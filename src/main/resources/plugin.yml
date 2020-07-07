@@ -1,0 +1,14 @@
+name: AureliumSkills
+version: Pre-Alpha 1.0.2
+main: io.github.archy_x.aureliumskills.AureliumSkills
+description: Feature-Packed Skills Plugin
+depend: [SmartInvs]
+api-version: 1.13
+
+permissions:
+    aureliumskills.sp.add:
+        default: op
+    aureliumskills.skill.setlevel:
+        default: op
+    aureliumskills.ability.setlevel:
+        default: op
