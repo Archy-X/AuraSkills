@@ -48,6 +48,8 @@ public class AureliumSkills extends JavaPlugin{
 	private File dataFile = new File(getDataFolder(), "data.yml");
 	private FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
 	private SkillLoader skillLoader = new SkillLoader(dataFile, config);
+	private Options options;
+	private Lang lang;
 	public static InventoryManager invManager;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
@@ -57,6 +59,12 @@ public class AureliumSkills extends JavaPlugin{
 		invManager.init();
 		//Registers Commands
 		registerCommands();
+		//Load config
+		loadConfig();
+		options = new Options(this);
+		options.loadConfig();
+		lang = new Lang(this);
+		lang.loadLanguages();
 		//Registers Events
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new BlockPlace(this), this);
@@ -99,8 +107,30 @@ public class AureliumSkills extends JavaPlugin{
 	}
 	
 	public void onDisable() {
+		//Save config
+		saveConfig();
 		//Save Data
 		skillLoader.saveSkillData();
+	}
+	
+	public void loadConfig() {
+		getConfig().options().copyDefaults(true);
+		saveDefaultConfig();
+		try {
+			if (getConfig() != null) {
+                FileConfiguration defConfig = getConfig();
+                for (String key : defConfig.getConfigurationSection("").getKeys(false))
+                    if (!getConfig().contains(key)) getConfig().set(key, defConfig.getConfigurationSection(key));
+         
+                for (String key : getConfig().getConfigurationSection("").getKeys(false))
+                    if (!defConfig.contains(key)) getConfig().set(key, null);
+         
+                this.saveConfig();
+			}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+			
 	}
 	
 	private void registerCommands() {
@@ -119,7 +149,10 @@ public class AureliumSkills extends JavaPlugin{
 			}
 			return values;
 		});
-		commandManager.registerCommand(new SkillsCommand());
+		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> {
+			return getConfig().getStringList("languages");
+		});
+		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());
 	}
 	

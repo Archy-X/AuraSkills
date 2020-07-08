@@ -1,0 +1,239 @@
+############################################################
+# +------------------------------------------------------+ #
+# |            Aurelium Skills Configuration             | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Version Pre-Alpha 1.1.0
+
+# Plugin made by Archy (DM Archy#2011 on discord for plugin support)
+
+# Action Bar Options
+enable-action-bar: true
+
+# If action bar is enabled, these settings will be applied
+
+enable-health-on-action-bar: true
+
+health-text-color: RED
+
+enable-mana-on-action-bar: true
+
+mana-text-color: AQUA
+
+# Color of text when gaining xp
+skill-xp-text-color: GOLD
+
+# Color of text in parenthesis showing xp progress
+xp-progress-text-color: GRAY
+
+# Skill Options
+# Change the equation that calculates xp level requirements (XpRequired = Multiplier * (level - 2) ^ 2 + 100)
+# Default: 100
+skill-level-requirements-multiplier: 100
+
+# Determines how skill points are scaled (PointsRewarded = Multiplier ^ (level - 2)) (Rounded to Integer) 
+# Default: 1.032
+skill-point-reward-multiplier: 1.032
+
+# Language and Display Options
+# The default language displayed
+default-language: EN
+
+# Whether certain numbers should show up as roman numerals:
+enable-roman-numerals: true
+
+# List of custom languages specified
+languages:
+- EN
+
+messages:
+    basic:
+        level:
+            singular:
+                EN: 'Level'
+            plural:
+                EN: 'Levels'
+        page:
+            EN: 'Page _'
+        progress-to-level:
+            EN: 'Progress to Level _'
+        close:
+            EN: 'Close'
+        go-back:
+            EN: 'Go Back'
+        previous-page:
+            EN: 'Previous Page'
+        previous-page-click:
+            EN: 'Click to go to previous page'
+        next-page:
+            EN: 'Next Page'
+        next-page-click:
+            EN: 'Click to go to next page'
+        rewards:
+            EN: 'Rewards'
+        locked:
+            EN: 'LOCKED'
+        in-progress:
+            EN: 'IN PROGRESS'
+        unlocked:
+            EN: 'UNLOCKED'
+        hp:
+            EN: 'HP'
+        xp:
+            EN: 'XP'
+        maxed:
+            EN: 'MAXED'
+        max-level:
+            EN: 'MAX LEVEL'
+        level-up:
+            EN: 'Level Up'
+        mana:
+            EN: 'Mana'
+    skills:
+        your-skills:
+            EN: 'Your Skills'
+        your-skills-description:
+            EN: 'Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!'
+        skill-points:
+            singular:
+                EN: 'Skill Point'
+            plural:
+                EN: 'Skill Points'
+        primary-skills:
+            EN: 'Primary Skills'
+        secondary-skills:
+            EN: 'Secondary Skils'
+        skill-hover:
+            EN: 'Hover over a Skill for more information!'
+        skill-click:
+            EN: 'Click on a Skill to view Level Progression!'
+        left-click-skill:
+            EN: 'Left Click to view Level Progression!'
+        right-click-skill:
+            EN: 'Right Click to view Skill Tree!'
+        back-skills-menu:
+            EN: 'Back to Skills Menu'
+        skill-tree:
+            name:
+                EN: 'Skill Tree'
+            description:
+                EN: 'Unlock and upgrade powerful abilities using Skill Points'
+            click:
+                EN: 'Click to open Skill Tree Menu!'
+        farming:
+            name:
+                EN: 'Farming'
+            description:
+                EN: 'Harvest crops to earn Farming XP'
+        foraging:
+            name:
+                EN: 'Foraging'
+            description:
+                EN: 'Cut trees to earn Foraging XP'
+        mining:
+            name:
+                EN: 'Mining'
+            description:
+                EN: 'Mine stone and ores to earn Mining XP'
+        fishing:
+            name:
+                EN: 'Fishing'
+            description:
+                EN: 'Catch fish to earn Fishing XP'
+        excavation:
+            name:
+                EN: 'Excavation'
+            description:
+                EN: 'Dig with a shovel to earn Excavation XP'
+        archery:
+            name:
+                EN: 'Archery'
+            description:
+                EN: 'Shoot mobs and players with a bow to earn Archery XP'
+        defense:
+            name:
+                EN: 'Defense'
+            description:
+                EN: 'Take damage from entities to earn Defense XP'
+        fighting:
+            name:
+                EN: 'Fighting'
+            description:
+                EN: 'Fight mobs with melee weapons to earn Fighting XP'
+        endurance:
+            name:
+                EN: 'Endurance'
+            description:
+                EN: 'Walk and run to earn Endurance XP'
+        agility:
+            name:
+                EN: 'Agility'
+            description:
+                EN: 'Jump and take fall damage to earn Agility XP'
+        alchemy:
+            name:
+                EN: 'Alchemy'
+            description:
+                EN: 'Brew potions to earn Alchemy XP'
+        enchanting:
+            name:
+                EN: 'Enchanting'
+            description:
+                EN: 'Enchant items and books to earn Enchanting XP'
+        sorcery:
+            name:
+                EN: 'Sorcery'
+            description:
+                EN: 'Cast spells to earn Sorcery XP'
+        healing:
+            name:
+                EN: 'Healing'
+            description:
+                EN: 'Drink and splash potions to earn Healing XP'
+        forging:
+            name:
+                EN: 'Forging'
+            description:
+                EN: 'Combine and apply books in an anvil to earn Forging XP'
+    stats:
+        your-stats:
+            EN: 'Your Stats'
+        primary-stat:
+            EN: 'Primary Stat'
+        secondary-stat:
+            EN: 'Secondary Stat'
+        strength:
+            name:
+                EN: 'Strength'
+            description:
+                EN: 'Strength increases your attack damage with various different weapons'
+        health:
+            name:
+                EN: 'Health'
+            description:
+                EN: 'Health increases the amount of HP you have, allowing you to last longer in fights'
+        regeneration:
+            name:
+                EN: 'Regeneration'
+            description:
+                EN: 'Regeneration increases how fast you recover both health and mana'
+        luck:
+            name:
+                EN: 'Luck'
+            description:
+                EN: 'Luck increases your chances of getting rare loot from mobs, fishing, and more'
+        wisdom:
+            name:
+                EN: 'Wisdom'
+            description:
+                EN: 'Wisdom increases your mana pool, the strength of magical attacks, and magical luck'
+        toughness:
+            name:
+                EN: 'Toughness'
+            description:
+                EN: 'Toughness increases the amount of damage reduced from enemy attacks'
+                
+        
+        
+  

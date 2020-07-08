@@ -2,6 +2,8 @@ package io.github.archy_x.aureliumskills.util;
 
 import java.util.TreeMap;
 
+import io.github.archy_x.aureliumskills.Options;
+
 public class RomanNumber {
 	
 	private final static TreeMap<Integer, String> map = new TreeMap<Integer, String>();
@@ -23,10 +25,15 @@ public class RomanNumber {
     }
 
     public final static String toRoman(int number) {
-        int l =  map.floorKey(number);
-        if ( number == l ) {
-            return map.get(number);
-        }
-        return map.get(l) + toRoman(number-l);
+    	if (Options.enable_roman_numerals) {
+	        int l =  map.floorKey(number);
+	        if ( number == l ) {
+	            return map.get(number);
+	        }
+	        return map.get(l) + toRoman(number-l);
+    	}
+    	else {
+    		return String.valueOf(number);
+    	}
     }
 }

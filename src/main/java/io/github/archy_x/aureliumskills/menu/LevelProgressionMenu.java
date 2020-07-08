@@ -5,7 +5,6 @@ import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,6 +18,8 @@ import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.Pagination;
 import fr.minuskube.inv.content.SlotPos;
 import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Lang;
+import io.github.archy_x.aureliumskills.Message;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
@@ -65,7 +66,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 			}));
 		}
 		
-		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton("Back to Skills Menu"), e -> {
+		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton(Lang.getMessage(Message.BACK_SKILLS_MENU)), e -> {
 			SkillsMenu.getInventory(player).open(player);
 		}));
 		
@@ -122,7 +123,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		return SmartInventory.builder()
 				.provider(new LevelProgressionMenu(player, skill))
 				.size(6, 9)
-				.title(StringUtils.capitalize(skill.getName()) + " Levels - Page " + (page + 1))
+				.title(Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.LEVELS) + " - " + Lang.getMessage(Message.PAGE).replace("_", String.valueOf(page + 1)))
 				.manager(AureliumSkills.invManager)
 				.build();
 	}
@@ -130,12 +131,15 @@ public class LevelProgressionMenu implements InventoryProvider {
 	public ItemStack getSkillTreeItem() {
 		ItemStack item = XMaterial.JUNGLE_SAPLING.parseItem();
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GREEN + "Skill Tree");
+		meta.setDisplayName(ChatColor.GREEN + Lang.getMessage(Message.SKILL_TREE_NAME));
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.GRAY + "Unlock and upgrade powerful abilities");
-		lore.add(ChatColor.GRAY + "using Skill Points.");
+		String fullDesc = Lang.getMessage(Message.SKILL_TREE_DESCRIPTION);
+		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
+		for (String s : splitDesc) {
+			lore.add(ChatColor.GRAY + s);
+		}
 		lore.add(" ");
-		lore.add(ChatColor.YELLOW + "Click to open Skill Tree Menu!");
+		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.SKILL_TREE_CLICK));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -144,9 +148,9 @@ public class LevelProgressionMenu implements InventoryProvider {
 	public ItemStack getNextPageItem() {
 		ItemStack item = new ItemStack(Material.ARROW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD + "Next Page");
+		meta.setDisplayName(ChatColor.GOLD + Lang.getMessage(Message.NEXT_PAGE));
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.YELLOW + "Click to go to next page");
+		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.NEXT_PAGE_CLICK));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -155,9 +159,9 @@ public class LevelProgressionMenu implements InventoryProvider {
 	public ItemStack getPreviousPageItem() {
 		ItemStack item = new ItemStack(Material.ARROW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD + "Previous Page");
+		meta.setDisplayName(ChatColor.GOLD + Lang.getMessage(Message.PREVIOUS_PAGE));
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.YELLOW + "Click to go to previous page");
+		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.PREVIOUS_PAGE_CLICK));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -166,9 +170,9 @@ public class LevelProgressionMenu implements InventoryProvider {
 	public ItemStack getUnlockedLevel(int level) {
 		ItemStack item = XMaterial.LIME_STAINED_GLASS_PANE.parseItem();
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GREEN + "Level " + RomanNumber.toRoman(level));
+		meta.setDisplayName(ChatColor.GREEN + Lang.getMessage(Message.LEVEL) + " " + RomanNumber.toRoman(level));
 		List<String> lore = getLore(level);
-		lore.add(ChatColor.GREEN + "" + ChatColor.BOLD + "UNLOCKED");
+		lore.add(ChatColor.GREEN + "" + ChatColor.BOLD + Lang.getMessage(Message.UNLOCKED));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -177,7 +181,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 	public ItemStack getCurrentLevel(int level) {
 		ItemStack item = XMaterial.YELLOW_STAINED_GLASS_PANE.parseItem();
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.YELLOW + "Level " + RomanNumber.toRoman(level));
+		meta.setDisplayName(ChatColor.YELLOW + Lang.getMessage(Message.LEVEL) + " " + RomanNumber.toRoman(level));
 		List<String> lore = getLore(level);
 		double xp = SkillLoader.playerSkills.get(player.getUniqueId()).getXp(skill);
 		double xpToNext;
@@ -191,7 +195,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		lore.add(ChatColor.GRAY + "Progress: " + ChatColor.YELLOW + nf.format(xp/xpToNext * 100) + "%");
 		lore.add(ChatColor.GRAY + "   " + nf.format(xp) + "/" + (int) xpToNext + " XP");
 		lore.add(" ");
-		lore.add(ChatColor.YELLOW + "" + ChatColor.BOLD + "IN PROGRESS");
+		lore.add(ChatColor.YELLOW + "" + ChatColor.BOLD + Lang.getMessage(Message.IN_PROGRESS));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -200,9 +204,9 @@ public class LevelProgressionMenu implements InventoryProvider {
 	public ItemStack getLockedLevel(int level) {
 		ItemStack item = XMaterial.RED_STAINED_GLASS_PANE.parseItem();
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Level " + RomanNumber.toRoman(level));
+		meta.setDisplayName(ChatColor.RED + Lang.getMessage(Message.LEVEL) + " " + RomanNumber.toRoman(level));
 		List<String> lore = getLore(level);
-		lore.add(ChatColor.RED + "" + ChatColor.BOLD + "LOCKED");
+		lore.add(ChatColor.RED + "" + ChatColor.BOLD + Lang.getMessage(Message.LOCKED));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -210,17 +214,17 @@ public class LevelProgressionMenu implements InventoryProvider {
 	
 	public List<String> getLore(int level) {
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.GRAY + "Level: " + ChatColor.WHITE + level);
-		lore.add(ChatColor.GRAY + "Rewards:");
-		lore.add(skill.getPrimaryStat().getColor() + "   +1 " + skill.getPrimaryStat().getSymbol() + " " + StringUtils.capitalize(skill.getPrimaryStat().getName()));
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + " " + ChatColor.WHITE + level);
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.REWARDS) + ":");
+		lore.add(skill.getPrimaryStat().getColor() + "   +1 " + skill.getPrimaryStat().getSymbol() + " " + Lang.getMessage(Message.valueOf(skill.getPrimaryStat().toString().toUpperCase() + "_NAME")));
 		if (level%2 == 0) {
-			lore.add(skill.getSecondaryStat().getColor() + "   +1 " + skill.getSecondaryStat().getSymbol() + " " + StringUtils.capitalize(skill.getSecondaryStat().getName()));
+			lore.add(skill.getSecondaryStat().getColor() + "   +1 " + skill.getSecondaryStat().getSymbol() + " " + Lang.getMessage(Message.valueOf(skill.getSecondaryStat().toString().toUpperCase() + "_NAME")));
 		}
 		if (Leveler.skillPointRewards.get(level - 2) == 1) {
-			lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " Skill Point");
+			lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_SINGULAR));
 		}
 		else {
-			lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " Skill Points");
+			lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_PLURAL));
 		}
 		lore.add(" ");
 		return lore;

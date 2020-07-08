@@ -15,6 +15,8 @@ import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.SlotPos;
 import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Lang;
+import io.github.archy_x.aureliumskills.Message;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.stats.PlayerStat;
 import io.github.archy_x.aureliumskills.stats.Stat;
@@ -33,23 +35,23 @@ public class StatsMenu implements InventoryProvider{
 		contents.fill(ClickableItem.empty(MenuItems.getEmptyPane()));
 		contents.set(SlotPos.of(1, 4), ClickableItem.empty(getPlayerHead(SkillLoader.playerStats.get(player.getUniqueId()))));
 		contents.set(SlotPos.of(1, 1), ClickableItem.empty(getStatItem(
-			ChatColor.DARK_RED + "Strength", 14, "Strength increases your attack damage", "with various different weapons", 
-			"Foraging, Fighting, Sorcery", "Farming, Archery")));
+			"Strength", 14, new Message[] {Message.FORAGING_NAME, Message.FIGHTING_NAME, Message.SORCERY_NAME}, 
+			new Message[] {Message.FARMING_NAME, Message.ARCHERY_NAME}, ChatColor.DARK_RED)));
 		contents.set(SlotPos.of(1, 2), ClickableItem.empty(getStatItem(
-			ChatColor.RED + "Health", 1, "Health increases the amount of HP you", "have, allowing you to last longer in fights", 
-			"Farming, Alchemy", "Fishing, Defense, Healing")));
+			"Health", 1, new Message[] {Message.FARMING_NAME, Message.ALCHEMY_NAME}, 
+			new Message[] {Message.FISHING_NAME, Message.DEFENSE_NAME, Message.HEALING_NAME}, ChatColor.RED)));
 		contents.set(SlotPos.of(1, 3), ClickableItem.empty(getStatItem(
-			ChatColor.GOLD + "Regeneration", 4, "Regeneration increases how fast you", "recover both health and mana", 
-			"Excavation, Endurance, Healing", "Fighting, Agility")));
+			"Regeneration", 4, new Message[] {Message.EXCAVATION_NAME, Message.ENDURANCE_NAME, Message.HEALING_NAME},
+			new Message[] {Message.FIGHTING_NAME, Message.AGILITY_NAME}, ChatColor.GOLD)));
 		contents.set(SlotPos.of(1, 5), ClickableItem.empty(getStatItem(
-			ChatColor.DARK_GREEN + "Luck", 13, "Luck increases your chances of getting", "rare loot from mobs, fishing, and more", 
-			"Fishing, Archery", "Mining, Excavation, Enchanting")));
+			"Luck", 13, new Message[] {Message.FISHING_NAME, Message.ARCHERY_NAME}, 
+			new Message[] {Message.MINING_NAME, Message.EXCAVATION_NAME, Message.ENCHANTING_NAME}, ChatColor.DARK_GREEN)));
 		contents.set(SlotPos.of(1, 6), ClickableItem.empty(getStatItem(
-			ChatColor.BLUE + "Wisdom", 11, "Wisdom increases your mana pool, the", "strength of magical attacks, and magical luck", 
-			"Agility, Enchanting", "Alchemy, Sorcery, Forging")));
+			"Wisdom", 11, new Message[] {Message.AGILITY_NAME, Message.ENCHANTING_NAME}, 
+			new Message[] {Message.ALCHEMY_NAME, Message.SORCERY_NAME, Message.FORAGING_NAME}, ChatColor.BLUE)));
 		contents.set(SlotPos.of(1, 7), ClickableItem.empty(getStatItem(
-			ChatColor.DARK_PURPLE + "Toughness", 10, "Toughness increases the amount of damage", "reduced from enemy attacks", 
-			"Mining, Defense, Forging", "Foraging, Endurance")));
+			"Toughness", 10, new Message[] {Message.MINING_NAME, Message.DEFENSE_NAME, Message.FORAGING_NAME}, 
+			new Message[] {Message.FORAGING_NAME, Message.ENDURANCE_NAME}, ChatColor.DARK_PURPLE)));
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class StatsMenu implements InventoryProvider{
 		
 	}
 
-	private ItemStack getStatItem(String name, int color, String desc1, String desc2, String primarySkills, String secondarySkills) {
+	private ItemStack getStatItem(String name, int color, Message[] primarySkills, Message[] secondarySkills, ChatColor chatColor) {
 		ItemStack item = XMaterial.WHITE_STAINED_GLASS_PANE.parseItem();
 		if (color == 14) {
 			item = XMaterial.RED_STAINED_GLASS_PANE.parseItem();
@@ -79,13 +81,36 @@ public class StatsMenu implements InventoryProvider{
 			item = XMaterial.PURPLE_STAINED_GLASS_PANE.parseItem();
 		}
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(name);
+		meta.setDisplayName(chatColor + Lang.getMessage(Message.valueOf(name.toUpperCase() + "_NAME")));
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.GRAY + desc1);
-		lore.add(ChatColor.GRAY + desc2);
+		String fullDesc = Lang.getMessage(Message.valueOf(ChatColor.stripColor(name).toUpperCase() + "_DESCRIPTION"));
+		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
+		for (String s : splitDesc) {
+			lore.add(ChatColor.GRAY + s);
+		}
 		lore.add(" ");
-		lore.add(ChatColor.GRAY + "Primary Skills: " + ChatColor.RESET + primarySkills);
-		lore.add(ChatColor.GRAY + "Secondary Skills: " + ChatColor.RESET + secondarySkills);
+		//Formats primary skills array into comma separated string
+		String primarySkillsMessage = "";
+		for (Message m : primarySkills) {
+			if (primarySkills[0] == m) {
+				primarySkillsMessage += Lang.getMessage(m);
+			}
+			else {
+				primarySkillsMessage += ", " + Lang.getMessage(m);
+			}
+		}
+		//Formats secondary skills array into comma separated string
+		String secondarySkillsMessage = "";
+		for (Message m : secondarySkills) {
+			if (secondarySkills[0] == m) {
+				secondarySkillsMessage += Lang.getMessage(m);
+			}
+			else {
+				secondarySkillsMessage += ", " + Lang.getMessage(m);
+			}
+		}
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.PRIMARY_SKILLS) + ": " + ChatColor.RESET + primarySkillsMessage);
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.SECONDARY_SKILLS) + ": " + ChatColor.RESET + secondarySkillsMessage);
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -96,12 +121,12 @@ public class StatsMenu implements InventoryProvider{
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.YELLOW + player.getName());
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.DARK_RED + "  ➽ Strength " + ChatColor.WHITE + stat.getStatLevel(Stat.STRENGTH));
-		lore.add(ChatColor.RED + "  ❤ Health " + ChatColor.WHITE + stat.getStatLevel(Stat.HEALTH));
-		lore.add(ChatColor.GOLD + "  ❥ Regeneration " + ChatColor.WHITE + stat.getStatLevel(Stat.REGENERATION));
-		lore.add(ChatColor.DARK_GREEN + "  ☘ Luck " + ChatColor.WHITE + stat.getStatLevel(Stat.LUCK));
-		lore.add(ChatColor.BLUE + "  ✿ Wisdom " + ChatColor.WHITE + stat.getStatLevel(Stat.WISDOM));
-		lore.add(ChatColor.DARK_PURPLE + "  ✦ Toughness " + ChatColor.WHITE + stat.getStatLevel(Stat.TOUGHNESS));
+		lore.add(ChatColor.DARK_RED + "  ➽ " + Lang.getMessage(Message.STRENGTH_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.STRENGTH));
+		lore.add(ChatColor.RED + "  ❤ " + Lang.getMessage(Message.HEALTH_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.HEALTH));
+		lore.add(ChatColor.GOLD + "  ❥ " + Lang.getMessage(Message.REGENERATION_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.REGENERATION));
+		lore.add(ChatColor.DARK_GREEN + "  ☘ " + Lang.getMessage(Message.LUCK_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.LUCK));
+		lore.add(ChatColor.BLUE + "  ✿ " + Lang.getMessage(Message.WISDOM_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.WISDOM));
+		lore.add(ChatColor.DARK_PURPLE + "  ✦ " + Lang.getMessage(Message.TOUGHNESS_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.TOUGHNESS));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -111,7 +136,7 @@ public class StatsMenu implements InventoryProvider{
 		return SmartInventory.builder()
 				.provider(new StatsMenu(player))
 				.size(3, 9)
-				.title("Your Stats")
+				.title(Lang.getMessage(Message.YOUR_STATS))
 				.manager(AureliumSkills.invManager)
 				.build();
 	}

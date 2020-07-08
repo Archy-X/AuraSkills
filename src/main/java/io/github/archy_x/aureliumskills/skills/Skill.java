@@ -16,6 +16,8 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
+import io.github.archy_x.aureliumskills.Lang;
+import io.github.archy_x.aureliumskills.Message;
 import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
 import io.github.archy_x.aureliumskills.stats.Stat;
 import io.github.archy_x.aureliumskills.util.RomanNumber;
@@ -67,37 +69,41 @@ public enum Skill {
 		NumberFormat nf = new DecimalFormat("##.##");
 		ItemStack item = new ItemStack(material);
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.GRAY + description);
+		String fullDesc = Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_DESCRIPTION"));
+		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
+		for (String s : splitDesc) {
+			lore.add(ChatColor.GRAY + s);
+		}
 		lore.add(" ");
-		lore.add(ChatColor.GRAY + "Primary Stat: " + ChatColor.RESET + primaryStat.getDisplayName());
-		lore.add(ChatColor.GRAY + "Secondary Stat: " + ChatColor.RESET + secondaryStat.getDisplayName());
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.PRIMARY_STAT) + ": " + primaryStat.getColor() + Lang.getMessage(Message.valueOf(primaryStat.toString().toUpperCase() + "_NAME")));
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.SECONDARY_STAT) + ": " + secondaryStat.getColor() + Lang.getMessage(Message.valueOf(secondaryStat.toString().toUpperCase() + "_NAME")));
 		lore.add(" ");
-		lore.add(ChatColor.GRAY + "Skill Points: " + ChatColor.YELLOW + skill.getSkillPoints(this));
-		lore.add(ChatColor.GRAY + "Level: " + ChatColor.YELLOW + RomanNumber.toRoman(level));
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.SKILL_POINTS_PLURAL) + ": " + ChatColor.YELLOW + skill.getSkillPoints(this));
+		lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + ": " + ChatColor.YELLOW + RomanNumber.toRoman(level));
 		if (xpToNext != 0) {
-			lore.add(ChatColor.GRAY + "Progress to Level " + RomanNumber.toRoman(level + 1) + ": " + ChatColor.YELLOW + nf.format(xp/xpToNext * 100) + "%");
+			lore.add(ChatColor.GRAY + Lang.getMessage(Message.PROGRESS_TO_LEVEL).replace("_", RomanNumber.toRoman(level + 1)) + ": " + ChatColor.YELLOW + nf.format(xp/xpToNext * 100) + "%");
 			lore.add(ChatColor.GRAY + "   " + nf.format(xp) + "/" + (int) xpToNext + " XP");
 		}
 		else {
-			lore.add(ChatColor.GOLD + "MAX LEVEL");
+			lore.add(ChatColor.GOLD + Lang.getMessage(Message.MAX_LEVEL));
 		}
 		
 		if (showClickText) {
 			lore.add(" ");
-			lore.add(ChatColor.YELLOW + "Left Click to view Level Progression!");
-			lore.add(ChatColor.YELLOW + "Right Click to view Skill Tree!");
+			lore.add(ChatColor.YELLOW + Lang.getMessage(Message.LEFT_CLICK_SKILL));
+			lore.add(ChatColor.YELLOW + Lang.getMessage(Message.RIGHT_CLICK_SKILL));
 		}
-		if (material.equals(Material.SPLASH_POTION)) {
+		if (material.equals(Material.SPLASH_POTION) || material.equals(Material.POTION)) {
 			PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
 			potionMeta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL));
 			potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-			potionMeta.setDisplayName(ChatColor.AQUA + StringUtils.capitalize(name) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
+			potionMeta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_NAME")) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
 			potionMeta.setLore(lore);
 			item.setItemMeta(potionMeta);
 		}
 		else {
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(ChatColor.AQUA + StringUtils.capitalize(name) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
+			meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_NAME")) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
 			meta.setLore(lore);
 			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 			item.setItemMeta(meta);

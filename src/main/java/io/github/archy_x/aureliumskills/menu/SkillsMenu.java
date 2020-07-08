@@ -16,6 +16,8 @@ import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.SlotPos;
 import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Lang;
+import io.github.archy_x.aureliumskills.Message;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.skilltree.SkillTree;
 
@@ -96,14 +98,17 @@ public class SkillsMenu implements InventoryProvider{
 	private ItemStack getSkillsItem() {
 		ItemStack item = new ItemStack(Material.DIAMOND_AXE);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA + "Your Skills - " + ChatColor.GOLD + player.getName());
+		meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.YOUR_SKILLS) + " - " + ChatColor.GOLD + player.getName());
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.GRAY + "Upgrade Skills by doing various tasks to unlock");
-		lore.add(ChatColor.GRAY + "valuable stat boosts, abilities, and more!");
+		String fullDesc = Lang.getMessage(Message.YOUR_SKILLS_DESCRIPTION);
+		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
+		for (String s : splitDesc) {
+			lore.add(ChatColor.GRAY + s);
+		}
 		lore.add(" ");
-		lore.add(ChatColor.YELLOW + "Hover over a Skill for more information!");
-		lore.add(ChatColor.YELLOW + "Click on a Skill to view level progression!");
+		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.SKILL_HOVER));
+		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.SKILL_CLICK));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -113,7 +118,7 @@ public class SkillsMenu implements InventoryProvider{
 		return SmartInventory.builder()
 				.provider(new SkillsMenu(player))
 				.size(5, 9)
-				.title("Your Skills")
+				.title(Lang.getMessage(Message.YOUR_SKILLS))
 				.manager(AureliumSkills.invManager)
 				.build();
 	}

@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import io.github.archy_x.aureliumskills.Lang;
+import io.github.archy_x.aureliumskills.Message;
 import io.github.archy_x.aureliumskills.util.XMaterial;
 
 public class MenuItems {
@@ -23,7 +25,7 @@ public class MenuItems {
 	public static ItemStack getBackButton(String backTo) {
 		ItemStack item = new ItemStack(Material.ARROW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GREEN + "Go Back");
+		meta.setDisplayName(ChatColor.GREEN + Lang.getMessage(Message.GO_BACK));
 		List<String> lore = new LinkedList<String>();
 		lore.add(ChatColor.GRAY + backTo);
 		meta.setLore(lore);
@@ -34,7 +36,7 @@ public class MenuItems {
 	public static ItemStack getCloseButton() {
 		ItemStack item = new ItemStack(Material.BARRIER);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + "Close");
+		meta.setDisplayName(ChatColor.RED + Lang.getMessage(Message.CLOSE));
 		item.setItemMeta(meta);
 		return item;
 	}

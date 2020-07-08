@@ -3,6 +3,7 @@ package io.github.archy_x.aureliumskills.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -12,6 +13,8 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Flags;
 import co.aikar.commands.annotation.Subcommand;
 import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Lang;
+import io.github.archy_x.aureliumskills.Options;
 import io.github.archy_x.aureliumskills.menu.SkillsMenu;
 import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.Skill;
@@ -21,10 +24,44 @@ import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
 
 @CommandAlias("skills|sk|skill")
 public class SkillsCommand extends BaseCommand {
-
+ 
+	private Plugin plugin;
+	private Options options;
+	private Lang lang;
+	
+	public SkillsCommand(Plugin plugin) {
+		this.plugin = plugin;
+		options = new Options(plugin);
+		lang = new Lang(plugin);
+	}
+	
 	@Default
 	public void onSkills(Player player) {
 		SkillsMenu.getInventory(player).open(player);
+	}
+	
+	@Subcommand("lang")
+	@CommandCompletion("@lang")
+	@CommandPermission("aureliumskills.lang")
+	public void onLanguage(Player player, String language) {
+		if (lang.setLanguage(language)) {
+			player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Language set to " + language);
+		}
+		else {
+			player.sendMessage(AureliumSkills.tag + ChatColor.RED + "Language not found in config!");
+		}
+	}
+	
+	
+	@Subcommand("reload")
+	@CommandPermission("aureliumskills.reload")
+	public void reload(CommandSender sender) {
+		plugin.reloadConfig();
+		plugin.saveDefaultConfig();
+		options.loadConfig();
+		lang.loadLanguages();
+		Leveler.loadLevelReqs();
+		sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Config reloaded!");
 	}
 	
 	@Subcommand("sp add")
