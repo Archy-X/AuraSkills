@@ -3,6 +3,7 @@ package io.github.archy_x.aureliumskills.listeners;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -11,9 +12,9 @@ import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.stats.PlayerStat;
 
-public class PlayerJoin implements Listener{
+public class PlayerJoin implements Listener {
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayJoin(PlayerJoinEvent event) {
 		if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId()) == false) {
 			SkillLoader.playerSkills.put(event.getPlayer().getUniqueId(), new PlayerSkill(event.getPlayer().getUniqueId()));

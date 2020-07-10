@@ -8,6 +8,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.Source;
+
 public class Options {
 
 	private Plugin plugin;
@@ -24,6 +27,13 @@ public class Options {
 	public static ChatColor skill_xp_text_color;
 	public static ChatColor xp_progress_text_color;
 	
+	private static Map<Skill, Boolean> skillToggle = new HashMap<>();
+	private static Map<Source, Double> xpAmounts = new HashMap<>();
+	private static Map<Source, Double> defXpAmounts = new HashMap<>();
+	
+	private static Map<Setting, Double> doubleOptions = new HashMap<>();
+	private static Map<Setting, Boolean> booleanOptions = new HashMap<>();
+	
 	public Options(Plugin plugin) {
 		this.plugin = plugin;
 		colors = new HashMap<>();
@@ -32,6 +42,32 @@ public class Options {
 					&& color != ChatColor.STRIKETHROUGH && color != ChatColor.UNDERLINE) {
 				colors.put(color.name(), color);
 			}
+		}
+		setDefaultXpAmounts();
+	}
+	
+	public static boolean isEnabled(Skill skill) {
+		if (skillToggle.containsKey(skill)) {
+			return skillToggle.get(skill);
+		}
+		return true;
+	}
+	
+	public static double getDoubleOption(Setting setting) {
+		if (doubleOptions.containsKey(setting)) {
+			return doubleOptions.get(setting);
+		}
+		else {
+			return setting.getDefaultDouble();
+		}
+	}
+	
+	public static boolean getBooleanOption(Setting setting) {
+		if (booleanOptions.containsKey(setting)) {
+			return booleanOptions.get(setting);
+		}
+		else {
+			return setting.getDefaultBoolean();
 		}
 	}
 	
@@ -71,5 +107,63 @@ public class Options {
 			xp_progress_text_color = ChatColor.GRAY;
 			Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Invalid xp progress text color, using default value instead!");
 		}
+		for (Setting setting : Setting.values()) {
+			if (setting.getType() == "double") {
+				if (config.contains(setting.getPath())) {
+					doubleOptions.put(setting, config.getDouble(setting.getPath(), setting.getDefaultDouble()));
+				}
+				else {
+					doubleOptions.put(setting, setting.getDefaultDouble());
+				}
+			}
+			else if (setting.getType() == "boolean") {
+				if (config.contains(setting.getPath())) {
+					booleanOptions.put(setting, config.getBoolean(setting.getPath(), setting.getDefaultBoolean()));
+				}
+				else {
+					booleanOptions.put(setting, setting.getDefaultBoolean());
+				}
+			}
+		}
+		
+		for (Skill skill : Skill.values()) {
+			if (config.contains(skill.toString().toLowerCase() + ".enabled")) {
+				skillToggle.put(skill, config.getBoolean(skill.toString().toLowerCase() + ".enabled", true));
+			}
+			else {
+				skillToggle.put(skill, true);
+			}
+		}
+		
+		for (Source type : Source.values()) {
+			if (config.contains(type.getPath())) {
+				if (config.getDouble(type.getPath()) >= 0) {
+					xpAmounts.put(type, config.getDouble(type.getPath(), defXpAmounts.get(type)));
+				}
+				else {
+					Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Invalid value in path " + type.getPath() + " in config, using default value instead.");
+				}
+			}
+			else {
+				Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Missing path " + type.getPath() + " in config, using default value instead.");
+			}
+		}
+		
+	}
+	
+	public void setDefaultXpAmounts() {
+		for (Source type : Source.values()) {
+			defXpAmounts.put(type, type.getDefault());
+		}
+	}
+	
+	public static double getXpAmount(Source key) {
+		if (xpAmounts.containsKey(key)) {
+			return xpAmounts.get(key);
+		}
+		else if (defXpAmounts.containsKey(key)) {
+			return defXpAmounts.get(key);
+		}
+		return 0;
 	}
 }

@@ -17,8 +17,9 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.google.common.collect.Sets;
 
+import io.github.archy_x.aureliumskills.Options;
 import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.SkillLoader;
+import io.github.archy_x.aureliumskills.skills.Source;
 
 public class AgilityLeveler implements Listener {
 	
@@ -31,16 +32,13 @@ public class AgilityLeveler implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onFall(EntityDamageEvent event) {
-		if (event.isCancelled() == false) {
-			if (event.getCause().equals(DamageCause.FALL)) {
-				if (event.getEntity() instanceof Player) {
-					Player player = (Player) event.getEntity();
-					if (event.getFinalDamage() < player.getHealth()) {
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							SkillLoader.playerSkills.get(player.getUniqueId()).addXp(Skill.AGILITY, event.getDamage() * 2);
-							Leveler.playSound(player);
-							Leveler.checkLevelUp(player, Skill.AGILITY);
-							Leveler.sendActionBarMessage(player, Skill.AGILITY, event.getDamage() * 2);
+		if (Options.isEnabled(Skill.AGILITY)) {
+			if (event.isCancelled() == false) {
+				if (event.getCause().equals(DamageCause.FALL)) {
+					if (event.getEntity() instanceof Player) {
+						Player player = (Player) event.getEntity();
+						if (event.getFinalDamage() < player.getHealth()) {
+							Leveler.addXp(player, Skill.AGILITY, event.getDamage() * Options.getXpAmount(Source.FALL_DAMAGE));
 						}
 					}
 				}
@@ -50,37 +48,34 @@ public class AgilityLeveler implements Listener {
 	
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
-        Player player = e.getPlayer();
-        if (player.getVelocity().getY() > 0) {
-            double jumpVelocity = (double) 0.42F;
-            if (player.hasPotionEffect(PotionEffectType.JUMP)) {
-                jumpVelocity += (double) ((float) (player.getPotionEffect(PotionEffectType.JUMP).getAmplifier() + 1) * 0.1F);
-            }
-            if (e.getPlayer().getLocation().getBlock().getType() != Material.LADDER && prevPlayersOnGround.contains(player.getUniqueId())) {
-                if (!player.isOnGround() && Double.compare(player.getVelocity().getY(), jumpVelocity) == 0) {
-                	if (player.hasMetadata("skillsJumps")) {
-                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
-                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 50) {
-                			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-        						SkillLoader.playerSkills.get(player.getUniqueId()).addXp(Skill.AGILITY, 5);
-        						Leveler.playSound(player);
-        						Leveler.checkLevelUp(player, Skill.AGILITY);
-        						Leveler.sendActionBarMessage(player, Skill.AGILITY, 5);
-        					}
-                			player.removeMetadata("skillsJumps", plugin);
-                		}
-                	}
-                	else {
-                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, 1));
-                	}
-                }
-            }
-        }
-        if (player.isOnGround()) {
-            prevPlayersOnGround.add(player.getUniqueId());
-        } else {
-            prevPlayersOnGround.remove(player.getUniqueId());
-        }
+    	if (Options.isEnabled(Skill.AGILITY)) {
+	        Player player = e.getPlayer();
+	        if (player.getVelocity().getY() > 0) {
+	            double jumpVelocity = (double) 0.42F;
+	            if (player.hasPotionEffect(PotionEffectType.JUMP)) {
+	                jumpVelocity += (double) ((float) (player.getPotionEffect(PotionEffectType.JUMP).getAmplifier() + 1) * 0.1F);
+	            }
+	            if (e.getPlayer().getLocation().getBlock().getType() != Material.LADDER && prevPlayersOnGround.contains(player.getUniqueId())) {
+	                if (!player.isOnGround() && Double.compare(player.getVelocity().getY(), jumpVelocity) == 0) {
+	                	if (player.hasMetadata("skillsJumps")) {
+	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
+	                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 100) {
+	                			Leveler.addXp(player, Skill.AGILITY, Source.JUMP_PER_100);
+	                			player.removeMetadata("skillsJumps", plugin);
+	                		}
+	                	}
+	                	else {
+	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, 1));
+	                	}
+	                }
+	            }
+	        }
+	        if (player.isOnGround()) {
+	            prevPlayersOnGround.add(player.getUniqueId());
+	        } else {
+	            prevPlayersOnGround.remove(player.getUniqueId());
+	        }
+    	}
     }
 	
 }

@@ -20,6 +20,8 @@ import fr.minuskube.inv.content.SlotPos;
 import io.github.archy_x.aureliumskills.AureliumSkills;
 import io.github.archy_x.aureliumskills.Lang;
 import io.github.archy_x.aureliumskills.Message;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.Setting;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
@@ -60,10 +62,12 @@ public class LevelProgressionMenu implements InventoryProvider {
 		
 		contents.set(SlotPos.of(0, 0), ClickableItem.empty(skill.getMenuItem(player, false)));
 		
-		if (skill.equals(Skill.FARMING)) {
-			contents.set(SlotPos.of(0, 1), ClickableItem.of(getSkillTreeItem(), e -> {
-				SkillTreeMenu.getInventory(SkillTree.valueOf(skill.toString()), true).open(player);
-			}));
+		if (Options.getBooleanOption(Setting.ENABLE_SKILL_POINTS)) {
+			if (skill.equals(Skill.FARMING)) {
+				contents.set(SlotPos.of(0, 1), ClickableItem.of(getSkillTreeItem(), e -> {
+					SkillTreeMenu.getInventory(SkillTree.valueOf(skill.toString()), true).open(player);
+				}));
+			}
 		}
 		
 		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton(Lang.getMessage(Message.BACK_SKILLS_MENU)), e -> {
@@ -220,11 +224,13 @@ public class LevelProgressionMenu implements InventoryProvider {
 		if (level%2 == 0) {
 			lore.add(skill.getSecondaryStat().getColor() + "   +1 " + skill.getSecondaryStat().getSymbol() + " " + Lang.getMessage(Message.valueOf(skill.getSecondaryStat().toString().toUpperCase() + "_NAME")));
 		}
-		if (Leveler.skillPointRewards.get(level - 2) == 1) {
-			lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_SINGULAR));
-		}
-		else {
-			lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_PLURAL));
+		if (Options.getBooleanOption(Setting.ENABLE_SKILL_POINTS)) {
+			if (Leveler.skillPointRewards.get(level - 2) == 1) {
+				lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_SINGULAR));
+			}
+			else {
+				lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_PLURAL));
+			}
 		}
 		lore.add(" ");
 		return lore;

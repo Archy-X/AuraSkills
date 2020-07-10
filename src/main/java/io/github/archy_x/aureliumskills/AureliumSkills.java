@@ -38,9 +38,11 @@ import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
 import io.github.archy_x.aureliumskills.skills.levelers.MiningLeveler;
 import io.github.archy_x.aureliumskills.stats.ActionBar;
 import io.github.archy_x.aureliumskills.stats.Health;
+import io.github.archy_x.aureliumskills.stats.Luck;
 import io.github.archy_x.aureliumskills.stats.Regeneration;
 import io.github.archy_x.aureliumskills.stats.Strength;
 import io.github.archy_x.aureliumskills.stats.Toughness;
+import io.github.archy_x.aureliumskills.stats.Wisdom;
 
 public class AureliumSkills extends JavaPlugin{
 
@@ -85,6 +87,8 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new Health(), this);
 		getServer().getPluginManager().registerEvents(new Toughness(), this);
 		getServer().getPluginManager().registerEvents(new Strength(), this);
+		getServer().getPluginManager().registerEvents(new Luck(), this);
+		getServer().getPluginManager().registerEvents(new Wisdom(), this);
 		getServer().getPluginManager().registerEvents(new FarmingAbilities(this), this);
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);

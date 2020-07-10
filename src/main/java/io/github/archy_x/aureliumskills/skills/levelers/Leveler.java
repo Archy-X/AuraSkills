@@ -18,9 +18,11 @@ import io.github.archy_x.aureliumskills.AureliumSkills;
 import io.github.archy_x.aureliumskills.Lang;
 import io.github.archy_x.aureliumskills.Message;
 import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.Setting;
 import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
+import io.github.archy_x.aureliumskills.skills.Source;
 import io.github.archy_x.aureliumskills.stats.ActionBar;
 import io.github.archy_x.aureliumskills.stats.PlayerStat;
 import io.github.archy_x.aureliumskills.stats.Stat;
@@ -42,6 +44,36 @@ public class Leveler {
 		for (int i = 0; i < 72; i++) {
 			levelReqs.add((int) Options.skillLevelRequirementsMultiplier*i*i + 100);
 			skillPointRewards.add((int) Math.pow(Options.skillPointRewardMultiplier, i));
+		}
+	}
+	
+	//Method for adding xp
+	public static void addXp(Player player, Skill skill, Source source) {
+		//Checks if player has a skill profile for safety
+		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+			//Adds Xp
+			SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, Options.getXpAmount(source));
+			//Plays a sound if turned on
+			Leveler.playSound(player);
+			//Check if player leveled up
+			Leveler.checkLevelUp(player, skill);
+			//Sends action bar message
+			Leveler.sendActionBarMessage(player, skill, Options.getXpAmount(source));
+		}
+	}
+	
+	//Method for adding xp with a defined amount
+	public static void addXp(Player player, Skill skill, double amount) {
+		//Checks if player has a skill profile for safety
+		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+			//Adds Xp
+			SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, amount);
+			//Plays a sound if turned on
+			Leveler.playSound(player);
+			//Check if player leveled up
+			Leveler.checkLevelUp(player, skill);
+			//Sends action bar message
+			Leveler.sendActionBarMessage(player, skill, amount);
 		}
 	}
 	
@@ -71,12 +103,14 @@ public class Leveler {
 			if (currentXp >= levelReqs.get(currentLevel - 1)) {
 				playerSkill.setXp(skill, currentXp - levelReqs.get(currentLevel - 1));
 				playerSkill.setSkillLevel(skill, SkillLoader.playerSkills.get(id).getSkillLevel(skill) + 1);
-				playerSkill.addSkillPoints(skill, skillPointRewards.get(currentLevel - 1));
-				if (skillPointRewards.get(currentLevel - 1) == 1) {
-					player.sendMessage(AureliumSkills.tag + ChatColor.AQUA + "+" + skillPointRewards.get(currentLevel - 1) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.SKILL_POINTS_SINGULAR));
-				}
-				else {
-					player.sendMessage(AureliumSkills.tag + ChatColor.AQUA + "+" + skillPointRewards.get(currentLevel - 1) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.SKILL_POINTS_PLURAL));
+				if (Options.getBooleanOption(Setting.ENABLE_SKILL_POINTS)) {
+					playerSkill.addSkillPoints(skill, skillPointRewards.get(currentLevel - 1));
+					if (skillPointRewards.get(currentLevel - 1) == 1) {
+						player.sendMessage(AureliumSkills.tag + ChatColor.AQUA + "+" + skillPointRewards.get(currentLevel - 1) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.SKILL_POINTS_SINGULAR));
+					}
+					else {
+						player.sendMessage(AureliumSkills.tag + ChatColor.AQUA + "+" + skillPointRewards.get(currentLevel - 1) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.SKILL_POINTS_PLURAL));
+					}
 				}
 				playerStat.addStatLevel(skill.getPrimaryStat(), 1);
 				StatLeveler.reloadStat(player, skill.getPrimaryStat());
@@ -115,12 +149,12 @@ public class Leveler {
 						if (currentAction == ActionBar.currentAction.get(player.getUniqueId())) {
 							if (Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1) {
 								if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * 5) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
+									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " + 
 											Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " +  Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
 											"   " + Options.mana_text_color + 20 + "/" + (20 + 2 * SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.WISDOM)) + " " + Lang.getMessage(Message.MANA)));
 								}
 								else if (Options.enable_health_on_action_bar) {
-									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * 5) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
+									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " + 
 											Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " +  Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")"));
 								}
 								else if (Options.enable_mana_on_action_bar) {
@@ -133,13 +167,13 @@ public class Leveler {
 							}
 							else {
 								if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * 5) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
+									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
 											Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
 											"   " + Options.mana_text_color + 20 + "/" + (20 + 2 * SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.WISDOM)) + " " + Lang.getMessage(Message.MANA)));
 								
 								}
 								else if (Options.enable_health_on_action_bar) {
-									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * 5) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
+									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
 											Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")"));
 								}
 								else if (Options.enable_mana_on_action_bar) {

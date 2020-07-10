@@ -1,9 +1,6 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
-import java.util.Map;
-
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,61 +8,42 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
+import io.github.archy_x.aureliumskills.Options;
 import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.SkillLoader;
+import io.github.archy_x.aureliumskills.skills.Source;
+import io.github.archy_x.aureliumskills.util.ItemUtils;
 
 public class ForgingLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onForge(InventoryClickEvent event) {
-		if (event.isCancelled() == false) {
-			if (event.getClickedInventory() != null) {
-				if (event.getClickedInventory().getType().equals(InventoryType.ANVIL)) {
-					if (event.getSlot() == 2) {
-						if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-							if (event.getWhoClicked() instanceof Player) {
-								ItemStack addedItem = event.getClickedInventory().getItem(1);
-								ItemStack baseItem = event.getClickedInventory().getItem(0);
-								Player player = (Player) event.getWhoClicked();
-								if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
-									if (baseItem.getType().equals(Material.ENCHANTED_BOOK) == false) {
-										EnchantmentStorageMeta meta = (EnchantmentStorageMeta) addedItem.getItemMeta();
-										Map<Enchantment, Integer> enchants = meta.getStoredEnchants();
-										int levelTotal = 0;
-										for (Enchantment e : enchants.keySet()) {
-											levelTotal += enchants.get(e);
+		if (Options.isEnabled(Skill.FORGING)) {
+	 		if (event.isCancelled() == false) {
+				if (event.getClickedInventory() != null) {
+					if (event.getClickedInventory().getType().equals(InventoryType.ANVIL)) {
+						if (event.getSlot() == 2) {
+							if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+								if (event.getWhoClicked() instanceof Player) {
+									ItemStack addedItem = event.getClickedInventory().getItem(1);
+									ItemStack baseItem = event.getClickedInventory().getItem(0);
+									Player p = (Player) event.getWhoClicked();
+									Skill s = Skill.FORGING;
+									AnvilInventory inventory = (AnvilInventory) event.getClickedInventory();
+									if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
+										if (ItemUtils.isArmor(baseItem.getType())) {
+											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_ARMOR_PER_LEVEL));
 										}
-										if (levelTotal > 0) {
-											if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-												SkillLoader.playerSkills.get(player.getUniqueId()).addXp(Skill.FORGING, levelTotal * 20);
-												Leveler.playSound(player);
-												Leveler.checkLevelUp(player, Skill.FORGING);
-												Leveler.sendActionBarMessage(player, Skill.FORGING, levelTotal * 20);
-											}
+										else if (ItemUtils.isWeapon(baseItem.getType())) {
+											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_WEAPON_PER_LEVEL));
 										}
-									}
-									else {
-										EnchantmentStorageMeta meta = (EnchantmentStorageMeta) addedItem.getItemMeta();
-										EnchantmentStorageMeta baseMeta = (EnchantmentStorageMeta) baseItem.getItemMeta();
-										Map<Enchantment, Integer> enchants = meta.getStoredEnchants();
-										Map<Enchantment, Integer> baseEnchants = baseMeta.getStoredEnchants();
-										int levelTotal = 0;
-										for (Enchantment e : enchants.keySet()) {
-											levelTotal += enchants.get(e);
+										else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
+											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_BOOKS_PER_LEVEL));
 										}
-										for (Enchantment e : baseEnchants.keySet()) {
-											levelTotal += enchants.get(e);
-										}
-										if (levelTotal > 0) {
-											if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-												SkillLoader.playerSkills.get(player.getUniqueId()).addXp(Skill.FORGING, levelTotal * 10);
-												Leveler.playSound(player);
-												Leveler.checkLevelUp(player, Skill.FORGING);
-												Leveler.sendActionBarMessage(player, Skill.FORGING, levelTotal * 10);
-											}
+										else {
+											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_TOOL_PER_LEVEL));
 										}
 									}
 								}

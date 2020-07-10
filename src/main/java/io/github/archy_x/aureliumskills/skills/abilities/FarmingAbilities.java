@@ -66,7 +66,6 @@ public class FarmingAbilities implements Listener {
 									@Override
 									public void run() {
 										((Crops) event.getBlock().getState().getData()).setState(CropState.RIPE);
-										player.sendMessage("Growth Aura Activated on block " + event.getBlock().getX() + ", " + event.getBlock().getY() + ", " + event.getBlock().getZ());
 									}
 								}.runTaskLater(plugin, 1L);
 							} // if

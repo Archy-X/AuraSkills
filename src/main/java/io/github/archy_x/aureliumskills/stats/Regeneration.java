@@ -10,6 +10,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.plugin.Plugin;
 
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.Setting;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 
 public class Regeneration implements Listener {
@@ -24,7 +26,24 @@ public class Regeneration implements Listener {
 	public void onRegen(EntityRegainHealthEvent event) {
 		if (event.getEntity() instanceof Player) {
 			if (event.getRegainReason().equals(RegainReason.SATIATED)) {
-				event.setCancelled(true);
+				if (!Options.getBooleanOption(Setting.CUSTOM_REGEN_MECHANICS)) {
+					Player player = (Player) event.getEntity();
+					if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
+						PlayerStat stat = SkillLoader.playerStats.get(player.getUniqueId());
+						if (player.getSaturation() > 0) {
+							event.setAmount(event.getAmount() + (stat.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.SATURATED_MODIFIER)));
+						}
+						else if (player.getFoodLevel() == 20) {
+							event.setAmount(event.getAmount() + (stat.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_FULL_MODIFIER)));
+						}
+						else if (player.getFoodLevel() >= 14) {
+							event.setAmount(event.getAmount() + (stat.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_ALMOST_FULL_MODIFIER)));
+						}
+					}
+				}
+				else {
+					event.setCancelled(true);
+				}
 			}
 		}
 	}
@@ -33,57 +52,61 @@ public class Regeneration implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
 			public void run() {
-				for (Player player : Bukkit.getOnlinePlayers()) {
-					if (player.isDead() == false) {
-						if (player.getHealth() < player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
-							if (player.getFoodLevel() >= 14 && player.getFoodLevel() < 20) {
-								
-								if ((player.getHealth() + 1 + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) / 40) <= player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
-									player.setHealth(player.getHealth() + 1 + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) / 40);
+				if (Options.getBooleanOption(Setting.CUSTOM_REGEN_MECHANICS)) {
+					for (Player player : Bukkit.getOnlinePlayers()) {
+						if (player.isDead() == false) {
+							if (player.getHealth() < player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
+								if (player.getFoodLevel() >= 14 && player.getFoodLevel() < 20) {
+									
+									if ((player.getHealth() + Options.getDoubleOption(Setting.BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_ALMOST_FULL_MODIFIER)) <= player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
+										player.setHealth(player.getHealth() + Options.getDoubleOption(Setting.BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_ALMOST_FULL_MODIFIER));
+									}
+									else {
+										player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+									}
+									if (player.getFoodLevel() - 1 >= 0) {
+										player.setFoodLevel(player.getFoodLevel() - 1);
+									}
 								}
-								else {
-									player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-								}
-								if (player.getFoodLevel() - 1 >= 0) {
-									player.setFoodLevel(player.getFoodLevel() - 1);
-								}
-							}
-							else if (player.getFoodLevel() == 20 && player.getSaturation() == 0) {
-								if ((player.getHealth() + 1 + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) / 40) <= player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
-									player.setHealth(player.getHealth() + 1 + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) / 40);
-								}
-								else {
-									player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-								}
-								if (player.getFoodLevel() - 1 >= 0) {
-									player.setFoodLevel(player.getFoodLevel() - 1);
+								else if (player.getFoodLevel() == 20 && player.getSaturation() == 0) {
+									if ((player.getHealth() + Options.getDoubleOption(Setting.BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_FULL_MODIFIER)) <= player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
+										player.setHealth(player.getHealth() + Options.getDoubleOption(Setting.BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_FULL_MODIFIER));
+									}
+									else {
+										player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+									}
+									if (player.getFoodLevel() - 1 >= 0) {
+										player.setFoodLevel(player.getFoodLevel() - 1);
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}, 0L, 60L);
+		}, 0L, (long) Options.getDoubleOption(Setting.HUNGER_DELAY));
 	}
 	
 	public void startSaturationRegen() {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
 			public void run() {
-				for (Player player : Bukkit.getOnlinePlayers()) {
-					if (player.isDead() == false) {
-						if (player.getSaturation() > 0 && player.getFoodLevel() >= 20) {
-							if ((player.getHealth() + 1 + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) / 20) <= player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
-								player.setHealth(player.getHealth() + 1 + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) / 20);
-							}
-							else {
-								player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+				if (Options.getBooleanOption(Setting.CUSTOM_REGEN_MECHANICS)) {
+					for (Player player : Bukkit.getOnlinePlayers()) {
+						if (player.isDead() == false) {
+							if (player.getSaturation() > 0 && player.getFoodLevel() >= 20) {
+								if ((player.getHealth() +  Options.getDoubleOption(Setting.BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.SATURATED_MODIFIER)) <= player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
+									player.setHealth(player.getHealth() + Options.getDoubleOption(Setting.BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.SATURATED_MODIFIER));
+								}
+								else {
+									player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+								}
 							}
 						}
 					}
 				}
 			}
-		}, 0L, 20L);
+		}, 0L, (long) Options.getDoubleOption(Setting.SATURATED_DELAY));
 	}
 	
 }

@@ -1,5 +1,6 @@
 package io.github.archy_x.aureliumskills.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,6 +22,9 @@ import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.abilities.Ability;
 import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
+import io.github.archy_x.aureliumskills.stats.Health;
+import io.github.archy_x.aureliumskills.stats.Luck;
+import io.github.archy_x.aureliumskills.stats.Toughness;
 
 @CommandAlias("skills|sk|skill")
 public class SkillsCommand extends BaseCommand {
@@ -61,6 +65,11 @@ public class SkillsCommand extends BaseCommand {
 		options.loadConfig();
 		lang.loadLanguages();
 		Leveler.loadLevelReqs();
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			Health.reload(player);
+			Toughness.reload(player);
+			Luck.reload(player);
+		}
 		sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Config reloaded!");
 	}
 	

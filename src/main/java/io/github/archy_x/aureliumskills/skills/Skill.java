@@ -18,6 +18,8 @@ import org.bukkit.potion.PotionType;
 
 import io.github.archy_x.aureliumskills.Lang;
 import io.github.archy_x.aureliumskills.Message;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.Setting;
 import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
 import io.github.archy_x.aureliumskills.stats.Stat;
 import io.github.archy_x.aureliumskills.util.RomanNumber;
@@ -78,7 +80,9 @@ public enum Skill {
 		lore.add(ChatColor.GRAY + Lang.getMessage(Message.PRIMARY_STAT) + ": " + primaryStat.getColor() + Lang.getMessage(Message.valueOf(primaryStat.toString().toUpperCase() + "_NAME")));
 		lore.add(ChatColor.GRAY + Lang.getMessage(Message.SECONDARY_STAT) + ": " + secondaryStat.getColor() + Lang.getMessage(Message.valueOf(secondaryStat.toString().toUpperCase() + "_NAME")));
 		lore.add(" ");
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.SKILL_POINTS_PLURAL) + ": " + ChatColor.YELLOW + skill.getSkillPoints(this));
+		if (Options.getBooleanOption(Setting.ENABLE_SKILL_POINTS)) {
+			lore.add(ChatColor.GRAY + Lang.getMessage(Message.SKILL_POINTS_PLURAL) + ": " + ChatColor.YELLOW + skill.getSkillPoints(this));
+		}
 		lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + ": " + ChatColor.YELLOW + RomanNumber.toRoman(level));
 		if (xpToNext != 0) {
 			lore.add(ChatColor.GRAY + Lang.getMessage(Message.PROGRESS_TO_LEVEL).replace("_", RomanNumber.toRoman(level + 1)) + ": " + ChatColor.YELLOW + nf.format(xp/xpToNext * 100) + "%");
@@ -91,7 +95,7 @@ public enum Skill {
 		if (showClickText) {
 			lore.add(" ");
 			lore.add(ChatColor.YELLOW + Lang.getMessage(Message.LEFT_CLICK_SKILL));
-			lore.add(ChatColor.YELLOW + Lang.getMessage(Message.RIGHT_CLICK_SKILL));
+			//lore.add(ChatColor.YELLOW + Lang.getMessage(Message.RIGHT_CLICK_SKILL));
 		}
 		if (material.equals(Material.SPLASH_POTION) || material.equals(Material.POTION)) {
 			PotionMeta potionMeta = (PotionMeta) item.getItemMeta();

@@ -76,9 +76,9 @@ public enum Message {
 	REGENERATION_NAME("stats.regeneration.name", "Regeneration"),
 	REGENERATION_DESCRIPTION("stats.regeneration.description", "Regeneration increases how fast you recover both health and mana"),
 	LUCK_NAME("stats.luck.name", "Luck"),
-	LUCK_DESCRIPTION("stats.luck.description", "Luck increases your chances of getting rare loot from mobs, fishing, and more"),
+	LUCK_DESCRIPTION("stats.luck.description", "Luck improves luck from loot chests, fishing, and gives a chance to drop double items on certain blocks"),
 	WISDOM_NAME("stats.wisdom.name", "Wisdom"),
-	WISDOM_DESCRIPTION("stats.wisdom.description", "Wisdom increases your mana pool, the strength of magical attacks, and magical luck"),
+	WISDOM_DESCRIPTION("stats.wisdom.description", "Wisdom increases your experience gain any source, decreases anvil costs, and increases your mana pool"),
 	TOUGHNESS_NAME("stats.toughness.name", "Toughness"),
 	TOUGHNESS_DESCRIPTION("stats.toughness.description", "Toughness increases the amount of damage reduced from enemy attacks");
 	
