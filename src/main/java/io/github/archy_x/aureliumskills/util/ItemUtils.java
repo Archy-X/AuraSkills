@@ -25,6 +25,6 @@ public class ItemUtils {
 		if (materialName.contains("pickaxe") || materialName.contains("axe") || materialName.contains("hoe") || materialName.contains("shovel") || materialName.contains("spade")) {
 			return true;
 		}
-    	return false;
+    		return false;
   	}
 } 
