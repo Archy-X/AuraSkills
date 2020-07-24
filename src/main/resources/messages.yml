@@ -85,6 +85,12 @@ messages:
     mana:
       EN: Mana
       RU: Энергия
+    config-reloaded:
+      EN: Config reloaded!
+    language-set-to:
+      EN: Language set to _
+    language-not-found:
+      EN: Language not found in config!
   skills:
     your-skills:
       EN: Your Skills
@@ -118,19 +124,12 @@ messages:
       EN: Back to Skills Menu
       PL: Wroc
       RU: Вернуться к меню навыков
-    skill-tree:
-      name:
-        EN: Skill Tree
-        PL: Drzewko Umiejetnosci
-        RU: Дерево навыков
-      description:
-        EN: Unlock and upgrade powerful abilities using Skill Points
-        PL: Odblokuj nowe Umiejetnosci za Punkty Umiejetnosci
-        RU: Разблокируйте и улучшайте мощные способности, используя очки навыков
-      click:
-        EN: Click to open Skill Tree Menu!
-        PL: Kliknij aby zobaczyc Drzewko Umiejetnosci!
-        RU: Нажмите, чтобы открыть меню дерева навыков!
+    skill-leaderboard:
+      EN: Skill Leaderboard
+    all-skills:
+      EN: All Skills
+    unknown-skill:
+      EN: Unknown skill!
     farming:
       name:
         EN: Farming
@@ -352,6 +351,7 @@ messages:
       incoming-damage:
         EN: Incoming Damage
   abilities:
+    ability-levels: Ability Levels
     farming:
       bountiful-harvest:
         name:

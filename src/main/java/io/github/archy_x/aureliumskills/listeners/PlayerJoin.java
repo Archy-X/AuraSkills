@@ -16,10 +16,13 @@ public class PlayerJoin implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayJoin(PlayerJoinEvent event) {
-		if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId()) == false) {
-			SkillLoader.playerSkills.put(event.getPlayer().getUniqueId(), new PlayerSkill(event.getPlayer().getUniqueId()));
+		if (!SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
+			SkillLoader.playerSkills.put(event.getPlayer().getUniqueId(), new PlayerSkill(event.getPlayer().getUniqueId(), event.getPlayer().getName()));
 		}
-		if (SkillLoader.playerStats.containsKey(event.getPlayer().getUniqueId()) == false) {
+		else {
+			SkillLoader.playerSkills.get(event.getPlayer().getUniqueId()).setPlayerName(event.getPlayer().getName());
+		}
+		if (!SkillLoader.playerStats.containsKey(event.getPlayer().getUniqueId())) {
 			SkillLoader.playerStats.put(event.getPlayer().getUniqueId(), new PlayerStat(event.getPlayer().getUniqueId()));
 		}
 		Location playerLoc = event.getPlayer().getLocation();

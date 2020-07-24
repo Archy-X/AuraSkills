@@ -11,8 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -39,7 +37,8 @@ public class SkillLoader {
 			if (config.getConfigurationSection("skillData").getKeys(false) != null) {
 				for (String stringId : config.getConfigurationSection("skillData").getKeys(false)) {
 					UUID id = UUID.fromString(stringId);
-					PlayerSkill playerSkill = new PlayerSkill(id);
+					String name = config.getString("skillData." + stringId + ".name", stringId);
+					PlayerSkill playerSkill = new PlayerSkill(id, name);
 					PlayerStat playerStat = new PlayerStat(id);
 					//Loading skill and stat data
 					if (config.getConfigurationSection("skillData." + stringId + ".skills") != null) {
@@ -50,7 +49,7 @@ public class SkillLoader {
 								int level = Integer.parseInt(skillDataArray[0]);
 								double xp = 0.0;
 								if (skillDataArray.length >= 2) {
-									xp = Double.parseDouble(skillDataArray[1]);
+									xp = Double.parseDouble(skillDataArray[1].replace(",", "."));
 								}
 								Skill skill = Skill.valueOf(skillName.toUpperCase());
 								playerSkill.setSkillLevel(skill, level);
@@ -81,12 +80,12 @@ public class SkillLoader {
 		}
 		for (UUID id : playerSkills.keySet()) {
 			PlayerSkill playerSkill = playerSkills.get(id);
+			config.set("skillData." + id.toString() + ".name", playerSkill.getPlayerName());
 			//Saving skills
 			for (Skill skill : playerSkill.getSkillSet()) {
 				int level = playerSkill.getSkillLevel(skill);
 				double xp = playerSkill.getXp(skill);
-				NumberFormat nf = new DecimalFormat("##.###");
-				config.set("skillData." + id.toString() + ".skills." + skill, level + ":" + nf.format(xp));
+				config.set("skillData." + id.toString() + ".skills." + skill, level + ":" + ((double) Math.round(xp * 1000) / 1000));
 			}
 		}
 		try {

@@ -21,6 +21,10 @@ public class HealingLeveler implements Listener {
 	public void onConsume(PlayerItemConsumeEvent event) {
 		if (Options.isEnabled(Skill.HEALING)) {
 			if (event.isCancelled() == false) {
+				//Checks if in blocked world
+				if (AureliumSkills.worldManager.isInBlockedWorld(event.getPlayer().getLocation())) {
+					return;
+				}
 				//Checks if in blocked region
 				if (AureliumSkills.worldGuardEnabled) {
 					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getPlayer().getLocation())) {

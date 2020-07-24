@@ -16,6 +16,7 @@ import io.github.archy_x.aureliumskills.skills.abilities.*;
 import io.github.archy_x.aureliumskills.skills.levelers.*;
 import io.github.archy_x.aureliumskills.stats.*;
 import io.github.archy_x.aureliumskills.util.WorldGuardSupport;
+import io.github.archy_x.aureliumskills.util.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -41,6 +42,7 @@ public class AureliumSkills extends JavaPlugin{
 	public static AbilityManager abilityManager;
 	public static AbilityOptionManager abilityOptionManager;
 	public static WorldGuardSupport worldGuardSupport;
+	public static WorldManager worldManager;
 	public static boolean worldGuardEnabled;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
@@ -70,6 +72,99 @@ public class AureliumSkills extends JavaPlugin{
 		lang.loadLanguages();
 		//Registers Commands
 		registerCommands();
+		//Registers events
+		registerEvents();
+		//Load ability manager
+		abilityManager = new AbilityManager(this);
+		getServer().getPluginManager().registerEvents(abilityManager, this);
+		abilityManager.init();
+		//Load ability options
+		abilityOptionManager = new AbilityOptionManager(this);
+		abilityOptionManager.loadOptions();
+		//Load stats
+		Regeneration regeneration = new Regeneration(this);
+		getServer().getPluginManager().registerEvents(regeneration, this);
+		regeneration.startRegen();
+		regeneration.startSaturationRegen();
+		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
+		enduranceLeveler.startTracking();
+		//Load Action Bar
+		ActionBar actionBar = new ActionBar(this);
+		actionBar.startUpdateActionBar();
+		//Load Data
+		if (dataFile.exists()) {
+			skillLoader.loadSkillData();
+		}	
+		else {
+			saveResource("data.yml", false);
+		}
+		skillLoader.startSaving();
+		//Load leveler
+		Leveler.plugin = this;
+		Leveler.loadLevelReqs();
+		//Load loot tables
+		lootTableManager = new LootTableManager(this);
+		//Load world manager
+		worldManager = new WorldManager(this);
+		worldManager.loadWorlds();
+		Bukkit.getConsoleSender().sendMessage(tag + ChatColor.GREEN + "Aurelium Skills has been enabled");
+	}
+	
+	public void onDisable() {
+		//Reloads config
+		reloadConfig();
+		//Save config
+		saveConfig();
+		//Save Data
+		skillLoader.saveSkillData(false);
+	}
+	
+	public void loadConfig() {
+		getConfig().options().copyDefaults(true);
+		saveDefaultConfig();
+		try {
+			InputStream is = getResource("config.yml");
+			if (is != null) {
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
+				for (String key : defConfig.getConfigurationSection("").getKeys(true)) {
+					if (!getConfig().contains(key)) {
+						getConfig().set(key, defConfig.get(key));
+					}
+				}
+				saveConfig();
+			}
+		} catch (Exception e) {
+            e.printStackTrace();
+        }
+			
+	}
+	
+	private void registerCommands() {
+		commandManager = new PaperCommandManager(this);
+		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
+			List<String> values = new ArrayList<String>();
+			for (Skill skill : Skill.values()) {
+				if (Options.isEnabled(skill)) {
+					values.add(skill.toString().toLowerCase());
+				}
+			}
+			return values;
+		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("abilities", c -> {
+			List<String> values = new ArrayList<String>();
+			for (Ability value : Ability.values()) {
+				values.add(value.toString().toLowerCase());
+			}
+			return values;
+		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> {
+			return lang.getConfig().getStringList("languages");
+		});
+		commandManager.registerCommand(new SkillsCommand(this));
+		commandManager.registerCommand(new StatsCommand());
+	}
+
+	public void registerEvents() {
 		//Registers Events
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new BlockPlace(this), this);
@@ -97,90 +192,6 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new MiningAbilities(this), this);
 		getServer().getPluginManager().registerEvents(new FishingAbilities(), this);
 		getServer().getPluginManager().registerEvents(new ExcavationAbilities(), this);
-		abilityManager = new AbilityManager(this);
-		getServer().getPluginManager().registerEvents(abilityManager, this);
-		abilityManager.init();
-		//Load ability options
-		abilityOptionManager = new AbilityOptionManager(this);
-		abilityOptionManager.loadOptions();
-		Regeneration regeneration = new Regeneration(this);
-		getServer().getPluginManager().registerEvents(regeneration, this);
-		regeneration.startRegen();
-		regeneration.startSaturationRegen();
-		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
-		ActionBar actionBar = new ActionBar(this);
-		actionBar.startUpdateActionBar();
-		//Load Data
-		if (dataFile.exists()) {
-			skillLoader.loadSkillData();
-		}	
-		else {
-			saveResource("data.yml", false);
-		}
-		skillLoader.startSaving();
-		Leveler.plugin = this;
-		Leveler.loadLevelReqs();
-		enduranceLeveler.startTracking();
-		//Load loot tables
-		lootTableManager = new LootTableManager(this);
-		Bukkit.getConsoleSender().sendMessage(tag + ChatColor.GREEN + "Aurelium Skills has been enabled");
-	}
-	
-	public void onDisable() {
-		//Reloads config
-		reloadConfig();
-		//Save config
-		saveConfig();
-		//Save Data
-		skillLoader.saveSkillData(false);
-	}
-	
-	public void loadConfig() {
-		getConfig().options().copyDefaults(true);
-		saveDefaultConfig();
-		try {
-			InputStream is = getResource("config.yml");
-			if (is != null) {
-				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
-				for (String key : defConfig.getConfigurationSection("").getKeys(true)) {
-					if (!getConfig().contains(key)) {
-						getConfig().set(key, defConfig.get(key));
-					}
-				}
-				for (String key : getConfig().getConfigurationSection("").getKeys(false)) {
-					if (!defConfig.contains(key)) {
-						getConfig().set(key, null);
-					}
-				}
-				saveConfig();
-			}
-		} catch (Exception e) {
-            e.printStackTrace();
-        }
-			
-	}
-	
-	private void registerCommands() {
-		commandManager = new PaperCommandManager(this);
-		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
-			List<String> values = new ArrayList<String>();
-			for (Skill skill : Skill.values()) {
-				values.add(skill.toString().toLowerCase());
-			}
-			return values;
-		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("abilities", c -> {
-			List<String> values = new ArrayList<String>();
-			for (Ability value : Ability.values()) {
-				values.add(value.toString().toLowerCase());
-			}
-			return values;
-		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> {
-			return lang.getConfig().getStringList("languages");
-		});
-		commandManager.registerCommand(new SkillsCommand(this));
-		commandManager.registerCommand(new StatsCommand());
 	}
 	
 }

@@ -20,6 +20,10 @@ public class ArcheryLeveler implements Listener {
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (Options.isEnabled(Skill.ARCHERY)) {
 			LivingEntity e = event.getEntity();
+			//Checks if in blocked world
+			if (AureliumSkills.worldManager.isInBlockedWorld(e.getLocation())) {
+				return;
+			}
 			//Checks if in blocked region
 			if (AureliumSkills.worldGuardEnabled) {
 				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(e.getLocation())) {
@@ -37,8 +41,8 @@ public class ArcheryLeveler implements Listener {
 							Leveler.addXp(p, s, Source.ARCHERY_SMALL_PASSIVE);
 						}
 						else if (type.equals(EntityType.COW) || type.equals(EntityType.PIG) || type.equals(EntityType.SHEEP) || type.equals(EntityType.MUSHROOM_COW) ||
-								type.equals(EntityType.SQUID) || type.equals(EntityType.HORSE) || type.equals(EntityType.SNOWMAN) || type.equals(EntityType.MULE) ||
-								type.equals(EntityType.DONKEY) || type.equals(EntityType.HORSE) || type.equals(EntityType.SNOWMAN) || type.equals(EntityType.PARROT)) {
+								type.equals(EntityType.SQUID) || type.equals(EntityType.HORSE)  || type.equals(EntityType.MULE) ||
+								type.equals(EntityType.DONKEY) || type.equals(EntityType.SNOWMAN) || type.equals(EntityType.PARROT)) {
 							Leveler.addXp(p, s, Source.ARCHERY_PASSIVE);
 						}
 						else if (type.equals(EntityType.LLAMA) || type.equals(EntityType.WOLF) || type.equals(EntityType.SILVERFISH) || type.equals(EntityType.ENDERMITE)) {

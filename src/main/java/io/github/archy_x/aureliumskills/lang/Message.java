@@ -163,7 +163,14 @@ public enum Message {
 	BIGGER_SCOOP_MINI_DESC("abilities.excavation.bigger-scoop.mini-desc", "_% Triple Drops"),
 	LUCKY_SPADES_NAME("abilities.excavation.lucky-spades.name", "Lucky Spades"),
 	LUCKY_SPADES_DESC("abilities.excavation.lucky-spades.desc", "_% chance to get epic loot from digging."),
-	LUCKY_SPADES_MINI_DESC("abilities.excavation.lucky-spades.mini-desc", "_% Epic Loot");
+	LUCKY_SPADES_MINI_DESC("abilities.excavation.lucky-spades.mini-desc", "_% Epic Loot"),
+	ABILITY_LEVELS("abilities.ability-levels", "Ability Levels"),
+	SKILL_LEADERBOARD("skills.skill-leaderboard", "Skill Leaderboard"),
+	ALL_SKILLS("skills.all-skills", "All Skills"),
+	UNKNOWN_SKILL("skills.unknown-skill", "Unknown skill!"),
+	CONFIG_RELOADED("basic.config-reloaded", "Config reloaded!"),
+	LANGUAGE_SET_TO("basic.language-set-to", "Language set to _"),
+	LANGUAGE_NOT_FOUND("basic.language-not-found", "Language not found in config!");
 	
 	private String path;
 	private String defaultMessage;

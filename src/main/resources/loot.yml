@@ -8,6 +8,5 @@ lootTables:
     excavation-rare:
     - 1 1 DIAMOND
     - 1 1 NAME_TAG
-    - 1 1 RECORD_WAIT
     excavation-epic:
-    - 1 1 DIAMOND
+    - 1 1 DIAMOND_BLOCK

@@ -19,6 +19,10 @@ public class ExcavationLeveler implements Listener{
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (Options.isEnabled(Skill.EXCAVATION)) {
 			if (!event.isCancelled()) {
+				//Checks if in blocked world
+				if (AureliumSkills.worldManager.isInBlockedWorld(event.getBlock().getLocation())) {
+					return;
+				}
 				//Checks if in blocked region
 				if (AureliumSkills.worldGuardEnabled) {
 					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {

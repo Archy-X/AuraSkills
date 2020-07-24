@@ -37,6 +37,15 @@ enable-roman-numerals: true
 # Default: 100
 skill-level-requirements-multiplier: 100
 
+check-block-replace: true
+blocked-check-block-replace-worlds:
+    - Example
+blocked-check-block-replace-regions:
+    - Example
+
+blocked-worlds:
+    - Example
+
 blocked-regions:
     - spawn
 

@@ -35,6 +35,10 @@ public class AlchemyLeveler implements Listener {
 	public void onBrew(BrewEvent event) {
 		if (Options.isEnabled(Skill.ALCHEMY)) {
 			if (event.isCancelled() == false) {
+				//Checks if in blocked world
+				if (AureliumSkills.worldManager.isInBlockedWorld(event.getBlock().getLocation())) {
+					return;
+				}
 				//Checks if in blocked region
 				if (AureliumSkills.worldGuardEnabled) {
 					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {

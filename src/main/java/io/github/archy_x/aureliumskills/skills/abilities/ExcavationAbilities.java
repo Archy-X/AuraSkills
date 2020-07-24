@@ -99,7 +99,7 @@ public class ExcavationAbilities implements Listener {
 						|| mat.equals(Material.GRAVEL) || mat.equals(XMaterial.MYCELIUM.parseMaterial()) || mat.equals(Material.CLAY)) {
 					if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
 						PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
-						if (r.nextDouble() < (Ability.METAL_DETECTOR.getValue(skill.getAbilityLevel(Ability.METAL_DETECTOR)) / 100)) {
+						if (r.nextDouble() < (Ability.LUCKY_SPADES.getValue(skill.getAbilityLevel(Ability.LUCKY_SPADES)) / 100)) {
 							ItemStack drop = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size())).getDrop();
 							event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), drop);
 						}

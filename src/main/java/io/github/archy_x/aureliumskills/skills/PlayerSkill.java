@@ -1,22 +1,24 @@
 package io.github.archy_x.aureliumskills.skills;
 
+import io.github.archy_x.aureliumskills.skills.abilities.Ability;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import io.github.archy_x.aureliumskills.skills.abilities.Ability;
-
 public class PlayerSkill {
 	
 	private UUID playerId;
-	
+	private String playerName;
+
 	private Map<Skill, Integer> levels = new HashMap<Skill, Integer>();
 	private Map<Skill, Double> xp = new HashMap<Skill, Double>();
 	private Map<Ability, Integer> abilities = new HashMap<Ability, Integer>();
 	
-	public PlayerSkill(UUID id) {
+	public PlayerSkill(UUID id, String playerName) {
 		this.playerId = id;
+		this.playerName = playerName;
 		for (Skill skill : Skill.values()) {
 			levels.put(skill, 1);
 			xp.put(skill, 0.0);
@@ -25,7 +27,15 @@ public class PlayerSkill {
 			abilities.put(ability, 0);
 		}
 	}
-	
+
+	public void setPlayerName(String name) {
+		this.playerName = name;
+	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
 	public Map<Ability, Integer> getAbilities() {
 		return abilities;
 	}
@@ -98,6 +108,12 @@ public class PlayerSkill {
 		return playerId;
 	}
 	
-	
+	public int getPowerLevel() {
+		int power = 0;
+		for (int level : levels.values()) {
+			power += level;
+		}
+		return power;
+	}
 	
 }

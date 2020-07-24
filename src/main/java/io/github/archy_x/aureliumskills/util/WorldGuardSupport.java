@@ -18,6 +18,7 @@ public class WorldGuardSupport {
     private RegionContainer container;
     private Plugin plugin;
     private List<String> blockedRegions;
+    private List<String> blockedCheckBlockReplaceRegions;
 
     public WorldGuardSupport(Plugin plugin) {
         this.plugin = plugin;
@@ -27,12 +28,14 @@ public class WorldGuardSupport {
         container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         FileConfiguration config = plugin.getConfig();
         blockedRegions = new LinkedList<>();
-        for (String blockedRegion : config.getStringList("blocked-regions")) {
-            blockedRegions.add(blockedRegion);
-        }
+        blockedRegions.addAll(config.getStringList("blocked-regions"));
+        blockedCheckBlockReplaceRegions.addAll(config.getStringList("blocked-check-block-replac-regions"));
     }
 
     public boolean isInBlockedRegion(Location location) {
+        if (location.getWorld() == null) {
+            return false;
+        }
         RegionManager regions = container.get(BukkitAdapter.adapt(location.getWorld()));
         if (regions == null) {
             return false;
@@ -40,6 +43,23 @@ public class WorldGuardSupport {
         ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.adapt(location).toVector().toBlockPoint());
         for (ProtectedRegion region : set) {
             if (blockedRegions.contains(region.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isInBlockedCheckRegion(Location location) {
+        if (location.getWorld() == null) {
+            return false;
+        }
+        RegionManager regions = container.get(BukkitAdapter.adapt(location.getWorld()));
+        if (regions == null) {
+            return false;
+        }
+        ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.adapt(location).toVector().toBlockPoint());
+        for (ProtectedRegion region : set) {
+            if (blockedCheckBlockReplaceRegions.contains(region.getId())) {
                 return true;
             }
         }

@@ -37,10 +37,6 @@ public class Leveler {
 	public static List<Integer> levelReqs = new LinkedList<Integer>();
 	public static Plugin plugin;
 	
-	public Leveler(Plugin plugin) {
-		Leveler.plugin = plugin;
-	}
-	
 	public static void loadLevelReqs() {
 		levelReqs.clear();
 		for (int i = 0; i < 96; i++) {

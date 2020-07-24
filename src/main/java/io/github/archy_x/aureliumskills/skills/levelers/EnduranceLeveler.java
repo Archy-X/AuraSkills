@@ -25,6 +25,10 @@ public class EnduranceLeveler {
 			public void run() {
 				if (Options.isEnabled(Skill.ENDURANCE)) {
 					for (Player player : Bukkit.getOnlinePlayers()) {
+						//Checks if in blocked world
+						if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
+							return;
+						}
 						//Checks if in blocked region
 						if (AureliumSkills.worldGuardEnabled) {
 							if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {

@@ -24,6 +24,10 @@ public class ForgingLeveler implements Listener {
 	 		if (event.isCancelled() == false) {
 				if (event.getClickedInventory() != null) {
 					if (event.getClickedInventory().getType().equals(InventoryType.ANVIL)) {
+						//Checks if in blocked world
+						if (AureliumSkills.worldManager.isInBlockedWorld(event.getClickedInventory().getLocation())) {
+							return;
+						}
 						//Checks if in blocked region
 						if (AureliumSkills.worldGuardEnabled) {
 							if (event.getClickedInventory().getLocation() != null) {

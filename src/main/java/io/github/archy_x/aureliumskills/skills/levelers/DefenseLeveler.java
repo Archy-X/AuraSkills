@@ -18,6 +18,10 @@ public class DefenseLeveler implements Listener {
 			if (event.isCancelled() == false) {
 				if (event.getEntity() instanceof Player) {
 					Player p = (Player) event.getEntity();
+					//Checks if in blocked world
+					if (AureliumSkills.worldManager.isInBlockedWorld(p.getLocation())) {
+						return;
+					}
 					//Checks if in blocked region
 					if (AureliumSkills.worldGuardEnabled) {
 						if (AureliumSkills.worldGuardSupport.isInBlockedRegion(p.getLocation())) {
@@ -26,7 +30,6 @@ public class DefenseLeveler implements Listener {
 					}
 					Skill s = Skill.DEFENSE;
 					double d = event.getDamage();
-					p.sendMessage("Damage: " + d);
 					if (event.getDamager() instanceof Player) {
 						Leveler.addXp(p, s, d * Options.getXpAmount(Source.PLAYER_DAMAGE));
 					} else {

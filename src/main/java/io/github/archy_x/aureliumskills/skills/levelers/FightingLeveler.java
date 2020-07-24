@@ -20,6 +20,10 @@ public class FightingLeveler implements Listener {
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (Options.isEnabled(Skill.FIGHTING)) {
 			LivingEntity e = event.getEntity();
+			//Checks if in blocked world
+			if (AureliumSkills.worldManager.isInBlockedWorld(e.getLocation())) {
+				return;
+			}
 			//Checks if in blocked region
 			if (AureliumSkills.worldGuardEnabled) {
 				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(e.getLocation())) {

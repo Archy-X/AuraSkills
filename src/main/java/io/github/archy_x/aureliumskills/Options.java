@@ -23,6 +23,7 @@ public class Options {
 	public static double skillPointRewardMultiplier;
 	public static int actionBarUpdatePeriod;
 	public static int dataSavePeriod;
+	public static boolean checkBlockReplace;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
@@ -82,6 +83,7 @@ public class Options {
 		skillPointRewardMultiplier = config.getDouble("skill-point-reward-multiplier", 1.032);
 		actionBarUpdatePeriod = config.getInt("action-bar-update-period", 2);
 		dataSavePeriod = config.getInt("data-save-period", 6000);
+		checkBlockReplace = config.getBoolean("check-block-replace", true);
 		if (colors.containsKey(config.getString("health-text-color").toUpperCase())) {
 			health_text_color = colors.get(config.getString("health-text-color").toUpperCase());
 		}

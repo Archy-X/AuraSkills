@@ -55,6 +55,10 @@ public class AgilityLeveler implements Listener {
     public void onMove(PlayerMoveEvent e) {
     	if (Options.isEnabled(Skill.AGILITY)) {
 			Player player = e.getPlayer();
+			//Checks if in blocked world
+			if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
+				return;
+			}
 			//Checks if in blocked region
 			if (AureliumSkills.worldGuardEnabled) {
 				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {

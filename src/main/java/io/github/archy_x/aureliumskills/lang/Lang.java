@@ -69,17 +69,7 @@ public class Lang {
                 	}
                 }
             }
-            for (String key : config.getConfigurationSection("").getKeys(true)) {
-                if (!defConfig.contains(key)) {
-                	config.set(key, null);
-                	if (!changesMade) {
-                		changesMade = true;
-                	}
-                }
-            }
-            if (changesMade) {
-            	config.save(file);
-            }
+            config.save(file);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

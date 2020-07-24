@@ -1,10 +1,12 @@
 package io.github.archy_x.aureliumskills.skills;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.LinkedList;
-import java.util.List;
-
+import io.github.archy_x.aureliumskills.lang.Lang;
+import io.github.archy_x.aureliumskills.lang.Message;
+import io.github.archy_x.aureliumskills.skills.abilities.Ability;
+import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
+import io.github.archy_x.aureliumskills.stats.Stat;
+import io.github.archy_x.aureliumskills.util.RomanNumber;
+import io.github.archy_x.aureliumskills.util.XMaterial;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,13 +18,10 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import io.github.archy_x.aureliumskills.lang.Lang;
-import io.github.archy_x.aureliumskills.lang.Message;
-import io.github.archy_x.aureliumskills.skills.abilities.Ability;
-import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
-import io.github.archy_x.aureliumskills.stats.Stat;
-import io.github.archy_x.aureliumskills.util.RomanNumber;
-import io.github.archy_x.aureliumskills.util.XMaterial;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 public enum Skill {
 
@@ -98,7 +97,7 @@ public enum Skill {
 		//Ability Levels
 		if (abilities.length == 5) {
 			lore.add(" ");
-			lore.add(ChatColor.GRAY + "Ability Levels:");
+			lore.add(ChatColor.GRAY + Lang.getMessage(Message.ABILITY_LEVELS) + ":");
 			for (Ability ability : this.getAbilities()) {
 				if (skill.getAbilityLevel(ability) > 0) {
 					lore.add(ChatColor.GOLD + "   " + ability.getDisplayName() + " " + RomanNumber.toRoman(skill.getAbilityLevel(ability)) + ChatColor.DARK_GRAY + " (" + ability.getMiniDescription().replace("_", nf.format(ability.getValue(skill.getAbilityLevel(ability)))) + ")");
