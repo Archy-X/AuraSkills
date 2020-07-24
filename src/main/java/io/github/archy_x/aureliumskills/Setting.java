@@ -7,8 +7,8 @@ public enum Setting {
 	HEALTH_SCALING("health.health-scaling", true),
 	HP_INDICATOR_SCALING("health.hp-indicator-scaling", 5),
 	STRENGTH_MODIFIER("strength.modifier", 0.1),
-	TOUGHNESS_MODIFIER("toughness.modifier", 0.1),
-	CUSTOM_REGEN_MECHANICS("regeneration.custom-regen-mechanics", true),
+	TOUGHNESS_MODIFIER("toughness.new-modifier", 1),
+	CUSTOM_REGEN_MECHANICS("regeneration.custom-regen-mechanics", false),
 	BASE_REGEN("regeneration.base-regen", 1),
 	SATURATED_MODIFIER("regeneration.saturated-modifier", 0.05),
 	HUNGER_FULL_MODIFIER("regeneration.hunger-full-modifier", 0.025),
@@ -20,8 +20,11 @@ public enum Setting {
 	DOUBLE_DROP_PERCENT_MAX("luck.double-drop-percent-max", 100),
 	EXPERIENCE_MODIFIER("wisdom.experience-modifier", 0.01),
 	ENABLE_SKILL_POINTS("enable-skill-points", true),
-	ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifiier", 0.25);
-	
+	ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifier", 0.25),
+	STRENGTH_HAND_DAMAGE("strength.hand-damage", true),
+	RESET_ARMOR_ATTRIBUTE("toughness.reset-armor-attribute", true),
+	DISPLAY_DAMAGE_WITH_HEALTH_SCALING("strength.display-damage-with-health-scaling", true);
+
 	private String path;
 	private double defDouble;
 	private boolean defBoolean;

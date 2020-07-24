@@ -1,0 +1,13 @@
+lootTables:
+    fishing-rare:
+    - 1 1 DIAMOND
+    - 2 4 GOLD_INGOT
+    fishing-epic:
+    - 1 1 DIAMOND_BLOCK
+    - 2 4 GOLD_BLOCK
+    excavation-rare:
+    - 1 1 DIAMOND
+    - 1 1 NAME_TAG
+    - 1 1 RECORD_WAIT
+    excavation-epic:
+    - 1 1 DIAMOND

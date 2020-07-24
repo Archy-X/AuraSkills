@@ -40,6 +40,8 @@ public enum Source {
     PUFFERFISH("fishing.types.pufferfish", 115),
     TREASURE("fishing.types.treasure", 1000),
     JUNK("fishing.types.junk", 30),
+    FISHING_RARE("fishing.types.rare", 2000),
+    FISHING_EPIC("fishing.types.epic", 5000),
     DIRT("excavation.types.dirt", 0.3),
     GRASS_BLOCK("excavation.types.grass-block", 0.7),
     SAND("excavation.types.sand", 0.4),

@@ -1,5 +1,9 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
+import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.Source;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -10,16 +14,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import io.github.archy_x.aureliumskills.Options;
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.Source;
-
 public class FightingLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (Options.isEnabled(Skill.FIGHTING)) {
 			LivingEntity e = event.getEntity();
+			//Checks if in blocked region
+			if (AureliumSkills.worldGuardEnabled) {
+				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(e.getLocation())) {
+					return;
+				}
+			}
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();

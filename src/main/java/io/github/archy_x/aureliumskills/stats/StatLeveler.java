@@ -8,9 +8,6 @@ public class StatLeveler {
 		if (stat.equals(Stat.HEALTH)) {
 			Health.reload(player);
 		}
-		else if (stat.equals(Stat.TOUGHNESS)) {
-			Toughness.reload(player);
-		}
 		else if (stat.equals(Stat.LUCK)) {
 			Luck.reload(player);
 		}

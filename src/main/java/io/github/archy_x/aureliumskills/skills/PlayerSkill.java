@@ -13,7 +13,6 @@ public class PlayerSkill {
 	
 	private Map<Skill, Integer> levels = new HashMap<Skill, Integer>();
 	private Map<Skill, Double> xp = new HashMap<Skill, Double>();
-	private Map<Skill, Integer> skillPoints = new HashMap<Skill, Integer>();
 	private Map<Ability, Integer> abilities = new HashMap<Ability, Integer>();
 	
 	public PlayerSkill(UUID id) {
@@ -21,7 +20,6 @@ public class PlayerSkill {
 		for (Skill skill : Skill.values()) {
 			levels.put(skill, 1);
 			xp.put(skill, 0.0);
-			skillPoints.put(skill, 0);
 		}
 		for (Ability ability : Ability.values()) {
 			abilities.put(ability, 0);
@@ -42,35 +40,6 @@ public class PlayerSkill {
 	
 	public void levelUpAbility(Ability ability) {
 		abilities.put(ability, abilities.get(ability) + 1);
-	}
-	
-	public boolean addSkillPoints(Skill skill, int amount) {
-		if (skillPoints.containsKey(skill)) {
-			skillPoints.put(skill, skillPoints.get(skill) + amount);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	public boolean setSkillPoints(Skill skill, int amount) {
-		if (skillPoints.containsKey(skill)) {
-			skillPoints.put(skill, amount);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	public int getSkillPoints(Skill skill) {
-		if (skillPoints.containsKey(skill)) {
-			return skillPoints.get(skill);
-		}
-		else {
-			return 0;
-		}
 	}
 	
 	public boolean addXp(Skill skill, double amount) {

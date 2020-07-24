@@ -1,5 +1,10 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
+import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.Source;
+import io.github.archy_x.aureliumskills.util.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,11 +16,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.archy_x.aureliumskills.Options;
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.Source;
-import io.github.archy_x.aureliumskills.util.ItemUtils;
-
 public class ForgingLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -24,6 +24,19 @@ public class ForgingLeveler implements Listener {
 	 		if (event.isCancelled() == false) {
 				if (event.getClickedInventory() != null) {
 					if (event.getClickedInventory().getType().equals(InventoryType.ANVIL)) {
+						//Checks if in blocked region
+						if (AureliumSkills.worldGuardEnabled) {
+							if (event.getClickedInventory().getLocation() != null) {
+								if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getClickedInventory().getLocation())) {
+									return;
+								}
+							}
+							else {
+								if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getWhoClicked().getLocation())) {
+									return;
+								}
+							}
+						}
 						if (event.getSlot() == 2) {
 							if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 								if (event.getWhoClicked() instanceof Player) {

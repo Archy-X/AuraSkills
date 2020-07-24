@@ -25,12 +25,17 @@ public class RomanNumber {
     }
 
     public final static String toRoman(int number) {
-    	if (Options.enable_roman_numerals) {
-	        int l =  map.floorKey(number);
-	        if ( number == l ) {
-	            return map.get(number);
-	        }
-	        return map.get(l) + toRoman(number-l);
+    	if (number > 0) {
+	    	if (Options.enable_roman_numerals) {
+		        int l =  map.floorKey(number);
+		        if ( number == l ) {
+		            return map.get(number);
+		        }
+		        return map.get(l) + toRoman(number-l);
+	    	}
+	    	else {
+	    		return String.valueOf(number);
+	    	}
     	}
     	else {
     		return String.valueOf(number);

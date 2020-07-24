@@ -7,11 +7,13 @@
 # Version Pre-Alpha 1.1.0
 
 # Plugin made by Archy (DM Archy#2011 on discord for plugin support)
+data-save-period: 6000
 
 # Action Bar Options
 enable-action-bar: true
 
 # If action bar is enabled, these settings will be applied
+action-bar-update-period: 2
 
 enable-health-on-action-bar: true
 
@@ -27,213 +29,257 @@ skill-xp-text-color: GOLD
 # Color of text in parenthesis showing xp progress
 xp-progress-text-color: GRAY
 
+# Whether certain numbers should show up as roman numerals:
+enable-roman-numerals: true
+
 # Skill Options
 # Change the equation that calculates xp level requirements (XpRequired = Multiplier * (level - 2) ^ 2 + 100)
 # Default: 100
 skill-level-requirements-multiplier: 100
 
-# Determines how skill points are scaled (PointsRewarded = Multiplier ^ (level - 2)) (Rounded to Integer) 
-# Default: 1.032
-skill-point-reward-multiplier: 1.032
+blocked-regions:
+    - spawn
 
-# Language and Display Options
-# The default language displayed
-default-language: EN
+# Skill specific options
+farming:
+    enabled: true
+    types:
+        wheat: 2.0
+        potato: 2.5
+        carrot: 2.7
+        beetroot: 3.0
+        nether-wart: 3.0
+        pumpkin: 3.4
+        melon: 3.4
+foraging:
+    enabled: true
+    types:
+        oak-log: 4
+        spruce-log: 4
+        birch-log: 4
+        jungle-log: 4
+        acacia-log: 4
+        dark-oak-log: 4
+        oak-leaves: 0.4
+        spruce-leaves: 0.4
+        birch-leaves: 0.4
+        jungle-leaves: 0.4
+        acacia-leaves: 0.4
+        dark-oak-leaves: 0.4
+mining:
+    enabled: true
+    types:
+        stone: 0.2
+        cobblestone: 0.2
+        andesite: 0.2
+        diorite: 0.2
+        granite: 0.2
+        coal-ore: 1
+        quartz-ore: 1.8
+        iron-ore: 1.8
+        lapis-ore: 40.6
+        redstone-ore: 5.7
+        gold-ore: 17.8
+        diamond-ore: 47.3
+        emerald-ore: 142
+fishing:
+    enabled: true
+    types:
+        raw-fish: 25
+        raw-salmon: 60
+        clownfish: 750
+        pufferfish: 115
+        treasure: 1000
+        junk: 30
+        rare: 2000
+        epic: 5000
+excavation:
+    enabled: true
+    types:
+        dirt: 0.3
+        grass-block: 0.7
+        sand: 0.4
+        gravel: 1.5
+        mycelium: 3.7
+        clay: 2.4
+        soul-sand: 2.7
+archery:
+    enabled: true
+    types:
+        small-passive: 1
+        passive: 2
+        weak-hostile: 5
+        common-hostile: 7
+        uncommon-hostile: 10
+        strong-hostile: 17
+        stronger-hostile: 35
+        mini-boss: 100
+        boss: 7000
+defense:
+    enabled: true
+    types:
+        mob-damage: 1
+        player-damage: 2
+fighting:
+    enabled: true
+    types:
+        small-passive: 1
+        passive: 2
+        weak-hostile: 5
+        common-hostile: 7
+        uncommon-hostile: 10
+        strong-hostile: 17
+        stronger-hostile: 35
+        mini-boss: 100
+        boss: 7000
+endurance:
+    enabled: true
+    refresh-time-ticks: 
+    types:
+        walk-per-meter: 0.333
+        sprint-per-meter: 0.1
+        swim-per-meter: 1
+agility:
+    enabled: true
+    types:
+        jump-per-100: 10
+        fall-damage: 2
+alchemy:
+    enabled: true
+    types:
+        awkward: 10
+        regular: 15
+        extended: 25
+        upgraded: 25
+        splash: 35
+        lingering: 50
+enchanting:
+    enabled: true
+    types:
+        weapon-per-level: 2
+        armor-per-level: 2
+        tool-per-level: 2
+        book-per-level: 2
+sorcery:
+    enabled: true
+    types:
+healing:
+    enabled: true
+    types:
+        drink-regular: 10
+        drink-extended: 15
+        drink-upgraded: 15
+        splash-regular: 20
+        splash-extended: 25
+        splash-upgraded: 25
+forging:
+    enabled: true
+    types:
+        combine-books-per-level: 10
+        combine-weapon-per-level: 15
+        combine-armor-per-level: 20
+        combine-tool-per-level: 25
 
-# Whether certain numbers should show up as roman numerals:
-enable-roman-numerals: true
+# Stat Options
+health:
+    modifier: 0.5
+    health-scaling: true
+    hp-indicator-scaling: 5
+strength:
+    modifier: 0.1
+    hand-damage: true
+    display-damage-with-health-scaling: true
+toughness:
+    new-modifier: 1
+    reset-armor-attribute: true
+regeneration:
+    custom-regen-mechanics: true
+    base-regen: 1
+    saturated-modifier: 0.05
+    hunger-full-modifier: 0.025
+    hunger-almost-full-modifier: 0.025
+    custom-regen-options:
+        saturated-delay: 20
+        hunger-delay: 60
+luck:
+    modifier: 0.1
+    double-drop-modifier: 0.005
+    double-drop-percent-max: 100
+wisdom:
+    anvil-cost-modifier: 0.25
+    experience-modifier: 0.01
 
-# List of custom languages specified
-languages:
-- EN
-
-messages:
-    basic:
-        level:
-            singular:
-                EN: 'Level'
-            plural:
-                EN: 'Levels'
-        page:
-            EN: 'Page _'
-        progress-to-level:
-            EN: 'Progress to Level _'
-        close:
-            EN: 'Close'
-        go-back:
-            EN: 'Go Back'
-        previous-page:
-            EN: 'Previous Page'
-        previous-page-click:
-            EN: 'Click to go to previous page'
-        next-page:
-            EN: 'Next Page'
-        next-page-click:
-            EN: 'Click to go to next page'
-        rewards:
-            EN: 'Rewards'
-        locked:
-            EN: 'LOCKED'
-        in-progress:
-            EN: 'IN PROGRESS'
-        unlocked:
-            EN: 'UNLOCKED'
-        hp:
-            EN: 'HP'
-        xp:
-            EN: 'XP'
-        maxed:
-            EN: 'MAXED'
-        max-level:
-            EN: 'MAX LEVEL'
-        level-up:
-            EN: 'Level Up'
-        mana:
-            EN: 'Mana'
-    skills:
-        your-skills:
-            EN: 'Your Skills'
-        your-skills-description:
-            EN: 'Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!'
-        skill-points:
-            singular:
-                EN: 'Skill Point'
-            plural:
-                EN: 'Skill Points'
-        primary-skills:
-            EN: 'Primary Skills'
-        secondary-skills:
-            EN: 'Secondary Skils'
-        skill-hover:
-            EN: 'Hover over a Skill for more information!'
-        skill-click:
-            EN: 'Click on a Skill to view Level Progression!'
-        left-click-skill:
-            EN: 'Left Click to view Level Progression!'
-        right-click-skill:
-            EN: 'Right Click to view Skill Tree!'
-        back-skills-menu:
-            EN: 'Back to Skills Menu'
-        skill-tree:
-            name:
-                EN: 'Skill Tree'
-            description:
-                EN: 'Unlock and upgrade powerful abilities using Skill Points'
-            click:
-                EN: 'Click to open Skill Tree Menu!'
-        farming:
-            name:
-                EN: 'Farming'
-            description:
-                EN: 'Harvest crops to earn Farming XP'
-        foraging:
-            name:
-                EN: 'Foraging'
-            description:
-                EN: 'Cut trees to earn Foraging XP'
-        mining:
-            name:
-                EN: 'Mining'
-            description:
-                EN: 'Mine stone and ores to earn Mining XP'
-        fishing:
-            name:
-                EN: 'Fishing'
-            description:
-                EN: 'Catch fish to earn Fishing XP'
-        excavation:
-            name:
-                EN: 'Excavation'
-            description:
-                EN: 'Dig with a shovel to earn Excavation XP'
-        archery:
-            name:
-                EN: 'Archery'
-            description:
-                EN: 'Shoot mobs and players with a bow to earn Archery XP'
-        defense:
-            name:
-                EN: 'Defense'
-            description:
-                EN: 'Take damage from entities to earn Defense XP'
-        fighting:
-            name:
-                EN: 'Fighting'
-            description:
-                EN: 'Fight mobs with melee weapons to earn Fighting XP'
-        endurance:
-            name:
-                EN: 'Endurance'
-            description:
-                EN: 'Walk and run to earn Endurance XP'
-        agility:
-            name:
-                EN: 'Agility'
-            description:
-                EN: 'Jump and take fall damage to earn Agility XP'
-        alchemy:
-            name:
-                EN: 'Alchemy'
-            description:
-                EN: 'Brew potions to earn Alchemy XP'
-        enchanting:
-            name:
-                EN: 'Enchanting'
-            description:
-                EN: 'Enchant items and books to earn Enchanting XP'
-        sorcery:
-            name:
-                EN: 'Sorcery'
-            description:
-                EN: 'Cast spells to earn Sorcery XP'
-        healing:
-            name:
-                EN: 'Healing'
-            description:
-                EN: 'Drink and splash potions to earn Healing XP'
-        forging:
-            name:
-                EN: 'Forging'
-            description:
-                EN: 'Combine and apply books in an anvil to earn Forging XP'
-    stats:
-        your-stats:
-            EN: 'Your Stats'
-        primary-stat:
-            EN: 'Primary Stat'
-        secondary-stat:
-            EN: 'Secondary Stat'
-        strength:
-            name:
-                EN: 'Strength'
-            description:
-                EN: 'Strength increases your attack damage with various different weapons'
-        health:
-            name:
-                EN: 'Health'
-            description:
-                EN: 'Health increases the amount of HP you have, allowing you to last longer in fights'
-        regeneration:
-            name:
-                EN: 'Regeneration'
-            description:
-                EN: 'Regeneration increases how fast you recover both health and mana'
-        luck:
-            name:
-                EN: 'Luck'
-            description:
-                EN: 'Luck increases your chances of getting rare loot from mobs, fishing, and more'
-        wisdom:
-            name:
-                EN: 'Wisdom'
-            description:
-                EN: 'Wisdom increases your mana pool, the strength of magical attacks, and magical luck'
-        toughness:
-            name:
-                EN: 'Toughness'
-            description:
-                EN: 'Toughness increases the amount of damage reduced from enemy attacks'
-                
-        
-        
-  
+# Ability Options
+abilities:
+    bountiful-harvest:
+        base: 10.0
+        per-level: 5.0
+    farmer:
+        base: 10.0
+        per-level: 10.0
+    scythe-master:
+        base: 3.0
+        per-level: 2.0
+    triple-harvest:
+        base: 5.0
+        per-level: 3.0
+    lumberjack:
+        base: 10.0
+        per-level: 5.0
+    forager:
+        base: 10.0
+        per-level: 10.0
+    axe-master:
+        base: 3.0
+        per-level: 2.0
+    treecapitator:
+        base: 5.0
+        per-level: 5.0
+    shredder:
+        base: 3.0
+        per-level: 3.0
+    lucky-miner:
+        base: 3.0
+        per-level: 3.0
+    miner:
+        base: 10.0
+        per-level: 10.0
+    pick-master:
+        base: 3.0
+        per-level: 2.0
+    speed-mine:
+        base: 5.0
+        per-level: 5.0
+    hardened-armor:
+        base: 3.0
+        per-level: 3.0
+    lucky-catch:
+        base: 10.0
+        per-level: 5.0
+    fisher:
+        base: 10.0
+        per-level: 10.0
+    treasure-hunter:
+        base: 1.0
+        per-level: 1.0
+    grappler:
+        base: 50.0
+        per-level: 100.0
+    epic-catch:
+        base: 0.4
+        per-level: 0.4
+    metal-detector:
+        base: 1.0
+        per-level: 1.0
+    excavator:
+        base: 10.0
+        per-level: 10.0
+    spade-master:
+        base: 3.0
+        per-level: 2.0
+    bigger-scoop:
+        base: 3.0
+        per-level: 3.0
+    lucky-spades:
+        base: 0.1
+        per-level: 0.2

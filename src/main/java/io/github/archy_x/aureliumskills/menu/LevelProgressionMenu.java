@@ -18,14 +18,12 @@ import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.Pagination;
 import fr.minuskube.inv.content.SlotPos;
 import io.github.archy_x.aureliumskills.AureliumSkills;
-import io.github.archy_x.aureliumskills.Lang;
-import io.github.archy_x.aureliumskills.Message;
-import io.github.archy_x.aureliumskills.Options;
-import io.github.archy_x.aureliumskills.Setting;
+import io.github.archy_x.aureliumskills.lang.Lang;
+import io.github.archy_x.aureliumskills.lang.Message;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
+import io.github.archy_x.aureliumskills.skills.abilities.Ability;
 import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
-import io.github.archy_x.aureliumskills.skills.skilltree.SkillTree;
 import io.github.archy_x.aureliumskills.util.RomanNumber;
 import io.github.archy_x.aureliumskills.util.XMaterial;
 
@@ -35,25 +33,19 @@ public class LevelProgressionMenu implements InventoryProvider {
 	private Player player;
 	private List<Integer> track;
 	
+	public final static int pages = 4;
+	
 	public LevelProgressionMenu(Player player, Skill skill) {
 		this.player = player;
 		this.skill = skill;
 		track = new LinkedList<Integer>();
-		track.add(0); track.add(9); track.add(18); track.add(27); track.add(28); 
-		track.add(29); track.add(20); track.add(11); track.add(2); track.add(3);
-		track.add(4); track.add(13); track.add(22); track.add(31); track.add(32);
-		track.add(33); track.add(24); track.add(15); track.add(6); track.add(7);
-		track.add(8); track.add(17); track.add(26); track.add(35);
-		track.add(36); track.add(45); track.add(54); track.add(63); track.add(64);
-		track.add(65); track.add(56); track.add(47); track.add(38); track.add(39);
-		track.add(40); track.add(49); track.add(58); track.add(67); track.add(68);
-		track.add(69); track.add(60); track.add(51); track.add(42); track.add(43);
-		track.add(44); track.add(53); track.add(62); track.add(71); 
-		track.add(72); track.add(81); track.add(90); track.add(99); track.add(100);
-		track.add(101); track.add(92); track.add(83); track.add(74); track.add(75);
-		track.add(76); track.add(85); track.add(94); track.add(103); track.add(104);
-		track.add(105); track.add(96); track.add(87); track.add(78); track.add(79);
-		track.add(80); track.add(89); track.add(98); track.add(107);
+		for (int i = 0; i < pages; i++) {
+			track.add(0 + i*36); track.add(9 + i*36); track.add(18 + i*36); track.add(27 + i*36); track.add(28 + i*36); 
+			track.add(29 + i*36); track.add(20 + i*36); track.add(11 + i*36); track.add(2 + i*36); track.add(3 + i*36);
+			track.add(4 + i*36); track.add(13 + i*36); track.add(22 + i*36); track.add(31 + i*36); track.add(32 + i*36);
+			track.add(33 + i*36); track.add(24 + i*36); track.add(15 + i*36); track.add(6 + i*36); track.add(7 + i*36);
+			track.add(8 + i*36); track.add(17 + i*36); track.add(26 + i*36); track.add(35 + i*36);
+		}
 	}
 	
 	@Override
@@ -61,14 +53,6 @@ public class LevelProgressionMenu implements InventoryProvider {
 		int currentLevel = SkillLoader.playerSkills.get(this.player.getUniqueId()).getSkillLevel(skill);
 		
 		contents.set(SlotPos.of(0, 0), ClickableItem.empty(skill.getMenuItem(player, false)));
-		
-		if (Options.getBooleanOption(Setting.ENABLE_SKILL_POINTS)) {
-			if (skill.equals(Skill.FARMING)) {
-				contents.set(SlotPos.of(0, 1), ClickableItem.of(getSkillTreeItem(), e -> {
-					SkillTreeMenu.getInventory(SkillTree.valueOf(skill.toString()), true).open(player);
-				}));
-			}
-		}
 		
 		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton(Lang.getMessage(Message.BACK_SKILLS_MENU)), e -> {
 			SkillsMenu.getInventory(player).open(player);
@@ -79,7 +63,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		}));
 		
 		Pagination pagination = contents.pagination();
-		ClickableItem[] items = new ClickableItem[108];
+		ClickableItem[] items = new ClickableItem[pages * 36];
 		
 		for (int i = 0; i < track.size(); i++) {
 			if (i + 2 <= currentLevel) {
@@ -105,16 +89,19 @@ public class LevelProgressionMenu implements InventoryProvider {
 			a++;
 		}
 		
-		contents.set(5, 8, ClickableItem.of(getNextPageItem(), e -> {
-			int page = pagination.next().getPage();
-			getInventory(player, skill, page).open(player, page);
-		}));
+		if (pagination.getPage() + 1 < pages) {
+			contents.set(5, 8, ClickableItem.of(getNextPageItem(), e -> {
+				int page = pagination.next().getPage();
+				getInventory(player, skill, page).open(player, page);
+			}));
+		}
 
-		contents.set(5, 7, ClickableItem.of(getPreviousPageItem(), e -> {
-			int previous = pagination.previous().getPage();
-			getInventory(player, skill, previous).open(player, previous);
-		}));
-		
+		if (pagination.getPage() - 1 >= 0) {
+			contents.set(5, 7, ClickableItem.of(getPreviousPageItem(), e -> {
+				int previous = pagination.previous().getPage();
+				getInventory(player, skill, previous).open(player, previous);
+			}));
+		}
 	}
 
 	@Override
@@ -130,23 +117,6 @@ public class LevelProgressionMenu implements InventoryProvider {
 				.title(Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.LEVELS) + " - " + Lang.getMessage(Message.PAGE).replace("_", String.valueOf(page + 1)))
 				.manager(AureliumSkills.invManager)
 				.build();
-	}
-	
-	public ItemStack getSkillTreeItem() {
-		ItemStack item = XMaterial.JUNGLE_SAPLING.parseItem();
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GREEN + Lang.getMessage(Message.SKILL_TREE_NAME));
-		List<String> lore = new LinkedList<String>();
-		String fullDesc = Lang.getMessage(Message.SKILL_TREE_DESCRIPTION);
-		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
-		for (String s : splitDesc) {
-			lore.add(ChatColor.GRAY + s);
-		}
-		lore.add(" ");
-		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.SKILL_TREE_CLICK));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
-		return item;
 	}
 	
 	public ItemStack getNextPageItem() {
@@ -224,16 +194,46 @@ public class LevelProgressionMenu implements InventoryProvider {
 		if (level%2 == 0) {
 			lore.add(skill.getSecondaryStat().getColor() + "   +1 " + skill.getSecondaryStat().getSymbol() + " " + Lang.getMessage(Message.valueOf(skill.getSecondaryStat().toString().toUpperCase() + "_NAME")));
 		}
-		if (Options.getBooleanOption(Setting.ENABLE_SKILL_POINTS)) {
-			if (Leveler.skillPointRewards.get(level - 2) == 1) {
-				lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_SINGULAR));
+		if (getAbility(level) != null) {
+			Ability ability = getAbility(level);
+			lore.add(" ");
+			if (level <= 6) {
+				lore.add(ChatColor.GOLD + ability.getDisplayName() + ChatColor.GREEN + "" + ChatColor.BOLD + " Ability Unlock");
 			}
 			else {
-				lore.add(ChatColor.AQUA + "   +" + Leveler.skillPointRewards.get(level - 2) + " " + Lang.getMessage(Message.SKILL_POINTS_PLURAL));
+				lore.add(ChatColor.GOLD + ability.getDisplayName() + " " + RomanNumber.toRoman((level + 3) / 5));
+			}
+			NumberFormat nf = new DecimalFormat("##.##");
+			String fullDesc = ability.getDescription().replace("_", nf.format(ability.getValue((level + 3) / 5)));
+			String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 35 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
+			for (String s : splitDesc) {
+				lore.add(ChatColor.GRAY + "   " + s);
 			}
 		}
 		lore.add(" ");
 		return lore;
+	}
+	
+	public Ability getAbility(int level) {
+		if (skill.getAbilities().length == 5) {
+			if (level % 5 == 2) {
+				return skill.getAbilities()[0];
+			}
+			else if (level % 5 == 3) {
+				return skill.getAbilities()[1];
+			}
+			else if (level % 5 == 4) {
+				return skill.getAbilities()[2];
+			}
+			else if (level % 5 == 0) {
+				return skill.getAbilities()[3];
+			}
+			else if (level % 5 == 1) {
+				return skill.getAbilities()[4];
+			}
+		}
+		return null;
+		
 	}
 	
 }

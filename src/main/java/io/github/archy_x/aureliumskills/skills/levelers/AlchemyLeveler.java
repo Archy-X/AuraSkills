@@ -1,7 +1,10 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
-import java.util.UUID;
-
+import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.Source;
+import io.github.archy_x.aureliumskills.util.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -18,10 +21,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
-import io.github.archy_x.aureliumskills.Options;
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.Source;
-import io.github.archy_x.aureliumskills.util.XMaterial;
+import java.util.UUID;
 
 public class AlchemyLeveler implements Listener {
 
@@ -35,6 +35,12 @@ public class AlchemyLeveler implements Listener {
 	public void onBrew(BrewEvent event) {
 		if (Options.isEnabled(Skill.ALCHEMY)) {
 			if (event.isCancelled() == false) {
+				//Checks if in blocked region
+				if (AureliumSkills.worldGuardEnabled) {
+					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {
+						return;
+					}
+				}
 				if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
 					OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
 					if (offlinePlayer.isOnline()) {
