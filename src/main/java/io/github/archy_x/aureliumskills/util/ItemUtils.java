@@ -14,7 +14,7 @@ public class ItemUtils {
 	
 	public static boolean isWeapon(Material material) {
 		String materialName = material.name().toLowerCase();
-		if (materialName.contains("sword") || materialName.contains("bow"))) {
+		if (materialName.contains("sword") || materialName.contains("bow")) {
 			return true;
 		}
 		return false;
