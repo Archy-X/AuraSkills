@@ -1,8 +1,9 @@
 name: AureliumSkills
-version: Pre-Alpha 1.1.0
+version: Alpha 1.1.0
 main: io.github.archy_x.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 depend: [SmartInvs]
+softdepend: [WorldGuard]
 api-version: 1.13
 
 permissions:
@@ -15,4 +16,6 @@ permissions:
     aureliumskils.reload:
         default: op
     aureliumskills.lang:
+        default: op
+    aureliumskills.xp.add:
         default: op

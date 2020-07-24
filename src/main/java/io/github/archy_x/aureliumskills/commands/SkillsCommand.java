@@ -14,17 +14,15 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Flags;
 import co.aikar.commands.annotation.Subcommand;
 import io.github.archy_x.aureliumskills.AureliumSkills;
-import io.github.archy_x.aureliumskills.Lang;
 import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.lang.Lang;
 import io.github.archy_x.aureliumskills.menu.SkillsMenu;
 import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
-import io.github.archy_x.aureliumskills.skills.abilities.Ability;
 import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
 import io.github.archy_x.aureliumskills.stats.Health;
 import io.github.archy_x.aureliumskills.stats.Luck;
-import io.github.archy_x.aureliumskills.stats.Toughness;
 
 @CommandAlias("skills|sk|skill")
 public class SkillsCommand extends BaseCommand {
@@ -43,6 +41,14 @@ public class SkillsCommand extends BaseCommand {
 	public void onSkills(Player player) {
 		SkillsMenu.getInventory(player).open(player);
 	}
+	
+	@Subcommand("xp add")
+	@CommandCompletion("@players @skills")
+	@CommandPermission("aureliumskills.xp.add")
+	public void onXpAdd(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
+		Leveler.addXp(player, skill, amount);
+	}
+	
 	
 	@Subcommand("lang")
 	@CommandCompletion("@lang")
@@ -64,26 +70,17 @@ public class SkillsCommand extends BaseCommand {
 		plugin.saveDefaultConfig();
 		options.loadConfig();
 		lang.loadLanguages();
+		AureliumSkills.abilityOptionManager.loadOptions();
 		Leveler.loadLevelReqs();
+		AureliumSkills.lootTableManager.loadLootTables();
+		if (AureliumSkills.worldGuardEnabled) {
+			AureliumSkills.worldGuardSupport.loadRegions();
+		}
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Health.reload(player);
-			Toughness.reload(player);
 			Luck.reload(player);
 		}
 		sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Config reloaded!");
-	}
-	
-	@Subcommand("sp add")
-	@CommandCompletion("@players @skills")
-	@CommandPermission("aureliumskills.sp.add")
-	public void onSkillPointsAdd(CommandSender sender, @Flags("other") Player player, Skill skill, int amount) {
-		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-			SkillLoader.playerSkills.get(player.getUniqueId()).addSkillPoints(skill, amount);
-			sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "Added " + ChatColor.AQUA + amount + " " + skill.getDisplayName() + ChatColor.GRAY + " Skill Points to " + ChatColor.GOLD + player.getName());
-		}
-		else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "That player does not have a skills profile!");
-		}
 	}
 	
 	@Subcommand("skill setlevel")
@@ -94,32 +91,13 @@ public class SkillsCommand extends BaseCommand {
 			if (level > 0) {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					playerSkill.setSkillLevel(skill, level);
+					playerSkill.setXp(skill, 0);
 					Leveler.updateStats(player);
+					Leveler.updateAbilities(player, skill);
 					sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "Skill " + ChatColor.AQUA + skill.getDisplayName() + ChatColor.GRAY + " set to level " + ChatColor.AQUA + level + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
 			}
 			else {
 				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Level must be at least 1!");
-			}
-		}
-	}
-	
-	@Subcommand("ability|ab setlevel")
-	@CommandCompletion("@players @abilities")
-	@CommandPermission("aureliumskills.ability.setlevel")
-	public void onAbilityLevelSet(CommandSender sender, @Flags("other") Player player, Ability ability, int level) {
-		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-			if (level >= 0) {
-				if (level <= ability.getMaxLevel()) {
-					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-					playerSkill.setAbilityLevel(ability, level);
-					sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "Ability " + ChatColor.GREEN + ability.getDisplayName() + ChatColor.GRAY + " set to level " + ChatColor.GREEN + level + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
-				}
-				else {
-					sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Level exceeds maximum level for that skill!");
-				}
-			}
-			else {
-				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Level cannot be negative!");
 			}
 		}
 	}

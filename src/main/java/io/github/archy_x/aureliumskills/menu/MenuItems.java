@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.archy_x.aureliumskills.Lang;
-import io.github.archy_x.aureliumskills.Message;
+import io.github.archy_x.aureliumskills.lang.Lang;
+import io.github.archy_x.aureliumskills.lang.Message;
 import io.github.archy_x.aureliumskills.util.XMaterial;
 
 public class MenuItems {

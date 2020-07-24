@@ -1,19 +1,20 @@
 package io.github.archy_x.aureliumskills.skills;
 
+import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.stats.PlayerStat;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-
-import io.github.archy_x.aureliumskills.AureliumSkills;
-import io.github.archy_x.aureliumskills.skills.abilities.Ability;
-import io.github.archy_x.aureliumskills.stats.PlayerStat;
 
 public class SkillLoader {
 
@@ -22,10 +23,12 @@ public class SkillLoader {
 	
 	private File file;
 	private FileConfiguration config;
-	
-	public SkillLoader(File file, FileConfiguration config) {
+	private Plugin plugin;
+
+	public SkillLoader(File file, FileConfiguration config, Plugin plugin) {
 		this.file = file;
 		this.config = config;
+		this.plugin = plugin;
 	}
 	
 	public void loadSkillData() {
@@ -49,27 +52,16 @@ public class SkillLoader {
 								if (skillDataArray.length >= 2) {
 									xp = Double.parseDouble(skillDataArray[1]);
 								}
-								int skillPoints = 0;
-								if (skillDataArray.length >= 3) {
-									skillPoints = Integer.parseInt(skillDataArray[2]);
-								}
 								Skill skill = Skill.valueOf(skillName.toUpperCase());
 								playerSkill.setSkillLevel(skill, level);
 								playerSkill.setXp(skill, xp);
-								playerSkill.setSkillPoints(skill, skillPoints);
+								
+								for (int i = 0; i < skill.getAbilities().length; i++) {
+									playerSkill.setAbilityLevel(skill.getAbilities()[i], (level + 3 - i) / 5);
+								}
 								
 								playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
 								playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
-							}
-						}
-					}
-					//Load ability data
-					if (config.getConfigurationSection("skillData." + stringId + ".abilities") != null) {
-						if (config.getConfigurationSection("skillData." + stringId + ".abilities").getKeys(false) != null) {
-							for (String abilityName : config.getConfigurationSection("skillData." + stringId + ".abilities").getKeys(false)) {
-								int level = config.getInt("skillData." + stringId + ".abilities." + abilityName);
-								Ability ability = Ability.valueOf(abilityName.toUpperCase());
-								playerSkill.setAbilityLevel(ability, level);
 							}
 						}
 					}
@@ -83,30 +75,40 @@ public class SkillLoader {
 		Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Loaded " + ChatColor.GOLD + playersLoaded + ChatColor.AQUA + " Player Skill Data in " + ChatColor.GOLD + (endTime - startTime) + "ms");
 	}
 	
-	public void saveSkillData() {
-		Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + "Saving Skill Data...");
+	public void saveSkillData(boolean silent) {
+		if (!silent) {
+			Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + "Saving Skill Data...");
+		}
 		for (UUID id : playerSkills.keySet()) {
 			PlayerSkill playerSkill = playerSkills.get(id);
 			//Saving skills
 			for (Skill skill : playerSkill.getSkillSet()) {
 				int level = playerSkill.getSkillLevel(skill);
 				double xp = playerSkill.getXp(skill);
-				int skillPoints = playerSkill.getSkillPoints(skill);
 				NumberFormat nf = new DecimalFormat("##.###");
-				config.set("skillData." + id.toString() + ".skills." + skill, level + ":" + nf.format(xp) + ":" + skillPoints);
-			}
-			//Saving abilities
-			for (Ability ability : Ability.values()) {
-				int level = playerSkill.getAbilityLevel(ability);
-				config.set("skillData." + id.toString() + ".abilities." + ability, level);
+				config.set("skillData." + id.toString() + ".skills." + skill, level + ":" + nf.format(xp));
 			}
 		}
 		try {
 			config.save(file);
+			if (!silent) {
+				Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Skill Data Saved!");
+			}
 		}
 		catch (IOException e) {
-			Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.RED + "An error occured while trying to save town data!");
+			if (!silent) {
+				Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.RED + "An error occured while trying to save skill data!");
+			}
 		}
+	}
+
+	public void startSaving() {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				saveSkillData(true);
+			}
+		}.runTaskTimer(plugin, Options.dataSavePeriod, Options.dataSavePeriod);
 	}
 	
 }

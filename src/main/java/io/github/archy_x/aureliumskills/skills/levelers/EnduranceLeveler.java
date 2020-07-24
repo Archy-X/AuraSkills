@@ -1,15 +1,15 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
+import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.SkillLoader;
+import io.github.archy_x.aureliumskills.skills.Source;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
-
-import io.github.archy_x.aureliumskills.Options;
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.SkillLoader;
-import io.github.archy_x.aureliumskills.skills.Source;
 
 public class EnduranceLeveler {
 
@@ -25,6 +25,12 @@ public class EnduranceLeveler {
 			public void run() {
 				if (Options.isEnabled(Skill.ENDURANCE)) {
 					for (Player player : Bukkit.getOnlinePlayers()) {
+						//Checks if in blocked region
+						if (AureliumSkills.worldGuardEnabled) {
+							if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
+								return;
+							}
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							int xpAmount = 0;
 							if (player.hasMetadata("skillsLastSprintDist")) {

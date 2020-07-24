@@ -1,15 +1,14 @@
 package io.github.archy_x.aureliumskills;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.Source;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.Source;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Options {
 
@@ -22,6 +21,8 @@ public class Options {
 	public static boolean enable_roman_numerals;
 	public static double skillLevelRequirementsMultiplier;
 	public static double skillPointRewardMultiplier;
+	public static int actionBarUpdatePeriod;
+	public static int dataSavePeriod;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
@@ -79,6 +80,8 @@ public class Options {
 		enable_roman_numerals = config.getBoolean("enable-roman-numerals", true);
 		skillLevelRequirementsMultiplier = config.getDouble("skill-level-requirements-multiplier", 100);
 		skillPointRewardMultiplier = config.getDouble("skill-point-reward-multiplier", 1.032);
+		actionBarUpdatePeriod = config.getInt("action-bar-update-period", 2);
+		dataSavePeriod = config.getInt("data-save-period", 6000);
 		if (colors.containsKey(config.getString("health-text-color").toUpperCase())) {
 			health_text_color = colors.get(config.getString("health-text-color").toUpperCase());
 		}

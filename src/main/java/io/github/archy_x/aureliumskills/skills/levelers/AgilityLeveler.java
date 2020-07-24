@@ -1,8 +1,10 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
-import java.util.Set;
-import java.util.UUID;
-
+import com.google.common.collect.Sets;
+import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.Source;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,11 +17,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
-import com.google.common.collect.Sets;
-
-import io.github.archy_x.aureliumskills.Options;
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.Source;
+import java.util.Set;
+import java.util.UUID;
 
 public class AgilityLeveler implements Listener {
 	
@@ -37,6 +36,12 @@ public class AgilityLeveler implements Listener {
 				if (event.getCause().equals(DamageCause.FALL)) {
 					if (event.getEntity() instanceof Player) {
 						Player player = (Player) event.getEntity();
+						//Checks if in blocked region
+						if (AureliumSkills.worldGuardEnabled) {
+							if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
+								return;
+							}
+						}
 						if (event.getFinalDamage() < player.getHealth()) {
 							Leveler.addXp(player, Skill.AGILITY, event.getDamage() * Options.getXpAmount(Source.FALL_DAMAGE));
 						}
@@ -49,7 +54,13 @@ public class AgilityLeveler implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
     	if (Options.isEnabled(Skill.AGILITY)) {
-	        Player player = e.getPlayer();
+			Player player = e.getPlayer();
+			//Checks if in blocked region
+			if (AureliumSkills.worldGuardEnabled) {
+				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
+					return;
+				}
+			}
 	        if (player.getVelocity().getY() > 0) {
 	            double jumpVelocity = (double) 0.42F;
 	            if (player.hasPotionEffect(PotionEffectType.JUMP)) {

@@ -1,28 +1,15 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.SoundCategory;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import io.github.archy_x.aureliumskills.AureliumSkills;
-import io.github.archy_x.aureliumskills.Lang;
-import io.github.archy_x.aureliumskills.Message;
 import io.github.archy_x.aureliumskills.Options;
 import io.github.archy_x.aureliumskills.Setting;
+import io.github.archy_x.aureliumskills.lang.Lang;
+import io.github.archy_x.aureliumskills.lang.Message;
 import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.Source;
+import io.github.archy_x.aureliumskills.skills.abilities.Ability;
 import io.github.archy_x.aureliumskills.stats.ActionBar;
 import io.github.archy_x.aureliumskills.stats.PlayerStat;
 import io.github.archy_x.aureliumskills.stats.Stat;
@@ -31,19 +18,33 @@ import io.github.archy_x.aureliumskills.util.BigNumber;
 import io.github.archy_x.aureliumskills.util.RomanNumber;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.SoundCategory;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 public class Leveler {
 
 	public static List<Integer> levelReqs = new LinkedList<Integer>();
-	public static List<Integer> skillPointRewards = new LinkedList<Integer>();
 	public static Plugin plugin;
 	
+	public Leveler(Plugin plugin) {
+		Leveler.plugin = plugin;
+	}
+	
 	public static void loadLevelReqs() {
-		levelReqs = new LinkedList<>();
-		skillPointRewards = new LinkedList<>();
-		for (int i = 0; i < 72; i++) {
+		levelReqs.clear();
+		for (int i = 0; i < 96; i++) {
 			levelReqs.add((int) Options.skillLevelRequirementsMultiplier*i*i + 100);
-			skillPointRewards.add((int) Math.pow(Options.skillPointRewardMultiplier, i));
 		}
 	}
 	
@@ -89,7 +90,6 @@ public class Leveler {
 				playerStat.addStatLevel(skill.getSecondaryStat(), playerSkill.getSkillLevel(skill) / 2);
 			}
 			StatLeveler.reloadStat(player, Stat.HEALTH);
-			StatLeveler.reloadStat(player, Stat.TOUGHNESS);
 		}
 	}
 	
@@ -101,15 +101,18 @@ public class Leveler {
 		PlayerStat playerStat = SkillLoader.playerStats.get(id);
 		if (levelReqs.size() > currentLevel - 1) {
 			if (currentXp >= levelReqs.get(currentLevel - 1)) {
+				// When player levels up a skill
 				playerSkill.setXp(skill, currentXp - levelReqs.get(currentLevel - 1));
 				playerSkill.setSkillLevel(skill, SkillLoader.playerSkills.get(id).getSkillLevel(skill) + 1);
-				if (Options.getBooleanOption(Setting.ENABLE_SKILL_POINTS)) {
-					playerSkill.addSkillPoints(skill, skillPointRewards.get(currentLevel - 1));
-					if (skillPointRewards.get(currentLevel - 1) == 1) {
-						player.sendMessage(AureliumSkills.tag + ChatColor.AQUA + "+" + skillPointRewards.get(currentLevel - 1) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.SKILL_POINTS_SINGULAR));
+				//Levels up ability
+				if (skill.getAbilities().length == 5) {
+					Ability ability = skill.getAbilities()[(currentLevel + 4) % 5];
+					playerSkill.levelUpAbility(ability);
+					if (playerSkill.getAbilityLevel(ability) > 1) {
+						player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Ability Level Up! " + ChatColor.GOLD + "" + ChatColor.BOLD + ability.getDisplayName() + ChatColor.GRAY + " is now level " + ChatColor.GOLD + RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)));
 					}
 					else {
-						player.sendMessage(AureliumSkills.tag + ChatColor.AQUA + "+" + skillPointRewards.get(currentLevel - 1) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.SKILL_POINTS_PLURAL));
+						player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Ability Unlock! " + ChatColor.GOLD + "" + ChatColor.BOLD + ability.getDisplayName() + ChatColor.GRAY + " has been unlocked");
 					}
 				}
 				playerStat.addStatLevel(skill.getPrimaryStat(), 1);
@@ -131,13 +134,22 @@ public class Leveler {
 		}
 	}
 	
+	public static void updateAbilities(Player player, Skill skill) {
+		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+			for (int i = 0; i < skill.getAbilities().length; i++) {
+				playerSkill.setAbilityLevel(skill.getAbilities()[i], (playerSkill.getSkillLevel(skill) + 3 - i) / 5);
+			}
+		}
+	}
+	
 	public static void sendActionBarMessage(Player player, Skill skill, double xpAmount) {
-		if (Options.enable_action_bar == true) {
+		if (Options.enable_action_bar) {
 			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 			NumberFormat nf = new DecimalFormat("##.#");
 			ActionBar.isGainingXp.put(player.getUniqueId(), true);
 			ActionBar.timer.put(player.getUniqueId(), 20);
-			if (ActionBar.currentAction.containsKey(player.getUniqueId()) == false) {
+			if (!ActionBar.currentAction.containsKey(player.getUniqueId())) {
 				ActionBar.currentAction.put(player.getUniqueId(), 0);
 			}
 			ActionBar.currentAction.put(player.getUniqueId(), ActionBar.currentAction.get(player.getUniqueId()) + 1);
@@ -167,13 +179,13 @@ public class Leveler {
 							}
 							else {
 								if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
+									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " + 
 											Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
 											"   " + Options.mana_text_color + 20 + "/" + (20 + 2 * SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.WISDOM)) + " " + Lang.getMessage(Message.MANA)));
 								
 								}
 								else if (Options.enable_health_on_action_bar) {
-									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 5) + " " + Lang.getMessage(Message.HP) + "   " + 
+									player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " + 
 											Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")"));
 								}
 								else if (Options.enable_mana_on_action_bar) {
@@ -193,7 +205,7 @@ public class Leveler {
 						cancel();
 					}
 				}
-			}.runTaskTimer(plugin, 0L, 2L);
+			}.runTaskTimer(plugin, 0L, Options.actionBarUpdatePeriod);
 			new BukkitRunnable() {
 				@Override
 				public void run() {

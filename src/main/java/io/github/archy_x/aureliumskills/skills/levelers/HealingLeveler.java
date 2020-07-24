@@ -1,5 +1,9 @@
 package io.github.archy_x.aureliumskills.skills.levelers;
 
+import io.github.archy_x.aureliumskills.AureliumSkills;
+import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.Source;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,16 +15,18 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import io.github.archy_x.aureliumskills.Options;
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.Source;
-
 public class HealingLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onConsume(PlayerItemConsumeEvent event) {
 		if (Options.isEnabled(Skill.HEALING)) {
 			if (event.isCancelled() == false) {
+				//Checks if in blocked region
+				if (AureliumSkills.worldGuardEnabled) {
+					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getPlayer().getLocation())) {
+						return;
+					}
+				}
 				if (event.getItem().getType().equals(Material.POTION)) {
 					if (event.getItem().getItemMeta() instanceof PotionMeta) {
 						PotionMeta meta = (PotionMeta) event.getItem().getItemMeta();

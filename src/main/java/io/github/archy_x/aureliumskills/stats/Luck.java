@@ -50,14 +50,14 @@ public class Luck implements Listener {
 							if ((double) stat.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.DOUBLE_DROP_MODIFIER) < Options.getDoubleOption(Setting.DOUBLE_DROP_PERCENT_MAX) / 100) {
 								if (r.nextDouble() < ((double) stat.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.DOUBLE_DROP_MODIFIER))) {
 									for (ItemStack item : event.getBlock().getDrops()) {
-										event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), item);
+										event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
 									}
 								}
 							}
 							else {
 								if (r.nextDouble() < Options.getDoubleOption(Setting.DOUBLE_DROP_PERCENT_MAX) / 100) {
 									for (ItemStack item : event.getBlock().getDrops()) {
-										event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), item);
+										event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
 									}
 								}
 							}

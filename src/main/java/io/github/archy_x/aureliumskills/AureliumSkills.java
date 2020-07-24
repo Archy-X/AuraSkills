@@ -1,72 +1,75 @@
 package io.github.archy_x.aureliumskills;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import co.aikar.commands.PaperCommandManager;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import fr.minuskube.inv.InventoryManager;
+import io.github.archy_x.aureliumskills.commands.SkillsCommand;
+import io.github.archy_x.aureliumskills.commands.StatsCommand;
+import io.github.archy_x.aureliumskills.lang.Lang;
+import io.github.archy_x.aureliumskills.listeners.BlockBreak;
+import io.github.archy_x.aureliumskills.listeners.BlockPlace;
+import io.github.archy_x.aureliumskills.listeners.PlayerJoin;
+import io.github.archy_x.aureliumskills.loot.LootTableManager;
+import io.github.archy_x.aureliumskills.skills.Skill;
+import io.github.archy_x.aureliumskills.skills.SkillLoader;
+import io.github.archy_x.aureliumskills.skills.abilities.*;
+import io.github.archy_x.aureliumskills.skills.levelers.*;
+import io.github.archy_x.aureliumskills.stats.*;
+import io.github.archy_x.aureliumskills.util.WorldGuardSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import co.aikar.commands.PaperCommandManager;
-import fr.minuskube.inv.InventoryManager;
-import io.github.archy_x.aureliumskills.commands.SkillsCommand;
-import io.github.archy_x.aureliumskills.commands.StatsCommand;
-import io.github.archy_x.aureliumskills.listeners.BlockBreak;
-import io.github.archy_x.aureliumskills.listeners.BlockPlace;
-import io.github.archy_x.aureliumskills.listeners.PlayerJoin;
-import io.github.archy_x.aureliumskills.skills.Skill;
-import io.github.archy_x.aureliumskills.skills.SkillLoader;
-import io.github.archy_x.aureliumskills.skills.abilities.Ability;
-import io.github.archy_x.aureliumskills.skills.abilities.FarmingAbilities;
-import io.github.archy_x.aureliumskills.skills.levelers.AgilityLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.AlchemyLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.ArcheryLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.DefenseLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.EnchantingLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.EnduranceLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.ExcavationLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.FarmingLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.FightingLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.FishingLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.ForagingLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.ForgingLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.HealingLeveler;
-import io.github.archy_x.aureliumskills.skills.levelers.Leveler;
-import io.github.archy_x.aureliumskills.skills.levelers.MiningLeveler;
-import io.github.archy_x.aureliumskills.stats.ActionBar;
-import io.github.archy_x.aureliumskills.stats.Health;
-import io.github.archy_x.aureliumskills.stats.Luck;
-import io.github.archy_x.aureliumskills.stats.Regeneration;
-import io.github.archy_x.aureliumskills.stats.Strength;
-import io.github.archy_x.aureliumskills.stats.Toughness;
-import io.github.archy_x.aureliumskills.stats.Wisdom;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AureliumSkills extends JavaPlugin{
 
 	private PaperCommandManager commandManager;
 	private File dataFile = new File(getDataFolder(), "data.yml");
 	private FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
-	private SkillLoader skillLoader = new SkillLoader(dataFile, config);
+	private SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
 	private Options options;
 	private Lang lang;
+	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
+	public static AbilityManager abilityManager;
+	public static AbilityOptionManager abilityOptionManager;
+	public static WorldGuardSupport worldGuardSupport;
+	public static boolean worldGuardEnabled;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
 	
 	public void onEnable() {
 		invManager = new InventoryManager(this);
 		invManager.init();
-		//Registers Commands
-		registerCommands();
+		//Checks for world guard
+		if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0.3")) {
+				worldGuardEnabled = true;
+				worldGuardSupport = new WorldGuardSupport(this);
+				worldGuardSupport.loadRegions();
+				Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "World Guard Support Enabled!");
+			}
+		}
+		else {
+			worldGuardEnabled = false;
+		}
 		//Load config
 		loadConfig();
 		options = new Options(this);
 		options.loadConfig();
+		//Load languages
 		lang = new Lang(this);
+		lang.matchConfig();
 		lang.loadLanguages();
+		//Registers Commands
+		registerCommands();
 		//Registers Events
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new BlockPlace(this), this);
@@ -89,7 +92,17 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new Strength(), this);
 		getServer().getPluginManager().registerEvents(new Luck(), this);
 		getServer().getPluginManager().registerEvents(new Wisdom(), this);
-		getServer().getPluginManager().registerEvents(new FarmingAbilities(this), this);
+		getServer().getPluginManager().registerEvents(new FarmingAbilities(), this);
+		getServer().getPluginManager().registerEvents(new ForagingAbilities(this), this);
+		getServer().getPluginManager().registerEvents(new MiningAbilities(this), this);
+		getServer().getPluginManager().registerEvents(new FishingAbilities(), this);
+		getServer().getPluginManager().registerEvents(new ExcavationAbilities(), this);
+		abilityManager = new AbilityManager(this);
+		getServer().getPluginManager().registerEvents(abilityManager, this);
+		abilityManager.init();
+		//Load ability options
+		abilityOptionManager = new AbilityOptionManager(this);
+		abilityOptionManager.loadOptions();
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);
 		regeneration.startRegen();
@@ -104,34 +117,44 @@ public class AureliumSkills extends JavaPlugin{
 		else {
 			saveResource("data.yml", false);
 		}
+		skillLoader.startSaving();
 		Leveler.plugin = this;
 		Leveler.loadLevelReqs();
 		enduranceLeveler.startTracking();
+		//Load loot tables
+		lootTableManager = new LootTableManager(this);
 		Bukkit.getConsoleSender().sendMessage(tag + ChatColor.GREEN + "Aurelium Skills has been enabled");
 	}
 	
 	public void onDisable() {
+		//Reloads config
+		reloadConfig();
 		//Save config
 		saveConfig();
 		//Save Data
-		skillLoader.saveSkillData();
+		skillLoader.saveSkillData(false);
 	}
 	
 	public void loadConfig() {
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
 		try {
-			if (getConfig() != null) {
-                FileConfiguration defConfig = getConfig();
-                for (String key : defConfig.getConfigurationSection("").getKeys(false))
-                    if (!getConfig().contains(key)) getConfig().set(key, defConfig.getConfigurationSection(key));
-         
-                for (String key : getConfig().getConfigurationSection("").getKeys(false))
-                    if (!defConfig.contains(key)) getConfig().set(key, null);
-         
-                this.saveConfig();
+			InputStream is = getResource("config.yml");
+			if (is != null) {
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
+				for (String key : defConfig.getConfigurationSection("").getKeys(true)) {
+					if (!getConfig().contains(key)) {
+						getConfig().set(key, defConfig.get(key));
+					}
+				}
+				for (String key : getConfig().getConfigurationSection("").getKeys(false)) {
+					if (!defConfig.contains(key)) {
+						getConfig().set(key, null);
+					}
+				}
+				saveConfig();
 			}
-        } catch (Exception e) {
+		} catch (Exception e) {
             e.printStackTrace();
         }
 			
@@ -154,7 +177,7 @@ public class AureliumSkills extends JavaPlugin{
 			return values;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> {
-			return getConfig().getStringList("languages");
+			return lang.getConfig().getStringList("languages");
 		});
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());

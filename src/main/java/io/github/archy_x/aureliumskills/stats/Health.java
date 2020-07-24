@@ -1,6 +1,8 @@
 package io.github.archy_x.aureliumskills.stats;
 
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,8 +24,23 @@ public class Health implements Listener {
 	}
 	
 	private static void setHealth(Player player) {
+		//Calculates the amount of health to add
 		double modifier = ((double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.HEALTH)) * Options.getDoubleOption(Setting.HEALTH_MODIFIER);
-		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0 + modifier);
+		boolean hadModifier = false;
+		//Removes existing modifiers of the same name
+		for (AttributeModifier am : player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getModifiers()) {
+			if (am.getName().equals("skillsHealth")) {
+				player.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(am);
+				hadModifier = true;
+			}
+		}
+		//Resets max health to move to new system
+		if (hadModifier == false) {
+			player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
+		}
+		//Applies modifier
+		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).addModifier(new AttributeModifier("skillsHealth", modifier, Operation.ADD_NUMBER));
+		//Applies health scaling
 		if (Options.getBooleanOption(Setting.HEALTH_SCALING)) {
 			double health = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
 			if (health < 23) {
