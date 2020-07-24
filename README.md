@@ -35,11 +35,6 @@ Stats are player specific buffs that directly link into Skills in a very organiz
 - Toughness (Increases base armor)
 Every Skill has a unique combination of 2 stats that it levels up! These are categorized into primary and secondary. Primary stats gain one level for every skill level. Secondary stats gain one level for every other skill Level.
 
-## **Abilities and Skill Trees**
-Here comes the most UNIQUE part about this plugin, abilities and skill trees! Each Skill has up to 15 unique abilities that grant the player a perk, buff, or other beneficial mechanic. Abilities are viewed, upgraded, and unlocked in the Skill Tree, an actual tree mechanic which requires lower abilities to be unlocked before unlocking the abilities higher up. Abilities are unlocked and upgraded with Skill Points, a skill specific currency gained by leveling up the specific skill.
-
-Currently, only the Farming skill has a skill tree and abiliites.
-
 ## **Commands**
 - /skills or /skill or /sk - Opens Skills Menu
 - /stats - Opens Stats Menu
