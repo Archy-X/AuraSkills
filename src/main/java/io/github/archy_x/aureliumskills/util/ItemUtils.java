@@ -22,9 +22,9 @@ public class ItemUtils {
   
   	public static boolean isTool(Material material) {
     		String materialName = material.name().toLowerCase();
-    	if (materialName.contains("pickaxe") || materialName.contains("axe") || materialName.contains("hoe") || materialName.contains("shovel") || materialName.contains("spade")) {
-      		return true;
-    	}
+		if (materialName.contains("pickaxe") || materialName.contains("axe") || materialName.contains("hoe") || materialName.contains("shovel") || materialName.contains("spade")) {
+			return true;
+		}
     	return false;
   	}
 } 
