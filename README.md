@@ -50,4 +50,4 @@ The plugin uses the action bar to display Health and Mana, as well as whenever S
 The plugin has sound effects and title texts when skills are leveled up.
 Every Skill has a level progression menu that displays the rewards for all levels, and your current progress.
 
-_This is in Pre-Alpha development, features are incomplete and there may be many bugs._
+_This is in Alpha development, features are incomplete and there may be many bugs._
