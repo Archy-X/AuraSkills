@@ -30,9 +30,9 @@ Stats are player specific buffs that directly link into Skills in a very organiz
 - Strength (Increases base attack damage)
 - Health (Increases max health)
 - Regeneration (Increases health regen speed)
-- Luck (Not implemented yet)
-- Wisdom (Not implemented yet)
-- Toughness (Increases base armor)
+- Luck (Increase luck and gives chance of double drops)
+- Wisdom (Increases xp gain and reduces anvil costs)
+- Toughness (Decreases incoming damage)
 Every Skill has a unique combination of 2 stats that it levels up! These are categorized into primary and secondary. Primary stats gain one level for every skill level. Secondary stats gain one level for every other skill Level.
 
 ## **Commands**
