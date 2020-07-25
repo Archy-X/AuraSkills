@@ -38,9 +38,12 @@ Every Skill has a unique combination of 2 stats that it levels up! These are cat
 ## **Commands**
 - /skills or /skill or /sk - Opens Skills Menu
 - /stats - Opens Stats Menu
-- /sk sp add <player> <skill> <amount> - Adds skill points to a player (requires permission aureliumskills.sp.add)
-- /sk ability setlevel <player> <ability> <level> - Sets ability level (requires permission aureliumskills.ability.setlevel)
-- /sk skill setlevel <player> <skill> <level> - Sets skill level (requires permission aureliumskills.skill.setlevel)
+- /sk ability setlevel <player> <ability> <level> - Sets ability level (aureliumskills.ability.setlevel)
+- /sk skill setlevel <player> <skill> <level> - Sets skill level (aureliumskills.skill.setlevel)
+- /sk xp add <player> <skill> <amount> - Adds skill xp to player (aureliumskills.xp.add)
+- /sk top [skill] - Shows skill leaderboard (aureliumskills.top)
+- /sk lang <lang> - Changes language (aureliumskills.lang)
+- /sk reload - Reloads config files (aureliumskill.reload)
 
 ## **More info**
 The plugin uses the action bar to display Health and Mana, as well as whenever Skill XP is gained.
