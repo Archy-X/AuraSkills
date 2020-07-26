@@ -24,12 +24,12 @@ public class FishingLeveler implements Listener {
 		if (Options.isEnabled(Skill.FISHING)) {
 			if (event.isCancelled() == false) {
 				//Checks if in blocked world
-				if (AureliumSkills.worldManager.isInBlockedWorld(event.getHook().getLocation())) {
+				if (AureliumSkills.worldManager.isInBlockedWorld(event.getPlayer().getLocation())) {
 					return;
 				}
 				//Checks if in blocked region
 				if (AureliumSkills.worldGuardEnabled) {
-					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getHook().getLocation())) {
+					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getPlayer().getLocation())) {
 						return;
 					}
 				}

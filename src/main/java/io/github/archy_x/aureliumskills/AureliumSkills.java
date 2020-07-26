@@ -8,13 +8,16 @@ import io.github.archy_x.aureliumskills.commands.StatsCommand;
 import io.github.archy_x.aureliumskills.lang.Lang;
 import io.github.archy_x.aureliumskills.listeners.BlockBreak;
 import io.github.archy_x.aureliumskills.listeners.BlockPlace;
+import io.github.archy_x.aureliumskills.listeners.BlockTracker;
 import io.github.archy_x.aureliumskills.listeners.PlayerJoin;
 import io.github.archy_x.aureliumskills.loot.LootTableManager;
+import io.github.archy_x.aureliumskills.magic.ManaManager;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.abilities.*;
 import io.github.archy_x.aureliumskills.skills.levelers.*;
 import io.github.archy_x.aureliumskills.stats.*;
+import io.github.archy_x.aureliumskills.util.PlaceholderSupport;
 import io.github.archy_x.aureliumskills.util.WorldGuardSupport;
 import io.github.archy_x.aureliumskills.util.WorldManager;
 import org.bukkit.Bukkit;
@@ -43,6 +46,7 @@ public class AureliumSkills extends JavaPlugin{
 	public static AbilityOptionManager abilityOptionManager;
 	public static WorldGuardSupport worldGuardSupport;
 	public static WorldManager worldManager;
+	public static ManaManager manaManager;
 	public static boolean worldGuardEnabled;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
@@ -52,15 +56,20 @@ public class AureliumSkills extends JavaPlugin{
 		invManager.init();
 		//Checks for world guard
 		if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0.3")) {
+			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
 				worldGuardEnabled = true;
 				worldGuardSupport = new WorldGuardSupport(this);
 				worldGuardSupport.loadRegions();
-				Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "World Guard Support Enabled!");
+				Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "WorldGuard Support Enabled!");
 			}
 		}
 		else {
 			worldGuardEnabled = false;
+		}
+		//Checks for PlaceholderAPI
+		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			new PlaceholderSupport(this).register();
+			Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "PlaceholderAPI Support Enabled!");
 		}
 		//Load config
 		loadConfig();
@@ -88,6 +97,10 @@ public class AureliumSkills extends JavaPlugin{
 		regeneration.startSaturationRegen();
 		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
 		enduranceLeveler.startTracking();
+		//Load mana manager
+		manaManager = new ManaManager(this);
+		getServer().getPluginManager().registerEvents(manaManager, this);
+		manaManager.startRegen();
 		//Load Action Bar
 		ActionBar actionBar = new ActionBar(this);
 		actionBar.startUpdateActionBar();
@@ -169,6 +182,7 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new BlockPlace(this), this);
 		getServer().getPluginManager().registerEvents(new BlockBreak(this), this);
+		getServer().getPluginManager().registerEvents(new BlockTracker(this), this);
 		getServer().getPluginManager().registerEvents(new FarmingLeveler(), this);
 		getServer().getPluginManager().registerEvents(new ForagingLeveler(), this);
 		getServer().getPluginManager().registerEvents(new MiningLeveler(), this);

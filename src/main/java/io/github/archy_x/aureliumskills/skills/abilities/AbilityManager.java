@@ -1,11 +1,5 @@
 package io.github.archy_x.aureliumskills.skills.abilities;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,19 +8,26 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.*;
+
 public class AbilityManager implements Listener {
 
-	private Map<UUID, Map<Ability, Integer>> cooldowns = new HashMap<>();
-	private Map<UUID, Map<Ability, Boolean>> ready = new HashMap<>();
-	private Map<UUID, Map<Ability, Boolean>> activated = new HashMap<>();
-	private Map<UUID, Map<Ability, Integer>> errorTimer = new HashMap<>();
+	private Map<UUID, Map<Ability, Integer>> cooldowns;
+	private Map<UUID, Map<Ability, Boolean>> ready;
+	private Map<UUID, Map<Ability, Boolean>> activated;
+	private Map<UUID, Map<Ability, Integer>> errorTimer;
 	
-	private Map<UUID, List<RightClickAbility>> activeAbilities = new HashMap<>();
+	private Map<UUID, List<RightClickAbility>> activeAbilities;
 	
 	private Plugin plugin;
 	
 	public AbilityManager(Plugin plugin) {
 		this.plugin = plugin;
+		cooldowns = new HashMap<>();
+		ready = new HashMap<>();
+		activated = new HashMap<>();
+		errorTimer = new HashMap<>();
+		activeAbilities = new HashMap<>();
 	}
 	
 	public void init() {
@@ -78,15 +79,20 @@ public class AbilityManager implements Listener {
 	}
 	
 	//Gets if ability is ready
-		public boolean isActivated(UUID id, Ability ability) {
+	public boolean isActivated(UUID id, Ability ability) {
+		if (activated.containsKey(id)) {
 			if (activated.get(id).containsKey(ability)) {
 				return activated.get(id).get(ability);
-			}
-			else {
+			} else {
 				activated.get(id).put(ability, false);
 				return false;
 			}
 		}
+		else {
+			activated.put(id, new HashMap<>());
+			return false;
+		}
+	}
 	
 	//Activates an ability
 	public void activateAbility(Player player, Ability ability, int durationTicks, RightClickAbility rca) {

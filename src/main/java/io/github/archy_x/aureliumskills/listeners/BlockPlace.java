@@ -43,7 +43,7 @@ public class BlockPlace implements Listener {
 					mat.equals(Material.GRAVEL) || mat.equals(Material.COBBLESTONE) || mat.equals(Material.REDSTONE_ORE) ||
 					mat.equals(Material.LAPIS_ORE) || mat.equals(Material.CLAY) || mat.equals(Material.GRASS) ||
 					mat.equals(XMaterial.MYCELIUM.parseMaterial()) || mat.equals(Material.SOUL_SAND) || mat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) ||
-					mat.equals(Material.LAPIS_ORE) || mat.equals(Material.CLAY) || mat.equals(Material.GRASS)) {
+					mat.equals(XMaterial.LAPIS_ORE.parseMaterial()) || mat.equals(XMaterial.CLAY.parseMaterial()) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
 				event.getBlock().setMetadata("skillsPlaced", new FixedMetadataValue(plugin, true));
 			}
 		}

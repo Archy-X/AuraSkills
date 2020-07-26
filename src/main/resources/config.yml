@@ -126,6 +126,8 @@ archery:
         boss: 7000
 defense:
     enabled: true
+    max: 100.0
+    min: 0
     types:
         mob-damage: 1
         player-damage: 2
@@ -202,7 +204,7 @@ toughness:
     new-modifier: 1
     reset-armor-attribute: true
 regeneration:
-    custom-regen-mechanics: true
+    custom-regen-mechanics: false
     base-regen: 1
     saturated-modifier: 0.05
     hunger-full-modifier: 0.025
@@ -210,6 +212,7 @@ regeneration:
     custom-regen-options:
         saturated-delay: 20
         hunger-delay: 60
+    mana-modifier: 0.25
 luck:
     modifier: 0.1
     double-drop-modifier: 0.005
@@ -279,7 +282,7 @@ abilities:
         per-level: 0.4
     metal-detector:
         base: 1.0
-        per-level: 1.0
+        per-level: 0.5
     excavator:
         base: 10.0
         per-level: 10.0
@@ -291,4 +294,4 @@ abilities:
         per-level: 3.0
     lucky-spades:
         base: 0.1
-        per-level: 0.2
+        per-level: 0.1

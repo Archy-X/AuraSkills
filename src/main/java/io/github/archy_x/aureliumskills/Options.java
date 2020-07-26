@@ -24,6 +24,7 @@ public class Options {
 	public static int actionBarUpdatePeriod;
 	public static int dataSavePeriod;
 	public static boolean checkBlockReplace;
+	public static double manaModifier;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
@@ -84,6 +85,7 @@ public class Options {
 		actionBarUpdatePeriod = config.getInt("action-bar-update-period", 2);
 		dataSavePeriod = config.getInt("data-save-period", 6000);
 		checkBlockReplace = config.getBoolean("check-block-replace", true);
+		manaModifier = config.getDouble("regeneration.mana-modifier", 0.25);
 		if (colors.containsKey(config.getString("health-text-color").toUpperCase())) {
 			health_text_color = colors.get(config.getString("health-text-color").toUpperCase());
 		}

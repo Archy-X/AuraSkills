@@ -130,7 +130,7 @@ public class SkillsCommand extends BaseCommand {
 	@Subcommand("skill setlevel")
 	@CommandCompletion("@players @skills")
 	@CommandPermission("aureliumskills.skill.setlevel")
-	public void onSkillLevelSet(CommandSender sender, @Flags("other") Player player, Skill skill, int level) {
+	public void onSkillSetlevel(CommandSender sender, @Flags("other") Player player, Skill skill, int level) {
 		if (Options.isEnabled(skill)) {
 			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 				if (level > 0) {
@@ -147,6 +147,59 @@ public class SkillsCommand extends BaseCommand {
 		}
 		else {
 			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+		}
+	}
+
+	@Subcommand("skill setall")
+	@CommandCompletion("@players")
+	@CommandPermission("aureliumskills.skill.setlevel")
+	public void onSkillSetall(CommandSender sender, @Flags("other") Player player, int level) {
+		if (level > 0) {
+			for (Skill skill : Skill.values()) {
+				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+					playerSkill.setSkillLevel(skill, level);
+					playerSkill.setXp(skill, 0);
+					Leveler.updateStats(player);
+					Leveler.updateAbilities(player, skill);
+				}
+			}
+			sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "All skills set to level " + ChatColor.AQUA + level + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
+		} else {
+			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Level must be at least 1!");
+		}
+	}
+
+
+	@Subcommand("skill reset")
+	@CommandCompletion("@players @skills")
+	@CommandPermission("aureliumskills.skill.reset")
+	public void onSkillReset(CommandSender sender, @Flags("other") Player player, @Optional Skill skill) {
+		if (skill != null) {
+			if (Options.isEnabled(skill)) {
+				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+					playerSkill.setSkillLevel(skill, 1);
+					playerSkill.setXp(skill, 0);
+					Leveler.updateStats(player);
+					Leveler.updateAbilities(player, skill);
+					sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "Skill " + ChatColor.AQUA + skill.getDisplayName() + ChatColor.GRAY + " set to level " + ChatColor.AQUA + "1" + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
+				}
+			} else {
+				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+			}
+		}
+		else {
+			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+				for (Skill s : Skill.values()) {
+					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+					playerSkill.setSkillLevel(s, 1);
+					playerSkill.setXp(s, 0);
+					Leveler.updateStats(player);
+					Leveler.updateAbilities(player, s);
+				}
+				sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "All Skills set to level " + ChatColor.AQUA + "1" + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
+			}
 		}
 	}
 	

@@ -10,6 +10,7 @@ import org.bukkit.CropState;
 import org.bukkit.Material;
 import org.bukkit.NetherWartsState;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -39,35 +40,72 @@ public class FarmingLeveler implements Listener{
 				Block b = event.getBlock();
 				Skill s = Skill.FARMING;
 				Material mat = b.getType();
-				if (mat.equals(Material.CARROT)) {
-					Crops crops = (Crops) b.getState().getData();
-					if (crops.getState().equals(CropState.RIPE)) {
-						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.CARROT));
-						applyAbilities(p, b);
+				if (XMaterial.isNewVersion()) {
+					if (b.getBlockData() instanceof Ageable) {
+						Ageable crop = (Ageable) b.getBlockData();
+						if (mat.equals(Material.CARROTS)) {
+							if (crop.getMaximumAge() == crop.getAge()) {
+								Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.CARROT));
+								applyAbilities(p, b);
+							}
+						} else if (mat.equals(Material.POTATOES)) {
+							if (crop.getMaximumAge() == crop.getAge()) {
+								Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.POTATO));
+								applyAbilities(p, b);
+							}
+						} else if (mat.equals(Material.BEETROOTS)) {
+							if (crop.getMaximumAge() == crop.getAge()) {
+								Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.BEETROOT));
+								applyAbilities(p, b);
+							}
+						} else if (mat.equals(Material.NETHER_WART)) {
+							if (crop.getMaximumAge() == crop.getAge()) {
+								Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.NETHER_WART));
+								applyAbilities(p, b);
+							}
+						} else if (mat.equals(Material.WHEAT)) {
+							if (crop.getMaximumAge() == crop.getAge()) {
+								Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.WHEAT));
+								applyAbilities(p, b);
+							}
+						}
 					}
 				}
-				else if (mat.equals(Material.POTATO)) {
-					Crops crops = (Crops) b.getState().getData();
-					if (crops.getState().equals(CropState.RIPE)) {
-						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.POTATO));
-						applyAbilities(p, b);
+				else {
+					if (mat.equals(Material.CARROT)) {
+						Crops crops = (Crops) b.getState().getData();
+						if (crops.getState().equals(CropState.RIPE)) {
+							Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.CARROT));
+							applyAbilities(p, b);
+						}
+					} else if (mat.equals(Material.POTATO)) {
+						Crops crops = (Crops) b.getState().getData();
+						if (crops.getState().equals(CropState.RIPE)) {
+							Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.POTATO));
+							applyAbilities(p, b);
+						}
+					} else if (mat.equals(XMaterial.BEETROOT.parseMaterial())) {
+						Crops crops = (Crops) b.getState().getData();
+						if (crops.getState().equals(CropState.RIPE)) {
+							Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.BEETROOT));
+							applyAbilities(p, b);
+						}
+					} else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
+						NetherWarts crops = (NetherWarts) b.getState().getData();
+						if (crops.getState().equals(NetherWartsState.RIPE)) {
+							Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.NETHER_WART));
+							applyAbilities(p, b);
+						}
+					}
+					else if (mat.name().equals("CROPS") || mat.equals(XMaterial.WHEAT.parseMaterial())) {
+						Crops crops = (Crops) b.getState().getData();
+						if (crops.getState().equals(CropState.RIPE)) {
+							Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.WHEAT));
+							applyAbilities(p, b);
+						}
 					}
 				}
-				else if (mat.equals(XMaterial.BEETROOT.parseMaterial())) {
-					Crops crops = (Crops) b.getState().getData();
-					if (crops.getState().equals(CropState.RIPE)) {
-						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.BEETROOT));
-						applyAbilities(p, b);
-					}
-				}
-				else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
-					NetherWarts crops = (NetherWarts) b.getState().getData();
-					if (crops.getState().equals(NetherWartsState.RIPE)) {
-						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.NETHER_WART));
-						applyAbilities(p, b);
-					}
-				}
-				else if (mat.equals(Material.PUMPKIN)) {
+				if (mat.equals(Material.PUMPKIN)) {
 					if (!b.hasMetadata("skillsPlaced")) {
 						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.PUMPKIN));
 						applyAbilities(p, b);
@@ -76,13 +114,6 @@ public class FarmingLeveler implements Listener{
 				else if (mat.equals(XMaterial.MELON.parseMaterial())) {
 					if (!b.hasMetadata("skillsPlaced")) {
 						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.MELON));
-						applyAbilities(p, b);
-					}
-				}
-				else if (mat.name().equals("CROPS") || mat.equals(XMaterial.WHEAT.parseMaterial())) {
-					Crops crops = (Crops) b.getState().getData();
-					if (crops.getState().equals(CropState.RIPE)) {
-						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.WHEAT));
 						applyAbilities(p, b);
 					}
 				}

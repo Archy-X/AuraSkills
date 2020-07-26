@@ -176,10 +176,11 @@ public class StatsMenu implements InventoryProvider{
 				double almostFullRegen = ps.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_ALMOST_FULL_MODIFIER) * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
 				return ChatColor.GOLD + "+" + nf.format(saturatedRegen) + " " + Lang.getMessage(Message.SATURATED_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(hungerFullRegen) + " " + Lang.getMessage(Message.FULL_HUNGER_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(almostFullRegen) + " " + Lang.getMessage(Message.ALMOST_FULL_HUNGER_REGEN);
 			case TOUGHNESS:
-				double damageReduction = ps.getStatLevel(Stat.TOUGHNESS) * Options.getDoubleOption(Setting.TOUGHNESS_MODIFIER);
+				double toughness = ps.getStatLevel(Stat.TOUGHNESS) * Options.getDoubleOption(Setting.TOUGHNESS_MODIFIER);
+				double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
 				return ChatColor.DARK_PURPLE + "-" + nf.format(damageReduction) + "% " + Lang.getMessage(Message.INCOMING_DAMAGE);
 			case WISDOM:
-				double xpModifier = ps.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.EXPERIENCE_MODIFIER);
+				double xpModifier = ps.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.EXPERIENCE_MODIFIER) * 100;
 				int anvilCostReduction = (int) (ps.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.ANVIL_COST_MODIFIER));
 				return ChatColor.BLUE + "+" + nf.format(xpModifier) + "% " + Lang.getMessage(Message.XP_GAIN) + "\n" + ChatColor.BLUE + Lang.getMessage(Message.ANVIL_COST_REDUCTION) + ": " + anvilCostReduction;
 			default:

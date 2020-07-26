@@ -23,7 +23,9 @@ public enum Setting {
 	ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifier", 0.25),
 	STRENGTH_HAND_DAMAGE("strength.hand-damage", true),
 	RESET_ARMOR_ATTRIBUTE("toughness.reset-armor-attribute", true),
-	DISPLAY_DAMAGE_WITH_HEALTH_SCALING("strength.display-damage-with-health-scaling", true);
+	DISPLAY_DAMAGE_WITH_HEALTH_SCALING("strength.display-damage-with-health-scaling", true),
+	DEFENSE_MAX("defense.max", 100.0),
+	DEFENSE_MIN("defense.min", 0);
 
 	private String path;
 	private double defDouble;

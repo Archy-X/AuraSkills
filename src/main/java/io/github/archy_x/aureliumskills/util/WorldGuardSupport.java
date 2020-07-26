@@ -29,7 +29,8 @@ public class WorldGuardSupport {
         FileConfiguration config = plugin.getConfig();
         blockedRegions = new LinkedList<>();
         blockedRegions.addAll(config.getStringList("blocked-regions"));
-        blockedCheckBlockReplaceRegions.addAll(config.getStringList("blocked-check-block-replac-regions"));
+        blockedCheckBlockReplaceRegions = new LinkedList<>();
+        blockedCheckBlockReplaceRegions.addAll(config.getStringList("blocked-check-block-replace-regions"));
     }
 
     public boolean isInBlockedRegion(Location location) {

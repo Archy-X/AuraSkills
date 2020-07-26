@@ -2,6 +2,7 @@ package io.github.archy_x.aureliumskills.skills.levelers;
 
 import io.github.archy_x.aureliumskills.AureliumSkills;
 import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.Setting;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.Source;
 import org.bukkit.entity.Player;
@@ -31,9 +32,23 @@ public class DefenseLeveler implements Listener {
 					Skill s = Skill.DEFENSE;
 					double d = event.getDamage();
 					if (event.getDamager() instanceof Player) {
-						Leveler.addXp(p, s, d * Options.getXpAmount(Source.PLAYER_DAMAGE));
+						if (d * Options.getXpAmount(Source.PLAYER_DAMAGE) <= Options.getDoubleOption(Setting.DEFENSE_MAX)) {
+							if (d * Options.getXpAmount(Source.PLAYER_DAMAGE) >= Options.getDoubleOption(Setting.DEFENSE_MIN)) {
+								Leveler.addXp(p, s, d * Options.getXpAmount(Source.PLAYER_DAMAGE));
+							}
+						}
+						else {
+							Leveler.addXp(p, s, Options.getDoubleOption(Setting.DEFENSE_MAX));
+						}
 					} else {
-						Leveler.addXp(p, s, d * Options.getXpAmount(Source.MOB_DAMAGE));
+						if (d * Options.getXpAmount(Source.MOB_DAMAGE) <= Options.getDoubleOption(Setting.DEFENSE_MAX)) {
+							if (d * Options.getXpAmount(Source.MOB_DAMAGE) >= Options.getDoubleOption(Setting.DEFENSE_MIN)) {
+								Leveler.addXp(p, s, d * Options.getXpAmount(Source.MOB_DAMAGE));
+							}
+						}
+						else {
+							Leveler.addXp(p, s, Options.getDoubleOption(Setting.DEFENSE_MAX));
+						}
 					}
 				}
 			}

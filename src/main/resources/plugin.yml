@@ -1,14 +1,14 @@
 name: AureliumSkills
-version: Alpha 1.1.2
+version: Alpha 1.1.4
 main: io.github.archy_x.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
+author: Archyx
+website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
 depend: [SmartInvs]
-softdepend: [WorldGuard]
+softdepend: [WorldGuard, PlaceholderAPI]
 api-version: 1.13
 
 permissions:
-    aureliumskills.sp.add:
-        default: op
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.ability.setlevel:
@@ -21,3 +21,5 @@ permissions:
         default: op
     aureliumskills.top:
         default: true
+    aureliumskills.skill.reset:
+        default: op
