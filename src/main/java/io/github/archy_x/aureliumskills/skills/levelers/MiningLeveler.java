@@ -30,49 +30,53 @@ public class MiningLeveler implements Listener {
 						return;
 					}
 				}
-				if (!event.getBlock().hasMetadata("skillsPlaced")) {
-					Player p = event.getPlayer();
-					Block b = event.getBlock();
-					Skill s = Skill.MINING;
-					Material mat = event.getBlock().getType();
-					if (mat.equals(Material.STONE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.STONE));
+				//Check block replace
+				if (Options.checkBlockReplace) {
+					if (event.getBlock().hasMetadata("skillsPlaced")) {
+						return;
 					}
-					else if (mat.equals(Material.COBBLESTONE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.COBBLESTONE));
-					}
-					else if (mat.equals(Material.COAL_ORE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.COAL_ORE));
-						applyAbilities(p, b);
-					}
-					else if (mat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial())) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.QUARTZ_ORE));
-						applyAbilities(p, b);
-					}
-					else if (mat.equals(Material.IRON_ORE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.IRON_ORE));
-						applyAbilities(p, b);
-					}
-					else if (mat.equals(XMaterial.REDSTONE_ORE.parseMaterial()) || mat.name().equals("GLOWING_REDSTONE_ORE")) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.REDSTONE_ORE));
-						applyAbilities(p, b);
-					}
-					else if (mat.equals(Material.LAPIS_ORE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.LAPIS_ORE));
-						applyAbilities(p, b);
-					}
-					else if (mat.equals(Material.GOLD_ORE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.GOLD_ORE));
-						applyAbilities(p, b);
-					}
-					else if (mat.equals(Material.DIAMOND_ORE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.DIAMOND_ORE));
-						applyAbilities(p, b);
-					}
-					else if (mat.equals(Material.EMERALD_ORE)) {
-						Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.EMERALD_ORE));
-						applyAbilities(p, b);
-					}
+				}
+				Player p = event.getPlayer();
+				Block b = event.getBlock();
+				Skill s = Skill.MINING;
+				Material mat = event.getBlock().getType();
+				if (mat.equals(Material.STONE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.STONE));
+				}
+				else if (mat.equals(Material.COBBLESTONE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.COBBLESTONE));
+				}
+				else if (mat.equals(Material.COAL_ORE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.COAL_ORE));
+					applyAbilities(p, b);
+				}
+				else if (mat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial())) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.QUARTZ_ORE));
+					applyAbilities(p, b);
+				}
+				else if (mat.equals(Material.IRON_ORE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.IRON_ORE));
+					applyAbilities(p, b);
+				}
+				else if (mat.equals(XMaterial.REDSTONE_ORE.parseMaterial()) || mat.name().equals("GLOWING_REDSTONE_ORE")) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.REDSTONE_ORE));
+					applyAbilities(p, b);
+				}
+				else if (mat.equals(Material.LAPIS_ORE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.LAPIS_ORE));
+					applyAbilities(p, b);
+				}
+				else if (mat.equals(Material.GOLD_ORE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.GOLD_ORE));
+					applyAbilities(p, b);
+				}
+				else if (mat.equals(Material.DIAMOND_ORE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.DIAMOND_ORE));
+					applyAbilities(p, b);
+				}
+				else if (mat.equals(Material.EMERALD_ORE)) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.EMERALD_ORE));
+					applyAbilities(p, b);
 				}
 			}
 		}

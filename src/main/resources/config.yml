@@ -29,8 +29,14 @@ skill-xp-text-color: GOLD
 # Color of text in parenthesis showing xp progress
 xp-progress-text-color: GRAY
 
+prefix-bracket-color: DARK_GRAY
+
+prefix-text: "&bSkills"
+
 # Whether certain numbers should show up as roman numerals:
 enable-roman-numerals: true
+
+damage-holograms: true
 
 # Skill Options
 # Change the equation that calculates xp level requirements (XpRequired = Multiplier * (level - 2) ^ 2 + 100)
@@ -199,6 +205,7 @@ health:
 strength:
     modifier: 0.1
     hand-damage: true
+    bow-damage: true
     display-damage-with-health-scaling: true
 toughness:
     new-modifier: 1
@@ -244,9 +251,6 @@ abilities:
     axe-master:
         base: 3.0
         per-level: 2.0
-    treecapitator:
-        base: 5.0
-        per-level: 5.0
     shredder:
         base: 3.0
         per-level: 3.0
@@ -259,9 +263,6 @@ abilities:
     pick-master:
         base: 3.0
         per-level: 2.0
-    speed-mine:
-        base: 5.0
-        per-level: 5.0
     hardened-armor:
         base: 3.0
         per-level: 3.0
@@ -295,3 +296,33 @@ abilities:
     lucky-spades:
         base: 0.1
         per-level: 0.1
+    crit-chance:
+        base: 5
+        per-level: 5
+    archer:
+        base: 10.0
+        per-level: 10.0
+    bow-master:
+        base: 3.0
+        per-level: 2.0
+    piercing:
+        base: 3.0
+        per-level: 3.0
+    stun:
+        base: 2.0
+        per-level: 1.0
+mana-abilities:
+    speed-mine:
+        base-value: 5.0
+        value-per-level: 5.0
+        cooldown: 200
+        cooldown-per-level: -5
+        mana-cost: 20
+        mana-cost-per-level: 20
+    treecapitator:
+        base-value: 5.0
+        value-per-level: 5.0
+        cooldown: 200
+        cooldown-per-level: -5
+        mana-cost: 20
+        mana-cost-per-level: 20

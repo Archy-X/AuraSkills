@@ -174,7 +174,10 @@ public class StatsMenu implements InventoryProvider{
 				double saturatedRegen = ps.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.SATURATED_MODIFIER) * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
 				double hungerFullRegen = ps.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_FULL_MODIFIER) * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
 				double almostFullRegen = ps.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_ALMOST_FULL_MODIFIER) * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
-				return ChatColor.GOLD + "+" + nf.format(saturatedRegen) + " " + Lang.getMessage(Message.SATURATED_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(hungerFullRegen) + " " + Lang.getMessage(Message.FULL_HUNGER_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(almostFullRegen) + " " + Lang.getMessage(Message.ALMOST_FULL_HUNGER_REGEN);
+				double manaRegen = ps.getStatLevel(Stat.REGENERATION) * Options.manaModifier;
+				return ChatColor.GOLD + "+" + nf.format(saturatedRegen) + " " + Lang.getMessage(Message.SATURATED_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(hungerFullRegen)
+						+ " " + Lang.getMessage(Message.FULL_HUNGER_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(almostFullRegen) + " " + Lang.getMessage(Message.ALMOST_FULL_HUNGER_REGEN)
+						+ "\n" + ChatColor.AQUA + "+" + nf.format(manaRegen) + " " + Lang.getMessage(Message.MANA_REGEN);
 			case TOUGHNESS:
 				double toughness = ps.getStatLevel(Stat.TOUGHNESS) * Options.getDoubleOption(Setting.TOUGHNESS_MODIFIER);
 				double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;

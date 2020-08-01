@@ -1,14 +1,32 @@
 package io.github.archy_x.aureliumskills.util;
 
-import java.util.TreeMap;
-
 import io.github.archy_x.aureliumskills.Options;
+
+import java.util.TreeMap;
 
 public class RomanNumber {
 	
 	private final static TreeMap<Integer, String> map = new TreeMap<Integer, String>();
 
     static {
+        map.put(1000000000, "Ⓜ");
+        map.put(900000000, "ⒸⓂ");
+        map.put(500000000, "Ⓓ");
+        map.put(100000000, "Ⓒ");
+        map.put(90000000, "ⓍⒸ");
+        map.put(50000000, "Ⓛ");
+        map.put(10000000, "Ⓧ");
+        map.put(9000000, "mⓍ");
+        map.put(5000000, "Ⓥ");
+        map.put(1000000, "m");
+        map.put(900000, "cm");
+        map.put(500000, "d");
+        map.put(100000, "c");
+        map.put(90000, "xc");
+        map.put(50000, "l");
+        map.put(10000, "x");
+        map.put(9000, "Mx");
+        map.put(5000, "v");
         map.put(1000, "M");
         map.put(900, "CM");
         map.put(500, "D");

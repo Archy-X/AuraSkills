@@ -36,7 +36,7 @@ public enum Skill {
 	EXCAVATION(Stat.REGENERATION, Stat.LUCK, "Dig with a shovel to earn Excavation XP", XMaterial.GOLDEN_SHOVEL.parseMaterial(),
 			new Ability[] {Ability.METAL_DETECTOR, Ability.EXCAVATOR, Ability.SPADE_MASTER, Ability.BIGGER_SCOOP, Ability.LUCKY_SPADES}),
 	ARCHERY(Stat.LUCK, Stat.STRENGTH, "Shoot mobs and players with a bow to earn Archery XP", Material.BOW,
-			new Ability[] {Ability.ARCHER}),
+			new Ability[] {Ability.CRIT_CHANCE, Ability.ARCHER, Ability.BOW_MASTER, Ability.PIERCING, Ability.STUN}),
 	DEFENSE(Stat.TOUGHNESS, Stat.HEALTH, "Take damage from entities to earn Defense XP", Material.CHAINMAIL_CHESTPLATE,
 			new Ability[] {Ability.DEFENDER}),
 	FIGHTING(Stat.STRENGTH, Stat.REGENERATION, "Fight mobs with melee weapons to earn Fighting XP", Material.DIAMOND_SWORD,

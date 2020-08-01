@@ -34,40 +34,36 @@ public class SkillLoader {
 		long startTime = System.currentTimeMillis();
 		int playersLoaded = 0;
 		if (config.getConfigurationSection("skillData") != null) {
-			if (config.getConfigurationSection("skillData").getKeys(false) != null) {
-				for (String stringId : config.getConfigurationSection("skillData").getKeys(false)) {
-					UUID id = UUID.fromString(stringId);
-					String name = config.getString("skillData." + stringId + ".name", stringId);
-					PlayerSkill playerSkill = new PlayerSkill(id, name);
-					PlayerStat playerStat = new PlayerStat(id);
-					//Loading skill and stat data
-					if (config.getConfigurationSection("skillData." + stringId + ".skills") != null) {
-						if (config.getConfigurationSection("skillData." + stringId + ".skills").getKeys(false) != null) {
-							for (String skillName : config.getConfigurationSection("skillData." + stringId + ".skills").getKeys(false)) {
-								String skillData = config.getString("skillData." + stringId + ".skills." + skillName);
-								String[] skillDataArray = skillData.split(":");
-								int level = Integer.parseInt(skillDataArray[0]);
-								double xp = 0.0;
-								if (skillDataArray.length >= 2) {
-									xp = Double.parseDouble(skillDataArray[1].replace(",", "."));
-								}
-								Skill skill = Skill.valueOf(skillName.toUpperCase());
-								playerSkill.setSkillLevel(skill, level);
-								playerSkill.setXp(skill, xp);
-								
-								for (int i = 0; i < skill.getAbilities().length; i++) {
-									playerSkill.setAbilityLevel(skill.getAbilities()[i], (level + 3 - i) / 5);
-								}
-								
-								playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
-								playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
-							}
+			for (String stringId : config.getConfigurationSection("skillData").getKeys(false)) {
+				UUID id = UUID.fromString(stringId);
+				String name = config.getString("skillData." + stringId + ".name", stringId);
+				PlayerSkill playerSkill = new PlayerSkill(id, name);
+				PlayerStat playerStat = new PlayerStat(id);
+				//Loading skill and stat data
+				if (config.getConfigurationSection("skillData." + stringId + ".skills") != null) {
+					for (String skillName : config.getConfigurationSection("skillData." + stringId + ".skills").getKeys(false)) {
+						String skillData = config.getString("skillData." + stringId + ".skills." + skillName);
+						String[] skillDataArray = skillData.split(":");
+						int level = Integer.parseInt(skillDataArray[0]);
+						double xp = 0.0;
+						if (skillDataArray.length >= 2) {
+							xp = Double.parseDouble(skillDataArray[1].replace(",", "."));
 						}
+						Skill skill = Skill.valueOf(skillName.toUpperCase());
+						playerSkill.setSkillLevel(skill, level);
+						playerSkill.setXp(skill, xp);
+
+						for (int i = 0; i < skill.getAbilities().length; i++) {
+							playerSkill.setAbilityLevel(skill.getAbilities()[i], (level + 3 - i) / 5);
+						}
+
+						playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
+						playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
 					}
-					playerSkills.put(id, playerSkill);
-					playerStats.put(id, playerStat);
-					playersLoaded++;
 				}
+				playerSkills.put(id, playerSkill);
+				playerStats.put(id, playerStat);
+				playersLoaded++;
 			}
 		}
 		long endTime = System.currentTimeMillis();

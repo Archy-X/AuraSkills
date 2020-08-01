@@ -1,16 +1,16 @@
 package io.github.archy_x.aureliumskills.listeners;
 
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-
 import dev.dbassett.skullcreator.SkullCreator;
 import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.stats.PlayerStat;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 
@@ -28,6 +28,8 @@ public class PlayerJoin implements Listener {
 		Location playerLoc = event.getPlayer().getLocation();
 		Location loc = new Location(playerLoc.getWorld(), playerLoc.getX(), 0, playerLoc.getZ());
 		Block b = loc.getBlock();
+		BlockState state = b.getState();
 		SkullCreator.blockWithUuid(b, event.getPlayer().getUniqueId());
+		state.update(true);
 	}
 }

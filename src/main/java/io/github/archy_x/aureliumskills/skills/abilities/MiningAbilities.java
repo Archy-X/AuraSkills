@@ -2,12 +2,17 @@ package io.github.archy_x.aureliumskills.skills.abilities;
 
 import io.github.archy_x.aureliumskills.AureliumSkills;
 import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.lang.Lang;
+import io.github.archy_x.aureliumskills.lang.Message;
 import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.Source;
+import io.github.archy_x.aureliumskills.skills.abilities.mana_abilities.MAbility;
+import io.github.archy_x.aureliumskills.skills.abilities.mana_abilities.SpeedMine;
 import io.github.archy_x.aureliumskills.util.ItemUtils;
 import io.github.archy_x.aureliumskills.util.XMaterial;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -45,12 +50,14 @@ public class MiningAbilities implements Listener {
 	}
 	
 	public static void luckyMiner(Player player, Block block) {
-		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-			PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-			if (skill.getAbilityLevel(Ability.LUCKY_MINER) > 0) {
-				if (r.nextDouble() < (Ability.LUCKY_MINER.getValue(skill.getAbilityLevel(Ability.LUCKY_MINER)) / 100)) {
-					for (ItemStack item : block.getDrops()) {
-						block.getWorld().dropItemNaturally(block.getLocation(), item);
+		if (player.getGameMode().equals(GameMode.SURVIVAL)) {
+			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+				PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+				if (skill.getAbilityLevel(Ability.LUCKY_MINER) > 0) {
+					if (r.nextDouble() < (Ability.LUCKY_MINER.getValue(skill.getAbilityLevel(Ability.LUCKY_MINER)) / 100)) {
+						for (ItemStack item : block.getDrops()) {
+							block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), item);
+						}
 					}
 				}
 			}
@@ -99,18 +106,23 @@ public class MiningAbilities implements Listener {
 				|| blockMat.equals(XMaterial.DIORITE.parseMaterial()) || blockMat.equals(XMaterial.ANDESITE.parseMaterial())) {
 			Player player = event.getPlayer();
 			//Checks if speed mine is already activated
-			if (AureliumSkills.abilityManager.isActivated(player.getUniqueId(), Ability.SPEED_MINE)) {
+			if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
 				return;
 			}
 			//Checks if speed mine is ready
-			if (AureliumSkills.abilityManager.isReady(player.getUniqueId(), Ability.SPEED_MINE)) {
+			if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
 				//Checks if holding pickaxe
 				Material mat = player.getInventory().getItemInMainHand().getType();
 				if (mat.equals(Material.DIAMOND_PICKAXE) || mat.equals(Material.IRON_PICKAXE) || mat.equals(XMaterial.GOLDEN_PICKAXE.parseMaterial())
 						|| mat.equals(Material.STONE_PICKAXE) || mat.equals(XMaterial.WOODEN_PICKAXE.parseMaterial())) {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-						AureliumSkills.abilityManager.activateAbility(player, Ability.SPEED_MINE, (int) (Ability.SPEED_MINE.getValue(skill.getAbilityLevel(Ability.SPEED_MINE)) * 20), new SpeedMine());
+						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.SPEED_MINE.getManaCost(skill.getAbilityLevel(Ability.SPEED_MINE))) {
+							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SPEED_MINE, (int) (Ability.SPEED_MINE.getValue(skill.getAbilityLevel(Ability.SPEED_MINE)) * 20), new SpeedMine());
+						}
+						else {
+							player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.SPEED_MINE.getManaCost(skill.getAbilityLevel(Ability.SPEED_MINE))) + ")");
+						}
 					}
 				}
 				
@@ -122,39 +134,38 @@ public class MiningAbilities implements Listener {
 	public void readySpeedMine(PlayerInteractEvent event) {
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
-			if (mat.equals(Material.DIAMOND_PICKAXE) || mat.equals(Material.IRON_PICKAXE) || mat.equals(XMaterial.GOLDEN_PICKAXE.parseMaterial())
-					|| mat.equals(Material.STONE_PICKAXE) || mat.equals(XMaterial.WOODEN_PICKAXE.parseMaterial())) {
+			if (mat.name().toUpperCase().contains("PICKAXE")) {
 				Player player = event.getPlayer();
 				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 					if (SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.SPEED_MINE) > 0) {
 						//Checks if speed mine is already activated
-						if (AureliumSkills.abilityManager.isActivated(player.getUniqueId(), Ability.SPEED_MINE)) {
+						if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
 							return;
 						}
 						//Checks if speed mine is already ready
-						if (AureliumSkills.abilityManager.isReady(player.getUniqueId(), Ability.SPEED_MINE)) {
+						if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
 							return;
 						}
 						//Checks if cooldown is reached
-						if (AureliumSkills.abilityManager.getCooldown(player.getUniqueId(), Ability.SPEED_MINE) == 0) {
-							AureliumSkills.abilityManager.setReady(player.getUniqueId(), Ability.SPEED_MINE, true);
-							player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "You raise your pickaxe");
+						if (AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
+							AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, true);
+							player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(Message.SPEED_MINE_RAISE));
 							new BukkitRunnable() {
 								@Override
 								public void run() {
-									if (!AureliumSkills.abilityManager.isActivated(player.getUniqueId(), Ability.SPEED_MINE)) {
-										if (AureliumSkills.abilityManager.isReady(player.getUniqueId(), Ability.SPEED_MINE)) {
-											AureliumSkills.abilityManager.setReady(player.getUniqueId(), Ability.SPEED_MINE, false);
-											player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "You lower your pickaxe");
+									if (!AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
+										if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
+											AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, false);
+											player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(Message.SPEED_MINE_LOWER));
 										}
 									}
 								}
 							}.runTaskLater(plugin, 50L);
 						}
 						else {
-							if (AureliumSkills.abilityManager.getErrorTimer(player.getUniqueId(), Ability.SPEED_MINE) == 0) {
-								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Ability not ready! " + ChatColor.GRAY + "(" + AureliumSkills.abilityManager.getCooldown(player.getUniqueId(), Ability.SPEED_MINE) + "s)");
-								AureliumSkills.abilityManager.setErrorTimer(player.getUniqueId(), Ability.SPEED_MINE, 2);
+							if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
+								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.ABILITY_NOT_READY) + " " + ChatColor.GRAY + "(" + AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SPEED_MINE) + "s)");
+								AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE, 2);
 							}
 						}
 					}

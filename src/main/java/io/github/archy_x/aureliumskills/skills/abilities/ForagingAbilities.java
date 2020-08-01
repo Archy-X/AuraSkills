@@ -2,9 +2,13 @@ package io.github.archy_x.aureliumskills.skills.abilities;
 
 import io.github.archy_x.aureliumskills.AureliumSkills;
 import io.github.archy_x.aureliumskills.Options;
+import io.github.archy_x.aureliumskills.lang.Lang;
+import io.github.archy_x.aureliumskills.lang.Message;
 import io.github.archy_x.aureliumskills.skills.PlayerSkill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.Source;
+import io.github.archy_x.aureliumskills.skills.abilities.mana_abilities.MAbility;
+import io.github.archy_x.aureliumskills.skills.abilities.mana_abilities.Treecapitator;
 import io.github.archy_x.aureliumskills.util.ItemUtils;
 import io.github.archy_x.aureliumskills.util.XMaterial;
 import org.bukkit.ChatColor;
@@ -118,25 +122,31 @@ public class ForagingAbilities implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void applyTreecapitator(BlockBreakEvent event) {
 		if (!event.isCancelled()) {
-			//Checks if block broken is ore/stone
+			//Checks if block broken is log
 			Material blockMat = event.getBlock().getType();
 			if (blockMat.equals(XMaterial.OAK_LOG.parseMaterial()) || blockMat.equals(XMaterial.BIRCH_LOG.parseMaterial()) || blockMat.equals(XMaterial.SPRUCE_LOG.parseMaterial())
 					|| blockMat.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || blockMat.equals(XMaterial.ACACIA_LOG.parseMaterial()) || blockMat.equals(XMaterial.DARK_OAK_LOG.parseMaterial())) {
 				Player player = event.getPlayer();
-				//Checks if speed mine is already activated
-				if (AureliumSkills.abilityManager.isActivated(player.getUniqueId(), Ability.TREECAPITATOR)) {
+				//Checks if treecapitator is already activated
+				if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 					return;
 				}
-				//Checks if speed mine is ready
-				if (AureliumSkills.abilityManager.isReady(player.getUniqueId(), Ability.TREECAPITATOR)) {
-					//Checks if holding pickaxe
+				//Checks if treecaptitator is ready
+				if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
+					//Checks if holding axe
 					Material mat = player.getInventory().getItemInMainHand().getType();
 					if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
 							|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+
 							PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-							AureliumSkills.abilityManager.activateAbility(player, Ability.TREECAPITATOR, (int) (Ability.TREECAPITATOR.getValue(skill.getAbilityLevel(Ability.TREECAPITATOR)) * 20), new Treecapitator());
-							treeCapitator(event);
+							if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.TREECAPITATOR.getManaCost(skill.getAbilityLevel(Ability.TREECAPITATOR))) {
+								AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.TREECAPITATOR, (int) (MAbility.TREECAPITATOR.getValue(skill.getAbilityLevel(Ability.TREECAPITATOR)) * 20), new Treecapitator());
+								treeCapitator(event);
+							}
+							else {
+								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.TREECAPITATOR.getManaCost(skill.getAbilityLevel(Ability.TREECAPITATOR))) + ")");
+							}
 						}
 					}
 					
@@ -153,7 +163,7 @@ public class ForagingAbilities implements Listener {
 				|| blockMat.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || blockMat.equals(XMaterial.ACACIA_LOG.parseMaterial()) || blockMat.equals(XMaterial.DARK_OAK_LOG.parseMaterial())) {
 			Player player = event.getPlayer();
 			//Checks if speed mine is already activated
-			if (AureliumSkills.abilityManager.isActivated(player.getUniqueId(), Ability.TREECAPITATOR)) {
+			if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 				breakBlock(event.getBlock().getState(), 0);
 			}
 		}
@@ -221,39 +231,38 @@ public class ForagingAbilities implements Listener {
 	public void readyTreecapitator(PlayerInteractEvent event) {
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
-			if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
-					|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
+			if (mat.name().toUpperCase().contains("_AXE")) {
 				Player player = event.getPlayer();
 				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 					if (SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.TREECAPITATOR) > 0) {
 						//Checks if speed mine is already activated
-						if (AureliumSkills.abilityManager.isActivated(player.getUniqueId(), Ability.TREECAPITATOR)) {
+						if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 							return;
 						}
 						//Checks if speed mine is already ready
-						if (AureliumSkills.abilityManager.isReady(player.getUniqueId(), Ability.TREECAPITATOR)) {
+						if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 							return;
 						}
 						//Checks if cooldown is reached
-						if (AureliumSkills.abilityManager.getCooldown(player.getUniqueId(), Ability.TREECAPITATOR) == 0) {
-							AureliumSkills.abilityManager.setReady(player.getUniqueId(), Ability.TREECAPITATOR, true);
-							player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "You raise your axe");
+						if (AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
+							AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, true);
+							player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(Message.TREECAPITATOR_RAISE));
 							new BukkitRunnable() {
 								@Override
 								public void run() {
-									if (!AureliumSkills.abilityManager.isActivated(player.getUniqueId(), Ability.TREECAPITATOR)) {
-										if (AureliumSkills.abilityManager.isReady(player.getUniqueId(), Ability.TREECAPITATOR)) {
-											AureliumSkills.abilityManager.setReady(player.getUniqueId(), Ability.TREECAPITATOR, false);
-											player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "You lower your axe");
+									if (!AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
+										if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
+											AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, false);
+											player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(Message.TREECAPITATOR_LOWER));
 										}
 									}
 								}
 							}.runTaskLater(plugin, 50L);
 						}
 						else {
-							if (AureliumSkills.abilityManager.getErrorTimer(player.getUniqueId(), Ability.TREECAPITATOR) == 0) {
-								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Ability not ready! " + ChatColor.GRAY + "(" + AureliumSkills.abilityManager.getCooldown(player.getUniqueId(), Ability.TREECAPITATOR) + "s)");
-								AureliumSkills.abilityManager.setErrorTimer(player.getUniqueId(), Ability.TREECAPITATOR, 2);
+							if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
+								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.ABILITY_NOT_READY) + " " + ChatColor.GRAY + "(" + AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) + "s)");
+								AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR, 2);
 							}
 						}
 					}

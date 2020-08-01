@@ -4,6 +4,7 @@ languages:
 - EN
 - PL
 - RU
+- VN
 
 messages:
   basic:
@@ -399,6 +400,8 @@ messages:
       almost-full-hunger-regen:
         EN: Almost Full Hunger Regen
         VN: Hồi phục khi gần đầy thức ăn
+      mana-regen:
+        EN: Mana Regen
     luck:
       name:
         EN: Luck
@@ -452,6 +455,12 @@ messages:
     ability-levels:
       EN: Ability Levels
       VN: Cấp độ kĩ năng
+    ability-not-ready:
+      EN: Ability not ready!
+    not-enough-mana:
+      EN: Not enough mana!
+    mana-required:
+      EN: _ Mana required
     farming:
       bountiful-harvest:
         name:
@@ -540,11 +549,18 @@ messages:
           VN: Fast Cutting
         desc:
           EN: Breaks entire trees instantly for _ seconds. [Right Click to Activate]
-            (200s cooldown)
           VN: Trong _ giây bạn sẽ nhận được khả năng chặt nhanh [Chuột phải]
         mini-desc:
           EN: _s Duration
           VN: _ Giây kích hoạt
+        raise:
+          EN: You raise your axe
+        lower:
+          EN: You lower your axe
+        activated:
+          EN: Treecapitator Activated!
+        worn-off:
+          EN: Treecapitator has worn off
       shredder:
         name:
           EN: Shredder
@@ -591,10 +607,19 @@ messages:
           EN: Speed Mine
           VN: Fast Mining
         desc:
-          EN: Trong _ giây bạn sẽ nhận được hiệu ứng Haste cấp độ 10 [Chuột phải]
+          EN: Gives Haste 10 for _ seconds. [Right Click to Activate]
+          VN: Trong _ giây bạn sẽ nhận được hiệu ứng Haste cấp độ 10 [Chuột phải]
         mini-desc:
           EN: _s Duration
           VN: _s Giây kích hoạt
+        raise:
+          EN: You raise your pickaxe
+        lower:
+          EN: You lower your pickaxe
+        activated:
+          EN: Speed Mine activated!
+        worn-off:
+          EN: Speed Mine has worn off
       hardened-armor:
         name:
           EN: Hardened Armor
@@ -707,3 +732,39 @@ messages:
         mini-desc:
           EN: _% Epic Loot
           VN: _% Nhận đồ hiếm
+    archery:
+      crit-chance:
+        name:
+          EN: Crit Chance
+        desc:
+          EN: _% to deal a critical hit.
+        mini-desc:
+          EN: _% Crit Chance
+      archer:
+        name:
+          EN: Archer
+        desc:
+          EN: Earn _% more Archery XP
+        mini-desc:
+          EN: +_% XP
+      bow-master:
+        name:
+          EN: Bow Master
+        desc:
+          EN: Deal _% more damage with bows.
+        mini-desc:
+          EN: +_% Bow Damage
+      piercing:
+        name:
+          EN: Piercing
+        desc:
+          EN: _% chance for arrows to pierce through mobs.
+        mini-desc:
+          EN: _% Pierce Chance
+      stun:
+        name:
+          EN: Stun
+        desc:
+          EN: _% chance to decrease enemy movement speed by 20% for 2 seconds.
+        mini-desc:
+          EN: _% Stun Chance

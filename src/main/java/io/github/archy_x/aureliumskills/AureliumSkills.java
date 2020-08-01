@@ -15,8 +15,10 @@ import io.github.archy_x.aureliumskills.magic.ManaManager;
 import io.github.archy_x.aureliumskills.skills.Skill;
 import io.github.archy_x.aureliumskills.skills.SkillLoader;
 import io.github.archy_x.aureliumskills.skills.abilities.*;
+import io.github.archy_x.aureliumskills.skills.abilities.mana_abilities.ManaAbilityManager;
 import io.github.archy_x.aureliumskills.skills.levelers.*;
 import io.github.archy_x.aureliumskills.stats.*;
+import io.github.archy_x.aureliumskills.util.HologramSupport;
 import io.github.archy_x.aureliumskills.util.PlaceholderSupport;
 import io.github.archy_x.aureliumskills.util.WorldGuardSupport;
 import io.github.archy_x.aureliumskills.util.WorldManager;
@@ -42,11 +44,12 @@ public class AureliumSkills extends JavaPlugin{
 	private Lang lang;
 	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
-	public static AbilityManager abilityManager;
 	public static AbilityOptionManager abilityOptionManager;
 	public static WorldGuardSupport worldGuardSupport;
 	public static WorldManager worldManager;
 	public static ManaManager manaManager;
+	public static ManaAbilityManager manaAbilityManager;
+	public static boolean holographicDisplaysEnabled;
 	public static boolean worldGuardEnabled;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
@@ -71,6 +74,15 @@ public class AureliumSkills extends JavaPlugin{
 			new PlaceholderSupport(this).register();
 			Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "PlaceholderAPI Support Enabled!");
 		}
+		//Checks for holographic displays
+		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+			holographicDisplaysEnabled = true;
+			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
+			Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "HolographicDisplays Support Enabled!");
+		}
+		else {
+			holographicDisplaysEnabled = false;
+		}
 		//Load config
 		loadConfig();
 		options = new Options(this);
@@ -84,9 +96,9 @@ public class AureliumSkills extends JavaPlugin{
 		//Registers events
 		registerEvents();
 		//Load ability manager
-		abilityManager = new AbilityManager(this);
-		getServer().getPluginManager().registerEvents(abilityManager, this);
-		abilityManager.init();
+		manaAbilityManager = new ManaAbilityManager(this);
+		getServer().getPluginManager().registerEvents(manaAbilityManager, this);
+		manaAbilityManager.init();
 		//Load ability options
 		abilityOptionManager = new AbilityOptionManager(this);
 		abilityOptionManager.loadOptions();
@@ -206,6 +218,7 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new MiningAbilities(this), this);
 		getServer().getPluginManager().registerEvents(new FishingAbilities(), this);
 		getServer().getPluginManager().registerEvents(new ExcavationAbilities(), this);
+		getServer().getPluginManager().registerEvents(new ArcheryAbilities(this), this);
 	}
 	
 }

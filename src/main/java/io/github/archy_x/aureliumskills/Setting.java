@@ -22,10 +22,12 @@ public enum Setting {
 	ENABLE_SKILL_POINTS("enable-skill-points", true),
 	ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifier", 0.25),
 	STRENGTH_HAND_DAMAGE("strength.hand-damage", true),
+	STRENGTH_BOW_DAMAGE("strength.bow-damage", true),
 	RESET_ARMOR_ATTRIBUTE("toughness.reset-armor-attribute", true),
 	DISPLAY_DAMAGE_WITH_HEALTH_SCALING("strength.display-damage-with-health-scaling", true),
 	DEFENSE_MAX("defense.max", 100.0),
-	DEFENSE_MIN("defense.min", 0);
+	DEFENSE_MIN("defense.min", 0),
+	DAMAGE_HOLOGRAMS("damage-holograms", true);
 
 	private String path;
 	private double defDouble;

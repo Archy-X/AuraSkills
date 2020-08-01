@@ -32,7 +32,7 @@ public class AgilityLeveler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onFall(EntityDamageEvent event) {
 		if (Options.isEnabled(Skill.AGILITY)) {
-			if (event.isCancelled() == false) {
+			if (!event.isCancelled()) {
 				if (event.getCause().equals(DamageCause.FALL)) {
 					if (event.getEntity() instanceof Player) {
 						Player player = (Player) event.getEntity();

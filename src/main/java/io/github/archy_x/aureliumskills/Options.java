@@ -76,6 +76,7 @@ public class Options {
 	
 	public void loadConfig() {
 		FileConfiguration config = plugin.getConfig();
+		loadPrefix(config);
 		enable_action_bar = config.getBoolean("enable-action-bar", true);
 		enable_health_on_action_bar = config.getBoolean("enable-health-on-action-bar", true);
 		enable_mana_on_action_bar = config.getBoolean("enable-mana-on-action-bar", true);
@@ -172,5 +173,20 @@ public class Options {
 			return defXpAmounts.get(key);
 		}
 		return 0;
+	}
+
+	private void loadPrefix(FileConfiguration config) {
+		//Load prefix color
+		ChatColor prefixColor;
+		try {
+			prefixColor = ChatColor.valueOf(config.getString("prefix-bracket-color"));
+		}
+		catch (IllegalArgumentException e) {
+			prefixColor = ChatColor.DARK_GRAY;
+			Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Invalid prefix-bracket-color! Using the default instead!");
+		}
+		//Load and set prefix text
+		String prefixText = config.getString("prefix-text", "&bSkills").replace("&", "§");
+		AureliumSkills.tag = prefixColor + "[" + prefixText + prefixColor + "] " + ChatColor.RESET;
 	}
 }

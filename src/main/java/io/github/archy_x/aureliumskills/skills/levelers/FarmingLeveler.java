@@ -106,16 +106,23 @@ public class FarmingLeveler implements Listener{
 					}
 				}
 				if (mat.equals(Material.PUMPKIN)) {
-					if (!b.hasMetadata("skillsPlaced")) {
-						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.PUMPKIN));
-						applyAbilities(p, b);
+					if (Options.checkBlockReplace) {
+						if (b.hasMetadata("skillsPlaced")) {
+							return;
+						}
 					}
+					Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.PUMPKIN));
+					applyAbilities(p, b);
+
 				}
 				else if (mat.equals(XMaterial.MELON.parseMaterial())) {
-					if (!b.hasMetadata("skillsPlaced")) {
-						Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.MELON));
-						applyAbilities(p, b);
+					if (Options.checkBlockReplace) {
+						if (b.hasMetadata("skillsPlaced")) {
+							return;
+						}
 					}
+					Leveler.addXp(p, s, FarmingAbilities.getModifiedXp(p, Source.MELON));
+					applyAbilities(p, b);
 				}
 			}
 		}

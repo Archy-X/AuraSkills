@@ -16,7 +16,7 @@ public class DefenseLeveler implements Listener {
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onDamage(EntityDamageByEntityEvent event) {
 		if (Options.isEnabled(Skill.DEFENSE)) {
-			if (event.isCancelled() == false) {
+			if (!event.isCancelled()) {
 				if (event.getEntity() instanceof Player) {
 					Player p = (Player) event.getEntity();
 					//Checks if in blocked world
@@ -28,6 +28,9 @@ public class DefenseLeveler implements Listener {
 						if (AureliumSkills.worldGuardSupport.isInBlockedRegion(p.getLocation())) {
 							return;
 						}
+					}
+					if (p.isBlocking()) {
+						return;
 					}
 					Skill s = Skill.DEFENSE;
 					double d = event.getDamage();

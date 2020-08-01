@@ -21,12 +21,14 @@ public class ForgingLeveler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onForge(InventoryClickEvent event) {
 		if (Options.isEnabled(Skill.FORGING)) {
-	 		if (event.isCancelled() == false) {
+	 		if (!event.isCancelled()) {
 				if (event.getClickedInventory() != null) {
 					if (event.getClickedInventory().getType().equals(InventoryType.ANVIL)) {
 						//Checks if in blocked world
-						if (AureliumSkills.worldManager.isInBlockedWorld(event.getClickedInventory().getLocation())) {
-							return;
+						if (event.getClickedInventory().getLocation() != null) {
+							if (AureliumSkills.worldManager.isInBlockedWorld(event.getClickedInventory().getLocation())) {
+								return;
+							}
 						}
 						//Checks if in blocked region
 						if (AureliumSkills.worldGuardEnabled) {
@@ -49,18 +51,17 @@ public class ForgingLeveler implements Listener {
 									Player p = (Player) event.getWhoClicked();
 									Skill s = Skill.FORGING;
 									AnvilInventory inventory = (AnvilInventory) event.getClickedInventory();
-									if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
-										if (ItemUtils.isArmor(baseItem.getType())) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_ARMOR_PER_LEVEL));
-										}
-										else if (ItemUtils.isWeapon(baseItem.getType())) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_WEAPON_PER_LEVEL));
-										}
-										else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_BOOKS_PER_LEVEL));
-										}
-										else {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_TOOL_PER_LEVEL));
+									if (addedItem != null && baseItem != null) {
+										if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
+											if (ItemUtils.isArmor(baseItem.getType())) {
+												Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_ARMOR_PER_LEVEL));
+											} else if (ItemUtils.isWeapon(baseItem.getType())) {
+												Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_WEAPON_PER_LEVEL));
+											} else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
+												Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_BOOKS_PER_LEVEL));
+											} else {
+												Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_TOOL_PER_LEVEL));
+											}
 										}
 									}
 								}
