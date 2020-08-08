@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Alpha1.2.0</version>
+    <version>Alpha1.3.0</version>
     <build>
         <plugins>
             <plugin>
@@ -28,11 +28,11 @@
                     <relocations>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>io.github.archy_x.aureliumskills.acf</shadedPattern>
+                            <shadedPattern>com.archyx.aureliumskills.acf</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>io.github.archy_x.aureliumskills.locales</shadedPattern>
+                            <shadedPattern>com.archyx.aureliumskills.locales</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
