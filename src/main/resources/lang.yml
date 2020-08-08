@@ -1,0 +1,180 @@
+messages:
+  action-bar:
+    idle-both: '&c$health$/$max_health$ HP                &b$mana$/$max_mana$ Mana'
+    idle-health: '&c$health$/$max_health$ HP'
+    idle-mana: '&b$mana$/$max_mana$ Mana'
+    xp-both: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)   &b$mana$/$max_mana$ Mana'
+    xp-both-maxed: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7(MAXED)   &b$mana$/$max_mana$ Mana'
+    xp-health: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)'
+    xp-health-maxed: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7(MAXED)'
+    xp-mana: '&6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)   &b$mana$/$max_mana$ Mana'
+    xp-mana-maxed: '&6+$xp_add$ $skill_name$ XP &7(MAXED)   &b$mana$/$max_mana$ Mana'
+    xp-none: '&6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)'
+    xp-none-maxed: '&6+$xp_add$ $skill_name$ XP &7(MAXED)'
+  skills-menu:
+    title: '&8Your Skills'
+    info-item:
+      item: DIAMOND_AXE
+      name: '&bYour Skills - &6$player_name$'
+      lore: '&7Upgrade Skills by doing various tasks|&7to unlock valuable stat boosts,|&7abilities, and more!| |&eHover over a Skill for more information|&eClick on a skill to view level progression!'
+    skill-item:
+      name: '&b$skill_name$ &3$level$'
+      lore: '&7$skill_desc_0$|?&7$skill_desc_1$| |&7Primary Stat: $primary_stat_color$$primary_stat_name$|&7Secondary Stat: $secondary_stat_color$$secondary_stat_name$| |&7Ability Levels:|?  $ability_1$|?  $ability_2$|?  $ability_3$|?  $ability_4$|?  $ability_5$| |&7Level: &e$level$|&7Progress to Level $level$: &e$progress_percent$%|  &7$progress_xp$/$progress_next$ XP| |&eClick to view Level Progression!'
+    close:
+      item: BARRIER
+      name: '&cClose'
+      lore: ''
+    pane:
+      item: BLACK_STAINED_GLASS_PANE
+      name: ' '
+      lore: ''
+    pos:
+      num-rows: 5
+      rows:
+        0: 'skill-item|pane|pane|pane|pane|pane|pane|pane'
+        1: 'pane|pane|farming|foraging|mining|fishing|excavation|pane|pane'
+        2: 'pane|pane|archery|defense|fighting|endurance|agility|pane|pane'
+        3: 'pane|pane|alchemy|enchanting|sorcery|healing|forging|pane|pane'
+        4: 'pane|pane|pane|pane|pane|pane|pane|pane|close'
+  progression-menu:
+    title: '&8$skill_name$ Levels - Page $page$'
+    unlocked:
+      item: LIME_STAINED_GLASS_PANE
+      name: '&aLevel $level$'
+      lore: '&7Level &f$level_number$|&7Rewards:|  $primary_stat_color$+1 $primary_stat_icon$ $primary_stat_name$|?  $secondary_stat_color$+1 $secondary_stat_icon$ $secondary_stat_name$| |&6$ability_name$ &a&l$ability_unlock$|  &7$ability_desc_0|? &7$ability_desc_1$| |&a&lUNLOCKED'
+    in-progress:
+      item: YELLOW_STAINED_GLASS_PANE
+      name: '&eLevel $level$'
+      lore: '&7Level &f$level_number$|&7Rewards:|  $primary_stat_color$+1 $primary_stat_icon$ $primary_stat_name$|?  $secondary_stat_color$+1 $secondary_stat_icon$ $secondary_stat_name$| |&6$ability_name$ &a&l$ability_unlock$|  &7$ability_desc_0|? &7$ability_desc_1$|&7Progress: &e$progress_percent$%|  &7$progress_xp$/$progress_next$ XP| |&e&lIN PROGRESS'
+    locked:
+      item: RED_STAINED_GLASS_PANE
+      name: '&cLevel $level$'
+      lore: '&7Level &f$level_number$|&7Rewards:|  $primary_stat_color$+1 $primary_stat_icon$ $primary_stat_name$|?  $secondary_stat_color$+1 $secondary_stat_icon$ $secondary_stat_name$| |&6$ability_name$ &a&l$ability_unlock$|  &7$ability_desc_0|? &7$ability_desc_1$| |&c&lLOCKED'
+    back:
+      item: ARROW
+      name: '&aGo Back'
+      lore: '&7Back to Skills Menu'
+    close:
+      item: BARRIER
+      name: '&cClose'
+      lore: ''
+    next:
+      item: ARROW
+      name: '&6Next Page'
+      lore: '&eClick to go to next page'
+    previous:
+      item: ARROW
+      name: '&6Previous Page'
+      lore: '&eClick to go to previous page'
+    pane:
+      item: AIR
+      name: ''
+      lore: ''
+    pos:
+      top-row: 'skill-item|pane|pane|pane|pane|pane|pane|pane|pane'
+      bottom-row: 'back|close|pane|pane|pane|pane|pane|previous|back'
+  stats-menu:
+    title: '&8Your Stats'
+    info-item:
+      item: $player_skull$
+      name: '&e$player_name$'
+      lore: ' $strength_color$$strength_icon$ $strength_name$ &f$strength_level$| $health_color$$health_icon$ $health_name$ &f$health_level$| $regeneration_color$$regeneration_icon$ $regeneration_name$ &f$regeneration_level$| $luck_color$$luck_icon$ $luck_name$ &f$luck_level$| $wisdom_color$$wisdom_icon$ $wisdom_name$ &f$wisdom_level$| $toughness_color$$toughness_icon$ $toughness_name$ &f$toughness_level$'
+    stat-item:
+      item: $stat_item$
+      name: '$stat_color$$stat_name$'
+      lore: '&7$stat_desc_0$|?&7$stat_desc_1$| |&7Primary Skills: &f$stat_primary_skills|&fSecondary Skills: &f$stat_secondary_skills$| |&7Your Level: $stat_color$$stat_level$|$stat_descriptors$'
+    pane:
+      item: BLACK_STAINED_GLASS_PANE
+      name: ' '
+      lore: ''
+    pos:
+      num-rows: 3
+      rows:
+        0: 'pane|pane|pane|pane|pane|pane|pane|pane|pane'
+        1: 'pane|strength|health|regeneration|info-item|luck|wisdom|toughness'
+        2: 'pane|pane|pane|pane|pane|pane|pane|pane|pane'
+  skills:
+    farming:
+      name: 'Farming'
+      desc: 'Harvest crops to earn Farming XP'
+    foraging:
+      name: 'Foraging'
+      desc: 'Cut trees to earn Foraging XP'
+    mining:
+      name: 'Mining'
+      desc: 'Mine stone and ores to earn Mining XP'
+    fishing:
+      name: 'Fishing'
+      desc: 'Catch fish to earn Fishing XP'
+    excavation:
+      name: 'Excavation'
+      desc: 'Dig with a shovel to earn Excavation|XP'
+    archery:
+      name: 'Archery'
+      desc: 'Shoot mobs and players with a bow to|earn Archery XP'
+    defense:
+      name: 'Defense'
+      desc: 'Take damage from entities to earn|Defense XP'
+    fighting:
+      name: 'Fighting'
+      desc: 'Fight mobs with melee weapons to earn Fighting XP'
+    endurance:
+      name: 'Endurance'
+      desc: 'Walk and run to earn Endurance XP'
+    agility:
+      name: 'Agility'
+      desc: 'Jump and take fall damage to earn|Agility XP'
+    alchemy:
+      name: 'Alchemy'
+      desc: 'Brew potions to earn Alchemy XP'
+    enchanting:
+      name: 'Enchanting'
+      desc: 'Enchant items and books to earn|Enchanting XP'
+    sorcery:
+      name: 'Sorcery'
+      desc: 'Case spells to earn Sorcery XP'
+    healing:
+      name: 'Healing'
+      desc: 'Drink and splash potions to earn|Healing XP'
+    forging:
+      name: 'Forging'
+      desc: 'Combine and apply books in an anvil to earn Forging XP'
+  stats:
+    strength:
+      name: 'Strength'
+      color: '&4'
+      desc: 'Strength increases your attack damage|with various different weapons'
+      icon: '➽'
+      descriptors: '&4+$attack_damage$ Attack Damage'
+    health:
+      name: 'Health'
+      color: '&c'
+      desc: 'Health increases the amount of HP you|have, allowing you to last longer in|fights'
+      icon: '❤'
+      descriptors: '&c+$hp$ HP'
+    regeneration:
+      name: 'Regeneration'
+      color: '&6'
+      desc: 'Regeneration increases how fast you recover both health and mana'
+      icon: '❥'
+      descriptors: '&6+$saturated_regen$ Saturated Regen|&6+$full_hunger_regen$ Full Hunger Regen|&6+$almost_full_hunger_regen$ Almost Full Hunger Regen|&b+$mana_regen$ Mana Regen'
+    luck:
+      name: 'Luck'
+      color: '&2'
+      desc: 'Luck increases your chances of getting|rare loot from mobs, fishing, and more'
+      icon: '☘'
+      descriptors: '&2+$attribute_luck$ Luck|&2Double Drop Chance: $double_drop_chance$%'
+    wisdom:
+      name: 'Wisdom'
+      color: '&9'
+      desc: 'Wisdom increases your mana pool, the|strength of magical attacks, and|magical luck'
+      icon: '✿'
+      descriptors: '&9+$xp_gain_percent$% XP Gain|&9Anvil Cost Reduction: $anvil_cost_reduction$'
+    toughness:
+      name: 'Toughness'
+      color: '&5'
+      desc: 'Toughness increases the amount of|damage reduced from enemy attacks'
+      icon: '✦'
+      descriptors: '&5-$damage_reduction_percent$% Incoming Damage'
+
+

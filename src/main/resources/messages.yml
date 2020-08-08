@@ -454,297 +454,388 @@ messages:
   abilities:
     ability-levels:
       EN: Ability Levels
+      PL: Poziomy Umiejetnosci
       VN: Cấp độ kĩ năng
     ability-not-ready:
       EN: Ability not ready!
     not-enough-mana:
       EN: Not enough mana!
+      PL: Niewystarczajaco Many!
     mana-required:
       EN: _ Mana required
+      PL: _ Potrzebnej Many
     farming:
       bountiful-harvest:
         name:
           EN: Bountiful Harvest
+          PL: Bogate Plony
           VN: Double Harvest
         desc:
           EN: _% chance to get double drops from crops.
+          PL: _% szans na zdobycie podwojnego dropu z roslin.
           VN: Có _% tỉ lệ thu hoạch x2
         mini-desc:
           EN: _% x2 Drops
+          PL: _% 2x Dropow
           VN: _% Thu hoạch x2
       farmer:
         name:
           EN: Farmer
+          PL: Farmer
           VN: Farming Tenchology
         desc:
           EN: Earn _% more Farming XP.
+          PL: Zdobywa _% wiecej EXPa w Rolnictwie.
           VN: Tăng _% kinh nghiệm Farming khi thu hoạch
         mini-desc:
           EN: +_% XP
+          PL: +_% EXPa
           VN: +_% Kinh nghiệm
       scythe-master:
         name:
           EN: Scythe Master
+          PL: Mistrz Motyki
           VN: Scythe Master
         desc:
           EN: Increases damage from hoes by _%
+          PL: Zwieksza obrazenia od Motyki o _%.
           VN: Tăng _% sát thương lưỡi hái
         mini-desc:
           EN: +_% Hoe Damage
+          PL: +_% Obrazen
           VN: +_% Sát thương
       geneticist:
         name:
           EN: Geneticist
+          PL: Genetyk
           VN: Geneticist
         desc:
           EN: Increases saturation gain from plant-based foods by _.
+          PL: Zwieksza nasycenie zdobyte poprzez Jedzenie o _.
           VN: Tăng lượng bão hòa nhận được khi ăn thức ăn được làm từ nông sản
         mini-desc:
           EN: +_% Saturation
+          PL: +_% Nasycenia
           VN: +_% Lượng bão hòa
       triple-harvest:
         name:
           EN: Triple Harvest
+          PL: Potrojne Zniwa
           VN: Triple Harvest
         desc:
           EN: _% chance to get triple drops from crops.
+          PL: _% szans na potrojny drop z roslin.
           VN: Có _% tỉ lệ thu hoạch x3
         mini-desc:
           EN: _% 3x Drops
+          PL: _% 3x Dropow
           VN: _% Thu hoạch x3
     foraging:
       lumberjack:
         name:
           EN: Lumberjack
+          PL: Drwal X
           VN: Lumberjack
         desc:
           EN: _% chance to get double drops from logs.
+          PL: _% szans na podwojny drop z pni.
           VN: Có _% tỉ lệ thu hoạch x2
         mini-desc:
           EN: _% 2x Drops
+          PL: _% 3x Dropow
           VN: _% Thu hoạch x2
       forager:
         name:
           EN: Forager
+          PL: Zbieracz
           VN: Forager
         desc:
           EN: Earn _% more Foraging XP.
+          PL: Zdobywa _% wiecej EXPa w Drwalnictwie.
           VN: Tăng _% kinh nghiệm Woodcutting khi thu hoạch
         mini-desc:
           EN: +_% XP
+          PL: +_% EXPa
           VN: +_% Kinh nghiệm
       axe-master:
         name:
           EN: Axe Master
+          PL: Mistrz Siekiery
           VN: Axe Master
         desc:
           EN: Increases damage from axes by _%
+          PL: Zwieksza obrazenia od siekiery o _%
           VN: Tăng _% sát thương rìu
         mini-desc:
           EN: +_% Axe Damage
+          PL: +_% Obrazen
           VN: +_% Sát thương
       treecapitator:
         name:
           EN: Treecapitator
+          PL: Siekiera-Maszyna
           VN: Fast Cutting
         desc:
           EN: Breaks entire trees instantly for _ seconds. [Right Click to Activate]
+          PL: Niszczy drzewo automatycznie przez _ sekund. [PPM aby aktywowac]
           VN: Trong _ giây bạn sẽ nhận được khả năng chặt nhanh [Chuột phải]
         mini-desc:
           EN: _s Duration
+          PL: _s Czasu
           VN: _ Giây kích hoạt
         raise:
           EN: You raise your axe
+          PL: Podnosisz swoja siekiere
         lower:
           EN: You lower your axe
+          PL: Chowasz swoja siekiere
         activated:
           EN: Treecapitator Activated!
+          PL: Siekiera-Maszyna Aktywowana!
         worn-off:
           EN: Treecapitator has worn off
+          PL: Siekiera-Maszyna sie skonczyla
       shredder:
         name:
           EN: Shredder
+          PL: Niszczarka
           VN: Shredder
         desc:
           EN: _% chance to deal triple durability damage with axes.
+          PL: _% szans na zadanie potrojnych obrazen zbroi przeciwnika.
           VN: Có _% tỉ lệ gây x3 sát thương độ bền cho giáp khi dùng rìu
         mini-desc:
           EN: _% 3x Durability Damage
+          PL: _% 3x Obrazen Zbori
           VN: _% Sát thương độ bền x3
     mining:
       lucky-miner:
         name:
           EN: Lucky Miner
+          PL: Szczesliwy Gornik
           VN: Lucky Miner
         desc:
           EN: _% chance to get double drops from ores.
+          PL: _% szans na podwojny drop z rud.
           VN: Có _% tỉ lệ thu hoạch x2
         mini-desc:
           EN: _% 2x Drops
+          PL: _% 3x Dropow
           VN: _% Thu hoạch x2
       miner:
         name:
           EN: Miner
+          PL: Blogoslawienstwo Jaskini
           VN: Dwarf Blessing
         desc:
           EN: Earn _% more Mining XP.
+          PL: Zdobywa _% EXPa w Gornictwie.
           VN: Tăng _% kinh nghiệm Mining khi khai khoáng
         mini-desc:
           EN: +_% XP
+          PL: +_% EXPa
           VN: +_% Kinh nghiệm
       pick-master:
         name:
           EN: Pick Master
+          PL: Mistrz Kilofa
           VN: Pickaxe Master
         desc:
           EN: Deal _% more damage with pickaxes.
+          PL: Zadaje _% wiecej obrazen z kilofa.
           VN: Tăng _% sát thương cúp
         mini-desc:
           EN: +_% Pickaxe Damage
+          PL: +_% Obrazen
           VN: +_% Sát thương
       speed-mine:
         name:
           EN: Speed Mine
+          PL: Pospiech Kopania
           VN: Fast Mining
         desc:
           EN: Gives Haste 10 for _ seconds. [Right Click to Activate]
+          PL: Daje Pospiech 10 na _ sekund. [PPM aby aktywowac]
           VN: Trong _ giây bạn sẽ nhận được hiệu ứng Haste cấp độ 10 [Chuột phải]
         mini-desc:
           EN: _s Duration
+          PL: _s Czasu
           VN: _s Giây kích hoạt
         raise:
           EN: You raise your pickaxe
+          PL: Podnosisz swoj kilof
         lower:
           EN: You lower your pickaxe
+          PL: Chowasz swoj kilof
         activated:
           EN: Speed Mine activated!
+          PL: Pospiech Gornika aktywowany!
         worn-off:
           EN: Speed Mine has worn off
+          PL: Pospiech Gornika sie skonczyl
       hardened-armor:
         name:
           EN: Hardened Armor
+          PL: Wzmocniona Zbroja
           VN: Hardened Armor
         desc:
           EN: _% chance to negate durability damage on armor.
+          PL: _% szans na immunitet wytrzymalosci zbroi.
           VN: Có _% tỉ lệ không bị mất độ bền
         mini-desc:
           EN: _% No Durability Loss
+          PL: _% Immunitetu Wytrzymalosci
           VN: _% Không bị mất độ bền
     fishing:
       lucky-catch:
         name:
           EN: Lucky Catch
+          PL: Szczesliwy Traf
           VN: Lucky Catch
         desc:
           EN: _% chance to get double drops from fishing.
+          PL: _% szans na podwojny drop z lowienia.
           VN: Có _% tỉ lệ thu hoạch x2
         mini-desc:
           EN: _% 2x Drops
+          PL: _% 2x Dropow
           VN: _% Thu hoạch x2
       fisher:
         name:
           EN: Fisher
+          PL: Sprytna Przyneta
           VN: Smart Lure
         desc:
           EN: Earn _% more Fishing XP.
+          PL: Zdobywa _% wiecej EXPa w Lowieniu.
           VN: Tăng _% kinh nghiệm Fishing khi câu cá
         mini-desc:
           EN: +_% XP
+          PL: +_% EXPa
           VN: +_% Kinh nghiệm
       treasure-hunter:
         name:
           EN: Treaure Hunter
+          PL: Lowca Skarbow
           VN: Rare Treasure
         desc:
           EN: _% chance to get rare loot from fishing
+          PL: _% szans na rzadkie zdobycze z lowienia.
           VN: Có _% tỉ lệ nhận được kho báu hiếm khi câu
         mini-desc:
           EN: _% Rare Loot
+          PL: _% Rzadkich Zdobyczy
           VN: _% Nhận kho báu
       grappler:
         name:
           EN: Grappler
+          PL: Hak
           VN: Hooker
         desc:
           EN: Hook entities with _% more speed.
+          PL: Lapie moby z _% wieksza predkoscia.
           VN: Tăng _% tốc độ kéo lại
         mini-desc:
           EN: +_% Hook Speed
+          PL: +_% Predkosci Wedki
           VN: +_% Tốc độ kéo
       epic-catch:
         name:
           EN: Epic Catch
+          PL: Epicki Low
           VN: Epic Treasure
         desc:
           EN: _% chance to get epic loot from fishing
+          PL: _% szans na epickie zdobycze z lowienia.
           VN: Có _% tỉ lệ nhận được kho báu cực hiếm khi câu
         mini-desc:
           EN: _% Epic Loot
+          PL: _% Epickich Zdobyczy
           VN: _% Nhận kho báu
     excavation:
       metal-detector:
         name:
           EN: Metal Detector
+          PL: Wykrywacz Metalu
           VN: Ore Finder
         desc:
           EN: _% chance to get rare loot from digging
+          PL: _% szans na rzadkie zdobycze podczas kopania.
           VN: Có _% tỉ lệ nhận được đồ khi đào
         mini-desc:
           EN: _% Rare Loot
+          PL: _% Rzadkich Zdobyczy
           VN: _% Nhận đồ
       excavator:
         name:
           EN: Excavator
+          PL: Archeolog
           VN: Archaeologists
         desc:
           EN: Earn _% more Excavation XP
+          PL: Zdobywa _% EXPa w Poszukiwaniu
           VN: Tăng _% kinh nghiệm Excavating khi đào
         mini-desc:
           EN: +_% XP
+          PL: +_% EXPa
           VN: +_% Kinh nghiệm
       spade-master:
         name:
           EN: Spade Master
-          VN: SPade Master
+          PL: Mistrz Szpady
+          VN: Spade Master
         desc:
           EN: Deal _% more damage with shovels.
+          PL: Zadaje _% wiecej obrazen z lopaty.
           VN: Tăng _% sát thương xẻng
         mini-desc:
           EN: +_% Shovel Damage
+          PL: +_% Obrazen
           VN: +_% Sát thương
       bigger-scoop:
         name:
           EN: Bigger Scoop
+          PL: Twarde Ostrze
           VN: Bigger Scoop
         desc:
           EN: _% chance to get triple drops from digging.
+          PL: _% szans na podwojny drop z kopania.
           VN: Có _% tỉ lệ thu hoạch x3
         mini-desc:
           EN: _% Triple Drops
+          PL: _% Potrojnych Dropow
           VN: _% Thu hoạch x3
       lucky-spades:
         name:
           EN: Lucky Spades
+          PL: Szczesliwe Szpady
           VN: Lucky Spades
         desc:
           EN: _% chance to get epic loot from digging.
+          PL: _% szans na epickie zdobycze podczas kopania.
           VN: Có _% tỉ lệ nhận được đồ hiếm khi đào
         mini-desc:
           EN: _% Epic Loot
+          PL: _% Epickich Zdobyczy
           VN: _% Nhận đồ hiếm
     archery:
       crit-chance:
         name:
           EN: Crit Chance
+          PL: Szans Na Krytyke
         desc:
           EN: _% to deal a critical hit.
+          PL: _% szans na zadanie ciosu krytycznego.
         mini-desc:
           EN: _% Crit Chance
+          PL: _% Szansy Krytyki
       archer:
         name:
           EN: Archer
+          PL: Lucznik
         desc:
           EN: Earn _% more Archery XP
+          PL: Zdobywa _% EXPa w Lucznictwie.
         mini-desc:
           EN: +_% XP
       bow-master:
@@ -768,3 +859,39 @@ messages:
           EN: _% chance to decrease enemy movement speed by 20% for 2 seconds.
         mini-desc:
           EN: _% Stun Chance
+    defense:
+      shielding:
+        name:
+          EN: Shielding
+        desc:
+          EN: Reduce incoming damage by _% while sneaking.
+        mini-desc:
+          EN: -_% Incoming Dmg while sneaking
+      defender:
+        name:
+          EN: Defender
+        desc:
+          EN: Earn _% more Defense XP
+        mini-desc:
+          EN: +_% XP
+      mob-master:
+        name:
+          EN: Mob Master
+        desc:
+          EN: Reduce incoming damage from mobs by _%
+        mini-desc:
+          EN: -_% Mob Dmg
+      immunity:
+        name:
+          EN: Immunity
+        desc:
+          EN: _% chance to completely negate an enemy attack.
+        mini-desc:
+          EN: _% Immune
+      no-debuff:
+        name:
+          EN: No Debuff
+        desc:
+          EN: _% chance to negate a harmful potion effect being applied.
+        mini-desc:
+          EN: _% No Debuff

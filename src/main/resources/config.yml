@@ -58,6 +58,7 @@ blocked-regions:
 # Skill specific options
 farming:
     enabled: true
+    check-cancelled: true
     types:
         wheat: 2.0
         potato: 2.5
@@ -66,8 +67,10 @@ farming:
         nether-wart: 3.0
         pumpkin: 3.4
         melon: 3.4
+        sugar-cane: 1.7
 foraging:
     enabled: true
+    check-cancelled: true
     types:
         oak-log: 4
         spruce-log: 4
@@ -83,6 +86,7 @@ foraging:
         dark-oak-leaves: 0.4
 mining:
     enabled: true
+    check-cancelled: true
     types:
         stone: 0.2
         cobblestone: 0.2
@@ -97,8 +101,16 @@ mining:
         gold-ore: 17.8
         diamond-ore: 47.3
         emerald-ore: 142
+        terracotta: 0.5
+        white-terracotta: 0.5
+        orange-terracotta: 0.5
+        yellow-terracotta: 0.5
+        light-gray-terracotta: 0.5
+        brown-terracotta: 0.5
+        red-terracotta: 0.5
 fishing:
     enabled: true
+    check-cancelled: true
     types:
         raw-fish: 25
         raw-salmon: 60
@@ -110,6 +122,7 @@ fishing:
         epic: 5000
 excavation:
     enabled: true
+    check-cancelled: true
     types:
         dirt: 0.3
         grass-block: 0.7
@@ -130,8 +143,10 @@ archery:
         stronger-hostile: 35
         mini-boss: 100
         boss: 7000
+        player: 50
 defense:
     enabled: true
+    check-cancelled: true
     max: 100.0
     min: 0
     types:
@@ -149,6 +164,7 @@ fighting:
         stronger-hostile: 35
         mini-boss: 100
         boss: 7000
+        player: 50
 endurance:
     enabled: true
     refresh-time-ticks: 
@@ -158,11 +174,13 @@ endurance:
         swim-per-meter: 1
 agility:
     enabled: true
+    check-cancelled: true
     types:
         jump-per-100: 10
         fall-damage: 2
 alchemy:
     enabled: true
+    check-cancelled: true
     types:
         awkward: 10
         regular: 15
@@ -172,6 +190,7 @@ alchemy:
         lingering: 50
 enchanting:
     enabled: true
+    check-cancelled: true
     types:
         weapon-per-level: 2
         armor-per-level: 2
@@ -182,6 +201,7 @@ sorcery:
     types:
 healing:
     enabled: true
+    check-cancelled: true
     types:
         drink-regular: 10
         drink-extended: 15
@@ -191,6 +211,7 @@ healing:
         splash-upgraded: 25
 forging:
     enabled: true
+    check-cancelled: true
     types:
         combine-books-per-level: 10
         combine-weapon-per-level: 15
@@ -222,6 +243,7 @@ regeneration:
     mana-modifier: 0.25
 luck:
     modifier: 0.1
+    double-drop-enabled: true
     double-drop-modifier: 0.005
     double-drop-percent-max: 100
 wisdom:
@@ -231,88 +253,140 @@ wisdom:
 # Ability Options
 abilities:
     bountiful-harvest:
+        enabled: true
         base: 10.0
         per-level: 5.0
     farmer:
+        enabled: true
         base: 10.0
         per-level: 10.0
     scythe-master:
+        enabled: true
         base: 3.0
         per-level: 2.0
+    geneticist:
+        enabled: true
+        base: 1.0
+        per-level: 2.0
     triple-harvest:
+        enabled: true
         base: 5.0
         per-level: 3.0
     lumberjack:
+        enabled: true
         base: 10.0
         per-level: 5.0
     forager:
+        enabled: true
         base: 10.0
         per-level: 10.0
     axe-master:
+        enabled: true
         base: 3.0
         per-level: 2.0
     shredder:
+        enabled: true
         base: 3.0
         per-level: 3.0
     lucky-miner:
+        enabled: true
         base: 3.0
         per-level: 3.0
     miner:
+        enabled: true
         base: 10.0
         per-level: 10.0
     pick-master:
+        enabled: true
         base: 3.0
         per-level: 2.0
     hardened-armor:
+        enabled: true
         base: 3.0
         per-level: 3.0
     lucky-catch:
+        enabled: true
         base: 10.0
         per-level: 5.0
     fisher:
+        enabled: true
         base: 10.0
         per-level: 10.0
     treasure-hunter:
+        enabled: true
         base: 1.0
         per-level: 1.0
     grappler:
+        enabled: true
         base: 50.0
         per-level: 100.0
     epic-catch:
+        enabled: true
         base: 0.4
         per-level: 0.4
     metal-detector:
+        enabled: true
         base: 1.0
         per-level: 0.5
     excavator:
+        enabled: true
         base: 10.0
         per-level: 10.0
     spade-master:
+        enabled: true
         base: 3.0
         per-level: 2.0
     bigger-scoop:
+        enabled: true
         base: 3.0
         per-level: 3.0
     lucky-spades:
+        enabled: true
         base: 0.1
         per-level: 0.1
     crit-chance:
+        enabled: true
         base: 5
         per-level: 5
     archer:
+        enabled: true
         base: 10.0
         per-level: 10.0
     bow-master:
+        enabled: true
         base: 3.0
         per-level: 2.0
     piercing:
+        enabled: true
         base: 3.0
         per-level: 3.0
     stun:
+        enabled: true
         base: 2.0
         per-level: 1.0
+    shielding:
+        enabled: true
+        base: 2.0
+        per-level: 3.0
+    defender:
+        enabled: true
+        base: 10.0
+        per-level: 10.0
+    mob-master:
+        enabled: true
+        base: 3.0
+        per-level: 4.0
+    immunity:
+        enabled: true
+        base: 0.5
+        per-level: 0.5
+    no-debuff:
+        enabled: true
+        base: 5.0
+        per-level: 5.0
 mana-abilities:
     speed-mine:
+        enabled: true
         base-value: 5.0
         value-per-level: 5.0
         cooldown: 200
@@ -320,6 +394,7 @@ mana-abilities:
         mana-cost: 20
         mana-cost-per-level: 20
     treecapitator:
+        enabled: true
         base-value: 5.0
         value-per-level: 5.0
         cooldown: 200

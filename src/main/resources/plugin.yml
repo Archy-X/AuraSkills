@@ -1,6 +1,6 @@
 name: AureliumSkills
-version: Alpha 1.2.0
-main: io.github.archy_x.aureliumskills.AureliumSkills
+version: Alpha 1.3.0
+main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
