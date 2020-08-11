@@ -139,25 +139,29 @@ public class ArcheryAbilities implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void piercing(EntityDamageByEntityEvent event) {
-        if (Options.isEnabled(Skill.ARCHERY)) {
-            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.PIERCING)) {
-                //Checks if damage is from arrow
-                if (event.getDamager() instanceof Arrow) {
-                    Arrow arrow = (Arrow) event.getDamager();
-                    //Checks if player shot the arrow
-                    if (arrow.getShooter() instanceof Player) {
-                        Player player = (Player) arrow.getShooter();
-                        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                            PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            if (r.nextDouble() < (Ability.PIERCING.getValue(skill.getAbilityLevel(Ability.PIERCING)) / 100)) {
-                                arrow.setBounce(false);
-                                Vector velocity = arrow.getVelocity();
-                                Arrow newArrow = event.getEntity().getWorld().spawnArrow(arrow.getLocation(), velocity, (float) velocity.length(), 0.0f);
-                                newArrow.setShooter(player);
-                                newArrow.setKnockbackStrength(arrow.getKnockbackStrength());
-                                newArrow.setFireTicks(arrow.getFireTicks());
+        if (!event.isCancelled()) {
+            if (Options.isEnabled(Skill.ARCHERY)) {
+                if (AureliumSkills.abilityOptionManager.isEnabled(Ability.PIERCING)) {
+                    //Checks if damage is from arrow
+                    if (event.getDamager() instanceof Arrow) {
+                        Arrow arrow = (Arrow) event.getDamager();
+                        //Checks if player shot the arrow
+                        if (arrow.getShooter() instanceof Player) {
+                            if (arrow.isValid()) {
+                                Player player = (Player) arrow.getShooter();
+                                if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+                                    PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+                                    if (r.nextDouble() < (Ability.PIERCING.getValue(skill.getAbilityLevel(Ability.PIERCING)) / 100)) {
+                                        arrow.setBounce(false);
+                                        Vector velocity = arrow.getVelocity();
+                                        Arrow newArrow = event.getEntity().getWorld().spawnArrow(arrow.getLocation(), velocity, (float) velocity.length(), 0.0f);
+                                        newArrow.setShooter(player);
+                                        newArrow.setKnockbackStrength(arrow.getKnockbackStrength());
+                                        newArrow.setFireTicks(arrow.getFireTicks());
+                                    }
+                                }
                             }
                         }
                     }

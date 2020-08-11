@@ -32,7 +32,7 @@ public enum Ability {
 	SPADE_MASTER(Skill.EXCAVATION, 3.0, 2.0),
 	BIGGER_SCOOP(Skill.EXCAVATION, 3.0, 3.0),
 	LUCKY_SPADES(Skill.EXCAVATION, 0.1, 0.1),
-	CRIT_CHANCE(Skill.ARCHERY, 5, 5),
+	CRIT_CHANCE(Skill.ARCHERY, 5.0, 5.0),
 	ARCHER(Skill.ARCHERY, 10.0, 10.0),
 	BOW_MASTER(Skill.ARCHERY, 3.0, 2.0),
 	PIERCING(Skill.ARCHERY, 3.0, 3.0),
@@ -42,8 +42,11 @@ public enum Ability {
 	MOB_MASTER(Skill.DEFENSE, 3.0, 4.0),
 	IMMUNITY(Skill.DEFENSE, 0.5, 0.5),
 	NO_DEBUFF(Skill.DEFENSE, 5.0, 5.0),
+	CRIT_DAMAGE(Skill.FIGHTING, 5.0, 5.0),
 	FIGHTER(Skill.FIGHTING, 10.0, 10.0),
 	SWORD_MASTER(Skill.FIGHTING, 3.0, 2.0),
+	FIRST_STRIKE(Skill.FIGHTING, 20.0, 10.0),
+	BLEED(Skill.FIGHTING, 1.0, 1.0, 0.5, 0.5),
 	RUNNER(Skill.ENDURANCE, 10.0, 10.0),
 	JUMPER(Skill.AGILITY, 10.0, 10.0),
 	BREWER(Skill.ALCHEMY, 10.0, 10.0),
@@ -52,16 +55,28 @@ public enum Ability {
 	HEALER(Skill.HEALING, 10.0, 10.0),
 	FORGER(Skill.FORGING, 10.0, 10.0);
 	
-	private double baseValue;
-	private double valuePerLevel;
-	private Skill skill;
+	private final double baseValue;
+	private final double valuePerLevel;
+	private boolean hasTwoValues;
+	private double baseValue2;
+	private double valuePerLevel2;
+	private final Skill skill;
 	
-	private Ability(Skill skill, double baseValue, double valuePerLevel) {
+	Ability(Skill skill, double baseValue, double valuePerLevel) {
 		this.baseValue = baseValue;
 		this.valuePerLevel = valuePerLevel;
 		this.skill = skill;
 	}
-	
+
+	Ability(Skill skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2) {
+		this.skill = skill;
+		this.hasTwoValues = true;
+		this.baseValue = baseValue1;
+		this.valuePerLevel = valuePerLevel1;
+		this.baseValue2 = baseValue2;
+		this.valuePerLevel2 = valuePerLevel2;
+	}
+
 	public String getMiniDescription() {
 		return Lang.getMessage(Message.valueOf(this.name() + "_MINI_DESC"));
 	}
@@ -94,7 +109,36 @@ public enum Ability {
 		}
 		return valuePerLevel;
 	}
-	
+
+	public boolean hasTwoValues() {
+		return hasTwoValues;
+	}
+
+	public double getValue2(int level) {
+		AbilityOptionManager option = AureliumSkills.abilityOptionManager;
+		if (option.containsOption(this)) {
+			AbilityOption abilityOption = option.getAbilityOption(this);
+			return abilityOption.getBaseValue2() + (abilityOption.getValuePerLevel2() * (level - 1));
+		}
+		return baseValue2 + (valuePerLevel2 * (level - 1));
+	}
+
+	public double getBaseValue2() {
+		AbilityOptionManager option = AureliumSkills.abilityOptionManager;
+		if (option.containsOption(this)) {
+			return option.getAbilityOption(this).getBaseValue2();
+		}
+		return baseValue;
+	}
+
+	public double getValuePerLevel2() {
+		AbilityOptionManager option = AureliumSkills.abilityOptionManager;
+		if (option.containsOption(this)) {
+			return option.getAbilityOption(this).getValuePerLevel2();
+		}
+		return valuePerLevel;
+	}
+
 	public String getDisplayName() {
 		return Lang.getMessage(Message.valueOf(this.name() + "_NAME"));
 	}

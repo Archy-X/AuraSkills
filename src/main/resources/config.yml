@@ -43,6 +43,8 @@ damage-holograms: true
 # Default: 100
 skill-level-requirements-multiplier: 100
 
+enable-skill-commands: true
+
 check-block-replace: true
 blocked-check-block-replace-worlds:
     - Example
@@ -84,6 +86,10 @@ foraging:
         jungle-leaves: 0.4
         acacia-leaves: 0.4
         dark-oak-leaves: 0.4
+        crimson-stem: 5.0
+        warped-stem: 5.0
+        nether-wart-block: 0.5
+        warped-wart-block: 0.5.
 mining:
     enabled: true
     check-cancelled: true
@@ -108,6 +114,14 @@ mining:
         light-gray-terracotta: 0.5
         brown-terracotta: 0.5
         red-terracotta: 0.5
+        netherrack: 0.1
+        blackstone: 0.3
+        basalt: 0.4
+        magma-block: 0.7
+        nether-gold-ore: 10.0
+        ancient-debris: 500.0
+        end-stone: 0.5
+        obsidian: 10.0
 fishing:
     enabled: true
     check-cancelled: true
@@ -131,6 +145,10 @@ excavation:
         mycelium: 3.7
         clay: 2.4
         soul-sand: 2.7
+        coarse-dirt: 2.3
+        podzol: 2.5
+        soul-soil: 3.0
+        red-sand: 0.7
 archery:
     enabled: true
     types:

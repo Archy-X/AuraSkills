@@ -84,6 +84,18 @@ public class ForagingLeveler implements Listener{
 				} else if (mat.equals(XMaterial.DARK_OAK_LEAVES.parseMaterial())) {
 					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.DARK_OAK_LEAVES));
 					applyAbilities(p, b);
+				} else if (mat.equals(XMaterial.CRIMSON_STEM.parseMaterial())) {
+					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.CRIMSON_STEM));
+					applyAbilities(p, b);
+				} else if (mat.equals(XMaterial.WARPED_STEM.parseMaterial())) {
+					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.WARPED_STEM));
+					applyAbilities(p, b);
+				} else if (mat.equals(XMaterial.NETHER_WART_BLOCK.parseMaterial())) {
+					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.NETHER_WART_BLOCK));
+					applyAbilities(p, b);
+				} else if (mat.equals(XMaterial.WARPED_WART_BLOCK.parseMaterial())) {
+					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.WARPED_WART_BLOCK));
+					applyAbilities(p, b);
 				}
 			}
 			//If legacy version (1.12)

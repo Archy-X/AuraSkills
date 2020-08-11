@@ -46,8 +46,18 @@ public class AbilityOptionManager {
                     }
                     double baseValue = config.getDouble("abilities." + ability + ".base");
                     double valuePerLevel = config.getDouble("abilities." + ability + ".per-level");
-                    AbilityOption option = new AbilityOption(enabled, baseValue, valuePerLevel);
-                    abilityOptions.put(Ability.valueOf(ability.toUpperCase().replace("-", "_")), option);
+                    AbilityOption option;
+                    Ability ab = Ability.valueOf(ability.toUpperCase().replace("-", "_"));
+                    //Checks if ability has 2 values
+                    if (ab.hasTwoValues()) {
+                        double baseValue2 = config.getDouble("abilities." + ability + ".base-2");
+                        double valuePerLevel2 = config.getDouble("abilities." + ability + ".per-level-2");
+                        option = new AbilityOption(enabled, baseValue, valuePerLevel, baseValue2, valuePerLevel2);
+                    }
+                    else {
+                        option = new AbilityOption(enabled, baseValue, valuePerLevel);
+                    }
+                    abilityOptions.put(ab, option);
                     amountLoaded++;
                 }
             }

@@ -46,7 +46,34 @@ public class MiningLeveler implements Listener {
 			Skill s = Skill.MINING;
 			Material mat = event.getBlock().getType();
 			if (mat.equals(Material.STONE)) {
-				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.STONE));
+				if (XMaterial.isNewVersion()) {
+					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.STONE));
+				}
+				else {
+					switch (b.getData()) {
+						case 0:
+							Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.STONE));
+							break;
+						case 1:
+							Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.GRANITE));
+							break;
+						case 2:
+							Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.DIORITE));
+							break;
+						case 3:
+							Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.ANDESITE));
+							break;
+					}
+				}
+			}
+			else if (mat.equals(XMaterial.GRANITE.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.GRANITE));
+			}
+			else if (mat.equals(XMaterial.DIORITE.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.DIORITE));
+			}
+			else if (mat.equals(XMaterial.ANDESITE.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.ANDESITE));
 			}
 			else if (mat.equals(Material.COBBLESTONE)) {
 				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.COBBLESTONE));
@@ -81,6 +108,34 @@ public class MiningLeveler implements Listener {
 			}
 			else if (mat.equals(Material.EMERALD_ORE)) {
 				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.EMERALD_ORE));
+				applyAbilities(p, b);
+			}
+			else if (mat.equals(Material.NETHERRACK)) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.NETHERRACK));
+				applyAbilities(p, b);
+			}
+			else if (mat.equals(XMaterial.BLACKSTONE.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.BLACKSTONE));
+				applyAbilities(p, b);
+			}
+			else if (mat.equals(XMaterial.BASALT.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.BASALT));
+				applyAbilities(p, b);
+			}
+			else if (mat.equals(XMaterial.NETHER_GOLD_ORE.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.NETHER_GOLD_ORE));
+				applyAbilities(p, b);
+			}
+			else if (mat.equals(XMaterial.ANCIENT_DEBRIS.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.ANCIENT_DEBRIS));
+				applyAbilities(p, b);
+			}
+			else if (mat.equals(XMaterial.END_STONE.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.END_STONE));
+				applyAbilities(p, b);
+			}
+			else if (mat.equals(XMaterial.OBSIDIAN.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.OBSIDIAN));
 				applyAbilities(p, b);
 			}
 			else if (XMaterial.isNewVersion()) {

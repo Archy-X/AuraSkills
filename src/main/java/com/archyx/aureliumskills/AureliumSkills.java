@@ -1,13 +1,11 @@
 package com.archyx.aureliumskills;
 
 import co.aikar.commands.PaperCommandManager;
+import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.listeners.BlockBreak;
-import com.archyx.aureliumskills.listeners.BlockPlace;
-import com.archyx.aureliumskills.listeners.BlockTracker;
-import com.archyx.aureliumskills.listeners.PlayerJoin;
+import com.archyx.aureliumskills.listeners.*;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.magic.ManaManager;
 import com.archyx.aureliumskills.skills.Skill;
@@ -16,14 +14,12 @@ import com.archyx.aureliumskills.skills.abilities.*;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.levelers.*;
 import com.archyx.aureliumskills.stats.*;
-import com.archyx.aureliumskills.util.HologramSupport;
-import com.archyx.aureliumskills.util.PlaceholderSupport;
-import com.archyx.aureliumskills.util.WorldManager;
+import com.archyx.aureliumskills.util.*;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.minuskube.inv.InventoryManager;
-import com.archyx.aureliumskills.util.WorldGuardSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,11 +32,9 @@ import java.util.List;
 
 public class AureliumSkills extends JavaPlugin{
 
-	private PaperCommandManager commandManager;
-	private File dataFile = new File(getDataFolder(), "data.yml");
-	private FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
-	private SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
-	private Options options;
+	private final File dataFile = new File(getDataFolder(), "data.yml");
+	private final FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
+	private final SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
 	private Lang lang;
 	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
@@ -63,7 +57,6 @@ public class AureliumSkills extends JavaPlugin{
 				worldGuardEnabled = true;
 				worldGuardSupport = new WorldGuardSupport(this);
 				worldGuardSupport.loadRegions();
-				Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "WorldGuard Support Enabled!");
 			}
 		}
 		else {
@@ -85,12 +78,17 @@ public class AureliumSkills extends JavaPlugin{
 		}
 		//Load config
 		loadConfig();
-		options = new Options(this);
+		Options options = new Options(this);
 		options.loadConfig();
 		//Load languages
 		lang = new Lang(this);
 		lang.matchConfig();
 		lang.loadLanguages();
+		//Load messages WIP
+		/*
+		LangLoader langLoader = new LangLoader(this);
+		langLoader.loadDefaultMessages();
+		*/
 		//Registers Commands
 		registerCommands();
 		//Registers events
@@ -151,9 +149,12 @@ public class AureliumSkills extends JavaPlugin{
 			InputStream is = getResource("config.yml");
 			if (is != null) {
 				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
-				for (String key : defConfig.getConfigurationSection("").getKeys(true)) {
-					if (!getConfig().contains(key)) {
-						getConfig().set(key, defConfig.get(key));
+				ConfigurationSection config = defConfig.getConfigurationSection("");
+				if (config != null) {
+					for (String key : config.getKeys(true)) {
+						if (!getConfig().contains(key)) {
+							getConfig().set(key, defConfig.get(key));
+						}
 					}
 				}
 				saveConfig();
@@ -165,9 +166,9 @@ public class AureliumSkills extends JavaPlugin{
 	}
 	
 	private void registerCommands() {
-		commandManager = new PaperCommandManager(this);
+		PaperCommandManager commandManager = new PaperCommandManager(this);
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
-			List<String> values = new ArrayList<String>();
+			List<String> values = new ArrayList<>();
 			for (Skill skill : Skill.values()) {
 				if (Options.isEnabled(skill)) {
 					values.add(skill.toString().toLowerCase());
@@ -176,25 +177,38 @@ public class AureliumSkills extends JavaPlugin{
 			return values;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("abilities", c -> {
-			List<String> values = new ArrayList<String>();
+			List<String> values = new ArrayList<>();
 			for (Ability value : Ability.values()) {
 				values.add(value.toString().toLowerCase());
 			}
 			return values;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> {
-			return lang.getConfig().getStringList("languages");
-		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> lang.getConfig().getStringList("languages"));
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());
+		if (Options.enableSkillCommands) {
+			if (Options.isEnabled(Skill.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand()); }
+			if (Options.isEnabled(Skill.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand()); }
+			if (Options.isEnabled(Skill.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand()); }
+			if (Options.isEnabled(Skill.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand()); }
+			if (Options.isEnabled(Skill.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand()); }
+			if (Options.isEnabled(Skill.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand()); }
+			if (Options.isEnabled(Skill.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand()); }
+			if (Options.isEnabled(Skill.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand()); }
+			if (Options.isEnabled(Skill.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand()); }
+			if (Options.isEnabled(Skill.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand()); }
+			if (Options.isEnabled(Skill.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand()); }
+			if (Options.isEnabled(Skill.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand()); }
+			if (Options.isEnabled(Skill.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand()); }
+			if (Options.isEnabled(Skill.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand()); }
+			if (Options.isEnabled(Skill.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand()); }
+		}
 	}
 
 	public void registerEvents() {
 		//Registers Events
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
-		getServer().getPluginManager().registerEvents(new BlockPlace(this), this);
-		getServer().getPluginManager().registerEvents(new BlockBreak(this), this);
-		getServer().getPluginManager().registerEvents(new BlockTracker(this), this);
+		getServer().getPluginManager().registerEvents(new CheckBlockReplace(this), this);
 		getServer().getPluginManager().registerEvents(new FarmingLeveler(), this);
 		getServer().getPluginManager().registerEvents(new ForagingLeveler(), this);
 		getServer().getPluginManager().registerEvents(new MiningLeveler(), this);

@@ -1,18 +1,19 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.menu.LevelProgressionMenu;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.abilities.ExcavationAbilities;
 import com.archyx.aureliumskills.util.XMaterial;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.tukaani.xz.check.Check;
 
 public class ExcavationLeveler implements Listener{
 
@@ -42,13 +43,26 @@ public class ExcavationLeveler implements Listener{
 				}
 			}
 			Skill s = Skill.EXCAVATION;
+			Block b = event.getBlock();
 			Player p = event.getPlayer();
 			Material mat = event.getBlock().getType();
-			if (mat.equals(Material.DIRT)) {
-				Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.DIRT));
+			if (mat.equals(Material.SAND)) {
+				if (XMaterial.isNewVersion()) {
+					Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.SAND));
+				}
+				else {
+					switch (b.getData()) {
+						case 0:
+							Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.SAND));
+							break;
+						case 1:
+							Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.RED_SAND));
+							break;
+					}
+				}
 			}
-			else if (mat.equals(Material.SAND)) {
-				Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.SAND));
+			else if (mat.equals(XMaterial.RED_SAND.parseMaterial())) {
+				Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.RED_SAND));
 			}
 			else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
 				Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.GRASS_BLOCK));
@@ -64,6 +78,35 @@ public class ExcavationLeveler implements Listener{
 			}
 			else if (mat.equals(XMaterial.MYCELIUM.parseMaterial())) {
 				Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.MYCELIUM));
+			}
+			else if (mat.equals(XMaterial.SOUL_SOIL.parseMaterial())) {
+				Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.SOUL_SOIL));
+			}
+			if (XMaterial.isNewVersion()) {
+				if (mat.equals(Material.DIRT)) {
+					Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.DIRT));
+				}
+				else if (mat.equals(XMaterial.COARSE_DIRT.parseMaterial())) {
+					Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.COARSE_DIRT));
+				}
+				else if (mat.equals(XMaterial.PODZOL.parseMaterial())) {
+					Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.PODZOL));
+				}
+			}
+			else {
+				if (mat.equals(Material.DIRT)) {
+					switch (b.getData()) {
+						case 0:
+							Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.DIRT));
+							break;
+						case 1:
+							Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.COARSE_DIRT));
+							break;
+						case 2:
+							Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.PODZOL));
+							break;
+					}
+				}
 			}
 		}
 	}

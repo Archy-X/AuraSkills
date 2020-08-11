@@ -2,8 +2,6 @@ package com.archyx.aureliumskills;
 
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.skills.abilities.Ability;
-import it.unimi.dsi.fastutil.Hash;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,6 +26,7 @@ public class Options {
 	public static boolean checkBlockReplace;
 	public static double manaModifier;
 	public static boolean luckDoubleDrop;
+	public static boolean enableSkillCommands;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
@@ -93,6 +92,7 @@ public class Options {
 		checkBlockReplace = config.getBoolean("check-block-replace", true);
 		manaModifier = config.getDouble("regeneration.mana-modifier", 0.25);
 		luckDoubleDrop = config.getBoolean("luck.double-drop-enabled", true);
+		enableSkillCommands = config.getBoolean("enable-skill-commands", true);
 		if (colors.containsKey(config.getString("health-text-color").toUpperCase())) {
 			health_text_color = colors.get(config.getString("health-text-color").toUpperCase());
 		}

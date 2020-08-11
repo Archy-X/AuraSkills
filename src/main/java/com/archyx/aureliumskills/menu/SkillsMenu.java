@@ -153,7 +153,7 @@ public class SkillsMenu implements InventoryProvider{
 		
 	}
 	
-	public int getPage(Skill skill, PlayerSkill playerSkill) {
+	public static int getPage(Skill skill, PlayerSkill playerSkill) {
 		int page = (playerSkill.getSkillLevel(skill) - 2) / 24;
 		if (page >= LevelProgressionMenu.pages) {
 			page = LevelProgressionMenu.pages - 1;

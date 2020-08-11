@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.abilities.ArcheryAbilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.util.VersionUtils;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -50,7 +51,7 @@ public class ArcheryLeveler implements Listener {
 							Leveler.addXp(p, s, ArcheryAbilities.getModifiedXp(p, Source.ARCHERY_WEAK_HOSTILE));
 						}
 						else if (type.equals(EntityType.ZOMBIE) || type.equals(EntityType.SKELETON) || type.equals(EntityType.SPIDER) || type.equals(EntityType.ZOMBIE_VILLAGER)
-							|| type.equals(EntityType.PIG_ZOMBIE)) {
+							|| VersionUtils.isPigman(type)) {
 							Leveler.addXp(p, s, ArcheryAbilities.getModifiedXp(p, Source.ARCHERY_COMMON_HOSTILE));
 						}
 						else if (type.equals(EntityType.CREEPER) || type.equals(EntityType.STRAY) || type.equals(EntityType.HUSK) || type.equals(EntityType.CAVE_SPIDER) ||
