@@ -4,6 +4,9 @@ AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin,
 
 AureliumSkills heavily utilizes inventory GUIs to make the player experience more interactive and convenient. Current features are limited, updates coming in the future.
 
+#### Github Disclaimer:
+Versions here may be unreleased/in development, some may be very unstable.
+
 ### Discord:
 
 https://discord.gg/Bh2EZfB (Join for support/suggestions/discussion)
