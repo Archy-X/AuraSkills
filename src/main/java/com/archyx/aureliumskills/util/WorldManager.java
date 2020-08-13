@@ -14,8 +14,9 @@ import java.util.List;
 public class WorldManager {
 
     private List<String> blockedWorlds;
+    private List<String> disabledWorlds;
     private List<String> blockedCheckBlockReplaceWorlds;
-    private Plugin plugin;
+    private final Plugin plugin;
 
     public WorldManager(Plugin plugin) {
         this.plugin = plugin;
@@ -24,10 +25,15 @@ public class WorldManager {
     public void loadWorlds() {
         int blockedWorldsLoaded = 0;
         blockedWorlds = new LinkedList<>();
+        disabledWorlds = new LinkedList<>();
         blockedCheckBlockReplaceWorlds = new LinkedList<>();
         FileConfiguration config = plugin.getConfig();
         for (String blockedWorld : config.getStringList("blocked-worlds")) {
             blockedWorlds.add(blockedWorld);
+            blockedWorldsLoaded++;
+        }
+        for (String blockedWorld : config.getStringList("disabled-worlds")) {
+            disabledWorlds.add(blockedWorld);
             blockedWorldsLoaded++;
         }
         for (String blockedWorld : config.getStringList("blocked-check-block-replace-worlds")) {
@@ -42,7 +48,15 @@ public class WorldManager {
             return false;
         }
         World world = location.getWorld();
-        return blockedWorlds.contains(world.getName());
+        return disabledWorlds.contains(world.getName()) || blockedWorlds.contains(world.getName());
+    }
+
+    public boolean isInDisabledWorld(Location location) {
+        if (location.getWorld() == null) {
+            return false;
+        }
+        World world = location.getWorld();
+        return disabledWorlds.contains(world.getName());
     }
 
     public boolean isInBlockedCheckWorld(Location location) {

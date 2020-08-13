@@ -57,6 +57,9 @@ blocked-worlds:
 blocked-regions:
     - spawn
 
+disabled-worlds:
+    - Example
+
 # Skill specific options
 farming:
     enabled: true
