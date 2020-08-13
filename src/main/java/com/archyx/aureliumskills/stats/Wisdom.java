@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.stats;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -15,8 +16,13 @@ public class Wisdom implements Listener {
 
 	@EventHandler
 	public void onPlayerExpChange(PlayerExpChangeEvent event) {
-		if (SkillLoader.playerStats.containsKey(event.getPlayer().getUniqueId())) {
-			PlayerStat stat = SkillLoader.playerStats.get(event.getPlayer().getUniqueId());
+		Player player = event.getPlayer();
+		//Check for disabled world
+		if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+			return;
+		}
+		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
+			PlayerStat stat = SkillLoader.playerStats.get(player.getUniqueId());
 			event.setAmount((int) (event.getAmount() * (1 + (stat.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.EXPERIENCE_MODIFIER)))));
 		}
 	}
@@ -28,6 +34,10 @@ public class Wisdom implements Listener {
 		for (HumanEntity entity : event.getViewers()) {
 			if (entity instanceof Player) {
 				Player player = (Player) entity;
+				//Check for disabled world
+				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+					return;
+				}
 				if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 					if (stat == null) {
 						stat = SkillLoader.playerStats.get(player.getUniqueId());

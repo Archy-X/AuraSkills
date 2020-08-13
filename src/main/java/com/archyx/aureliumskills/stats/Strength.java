@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.stats;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -17,6 +18,10 @@ public class Strength implements Listener {
 	public void onDamage(EntityDamageByEntityEvent event) {
 		if (event.getDamager() instanceof Player) {
 			Player player = (Player) event.getDamager();
+			//Check for disabled world
+			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				return;
+			}
 			if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 				if (Options.getBooleanOption(Setting.STRENGTH_HAND_DAMAGE)) {
 					int strength = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.STRENGTH);
@@ -35,6 +40,10 @@ public class Strength implements Listener {
 				Arrow arrow = (Arrow) event.getDamager();
 				if (arrow.getShooter() instanceof Player) {
 					Player player = (Player) arrow.getShooter();
+					//Check for disabled world
+					if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+						return;
+					}
 					int strength = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.STRENGTH);
 					event.setDamage(event.getDamage() + (double) strength * Options.getDoubleOption(Setting.STRENGTH_MODIFIER));
 				}
