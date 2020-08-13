@@ -72,7 +72,7 @@ public class FightingAbilities implements Listener {
             //Modifies damage
             double modifier = Ability.FIRST_STRIKE.getValue(playerSkill.getAbilityLevel(Ability.FIRST_STRIKE)) / 100;
             event.setDamage(event.getDamage() * (1 + modifier));
-            event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(Message.BLEED_ACTIVATE).replace("&", "§"));
+            event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(Message.FIRST_STRIKE_ACTIVATE).replace("&", "§"));
             //Adds metadata
             player.setMetadata("AureliumSkills-FirstStrike", new FixedMetadataValue(plugin, true));
             //Increments counter
