@@ -4,10 +4,10 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.util.XMaterial;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.RomanNumber;
+import com.archyx.aureliumskills.util.XMaterial;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -92,46 +92,51 @@ public enum Skill {
 		for (String s : splitDesc) {
 			lore.add(ChatColor.GRAY + s);
 		}
-		lore.add(" ");
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.PRIMARY_STAT) + ": " + primaryStat.getColor() + Lang.getMessage(Message.valueOf(primaryStat.toString().toUpperCase() + "_NAME")));
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.SECONDARY_STAT) + ": " + secondaryStat.getColor() + Lang.getMessage(Message.valueOf(secondaryStat.toString().toUpperCase() + "_NAME")));
-		//Ability Levels
-		if (abilities.length == 5) {
-			boolean hasSkills = false;
-			for (Ability ability : this.getAbilities()) {
-				if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
-					hasSkills = true;
-					break;
-				}
-			}
-			if (hasSkills) {
-				lore.add(" ");
-				lore.add(ChatColor.GRAY + Lang.getMessage(Message.ABILITY_LEVELS) + ":");
+		if (player.hasPermission("aureliumskills." + this.toString().toLowerCase())) {
+			lore.add(" ");
+			lore.add(ChatColor.GRAY + Lang.getMessage(Message.PRIMARY_STAT) + ": " + primaryStat.getColor() + Lang.getMessage(Message.valueOf(primaryStat.toString().toUpperCase() + "_NAME")));
+			lore.add(ChatColor.GRAY + Lang.getMessage(Message.SECONDARY_STAT) + ": " + secondaryStat.getColor() + Lang.getMessage(Message.valueOf(secondaryStat.toString().toUpperCase() + "_NAME")));
+			//Ability Levels
+			if (abilities.length == 5) {
+				boolean hasSkills = false;
 				for (Ability ability : this.getAbilities()) {
 					if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
-						if (skill.getAbilityLevel(ability) > 0) {
-							lore.add(ChatColor.GOLD + "   " + ability.getDisplayName() + " " + RomanNumber.toRoman(skill.getAbilityLevel(ability)) + ChatColor.DARK_GRAY + " (" + ability.getMiniDescription().replace("_", nf.format(ability.getValue(skill.getAbilityLevel(ability)))) + ")");
-						} else {
-							lore.add(ChatColor.DARK_GRAY + "   " + ChatColor.STRIKETHROUGH + ability.getDisplayName());
+						hasSkills = true;
+						break;
+					}
+				}
+				if (hasSkills) {
+					lore.add(" ");
+					lore.add(ChatColor.GRAY + Lang.getMessage(Message.ABILITY_LEVELS) + ":");
+					for (Ability ability : this.getAbilities()) {
+						if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+							if (skill.getAbilityLevel(ability) > 0) {
+								lore.add(ChatColor.GOLD + "   " + ability.getDisplayName() + " " + RomanNumber.toRoman(skill.getAbilityLevel(ability)) + ChatColor.DARK_GRAY + " (" + ability.getMiniDescription().replace("_", nf.format(ability.getValue(skill.getAbilityLevel(ability)))) + ")");
+							} else {
+								lore.add(ChatColor.DARK_GRAY + "   " + ChatColor.STRIKETHROUGH + ability.getDisplayName());
+							}
 						}
 					}
 				}
 			}
-		}
-		//Level Progress
-		lore.add(" ");
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + ": " + ChatColor.YELLOW + RomanNumber.toRoman(level));
-		if (xpToNext != 0) {
-			lore.add(ChatColor.GRAY + Lang.getMessage(Message.PROGRESS_TO_LEVEL).replace("_", RomanNumber.toRoman(level + 1)) + ": " + ChatColor.YELLOW + nf.format(xp/xpToNext * 100) + "%");
-			lore.add(ChatColor.GRAY + "   " + nf.format(xp) + "/" + (int) xpToNext + " XP");
+			//Level Progress
+			lore.add(" ");
+			lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + ": " + ChatColor.YELLOW + RomanNumber.toRoman(level));
+			if (xpToNext != 0) {
+				lore.add(ChatColor.GRAY + Lang.getMessage(Message.PROGRESS_TO_LEVEL).replace("_", RomanNumber.toRoman(level + 1)) + ": " + ChatColor.YELLOW + nf.format(xp / xpToNext * 100) + "%");
+				lore.add(ChatColor.GRAY + "   " + nf.format(xp) + "/" + (int) xpToNext + " XP");
+			} else {
+				lore.add(ChatColor.GOLD + Lang.getMessage(Message.MAX_LEVEL));
+			}
+			//Click text
+			if (showClickText) {
+				lore.add(" ");
+				lore.add(ChatColor.YELLOW + Lang.getMessage(Message.CLICK_SKILL));
+			}
 		}
 		else {
-			lore.add(ChatColor.GOLD + Lang.getMessage(Message.MAX_LEVEL));
-		}
-		//Click text
-		if (showClickText) {
 			lore.add(" ");
-			lore.add(ChatColor.YELLOW + Lang.getMessage(Message.CLICK_SKILL));
+			lore.add(ChatColor.RED + Lang.getMessage(Message.SKILL_LOCKED));
 		}
 		//Sets item
 		if (material.equals(Material.SPLASH_POTION) || material.equals(Material.POTION)) {

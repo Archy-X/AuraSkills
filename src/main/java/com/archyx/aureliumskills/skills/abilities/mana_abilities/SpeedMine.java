@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
-import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;

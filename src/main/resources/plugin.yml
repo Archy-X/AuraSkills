@@ -1,5 +1,5 @@
 name: AureliumSkills
-version: Alpha 1.3.1
+version: Alpha 1.3.2
 main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
@@ -13,7 +13,7 @@ permissions:
         default: op
     aureliumskills.ability.setlevel:
         default: op
-    aureliumskils.reload:
+    aureliumskills.reload:
         default: op
     aureliumskills.lang:
         default: op
@@ -23,3 +23,33 @@ permissions:
         default: true
     aureliumskills.skill.reset:
         default: op
+    aureliumskills.farming:
+        default: true
+    aureliumskills.foraging:
+        default: true
+    aureliumskills.mining:
+        default: true
+    aureliumskills.fishing:
+        default: true
+    aureliumskills.excavation:
+        default: true
+    aureliumskills.archery:
+        default: true
+    aureliumskills.defense:
+        default: true
+    aureliumskills.fighting:
+        default: true
+    aureliumskills.endurance:
+        default: true
+    aureliumskills.agility:
+        default: true
+    aureliumskills.alchemy:
+        default: true
+    aureliumskills.enchanting:
+        default: true
+    aureliumskills.sorcery:
+        default: true
+    aureliumskills.healing:
+        default: true
+    aureliumskills.forging:
+        default: true

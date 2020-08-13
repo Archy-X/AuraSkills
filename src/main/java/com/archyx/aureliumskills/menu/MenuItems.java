@@ -1,16 +1,15 @@
 package com.archyx.aureliumskills.menu;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.util.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MenuItems {
 

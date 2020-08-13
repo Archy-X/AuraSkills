@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.skills.levelers;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.Bukkit;

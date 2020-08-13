@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.skills;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.stats.PlayerStat;
-import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

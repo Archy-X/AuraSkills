@@ -1,10 +1,9 @@
 package com.archyx.aureliumskills.stats;
 
-import java.util.Random;
-
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -17,7 +16,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.archyx.aureliumskills.skills.SkillLoader;
+import java.util.Random;
 
 public class Luck implements Listener {
 

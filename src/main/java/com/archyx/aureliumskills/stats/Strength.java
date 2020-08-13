@@ -2,8 +2,8 @@ package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
-import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.util.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;

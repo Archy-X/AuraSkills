@@ -115,6 +115,8 @@ messages:
     language-not-found:
       EN: Language not found in config!
       VN: Không tìm thấy ngôn ngữ bạn chọn trong config
+    skill-locked:
+      EN: You have not unlocked this skill!
   skills:
     your-skills:
       EN: Your Skills

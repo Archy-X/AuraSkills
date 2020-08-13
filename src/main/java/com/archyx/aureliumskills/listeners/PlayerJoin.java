@@ -1,9 +1,9 @@
 package com.archyx.aureliumskills.listeners;
 
-import dev.dbassett.skullcreator.SkullCreator;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
+import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;

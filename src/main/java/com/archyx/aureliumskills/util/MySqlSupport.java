@@ -2,8 +2,8 @@ package com.archyx.aureliumskills.util;
 
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.stats.PlayerStat;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 

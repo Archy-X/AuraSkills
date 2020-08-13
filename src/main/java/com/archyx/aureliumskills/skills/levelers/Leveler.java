@@ -1,22 +1,22 @@
 package com.archyx.aureliumskills.skills.levelers;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.magic.ManaManager;
+import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.stats.ActionBar;
 import com.archyx.aureliumskills.stats.PlayerStat;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.util.BigNumber;
 import com.archyx.aureliumskills.util.RomanNumber;
-import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.stats.Stat;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;

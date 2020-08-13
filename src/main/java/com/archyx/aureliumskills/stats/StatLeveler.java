@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.stats;
 
-import com.archyx.aureliumskills.magic.ManaManager;
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.magic.ManaManager;
 import org.bukkit.entity.Player;
 
 public class StatLeveler {

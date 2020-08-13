@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -11,8 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.plugin.Plugin;
-
-import com.archyx.aureliumskills.skills.SkillLoader;
 
 public class Regeneration implements Listener {
 

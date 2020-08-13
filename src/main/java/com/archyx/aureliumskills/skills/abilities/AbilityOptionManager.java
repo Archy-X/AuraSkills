@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.skills.abilities;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityOption;
-import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

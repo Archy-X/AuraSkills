@@ -1,9 +1,12 @@
 package com.archyx.aureliumskills.skills.abilities;
 
-import java.util.Random;
-
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.levelers.Leveler;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,11 +15,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
+import java.util.Random;
 
 public class FishingAbilities implements Listener {
 

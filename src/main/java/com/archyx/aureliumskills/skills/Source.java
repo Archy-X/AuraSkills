@@ -31,7 +31,7 @@ public enum Source {
 	GRANITE("mining.types.granite", 0.2),
 	DIORITE("mining.types.diorite", 0.2),
 	ANDESITE("mining.types.andesite", 0.2),
-	COAL_ORE("mining.types.coal-ore", 1),
+	COAL_ORE("mining.types.coal-ore", 1.0),
 	IRON_ORE("mining.types.iron-ore", 1.8),
 	QUARTZ_ORE("mining.types.quartz-ore", 1.8),
 	REDSTONE_ORE("mining.types.redstone-ore", 5.7),
@@ -54,6 +54,28 @@ public enum Source {
 	ANCIENT_DEBRIS("mining.types.ancient-debris", 500.0),
 	END_STONE("mining.types.end-stone", 0.5),
 	OBSIDIAN("mining.types.obsidian", 10.0),
+	//TODO Implement new sources
+	/*
+	BONE_BLOCK("mining.types.bone-block", 4.7),
+	MOSSY_COBBLESTONE("mining.types.mossy-cobblestone", 0.5),
+	NETHER_BRICKS("mining.types.nether-bricks", 1.0),
+	NETHER_BRICK_FENCE("mining.types.nether-brick-fence", 0.7),
+	NETHER_BRICK_STAIRS("mining.types.nether-brick-stairs", 0.8),
+	BLACKSTONE_SLAB("mining.types.blackstone-slab", 0.6),
+	BLACKSTONE_WALL("mining.types.blackstone-wall", 0.5),
+	CHAIN("mining.types.chain", 1.0),
+	CHISELED_POLISHED_BLACKSTONE("mining.types.chiseled-polished-blackstone", 1.0),
+	CRACKED_POLISHED_BLACKSTONE_BRICKS("mining.types.cracked-polished-blackstone-bricks", 1.0),
+	GOLD_BLOCK("mining.types.gold-block", 1.0),
+	GILDED_BLACKSTONE("mining.types.gilded-blackstone", 7.6),
+	POLISHED_BASALT("mining.types.polished-basalt", 1.0),
+	POLISHED_BLACKSTONE_BRICKS("mining.types.polished-blackstone-bricks", 0.7),
+	POLISHED_BLACKSTONE_BRICK_STAIRS("mining.types.polished-blackstone-brick-stairs", 0.5),
+	QUARTZ_BLOCK("mining.types.quartz-block", 0.9),
+	QUARTZ_SLAB("mining.types.quartz-slab", 0.4),
+	SMOOTH_QUARTZ("mining.types.smooth-quartz", 1.0),
+	SMOOTH_QUARTZ_SLAB("mining.types.smooth-quartz-slab", 0.5),
+	 */
     RAW_FISH("fishing.types.raw-fish", 25),
     RAW_SALMON("fishing.types.raw-salmon", 60),
     CLOWNFISH("fishing.types.clownfish", 750),
@@ -121,10 +143,10 @@ public enum Source {
 	COMBINE_ARMOR_PER_LEVEL("forging.types.combine-armor-per-level", 25),
 	COMBINE_TOOL_PER_LEVEL("forging.types.combine-tool-per-level", 30);
 	
-	private String path;
-	private double def;
+	private final String path;
+	private final double def;
 	
-	private Source(String path, double def) {
+	Source(String path, double def) {
 		this.path = path;
 		this.def = def;
 	}

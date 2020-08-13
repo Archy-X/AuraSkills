@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.skills.abilities;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 
 public enum Ability {

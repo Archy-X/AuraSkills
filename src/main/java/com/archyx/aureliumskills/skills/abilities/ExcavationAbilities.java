@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.skills.abilities;
 
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.XMaterial;
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.PlayerSkill;
+import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.util.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

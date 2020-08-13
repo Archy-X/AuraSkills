@@ -212,7 +212,8 @@ public enum Message {
 	UNKNOWN_SKILL("skills.unknown-skill", "Unknown skill!"),
 	CONFIG_RELOADED("basic.config-reloaded", "Config reloaded!"),
 	LANGUAGE_SET_TO("basic.language-set-to", "Language set to _"),
-	LANGUAGE_NOT_FOUND("basic.language-not-found", "Language not found in config!");
+	LANGUAGE_NOT_FOUND("basic.language-not-found", "Language not found in config!"),
+	SKILL_LOCKED("basic.skill-locked", "You have not unlocked this skill!");
 	
 	private String path;
 	private String defaultMessage;

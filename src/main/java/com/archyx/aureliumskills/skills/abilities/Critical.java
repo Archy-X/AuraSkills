@@ -1,8 +1,7 @@
 package com.archyx.aureliumskills.skills.abilities;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import org.bukkit.entity.Player;
 
 import java.util.Random;
 
@@ -10,17 +9,18 @@ public class Critical {
 
     private static Random r = new Random();
 
-    public static boolean isCrit(Player player) {
-        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-            PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (r.nextDouble() < (Ability.CRIT_CHANCE.getValue(skill.getAbilityLevel(Ability.CRIT_CHANCE)) / 100)) {
-                return true;
-            }
+    public static boolean isCrit(PlayerSkill playerSkill) {
+        if (r.nextDouble() < (Ability.CRIT_CHANCE.getValue(playerSkill.getAbilityLevel(Ability.CRIT_CHANCE)) / 100)) {
+            return true;
         }
         return false;
     }
 
-    public static double getCritMultiplier(Player player) {
+    public static double getCritMultiplier(PlayerSkill playerSkill) {
+        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.CRIT_DAMAGE)) {
+            double multiplier = Ability.CRIT_DAMAGE.getValue(playerSkill.getAbilityLevel(Ability.CRIT_DAMAGE)) / 100;
+            return 2.0 * (1 + multiplier);
+        }
         return 2.0;
     }
 

@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
@@ -9,8 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import com.archyx.aureliumskills.skills.SkillLoader;
 
 public class Health implements Listener {
 

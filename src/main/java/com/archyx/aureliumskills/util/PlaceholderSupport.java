@@ -1,9 +1,9 @@
 package com.archyx.aureliumskills.util;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;

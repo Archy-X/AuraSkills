@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.skills.levelers;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.google.common.collect.Sets;
-import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
