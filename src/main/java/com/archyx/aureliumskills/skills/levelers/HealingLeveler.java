@@ -36,6 +36,10 @@ public class HealingLeveler implements Listener {
 					return;
 				}
 			}
+			//Check for permission
+			if (!event.getPlayer().hasPermission("aureliumskills.healing")) {
+				return;
+			}
 			if (event.getItem().getType().equals(Material.POTION)) {
 				if (event.getItem().getItemMeta() instanceof PotionMeta) {
 					PotionMeta meta = (PotionMeta) event.getItem().getItemMeta();
@@ -76,6 +80,10 @@ public class HealingLeveler implements Listener {
 						PotionMeta meta = (PotionMeta) event.getPotion().getItem().getItemMeta();
 						PotionData data = meta.getBasePotionData();
 						Skill s = Skill.HEALING;
+						//Check for permission
+						if (!p.hasPermission("aureliumskills.healing")) {
+							return;
+						}
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 							if (data.isExtended()) {

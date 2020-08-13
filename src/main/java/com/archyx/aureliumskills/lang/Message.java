@@ -203,6 +203,21 @@ public enum Message {
 	NO_DEBUFF_NAME("abilities.defense.no-debuff.name", "No Debuff"),
 	NO_DEBUFF_DESC("abilities.defense.no-debuff.desc", "_% chance to negate a harmful potion effect being applied."),
 	NO_DEBUFF_MINI_DESC("abilities.defense.no-debuff.mini-desc", "_% No Debuff"),
+	CRIT_DAMAGE_NAME("abilities.fighting.crit-damage.name", "Crit Damage"),
+	CRIT_DAMAGE_DESC("abilities.fighting.crit-damage.desc", "Increases critical hit damage by _%"),
+	CRIT_DAMAGE_MINI_DESC("abilities.fighting.crit-damage.mini-desc", "+_% Crit Damage"),
+	FIGHTER_NAME("abilities.fighting.fighter.name", "Fighter"),
+	FIGHTER_DESC("abilities.fighting.fighter.desc", "Earn _% more Fighting XP"),
+	FIGHTER_MINI_DESC("abilities.fighting.fighter.mini-desc", "+_% XP"),
+	SWORD_MASTER_NAME("abilities.fighting.sword-master.name", "Sword Master"),
+	SWORD_MASTER_DESC("abilities.fighting.sword-master.desc", "Deal _% more damage with swords."),
+	SWORD_MASTER_MINI_DESC("abilities.fighting.sword-master.mini-desc", "+_% Sword Damage"),
+	FIRST_STRIKE_NAME("abilities.fighting.first-strike.name", "First Strike"),
+	FIRST_STRIKE_DESC("abilities.fighting.first-strike.desc", "Deal _% more damage on the first hit."),
+	FIRST_STRIKE_MINI_DESC("abilities.fighting.first-strike.mini-desc", "+_% Dmg First Hit"),
+	BLEED_NAME("abilities.fighting.bleed.name", "Bleed"),
+	BLEED_DESC("abilities.fighting.bleed.desc", "_% chance to make the enemy bleed for 3 bleed ticks, dealing $ damage per tick."),
+	BLEED_MINI_DESC("abilities.fighting.bleed.mini-desc", "_% Chance, $ Damage"),
 	ABILITY_LEVELS("abilities.ability-levels", "Ability Levels"),
 	ABILITY_NOT_READY("abilities.ability-not-ready", "Ability not ready!"),
 	NOT_ENOUGH_MANA("abilities.not-enough-mana", "Not enough mana!"),
@@ -213,7 +228,12 @@ public enum Message {
 	CONFIG_RELOADED("basic.config-reloaded", "Config reloaded!"),
 	LANGUAGE_SET_TO("basic.language-set-to", "Language set to _"),
 	LANGUAGE_NOT_FOUND("basic.language-not-found", "Language not found in config!"),
-	SKILL_LOCKED("basic.skill-locked", "You have not unlocked this skill!");
+	SKILL_LOCKED("basic.skill-locked", "You have not unlocked this skill!"),
+	ABILITY_UNLOCK("abilities.ability-unlock", "Ability Unlock"),
+	ABILITY_UNLOCK_MESSAGE("abilities.ability-unlock-message", "&aAbility Unlock! &6&l_ &7has been unlocked"),
+	ABILITY_LEVEL_UP("abilities.ability-level-up", "&aAbility Level Up! &6&l_ &7is now level &6$"),
+	FIRST_STRIKE_ACTIVATE("abilities.fighting.first-strike.activate", "&cFirst Strike Dealt!"),
+	BLEED_ACTIVATE("abilities.fighting.bleed.activate", "&cEnemy Bleeding!");
 	
 	private String path;
 	private String defaultMessage;

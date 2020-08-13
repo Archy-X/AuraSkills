@@ -466,6 +466,12 @@ messages:
     mana-required:
       EN: _ Mana required
       PL: _ Potrzebnej Many
+    ability-unlock:
+      EN: Ability Unlock
+    ability-unlock-message:
+      EN: '&aAbility Unlock! &6&l_ &7has been unlocked'
+    ability-level-up:
+      EN: '&aAbility Level Up! &6&l_ &7is now level &6$'
     farming:
       bountiful-harvest:
         name:
@@ -897,3 +903,43 @@ messages:
           EN: _% chance to negate a harmful potion effect being applied.
         mini-desc:
           EN: _% No Debuff
+    fighting:
+      crit-damage:
+        name:
+          EN: Crit Damage
+        desc:
+          EN: Increases critical hit damage by _%
+        mini-desc:
+          EN: +_% Crit Damage
+      fighter:
+        name:
+          EN: Fighter
+        desc:
+          EN: Earn _% more Fighting XP
+        mini-desc:
+          EN: +_% XP
+      sword-master:
+        name:
+          EN: Sword Master
+        desc:
+          EN: Deal _% more damage with swords.
+        mini-desc:
+          EN: +_% Sword Damage
+      first-strike:
+        name:
+          EN: First Strike
+        desc:
+          EN: Deal _% more damage on the first hit.
+        mini-desc:
+          EN: +_% Dmg First Hit
+        activate:
+          EN: '&cFirst Strike Dealt!'
+      bleed:
+        name:
+          EN: Bleed
+        desc:
+          EN: _% chance to make the enemy bleed for 3 bleed ticks, dealing $ damage per tick.
+        mini-desc:
+          EN: _% Chance, $ Damage
+        activate:
+          EN: '&cEnemy Bleeding!'

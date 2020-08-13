@@ -45,6 +45,10 @@ public class MiningLeveler implements Listener {
 			Block b = event.getBlock();
 			Skill s = Skill.MINING;
 			Material mat = event.getBlock().getType();
+			//Check for permission
+			if (!p.hasPermission("aureliumskills.mining")) {
+				return;
+			}
 			if (mat.equals(Material.STONE)) {
 				if (XMaterial.isNewVersion()) {
 					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.STONE));

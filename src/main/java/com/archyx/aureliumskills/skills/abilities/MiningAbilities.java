@@ -77,6 +77,10 @@ public class MiningAbilities implements Listener {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.PICK_MASTER)) {
 				if (event.getDamager() instanceof Player) {
 					Player player = (Player) event.getDamager();
+					//Check permission
+					if (!player.hasPermission("aureliumskills.mining")) {
+						return;
+					}
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
 							Material mat = player.getInventory().getItemInMainHand().getType();
@@ -96,6 +100,10 @@ public class MiningAbilities implements Listener {
 	public void hardenedArmor(PlayerItemDamageEvent event) {
 		if (Options.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.HARDENED_ARMOR)) {
+				//Check permission
+				if (!event.getPlayer().hasPermission("aureliumskills.mining")) {
+					return;
+				}
 				//Checks if item damaged is armor
 				if (ItemUtils.isArmor(event.getItem().getType())) {
 					if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
@@ -153,6 +161,10 @@ public class MiningAbilities implements Listener {
 					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
 					if (mat.name().toUpperCase().contains("PICKAXE")) {
 						Player player = event.getPlayer();
+						//Check permission
+						if (!player.hasPermission("aureliumskills.mining")) {
+							return;
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.SPEED_MINE) > 0) {
 								//Checks if speed mine is already activated

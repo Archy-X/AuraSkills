@@ -41,11 +41,19 @@ public class AgilityLeveler implements Listener {
 			if (event.getCause().equals(DamageCause.FALL)) {
 				if (event.getEntity() instanceof Player) {
 					Player player = (Player) event.getEntity();
+					//Checks if in blocked world
+					if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
+						return;
+					}
 					//Checks if in blocked region
 					if (AureliumSkills.worldGuardEnabled) {
 						if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
 							return;
 						}
+					}
+					//Check for permission
+					if (!player.hasPermission("aureliumskills.agility")) {
+						return;
 					}
 					if (event.getFinalDamage() < player.getHealth()) {
 						Leveler.addXp(player, Skill.AGILITY, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * Options.getXpAmount(Source.FALL_DAMAGE));
@@ -74,6 +82,10 @@ public class AgilityLeveler implements Listener {
 				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
 					return;
 				}
+			}
+			//Check for permission
+			if (!player.hasPermission("aureliumskills.agility")) {
+				return;
 			}
 	        if (player.getVelocity().getY() > 0) {
 	            double jumpVelocity = 0.42F;

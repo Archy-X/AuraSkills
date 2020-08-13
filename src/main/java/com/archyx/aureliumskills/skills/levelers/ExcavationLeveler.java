@@ -45,6 +45,10 @@ public class ExcavationLeveler implements Listener{
 			Block b = event.getBlock();
 			Player p = event.getPlayer();
 			Material mat = event.getBlock().getType();
+			//Check for permission
+			if (!p.hasPermission("aureliumskills.excavation")) {
+				return;
+			}
 			if (mat.equals(Material.SAND)) {
 				if (XMaterial.isNewVersion()) {
 					Leveler.addXp(p, s, ExcavationAbilities.getModifiedXp(p, Source.SAND));

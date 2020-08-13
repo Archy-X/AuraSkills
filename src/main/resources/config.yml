@@ -402,6 +402,28 @@ abilities:
         enabled: true
         base: 5.0
         per-level: 5.0
+    crit-damage:
+        enabled: true
+        base: 5.0
+        per-level: 5.0
+    fighter:
+        enabled: true
+        base: 10.0
+        per-level: 10.0
+    sword-master:
+        enabled: true
+        base: 3.0
+        per-level: 2.0
+    first-strike:
+        enabled: true
+        base: 20.0
+        per-level: 10.0
+    bleed:
+        enabled: true
+        base: 3.0
+        per-level: 4.0
+        base-2: 0.5
+        per-level-2: 0.5
 mana-abilities:
     speed-mine:
         enabled: true

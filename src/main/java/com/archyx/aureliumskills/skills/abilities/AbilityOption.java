@@ -2,10 +2,9 @@ package com.archyx.aureliumskills.skills.abilities;
 
 public class AbilityOption {
 
-    private boolean enabled;
-    private double baseValue;
-    private double valuePerLevel;
-    private boolean hasTwoValues;
+    private final boolean enabled;
+    private final double baseValue;
+    private final double valuePerLevel;
     private double baseValue2;
     private double valuePerLevel2;
 
@@ -17,7 +16,6 @@ public class AbilityOption {
 
     public AbilityOption(boolean enabled, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2) {
         this.enabled = enabled;
-        this.hasTwoValues = true;
         this.baseValue = baseValue1;
         this.valuePerLevel = valuePerLevel1;
         this.baseValue2 = baseValue2;
@@ -30,10 +28,6 @@ public class AbilityOption {
 
     public double getValuePerLevel() {
         return valuePerLevel;
-    }
-
-    public boolean hasTwoValues() {
-        return hasTwoValues;
     }
 
     public double getBaseValue2() {

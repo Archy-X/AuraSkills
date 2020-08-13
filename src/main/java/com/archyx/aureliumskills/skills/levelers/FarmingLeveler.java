@@ -46,6 +46,10 @@ public class FarmingLeveler implements Listener{
 			Block b = event.getBlock();
 			Skill s = Skill.FARMING;
 			Material mat = b.getType();
+			//Check for permission
+			if (!p.hasPermission("aureliumskills.farming")) {
+				return;
+			}
 			if (XMaterial.isNewVersion()) {
 				if (b.getBlockData() instanceof Ageable) {
 					Ageable crop = (Ageable) b.getBlockData();

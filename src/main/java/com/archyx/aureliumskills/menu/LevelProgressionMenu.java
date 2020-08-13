@@ -186,7 +186,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 	}
 	
 	public List<String> getLore(int level) {
-		List<String> lore = new LinkedList<String>();
+		List<String> lore = new LinkedList<>();
 		lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + " " + ChatColor.WHITE + level);
 		lore.add(ChatColor.GRAY + Lang.getMessage(Message.REWARDS) + ":");
 		lore.add(skill.getPrimaryStat().getColor() + "   +1 " + skill.getPrimaryStat().getSymbol() + " " + Lang.getMessage(Message.valueOf(skill.getPrimaryStat().toString().toUpperCase() + "_NAME")));
@@ -198,12 +198,15 @@ public class LevelProgressionMenu implements InventoryProvider {
 			if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
 				lore.add(" ");
 				if (level <= 6) {
-					lore.add(ChatColor.GOLD + ability.getDisplayName() + ChatColor.GREEN + "" + ChatColor.BOLD + " Ability Unlock");
+					lore.add(ChatColor.GOLD + ability.getDisplayName() + ChatColor.GREEN + "" + ChatColor.BOLD + " " + Lang.getMessage(Message.ABILITY_UNLOCK));
 				} else {
 					lore.add(ChatColor.GOLD + ability.getDisplayName() + " " + RomanNumber.toRoman((level + 3) / 5));
 				}
 				NumberFormat nf = new DecimalFormat("##.##");
 				String fullDesc = ability.getDescription().replace("_", nf.format(ability.getValue((level + 3) / 5)));
+				if (ability.hasTwoValues()) {
+					fullDesc = fullDesc.replace("$", nf.format(ability.getValue2((level + 3) / 5)));
+				}
 				String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1," + 35 + "})(?:\\s+|\\s*$)", "$1\n").split("\n");
 				for (String s : splitDesc) {
 					lore.add(ChatColor.GRAY + "   " + s);

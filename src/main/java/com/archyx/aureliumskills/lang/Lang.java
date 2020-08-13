@@ -102,7 +102,7 @@ public class Lang {
 		else if (defaultLang.containsKey(message)) {
 			return defaultLang.get(message);
 		}
-		return null;
+		return "";
 	}
 	
 	public FileConfiguration getConfig() {

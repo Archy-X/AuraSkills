@@ -116,10 +116,14 @@ public class Leveler {
 					Ability ability = skill.getAbilities()[(currentLevel + 4) % 5];
 					playerSkill.levelUpAbility(ability);
 					if (playerSkill.getAbilityLevel(ability) > 1) {
-						player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Ability Level Up! " + ChatColor.GOLD + "" + ChatColor.BOLD + ability.getDisplayName() + ChatColor.GRAY + " is now level " + ChatColor.GOLD + RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)));
+						String abilityLevelUp = Lang.getMessage(Message.ABILITY_LEVEL_UP);
+						abilityLevelUp = abilityLevelUp.replace("&", "§").replace("_", ability.getDisplayName()).replace("$", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)));
+						player.sendMessage(AureliumSkills.tag + abilityLevelUp);
 					}
 					else {
-						player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Ability Unlock! " + ChatColor.GOLD + "" + ChatColor.BOLD + ability.getDisplayName() + ChatColor.GRAY + " has been unlocked");
+						String abilityUnlockMessage = Lang.getMessage(Message.ABILITY_UNLOCK_MESSAGE);
+						abilityUnlockMessage = abilityUnlockMessage.replace("&", "§").replace("_", ability.getDisplayName());
+						player.sendMessage(AureliumSkills.tag  + abilityUnlockMessage);
 					}
 				}
 				playerStat.addStatLevel(skill.getPrimaryStat(), 1);
@@ -132,11 +136,7 @@ public class Leveler {
 				}
 				player.sendTitle(ChatColor.GREEN + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.LEVEL_UP), ChatColor.GOLD + "" + RomanNumber.toRoman(currentLevel) + " ➜ " + RomanNumber.toRoman(currentLevel + 1), 5, 100, 5);
 				player.playSound(player.getLocation(), "entity.player.levelup", SoundCategory.MASTER, 1f, 0.5f);
-				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-					public void run() {
-						checkLevelUp(player, skill);
-					}
-				}, 20L);
+				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), 20L);
 			}
 		}
 	}

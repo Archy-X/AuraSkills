@@ -122,7 +122,7 @@ public class StatsMenu implements InventoryProvider{
 		//Add player stat levels and values
 		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-			lore.add(ChatColor.GRAY + "Your Level: " + stat.getColor() + playerStat.getStatLevel(stat));
+			lore.add(ChatColor.GRAY + Lang.getMessage(Message.YOUR_LEVEL) + ": " + stat.getColor() + playerStat.getStatLevel(stat));
 			lore.add(" ");
 			for (String line : getStatValue(stat, playerStat).split("\n")) {
 				lore.add(line);

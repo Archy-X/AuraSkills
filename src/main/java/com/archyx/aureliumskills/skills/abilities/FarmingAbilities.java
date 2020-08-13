@@ -75,7 +75,11 @@ public class FarmingAbilities implements Listener {
 	public void geneticist(PlayerItemConsumeEvent event) {
 		if (Options.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.GENETICIST)) {
-				Player player = (Player) event.getPlayer();
+				Player player = event.getPlayer();
+				//Check permission
+				if (!player.hasPermission("aureliumskills.farming")) {
+					return;
+				}
 				Material mat = event.getItem().getType();
 				if (mat.equals(Material.BREAD) || mat.equals(Material.APPLE) || mat.equals(Material.GOLDEN_APPLE) || mat.equals(XMaterial.POTATO.parseMaterial())
 						|| mat.equals(Material.BAKED_POTATO) || mat.equals(XMaterial.CARROT.parseMaterial()) || mat.equals(Material.GOLDEN_CARROT) || mat.equals(Material.MELON)
@@ -95,6 +99,10 @@ public class FarmingAbilities implements Listener {
 				if (!event.isCancelled()) {
 					if (event.getDamager() instanceof Player) {
 						Player player = (Player) event.getDamager();
+						//Check permission
+						if (!player.hasPermission("aureliumskills.farming")) {
+							return;
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
 								Material mat = player.getInventory().getItemInMainHand().getType();

@@ -35,6 +35,10 @@ public class EnchantingLeveler implements Listener {
 			}
 			Player p = event.getEnchanter();
 			Material mat = event.getItem().getType();
+			//Check for permission
+			if (!p.hasPermission("aureliumskills.enchanting")) {
+				return;
+			}
 			if (ItemUtils.isArmor(mat)) {
 				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * Options.getXpAmount(Source.ARMOR_PER_LEVEL));
 			}

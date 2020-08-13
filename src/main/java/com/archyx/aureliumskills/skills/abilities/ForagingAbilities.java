@@ -80,6 +80,10 @@ public class ForagingAbilities implements Listener {
 				if (!event.isCancelled()) {
 					if (event.getDamager() instanceof Player) {
 						Player player = (Player) event.getDamager();
+						//Check permission
+						if (!player.hasPermission("aureliumskills.foraging")) {
+							return;
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
 								Material mat = player.getInventory().getItemInMainHand().getType();
@@ -109,6 +113,10 @@ public class ForagingAbilities implements Listener {
 							//If last damage was from player
 							if (e.getDamager() instanceof Player) {
 								Player player = (Player) e.getDamager();
+								//Check permission
+								if (!player.hasPermission("aureliumskills.foraging")) {
+									return;
+								}
 								if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 									//If damage was an attack
 									if (e.getCause().equals(DamageCause.ENTITY_ATTACK)) {
@@ -250,6 +258,10 @@ public class ForagingAbilities implements Listener {
 					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
 					if (mat.name().toUpperCase().contains("_AXE")) {
 						Player player = event.getPlayer();
+						//Check permission
+						if (!player.hasPermission("aureliumskills.foraging")) {
+							return;
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.TREECAPITATOR) > 0) {
 								//Checks if speed mine is already activated

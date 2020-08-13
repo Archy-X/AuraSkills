@@ -33,6 +33,10 @@ public class EnduranceLeveler {
 							return;
 						}
 					}
+					//Check for permission
+					if (!player.hasPermission("aureliumskills.endurance")) {
+						return;
+					}
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						int xpAmount = 0;
 						if (player.hasMetadata("skillsLastSprintDist")) {

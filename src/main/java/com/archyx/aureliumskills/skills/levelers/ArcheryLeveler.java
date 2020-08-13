@@ -39,6 +39,10 @@ public class ArcheryLeveler implements Listener {
 						EntityType type = e.getType();
 						Player p = (Player) e.getKiller();
 						Skill s = Skill.ARCHERY;
+						//Check for permission
+						if (!p.hasPermission("aureliumskills.archery")) {
+							return;
+						}
 						if (type.equals(EntityType.CHICKEN) || type.equals(EntityType.BAT) || type.equals(EntityType.OCELOT) || type.equals(EntityType.RABBIT)) {
 							Leveler.addXp(p, s, ArcheryAbilities.getModifiedXp(p, Source.ARCHERY_SMALL_PASSIVE));
 						}

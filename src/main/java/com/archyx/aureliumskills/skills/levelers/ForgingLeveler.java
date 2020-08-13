@@ -48,6 +48,10 @@ public class ForgingLeveler implements Listener {
 							}
 						}
 					}
+					//Check for permission
+					if (!event.getWhoClicked().hasPermission("aureliumskills.forging")) {
+						return;
+					}
 					if (event.getSlot() == 2) {
 						if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 							if (event.getWhoClicked() instanceof Player) {

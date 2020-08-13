@@ -37,6 +37,10 @@ public class DefenseLeveler implements Listener {
 							return;
 						}
 					}
+					//Check for permission
+					if (!p.hasPermission("aureliumskills.defense")) {
+						return;
+					}
 					if (p.isBlocking()) {
 						return;
 					}

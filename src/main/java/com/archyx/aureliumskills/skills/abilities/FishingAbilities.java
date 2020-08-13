@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class FishingAbilities implements Listener {
 
-	private static Random r = new Random();
+	private final Random r = new Random();
 	
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -36,20 +36,25 @@ public class FishingAbilities implements Listener {
 	public void luckyCatch(PlayerFishEvent event) {
 		if (Options.isEnabled(Skill.FISHING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUCKY_CATCH)) {
+				Player player = event.getPlayer();
 				//Checks if in blocked world
-				if (AureliumSkills.worldManager.isInBlockedWorld(event.getPlayer().getLocation())) {
+				if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
 					return;
 				}
 				//Checks if in blocked region
 				if (AureliumSkills.worldGuardEnabled) {
-					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getPlayer().getLocation())) {
+					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
 						return;
 					}
 				}
+				//Check permission
+				if (!player.hasPermission("aureliumskills.fishing")) {
+					return;
+				}
 				if (event.getCaught() instanceof Item) {
 					if (event.getExpToDrop() > 0) {
-						if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
-							PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
+						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+							PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 							if (r.nextDouble() < (Ability.LUCKY_CATCH.getValue(skill.getAbilityLevel(Ability.LUCKY_CATCH)) / 100)) {
 								Item item = (Item) event.getCaught();
 								ItemStack drop = item.getItemStack();
@@ -68,15 +73,20 @@ public class FishingAbilities implements Listener {
 	@EventHandler
 	public void treasureHunterAndEpicCatch(PlayerFishEvent event) {
 		if (Options.isEnabled(Skill.FISHING)) {
+			Player player = event.getPlayer();
 			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getPlayer().getLocation())) {
+			if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
 				return;
 			}
 			//Checks if in blocked region
 			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getPlayer().getLocation())) {
+				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
 					return;
 				}
+			}
+			//Check permission
+			if (!player.hasPermission("aureliumskills.fishing")) {
+				return;
 			}
 			if (event.getCaught() instanceof Item) {
 				if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
@@ -114,6 +124,10 @@ public class FishingAbilities implements Listener {
 						if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
 							PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
 							Player player = event.getPlayer();
+							//Check permission
+							if (!player.hasPermission("aureliumskills.fishing")) {
+								return;
+							}
 							Vector vector = player.getLocation().toVector().subtract(event.getCaught().getLocation().toVector());
 							event.getCaught().setVelocity(vector.multiply(0.004 + (Ability.GRAPPLER.getValue(skill.getAbilityLevel(Ability.GRAPPLER)) / 25000)));
 						}

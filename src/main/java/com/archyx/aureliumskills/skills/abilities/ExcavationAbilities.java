@@ -41,6 +41,10 @@ public class ExcavationAbilities implements Listener {
 					//Checks if entity is damaged by player
 					if (event.getDamager() instanceof Player) {
 						Player player = (Player) event.getDamager();
+						//Check permission
+						if (!player.hasPermission("aureliumskills.excavation")) {
+							return;
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							//Checks if item used is a shovel
 							Material mat = player.getInventory().getItemInMainHand().getType();
@@ -62,6 +66,10 @@ public class ExcavationAbilities implements Listener {
 		if (Options.isEnabled(Skill.EXCAVATION)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.BIGGER_SCOOP)) {
 				if (!event.isCancelled()) {
+					//Check permission
+					if (!event.getPlayer().hasPermission("aureliumskills.excavation")) {
+						return;
+					}
 					if (event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
 						Material mat = event.getBlock().getType();
 						if (mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(Material.SAND) || mat.equals(Material.SOUL_SAND)
@@ -87,6 +95,10 @@ public class ExcavationAbilities implements Listener {
 		if (Options.isEnabled(Skill.EXCAVATION)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.METAL_DETECTOR)) {
 				if (!event.isCancelled()) {
+					//Check permission
+					if (!event.getPlayer().hasPermission("aureliumskills.excavation")) {
+						return;
+					}
 					if (event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
 						Material mat = event.getBlock().getType();
 						if (mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(Material.SAND) || mat.equals(Material.SOUL_SAND)
@@ -110,6 +122,10 @@ public class ExcavationAbilities implements Listener {
 		if (Options.isEnabled(Skill.EXCAVATION)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUCKY_SPADES)) {
 				if (!event.isCancelled()) {
+					//Check permission
+					if (!event.getPlayer().hasPermission("aureliumskills.excavation")) {
+						return;
+					}
 					if (event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
 						Material mat = event.getBlock().getType();
 						if (mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(Material.SAND) || mat.equals(Material.SOUL_SAND)

@@ -46,6 +46,10 @@ public class ForagingLeveler implements Listener{
 			Block b = event.getBlock();
 			Skill s = Skill.FORAGING;
 			Material mat = event.getBlock().getType();
+			//Check for permission
+			if (!p.hasPermission("aureliumskills.foraging")) {
+				return;
+			}
 			//If 1.13+
 			if (XMaterial.isNewVersion()) {
 				if (mat.equals(XMaterial.OAK_LOG.parseMaterial())) {

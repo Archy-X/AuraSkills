@@ -7,13 +7,10 @@ import java.util.Random;
 
 public class Critical {
 
-    private static Random r = new Random();
+    private static final Random r = new Random();
 
     public static boolean isCrit(PlayerSkill playerSkill) {
-        if (r.nextDouble() < (Ability.CRIT_CHANCE.getValue(playerSkill.getAbilityLevel(Ability.CRIT_CHANCE)) / 100)) {
-            return true;
-        }
-        return false;
+        return r.nextDouble() < (Ability.CRIT_CHANCE.getValue(playerSkill.getAbilityLevel(Ability.CRIT_CHANCE)) / 100);
     }
 
     public static double getCritMultiplier(PlayerSkill playerSkill) {

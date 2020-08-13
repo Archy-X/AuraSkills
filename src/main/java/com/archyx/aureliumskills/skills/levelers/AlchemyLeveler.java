@@ -56,6 +56,10 @@ public class AlchemyLeveler implements Listener {
 					if (event.getContents().getIngredient() != null) {
 						Player p = offlinePlayer.getPlayer();
 						if (p != null) {
+							//Check for permission
+							if (!p.hasPermission("aureliumskills.alchemy")) {
+								return;
+							}
 							Skill s = Skill.ALCHEMY;
 							Material mat = event.getContents().getIngredient().getType();
 							if (mat.equals(Material.REDSTONE)) {

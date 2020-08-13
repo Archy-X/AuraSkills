@@ -41,7 +41,7 @@ public enum Skill {
 	DEFENSE(Stat.TOUGHNESS, Stat.HEALTH, "Take damage from entities to earn Defense XP", Material.CHAINMAIL_CHESTPLATE,
 			new Ability[] {Ability.SHIELDING, Ability.DEFENDER, Ability.MOB_MASTER, Ability.IMMUNITY, Ability.NO_DEBUFF}),
 	FIGHTING(Stat.STRENGTH, Stat.REGENERATION, "Fight mobs with melee weapons to earn Fighting XP", Material.DIAMOND_SWORD,
-			new Ability[] {Ability.FIGHTER}),
+			new Ability[] {Ability.CRIT_DAMAGE, Ability.FIGHTER, Ability.SWORD_MASTER, Ability.FIRST_STRIKE, Ability.BLEED}),
 	ENDURANCE(Stat.REGENERATION, Stat.TOUGHNESS, "Walk and run to earn Endurance XP", Material.GOLDEN_APPLE,
 			new Ability[] {Ability.RUNNER}),
 	AGILITY(Stat.WISDOM, Stat.REGENERATION, "Jump and take fall damage to earn Agility XP", Material.FEATHER,
@@ -57,14 +57,14 @@ public enum Skill {
 	FORGING(Stat.TOUGHNESS, Stat.WISDOM, "Combine and apply books in an anvil to earn Forging XP", Material.ANVIL,
 			new Ability[] {Ability.FORGER});
 	
-	private Stat primaryStat;
-	private Stat secondaryStat;
-	private String description;
-	private String name;
-	private Material material;
-	private Ability[] abilities;
+	private final Stat primaryStat;
+	private final Stat secondaryStat;
+	private final String description;
+	private final String name;
+	private final Material material;
+	private final Ability[] abilities;
 	
-	private Skill(Stat primaryStat, Stat secondaryStat, String description, Material material, Ability[] abilities) {
+	Skill(Stat primaryStat, Stat secondaryStat, String description, Material material, Ability[] abilities) {
 		this.name = this.toString().toLowerCase();
 		this.primaryStat = primaryStat;
 		this.secondaryStat = secondaryStat;
@@ -86,11 +86,13 @@ public enum Skill {
 		}
 		NumberFormat nf = new DecimalFormat("##.##");
 		ItemStack item = new ItemStack(material);
-		List<String> lore = new LinkedList<String>();
+		List<String> lore = new LinkedList<>();
 		String fullDesc = Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_DESCRIPTION"));
-		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
-		for (String s : splitDesc) {
-			lore.add(ChatColor.GRAY + s);
+		if (fullDesc != null) {
+			String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1," + 38 + "})(?:\\s+|\\s*$)", "$1\n").split("\n");
+			for (String s : splitDesc) {
+				lore.add(ChatColor.GRAY + s);
+			}
 		}
 		if (player.hasPermission("aureliumskills." + this.toString().toLowerCase())) {
 			lore.add(" ");
@@ -111,7 +113,11 @@ public enum Skill {
 					for (Ability ability : this.getAbilities()) {
 						if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
 							if (skill.getAbilityLevel(ability) > 0) {
-								lore.add(ChatColor.GOLD + "   " + ability.getDisplayName() + " " + RomanNumber.toRoman(skill.getAbilityLevel(ability)) + ChatColor.DARK_GRAY + " (" + ability.getMiniDescription().replace("_", nf.format(ability.getValue(skill.getAbilityLevel(ability)))) + ")");
+								String miniDesc = ability.getMiniDescription().replace("_", nf.format(ability.getValue(skill.getAbilityLevel(ability))));
+								if (ability.hasTwoValues()) {
+									miniDesc = miniDesc.replace("$", nf.format(ability.getValue2(skill.getAbilityLevel(ability))));
+								}
+								lore.add(ChatColor.GOLD + "   " + ability.getDisplayName() + " " + RomanNumber.toRoman(skill.getAbilityLevel(ability)) + ChatColor.DARK_GRAY + " (" + miniDesc + ")");
 							} else {
 								lore.add(ChatColor.DARK_GRAY + "   " + ChatColor.STRIKETHROUGH + ability.getDisplayName());
 							}
@@ -123,7 +129,10 @@ public enum Skill {
 			lore.add(" ");
 			lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + ": " + ChatColor.YELLOW + RomanNumber.toRoman(level));
 			if (xpToNext != 0) {
-				lore.add(ChatColor.GRAY + Lang.getMessage(Message.PROGRESS_TO_LEVEL).replace("_", RomanNumber.toRoman(level + 1)) + ": " + ChatColor.YELLOW + nf.format(xp / xpToNext * 100) + "%");
+				String progressToLevel = Lang.getMessage(Message.PROGRESS_TO_LEVEL);
+				if (progressToLevel != null) {
+					lore.add(ChatColor.GRAY + progressToLevel.replace("_", RomanNumber.toRoman(level + 1)) + ": " + ChatColor.YELLOW + nf.format(xp / xpToNext * 100) + "%");
+				}
 				lore.add(ChatColor.GRAY + "   " + nf.format(xp) + "/" + (int) xpToNext + " XP");
 			} else {
 				lore.add(ChatColor.GOLD + Lang.getMessage(Message.MAX_LEVEL));
@@ -141,18 +150,22 @@ public enum Skill {
 		//Sets item
 		if (material.equals(Material.SPLASH_POTION) || material.equals(Material.POTION)) {
 			PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
-			potionMeta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL));
-			potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-			potionMeta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_NAME")) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
-			potionMeta.setLore(lore);
-			item.setItemMeta(potionMeta);
+			if (potionMeta != null) {
+				potionMeta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL));
+				potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+				potionMeta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_NAME")) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
+				potionMeta.setLore(lore);
+				item.setItemMeta(potionMeta);
+			}
 		}
 		else {
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_NAME")) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
-			meta.setLore(lore);
-			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-			item.setItemMeta(meta);
+			if (meta != null) {
+				meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_NAME")) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
+				meta.setLore(lore);
+				meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+				item.setItemMeta(meta);
+			}
 		}
 		return item;
 	}
