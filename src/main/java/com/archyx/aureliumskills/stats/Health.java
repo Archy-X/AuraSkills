@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.stats;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -33,6 +34,10 @@ public class Health implements Listener {
 				if (am.getName().equals("skillsHealth")) {
 					attribute.removeModifier(am);
 				}
+			}
+			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				player.setHealthScaled(false);
+				return;
 			}
 			//Applies modifier
 			attribute.addModifier(new AttributeModifier("skillsHealth", modifier, Operation.ADD_NUMBER));

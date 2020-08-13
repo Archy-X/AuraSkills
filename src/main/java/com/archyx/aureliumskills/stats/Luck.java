@@ -7,7 +7,10 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,26 +23,48 @@ import java.util.Random;
 
 public class Luck implements Listener {
 
-	private Random r = new Random();
+	private final Random r = new Random();
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		if (SkillLoader.playerStats.containsKey(event.getPlayer().getUniqueId())) {
-			double luck = SkillLoader.playerStats.get(event.getPlayer().getUniqueId()).getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.LUCK_MODIFIER);
-			event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).setBaseValue(luck);
-		}
+		setLuck(event.getPlayer());
 	}
 	
 	public static void reload(Player player) {
-		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-			double luck = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.LUCK_MODIFIER);
-			player.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(luck);
+		setLuck(player);
+	}
+
+	private static void setLuck(Player player) {
+		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_LUCK);
+		if (attribute != null) {
+			boolean hasModifier = false;
+			//Removes existing modifiers of the same name
+			for (AttributeModifier am : attribute.getModifiers()) {
+				if (am.getName().equals("AureliumSkills-Luck")) {
+					attribute.removeModifier(am);
+					hasModifier = true;
+				}
+			}
+			if (!hasModifier) {
+				attribute.setBaseValue(0.0);
+			}
+			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				return;
+			}
+			if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
+				double luck = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.LUCK_MODIFIER);
+				attribute.addModifier(new AttributeModifier("AureliumSkills-Luck", luck, AttributeModifier.Operation.ADD_NUMBER));
+			}
 		}
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (Options.luckDoubleDrop) {
+			//Checks if in disabled world
+			if (AureliumSkills.worldManager.isInDisabledWorld(event.getBlock().getLocation())) {
+				return;
+			}
 			//Checks if in blocked world
 			if (AureliumSkills.worldManager.isInBlockedWorld(event.getBlock().getLocation())) {
 				return;
@@ -63,13 +88,19 @@ public class Luck implements Listener {
 									if ((double) stat.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.DOUBLE_DROP_MODIFIER) < Options.getDoubleOption(Setting.DOUBLE_DROP_PERCENT_MAX) / 100) {
 										if (r.nextDouble() < ((double) stat.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.DOUBLE_DROP_MODIFIER))) {
 											for (ItemStack item : event.getBlock().getDrops()) {
-												event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
+												World world = event.getBlock().getLocation().getWorld();
+												if (world != null) {
+													world.dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
+												}
 											}
 										}
 									} else {
 										if (r.nextDouble() < Options.getDoubleOption(Setting.DOUBLE_DROP_PERCENT_MAX) / 100) {
 											for (ItemStack item : event.getBlock().getDrops()) {
-												event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
+												World world = event.getBlock().getLocation().getWorld();
+												if (world != null) {
+													world.dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
+												}
 											}
 										}
 									}
