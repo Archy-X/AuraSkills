@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -32,6 +33,11 @@ public class Luck implements Listener {
 	
 	public static void reload(Player player) {
 		setLuck(player);
+	}
+
+	@EventHandler
+	public void worldChange(PlayerChangedWorldEvent event) {
+		setLuck(event.getPlayer());
 	}
 
 	private static void setLuck(Player player) {

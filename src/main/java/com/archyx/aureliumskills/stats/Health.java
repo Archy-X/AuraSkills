@@ -11,6 +11,7 @@ import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class Health implements Listener {
@@ -23,7 +24,12 @@ public class Health implements Listener {
 	public static void reload(Player player) {
 		setHealth(player);
 	}
-	
+
+	@EventHandler
+	public void worldChange(PlayerChangedWorldEvent event) {
+		setHealth(event.getPlayer());
+	}
+
 	private static void setHealth(Player player) {
 		//Calculates the amount of health to add
 		double modifier = ((double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.HEALTH)) * Options.getDoubleOption(Setting.HEALTH_MODIFIER);

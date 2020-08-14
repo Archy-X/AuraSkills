@@ -144,6 +144,10 @@ public class FightingAbilities implements Listener {
                     if (!player.hasPermission("aureliumskills.fighting")) {
                         return;
                     }
+                    //Check disabled worlds
+                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                        return;
+                    }
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         //If player used sword
                         if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {

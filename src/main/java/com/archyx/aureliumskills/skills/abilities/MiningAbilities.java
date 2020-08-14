@@ -77,6 +77,10 @@ public class MiningAbilities implements Listener {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.PICK_MASTER)) {
 				if (event.getDamager() instanceof Player) {
 					Player player = (Player) event.getDamager();
+					//Check disabled worlds
+					if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+						return;
+					}
 					//Check permission
 					if (!player.hasPermission("aureliumskills.mining")) {
 						return;
@@ -100,14 +104,19 @@ public class MiningAbilities implements Listener {
 	public void hardenedArmor(PlayerItemDamageEvent event) {
 		if (Options.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.HARDENED_ARMOR)) {
+				Player player = event.getPlayer();
+				//Check disabled worlds
+				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+					return;
+				}
 				//Check permission
-				if (!event.getPlayer().hasPermission("aureliumskills.mining")) {
+				if (!player.hasPermission("aureliumskills.mining")) {
 					return;
 				}
 				//Checks if item damaged is armor
 				if (ItemUtils.isArmor(event.getItem().getType())) {
-					if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
-						PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
+					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 						//Applies ability
 						if (r.nextDouble() < (Ability.HARDENED_ARMOR.getValue(skill.getAbilityLevel(Ability.HARDENED_ARMOR)) / 100)) {
 							event.setCancelled(true);
@@ -161,6 +170,10 @@ public class MiningAbilities implements Listener {
 					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
 					if (mat.name().toUpperCase().contains("PICKAXE")) {
 						Player player = event.getPlayer();
+						//Check disabled worlds
+						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+							return;
+						}
 						//Check permission
 						if (!player.hasPermission("aureliumskills.mining")) {
 							return;

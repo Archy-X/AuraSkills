@@ -80,6 +80,14 @@ public class DefenseAbilities implements Listener {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
                         Player player = (Player) entity;
+                        //Check disabled worlds
+                        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                            return;
+                        }
+                        //Check Permission
+                        if (!player.hasPermission("aureliumskills.defense")) {
+                            return;
+                        }
                         for (PotionEffect effect : event.getPotion().getEffects()) {
                             PotionEffectType type = effect.getType();
                             if (type.equals(PotionEffectType.POISON) || type.equals(PotionEffectType.UNLUCK) || type.equals(PotionEffectType.WITHER) ||
@@ -125,6 +133,10 @@ public class DefenseAbilities implements Listener {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
+                    //Check disabled worlds
+                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                        return;
+                    }
                     //Check Permission
                     if (!player.hasPermission("aureliumskills.defense")) {
                         return;
