@@ -84,6 +84,10 @@ public class ForagingAbilities implements Listener {
 						if (!player.hasPermission("aureliumskills.foraging")) {
 							return;
 						}
+						//Check disabled worlds
+						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+							return;
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
 								Material mat = player.getInventory().getItemInMainHand().getType();
@@ -115,6 +119,10 @@ public class ForagingAbilities implements Listener {
 								Player player = (Player) e.getDamager();
 								//Check permission
 								if (!player.hasPermission("aureliumskills.foraging")) {
+									return;
+								}
+								//Check disabled worlds
+								if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
 									return;
 								}
 								if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -260,6 +268,10 @@ public class ForagingAbilities implements Listener {
 						Player player = event.getPlayer();
 						//Check permission
 						if (!player.hasPermission("aureliumskills.foraging")) {
+							return;
+						}
+						//Check disabled worlds
+						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
 							return;
 						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {

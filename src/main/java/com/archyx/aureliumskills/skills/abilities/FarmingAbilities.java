@@ -80,6 +80,10 @@ public class FarmingAbilities implements Listener {
 				if (!player.hasPermission("aureliumskills.farming")) {
 					return;
 				}
+				//Check disabled worlds
+				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+					return;
+				}
 				Material mat = event.getItem().getType();
 				if (mat.equals(Material.BREAD) || mat.equals(Material.APPLE) || mat.equals(Material.GOLDEN_APPLE) || mat.equals(XMaterial.POTATO.parseMaterial())
 						|| mat.equals(Material.BAKED_POTATO) || mat.equals(XMaterial.CARROT.parseMaterial()) || mat.equals(Material.GOLDEN_CARROT) || mat.equals(Material.MELON)
@@ -101,6 +105,10 @@ public class FarmingAbilities implements Listener {
 						Player player = (Player) event.getDamager();
 						//Check permission
 						if (!player.hasPermission("aureliumskills.farming")) {
+							return;
+						}
+						//Check disabled worlds
+						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
 							return;
 						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {

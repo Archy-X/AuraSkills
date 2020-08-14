@@ -37,6 +37,10 @@ public class FishingAbilities implements Listener {
 		if (Options.isEnabled(Skill.FISHING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUCKY_CATCH)) {
 				Player player = event.getPlayer();
+				//Check disabled worlds
+				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+					return;
+				}
 				//Checks if in blocked world
 				if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
 					return;
@@ -74,6 +78,10 @@ public class FishingAbilities implements Listener {
 	public void treasureHunterAndEpicCatch(PlayerFishEvent event) {
 		if (Options.isEnabled(Skill.FISHING)) {
 			Player player = event.getPlayer();
+			//Check disabled worlds
+			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				return;
+			}
 			//Checks if in blocked world
 			if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
 				return;
@@ -124,6 +132,10 @@ public class FishingAbilities implements Listener {
 						if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
 							PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
 							Player player = event.getPlayer();
+							//Check disabled worlds
+							if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+								return;
+							}
 							//Check permission
 							if (!player.hasPermission("aureliumskills.fishing")) {
 								return;

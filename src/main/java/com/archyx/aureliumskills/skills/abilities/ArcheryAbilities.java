@@ -107,6 +107,10 @@ public class ArcheryAbilities implements Listener {
                     Arrow arrow = (Arrow) event.getDamager();
                     if (arrow.getShooter() instanceof Player) {
                         Player player = (Player) arrow.getShooter();
+                        //Check disabled worlds
+                        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                            return;
+                        }
                         //Check for permission
                         if (!player.hasPermission("aureliumskills.archery")) {
                             return;
