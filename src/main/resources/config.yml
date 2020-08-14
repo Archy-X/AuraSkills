@@ -427,6 +427,26 @@ abilities:
         per-level: 4.0
         base-2: 0.5
         per-level-2: 0.5
+    anti-hunger:
+        enabled: true
+        base: 5.0
+        per-level: 5.0
+    runner:
+        enabled: true
+        base: 10.0
+        per-level: 10.0
+    golden-heal:
+        enabled: true
+        base: 5.0
+        per-level: 6.0
+    recovery:
+        enabled: true
+        base: 10.0
+        per-level: 10.0
+    meal-steal:
+        enabled: true
+        base: 1.0
+        per-level: 2.0
 mana-abilities:
     speed-mine:
         enabled: true

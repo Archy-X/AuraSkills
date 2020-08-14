@@ -43,7 +43,7 @@ public enum Skill {
 	FIGHTING(Stat.STRENGTH, Stat.REGENERATION, "Fight mobs with melee weapons to earn Fighting XP", Material.DIAMOND_SWORD,
 			new Ability[] {Ability.CRIT_DAMAGE, Ability.FIGHTER, Ability.SWORD_MASTER, Ability.FIRST_STRIKE, Ability.BLEED}),
 	ENDURANCE(Stat.REGENERATION, Stat.TOUGHNESS, "Walk and run to earn Endurance XP", Material.GOLDEN_APPLE,
-			new Ability[] {Ability.RUNNER}),
+			new Ability[] {Ability.ANTI_HUNGER, Ability.RUNNER, Ability.GOLDEN_HEAL, Ability.RECOVERY, Ability.MEAL_STEAL}),
 	AGILITY(Stat.WISDOM, Stat.REGENERATION, "Jump and take fall damage to earn Agility XP", Material.FEATHER,
 			new Ability[] {Ability.JUMPER}),
 	ALCHEMY(Stat.HEALTH, Stat.WISDOM, "Brew potions to earn Alchemy XP", XMaterial.POTION.parseMaterial(),

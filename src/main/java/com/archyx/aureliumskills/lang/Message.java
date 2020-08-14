@@ -218,6 +218,21 @@ public enum Message {
 	BLEED_NAME("abilities.fighting.bleed.name", "Bleed"),
 	BLEED_DESC("abilities.fighting.bleed.desc", "_% chance to make the enemy bleed for 3 bleed ticks, dealing $ damage per tick."),
 	BLEED_MINI_DESC("abilities.fighting.bleed.mini-desc", "_% Chance, $ Damage"),
+	ANTI_HUNGER_NAME("abilities.endurance.anti-hunger.name", "Anti Hunger"),
+	ANTI_HUNGER_DESC("abilities.endurance.anti-hunger.desc", "Decreases hunger loss by _%"),
+	ANTI_HUNGER_MINI_DESC("abilities.endurance.anti-hunger.mini-desc", "_% Less Hunger Loss"),
+	RUNNER_NAME("abilities.endurance.runner.name", "Runner"),
+	RUNNER_DESC("abilities.endurance.runner.desc", "Earn _% more Endurance XP"),
+	RUNNER_MINI_DESC("abilities.endurance.runner.mini-desc", "+_% XP"),
+	GOLDEN_HEAL_NAME("abilities.endurance.golden-heal.name", "Golden Heal"),
+	GOLDEN_HEAL_DESC("abilities.endurance.golden-heal.desc", "Increases regeneration effect health gain by _%"),
+	GOLDEN_HEAL_MINI_DESC("abilities.endurance.golden-heal.mini-desc", "+_% Effect Regen"),
+	RECOVERY_NAME("abilities.endurance.recovery.name", "Recovery"),
+	RECOVERY_DESC("abilities.endurance.recovery.desc", "Increases natural regeneration when at less than half health by _%"),
+	RECOVERY_MINI_DESC("abilities.endurance.recovery.mini-desc", "+_% Low HP Regen"),
+	MEAL_STEAL_NAME("abilities.endurance.meal-steal.name", "Meal Steal"),
+	MEAL_STEAL_DESC("abilities.endurance.meal-steal.desc", "_% chance to steal 1 hunger point when attacking a player"),
+	MEAL_STEAL_MINI_DESC("abilities.endurance.meal-steal.mini-desc", "_% Hunger Steal"),
 	ABILITY_LEVELS("abilities.ability-levels", "Ability Levels"),
 	ABILITY_NOT_READY("abilities.ability-not-ready", "Ability not ready!"),
 	NOT_ENOUGH_MANA("abilities.not-enough-mana", "Not enough mana!"),
@@ -238,7 +253,7 @@ public enum Message {
 	private String path;
 	private String defaultMessage;
 	
-	private Message(String path, String defaultMessage) {
+	Message(String path, String defaultMessage) {
 		this.path = path;
 		this.defaultMessage = defaultMessage;
 	}

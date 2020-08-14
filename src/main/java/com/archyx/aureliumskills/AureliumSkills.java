@@ -239,6 +239,7 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new ArcheryAbilities(this), this);
 		getServer().getPluginManager().registerEvents(new DefenseAbilities(this), this);
 		getServer().getPluginManager().registerEvents(new FightingAbilities(this), this);
+		getServer().getPluginManager().registerEvents(new EnduranceAbilities(), this);
 	}
 	
 }

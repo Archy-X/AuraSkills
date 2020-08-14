@@ -943,3 +943,39 @@ messages:
           EN: _% Chance, $ Damage
         activate:
           EN: '&cEnemy Bleeding!'
+    endurance:
+      anti-hunger:
+        name:
+          EN: Anti Hunger
+        desc:
+          EN: _% chance to stop hunger loss
+        mini-desc:
+          EN: _% No Hunger Loss
+      runner:
+        name:
+          EN: Runner
+        desc:
+          EN: Earn _% more Endurance XP
+        mini-desc:
+          EN: +_% XP
+      golden-heal:
+        name:
+          EN: Golden Heal
+        desc:
+          EN: Increases regeneration effect health gain by _%
+        mini-desc:
+          EN: +_% Effect Regen
+      recovery:
+        name:
+          EN: Recovery
+        desc:
+          EN: Increases natural regeneration when at less than half health by _%
+        mini-desc:
+          EN: +_% Low HP Regen
+      meal-steal:
+        name:
+          EN: Meal Steal
+        desc:
+          EN: _% chance to steal 1 hunger point when attacking a player
+        mini-desc:
+          EN: _% Hunger Steal
