@@ -33,6 +33,9 @@ public class HologramSupport implements Listener {
         if (!event.isCancelled()) {
             if (AureliumSkills.holographicDisplaysEnabled) {
                 if (Options.getBooleanOption(Setting.DAMAGE_HOLOGRAMS)) {
+                    if (AureliumSkills.worldManager.isInDisabledWorld(event.getEntity().getLocation())) {
+                        return;
+                    }
                     if (event.getDamager() instanceof Player) {
                         Player player = (Player) event.getDamager();
                         if (player.hasMetadata("skillsCritical")) {

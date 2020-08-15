@@ -1,10 +1,8 @@
 package com.archyx.aureliumskills.skills.abilities;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityOption;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -96,8 +94,8 @@ public class AbilityOptionManager {
         }
         long endTime = System.currentTimeMillis();
         long timeElapsed = endTime - startTime;
-        Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Disabled " + ChatColor.GOLD + amountDisabled + ChatColor.AQUA + " Abilities");
-        Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Loaded " + ChatColor.GOLD + amountLoaded + ChatColor.AQUA + " Ability Options in " + ChatColor.GOLD + timeElapsed + "ms");
+        Bukkit.getLogger().info("[AureliumSkills] Disabled " + amountDisabled + " Abilities");
+        Bukkit.getLogger().info("[AureliumSkills] Loaded " + amountLoaded + " Ability Options in " + timeElapsed + "ms");
     }
 
     public AbilityOption getAbilityOption(Ability ability) {

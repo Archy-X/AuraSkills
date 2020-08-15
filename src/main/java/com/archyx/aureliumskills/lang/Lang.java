@@ -1,8 +1,6 @@
 package com.archyx.aureliumskills.lang;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -46,7 +44,8 @@ public class Lang {
 	}
 
 	public void loadLanguages() {
-		Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Loading languages...");
+		Bukkit.getLogger().info("[AureliumSkills] Loading languages...");
+		long startTime = System.currentTimeMillis();
 		//Reloads config
 		config = YamlConfiguration.loadConfiguration(file);
 		//Sets default language
@@ -62,7 +61,9 @@ public class Lang {
 			}
 			customLang.put(customLanguage, customMessages);
 		}
-		Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Loaded " + config.getStringList("languages").size() + " languages!");
+		long endTime = System.currentTimeMillis();
+		long timeElapsed = endTime - startTime;
+		Bukkit.getLogger().info("[AureliumSkills] Loaded " + config.getStringList("languages").size() + " languages in " + timeElapsed + "ms");
 	}
 	
 	public void matchConfig() {
@@ -98,7 +99,7 @@ public class Lang {
 			try {
 				config.save(file);
 			} catch (IOException e) {
-				Bukkit.getLogger().severe("Error saving messages.yml!");
+				Bukkit.getLogger().severe("[AureliumSkills] Error saving messages.yml!");
 			}
 			return true;
 		}

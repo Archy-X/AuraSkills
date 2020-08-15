@@ -1,9 +1,8 @@
 package com.archyx.aureliumskills.loot;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -19,10 +18,10 @@ import java.util.*;
 
 public class LootTableManager {
 
-	private Map<String, LootTable> lootTables;
+	private final Map<String, LootTable> lootTables;
 	private File file;
 	private FileConfiguration config;
-	private Plugin plugin;
+	private final Plugin plugin;
 	
 	public LootTableManager(Plugin plugin) {
 		this.plugin = plugin;
@@ -41,28 +40,30 @@ public class LootTableManager {
 		config = YamlConfiguration.loadConfiguration(file);
 		int itemsLoaded = 0;
 		int lootTablesLoaded = 0;
-		for (String lootTableName : config.getConfigurationSection("lootTables").getKeys(false)) {
-			List<Loot> loot = new ArrayList<Loot>();
-			for (String itemString : config.getStringList("lootTables." + lootTableName)) {
-				try {
-					String[] splitString = itemString.split(" ", 3);
-					int minAmount = Integer.parseInt(splitString[0]);
-					int maxAmount = Integer.parseInt(splitString[1]);
-					ItemStack item = parse(splitString[2]);
-					if (item != null) {
-						loot.add(new Loot(item, minAmount, maxAmount));
-						itemsLoaded++;
+		ConfigurationSection configurationSection = config.getConfigurationSection("lootTables");
+		if (configurationSection != null) {
+			for (String lootTableName : configurationSection.getKeys(false)) {
+				List<Loot> loot = new ArrayList<>();
+				for (String itemString : config.getStringList("lootTables." + lootTableName)) {
+					try {
+						String[] splitString = itemString.split(" ", 3);
+						int minAmount = Integer.parseInt(splitString[0]);
+						int maxAmount = Integer.parseInt(splitString[1]);
+						ItemStack item = parse(splitString[2]);
+						if (item != null) {
+							loot.add(new Loot(item, minAmount, maxAmount));
+							itemsLoaded++;
+						}
+					} catch (Exception e) {
+						Bukkit.getLogger().warning("[AureliumSkills] Error loading loot " + itemString + " from loot.yml. Try checking if minimum and maximum amount are specified!");
 					}
 				}
-				catch (Exception e) {
-					Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.RED + "Error loading loot " + itemString + " from loot.yml. Try checking if minimum and maximum amount are specified!");
-				}
+				LootTable lootTable = new LootTable(lootTableName, loot);
+				lootTables.put(lootTableName, lootTable);
+				lootTablesLoaded++;
 			}
-			LootTable lootTable = new LootTable(lootTableName, loot);
-			lootTables.put(lootTableName, lootTable);
-			lootTablesLoaded++;
 		}
-		Bukkit.getLogger().info(AureliumSkills.tag + ChatColor.AQUA + "Loaded " + ChatColor.GOLD + itemsLoaded + ChatColor.AQUA + " items in " + ChatColor.GOLD + lootTablesLoaded + ChatColor.AQUA + " loot tables.");
+		Bukkit.getLogger().info("[AureliumSkills] Loaded " + itemsLoaded + " items in " + lootTablesLoaded + " loot tables.");
 	}
 	
 	public LootTable getLootTable(String name) {
@@ -74,18 +75,23 @@ public class LootTableManager {
 		try {
 			boolean changesMade = false;
 			InputStream is = plugin.getResource(file.getName());
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
-            for (String key : defConfig.getConfigurationSection("").getKeys(true)) {
-                if (!config.contains(key)) {
-                	config.set(key, defConfig.get(key));
-                	if (changesMade == false) {
-                		changesMade = true;
-                	}
-                }
-            }
-            if (changesMade) {
-            	config.save(file);
-            }
+			if (is != null) {
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
+				ConfigurationSection configurationSection = defConfig.getConfigurationSection("");
+				if (configurationSection != null) {
+					for (String key : configurationSection.getKeys(true)) {
+						if (!config.contains(key)) {
+							config.set(key, defConfig.get(key));
+							if (!changesMade) {
+								changesMade = true;
+							}
+						}
+					}
+					if (changesMade) {
+						config.save(file);
+					}
+				}
+			}
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -98,42 +104,51 @@ public class LootTableManager {
 			ItemStack item = null;
 			if (textArray.length >= 1) {
 				if (textArray[0].split(":").length == 1) {
-					item = new ItemStack(Material.getMaterial(textArray[0].toUpperCase()), 1);
+					Material material = Material.getMaterial(textArray[0].toUpperCase());
+					if (material != null) {
+						item = new ItemStack(material, 1);
+					}
 				} else {
 					String itemId = textArray[0].split(":")[0];
 					short dataValue = Short.parseShort(textArray[0].split(":")[1]);
-					item = new ItemStack(Material.getMaterial(itemId.toUpperCase()), 1, dataValue);
-				}
-			}
-			ItemMeta meta = null;
-			if (item != null) {
-				meta = item.getItemMeta();
-			}
-			for (int i = 1; i < textArray.length; i++) {
-				if (textArray[i].split(":").length == 2) {
-					String key = textArray[i].split(":")[0];
-					String value = textArray[i].split(":")[1].replace("_", " ").replace("&", "§");
-					if (key.equals("name")) {
-						meta.setDisplayName(value);
-					} else if (key.equals("lore")) {
-						List<String> lore = new LinkedList<>();
-						for (String s : value.split("\\|")) {
-							lore.add(s);
-						}
-						meta.setLore(lore);
-					} else if (key.equals("glow")) {
-						if (Boolean.parseBoolean(value) == true) {
-							meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-							meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-						}
+					Material material = Material.getMaterial(itemId.toUpperCase());
+					if (material != null) {
+						item = new ItemStack(material, 1, dataValue);
 					}
 				}
 			}
-			item.setItemMeta(meta);
+			ItemMeta meta;
+			if (item != null) {
+				meta = item.getItemMeta();
+				if (meta != null) {
+					for (int i = 1; i < textArray.length; i++) {
+						if (textArray[i].split(":").length == 2) {
+							String key = textArray[i].split(":")[0];
+							String value = textArray[i].split(":")[1].replace("_", " ").replace("&", "§");
+							switch (key) {
+								case "name":
+									meta.setDisplayName(value);
+									break;
+								case "lore":
+									List<String> lore = new LinkedList<>(Arrays.asList(value.split("\\|")));
+									meta.setLore(lore);
+									break;
+								case "glow":
+									if (Boolean.parseBoolean(value)) {
+										meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+										meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+									}
+									break;
+							}
+						}
+					}
+				}
+				item.setItemMeta(meta);
+			}
 			return item;
 		}
 		catch (Exception e) {
-			Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.RED + "Error loading item " + text + " in loot.yml. Try checking if the material is valid!");
+			Bukkit.getLogger().warning("[AureliumSkills] Error loading item " + text + " from loot.yml. Try checking if the material is valid!");
 			return null;
 		}
 	}

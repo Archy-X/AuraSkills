@@ -1,8 +1,6 @@
 package com.archyx.aureliumskills.util;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -40,7 +38,7 @@ public class WorldManager {
             blockedCheckBlockReplaceWorlds.add(blockedWorld);
             blockedWorldsLoaded++;
         }
-        Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Loaded " + ChatColor.GOLD + blockedWorldsLoaded + ChatColor.AQUA + " blocked worlds.");
+        Bukkit.getLogger().info("[AureliumSkills] Loaded " + blockedWorldsLoaded + " blocked worlds.");
     }
 
     public boolean isInBlockedWorld(Location location) {

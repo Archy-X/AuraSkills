@@ -34,6 +34,10 @@
                             <pattern>co.aikar.locales</pattern>
                             <shadedPattern>com.archyx.aureliumskills.locales</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>fr.minuskube.inv</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.inv</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -97,7 +101,7 @@
             <groupId>fr.minuskube.inv</groupId>
             <artifactId>smart-invs</artifactId>
             <version>1.2.7</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>

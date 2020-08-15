@@ -1,10 +1,9 @@
 package com.archyx.aureliumskills.skills;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -19,9 +18,9 @@ public class SkillLoader {
 	public static HashMap<UUID, PlayerSkill> playerSkills = new HashMap<UUID, PlayerSkill>();
 	public static HashMap<UUID, PlayerStat> playerStats = new HashMap<UUID, PlayerStat>();
 	
-	private File file;
-	private FileConfiguration config;
-	private Plugin plugin;
+	private final File file;
+	private final FileConfiguration config;
+	private final Plugin plugin;
 
 	public SkillLoader(File file, FileConfiguration config, Plugin plugin) {
 		this.file = file;
@@ -30,11 +29,12 @@ public class SkillLoader {
 	}
 	
 	public void loadSkillData() {
-		Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + "Loading Skill Data...");
+		Bukkit.getLogger().info("[AureliumSkills] Loading Skill Data...");
 		long startTime = System.currentTimeMillis();
 		int playersLoaded = 0;
-		if (config.getConfigurationSection("skillData") != null) {
-			for (String stringId : config.getConfigurationSection("skillData").getKeys(false)) {
+		ConfigurationSection configurationSection = config.getConfigurationSection("skillData");
+		if (configurationSection != null) {
+			for (String stringId : configurationSection.getKeys(false)) {
 				UUID id = UUID.fromString(stringId);
 				String name = config.getString("skillData." + stringId + ".name", stringId);
 				PlayerSkill playerSkill = new PlayerSkill(id, name);
@@ -67,12 +67,12 @@ public class SkillLoader {
 			}
 		}
 		long endTime = System.currentTimeMillis();
-		Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Loaded " + ChatColor.GOLD + playersLoaded + ChatColor.AQUA + " Player Skill Data in " + ChatColor.GOLD + (endTime - startTime) + "ms");
+		Bukkit.getLogger().info("[AureliumSkills] Loaded " + playersLoaded + " Player Skill Data in " + (endTime - startTime) + "ms");
 	}
 	
 	public void saveSkillData(boolean silent) {
 		if (!silent) {
-			Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + "Saving Skill Data...");
+			Bukkit.getLogger().info("[AureliumSkills] Saving Skill Data...");
 		}
 		for (UUID id : playerSkills.keySet()) {
 			PlayerSkill playerSkill = playerSkills.get(id);
@@ -87,12 +87,12 @@ public class SkillLoader {
 		try {
 			config.save(file);
 			if (!silent) {
-				Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Skill Data Saved!");
+				Bukkit.getLogger().info("[AureliumSkills] Skill Data Saved!");
 			}
 		}
 		catch (IOException e) {
 			if (!silent) {
-				Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.RED + "An error occured while trying to save skill data!");
+				Bukkit.getLogger().severe("[AureliumSkills] An error occurred while trying to save skill data!");
 			}
 		}
 	}

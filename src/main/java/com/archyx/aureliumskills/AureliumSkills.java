@@ -15,10 +15,7 @@ import com.archyx.aureliumskills.skills.abilities.*;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.levelers.*;
 import com.archyx.aureliumskills.stats.*;
-import com.archyx.aureliumskills.util.HologramSupport;
-import com.archyx.aureliumskills.util.PlaceholderSupport;
-import com.archyx.aureliumskills.util.WorldGuardSupport;
-import com.archyx.aureliumskills.util.WorldManager;
+import com.archyx.aureliumskills.util.*;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.minuskube.inv.InventoryManager;
 import org.bukkit.Bukkit;
@@ -27,8 +24,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import sun.misc.resources.Messages;
-
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -70,13 +65,13 @@ public class AureliumSkills extends JavaPlugin{
 		//Checks for PlaceholderAPI
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			new PlaceholderSupport(this).register();
-			Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "PlaceholderAPI Support Enabled!");
+			Bukkit.getLogger().info("[AureliumSkills] PlaceholderAPI Support Enabled!");
 		}
 		//Checks for holographic displays
 		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
 			holographicDisplaysEnabled = true;
 			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
-			Bukkit.getConsoleSender().sendMessage(tag + ChatColor.AQUA + "HolographicDisplays Support Enabled!");
+			Bukkit.getLogger().info("[AureliumSkills] HolographicDisplays Support Enabled!");
 		}
 		else {
 			holographicDisplaysEnabled = false;
@@ -90,11 +85,6 @@ public class AureliumSkills extends JavaPlugin{
 		lang.matchConfig();
 		lang.loadDefaultMessages();
 		lang.loadLanguages();
-		//Load messages WIP
-		/*
-		LangLoader langLoader = new LangLoader(this);
-		langLoader.loadDefaultMessages();
-		*/
 		//Registers Commands
 		registerCommands();
 		//Registers events
@@ -136,7 +126,8 @@ public class AureliumSkills extends JavaPlugin{
 		//Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
-		Bukkit.getConsoleSender().sendMessage(tag + ChatColor.GREEN + "Aurelium Skills has been enabled");
+		Bukkit.getLogger().info("[AureliumSkills] Aurelium Skills has been enabled");
+		checkUpdates();
 	}
 	
 	public void onDisable() {
@@ -147,7 +138,27 @@ public class AureliumSkills extends JavaPlugin{
 		//Save Data
 		skillLoader.saveSkillData(false);
 	}
-	
+
+	public void checkUpdates() {
+		//Check for updates
+		new UpdateChecker(this, 81069).getVersion(version -> {
+			if (!this.getDescription().getVersion().contains("Pre-Release")) {
+				if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+					getLogger().info("No new updates found");
+				} else {
+					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
+							version);
+					getLogger().info("Download it on Spigot:");
+					getLogger().info("http://spigotmc.org/resources/81069");
+				}
+			}
+			else {
+				getLogger().info("You are on a Pre-Release version, plugin may be buggy or unstable!");
+				getLogger().info("Report any bugs to Archy#2011 on discord or submit an issue here: https://github.com/Archy-X/AureliumSkills/issues");
+			}
+		});
+	}
+
 	public void loadConfig() {
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
@@ -213,7 +224,7 @@ public class AureliumSkills extends JavaPlugin{
 
 	public void registerEvents() {
 		//Registers Events
-		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+		getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 		getServer().getPluginManager().registerEvents(new CheckBlockReplace(this), this);
 		getServer().getPluginManager().registerEvents(new FarmingLeveler(), this);
 		getServer().getPluginManager().registerEvents(new ForagingLeveler(), this);
@@ -243,5 +254,5 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new FightingAbilities(this), this);
 		getServer().getPluginManager().registerEvents(new EnduranceAbilities(), this);
 	}
-	
+
 }
