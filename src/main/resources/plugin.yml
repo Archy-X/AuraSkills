@@ -6,9 +6,19 @@ author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
 depend: [SmartInvs]
 softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays]
-api-version: 1.13
+api-version: '1.13'
 
 permissions:
+    aureliumskills.*:
+        description: Gives access to all Aurlium Skills commands
+        children:
+            aureliumskills.skill.setlevel: true
+            aureliumskills.ability.setlevel: true
+            aureliumskills.reload: true
+            aureliumskills.lang: true
+            aureliumskills.xp.add: true
+            aureliumskills.top: true
+            aureliumskills.skill.reset: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.ability.setlevel:
