@@ -25,10 +25,10 @@ import java.util.List;
 @CommandAlias("skills|sk|skill")
 public class SkillsCommand extends BaseCommand {
  
-	private Plugin plugin;
-	private Options options;
-	private Lang lang;
-	private Leaderboard leaderboard;
+	private final Plugin plugin;
+	private final Options options;
+	private final Lang lang;
+	private final Leaderboard leaderboard;
 
 	public SkillsCommand(Plugin plugin) {
 		this.plugin = plugin;
@@ -59,10 +59,12 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.top")
 	public void onTop(CommandSender sender, @Optional Skill skill) {
 		if (Options.isEnabled(skill)) {
+			List<PlayerSkill> powerLeaderboard;
+			String message;
+			int num = 1;
 			if (skill == null) {
-				List<PlayerSkill> powerLeaderboard = leaderboard.getPowerLeaderBoard();
-				String message = ChatColor.AQUA + "" + ChatColor.BOLD + Lang.getMessage(Message.SKILL_LEADERBOARD) + ChatColor.WHITE + " (" + Lang.getMessage(Message.ALL_SKILLS) + ")" ;
-				int num = 1;
+				powerLeaderboard = leaderboard.getPowerLeaderBoard();
+				message = ChatColor.AQUA + "" + ChatColor.BOLD + Lang.getMessage(Message.SKILL_LEADERBOARD) + ChatColor.WHITE + " (" + Lang.getMessage(Message.ALL_SKILLS) + ")";
 				for (PlayerSkill playerSkill : powerLeaderboard) {
 					if (num <= 10) {
 						message += "\n" + num + ". " + playerSkill.getPlayerName() + " - " + playerSkill.getPowerLevel();
@@ -71,11 +73,9 @@ public class SkillsCommand extends BaseCommand {
 						break;
 					}
 				}
-				sender.sendMessage(message);
 			} else {
-				List<PlayerSkill> powerLeaderboard = leaderboard.getSkillLeaderBoard(skill);
-				String message = ChatColor.AQUA + "" + ChatColor.BOLD + Lang.getMessage(Message.SKILL_LEADERBOARD) + ChatColor.WHITE + " (" + Lang.getMessage(Message.valueOf(skill.getName().toUpperCase() + "_NAME"))+ ")";
-				int num = 1;
+				powerLeaderboard = leaderboard.getSkillLeaderBoard(skill);
+				message = ChatColor.AQUA + "" + ChatColor.BOLD + Lang.getMessage(Message.SKILL_LEADERBOARD) + ChatColor.WHITE + " (" + Lang.getMessage(Message.valueOf(skill.getName().toUpperCase() + "_NAME")) + ")";
 				for (PlayerSkill playerSkill : powerLeaderboard) {
 					if (num <= 10) {
 						message += "\n" + num + ". " + playerSkill.getPlayerName() + " - " + playerSkill.getSkillLevel(skill);
@@ -84,8 +84,8 @@ public class SkillsCommand extends BaseCommand {
 						break;
 					}
 				}
-				sender.sendMessage(message);
 			}
+			sender.sendMessage(message);
 		}
 		else {
 			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
@@ -112,6 +112,7 @@ public class SkillsCommand extends BaseCommand {
 		plugin.reloadConfig();
 		plugin.saveDefaultConfig();
 		options.loadConfig();
+		lang.loadDefaultMessages();
 		lang.loadLanguages();
 		AureliumSkills.abilityOptionManager.loadOptions();
 		Leveler.loadLevelReqs();

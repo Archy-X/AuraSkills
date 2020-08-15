@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.lang;
 import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -16,13 +17,13 @@ import java.util.Map;
 
 public class Lang {
 
-	private static Map<Message, String> defaultLang = new HashMap<>();
-	private static Map<String, Map<Message, String>> customLang = new HashMap<>();
+	private static final Map<Message, String> defaultLang = new HashMap<>();
+	private static final Map<String, Map<Message, String>> customLang = new HashMap<>();
 	
 	private static String language;
-	private File file;
+	private final File file;
 	private FileConfiguration config;
-	private Plugin plugin;
+	private final Plugin plugin;
 	
 	public Lang(Plugin plugin) {
 		this.plugin = plugin;
@@ -32,15 +33,24 @@ public class Lang {
 		}
 		config = YamlConfiguration.loadConfiguration(file);
 	}
-	
+
+	public void loadDefaultMessages() {
+		//Loads default message from embedded resource
+		InputStream inputStream = plugin.getResource("messages.yml");
+		if (inputStream != null) {
+			FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
+			for (Message message : Message.values()) {
+				defaultLang.put(message, config.getString("messages." + message.getPath() + ".EN"));
+			}
+		}
+	}
+
 	public void loadLanguages() {
 		Bukkit.getConsoleSender().sendMessage(AureliumSkills.tag + ChatColor.AQUA + "Loading languages...");
+		//Reloads config
 		config = YamlConfiguration.loadConfiguration(file);
+		//Sets default language
 		language = config.getString("default-language");
-		for (Message message : Message.values()) {
-			//Load default message
-			defaultLang.put(message, message.getDefaultMessage());
-		}
 		//For every custom language
 		for (String customLanguage : config.getStringList("languages")) {
 			Map<Message, String> customMessages = new HashMap<>();
@@ -60,15 +70,20 @@ public class Lang {
 		try {
 			boolean changesMade = false;
 			InputStream is = plugin.getResource(file.getName());
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
-            for (String key : defConfig.getConfigurationSection("").getKeys(true)) {
-                if (!config.contains(key)) {
-                	config.set(key, defConfig.get(key));
-                	if (!changesMade) {
-                		changesMade = true;
-                	}
-                }
-            }
+			if (is != null) {
+				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
+				ConfigurationSection configurationSection = defConfig.getConfigurationSection("");
+				if (configurationSection != null) {
+					for (String key : configurationSection.getKeys(true)) {
+						if (!config.contains(key)) {
+							config.set(key, defConfig.get(key));
+							if (!changesMade) {
+								changesMade = true;
+							}
+						}
+					}
+				}
+			}
             config.save(file);
 	    } catch (Exception e) {
 	        e.printStackTrace();

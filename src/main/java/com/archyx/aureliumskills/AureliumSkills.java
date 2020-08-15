@@ -27,6 +27,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import sun.misc.resources.Messages;
 
 import java.io.File;
 import java.io.InputStream;
@@ -87,6 +88,7 @@ public class AureliumSkills extends JavaPlugin{
 		//Load languages
 		lang = new Lang(this);
 		lang.matchConfig();
+		lang.loadDefaultMessages();
 		lang.loadLanguages();
 		//Load messages WIP
 		/*
