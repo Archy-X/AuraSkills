@@ -88,6 +88,10 @@ public class Regeneration implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (Options.getBooleanOption(Setting.CUSTOM_REGEN_MECHANICS)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
+					//Check for disabled world
+					if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+						return;
+					}
 					if (!player.isDead()) {
 						if (player.getSaturation() > 0 && player.getFoodLevel() >= 20) {
 							AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
