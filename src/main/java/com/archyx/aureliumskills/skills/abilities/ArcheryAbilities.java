@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -88,6 +89,19 @@ public class ArcheryAbilities implements Listener {
         }
     }
 
+    @EventHandler
+    public void removeStun(PlayerQuitEvent event) {
+        //Removes stun on logout
+        AttributeInstance speed = event.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+        if (speed != null) {
+            for (AttributeModifier attributeModifier : speed.getModifiers()) {
+                if (attributeModifier.getName().equals("AureliumSkills-Stun")) {
+                    speed.removeModifier(attributeModifier);
+                }
+            }
+        }
+    }
+
     public void piercing(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, Arrow arrow) {
         if (r.nextDouble() < (Ability.PIERCING.getValue(playerSkill.getAbilityLevel(Ability.PIERCING)) / 100)) {
             arrow.setBounce(false);
@@ -126,7 +140,10 @@ public class ArcheryAbilities implements Listener {
                                 applyCrit(event, playerSkill, player);
                             }
                             if (options.isEnabled(Ability.STUN)) {
-                                stun(playerSkill, player);
+                                if (event.getEntity() instanceof LivingEntity) {
+                                    LivingEntity entity = (LivingEntity) event.getEntity();
+                                    stun(playerSkill, entity);
+                                }
                             }
                             if (options.isEnabled(Ability.PIERCING)) {
                                 piercing(event, playerSkill, player, arrow);
