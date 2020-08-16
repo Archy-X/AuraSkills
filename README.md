@@ -13,8 +13,6 @@ https://discord.gg/Bh2EZfB (Join for support/suggestions/discussion)
 
 ### Requirements:
 
-This plugin requires SmartInvs-1.2.7 or higher in your server plugins.
-Download SmartInvs here: https://www.spigotmc.org/resources/smartinvs-advanced-inventory-api.42835/
 Requires server running Spigot, Paper, or fork of those. CraftBukkit will not work.
 
 ### Skills
