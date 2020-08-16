@@ -145,8 +145,7 @@ public class MiningAbilities implements Listener {
 			if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
 				//Checks if holding pickaxe
 				Material mat = player.getInventory().getItemInMainHand().getType();
-				if (mat.equals(Material.DIAMOND_PICKAXE) || mat.equals(Material.IRON_PICKAXE) || mat.equals(XMaterial.GOLDEN_PICKAXE.parseMaterial())
-						|| mat.equals(Material.STONE_PICKAXE) || mat.equals(XMaterial.WOODEN_PICKAXE.parseMaterial())) {
+				if (mat.name().toUpperCase().contains("PICKAXE")) {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.SPEED_MINE.getManaCost(skill.getAbilityLevel(Ability.SPEED_MINE))) {

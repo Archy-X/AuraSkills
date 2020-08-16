@@ -166,10 +166,8 @@ public class ForagingAbilities implements Listener {
 				if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 					//Checks if holding axe
 					Material mat = player.getInventory().getItemInMainHand().getType();
-					if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
-							|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
+					if (mat.name().toUpperCase().contains("_AXE")) {
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-
 							PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 							if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.TREECAPITATOR.getManaCost(skill.getAbilityLevel(Ability.TREECAPITATOR))) {
 								AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.TREECAPITATOR, (int) (MAbility.TREECAPITATOR.getValue(skill.getAbilityLevel(Ability.TREECAPITATOR)) * 20), new Treecapitator());
