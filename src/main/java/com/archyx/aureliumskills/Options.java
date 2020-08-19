@@ -27,19 +27,22 @@ public class Options {
 	public static double manaModifier;
 	public static boolean luckDoubleDrop;
 	public static boolean enableSkillCommands;
+	public static boolean mySqlEnabled;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
 	public static ChatColor xp_progress_text_color;
 	
-	private static Map<Skill, Boolean> skillToggle = new HashMap<>();
-	private static Map<Source, Double> xpAmounts = new HashMap<>();
-	private static Map<Source, Double> defXpAmounts = new HashMap<>();
+	private static final Map<Skill, Boolean> skillToggle = new HashMap<>();
+	private static final Map<Source, Double> xpAmounts = new HashMap<>();
+	private static final Map<Source, Double> defXpAmounts = new HashMap<>();
 	
-	private static Map<Setting, Double> doubleOptions = new HashMap<>();
-	private static Map<Setting, Boolean> booleanOptions = new HashMap<>();
+	private static final Map<Setting, Double> doubleOptions = new HashMap<>();
+	private static final Map<Setting, Boolean> booleanOptions = new HashMap<>();
 
-	private static Map<Skill, Boolean> checkCancelled = new HashMap<>();
+	private static final Map<Skill, Boolean> checkCancelled = new HashMap<>();
+
+	private static final Map<String, String> mySqlValues = new HashMap<>();
 
 	public Options(Plugin plugin) {
 		this.plugin = plugin;
@@ -93,6 +96,14 @@ public class Options {
 		manaModifier = config.getDouble("regeneration.mana-modifier", 0.25);
 		luckDoubleDrop = config.getBoolean("luck.double-drop-enabled", true);
 		enableSkillCommands = config.getBoolean("enable-skill-commands", true);
+		mySqlEnabled = config.getBoolean("mysql.enabled", false);
+		if (mySqlEnabled) {
+			mySqlValues.put("host", config.getString("mysql.host", "localhost"));
+			mySqlValues.put("port", config.getString("mysql.port", "3306"));
+			mySqlValues.put("database", config.getString("mysql.database", "aureliumskills"));
+			mySqlValues.put("username", config.getString("mysql.username", "root"));
+			mySqlValues.put("password", config.getString("mysql.password", "pass"));
+		}
 		if (colors.containsKey(config.getString("health-text-color").toUpperCase())) {
 			health_text_color = colors.get(config.getString("health-text-color").toUpperCase());
 		}
@@ -185,6 +196,10 @@ public class Options {
 			return defXpAmounts.get(key);
 		}
 		return 0;
+	}
+
+	public static Map<String, String> getMySqlValues() {
+		return mySqlValues;
 	}
 
 	private void loadPrefix(FileConfiguration config) {

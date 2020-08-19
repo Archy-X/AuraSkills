@@ -24,9 +24,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class AureliumSkills extends JavaPlugin{
 	private final File dataFile = new File(getDataFolder(), "data.yml");
 	private final FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
 	private final SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
+	private MySqlSupport mySqlSupport;
 	private Lang lang;
 	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
@@ -111,13 +115,24 @@ public class AureliumSkills extends JavaPlugin{
 		ActionBar actionBar = new ActionBar(this);
 		actionBar.startUpdateActionBar();
 		//Load Data
-		if (dataFile.exists()) {
-			skillLoader.loadSkillData();
-		}	
-		else {
-			saveResource("data.yml", false);
+		if (Options.mySqlEnabled) {
+			//Mysql
+			mySqlSupport = new MySqlSupport(this, this);
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					mySqlSupport.init();
+				}
+			}.runTaskAsynchronously(this);
 		}
-		skillLoader.startSaving();
+		else {
+			if (dataFile.exists()) {
+				skillLoader.loadSkillData();
+			} else {
+				saveResource("data.yml", false);
+			}
+			skillLoader.startSaving();
+		}
 		//Load leveler
 		Leveler.plugin = this;
 		Leveler.loadLevelReqs();
@@ -136,7 +151,19 @@ public class AureliumSkills extends JavaPlugin{
 		//Save config
 		saveConfig();
 		//Save Data
-		skillLoader.saveSkillData(false);
+		if (Options.mySqlEnabled) {
+			if (mySqlSupport != null) {
+				mySqlSupport.saveData(false);
+				mySqlSupport.closeConnection();
+			}
+			else {
+				Bukkit.getLogger().warning("MySql wasn't enabled on server startup, saving data to file instead! MySql will be enabled next time the server starts.");
+				skillLoader.saveSkillData(false);
+			}
+		}
+		else {
+			skillLoader.saveSkillData(false);
+		}
 	}
 
 	public void checkUpdates() {
@@ -181,7 +208,11 @@ public class AureliumSkills extends JavaPlugin{
         }
 			
 	}
-	
+
+	public SkillLoader getSkillLoader() {
+		return skillLoader;
+	}
+
 	private void registerCommands() {
 		PaperCommandManager commandManager = new PaperCommandManager(this);
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {

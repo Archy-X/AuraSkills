@@ -9,6 +9,15 @@
 # Plugin made by Archy (DM Archy#2011 on discord for plugin support)
 data-save-period: 6000
 
+# MySql Options
+mysql:
+    enabled: false
+    host: localhost
+    port: 3306
+    database: aureliumskills
+    username: root
+    password: pass
+
 # Action Bar Options
 enable-action-bar: true
 

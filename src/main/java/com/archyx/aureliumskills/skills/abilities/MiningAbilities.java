@@ -16,6 +16,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -60,9 +61,18 @@ public class MiningAbilities implements Listener {
 						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 						if (skill.getAbilityLevel(Ability.LUCKY_MINER) > 0) {
 							if (r.nextDouble() < (Ability.LUCKY_MINER.getValue(skill.getAbilityLevel(Ability.LUCKY_MINER)) / 100)) {
+								if (player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+									if (block.getType().equals(Material.DIAMOND_ORE) || block.getType().equals(Material.LAPIS_ORE) ||
+										block.getType().equals(Material.REDSTONE_ORE) || block.getType().name().equals("GLOWING_REDSTONE_ORE") ||
+										block.getType().equals(Material.EMERALD_ORE) || block.getType().equals(Material.COAL_ORE) ||
+										block.getType().equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial())) {
+										return;
+									}
+								}
 								for (ItemStack item : block.getDrops()) {
 									block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), item);
 								}
+
 							}
 						}
 					}
