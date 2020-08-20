@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.XMaterial;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -59,6 +60,12 @@ public class AlchemyLeveler implements Listener {
 							//Check for permission
 							if (!p.hasPermission("aureliumskills.alchemy")) {
 								return;
+							}
+							//Check creative mode disable
+							if (Options.disableInCreativeMode) {
+								if (p.getGameMode().equals(GameMode.CREATIVE)) {
+									return;
+								}
 							}
 							Skill s = Skill.ALCHEMY;
 							Material mat = event.getContents().getIngredient().getType();

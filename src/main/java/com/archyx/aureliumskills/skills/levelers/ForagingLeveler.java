@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.ForagingAbilities;
 import com.archyx.aureliumskills.util.XMaterial;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -49,6 +50,12 @@ public class ForagingLeveler implements Listener{
 			//Check for permission
 			if (!p.hasPermission("aureliumskills.foraging")) {
 				return;
+			}
+			//Check creative mode disable
+			if (Options.disableInCreativeMode) {
+				if (p.getGameMode().equals(GameMode.CREATIVE)) {
+					return;
+				}
 			}
 			//If 1.13+
 			if (XMaterial.isNewVersion()) {

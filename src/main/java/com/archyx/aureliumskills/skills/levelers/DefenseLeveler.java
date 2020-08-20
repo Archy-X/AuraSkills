@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.Setting;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.DefenseAbilities;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,6 +41,12 @@ public class DefenseLeveler implements Listener {
 					//Check for permission
 					if (!p.hasPermission("aureliumskills.defense")) {
 						return;
+					}
+					//Check creative mode disable
+					if (Options.disableInCreativeMode) {
+						if (p.getGameMode().equals(GameMode.CREATIVE)) {
+							return;
+						}
 					}
 					if (p.isBlocking()) {
 						return;

@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.FightingAbilities;
 import com.archyx.aureliumskills.util.VersionUtils;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -42,6 +43,12 @@ public class FightingLeveler implements Listener {
 						//Check for permission
 						if (!p.hasPermission("aureliumskills.fighting")) {
 							return;
+						}
+						//Check creative mode disable
+						if (Options.disableInCreativeMode) {
+							if (p.getGameMode().equals(GameMode.CREATIVE)) {
+								return;
+							}
 						}
 						if (type.equals(EntityType.CHICKEN) || type.equals(EntityType.BAT) || type.equals(EntityType.OCELOT) || type.equals(EntityType.RABBIT)) {
 							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_SMALL_PASSIVE));

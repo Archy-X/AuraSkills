@@ -28,6 +28,7 @@ public class Options {
 	public static boolean luckDoubleDrop;
 	public static boolean enableSkillCommands;
 	public static boolean mySqlEnabled;
+	public static boolean disableInCreativeMode;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
@@ -97,6 +98,7 @@ public class Options {
 		luckDoubleDrop = config.getBoolean("luck.double-drop-enabled", true);
 		enableSkillCommands = config.getBoolean("enable-skill-commands", true);
 		mySqlEnabled = config.getBoolean("mysql.enabled", false);
+		disableInCreativeMode = config.getBoolean("disable-in-creative-mode", false);
 		if (mySqlEnabled) {
 			mySqlValues.put("host", config.getString("mysql.host", "localhost"));
 			mySqlValues.put("port", config.getString("mysql.port", "3306"));

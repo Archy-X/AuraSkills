@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.google.common.collect.Sets;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,6 +56,12 @@ public class AgilityLeveler implements Listener {
 					if (!player.hasPermission("aureliumskills.agility")) {
 						return;
 					}
+					//Check creative mode disable
+					if (Options.disableInCreativeMode) {
+						if (player.getGameMode().equals(GameMode.CREATIVE)) {
+							return;
+						}
+					}
 					if (event.getFinalDamage() < player.getHealth()) {
 						Leveler.addXp(player, Skill.AGILITY, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * Options.getXpAmount(Source.FALL_DAMAGE));
 					}
@@ -86,6 +93,12 @@ public class AgilityLeveler implements Listener {
 			//Check for permission
 			if (!player.hasPermission("aureliumskills.agility")) {
 				return;
+			}
+			//Check creative mode disable
+			if (Options.disableInCreativeMode) {
+				if (player.getGameMode().equals(GameMode.CREATIVE)) {
+					return;
+				}
 			}
 	        if (player.getVelocity().getY() > 0) {
 	            double jumpVelocity = 0.42F;

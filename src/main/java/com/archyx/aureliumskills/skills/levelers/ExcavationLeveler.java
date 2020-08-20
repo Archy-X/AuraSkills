@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.ExcavationAbilities;
 import com.archyx.aureliumskills.util.XMaterial;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -48,6 +49,12 @@ public class ExcavationLeveler implements Listener{
 			//Check for permission
 			if (!p.hasPermission("aureliumskills.excavation")) {
 				return;
+			}
+			//Check creative mode disable
+			if (Options.disableInCreativeMode) {
+				if (p.getGameMode().equals(GameMode.CREATIVE)) {
+					return;
+				}
 			}
 			if (mat.equals(Material.SAND)) {
 				if (XMaterial.isNewVersion()) {

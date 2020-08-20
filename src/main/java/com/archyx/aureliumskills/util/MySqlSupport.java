@@ -20,7 +20,7 @@ public class MySqlSupport {
     private Connection connection;
     private final String host, database, username, password;
     private final int port;
-    private AureliumSkills aureliumSkills;
+    private final AureliumSkills aureliumSkills;
 
     public MySqlSupport(Plugin plugin, AureliumSkills aureliumSkills) {
         this.plugin = plugin;

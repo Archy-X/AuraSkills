@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.ItemUtils;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,6 +52,12 @@ public class ForgingLeveler implements Listener {
 					//Check for permission
 					if (!event.getWhoClicked().hasPermission("aureliumskills.forging")) {
 						return;
+					}
+					//Check creative mode disable
+					if (Options.disableInCreativeMode) {
+						if (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE)) {
+							return;
+						}
 					}
 					if (event.getSlot() == 2) {
 						if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {

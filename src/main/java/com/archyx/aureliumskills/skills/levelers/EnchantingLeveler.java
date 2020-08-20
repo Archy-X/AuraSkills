@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.ItemUtils;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +39,12 @@ public class EnchantingLeveler implements Listener {
 			//Check for permission
 			if (!p.hasPermission("aureliumskills.enchanting")) {
 				return;
+			}
+			//Check creative mode disable
+			if (Options.disableInCreativeMode) {
+				if (p.getGameMode().equals(GameMode.CREATIVE)) {
+					return;
+				}
 			}
 			if (ItemUtils.isArmor(mat)) {
 				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * Options.getXpAmount(Source.ARMOR_PER_LEVEL));

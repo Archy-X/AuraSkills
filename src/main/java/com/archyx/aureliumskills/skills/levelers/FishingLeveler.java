@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.FishingAbilities;
 import com.archyx.aureliumskills.util.XMaterial;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -43,6 +44,12 @@ public class FishingLeveler implements Listener {
 				//Check for permission
 				if (!p.hasPermission("aureliumskills.fishing")) {
 					return;
+				}
+				//Check creative mode disable
+				if (Options.disableInCreativeMode) {
+					if (p.getGameMode().equals(GameMode.CREATIVE)) {
+						return;
+					}
 				}
 				Skill s = Skill.FISHING;
 				if (event.getCaught() instanceof Item) {

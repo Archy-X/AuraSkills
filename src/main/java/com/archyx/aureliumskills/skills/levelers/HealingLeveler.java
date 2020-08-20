@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,6 +40,12 @@ public class HealingLeveler implements Listener {
 			//Check for permission
 			if (!event.getPlayer().hasPermission("aureliumskills.healing")) {
 				return;
+			}
+			//Check creative mode disable
+			if (Options.disableInCreativeMode) {
+				if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+					return;
+				}
 			}
 			if (event.getItem().getType().equals(Material.POTION)) {
 				if (event.getItem().getItemMeta() instanceof PotionMeta) {
@@ -83,6 +90,12 @@ public class HealingLeveler implements Listener {
 						//Check for permission
 						if (!p.hasPermission("aureliumskills.healing")) {
 							return;
+						}
+						//Check creative mode disable
+						if (Options.disableInCreativeMode) {
+							if (p.getGameMode().equals(GameMode.CREATIVE)) {
+								return;
+							}
 						}
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {

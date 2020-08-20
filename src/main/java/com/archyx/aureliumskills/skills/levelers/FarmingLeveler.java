@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.FarmingAbilities;
 import com.archyx.aureliumskills.util.XMaterial;
 import org.bukkit.CropState;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NetherWartsState;
 import org.bukkit.block.Block;
@@ -49,6 +50,12 @@ public class FarmingLeveler implements Listener{
 			//Check for permission
 			if (!p.hasPermission("aureliumskills.farming")) {
 				return;
+			}
+			//Check creative mode disable
+			if (Options.disableInCreativeMode) {
+				if (p.getGameMode().equals(GameMode.CREATIVE)) {
+					return;
+				}
 			}
 			if (XMaterial.isNewVersion()) {
 				if (b.getBlockData() instanceof Ageable) {

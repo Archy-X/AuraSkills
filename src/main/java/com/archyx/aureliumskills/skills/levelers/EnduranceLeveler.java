@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.EnduranceAbilities;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -37,6 +38,12 @@ public class EnduranceLeveler {
 					//Check for permission
 					if (!player.hasPermission("aureliumskills.endurance")) {
 						return;
+					}
+					//Check creative mode disable
+					if (Options.disableInCreativeMode) {
+						if (player.getGameMode().equals(GameMode.CREATIVE)) {
+							return;
+						}
 					}
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						int xpAmount = 0;

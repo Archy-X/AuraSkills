@@ -69,6 +69,7 @@ blocked-regions:
 disabled-worlds:
     - Example
 
+disable-in-creative-mode: false
 # Skill specific options
 farming:
     enabled: true
