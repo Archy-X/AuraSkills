@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -35,14 +36,10 @@ public class ManaManager implements Listener {
                     if (SkillLoader.playerStats.containsKey(id)) {
                         PlayerStat stat = SkillLoader.playerStats.get(id);
                         int originalMana = mana.get(id);
-                        int maxMana = 20 + 2 * stat.getStatLevel(Stat.WISDOM);
+                        int maxMana = Options.baseMana + 2 * stat.getStatLevel(Stat.WISDOM);
                         if (originalMana < maxMana) {
-                            int regen = (int) (stat.getStatLevel(Stat.REGENERATION) * Options.manaModifier);
-                            if (originalMana + regen <= maxMana) {
-                                mana.put(id, originalMana + regen);
-                            } else {
-                                mana.put(id, maxMana);
-                            }
+                            int regen = Options.baseManaRegen + (int) (stat.getStatLevel(Stat.REGENERATION) * Options.manaModifier);
+                            mana.put(id, Math.min(originalMana + regen, maxMana));
                         }
                     }
                 }
@@ -55,18 +52,18 @@ public class ManaManager implements Listener {
             return mana.get(id);
         }
         else {
-            mana.put(id, 20);
-            return 20;
+            mana.put(id, Options.baseMana);
+            return Options.baseMana;
         }
     }
 
     public int getMaxMana(UUID id) {
         if (SkillLoader.playerStats.containsKey(id)) {
-            return 20 + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
+            return Options.baseMana + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
         }
         else {
             SkillLoader.playerStats.put(id, new PlayerStat(id));
-            return 20;
+            return Options.baseMana;
         }
     }
 
@@ -79,7 +76,7 @@ public class ManaManager implements Listener {
         UUID id = event.getPlayer().getUniqueId();
         if (!mana.containsKey(id)) {
             if (SkillLoader.playerStats.containsKey(id)) {
-                mana.put(event.getPlayer().getUniqueId(), 20 + 2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
+                mana.put(event.getPlayer().getUniqueId(), Options.baseMana + 2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
             }
         }
     }
