@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Options {
@@ -31,10 +32,13 @@ public class Options {
 	public static boolean disableInCreativeMode;
 	public static int baseMana;
 	public static int baseManaRegen;
+	public static boolean skillMoneyRewardsEnabled;
+	public static double[] skillMoneyRewards;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
 	public static ChatColor xp_progress_text_color;
+	public static List<String> skillLevelUpMessage;
 	
 	private static final Map<Skill, Boolean> skillToggle = new HashMap<>();
 	private static final Map<Source, Double> xpAmounts = new HashMap<>();
@@ -103,6 +107,14 @@ public class Options {
 		disableInCreativeMode = config.getBoolean("disable-in-creative-mode", false);
 		baseMana = config.getInt("base-mana", 20);
 		baseManaRegen = config.getInt("regeneration.base-mana-regen", 1);
+		skillLevelUpMessage = config.getStringList("skill-level-up-message");
+		//Load skill money rewards
+		skillMoneyRewardsEnabled = config.getBoolean("skill-money-rewards.enabled", false);
+		if (skillMoneyRewardsEnabled) {
+			skillMoneyRewards = new double[2];
+			skillMoneyRewards[0] = config.getDouble("skill-money-rewards.base");
+			skillMoneyRewards[1] = config.getDouble("skill-money-rewards.multiplier");
+		}
 		if (mySqlEnabled) {
 			mySqlValues.put("host", config.getString("mysql.host", "localhost"));
 			mySqlValues.put("port", config.getString("mysql.port", "3306"));

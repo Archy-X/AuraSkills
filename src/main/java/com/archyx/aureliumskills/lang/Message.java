@@ -248,7 +248,10 @@ public enum Message {
 	ABILITY_UNLOCK_MESSAGE("abilities.ability-unlock-message"),
 	ABILITY_LEVEL_UP("abilities.ability-level-up"),
 	FIRST_STRIKE_ACTIVATE("abilities.fighting.first-strike.activate"),
-	BLEED_ACTIVATE("abilities.fighting.bleed.activate");
+	BLEED_ACTIVATE("abilities.fighting.bleed.activate"),
+	XP_ADD("basic.xp-add"),
+	XP_SET("basic.xp-set"),
+	XP_REMOVE("basic.xp-remove");
 	
 	private final String path;
 	

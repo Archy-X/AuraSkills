@@ -19,6 +19,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import scala.language;
 
 import java.util.List;
 
@@ -48,6 +49,42 @@ public class SkillsCommand extends BaseCommand {
 	public void onXpAdd(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
 		if (Options.isEnabled(skill)) {
 			Leveler.addXp(player, skill, amount);
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_ADD).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+		}
+		else {
+			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+		}
+	}
+
+	@Subcommand("xp set")
+	@CommandCompletion("@players @skills")
+	@CommandPermission("aureliumskills.xp.set")
+	public void onXpSet(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
+		if (Options.isEnabled(skill)) {
+			Leveler.setXp(player, skill, amount);
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_SET).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+		}
+		else {
+			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+		}
+	}
+
+	@Subcommand("xp remove")
+	@CommandCompletion("@players @skills")
+	@CommandPermission("aureliumskills.xp.remove")
+	public void onXpRemove(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
+		if (Options.isEnabled(skill)) {
+			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+				if (playerSkill.getXp(skill) - amount >= 0) {
+					Leveler.setXp(player, skill, playerSkill.getXp(skill) - amount);
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_REMOVE).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+				}
+				else {
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_REMOVE).replace("$amount$", String.valueOf(playerSkill.getXp(skill))).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+					Leveler.setXp(player, skill, 0);
+				}
+			}
 		}
 		else {
 			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));

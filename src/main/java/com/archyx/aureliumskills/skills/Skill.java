@@ -179,7 +179,7 @@ public enum Skill {
 	}
 	
 	public String getDisplayName() {
-		return StringUtils.capitalize(name);
+		return Lang.getMessage(Message.valueOf(name.toUpperCase() + "_NAME"));
 	}
 	
 	public String getName() {

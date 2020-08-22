@@ -4,7 +4,7 @@ main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
-softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays]
+softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, Vault]
 api-version: '1.13'
 
 permissions:
@@ -18,6 +18,8 @@ permissions:
             aureliumskills.xp.add: true
             aureliumskills.top: true
             aureliumskills.skill.reset: true
+            aureliumskills.xp.set: true
+            aureliumskills.xp.remove: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.ability.setlevel:
@@ -28,6 +30,10 @@ permissions:
         default: op
     aureliumskills.xp.add:
         default: op
+    aureliumskills.xp.set:
+        default: op
+    aureliumskills.xp.remove:
+        default: true
     aureliumskills.top:
         default: true
     aureliumskills.skill.reset:

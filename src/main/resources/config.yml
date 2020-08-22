@@ -73,6 +73,23 @@ disabled-worlds:
     - Example
 
 disable-in-creative-mode: false
+
+skill-money-rewards:
+    enabled: false
+    base: 100
+    multiplier: 10
+
+skill-level-up-message:
+    - '&3&l----------------------------------------'
+    - ' &3Skill Level Up! &b&l$skill_name$ &8$level_old$➜&3&l$level_new$'
+    - ' '
+    - ' &bRewards:'
+    - '  $primary_stat_color$+1$primary_stat_symbol$ $primary_stat_name$'
+    - '  $secondary_stat_color$+1$secondary_stat_symbol$ $secondary_stat_name$'
+    - '  $ability_unlock$'
+    - '  $ability_level_up$'
+    - '  &a$$money_amount$'
+    - '&3&l----------------------------------------'
 # Skill specific options
 farming:
     enabled: true

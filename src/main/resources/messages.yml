@@ -87,6 +87,12 @@ messages:
       EN: XP
       RU: Опыта
       VN: Exp
+    xp-add:
+      EN: '&7Added &b$amount$ &b$skill$ &7XP to player &6$player$'
+    xp-set:
+      EN: '&7Set &b$skill$ &7XP for player &6$player$ &7to &b$amount$'
+    xp-remove:
+      EN: '&7Removed &b$amount$ $skill$ &7XP from player &6$player$'
     maxed:
       EN: MAXED
       PL: WYMAXOWANE

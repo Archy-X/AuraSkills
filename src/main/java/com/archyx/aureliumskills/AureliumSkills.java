@@ -18,18 +18,19 @@ import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.*;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.minuskube.inv.InventoryManager;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,9 @@ public class AureliumSkills extends JavaPlugin{
 	public static ManaAbilityManager manaAbilityManager;
 	public static boolean holographicDisplaysEnabled;
 	public static boolean worldGuardEnabled;
+	public static boolean placeholderAPIEnabled;
+	public static boolean vaultEnabled;
+	private static Economy economy = null;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
 	
@@ -69,7 +73,11 @@ public class AureliumSkills extends JavaPlugin{
 		//Checks for PlaceholderAPI
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			new PlaceholderSupport(this).register();
+			placeholderAPIEnabled = true;
 			Bukkit.getLogger().info("[AureliumSkills] PlaceholderAPI Support Enabled!");
+		}
+		else {
+			placeholderAPIEnabled = false;
 		}
 		//Checks for holographic displays
 		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
@@ -79,6 +87,14 @@ public class AureliumSkills extends JavaPlugin{
 		}
 		else {
 			holographicDisplaysEnabled = false;
+		}
+		//Checks for Vault
+		if (setupEconomy()) {
+			vaultEnabled = true;
+			Bukkit.getLogger().info("[AureliumSkills] Vault Support Enabled!");
+		}
+		else {
+			vaultEnabled = false;
 		}
 		//Load config
 		loadConfig();
@@ -284,6 +300,22 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new DefenseAbilities(this), this);
 		getServer().getPluginManager().registerEvents(new FightingAbilities(this), this);
 		getServer().getPluginManager().registerEvents(new EnduranceAbilities(), this);
+	}
+
+	private boolean setupEconomy() {
+		if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
+			return false;
+		}
+		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+		if (rsp == null) {
+			return false;
+		}
+		economy = rsp.getProvider();
+		return true;
+	}
+
+	public static Economy getEconomy() {
+		return economy;
 	}
 
 }
