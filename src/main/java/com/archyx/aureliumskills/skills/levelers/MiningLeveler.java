@@ -149,6 +149,10 @@ public class MiningLeveler implements Listener {
 				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.OBSIDIAN));
 				applyAbilities(p, b);
 			}
+			else if (mat.equals(XMaterial.MAGMA_BLOCK.parseMaterial())) {
+				Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.MAGMA_BLOCK));
+				applyAbilities(p, b);
+			}
 			else if (XMaterial.isNewVersion()) {
 				if (mat.equals(XMaterial.TERRACOTTA.parseMaterial())) {
 					Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.TERRACOTTA));

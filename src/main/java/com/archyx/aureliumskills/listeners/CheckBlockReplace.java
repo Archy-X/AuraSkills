@@ -30,6 +30,7 @@ public class CheckBlockReplace implements Listener {
             XMaterial.STONE,
             //Common
             XMaterial.SAND,
+            XMaterial.GRAVEL,
             XMaterial.GRASS_BLOCK,
             XMaterial.OAK_LOG,
             XMaterial.BIRCH_LOG,
@@ -47,8 +48,12 @@ public class CheckBlockReplace implements Listener {
             XMaterial.SOUL_SAND,
             XMaterial.COAL_ORE,
             XMaterial.IRON_ORE,
+            XMaterial.BLACKSTONE,
             XMaterial.NETHER_QUARTZ_ORE,
             XMaterial.END_STONE,
+            XMaterial.BASALT,
+            XMaterial.OBSIDIAN,
+            XMaterial.MYCELIUM,
             //Rare
             XMaterial.PUMPKIN,
             XMaterial.MELON,
@@ -73,6 +78,7 @@ public class CheckBlockReplace implements Listener {
             XMaterial.PODZOL,
             XMaterial.RED_SAND,
             XMaterial.SOUL_SOIL,
+            XMaterial.NETHER_GOLD_ORE,
             //Very Rare
             XMaterial.NETHER_WART_BLOCK,
             XMaterial.WARPED_WART_BLOCK,
