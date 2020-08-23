@@ -123,6 +123,8 @@ messages:
       VN: Không tìm thấy ngôn ngữ bạn chọn trong config
     skill-locked:
       EN: You have not unlocked this skill!
+    no-skills-profile:
+      EN: You do not have a Skills profile. Try relogging!
   skills:
     your-skills:
       EN: Your Skills

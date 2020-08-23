@@ -251,7 +251,8 @@ public enum Message {
 	BLEED_ACTIVATE("abilities.fighting.bleed.activate"),
 	XP_ADD("basic.xp-add"),
 	XP_SET("basic.xp-set"),
-	XP_REMOVE("basic.xp-remove");
+	XP_REMOVE("basic.xp-remove"),
+	NO_SKILLS_PROFILE("basic.no-skills-profile");
 	
 	private final String path;
 	

@@ -80,8 +80,7 @@ public enum Skill {
 		double xpToNext;
 		if (Leveler.levelReqs.size() > level - 1) {
 			xpToNext = Leveler.levelReqs.get(level - 1);
-		}
-		else {
+		} else {
 			xpToNext = 0;
 		}
 		NumberFormat nf = new DecimalFormat("##.##");
@@ -142,8 +141,7 @@ public enum Skill {
 				lore.add(" ");
 				lore.add(ChatColor.YELLOW + Lang.getMessage(Message.CLICK_SKILL));
 			}
-		}
-		else {
+		} else {
 			lore.add(" ");
 			lore.add(ChatColor.RED + Lang.getMessage(Message.SKILL_LOCKED));
 		}
@@ -157,8 +155,7 @@ public enum Skill {
 				potionMeta.setLore(lore);
 				item.setItemMeta(potionMeta);
 			}
-		}
-		else {
+		} else {
 			ItemMeta meta = item.getItemMeta();
 			if (meta != null) {
 				meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.valueOf(this.toString().toUpperCase() + "_NAME")) + ChatColor.DARK_AQUA + " " + RomanNumber.toRoman(level));
