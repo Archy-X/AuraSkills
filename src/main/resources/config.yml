@@ -49,6 +49,7 @@ base-mana: 20
 enable-roman-numerals: true
 
 damage-holograms: true
+damage-holograms-scaling: true
 
 # Skill Options
 # Change the equation that calculates xp level requirements (XpRequired = Multiplier * (level - 2) ^ 2 + 100)
@@ -90,6 +91,18 @@ skill-level-up-message:
     - '  $ability_level_up$'
     - '  &a$$money_amount$'
     - '&3&l----------------------------------------'
+
+critical:
+    base-multiplier: 1.5
+    enabled:
+        sword: true
+        bow: true
+        axe: true
+        pickaxe: true
+        shovel: true
+        hoe: true
+        hand: false
+        other: false
 # Skill specific options
 farming:
     enabled: true
@@ -275,19 +288,19 @@ health:
     health-scaling: true
     hp-indicator-scaling: 5
 strength:
-    modifier: 0.1
+    modifier: 0.05
     hand-damage: true
     bow-damage: true
     display-damage-with-health-scaling: true
 toughness:
-    new-modifier: 1
+    new-modifier: 0.3
     reset-armor-attribute: true
 regeneration:
     custom-regen-mechanics: false
     base-regen: 1
-    saturated-modifier: 0.05
-    hunger-full-modifier: 0.025
-    hunger-almost-full-modifier: 0.025
+    saturated-modifier: 0.007
+    hunger-full-modifier: 0.006
+    hunger-almost-full-modifier: 0.005
     custom-regen-options:
         saturated-delay: 20
         hunger-delay: 60
@@ -334,8 +347,8 @@ abilities:
         per-level: 10.0
     axe-master:
         enabled: true
-        base: 3.0
-        per-level: 2.0
+        base: 4.0
+        per-level: 3.0
     shredder:
         enabled: true
         base: 3.0
@@ -378,8 +391,8 @@ abilities:
         per-level: 0.4
     metal-detector:
         enabled: true
-        base: 1.0
-        per-level: 0.5
+        base: 0.5
+        per-level: 0.4
     excavator:
         enabled: true
         base: 10.0
@@ -395,7 +408,7 @@ abilities:
     lucky-spades:
         enabled: true
         base: 0.1
-        per-level: 0.1
+        per-level: 0.05
     crit-chance:
         enabled: true
         base: 5
@@ -426,12 +439,12 @@ abilities:
         per-level: 10.0
     mob-master:
         enabled: true
-        base: 3.0
-        per-level: 4.0
+        base: 2.0
+        per-level: 3.0
     immunity:
         enabled: true
         base: 0.5
-        per-level: 0.5
+        per-level: 0.4
     no-debuff:
         enabled: true
         base: 5.0
@@ -439,7 +452,7 @@ abilities:
     crit-damage:
         enabled: true
         base: 5.0
-        per-level: 5.0
+        per-level: 4.0
     fighter:
         enabled: true
         base: 10.0

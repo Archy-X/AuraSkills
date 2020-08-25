@@ -47,6 +47,10 @@ public class Health implements Listener {
 			}
 			//Applies modifier
 			attribute.addModifier(new AttributeModifier("skillsHealth", modifier, Operation.ADD_NUMBER));
+			//Sets health to max if over max
+			if (player.getHealth() > attribute.getValue()) {
+				player.setHealth(attribute.getValue());
+			}
 			//Applies health scaling
 			if (Options.getBooleanOption(Setting.HEALTH_SCALING)) {
 				double health = attribute.getValue();

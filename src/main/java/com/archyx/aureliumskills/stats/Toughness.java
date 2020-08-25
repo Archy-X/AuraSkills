@@ -8,22 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class Toughness implements Listener {
+public class Toughness {
 
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onDamage(EntityDamageEvent event) {
-		if (event.getEntity() instanceof Player) {
-			Player player = (Player) event.getEntity();
-			//Check for disabled world
-			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-				return;
-			}
-			if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-				double toughness = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.TOUGHNESS) * Options.getDoubleOption(Setting.TOUGHNESS_MODIFIER);
-				event.setDamage(event.getDamage() * (1 - (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1)));
-			}
-		}
+	public static void onDamage(EntityDamageByEntityEvent event, PlayerStat playerStat) {
+		double toughness = playerStat.getStatLevel(Stat.TOUGHNESS) * Options.getDoubleOption(Setting.TOUGHNESS_MODIFIER);
+		event.setDamage(event.getDamage() * (1 - (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1)));
 	}
 }

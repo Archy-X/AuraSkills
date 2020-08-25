@@ -80,31 +80,16 @@ public class MiningAbilities implements Listener {
 			}
 		}
 	}
-	
-	@EventHandler
-	public void pickMaster(EntityDamageByEntityEvent event) {
+
+	public static void pickMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
 		if (Options.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.PICK_MASTER)) {
-				if (event.getDamager() instanceof Player) {
-					Player player = (Player) event.getDamager();
-					//Check disabled worlds
-					if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-						return;
-					}
-					//Check permission
-					if (!player.hasPermission("aureliumskills.mining")) {
-						return;
-					}
-					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-						if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
-							Material mat = player.getInventory().getItemInMainHand().getType();
-							if (mat.equals(Material.DIAMOND_PICKAXE) || mat.equals(Material.IRON_PICKAXE) || mat.equals(XMaterial.GOLDEN_PICKAXE.parseMaterial())
-									|| mat.equals(Material.STONE_PICKAXE) || mat.equals(XMaterial.WOODEN_PICKAXE.parseMaterial())) {
-								PlayerSkill s = SkillLoader.playerSkills.get(player.getUniqueId());
-								event.setDamage(event.getDamage() * (1 + (Ability.PICK_MASTER.getValue(s.getAbilityLevel(Ability.PICK_MASTER)) / 100)));
-							}
-						}
-					}
+				//Check permission
+				if (!player.hasPermission("aureliumskills.mining")) {
+					return;
+				}
+				if (playerSkill.getAbilityLevel(Ability.PICK_MASTER) > 0) {
+					event.setDamage(event.getDamage() * (1 + (Ability.PICK_MASTER.getValue(playerSkill.getAbilityLevel(Ability.PICK_MASTER)) / 100)));
 				}
 			}
 		}

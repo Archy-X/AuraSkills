@@ -951,6 +951,10 @@ messages:
           EN: _% Chance, $ Damage
         activate:
           EN: '&cEnemy Bleeding!'
+        bleeding:
+          EN: '&cYou are bleeding!'
+        bleed-stop:
+          EN: '&fThe bleeding has stopped'
     endurance:
       anti-hunger:
         name:

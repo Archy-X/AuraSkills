@@ -2,6 +2,7 @@ package com.archyx.aureliumskills;
 
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.util.DamageType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -34,6 +35,8 @@ public class Options {
 	public static int baseManaRegen;
 	public static boolean skillMoneyRewardsEnabled;
 	public static double[] skillMoneyRewards;
+	public static double criticalBase;
+	public static Map<DamageType, Boolean> criticalEnabled;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
@@ -108,6 +111,17 @@ public class Options {
 		baseMana = config.getInt("base-mana", 20);
 		baseManaRegen = config.getInt("regeneration.base-mana-regen", 1);
 		skillLevelUpMessage = config.getStringList("skill-level-up-message");
+		criticalBase = config.getDouble("critical.base-multiplier", 1.5);
+		//Load critical options
+		criticalEnabled = new HashMap<>();
+		for (DamageType damageType : DamageType.values()) {
+			if (damageType == DamageType.HAND || damageType == DamageType.OTHER) {
+				criticalEnabled.put(damageType, config.getBoolean("critical.enabled." + damageType.name().toLowerCase(), false));
+			}
+			else {
+				criticalEnabled.put(damageType, config.getBoolean("critical.enabled." + damageType.name().toLowerCase(), true));
+			}
+		}
 		//Load skill money rewards
 		skillMoneyRewardsEnabled = config.getBoolean("skill-money-rewards.enabled", false);
 		if (skillMoneyRewardsEnabled) {

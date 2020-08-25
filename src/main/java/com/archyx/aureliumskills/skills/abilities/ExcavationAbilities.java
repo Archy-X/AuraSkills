@@ -48,34 +48,16 @@ public class ExcavationAbilities implements Listener {
 		}
 		return output;
 	}
-	
-	@EventHandler
-	public void spadeMaster(EntityDamageByEntityEvent event) {
+
+	public static void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
 		if (Options.isEnabled(Skill.EXCAVATION)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SPADE_MASTER)) {
-				if (!event.isCancelled()) {
-					//Checks if entity is damaged by player
-					if (event.getDamager() instanceof Player) {
-						Player player = (Player) event.getDamager();
-						//Check disabled worlds
-						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-							return;
-						}
-						//Check permission
-						if (!player.hasPermission("aureliumskills.excavation")) {
-							return;
-						}
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							//Checks if item used is a shovel
-							Material mat = player.getInventory().getItemInMainHand().getType();
-							if (mat.equals(XMaterial.DIAMOND_SHOVEL.parseMaterial()) || mat.equals(XMaterial.IRON_SHOVEL.parseMaterial()) || mat.equals(XMaterial.GOLDEN_SHOVEL.parseMaterial()) ||
-									mat.equals(XMaterial.STONE_SHOVEL.parseMaterial()) || mat.equals(XMaterial.WOODEN_SHOVEL.parseMaterial())) {
-								PlayerSkill s = SkillLoader.playerSkills.get(player.getUniqueId());
-								//Multiplies damage
-								event.setDamage(event.getDamage() * (1 + (Ability.SPADE_MASTER.getValue(s.getAbilityLevel(Ability.SPADE_MASTER)) / 100)));
-							}
-						}
-					}
+				//Check permission
+				if (!player.hasPermission("aureliumskills.excavation")) {
+					return;
+				}
+				if (playerSkill.getAbilityLevel(Ability.SPADE_MASTER) > 0) {
+					event.setDamage(event.getDamage() * (1 + (Ability.SPADE_MASTER.getValue(playerSkill.getAbilityLevel(Ability.SPADE_MASTER)) / 100)));
 				}
 			}
 		}

@@ -1,53 +1,28 @@
 package com.archyx.aureliumskills.stats;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.ItemUtils;
-import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import com.archyx.aureliumskills.util.DamageType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class Strength implements Listener {
-	
-	@EventHandler
-	public void onDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player) {
-			Player player = (Player) event.getDamager();
-			//Check for disabled world
-			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-				return;
-			}
-			if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-				if (Options.getBooleanOption(Setting.STRENGTH_HAND_DAMAGE)) {
-					int strength = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.STRENGTH);
-					event.setDamage(event.getDamage() + (double) strength * Options.getDoubleOption(Setting.STRENGTH_MODIFIER));
-				} else {
-					Material mat = player.getInventory().getItemInMainHand().getType();
-					if (ItemUtils.isWeapon(mat) || ItemUtils.isTool(mat)) {
-						int strength = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.STRENGTH);
-						event.setDamage(event.getDamage() + (double) strength * Options.getDoubleOption(Setting.STRENGTH_MODIFIER));
-					}
-				}
+public class Strength {
+
+	public void strength(EntityDamageByEntityEvent event, PlayerStat playerStat, DamageType damageType) {
+		if (damageType == DamageType.HAND) {
+			if (Options.getBooleanOption(Setting.STRENGTH_HAND_DAMAGE)) {
+				int strength = playerStat.getStatLevel(Stat.STRENGTH);
+				event.setDamage(event.getDamage() + (double) strength * Options.getDoubleOption(Setting.STRENGTH_MODIFIER));
 			}
 		}
-		else if (event.getDamager() instanceof Arrow) {
+		else if (damageType == DamageType.BOW) {
 			if (Options.getBooleanOption(Setting.STRENGTH_BOW_DAMAGE)) {
-				Arrow arrow = (Arrow) event.getDamager();
-				if (arrow.getShooter() instanceof Player) {
-					Player player = (Player) arrow.getShooter();
-					//Check for disabled world
-					if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-						return;
-					}
-					int strength = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.STRENGTH);
-					event.setDamage(event.getDamage() + (double) strength * Options.getDoubleOption(Setting.STRENGTH_MODIFIER));
-				}
+				int strength = playerStat.getStatLevel(Stat.STRENGTH);
+				event.setDamage(event.getDamage() + (double) strength * Options.getDoubleOption(Setting.STRENGTH_MODIFIER));
 			}
+		}
+		else {
+			int strength = playerStat.getStatLevel(Stat.STRENGTH);
+			event.setDamage(event.getDamage() + (double) strength * Options.getDoubleOption(Setting.STRENGTH_MODIFIER));
 		}
 	}
 	

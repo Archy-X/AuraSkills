@@ -52,17 +52,25 @@ public class DefenseAbilities implements Listener {
         return output;
     }
 
-    public void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
-        if (player.isSneaking()) {
-            double damageReduction = 1 - (Ability.SHIELDING.getValue(playerSkill.getAbilityLevel(Ability.SHIELDING)) / 100);
-            event.setDamage(event.getDamage() * damageReduction);
+    public static void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
+        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SHIELDING)) {
+            if (player.isSneaking()) {
+                if (playerSkill.getAbilityLevel(Ability.SHIELDING) > 0) {
+                    double damageReduction = 1 - (Ability.SHIELDING.getValue(playerSkill.getAbilityLevel(Ability.SHIELDING)) / 100);
+                    event.setDamage(event.getDamage() * damageReduction);
+                }
+            }
         }
     }
 
-    public void mobMaster(EntityDamageByEntityEvent event, PlayerSkill playerSKill) {
-        if (event.getDamager() instanceof LivingEntity && !(event.getDamager() instanceof Player)) {
-            double damageReduction = 1 - (Ability.MOB_MASTER.getValue(playerSKill.getAbilityLevel(Ability.MOB_MASTER)) / 100);
-            event.setDamage(event.getDamage() * damageReduction);
+    public static void mobMaster(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
+        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.MOB_MASTER)) {
+            if (event.getDamager() instanceof LivingEntity && !(event.getDamager() instanceof Player)) {
+                if (playerSkill.getAbilityLevel(Ability.MOB_MASTER) > 0) {
+                    double damageReduction = 1 - (Ability.MOB_MASTER.getValue(playerSkill.getAbilityLevel(Ability.MOB_MASTER)) / 100);
+                    event.setDamage(event.getDamage() * damageReduction);
+                }
+            }
         }
     }
 
@@ -127,7 +135,7 @@ public class DefenseAbilities implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void defenseListener(EntityDamageByEntityEvent event) {
         if (Options.isEnabled(Skill.DEFENSE)) {
             if (!event.isCancelled()) {
@@ -144,12 +152,6 @@ public class DefenseAbilities implements Listener {
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                         AbilityOptionManager options = AureliumSkills.abilityOptionManager;
-                        if (options.isEnabled(Ability.MOB_MASTER)) {
-                            mobMaster(event, playerSkill);
-                        }
-                        if (options.isEnabled(Ability.SHIELDING)) {
-                            shielding(event, playerSkill, player);
-                        }
                         if (options.isEnabled(Ability.NO_DEBUFF)) {
                             if (event.getDamager() instanceof LivingEntity) {
                                 LivingEntity entity = (LivingEntity) event.getDamager();

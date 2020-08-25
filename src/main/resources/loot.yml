@@ -6,7 +6,8 @@ lootTables:
     - 1 1 DIAMOND_BLOCK
     - 2 4 GOLD_BLOCK
     excavation-rare:
-    - 1 1 DIAMOND
-    - 1 1 NAME_TAG
+    - 1 1 IRON_INGOT
+    - 1 1 GOLD_INGOT
     excavation-epic:
     - 1 1 DIAMOND_BLOCK
+    - 1 1 NAME_TAG

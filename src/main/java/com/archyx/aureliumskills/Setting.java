@@ -10,9 +10,9 @@ public enum Setting {
 	TOUGHNESS_MODIFIER("toughness.new-modifier", 1),
 	CUSTOM_REGEN_MECHANICS("regeneration.custom-regen-mechanics", false),
 	BASE_REGEN("regeneration.base-regen", 1),
-	SATURATED_MODIFIER("regeneration.saturated-modifier", 0.05),
-	HUNGER_FULL_MODIFIER("regeneration.hunger-full-modifier", 0.025),
-	HUNGER_ALMOST_FULL_MODIFIER("regeneration.hunger-almost-full-modifier", 0.025),
+	SATURATED_MODIFIER("regeneration.saturated-modifier", 0.007),
+	HUNGER_FULL_MODIFIER("regeneration.hunger-full-modifier", 0.006),
+	HUNGER_ALMOST_FULL_MODIFIER("regeneration.hunger-almost-full-modifier", 0.005),
 	SATURATED_DELAY("regeneration.saturated-delay", 20),
 	HUNGER_DELAY("regeneration.hunger-delay", 60),
 	LUCK_MODIFIER("luck.modifier", 0.1),
@@ -27,20 +27,21 @@ public enum Setting {
 	DISPLAY_DAMAGE_WITH_HEALTH_SCALING("strength.display-damage-with-health-scaling", true),
 	DEFENSE_MAX("defense.max", 100.0),
 	DEFENSE_MIN("defense.min", 0),
-	DAMAGE_HOLOGRAMS("damage-holograms", true);
+	DAMAGE_HOLOGRAMS("damage-holograms", true),
+	DAMAGE_HOLOGRAMS_SCALING("damage-holograms-scaling", true);
 
-	private String path;
+	private final String path;
 	private double defDouble;
 	private boolean defBoolean;
-	private String type;
+	private final String type;
 	
-	private Setting(String path, double def) {
+	Setting(String path, double def) {
 		this.path = path;
 		this.defDouble = def;
 		this.type = "double";
 	}
 	
-	private Setting(String path, boolean def) {
+	Setting(String path, boolean def) {
 		this.path = path;
 		this.defBoolean = def;
 		this.type = "boolean";

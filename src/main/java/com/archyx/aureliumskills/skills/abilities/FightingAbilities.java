@@ -28,12 +28,11 @@ import java.util.UUID;
 public class FightingAbilities implements Listener {
 
     private final Plugin plugin;
-    private final Map<UUID, Integer> firstStrikeCounter;
+    private static final Map<UUID, Integer> firstStrikeCounter = new HashMap<>();
     private final Random r = new Random();
 
     public FightingAbilities(Plugin plugin) {
         this.plugin = plugin;
-        firstStrikeCounter = new HashMap<>();
     }
 
     public static double getModifiedXp(Player player, Source source) {
@@ -47,56 +46,54 @@ public class FightingAbilities implements Listener {
         return output;
     }
 
-    public void applyCrit(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
-        //Checks if crit should be applied
-        if (Critical.isCrit(playerSkill)) {
-            //Modifies damage
-            event.setDamage(event.getDamage() * Critical.getCritMultiplier(playerSkill));
-            //Sets metadata for damage indicators
-            player.setMetadata("skillsCritical", new FixedMetadataValue(plugin, true));
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    player.removeMetadata("skillsCritical", plugin);
+    public static void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+        if (Options.isEnabled(Skill.FIGHTING)) {
+            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SWORD_MASTER)) {
+                if (!player.hasPermission("aureliumskills.fighting")) {
+                    return;
                 }
-            }.runTaskLater(plugin, 1L);
+                if (playerSkill.getAbilityLevel(Ability.SWORD_MASTER) > 0) {
+                    //Modifies damage
+                    double modifier = Ability.SWORD_MASTER.getValue(playerSkill.getAbilityLevel(Ability.SWORD_MASTER)) / 100;
+                    event.setDamage(event.getDamage() * (1 + modifier));
+                }
+            }
         }
     }
 
-    public void swordMaster(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
-        //Modifies damage
-        double modifier = Ability.SWORD_MASTER.getValue(playerSkill.getAbilityLevel(Ability.SWORD_MASTER)) / 100;
-        event.setDamage(event.getDamage() * (1 + modifier));
-    }
-
-    public void firstStrike(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
-        if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
-            //Modifies damage
-            double modifier = Ability.FIRST_STRIKE.getValue(playerSkill.getAbilityLevel(Ability.FIRST_STRIKE)) / 100;
-            event.setDamage(event.getDamage() * (1 + modifier));
-            event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(Message.FIRST_STRIKE_ACTIVATE).replace("&", "§"));
-            //Adds metadata
-            player.setMetadata("AureliumSkills-FirstStrike", new FixedMetadataValue(plugin, true));
-            //Increments counter
-            if (firstStrikeCounter.containsKey(player.getUniqueId())) {
-                firstStrikeCounter.put(player.getUniqueId(), firstStrikeCounter.get(player.getUniqueId()) + 1);
-            }
-            else {
-                firstStrikeCounter.put(player.getUniqueId(), 0);
-            }
-            int id = firstStrikeCounter.get(player.getUniqueId());
-            //Schedules metadata removal
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    //Remove if this event was the last hit
-                    if (firstStrikeCounter.containsKey(player.getUniqueId())) {
-                        if (firstStrikeCounter.get(player.getUniqueId()) == id) {
-                            player.removeMetadata("AureliumSkills-FirstStrike", plugin);
+    public static void firstStrike(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, Plugin plugin) {
+        if (Options.isEnabled(Skill.FIGHTING)) {
+            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FIRST_STRIKE)) {
+                if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
+                    if (playerSkill.getAbilityLevel(Ability.FIRST_STRIKE) > 0) {
+                        //Modifies damage
+                        double modifier = Ability.FIRST_STRIKE.getValue(playerSkill.getAbilityLevel(Ability.FIRST_STRIKE)) / 100;
+                        event.setDamage(event.getDamage() * (1 + modifier));
+                        event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(Message.FIRST_STRIKE_ACTIVATE).replace("&", "§"));
+                        //Adds metadata
+                        player.setMetadata("AureliumSkills-FirstStrike", new FixedMetadataValue(plugin, true));
+                        //Increments counter
+                        if (firstStrikeCounter.containsKey(player.getUniqueId())) {
+                            firstStrikeCounter.put(player.getUniqueId(), firstStrikeCounter.get(player.getUniqueId()) + 1);
+                        } else {
+                            firstStrikeCounter.put(player.getUniqueId(), 0);
                         }
+                        int id = firstStrikeCounter.get(player.getUniqueId());
+                        //Schedules metadata removal
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                //Remove if this event was the last hit
+                                if (firstStrikeCounter.containsKey(player.getUniqueId())) {
+                                    if (firstStrikeCounter.get(player.getUniqueId()) == id) {
+                                        player.removeMetadata("AureliumSkills-FirstStrike", plugin);
+                                    }
+                                }
+                            }
+                        }.runTaskLater(plugin, 6000L);
                     }
                 }
-            }.runTaskLater(plugin, 6000L);
+            }
         }
     }
 
@@ -106,6 +103,9 @@ public class FightingAbilities implements Listener {
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
                     entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, 3));
                     event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(Message.BLEED_ACTIVATE).replace("&", "§"));
+                    if (entity instanceof Player) {
+                        entity.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.BLEED_BLEEDING).replace("&", "§"));
+                    }
                     //Schedules bleed ticks
                     new BukkitRunnable() {
                         @Override
@@ -125,12 +125,15 @@ public class FightingAbilities implements Listener {
                                     return;
                                 }
                             }
+                            if (entity instanceof Player) {
+                                entity.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.BLEED_STOP).replace("&", "§"));
+                            }
                             cancel();
                         }
                     }.runTaskTimer(plugin, 40L, 40L);
                 } else {
                     int bleedTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
-                    entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, bleedTicks + 3));
+                    entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, bleedTicks + 2));
                 }
             }
         }
@@ -141,7 +144,7 @@ public class FightingAbilities implements Listener {
         event.getEntity().removeMetadata("AureliumSkills-BleedTicks", plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void fightingListener(EntityDamageByEntityEvent event) {
         if (Options.isEnabled(Skill.FIGHTING)) {
             if (!event.isCancelled()) {
@@ -160,16 +163,6 @@ public class FightingAbilities implements Listener {
                         if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
                             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                             AbilityOptionManager options = AureliumSkills.abilityOptionManager;
-                            //Applies abilities
-                            if (options.isEnabled(Ability.SWORD_MASTER)) {
-                                swordMaster(event, playerSkill);
-                            }
-                            if (options.isEnabled(Ability.FIRST_STRIKE)) {
-                                firstStrike(event, playerSkill, player);
-                            }
-                            if (options.isEnabled(Ability.CRIT_CHANCE)) {
-                                applyCrit(event, playerSkill, player);
-                            }
                             if (options.isEnabled(Ability.BLEED)) {
                                 if (event.getEntity() instanceof LivingEntity) {
                                     bleed(event, playerSkill, (LivingEntity) event.getEntity());

@@ -249,6 +249,8 @@ public enum Message {
 	ABILITY_LEVEL_UP("abilities.ability-level-up"),
 	FIRST_STRIKE_ACTIVATE("abilities.fighting.first-strike.activate"),
 	BLEED_ACTIVATE("abilities.fighting.bleed.activate"),
+	BLEED_BLEEDING("abilities.fighting.bleed.bleeding"),
+	BLEED_STOP("abilities.fighting.bleed.bleed-stop"),
 	XP_ADD("basic.xp-add"),
 	XP_SET("basic.xp-set"),
 	XP_REMOVE("basic.xp-remove"),

@@ -44,22 +44,18 @@ public class ArcheryAbilities implements Listener {
         return output;
     }
 
-    public void applyCrit(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
-        if (Critical.isCrit(playerSkill)) {
-            event.setDamage(event.getDamage() * Critical.getCritMultiplier(playerSkill));
-            player.setMetadata("skillsCritical", new FixedMetadataValue(plugin, true));
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    player.removeMetadata("skillsCritical", plugin);
+    public static void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+        if (Options.isEnabled(Skill.ARCHERY)) {
+            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.BOW_MASTER)) {
+                if (!player.hasPermission("aureliumskills.archery")) {
+                    return;
                 }
-            }.runTaskLater(plugin, 1L);
+                if (playerSkill.getAbilityLevel(Ability.BOW_MASTER) > 0) {
+                    double multiplier = 1 + (Ability.BOW_MASTER.getValue(playerSkill.getAbilityLevel(Ability.BOW_MASTER)) / 100);
+                    event.setDamage(event.getDamage() * multiplier);
+                }
+            }
         }
-    }
-
-    public void bowMaster(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
-        double multiplier = 1 + (Ability.BOW_MASTER.getValue(playerSkill.getAbilityLevel(Ability.BOW_MASTER)) / 100);
-        event.setDamage(event.getDamage() * multiplier);
     }
 
     public void stun(PlayerSkill playerSkill, LivingEntity entity) {
@@ -133,12 +129,6 @@ public class ArcheryAbilities implements Listener {
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                             AbilityOptionManager options = AureliumSkills.abilityOptionManager;
-                            if (options.isEnabled(Ability.BOW_MASTER)) {
-                                bowMaster(event, playerSkill);
-                            }
-                            if (options.isEnabled(Ability.CRIT_CHANCE)) {
-                                applyCrit(event, playerSkill, player);
-                            }
                             if (options.isEnabled(Ability.STUN)) {
                                 if (event.getEntity() instanceof LivingEntity) {
                                     LivingEntity entity = (LivingEntity) event.getEntity();

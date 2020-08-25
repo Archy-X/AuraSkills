@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,29 +32,31 @@ public class HologramSupport implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (!event.isCancelled()) {
-            if (AureliumSkills.holographicDisplaysEnabled) {
-                if (Options.getBooleanOption(Setting.DAMAGE_HOLOGRAMS)) {
-                    if (AureliumSkills.worldManager.isInDisabledWorld(event.getEntity().getLocation())) {
-                        return;
-                    }
-                    if (event.getDamager() instanceof Player) {
-                        Player player = (Player) event.getDamager();
-                        if (player.hasMetadata("skillsCritical")) {
-                            //If only critical
-                            createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), true));
-                        } else {
-                            //If none
-                            createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), false));
-
+            if (event.getEntity() instanceof LivingEntity) {
+                if (AureliumSkills.holographicDisplaysEnabled) {
+                    if (Options.getBooleanOption(Setting.DAMAGE_HOLOGRAMS)) {
+                        if (AureliumSkills.worldManager.isInDisabledWorld(event.getEntity().getLocation())) {
+                            return;
                         }
-                    } else if (event.getDamager() instanceof Arrow) {
-                        Arrow arrow = (Arrow) event.getDamager();
-                        if (arrow.getShooter() instanceof Player) {
-                            Player player = (Player) arrow.getShooter();
+                        if (event.getDamager() instanceof Player) {
+                            Player player = (Player) event.getDamager();
                             if (player.hasMetadata("skillsCritical")) {
+                                //If only critical
                                 createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), true));
                             } else {
+                                //If none
                                 createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), false));
+
+                            }
+                        } else if (event.getDamager() instanceof Arrow) {
+                            Arrow arrow = (Arrow) event.getDamager();
+                            if (arrow.getShooter() instanceof Player) {
+                                Player player = (Player) arrow.getShooter();
+                                if (player.hasMetadata("skillsCritical")) {
+                                    createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), true));
+                                } else {
+                                    createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), false));
+                                }
                             }
                         }
                     }
@@ -69,32 +72,37 @@ public class HologramSupport implements Listener {
     }
 
     private String getText(double damage, boolean critical) {
-        NumberFormat nf = new DecimalFormat("#,###");
         StringBuilder text = new StringBuilder(ChatColor.GRAY + "");
-        String damageText = "" + (int) (damage * 5);
+        String damageText;
+        if (Options.getBooleanOption(Setting.DAMAGE_HOLOGRAMS_SCALING)) {
+            damageText = "" + (int) (damage * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING));
+        }
+        else {
+            damageText = "" + (int) damage;
+        }
         if (critical) {
             for (int i = 0; i < damageText.length(); i++) {
                 int j = Math.abs(i - (damageText.length() - 1));
                 if (j == 0) {
-                    text.append(ChatColor.GRAY).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.GRAY).append(damageText.charAt(i));
                 } else if (j == 1) {
-                    text.append(ChatColor.WHITE).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.WHITE).append(damageText.charAt(i));
                 } else if (j == 2) {
-                    text.append(ChatColor.YELLOW).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.YELLOW).append(damageText.charAt(i));
                 } else if (j == 3) {
-                    text.append(ChatColor.GOLD).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.GOLD).append(damageText.charAt(i));
                 } else if (j == 4) {
-                    text.append(ChatColor.RED).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.RED).append(damageText.charAt(i));
                 } else if (j == 5) {
-                    text.append(ChatColor.DARK_RED).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.DARK_RED).append(damageText.charAt(i));
                 } else if (j == 6) {
-                    text.append(ChatColor.DARK_PURPLE).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.DARK_PURPLE).append(damageText.charAt(i));
                 } else if (j == 7) {
-                    text.append(ChatColor.LIGHT_PURPLE).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.LIGHT_PURPLE).append(damageText.charAt(i));
                 } else if (j == 8) {
-                    text.append(ChatColor.BLUE).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.BLUE).append(damageText.charAt(i));
                 } else {
-                    text.append(ChatColor.DARK_BLUE).append(String.valueOf(damageText.charAt(i)));
+                    text.append(ChatColor.DARK_BLUE).append(damageText.charAt(i));
                 }
             }
         }

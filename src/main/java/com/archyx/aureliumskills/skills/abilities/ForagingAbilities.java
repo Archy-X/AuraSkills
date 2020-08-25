@@ -72,33 +72,15 @@ public class ForagingAbilities implements Listener {
 		}
 	}
 
-	
-	@EventHandler(priority = EventPriority.HIGH)
-	public void axeMaster(EntityDamageByEntityEvent event) {
+	public static void axeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
 		if (Options.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.AXE_MASTER)) {
-				if (!event.isCancelled()) {
-					if (event.getDamager() instanceof Player) {
-						Player player = (Player) event.getDamager();
-						//Check permission
-						if (!player.hasPermission("aureliumskills.foraging")) {
-							return;
-						}
-						//Check disabled worlds
-						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-							return;
-						}
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							if (event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
-								Material mat = player.getInventory().getItemInMainHand().getType();
-								if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
-										|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
-									PlayerSkill s = SkillLoader.playerSkills.get(player.getUniqueId());
-									event.setDamage(event.getDamage() * (1 + (Ability.AXE_MASTER.getValue(s.getAbilityLevel(Ability.AXE_MASTER)) / 100)));
-								}
-							}
-						}
-					}
+				//Check permission
+				if (!player.hasPermission("aureliumskills.foraging")) {
+					return;
+				}
+				if (playerSkill.getAbilityLevel(Ability.AXE_MASTER) > 0) {
+					event.setDamage(event.getDamage() * (1 + (Ability.AXE_MASTER.getValue(playerSkill.getAbilityLevel(Ability.AXE_MASTER)) / 100)));
 				}
 			}
 		}
