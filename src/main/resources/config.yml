@@ -50,6 +50,21 @@ enable-roman-numerals: true
 
 damage-holograms: true
 damage-holograms-scaling: true
+damage-holograms-decimal:
+    display-when-less-than: 1
+    decimal-max-amount: 1
+damage-holograms-offset:
+    x: 0
+    y: 0
+    z: 0
+    random:
+        enabled: false
+        x-min: -0.5
+        x-max: 0.5
+        y-min: 0
+        y-max: 0
+        z-min: -0.5
+        z-max: 0.5
 
 # Skill Options
 # Change the equation that calculates xp level requirements (XpRequired = Multiplier * (level - 2) ^ 2 + 100)
@@ -91,6 +106,13 @@ skill-level-up-message:
     - '  $ability_level_up$'
     - '  &a$$money_amount$'
     - '&3&l----------------------------------------'
+
+modifier:
+    armor:
+        equip-blocked-materials:
+            - EXAMPLE
+    item:
+        check-period: 2
 
 critical:
     base-multiplier: 1.5

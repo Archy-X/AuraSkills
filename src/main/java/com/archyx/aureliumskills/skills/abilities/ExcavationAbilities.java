@@ -77,8 +77,12 @@ public class ExcavationAbilities implements Listener {
 	public void metalDetector(PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.METAL_DETECTOR.getValue(playerSkill.getAbilityLevel(Ability.METAL_DETECTOR)) / 100)) {
-				ItemStack drop = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size())).getDrop();
-				block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+				if (AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size() > 0) {
+					ItemStack drop = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size())).getDrop();
+					if (drop != null) {
+						block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+					}
+				}
 			}
 		}
 	}
@@ -86,8 +90,12 @@ public class ExcavationAbilities implements Listener {
 	public void luckySpades(PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.LUCKY_SPADES.getValue(playerSkill.getAbilityLevel(Ability.LUCKY_SPADES)) / 100)) {
-				ItemStack drop = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size())).getDrop();
-				block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+				if (AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size() > 0) {
+					ItemStack drop = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size())).getDrop();
+					if (drop != null) {
+						block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+					}
+				}
 			}
 		}
 	}

@@ -36,12 +36,16 @@ public class Options {
 	public static boolean skillMoneyRewardsEnabled;
 	public static double[] skillMoneyRewards;
 	public static double criticalBase;
+	public static int itemModifierCheckPeriod;
+	public static List<String> armorEquipBlockedMaterials;
 	public static Map<DamageType, Boolean> criticalEnabled;
 	public static ChatColor health_text_color;
 	public static ChatColor mana_text_color;
 	public static ChatColor skill_xp_text_color;
 	public static ChatColor xp_progress_text_color;
 	public static List<String> skillLevelUpMessage;
+	public static double hologramsDisplayLessThan;
+	public static int hologramsDecimalAmount;
 	
 	private static final Map<Skill, Boolean> skillToggle = new HashMap<>();
 	private static final Map<Source, Double> xpAmounts = new HashMap<>();
@@ -112,6 +116,10 @@ public class Options {
 		baseManaRegen = config.getInt("regeneration.base-mana-regen", 1);
 		skillLevelUpMessage = config.getStringList("skill-level-up-message");
 		criticalBase = config.getDouble("critical.base-multiplier", 1.5);
+		armorEquipBlockedMaterials = config.getStringList("modifier.armor.equip-blocked-materials");
+		itemModifierCheckPeriod = config.getInt("modifier.item.check-period", 2);
+		hologramsDisplayLessThan = config.getDouble("damage-holograms-decimal.display-when-less-than", 1);
+		hologramsDecimalAmount = config.getInt("damage-holograms-decimal.decimal-max-amount", 1);
 		//Load critical options
 		criticalEnabled = new HashMap<>();
 		for (DamageType damageType : DamageType.values()) {

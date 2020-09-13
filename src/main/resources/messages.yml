@@ -125,6 +125,8 @@ messages:
       EN: You have not unlocked this skill!
     no-skills-profile:
       EN: You do not have a Skills profile. Try relogging!
+    xp-multiplier-command:
+      EN: '&fXP multiplier for &6$player_name$&f: &b$multiplier$x / +$multiplier_percent$%'
   skills:
     your-skills:
       EN: Your Skills
@@ -991,3 +993,86 @@ messages:
           EN: _% chance to steal 1 hunger point when attacking a player
         mini-desc:
           EN: _% Hunger Steal
+  modifier:
+    no-profile:
+      EN: '&ePlayer does not have a stats profile!'
+    modifier-add:
+      added:
+        EN: '$stat_color$$stat_name$ &7modifier level &b$modifier_value$ &7with name &f$modifier_name$ &7added to player &6$player_name$'
+      already-exists:
+        EN: '&eModifier with name &f$modifier_name$ &ealready exists on player &6$player_name$&e! Remove it with &6/sk modifier remove $player_name$ $modifier_name$'
+    modifier-remove:
+      removed:
+        EN: '&7Modifier &f$modifier_name$ &7removed from player &6$player_name$'
+      not-found:
+        EN: '&eModifier &7$modifier_name$ &enot fond for player &6$player_name$'
+    modifier-list:
+      all-stats-header:
+        EN: '&7Stat modifiers for player &6$player_name$:'
+      all-stats-line:
+        EN: '  &f$modifier_name$ - $stat_color$$stat_name$ &fLevel &6$modifier_value$'
+      one-stat-header:
+        EN: '&fStat modifiers ($stat_color$$stat_name$&f) for player &6$player_name$:'
+      one-stat-line:
+        EN: '  &f$modifier_name$ - $stat_color$$stat_name$ &fLevel &6$modifier_value$'
+      players-only:
+        EN: '&eOnly players can list their own modifiers! Try specifying a player'
+    modifier-remove-all:
+      removed-all-stats:
+        EN: '&7Removed &b$removed$ &7stat modifiers from player &6$player_name$'
+      removed-one-stat:
+        EN: '&7Removed &b$removed$ $stat_color$$stat_name$ &7modifiers from player &6$player_name$'
+      players-only:
+        EN: '&eOnly players can removed their own modifiers! Try specifying a player'
+    item-modifier-add:
+      added:
+        EN: '$stat_color$$stat_name$ &7modifier with level &b$modifier_value$ &7was added to your item'
+      already-exists:
+        EN: '&eAn item modifier with stat $stat_color$$stat_name$ &ealready exists on your item! Remove it first with /sk item modifier remove'
+      must-hold-item:
+        EN: '&eYou must be holding an item to add modifiers!'
+    item-modifier-remove:
+      removed:
+        EN: '$stat_color$$stat_name$ &7modifier was removed from your item'
+      does-not-exist:
+        EN: '&eYour item does not have a $stat_color$$stat_name$ &emodifier!'
+      must-hold-item:
+        EN: '&eYou must be holding an item to removed modifiers!'
+    item-modifier-list:
+      header:
+        EN: '&fItem modifiers found:'
+      line:
+        EN: '  $stat_color$$stat_name$ &f- $modifier_value$'
+      must-hold-item:
+        EN: '&eYou must be holding an item to list modifiers!'
+    item-modifier-remove-all:
+      removed:
+        EN: '&7All item modifiers have been removed from your item!'
+      must-hold-item:
+        EN: '&eYou must be holding an item to remove all modifiers!'
+    armor-modifier-add:
+      added:
+        EN: '$stat_color$$stat_name$ &7modifier with level &b$modifier_value$ &7was added to your item'
+      already-exists:
+        EN: '&eAn armor modifier with stat $stat_color$$stat_name$ &ealready exists on your armor! Remove it first with /sk armor modifier remove'
+      must-hold-item:
+        EN: '&eYou must be holding an item to add modifiers!'
+    armor-modifier-remove:
+      removed:
+        EN: '$stat_color$$stat_name$ &7modifier was removed from your item'
+      does-not-exist:
+        EN: '&eYour item does not have a $stat_color$$stat_name$ &emodifier!'
+      must-hold-item:
+        EN: '&eYou must be holding an item to remove modifiers!'
+    armor-modifier-list:
+      header:
+        EN: '&fArmor modifiers found:'
+      line:
+        EN: '  $stat_color$$stat_name$&f - $modifier_value$'
+      must-hold-item:
+        EN: '&eYou must be holding an item to list modifiers!'
+    armor-modifier-remove-all:
+      removed:
+        EN: '&7All armor modifiers have been removed from your item'
+      must-hold-item:
+        EN: '&eYou must be holding an item to remove all modifiers!'

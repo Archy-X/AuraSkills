@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Alpha1.4.1</version>
+    <version>Alpha1.4.2</version>
     <build>
         <plugins>
             <plugin>
@@ -37,6 +37,10 @@
                         <relocation>
                             <pattern>fr.minuskube.inv</pattern>
                             <shadedPattern>com.archyx.aureliumskills.inv</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>de.tr7zw.changeme.nbtapi</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.nbtapi</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -97,7 +101,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <version>1.16.2-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
@@ -130,6 +134,11 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.tr7zw</groupId>
+            <artifactId>item-nbt-api</artifactId>
+            <version>2.5.0</version>
         </dependency>
     </dependencies>
 </project>

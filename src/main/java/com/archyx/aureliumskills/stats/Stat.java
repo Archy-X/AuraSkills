@@ -12,11 +12,11 @@ public enum Stat {
 	WISDOM(ChatColor.BLUE + "", "✿"), 
 	TOUGHNESS(ChatColor.DARK_PURPLE + "", "✦");
 	
-	private String color;
-	private String symbol;
-	private String name;
+	private final String color;
+	private final String symbol;
+	private final String name;
 	
-	private Stat(String color, String symbol) {
+	Stat(String color, String symbol) {
 		this.name = this.toString().toLowerCase();
 		this.color = color;
 		this.symbol = symbol;

@@ -6,15 +6,13 @@ import com.archyx.aureliumskills.Setting;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.magic.ManaManager;
+import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.stats.ActionBar;
-import com.archyx.aureliumskills.stats.PlayerStat;
-import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.stats.StatLeveler;
+import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.BigNumber;
 import com.archyx.aureliumskills.util.RomanNumber;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -26,6 +24,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.text.DecimalFormat;
@@ -33,6 +32,7 @@ import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class Leveler {
 
@@ -40,7 +40,8 @@ public class Leveler {
 	public static Plugin plugin;
 
 	private static ManaManager mana;
-	private static NumberFormat nf = new DecimalFormat("#,###.##");
+	private static final NumberFormat nf = new DecimalFormat("#,###.##");
+	private static final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public static void loadLevelReqs() {
 		mana = AureliumSkills.manaManager;
@@ -49,7 +50,19 @@ public class Leveler {
 			levelReqs.add((int) Options.skillLevelRequirementsMultiplier*i*i + 100);
 		}
 	}
-	
+
+	public static double getMultiplier(Player player) {
+		return 1 + player.getEffectivePermissions().stream()
+				.map(PermissionAttachmentInfo::getPermission)
+				.map(String::toLowerCase)
+				.filter(value -> value.startsWith("aureliumskills.multiplier."))
+				.map(value -> value.replace("aureliumskills.multiplier.", ""))
+				.filter(value -> pattern.matcher(value).matches())
+				.mapToDouble(Double::parseDouble)
+				.map(it -> it/100)
+				.sum();
+	}
+
 	//Method for adding xp
 	public static void addXp(Player player, Skill skill, Source source) {
 		//Checks if player has a skill profile for safety
@@ -57,13 +70,14 @@ public class Leveler {
 			//Checks if xp amount is not zero
 			if (Options.getXpAmount(source) != 0) {
 				//Adds Xp
-				SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, Options.getXpAmount(source));
+				double amount = Options.getXpAmount(source) * getMultiplier(player);
+				SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, amount);
 				//Plays a sound if turned on
 				Leveler.playSound(player);
 				//Check if player leveled up
 				Leveler.checkLevelUp(player, skill);
 				//Sends action bar message
-				Leveler.sendActionBarMessage(player, skill, Options.getXpAmount(source));
+				Leveler.sendActionBarMessage(player, skill, amount);
 			}
 		}
 	}
@@ -75,13 +89,14 @@ public class Leveler {
 			//Checks if xp amount is not zero
 			if (amount != 0) {
 				//Adds Xp
-				SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, amount);
+				double xpAmount = amount * getMultiplier(player);
+				SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, xpAmount);
 				//Plays a sound if turned on
 				Leveler.playSound(player);
 				//Check if player leveled up
 				Leveler.checkLevelUp(player, skill);
 				//Sends action bar message
-				Leveler.sendActionBarMessage(player, skill, amount);
+				Leveler.sendActionBarMessage(player, skill, xpAmount);
 			}
 		}
 	}
@@ -112,6 +127,11 @@ public class Leveler {
 			for (Skill skill : Skill.values()) {
 				playerStat.addStatLevel(skill.getPrimaryStat(), playerSkill.getSkillLevel(skill) - 1);
 				playerStat.addStatLevel(skill.getSecondaryStat(), playerSkill.getSkillLevel(skill) / 2);
+			}
+			//Reloads modifiers
+			for (String key : playerStat.getModifiers().keySet()) {
+				StatModifier modifier = playerStat.getModifiers().get(key);
+				playerStat.addStatLevel(modifier.getStat(), modifier.getValue());
 			}
 			StatLeveler.reloadStat(player, Stat.HEALTH);
 			StatLeveler.reloadStat(player, Stat.WISDOM);

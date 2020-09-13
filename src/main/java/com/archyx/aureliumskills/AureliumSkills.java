@@ -4,6 +4,8 @@ import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
+import com.archyx.aureliumskills.modifier.ArmorModifierListener;
+import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
@@ -81,15 +83,6 @@ public class AureliumSkills extends JavaPlugin{
 		else {
 			placeholderAPIEnabled = false;
 		}
-		//Checks for holographic displays
-		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
-			holographicDisplaysEnabled = true;
-			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
-			Bukkit.getLogger().info("[AureliumSkills] HolographicDisplays Support Enabled!");
-		}
-		else {
-			holographicDisplaysEnabled = false;
-		}
 		//Checks for Vault
 		if (setupEconomy()) {
 			vaultEnabled = true;
@@ -102,6 +95,15 @@ public class AureliumSkills extends JavaPlugin{
 		loadConfig();
 		Options options = new Options(this);
 		options.loadConfig();
+		//Checks for holographic displays
+		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+			holographicDisplaysEnabled = true;
+			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
+			Bukkit.getLogger().info("[AureliumSkills] HolographicDisplays Support Enabled!");
+		}
+		else {
+			holographicDisplaysEnabled = false;
+		}
 		//Load languages
 		lang = new Lang(this);
 		lang.matchConfig();
@@ -233,6 +235,7 @@ public class AureliumSkills extends JavaPlugin{
 
 	private void registerCommands() {
 		PaperCommandManager commandManager = new PaperCommandManager(this);
+		commandManager.enableUnstableAPI("help");
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : Skill.values()) {
@@ -246,6 +249,13 @@ public class AureliumSkills extends JavaPlugin{
 			List<String> values = new ArrayList<>();
 			for (Ability value : Ability.values()) {
 				values.add(value.toString().toLowerCase());
+			}
+			return values;
+		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
+			List<String> values = new ArrayList<>();
+			for (Stat stat : Stat.values()) {
+				values.add(stat.toString().toLowerCase());
 			}
 			return values;
 		});
@@ -302,6 +312,11 @@ public class AureliumSkills extends JavaPlugin{
 		pm.registerEvents(new FightingAbilities(this), this);
 		pm.registerEvents(new EnduranceAbilities(), this);
 		pm.registerEvents(new DamageListener(this), this);
+		ItemListener itemListener = new ItemListener(this);
+		pm.registerEvents(itemListener, this);
+		itemListener.scheduleTask();
+		pm.registerEvents(new ArmorListener(Options.armorEquipBlockedMaterials), this);
+		pm.registerEvents(new ArmorModifierListener(), this);
 	}
 
 	private boolean setupEconomy() {

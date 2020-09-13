@@ -62,7 +62,7 @@ public class FightingLeveler implements Listener {
 							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_WEAK_HOSTILE));
 						}
 						else if (type.equals(EntityType.ZOMBIE) || type.equals(EntityType.SKELETON) || type.equals(EntityType.SPIDER) || type.equals(EntityType.ZOMBIE_VILLAGER)
-							|| VersionUtils.isPigman(type)) {
+								|| type.name().equalsIgnoreCase("DROWNED") || VersionUtils.isPigman(type)) {
 							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_COMMON_HOSTILE));
 						}
 						else if (type.equals(EntityType.CREEPER) || type.equals(EntityType.STRAY) || type.equals(EntityType.HUSK) || type.equals(EntityType.CAVE_SPIDER) ||

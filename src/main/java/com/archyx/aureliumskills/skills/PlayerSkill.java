@@ -9,12 +9,12 @@ import java.util.UUID;
 
 public class PlayerSkill {
 	
-	private UUID playerId;
+	private final UUID playerId;
 	private String playerName;
 
-	private Map<Skill, Integer> levels = new HashMap<Skill, Integer>();
-	private Map<Skill, Double> xp = new HashMap<Skill, Double>();
-	private Map<Ability, Integer> abilities = new HashMap<Ability, Integer>();
+	private final Map<Skill, Integer> levels = new HashMap<>();
+	private final Map<Skill, Double> xp = new HashMap<>();
+	private final Map<Ability, Integer> abilities = new HashMap<>();
 	
 	public PlayerSkill(UUID id, String playerName) {
 		this.playerId = id;
@@ -82,25 +82,16 @@ public class PlayerSkill {
 	}
 	
 	public int getSkillLevel(Skill skill) {
-		if (levels.containsKey(skill)) {
-			return levels.get(skill);
-		}
-		else {
-			return 0;
-		}
+		return levels.getOrDefault(skill, 0);
 	}
 	
 	public Set<Skill> getSkillSet() {
 		return levels.keySet();
 	}
 	
-	public boolean setSkillLevel(Skill skill, int level) {
+	public void setSkillLevel(Skill skill, int level) {
 		if (levels.containsKey(skill)) {
 			levels.put(skill, level);
-			return true;
-		}
-		else {
-			return false;
 		}
 	}
 	
@@ -115,5 +106,5 @@ public class PlayerSkill {
 		}
 		return power;
 	}
-	
+
 }

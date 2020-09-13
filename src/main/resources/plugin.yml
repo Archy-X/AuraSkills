@@ -1,5 +1,5 @@
 name: AureliumSkills
-version: Alpha 1.4.1
+version: Alpha 1.4.2
 main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
@@ -20,6 +20,19 @@ permissions:
             aureliumskills.skill.reset: true
             aureliumskills.xp.set: true
             aureliumskills.xp.remove: true
+            aureliumskills.modifier.add: true
+            aureliumskills.modifier.remove: true
+            aureliumskills.modifier.list: true
+            aureliumskills.modifier.removeall: true
+            aureliumskills.item.modifier.add: true
+            aureliumskills.item.modifier.remove: true
+            aureliumskills.item.modifier.list: true
+            aureliumskills.item.modifier.removeall: true
+            aureliumskills.armor.modifier.add: true
+            aureliumskills.armor.modifier.remove: true
+            aureliumskills.armor.modifier.list: true
+            aureliumskills.armor.modifier.removeall: true
+            aureliumskills.help: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.ability.setlevel:
@@ -33,11 +46,45 @@ permissions:
     aureliumskills.xp.set:
         default: op
     aureliumskills.xp.remove:
-        default: true
+        default: op
     aureliumskills.top:
         default: true
     aureliumskills.skill.reset:
         default: op
+    aureliumskills.modifier.add:
+        default: op
+    aureliumskills.modifier.remove:
+        default: op
+    aureliumskills.modifier.list:
+        default: op
+    aureliumskills.modifier.removeall:
+        default: op
+    aureliumskills.item.modifier.add:
+        default: op
+    aureliumskills.item.modifier.remove:
+        default: op
+    aureliumskills.item.modifier.list:
+        default: op
+    aureliumskills.item.modifier.removeall:
+        default: op
+    aureliumskills.armor.modifier.add:
+        default: op
+    aureliumskills.armor.modifier.remove:
+        default: op
+    aureliumskills.armor.modifier.list:
+        default: op
+    aureliumskills.armor.modifier.removeall:
+        default: op
+    aureliumskills.multipliercommand:
+        default: op
+    aureliumskills.multiplier:
+        default: false
+    aureliumskills.help:
+        default: true
+    aureliumskills.skills:
+        default: true
+    aureliumskills.stats:
+        default: true
     aureliumskills.farming:
         default: true
     aureliumskills.foraging:

@@ -104,16 +104,24 @@ public class FishingAbilities implements Listener {
 							if (r.nextDouble() < (Ability.EPIC_CATCH.getValue(skill.getAbilityLevel(Ability.EPIC_CATCH)) / 100)) {
 								if (AureliumSkills.abilityOptionManager.isEnabled(Ability.EPIC_CATCH)) {
 									Item item = (Item) event.getCaught();
-									ItemStack drop = AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().size())).getDrop();
-									item.setItemStack(drop);
-									Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_EPIC));
+									if (AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().size() > 0) {
+										ItemStack drop = AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().size())).getDrop();
+										if (drop != null) {
+											item.setItemStack(drop);
+											Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_EPIC));
+										}
+									}
 								}
 							} else if (r.nextDouble() < (Ability.TREASURE_HUNTER.getValue(skill.getAbilityLevel(Ability.TREASURE_HUNTER)) / 100)) {
 								if (AureliumSkills.abilityOptionManager.isEnabled(Ability.TREASURE_HUNTER)) {
 									Item item = (Item) event.getCaught();
-									ItemStack drop = AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().size())).getDrop();
-									item.setItemStack(drop);
-									Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_RARE));
+									if (AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().size() > 0) {
+										ItemStack drop = AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().size())).getDrop();
+										if (drop != null) {
+											item.setItemStack(drop);
+											Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_RARE));
+										}
+									}
 								}
 							}
 						}

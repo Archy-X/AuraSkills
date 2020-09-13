@@ -28,7 +28,17 @@ public enum Setting {
 	DEFENSE_MAX("defense.max", 100.0),
 	DEFENSE_MIN("defense.min", 0),
 	DAMAGE_HOLOGRAMS("damage-holograms", true),
-	DAMAGE_HOLOGRAMS_SCALING("damage-holograms-scaling", true);
+	DAMAGE_HOLOGRAMS_SCALING("damage-holograms-scaling", true),
+	DAMAGE_HOLOGRAMS_OFFSET_X("damage-holograms-offset.x", 0.0),
+	DAMAGE_HOLOGRAMS_OFFSET_Y("damage-holograms-offset.y", 0.0),
+	DAMAGE_HOLOGRAMS_OFFSET_Z("damage-holograms-offset.z", 0.0),
+	DAMAGE_HOLOGRAMS_RANDOM_ENABLED("damage-holograms-offset.random.enabled", false),
+	DAMAGE_HOLOGRAMS_RANDOM_X_MIN("damage-holograms-offset.random.x-min", -0.5),
+	DAMAGE_HOLOGRAMS_RANDOM_X_MAX("damage-holograms-offset.random.x-max", 0.5),
+	DAMAGE_HOLOGRAMS_RANDOM_Y_MIN("damage-holograms-offset.random.y-min", 0),
+	DAMAGE_HOLOGRAMS_RANDOM_Y_MAX("damage-holograms-offset.random.y-max", 0),
+	DAMAGE_HOLOGRAMS_RANDOM_Z_MIN("damage-holograms-offset.random.z-min", -0.5),
+	DAMAGE_HOLOGRAMS_RANDOM_Z_MAX("damage-holograms-offset.random.z-max", 0.5);
 
 	private final String path;
 	private double defDouble;

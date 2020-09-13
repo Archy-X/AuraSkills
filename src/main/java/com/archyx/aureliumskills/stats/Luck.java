@@ -32,7 +32,9 @@ public class Luck implements Listener {
 	}
 	
 	public static void reload(Player player) {
-		setLuck(player);
+		if (player != null) {
+			setLuck(player);
+		}
 	}
 
 	@EventHandler
