@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.skills;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import org.bukkit.Bukkit;
@@ -10,14 +11,15 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SkillLoader {
 
-	public static HashMap<UUID, PlayerSkill> playerSkills = new HashMap<UUID, PlayerSkill>();
-	public static HashMap<UUID, PlayerStat> playerStats = new HashMap<UUID, PlayerStat>();
-	
+	public static ConcurrentHashMap<UUID, PlayerSkill> playerSkills = new ConcurrentHashMap<>();
+	public static ConcurrentHashMap<UUID, PlayerStat> playerStats = new ConcurrentHashMap<>();
+
+	public static boolean isSaving;
 	private final File file;
 	private final FileConfiguration config;
 	private final Plugin plugin;
@@ -26,6 +28,7 @@ public class SkillLoader {
 		this.file = file;
 		this.config = config;
 		this.plugin = plugin;
+		isSaving = false;
 	}
 	
 	public void loadSkillData() {
@@ -35,45 +38,59 @@ public class SkillLoader {
 		ConfigurationSection configurationSection = config.getConfigurationSection("skillData");
 		if (configurationSection != null) {
 			for (String stringId : configurationSection.getKeys(false)) {
-				UUID id = UUID.fromString(stringId);
-				String name = config.getString("skillData." + stringId + ".name", stringId);
-				PlayerSkill playerSkill = new PlayerSkill(id, name);
-				PlayerStat playerStat = new PlayerStat(id);
-				//Loading skill and stat data
-				if (config.getConfigurationSection("skillData." + stringId + ".skills") != null) {
-					for (String skillName : config.getConfigurationSection("skillData." + stringId + ".skills").getKeys(false)) {
-						String skillData = config.getString("skillData." + stringId + ".skills." + skillName);
-						String[] skillDataArray = skillData.split(":");
-						int level = Integer.parseInt(skillDataArray[0]);
-						double xp = 0.0;
-						if (skillDataArray.length >= 2) {
-							xp = Double.parseDouble(skillDataArray[1].replace(",", "."));
-						}
-						Skill skill = Skill.valueOf(skillName.toUpperCase());
-						playerSkill.setSkillLevel(skill, level);
-						playerSkill.setXp(skill, xp);
+				try {
+					UUID id = UUID.fromString(stringId);
+					String name = config.getString("skillData." + stringId + ".name", stringId);
+					PlayerSkill playerSkill = new PlayerSkill(id, name);
+					PlayerStat playerStat = new PlayerStat(id);
+					//Loading skill and stat data
+					if (config.getConfigurationSection("skillData." + stringId + ".skills") != null) {
+						for (String skillName : config.getConfigurationSection("skillData." + stringId + ".skills").getKeys(false)) {
+							String skillData = config.getString("skillData." + stringId + ".skills." + skillName);
+							String[] skillDataArray = skillData.split(":");
+							int level = Integer.parseInt(skillDataArray[0]);
+							double xp = 0.0;
+							if (skillDataArray.length >= 2) {
+								xp = Double.parseDouble(skillDataArray[1].replace(",", "."));
+							}
+							Skill skill = Skill.valueOf(skillName.toUpperCase());
+							playerSkill.setSkillLevel(skill, level);
+							playerSkill.setXp(skill, xp);
 
-						for (int i = 0; i < skill.getAbilities().length; i++) {
-							playerSkill.setAbilityLevel(skill.getAbilities()[i], (level + 3 - i) / 5);
+							for (int i = 0; i < skill.getAbilities().length; i++) {
+								playerSkill.setAbilityLevel(skill.getAbilities()[i], (level + 3 - i) / 5);
+							}
+
+							playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
+							playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
 						}
 
-						playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
-						playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
 					}
+					playerSkills.put(id, playerSkill);
+					playerStats.put(id, playerStat);
+					playersLoaded++;
+				} catch (Exception e) {
+					Bukkit.getLogger().warning("[AureliumSkills] Error loading skill data for player with uuid " + stringId);
 				}
-				playerSkills.put(id, playerSkill);
-				playerStats.put(id, playerStat);
-				playersLoaded++;
 			}
 		}
 		long endTime = System.currentTimeMillis();
 		Bukkit.getLogger().info("[AureliumSkills] Loaded " + playersLoaded + " Player Skill Data in " + (endTime - startTime) + "ms");
+		//Update leaderboards
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				AureliumSkills.leaderboard.updateLeaderboards(false);
+			}
+		}.runTaskAsynchronously(plugin);
 	}
 	
 	public void saveSkillData(boolean silent) {
+		isSaving = true;
 		if (!silent) {
 			Bukkit.getLogger().info("[AureliumSkills] Saving Skill Data...");
 		}
+		long start = System.currentTimeMillis();
 		for (UUID id : playerSkills.keySet()) {
 			PlayerSkill playerSkill = playerSkills.get(id);
 			config.set("skillData." + id.toString() + ".name", playerSkill.getPlayerName());
@@ -85,16 +102,22 @@ public class SkillLoader {
 			}
 		}
 		try {
+			if (!silent) {
+				long end = System.currentTimeMillis();
+				Bukkit.getLogger().info("[AureliumSkills] Mappings saved in " + (end - start) + " ms");
+			}
+			long fileStart = System.currentTimeMillis();
+			//Save config
 			config.save(file);
 			if (!silent) {
-				Bukkit.getLogger().info("[AureliumSkills] Skill Data Saved!");
+				long fileEnd = System.currentTimeMillis();
+				Bukkit.getLogger().info("[AureliumSkills] File saved in " + (fileEnd - fileStart) + " ms");
 			}
 		}
 		catch (IOException e) {
-			if (!silent) {
-				Bukkit.getLogger().severe("[AureliumSkills] An error occurred while trying to save skill data!");
-			}
+			Bukkit.getLogger().severe("[AureliumSkills] An error occurred while trying to save skill data!");
 		}
+		isSaving = false;
 	}
 
 	public void startSaving() {
@@ -103,7 +126,7 @@ public class SkillLoader {
 			public void run() {
 				saveSkillData(true);
 			}
-		}.runTaskTimer(plugin, Options.dataSavePeriod, Options.dataSavePeriod);
+		}.runTaskTimerAsynchronously(plugin, Options.dataSavePeriod, Options.dataSavePeriod);
 	}
 	
 }

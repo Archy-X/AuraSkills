@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Alpha1.4.2</version>
+    <version>Alpha1.4.3</version>
     <build>
         <plugins>
             <plugin>
@@ -84,6 +84,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -101,8 +105,15 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.2-R0.1-SNAPSHOT</version>
+            <version>1.16.3-R0.1-SNAPSHOT</version>
             <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.3-R0.1-SNAPSHOT</version>
+            <type>javadoc</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -139,6 +150,13 @@
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
             <version>2.5.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>4.5.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

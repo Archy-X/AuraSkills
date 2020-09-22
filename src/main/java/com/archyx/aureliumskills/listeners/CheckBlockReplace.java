@@ -54,6 +54,12 @@ public class CheckBlockReplace implements Listener {
             XMaterial.BASALT,
             XMaterial.OBSIDIAN,
             XMaterial.MYCELIUM,
+            XMaterial.OAK_WOOD,
+            XMaterial.SPRUCE_WOOD,
+            XMaterial.BIRCH_WOOD,
+            XMaterial.JUNGLE_WOOD,
+            XMaterial.ACACIA_WOOD,
+            XMaterial.DARK_OAK_WOOD,
             //Rare
             XMaterial.PUMPKIN,
             XMaterial.MELON,

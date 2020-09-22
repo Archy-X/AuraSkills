@@ -4,7 +4,6 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.stats.Stat;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

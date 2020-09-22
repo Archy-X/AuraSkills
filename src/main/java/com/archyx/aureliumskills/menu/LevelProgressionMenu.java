@@ -23,6 +23,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,6 +61,8 @@ public class LevelProgressionMenu implements InventoryProvider {
 		contents.set(SlotPos.of(5, 1), ClickableItem.of(MenuItems.getCloseButton(), e -> {
 			player.closeInventory();
 		}));
+
+		contents.set(SlotPos.of(0, 1), ClickableItem.empty(getRankItem()));
 		
 		Pagination pagination = contents.pagination();
 		ClickableItem[] items = new ClickableItem[pages * 36];
@@ -158,8 +161,8 @@ public class LevelProgressionMenu implements InventoryProvider {
 		List<String> lore = getLore(level);
 		double xp = SkillLoader.playerSkills.get(player.getUniqueId()).getXp(skill);
 		double xpToNext;
-		if (Leveler.levelReqs.size() > level - 1) {
-			xpToNext = Leveler.levelReqs.get(level - 1);
+		if (Leveler.levelReqs.size() > level - 2) {
+			xpToNext = Leveler.levelReqs.get(level - 2);
 		}
 		else {
 			xpToNext = 0;
@@ -184,7 +187,29 @@ public class LevelProgressionMenu implements InventoryProvider {
 		item.setItemMeta(meta);
 		return item;
 	}
-	
+
+	private ItemStack getRankItem() {
+		ItemStack item = new ItemStack(Material.PAPER);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(Lang.getMessage(Message.MENU_RANK_NAME).replace("&", "§"));
+		List<String> lore = new ArrayList<>();
+		int rank = AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId());
+		int total =  AureliumSkills.leaderboard.getSize();
+		lore.add(Lang.getMessage(Message.MENU_RANK_RANKED).replace("&", "§").replace("$rank$", String.valueOf(rank)).replace("$total$", String.valueOf(total)));
+		NumberFormat nf;
+		double percentRank = (double) rank / (double) total * 100;
+		if (percentRank < 1) {
+			nf = new DecimalFormat("#.###");
+		}
+		else {
+			nf = new DecimalFormat("#.#");
+		}
+		lore.add(Lang.getMessage(Message.MENU_RANK_PERCENT).replace("&", "§").replace("$percent$", nf.format(percentRank)));
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		return item;
+	}
+
 	public List<String> getLore(int level) {
 		List<String> lore = new LinkedList<>();
 		lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + " " + ChatColor.WHITE + level);

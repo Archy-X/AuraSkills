@@ -46,6 +46,8 @@ public class Options {
 	public static List<String> skillLevelUpMessage;
 	public static double hologramsDisplayLessThan;
 	public static int hologramsDecimalAmount;
+	public static long leaderboardUpdatePeriod;
+	public static long leaderboardUpdateDelay;
 	
 	private static final Map<Skill, Boolean> skillToggle = new HashMap<>();
 	private static final Map<Source, Double> xpAmounts = new HashMap<>();
@@ -120,6 +122,8 @@ public class Options {
 		itemModifierCheckPeriod = config.getInt("modifier.item.check-period", 2);
 		hologramsDisplayLessThan = config.getDouble("damage-holograms-decimal.display-when-less-than", 1);
 		hologramsDecimalAmount = config.getInt("damage-holograms-decimal.decimal-max-amount", 1);
+		leaderboardUpdatePeriod = config.getLong("leaderboards.update-period", 6000);
+		leaderboardUpdateDelay = config.getLong("leaderboards.update-delay", 6000);
 		//Load critical options
 		criticalEnabled = new HashMap<>();
 		for (DamageType damageType : DamageType.values()) {

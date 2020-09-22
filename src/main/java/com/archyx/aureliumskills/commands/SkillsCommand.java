@@ -5,41 +5,39 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.modifier.ArmorModifier;
-import com.archyx.aureliumskills.modifier.ItemModifier;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.menu.SkillsMenu;
+import com.archyx.aureliumskills.modifier.ArmorModifier;
+import com.archyx.aureliumskills.modifier.ItemModifier;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Leaderboard;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.*;
+import com.archyx.aureliumskills.util.MySqlSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
 @CommandAlias("skills|sk|skill")
 public class SkillsCommand extends BaseCommand {
  
-	private final Plugin plugin;
+	private final AureliumSkills plugin;
 	private final Options options;
 	private final Lang lang;
 	private final Leaderboard leaderboard;
 
-	public SkillsCommand(Plugin plugin) {
+	public SkillsCommand(AureliumSkills plugin) {
 		this.plugin = plugin;
 		options = new Options(plugin);
 		lang = new Lang(plugin);
-		leaderboard = new Leaderboard();
+		leaderboard = AureliumSkills.leaderboard;
 	}
 	
 	@Default
@@ -101,41 +99,170 @@ public class SkillsCommand extends BaseCommand {
 	}
 
 	@Subcommand("top")
+	@CommandAlias("skilltop")
 	@CommandCompletion("@skills")
 	@CommandPermission("aureliumskills.top")
-	@Description("Shows the top players in a skill or all skills.")
-	public void onTop(CommandSender sender, @Optional Skill skill) {
-		if (Options.isEnabled(skill)) {
-			List<PlayerSkill> powerLeaderboard;
-			String message;
-			int num = 1;
-			if (skill == null) {
-				powerLeaderboard = leaderboard.getPowerLeaderBoard();
-				message = ChatColor.AQUA + "" + ChatColor.BOLD + Lang.getMessage(Message.SKILL_LEADERBOARD) + ChatColor.WHITE + " (" + Lang.getMessage(Message.ALL_SKILLS) + ")";
-				for (PlayerSkill playerSkill : powerLeaderboard) {
-					if (num <= 10) {
-						message += "\n" + num + ". " + playerSkill.getPlayerName() + " - " + playerSkill.getPowerLevel();
-						num++;
-					} else {
-						break;
-					}
-				}
-			} else {
-				powerLeaderboard = leaderboard.getSkillLeaderBoard(skill);
-				message = ChatColor.AQUA + "" + ChatColor.BOLD + Lang.getMessage(Message.SKILL_LEADERBOARD) + ChatColor.WHITE + " (" + Lang.getMessage(Message.valueOf(skill.getName().toUpperCase() + "_NAME")) + ")";
-				for (PlayerSkill playerSkill : powerLeaderboard) {
-					if (num <= 10) {
-						message += "\n" + num + ". " + playerSkill.getPlayerName() + " - " + playerSkill.getSkillLevel(skill);
-						num++;
-					} else {
-						break;
-					}
+	@Description("Shows the top players in a skill")
+	@Syntax("Usage: /sk top <page> or /sk top [skill] <page>")
+	public void onTop(CommandSender sender, String[] args) {
+		if (args.length == 0) {
+			List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(1, 10);
+			sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_HEADER).replace("&", "§"));
+			for (PlayerSkillInstance playerSkill : lb) {
+				sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_ENTRY)
+						.replace("&", "§")
+						.replace("$rank$", String.valueOf(lb.indexOf(playerSkill) + 1))
+						.replace("$player_name$", playerSkill.getPlayerName())
+						.replace("$level$", String.valueOf(playerSkill.getPowerLevel())));
+			}
+		}
+		else if (args.length == 1) {
+			try {
+				int page = Integer.parseInt(args[0]);
+				List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(page, 10);
+				sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_HEADER_PAGE).replace("&", "§").replace("$page$", String.valueOf(page)));
+				for (PlayerSkillInstance playerSkill : lb) {
+					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_ENTRY)
+							.replace("&", "§")
+							.replace("$rank$", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
+							.replace("$player_name$", playerSkill.getPlayerName())
+							.replace("$level$", String.valueOf(playerSkill.getPowerLevel())));
 				}
 			}
-			sender.sendMessage(message);
+			catch (Exception e) {
+				try {
+					Skill skill = Skill.valueOf(args[0].toUpperCase());
+					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, 1, 10);
+					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_HEADER).replace("&", "§").replace("$skill$", skill.getDisplayName()));
+					for (PlayerSkillInstance playerSkill : lb) {
+						sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_ENTRY)
+								.replace("&", "§")
+								.replace("$rank$", String.valueOf(lb.indexOf(playerSkill) + 1))
+								.replace("$player_name$", playerSkill.getPlayerName())
+								.replace("$level$", String.valueOf(playerSkill.getSkillLevel(skill))));
+					}
+				}
+				catch (IllegalArgumentException iae) {
+					sender.sendMessage(ChatColor.YELLOW + "Usage: " + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "<page>" + ChatColor.GRAY +  " or "  + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "[skill] <page>");
+				}
+			}
+		}
+		else if (args.length == 2) {
+			try {
+				Skill skill = Skill.valueOf(args[0].toUpperCase());
+				try {
+					int page = Integer.parseInt(args[1]);
+					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, page, 10);
+					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_HEADER_PAGE).replace("&", "§").replace("$page$", String.valueOf(page)).replace("$skill$", skill.getDisplayName()));
+					for (PlayerSkillInstance playerSkill : lb) {
+						sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_ENTRY)
+								.replace("&", "§")
+								.replace("$rank$", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
+								.replace("$player_name$", playerSkill.getPlayerName())
+								.replace("$level$", String.valueOf(playerSkill.getSkillLevel(skill))));
+					}
+				}
+				catch (Exception e) {
+					sender.sendMessage(ChatColor.YELLOW + "Usage: " + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "<page>" + ChatColor.GRAY +  " or "  + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "[skill] <page>");
+				}
+			}
+			catch (IllegalArgumentException iae) {
+				sender.sendMessage(ChatColor.YELLOW + "Usage: " + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "<page>" + ChatColor.GRAY +  " or "  + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "[skill] <page>");
+			}
+		}
+	}
+
+
+	@Subcommand("save")
+	@CommandPermission("aureliumskills.save")
+	@Description("Saves skill data")
+	public void onSave(CommandSender sender) {
+		if (Options.mySqlEnabled) {
+			if (!MySqlSupport.isSaving) {
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						plugin.mySqlSupport.saveData(false);
+					}
+				}.runTaskAsynchronously(plugin);
+				if (sender instanceof Player) {
+					sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
+				}
+			}
+			else {
+				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Data is already saving!");
+			}
 		}
 		else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+			if (!SkillLoader.isSaving) {
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						plugin.getSkillLoader().saveSkillData(false);
+					}
+				}.runTaskAsynchronously(plugin);
+				if (sender instanceof Player) {
+					sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
+				}
+			}
+			else {
+				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Data is already saving!");
+			}
+		}
+	}
+
+	@Subcommand("updateleaderboards")
+	@CommandPermission("aureliumskills.updateleaderboards")
+	@Description("Updates and sorts the leaderboards")
+	public void onUpdateLeaderboards(CommandSender sender) {
+		if (!Leaderboard.isSorting) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					AureliumSkills.leaderboard.updateLeaderboards(false);
+				}
+			}.runTaskAsynchronously(plugin);
+			if (sender instanceof Player) {
+				sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Leaderboard updated!");
+			}
+		}
+		else {
+			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Leaderboard is already updating!");
+		}
+	}
+
+	@Subcommand("toggle")
+	@CommandAlias("abtoggle")
+	@CommandPermission("aureliumskills.abtoggle")
+	@Description("Toggle your own action bar")
+	public void onActionBarToggle(Player player) {
+		if (Options.enable_action_bar) {
+			if (ActionBar.actionBarDisabled.contains(player.getUniqueId())) {
+				ActionBar.actionBarDisabled.remove(player.getUniqueId());
+				player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Your skills action bar has been enabled");
+			}
+			else {
+				ActionBar.actionBarDisabled.add(player.getUniqueId());
+				player.sendMessage(AureliumSkills.tag + ChatColor.RED + "Your skills action bar has been disabled");
+			}
+		}
+		else {
+			player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Skills action bar is not enabled on this server!");
+		}
+	}
+
+	@Subcommand("rank")
+	@CommandAlias("skillrank")
+	@CommandPermission("aureliumskills.rank")
+	@Description("Shows your skill rankings")
+	public void onRank(Player player) {
+		player.sendMessage(Lang.getMessage(Message.SKILL_RANK_HEADER).replace("&", "§"));
+		player.sendMessage(Lang.getMessage(Message.SKILL_RANK_POWER).replace("&", "§").replace("$rank$", String.valueOf(AureliumSkills.leaderboard.getPowerRank(player.getUniqueId()))).replace("$total$", String.valueOf(AureliumSkills.leaderboard.getSize())));
+		for (Skill skill : Skill.values()) {
+			player.sendMessage(Lang.getMessage(Message.SKILL_RANK_ENTRY)
+					.replace("&", "§").replace("$skill$", skill.getDisplayName())
+					.replace("$rank$", String.valueOf(AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId())))
+					.replace("$total$", String.valueOf(AureliumSkills.leaderboard.getSize())));
 		}
 	}
 
@@ -286,7 +413,7 @@ public class SkillsCommand extends BaseCommand {
 	@Subcommand("modifier remove")
 	@CommandPermission("aureliumskills.modifier.remove")
 	@CommandCompletion("@players @nothing true")
-	@Description("Removes a specific stat modifier for a player.")
+	@Description("Removes a specific stat modifier from a player.")
 	public void onRemove(CommandSender sender, @Flags("other") Player player, String name, @Default("false") boolean silent) {
 		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());

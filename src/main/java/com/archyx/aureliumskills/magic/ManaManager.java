@@ -1,10 +1,12 @@
 package com.archyx.aureliumskills.magic;
 
 import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.api.ManaRegenerateEvent;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -33,18 +35,27 @@ public class ManaManager implements Listener {
             @Override
             public void run() {
                 for (UUID id : mana.keySet()) {
-                    if (SkillLoader.playerStats.containsKey(id)) {
-                        PlayerStat stat = SkillLoader.playerStats.get(id);
-                        int originalMana = mana.get(id);
-                        int maxMana = Options.baseMana + 2 * stat.getStatLevel(Stat.WISDOM);
-                        if (originalMana < maxMana) {
-                            int regen = Options.baseManaRegen + (int) (stat.getStatLevel(Stat.REGENERATION) * Options.manaModifier);
-                            mana.put(id, Math.min(originalMana + regen, maxMana));
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(id);
+                    if (player.isOnline()) {
+                        if (SkillLoader.playerStats.containsKey(id)) {
+                            PlayerStat stat = SkillLoader.playerStats.get(id);
+                            int originalMana = mana.get(id);
+                            int maxMana = Options.baseMana + 2 * stat.getStatLevel(Stat.WISDOM);
+                            if (originalMana < maxMana) {
+                                int regen = Options.baseManaRegen + (int) (stat.getStatLevel(Stat.REGENERATION) * Options.manaModifier);
+                                int finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
+                                //Call Event
+                                ManaRegenerateEvent event = new ManaRegenerateEvent(player.getPlayer(), finalRegen);
+                                Bukkit.getPluginManager().callEvent(event);
+                                if (!event.isCancelled()) {
+                                    mana.put(id, originalMana + event.getAmount());
+                                }
+                            }
                         }
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(plugin, 0L, 20L);
+        }.runTaskTimer(plugin, 0L, 20L);
     }
 
     public int getMana(UUID id) {

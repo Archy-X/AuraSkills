@@ -3,6 +3,8 @@ package com.archyx.aureliumskills.skills.levelers;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.api.SkillLevelUpEvent;
+import com.archyx.aureliumskills.api.XpGainEvent;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.magic.ManaManager;
@@ -12,8 +14,12 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.stats.*;
+import com.archyx.aureliumskills.stats.ActionBar;
+import com.archyx.aureliumskills.stats.PlayerStat;
+import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.util.BigNumber;
+import com.archyx.aureliumskills.util.ProtocolUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
@@ -23,10 +29,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedList;
@@ -69,15 +77,21 @@ public class Leveler {
 		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 			//Checks if xp amount is not zero
 			if (Options.getXpAmount(source) != 0) {
-				//Adds Xp
+				//Gets amount
 				double amount = Options.getXpAmount(source) * getMultiplier(player);
-				SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, amount);
-				//Plays a sound if turned on
-				Leveler.playSound(player);
-				//Check if player leveled up
-				Leveler.checkLevelUp(player, skill);
-				//Sends action bar message
-				Leveler.sendActionBarMessage(player, skill, amount);
+				//Calls event
+				XpGainEvent event = new XpGainEvent(player, skill, amount);
+				Bukkit.getPluginManager().callEvent(event);
+				if (!event.isCancelled()) {
+					//Adds Xp
+					SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, event.getAmount());
+					//Plays a sound if turned on
+					Leveler.playSound(player);
+					//Check if player leveled up
+					Leveler.checkLevelUp(player, skill);
+					//Sends action bar message
+					Leveler.sendActionBarMessage(player, skill, event.getAmount());
+				}
 			}
 		}
 	}
@@ -88,15 +102,21 @@ public class Leveler {
 		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 			//Checks if xp amount is not zero
 			if (amount != 0) {
-				//Adds Xp
+				//Gets xp amount
 				double xpAmount = amount * getMultiplier(player);
-				SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, xpAmount);
-				//Plays a sound if turned on
-				Leveler.playSound(player);
-				//Check if player leveled up
-				Leveler.checkLevelUp(player, skill);
-				//Sends action bar message
-				Leveler.sendActionBarMessage(player, skill, xpAmount);
+				//Calls event
+				XpGainEvent event = new XpGainEvent(player, skill, amount);
+				Bukkit.getPluginManager().callEvent(event);
+				if (!event.isCancelled()) {
+					//Adds xp
+					SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, event.getAmount());
+					//Plays a sound if turned on
+					Leveler.playSound(player);
+					//Check if player leveled up
+					Leveler.checkLevelUp(player, skill);
+					//Sends action bar message
+					Leveler.sendActionBarMessage(player, skill, event.getAmount());
+				}
 			}
 		}
 	}
@@ -169,6 +189,10 @@ public class Leveler {
 						economy.depositPlayer(player, base + (multiplier * (currentLevel + 1) * (currentLevel + 1)));
 					}
 				}
+				//Calls event
+				SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, currentLevel + 1);
+				Bukkit.getPluginManager().callEvent(event);
+				//Sends messages
 				player.sendTitle(ChatColor.GREEN + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.LEVEL_UP), ChatColor.GOLD + "" + RomanNumber.toRoman(currentLevel) + " ➜ " + RomanNumber.toRoman(currentLevel + 1), 5, 100, 5);
 				player.playSound(player.getLocation(), "entity.player.levelup", SoundCategory.MASTER, 1f, 0.5f);
 				player.sendMessage(getLevelUpMessage(player, playerSkill, skill, currentLevel + 1));
@@ -266,107 +290,135 @@ public class Leveler {
 
 	public static void sendActionBarMessage(Player player, Skill skill, double xpAmount) {
 		if (Options.enable_action_bar) {
-			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-			NumberFormat nf = new DecimalFormat("##.#");
-			ActionBar.isGainingXp.put(player.getUniqueId(), true);
-			ActionBar.timer.put(player.getUniqueId(), 20);
-			if (!ActionBar.currentAction.containsKey(player.getUniqueId())) {
-				ActionBar.currentAction.put(player.getUniqueId(), 0);
-			}
-			ActionBar.currentAction.put(player.getUniqueId(), ActionBar.currentAction.get(player.getUniqueId()) + 1);
-			int currentAction = ActionBar.currentAction.get(player.getUniqueId());
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					if (ActionBar.isGainingXp.get(player.getUniqueId())) {
-						if (currentAction == ActionBar.currentAction.get(player.getUniqueId())) {
-							if (Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1) {
-								if (xpAmount >= 0) {
-									if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-									} else if (Options.enable_health_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")"));
-									} else if (Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
+			if (!ActionBar.actionBarDisabled.contains(player.getUniqueId())) {
+				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+				NumberFormat nf = new DecimalFormat("##.#");
+				ActionBar.isGainingXp.put(player.getUniqueId(), true);
+				ActionBar.timer.put(player.getUniqueId(), 20);
+				if (!ActionBar.currentAction.containsKey(player.getUniqueId())) {
+					ActionBar.currentAction.put(player.getUniqueId(), 0);
+				}
+				ActionBar.currentAction.put(player.getUniqueId(), ActionBar.currentAction.get(player.getUniqueId()) + 1);
+				int currentAction = ActionBar.currentAction.get(player.getUniqueId());
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						if (ActionBar.isGainingXp.get(player.getUniqueId())) {
+							if (currentAction == ActionBar.currentAction.get(player.getUniqueId())) {
+								if (Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1) {
+									if (xpAmount >= 0) {
+										if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
+														"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+											}
+										} else if (Options.enable_health_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
+											}
+										} else if (Options.enable_mana_on_action_bar) {
+											handleActionBarSend(player, Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
+													"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+										} else {
+											handleActionBarSend(player, Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
+										}
 									} else {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")"));
+										if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
+														"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+											}
+										} else if (Options.enable_health_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
+											}
+										} else if (Options.enable_mana_on_action_bar) {
+											handleActionBarSend(player, Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
+													"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+										} else {
+											handleActionBarSend(player, Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
+										}
+									}
+								} else {
+									if (xpAmount >= 0) {
+										if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
+														"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+											}
+										} else if (Options.enable_health_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")");
+											}
+										} else if (Options.enable_mana_on_action_bar) {
+											handleActionBarSend(player, Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
+													"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+										} else {
+											handleActionBarSend(player, Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")");
+										}
+									} else {
+										if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
+														"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+											}
+										} else if (Options.enable_health_on_action_bar) {
+											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+											if (attribute != null) {
+												handleActionBarSend(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
+														Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")");
+											}
+										} else if (Options.enable_mana_on_action_bar) {
+											handleActionBarSend(player, Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
+													"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+										} else {
+											handleActionBarSend(player, Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")");
+										}
 									}
 								}
-								else {
-									if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-									} else if (Options.enable_health_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")"));
-									} else if (Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-									} else {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")"));
-									}
-								}
+							} else {
+								cancel();
 							}
-							else {
-								if (xpAmount >= 0) {
-									if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-
-									} else if (Options.enable_health_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")"));
-									} else if (Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-									} else {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")"));
-									}
-								}
-								else {
-									if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-
-									} else if (Options.enable_health_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-												Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")"));
-									} else if (Options.enable_mana_on_action_bar) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")" +
-												"   " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-									} else {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.skill_xp_text_color + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + Options.xp_progress_text_color + "(" + Lang.getMessage(Message.MAXED) + ")"));
-									}
-								}
-							}
-						}
-						else {
+						} else {
 							cancel();
 						}
 					}
-					else {
-						cancel();
+				}.runTaskTimer(plugin, 0L, Options.actionBarUpdatePeriod);
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						if (ActionBar.timer.get(player.getUniqueId()).equals(0)) {
+							ActionBar.isGainingXp.put(player.getUniqueId(), false);
+						}
 					}
-				}
-			}.runTaskTimer(plugin, 0L, Options.actionBarUpdatePeriod);
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					if (ActionBar.timer.get(player.getUniqueId()).equals(0)) {
-						ActionBar.isGainingXp.put(player.getUniqueId(), false);
-					}
-				}
-			}.runTaskLater(plugin, 41L);
+				}.runTaskLater(plugin, 41L);
+			}
 		}
 	}
-	
+
+	private static void handleActionBarSend(Player player, String message) {
+		if (AureliumSkills.protocolLibEnabled) {
+			ProtocolUtil.sendActionBar(player, message);
+		}
+		else {
+			player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+		}
+	}
+
 	public static void playSound(Player player) {
 		//player.playSound(player.getLocation(), "entity.experience_orb.pickup", SoundCategory.BLOCKS, 0.2f, r.nextFloat() + 0.5f);
 	}

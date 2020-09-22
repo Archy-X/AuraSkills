@@ -66,6 +66,10 @@ damage-holograms-offset:
         z-min: -0.5
         z-max: 0.5
 
+leaderboards:
+    update-period: 6000
+    update-delay: 6000
+
 # Skill Options
 # Change the equation that calculates xp level requirements (XpRequired = Multiplier * (level - 2) ^ 2 + 100)
 # Default: 100

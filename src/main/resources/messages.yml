@@ -170,9 +170,33 @@ messages:
       PL: Wroc
       RU: Вернуться к меню навыков
       VN: Quay lại giao diện chính
-    skill-leaderboard:
-      EN: Skill Leaderboard
-      VN: Danh sách những người cấp cao nhất
+    leaderboard:
+      power-header:
+        EN: '&f--==&b&lAll Skills Leaderboard&f==--'
+      power-header-page:
+        EN: '&f--==&b&lAll Skills Leaderboard &f(Page $page$)==--'
+      skill-header:
+        EN: '&f--==&b&l$skill$ Leaderboard&f==--'
+      skill-header-page:
+        EN: '&f--==&b&l$skill$ Leaderboard &f(Page $page$)==--'
+      power-entry:
+        EN: '&f$rank$. &b$player_name$ &f- $level$'
+      skill-entry:
+        EN: '&f$rank$. &b$player_name$ &f- $level$'
+    rank:
+      header:
+        EN: '&b&lYour Skill Rankings'
+      power:
+        EN: '&ePower &7(All Skills): &f#$rank$ of $total$'
+      entry:
+        EN: '&b$skill$&7: &f#$rank$ of $total$'
+    menu-rank:
+      name:
+        EN: '&eYour Skill Ranking'
+      ranked:
+        EN: '&fYou are ranked &6$rank$ &fout of $total$ players'
+      percent:
+        EN: '&fYou are in the top &6$percent$% &fof players'
     all-skills:
       EN: All Skills
       VN: Tất cả kĩ năng
@@ -437,7 +461,7 @@ messages:
         RU: Энергия
         VN: Trí tuệ
       description:
-        EN: Wisdom increases your experience gain any source, decreases anvil costs,
+        EN: Wisdom increases your experience gain from any source, decreases anvil costs,
           and increases your mana pool
         PL: Zwieksza zdobywanie doswiadczenia, zmniejsza koszty kowadla i zwieksza
           twoja Mane

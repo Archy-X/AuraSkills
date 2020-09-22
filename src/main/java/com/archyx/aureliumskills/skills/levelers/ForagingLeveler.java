@@ -59,22 +59,22 @@ public class ForagingLeveler implements Listener{
 			}
 			//If 1.13+
 			if (XMaterial.isNewVersion()) {
-				if (mat.equals(XMaterial.OAK_LOG.parseMaterial())) {
+				if (mat.equals(XMaterial.OAK_LOG.parseMaterial()) || mat.equals(XMaterial.OAK_WOOD.parseMaterial())) {
 					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.OAK_LOG));
 					applyAbilities(p, b);
-				} else if (mat.equals(XMaterial.SPRUCE_LOG.parseMaterial())) {
+				} else if (mat.equals(XMaterial.SPRUCE_LOG.parseMaterial()) || mat.equals(XMaterial.SPRUCE_WOOD.parseMaterial())) {
 					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.SPRUCE_LOG));
 					applyAbilities(p, b);
-				} else if (mat.equals(XMaterial.BIRCH_LOG.parseMaterial())) {
+				} else if (mat.equals(XMaterial.BIRCH_LOG.parseMaterial()) || mat.equals(XMaterial.BIRCH_WOOD.parseMaterial())) {
 					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.BIRCH_LOG));
 					applyAbilities(p, b);
-				} else if (mat.equals(XMaterial.JUNGLE_LOG.parseMaterial())) {
+				} else if (mat.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || mat.equals(XMaterial.JUNGLE_WOOD.parseMaterial())) {
 					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.JUNGLE_LOG));
 					applyAbilities(p, b);
-				} else if (mat.equals(XMaterial.ACACIA_LOG.parseMaterial())) {
+				} else if (mat.equals(XMaterial.ACACIA_LOG.parseMaterial()) || mat.equals(XMaterial.ACACIA_WOOD.parseMaterial())) {
 					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.ACACIA_LOG));
 					applyAbilities(p, b);
-				} else if (mat.equals(XMaterial.DARK_OAK_LOG.parseMaterial())) {
+				} else if (mat.equals(XMaterial.DARK_OAK_LOG.parseMaterial()) || mat.equals(XMaterial.DARK_OAK_WOOD.parseMaterial())) {
 					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.DARK_OAK_LOG));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.OAK_LEAVES.parseMaterial())) {

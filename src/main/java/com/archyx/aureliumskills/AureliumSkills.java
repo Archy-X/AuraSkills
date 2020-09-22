@@ -4,14 +4,15 @@ import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
-import com.archyx.aureliumskills.modifier.ArmorModifierListener;
-import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoin;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.magic.ManaManager;
+import com.archyx.aureliumskills.modifier.ArmorModifierListener;
+import com.archyx.aureliumskills.modifier.ItemListener;
+import com.archyx.aureliumskills.skills.Leaderboard;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.abilities.*;
@@ -43,7 +44,7 @@ public class AureliumSkills extends JavaPlugin{
 	private final File dataFile = new File(getDataFolder(), "data.yml");
 	private final FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
 	private final SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
-	private MySqlSupport mySqlSupport;
+	public MySqlSupport mySqlSupport;
 	private Lang lang;
 	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
@@ -56,6 +57,8 @@ public class AureliumSkills extends JavaPlugin{
 	public static boolean worldGuardEnabled;
 	public static boolean placeholderAPIEnabled;
 	public static boolean vaultEnabled;
+	public static boolean protocolLibEnabled;
+	public static Leaderboard leaderboard;
 	private static Economy economy = null;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
@@ -91,6 +94,8 @@ public class AureliumSkills extends JavaPlugin{
 		else {
 			vaultEnabled = false;
 		}
+		//Check for protocol lib
+		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
 		//Load config
 		loadConfig();
 		Options options = new Options(this);
@@ -109,6 +114,8 @@ public class AureliumSkills extends JavaPlugin{
 		lang.matchConfig();
 		lang.loadDefaultMessages();
 		lang.loadLanguages();
+		//Load leaderboard
+		leaderboard = new Leaderboard(this);
 		//Registers Commands
 		registerCommands();
 		//Registers events
@@ -133,7 +140,13 @@ public class AureliumSkills extends JavaPlugin{
 		manaManager.startRegen();
 		//Load Action Bar
 		ActionBar actionBar = new ActionBar(this);
-		actionBar.startUpdateActionBar();
+		if (protocolLibEnabled) {
+			actionBar.startUpdatingActionBarProtocolLib();
+			ProtocolUtil.init();
+		}
+		else {
+			actionBar.startUpdateActionBar();
+		}
 		//Load Data
 		if (Options.mySqlEnabled) {
 			//Mysql

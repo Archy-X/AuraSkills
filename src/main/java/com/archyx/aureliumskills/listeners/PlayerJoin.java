@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.listeners;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.PlayerSkill;
+import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.util.UpdateChecker;
@@ -29,6 +30,7 @@ public class PlayerJoin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		if (!SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
 			SkillLoader.playerSkills.put(event.getPlayer().getUniqueId(), new PlayerSkill(event.getPlayer().getUniqueId(), event.getPlayer().getName()));
+			AureliumSkills.leaderboard.queueAdd(new PlayerSkillInstance(SkillLoader.playerSkills.get(event.getPlayer().getUniqueId())));
 		}
 		else {
 			SkillLoader.playerSkills.get(event.getPlayer().getUniqueId()).setPlayerName(event.getPlayer().getName());

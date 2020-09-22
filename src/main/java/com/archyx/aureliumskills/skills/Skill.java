@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.RomanNumber;
 import com.archyx.aureliumskills.util.XMaterial;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,6 +20,7 @@ import org.bukkit.potion.PotionType;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -189,6 +189,26 @@ public enum Skill {
 	
 	public Stat getSecondaryStat() {
 		return secondaryStat;
+	}
+
+	public static List<Skill> getOrderedValues() {
+		List<Skill> list = new ArrayList<>();
+		list.add(Skill.AGILITY);
+		list.add(Skill.ALCHEMY);
+		list.add(Skill.ARCHERY);
+		list.add(Skill.DEFENSE);
+		list.add(Skill.ENCHANTING);
+		list.add(Skill.ENDURANCE);
+		list.add(Skill.EXCAVATION);
+		list.add(Skill.FARMING);
+		list.add(Skill.FIGHTING);
+		list.add(Skill.FISHING);
+		list.add(Skill.FORAGING);
+		list.add(Skill.FORGING);
+		list.add(Skill.HEALING);
+		list.add(Skill.MINING);
+		list.add(Skill.SORCERY);
+		return list;
 	}
 	
 }

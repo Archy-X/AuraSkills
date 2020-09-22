@@ -1,297 +1,118 @@
+menus:
+  skills:
+  stats:
+  level-progression:
+items:
+  pane:
+  skill:
+  your-skills:
+  close:
+  back:
+  previous:
+  next:
+  level-unlocked-ability-unlock:
+  level-unlocked-ability-level:
+  level-in-progress-ability-unlock:
+  level-in-progress-ability-level:
+  level-locked-ability-unlock:
+  level-locked-ability-level:
+  stats-info:
+  stat:
 messages:
-  action_bar:
-    idle_both: '&c$health$/$max_health$ HP                &b$mana$/$max_mana$ Mana'
-    idle_health: '&c$health$/$max_health$ HP'
-    idle_mana: '&b$mana$/$max_mana$ Mana'
-    xp_both: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)   &b$mana$/$max_mana$ Mana'
-    xp_both_maxed: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7(MAXED)   &b$mana$/$max_mana$ Mana'
-    xp_health: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)'
-    xp_health_maxed: '&c$health$/$max_health$ HP   &6+$xp_add$ $skill_name$ XP &7(MAXED)'
-    xp_mana: '&6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)   &b$mana$/$max_mana$ Mana'
-    xp_mana_maxed: '&6+$xp_add$ $skill_name$ XP &7(MAXED)   &b$mana$/$max_mana$ Mana'
-    xp_none: '&6+$xp_add$ $skill_name$ XP &7($xp_current$/$xp_max$ XP)'
-    xp_none_maxed: '&6+$xp_add$ $skill_name$ XP &7(MAXED)'
-  skills_menu:
-    title: '&8Your Skills'
-    item-info:
-      item: DIAMOND_AXE
-      name: '&bYour Skills - &6$player_name$'
-      lore:
-        - '&7Upgrade Skills by doing various tasks'
-        - '&7to unlock valuable stat boosts,|&7abilities, and more!'
-        - ' '
-        - '&eHover over a Skill for more information'
-        - '&eClick on a skill to view level progression!'
-    item-skills:
-      item: $skill_item$
-      name: '&b$skill_name$ &3$level$'
-      lore:
-        - '&7$skill_desc$'
-        - ' '
-        - '&7Primary Stat: $primary_stat_color$$primary_stat_name$'
-        - '&7Secondary Stat: $secondary_stat_color$$secondary_stat_name$'
-        - '&7Ability Levels:'
-        - '  &6$ability_name$ &8($ability_mini_desc$)'
-        - ' '
-        - '&7Level: &e$level$'
-        - '&7Progress to Level $level$: &e$progress_percent$%'
-        - '  &7$progress_xp$/$progress_next$ XP'
-        - ' '
-        - '&eClick to view Level Progression!'
-    item-close:
-      item: BARRIER
-      name: '&cClose'
-      lore:
-        - ''
-    item-pane:
-      item: BLACK_STAINED_GLASS_PANE
-      name: ' '
-      lore:
-        - ''
-  progression_menu:
-    title: '&8$skill_name$ Levels - Page $page$'
-    item-unlocked:
-      item: LIME_STAINED_GLASS_PANE
-      name: '&aLevel $level$'
-      lore:
-        - '&7Level &f$level_number$'
-        - '&7Rewards:'
-        - '  $primary_stat_color$+1 $primary_stat_icon$ $primary_stat_name$'
-        - '  $secondary_stat_color$+1 $secondary_stat_icon$ $secondary_stat_name$'
-        - ' '
-        - '&6$ability_name$ &a&l$ability_unlock$'
-        - '  &7$ability_desc$'
-        - ' '
-        - '&a&lUNLOCKED'
-    item-in_progress:
-      item: YELLOW_STAINED_GLASS_PANE
-      name: '&eLevel $level$'
-      lore:
-        - '&7Level &f$level_number$'
-        - '&7Rewards:'
-        - '  $primary_stat_color$+1 $primary_stat_icon$ $primary_stat_name$'
-        - '  $secondary_stat_color$+1 $secondary_stat_icon$ $secondary_stat_name$'
-        - ' '
-        - '&6$ability_name$ &a&l$ability_unlock$'
-        - '  &7$ability_desc$'
-        - ' '
-        - '&7Progress: &e$progress_percent$%'
-        - '  &7$progress_xp$/$progress_next$ XP'
-        - ' '
-        - '&e&lIN PROGRESS'
-    item-locked:
-      item: RED_STAINED_GLASS_PANE
-      name: '&cLevel $level$'
-      lore:
-        - '&7Level &f$level_number$'
-        - '&7Rewards:'
-        - '  $primary_stat_color$+1 $primary_stat_icon$ $primary_stat_name$'
-        - '  $secondary_stat_color$+1 $secondary_stat_icon$ $secondary_stat_name$'
-        - ' '
-        - '&6$ability_name$ &a&l$ability_unlock$'
-        - '  &7$ability_desc$'
-        - ' '
-        - '&c&lLOCKED'
-    item-back:
-      item: ARROW
-      name: '&aGo Back'
-      lore:
-        - '&7Back to Skills Menu'
-    item-close:
-      item: BARRIER
-      name: '&cClose'
-      lore:
-        - ''
-    item-next:
-      item: ARROW
-      name: '&6Next Page'
-      lore:
-       - '&eClick to go to next page'
-    item-previous:
-      item: ARROW
-      name: '&6Previous Page'
-      lore:
-        - '&eClick to go to previous page'
-  stats_menu:
-    title: '&8Your Stats'
-    item-info:
-      item: $player_skull$
-      name: '&e$player_name$'
-      lore:
-        - ' $strength_color$$strength_icon$ $strength_name$ &f$strength_level$'
-        - ' $health_color$$health_icon$ $health_name$ &f$health_level$'
-        - ' $regeneration_color$$regeneration_icon$ $regeneration_name$ &f$regeneration_level$'
-        - ' $luck_color$$luck_icon$ $luck_name$ &f$luck_level$'
-        - ' $wisdom_color$$wisdom_icon$ $wisdom_name$ &f$wisdom_level$'
-        - ' $toughness_color$$toughness_icon$ $toughness_name$ &f$toughness_level$'
-    item-stat:
-      item: $stat_item$
-      name: '$stat_color$$stat_name$'
-      lore:
-        - '&7$stat_desc$'
-        - ' '
-        - '&7Primary Skills: &f$stat_primary_skills'
-        - '&fSecondary Skills: &f$stat_secondary_skills$'
-        - ' '
-        - '&7Your Level: $stat_color$$stat_level$'
-        - '$stat_descriptors$'
-    item-pane:
-      item: BLACK_STAINED_GLASS_PANE
-      name: ' '
-      lore:
-        - ''
   skills:
     farming:
-      name: Farming
-      item: DIAMOND_HOE
-      desc: Harvest crops to earn Farming XP
+      name:
+      desc:
     foraging:
-      name: Foraging
-      item: STONE_AXE
-      desc: Cut trees to earn Foraging XP
+      name:
+      desc:
     mining:
-      name: Mining
-      item: IRON_PICKAXE
-      desc: Mine stone and ores to earn Mining XP
+      name:
+      desc:
     fishing:
-      name: Fishing
-      item: FISHING_ROD
-      desc: Catch fish to earn Fishing XP
+      name:
+      desc:
     excavation:
-      name: Excavation
-      item: GOLDEN_SHOVEL
-      desc: Dig with a shovel to earn Excavation|XP
+      name:
+      desc:
     archery:
-      name: Archery
-      item: BOW
-      desc: Shoot mobs and players with a bow to|earn Archery XP
+      name:
+      desc:
     defense:
-      name: Defense
-      item: CHAINMAIL_CHESPLATE
-      desc: Take damage from entities to earn|Defense XP
+      name:
+      desc:
     fighting:
-      name: Fighting
-      item: DIAMOND_SWORD
-      desc: Fight mobs with melee weapons to earn Fighting XP
+      name:
+      desc:
     endurance:
-      name: Endurance
-      item: GOLDEN_APPLE
-      desc: Walk and run to earn Endurance XP
+      name:
+      desc:
     agility:
-      name: Agility
-      item: FEATHER
-      desc: Jump and take fall damage to earn|Agility XP
+      name:
+      desc:
     alchemy:
-      name: Alchemy
-      item: POTION INSTANT_HEAL
-      desc: Brew potions to earn Alchemy XP
+      name:
+      desc:
     enchanting:
-      name: Enchanting
-      item: ENCHANTING_TABLE
-      desc: Enchant items and books to earn|Enchanting XP
+      name:
+      desc:
     sorcery:
-      name: Sorcery
-      item: BLAZE_ROD
-      desc: Case spells to earn Sorcery XP
+      name:
+      desc:
     healing:
-      name: Healing
-      item: SPLASH_POTION INSTANT_HEAL
-      desc: Drink and splash potions to earn|Healing XP
+      name:
+      desc:
     forging:
-      name: Forging
-      item: ANVIL
-      desc: Combine and apply books in an anvil to earn Forging XP
+      name:
+      desc:
   stats:
     strength:
       name: Strength
-      item: RED_STAINED_GLASS_PANE
+      desc: Strength increases your attack damage_with various different weapons
       color: '&4'
-      desc: Strength increases your attack damage|with various different weapons
-      icon: ➽
-      descriptors: '&4+$attack_damage$ Attack Damage'
+      symbol: '➽'
+      descriptors:
+        - '&4+{1} Attack Damage'
     health:
       name: Health
-      item: ORANGE_STAINED_GLASS_PANE
+      desc: Health increases the amount of HP you_have, allowing you to last longer in fights
       color: '&c'
-      desc: Health increases the amount of HP you|have, allowing you to last longer in|fights
-      icon: ❤
-      descriptors: '&c+$hp$ HP'
+      symbol: '❤'
+      descriptors:
+        - '&c+{1} HP'
     regeneration:
       name: Regeneration
-      item: YELLOW_STAINED_GLASS_PANE
+      desc: Regeneration increases how fast you_recover both health and mana
       color: '&6'
-      desc: Regeneration increases how fast you recover both health and mana
-      icon: ❥
-      descriptors: '&6+$saturated_regen$ Saturated Regen|&6+$full_hunger_regen$ Full Hunger Regen|&6+$almost_full_hunger_regen$ Almost Full Hunger Regen|&b+$mana_regen$ Mana Regen'
+      symbol: '❥'
+      descriptors:
+        - '&e+{1} Saturated Regen'
+        - '&e+{2} Full Hunger Regen'
+        - '&e+{3} Almost Full Hunger Regen'
+        - '&b+{4} Mana Regen'
     luck:
       name: Luck
-      item: GREEN_STAINED_GLASS_PANE
+      desc: Luck increases your chances of getting_rare loot from mobs, fishing, and more
       color: '&2'
-      desc: Luck increases your chances of getting|rare loot from mobs, fishing, and more
-      icon: ☘
-      descriptors: '&2+$attribute_luck$ Luck|&2Double Drop Chance: $double_drop_chance$%'
+      symbol: '☘'
+      descriptors:
+        - '&2+{1} Luck'
+        - '&2Double Drop Chance: {2}%'
     wisdom:
       name: Wisdom
-      item: BLUE_STAINED_GLASS_PANE
+      desc: Wisdom increases your experience gain_from any source, decreases anvil costs,_and increases your mana pool
       color: '&9'
-      desc: Wisdom increases your mana pool, the|strength of magical attacks, and|magical luck
-      icon: ✿
-      descriptors: '&9+$xp_gain_percent$% XP Gain|&9Anvil Cost Reduction: $anvil_cost_reduction$'
+      symbol: '✿'
+      descriptors:
+        - '&9+{1} XP Gain'
+        - 'Anvil Cost Reduction: {2}'
     toughness:
       name: Toughness
-      item: PURPLE_STAINED_GLASS_PANE
+      desc: Toughness increases the amount of_damage reduced from enemy attacks
       color: '&5'
-      desc: Toughness increases the amount of|damage reduced from enemy attacks
-      icon: ✦
-      descriptors: '&5-$damage_reduction_percent$% Incoming Damage'
-  abilities:
-    farming:
-      bountiful_harvest:
-        name: Bountiful Harvest
-        desc: _% chance to get double drops from crops.
-        mini_desc: _% x2 Drops
-      farmer:
-        name: Farmer
-        desc: Earn _% more Farming XP.
-        mini_desc: +_% XP
-      scythe_master:
-        name: Scythe Master
-        desc: Increases damage from hoes by _%
-        mini_desc: +_% Hoe Damage
-      geneticist:
-        name: Geneticist
-        desc: Increases saturation gain from plant-based foods by _.
-        mini_desc: +_% Saturation
-      triple_harvest:
-        name: Triple Harvest
-        desc: _% chance to get triple drops from crops.
-        mini_desc: _% 3x Drops
-    foraging:
-      lumberjack:
-        name: Lumberjack
-        desc: _% chance to get double drops from logs.
-        mini_desc: _% chance to get double drops from logs.
-      forager:
-        name: Forager
-        desc: Earn _% more Foraging XP.
-        mini_desc: +_% XP
-      axe_master:
-        name: Axe Master
-        desc: Increases damage from axes by _%
-        mini_desc: +_% Axe Damage
-      treecapitator:
-        name: Treecapitator
-        desc: Breaks entire trees instantly for _ seconds. [Right Click to Activate]
-        mini_desc: _s Duration
-        raise: You raise your axe
-        lower: You lower your axe
-        activated: Treecapitator Activated!
-        worn_off: Treecapitator has worn off
-      shredder:
-        name: Shredder
-        desc: _% chance to deal triple durability damage with axes
-        mini_desc: _% 3x Durability Damage
-
+      symbol: '✦'
+      descriptors:
+        - '&5-{1}% Incoming Damage'
 
 
 

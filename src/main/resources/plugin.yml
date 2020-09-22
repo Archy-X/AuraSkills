@@ -1,15 +1,15 @@
 name: AureliumSkills
-version: Alpha 1.4.2
+version: Alpha 1.4.3
 main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
-softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, Vault]
+softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, Vault, ProtocolLib]
 api-version: '1.13'
 
 permissions:
     aureliumskills.*:
-        description: Gives access to all Aurlium Skills commands
+        description: Gives access to all Aurelium Skills commands
         children:
             aureliumskills.skill.setlevel: true
             aureliumskills.ability.setlevel: true
@@ -33,6 +33,10 @@ permissions:
             aureliumskills.armor.modifier.list: true
             aureliumskills.armor.modifier.removeall: true
             aureliumskills.help: true
+            aureliumskills.abtoggle: true
+            aureliumskills.save: true
+            aureliumskills.updateleaderboards: true
+            aureliumskills.rank: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.ability.setlevel:
@@ -84,6 +88,14 @@ permissions:
     aureliumskills.skills:
         default: true
     aureliumskills.stats:
+        default: true
+    aureliumskills.abtoggle:
+        default: true
+    aureliumskills.updateleaderboards:
+        default: op
+    aureliumskills.save:
+        default: op
+    aureliumskills.rank:
         default: true
     aureliumskills.farming:
         default: true

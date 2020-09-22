@@ -1,15 +1,8 @@
 package com.archyx.aureliumskills.stats;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.Setting;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public class Toughness {
 

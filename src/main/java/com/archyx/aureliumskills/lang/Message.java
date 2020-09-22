@@ -237,7 +237,6 @@ public enum Message {
 	ABILITY_NOT_READY("abilities.ability-not-ready"),
 	NOT_ENOUGH_MANA("abilities.not-enough-mana"),
 	MANA_REQUIRED("abilities.mana-required"),
-	SKILL_LEADERBOARD("skills.skill-leaderboard"),
 	ALL_SKILLS("skills.all-skills"),
 	UNKNOWN_SKILL("skills.unknown-skill"),
 	CONFIG_RELOADED("basic.config-reloaded"),
@@ -290,8 +289,20 @@ public enum Message {
 	ARMOR_LIST_MUST_HOLD_ITEM("modifier.armor-modifier-list.must-hold-item"),
 	ARMOR_REMOVE_ALL_REMOVED("modifier.armor-modifier-remove-all.removed"),
 	ARMOR_REMOVE_ALL_MUST_HOLD_ITEM("modifier.armor-modifier-remove-all.must-hold-item"),
-	XP_MULTIPLIER("basic.xp-multiplier-command");
-	
+	XP_MULTIPLIER("basic.xp-multiplier-command"),
+	LEADERBOARD_POWER_HEADER("skills.leaderboard.power-header"),
+	LEADERBOARD_POWER_HEADER_PAGE("skills.leaderboard.power-header-page"),
+	LEADERBOARD_SKILL_HEADER("skills.leaderboard.skill-header"),
+	LEADERBOARD_SKILL_HEADER_PAGE("skills.leaderboard.skill-header-page"),
+	LEADERBOARD_POWER_ENTRY("skills.leaderboard.power-entry"),
+	LEADERBOARD_SKILL_ENTRY("skills.leaderboard.skill-entry"),
+	SKILL_RANK_HEADER("skills.rank.header"),
+	SKILL_RANK_POWER("skills.rank.power"),
+	SKILL_RANK_ENTRY("skills.rank.entry"),
+	MENU_RANK_NAME("skills.menu-rank.name"),
+	MENU_RANK_RANKED("skills.menu-rank.ranked"),
+	MENU_RANK_PERCENT("skills.menu-rank.percent");
+
 	private final String path;
 	
 	Message(String path) {

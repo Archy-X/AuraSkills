@@ -11,7 +11,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class MySqlSupport {
@@ -21,6 +23,9 @@ public class MySqlSupport {
     private final String host, database, username, password;
     private final int port;
     private final AureliumSkills aureliumSkills;
+    private final String updateString;
+    private final String insertString;
+    public static boolean isSaving;
 
     public MySqlSupport(Plugin plugin, AureliumSkills aureliumSkills) {
         this.plugin = plugin;
@@ -31,6 +36,73 @@ public class MySqlSupport {
         username = values.get("username");
         password = values.get("password");
         port = Integer.parseInt(values.get("port"));
+        isSaving = false;
+        updateString = "UPDATE " + database + ".SkillData SET " +
+                "NAME = " + "?" +
+                ", AGILITY_LEVEL = " + "?" +
+                ", AGILITY_XP = " + "?" +
+                ", ALCHEMY_LEVEL = " + "?" +
+                ", ALCHEMY_XP = " + "?" +
+                ", ARCHERY_LEVEL = " + "?" +
+                ", ARCHERY_XP = " + "?" +
+                ", DEFENSE_LEVEL = " + "?" +
+                ", DEFENSE_XP = " + "?" +
+                ", ENCHANTING_LEVEL = " + "?" +
+                ", ENCHANTING_XP = " + "?" +
+                ", ENDURANCE_LEVEL = " + "?" +
+                ", ENDURANCE_XP = " + "?" +
+                ", EXCAVATION_LEVEL = " + "?" +
+                ", EXCAVATION_XP = " + "?" +
+                ", FARMING_LEVEL = " + "?" +
+                ", FARMING_XP = " + "?" +
+                ", FIGHTING_LEVEL = " + "?" +
+                ", FIGHTING_XP = " + "?" +
+                ", FISHING_LEVEL = " + "?" +
+                ", FISHING_XP = " + "?" +
+                ", FORAGING_LEVEL = " + "?" +
+                ", FORAGING_XP = " + "?" +
+                ", FORGING_LEVEL = " + "?" +
+                ", FORGING_XP = " + "?" +
+                ", HEALING_LEVEL = " + "?" +
+                ", HEALING_XP = " + "?" +
+                ", MINING_LEVEL = " + "?" +
+                ", MINING_XP = " + "?" +
+                ", SORCERY_LEVEL = " + "?" +
+                ", SORCERY_XP = " + "?" +
+                " WHERE ID = " + "?" + "";
+        insertString = "INSERT INTO SkillData VALUES " +
+                "(" + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" +
+                ", " + "?" + ")";
     }
 
     public void init() {
@@ -44,7 +116,7 @@ public class MySqlSupport {
                     loadData(statement);
                     startSaving();
                 }
-                catch (ClassNotFoundException | SQLException e) {
+                catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -92,6 +164,13 @@ public class MySqlSupport {
             long endTime = System.currentTimeMillis();
             long elapsed = endTime - startTime;
             Bukkit.getLogger().info("[AureliumSkills] Loaded " + numLoaded + " player Skill Data in " + elapsed + "ms");
+            //Update leaderboards
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    AureliumSkills.leaderboard.updateLeaderboards(false);
+                }
+            }.runTaskAsynchronously(plugin);
         }
         else {
             Bukkit.getLogger().info("[AureliumSkills] MySql table doesn't exist, migrating existing data from file...");
@@ -100,10 +179,19 @@ public class MySqlSupport {
     }
 
     public void saveData(boolean silent) {
+        isSaving = true;
+        if (!silent) {
+            Bukkit.getConsoleSender().sendMessage("[AureliumSkills] Saving Skill Data...");
+        }
+        long start = System.currentTimeMillis();
         try {
-            Statement statement = connection.createStatement();
+            PreparedStatement updateStatement = connection.prepareStatement(updateString);
+            PreparedStatement insertStatement = connection.prepareStatement(insertString);
+            Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             DatabaseMetaData dbm = connection.getMetaData();
             ResultSet tables = dbm.getTables(null, null, "SkillData", null);
+            int numInserted = 0;
+            int numUpdated = 0;
             if (!tables.next()) {
                 statement.execute("CREATE TABLE SkillData (" +
                         "ID varchar(40), " +
@@ -122,94 +210,94 @@ public class MySqlSupport {
                         "FORGING_LEVEL int, FORGING_XP double, " +
                         "HEALING_LEVEL int, HEALING_XP double, " +
                         "MINING_LEVEL int, MINING_XP double, " +
-                        "SORCERY_LEVEL int, SORCERY_XP double)");
+                        "SORCERY_LEVEL int, SORCERY_XP double," +
+                        "CONSTRAINT PKEY PRIMARY KEY (ID))");
             }
-            for (UUID uuid : SkillLoader.playerSkills.keySet()) {
-                PlayerSkill playerSkill = SkillLoader.playerSkills.get(uuid);
-                String id = playerSkill.getPlayerId().toString();
-                String name = playerSkill.getPlayerName();
-                //TODO Add check for row exists
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM SkillData WHERE ID='" + id + "'");
-                if (resultSet.next()) {
-                    statement.executeUpdate("UPDATE " + database + ".SkillData SET " +
-                            "NAME = '" + name +
-                            "', AGILITY_LEVEL = '" + playerSkill.getSkillLevel(Skill.AGILITY) +
-                            "', AGILITY_XP = '" + playerSkill.getXp(Skill.AGILITY) +
-                            "', ALCHEMY_LEVEL = '" + playerSkill.getSkillLevel(Skill.ALCHEMY) +
-                            "', ALCHEMY_XP = '" + playerSkill.getXp(Skill.ALCHEMY) +
-                            "', ARCHERY_LEVEL = '" + playerSkill.getSkillLevel(Skill.ARCHERY) +
-                            "', ARCHERY_XP = '" + playerSkill.getXp(Skill.ARCHERY) +
-                            "', DEFENSE_LEVEL = '" + playerSkill.getSkillLevel(Skill.DEFENSE) +
-                            "', DEFENSE_XP = '" + playerSkill.getXp(Skill.DEFENSE) +
-                            "', ENCHANTING_LEVEL = '" + playerSkill.getSkillLevel(Skill.ENCHANTING) +
-                            "', ENCHANTING_XP = '" + playerSkill.getXp(Skill.ENCHANTING) +
-                            "', ENDURANCE_LEVEL = '" + playerSkill.getSkillLevel(Skill.ENDURANCE) +
-                            "', ENDURANCE_XP = '" + playerSkill.getXp(Skill.ENDURANCE) +
-                            "', EXCAVATION_LEVEL = '" + playerSkill.getSkillLevel(Skill.EXCAVATION) +
-                            "', EXCAVATION_XP = '" + playerSkill.getXp(Skill.EXCAVATION) +
-                            "', FARMING_LEVEL = '" + playerSkill.getSkillLevel(Skill.FARMING) +
-                            "', FARMING_XP = '" + playerSkill.getXp(Skill.FARMING) +
-                            "', FIGHTING_LEVEL = '" + playerSkill.getSkillLevel(Skill.FIGHTING) +
-                            "', FIGHTING_XP = '" + playerSkill.getXp(Skill.FIGHTING) +
-                            "', FISHING_LEVEL = '" + playerSkill.getSkillLevel(Skill.FISHING) +
-                            "', FISHING_XP = '" + playerSkill.getXp(Skill.FISHING) +
-                            "', FORAGING_LEVEL = '" + playerSkill.getSkillLevel(Skill.FORAGING) +
-                            "', FORAGING_XP = '" + playerSkill.getXp(Skill.FORAGING) +
-                            "', FORGING_LEVEL = '" + playerSkill.getSkillLevel(Skill.FORGING) +
-                            "', FORGING_XP = '" + playerSkill.getXp(Skill.FORGING) +
-                            "', HEALING_LEVEL = '" + playerSkill.getSkillLevel(Skill.HEALING) +
-                            "', HEALING_XP = '" + playerSkill.getXp(Skill.AGILITY) +
-                            "', MINING_LEVEL = '" + playerSkill.getSkillLevel(Skill.MINING) +
-                            "', MINING_XP = '" + playerSkill.getXp(Skill.MINING) +
-                            "', SORCERY_LEVEL = '" + playerSkill.getSkillLevel(Skill.SORCERY) +
-                            "', SORCERY_XP = '" + playerSkill.getXp(Skill.SORCERY) +
-                            "' WHERE ID = '" + id + "'");
-                } else {
-                    statement.executeUpdate("INSERT INTO SkillData VALUES " +
-                            "('" + id +
-                            "', '" + name +
-                            "', '" + playerSkill.getSkillLevel(Skill.AGILITY) +
-                            "', '" + playerSkill.getXp(Skill.AGILITY) +
-                            "', '" + playerSkill.getSkillLevel(Skill.ALCHEMY) +
-                            "', '" + playerSkill.getXp(Skill.ALCHEMY) +
-                            "', '" + playerSkill.getSkillLevel(Skill.ARCHERY) +
-                            "', '" + playerSkill.getXp(Skill.ARCHERY) +
-                            "', '" + playerSkill.getSkillLevel(Skill.DEFENSE) +
-                            "', '" + playerSkill.getXp(Skill.DEFENSE) +
-                            "', '" + playerSkill.getSkillLevel(Skill.ENCHANTING) +
-                            "', '" + playerSkill.getXp(Skill.ENCHANTING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.ENDURANCE) +
-                            "', '" + playerSkill.getXp(Skill.ENDURANCE) +
-                            "', '" + playerSkill.getSkillLevel(Skill.EXCAVATION) +
-                            "', '" + playerSkill.getXp(Skill.EXCAVATION) +
-                            "', '" + playerSkill.getSkillLevel(Skill.FARMING) +
-                            "', '" + playerSkill.getXp(Skill.FARMING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.FIGHTING) +
-                            "', '" + playerSkill.getXp(Skill.FIGHTING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.FISHING) +
-                            "', '" + playerSkill.getXp(Skill.FISHING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.FORAGING) +
-                            "', '" + playerSkill.getXp(Skill.FORAGING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.FORGING) +
-                            "', '" + playerSkill.getXp(Skill.FORGING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.HEALING) +
-                            "', '" + playerSkill.getXp(Skill.HEALING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.MINING) +
-                            "', '" + playerSkill.getXp(Skill.MINING) +
-                            "', '" + playerSkill.getSkillLevel(Skill.SORCERY) +
-                            "', '" + playerSkill.getXp(Skill.SORCERY) + "')"
-                    );
+            else {
+                //Add primary key if not exists
+                if (!statement.executeQuery("SELECT constraint_name FROM information_schema.table_constraints " +
+                        "WHERE table_name = 'SkillData' " +
+                        "AND table_schema = '" + database + "' " +
+                        "AND constraint_name = 'PRIMARY'").next()) {
+                    statement.execute("ALTER TABLE SkillData ADD CONSTRAINT PKEY PRIMARY KEY (ID)");
+                }
+            }
+            ResultSet data = statement.executeQuery("SELECT * FROM SkillData");
+            Set<UUID> updated = new HashSet<>();
+            //Update existing records and remove deleted players
+            while (data.next()) {
+                PlayerSkill playerSkill = SkillLoader.playerSkills.get(UUID.fromString(data.getString(1)));
+                if (playerSkill != null) {
+                    if (!isSame(data, playerSkill)) {
+                        //Update
+                        updateStatement.setString(1, playerSkill.getPlayerName());
+                        int index = 2;
+                        for (Skill skill : Skill.getOrderedValues()) {
+                            updateStatement.setInt(index, playerSkill.getSkillLevel(skill));
+                            index++;
+                            updateStatement.setDouble(index, playerSkill.getXp(skill));
+                            index++;
+                        }
+                        updateStatement.setString(32, playerSkill.getPlayerId().toString());
+                        updateStatement.executeUpdate();
+                        numUpdated++;
+                    }
+                    //Mark as updated
+                    updated.add(playerSkill.getPlayerId());
+                }
+            }
+            //Insert if not updated
+            for (Map.Entry<UUID, PlayerSkill> entry : SkillLoader.playerSkills.entrySet()) {
+                if (!updated.contains(entry.getKey())) {
+                    //Insert
+                    PlayerSkill playerSkill = entry.getValue();
+                    insertStatement.setString(1, playerSkill.getPlayerId().toString());
+                    insertStatement.setString(2, playerSkill.getPlayerName());
+                    int index = 3;
+                    for (Skill skill : Skill.getOrderedValues()) {
+                        insertStatement.setInt(index, playerSkill.getSkillLevel(skill));
+                        index++;
+                        insertStatement.setDouble(index, playerSkill.getXp(skill));
+                        index++;
+                    }
+                    insertStatement.executeUpdate();
+                    numInserted++;
                 }
             }
             if (!silent) {
-                Bukkit.getLogger().info("[AureliumSkills] Skill Data successfully saved!");
+                long end = System.currentTimeMillis();
+                Bukkit.getConsoleSender().sendMessage("[AureliumSkills] Skill Data successfully saved in " +  (end - start) + " ms) [" + numUpdated + " Updated, " + numInserted + " Inserted]");
             }
+            isSaving = false;
         }
         catch (Exception e) {
             Bukkit.getLogger().severe("[AureliumSkills] Error saving Skill Data!");
+            e.printStackTrace();
+            isSaving = false;
         }
     }
 
+    private boolean isSame(ResultSet data, PlayerSkill playerSkill) throws SQLException {
+        boolean same = true;
+        if (!data.getString(2).equals(playerSkill.getPlayerName())) {
+            same = false;
+        }
+        if (same) {
+            int index = 3;
+            for (Skill skill : Skill.getOrderedValues()) {
+                if (data.getInt(index) != playerSkill.getSkillLevel(skill)) {
+                    same = false;
+                }
+                index++;
+                if (data.getDouble(index) != playerSkill.getXp(skill)) {
+                    same = false;
+                }
+                index++;
+            }
+        }
+        return same;
+    }
+    
     //Tries to open connection
     public void openConnection() throws SQLException, ClassNotFoundException {
         if (connection != null && !connection.isClosed()) {
@@ -240,7 +328,9 @@ public class MySqlSupport {
         new BukkitRunnable() {
             @Override
             public void run() {
-                saveData(true);
+                if (!isSaving) {
+                    saveData(true);
+                }
             }
         }.runTaskTimerAsynchronously(plugin, Options.dataSavePeriod, Options.dataSavePeriod);
     }

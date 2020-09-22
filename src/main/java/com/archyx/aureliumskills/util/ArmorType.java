@@ -1,6 +1,5 @@
 package com.archyx.aureliumskills.util;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**
