@@ -50,7 +50,6 @@ Every Skill has a unique combination of 2 stats that it levels up! These are cat
 
 - /skills or /skill or /sk - Opens Skills Menu
 - /stats - Opens Stats Menu
-- /sk ability setlevel <player> <ability> <level> - Sets ability level (aureliumskills.ability.setlevel)
 - /sk skill setlevel <player> <skill> <level> - Sets skill level (aureliumskills.skill.setlevel)
 - /sk xp add <player> <skill> <amount> - Adds skill xp to player (aureliumskills.xp.add)
 - /sk top [skill] - Shows skill leaderboard (aureliumskills.top)
