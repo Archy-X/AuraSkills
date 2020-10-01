@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.util;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.apache.commons.lang.StringUtils;
@@ -27,11 +27,11 @@ public class HologramSupport implements Listener {
 
     private final Plugin plugin;
     private final Random r = new Random();
-    private NumberFormat nf;
+    private final NumberFormat nf;
 
     public HologramSupport(Plugin plugin) {
         this.plugin = plugin;
-        nf = new DecimalFormat("#." + StringUtils.repeat("#", Options.hologramsDecimalAmount));
+        nf = new DecimalFormat("#." + StringUtils.repeat("#", OptionL.getInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -39,7 +39,7 @@ public class HologramSupport implements Listener {
         if (!event.isCancelled()) {
             if (event.getEntity() instanceof LivingEntity) {
                 if (AureliumSkills.holographicDisplaysEnabled) {
-                    if (Options.getBooleanOption(Setting.DAMAGE_HOLOGRAMS)) {
+                    if (OptionL.getBoolean(Option.DAMAGE_HOLOGRAMS)) {
                         if (AureliumSkills.worldManager.isInDisabledWorld(event.getEntity().getLocation())) {
                             return;
                         }
@@ -72,23 +72,23 @@ public class HologramSupport implements Listener {
 
     private Location getLocation(Entity entity) {
         Location location = entity.getLocation();
-        if (Options.getBooleanOption(Setting.DAMAGE_HOLOGRAMS_RANDOM_ENABLED)) {
+        if (OptionL.getBoolean(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_ENABLED)) {
             //Calculate random holograms
-            double xMin = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_RANDOM_X_MIN);
-            double xMax = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_RANDOM_X_MAX);
+            double xMin = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_X_MIN);
+            double xMax = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_X_MAX);
             double x = xMin + (xMax - xMin) * r.nextDouble();
-            double yMin = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_RANDOM_Y_MIN);
-            double yMax = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_RANDOM_Y_MAX);
+            double yMin = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_Y_MIN);
+            double yMax = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_Y_MAX);
             double y = yMin + (yMax - yMin) * r.nextDouble();
-            double zMin = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_RANDOM_Z_MIN);
-            double zMax = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_RANDOM_Z_MAX);
+            double zMin = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_Z_MIN);
+            double zMax = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_Z_MAX);
             double z = zMin + (zMax - zMin) * r.nextDouble();
             location.add(x, (entity.getHeight() - entity.getHeight() * 0.1) + y, z);
         }
         else {
-            double x = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_OFFSET_X);
-            double y = (entity.getHeight() - entity.getHeight() * 0.1) + Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_OFFSET_Y);
-            double z = Options.getDoubleOption(Setting.DAMAGE_HOLOGRAMS_OFFSET_Z);
+            double x = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_X);
+            double y = (entity.getHeight() - entity.getHeight() * 0.1) + OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_Y);
+            double z = OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_Z);
             location.add(x, y, z);
         }
         return location;
@@ -97,9 +97,9 @@ public class HologramSupport implements Listener {
     private String getText(double damage, boolean critical) {
         StringBuilder text = new StringBuilder(ChatColor.GRAY + "");
         String damageText;
-        if (Options.getBooleanOption(Setting.DAMAGE_HOLOGRAMS_SCALING)) {
-            double damageScaling = damage * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
-            if (damageScaling < Options.hologramsDisplayLessThan) {
+        if (OptionL.getBoolean(Option.DAMAGE_HOLOGRAMS_SCALING)) {
+            double damageScaling = damage * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
+            if (damageScaling < OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_DECIMAL_LESS_THAN)) {
                 damageText = nf.format(damageScaling);
             }
             else {
@@ -107,7 +107,7 @@ public class HologramSupport implements Listener {
             }
         }
         else {
-            if (damage < Options.hologramsDisplayLessThan) {
+            if (damage < OptionL.getDouble(Option.DAMAGE_HOLOGRAMS_DECIMAL_LESS_THAN)) {
                 damageText = nf.format(damage);
             }
             else {

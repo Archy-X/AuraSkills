@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 
 public class StatModifier {
 
-    private String name;
-    private Stat stat;
-    private int value;
+    private final String name;
+    private final Stat stat;
+    private final int value;
 
     public StatModifier(String name, Stat stat, int value) {
         this.name = name;
@@ -54,15 +54,6 @@ public class StatModifier {
                 .replace("&", "§");
     }
 
-    public static String applyPlaceholders(String input, Stat stat, String name, int value) {
-        return input.replace("$stat_color$", stat.getColor())
-                .replace("$stat_symbol$", stat.getSymbol())
-                .replace("$stat_name$", Lang.getMessage(Message.valueOf(stat.name().toUpperCase() + "_NAME")))
-                .replace("$modifier_value$", String.valueOf(value))
-                .replace("$modifier_name$", name)
-                .replace("&", "§");
-    }
-
     public static String applyPlaceholders(String input, Stat stat, Player player) {
         return input.replace("$stat_color$", stat.getColor())
                 .replace("$stat_symbol$", stat.getSymbol())
@@ -89,11 +80,6 @@ public class StatModifier {
     public static String applyPlaceholders(String input, String name, Player player) {
         return input.replace("$modifier_name$", name)
                 .replace("$player_name$", player.getName())
-                .replace("&", "§");
-    }
-
-    public static String applyPlaceholders(String input, String name) {
-        return input.replace("$modifier_name$", name)
                 .replace("&", "§");
     }
 

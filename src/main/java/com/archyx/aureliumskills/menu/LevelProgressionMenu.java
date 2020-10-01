@@ -1,14 +1,17 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.abilities.Ability;
+import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.util.RomanNumber;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -29,16 +32,26 @@ import java.util.List;
 
 public class LevelProgressionMenu implements InventoryProvider {
 
-	private Skill skill;
-	private Player player;
-	private List<Integer> track;
+	private final Skill skill;
+	private final Player player;
+	private final List<Integer> track;
 	
-	public final static int pages = 4;
+	public static int pages = 4;
 	
 	public LevelProgressionMenu(Player player, Skill skill) {
 		this.player = player;
 		this.skill = skill;
-		track = new LinkedList<Integer>();
+		int maxLevel = OptionL.getMaxLevel(skill);
+		if (maxLevel < 26) {
+			pages = 1;
+		}
+		else if (maxLevel < 50) {
+			pages = 2;
+		}
+		else if (maxLevel < 74) {
+			pages = 3;
+		}
+		track = new LinkedList<>();
 		for (int i = 0; i < pages; i++) {
 			track.add(i*36); track.add(9 + i*36); track.add(18 + i*36); track.add(27 + i*36); track.add(28 + i*36);
 			track.add(29 + i*36); track.add(20 + i*36); track.add(11 + i*36); track.add(2 + i*36); track.add(3 + i*36);
@@ -51,33 +64,46 @@ public class LevelProgressionMenu implements InventoryProvider {
 	@Override
 	public void init(Player player, InventoryContents contents) {
 		int currentLevel = SkillLoader.playerSkills.get(this.player.getUniqueId()).getSkillLevel(skill);
-		
+
+		if (OptionL.getBoolean(Option.LEVEL_PROGRESSION_MENU_FILL_PANE)) {
+			contents.fill(ClickableItem.empty(MenuItems.getEmptyPane()));
+		}
+
 		contents.set(SlotPos.of(0, 0), ClickableItem.empty(skill.getMenuItem(player, false)));
 		
-		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton(Lang.getMessage(Message.BACK_SKILLS_MENU)), e -> {
-			SkillsMenu.getInventory(player).open(player);
-		}));
+		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton(Lang.getMessage(Message.BACK_SKILLS_MENU)), e -> SkillsMenu.getInventory(player).open(player)));
 		
-		contents.set(SlotPos.of(5, 1), ClickableItem.of(MenuItems.getCloseButton(), e -> {
-			player.closeInventory();
-		}));
+		contents.set(SlotPos.of(5, 1), ClickableItem.of(MenuItems.getCloseButton(), e -> player.closeInventory()));
 
 		contents.set(SlotPos.of(0, 1), ClickableItem.empty(getRankItem()));
 		
 		Pagination pagination = contents.pagination();
 		ClickableItem[] items = new ClickableItem[pages * 36];
+
+		if (OptionL.getBoolean(Option.LEVEL_PROGRESSION_MENU_FILL_PANE)) {
+			for (int i = 0; i < items.length; i++) {
+				items[i] = ClickableItem.empty(MenuItems.getEmptyPane());
+			}
+		}
 		
 		for (int i = 0; i < track.size(); i++) {
-			if (i + 2 <= currentLevel) {
-				items[track.get(i)] = ClickableItem.empty(getUnlockedLevel(i+2));
-			}
-			else if (i + 2 == currentLevel + 1) {
-				items[track.get(i)] = ClickableItem.empty(getCurrentLevel(i+2));
+			if (i + 2 <= OptionL.getMaxLevel(skill)) {
+				if (i + 2 <= currentLevel) {
+					items[track.get(i)] = ClickableItem.empty(getUnlockedLevel(i + 2));
+				} else if (i + 2 == currentLevel + 1) {
+					items[track.get(i)] = ClickableItem.empty(getCurrentLevel(i + 2));
+				} else {
+					items[track.get(i)] = ClickableItem.empty(getLockedLevel(i + 2));
+				}
 			}
 			else {
-				items[track.get(i)] = ClickableItem.empty(getLockedLevel(i+2));
+				if (OptionL.getBoolean(Option.LEVEL_PROGRESSION_MENU_FILL_PANE)) {
+					items[track.get(i)] = ClickableItem.empty(MenuItems.getEmptyPane());
+				}
+				else {
+					items[track.get(i)] = ClickableItem.empty(new ItemStack(Material.AIR));
+				}
 			}
-			
 		}
 		
 		pagination.setItems(items);
@@ -232,6 +258,25 @@ public class LevelProgressionMenu implements InventoryProvider {
 				if (ability.hasTwoValues()) {
 					fullDesc = fullDesc.replace("$", nf.format(ability.getValue2((level + 3) / 5)));
 				}
+				String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1," + 35 + "})(?:\\s+|\\s*$)", "$1\n").split("\n");
+				for (String s : splitDesc) {
+					lore.add(ChatColor.GRAY + "   " + s);
+				}
+			}
+		}
+		//Show mana ability unlock/level up
+		if (level % 7 == 0) {
+			MAbility mAbility = skill.getManaAbility();
+			if (AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
+				lore.add(" ");
+				if (level == 7) {
+					lore.add(ChatColor.BLUE + mAbility.getName() + ChatColor.LIGHT_PURPLE + " " + ChatColor.BOLD + Lang.getMessage(Message.MANA_ABILITY_UNLOCK));
+				}
+				else {
+					lore.add(ChatColor.BLUE + mAbility.getName() + " " + RomanNumber.toRoman(level / 7));
+				}
+				NumberFormat nf = new DecimalFormat("##.##");
+				String fullDesc = mAbility.getDescription().replace("_", nf.format(mAbility.getValue(level / 7)));
 				String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1," + 35 + "})(?:\\s+|\\s*$)", "$1\n").split("\n");
 				for (String s : splitDesc) {
 					lore.add(ChatColor.GRAY + "   " + s);

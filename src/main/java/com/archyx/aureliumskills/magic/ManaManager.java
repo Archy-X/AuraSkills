@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.magic;
 
-import com.archyx.aureliumskills.Options;
 import com.archyx.aureliumskills.api.ManaRegenerateEvent;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
@@ -19,8 +20,8 @@ import java.util.UUID;
 
 public class ManaManager implements Listener {
 
-    private Map<UUID, Integer> mana;
-    private Plugin plugin;
+    private final Map<UUID, Integer> mana;
+    private final Plugin plugin;
 
     public ManaManager(Plugin plugin) {
         this.plugin = plugin;
@@ -40,9 +41,9 @@ public class ManaManager implements Listener {
                         if (SkillLoader.playerStats.containsKey(id)) {
                             PlayerStat stat = SkillLoader.playerStats.get(id);
                             int originalMana = mana.get(id);
-                            int maxMana = Options.baseMana + 2 * stat.getStatLevel(Stat.WISDOM);
+                            int maxMana = OptionL.getInt(Option.BASE_MANA) + 2 * stat.getStatLevel(Stat.WISDOM);
                             if (originalMana < maxMana) {
-                                int regen = Options.baseManaRegen + (int) (stat.getStatLevel(Stat.REGENERATION) * Options.manaModifier);
+                                int regen = OptionL.getInt(Option.REGENERATION_BASE_MANA_REGEN) + (int) (stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER));
                                 int finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
                                 //Call Event
                                 ManaRegenerateEvent event = new ManaRegenerateEvent(player.getPlayer(), finalRegen);
@@ -63,18 +64,18 @@ public class ManaManager implements Listener {
             return mana.get(id);
         }
         else {
-            mana.put(id, Options.baseMana);
-            return Options.baseMana;
+            mana.put(id, OptionL.getInt(Option.BASE_MANA));
+            return OptionL.getInt(Option.BASE_MANA);
         }
     }
 
     public int getMaxMana(UUID id) {
         if (SkillLoader.playerStats.containsKey(id)) {
-            return Options.baseMana + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
+            return OptionL.getInt(Option.BASE_MANA) + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
         }
         else {
             SkillLoader.playerStats.put(id, new PlayerStat(id));
-            return Options.baseMana;
+            return OptionL.getInt(Option.BASE_MANA);
         }
     }
 
@@ -87,7 +88,7 @@ public class ManaManager implements Listener {
         UUID id = event.getPlayer().getUniqueId();
         if (!mana.containsKey(id)) {
             if (SkillLoader.playerStats.containsKey(id)) {
-                mana.put(event.getPlayer().getUniqueId(), Options.baseMana + 2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
+                mana.put(event.getPlayer().getUniqueId(), OptionL.getInt(Option.BASE_MANA) + 2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
             }
         }
     }

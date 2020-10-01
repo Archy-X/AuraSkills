@@ -1,31 +1,47 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
+import com.archyx.aureliumskills.skills.abilities.mana_abilities.Replenish;
+import com.archyx.aureliumskills.util.BlockUtil;
+import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
 public class FarmingAbilities implements Listener {
 
 	private static final Random r = new Random();
-	
+	private final Plugin plugin;
+
+	public FarmingAbilities(Plugin plugin) {
+		this.plugin = plugin;
+	}
+
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = Options.getXpAmount(source);
+		double output = OptionL.getXp(source);
 		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FARMER)) {
 			double modifier = 1;
 			modifier += Ability.FARMER.getValue(skill.getAbilityLevel(Ability.FARMER)) / 100;
@@ -35,7 +51,7 @@ public class FarmingAbilities implements Listener {
 	}
 	
 	public static void bountifulHarvest(Player player, Block block) {
-		if (Options.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.BOUNTIFUL_HARVEST)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -52,7 +68,7 @@ public class FarmingAbilities implements Listener {
 	}
 	
 	public static void tripleHarvest(Player player, Block block) {
-		if (Options.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.TRIPLE_HARVEST)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -71,7 +87,7 @@ public class FarmingAbilities implements Listener {
 	
 	@EventHandler
 	public void geneticist(PlayerItemConsumeEvent event) {
-		if (Options.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.GENETICIST)) {
 				Player player = event.getPlayer();
 				//Check permission
@@ -95,7 +111,7 @@ public class FarmingAbilities implements Listener {
 	}
 
 	public static void scytheMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (Options.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SCYTHE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.farming")) {
@@ -107,5 +123,74 @@ public class FarmingAbilities implements Listener {
 			}
 		}
 	}
-	
+
+	@EventHandler
+	public void applyReplenish(BlockBreakEvent event) {
+		Material blockMat = event.getBlock().getType();
+		if (BlockUtil.isReplenishable(blockMat)) {
+			Player player = event.getPlayer();
+			if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
+				return;
+			}
+			if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.REPLENISH)) {
+				Material mat = player.getInventory().getItemInMainHand().getType();
+				if (mat.name().toUpperCase().contains("HOE")) {
+					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH))) {
+							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.REPLENISH, (int) (MAbility.REPLENISH.getValue(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20), new Replenish());
+						}
+						else {
+							player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH))) + ")");
+						}
+					}
+				}
+
+			}
+		}
+	}
+
+	@EventHandler
+	public void readyReplenish(PlayerInteractEvent event) {
+		AureliumSkills.manaAbilityManager.activator.readyAbility(event, Skill.FARMING, "HOE");
+	}
+
+	@EventHandler
+	public void replenishBreakBlock(BlockBreakEvent event) {
+		//Checks if block broken is ore/stone
+		Material mat = event.getBlock().getType();
+		if (BlockUtil.isReplenishable(mat)) {
+			Player player = event.getPlayer();
+			Block block = event.getBlock();
+			//Checks if ability is already activated
+			if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
+				if (BlockUtil.isFullyGrown(block) && isHoldingHoe(player) && BlockUtil.isReplenishable(mat)) {
+					replenishReplant(block, mat);
+				}
+			}
+		}
+	}
+
+	private void replenishReplant(Block block, Material material) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if (!BlockUtil.isNetherWart(material)) {
+					if (block.getRelative(BlockFace.DOWN).getType().equals(XMaterial.FARMLAND.parseMaterial())) {
+						block.setType(material);
+					}
+				}
+				else {
+					if (block.getRelative(BlockFace.DOWN).getType().equals(XMaterial.SOUL_SAND.parseMaterial())) {
+						block.setType(material);
+					}
+				}
+			}
+		}.runTaskLater(plugin, 4L);
+	}
+
+	private boolean isHoldingHoe(Player player) {
+		return player.getInventory().getItemInMainHand().getType().name().contains("HOE");
+	}
+
 }

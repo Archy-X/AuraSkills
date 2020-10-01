@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.ItemUtils;
@@ -21,9 +22,9 @@ public class ForgingLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onForge(InventoryClickEvent event) {
-		if (Options.isEnabled(Skill.FORGING)) {
+		if (OptionL.isEnabled(Skill.FORGING)) {
 			//Check cancelled
-			if (Options.getCheckCancelled(Skill.FORGING)) {
+			if (OptionL.getBoolean(Option.FORGING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -54,7 +55,7 @@ public class ForgingLeveler implements Listener {
 						return;
 					}
 					//Check creative mode disable
-					if (Options.disableInCreativeMode) {
+					if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 						if (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE)) {
 							return;
 						}
@@ -70,13 +71,13 @@ public class ForgingLeveler implements Listener {
 								if (addedItem != null && baseItem != null) {
 									if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
 										if (ItemUtils.isArmor(baseItem.getType())) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_ARMOR_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_ARMOR_PER_LEVEL));
 										} else if (ItemUtils.isWeapon(baseItem.getType())) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_WEAPON_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_WEAPON_PER_LEVEL));
 										} else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_BOOKS_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_BOOKS_PER_LEVEL));
 										} else {
-											Leveler.addXp(p, s, inventory.getRepairCost() * Options.getXpAmount(Source.COMBINE_TOOL_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_TOOL_PER_LEVEL));
 										}
 									}
 								}

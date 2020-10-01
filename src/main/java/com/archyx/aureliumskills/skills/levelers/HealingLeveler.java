@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.GameMode;
@@ -20,9 +21,9 @@ public class HealingLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onConsume(PlayerItemConsumeEvent event) {
-		if (Options.isEnabled(Skill.HEALING)) {
+		if (OptionL.isEnabled(Skill.HEALING)) {
 			//Check cancelled
-			if (Options.getCheckCancelled(Skill.HEALING)) {
+			if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -42,7 +43,7 @@ public class HealingLeveler implements Listener {
 				return;
 			}
 			//Check creative mode disable
-			if (Options.disableInCreativeMode) {
+			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 				if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
 					return;
 				}
@@ -73,9 +74,9 @@ public class HealingLeveler implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onThrow(PotionSplashEvent event) {
-		if (Options.isEnabled(Skill.HEALING)) {
+		if (OptionL.isEnabled(Skill.HEALING)) {
 			//Check cancelled
-			if (Options.getCheckCancelled(Skill.HEALING)) {
+			if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -92,7 +93,7 @@ public class HealingLeveler implements Listener {
 							return;
 						}
 						//Check creative mode disable
-						if (Options.disableInCreativeMode) {
+						if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 							if (p.getGameMode().equals(GameMode.CREATIVE)) {
 								return;
 							}

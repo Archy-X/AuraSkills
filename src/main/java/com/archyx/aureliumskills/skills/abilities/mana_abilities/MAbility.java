@@ -1,24 +1,27 @@
 package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.abilities.AbilityOptionManager;
 
 public enum MAbility {
 
-    SPEED_MINE(Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20),
+    REPLENISH(Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20),
     TREECAPITATOR(Skill.FORAGING, 5.0, 5.0, 200, -5, 20, 20),
+    SPEED_MINE(Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20),
     ABSORPTION(Skill.DEFENSE, 2.0, 3.0, 200, -5, 20, 20);
 
-    private Skill skill;
-    private double baseValue;
-    private double valuePerLevel;
-    private int baseCooldown;
-    private int cooldownPerLevel;
-    private int baseManaCost;
-    private int manaCostPerLevel;
+    private final Skill skill;
+    private final double baseValue;
+    private final double valuePerLevel;
+    private final int baseCooldown;
+    private final int cooldownPerLevel;
+    private final int baseManaCost;
+    private final int manaCostPerLevel;
 
-    private MAbility(Skill skill, double baseValue, double valuePerLevel, int baseCooldown, int cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
+    MAbility(Skill skill, double baseValue, double valuePerLevel, int baseCooldown, int cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
         this.skill = skill;
         this.baseValue = baseValue;
         this.valuePerLevel = valuePerLevel;
@@ -105,5 +108,17 @@ public enum MAbility {
             return option.getAbilityOption(this).getManaCostPerLevel();
         }
         return manaCostPerLevel;
+    }
+
+    public String getName() {
+        return Lang.getMessage(Message.valueOf(this.name().toUpperCase() + "_NAME"));
+    }
+
+    public String getDescription() {
+        return Lang.getMessage(Message.valueOf(this.name().toUpperCase() + "_DESC"));
+    }
+
+    public String getMiniDesc() {
+        return Lang.getMessage(Message.valueOf(this.name().toUpperCase() + "_MINI_DESC"));
     }
 }

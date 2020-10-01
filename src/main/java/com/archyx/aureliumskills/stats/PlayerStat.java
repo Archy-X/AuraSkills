@@ -95,8 +95,8 @@ public class PlayerStat {
 
 	public void addModifier(StatModifier modifier, boolean reload) {
 		//Removes if already existing
-		if (modifiers.containsKey(modifier.getName())) {
-			StatModifier oldModifier = modifiers.get(modifier.getName());
+		StatModifier oldModifier = modifiers.get(modifier.getName());
+		if (oldModifier != null) {
 			if (oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
 				return;
 			}
@@ -122,9 +122,9 @@ public class PlayerStat {
 	Removes a stat modifier and reloads stats
 	 */
 	public boolean removeModifier(String name) {
-		if (modifiers.containsKey(name)) {
-			//Gets the modifier to remove
-			StatModifier modifier = modifiers.get(name);
+		//Gets the modifier to remove
+		StatModifier modifier = modifiers.get(name);
+		if (modifier != null) {
 			//Changes the stat level
 			setStatLevel(modifier.getStat(), stats.get(modifier.getStat()) - modifier.getValue());
 			//Removes the modifier

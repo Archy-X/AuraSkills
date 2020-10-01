@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -60,6 +61,8 @@ public class SkillLoader {
 							for (int i = 0; i < skill.getAbilities().length; i++) {
 								playerSkill.setAbilityLevel(skill.getAbilities()[i], (level + 3 - i) / 5);
 							}
+
+							playerSkill.setManaAbilityLevel(skill.getManaAbility(), level / 7);
 
 							playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
 							playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
@@ -126,7 +129,7 @@ public class SkillLoader {
 			public void run() {
 				saveSkillData(true);
 			}
-		}.runTaskTimerAsynchronously(plugin, Options.dataSavePeriod, Options.dataSavePeriod);
+		}.runTaskTimerAsynchronously(plugin, OptionL.getInt(Option.DATA_SAVE_PERIOD), OptionL.getInt(Option.DATA_SAVE_PERIOD));
 	}
 	
 }

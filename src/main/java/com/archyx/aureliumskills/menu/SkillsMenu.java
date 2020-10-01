@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.PlayerSkill;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class SkillsMenu implements InventoryProvider{
 
-	private Player player;
+	private final Player player;
 	
 	public SkillsMenu(Player player) {
 		this.player = player;
@@ -32,15 +32,13 @@ public class SkillsMenu implements InventoryProvider{
 
 	public void init(Player player, InventoryContents contents) {
 		contents.fill(ClickableItem.empty(MenuItems.getEmptyPane()));
-		contents.set(SlotPos.of(4, 8), ClickableItem.of(MenuItems.getCloseButton(), e -> {
-			player.closeInventory();
-		}));
+		contents.set(SlotPos.of(4, 8), ClickableItem.of(MenuItems.getCloseButton(), e -> player.closeInventory()));
 		contents.set(SlotPos.of(0, 0), ClickableItem.empty(getSkillsItem()));
 		int pos = 2;
 		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 			PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 			//Gathering Skills
-			if (Options.isEnabled(Skill.FARMING)) {
+			if (OptionL.isEnabled(Skill.FARMING)) {
 				contents.set(SlotPos.of(1, pos), ClickableItem.of(Skill.FARMING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.farming")) {
 						int page = getPage(Skill.FARMING, skill);
@@ -49,7 +47,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.FORAGING)) {
+			if (OptionL.isEnabled(Skill.FORAGING)) {
 				contents.set(SlotPos.of(1, pos), ClickableItem.of(Skill.FORAGING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.foraging")) {
 						int page = getPage(Skill.FORAGING, skill);
@@ -58,7 +56,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.MINING)) {
+			if (OptionL.isEnabled(Skill.MINING)) {
 				contents.set(SlotPos.of(1, pos), ClickableItem.of(Skill.MINING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.mining")) {
 						int page = getPage(Skill.MINING, skill);
@@ -67,7 +65,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.FISHING)) {
+			if (OptionL.isEnabled(Skill.FISHING)) {
 				contents.set(SlotPos.of(1, pos), ClickableItem.of(Skill.FISHING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.fishing")) {
 						int page = getPage(Skill.FISHING, skill);
@@ -76,7 +74,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.EXCAVATION)) {
+			if (OptionL.isEnabled(Skill.EXCAVATION)) {
 				contents.set(SlotPos.of(1, pos), ClickableItem.of(Skill.EXCAVATION.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.excavation")) {
 						int page = getPage(Skill.EXCAVATION, skill);
@@ -86,7 +84,7 @@ public class SkillsMenu implements InventoryProvider{
 			}
 			pos = 2;
 			//Combat Skills
-			if (Options.isEnabled(Skill.ARCHERY)) {
+			if (OptionL.isEnabled(Skill.ARCHERY)) {
 				contents.set(SlotPos.of(2, pos), ClickableItem.of(Skill.ARCHERY.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.archery")) {
 						int page = getPage(Skill.ARCHERY, skill);
@@ -95,7 +93,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.DEFENSE)) {
+			if (OptionL.isEnabled(Skill.DEFENSE)) {
 				contents.set(SlotPos.of(2, pos), ClickableItem.of(Skill.DEFENSE.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.defense")) {
 						int page = getPage(Skill.DEFENSE, skill);
@@ -104,7 +102,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.FIGHTING)) {
+			if (OptionL.isEnabled(Skill.FIGHTING)) {
 				contents.set(SlotPos.of(2, pos), ClickableItem.of(Skill.FIGHTING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.fighting")) {
 						int page = getPage(Skill.FIGHTING, skill);
@@ -113,7 +111,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.ENDURANCE)) {
+			if (OptionL.isEnabled(Skill.ENDURANCE)) {
 				contents.set(SlotPos.of(2, pos), ClickableItem.of(Skill.ENDURANCE.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.endurance")) {
 						int page = getPage(Skill.ENDURANCE, skill);
@@ -122,7 +120,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.AGILITY)) {
+			if (OptionL.isEnabled(Skill.AGILITY)) {
 				contents.set(SlotPos.of(2, pos), ClickableItem.of(Skill.AGILITY.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.agility")) {
 						int page = getPage(Skill.AGILITY, skill);
@@ -132,7 +130,7 @@ public class SkillsMenu implements InventoryProvider{
 			}
 			pos = 2;
 			//Magic Skills
-			if (Options.isEnabled(Skill.ALCHEMY)) {
+			if (OptionL.isEnabled(Skill.ALCHEMY)) {
 				contents.set(SlotPos.of(3, pos), ClickableItem.of(Skill.ALCHEMY.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.alchemy")) {
 						int page = getPage(Skill.ALCHEMY, skill);
@@ -141,7 +139,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.ENCHANTING)) {
+			if (OptionL.isEnabled(Skill.ENCHANTING)) {
 				contents.set(SlotPos.of(3, pos), ClickableItem.of(Skill.ENCHANTING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.enchanting")) {
 						int page = getPage(Skill.ENCHANTING, skill);
@@ -150,7 +148,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.SORCERY)) {
+			if (OptionL.isEnabled(Skill.SORCERY)) {
 				contents.set(SlotPos.of(3, pos), ClickableItem.of(Skill.SORCERY.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.sorcery")) {
 						int page = getPage(Skill.SORCERY, skill);
@@ -159,7 +157,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.HEALING)) {
+			if (OptionL.isEnabled(Skill.HEALING)) {
 				contents.set(SlotPos.of(3, pos), ClickableItem.of(Skill.HEALING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.healing")) {
 						int page = getPage(Skill.HEALING, skill);
@@ -168,7 +166,7 @@ public class SkillsMenu implements InventoryProvider{
 				}));
 				pos++;
 			}
-			if (Options.isEnabled(Skill.FORGING)) {
+			if (OptionL.isEnabled(Skill.FORGING)) {
 				contents.set(SlotPos.of(3, pos), ClickableItem.of(Skill.FORGING.getMenuItem(player, true), e -> {
 					if (player.hasPermission("aureliumskills.forging")) {
 						int page = getPage(Skill.FORGING, skill);

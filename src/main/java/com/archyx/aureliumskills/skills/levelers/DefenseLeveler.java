@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.DefenseAbilities;
@@ -18,9 +18,9 @@ public class DefenseLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onDamage(EntityDamageByEntityEvent event) {
-		if (Options.isEnabled(Skill.DEFENSE)) {
+		if (OptionL.isEnabled(Skill.DEFENSE)) {
 			//Checks cancelled
-			if (Options.getCheckCancelled(Skill.DEFENSE)) {
+			if (OptionL.getBoolean(Option.DEFENSE_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -43,7 +43,7 @@ public class DefenseLeveler implements Listener {
 						return;
 					}
 					//Check creative mode disable
-					if (Options.disableInCreativeMode) {
+					if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 						if (p.getGameMode().equals(GameMode.CREATIVE)) {
 							return;
 						}
@@ -56,22 +56,22 @@ public class DefenseLeveler implements Listener {
 					if (event.getFinalDamage() < p.getHealth()) {
 						//Player Damage
 						if (event.getDamager() instanceof Player) {
-							if (d * Options.getXpAmount(Source.PLAYER_DAMAGE) <= Options.getDoubleOption(Setting.DEFENSE_MAX)) {
-								if (d * Options.getXpAmount(Source.PLAYER_DAMAGE) >= Options.getDoubleOption(Setting.DEFENSE_MIN)) {
+							if (d * OptionL.getXp(Source.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (d * OptionL.getXp(Source.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MAX)) {
 									Leveler.addXp(p, s, d * DefenseAbilities.getModifiedXp(p, Source.PLAYER_DAMAGE));
 								}
 							} else {
-								Leveler.addXp(p, s, DefenseAbilities.getModifiedXp(p, Options.getDoubleOption(Setting.DEFENSE_MAX)));
+								Leveler.addXp(p, s, DefenseAbilities.getModifiedXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 						//Mob damage
 						else {
-							if (d * Options.getXpAmount(Source.MOB_DAMAGE) <= Options.getDoubleOption(Setting.DEFENSE_MAX)) {
-								if (d * Options.getXpAmount(Source.MOB_DAMAGE) >= Options.getDoubleOption(Setting.DEFENSE_MIN)) {
+							if (d * OptionL.getXp(Source.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (d * OptionL.getXp(Source.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
 									Leveler.addXp(p, s, d * DefenseAbilities.getModifiedXp(p, Source.MOB_DAMAGE));
 								}
 							} else {
-								Leveler.addXp(p, s, DefenseAbilities.getModifiedXp(p, Options.getDoubleOption(Setting.DEFENSE_MAX)));
+								Leveler.addXp(p, s, DefenseAbilities.getModifiedXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 					}

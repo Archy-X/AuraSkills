@@ -12,14 +12,15 @@ import java.util.*;
 
 public class ManaAbilityManager implements Listener {
 
-    private Map<UUID, Map<MAbility, Integer>> cooldowns;
-    private Map<UUID, Map<MAbility, Boolean>> ready;
-    private Map<UUID, Map<MAbility, Boolean>> activated;
-    private Map<UUID, Map<MAbility, Integer>> errorTimer;
+    private final Map<UUID, Map<MAbility, Integer>> cooldowns;
+    private final Map<UUID, Map<MAbility, Boolean>> ready;
+    private final Map<UUID, Map<MAbility, Boolean>> activated;
+    private final Map<UUID, Map<MAbility, Integer>> errorTimer;
 
-    private Map<UUID, List<ManaAbility>> activeAbilities;
+    private final Map<UUID, List<ManaAbility>> activeAbilities;
+    public ManaAbilityActivator activator;
 
-    private Plugin plugin;
+    private final Plugin plugin;
 
     public ManaAbilityManager(Plugin plugin) {
         this.plugin = plugin;
@@ -28,6 +29,7 @@ public class ManaAbilityManager implements Listener {
         activated = new HashMap<>();
         errorTimer = new HashMap<>();
         activeAbilities = new HashMap<>();
+        activator = new ManaAbilityActivator(plugin);
     }
 
     public void init() {
@@ -170,19 +172,19 @@ public class ManaAbilityManager implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         UUID id = event.getPlayer().getUniqueId();
         if (!cooldowns.containsKey(id)) {
-            cooldowns.put(id, new HashMap<MAbility, Integer>());
+            cooldowns.put(id, new HashMap<>());
         }
         if (!ready.containsKey(id)) {
-            ready.put(id, new HashMap<MAbility, Boolean>());
+            ready.put(id, new HashMap<>());
         }
         if (!activated.containsKey(id)) {
-            activated.put(id, new HashMap<MAbility, Boolean>());
+            activated.put(id, new HashMap<>());
         }
         if (!errorTimer.containsKey(id)) {
-            errorTimer.put(id, new HashMap<MAbility, Integer>());
+            errorTimer.put(id, new HashMap<>());
         }
         if (!activeAbilities.containsKey(id)) {
-            activeAbilities.put(id, new LinkedList<ManaAbility>());
+            activeAbilities.put(id, new LinkedList<>());
         }
     }
 

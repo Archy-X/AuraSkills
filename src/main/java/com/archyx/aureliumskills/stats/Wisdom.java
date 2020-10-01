@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ public class Wisdom implements Listener {
 		}
 		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 			PlayerStat stat = SkillLoader.playerStats.get(player.getUniqueId());
-			event.setAmount((int) (event.getAmount() * (1 + (stat.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.EXPERIENCE_MODIFIER)))));
+			event.setAmount((int) (event.getAmount() * (1 + (stat.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER)))));
 		}
 	}
 	
@@ -52,8 +52,8 @@ public class Wisdom implements Listener {
 		}
 		if (stat != null) {
 			AnvilInventory anvil = event.getInventory();
-			if (anvil.getRepairCost() - (int) (stat.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.ANVIL_COST_MODIFIER)) > 0) {
-				anvil.setRepairCost(anvil.getRepairCost() - (int) (stat.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.ANVIL_COST_MODIFIER)));
+			if (anvil.getRepairCost() - (int) (stat.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) > 0) {
+				anvil.setRepairCost(anvil.getRepairCost() - (int) (stat.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)));
 			}
 			else {
 				anvil.setRepairCost(1);

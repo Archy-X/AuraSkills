@@ -1,17 +1,20 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.SpeedMine;
+import com.archyx.aureliumskills.stats.PlayerStat;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -43,7 +46,7 @@ public class MiningAbilities implements Listener {
 	
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = Options.getXpAmount(source);
+		double output = OptionL.getXp(source);
 		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.MINER)) {
 			double modifier = 1;
 			modifier += Ability.MINER.getValue(skill.getAbilityLevel(Ability.MINER)) / 100;
@@ -53,7 +56,7 @@ public class MiningAbilities implements Listener {
 	}
 	
 	public static void luckyMiner(Player player, Block block) {
-		if (Options.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUCKY_MINER)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -81,7 +84,7 @@ public class MiningAbilities implements Listener {
 	}
 
 	public static void pickMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (Options.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.PICK_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.mining")) {
@@ -96,7 +99,7 @@ public class MiningAbilities implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void hardenedArmor(PlayerItemDamageEvent event) {
-		if (Options.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.HARDENED_ARMOR)) {
 				Player player = event.getPlayer();
 				//Check disabled worlds
@@ -120,7 +123,25 @@ public class MiningAbilities implements Listener {
 			}
 		}
 	}
-	
+
+	public static void applyStamina(Player player, PlayerStat playerStat) {
+		if (OptionL.isEnabled(Skill.MINING)) {
+			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.STAMINA)) {
+				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+				if (playerSkill != null) {
+					if (playerSkill.getAbilityLevel(Ability.STAMINA) > 0) {
+						playerStat.addModifier(new StatModifier("mining-stamina", Stat.TOUGHNESS, (int) Ability.STAMINA.getValue(playerSkill.getAbilityLevel(Ability.STAMINA))));
+					}
+				}
+			}
+		}
+	}
+
+	public static void removeStamina(PlayerStat playerStat) {
+		playerStat.removeModifier("mining-stamina");
+	}
+
+
 	@EventHandler
 	public void applySpeedMine(BlockBreakEvent event) {
 		//Checks if block broken is ore/stone
@@ -142,11 +163,11 @@ public class MiningAbilities implements Listener {
 				if (mat.name().toUpperCase().contains("PICKAXE")) {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.SPEED_MINE.getManaCost(skill.getAbilityLevel(Ability.SPEED_MINE))) {
-							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SPEED_MINE, (int) (Ability.SPEED_MINE.getValue(skill.getAbilityLevel(Ability.SPEED_MINE)) * 20), new SpeedMine());
+						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.SPEED_MINE.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE))) {
+							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SPEED_MINE, (int) (MAbility.SPEED_MINE.getValue(skill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), new SpeedMine());
 						}
 						else {
-							player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.SPEED_MINE.getManaCost(skill.getAbilityLevel(Ability.SPEED_MINE))) + ")");
+							player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.SPEED_MINE.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE))) + ")");
 						}
 					}
 				}
@@ -157,8 +178,8 @@ public class MiningAbilities implements Listener {
 
 	@EventHandler
 	public void readySpeedMine(PlayerInteractEvent event) {
-		if (Options.isEnabled(Skill.MINING)) {
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SPEED_MINE)) {
+		if (OptionL.isEnabled(Skill.MINING)) {
+			if (AureliumSkills.abilityOptionManager.isEnabled(MAbility.SPEED_MINE)) {
 				if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
 					if (mat.name().toUpperCase().contains("PICKAXE")) {
@@ -172,7 +193,7 @@ public class MiningAbilities implements Listener {
 							return;
 						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							if (SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.SPEED_MINE) > 0) {
+							if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(MAbility.SPEED_MINE) > 0) {
 								//Checks if speed mine is already activated
 								if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
 									return;

@@ -1,12 +1,13 @@
 package com.archyx.aureliumskills.util;
 
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 
 import java.util.TreeMap;
 
 public class RomanNumber {
 	
-	private final static TreeMap<Integer, String> map = new TreeMap<Integer, String>();
+	private final static TreeMap<Integer, String> map = new TreeMap<>();
 
     static {
         map.put(1000000000, "Ⓜ");
@@ -42,9 +43,9 @@ public class RomanNumber {
         map.put(1, "I");
     }
 
-    public final static String toRoman(int number) {
+    public static String toRoman(int number) {
     	if (number > 0) {
-	    	if (Options.enable_roman_numerals) {
+	    	if (OptionL.getBoolean(Option.ENABLE_ROMAN_NUMERALS)) {
 		        int l =  map.floorKey(number);
 		        if ( number == l ) {
 		            return map.get(number);

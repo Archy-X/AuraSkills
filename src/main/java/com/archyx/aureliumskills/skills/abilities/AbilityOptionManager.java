@@ -83,9 +83,7 @@ public class AbilityOptionManager {
                         int cooldownPerLevel = config.getInt("mana-abilities." + manaAbility + ".cooldown-per-level");
                         int manaCost = config.getInt("mana-abilities." + manaAbility + ".mana-cost");
                         int manaCostPerLevel = config.getInt("mana-abilities." + manaAbility + ".mana-cost-per-level");
-                        AbilityOption abilityOption = new AbilityOption(enabled, baseValue, valuePerLevel);
-                        abilityOptions.put(Ability.valueOf(manaAbility.toUpperCase().replace("-", "_")), abilityOption);
-                        ManaAbilityOption option = new ManaAbilityOption(baseValue, valuePerLevel, cooldown, cooldownPerLevel, manaCost, manaCostPerLevel);
+                        ManaAbilityOption option = new ManaAbilityOption(enabled, baseValue, valuePerLevel, cooldown, cooldownPerLevel, manaCost, manaCostPerLevel);
                         manaAbilityOptions.put(MAbility.valueOf(manaAbility.toUpperCase().replace("-", "_")), option);
                         amountLoaded++;
                     }
@@ -117,6 +115,13 @@ public class AbilityOptionManager {
     public boolean isEnabled(Ability ability) {
         if (abilityOptions.containsKey(ability)) {
             return abilityOptions.get(ability).isEnabled();
+        }
+        return true;
+    }
+
+    public boolean isEnabled(MAbility mAbility) {
+        if (manaAbilityOptions.containsKey(mAbility)) {
+            return manaAbilityOptions.get(mAbility).isEnabled();
         }
         return true;
     }

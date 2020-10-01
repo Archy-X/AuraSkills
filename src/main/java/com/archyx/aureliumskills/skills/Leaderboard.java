@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.skills;
 
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -77,7 +78,7 @@ public class Leaderboard {
             public void run() {
                 updateLeaderboards(true);
             }
-        }.runTaskTimerAsynchronously(plugin, Options.leaderboardUpdateDelay, Options.leaderboardUpdatePeriod);
+        }.runTaskTimerAsynchronously(plugin, OptionL.getInt(Option.LEADERBOARDS_UPDATE_DELAY), OptionL.getInt(Option.LEADERBOARDS_UPDATE_PERIOD));
     }
 
     private void clearLeaderboards() {

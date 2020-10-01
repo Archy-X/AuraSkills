@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

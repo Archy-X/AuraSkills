@@ -4,7 +4,8 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.menu.SkillsMenu;
@@ -29,13 +30,11 @@ import java.util.List;
 public class SkillsCommand extends BaseCommand {
  
 	private final AureliumSkills plugin;
-	private final Options options;
 	private final Lang lang;
 	private final Leaderboard leaderboard;
 
 	public SkillsCommand(AureliumSkills plugin) {
 		this.plugin = plugin;
-		options = new Options(plugin);
 		lang = new Lang(plugin);
 		leaderboard = AureliumSkills.leaderboard;
 	}
@@ -52,7 +51,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.xp.add")
 	@Description("Adds skill XP to a player for a certain skill.")
 	public void onXpAdd(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
-		if (Options.isEnabled(skill)) {
+		if (OptionL.isEnabled(skill)) {
 			Leveler.addXp(player, skill, amount);
 			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_ADD).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
 		}
@@ -66,7 +65,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.xp.set")
 	@Description("Sets a player's skill XP for a certain skill to an amount.")
 	public void onXpSet(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
-		if (Options.isEnabled(skill)) {
+		if (OptionL.isEnabled(skill)) {
 			Leveler.setXp(player, skill, amount);
 			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_SET).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
 		}
@@ -80,7 +79,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.xp.remove")
 	@Description("Removes skill XP from a player in a certain skill.")
 	public void onXpRemove(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
-		if (Options.isEnabled(skill)) {
+		if (OptionL.isEnabled(skill)) {
 			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 				if (playerSkill.getXp(skill) - amount >= 0) {
@@ -177,7 +176,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.save")
 	@Description("Saves skill data")
 	public void onSave(CommandSender sender) {
-		if (Options.mySqlEnabled) {
+		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (!MySqlSupport.isSaving) {
 				new BukkitRunnable() {
 					@Override
@@ -236,7 +235,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.abtoggle")
 	@Description("Toggle your own action bar")
 	public void onActionBarToggle(Player player) {
-		if (Options.enable_action_bar) {
+		if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 			if (ActionBar.actionBarDisabled.contains(player.getUniqueId())) {
 				ActionBar.actionBarDisabled.remove(player.getUniqueId());
 				player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Your skills action bar has been enabled");
@@ -287,7 +286,7 @@ public class SkillsCommand extends BaseCommand {
 	public void reload(CommandSender sender) {
 		plugin.reloadConfig();
 		plugin.saveDefaultConfig();
-		options.loadConfig();
+		AureliumSkills.optionLoader.loadOptions();
 		lang.loadDefaultMessages();
 		lang.loadLanguages();
 		AureliumSkills.abilityOptionManager.loadOptions();
@@ -309,7 +308,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.skill.setlevel")
 	@Description("Sets a specific skill to a level for a player.")
 	public void onSkillSetlevel(CommandSender sender, @Flags("other") Player player, Skill skill, int level) {
-		if (Options.isEnabled(skill)) {
+		if (OptionL.isEnabled(skill)) {
 			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 				if (level > 0) {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -356,7 +355,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Resets all skills or a specific skill to level 1 for a player.")
 	public void onSkillReset(CommandSender sender, @Flags("other") Player player, @Optional Skill skill) {
 		if (skill != null) {
-			if (Options.isEnabled(skill)) {
+			if (OptionL.isEnabled(skill)) {
 				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					playerSkill.setSkillLevel(skill, 1);

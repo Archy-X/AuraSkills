@@ -1,11 +1,12 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.FishingAbilities;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -22,9 +23,9 @@ public class FishingLeveler implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onFish(PlayerFishEvent event) {
-		if (Options.isEnabled(Skill.FISHING)) {
+		if (OptionL.isEnabled(Skill.FISHING)) {
 			//Check cancelled
-			if (Options.getCheckCancelled(Skill.FISHING)) {
+			if (OptionL.getBoolean(Option.FISHING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -46,7 +47,7 @@ public class FishingLeveler implements Listener {
 					return;
 				}
 				//Check creative mode disable
-				if (Options.disableInCreativeMode) {
+				if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 					if (p.getGameMode().equals(GameMode.CREATIVE)) {
 						return;
 					}

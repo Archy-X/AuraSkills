@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.magic.ManaManager;
@@ -36,7 +36,7 @@ public class ActionBar {
 	public void startUpdateActionBar() {
 		mana = AureliumSkills.manaManager;
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-			if (Options.enable_action_bar) {
+			if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
@@ -48,13 +48,13 @@ public class ActionBar {
 								if (!isGainingXp.get(player.getUniqueId())) {
 									AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 									if (attribute != null) {
-										if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-											player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) +
-													"                " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
-										} else if (Options.enable_health_on_action_bar) {
-											player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP)));
-										} else if (Options.enable_mana_on_action_bar) {
-											player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Options.mana_text_color + "" + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
+										if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR) && OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
+											player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) +
+													"                " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
+										} else if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR)) {
+											player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP)));
+										} else if (OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
+											player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(OptionL.getColor(Option.MANA_TEXT_COLOR) + "" + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA)));
 										}
 									}
 								}
@@ -65,9 +65,9 @@ public class ActionBar {
 					}
 				}
 			}
-		}, 0L, Options.actionBarUpdatePeriod);
+		}, 0L, OptionL.getInt(Option.ACTION_BAR_UPDATE_PERIOD));
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-			if (Options.enable_action_bar) {
+			if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if (timer.containsKey(player.getUniqueId())) {
 						if (timer.get(player.getUniqueId()) != 0) {
@@ -84,7 +84,7 @@ public class ActionBar {
 	public void startUpdatingActionBarProtocolLib() {
 		mana = AureliumSkills.manaManager;
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-			if (Options.enable_action_bar) {
+			if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
@@ -96,13 +96,13 @@ public class ActionBar {
 								if (!isGainingXp.get(player.getUniqueId())) {
 									AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 									if (attribute != null) {
-										if (Options.enable_health_on_action_bar && Options.enable_mana_on_action_bar) {
-											ProtocolUtil.sendActionBar(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) +
-													"                " + Options.mana_text_color + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
-										} else if (Options.enable_health_on_action_bar) {
-											ProtocolUtil.sendActionBar(player, Options.health_text_color + "" + (int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP));
-										} else if (Options.enable_mana_on_action_bar) {
-											ProtocolUtil.sendActionBar(player, Options.mana_text_color + "" + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+										if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR) && OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
+											ProtocolUtil.sendActionBar(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) +
+													"                " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+										} else if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR)) {
+											ProtocolUtil.sendActionBar(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP));
+										} else if (OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
+											ProtocolUtil.sendActionBar(player, OptionL.getColor(Option.MANA_TEXT_COLOR) + "" + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
 										}
 									}
 								}
@@ -113,9 +113,9 @@ public class ActionBar {
 					}
 				}
 			}
-		}, 0L, Options.actionBarUpdatePeriod);
+		}, 0L, OptionL.getInt(Option.ACTION_BAR_UPDATE_PERIOD));
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-			if (Options.enable_action_bar) {
+			if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if (timer.containsKey(player.getUniqueId())) {
 						if (timer.get(player.getUniqueId()) != 0) {

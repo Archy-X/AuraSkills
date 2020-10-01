@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.util;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -30,12 +31,11 @@ public class MySqlSupport {
     public MySqlSupport(Plugin plugin, AureliumSkills aureliumSkills) {
         this.plugin = plugin;
         this.aureliumSkills = aureliumSkills;
-        Map<String, String> values = Options.getMySqlValues();
-        host = values.get("host");
-        database = values.get("database");
-        username = values.get("username");
-        password = values.get("password");
-        port = Integer.parseInt(values.get("port"));
+        host = OptionL.getString(Option.MYSQL_HOST);
+        database = OptionL.getString(Option.MYSQL_DATABASE);
+        username = OptionL.getString(Option.MYSQL_USERNAME);
+        password = OptionL.getString(Option.MYSQL_PASSWORD);
+        port = OptionL.getInt(Option.MYSQL_PORT);
         isSaving = false;
         updateString = "UPDATE " + database + ".SkillData SET " +
                 "NAME = " + "?" +
@@ -152,6 +152,7 @@ public class MySqlSupport {
                     for (int i = 0; i < skill.getAbilities().length; i++) {
                         playerSkill.setAbilityLevel(skill.getAbilities()[i], (level + 3 - i) / 5);
                     }
+                    playerSkill.setManaAbilityLevel(skill.getManaAbility(), level / 7);
                     //Calculates and sets stat levels
                     playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
                     playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
@@ -266,7 +267,7 @@ public class MySqlSupport {
             }
             if (!silent) {
                 long end = System.currentTimeMillis();
-                Bukkit.getConsoleSender().sendMessage("[AureliumSkills] Skill Data successfully saved in " +  (end - start) + " ms) [" + numUpdated + " Updated, " + numInserted + " Inserted]");
+                Bukkit.getConsoleSender().sendMessage("[AureliumSkills] Skill Data successfully saved in " +  (end - start) + " ms [" + numUpdated + " Updated, " + numInserted + " Inserted]");
             }
             isSaving = false;
         }
@@ -332,6 +333,6 @@ public class MySqlSupport {
                     saveData(true);
                 }
             }
-        }.runTaskTimerAsynchronously(plugin, Options.dataSavePeriod, Options.dataSavePeriod);
+        }.runTaskTimerAsynchronously(plugin, OptionL.getInt(Option.DATA_SAVE_PERIOD), OptionL.getInt(Option.DATA_SAVE_PERIOD));
     }
 }

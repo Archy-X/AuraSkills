@@ -506,6 +506,12 @@ messages:
       EN: '&aAbility Unlock! &6&l_ &7has been unlocked'
     ability-level-up:
       EN: '&aAbility Level Up! &6&l_ &7is now level &6$'
+    mana-ability-unlock:
+      EN: Mana Ability Unlock
+    mana-ability-unlock-message:
+      EN: '&dMana Ability Unlock! &9&l_ &7has been unlocked'
+    mana-ability-level-up:
+      EN: '&dMana Ability Level Up! &9&l_ &7is now level &9$'
     farming:
       bountiful-harvest:
         name:
@@ -572,6 +578,21 @@ messages:
           EN: _% 3x Drops
           PL: _% 3x Dropow
           VN: _% Thu hoạch x3
+      replenish:
+        name:
+          EN: Replenish
+        desc:
+          EN: Replants crops automatically when harvesting for _ seconds [Right Click to Activate]
+        mini-desc:
+          EN: _s Duration
+        raise:
+          EN: You raise your hoe
+        lower:
+          EN: You lower your hoe
+        activated:
+          EN: Replenish activated!
+        worn-off:
+          EN: Replenish has worn off
     foraging:
       lumberjack:
         name:
@@ -612,6 +633,13 @@ messages:
           EN: +_% Axe Damage
           PL: +_% Obrazen
           VN: +_% Sát thương
+      valor:
+        name:
+          EN: Valor
+        desc:
+          EN: Grants +_ Strength while holding an axe
+        mini-desc:
+          EN: +_ Strength
       treecapitator:
         name:
           EN: Treecapitator
@@ -690,6 +718,13 @@ messages:
           EN: +_% Pickaxe Damage
           PL: +_% Obrazen
           VN: +_% Sát thương
+      stamina:
+        name:
+          EN: Stamina
+        desc:
+          EN: Grants +_ Toughness while holding a pickaxe
+        mini-desc:
+          EN: +_ Toughness
       speed-mine:
         name:
           EN: Speed Mine
@@ -937,6 +972,21 @@ messages:
           EN: _% chance to negate a harmful potion effect being applied.
         mini-desc:
           EN: _% No Debuff
+      absorption:
+        name:
+          EN: Absorption
+        desc:
+          EN: Heal _% of the damage you take for _ seconds
+        mini-desc:
+          EN: _ Duration
+        raise:
+          EN: You raise your shield
+        lower:
+          EN: You lower your shield
+        activated:
+          EN: Absorption activated!
+        worn-off:
+          EN: Absorption has worn off
     fighting:
       crit-damage:
         name:

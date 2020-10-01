@@ -1,17 +1,20 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.Treecapitator;
+import com.archyx.aureliumskills.stats.PlayerStat;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -46,7 +49,7 @@ public class ForagingAbilities implements Listener {
 	
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = Options.getXpAmount(source);
+		double output = OptionL.getXp(source);
 		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FORAGER)) {
 			double modifier = 1;
 			modifier += Ability.FORAGER.getValue(skill.getAbilityLevel(Ability.FORAGER)) / 100;
@@ -56,7 +59,7 @@ public class ForagingAbilities implements Listener {
 	}
 	
 	public static void lumberjack(Player player, Block block) {
-		if (Options.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUMBERJACK)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -73,7 +76,7 @@ public class ForagingAbilities implements Listener {
 	}
 
 	public static void axeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (Options.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.AXE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.foraging")) {
@@ -88,7 +91,7 @@ public class ForagingAbilities implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void shredder(PlayerItemDamageEvent event) {
-		if (Options.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SHREDDER)) {
 				if (!event.isCancelled()) {
 					//If is item taking durabilty damage is armor
@@ -131,7 +134,25 @@ public class ForagingAbilities implements Listener {
 			}
 		}
 	}
-	
+
+	public static void applyValor(Player player, PlayerStat playerStat) {
+		if (OptionL.isEnabled(Skill.FORAGING)) {
+			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.VALOR)) {
+				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+				if (playerSkill != null) {
+					if (playerSkill.getAbilityLevel(Ability.VALOR) > 0) {
+						playerStat.addModifier(new StatModifier("foraging-valor", Stat.STRENGTH, (int) Ability.VALOR.getValue(playerSkill.getAbilityLevel(Ability.VALOR))));
+					}
+				}
+			}
+		}
+	}
+
+	public static void removeValor(PlayerStat playerStat) {
+		playerStat.removeModifier("foraging-valor");
+	}
+
+
 	@EventHandler(priority = EventPriority.HIGH)
 	public void applyTreecapitator(BlockBreakEvent event) {
 		if (!event.isCancelled()) {
@@ -151,12 +172,12 @@ public class ForagingAbilities implements Listener {
 					if (mat.name().toUpperCase().contains("_AXE")) {
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-							if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.TREECAPITATOR.getManaCost(skill.getAbilityLevel(Ability.TREECAPITATOR))) {
-								AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.TREECAPITATOR, (int) (MAbility.TREECAPITATOR.getValue(skill.getAbilityLevel(Ability.TREECAPITATOR)) * 20), new Treecapitator());
+							if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR))) {
+								AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.TREECAPITATOR, (int) (MAbility.TREECAPITATOR.getValue(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)) * 20), new Treecapitator());
 								treeCapitator(event);
 							}
 							else {
-								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.TREECAPITATOR.getManaCost(skill.getAbilityLevel(Ability.TREECAPITATOR))) + ")");
+								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR))) + ")");
 							}
 						}
 					}
@@ -240,8 +261,8 @@ public class ForagingAbilities implements Listener {
 	
 	@EventHandler
 	public void readyTreecapitator(PlayerInteractEvent event) {
-		if (Options.isEnabled(Skill.FARMING)) {
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.TREECAPITATOR)) {
+		if (OptionL.isEnabled(Skill.FARMING)) {
+			if (AureliumSkills.abilityOptionManager.isEnabled(MAbility.TREECAPITATOR)) {
 				if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
 					if (mat.name().toUpperCase().contains("_AXE")) {
@@ -255,7 +276,7 @@ public class ForagingAbilities implements Listener {
 							return;
 						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							if (SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.TREECAPITATOR) > 0) {
+							if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(MAbility.TREECAPITATOR) > 0) {
 								//Checks if speed mine is already activated
 								if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 									return;

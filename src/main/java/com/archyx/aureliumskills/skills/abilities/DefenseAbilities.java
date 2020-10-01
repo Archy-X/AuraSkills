@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -31,7 +31,7 @@ public class DefenseAbilities implements Listener {
 
     public static double getModifiedXp(Player player, Source source) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = Options.getXpAmount(source);
+        double output = OptionL.getXp(source);
         if (AureliumSkills.abilityOptionManager.isEnabled(Ability.DEFENDER)) {
             double modifier = 1;
             modifier += Ability.DEFENDER.getValue(skill.getAbilityLevel(Ability.DEFENDER)) / 100;
@@ -82,7 +82,7 @@ public class DefenseAbilities implements Listener {
 
     @EventHandler
     public void noDebuff(PotionSplashEvent event) {
-        if (Options.isEnabled(Skill.DEFENSE)) {
+        if (OptionL.isEnabled(Skill.DEFENSE)) {
             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.NO_DEBUFF)) {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
@@ -118,7 +118,7 @@ public class DefenseAbilities implements Listener {
         }
     }
 
-    public void noDebuffFire(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, LivingEntity entity) {
+    public void noDebuffFire(PlayerSkill playerSkill, Player player, LivingEntity entity) {
         if (entity.getEquipment() != null) {
             if (entity.getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.FIRE_ASPECT) > 0) {
                 double chance = Ability.NO_DEBUFF.getValue(playerSkill.getAbilityLevel(Ability.NO_DEBUFF)) / 100;
@@ -136,7 +136,7 @@ public class DefenseAbilities implements Listener {
 
     @EventHandler
     public void defenseListener(EntityDamageByEntityEvent event) {
-        if (Options.isEnabled(Skill.DEFENSE)) {
+        if (OptionL.isEnabled(Skill.DEFENSE)) {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
@@ -154,7 +154,7 @@ public class DefenseAbilities implements Listener {
                         if (options.isEnabled(Ability.NO_DEBUFF)) {
                             if (event.getDamager() instanceof LivingEntity) {
                                 LivingEntity entity = (LivingEntity) event.getDamager();
-                                noDebuffFire(event, playerSkill, player, entity);
+                                noDebuffFire(playerSkill, player, entity);
                             }
                         }
                         if (options.isEnabled(Ability.IMMUNITY)) {

@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.skills.abilities;
 
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.PlayerSkill;
@@ -37,7 +37,7 @@ public class FightingAbilities implements Listener {
 
     public static double getModifiedXp(Player player, Source source) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = Options.getXpAmount(source);
+        double output = OptionL.getXp(source);
         if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FIGHTER)) {
             double modifier = 1;
             modifier += Ability.FIGHTER.getValue(skill.getAbilityLevel(Ability.FIGHTER)) / 100;
@@ -47,7 +47,7 @@ public class FightingAbilities implements Listener {
     }
 
     public static void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-        if (Options.isEnabled(Skill.FIGHTING)) {
+        if (OptionL.isEnabled(Skill.FIGHTING)) {
             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SWORD_MASTER)) {
                 if (!player.hasPermission("aureliumskills.fighting")) {
                     return;
@@ -62,7 +62,7 @@ public class FightingAbilities implements Listener {
     }
 
     public static void firstStrike(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, Plugin plugin) {
-        if (Options.isEnabled(Skill.FIGHTING)) {
+        if (OptionL.isEnabled(Skill.FIGHTING)) {
             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FIRST_STRIKE)) {
                 if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
                     if (playerSkill.getAbilityLevel(Ability.FIRST_STRIKE) > 0) {
@@ -146,7 +146,7 @@ public class FightingAbilities implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void fightingListener(EntityDamageByEntityEvent event) {
-        if (Options.isEnabled(Skill.FIGHTING)) {
+        if (OptionL.isEnabled(Skill.FIGHTING)) {
             if (!event.isCancelled()) {
                 if (event.getDamager() instanceof Player) {
                     Player player = (Player) event.getDamager();

@@ -1,13 +1,15 @@
 package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.abilities.Ability;
+import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.RomanNumber;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -27,35 +29,50 @@ import java.util.List;
 public enum Skill {
 
 	FARMING(Stat.HEALTH, Stat.STRENGTH, "Harvest crops to earn Farming XP", Material.DIAMOND_HOE, 
-			new Ability[] {Ability.BOUNTIFUL_HARVEST, Ability.FARMER, Ability.SCYTHE_MASTER, Ability.GENETICIST, Ability.TRIPLE_HARVEST}),
+			new Ability[] {Ability.BOUNTIFUL_HARVEST, Ability.FARMER, Ability.SCYTHE_MASTER, Ability.GENETICIST, Ability.TRIPLE_HARVEST},
+			MAbility.REPLENISH),
 	FORAGING(Stat.STRENGTH, Stat.TOUGHNESS, "Cut trees to earn Foraging XP", Material.STONE_AXE, 
-			new Ability[] {Ability.LUMBERJACK, Ability.FORAGER, Ability.AXE_MASTER, Ability.TREECAPITATOR, Ability.SHREDDER}),
+			new Ability[] {Ability.LUMBERJACK, Ability.FORAGER, Ability.AXE_MASTER, Ability.VALOR, Ability.SHREDDER},
+			MAbility.TREECAPITATOR),
 	MINING(Stat.TOUGHNESS, Stat.LUCK, "Mine stone and ores to earn Mining XP", Material.IRON_PICKAXE, 
-			new Ability[] {Ability.LUCKY_MINER, Ability.MINER, Ability.PICK_MASTER, Ability.SPEED_MINE, Ability.HARDENED_ARMOR}),
+			new Ability[] {Ability.LUCKY_MINER, Ability.MINER, Ability.PICK_MASTER, Ability.STAMINA, Ability.HARDENED_ARMOR},
+			MAbility.SPEED_MINE),
 	FISHING(Stat.LUCK, Stat.HEALTH, "Catch fish to earn Fishing XP", Material.FISHING_ROD, 
-			new Ability[] {Ability.LUCKY_CATCH, Ability.FISHER, Ability.TREASURE_HUNTER, Ability.GRAPPLER, Ability.EPIC_CATCH}),
+			new Ability[] {Ability.LUCKY_CATCH, Ability.FISHER, Ability.TREASURE_HUNTER, Ability.GRAPPLER, Ability.EPIC_CATCH},
+			MAbility.ABSORPTION),
 	EXCAVATION(Stat.REGENERATION, Stat.LUCK, "Dig with a shovel to earn Excavation XP", XMaterial.GOLDEN_SHOVEL.parseMaterial(),
-			new Ability[] {Ability.METAL_DETECTOR, Ability.EXCAVATOR, Ability.SPADE_MASTER, Ability.BIGGER_SCOOP, Ability.LUCKY_SPADES}),
+			new Ability[] {Ability.METAL_DETECTOR, Ability.EXCAVATOR, Ability.SPADE_MASTER, Ability.BIGGER_SCOOP, Ability.LUCKY_SPADES},
+			MAbility.ABSORPTION),
 	ARCHERY(Stat.LUCK, Stat.STRENGTH, "Shoot mobs and players with a bow to earn Archery XP", Material.BOW,
-			new Ability[] {Ability.CRIT_CHANCE, Ability.ARCHER, Ability.BOW_MASTER, Ability.PIERCING, Ability.STUN}),
+			new Ability[] {Ability.CRIT_CHANCE, Ability.ARCHER, Ability.BOW_MASTER, Ability.PIERCING, Ability.STUN},
+			MAbility.ABSORPTION),
 	DEFENSE(Stat.TOUGHNESS, Stat.HEALTH, "Take damage from entities to earn Defense XP", Material.CHAINMAIL_CHESTPLATE,
-			new Ability[] {Ability.SHIELDING, Ability.DEFENDER, Ability.MOB_MASTER, Ability.IMMUNITY, Ability.NO_DEBUFF}),
+			new Ability[] {Ability.SHIELDING, Ability.DEFENDER, Ability.MOB_MASTER, Ability.IMMUNITY, Ability.NO_DEBUFF},
+			MAbility.ABSORPTION),
 	FIGHTING(Stat.STRENGTH, Stat.REGENERATION, "Fight mobs with melee weapons to earn Fighting XP", Material.DIAMOND_SWORD,
-			new Ability[] {Ability.CRIT_DAMAGE, Ability.FIGHTER, Ability.SWORD_MASTER, Ability.FIRST_STRIKE, Ability.BLEED}),
+			new Ability[] {Ability.CRIT_DAMAGE, Ability.FIGHTER, Ability.SWORD_MASTER, Ability.FIRST_STRIKE, Ability.BLEED},
+			MAbility.ABSORPTION),
 	ENDURANCE(Stat.REGENERATION, Stat.TOUGHNESS, "Walk and run to earn Endurance XP", Material.GOLDEN_APPLE,
-			new Ability[] {Ability.ANTI_HUNGER, Ability.RUNNER, Ability.GOLDEN_HEAL, Ability.RECOVERY, Ability.MEAL_STEAL}),
+			new Ability[] {Ability.ANTI_HUNGER, Ability.RUNNER, Ability.GOLDEN_HEAL, Ability.RECOVERY, Ability.MEAL_STEAL},
+			MAbility.ABSORPTION),
 	AGILITY(Stat.WISDOM, Stat.REGENERATION, "Jump and take fall damage to earn Agility XP", Material.FEATHER,
-			new Ability[] {Ability.JUMPER}),
+			new Ability[] {Ability.JUMPER},
+			MAbility.ABSORPTION),
 	ALCHEMY(Stat.HEALTH, Stat.WISDOM, "Brew potions to earn Alchemy XP", XMaterial.POTION.parseMaterial(),
-			new Ability[] {Ability.BREWER}),
+			new Ability[] {Ability.BREWER},
+			MAbility.ABSORPTION),
 	ENCHANTING(Stat.WISDOM, Stat.LUCK, "Enchant items and books to earn Enchanting XP", XMaterial.ENCHANTING_TABLE.parseMaterial(),
-			new Ability[] {Ability.ENCHANTER}),
+			new Ability[] {Ability.ENCHANTER},
+			MAbility.ABSORPTION),
 	SORCERY(Stat.STRENGTH, Stat.WISDOM, "Cast spells to earn Sorcery XP", Material.BLAZE_ROD,
-			new Ability[] {Ability.SORCERER}),
+			new Ability[] {Ability.SORCERER},
+			MAbility.ABSORPTION),
 	HEALING(Stat.REGENERATION, Stat.HEALTH, "Drink and splash potions to earn Healing XP", Material.SPLASH_POTION,
-			new Ability[] {Ability.HEALER}),
+			new Ability[] {Ability.HEALER},
+			MAbility.ABSORPTION),
 	FORGING(Stat.TOUGHNESS, Stat.WISDOM, "Combine and apply books in an anvil to earn Forging XP", Material.ANVIL,
-			new Ability[] {Ability.FORGER});
+			new Ability[] {Ability.FORGER},
+			MAbility.ABSORPTION);
 	
 	private final Stat primaryStat;
 	private final Stat secondaryStat;
@@ -63,14 +80,17 @@ public enum Skill {
 	private final String name;
 	private final Material material;
 	private final Ability[] abilities;
+	private final MAbility manaAbility;
+	private final NumberFormat nf = new DecimalFormat("#.#");
 	
-	Skill(Stat primaryStat, Stat secondaryStat, String description, Material material, Ability[] abilities) {
+	Skill(Stat primaryStat, Stat secondaryStat, String description, Material material, Ability[] abilities, MAbility manaAbility) {
 		this.name = this.toString().toLowerCase();
 		this.primaryStat = primaryStat;
 		this.secondaryStat = secondaryStat;
 		this.description = description;
 		this.material = material;
 		this.abilities = abilities;
+		this.manaAbility = manaAbility;
 	}
 	
 	public ItemStack getMenuItem(Player player, boolean showClickText) {
@@ -78,7 +98,7 @@ public enum Skill {
 		int level = skill.getSkillLevel(this);
 		double xp = skill.getXp(this);
 		double xpToNext;
-		if (Leveler.levelReqs.size() > level - 1) {
+		if (Leveler.levelReqs.size() > level - 1 && level < OptionL.getMaxLevel(this)) {
 			xpToNext = Leveler.levelReqs.get(level - 1);
 		} else {
 			xpToNext = 0;
@@ -123,6 +143,13 @@ public enum Skill {
 						}
 					}
 				}
+			}
+			//Mana ability
+			if (skill.getManaAbilityLevel(manaAbility) > 0) {
+				lore.add(" ");
+				int manaAbilityLevel = skill.getManaAbilityLevel(manaAbility);
+				lore.add(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Mana Ability " + ChatColor.BLUE + manaAbility.getName() + " " + RomanNumber.toRoman(manaAbilityLevel));
+				lore.add(ChatColor.GRAY + "  Duration: " + ChatColor.GREEN + nf.format(manaAbility.getValue(manaAbilityLevel)) + "s" + ChatColor.GRAY + " Mana Cost: " + ChatColor.AQUA + manaAbility.getManaCost(manaAbilityLevel) + ChatColor.GRAY + " Cooldown: " + ChatColor.YELLOW + manaAbility.getCooldown(manaAbilityLevel) + "s");
 			}
 			//Level Progress
 			lore.add(" ");
@@ -189,6 +216,10 @@ public enum Skill {
 	
 	public Stat getSecondaryStat() {
 		return secondaryStat;
+	}
+
+	public MAbility getManaAbility() {
+		return manaAbility;
 	}
 
 	public static List<Skill> getOrderedValues() {

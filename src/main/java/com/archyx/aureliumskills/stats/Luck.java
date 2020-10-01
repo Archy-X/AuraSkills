@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -60,7 +60,7 @@ public class Luck implements Listener {
 				return;
 			}
 			if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-				double luck = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.LUCK_MODIFIER);
+				double luck = SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_MODIFIER);
 				attribute.addModifier(new AttributeModifier("AureliumSkills-Luck", luck, AttributeModifier.Operation.ADD_NUMBER));
 			}
 		}
@@ -68,7 +68,7 @@ public class Luck implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (Options.luckDoubleDrop) {
+		if (OptionL.getBoolean(Option.LUCK_DOUBLE_DROP_ENABLED)) {
 			//Checks if in disabled world
 			if (AureliumSkills.worldManager.isInDisabledWorld(event.getBlock().getLocation())) {
 				return;
@@ -93,8 +93,8 @@ public class Luck implements Listener {
 								if (mat.equals(Material.STONE) || mat.equals(Material.COBBLESTONE) || mat.equals(Material.SAND) || mat.equals(Material.GRAVEL)
 										|| mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(XMaterial.ANDESITE.parseMaterial()) || mat.equals(XMaterial.DIORITE.parseMaterial())
 										|| mat.equals(XMaterial.GRANITE.parseMaterial())) {
-									if ((double) stat.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.DOUBLE_DROP_MODIFIER) < Options.getDoubleOption(Setting.DOUBLE_DROP_PERCENT_MAX) / 100) {
-										if (r.nextDouble() < ((double) stat.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.DOUBLE_DROP_MODIFIER))) {
+									if ((double) stat.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) < OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX) / 100) {
+										if (r.nextDouble() < ((double) stat.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER))) {
 											for (ItemStack item : event.getBlock().getDrops()) {
 												World world = event.getBlock().getLocation().getWorld();
 												if (world != null) {
@@ -103,7 +103,7 @@ public class Luck implements Listener {
 											}
 										}
 									} else {
-										if (r.nextDouble() < Options.getDoubleOption(Setting.DOUBLE_DROP_PERCENT_MAX) / 100) {
+										if (r.nextDouble() < OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX) / 100) {
 											for (ItemStack item : event.getBlock().getDrops()) {
 												World world = event.getBlock().getLocation().getWorld();
 												if (world != null) {

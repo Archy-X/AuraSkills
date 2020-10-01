@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -23,7 +23,7 @@ public class FishingAbilities implements Listener {
 	
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = Options.getXpAmount(source);
+		double output = OptionL.getXp(source);
 		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FISHER)) {
 			double modifier = 1;
 			modifier += Ability.FISHER.getValue(skill.getAbilityLevel(Ability.FISHER)) / 100;
@@ -34,7 +34,7 @@ public class FishingAbilities implements Listener {
 	
 	@EventHandler
 	public void luckyCatch(PlayerFishEvent event) {
-		if (Options.isEnabled(Skill.FISHING)) {
+		if (OptionL.isEnabled(Skill.FISHING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUCKY_CATCH)) {
 				Player player = event.getPlayer();
 				//Check disabled worlds
@@ -76,7 +76,7 @@ public class FishingAbilities implements Listener {
 	
 	@EventHandler
 	public void treasureHunterAndEpicCatch(PlayerFishEvent event) {
-		if (Options.isEnabled(Skill.FISHING)) {
+		if (OptionL.isEnabled(Skill.FISHING)) {
 			Player player = event.getPlayer();
 			//Check disabled worlds
 			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
@@ -133,7 +133,7 @@ public class FishingAbilities implements Listener {
 	
 	@EventHandler
 	public void grappler(PlayerFishEvent event) {
-		if (Options.isEnabled(Skill.FISHING)) {
+		if (OptionL.isEnabled(Skill.FISHING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.GRAPPLER)) {
 				if (event.getCaught() != null) {
 					if (!(event.getCaught() instanceof Item)) {

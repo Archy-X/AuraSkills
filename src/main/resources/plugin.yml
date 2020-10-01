@@ -1,11 +1,12 @@
 name: AureliumSkills
-version: Alpha 1.4.3
+version: Alpha 1.5.0
 main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
 softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, Vault, ProtocolLib]
 api-version: '1.13'
+prefix: AureliumSkills
 
 permissions:
     aureliumskills.*:

@@ -4,6 +4,8 @@ import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
@@ -23,6 +25,7 @@ import com.archyx.aureliumskills.util.*;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -53,6 +56,7 @@ public class AureliumSkills extends JavaPlugin{
 	public static WorldManager worldManager;
 	public static ManaManager manaManager;
 	public static ManaAbilityManager manaAbilityManager;
+	public static OptionL optionLoader;
 	public static boolean holographicDisplaysEnabled;
 	public static boolean worldGuardEnabled;
 	public static boolean placeholderAPIEnabled;
@@ -98,8 +102,9 @@ public class AureliumSkills extends JavaPlugin{
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
 		//Load config
 		loadConfig();
-		Options options = new Options(this);
-		options.loadConfig();
+		//Load config
+		optionLoader = new OptionL(this);
+		optionLoader.loadOptions();
 		//Checks for holographic displays
 		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
 			holographicDisplaysEnabled = true;
@@ -148,7 +153,7 @@ public class AureliumSkills extends JavaPlugin{
 			actionBar.startUpdateActionBar();
 		}
 		//Load Data
-		if (Options.mySqlEnabled) {
+		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			//Mysql
 			mySqlSupport = new MySqlSupport(this, this);
 			new BukkitRunnable() {
@@ -174,6 +179,9 @@ public class AureliumSkills extends JavaPlugin{
 		//Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
+		//B-stats
+		int pluginId = 8629;
+		Metrics metrics = new Metrics(this, pluginId);
 		Bukkit.getLogger().info("[AureliumSkills] Aurelium Skills has been enabled");
 		checkUpdates();
 	}
@@ -184,7 +192,7 @@ public class AureliumSkills extends JavaPlugin{
 		//Save config
 		saveConfig();
 		//Save Data
-		if (Options.mySqlEnabled) {
+		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (mySqlSupport != null) {
 				mySqlSupport.saveData(false);
 				mySqlSupport.closeConnection();
@@ -252,7 +260,7 @@ public class AureliumSkills extends JavaPlugin{
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : Skill.values()) {
-				if (Options.isEnabled(skill)) {
+				if (OptionL.isEnabled(skill)) {
 					values.add(skill.toString().toLowerCase());
 				}
 			}
@@ -275,22 +283,22 @@ public class AureliumSkills extends JavaPlugin{
 		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> lang.getConfig().getStringList("languages"));
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());
-		if (Options.enableSkillCommands) {
-			if (Options.isEnabled(Skill.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand()); }
-			if (Options.isEnabled(Skill.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand()); }
-			if (Options.isEnabled(Skill.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand()); }
-			if (Options.isEnabled(Skill.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand()); }
-			if (Options.isEnabled(Skill.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand()); }
-			if (Options.isEnabled(Skill.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand()); }
-			if (Options.isEnabled(Skill.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand()); }
-			if (Options.isEnabled(Skill.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand()); }
-			if (Options.isEnabled(Skill.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand()); }
-			if (Options.isEnabled(Skill.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand()); }
-			if (Options.isEnabled(Skill.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand()); }
-			if (Options.isEnabled(Skill.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand()); }
-			if (Options.isEnabled(Skill.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand()); }
-			if (Options.isEnabled(Skill.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand()); }
-			if (Options.isEnabled(Skill.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand()); }
+		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
+			if (OptionL.isEnabled(Skill.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand()); }
+			if (OptionL.isEnabled(Skill.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand()); }
+			if (OptionL.isEnabled(Skill.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand()); }
+			if (OptionL.isEnabled(Skill.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand()); }
+			if (OptionL.isEnabled(Skill.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand()); }
+			if (OptionL.isEnabled(Skill.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand()); }
+			if (OptionL.isEnabled(Skill.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand()); }
+			if (OptionL.isEnabled(Skill.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand()); }
+			if (OptionL.isEnabled(Skill.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand()); }
+			if (OptionL.isEnabled(Skill.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand()); }
+			if (OptionL.isEnabled(Skill.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand()); }
+			if (OptionL.isEnabled(Skill.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand()); }
+			if (OptionL.isEnabled(Skill.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand()); }
+			if (OptionL.isEnabled(Skill.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand()); }
+			if (OptionL.isEnabled(Skill.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand()); }
 		}
 	}
 
@@ -315,7 +323,7 @@ public class AureliumSkills extends JavaPlugin{
 		pm.registerEvents(new Health(), this);
 		pm.registerEvents(new Luck(), this);
 		pm.registerEvents(new Wisdom(), this);
-		pm.registerEvents(new FarmingAbilities(), this);
+		pm.registerEvents(new FarmingAbilities(this), this);
 		pm.registerEvents(new ForagingAbilities(this), this);
 		pm.registerEvents(new MiningAbilities(this), this);
 		pm.registerEvents(new FishingAbilities(), this);
@@ -328,7 +336,7 @@ public class AureliumSkills extends JavaPlugin{
 		ItemListener itemListener = new ItemListener(this);
 		pm.registerEvents(itemListener, this);
 		itemListener.scheduleTask();
-		pm.registerEvents(new ArmorListener(Options.armorEquipBlockedMaterials), this);
+		pm.registerEvents(new ArmorListener(OptionL.getList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
 		pm.registerEvents(new ArmorModifierListener(), this);
 	}
 

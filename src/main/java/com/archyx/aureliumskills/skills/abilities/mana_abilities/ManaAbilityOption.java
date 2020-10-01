@@ -2,20 +2,26 @@ package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
 public class ManaAbilityOption {
 
-    private double baseValue;
-    private double valuePerLevel;
-    private int baseCooldown;
-    private int cooldownPerLevel;
-    private int baseManaCost;
-    private int manaCostPerLevel;
+    private final boolean enabled;
+    private final double baseValue;
+    private final double valuePerLevel;
+    private final int baseCooldown;
+    private final int cooldownPerLevel;
+    private final int baseManaCost;
+    private final int manaCostPerLevel;
 
-    public ManaAbilityOption(double baseValue, double valuePerLevel, int baseCooldown, int cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
+    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, int baseCooldown, int cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
+        this.enabled = enabled;
         this.baseValue = baseValue;
         this.valuePerLevel = valuePerLevel;
         this.baseCooldown = baseCooldown;
         this.cooldownPerLevel = cooldownPerLevel;
         this.baseManaCost = baseManaCost;
         this.manaCostPerLevel = manaCostPerLevel;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public double getBaseValue() {
@@ -41,4 +47,5 @@ public class ManaAbilityOption {
     public int getManaCostPerLevel() {
         return manaCostPerLevel;
     }
+
 }

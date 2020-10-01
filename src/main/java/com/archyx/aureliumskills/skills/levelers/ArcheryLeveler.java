@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.ArcheryAbilities;
@@ -21,7 +22,7 @@ public class ArcheryLeveler implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event) {
-		if (Options.isEnabled(Skill.ARCHERY)) {
+		if (OptionL.isEnabled(Skill.ARCHERY)) {
 			LivingEntity e = event.getEntity();
 			//Checks if in blocked world
 			if (AureliumSkills.worldManager.isInBlockedWorld(e.getLocation())) {
@@ -38,14 +39,14 @@ public class ArcheryLeveler implements Listener {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
 					if (ee.getDamager() instanceof Arrow) {
 						EntityType type = e.getType();
-						Player p = (Player) e.getKiller();
+						Player p = e.getKiller();
 						Skill s = Skill.ARCHERY;
 						//Check for permission
 						if (!p.hasPermission("aureliumskills.archery")) {
 							return;
 						}
 						//Check creative mode disable
-						if (Options.disableInCreativeMode) {
+						if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 							if (p.getGameMode().equals(GameMode.CREATIVE)) {
 								return;
 							}

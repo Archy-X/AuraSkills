@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.util;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.entity.EntityType;
 
 public class VersionUtils {

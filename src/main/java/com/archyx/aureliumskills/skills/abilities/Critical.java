@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,7 +15,7 @@ import java.util.Random;
 public class Critical {
 
     private final Random r = new Random();
-    private Plugin plugin;
+    private final Plugin plugin;
 
     public Critical(Plugin plugin) {
         this.plugin = plugin;
@@ -42,9 +43,9 @@ public class Critical {
     private double getCritMultiplier(PlayerSkill playerSkill) {
         if (AureliumSkills.abilityOptionManager.isEnabled(Ability.CRIT_DAMAGE)) {
             double multiplier = Ability.CRIT_DAMAGE.getValue(playerSkill.getAbilityLevel(Ability.CRIT_DAMAGE)) / 100;
-            return Options.criticalBase * (1 + multiplier);
+            return OptionL.getDouble(Option.CRITICAL_BASE_MULTIPLIER) * (1 + multiplier);
         }
-        return Options.criticalBase;
+        return OptionL.getDouble(Option.CRITICAL_BASE_MULTIPLIER);
     }
 
 }

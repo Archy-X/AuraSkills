@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -24,7 +24,7 @@ public class EnduranceAbilities implements Listener {
 
     public static double getModifiedXp(Player player, Source source) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = Options.getXpAmount(source);
+        double output = OptionL.getXp(source);
         if (AureliumSkills.abilityOptionManager.isEnabled(Ability.RUNNER)) {
             double modifier = 1;
             modifier += Ability.RUNNER.getValue(skill.getAbilityLevel(Ability.RUNNER)) / 100;
@@ -35,7 +35,7 @@ public class EnduranceAbilities implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void antiHunger(FoodLevelChangeEvent event) {
-        if (Options.isEnabled(Skill.ENDURANCE)) {
+        if (OptionL.isEnabled(Skill.ENDURANCE)) {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
@@ -64,7 +64,7 @@ public class EnduranceAbilities implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void goldenHealAndRecovery(EntityRegainHealthEvent event) {
-        if (Options.isEnabled(Skill.ENDURANCE)) {
+        if (OptionL.isEnabled(Skill.ENDURANCE)) {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
@@ -107,7 +107,7 @@ public class EnduranceAbilities implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void mealSteal(EntityDamageByEntityEvent event) {
-        if (Options.isEnabled(Skill.ENDURANCE)) {
+        if (OptionL.isEnabled(Skill.ENDURANCE)) {
             if (!event.isCancelled()) {
                 //Checks if entity and damager are players
                 if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {

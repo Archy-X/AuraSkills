@@ -1,9 +1,10 @@
 package com.archyx.aureliumskills.listeners;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.skills.levelers.FarmingLeveler;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
+import com.cryptomorin.xseries.XBlock;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -16,9 +17,6 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 public class CheckBlockReplace implements Listener {
 
@@ -93,10 +91,9 @@ public class CheckBlockReplace implements Listener {
             XMaterial.ANCIENT_DEBRIS,
     };
 
-    private Material[] materials = new Material[checkedMaterials.length];
+    private final Material[] materials = new Material[checkedMaterials.length];
 
     private final Plugin plugin;
-    private NumberFormat nf = new DecimalFormat("#.####");
 
     public CheckBlockReplace(Plugin plugin) {
         this.plugin = plugin;
@@ -123,7 +120,7 @@ public class CheckBlockReplace implements Listener {
             }
         }
         //Check block replace
-        if (Options.checkBlockReplace) {
+        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
             Material material = event.getBlock().getType();
             for (Material checkedMaterial : materials) {
                 if (material.equals(checkedMaterial)) {
@@ -171,7 +168,7 @@ public class CheckBlockReplace implements Listener {
     private void checkSugarCane(Block block, int num) {
         if (num < 20) {
             Block above = block.getRelative(BlockFace.UP);
-            if (FarmingLeveler.isSugarCane(above.getType())) {
+            if (XBlock.isSugarCane(above.getType())) {
                 if (above.hasMetadata("skillsPlaced")) {
                     above.removeMetadata("skillsPlaced", plugin);
                     checkSugarCane(above, num + 1);

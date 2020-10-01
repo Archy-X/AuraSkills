@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -40,7 +40,7 @@ public class ExcavationAbilities implements Listener {
 
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = Options.getXpAmount(source);
+		double output = OptionL.getXp(source);
 		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.EXCAVATOR)) {
 			double modifier = 1;
 			modifier += Ability.EXCAVATOR.getValue(skill.getAbilityLevel(Ability.EXCAVATOR)) / 100;
@@ -50,7 +50,7 @@ public class ExcavationAbilities implements Listener {
 	}
 
 	public static void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (Options.isEnabled(Skill.EXCAVATION)) {
+		if (OptionL.isEnabled(Skill.EXCAVATION)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SPADE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.excavation")) {
@@ -102,7 +102,7 @@ public class ExcavationAbilities implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void excavationListener(BlockBreakEvent event) {
-		if (Options.isEnabled(Skill.ARCHERY)) {
+		if (OptionL.isEnabled(Skill.ARCHERY)) {
 			if (!event.isCancelled()) {
 				Player player = event.getPlayer();
 				Block block = event.getBlock();

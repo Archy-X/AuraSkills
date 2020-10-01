@@ -1,12 +1,14 @@
 package com.archyx.aureliumskills.util;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -15,9 +17,9 @@ import java.text.NumberFormat;
 
 public class PlaceholderSupport extends PlaceholderExpansion {
 
-    private Plugin plugin;
-    private NumberFormat format1;
-    private NumberFormat format2;
+    private final Plugin plugin;
+    private final NumberFormat format1;
+    private final NumberFormat format2;
 
     public PlaceholderSupport(Plugin plugin) {
         this.plugin = plugin;
@@ -65,22 +67,38 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets HP with scaling as an integer
         if (identifier.equals("hp")) {
-            return String.valueOf((int) (player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)));
+            return String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
         }
 
         //Gets HP with scaling with 1 decimal
         if (identifier.equals("hp_1")) {
-            return String.valueOf(format1.format(player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)));
+            return String.valueOf(format1.format(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+        }
+
+        //Gets max hp
+        if (identifier.equals("hp_max")) {
+            AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            if (attribute != null) {
+                return String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+            }
+            else {
+                return "";
+            }
         }
 
         //Gets HP with scaling with 2 decimal
         if (identifier.equals("hp_2")) {
-            return String.valueOf(format2.format(player.getHealth() * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING)));
+            return String.valueOf(format2.format(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
         }
 
         //Gets mana
         if (identifier.equals("mana")) {
             return String.valueOf(AureliumSkills.manaManager.getMana(player.getUniqueId()));
+        }
+
+        //Gets max mana
+        if (identifier.equals("mana_max")) {
+            return String.valueOf(AureliumSkills.manaManager.getMaxMana(player.getUniqueId()));
         }
 
         //Gets stat values

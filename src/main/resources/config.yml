@@ -108,6 +108,8 @@ skill-level-up-message:
     - '  $secondary_stat_color$+1$secondary_stat_symbol$ $secondary_stat_name$'
     - '  $ability_unlock$'
     - '  $ability_level_up$'
+    - '  $mana_ability_unlock$'
+    - '  $mana_ability_level_up$'
     - '  &a$$money_amount$'
     - '&3&l----------------------------------------'
 
@@ -117,6 +119,8 @@ modifier:
             - EXAMPLE
     item:
         check-period: 2
+
+level-progression-menu-fill-pane: false
 
 critical:
     base-multiplier: 1.5
@@ -132,6 +136,7 @@ critical:
 # Skill specific options
 farming:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         wheat: 2.0
@@ -144,6 +149,7 @@ farming:
         sugar-cane: 1.7
 foraging:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         oak-log: 4
@@ -164,6 +170,7 @@ foraging:
         warped-wart-block: 0.5.
 mining:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         stone: 0.2
@@ -196,6 +203,7 @@ mining:
         obsidian: 10.0
 fishing:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         raw-fish: 25
@@ -208,6 +216,7 @@ fishing:
         epic: 5000
 excavation:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         dirt: 0.3
@@ -223,6 +232,7 @@ excavation:
         red-sand: 0.7
 archery:
     enabled: true
+    max-level: 97
     types:
         small-passive: 1
         passive: 2
@@ -236,6 +246,7 @@ archery:
         player: 50
 defense:
     enabled: true
+    max-level: 97
     check-cancelled: true
     max: 100.0
     min: 0
@@ -244,6 +255,7 @@ defense:
         player-damage: 2
 fighting:
     enabled: true
+    max-level: 97
     types:
         small-passive: 1
         passive: 2
@@ -257,19 +269,22 @@ fighting:
         player: 50
 endurance:
     enabled: true
-    refresh-time-ticks: 
+    max-level: 97
+    xp-gain-period: 12000
     types:
         walk-per-meter: 0.333
         sprint-per-meter: 0.1
         swim-per-meter: 1
 agility:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         jump-per-100: 10
         fall-damage: 2
 alchemy:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         awkward: 10
@@ -280,6 +295,7 @@ alchemy:
         lingering: 50
 enchanting:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         weapon-per-level: 2
@@ -288,10 +304,12 @@ enchanting:
         book-per-level: 2
 sorcery:
     enabled: true
+    max-level: 97
     types:
 healing:
     enabled: true
     check-cancelled: true
+    max-level: 97
     types:
         drink-regular: 10
         drink-extended: 15
@@ -301,6 +319,7 @@ healing:
         splash-upgraded: 25
 forging:
     enabled: true
+    max-level: 97
     check-cancelled: true
     types:
         combine-books-per-level: 10
@@ -320,7 +339,6 @@ strength:
     display-damage-with-health-scaling: true
 toughness:
     new-modifier: 0.3
-    reset-armor-attribute: true
 regeneration:
     custom-regen-mechanics: false
     base-regen: 1
@@ -375,6 +393,10 @@ abilities:
         enabled: true
         base: 4.0
         per-level: 3.0
+    valor:
+        enabled: true
+        base: 1.0
+        per-level: 1.0
     shredder:
         enabled: true
         base: 3.0

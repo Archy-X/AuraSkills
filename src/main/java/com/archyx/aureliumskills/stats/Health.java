@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -37,7 +37,7 @@ public class Health implements Listener {
 		//Calculates the amount of health to add
 		PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
 		if (playerStat != null) {
-			double modifier = ((double) playerStat.getStatLevel(Stat.HEALTH)) * Options.getDoubleOption(Setting.HEALTH_MODIFIER);
+			double modifier = ((double) playerStat.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
 			AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 			if (attribute != null) {
 				double originalMaxHealth = attribute.getValue();
@@ -70,7 +70,7 @@ public class Health implements Listener {
 					}
 				}
 				//Applies health scaling
-				if (Options.getBooleanOption(Setting.HEALTH_SCALING)) {
+				if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
 					double health = attribute.getValue();
 					if (health < 23) {
 						player.setHealthScale(20.0);

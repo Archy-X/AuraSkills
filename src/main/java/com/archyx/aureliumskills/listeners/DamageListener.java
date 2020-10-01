@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.listeners;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.abilities.*;
@@ -86,10 +86,8 @@ public class DamageListener implements Listener {
             }
 
             //Critical
-            if (Options.criticalEnabled.containsKey(damageType)) {
-                if (Options.criticalEnabled.get(damageType)) {
-                    critical.applyCrit(event, player, playerSkill);
-                }
+            if (OptionL.criticalEnabled(damageType)) {
+                critical.applyCrit(event, player, playerSkill);
             }
 
         }

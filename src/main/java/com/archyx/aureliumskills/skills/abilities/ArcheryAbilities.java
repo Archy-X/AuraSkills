@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -34,7 +34,7 @@ public class ArcheryAbilities implements Listener {
 
     public static double getModifiedXp(Player player, Source source) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = Options.getXpAmount(source);
+        double output = OptionL.getXp(source);
         if (AureliumSkills.abilityOptionManager.isEnabled(Ability.ARCHER)) {
             double modifier = 1;
             modifier += Ability.ARCHER.getValue(skill.getAbilityLevel(Ability.ARCHER)) / 100;
@@ -44,7 +44,7 @@ public class ArcheryAbilities implements Listener {
     }
 
     public static void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-        if (Options.isEnabled(Skill.ARCHERY)) {
+        if (OptionL.isEnabled(Skill.ARCHERY)) {
             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.BOW_MASTER)) {
                 if (!player.hasPermission("aureliumskills.archery")) {
                     return;
@@ -110,7 +110,7 @@ public class ArcheryAbilities implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void archeryListener(EntityDamageByEntityEvent event) {
-        if (Options.isEnabled(Skill.ARCHERY)) {
+        if (OptionL.isEnabled(Skill.ARCHERY)) {
             if (!event.isCancelled()) {
                 if (event.getDamager() instanceof Arrow) {
                     Arrow arrow = (Arrow) event.getDamager();

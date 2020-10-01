@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
@@ -23,7 +24,7 @@ public class EnduranceLeveler {
 	
 	public void startTracking() {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-			if (Options.isEnabled(Skill.ENDURANCE)) {
+			if (OptionL.isEnabled(Skill.ENDURANCE)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					//Checks if in blocked world
 					if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
@@ -40,7 +41,7 @@ public class EnduranceLeveler {
 						return;
 					}
 					//Check creative mode disable
-					if (Options.disableInCreativeMode) {
+					if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 						if (player.getGameMode().equals(GameMode.CREATIVE)) {
 							return;
 						}

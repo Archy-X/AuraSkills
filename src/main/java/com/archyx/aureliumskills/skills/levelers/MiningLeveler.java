@@ -1,11 +1,12 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.MiningAbilities;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,9 +20,9 @@ public class MiningLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (Options.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skill.MINING)) {
 			//Check cancelled
-			if (Options.getCheckCancelled(Skill.MINING)) {
+			if (OptionL.getBoolean(Option.MINING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -37,7 +38,7 @@ public class MiningLeveler implements Listener {
 				}
 			}
 			//Check block replace
-			if (Options.checkBlockReplace) {
+			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
 				if (event.getBlock().hasMetadata("skillsPlaced")) {
 					return;
 				}
@@ -51,7 +52,7 @@ public class MiningLeveler implements Listener {
 				return;
 			}
 			//Check creative mode disable
-			if (Options.disableInCreativeMode) {
+			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 				if (p.getGameMode().equals(GameMode.CREATIVE)) {
 					return;
 				}

@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.skills.abilities.Ability;
+import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ public class PlayerSkill {
 	private final Map<Skill, Integer> levels = new HashMap<>();
 	private final Map<Skill, Double> xp = new HashMap<>();
 	private final Map<Ability, Integer> abilities = new HashMap<>();
+	private final Map<MAbility, Integer> manaAbilities = new HashMap<>();
 	
 	public PlayerSkill(UUID id, String playerName) {
 		this.playerId = id;
@@ -25,6 +27,9 @@ public class PlayerSkill {
 		}
 		for (Ability ability : Ability.values()) {
 			abilities.put(ability, 0);
+		}
+		for (MAbility mAbility : MAbility.values()) {
+			manaAbilities.put(mAbility, 0);
 		}
 	}
 
@@ -51,7 +56,19 @@ public class PlayerSkill {
 	public void levelUpAbility(Ability ability) {
 		abilities.put(ability, abilities.get(ability) + 1);
 	}
-	
+
+	public int getManaAbilityLevel(MAbility mAbility) {
+		return manaAbilities.get(mAbility);
+	}
+
+	public void setManaAbilityLevel(MAbility mAbility, int level) {
+		manaAbilities.put(mAbility, level);
+	}
+
+	public void levelUpManaAbility(MAbility mAbility) {
+		manaAbilities.put(mAbility, manaAbilities.get(mAbility) + 1);
+	}
+
 	public boolean addXp(Skill skill, double amount) {
 		if (xp.containsKey(skill)) {
 			xp.put(skill, xp.get(skill) + amount);

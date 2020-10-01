@@ -1,8 +1,12 @@
 package com.archyx.aureliumskills.modifier;
 
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.abilities.ForagingAbilities;
+import com.archyx.aureliumskills.skills.abilities.MiningAbilities;
 import com.archyx.aureliumskills.stats.PlayerStat;
+import com.archyx.aureliumskills.util.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -56,7 +60,6 @@ public class ItemListener implements Listener {
             public void run() {
                 //For every player
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    long start = System.nanoTime();
                     //Gets stats profile
                     PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
                     if (playerStat != null) {
@@ -72,11 +75,27 @@ public class ItemListener implements Listener {
                                     for (StatModifier modifier : ItemModifier.getItemModifiers(stored)) {
                                         playerStat.removeModifier(modifier.getName());
                                     }
+                                    //Remove valor
+                                    if (ItemUtils.isAxe(stored.getType())) {
+                                        ForagingAbilities.removeValor(playerStat);
+                                    }
+                                    //Remove stamina
+                                    if (ItemUtils.isPickaxe(stored.getType())) {
+                                        MiningAbilities.removeStamina(playerStat);
+                                    }
                                 }
                                 //Add modifiers from held item
                                 if (!held.getType().equals(Material.AIR)) {
                                     for (StatModifier modifier : ItemModifier.getItemModifiers(held)) {
                                         playerStat.addModifier(modifier);
+                                    }
+                                    //Apply valor
+                                    if (ItemUtils.isAxe(held.getType())) {
+                                        ForagingAbilities.applyValor(player, playerStat);
+                                    }
+                                    //Apply stamina
+                                    if (ItemUtils.isPickaxe(held.getType())) {
+                                        MiningAbilities.applyStamina(player, playerStat);
                                     }
                                 }
                                 //Set stored item to held item
@@ -88,10 +107,9 @@ public class ItemListener implements Listener {
                             heldItems.put(player, held);
                         }
                     }
-                    long end = System.nanoTime();
                 }
             }
-        }.runTaskTimer(plugin, 0L, Options.itemModifierCheckPeriod);
+        }.runTaskTimer(plugin, 0L, OptionL.getInt(Option.MODIFIER_ITEM_CHECK_PERIOD));
     }
 
 }

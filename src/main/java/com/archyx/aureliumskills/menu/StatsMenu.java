@@ -1,14 +1,14 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
-import com.archyx.aureliumskills.Setting;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import dev.dbassett.skullcreator.SkullCreator;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
@@ -22,12 +22,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class StatsMenu implements InventoryProvider{
 
-	private Player player;
+	private final Player player;
 	
 	public StatsMenu(Player player) {
 		this.player = player;
@@ -124,9 +125,7 @@ public class StatsMenu implements InventoryProvider{
 			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
 			lore.add(ChatColor.GRAY + Lang.getMessage(Message.YOUR_LEVEL) + ": " + stat.getColor() + playerStat.getStatLevel(stat));
 			lore.add(" ");
-			for (String line : getStatValue(stat, playerStat).split("\n")) {
-				lore.add(line);
-			}
+			lore.addAll(Arrays.asList(getStatValue(stat, playerStat).split("\n")));
 		}
 		meta.setLore(lore);
 		item.setItemMeta(meta);
@@ -137,7 +136,7 @@ public class StatsMenu implements InventoryProvider{
 		ItemStack item = SkullCreator.itemFromUuid(player.getUniqueId());
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.YELLOW + player.getName());
-		List<String> lore = new LinkedList<String>();
+		List<String> lore = new LinkedList<>();
 		lore.add(ChatColor.DARK_RED + "  ➽ " + Lang.getMessage(Message.STRENGTH_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.STRENGTH));
 		lore.add(ChatColor.RED + "  ❤ " + Lang.getMessage(Message.HEALTH_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.HEALTH));
 		lore.add(ChatColor.GOLD + "  ❥ " + Lang.getMessage(Message.REGENERATION_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.REGENERATION));
@@ -154,37 +153,37 @@ public class StatsMenu implements InventoryProvider{
 		switch(stat) {
 			case STRENGTH:
 				double strengthLevel = ps.getStatLevel(Stat.STRENGTH);
-				double attackDamage = strengthLevel * Options.getDoubleOption(Setting.STRENGTH_MODIFIER);
-				if (Options.getBooleanOption(Setting.DISPLAY_DAMAGE_WITH_HEALTH_SCALING)) {
-					attackDamage *= Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
+				double attackDamage = strengthLevel * OptionL.getDouble(Option.STRENGTH_MODIFIER);
+				if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING)) {
+					attackDamage *= OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
 				}
 				return ChatColor.DARK_RED + "+"  +  nf.format(attackDamage) + " " + Lang.getMessage(Message.ATTACK_DAMAGE);
 			case HEALTH:
-				double modifier = ((double) ps.getStatLevel(Stat.HEALTH)) * Options.getDoubleOption(Setting.HEALTH_MODIFIER);
-				double scaledHealth = modifier * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
+				double modifier = ((double) ps.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
+				double scaledHealth = modifier * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
 				return ChatColor.RED + "+" + nf.format(scaledHealth) + " " + Lang.getMessage(Message.HP);
 			case LUCK:
-				double luck = ps.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.LUCK_MODIFIER);
-				double doubleDropChance = (double) ps.getStatLevel(Stat.LUCK) * Options.getDoubleOption(Setting.DOUBLE_DROP_MODIFIER) * 100;
+				double luck = ps.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_MODIFIER);
+				double doubleDropChance = (double) ps.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) * 100;
 				if (doubleDropChance > 100.0) {
 					doubleDropChance = 100.0;
 				}
 				return ChatColor.DARK_GREEN + "+" + nf.format(luck) + " " + Lang.getMessage(Message.LUCK_NAME) + "\n" + ChatColor.DARK_GREEN + Lang.getMessage(Message.DOUBLE_DROP_CHANCE) + ": " + nf.format(doubleDropChance) + "%";
 			case REGENERATION:
-				double saturatedRegen = ps.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.SATURATED_MODIFIER) * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
-				double hungerFullRegen = ps.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_FULL_MODIFIER) * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
-				double almostFullRegen = ps.getStatLevel(Stat.REGENERATION) * Options.getDoubleOption(Setting.HUNGER_ALMOST_FULL_MODIFIER) * Options.getDoubleOption(Setting.HP_INDICATOR_SCALING);
-				double manaRegen = ps.getStatLevel(Stat.REGENERATION) * Options.manaModifier;
+				double saturatedRegen = ps.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
+				double hungerFullRegen = ps.getStatLevel(Stat.REGENERATION) *  OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
+				double almostFullRegen = ps.getStatLevel(Stat.REGENERATION) *  OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
+				double manaRegen = ps.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
 				return ChatColor.GOLD + "+" + nf.format(saturatedRegen) + " " + Lang.getMessage(Message.SATURATED_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(hungerFullRegen)
 						+ " " + Lang.getMessage(Message.FULL_HUNGER_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(almostFullRegen) + " " + Lang.getMessage(Message.ALMOST_FULL_HUNGER_REGEN)
 						+ "\n" + ChatColor.AQUA + "+" + nf.format(manaRegen) + " " + Lang.getMessage(Message.MANA_REGEN);
 			case TOUGHNESS:
-				double toughness = ps.getStatLevel(Stat.TOUGHNESS) * Options.getDoubleOption(Setting.TOUGHNESS_MODIFIER);
+				double toughness = ps.getStatLevel(Stat.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
 				double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
 				return ChatColor.DARK_PURPLE + "-" + nf.format(damageReduction) + "% " + Lang.getMessage(Message.INCOMING_DAMAGE);
 			case WISDOM:
-				double xpModifier = ps.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.EXPERIENCE_MODIFIER) * 100;
-				int anvilCostReduction = (int) (ps.getStatLevel(Stat.WISDOM) * Options.getDoubleOption(Setting.ANVIL_COST_MODIFIER));
+				double xpModifier = ps.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
+				int anvilCostReduction = (int) (ps.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER));
 				return ChatColor.BLUE + "+" + nf.format(xpModifier) + "% " + Lang.getMessage(Message.XP_GAIN) + "\n" + ChatColor.BLUE + Lang.getMessage(Message.ANVIL_COST_REDUCTION) + ": " + anvilCostReduction;
 			default:
 				return "";

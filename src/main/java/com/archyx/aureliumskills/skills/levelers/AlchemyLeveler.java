@@ -1,10 +1,11 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.util.XMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -34,9 +35,9 @@ public class AlchemyLeveler implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBrew(BrewEvent event) {
-		if (Options.isEnabled(Skill.ALCHEMY)) {
+		if (OptionL.isEnabled(Skill.ALCHEMY)) {
 			//Check cancelled
-			if (Options.getCheckCancelled(Skill.ALCHEMY)) {
+			if (OptionL.getBoolean(Option.ALCHEMY_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -62,7 +63,7 @@ public class AlchemyLeveler implements Listener {
 								return;
 							}
 							//Check creative mode disable
-							if (Options.disableInCreativeMode) {
+							if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 								if (p.getGameMode().equals(GameMode.CREATIVE)) {
 									return;
 								}
@@ -92,7 +93,7 @@ public class AlchemyLeveler implements Listener {
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		if (event.getBlock().getType().equals(Material.BREWING_STAND)) {
-			if (Options.isEnabled(Skill.ALCHEMY)) {
+			if (OptionL.isEnabled(Skill.ALCHEMY)) {
 				event.getBlock().setMetadata("skillsBrewingStandOwner", new FixedMetadataValue(plugin, event.getPlayer().getUniqueId()));
 			}
 		}
@@ -101,7 +102,7 @@ public class AlchemyLeveler implements Listener {
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (event.getBlock().getType().equals(Material.BREWING_STAND)) {
-			if (Options.isEnabled(Skill.ALCHEMY)) {
+			if (OptionL.isEnabled(Skill.ALCHEMY)) {
 				if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
 					event.getBlock().removeMetadata("skillsBrewingStandOwner", plugin);
 				}
@@ -112,7 +113,7 @@ public class AlchemyLeveler implements Listener {
 	@EventHandler
 	public void onInventoryOpen(InventoryOpenEvent event) {
 		if (event.getInventory().getType().equals(InventoryType.BREWING)) {
-			if (Options.isEnabled(Skill.ALCHEMY)) {
+			if (OptionL.isEnabled(Skill.ALCHEMY)) {
 				if (event.getInventory().getHolder() != null) {
 					if (event.getInventory().getLocation() != null) {
 						Block block = event.getInventory().getLocation().getBlock();

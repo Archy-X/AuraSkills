@@ -1,7 +1,8 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.Options;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.google.common.collect.Sets;
@@ -32,9 +33,9 @@ public class AgilityLeveler implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onFall(EntityDamageEvent event) {
-		if (Options.isEnabled(Skill.AGILITY)) {
+		if (OptionL.isEnabled(Skill.AGILITY)) {
 			//Check cancelled
-			if (Options.getCheckCancelled(Skill.AGILITY)) {
+			if (OptionL.getBoolean(Option.AGILITY_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
@@ -57,13 +58,13 @@ public class AgilityLeveler implements Listener {
 						return;
 					}
 					//Check creative mode disable
-					if (Options.disableInCreativeMode) {
+					if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 						if (player.getGameMode().equals(GameMode.CREATIVE)) {
 							return;
 						}
 					}
 					if (event.getFinalDamage() < player.getHealth()) {
-						Leveler.addXp(player, Skill.AGILITY, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * Options.getXpAmount(Source.FALL_DAMAGE));
+						Leveler.addXp(player, Skill.AGILITY, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * OptionL.getXp(Source.FALL_DAMAGE));
 					}
 				}
 			}
@@ -72,9 +73,9 @@ public class AgilityLeveler implements Listener {
 	
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
-    	if (Options.isEnabled(Skill.AGILITY)) {
+    	if (OptionL.isEnabled(Skill.AGILITY)) {
     		//Check cancelled
-    		if (Options.getCheckCancelled(Skill.AGILITY)) {
+    		if (OptionL.getBoolean(Option.AGILITY_CHECK_CANCELLED)) {
     			if (e.isCancelled()) {
     				return;
 				}
@@ -95,7 +96,7 @@ public class AgilityLeveler implements Listener {
 				return;
 			}
 			//Check creative mode disable
-			if (Options.disableInCreativeMode) {
+			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
 				if (player.getGameMode().equals(GameMode.CREATIVE)) {
 					return;
 				}
