@@ -45,14 +45,23 @@ public class SkillLoader {
 					PlayerSkill playerSkill = new PlayerSkill(id, name);
 					PlayerStat playerStat = new PlayerStat(id);
 					//Loading skill and stat data
-					if (config.getConfigurationSection("skillData." + stringId + ".skills") != null) {
-						for (String skillName : config.getConfigurationSection("skillData." + stringId + ".skills").getKeys(false)) {
+					ConfigurationSection section = config.getConfigurationSection("skillData." + stringId + ".skills");
+					if (section != null) {
+						for (String skillName : section.getKeys(false)) {
 							String skillData = config.getString("skillData." + stringId + ".skills." + skillName);
-							String[] skillDataArray = skillData.split(":");
-							int level = Integer.parseInt(skillDataArray[0]);
-							double xp = 0.0;
-							if (skillDataArray.length >= 2) {
-								xp = Double.parseDouble(skillDataArray[1].replace(",", "."));
+							int level;
+							double xp;
+							if (skillData != null) {
+								String[] skillDataArray = skillData.split(":");
+								level = Integer.parseInt(skillDataArray[0]);
+								xp = 0.0;
+								if (skillDataArray.length >= 2) {
+									xp = Double.parseDouble(skillDataArray[1].replace(",", "."));
+								}
+							}
+							else {
+								level = 0;
+								xp = 0.0;
 							}
 							Skill skill = Skill.valueOf(skillName.toUpperCase());
 							playerSkill.setSkillLevel(skill, level);
@@ -87,7 +96,7 @@ public class SkillLoader {
 			}
 		}.runTaskAsynchronously(plugin);
 	}
-	
+
 	public void saveSkillData(boolean silent) {
 		isSaving = true;
 		if (!silent) {
@@ -96,12 +105,20 @@ public class SkillLoader {
 		long start = System.currentTimeMillis();
 		for (UUID id : playerSkills.keySet()) {
 			PlayerSkill playerSkill = playerSkills.get(id);
-			config.set("skillData." + id.toString() + ".name", playerSkill.getPlayerName());
-			//Saving skills
-			for (Skill skill : playerSkill.getSkillSet()) {
-				int level = playerSkill.getSkillLevel(skill);
-				double xp = playerSkill.getXp(skill);
-				config.set("skillData." + id.toString() + ".skills." + skill, level + ":" + ((double) Math.round(xp * 1000) / 1000));
+			if (!playerSkill.isEmpty()) {
+				config.set("skillData." + id.toString() + ".name", playerSkill.getPlayerName());
+				//Saving skills
+				for (Skill skill : playerSkill.getSkillSet()) {
+					int level = playerSkill.getSkillLevel(skill);
+					double xp = playerSkill.getXp(skill);
+					config.set("skillData." + id.toString() + ".skills." + skill, level + ":" + ((double) Math.round(xp * 1000) / 1000));
+				}
+			}
+			else {
+				ConfigurationSection section = config.getConfigurationSection("skillData." + id.toString());
+				if (section != null) {
+					config.set("skillData." + id.toString(), null);
+				}
 			}
 		}
 		try {

@@ -124,4 +124,18 @@ public class PlayerSkill {
 		return power;
 	}
 
+	public boolean isEmpty() {
+		for (Map.Entry<Skill, Integer> entry : levels.entrySet()) {
+			if (!entry.getValue().equals(1)) {
+				return false;
+			}
+		}
+		for (Map.Entry<Skill, Double> entry : xp.entrySet()) {
+			if (!entry.getValue().equals(0.0)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

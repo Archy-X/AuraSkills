@@ -9,7 +9,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
-import com.archyx.aureliumskills.listeners.PlayerJoin;
+import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.magic.ManaManager;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
@@ -305,7 +305,7 @@ public class AureliumSkills extends JavaPlugin{
 	public void registerEvents() {
 		//Registers Events
 		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(new PlayerJoin(this), this);
+		pm.registerEvents(new PlayerJoinQuit(this), this);
 		pm.registerEvents(new CheckBlockReplace(this), this);
 		pm.registerEvents(new FarmingLeveler(), this);
 		pm.registerEvents(new ForagingLeveler(), this);

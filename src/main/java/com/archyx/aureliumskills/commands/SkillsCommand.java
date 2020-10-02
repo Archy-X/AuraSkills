@@ -23,6 +23,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import scala.language;
 
 import java.util.List;
 
@@ -178,14 +179,33 @@ public class SkillsCommand extends BaseCommand {
 	public void onSave(CommandSender sender) {
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (!MySqlSupport.isSaving) {
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						plugin.mySqlSupport.saveData(false);
+				if (plugin.mySqlSupport != null) {
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							plugin.mySqlSupport.saveData(false);
+						}
+					}.runTaskAsynchronously(plugin);
+					if (sender instanceof Player) {
+						sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
 					}
-				}.runTaskAsynchronously(plugin);
-				if (sender instanceof Player) {
-					sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
+				}
+				else {
+					sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "MySQL wasn't enabled at server startup, saving to file instead!");
+					if (!SkillLoader.isSaving) {
+						new BukkitRunnable() {
+							@Override
+							public void run() {
+								plugin.getSkillLoader().saveSkillData(false);
+							}
+						}.runTaskAsynchronously(plugin);
+						if (sender instanceof Player) {
+							sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
+						}
+					}
+					else {
+						sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Data is already saving!");
+					}
 				}
 			}
 			else {

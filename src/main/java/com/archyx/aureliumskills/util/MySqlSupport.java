@@ -252,17 +252,19 @@ public class MySqlSupport {
                 if (!updated.contains(entry.getKey())) {
                     //Insert
                     PlayerSkill playerSkill = entry.getValue();
-                    insertStatement.setString(1, playerSkill.getPlayerId().toString());
-                    insertStatement.setString(2, playerSkill.getPlayerName());
-                    int index = 3;
-                    for (Skill skill : Skill.getOrderedValues()) {
-                        insertStatement.setInt(index, playerSkill.getSkillLevel(skill));
-                        index++;
-                        insertStatement.setDouble(index, playerSkill.getXp(skill));
-                        index++;
+                    if (!playerSkill.isEmpty()) {
+                        insertStatement.setString(1, playerSkill.getPlayerId().toString());
+                        insertStatement.setString(2, playerSkill.getPlayerName());
+                        int index = 3;
+                        for (Skill skill : Skill.getOrderedValues()) {
+                            insertStatement.setInt(index, playerSkill.getSkillLevel(skill));
+                            index++;
+                            insertStatement.setDouble(index, playerSkill.getXp(skill));
+                            index++;
+                        }
+                        insertStatement.executeUpdate();
+                        numInserted++;
                     }
-                    insertStatement.executeUpdate();
-                    numInserted++;
                 }
             }
             if (!silent) {
