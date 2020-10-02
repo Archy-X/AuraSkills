@@ -6,10 +6,12 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -63,12 +65,51 @@ public class ExcavationAbilities implements Listener {
 		}
 	}
 
-	public void biggerScoop(PlayerSkill playerSkill, Block block) {
+	public void biggerScoop(PlayerSkill playerSkill, Block block, Player player) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.BIGGER_SCOOP.getValue(playerSkill.getAbilityLevel(Ability.BIGGER_SCOOP)) / 100)) {
-				//Applies triple drops
-				for (ItemStack item : block.getDrops()) {
-					block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), item);
+				ItemStack tool = player.getInventory().getItemInMainHand();
+				Material mat =  block.getType();
+				for (ItemStack item : block.getDrops(tool)) {
+					//If silk touch
+					if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+						if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
+							Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
+							if (grassBlock != null) {
+								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(grassBlock, 2));
+							}
+						}
+						else if (mat.equals(XMaterial.MYCELIUM.parseMaterial())) {
+							Material mycelium = XMaterial.MYCELIUM.parseMaterial();
+							if (mycelium != null) {
+								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(mycelium, 2));
+							}
+						}
+						else if (mat.equals(XMaterial.CLAY.parseMaterial())) {
+							Material clay = XMaterial.CLAY.parseMaterial();
+							if (clay != null) {
+								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(clay, 2));
+							}
+						}
+						if (XMaterial.isNewVersion()) {
+							if (mat.equals(XMaterial.PODZOL.parseMaterial())) {
+								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.PODZOL, 2));
+							}
+						}
+						else {
+							if (mat.equals(Material.DIRT)) {
+								if (block.getData() == 2) {
+									block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.DIRT, 2, (short) 2));
+								}
+							}
+						}
+					}
+					//Drop regular item if not silk touch
+					else {
+						ItemStack drop = item.clone();
+						drop.setAmount(2);
+						block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+					}
 				}
 			}
 		}
@@ -123,7 +164,7 @@ public class ExcavationAbilities implements Listener {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					AbilityOptionManager options = AureliumSkills.abilityOptionManager;
 					if (options.isEnabled(Ability.BIGGER_SCOOP)) {
-						biggerScoop(playerSkill, block);
+						biggerScoop(playerSkill, block, player);
 					}
 					if (options.isEnabled(Ability.METAL_DETECTOR)) {
 						metalDetector(playerSkill, block);

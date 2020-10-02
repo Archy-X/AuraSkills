@@ -19,6 +19,7 @@ import com.archyx.aureliumskills.util.MySqlSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -109,10 +110,11 @@ public class SkillsCommand extends BaseCommand {
 			List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(1, 10);
 			sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_HEADER).replace("&", "§"));
 			for (PlayerSkillInstance playerSkill : lb) {
+				OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
 				sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_ENTRY)
 						.replace("&", "§")
 						.replace("$rank$", String.valueOf(lb.indexOf(playerSkill) + 1))
-						.replace("$player_name$", playerSkill.getPlayerName())
+						.replace("$player_name$", player.getName() != null ? player.getName() : "?")
 						.replace("$level$", String.valueOf(playerSkill.getPowerLevel())));
 			}
 		}
@@ -122,10 +124,11 @@ public class SkillsCommand extends BaseCommand {
 				List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(page, 10);
 				sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_HEADER_PAGE).replace("&", "§").replace("$page$", String.valueOf(page)));
 				for (PlayerSkillInstance playerSkill : lb) {
+					OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
 					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_ENTRY)
 							.replace("&", "§")
 							.replace("$rank$", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
-							.replace("$player_name$", playerSkill.getPlayerName())
+							.replace("$player_name$", player.getName() != null ? player.getName() : "?")
 							.replace("$level$", String.valueOf(playerSkill.getPowerLevel())));
 				}
 			}
@@ -135,10 +138,11 @@ public class SkillsCommand extends BaseCommand {
 					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, 1, 10);
 					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_HEADER).replace("&", "§").replace("$skill$", skill.getDisplayName()));
 					for (PlayerSkillInstance playerSkill : lb) {
+						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
 						sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_ENTRY)
 								.replace("&", "§")
 								.replace("$rank$", String.valueOf(lb.indexOf(playerSkill) + 1))
-								.replace("$player_name$", playerSkill.getPlayerName())
+								.replace("$player_name$", player.getName() != null ? player.getName() : "?")
 								.replace("$level$", String.valueOf(playerSkill.getSkillLevel(skill))));
 					}
 				}
@@ -155,10 +159,11 @@ public class SkillsCommand extends BaseCommand {
 					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, page, 10);
 					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_HEADER_PAGE).replace("&", "§").replace("$page$", String.valueOf(page)).replace("$skill$", skill.getDisplayName()));
 					for (PlayerSkillInstance playerSkill : lb) {
+						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
 						sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_ENTRY)
 								.replace("&", "§")
 								.replace("$rank$", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
-								.replace("$player_name$", playerSkill.getPlayerName())
+								.replace("$player_name$", player.getName() != null ? player.getName() : "?")
 								.replace("$level$", String.valueOf(playerSkill.getSkillLevel(skill))));
 					}
 				}

@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -11,6 +12,8 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,6 +23,8 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 public class Luck implements Listener {
@@ -68,49 +73,61 @@ public class Luck implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (OptionL.getBoolean(Option.LUCK_DOUBLE_DROP_ENABLED)) {
+		if (OptionL.getBoolean(Option.LUCK_DOUBLE_DROP_ENABLED) && !event.isCancelled()) {
+			Player player = event.getPlayer();
+			Block block = event.getBlock();
 			//Checks if in disabled world
-			if (AureliumSkills.worldManager.isInDisabledWorld(event.getBlock().getLocation())) {
+			if (AureliumSkills.worldManager.isInDisabledWorld(block.getLocation())) {
 				return;
 			}
 			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getBlock().getLocation())) {
+			if (AureliumSkills.worldManager.isInBlockedWorld(block.getLocation())) {
 				return;
 			}
 			//Checks if in blocked region
 			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {
+				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(block.getLocation())) {
 					return;
 				}
 			}
-			if (event.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
-				if (event.getBlock().getType().isSolid()) {
-					if (!event.isCancelled()) {
-						if (!event.getBlock().hasMetadata("skillsPlaced")) {
-							if (SkillLoader.playerStats.containsKey(event.getPlayer().getUniqueId())) {
-								PlayerStat stat = SkillLoader.playerStats.get(event.getPlayer().getUniqueId());
-								Material mat = event.getBlock().getType();
-								if (mat.equals(Material.STONE) || mat.equals(Material.COBBLESTONE) || mat.equals(Material.SAND) || mat.equals(Material.GRAVEL)
-										|| mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(XMaterial.ANDESITE.parseMaterial()) || mat.equals(XMaterial.DIORITE.parseMaterial())
-										|| mat.equals(XMaterial.GRANITE.parseMaterial())) {
-									if ((double) stat.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) < OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX) / 100) {
-										if (r.nextDouble() < ((double) stat.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER))) {
-											for (ItemStack item : event.getBlock().getDrops()) {
-												World world = event.getBlock().getLocation().getWorld();
-												if (world != null) {
-													world.dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
+			if (player.getGameMode().equals(GameMode.SURVIVAL)) {
+				if (!event.getBlock().hasMetadata("skillsPlaced")) {
+					if (SkillLoader.playerStats.containsKey(event.getPlayer().getUniqueId())) {
+						PlayerStat stat = SkillLoader.playerStats.get(event.getPlayer().getUniqueId());
+						Material mat = block.getType();
+						if (mat.equals(Material.STONE) || mat.equals(Material.COBBLESTONE) || mat.equals(Material.SAND) || mat.equals(Material.GRAVEL)
+								|| mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(XMaterial.ANDESITE.parseMaterial())
+								|| mat.equals(XMaterial.DIORITE.parseMaterial()) || mat.equals(XMaterial.GRANITE.parseMaterial())) {
+							//Calculate chance
+							double chance = stat.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER);
+							if (chance * 100 > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
+								chance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
+							}
+							if (r.nextDouble() < chance) {
+								ItemStack tool = player.getInventory().getItemInMainHand();
+								for (ItemStack item : block.getDrops(tool)) {
+									//If silk touch
+									if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+										if (mat.equals(Material.STONE)) {
+											if (!XMaterial.isNewVersion()) {
+												if (block.getData() == 0) {
+													block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.STONE));
 												}
 											}
-										}
-									} else {
-										if (r.nextDouble() < OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX) / 100) {
-											for (ItemStack item : event.getBlock().getDrops()) {
-												World world = event.getBlock().getLocation().getWorld();
-												if (world != null) {
-													world.dropItemNaturally(event.getBlock().getLocation().add(0.5, 0.5, 0.5), item);
-												}
+											else {
+												block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.STONE));
 											}
 										}
+										else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
+											Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
+											if (grassBlock != null) {
+												block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(grassBlock));
+											}
+										}
+									}
+									//Drop regular item if not silk touch
+									else {
+										block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), item);
 									}
 								}
 							}

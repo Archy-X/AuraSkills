@@ -165,8 +165,8 @@ public class StatsMenu implements InventoryProvider{
 			case LUCK:
 				double luck = ps.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_MODIFIER);
 				double doubleDropChance = (double) ps.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) * 100;
-				if (doubleDropChance > 100.0) {
-					doubleDropChance = 100.0;
+				if (doubleDropChance > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
+					doubleDropChance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
 				}
 				return ChatColor.DARK_GREEN + "+" + nf.format(luck) + " " + Lang.getMessage(Message.LUCK_NAME) + "\n" + ChatColor.DARK_GREEN + Lang.getMessage(Message.DOUBLE_DROP_CHANCE) + ": " + nf.format(doubleDropChance) + "%";
 			case REGENERATION:
