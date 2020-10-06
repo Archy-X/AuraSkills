@@ -1,6 +1,6 @@
 abilities:
   farming:
-    bountiful-harvest:
+    bountiful_harvest:
       name: Bountiful Harvest
       desc: '{0} chance to get double drops from crops.'
       info: '{0}% 2x Drops'
@@ -8,7 +8,7 @@ abilities:
       name: Farmer
       desc: 'Earn {0}% more Farming XP.'
       info: '+{0}% XP'
-    scythe-master:
+    scythe_master:
       name: Sycthe Master
       desc: 'Increases damage from hoes by {0}%'
       info: '+{0}% Hoe Damage'
@@ -16,7 +16,7 @@ abilities:
       name: Geneticist
       desc: 'Increases saturation gain from plant-based foods by {0}.'
       info: '+{0} Saturation'
-    triple-harvest:
+    triple_harvest:
       name: Triple Harvest
       desc: '{0}% chance to get triple drops from crops.'
       info: '{0]% 3x Drops'
@@ -29,20 +29,20 @@ abilities:
       name: Forager
       desc: 'Earn {0}% more Foraging XP.'
       info: '+{0}% XP'
-    axe-master:
+    axe_master:
       name: Axe Master
       desc: 'Increases damage from axes by {0}%'
       info: '+{0}% Axe Damage'
     valor:
       name: Valor
       desc: 'Grants +{0} Strength while holding an axe'
-      mini-desc: '+{0} Strength'
+      info: '+{0} Strength'
     shredder:
       name: Shredder
       desc: '{0}% chance to deal triple durability damage with axes.'
       info: '{0}% 3x Durability Damage'
   mining:
-    lucky-miner:
+    lucky_miner:
       name: Lucky Miner
       desc: '{0}% chance to get double drops from ores.'
       info: '{0}% 2x Drops'
@@ -50,7 +50,7 @@ abilities:
       name: Miner
       desc: 'Earn {0}% more Mining XP.'
       info: '+{0}% XP'
-    pick-master:
+    pick_master:
       name: Pick Master
       desc: 'Deal {0}% more damage with pickaxes.'
       info: '+{0}% Pickaxe Damage'
@@ -58,12 +58,12 @@ abilities:
       name: Stamina
       desc: 'Grants +{0} Toughness while holding a pickaxe'
       info: '+{0} Toughness'
-    hardened-armor:
+    hardened_armor:
       name: Hardened Armor
       desc: '{0}% chance to negate durability damage on armor.'
       info: '{0}% No Durability Loss'
   fishing:
-    lucky-catch:
+    lucky_catch:
       name: Lucky Catch
       desc: '{0}% chance to get double drops from fishing.'
       info: '{0}% 2x Drops'
@@ -71,7 +71,7 @@ abilities:
       name: Fisher
       desc: 'Earn {0}% more Fishing XP'
       info: '+{0}% XP'
-    treasure-hunter:
+    treasure_hunter:
       name: Treasure Hunter
       desc: '{0}% chance to get rare loot from fishing.'
       info: '{0}% Rare Loot'
@@ -79,12 +79,12 @@ abilities:
       name: Grappler
       desc: 'Hook entities with {0}% more speed.'
       info: '+{0}% Hook Speed'
-    epic-catch:
+    epic_catch:
       name: Epic Catch
       desc: '{0}% chance to get epic loot from fishing.'
       info: '{0}% Epic Loot'
   excavation:
-    metal-detector:
+    metal_detector:
       name: Metal Detector
       desc: '{0}% chance to get rare loot from digging.'
       info: '{0}% Rare Loot'
@@ -92,20 +92,20 @@ abilities:
       name: Excavator
       desc: 'Earn {0}% more Excavation XP'
       info: '+{0}% XP'
-    spade-master:
+    spade_master:
       name: Spade Master
       desc: 'Deal {0} more damage with shovels.'
       info: '+{0}% Shovel Damage'
-    bigger-scoop:
+    bigger_scoop:
       name: Bigger Scoop
       desc: '{0}% chance to get triple drops from digging.'
       info: '{0}% 3x Drops'
-    lucky-spades:
+    lucky_spades:
       name: Lucky Spades
       desc: '{0}% chance to get epic loot from digging.'
       info: '{0}% Epic Loot'
   archery:
-    crit-chance:
+    crit_chance:
       name: Crit Chance
       desc: '+{0}% chance to deal a critical hit.'
       info: '+{0}% Crit Chance'
@@ -113,7 +113,7 @@ abilities:
       name: Archer
       desc: 'Earn {0}% more Archery XP.'
       info: '+{0}% XP'
-    bow-master:
+    bow_master:
       name: Bow Master
       desc: 'Deal {0}% more damage with bows.'
       info: '+{0}% Bow Damage'
@@ -134,7 +134,7 @@ abilities:
       name: Defender
       desc: 'Earn {0}% more Defense XP'
       info: '+{0}% XP'
-    mob-master:
+    mob_master:
       name: Mob Master
       desc: 'Reduce incoming damage from mobs by {0}%'
       info: '-{0}% Mob Dmg'
@@ -142,12 +142,12 @@ abilities:
       name: Immunity
       desc: '{0}% chance to completely negate an enemy attack.'
       info: '{0}% Immune'
-    no-debuff:
+    no_debuff:
       name: No Debuff
       desc: '{0}% chance to negate a harmful potion effect from being applied.'
       info: '{0}% No Debuff'
   fighting:
-    crit-damage:
+    crit_damage:
       name: Crit Damage
       desc: 'Increases critical hit damage by {0}%'
       info: '+{0}% Crit Damage'
@@ -155,11 +155,11 @@ abilities:
       name: Fighter
       desc: 'Earn {0}% more Fighting XP'
       info: '+{0}% XP'
-    sword-master:
+    sword_master:
       name: Sword Master
       desc: 'Deal {0}% more damage with swords.'
       info: '+{0}% Sword Damage'
-    first-strike:
+    first_strike:
       name: First Strike
       desc: 'Deal {0}% more damage on the first hit.'
       info: '+{0}% Dmg First Hit'
@@ -168,11 +168,11 @@ abilities:
       name: Bleed
       desc: '{0}% chance to make the enemy bleed for 3 bleed ticks, dealing {1} damage per tick.'
       info: '{0}% Chance, {1} Damage'
-      enemy-bleeding: '&cEnemy Bleeding!'
-      self-bleeding: '&cYou are bleeding!'
-      bleed-stop: '&fThe bleeding has stopped'
+      enemy_bleeding: '&cEnemy Bleeding!'
+      self_bleeding: '&cYou are bleeding!'
+      bleed_stop: '&fThe bleeding has stopped'
   endurance:
-    anti-hunger:
+    anti_hunger:
       name: Anti Hunger
       desc: '{0}% chance to stop hunger loss.'
       info: '{0}% No Hunger Loss'
@@ -180,7 +180,7 @@ abilities:
       name: Runner
       desc: 'Earn {0} more Endurance XP.'
       info: '+{0}% XP'
-    golden-heal:
+    golden_heal:
       name: Golden Heal
       desc: 'Increases regeneration effect health gain by {0}%'
       info: '+{0}% Effect Regen'
@@ -188,12 +188,12 @@ abilities:
       name: Recovery
       desc: 'Increases natural regeneration when at less than half health by {0}%'
       info: '+{0} Low HP Regen'
-    meal-steal:
+    meal_steal:
       name: Meal Steal
       desc: '{0}% chance to steal 1 hunger point when attacking a player.'
       info: '{0}% Hunger Steal'
   agility:
-    light-fall:
+    light_fall:
       name: Light Fall
       desc: 'Reduces all fall damage by {0}%'
       info: '-{0}% Fall Damage'
@@ -201,7 +201,7 @@ abilities:
       name: Jumper
       desc: 'Earn {0}% more Agility XP'
       info: '+{0}% XP'
-    sugar-rush:
+    sugar_rush:
       name: Sugar Rush
       desc: 'Consumed and splashed speed and jump boost potions last {0}% longer.'
       info: '{0}% Longer Speed'
@@ -209,7 +209,7 @@ abilities:
       name: Fleeting
       desc: 'Gain +{0}% movement speed when under 20% health'
       info: '+{0}% Speed'
-    thunder-fall:
+    thunder_fall:
       name: Thunder Fall
       desc: 'When sneaking during a fall, you have a {0}% chance to deal {1}% of the fall damage expected to mobs in a 3 block radius'
       info: '{0}% Chance, {1}% Damage'
@@ -230,7 +230,7 @@ abilities:
       name: Lingering
       desc: 'Lingering potions naturally decay {0}% slower and decay {1}% less per affected entity.'
       info: '-{0}% Natural, -{1}% Entity Decay'
-    wise-effect:
+    wise_effect:
       name: Wise Effect
       desc: 'Gain {0} Wisdom for every unique active potion effect.'
       info: '+{0} Wisdom/Effect'
@@ -244,18 +244,18 @@ commands:
     modifier:
       add:
         added: '{0}{1} &7modifier with level &b{2} &7was added to your item'
-        already-exists: '&eAn armor modifier with stat {0}{1} &ealready exists on your armor! Remove it first with /sk armor modifier remove'
-        must-hold-item: '&eYou must be holding an item to add modifiers!'
+        already_exists: '&eAn armor modifier with stat {0}{1} &ealready exists on your armor! Remove it first with /sk armor modifier remove'
+        must_hold_item: '&eYou must be holding an item to add modifiers!'
       remove:
-        does-not-exist: '&eYour item does not have a {0}{1} &emodifier!'
-        must-hold-item: '&eYou must be holding an item to remove modifiers!'
+        does_not_exist: '&eYour item does not have a {0}{1} &emodifier!'
+        must_hold_item: '&eYou must be holding an item to remove modifiers!'
         removed: '{0}{1} &7modifier was removed from your item'
       list:
         header: '&fArmor modifiers found:'
         entry: '  {0}{1}&f - {2}'
-        must-hold-item: '&eYou must be holding an item to list modifiers!'
+        must_hold_item: '&eYou must be holding an item to list modifiers!'
       removeall:
-        must-hold-item: '&eYou must be holding an item to remove all modifiers!'
+        must_hold_item: '&eYou must be holding an item to remove all modifiers!'
         removed: '&7All armor modifiers have been removed from your item'
   help:
     header: '&bAurelium Skills Help &7({0})'
@@ -264,38 +264,38 @@ commands:
     modifier:
       add:
         added: '{0}{1} &7modifier with level &b{2} &7was added to your item'
-        already-exists: '&eAn item modifier with stat {0}{1} &ealready exists on your armor! Remove it first with /sk item modifier remove'
-        must-hold-item: '&eYou must be holding an item to add modifiers!'
+        already_exists: '&eAn item modifier with stat {0}{1} &ealready exists on your armor! Remove it first with /sk item modifier remove'
+        must_hold_item: '&eYou must be holding an item to add modifiers!'
       remove:
-        does-not-exist: '&eYour item does not have a {0}{1} &emodifier!'
-        must-hold-item: '&eYou must be holding an item to remove modifiers!'
+        does_not_exist: '&eYour item does not have a {0}{1} &emodifier!'
+        must_hold_item: '&eYou must be holding an item to remove modifiers!'
         removed: '{0}{1} &7modifier was removed from your item'
       list:
         header: '&fItem modifiers found:'
         entry: '  {0}{1}&f - {2}'
-        must-hold-item: '&eYou must be holding an item to list modifiers!'
+        must_hold_item: '&eYou must be holding an item to list modifiers!'
       removeall:
-        must-hold-item: '&eYou must be holding an item to remove all modifiers!'
+        must_hold_item: '&eYou must be holding an item to remove all modifiers!'
         removed: '&7All item modifiers have been removed from your item'
   lang: '&7Language set to &b{0}'
   modifier:
     add:
       added: '{0}{1} &7modifier level &b{2} &7 with name &f{3} &7added to player &6{4}'
-      already-exists: '&eModifier with name {0} &ealready exists on player &6{1}&e! Remove it with &6/sk modifier remove {1} {0}'
+      already_exists: '&eModifier with name {0} &ealready exists on player &6{1}&e! Remove it with &6/sk modifier remove {1} {0}'
     remove:
-      not-found: '&eModifier {0} &7enot found for player &6{1}'
+      not_found: '&eModifier {0} &7enot found for player &6{1}'
       removed: '&7Modifier &f{0} &7removed from player &6{1}'
     list:
-      all-stats-header: '&7Stat modifiers for player &6{0}:'
-      all-stats-entry: '  &f{0} - {1}{2} &fLevel &6{3}'
-      one-stat-header: '&7Stat modifiers ({0}{1}&7) for player &6{2}:'
-      one-stat-entry: '  &f{0} - {1}{2} &fLevel &6{3}'
-      players-only: '&eOnly players can list their own modifiers! Try specifying a player'
+      all_stats_header: '&7Stat modifiers for player &6{0}:'
+      all_stats_entry: '  &f{0} - {1}{2} &fLevel &6{3}'
+      one_stat_header: '&7Stat modifiers ({0}{1}&7) for player &6{2}:'
+      one_stat_entry: '  &f{0} - {1}{2} &fLevel &6{3}'
+      players_only: '&eOnly players can list their own modifiers! Try specifying a player'
     removeall:
-      removed-all-stats: '&7Removed &b{0} &7stat modifiers from player &6{1}'
-      removed-one-stat: '&7Removed &b{0} {1}{2} &7modifiers from player &6{3}'
-      players-only: '&eOnly players can remove their own modifiers! Try specifying a player'
-    no-profile: '&ePlayer does not have a stats profile!'
+      removed_all_stats: '&7Removed &b{0} &7stat modifiers from player &6{1}'
+      removed_one_stat: '&7Removed &b{0} {1}{2} &7modifiers from player &6{3}'
+      players_only: '&eOnly players can remove their own modifiers! Try specifying a player'
+    no_profile: '&ePlayer does not have a stats profile!'
   multiplier: '&fXP multiplier for &6{0}&f: &b{1}x / +{2}%'
   rank:
     header: '&b&lYour Skill Rankings'
@@ -303,39 +303,39 @@ commands:
     entry: '&b{0}&7: &f#{1} of {2}'
   reload: '&aConfig reloaded!'
   save:
-    already-saving: '&eData is already saving!'
-    mysql-not-enabled: '&eMySQL wasn't enabled at server startup, saving to file instead!'
+    already_saving: '&eData is already saving!'
+    mysql_not_enabled: '&eMySQL wasn't enabled at server startup, saving to file instead!'
     saved: '&aSkill data saved!'
   skill:
     reset:
-      reset-all: '&7All Skills set to level &b1 &7for player &6{0}'
-      reset-skill: '&7Skill &b{0} &7set to level &b1 &7for player &6{1}'
+      reset_all: '&7All Skills set to level &b1 &7for player &6{0}'
+      reset_skill: '&7Skill &b{0} &7set to level &b1 &7for player &6{1}'
     setall:
-      at-least-one: '&eLevel must be at least 1!'
+      at_least_one: '&eLevel must be at least 1!'
       set: '&7All skills set to level &b{0} &7for player &6{1}'
     setlevel:
-      at-least-one: '&eLevel must be at least 1!'
+      at_least_one: '&eLevel must be at least 1!'
       set: '&7Skill &b{0} &7set to level &b{1} &7for player &6{2}'
   toggle:
     enabled: '&aYour skills action bar has been enabled'
     disabled: '&cYour skills action bar has been disabled'
-    not-enabled: '&eSkills action bar is not enabled on this server!'
+    not_enabled: '&eSkills action bar is not enabled on this server!'
   top:
-    power-entry: '&f{0}. &b{1} &f- {2}'
-    power-header: '&f--==&b&lAll Skills Leaderboard&f==--'
-    power-header-page: '&f--==&b&lAll Skills Leaderboard &f(Page {0})==--'
-    skill-header: '&f--==&b&l{0} Leaderboard&f==--'
-    skill-header-page: '&f--==&b&l{0} Leaderboard &f(Page {1})==--'
-    skill-entry: '&f{0}. &b{1} &f- {2}'
+    power_entry: '&f{0}. &b{1} &f- {2}'
+    power_header: '&f--==&b&lAll Skills Leaderboard&f==--'
+    power_header_page: '&f--==&b&lAll Skills Leaderboard &f(Page {0})==--'
+    skill_header: '&f--==&b&l{0} Leaderboard&f==--'
+    skill_header_page: '&f--==&b&l{0} Leaderboard &f(Page {1})==--'
+    skill_entry: '&f{0}. &b{1} &f- {2}'
     usage: '&eUsage: &a/sk top &f<page> &7or &a/sk top &f[skill] <page>'
   updateleaderboards:
-    already-updating: '&eLeaderboard is already updating!'
+    already_updating: '&eLeaderboard is already updating!'
     updated: '&aLeaderboard updated!'
   xp:
     add: '&7Added &b{0} {1} &7XP to player &7{2}'
     set: '&7Set &b{0} &7XP for player &7{1} &7to {2}'
     remove: '&7Removed &b{0} {1} &7XP from player &6{2}'
-  unknown-skill: '&eUnknown skill!'
+  unknown_skill: '&eUnknown skill!'
 menus:
   common:
     close: '&cClose'
@@ -398,12 +398,32 @@ menus:
 mana_abilities:
   replenish:
     name: Replenish
-    desc: 'Replants crops automatically for {0} seconds &e[Right Click to Activate]'
-    info:
-    raise:
-    lower:
-    activated:
-    worn-off:
+    desc: 'Replants crops automatically for {0} seconds. &e[Right Click to Activate]'
+    raise: '&7You raise your hoe'
+    lower: '&7You lower your hoe'
+    activated: '&6Replenish Activated! &7(-{0} {mana})'
+    worn_off: '&6Replenish has worn off'
+  treecapitator:
+    name: Treecapitator
+    desc: 'Breaks entire trees instantly for {0} seconds. &e[Right Click to Activate]'
+    raise: '&7You raise your axe'
+    lower: '&7You lower your axe'
+    activated: '&6Treecapitator Activated! &7(-{0} {mana})'
+    worn_off: '&6Treecapitator has worn off'
+  speed_mine:
+    name: Speed Mine
+    desc: 'Gives Haste 10 for {0} seconds. &e[Right Click to Activate]'
+    raise: '&7You raise your pickaxe'
+    lower: '&7You lower your pickaxe'
+    activated: '&6Speed Mine Activated! &7(-{0} {mana})'
+    worn_off: '&7Speed Mine has worn off'
+  absorption:
+    name: Absorption
+    desc: 'Heal {0}% of the damage you take for {1} seconds.'
+    raise: '&7You raise your shield'
+    lower: '&7You lower your shield'
+    activated: '&6Absorption Activated! &7(-{0} {mana})'
+    worn_off: '&6Absorption has worn off'
 skills:
   farming:
     name: Farming
