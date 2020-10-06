@@ -477,7 +477,7 @@ public class SkillsCommand extends BaseCommand {
 							message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ALL_STATS_LINE), modifier, target);
 						}
 					} else {
-						message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_HEADER), target);
+						message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_HEADER), stat, target);
 						for (String key : targetStat.getModifiers().keySet()) {
 							StatModifier modifier = targetStat.getModifiers().get(key);
 							if (modifier.getStat() == stat) {
@@ -505,7 +505,7 @@ public class SkillsCommand extends BaseCommand {
 						message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ALL_STATS_LINE), modifier, player);
 					}
 				} else {
-					message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_HEADER), player);
+					message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_HEADER), stat, player);
 					for (String key : playerStat.getModifiers().keySet()) {
 						StatModifier modifier = playerStat.getModifiers().get(key);
 						if (modifier.getStat() == stat) {

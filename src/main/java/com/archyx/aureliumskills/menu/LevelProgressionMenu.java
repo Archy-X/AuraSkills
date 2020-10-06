@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.abilities.Ability;
@@ -36,7 +37,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 	private final Player player;
 	private final List<Integer> track;
 	
-	public static int pages = 4;
+	private int pages = 4;
 	
 	public LevelProgressionMenu(Player player, Skill skill) {
 		this.player = player;
@@ -63,8 +64,14 @@ public class LevelProgressionMenu implements InventoryProvider {
 	
 	@Override
 	public void init(Player player, InventoryContents contents) {
-		int currentLevel = SkillLoader.playerSkills.get(this.player.getUniqueId()).getSkillLevel(skill);
-
+		PlayerSkill playerSkill = SkillLoader.playerSkills.get(this.player.getUniqueId());
+		int currentLevel;
+		if (playerSkill != null) {
+			 currentLevel = playerSkill.getSkillLevel(skill);
+		}
+		else {
+			currentLevel = 1;
+		}
 		if (OptionL.getBoolean(Option.LEVEL_PROGRESSION_MENU_FILL_PANE)) {
 			contents.fill(ClickableItem.empty(MenuItems.getEmptyPane()));
 		}

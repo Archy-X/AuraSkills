@@ -146,7 +146,7 @@ messages:
       RU: Основные навыки
       VN: Kĩ năng chính
     secondary-skills:
-      EN: Secondary Skils
+      EN: Secondary Skills
       PL: Poboczne Umiejetnosci
       RU: Вторичный навыки
       VN: Kĩ năng phụ
@@ -605,7 +605,7 @@ messages:
           VN: Có _% tỉ lệ thu hoạch x2
         mini-desc:
           EN: _% 2x Drops
-          PL: _% 3x Dropow
+          PL: _% 2x Dropow
           VN: _% Thu hoạch x2
       forager:
         name:
@@ -1079,14 +1079,14 @@ messages:
       removed:
         EN: '&7Modifier &f$modifier_name$ &7removed from player &6$player_name$'
       not-found:
-        EN: '&eModifier &7$modifier_name$ &enot fond for player &6$player_name$'
+        EN: '&eModifier &7$modifier_name$ &enot found for player &6$player_name$'
     modifier-list:
       all-stats-header:
         EN: '&7Stat modifiers for player &6$player_name$:'
       all-stats-line:
         EN: '  &f$modifier_name$ - $stat_color$$stat_name$ &fLevel &6$modifier_value$'
       one-stat-header:
-        EN: '&fStat modifiers ($stat_color$$stat_name$&f) for player &6$player_name$:'
+        EN: '&7Stat modifiers ($stat_color$$stat_name$&7) for player &6$player_name$:'
       one-stat-line:
         EN: '  &f$modifier_name$ - $stat_color$$stat_name$ &fLevel &6$modifier_value$'
       players-only:
@@ -1097,7 +1097,7 @@ messages:
       removed-one-stat:
         EN: '&7Removed &b$removed$ $stat_color$$stat_name$ &7modifiers from player &6$player_name$'
       players-only:
-        EN: '&eOnly players can removed their own modifiers! Try specifying a player'
+        EN: '&eOnly players can remove their own modifiers! Try specifying a player'
     item-modifier-add:
       added:
         EN: '$stat_color$$stat_name$ &7modifier with level &b$modifier_value$ &7was added to your item'

@@ -1,0 +1,487 @@
+abilities:
+  farming:
+    bountiful-harvest:
+      name: Bountiful Harvest
+      desc: '{0} chance to get double drops from crops.'
+      info: '{0}% 2x Drops'
+    farmer:
+      name: Farmer
+      desc: 'Earn {0}% more Farming XP.'
+      info: '+{0}% XP'
+    scythe-master:
+      name: Sycthe Master
+      desc: 'Increases damage from hoes by {0}%'
+      info: '+{0}% Hoe Damage'
+    geneticist:
+      name: Geneticist
+      desc: 'Increases saturation gain from plant-based foods by {0}.'
+      info: '+{0} Saturation'
+    triple-harvest:
+      name: Triple Harvest
+      desc: '{0}% chance to get triple drops from crops.'
+      info: '{0]% 3x Drops'
+  foraging:
+    lumberjack:
+      name: Lumberjack
+      desc: '{0}% chance to get double drops from logs.'
+      info: '{0}% 2x Drops'
+    forager:
+      name: Forager
+      desc: 'Earn {0}% more Foraging XP.'
+      info: '+{0}% XP'
+    axe-master:
+      name: Axe Master
+      desc: 'Increases damage from axes by {0}%'
+      info: '+{0}% Axe Damage'
+    valor:
+      name: Valor
+      desc: 'Grants +{0} Strength while holding an axe'
+      mini-desc: '+{0} Strength'
+    shredder:
+      name: Shredder
+      desc: '{0}% chance to deal triple durability damage with axes.'
+      info: '{0}% 3x Durability Damage'
+  mining:
+    lucky-miner:
+      name: Lucky Miner
+      desc: '{0}% chance to get double drops from ores.'
+      info: '{0}% 2x Drops'
+    miner:
+      name: Miner
+      desc: 'Earn {0}% more Mining XP.'
+      info: '+{0}% XP'
+    pick-master:
+      name: Pick Master
+      desc: 'Deal {0}% more damage with pickaxes.'
+      info: '+{0}% Pickaxe Damage'
+    stamina:
+      name: Stamina
+      desc: 'Grants +{0} Toughness while holding a pickaxe'
+      info: '+{0} Toughness'
+    hardened-armor:
+      name: Hardened Armor
+      desc: '{0}% chance to negate durability damage on armor.'
+      info: '{0}% No Durability Loss'
+  fishing:
+    lucky-catch:
+      name: Lucky Catch
+      desc: '{0}% chance to get double drops from fishing.'
+      info: '{0}% 2x Drops'
+    fisher:
+      name: Fisher
+      desc: 'Earn {0}% more Fishing XP'
+      info: '+{0}% XP'
+    treasure-hunter:
+      name: Treasure Hunter
+      desc: '{0}% chance to get rare loot from fishing.'
+      info: '{0}% Rare Loot'
+    grappler:
+      name: Grappler
+      desc: 'Hook entities with {0}% more speed.'
+      info: '+{0}% Hook Speed'
+    epic-catch:
+      name: Epic Catch
+      desc: '{0}% chance to get epic loot from fishing.'
+      info: '{0}% Epic Loot'
+  excavation:
+    metal-detector:
+      name: Metal Detector
+      desc: '{0}% chance to get rare loot from digging.'
+      info: '{0}% Rare Loot'
+    excavator:
+      name: Excavator
+      desc: 'Earn {0}% more Excavation XP'
+      info: '+{0}% XP'
+    spade-master:
+      name: Spade Master
+      desc: 'Deal {0} more damage with shovels.'
+      info: '+{0}% Shovel Damage'
+    bigger-scoop:
+      name: Bigger Scoop
+      desc: '{0}% chance to get triple drops from digging.'
+      info: '{0}% 3x Drops'
+    lucky-spades:
+      name: Lucky Spades
+      desc: '{0}% chance to get epic loot from digging.'
+      info: '{0}% Epic Loot'
+  archery:
+    crit-chance:
+      name: Crit Chance
+      desc: '+{0}% chance to deal a critical hit.'
+      info: '+{0}% Crit Chance'
+    archer:
+      name: Archer
+      desc: 'Earn {0}% more Archery XP.'
+      info: '+{0}% XP'
+    bow-master:
+      name: Bow Master
+      desc: 'Deal {0}% more damage with bows.'
+      info: '+{0}% Bow Damage'
+    piercing:
+      name: Piercing
+      desc: '{0}% chance for arrows to pierce through mobs.'
+      info: '{0}% Pierce Chance'
+    stun:
+      name: Stun
+      desc: '{0}% chance to decreases enemy movement speed by 20% for 2 seconds.'
+      info: '{0}% Stun Chance'
+  defense:
+    shielding:
+      name: Shielding
+      desc: 'Reduce incoming damage by {0}% while sneaking.'
+      info: '-{0}% Incoming Dmg Sneaking'
+    defender:
+      name: Defender
+      desc: 'Earn {0}% more Defense XP'
+      info: '+{0}% XP'
+    mob-master:
+      name: Mob Master
+      desc: 'Reduce incoming damage from mobs by {0}%'
+      info: '-{0}% Mob Dmg'
+    immunity:
+      name: Immunity
+      desc: '{0}% chance to completely negate an enemy attack.'
+      info: '{0}% Immune'
+    no-debuff:
+      name: No Debuff
+      desc: '{0}% chance to negate a harmful potion effect from being applied.'
+      info: '{0}% No Debuff'
+  fighting:
+    crit-damage:
+      name: Crit Damage
+      desc: 'Increases critical hit damage by {0}%'
+      info: '+{0}% Crit Damage'
+    fighter:
+      name: Fighter
+      desc: 'Earn {0}% more Fighting XP'
+      info: '+{0}% XP'
+    sword-master:
+      name: Sword Master
+      desc: 'Deal {0}% more damage with swords.'
+      info: '+{0}% Sword Damage'
+    first-strike:
+      name: First Strike
+      desc: 'Deal {0}% more damage on the first hit.'
+      info: '+{0}% Dmg First Hit'
+      dealt: '&cFirst Strike Dealt!'
+    bleed:
+      name: Bleed
+      desc: '{0}% chance to make the enemy bleed for 3 bleed ticks, dealing {1} damage per tick.'
+      info: '{0}% Chance, {1} Damage'
+      enemy-bleeding: '&cEnemy Bleeding!'
+      self-bleeding: '&cYou are bleeding!'
+      bleed-stop: '&fThe bleeding has stopped'
+  endurance:
+    anti-hunger:
+      name: Anti Hunger
+      desc: '{0}% chance to stop hunger loss.'
+      info: '{0}% No Hunger Loss'
+    runner:
+      name: Runner
+      desc: 'Earn {0} more Endurance XP.'
+      info: '+{0}% XP'
+    golden-heal:
+      name: Golden Heal
+      desc: 'Increases regeneration effect health gain by {0}%'
+      info: '+{0}% Effect Regen'
+    recovery:
+      name: Recovery
+      desc: 'Increases natural regeneration when at less than half health by {0}%'
+      info: '+{0} Low HP Regen'
+    meal-steal:
+      name: Meal Steal
+      desc: '{0}% chance to steal 1 hunger point when attacking a player.'
+      info: '{0}% Hunger Steal'
+  agility:
+    light-fall:
+      name: Light Fall
+      desc: 'Reduces all fall damage by {0}%'
+      info: '-{0}% Fall Damage'
+    jumper:
+      name: Jumper
+      desc: 'Earn {0}% more Agility XP'
+      info: '+{0}% XP'
+    sugar-rush:
+      name: Sugar Rush
+      desc: 'Consumed and splashed speed and jump boost potions last {0}% longer.'
+      info: '{0}% Longer Speed'
+    fleeting:
+      name: Fleeting
+      desc: 'Gain +{0}% movement speed when under 20% health'
+      info: '+{0}% Speed'
+    thunder-fall:
+      name: Thunder Fall
+      desc: 'When sneaking during a fall, you have a {0}% chance to deal {1}% of the fall damage expected to mobs in a 3 block radius'
+      info: '{0}% Chance, {1}% Damage'
+  alchemy:
+    alchemist:
+      name: Alchemist
+      desc: 'Potions you brew have a {0}% longer duration.'
+      info: '+{0}% Potion Duration'
+    brewer:
+      name: Brewer
+      desc: 'Earn {0}% more Alchemy XP'
+      info: '+{0}% XP'
+    splasher:
+      name: Splasher
+      desc: 'Potions you splash gain {0}% longer duration for each player affected.'
+      info: '+{0}% Duration/Player'
+    lingering:
+      name: Lingering
+      desc: 'Lingering potions naturally decay {0}% slower and decay {1}% less per affected entity.'
+      info: '-{0}% Natural, -{1}% Entity Decay'
+    wise-effect:
+      name: Wise Effect
+      desc: 'Gain {0} Wisdom for every unique active potion effect.'
+      info: '+{0} Wisdom/Effect'
+action_bar:
+  idle: '&c{0}/{1} {hp}                &b{2}/{3} {mana}'
+  xp: '&c{0}/{1} {hp}  &6+{2} {3} {xp} &7({4}/{5} {xp})  &b{6}/{7} {mana}'
+  maxed: '&c{0}/{1} {hp}  &6+{2} {3} {xp} &7(MAXED)  &b{4}/{5} {mana}'
+commands:
+  prefix: '&8[&bSkills&8] '
+  armor:
+    modifier:
+      add:
+        added: '{0}{1} &7modifier with level &b{2} &7was added to your item'
+        already-exists: '&eAn armor modifier with stat {0}{1} &ealready exists on your armor! Remove it first with /sk armor modifier remove'
+        must-hold-item: '&eYou must be holding an item to add modifiers!'
+      remove:
+        does-not-exist: '&eYour item does not have a {0}{1} &emodifier!'
+        must-hold-item: '&eYou must be holding an item to remove modifiers!'
+        removed: '{0}{1} &7modifier was removed from your item'
+      list:
+        header: '&fArmor modifiers found:'
+        entry: '  {0}{1}&f - {2}'
+        must-hold-item: '&eYou must be holding an item to list modifiers!'
+      removeall:
+        must-hold-item: '&eYou must be holding an item to remove all modifiers!'
+        removed: '&7All armor modifiers have been removed from your item'
+  help:
+    header: '&bAurelium Skills Help &7({0})'
+    entry: '&e/{0} {1} &7- &b{1}'
+  item:
+    modifier:
+      add:
+        added: '{0}{1} &7modifier with level &b{2} &7was added to your item'
+        already-exists: '&eAn item modifier with stat {0}{1} &ealready exists on your armor! Remove it first with /sk item modifier remove'
+        must-hold-item: '&eYou must be holding an item to add modifiers!'
+      remove:
+        does-not-exist: '&eYour item does not have a {0}{1} &emodifier!'
+        must-hold-item: '&eYou must be holding an item to remove modifiers!'
+        removed: '{0}{1} &7modifier was removed from your item'
+      list:
+        header: '&fItem modifiers found:'
+        entry: '  {0}{1}&f - {2}'
+        must-hold-item: '&eYou must be holding an item to list modifiers!'
+      removeall:
+        must-hold-item: '&eYou must be holding an item to remove all modifiers!'
+        removed: '&7All item modifiers have been removed from your item'
+  lang: '&7Language set to &b{0}'
+  modifier:
+    add:
+      added: '{0}{1} &7modifier level &b{2} &7 with name &f{3} &7added to player &6{4}'
+      already-exists: '&eModifier with name {0} &ealready exists on player &6{1}&e! Remove it with &6/sk modifier remove {1} {0}'
+    remove:
+      not-found: '&eModifier {0} &7enot found for player &6{1}'
+      removed: '&7Modifier &f{0} &7removed from player &6{1}'
+    list:
+      all-stats-header: '&7Stat modifiers for player &6{0}:'
+      all-stats-entry: '  &f{0} - {1}{2} &fLevel &6{3}'
+      one-stat-header: '&7Stat modifiers ({0}{1}&7) for player &6{2}:'
+      one-stat-entry: '  &f{0} - {1}{2} &fLevel &6{3}'
+      players-only: '&eOnly players can list their own modifiers! Try specifying a player'
+    removeall:
+      removed-all-stats: '&7Removed &b{0} &7stat modifiers from player &6{1}'
+      removed-one-stat: '&7Removed &b{0} {1}{2} &7modifiers from player &6{3}'
+      players-only: '&eOnly players can remove their own modifiers! Try specifying a player'
+    no-profile: '&ePlayer does not have a stats profile!'
+  multiplier: '&fXP multiplier for &6{0}&f: &b{1}x / +{2}%'
+  rank:
+    header: '&b&lYour Skill Rankings'
+    power: '&ePower &7(All Skills): &f#{0} of {1}'
+    entry: '&b{0}&7: &f#{1} of {2}'
+  reload: '&aConfig reloaded!'
+  save:
+    already-saving: '&eData is already saving!'
+    mysql-not-enabled: '&eMySQL wasn't enabled at server startup, saving to file instead!'
+    saved: '&aSkill data saved!'
+  skill:
+    reset:
+      reset-all: '&7All Skills set to level &b1 &7for player &6{0}'
+      reset-skill: '&7Skill &b{0} &7set to level &b1 &7for player &6{1}'
+    setall:
+      at-least-one: '&eLevel must be at least 1!'
+      set: '&7All skills set to level &b{0} &7for player &6{1}'
+    setlevel:
+      at-least-one: '&eLevel must be at least 1!'
+      set: '&7Skill &b{0} &7set to level &b{1} &7for player &6{2}'
+  toggle:
+    enabled: '&aYour skills action bar has been enabled'
+    disabled: '&cYour skills action bar has been disabled'
+    not-enabled: '&eSkills action bar is not enabled on this server!'
+  top:
+    power-entry: '&f{0}. &b{1} &f- {2}'
+    power-header: '&f--==&b&lAll Skills Leaderboard&f==--'
+    power-header-page: '&f--==&b&lAll Skills Leaderboard &f(Page {0})==--'
+    skill-header: '&f--==&b&l{0} Leaderboard&f==--'
+    skill-header-page: '&f--==&b&l{0} Leaderboard &f(Page {1})==--'
+    skill-entry: '&f{0}. &b{1} &f- {2}'
+    usage: '&eUsage: &a/sk top &f<page> &7or &a/sk top &f[skill] <page>'
+  updateleaderboards:
+    already-updating: '&eLeaderboard is already updating!'
+    updated: '&aLeaderboard updated!'
+  xp:
+    add: '&7Added &b{0} {1} &7XP to player &7{2}'
+    set: '&7Set &b{0} &7XP for player &7{1} &7to {2}'
+    remove: '&7Removed &b{0} {1} &7XP from player &6{2}'
+  unknown-skill: '&eUnknown skill!'
+menus:
+  common:
+    close: '&cClose'
+    level: '&7Level: &e{0}'
+    progress_to_level: '&7Progress to Level {0}: &e{1}%\n  &7{2}/{3} {xp}'
+    ability_levels: '&7Ability Levels:\n  {0}\n  {1}\n  {2}\n  {3}\n  {4}'
+    ability_level_entry: '&6{0} {1} &8({2})'
+    ability_level_entry_locked: '&8&m{0}'
+    primary_stat: '&7Primary Stat: {1}{0}'
+    secondary_stat: '&7Secondary Stat: {1}{0}'
+    mana_ability: '&d&l{0} &9{1} {2}\n &7Duration: &a{3}s &7Mana Cost: &b{4} &7Cooldown: &e{5}s'
+  skills_menu:
+    your_skills: '&bYour Skills - &6{0}'
+    your_skills_desc: '&7Upgrade Skills by doing various tasks\nto unlock valuable stat boosts,\nabilities, and more!'
+    your_skills_hover: '&eHover over a Skill for more information!'
+    your_skills_click: '&eClick on a Skill to view level progression!'
+    skill_click: '&eClick to view Level Progression!'
+  level_progression_menu:
+    your_ranking: '&eYour Skill Ranking'
+    rank_out_of: '&fYou are ranked &6{0}&f out of {1} players'
+    rank_percent: '&fYou are in the top &6{0}%&f of players'
+    back: '&aGo Back'
+    back_click: '&7Back to Skills Menu'
+    next_page: '&6Next Page'
+    next_page_click: '&eClick to go to next page'
+    previous_page: '&6Previous Page'
+    previous_page_click: '&eClick to go to previous page'
+    level_unlocked: '&aLevel {0}'
+    level_in_progress: '&eLevel {0}'
+    level_lock: '&cLevel {0}'
+    level_number: '&7Level &f{0}'
+    unlocked: '&aUNLOCKED'
+    in_progress: '&eIN PROGRESS'
+    locked: '&cLOCKED'
+    rewards_one: '&7Rewards:\n  {0}+{1} {2} {3}'
+    rewards_two: '&7Rewards:\n  {0}+{1} {2} {3}\n  {4}+{5} {6} {7}'
+    ability_unlock: '&6{0} &a&lAbility Unlock\n&7{  1}'
+    ability_level: '&6{0} {1}\n&7{  2}'
+    mana_ability_unlock: '&9{0} &d&lMana Ability Unlock\n&7{  1}'
+    mana_ability_level: '&9{0} {1}\n&7{  2}'
+    progress: '&7Progress: &e{0}%\n  &7{1}/{2} {xp}'
+  stats_menu:
+    player_stat_entry: ' {0}{1} {2} &f{3}'
+    primary_skills_two: '&7Primary Skills: &f{0}, {1}'
+    primary_skills_three: '&7Primary Skills: &f{0}, {1}, {3}'
+    secondary_skills_two: '&7Secondary Skills: &f{0}, {1}'
+    secondary_skills_three: '&7Secondary Skills: &f{0}, {1}, {3}'
+    your_level: '&7Your Level: {0}{1}'
+    attack_damage: '&4+{0} Attack Damage'
+    hp: '&c+{0} {hp}'
+    saturated_regen: '&6+{0} Saturated Regen'
+    full_hunger_regen: '&6+{0} Full Hunger Regen'
+    almost_full_hunger_regen: '&6+{0} Almost Full Hunger Regen'
+    mana_regen: '&b+{0} Mana Regen'
+    luck: '&2+{0} Luck'
+    double_drop_chance: '&2Double Drop Chance: {0}%'
+    xp_gain: '&9+{0}% {xp} Gain'
+    anvil_cost_reduction: '&9Anvil Cost Reduction: {0}'
+    incoming_damage: '&5-{0}% Incoming Damage'
+mana_abilities:
+  replenish:
+    name: Replenish
+    desc: 'Replants crops automatically for {0} seconds &e[Right Click to Activate]'
+    info:
+    raise:
+    lower:
+    activated:
+    worn-off:
+skills:
+  farming:
+    name: Farming
+    desc: '&7Harvest crops to earn Farming {xp}'
+  foraging:
+    name: Foraging
+    desc: '&7Cut trees to earn Foraging {xp}'
+  mining:
+    name: Mining
+    desc: '&7Mine stone and ores to earn Mining {xp}'
+  fishing:
+    name: Fishing
+    desc: '&7Catch fish to earn Fishing {xp}'
+  excavation:
+    name: Excavation
+    desc: '&7Dig with a shovel to earn Excavation {xp}'
+  archery:
+    name: Archery
+    desc: '&7Shoot mobs and players with a bow to\nearn Archery {xp}'
+  defense:
+    name: Defense
+    desc: '&7Take damage from entities to earn Defense {xp}'
+  fighting:
+    name: Fighting
+    desc: '&7Fight mobs with melee weapons to earn\nFighting {xp}'
+  endurance:
+    name: Endurance
+    desc: '&7Walk and run to earn Endurance {xp}'
+  agility:
+    name: Agility
+    desc: '&7Jump and take fall damage to earn\n Agility {xp}'
+  alchemy:
+    name: Alchemy
+    desc: '&7Brew potions to earn Alchemy {xp}'
+  enchanting:
+    name: Enchanting
+    desc: '&7Enchant items and books to earn\nEnchanting {xp}'
+  sorcery:
+    name: Sorcery
+    desc: '&7Cast spells to earn Sorcery {xp}'
+  healing:
+    name: Healing
+    desc: '&7Drink and splash potions to earn\n Healing {xp}'
+  forging:
+    name: Forging
+    desc: '&7Combine and apply books in an anvil to\nearn Forging {xp}'
+stats:
+  strength:
+    name: Strength
+    desc: '&7Strength increases your attack damage\nwith various different weapons'
+    color: '&4'
+    symbol: '➽'
+  health:
+    name: Health
+    desc: '&7Health increases the amount of {hp} you\nhave, allowing you to last longer in\nfights'
+    color: '&c'
+    symbol: '❤'
+  regeneration:
+    name: Regeneration
+    desc: '&7Regeneration increases how fast you\nrecover both health and mana'
+    color: '&6'
+    symbol: '❥'
+  luck:
+    name: Luck
+    desc: '&7Luck increases your chances of getting\nrare loot from mobs, fishing, and more'
+    color: '&2'
+    symbol: '☘'
+  wisdom:
+    name: Wisdom
+    desc: '&7Wisdom increases your mana pool, the\nstrength of magical attacks, and\nmagical luck'
+    color: '&9'
+    symbol: '✿'
+  toughness:
+    name: Toughness
+    desc: '&7Toughness increases the amount of\ndamage reduced from enemy attacks'
+    color: '&5'
+    symbol: '✦'
+units:
+  mana: Mana
+  hp: HP
+  xp: XP

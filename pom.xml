@@ -58,6 +58,9 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <outputFile>H:\Minecraft Local Server\1.12.2\plugins\${project.artifactId}-${project.version}-shaded.jar</outputFile>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
