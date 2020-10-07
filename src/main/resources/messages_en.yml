@@ -381,6 +381,7 @@ menus:
     close: '&cClose'
     level: '&7Level: &e{0}'
     progress_to_level: '&7Progress to Level {0}: &e{1}%\n  &7{2}/{3} {xp}'
+    max_level: '&6MAX LEVEL'
     ability_levels: '&7Ability Levels:\n  {0}\n  {1}\n  {2}\n  {3}\n  {4}'
     ability_level_entry: '&6{0} {1} &8({2})'
     ability_level_entry_locked: '&8&m{0}'

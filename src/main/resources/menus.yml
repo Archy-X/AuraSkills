@@ -1,0 +1,71 @@
+skills_menu:
+  title: Your Skills
+  rows: 5
+  fill:
+    enabled: true
+    material: BLACK_STAINED_GLASS_PANE
+  items:
+    your_skills:
+      row: 0
+      column: 0
+      material: DIAMOND_AXE
+      display_name: '{your_skills}'
+      lore:
+        - '{your_skills_desc}'
+        - ' '
+        - '{your_skills_hover}'
+        - '{your_skills_click}'
+    close:
+      row: 4
+      column: 8
+      material: BARRIER
+      display_name: '{close}'
+  templates:
+    skill:
+      material:
+        - farming DIAMOND_HOE
+        - foraging STONE_AXE
+        - mining IRON_PICKAXE
+        - fishing FISHING_ROD
+        - excavation GOLDEN_SHOVEL
+        - archery BOW
+        - defense CHAINMAIL_CHESTPLATE
+        - fighting DIAMOND_SWORD
+        - endurance GOLDEN_APPLE
+        - agility FEATEHR
+        - alchemy POTION potion_type:INSTANT_HEAL
+        - enchanting ENCHANTING_TABLE
+        - sorcery BLAZE_ROD
+        - healing SPLASH_POTION potion_type:INSTANT_HEAL
+        - forging ANVIL
+      display_name: '&b{skill} &3{level}'
+      lore:
+        - '{skill_desc}'
+        - ' '
+        - '{primary_stat}'
+        - '{secondary_stat}'
+        - ' '
+        - '{ability_levels}'
+        - ' '
+        - '{mana_ability}'
+        - ' '
+        - '{level}'
+        - '{progress_to_level}||{max_level}'
+        - ' '
+        - '{skill_click}'
+      pos:
+        - farming 1 2
+        - foraging 1 3
+        - mining 1 4
+        - fishing 1 5
+        - excavation 1 6
+        - archery 2 2
+        - defense 2 3
+        - fighting 2 4
+        - endurance 2 5
+        - agility 2 6
+        - alchemy 3 2
+        - enchanting 3 3
+        - sorcery 3 4
+        - healing 3 5
+        - forging 3 6
