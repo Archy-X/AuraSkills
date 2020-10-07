@@ -97,7 +97,7 @@ stats_menu:
         - luck GREEN_STAINED_GLASS_PANE
         - wisdom BLUE_STAINED_GLASS_PANE
         - toughness PURPLE_STAINED_GLASS_PANE
-      display-name: '{stat_color}{stat_name}'
+      display_name: '{stat_color}{stat_name}'
       lore:
         - '{stat_desc}'
         - ' '
@@ -114,3 +114,115 @@ stats_menu:
         - luck 1 4
         - wisdom 1 5
         - toughness 1 6
+level_progression_menu:
+  title:
+  rows:
+  fill:
+    enabled: false
+    material: BLACK_STAINED_GLASS_PANE
+  items:
+    rank:
+      row: 0
+      column: 1
+      material: PAPER
+      display_name: '{your_ranking}'
+      lore:
+        - '{rank_out_of}'
+        - '{rank_percent}'
+    back:
+      row: 5
+      column: 0
+      material: ARROW
+      display_name: '{back}'
+      lore:
+        - '{back_click}'
+    close:
+      row: 5
+      column: 1
+      material: BARRIER
+      display_name: '{close}'
+    next_page:
+      row: 5
+      column: 8
+      material: ARROW
+      display_name: '{next_page}'
+      lore:
+        - '{next_page_click}'
+    previous_page:
+      row: 5
+      column: 7
+      material: ARROW
+      display_name: '{previous_page}'
+      lore:
+        - '{previous_page_click}'
+    skill:
+      row: 0
+      column: 0
+      material:
+        - farming DIAMOND_HOE
+        - foraging STONE_AXE
+        - mining IRON_PICKAXE
+        - fishing FISHING_ROD
+        - excavation GOLDEN_SHOVEL
+        - archery BOW
+        - defense CHAINMAIL_CHESTPLATE
+        - fighting DIAMOND_SWORD
+        - endurance GOLDEN_APPLE
+        - agility FEATEHR
+        - alchemy POTION potion_type:INSTANT_HEAL
+        - enchanting ENCHANTING_TABLE
+        - sorcery BLAZE_ROD
+        - healing SPLASH_POTION potion_type:INSTANT_HEAL
+        - forging ANVIL
+      display_name: '&b{skill} &3{level}'
+      lore:
+        - '{skill_desc}'
+        - ' '
+        - '{primary_stat}'
+        - '{secondary_stat}'
+        - ' '
+        - '{ability_levels}'
+        - ' '
+        - '{mana_ability}'
+        - ' '
+        - '{level}'
+        - '{progress_to_level}||{max_level}'
+  templates:
+    unlocked:
+      material: LIME_STAINED_GLASS_PANE
+      display_name: '{level_unlocked}'
+      lore:
+        - '{level_number}'
+        - '{rewards_one}||{rewards_two}'
+        - ' '
+        - '{ability_unlock}||{ability_level}'
+        - ' '
+        - '?hasManaAbility{mana_ability_unlock}||{mana_ability_level}'
+        - '?hasManaAbility '
+        - '{unlocked}'
+    in_progress:
+      material: YELLOW_STAINED_GLASS_PANE
+      display_name: '{level_in_progress}'
+      lore:
+        - '{level_number}'
+        - '{rewards_one}||{rewards_two}'
+        - ' '
+        - '{ability_unlock}||{ability_level}'
+        - ' '
+        - '?hasManaAbility{mana_ability_unlock}||{mana_ability_level}'
+        - '?hasManaAbility '
+        - '{progress}'
+        - ' '
+        - '{in_progress}'
+    locked:
+      material: RED_STAINED_GLASS_PANE
+      display_name: '{level_locked}'
+      lore:
+        - '{level_number}'
+        - '{rewards_one}||{rewards_two}'
+        - ' '
+        - '{ability_unlock}||{ability_level}'
+        - ' '
+        - '?hasManaAbility{mana_ability_unlock}||{mana_ability_level}'
+        - '?hasManaAbility '
+        - '{locked}'

@@ -29,9 +29,24 @@ public class ArmorListener implements Listener{
 
     private final List<String> blockedMaterials;
 
+    private static final String[] defBlocked = new String[] {
+            "CHEST", "TRAPPED_CHEST", "ENDER_CHEST",
+            "FURNACE", "WORKBENCH", "CRAFTING_TABLE",
+            "ANVIL", "ENCHANTING_TABLE", "ENCHANTMENT_TABLE",
+            "*SHULKER_BOX", "*BED", "BED_BLOCK",
+            "NOTE_BLOCK", "BREWING_STAND", "HOPPER",
+            "DISPENSER", "DROPPER", "*BUTTON",
+            "REPEATER", "?DIODE", "LEVER",
+            "?COMPARATOR", "*DOOR!?IRON_DOOR", "*FENCE_GATE",
+            "?DAYLIGHT_DETECTOR", "BEACON", "?COMMAND",
+            "CARTOGRAPHY_TABLE", "LECTERN", "GRINDSTONE",
+            "SMITHING_TABLE", "STONECUTTER", "BLAST_FURNACE",
+            "BELL", "SMOKER", "BARREL", "LOOM"
+    };
+
     public ArmorListener(List<String> blockedMaterials){
         this.blockedMaterials = new LinkedList<>();
-        this.blockedMaterials.addAll(Arrays.asList(ArmorBlockedMaterials.getDefBlocked()));
+        this.blockedMaterials.addAll(Arrays.asList(defBlocked));
         this.blockedMaterials.addAll(blockedMaterials);
     }
     //Event Priority is highest because other plugins might cancel the events before we check.
