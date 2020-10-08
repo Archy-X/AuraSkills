@@ -8,6 +8,8 @@ import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.ACFCoreMessage;
+import com.archyx.aureliumskills.lang.ACFMinecraftMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
@@ -305,17 +307,13 @@ public class AureliumSkills extends JavaPlugin{
 		File file = new File(getDataFolder(), "messages_" + Lang.language + ".yml");
 		FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 		//Load core messages
-		ConfigurationSection core = config.getConfigurationSection("acf.core");
-		if (core != null) {
-			for (String key : core.getKeys(false)) {
-				commandManager.getLocales().addMessage(new Locale(Lang.language), MessageKeys.valueOf(key.toUpperCase()), core.getString(key));
-			}
+		for (ACFCoreMessage message : ACFCoreMessage.values()) {
+			String path = message.getPath();
+			commandManager.getLocales().addMessage(new Locale(Lang.language), MessageKeys.valueOf(message.name()), config.getString(path));
 		}
-		ConfigurationSection minecraft = config.getConfigurationSection("acf.minecraft");
-		if (minecraft != null) {
-			for (String key : minecraft.getKeys(false)) {
-				commandManager.getLocales().addMessage(new Locale(Lang.language), MinecraftMessageKeys.valueOf(key.toUpperCase()), minecraft.getString(key));
-			}
+		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
+			String path = message.getPath();
+			commandManager.getLocales().addMessage(new Locale(Lang.language), MinecraftMessageKeys.valueOf(message.name()), config.getString(path));
 		}
 	}
 

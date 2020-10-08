@@ -181,16 +181,11 @@ public enum AbilityMessage implements MessageKey {
     WISE_EFFECT_DESC,
     WISE_EFFECT_INFO;
 
-    private final Ability ability;
-    private final String path;
-
-    AbilityMessage() {
-        this.ability = Ability.valueOf(this.name().substring(0, this.name().lastIndexOf("_") - 1));
-        this.path = this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
-    }
+    private final Ability ability = Ability.valueOf(this.name().substring(0, this.name().lastIndexOf("_") - 1));
+    private final String path = "abilities." + ability.getSkill().name().toLowerCase() + "." + ability.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
 
     @Override
     public String getPath() {
-        return "abilities." + ability.getSkill().name().toLowerCase() + "." + ability.name().toLowerCase() + "." + path;
+        return path;
     }
 }
