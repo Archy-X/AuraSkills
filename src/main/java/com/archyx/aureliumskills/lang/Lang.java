@@ -15,7 +15,7 @@ import java.util.Map;
 public class Lang {
 
 	private static final Map<Message, String> messages = new HashMap<>();
-
+	public static String language;
 	private final Plugin plugin;
 	
 	public Lang(Plugin plugin) {
@@ -41,12 +41,12 @@ public class Lang {
 		Bukkit.getLogger().info("[AureliumSkills] Loading languages...");
 		long startTime = System.currentTimeMillis();
 		//Sets default language
-		String language = plugin.getConfig().getString("default-language");
+		language = plugin.getConfig().getString("default-language");
 		//Load file
 		try {
 			File file = new File(plugin.getDataFolder(), "messages_" + language + ".yml");
 			//Load and update file
-			FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file), language);
+			FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
 			//Add message keys
 			for (Message message : Message.values()) {
 				messages.put(message, config.getString(message.getPath().replace('&', '§')));
@@ -59,7 +59,7 @@ public class Lang {
 		}
 	}
 
-	private FileConfiguration updateFile(File file, FileConfiguration config, String language) {
+	private FileConfiguration updateFile(File file, FileConfiguration config) {
 		InputStream stream = plugin.getResource("messages_en.yml");
 		if (stream != null) {
 			int currentVersion = config.getInt("file_version");
