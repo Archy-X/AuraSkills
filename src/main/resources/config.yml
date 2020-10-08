@@ -18,6 +18,8 @@ mysql:
     username: root
     password: pass
 
+default-language: en
+
 # Action Bar Options
 enable-action-bar: true
 

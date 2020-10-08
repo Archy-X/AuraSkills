@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -15,30 +14,25 @@ import java.util.Map;
 
 public class Lang {
 
-	private static final Map<Message, String> defaultLang = new HashMap<>();
-	private static final Map<String, Map<Message, String>> customLang = new HashMap<>();
-	
-	private static String language;
-	private final File file;
-	private FileConfiguration config;
+	private static final Map<Message, String> messages = new HashMap<>();
+
 	private final Plugin plugin;
 	
 	public Lang(Plugin plugin) {
 		this.plugin = plugin;
-		file = new File(plugin.getDataFolder(), "messages.yml");
+		File file = new File(plugin.getDataFolder(), "messages_en.yml");
 		if (!file.exists()) {
-			plugin.saveResource("messages.yml", false);
+			plugin.saveResource("messages_en.yml", false);
 		}
-		config = YamlConfiguration.loadConfiguration(file);
 	}
 
 	public void loadDefaultMessages() {
 		//Loads default message from embedded resource
-		InputStream inputStream = plugin.getResource("messages.yml");
+		InputStream inputStream = plugin.getResource("messages_en.yml");
 		if (inputStream != null) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
 			for (Message message : Message.values()) {
-				defaultLang.put(message, config.getString("messages." + message.getPath() + ".EN"));
+				messages.put(message, config.getString(message.getPath().replace('&', '§')));
 			}
 		}
 	}
@@ -46,82 +40,57 @@ public class Lang {
 	public void loadLanguages() {
 		Bukkit.getLogger().info("[AureliumSkills] Loading languages...");
 		long startTime = System.currentTimeMillis();
-		//Reloads config
-		config = YamlConfiguration.loadConfiguration(file);
 		//Sets default language
-		language = config.getString("default-language");
-		//For every custom language
-		for (String customLanguage : config.getStringList("languages")) {
-			Map<Message, String> customMessages = new HashMap<>();
-			//For every message
-			for (Message message : Message.values()) {
-				if (config.contains("messages." + message.getPath() + "." + customLanguage)) {
-					customMessages.put(message, config.getString("messages." + message.getPath() + "." + customLanguage));
-				}
-			}
-			customLang.put(customLanguage, customMessages);
-		}
-		long endTime = System.currentTimeMillis();
-		long timeElapsed = endTime - startTime;
-		Bukkit.getLogger().info("[AureliumSkills] Loaded " + config.getStringList("languages").size() + " languages in " + timeElapsed + "ms");
-	}
-	
-	public void matchConfig() {
-		config.options().copyDefaults(true);
+		String language = plugin.getConfig().getString("default-language");
+		//Load file
 		try {
-			boolean changesMade = false;
-			InputStream is = plugin.getResource(file.getName());
-			if (is != null) {
-				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
-				ConfigurationSection configurationSection = defConfig.getConfigurationSection("");
-				if (configurationSection != null) {
-					for (String key : configurationSection.getKeys(true)) {
-						if (!config.contains(key)) {
-							config.set(key, defConfig.get(key));
-							if (!changesMade) {
-								changesMade = true;
+			File file = new File(plugin.getDataFolder(), "messages_" + language + ".yml");
+			//Load and update file
+			FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file), language);
+			//Add message keys
+			for (Message message : Message.values()) {
+				messages.put(message, config.getString(message.getPath().replace('&', '§')));
+			}
+			long endTime = System.currentTimeMillis();
+			Bukkit.getLogger().info("[AureliumSkills] Loaded " + config.getStringList("languages").size() + " languages in " + (endTime - startTime) + "ms");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private FileConfiguration updateFile(File file, FileConfiguration config, String language) {
+		InputStream stream = plugin.getResource("messages_en.yml");
+		if (stream != null) {
+			int currentVersion = config.getInt("file_version");
+			FileConfiguration imbConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
+			int imbVersion = imbConfig.getInt("file_version");
+			//If versions do not match
+			if (currentVersion != imbVersion) {
+				try {
+					ConfigurationSection configSection = imbConfig.getConfigurationSection("");
+					int keysAdded = 0;
+					if (configSection != null) {
+						for (String key : configSection.getKeys(true)) {
+							if (!config.contains(key)) {
+								config.set(key, imbConfig.get(key));
+								keysAdded++;
 							}
 						}
 					}
+					config.save(file);
+					Bukkit.getLogger().info("[AureliumSkills] messages_" + language + ".yml was updated to a new file version, " + keysAdded + " new keys were added.");
+				}
+				catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
-            config.save(file);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
-	public boolean setLanguage(String lang) {
-		FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-		if (config.getStringList("languages").contains(lang)) {
-			language = lang;
-			config.set("default-language", lang);
-			try {
-				config.save(file);
-			} catch (IOException e) {
-				Bukkit.getLogger().severe("[AureliumSkills] Error saving messages.yml!");
-			}
-			return true;
 		}
-		return false;
+		return YamlConfiguration.loadConfiguration(file);
 	}
 	
 	public static String getMessage(Message message) {
-		if (customLang.containsKey(language)) {
-			if (customLang.get(language).containsKey(message)) {
-				return customLang.get(language).get(message);
-			}
-			else {
-				return defaultLang.get(message);
-			}
-		}
-		else if (defaultLang.containsKey(message)) {
-			return defaultLang.get(message);
-		}
-		return "";
+		return messages.get(message);
 	}
-	
-	public FileConfiguration getConfig() {
-		return config;
-	}
+
 }

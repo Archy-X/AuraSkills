@@ -41,7 +41,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class AureliumSkills extends JavaPlugin{
 
@@ -117,7 +116,6 @@ public class AureliumSkills extends JavaPlugin{
 		}
 		//Load languages
 		lang = new Lang(this);
-		lang.matchConfig();
 		lang.loadDefaultMessages();
 		lang.loadLanguages();
 		//Load leaderboard
@@ -281,7 +279,6 @@ public class AureliumSkills extends JavaPlugin{
 			}
 			return values;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> lang.getConfig().getStringList("languages"));
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {

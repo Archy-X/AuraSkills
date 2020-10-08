@@ -1,8 +1,6 @@
 package com.archyx.aureliumskills.configuration;
 
 
-import org.bukkit.ChatColor;
-
 public enum Option {
 
     DATA_SAVE_PERIOD("data-save-period", OptionType.INT),

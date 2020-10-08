@@ -1,7 +1,5 @@
 package com.archyx.aureliumskills.skills;
 
-import com.archyx.aureliumskills.skills.abilities.Ability;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

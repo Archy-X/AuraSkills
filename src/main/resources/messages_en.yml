@@ -19,7 +19,7 @@ abilities:
     triple_harvest:
       name: Triple Harvest
       desc: '{value}% chance to get triple drops from crops.'
-      info: '{0]% 3x Drops'
+      info: '{value}% 3x Drops'
   foraging:
     lumberjack:
       name: Lumberjack
@@ -543,3 +543,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
+file_version: 1

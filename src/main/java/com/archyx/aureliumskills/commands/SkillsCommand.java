@@ -24,7 +24,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import scala.language;
 
 import java.util.List;
 
@@ -296,12 +295,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.lang")
 	@Description("Sets the language displayed to a certain language defined in messages.yml, but will not change the default language set in the file.")
 	public void onLanguage(Player player, String language) {
-		if (lang.setLanguage(language)) {
-			player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + Lang.getMessage(Message.LANGUAGE_SET_TO).replace("_", language));
-		}
-		else {
-			player.sendMessage(AureliumSkills.tag + ChatColor.RED + Lang.getMessage(Message.LANGUAGE_NOT_FOUND));
-		}
+		//TODO fix later
 	}
 	
 	
