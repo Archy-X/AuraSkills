@@ -11,6 +11,10 @@ public interface MessageKey {
         keys.addAll(Arrays.asList(Message.values()));
         keys.addAll(Arrays.asList(CommandMessage.values()));
         keys.addAll(Arrays.asList(MenuMessage.values()));
+        keys.addAll(Arrays.asList(ManaAbilityMessage.values()));
+        keys.addAll(Arrays.asList(SkillMessage.values()));
+        keys.addAll(Arrays.asList(StatMessage.values()));
+        keys.addAll(Arrays.asList(UnitMessage.values()));
         return keys;
     }
 }

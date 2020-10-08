@@ -184,7 +184,6 @@ public enum AbilityMessage implements MessageKey {
     private final Ability ability = Ability.valueOf(this.name().substring(0, this.name().lastIndexOf("_") - 1));
     private final String path = "abilities." + ability.getSkill().name().toLowerCase() + "." + ability.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
 
-    @Override
     public String getPath() {
         return path;
     }

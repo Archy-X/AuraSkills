@@ -439,29 +439,29 @@ mana_abilities:
     desc: 'Replants crops automatically for {duration} seconds. &e[Right Click to Activate]'
     raise: '&7You raise your hoe'
     lower: '&7You lower your hoe'
-    activated: '&6Replenish Activated! &7(-{mana} {mana_unit})'
-    worn_off: '&6Replenish has worn off'
+    start: '&6Replenish Activated! &7(-{mana} {mana_unit})'
+    end: '&6Replenish has worn off'
   treecapitator:
     name: Treecapitator
     desc: 'Breaks entire trees instantly for {duration} seconds. &e[Right Click to Activate]'
     raise: '&7You raise your axe'
     lower: '&7You lower your axe'
-    activated: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
-    worn_off: '&6Treecapitator has worn off'
+    start: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
+    end: '&6Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
     desc: 'Gives Haste 10 for {duration} seconds. &e[Right Click to Activate]'
     raise: '&7You raise your pickaxe'
     lower: '&7You lower your pickaxe'
-    activated: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
-    worn_off: '&7Speed Mine has worn off'
+    start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
+    end: '&7Speed Mine has worn off'
   absorption:
     name: Absorption
     desc: 'Heal {value}% of the damage you take for {duration} seconds.'
     raise: '&7You raise your shield'
     lower: '&7You lower your shield'
-    activated: '&6Absorption Activated! &7(-{mana} {mana_unit})'
-    worn_off: '&6Absorption has worn off'
+    start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
+    end: '&6Absorption has worn off'
 skills:
   farming:
     name: Farming
