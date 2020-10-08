@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Lang {
 
-	private static final Map<Message, String> messages = new HashMap<>();
+	private static final Map<MessageKey, String> messages = new HashMap<>();
 	public static String language;
 	private final Plugin plugin;
 	
@@ -31,7 +31,7 @@ public class Lang {
 		InputStream inputStream = plugin.getResource("messages_en.yml");
 		if (inputStream != null) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
-			for (Message message : Message.values()) {
+			for (MessageKey message : MessageKey.values()) {
 				messages.put(message, config.getString(message.getPath().replace('&', '§')));
 			}
 		}
@@ -48,7 +48,7 @@ public class Lang {
 			//Load and update file
 			FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
 			//Add message keys
-			for (Message message : Message.values()) {
+			for (MessageKey message : MessageKey.values()) {
 				messages.put(message, config.getString(message.getPath().replace('&', '§')));
 			}
 			long endTime = System.currentTimeMillis();
@@ -89,7 +89,7 @@ public class Lang {
 		return YamlConfiguration.loadConfiguration(file);
 	}
 	
-	public static String getMessage(Message message) {
+	public static String getMessage(MessageKey message) {
 		return messages.get(message);
 	}
 

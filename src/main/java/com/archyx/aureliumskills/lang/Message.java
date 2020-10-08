@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.lang;
 
-public enum Message {
+public enum Message implements MessageKey {
 
 	LEVEL("basic.level.singular"),
 	LEVELS("basic.level.plural"),
