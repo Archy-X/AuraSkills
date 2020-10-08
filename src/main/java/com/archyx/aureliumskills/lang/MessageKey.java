@@ -10,6 +10,7 @@ public interface MessageKey {
         Set<MessageKey> keys = new HashSet<>(Arrays.asList(AbilityMessage.values()));
         keys.addAll(Arrays.asList(Message.values()));
         keys.addAll(Arrays.asList(CommandMessage.values()));
+        keys.addAll(Arrays.asList(MenuMessage.values()));
         return keys;
     }
 }

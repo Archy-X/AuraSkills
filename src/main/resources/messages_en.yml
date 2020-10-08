@@ -403,7 +403,7 @@ menus:
     previous_page_click: '&eClick to go to previous page'
     level_unlocked: '&aLevel {level}'
     level_in_progress: '&eLevel {level}'
-    level_lock: '&cLevel {level}'
+    level_locked: '&cLevel {level}'
     level_number: '&7Level &f{level}'
     unlocked: '&aUNLOCKED'
     in_progress: '&eIN PROGRESS'
