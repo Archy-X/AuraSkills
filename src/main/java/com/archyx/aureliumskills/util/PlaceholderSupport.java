@@ -91,6 +91,17 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             return String.valueOf(format2.format(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
         }
 
+        //Gets HP Percent as an integer
+        if (identifier.equals("hp_percent")) {
+            AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            if (attribute != null) {
+                return String.valueOf((int) (player.getHealth() / attribute.getValue()));
+            }
+            else {
+                return "";
+            }
+        }
+
         //Gets mana
         if (identifier.equals("mana")) {
             return String.valueOf(AureliumSkills.manaManager.getMana(player.getUniqueId()));
