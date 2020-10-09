@@ -1,7 +1,5 @@
 package com.archyx.aureliumskills.modifier;
 
-import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.stats.Stat;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
@@ -70,7 +68,7 @@ public class ItemModifier {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, ChatColor.GRAY + Lang.getMessage(Message.valueOf(stat.name().toUpperCase() + "_NAME")) + ":" + stat.getColor() + " +" + value);
+            lore.add(0, ChatColor.GRAY + stat.getDisplayName() + ":" + stat.getColor() + " +" + value);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
@@ -81,7 +79,7 @@ public class ItemModifier {
         if (meta != null) {
             List<String> lore = meta.getLore();
             if (lore != null && lore.size() > 0) {
-                lore.removeIf(line -> line.contains(ChatColor.GRAY + Lang.getMessage(Message.valueOf(stat.name().toUpperCase() + "_NAME")) + ":"));
+                lore.removeIf(line -> line.contains(ChatColor.GRAY + stat.getDisplayName() + ":"));
             }
             meta.setLore(lore);
         }

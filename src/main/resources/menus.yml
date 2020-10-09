@@ -1,5 +1,5 @@
 skills_menu:
-  title: Your Skills
+  title: '{skills_menu_title}'
   rows: 5
   fill:
     enabled: true
@@ -70,7 +70,7 @@ skills_menu:
         - healing 3 5
         - forging 3 6
 stats_menu:
-  title: Your Stats
+  title: '{stats_menu_title}'
   rows: 3
   fill:
     enabled: true
@@ -115,8 +115,8 @@ stats_menu:
         - wisdom 1 5
         - toughness 1 6
 level_progression_menu:
-  title:
-  rows:
+  title: '{level_progression_menu_title}'
+  rows: 6
   fill:
     enabled: false
     material: BLACK_STAINED_GLASS_PANE

@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
@@ -15,7 +15,6 @@ import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -177,7 +176,7 @@ public class ForagingAbilities implements Listener {
 								treeCapitator(event);
 							}
 							else {
-								player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR))) + ")");
+								player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA).replace("{mana}", String.valueOf(MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)))));
 							}
 						}
 					}
@@ -288,21 +287,21 @@ public class ForagingAbilities implements Listener {
 								//Checks if cooldown is reached
 								if (AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
 									AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, true);
-									player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(Message.TREECAPITATOR_RAISE));
+									player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_RAISE));
 									new BukkitRunnable() {
 										@Override
 										public void run() {
 											if (!AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 												if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 													AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, false);
-													player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(Message.TREECAPITATOR_LOWER));
+													player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_LOWER));
 												}
 											}
 										}
 									}.runTaskLater(plugin, 50L);
 								} else {
 									if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
-										player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.ABILITY_NOT_READY) + " " + ChatColor.GRAY + "(" + AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) + "s)");
+										player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_READY).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR))));
 										AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR, 2);
 									}
 								}

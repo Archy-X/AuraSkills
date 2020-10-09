@@ -6,8 +6,8 @@ import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.menu.SkillsMenu;
 import com.archyx.aureliumskills.modifier.ArmorModifier;
 import com.archyx.aureliumskills.modifier.ItemModifier;
@@ -32,12 +32,10 @@ public class SkillsCommand extends BaseCommand {
  
 	private final AureliumSkills plugin;
 	private final Lang lang;
-	private final Leaderboard leaderboard;
 
 	public SkillsCommand(AureliumSkills plugin) {
 		this.plugin = plugin;
 		lang = new Lang(plugin);
-		leaderboard = AureliumSkills.leaderboard;
 	}
 	
 	@Default
@@ -54,10 +52,10 @@ public class SkillsCommand extends BaseCommand {
 	public void onXpAdd(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
 		if (OptionL.isEnabled(skill)) {
 			Leveler.addXp(player, skill, amount);
-			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_ADD).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.XP_ADD).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName()).replace("{player}", player.getName()));
 		}
 		else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(CommandMessage.UNKNOWN_SKILL));
 		}
 	}
 
@@ -68,10 +66,10 @@ public class SkillsCommand extends BaseCommand {
 	public void onXpSet(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
 		if (OptionL.isEnabled(skill)) {
 			Leveler.setXp(player, skill, amount);
-			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_SET).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.XP_SET).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName()).replace("{player}", player.getName()));
 		}
 		else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(CommandMessage.UNKNOWN_SKILL));
 		}
 	}
 
@@ -85,16 +83,16 @@ public class SkillsCommand extends BaseCommand {
 				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 				if (playerSkill.getXp(skill) - amount >= 0) {
 					Leveler.setXp(player, skill, playerSkill.getXp(skill) - amount);
-					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_REMOVE).replace("$amount$", String.valueOf(amount)).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.XP_REMOVE).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName()).replace("{player}", player.getName()));
 				}
 				else {
-					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_REMOVE).replace("$amount$", String.valueOf(playerSkill.getXp(skill))).replace("$skill$", skill.getDisplayName()).replace("$player$", player.getName()).replace("&", "§"));
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.XP_REMOVE).replace("{amount}", String.valueOf(playerSkill.getXp(skill))).replace("{skill}", skill.getDisplayName()).replace("{player}", player.getName()));
 					Leveler.setXp(player, skill, 0);
 				}
 			}
 		}
 		else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(CommandMessage.UNKNOWN_SKILL));
 		}
 	}
 
@@ -107,46 +105,43 @@ public class SkillsCommand extends BaseCommand {
 	public void onTop(CommandSender sender, String[] args) {
 		if (args.length == 0) {
 			List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(1, 10);
-			sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_HEADER).replace("&", "§"));
+			sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_HEADER));
 			for (PlayerSkillInstance playerSkill : lb) {
 				OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
-				sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_ENTRY)
-						.replace("&", "§")
-						.replace("$rank$", String.valueOf(lb.indexOf(playerSkill) + 1))
-						.replace("$player_name$", player.getName() != null ? player.getName() : "?")
-						.replace("$level$", String.valueOf(playerSkill.getPowerLevel())));
+				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_ENTRY)
+						.replace("{rank}", String.valueOf(lb.indexOf(playerSkill) + 1))
+						.replace("{player}", player.getName() != null ? player.getName() : "?")
+						.replace("{level}", String.valueOf(playerSkill.getPowerLevel())));
 			}
 		}
 		else if (args.length == 1) {
 			try {
 				int page = Integer.parseInt(args[0]);
 				List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(page, 10);
-				sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_HEADER_PAGE).replace("&", "§").replace("$page$", String.valueOf(page)));
+				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_HEADER_PAGE).replace("{page}", String.valueOf(page)));
 				for (PlayerSkillInstance playerSkill : lb) {
 					OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
-					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_POWER_ENTRY)
-							.replace("&", "§")
-							.replace("$rank$", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
-							.replace("$player_name$", player.getName() != null ? player.getName() : "?")
-							.replace("$level$", String.valueOf(playerSkill.getPowerLevel())));
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_ENTRY)
+							.replace("{rank}", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
+							.replace("{player}", player.getName() != null ? player.getName() : "?")
+							.replace("{level}", String.valueOf(playerSkill.getPowerLevel())));
 				}
 			}
 			catch (Exception e) {
 				try {
 					Skill skill = Skill.valueOf(args[0].toUpperCase());
 					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, 1, 10);
-					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_HEADER).replace("&", "§").replace("$skill$", skill.getDisplayName()));
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER).replace("&", "§").replace("$skill$", skill.getDisplayName()));
 					for (PlayerSkillInstance playerSkill : lb) {
 						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
-						sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_ENTRY)
-								.replace("&", "§")
-								.replace("$rank$", String.valueOf(lb.indexOf(playerSkill) + 1))
-								.replace("$player_name$", player.getName() != null ? player.getName() : "?")
-								.replace("$level$", String.valueOf(playerSkill.getSkillLevel(skill))));
+						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY)
+								.replace("{rank}", String.valueOf(lb.indexOf(playerSkill) + 1))
+								.replace("{player}", player.getName() != null ? player.getName() : "?")
+								.replace("{level}", String.valueOf(playerSkill.getSkillLevel(skill))));
 					}
 				}
 				catch (IllegalArgumentException iae) {
-					sender.sendMessage(ChatColor.YELLOW + "Usage: " + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "<page>" + ChatColor.GRAY +  " or "  + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "[skill] <page>");
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE));
 				}
 			}
 		}
@@ -156,22 +151,21 @@ public class SkillsCommand extends BaseCommand {
 				try {
 					int page = Integer.parseInt(args[1]);
 					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, page, 10);
-					sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_HEADER_PAGE).replace("&", "§").replace("$page$", String.valueOf(page)).replace("$skill$", skill.getDisplayName()));
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER_PAGE).replace("{page}", String.valueOf(page)).replace("{skill}", skill.getDisplayName()));
 					for (PlayerSkillInstance playerSkill : lb) {
 						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
-						sender.sendMessage(Lang.getMessage(Message.LEADERBOARD_SKILL_ENTRY)
-								.replace("&", "§")
-								.replace("$rank$", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
-								.replace("$player_name$", player.getName() != null ? player.getName() : "?")
-								.replace("$level$", String.valueOf(playerSkill.getSkillLevel(skill))));
+						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY)
+								.replace("{rank}", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
+								.replace("{player_name}", player.getName() != null ? player.getName() : "?")
+								.replace("{level}", String.valueOf(playerSkill.getSkillLevel(skill))));
 					}
 				}
 				catch (Exception e) {
-					sender.sendMessage(ChatColor.YELLOW + "Usage: " + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "<page>" + ChatColor.GRAY +  " or "  + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "[skill] <page>");
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE));
 				}
 			}
 			catch (IllegalArgumentException iae) {
-				sender.sendMessage(ChatColor.YELLOW + "Usage: " + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "<page>" + ChatColor.GRAY +  " or "  + ChatColor.GREEN + "/sk top " + ChatColor.WHITE + "[skill] <page>");
+				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE));
 			}
 		}
 	}
@@ -191,11 +185,11 @@ public class SkillsCommand extends BaseCommand {
 						}
 					}.runTaskAsynchronously(plugin);
 					if (sender instanceof Player) {
-						sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
+						sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SAVE_SAVED));
 					}
 				}
 				else {
-					sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "MySQL wasn't enabled at server startup, saving to file instead!");
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SAVE_MYSQL_NOT_ENABLED));
 					if (!SkillLoader.isSaving) {
 						new BukkitRunnable() {
 							@Override
@@ -204,16 +198,16 @@ public class SkillsCommand extends BaseCommand {
 							}
 						}.runTaskAsynchronously(plugin);
 						if (sender instanceof Player) {
-							sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
+							sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SAVE_SAVED));
 						}
 					}
 					else {
-						sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Data is already saving!");
+						sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SAVE_ALREADY_SAVING));
 					}
 				}
 			}
 			else {
-				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Data is already saving!");
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SAVE_ALREADY_SAVING));
 			}
 		}
 		else {
@@ -225,11 +219,11 @@ public class SkillsCommand extends BaseCommand {
 					}
 				}.runTaskAsynchronously(plugin);
 				if (sender instanceof Player) {
-					sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Skill data saved!");
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SAVE_SAVED));
 				}
 			}
 			else {
-				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Data is already saving!");
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SAVE_ALREADY_SAVING));
 			}
 		}
 	}
@@ -246,11 +240,11 @@ public class SkillsCommand extends BaseCommand {
 				}
 			}.runTaskAsynchronously(plugin);
 			if (sender instanceof Player) {
-				sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Leaderboard updated!");
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.UPDATELEADERBOARDS_UPDATED));
 			}
 		}
 		else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Leaderboard is already updating!");
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.UPDATELEADERBOARDS_ALREADY_UPDATING));
 		}
 	}
 
@@ -262,15 +256,15 @@ public class SkillsCommand extends BaseCommand {
 		if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 			if (ActionBar.actionBarDisabled.contains(player.getUniqueId())) {
 				ActionBar.actionBarDisabled.remove(player.getUniqueId());
-				player.sendMessage(AureliumSkills.tag + ChatColor.GREEN + "Your skills action bar has been enabled");
+				player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.TOGGLE_ENABLED));
 			}
 			else {
 				ActionBar.actionBarDisabled.add(player.getUniqueId());
-				player.sendMessage(AureliumSkills.tag + ChatColor.RED + "Your skills action bar has been disabled");
+				player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.TOGGLE_DISABLED));
 			}
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Skills action bar is not enabled on this server!");
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.TOGGLE_NOT_ENABLED));
 		}
 	}
 
@@ -279,11 +273,12 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.rank")
 	@Description("Shows your skill rankings")
 	public void onRank(Player player) {
-		player.sendMessage(Lang.getMessage(Message.SKILL_RANK_HEADER).replace("&", "§"));
-		player.sendMessage(Lang.getMessage(Message.SKILL_RANK_POWER).replace("&", "§").replace("$rank$", String.valueOf(AureliumSkills.leaderboard.getPowerRank(player.getUniqueId()))).replace("$total$", String.valueOf(AureliumSkills.leaderboard.getSize())));
+		player.sendMessage(Lang.getMessage(CommandMessage.RANK_HEADER));
+		player.sendMessage(Lang.getMessage(CommandMessage.RANK_POWER)
+				.replace("{rank}", String.valueOf(AureliumSkills.leaderboard.getPowerRank(player.getUniqueId())))
+				.replace("{total}", String.valueOf(AureliumSkills.leaderboard.getSize())));
 		for (Skill skill : Skill.values()) {
-			player.sendMessage(Lang.getMessage(Message.SKILL_RANK_ENTRY)
-					.replace("&", "§").replace("$skill$", skill.getDisplayName())
+			player.sendMessage(Lang.getMessage(CommandMessage.RANK_ENTRY)
 					.replace("$rank$", String.valueOf(AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId())))
 					.replace("$total$", String.valueOf(AureliumSkills.leaderboard.getSize())));
 		}
@@ -319,7 +314,7 @@ public class SkillsCommand extends BaseCommand {
 			Health.reload(player);
 			Luck.reload(player);
 		}
-		sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + Lang.getMessage(Message.CONFIG_RELOADED));
+		sender.sendMessage(AureliumSkills.tag + ChatColor.GREEN + Lang.getMessage(CommandMessage.RELOAD));
 	}
 	
 	@Subcommand("skill setlevel")
@@ -335,14 +330,17 @@ public class SkillsCommand extends BaseCommand {
 					playerSkill.setXp(skill, 0);
 					Leveler.updateStats(player);
 					Leveler.updateAbilities(player, skill);
-					sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "Skill " + ChatColor.AQUA + skill.getDisplayName() + ChatColor.GRAY + " set to level " + ChatColor.AQUA + level + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET)
+							.replace("{skill}", skill.getDisplayName())
+							.replace("{level}", String.valueOf(level))
+							.replace("{player}", player.getName()));
 				} else {
-					sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Level must be at least 1!");
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_AT_LEAST_ONE));
 				}
 			}
 		}
 		else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.UNKNOWN_SKILL));
 		}
 	}
 
@@ -361,9 +359,11 @@ public class SkillsCommand extends BaseCommand {
 					Leveler.updateAbilities(player, skill);
 				}
 			}
-			sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "All skills set to level " + ChatColor.AQUA + level + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SKILL_SETALL_SET)
+					.replace("{level}", String.valueOf(level))
+					.replace("{player}", player.getName()));
 		} else {
-			sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Level must be at least 1!");
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SKILL_SETALL_AT_LEAST_ONE));
 		}
 	}
 
@@ -381,10 +381,12 @@ public class SkillsCommand extends BaseCommand {
 					playerSkill.setXp(skill, 0);
 					Leveler.updateStats(player);
 					Leveler.updateAbilities(player, skill);
-					sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "Skill " + ChatColor.AQUA + skill.getDisplayName() + ChatColor.GRAY + " set to level " + ChatColor.AQUA + "1" + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL)
+							.replace("{skill}", skill.getDisplayName())
+							.replace("{player}", player.getName()));
 				}
 			} else {
-				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.UNKNOWN_SKILL));
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.UNKNOWN_SKILL));
 			}
 		}
 		else {
@@ -396,7 +398,8 @@ public class SkillsCommand extends BaseCommand {
 					Leveler.updateStats(player);
 					Leveler.updateAbilities(player, s);
 				}
-				sender.sendMessage(AureliumSkills.tag + ChatColor.GRAY + "All Skills set to level " + ChatColor.AQUA + "1" + ChatColor.GRAY + " for player " + ChatColor.GOLD + player.getName());
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL)
+						.replace("{player}", player.getName()));
 			}
 		}
 	}
@@ -412,18 +415,18 @@ public class SkillsCommand extends BaseCommand {
 			if (!playerStat.getModifiers().containsKey(name)) {
 				playerStat.addModifier(modifier);
 				if (!silent) {
-					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_ADD_ADDED), modifier, player));
+					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_ADD_ADDED), modifier, player));
 				}
 			}
 			else {
 				if (!silent) {
-					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_ADD_ALREADY_EXISTS), modifier, player));
+					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_ADD_ALREADY_EXISTS), modifier, player));
 				}
 			}
 		}
 		else {
 			if (!silent) {
-				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_NO_PROFILE).replace("&", "§"));
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.NO_PROFILE));
 			}
 		}
 	}
@@ -437,18 +440,18 @@ public class SkillsCommand extends BaseCommand {
 			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
 			if (playerStat.removeModifier(name)) {
 				if (!silent) {
-					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_REMOVE_REMOVED), name, player));
+					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVE_REMOVED), name, player));
 				}
 			}
 			else {
 				if (!silent) {
-					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_REMOVE_NOT_FOUND), name, player));
+					sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVE_NOT_FOUND), name, player));
 				}
 			}
 		}
 		else {
 			if (!silent) {
-				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_NO_PROFILE).replace("&", "§"));
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.NO_PROFILE));
 			}
 		}
 	}
@@ -465,27 +468,27 @@ public class SkillsCommand extends BaseCommand {
 					PlayerStat targetStat = SkillLoader.playerStats.get(target.getUniqueId());
 					String message;
 					if (stat == null) {
-						message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ALL_STATS_HEADER), target);
+						message = StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER), target);
 						for (String key : targetStat.getModifiers().keySet()) {
 							StatModifier modifier = targetStat.getModifiers().get(key);
-							message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ALL_STATS_LINE), modifier, target);
+							message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY), modifier, target);
 						}
 					} else {
-						message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_HEADER), stat, target);
+						message = StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER), stat, target);
 						for (String key : targetStat.getModifiers().keySet()) {
 							StatModifier modifier = targetStat.getModifiers().get(key);
 							if (modifier.getStat() == stat) {
-								message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_LINE), modifier, target);
+								message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY), modifier, target);
 							}
 						}
 					}
 					sender.sendMessage(message);
 				} else {
-					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_NO_PROFILE).replace("&", "§"));
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.NO_PROFILE));
 				}
 			}
 			else {
-				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_LIST_PLAYERS_ONLY).replace("&", "§"));
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.MODIFIER_LIST_PLAYERS_ONLY));
 			}
 		}
 		else {
@@ -493,23 +496,23 @@ public class SkillsCommand extends BaseCommand {
 				PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
 				String message;
 				if (stat == null) {
-					message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ALL_STATS_HEADER), player);
+					message = StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER), player);
 					for (String key : playerStat.getModifiers().keySet()) {
 						StatModifier modifier = playerStat.getModifiers().get(key);
-						message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ALL_STATS_LINE), modifier, player);
+						message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY), modifier, player);
 					}
 				} else {
-					message = StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_HEADER), stat, player);
+					message = StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER), stat, player);
 					for (String key : playerStat.getModifiers().keySet()) {
 						StatModifier modifier = playerStat.getModifiers().get(key);
 						if (modifier.getStat() == stat) {
-							message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_LIST_ONE_STAT_LINE), modifier, player);
+							message += "\n" + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY), modifier, player);
 						}
 					}
 				}
 				sender.sendMessage(message);
 			} else {
-				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_NO_PROFILE).replace("&", "§"));
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.NO_PROFILE));
 			}
 		}
 	}
@@ -537,22 +540,22 @@ public class SkillsCommand extends BaseCommand {
 					}
 					if (!silent) {
 						if (stat == null) {
-							sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_REMOVE_ALL_REMOVED_ALL_STATS), target).replace("$removed$", String.valueOf(removed)));
+							sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS), target).replace("{num}", String.valueOf(removed)));
 						}
 						else {
-							sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_REMOVE_ALL_REMOVED_ONE_STAT), stat, target).replace("$removed$", String.valueOf(removed)));
+							sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT), stat, target).replace("{num}", String.valueOf(removed)));
 						}
 					}
 				}
 				else {
 					if (!silent) {
-						sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_NO_PROFILE).replace("&", "§"));
+						sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.NO_PROFILE));
 					}
 				}
 			}
 			else {
 				if (!silent) {
-					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_REMOVE_ALL_PLAYERS_ONLY).replace("&", "§"));
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_PLAYERS_ONLY));
 				}
 			}
 		}
@@ -572,16 +575,16 @@ public class SkillsCommand extends BaseCommand {
 				}
 				if (!silent) {
 					if (stat == null) {
-						sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_REMOVE_ALL_REMOVED_ALL_STATS), player).replace("$removed$", String.valueOf(removed)));
+						sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS), player).replace("{num}", String.valueOf(removed)));
 					}
 					else {
-						sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.MODIFIER_REMOVE_ALL_REMOVED_ONE_STAT), stat, player).replace("$removed$", String.valueOf(removed)));
+						sender.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT), stat, player).replace("{num}", String.valueOf(removed)));
 					}
 				}
 			}
 			else {
 				if (!silent) {
-					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.MODIFIER_NO_PROFILE).replace("&", "§"));
+					sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.NO_PROFILE));
 				}
 			}
 		}
@@ -596,7 +599,7 @@ public class SkillsCommand extends BaseCommand {
 			ItemStack item = player.getInventory().getItemInMainHand();
 			for (StatModifier statModifier : ItemModifier.getItemModifiers(item)) {
 				if (statModifier.getStat() == stat) {
-					player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ITEM_ADD_ALREADY_EXISTS), stat));
+					player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ALREADY_EXISTS), stat));
 					return;
 				}
 			}
@@ -605,10 +608,10 @@ public class SkillsCommand extends BaseCommand {
 			}
 			ItemStack newItem = ItemModifier.addItemModifier(item, stat, value);
 			player.getInventory().setItemInMainHand(newItem);
-			player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ITEM_ADD_ADDED), stat, value));
+			player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ADDED), stat, value));
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ITEM_ADD_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -632,14 +635,14 @@ public class SkillsCommand extends BaseCommand {
 			}
 			player.getInventory().setItemInMainHand(item);
 			if (removed) {
-				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ITEM_REMOVE_REMOVED), stat));
+				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVE_REMOVED), stat));
 			}
 			else {
-				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ITEM_REMOVE_DOES_NOT_EXIST), stat));
+				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVE_DOES_NOT_EXIST), stat));
 			}
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ITEM_REMOVE_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVE_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -649,14 +652,14 @@ public class SkillsCommand extends BaseCommand {
 	public void onItemModifierList(Player player) {
 		if (!player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
 			ItemStack item = player.getInventory().getItemInMainHand();
-			StringBuilder message = new StringBuilder(Lang.getMessage(Message.ITEM_LIST_HEADER).replace("&", "§"));
+			StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_HEADER));
 			for (StatModifier modifier : ItemModifier.getItemModifiers(item)) {
-				message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(Message.ITEM_LIST_LINE), modifier));
+				message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_ENTRY), modifier));
 			}
 			player.sendMessage(message.toString());
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ITEM_LIST_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -667,10 +670,10 @@ public class SkillsCommand extends BaseCommand {
 		if (!player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
 			ItemStack item = ItemModifier.removeAllItemModifiers(player.getInventory().getItemInMainHand());
 			player.getInventory().setItemInMainHand(item);
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ITEM_REMOVE_ALL_REMOVED).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVEALL_REMOVED));
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ITEM_REMOVE_ALL_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVEALL_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -683,7 +686,7 @@ public class SkillsCommand extends BaseCommand {
 			ItemStack item = player.getInventory().getItemInMainHand();
 			for (StatModifier statModifier : ArmorModifier.getArmorModifiers(item)) {
 				if (statModifier.getStat() == stat) {
-					player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ARMOR_ADD_ALREADY_EXISTS), stat));
+					player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ALREADY_EXISTS), stat));
 					return;
 				}
 			}
@@ -692,10 +695,10 @@ public class SkillsCommand extends BaseCommand {
 			}
 			ItemStack newItem = ArmorModifier.addArmorModifier(item, stat, value);
 			player.getInventory().setItemInMainHand(newItem);
-			player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ARMOR_ADD_ADDED), stat, value));
+			player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ADDED), stat, value));
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ARMOR_ADD_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -719,14 +722,14 @@ public class SkillsCommand extends BaseCommand {
 			}
 			player.getInventory().setItemInMainHand(item);
 			if (removed) {
-				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ARMOR_REMOVE_REMOVED), stat));
+				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVE_REMOVED), stat));
 			}
 			else {
-				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(Message.ARMOR_REMOVE_DOES_NOT_EXIST), stat));
+				player.sendMessage(AureliumSkills.tag + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVE_DOES_NOT_EXIST), stat));
 			}
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ARMOR_REMOVE_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVE_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -736,14 +739,14 @@ public class SkillsCommand extends BaseCommand {
 	public void onArmorModifierList(Player player) {
 		if (!player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
 			ItemStack item = player.getInventory().getItemInMainHand();
-			StringBuilder message = new StringBuilder(Lang.getMessage(Message.ARMOR_LIST_HEADER).replace("&", "§"));
+			StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_HEADER));
 			for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
-				message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(Message.ARMOR_LIST_LINE), modifier));
+				message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_ENTRY), modifier));
 			}
 			player.sendMessage(message.toString());
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ARMOR_LIST_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -754,10 +757,10 @@ public class SkillsCommand extends BaseCommand {
 		if (!player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
 			ItemStack item = ArmorModifier.removeAllArmorModifiers(player.getInventory().getItemInMainHand());
 			player.getInventory().setItemInMainHand(item);
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ARMOR_REMOVE_ALL_REMOVED).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVEALL_REMOVED));
 		}
 		else {
-			player.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.ARMOR_REMOVE_ALL_MUST_HOLD_ITEM).replace("&", "§"));
+			player.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVEALL_MUST_HOLD_ITEM));
 		}
 	}
 
@@ -770,19 +773,25 @@ public class SkillsCommand extends BaseCommand {
 			if (sender instanceof Player) {
 				Player target = (Player) sender;
 				double multiplier = Leveler.getMultiplier(target);
-				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_MULTIPLIER).replace("&", "§").replace("$player_name$", target.getName()).replace("$multiplier$", String.valueOf(multiplier)).replace("$multiplier_percent$", String.valueOf((multiplier - 1) * 100)));
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.MULTIPLIER_LIST)
+						.replace("{player}", target.getName())
+						.replace("{multiplier}", String.valueOf(multiplier))
+						.replace("{percent}", String.valueOf((multiplier - 1) * 100)));
 			}
 			else {
-				sender.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + "Only players can list their own multiplier! Specify a player!");
+				sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.MULTIPLIER_PLAYERS_ONLY));
 			}
 		}
 		else {
 			double multiplier = Leveler.getMultiplier(player);
-			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.XP_MULTIPLIER).replace("&", "§").replace("$player_name$", player.getName()).replace("$multiplier$", String.valueOf(multiplier)).replace("$multiplier_percent$", String.valueOf((multiplier - 1) * 100)));
+			sender.sendMessage(AureliumSkills.tag + Lang.getMessage(CommandMessage.MULTIPLIER_LIST)
+					.replace("{player}", player.getName())
+					.replace("{multiplier}", String.valueOf(multiplier))
+					.replace("{percent}", String.valueOf((multiplier - 1) * 100)));
 		}
 	}
 
-	@HelpCommand
+	@Subcommand("help")
 	@CommandPermission("aureliumskills.help")
 	public void onHelp(CommandSender sender, CommandHelp help) {
 		help.showHelp();

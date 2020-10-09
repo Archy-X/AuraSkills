@@ -2,10 +2,9 @@ package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -18,7 +17,7 @@ public class Replenish implements ManaAbility {
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.REPLENISH));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(Message.REPLENISH_ACTIVATED) + " " + ChatColor.GRAY + "(-" + manaConsumed + " " + Lang.getMessage(Message.MANA) + ")");
+            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.REPLENISH_START).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }
 
@@ -32,7 +31,7 @@ public class Replenish implements ManaAbility {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
             PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
             AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.REPLENISH, MAbility.REPLENISH.getCooldown(skill.getManaAbilityLevel(MAbility.REPLENISH)));
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(Message.REPLENISH_WORN_OFF));
+            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.REPLENISH_END));
         }
     }
 }

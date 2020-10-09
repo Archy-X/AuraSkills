@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.Skill;
 
 public enum Ability {
@@ -90,7 +90,7 @@ public enum Ability {
 	}
 
 	public String getMiniDescription() {
-		return Lang.getMessage(Message.valueOf(this.name() + "_MINI_DESC"));
+		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_INFO"));
 	}
 	
 	public Skill getSkill() {
@@ -152,10 +152,10 @@ public enum Ability {
 	}
 
 	public String getDisplayName() {
-		return Lang.getMessage(Message.valueOf(this.name() + "_NAME"));
+		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_NAME"));
 	}
 	
 	public String getDescription() {
-		return Lang.getMessage(Message.valueOf(this.name() + "_DESC"));
+		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_DESC"));
 	}
 }

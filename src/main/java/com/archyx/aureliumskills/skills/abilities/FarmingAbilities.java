@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -12,7 +12,6 @@ import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.Replenish;
 import com.archyx.aureliumskills.util.BlockUtil;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -141,7 +140,8 @@ public class FarmingAbilities implements Listener {
 							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.REPLENISH, (int) (MAbility.REPLENISH.getValue(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20), new Replenish());
 						}
 						else {
-							player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(Message.NOT_ENOUGH_MANA) + " " + ChatColor.GRAY + "(" + Lang.getMessage(Message.MANA_REQUIRED).replace("_", "" + MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH))) + ")");
+							player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA)
+									.replace("{mana}", String.valueOf(MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH)))));
 						}
 					}
 				}

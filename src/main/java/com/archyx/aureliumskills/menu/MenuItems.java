@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,8 +24,8 @@ public class MenuItems {
 	public static ItemStack getBackButton(String backTo) {
 		ItemStack item = new ItemStack(Material.ARROW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GREEN + Lang.getMessage(Message.GO_BACK));
-		List<String> lore = new LinkedList<String>();
+		meta.setDisplayName(ChatColor.GREEN + Lang.getMessage(MenuMessage.BACK));
+		List<String> lore = new LinkedList<>();
 		lore.add(ChatColor.GRAY + backTo);
 		meta.setLore(lore);
 		item.setItemMeta(meta);
@@ -35,7 +35,7 @@ public class MenuItems {
 	public static ItemStack getCloseButton() {
 		ItemStack item = new ItemStack(Material.BARRIER);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + Lang.getMessage(Message.CLOSE));
+		meta.setDisplayName(ChatColor.RED + Lang.getMessage(MenuMessage.CLOSE));
 		item.setItemMeta(meta);
 		return item;
 	}

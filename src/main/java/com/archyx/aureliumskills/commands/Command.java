@@ -15,6 +15,7 @@ public enum Command {
     MODIFIER_REMOVE,
     MODIFIER_LIST,
     MODIFIER_REMOVEALL,
+    MULTIPLIER,
     RANK,
     RELOAD,
     SAVE,

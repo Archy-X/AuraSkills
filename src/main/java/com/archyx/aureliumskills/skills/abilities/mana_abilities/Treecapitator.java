@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.ChatColor;
@@ -19,7 +19,7 @@ public class Treecapitator implements ManaAbility {
             //Consume mana
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(Message.TREECAPITATOR_ACTIVATED) + " " + ChatColor.GRAY + "(-" + manaConsumed + " " + Lang.getMessage(Message.MANA) + ")");
+            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_START).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }
 
@@ -33,7 +33,7 @@ public class Treecapitator implements ManaAbility {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
             PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
             AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.TREECAPITATOR, MAbility.TREECAPITATOR.getCooldown(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)));
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(Message.TREECAPITATOR_WORN_OFF));
+            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_END));
         }
     }
 }

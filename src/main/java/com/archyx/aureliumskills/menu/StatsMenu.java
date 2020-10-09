@@ -4,10 +4,12 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.MenuMessage;
+import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.util.ItemUtils;
 import com.cryptomorin.xseries.XMaterial;
 import dev.dbassett.skullcreator.SkullCreator;
 import fr.minuskube.inv.ClickableItem;
@@ -39,23 +41,23 @@ public class StatsMenu implements InventoryProvider{
 		contents.fill(ClickableItem.empty(MenuItems.getEmptyPane()));
 		contents.set(SlotPos.of(1, 4), ClickableItem.empty(getPlayerHead(SkillLoader.playerStats.get(player.getUniqueId()))));
 		contents.set(SlotPos.of(1, 1), ClickableItem.empty(getStatItem(
-			Stat.STRENGTH, 14, new Message[] {Message.FORAGING_NAME, Message.FIGHTING_NAME, Message.SORCERY_NAME}, 
-			new Message[] {Message.FARMING_NAME, Message.ARCHERY_NAME}, ChatColor.DARK_RED)));
+			Stat.STRENGTH, 14, new Skill[] {Skill.FORAGING, Skill.FIGHTING, Skill.SORCERY}, 
+			new Skill[] {Skill.FARMING, Skill.ARCHERY}, ChatColor.DARK_RED)));
 		contents.set(SlotPos.of(1, 2), ClickableItem.empty(getStatItem(
-			Stat.HEALTH, 1, new Message[] {Message.FARMING_NAME, Message.ALCHEMY_NAME}, 
-			new Message[] {Message.FISHING_NAME, Message.DEFENSE_NAME, Message.HEALING_NAME}, ChatColor.RED)));
+			Stat.HEALTH, 1, new Skill[] {Skill.FARMING, Skill.ALCHEMY}, 
+			new Skill[] {Skill.FISHING, Skill.DEFENSE, Skill.HEALING}, ChatColor.RED)));
 		contents.set(SlotPos.of(1, 3), ClickableItem.empty(getStatItem(
-			Stat.REGENERATION, 4, new Message[] {Message.EXCAVATION_NAME, Message.ENDURANCE_NAME, Message.HEALING_NAME},
-			new Message[] {Message.FIGHTING_NAME, Message.AGILITY_NAME}, ChatColor.GOLD)));
+			Stat.REGENERATION, 4, new Skill[] {Skill.EXCAVATION, Skill.ENDURANCE, Skill.HEALING},
+			new Skill[] {Skill.FIGHTING, Skill.AGILITY}, ChatColor.GOLD)));
 		contents.set(SlotPos.of(1, 5), ClickableItem.empty(getStatItem(
-			Stat.LUCK, 13, new Message[] {Message.FISHING_NAME, Message.ARCHERY_NAME}, 
-			new Message[] {Message.MINING_NAME, Message.EXCAVATION_NAME, Message.ENCHANTING_NAME}, ChatColor.DARK_GREEN)));
+			Stat.LUCK, 13, new Skill[] {Skill.FISHING, Skill.ARCHERY}, 
+			new Skill[] {Skill.MINING, Skill.EXCAVATION, Skill.ENCHANTING}, ChatColor.DARK_GREEN)));
 		contents.set(SlotPos.of(1, 6), ClickableItem.empty(getStatItem(
-			Stat.WISDOM, 11, new Message[] {Message.AGILITY_NAME, Message.ENCHANTING_NAME}, 
-			new Message[] {Message.ALCHEMY_NAME, Message.SORCERY_NAME, Message.FORAGING_NAME}, ChatColor.BLUE)));
+			Stat.WISDOM, 11, new Skill[] {Skill.AGILITY, Skill.ENCHANTING}, 
+			new Skill[] {Skill.ALCHEMY, Skill.SORCERY, Skill.FORAGING}, ChatColor.BLUE)));
 		contents.set(SlotPos.of(1, 7), ClickableItem.empty(getStatItem(
-			Stat.TOUGHNESS, 10, new Message[] {Message.MINING_NAME, Message.DEFENSE_NAME, Message.FORAGING_NAME}, 
-			new Message[] {Message.FORAGING_NAME, Message.ENDURANCE_NAME}, ChatColor.DARK_PURPLE)));
+			Stat.TOUGHNESS, 10, new Skill[] {Skill.MINING, Skill.DEFENSE, Skill.FORAGING}, 
+			new Skill[] {Skill.FORAGING, Skill.ENDURANCE}, ChatColor.DARK_PURPLE)));
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class StatsMenu implements InventoryProvider{
 		
 	}
 
-	private ItemStack getStatItem(Stat stat, int color, Message[] primarySkills, Message[] secondarySkills, ChatColor chatColor) {
+	private ItemStack getStatItem(Stat stat, int color, Skill[] primarySkills, Skill[] secondarySkills, ChatColor chatColor) {
 		//Creates item and sets it to correct color
 		ItemStack item = XMaterial.WHITE_STAINED_GLASS_PANE.parseItem();
 		if (color == 14) {
@@ -86,65 +88,66 @@ public class StatsMenu implements InventoryProvider{
 			item = XMaterial.PURPLE_STAINED_GLASS_PANE.parseItem();
 		}
 		//Sets item name
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(chatColor + Lang.getMessage(Message.valueOf(ChatColor.stripColor(stat.getDisplayName()).toUpperCase() + "_NAME")));
-		List<String> lore = new LinkedList<String>();
-		//Parses description and separates long descriptions
-		String fullDesc = Lang.getMessage(Message.valueOf(ChatColor.stripColor(stat.getDisplayName()).toUpperCase() + "_DESCRIPTION"));
-		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
-		for (String s : splitDesc) {
-			lore.add(ChatColor.GRAY + s);
-		}
-		lore.add(" ");
-		//Formats primary skills array into comma separated string
-		String primarySkillsMessage = "";
-		for (Message m : primarySkills) {
-			if (primarySkills[0] == m) {
-				primarySkillsMessage += Lang.getMessage(m);
+		if (item != null) {
+			ItemMeta meta = item.getItemMeta();
+			if (meta != null) {
+				meta.setDisplayName(chatColor + stat.getDisplayName());
+				//Adds name
+				List<String> lore = new LinkedList<>(Arrays.asList(stat.getDisplayName().split("\n")));
+				lore.add(" ");
+				//Add primary and secondary skill lists
+				if (primarySkills.length == 2) {
+					lore.add(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO)
+							.replace("{skill_1}", primarySkills[0].getDisplayName())
+							.replace("{skill_2}", primarySkills[1].getDisplayName()));
+				} else if (primarySkills.length == 3) {
+					lore.add(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_THREE)
+							.replace("{skill_1}", primarySkills[0].getDisplayName())
+							.replace("{skill_2}", primarySkills[1].getDisplayName())
+							.replace("{skill_3}", primarySkills[2].getDisplayName()));
+				}
+				if (secondarySkills.length == 2) {
+					lore.add(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO)
+							.replace("{skill_1}", secondarySkills[0].getDisplayName())
+							.replace("{skill_2}", secondarySkills[1].getDisplayName()));
+				} else if (secondarySkills.length == 3) {
+					lore.add(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_THREE)
+							.replace("{skill_1}", secondarySkills[0].getDisplayName())
+							.replace("{skill_2}", secondarySkills[1].getDisplayName())
+							.replace("{skill_3}", secondarySkills[2].getDisplayName()));
+				}
+				lore.add(" ");
+				//Add player stat levels and values
+				if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
+					PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+					lore.add(Lang.getMessage(MenuMessage.YOUR_LEVEL)
+							.replace("{color}", stat.getColor())
+							.replace("{level}", String.valueOf(playerStat.getStatLevel(stat))));
+					lore.add(" ");
+					lore.addAll(Arrays.asList(getStatValue(stat, playerStat).split("\n")));
+				}
+				meta.setLore(ItemUtils.formatLore(lore));
+				item.setItemMeta(meta);
 			}
-			else {
-				primarySkillsMessage += ", " + Lang.getMessage(m);
-			}
 		}
-		//Formats secondary skills array into comma separated string
-		String secondarySkillsMessage = "";
-		for (Message m : secondarySkills) {
-			if (secondarySkills[0] == m) {
-				secondarySkillsMessage += Lang.getMessage(m);
-			}
-			else {
-				secondarySkillsMessage += ", " + Lang.getMessage(m);
-			}
-		}
-		//Add primary and secondary skill lists
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.PRIMARY_SKILLS) + ": " + ChatColor.RESET + primarySkillsMessage);
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.SECONDARY_SKILLS) + ": " + ChatColor.RESET + secondarySkillsMessage);
-		lore.add(" ");
-		//Add player stat levels and values
-		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-			lore.add(ChatColor.GRAY + Lang.getMessage(Message.YOUR_LEVEL) + ": " + stat.getColor() + playerStat.getStatLevel(stat));
-			lore.add(" ");
-			lore.addAll(Arrays.asList(getStatValue(stat, playerStat).split("\n")));
-		}
-		meta.setLore(lore);
-		item.setItemMeta(meta);
 		return item;
 	}
 	
 	private ItemStack getPlayerHead(PlayerStat stat) {
 		ItemStack item = SkullCreator.itemFromUuid(player.getUniqueId());
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.YELLOW + player.getName());
-		List<String> lore = new LinkedList<>();
-		lore.add(ChatColor.DARK_RED + "  ➽ " + Lang.getMessage(Message.STRENGTH_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.STRENGTH));
-		lore.add(ChatColor.RED + "  ❤ " + Lang.getMessage(Message.HEALTH_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.HEALTH));
-		lore.add(ChatColor.GOLD + "  ❥ " + Lang.getMessage(Message.REGENERATION_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.REGENERATION));
-		lore.add(ChatColor.DARK_GREEN + "  ☘ " + Lang.getMessage(Message.LUCK_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.LUCK));
-		lore.add(ChatColor.BLUE + "  ✿ " + Lang.getMessage(Message.WISDOM_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.WISDOM));
-		lore.add(ChatColor.DARK_PURPLE + "  ✦ " + Lang.getMessage(Message.TOUGHNESS_NAME) + " " + ChatColor.WHITE + stat.getStatLevel(Stat.TOUGHNESS));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		if (meta != null) {
+			meta.setDisplayName(ChatColor.YELLOW + player.getName());
+			List<String> lore = new LinkedList<>();
+			lore.add(ChatColor.DARK_RED + "  ➽ " + Stat.STRENGTH.getDisplayName() + " " + ChatColor.WHITE + stat.getStatLevel(Stat.STRENGTH));
+			lore.add(ChatColor.RED + "  ❤ " + Stat.HEALTH.getDisplayName() + " " + ChatColor.WHITE + stat.getStatLevel(Stat.HEALTH));
+			lore.add(ChatColor.GOLD + "  ❥ " + Stat.REGENERATION.getDisplayName() + " " + ChatColor.WHITE + stat.getStatLevel(Stat.REGENERATION));
+			lore.add(ChatColor.DARK_GREEN + "  ☘ " + Stat.LUCK.getDisplayName() + " " + ChatColor.WHITE + stat.getStatLevel(Stat.LUCK));
+			lore.add(ChatColor.BLUE + "  ✿ " + Stat.WISDOM.getDisplayName() + " " + ChatColor.WHITE + stat.getStatLevel(Stat.WISDOM));
+			lore.add(ChatColor.DARK_PURPLE + "  ✦ " + Stat.TOUGHNESS.getDisplayName() + " " + ChatColor.WHITE + stat.getStatLevel(Stat.TOUGHNESS));
+			meta.setLore(ItemUtils.formatLore(lore));
+			item.setItemMeta(meta);
+		}
 		return item;
 	}
 	
@@ -157,34 +160,37 @@ public class StatsMenu implements InventoryProvider{
 				if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING)) {
 					attackDamage *= OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
 				}
-				return ChatColor.DARK_RED + "+"  +  nf.format(attackDamage) + " " + Lang.getMessage(Message.ATTACK_DAMAGE);
+				return Lang.getMessage(MenuMessage.ATTACK_DAMAGE).replace("{value}", nf.format(attackDamage));
 			case HEALTH:
 				double modifier = ((double) ps.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
 				double scaledHealth = modifier * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-				return ChatColor.RED + "+" + nf.format(scaledHealth) + " " + Lang.getMessage(Message.HP);
+				return Lang.getMessage(MenuMessage.HP).replace("{value}", nf.format(scaledHealth));
 			case LUCK:
 				double luck = ps.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_MODIFIER);
 				double doubleDropChance = (double) ps.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) * 100;
 				if (doubleDropChance > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
 					doubleDropChance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
 				}
-				return ChatColor.DARK_GREEN + "+" + nf.format(luck) + " " + Lang.getMessage(Message.LUCK_NAME) + "\n" + ChatColor.DARK_GREEN + Lang.getMessage(Message.DOUBLE_DROP_CHANCE) + ": " + nf.format(doubleDropChance) + "%";
+				return Lang.getMessage(MenuMessage.LUCK).replace("{value}", nf.format(luck))
+						+ "\n" + Lang.getMessage(MenuMessage.DOUBLE_DROP_CHANCE).replace("{value}", nf.format(doubleDropChance));
 			case REGENERATION:
 				double saturatedRegen = ps.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
 				double hungerFullRegen = ps.getStatLevel(Stat.REGENERATION) *  OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
 				double almostFullRegen = ps.getStatLevel(Stat.REGENERATION) *  OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
 				double manaRegen = ps.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
-				return ChatColor.GOLD + "+" + nf.format(saturatedRegen) + " " + Lang.getMessage(Message.SATURATED_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(hungerFullRegen)
-						+ " " + Lang.getMessage(Message.FULL_HUNGER_REGEN) + "\n" + ChatColor.GOLD + "+" + nf.format(almostFullRegen) + " " + Lang.getMessage(Message.ALMOST_FULL_HUNGER_REGEN)
-						+ "\n" + ChatColor.AQUA + "+" + nf.format(manaRegen) + " " + Lang.getMessage(Message.MANA_REGEN);
+				return Lang.getMessage(MenuMessage.SATURATED_REGEN).replace("{value}", nf.format(saturatedRegen))
+						+ "\n" + Lang.getMessage(MenuMessage.FULL_HUNGER_REGEN).replace("{value}", nf.format(hungerFullRegen))
+						+ "\n" + Lang.getMessage(MenuMessage.ALMOST_FULL_HUNGER_REGEN).replace("{value}", nf.format(almostFullRegen))
+						+ "\n" + Lang.getMessage(MenuMessage.MANA_REGEN).replace("{value}", String.valueOf((int) manaRegen));
 			case TOUGHNESS:
 				double toughness = ps.getStatLevel(Stat.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
 				double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
-				return ChatColor.DARK_PURPLE + "-" + nf.format(damageReduction) + "% " + Lang.getMessage(Message.INCOMING_DAMAGE);
+				return Lang.getMessage(MenuMessage.INCOMING_DAMAGE).replace("{value}", nf.format(damageReduction));
 			case WISDOM:
 				double xpModifier = ps.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
 				int anvilCostReduction = (int) (ps.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER));
-				return ChatColor.BLUE + "+" + nf.format(xpModifier) + "% " + Lang.getMessage(Message.XP_GAIN) + "\n" + ChatColor.BLUE + Lang.getMessage(Message.ANVIL_COST_REDUCTION) + ": " + anvilCostReduction;
+				return Lang.getMessage(MenuMessage.XP_GAIN).replace("{value}", nf.format(xpModifier))
+						+ "\n" + Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION).replace("{value}", String.valueOf(anvilCostReduction));
 			default:
 				return "";
 		}
@@ -194,7 +200,7 @@ public class StatsMenu implements InventoryProvider{
 		return SmartInventory.builder()
 				.provider(new StatsMenu(player))
 				.size(3, 9)
-				.title(Lang.getMessage(Message.YOUR_STATS))
+				.title(Lang.getMessage(MenuMessage.STATS_MENU_TITLE))
 				.manager(AureliumSkills.invManager)
 				.build();
 	}

@@ -15,6 +15,7 @@ import java.util.Map;
 public class Lang {
 
 	private static final Map<MessageKey, String> messages = new HashMap<>();
+	private static final Map<UnitMessage, String> units = new HashMap<>();
 	public static String language;
 	private final Plugin plugin;
 	
@@ -31,8 +32,25 @@ public class Lang {
 		InputStream inputStream = plugin.getResource("messages_en.yml");
 		if (inputStream != null) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
-			for (MessageKey message : MessageKey.values()) {
-				messages.put(message, config.getString(message.getPath().replace('&', '§')));
+			//Load units
+			for (UnitMessage key : UnitMessage.values()) {
+				String message = config.getString(key.getPath());
+				if (message != null) {
+					units.put(key, message.replace('&', '§'));
+				}
+			}
+			for (MessageKey key : MessageKey.values()) {
+				String message = config.getString(key.getPath());
+				if (message != null) {
+					messages.put(key, message
+							.replace('&', '§')
+							.replace("{mana_unit}", units.get(UnitMessage.MANA))
+							.replace("{hp_unit}", units.get(UnitMessage.HP))
+							.replace("{xp_unit}", units.get(UnitMessage.XP)));
+				}
+				else {
+					Bukkit.getLogger().severe("[AureliumSkills] Message with path " + key.getPath() + " was null!");
+				}
 			}
 		}
 	}
@@ -47,17 +65,36 @@ public class Lang {
 			File file = new File(plugin.getDataFolder(), "messages_" + language + ".yml");
 			//Load and update file
 			FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
+			//Load units
+			for (UnitMessage key : UnitMessage.values()) {
+				String message = config.getString(key.getPath());
+				if (message != null) {
+					units.put(key, message.replace('&', '§'));
+				}
+			}
 			//Add message keys
-			for (MessageKey message : MessageKey.values()) {
-				messages.put(message, config.getString(message.getPath().replace('&', '§')));
+			for (MessageKey key : MessageKey.values()) {
+				String message = config.getString(key.getPath());
+				if (message != null) {
+					messages.put(key, message
+							.replace('&', '§')
+							.replace("{mana_unit}", units.get(UnitMessage.MANA))
+							.replace("{hp_unit}", units.get(UnitMessage.HP))
+							.replace("{xp_unit}", units.get(UnitMessage.XP)));
+				}
+				else {
+					Bukkit.getLogger().severe("[AureliumSkills] Message with path " + key.getPath() + " was null!");
+				}
 			}
 			long endTime = System.currentTimeMillis();
-			Bukkit.getLogger().info("[AureliumSkills] Loaded " + config.getStringList("languages").size() + " languages in " + (endTime - startTime) + "ms");
+			Bukkit.getLogger().info("[AureliumSkills] Loaded languages in " + (endTime - startTime) + "ms");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+
 
 	private FileConfiguration updateFile(File file, FileConfiguration config) {
 		InputStream stream = plugin.getResource("messages_en.yml");
@@ -89,8 +126,15 @@ public class Lang {
 		return YamlConfiguration.loadConfiguration(file);
 	}
 	
-	public static String getMessage(MessageKey message) {
-		return messages.get(message);
+	public static String getMessage(MessageKey key) {
+		String message = messages.get(key);
+		if (message != null) {
+			return message;
+		}
+		else {
+			Bukkit.getLogger().warning("[AureliumSkills] Message key " + key + " with path " + key.getPath() + " was null!");
+			return "";
+		}
 	}
 
 }

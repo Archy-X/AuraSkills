@@ -3,8 +3,8 @@ package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -69,7 +69,7 @@ public class FightingAbilities implements Listener {
                         //Modifies damage
                         double modifier = Ability.FIRST_STRIKE.getValue(playerSkill.getAbilityLevel(Ability.FIRST_STRIKE)) / 100;
                         event.setDamage(event.getDamage() * (1 + modifier));
-                        event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(Message.FIRST_STRIKE_ACTIVATE).replace("&", "§"));
+                        event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.FIRST_STRIKE_DEALT));
                         //Adds metadata
                         player.setMetadata("AureliumSkills-FirstStrike", new FixedMetadataValue(plugin, true));
                         //Increments counter
@@ -102,9 +102,9 @@ public class FightingAbilities implements Listener {
             if (event.getFinalDamage() < entity.getHealth()) {
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
                     entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, 3));
-                    event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(Message.BLEED_ACTIVATE).replace("&", "§"));
+                    event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_ENEMY_BLEEDING));
                     if (entity instanceof Player) {
-                        entity.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.BLEED_BLEEDING).replace("&", "§"));
+                        entity.sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_SELF_BLEEDING));
                     }
                     //Schedules bleed ticks
                     new BukkitRunnable() {
@@ -126,7 +126,7 @@ public class FightingAbilities implements Listener {
                                 }
                             }
                             if (entity instanceof Player) {
-                                entity.sendMessage(AureliumSkills.tag + Lang.getMessage(Message.BLEED_STOP).replace("&", "§"));
+                                entity.sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_STOP));
                             }
                             cancel();
                         }

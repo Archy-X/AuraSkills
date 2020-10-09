@@ -166,11 +166,11 @@ abilities:
       dealt: '&cFirst Strike Dealt!'
     bleed:
       name: Bleed
-      desc: '{value}% chance to make the enemy bleed for 3 bleed ticks, dealing {1} damage per tick.'
-      info: '{value}% Chance, {1} Damage'
+      desc: '{value}% chance to make the enemy bleed for 3 bleed ticks, dealing {value_2} damage per tick.'
+      info: '{value}% Chance, {value_2} Damage'
       enemy_bleeding: '&cEnemy Bleeding!'
       self_bleeding: '&cYou are bleeding!'
-      bleed_stop: '&fThe bleeding has stopped'
+      stop: '&fThe bleeding has stopped'
   endurance:
     anti_hunger:
       name: Anti Hunger
@@ -236,13 +236,13 @@ abilities:
       info: '+{value} Wisdom/Effect'
 acf:
   core:
-    permission_denied: '&cI'm sorry, but you do not have permission to perform this command.'
-    permission_denied_parameter: '&cI'm sorry, but you do not have permission to perform this command.'
+    permission_denied: '&cI''m sorry, but you do not have permission to perform this command.'
+    permission_denied_parameter: '&cI''m sorry, but you do not have permission to perform this command.'
     error_generic_logged: '&cAn error occurred. This problem has been logged. Sorry for the inconvenience.'
-    unknown_command: '&cUnknown Command, please type &e/help'
+    unknown_command: '&cUnknown Command, please type &e/sk help'
     invalid_syntax: '&eUsage: &e{command} &a{syntax}'
     error_prefix: '&cError: {message}'
-    error_performing_command: '&cI'm sorry, but there was an error performing this command.'
+    error_performing_command: "&cI'm sorry, but there was an error performing this command."
     info_message: '{message}'
     please_specify_one_of: '&cError: Please specify one of (&e{valid}&c)'
     must_be_a_number: '&cError: {num} must be a number.'
@@ -277,7 +277,9 @@ acf:
 action_bar:
   idle: '&c{hp}/{max_hp} {hp_unit}                &b{mana}/{max_mana} {mana_unit}'
   xp: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
 commands:
   prefix: '&8[&bSkills&8] '
   armor:
@@ -332,8 +334,9 @@ commands:
       removed_all_stats: '&7Removed &b{num} &7stat modifiers from player &6{player}'
       removed_one_stat: '&7Removed &b{num} {color}{stat} &7modifiers from player &6{player}'
       players_only: '&eOnly players can remove their own modifiers! Try specifying a player'
-    no_profile: '&ePlayer does not have a stats profile!'
-  multiplier: '&fXP multiplier for &6{player}&f: &b{multiplier}x / +{percent}%'
+  multiplier:
+    list: '&fXP multiplier for &6{player}&f: &b{multiplier}x / +{percent}%'
+    players_only: 'Only players can list their own multiplier! Specify a player!'
   rank:
     header: '&b&lYour Skill Rankings'
     power: '&ePower &7(All Skills): &f#{rank} of {total}'
@@ -373,6 +376,15 @@ commands:
     set: '&7Set &b{skill} &7XP for player &7{player} &7to {amount}'
     remove: '&7Removed &b{amount} {skill} &7XP from player &6{player}'
   unknown_skill: '&eUnknown skill!'
+  no_profile: '&ePlayer does not have a skills profile!'
+leveler:
+  title: '&a{skill} Level Up'
+  subtitle: '&6{old} ➜ {new}'
+  level_up: '&3&l----------------------------------------\n &3Skill Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&l----------------------------------------'
+  stat_level: '{color}+1{symbol} {stat}'
+  ability_unlock: '&aAbility Unlock! &6&l{ability} &7has been unlocked'
+  ability_level_up: '&aAbility Level Up! &6&l{ability} &7is now level &6{level}'
+  money_reward: '&a${amount}'
 menus:
   common:
     close: '&cClose'
@@ -386,12 +398,15 @@ menus:
     secondary_stat: '&7Secondary Stat: {color}{stat}'
     mana_ability: '&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s'
   skills_menu:
+    skills_menu_title: Your Skills
     your_skills: '&bYour Skills - &6{player}'
     your_skills_desc: '&7Upgrade Skills by doing various tasks\nto unlock valuable stat boosts,\nabilities, and more!'
     your_skills_hover: '&eHover over a Skill for more information!'
     your_skills_click: '&eClick on a Skill to view level progression!'
     skill_click: '&eClick to view Level Progression!'
+    skill_locked: '&cYou do no have permission to view this skill!'
   level_progression_menu:
+    level_progression_menu_title: '{skill} Levels - Page {page}'
     your_ranking: '&eYour Skill Ranking'
     rank_out_of: '&fYou are ranked &6{rank}&f out of {total} players'
     rank_percent: '&fYou are in the top &6{percent}%&f of players'
@@ -410,12 +425,13 @@ menus:
     locked: '&cLOCKED'
     rewards_one: '&7Rewards:\n  {color}+{num} {symbol} {stat}'
     rewards_two: '&7Rewards:\n  {color_1}+{num_1} {symbol_1} {stat_1}\n  {color_2}+{num_2} {symbol_2} {stat_2}'
-    ability_unlock: '&6{ability} &a&lAbility Unlock\n&7{  desc}'
-    ability_level: '&6{ability} {level}\n&7{  desc}'
-    mana_ability_unlock: '&9{mana_ability} &d&lMana Ability Unlock\n&7{  desc}'
-    mana_ability_level: '&9{mana_ability} {level}\n&7{  desc}'
+    ability_unlock: '&6{ability} &a&lAbility Unlock\n&7  {desc}'
+    ability_level: '&6{ability} {level}\n&7  {desc}'
+    mana_ability_unlock: '&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}'
+    mana_ability_level: '&9{mana_ability} {level}\n&7  {desc}'
     progress: '&7Progress: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
   stats_menu:
+    stats_menu_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
     primary_skills_two: '&7Primary Skills: &f{skill_1}, {skill_2}'
     primary_skills_three: '&7Primary Skills: &f{skill_1}, {skill_2}, {skill_3}'
@@ -462,6 +478,8 @@ mana_abilities:
     lower: '&7You lower your shield'
     start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
     end: '&6Absorption has worn off'
+  not_ready: '&cAbility not ready! &7({cooldown}s)'
+  not_enough_mana: '&eNot enough mana! &7({mana} {mana_unit} required)'
 skills:
   farming:
     name: Farming
@@ -480,63 +498,63 @@ skills:
     desc: '&7Dig with a shovel to earn Excavation {xp_unit}'
   archery:
     name: Archery
-    desc: '&7Shoot mobs and players with a bow to\nearn Archery {xp_unit}'
+    desc: '&7Shoot mobs and players with a bow to\n&7earn Archery {xp_unit}'
   defense:
     name: Defense
     desc: '&7Take damage from entities to earn Defense {xp_unit}'
   fighting:
     name: Fighting
-    desc: '&7Fight mobs with melee weapons to earn\nFighting {xp_unit}'
+    desc: '&7Fight mobs with melee weapons to earn\n&7Fighting {xp_unit}'
   endurance:
     name: Endurance
     desc: '&7Walk and run to earn Endurance {xp_unit}'
   agility:
     name: Agility
-    desc: '&7Jump and take fall damage to earn\n Agility {xp_unit}'
+    desc: '&7Jump and take fall damage to earn\n&7Agility {xp_unit}'
   alchemy:
     name: Alchemy
     desc: '&7Brew potions to earn Alchemy {xp_unit}'
   enchanting:
     name: Enchanting
-    desc: '&7Enchant items and books to earn\nEnchanting {xp_unit}'
+    desc: '&7Enchant items and books to earn\n&7Enchanting {xp_unit}'
   sorcery:
     name: Sorcery
     desc: '&7Cast spells to earn Sorcery {xp_unit}'
   healing:
     name: Healing
-    desc: '&7Drink and splash potions to earn\n Healing {xp_unit}'
+    desc: '&7Drink and splash potions to earn\n&7Healing {xp_unit}'
   forging:
     name: Forging
-    desc: '&7Combine and apply books in an anvil to\nearn Forging {xp_unit}'
+    desc: '&7Combine and apply books in an anvil to\n&7earn Forging {xp_unit}'
 stats:
   strength:
     name: Strength
-    desc: '&7Strength increases your attack damage\nwith various different weapons'
+    desc: '&7Strength increases your attack damage\n&7with various different weapons'
     color: '&4'
     symbol: '➽'
   health:
     name: Health
-    desc: '&7Health increases the amount of {hp_unit} you\nhave, allowing you to last longer in\nfights'
+    desc: '&7Health increases the amount of {hp_unit} you\n&7have, allowing you to last longer in\nfights'
     color: '&c'
     symbol: '❤'
   regeneration:
     name: Regeneration
-    desc: '&7Regeneration increases how fast you\nrecover both health and mana'
+    desc: '&7Regeneration increases how fast you\n&7recover both health and mana'
     color: '&6'
     symbol: '❥'
   luck:
     name: Luck
-    desc: '&7Luck increases your chances of getting\nrare loot from mobs, fishing, and more'
+    desc: '&7Luck increases your chances of getting\n&7rare loot from mobs, fishing, and more'
     color: '&2'
     symbol: '☘'
   wisdom:
     name: Wisdom
-    desc: '&7Wisdom increases your mana pool, the\nstrength of magical attacks, and\nmagical luck'
+    desc: '&7Wisdom increases your mana pool, the\n&7strength of magical attacks, and\nmagical luck'
     color: '&9'
     symbol: '✿'
   toughness:
     name: Toughness
-    desc: '&7Toughness increases the amount of\ndamage reduced from enemy attacks'
+    desc: '&7Toughness increases the amount of\n&7damage reduced from enemy attacks'
     color: '&5'
     symbol: '✦'
 units:

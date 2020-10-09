@@ -2,10 +2,9 @@ package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -24,7 +23,7 @@ public class SpeedMine implements ManaAbility {
             //Consume mana
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(Message.SPEED_MINE_ACTIVATED) + " " + ChatColor.GRAY + "(-" + manaConsumed + " " + Lang.getMessage(Message.MANA) + ")");
+            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }
 
@@ -38,7 +37,7 @@ public class SpeedMine implements ManaAbility {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
             PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
             AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SPEED_MINE, MAbility.SPEED_MINE.getCooldown(skill.getManaAbilityLevel(MAbility.SPEED_MINE)));
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(Message.SPEED_MINE_WORN_OFF));
+            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END));
         }
     }
 }

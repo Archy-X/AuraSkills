@@ -1,41 +1,31 @@
 package com.archyx.aureliumskills.stats;
 
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.StatMessage;
 
 public enum Stat {
 
-	HEALTH(ChatColor.RED + "", "❤"), 
-	STRENGTH(ChatColor.DARK_RED + "", "➽"), 
-	REGENERATION(ChatColor.GOLD + "", "❥"), 
-	LUCK(ChatColor.DARK_GREEN + "", "☘"), 
-	WISDOM(ChatColor.BLUE + "", "✿"), 
-	TOUGHNESS(ChatColor.DARK_PURPLE + "", "✦");
-	
-	private final String color;
-	private final String symbol;
-	private final String name;
-	
-	Stat(String color, String symbol) {
-		this.name = this.toString().toLowerCase();
-		this.color = color;
-		this.symbol = symbol;
-	}
-	
+	HEALTH,
+	STRENGTH,
+	REGENERATION,
+	LUCK,
+	WISDOM,
+	TOUGHNESS;
+
 	public String getDisplayName() {
-		return color + StringUtils.capitalize(name);
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"));
 	}
 	
 	public String getColor() {
-		return color;
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"));
 	}
 	
 	public String getSymbol() {
-		return symbol;
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"));
 	}
-	
-	public String getName() {
-		return name;
+
+	public String getDescription() {
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"));
 	}
-	
+
 }

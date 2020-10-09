@@ -129,9 +129,13 @@ public enum AbilityMessage implements MessageKey {
     FIRST_STRIKE_NAME,
     FIRST_STRIKE_DESC,
     FIRST_STRIKE_INFO,
+    FIRST_STRIKE_DEALT,
     BLEED_NAME,
     BLEED_DESC,
     BLEED_INFO,
+    BLEED_ENEMY_BLEEDING,
+    BLEED_SELF_BLEEDING,
+    BLEED_STOP,
     //Endurance
     ANTI_HUNGER_NAME,
     ANTI_HUNGER_DESC,
@@ -181,8 +185,18 @@ public enum AbilityMessage implements MessageKey {
     WISE_EFFECT_DESC,
     WISE_EFFECT_INFO;
 
-    private final Ability ability = Ability.valueOf(this.name().substring(0, this.name().lastIndexOf("_") - 1));
-    private final String path = "abilities." + ability.getSkill().name().toLowerCase() + "." + ability.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
+    private final String path;
+
+    AbilityMessage() {
+        Ability ability;
+        try {
+            ability = Ability.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
+        }
+        catch (IllegalArgumentException e) {
+            ability = Ability.valueOf(this.name().substring(0, this.name().indexOf("_")));
+        }
+        path = "abilities." + ability.getSkill().name().toLowerCase() + "." + ability.name().toLowerCase() + "." + this.name().substring(ability.name().length() + 1).toLowerCase();
+    }
 
     public String getPath() {
         return path;

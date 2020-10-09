@@ -2,6 +2,10 @@ package com.archyx.aureliumskills.util;
 
 import org.bukkit.Material;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ItemUtils {
 
 	public static boolean isArmor(Material material) {
@@ -26,5 +30,13 @@ public class ItemUtils {
 
 	public static boolean isPickaxe(Material material) {
 		return material.name().toLowerCase().contains("pickaxe");
+	}
+
+	public static List<String> formatLore(List<String> input) {
+		List<String> lore = new ArrayList<>();
+		for (String entry : input) {
+			lore.addAll(Arrays.asList(entry.split("\n")));
+		}
+		return lore;
 	}
 } 

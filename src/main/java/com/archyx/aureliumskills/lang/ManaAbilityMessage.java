@@ -27,11 +27,21 @@ public enum ManaAbilityMessage implements MessageKey {
     ABSORPTION_RAISE,
     ABSORPTION_LOWER,
     ABSORPTION_START,
-    ABSORPTION_END;
+    ABSORPTION_END,
+    NOT_READY("not_ready"),
+    NOT_ENOUGH_MANA("not_enough_mana");
 
-    private final MAbility manaAbility = MAbility.valueOf(this.name().substring(0, this.name().lastIndexOf("_") - 1));
-    private final String path = "abilities." + manaAbility.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
-    
+    private final String path;
+
+    ManaAbilityMessage() {
+        MAbility manaAbility = MAbility.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
+        this.path = "mana_abilities." + manaAbility.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();;
+    }
+
+    ManaAbilityMessage(String path) {
+        this.path = "mana_abilities." + path;
+    }
+
     public String getPath() {
         return path;
     }

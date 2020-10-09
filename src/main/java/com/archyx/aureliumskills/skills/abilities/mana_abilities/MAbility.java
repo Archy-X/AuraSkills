@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.abilities.AbilityOptionManager;
 
@@ -110,15 +110,12 @@ public enum MAbility {
         return manaCostPerLevel;
     }
 
-    public String getName() {
-        return Lang.getMessage(Message.valueOf(this.name().toUpperCase() + "_NAME"));
+    public String getDisplayName() {
+        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_NAME"));
     }
 
     public String getDescription() {
-        return Lang.getMessage(Message.valueOf(this.name().toUpperCase() + "_DESC"));
+        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_DESC"));
     }
 
-    public String getMiniDesc() {
-        return Lang.getMessage(Message.valueOf(this.name().toUpperCase() + "_MINI_DESC"));
-    }
 }

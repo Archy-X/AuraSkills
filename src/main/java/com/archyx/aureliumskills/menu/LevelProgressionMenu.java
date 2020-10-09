@@ -4,13 +4,14 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
+import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.RomanNumber;
 import com.cryptomorin.xseries.XMaterial;
 import fr.minuskube.inv.ClickableItem;
@@ -78,7 +79,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 
 		contents.set(SlotPos.of(0, 0), ClickableItem.empty(skill.getMenuItem(player, false)));
 		
-		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton(Lang.getMessage(Message.BACK_SKILLS_MENU)), e -> SkillsMenu.getInventory(player).open(player)));
+		contents.set(SlotPos.of(5, 0), ClickableItem.of(MenuItems.getBackButton(Lang.getMessage(MenuMessage.BACK_CLICK)), e -> SkillsMenu.getInventory(player).open(player)));
 		
 		contents.set(SlotPos.of(5, 1), ClickableItem.of(MenuItems.getCloseButton(), e -> player.closeInventory()));
 
@@ -149,7 +150,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		return SmartInventory.builder()
 				.provider(new LevelProgressionMenu(player, skill))
 				.size(6, 9)
-				.title(Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.LEVELS) + " - " + Lang.getMessage(Message.PAGE).replace("_", String.valueOf(page + 1)))
+				.title(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE).replace("{skill}", skill.getDisplayName()).replace("{page}", String.valueOf(page)))
 				.manager(AureliumSkills.invManager)
 				.build();
 	}
@@ -157,117 +158,144 @@ public class LevelProgressionMenu implements InventoryProvider {
 	public ItemStack getNextPageItem() {
 		ItemStack item = new ItemStack(Material.ARROW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD + Lang.getMessage(Message.NEXT_PAGE));
-		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.NEXT_PAGE_CLICK));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		if (meta != null) {
+			meta.setDisplayName(ChatColor.GOLD + Lang.getMessage(MenuMessage.NEXT_PAGE));
+			List<String> lore = new LinkedList<>();
+			lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.NEXT_PAGE_CLICK));
+			meta.setLore(lore);
+			item.setItemMeta(meta);
+		}
 		return item;
 	}
 	
 	public ItemStack getPreviousPageItem() {
 		ItemStack item = new ItemStack(Material.ARROW);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD + Lang.getMessage(Message.PREVIOUS_PAGE));
-		List<String> lore = new LinkedList<String>();
-		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.PREVIOUS_PAGE_CLICK));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		if (meta != null) {
+			meta.setDisplayName(ChatColor.GOLD + Lang.getMessage(MenuMessage.PREVIOUS_PAGE));
+			List<String> lore = new LinkedList<>();
+			lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.PREVIOUS_PAGE_CLICK));
+			meta.setLore(lore);
+			item.setItemMeta(meta);
+		}
 		return item;
 	}
 	
 	public ItemStack getUnlockedLevel(int level) {
 		ItemStack item = XMaterial.LIME_STAINED_GLASS_PANE.parseItem();
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.GREEN + Lang.getMessage(Message.LEVEL) + " " + RomanNumber.toRoman(level));
-		List<String> lore = getLore(level);
-		lore.add(ChatColor.GREEN + "" + ChatColor.BOLD + Lang.getMessage(Message.UNLOCKED));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		if (item != null) {
+			ItemMeta meta = item.getItemMeta();
+			if (meta != null) {
+				meta.setDisplayName(Lang.getMessage(MenuMessage.LEVEL_UNLOCKED).replace("{level}", RomanNumber.toRoman(level)));
+				List<String> lore = getLore(level);
+				lore.add(Lang.getMessage(MenuMessage.UNLOCKED));
+				meta.setLore(lore);
+				item.setItemMeta(meta);
+			}
+		}
 		return item;
 	}
 	
 	public ItemStack getCurrentLevel(int level) {
 		ItemStack item = XMaterial.YELLOW_STAINED_GLASS_PANE.parseItem();
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.YELLOW + Lang.getMessage(Message.LEVEL) + " " + RomanNumber.toRoman(level));
-		List<String> lore = getLore(level);
-		double xp = SkillLoader.playerSkills.get(player.getUniqueId()).getXp(skill);
-		double xpToNext;
-		if (Leveler.levelReqs.size() > level - 2) {
-			xpToNext = Leveler.levelReqs.get(level - 2);
+		if (item != null) {
+			ItemMeta meta = item.getItemMeta();
+			if (meta != null) {
+				meta.setDisplayName(Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS).replace("{level}", RomanNumber.toRoman(level)));
+				List<String> lore = getLore(level);
+				double xp = SkillLoader.playerSkills.get(player.getUniqueId()).getXp(skill);
+				double xpToNext;
+				if (Leveler.levelReqs.size() > level - 2) {
+					xpToNext = Leveler.levelReqs.get(level - 2);
+				} else {
+					xpToNext = 0;
+				}
+				NumberFormat nf = new DecimalFormat("##.##");
+				lore.add(ChatColor.GRAY + "Progress: " + ChatColor.YELLOW + nf.format(xp / xpToNext * 100) + "%");
+				lore.add(ChatColor.GRAY + "   " + nf.format(xp) + "/" + (int) xpToNext + " XP");
+				lore.add(" ");
+				lore.add(Lang.getMessage(MenuMessage.IN_PROGRESS));
+				meta.setLore(lore);
+				item.setItemMeta(meta);
+			}
 		}
-		else {
-			xpToNext = 0;
-		}
-		NumberFormat nf = new DecimalFormat("##.##");
-		lore.add(ChatColor.GRAY + "Progress: " + ChatColor.YELLOW + nf.format(xp/xpToNext * 100) + "%");
-		lore.add(ChatColor.GRAY + "   " + nf.format(xp) + "/" + (int) xpToNext + " XP");
-		lore.add(" ");
-		lore.add(ChatColor.YELLOW + "" + ChatColor.BOLD + Lang.getMessage(Message.IN_PROGRESS));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
 		return item;
 	}
 	
 	public ItemStack getLockedLevel(int level) {
 		ItemStack item = XMaterial.RED_STAINED_GLASS_PANE.parseItem();
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.RED + Lang.getMessage(Message.LEVEL) + " " + RomanNumber.toRoman(level));
-		List<String> lore = getLore(level);
-		lore.add(ChatColor.RED + "" + ChatColor.BOLD + Lang.getMessage(Message.LOCKED));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
+		if (item != null) {
+			ItemMeta meta = item.getItemMeta();
+			if (meta != null) {
+				meta.setDisplayName(Lang.getMessage(MenuMessage.LEVEL_LOCKED).replace("{level}", RomanNumber.toRoman(level)));
+				List<String> lore = getLore(level);
+				lore.add(Lang.getMessage(MenuMessage.LOCKED));
+				meta.setLore(lore);
+				item.setItemMeta(meta);
+			}
+		}
 		return item;
 	}
 
 	private ItemStack getRankItem() {
 		ItemStack item = new ItemStack(Material.PAPER);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(Lang.getMessage(Message.MENU_RANK_NAME).replace("&", "§"));
-		List<String> lore = new ArrayList<>();
-		int rank = AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId());
-		int total =  AureliumSkills.leaderboard.getSize();
-		lore.add(Lang.getMessage(Message.MENU_RANK_RANKED).replace("&", "§").replace("$rank$", String.valueOf(rank)).replace("$total$", String.valueOf(total)));
-		NumberFormat nf;
-		double percentRank = (double) rank / (double) total * 100;
-		if (percentRank < 1) {
-			nf = new DecimalFormat("#.###");
+		if (meta != null) {
+			meta.setDisplayName(Lang.getMessage(MenuMessage.YOUR_RANKING));
+			List<String> lore = new ArrayList<>();
+			int rank = AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId());
+			int total = AureliumSkills.leaderboard.getSize();
+			lore.add(Lang.getMessage(MenuMessage.RANK_OUT_OF)
+					.replace("{rank}", String.valueOf(rank))
+					.replace("{total}", String.valueOf(total)));
+			NumberFormat nf;
+			double percentRank = (double) rank / (double) total * 100;
+			if (percentRank < 1) {
+				nf = new DecimalFormat("#.###");
+			} else {
+				nf = new DecimalFormat("#.#");
+			}
+			lore.add(Lang.getMessage(MenuMessage.RANK_PERCENT).replace("{percent}", nf.format(percentRank)));
+			meta.setLore(lore);
+			item.setItemMeta(meta);
 		}
-		else {
-			nf = new DecimalFormat("#.#");
-		}
-		lore.add(Lang.getMessage(Message.MENU_RANK_PERCENT).replace("&", "§").replace("$percent$", nf.format(percentRank)));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
 		return item;
 	}
 
 	public List<String> getLore(int level) {
 		List<String> lore = new LinkedList<>();
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.LEVEL) + " " + ChatColor.WHITE + level);
-		lore.add(ChatColor.GRAY + Lang.getMessage(Message.REWARDS) + ":");
-		lore.add(skill.getPrimaryStat().getColor() + "   +1 " + skill.getPrimaryStat().getSymbol() + " " + Lang.getMessage(Message.valueOf(skill.getPrimaryStat().toString().toUpperCase() + "_NAME")));
-		if (level%2 == 0) {
-			lore.add(skill.getSecondaryStat().getColor() + "   +1 " + skill.getSecondaryStat().getSymbol() + " " + Lang.getMessage(Message.valueOf(skill.getSecondaryStat().toString().toUpperCase() + "_NAME")));
+		lore.add(Lang.getMessage(MenuMessage.LEVEL_NUMBER).replace("{level}", String.valueOf(level)));
+		if (level%2 != 0) {
+			lore.add(Lang.getMessage(MenuMessage.REWARDS_ONE)
+					.replace("{color}",skill.getPrimaryStat().getColor())
+					.replace("{num}", String.valueOf(1))
+					.replace("{symbol}", skill.getPrimaryStat().getSymbol())
+					.replace("{stat}", skill.getPrimaryStat().getDisplayName()));
+		}
+		else {
+			lore.add(Lang.getMessage(MenuMessage.REWARDS_TWO)
+					.replace("{color_1}",skill.getPrimaryStat().getColor())
+					.replace("{num_1}", String.valueOf(1))
+					.replace("{symbol_1}", skill.getPrimaryStat().getSymbol())
+					.replace("{stat_1}", skill.getPrimaryStat().getDisplayName())
+					.replace("{color_2}",skill.getSecondaryStat().getColor())
+					.replace("{num_2}", String.valueOf(1))
+					.replace("{symbol_2}", skill.getSecondaryStat().getSymbol())
+					.replace("{stat_2}", skill.getSecondaryStat().getDisplayName()));
 		}
 		if (getAbility(level) != null) {
 			Ability ability = getAbility(level);
 			if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
 				lore.add(" ");
 				if (level <= 6) {
-					lore.add(ChatColor.GOLD + ability.getDisplayName() + ChatColor.GREEN + "" + ChatColor.BOLD + " " + Lang.getMessage(Message.ABILITY_UNLOCK));
+					lore.add(Lang.getMessage(MenuMessage.ABILITY_UNLOCK)
+							.replace("{ability}", ability.getDisplayName())
+							.replace("{desc}", ability.getDescription()));
 				} else {
-					lore.add(ChatColor.GOLD + ability.getDisplayName() + " " + RomanNumber.toRoman((level + 3) / 5));
-				}
-				NumberFormat nf = new DecimalFormat("##.##");
-				String fullDesc = ability.getDescription().replace("_", nf.format(ability.getValue((level + 3) / 5)));
-				if (ability.hasTwoValues()) {
-					fullDesc = fullDesc.replace("$", nf.format(ability.getValue2((level + 3) / 5)));
-				}
-				String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1," + 35 + "})(?:\\s+|\\s*$)", "$1\n").split("\n");
-				for (String s : splitDesc) {
-					lore.add(ChatColor.GRAY + "   " + s);
+					lore.add(Lang.getMessage(MenuMessage.ABILITY_LEVEL)
+							.replace("{ability}", ability.getDisplayName())
+							.replace("{level}", RomanNumber.toRoman((level + 3) / 5))
+							.replace("{desc}", ability.getDescription()));
 				}
 			}
 		}
@@ -277,21 +305,20 @@ public class LevelProgressionMenu implements InventoryProvider {
 			if (AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
 				lore.add(" ");
 				if (level == 7) {
-					lore.add(ChatColor.BLUE + mAbility.getName() + ChatColor.LIGHT_PURPLE + " " + ChatColor.BOLD + Lang.getMessage(Message.MANA_ABILITY_UNLOCK));
+					lore.add(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK)
+							.replace("{mana_ability}", mAbility.getDisplayName())
+							.replace("{desc}", mAbility.getDescription()));
 				}
 				else {
-					lore.add(ChatColor.BLUE + mAbility.getName() + " " + RomanNumber.toRoman(level / 7));
-				}
-				NumberFormat nf = new DecimalFormat("##.##");
-				String fullDesc = mAbility.getDescription().replace("_", nf.format(mAbility.getValue(level / 7)));
-				String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1," + 35 + "})(?:\\s+|\\s*$)", "$1\n").split("\n");
-				for (String s : splitDesc) {
-					lore.add(ChatColor.GRAY + "   " + s);
+					lore.add(Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL)
+							.replace("{mana_ability}", mAbility.getDisplayName())
+							.replace("{level}", RomanNumber.toRoman(level / 7))
+							.replace("{desc}", mAbility.getDescription()));
 				}
 			}
 		}
 		lore.add(" ");
-		return lore;
+		return ItemUtils.formatLore(lore);
 	}
 	
 	public Ability getAbility(int level) {
@@ -313,7 +340,6 @@ public class LevelProgressionMenu implements InventoryProvider {
 			}
 		}
 		return null;
-		
 	}
 	
 }

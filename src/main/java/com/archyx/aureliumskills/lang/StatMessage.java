@@ -29,7 +29,7 @@ public enum StatMessage implements MessageKey {
     TOUGHNESS_COLOR,
     TOUGHNESS_SYMBOL;
     
-    private final Stat stat = Stat.valueOf(this.name().substring(0, this.name().lastIndexOf("_") - 1));
+    private final Stat stat = Stat.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
     private final String path = "stats." + stat.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
     
     public String getPath() {

@@ -5,8 +5,9 @@ import com.archyx.aureliumskills.api.SkillLevelUpEvent;
 import com.archyx.aureliumskills.api.XpGainEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.magic.ManaManager;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
@@ -27,7 +28,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -49,7 +49,7 @@ public class Leveler {
 	public static Plugin plugin;
 
 	private static ManaManager mana;
-	private static final NumberFormat nf = new DecimalFormat("#,###.##");
+	private static final NumberFormat nf = new DecimalFormat("##.#");
 	private static final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public static void loadLevelReqs() {
@@ -86,8 +86,6 @@ public class Leveler {
 				if (!event.isCancelled()) {
 					//Adds Xp
 					SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, event.getAmount());
-					//Plays a sound if turned on
-					Leveler.playSound(player);
 					//Check if player leveled up
 					Leveler.checkLevelUp(player, skill);
 					//Sends action bar message
@@ -111,8 +109,6 @@ public class Leveler {
 				if (!event.isCancelled()) {
 					//Adds xp
 					SkillLoader.playerSkills.get(player.getUniqueId()).addXp(skill, event.getAmount());
-					//Plays a sound if turned on
-					Leveler.playSound(player);
 					//Check if player leveled up
 					Leveler.checkLevelUp(player, skill);
 					//Sends action bar message
@@ -129,8 +125,6 @@ public class Leveler {
 			double originalAmount = SkillLoader.playerSkills.get(player.getUniqueId()).getXp(skill);
 			//Sets Xp
 			SkillLoader.playerSkills.get(player.getUniqueId()).setXp(skill, amount);
-			//Plays a sound if turned on
-			Leveler.playSound(player);
 			//Check if player leveled up
 			Leveler.checkLevelUp(player, skill);
 			//Sends action bar message
@@ -199,7 +193,10 @@ public class Leveler {
 					SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, currentLevel + 1);
 					Bukkit.getPluginManager().callEvent(event);
 					//Sends messages
-					player.sendTitle(ChatColor.GREEN + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.LEVEL_UP), ChatColor.GOLD + "" + RomanNumber.toRoman(currentLevel) + " ➜ " + RomanNumber.toRoman(currentLevel + 1), 5, 100, 5);
+					player.sendTitle(Lang.getMessage(LevelerMessage.TITLE).replace("{skill}", skill.getDisplayName()),
+							Lang.getMessage(LevelerMessage.SUBTITLE)
+									.replace("{old}", RomanNumber.toRoman(currentLevel))
+									.replace("{new}", RomanNumber.toRoman(currentLevel + 1)), 5, 100, 5);
 					player.playSound(player.getLocation(), "entity.player.levelup", SoundCategory.MASTER, 1f, 0.5f);
 					player.sendMessage(getLevelUpMessage(player, playerSkill, skill, currentLevel + 1));
 					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), 20L);
@@ -210,107 +207,71 @@ public class Leveler {
 
 
 	private static String getLevelUpMessage(Player player, PlayerSkill playerSkill, Skill skill, int newLevel) {
+		//Build original message with placeholders that are always there
+		String originalMessage = PlaceholderAPI.setPlaceholders(player,Lang.getMessage(LevelerMessage.LEVEL_UP)
+				.replace("{skill}", skill.getDisplayName())
+				.replace("{old}", RomanNumber.toRoman(newLevel - 1))
+				.replace("{new}", RomanNumber.toRoman(newLevel))
+				.replace("{stat_level_1}", Lang.getMessage(LevelerMessage.STAT_LEVEL)
+						.replace("{color}", skill.getPrimaryStat().getColor())
+						.replace("{symbol}", skill.getPrimaryStat().getSymbol())
+						.replace("{stat}", skill.getPrimaryStat().getDisplayName())));
 		StringBuilder message = new StringBuilder();
-		List<String> messageList = OptionL.getList(Option.SKILL_LEVEL_UP_MESSAGE);
-		for (String originalLine : messageList) {
-			boolean hasSecondaryStat = false;
-			boolean hasAbilityUnlock = false;
-			boolean hasAbilityLevelUp = false;
-			boolean hasMoneyReward = false;
-			boolean hasManaAbilityUnlock = false;
-			boolean hasManaAbilityLevelUp = false;
-			String line = originalLine.replace("$skill_name$", skill.getDisplayName());
-			line = line.replace("&", "§");
-			line = line.replace("$level_old$", RomanNumber.toRoman(newLevel - 1));
-			line = line.replace("$level_new$", RomanNumber.toRoman(newLevel));
-			line = line.replace("$primary_stat_color$", skill.getPrimaryStat().getColor());
-			line = line.replace("$primary_stat_symbol$", skill.getPrimaryStat().getSymbol());
-			line = line.replace("$primary_stat_name$", Lang.getMessage(Message.valueOf(skill.getPrimaryStat().toString().toUpperCase() + "_NAME")));
-			if (newLevel %2 == 0) {
-				line = line.replace("$secondary_stat_color$", skill.getSecondaryStat().getColor());
-				line = line.replace("$secondary_stat_symbol$", skill.getSecondaryStat().getSymbol());
-				line = line.replace("$secondary_stat_name$", Lang.getMessage(Message.valueOf(skill.getSecondaryStat().toString().toUpperCase() + "_NAME")));
-				hasSecondaryStat = true;
+		//For every line
+		for (String line : originalMessage.split("\n")) {
+			if (line.contains("{stat_level_2}")) {
+				//If level has secondary stat
+				if (newLevel % 2 == 0) {
+					message.append("\n").append(line.replace("{stat_level_2}", Lang.getMessage(LevelerMessage.STAT_LEVEL)
+							.replace("{color}", skill.getSecondaryStat().getColor())
+							.replace("{symbol}", skill.getSecondaryStat().getSymbol())
+							.replace("{stat}", skill.getSecondaryStat().getDisplayName())));
+				}
 			}
-			if (skill.getAbilities().length == 5) {
-				Ability ability = skill.getAbilities()[(newLevel + 3) % 5];
-				if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
-					if (playerSkill.getAbilityLevel(ability) > 1) {
-						String abilityLevelUp = Lang.getMessage(Message.ABILITY_LEVEL_UP);
-						abilityLevelUp = abilityLevelUp.replace("&", "§").replace("_", ability.getDisplayName()).replace("$", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)));
-						line = line.replace("$ability_level_up$", abilityLevelUp);
-						hasAbilityLevelUp = true;
-					} else {
-						String abilityUnlockMessage = Lang.getMessage(Message.ABILITY_UNLOCK_MESSAGE);
-						abilityUnlockMessage = abilityUnlockMessage.replace("&", "§").replace("_", ability.getDisplayName());
-						line = line.replace("$ability_unlock$", abilityUnlockMessage);
-						hasAbilityUnlock = true;
+			else if (line.contains("{ability_unlock}")) {
+				//If skill has 5 abilities
+				if (skill.getAbilities().length == 5) {
+					Ability ability = skill.getAbilities()[(newLevel + 3) % 5];
+					//Check ability is enabled
+					if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+						//If ability is unlocked
+						if (!(playerSkill.getAbilityLevel(ability) > 1)) {
+							message.append("\n").append(line.replace("{ability_unlock}", Lang.getMessage(LevelerMessage.ABILITY_UNLOCK)
+									.replace("{ability}", ability.getDisplayName())));
+						}
 					}
 				}
 			}
-			if (newLevel % 7 == 0) {
-				MAbility mAbility = skill.getManaAbility();
-				if (AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
-					if (playerSkill.getManaAbilityLevel(mAbility) > 1) {
-						String levelUp = Lang.getMessage(Message.MANA_ABILITY_LEVEL_UP);
-						levelUp = levelUp.replace("&", "§").replace("_", mAbility.getName()).replace("$", RomanNumber.toRoman(playerSkill.getManaAbilityLevel(mAbility)));
-						line = line.replace("$mana_ability_level_up$", levelUp);
-						hasManaAbilityLevelUp = true;
-					} else {
-						String unlock = Lang.getMessage(Message.MANA_ABILITY_UNLOCK_MESSAGE);
-						unlock = unlock.replace("&", "§").replace("_", mAbility.getName());
-						line = line.replace("$mana_ability_unlock$", unlock);
-						hasManaAbilityUnlock = true;
+			else if (line.contains("{ability_level_up}")) {
+				//If skill has 5 abilities
+				if (skill.getAbilities().length == 5) {
+					Ability ability = skill.getAbilities()[(newLevel + 3) % 5];
+					//Check ability is enabled
+					if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+						//If ability is leveled up
+						if (playerSkill.getAbilityLevel(ability) > 1) {
+							message.append("\n").append(line.replace("{ability_level_up}", Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP)
+									.replace("{ability}", ability.getDisplayName())
+									.replace("{level}", String.valueOf(playerSkill.getAbilityLevel(ability)))));
+						}
 					}
 				}
 			}
-			if (AureliumSkills.vaultEnabled) {
-				if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-					double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
-					double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-					double amount = base + (multiplier * newLevel * newLevel);
-					line = line.replace("$money_amount$", nf.format(amount));
-					hasMoneyReward = true;
-				}
-			}
-			line += "\n";
-			if (AureliumSkills.placeholderAPIEnabled) {
-				line = PlaceholderAPI.setPlaceholders(player, line);
-			}
-			if (line.contains("$secondary_stat_name$")) {
-				if (hasSecondaryStat) {
-					message.append(line);
-				}
-			}
-			else if (line.contains("$ability_unlock$")) {
-				if (hasAbilityUnlock) {
-					message.append(line);
-				}
-			}
-			else if (line.contains("$ability_level_up$")) {
-				if (hasAbilityLevelUp) {
-					message.append(line);
-				}
-			}
-			else if (line.contains("$mana_ability_unlock$")) {
-				if (hasManaAbilityUnlock) {
-					message.append(line);
-				}
-			}
-			else if (line.contains("$mana_ability_level_up$")) {
-				if (hasManaAbilityLevelUp) {
-					message.append(line);
-				}
-			}
-			else if (line.contains("$money_amount$")) {
-				if (hasMoneyReward) {
-					message.append(line);
+			else if (line.contains("{money_reward}")) {
+				//If money rewards are enabled
+				if (AureliumSkills.vaultEnabled) {
+					if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
+						double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
+						double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
+						message.append("\n").append(line.replace("{amount}", String.valueOf(base + (multiplier * newLevel * newLevel))));
+					}
 				}
 			}
 			else {
-				message.append(line);
+				message.append("\n").append(line);
 			}
 		}
+		message.delete(0, 2); //Delete the first new line
 		return message.toString();
 	}
 
@@ -326,123 +287,100 @@ public class Leveler {
 	}
 
 	public static void sendActionBarMessage(Player player, Skill skill, double xpAmount) {
-		if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
-			if (!ActionBar.actionBarDisabled.contains(player.getUniqueId())) {
+		if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) { //If action bar enabled
+			if (!ActionBar.actionBarDisabled.contains(player.getUniqueId())) { //If the player's action bar is enabled
+				//Get player skill data
 				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-				NumberFormat nf = new DecimalFormat("##.#");
-				ActionBar.isGainingXp.put(player.getUniqueId(), true);
-				ActionBar.timer.put(player.getUniqueId(), 20);
-				if (!ActionBar.currentAction.containsKey(player.getUniqueId())) {
-					ActionBar.currentAction.put(player.getUniqueId(), 0);
-				}
-				ActionBar.currentAction.put(player.getUniqueId(), ActionBar.currentAction.get(player.getUniqueId()) + 1);
-				int currentAction = ActionBar.currentAction.get(player.getUniqueId());
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						if (ActionBar.isGainingXp.get(player.getUniqueId())) {
-							if (currentAction == ActionBar.currentAction.get(player.getUniqueId())) {
-								if (Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill)) {
-									if (xpAmount >= 0) {
-										if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR) && OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-														"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+				if (playerSkill != null) {
+					//Set timer and is gaining xp
+					ActionBar.isGainingXp.put(player.getUniqueId(), true);
+					ActionBar.timer.put(player.getUniqueId(), 20);
+					//Put current action if not present
+					if (!ActionBar.currentAction.containsKey(player.getUniqueId())) {
+						ActionBar.currentAction.put(player.getUniqueId(), 0);
+					}
+					//Add to current action
+					ActionBar.currentAction.put(player.getUniqueId(), ActionBar.currentAction.get(player.getUniqueId()) + 1);
+					int currentAction = ActionBar.currentAction.get(player.getUniqueId());
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							//If is gaining xp
+							if (ActionBar.isGainingXp.get(player.getUniqueId())) {
+								//If latest action
+								if (currentAction == ActionBar.currentAction.get(player.getUniqueId())) {
+									//Get health attribute
+									AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+									if (attribute != null) {
+										//Not maxed
+										if (Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill)) {
+											//Xp gained
+											if (xpAmount >= 0) {
+												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.XP)
+														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{xp_gained}", nf.format(xpAmount))
+														.replace("{skill}", skill.getDisplayName())
+														.replace("{current_xp}", nf.format(playerSkill.getXp(skill)))
+														.replace("{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)))
+														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
+														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
-										} else if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
+											//Xp removed
+											else {
+												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.XP_REMOVED)
+														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{xp_removed}", nf.format(xpAmount))
+														.replace("{skill}", skill.getDisplayName())
+														.replace("{current_xp}", nf.format(playerSkill.getXp(skill)))
+														.replace("{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)))
+														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
+														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
-										} else if (OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-													"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
-										} else {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
 										}
-									} else {
-										if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR) && OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-														"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
+										//Maxed
+										else {
+											//Xp gained
+											if (xpAmount >= 0) {
+												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.MAXED)
+														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{xp_gained}", nf.format(xpAmount))
+														.replace("{skill}", skill.getDisplayName())
+														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
+														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
-										} else if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
+											//Xp removed
+											else {
+												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.MAXED_REMOVED)
+														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
+														.replace("{xp_removed}", nf.format(xpAmount))
+														.replace("{skill}", skill.getDisplayName())
+														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
+														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
-										} else if (OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")" +
-													"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
-										} else {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + nf.format(playerSkill.getXp(skill)) + "/" + BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) + " " + Lang.getMessage(Message.XP) + ")");
 										}
 									}
 								} else {
-									if (xpAmount >= 0) {
-										if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR) && OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")" +
-														"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
-											}
-										} else if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")");
-											}
-										} else if (OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")" +
-													"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
-										} else {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "+" + nf.format(xpAmount) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")");
-										}
-									} else {
-										if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR) && OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")" +
-														"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
-											}
-										} else if (OptionL.getBoolean(Option.ENABLE_HEALTH_ON_ACTION_BAR)) {
-											AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-											if (attribute != null) {
-												handleActionBarSend(player, OptionL.getColor(Option.HEALTH_TEXT_COLOR) + "" + (int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + "/" + (int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)) + " " + Lang.getMessage(Message.HP) + "   " +
-														OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")");
-											}
-										} else if (OptionL.getBoolean(Option.ENABLE_MANA_ON_ACTION_BAR)) {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")" +
-													"   " + OptionL.getColor(Option.MANA_TEXT_COLOR) + mana.getMana(player.getUniqueId()) + "/" + mana.getMaxMana(player.getUniqueId()) + " " + Lang.getMessage(Message.MANA));
-										} else {
-											handleActionBarSend(player, OptionL.getColor(Option.SKILL_XP_TEXT_COLOR) + "-" + nf.format(Math.abs(xpAmount)) + " " + Lang.getMessage(Message.valueOf(skill.toString().toUpperCase() + "_NAME")) + " " + Lang.getMessage(Message.XP) + " " + OptionL.getColor(Option.XP_PROGRESS_TEXT_COLOR) + "(" + Lang.getMessage(Message.MAXED) + ")");
-										}
-									}
+									cancel();
 								}
 							} else {
 								cancel();
 							}
-						} else {
-							cancel();
 						}
-					}
-				}.runTaskTimer(plugin, 0L, OptionL.getInt(Option.ACTION_BAR_UPDATE_PERIOD));
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						if (ActionBar.timer.get(player.getUniqueId()).equals(0)) {
-							ActionBar.isGainingXp.put(player.getUniqueId(), false);
+					}.runTaskTimer(plugin, 0L, OptionL.getInt(Option.ACTION_BAR_UPDATE_PERIOD));
+					//Schedule stop gaining xp
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							if (ActionBar.timer.get(player.getUniqueId()).equals(0)) {
+								ActionBar.isGainingXp.put(player.getUniqueId(), false);
+							}
 						}
-					}
-				}.runTaskLater(plugin, 41L);
+					}.runTaskLater(plugin, 41L);
+				}
 			}
 		}
 	}
@@ -456,7 +394,4 @@ public class Leveler {
 		}
 	}
 
-	public static void playSound(Player player) {
-		//player.playSound(player.getLocation(), "entity.experience_orb.pickup", SoundCategory.BLOCKS, 0.2f, r.nextFloat() + 0.5f);
-	}
 }

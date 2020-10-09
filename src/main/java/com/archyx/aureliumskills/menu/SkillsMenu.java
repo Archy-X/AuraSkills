@@ -2,8 +2,9 @@ package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.Message;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -177,13 +178,12 @@ public class SkillsMenu implements InventoryProvider{
 		}
 		else {
 			player.closeInventory();
-			player.sendMessage(AureliumSkills.tag + ChatColor.RED + Lang.getMessage(Message.NO_SKILLS_PROFILE));
+			player.sendMessage(AureliumSkills.tag + ChatColor.RED + Lang.getMessage(CommandMessage.NO_PROFILE));
 		}
 	}
 
 	public void update(Player player, InventoryContents contents) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 	public static int getPage(Skill skill, PlayerSkill playerSkill) {
@@ -201,17 +201,17 @@ public class SkillsMenu implements InventoryProvider{
 	private ItemStack getSkillsItem() {
 		ItemStack item = new ItemStack(Material.DIAMOND_AXE);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(Message.YOUR_SKILLS) + " - " + ChatColor.GOLD + player.getName());
+		meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(MenuMessage.YOUR_SKILLS) + " - " + ChatColor.GOLD + player.getName());
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		List<String> lore = new LinkedList<String>();
-		String fullDesc = Lang.getMessage(Message.YOUR_SKILLS_DESCRIPTION);
+		String fullDesc = Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC);
 		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
 		for (String s : splitDesc) {
 			lore.add(ChatColor.GRAY + s);
 		}
 		lore.add(" ");
-		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.SKILL_HOVER));
-		lore.add(ChatColor.YELLOW + Lang.getMessage(Message.SKILL_CLICK));
+		lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER));
+		lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		return item;
@@ -221,7 +221,7 @@ public class SkillsMenu implements InventoryProvider{
 		return SmartInventory.builder()
 				.provider(new SkillsMenu(player))
 				.size(5, 9)
-				.title(Lang.getMessage(Message.YOUR_SKILLS))
+				.title(Lang.getMessage(MenuMessage.SKILLS_MENU_TITLE))
 				.manager(AureliumSkills.invManager)
 				.build();
 	}

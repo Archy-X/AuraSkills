@@ -103,7 +103,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets stat values
         for (Stat stat : Stat.values()) {
-            if (identifier.equals(stat.getName().toLowerCase())) {
+            if (identifier.equals(stat.name().toLowerCase())) {
                 if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
                     return String.valueOf(SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(stat));
                 }
