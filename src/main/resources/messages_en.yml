@@ -2,7 +2,7 @@ abilities:
   farming:
     bountiful_harvest:
       name: Bountiful Harvest
-      desc: '{value} chance to get double drops from crops.'
+      desc: '{value}% chance to get double drops\n&7  from crops.'
       info: '{value}% 2x Drops'
     farmer:
       name: Farmer
@@ -14,16 +14,16 @@ abilities:
       info: '+{value}% Hoe Damage'
     geneticist:
       name: Geneticist
-      desc: 'Increases saturation gain from plant-based foods by {value}.'
+      desc: 'Increases saturation gain from\n&7  plant-based foods by {value}.'
       info: '+{value} Saturation'
     triple_harvest:
       name: Triple Harvest
-      desc: '{value}% chance to get triple drops from crops.'
+      desc: '{value}% chance to get triple drops from\n&7  crops.'
       info: '{value}% 3x Drops'
   foraging:
     lumberjack:
       name: Lumberjack
-      desc: '{value}% chance to get double drops from logs.'
+      desc: '{value}% chance to get double drops\n&7  from logs.'
       info: '{value}% 2x Drops'
     forager:
       name: Forager
@@ -35,16 +35,16 @@ abilities:
       info: '+{value}% Axe Damage'
     valor:
       name: Valor
-      desc: 'Grants +{value} Strength while holding an axe'
+      desc: 'Grants +{value} Strength while holding\n&7  an axe'
       info: '+{value} Strength'
     shredder:
       name: Shredder
-      desc: '{value}% chance to deal triple durability damage with axes.'
+      desc: '{value}% chance to deal triple durability\n&7  damage with axes.'
       info: '{value}% 3x Durability Damage'
   mining:
     lucky_miner:
       name: Lucky Miner
-      desc: '{value}% chance to get double drops from ores.'
+      desc: '{value}% chance to get double drops\n&7  from ores.'
       info: '{value}% 2x Drops'
     miner:
       name: Miner
@@ -56,16 +56,16 @@ abilities:
       info: '+{value}% Pickaxe Damage'
     stamina:
       name: Stamina
-      desc: 'Grants +{value} Toughness while holding a pickaxe'
+      desc: 'Grants +{value} Toughness while\n&7  holding a pickaxe'
       info: '+{value} Toughness'
     hardened_armor:
       name: Hardened Armor
-      desc: '{value}% chance to negate durability damage on armor.'
+      desc: '{value}% chance to negate durability\n&7  damage on armor.'
       info: '{value}% No Durability Loss'
   fishing:
     lucky_catch:
       name: Lucky Catch
-      desc: '{value}% chance to get double drops from fishing.'
+      desc: '{value}% chance to get double drops\n&7  from fishing.'
       info: '{value}% 2x Drops'
     fisher:
       name: Fisher
@@ -81,7 +81,7 @@ abilities:
       info: '+{value}% Hook Speed'
     epic_catch:
       name: Epic Catch
-      desc: '{value}% chance to get epic loot from fishing.'
+      desc: '{value}% chance to get epic loot\n&7  from fishing.'
       info: '{value}% Epic Loot'
   excavation:
     metal_detector:
@@ -119,16 +119,16 @@ abilities:
       info: '+{value}% Bow Damage'
     piercing:
       name: Piercing
-      desc: '{value}% chance for arrows to pierce through mobs.'
+      desc: '{value}% chance for arrows to\n&7  pierce through mobs.'
       info: '{value}% Pierce Chance'
     stun:
       name: Stun
-      desc: '{value}% chance to decreases enemy movement speed by 20% for 2 seconds.'
+      desc: '{value}% chance to decreases enemy\n&7  movement speed by 20% for 2 seconds.'
       info: '{value}% Stun Chance'
   defense:
     shielding:
       name: Shielding
-      desc: 'Reduce incoming damage by {value}% while sneaking.'
+      desc: 'Reduce incoming damage by {value}%\n&7  while sneaking.'
       info: '-{value}% Incoming Dmg Sneaking'
     defender:
       name: Defender
@@ -140,11 +140,11 @@ abilities:
       info: '-{value}% Mob Dmg'
     immunity:
       name: Immunity
-      desc: '{value}% chance to completely negate an enemy attack.'
+      desc: '{value}% chance to completely negate\n&7  an enemy attack.'
       info: '{value}% Immune'
     no_debuff:
       name: No Debuff
-      desc: '{value}% chance to negate a harmful potion effect from being applied.'
+      desc: '{value}% chance to negate a harmful\n&7  potion effect from being applied.'
       info: '{value}% No Debuff'
   fighting:
     crit_damage:
@@ -166,7 +166,7 @@ abilities:
       dealt: '&cFirst Strike Dealt!'
     bleed:
       name: Bleed
-      desc: '{value}% chance to make the enemy bleed for 3 bleed ticks, dealing {value_2} damage per tick.'
+      desc: '{value}% chance to make the enemy bleed for\n&7  3 bleed ticks, dealing {value_2} damage per tick.'
       info: '{value}% Chance, {value_2} Damage'
       enemy_bleeding: '&cEnemy Bleeding!'
       self_bleeding: '&cYou are bleeding!'
@@ -182,15 +182,15 @@ abilities:
       info: '+{value}% XP'
     golden_heal:
       name: Golden Heal
-      desc: 'Increases regeneration effect health gain by {value}%'
+      desc: 'Increases regeneration effect\n&7  health gain by {value}%'
       info: '+{value}% Effect Regen'
     recovery:
       name: Recovery
-      desc: 'Increases natural regeneration when at less than half health by {value}%'
+      desc: 'Increases natural regeneration when\n&7  at less than half health by {value}%'
       info: '+{value} Low HP Regen'
     meal_steal:
       name: Meal Steal
-      desc: '{value}% chance to steal 1 hunger point when attacking a player.'
+      desc: '{value}% chance to steal 1 hunger point\n&7  when attacking a player.'
       info: '{value}% Hunger Steal'
   agility:
     light_fall:
@@ -203,7 +203,7 @@ abilities:
       info: '+{value}% XP'
     sugar_rush:
       name: Sugar Rush
-      desc: 'Consumed and splashed speed and jump boost potions last {value}% longer.'
+      desc: 'Consumed and splashed speed and jump boost\n&7  potions last {value}% longer.'
       info: '{value}% Longer Speed'
     fleeting:
       name: Fleeting
@@ -211,12 +211,12 @@ abilities:
       info: '+{value}% Speed'
     thunder_fall:
       name: Thunder Fall
-      desc: 'When sneaking during a fall, you have a {value}% chance to deal {1}% of the fall damage expected to mobs in a 3 block radius'
+      desc: 'When sneaking during a fall, you have a {value}% chance\n&7  to deal {1}% of the fall damage expected to mobs\n&7  in a 3 block radius'
       info: '{value}% Chance, {1}% Damage'
   alchemy:
     alchemist:
       name: Alchemist
-      desc: 'Potions you brew have a {value}% longer duration.'
+      desc: 'Potions you brew have a {value}% longer\n&7  duration.'
       info: '+{value}% Potion Duration'
     brewer:
       name: Brewer
@@ -224,15 +224,15 @@ abilities:
       info: '+{value}% XP'
     splasher:
       name: Splasher
-      desc: 'Potions you splash gain {value}% longer duration for each player affected.'
+      desc: 'Potions you splash gain {value}% longer\n&7  duration for each player affected.'
       info: '+{value}% Duration/Player'
     lingering:
       name: Lingering
-      desc: 'Lingering potions naturally decay {value}% slower and decay {1}% less per affected entity.'
+      desc: 'Lingering potions naturally decay {value}%\n&7  slower and decay {1}% less per affected entity.'
       info: '-{value}% Natural, -{1}% Entity Decay'
     wise_effect:
       name: Wise Effect
-      desc: 'Gain {value} Wisdom for every unique active potion effect.'
+      desc: 'Gain {value} Wisdom for every unique active\n&7  potion effect.'
       info: '+{value} Wisdom/Effect'
 acf:
   core:
@@ -400,7 +400,7 @@ menus:
   skills_menu:
     skills_menu_title: Your Skills
     your_skills: '&bYour Skills - &6{player}'
-    your_skills_desc: '&7Upgrade Skills by doing various tasks\nto unlock valuable stat boosts,\nabilities, and more!'
+    your_skills_desc: '&7Upgrade Skills by doing various tasks\n&7to unlock valuable stat boosts,\n&7abilities, and more!'
     your_skills_hover: '&eHover over a Skill for more information!'
     your_skills_click: '&eClick on a Skill to view level progression!'
     skill_click: '&eClick to view Level Progression!'
@@ -452,28 +452,28 @@ menus:
 mana_abilities:
   replenish:
     name: Replenish
-    desc: 'Replants crops automatically for {duration} seconds. &e[Right Click to Activate]'
+    desc: '&7Replants crops automatically for \n&7  {value} seconds. &e[Right Click to Activate]'
     raise: '&7You raise your hoe'
     lower: '&7You lower your hoe'
     start: '&6Replenish Activated! &7(-{mana} {mana_unit})'
     end: '&6Replenish has worn off'
   treecapitator:
     name: Treecapitator
-    desc: 'Breaks entire trees instantly for {duration} seconds. &e[Right Click to Activate]'
+    desc: '&7Breaks entire trees instantly for \n&7  {value} seconds. &e[Right Click to Activate]'
     raise: '&7You raise your axe'
     lower: '&7You lower your axe'
     start: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
     end: '&6Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
-    desc: 'Gives Haste 10 for {duration} seconds. &e[Right Click to Activate]'
+    desc: '&7Gives Haste 10 for {value} \n&7  seconds. &e[Right Click to Activate]'
     raise: '&7You raise your pickaxe'
     lower: '&7You lower your pickaxe'
     start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
     end: '&7Speed Mine has worn off'
   absorption:
     name: Absorption
-    desc: 'Heal {value}% of the damage you take for {duration} seconds.'
+    desc: 'Heal 50% of the damage you take \n&7  for {value} seconds.'
     raise: '&7You raise your shield'
     lower: '&7You lower your shield'
     start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
@@ -534,7 +534,7 @@ stats:
     symbol: '➽'
   health:
     name: Health
-    desc: '&7Health increases the amount of {hp_unit} you\n&7have, allowing you to last longer in\nfights'
+    desc: '&7Health increases the amount of {hp_unit} you\n&7have, allowing you to last longer in\n&7fights'
     color: '&c'
     symbol: '❤'
   regeneration:
@@ -549,7 +549,7 @@ stats:
     symbol: '☘'
   wisdom:
     name: Wisdom
-    desc: '&7Wisdom increases your mana pool, the\n&7strength of magical attacks, and\nmagical luck'
+    desc: '&7Wisdom increases your mana pool, the\n&7strength of magical attacks, and\n&7magical luck'
     color: '&9'
     symbol: '✿'
   toughness:

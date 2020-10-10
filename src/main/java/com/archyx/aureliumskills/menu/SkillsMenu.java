@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.util.ItemUtils;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -201,19 +202,17 @@ public class SkillsMenu implements InventoryProvider{
 	private ItemStack getSkillsItem() {
 		ItemStack item = new ItemStack(Material.DIAMOND_AXE);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA + Lang.getMessage(MenuMessage.YOUR_SKILLS) + " - " + ChatColor.GOLD + player.getName());
-		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		List<String> lore = new LinkedList<String>();
-		String fullDesc = Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC);
-		String[] splitDesc = fullDesc.replaceAll("(?:\\s*)(.{1,"+ 38 +"})(?:\\s+|\\s*$)", "$1\n").split("\n");
-		for (String s : splitDesc) {
-			lore.add(ChatColor.GRAY + s);
+		if (meta != null) {
+			meta.setDisplayName(Lang.getMessage(MenuMessage.YOUR_SKILLS).replace("{player}", player.getName()));
+			meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+			List<String> lore = new LinkedList<>();
+			lore.add(ChatColor.GRAY + Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC));
+			lore.add(" ");
+			lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER));
+			lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK));
+			meta.setLore(ItemUtils.formatLore(lore));
+			item.setItemMeta(meta);
 		}
-		lore.add(" ");
-		lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER));
-		lore.add(ChatColor.YELLOW + Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK));
-		meta.setLore(lore);
-		item.setItemMeta(meta);
 		return item;
 	}
 	

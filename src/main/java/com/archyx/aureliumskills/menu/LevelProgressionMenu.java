@@ -150,7 +150,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		return SmartInventory.builder()
 				.provider(new LevelProgressionMenu(player, skill))
 				.size(6, 9)
-				.title(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE).replace("{skill}", skill.getDisplayName()).replace("{page}", String.valueOf(page)))
+				.title(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE).replace("{skill}", skill.getDisplayName()).replace("{page}", String.valueOf(page + 1)))
 				.manager(AureliumSkills.invManager)
 				.build();
 	}
@@ -264,6 +264,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 
 	public List<String> getLore(int level) {
 		List<String> lore = new LinkedList<>();
+		NumberFormat nf = new DecimalFormat("#.#");
 		lore.add(Lang.getMessage(MenuMessage.LEVEL_NUMBER).replace("{level}", String.valueOf(level)));
 		if (level%2 != 0) {
 			lore.add(Lang.getMessage(MenuMessage.REWARDS_ONE)
@@ -283,19 +284,24 @@ public class LevelProgressionMenu implements InventoryProvider {
 					.replace("{symbol_2}", skill.getSecondaryStat().getSymbol())
 					.replace("{stat_2}", skill.getSecondaryStat().getDisplayName()));
 		}
-		if (getAbility(level) != null) {
-			Ability ability = getAbility(level);
+		Ability ability = getAbility(level);
+		if (ability != null) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
 				lore.add(" ");
 				if (level <= 6) {
 					lore.add(Lang.getMessage(MenuMessage.ABILITY_UNLOCK)
 							.replace("{ability}", ability.getDisplayName())
-							.replace("{desc}", ability.getDescription()));
-				} else {
+							.replace("{desc}", ability.getDescription())
+							.replace("{value_2}", nf.format(ability.getValue2((level + 3) / 5)))
+							.replace("{value}", nf.format(ability.getValue((level + 3) / 5))));
+				}
+				else {
 					lore.add(Lang.getMessage(MenuMessage.ABILITY_LEVEL)
 							.replace("{ability}", ability.getDisplayName())
 							.replace("{level}", RomanNumber.toRoman((level + 3) / 5))
-							.replace("{desc}", ability.getDescription()));
+							.replace("{desc}", ability.getDescription())
+							.replace("{value_2}", nf.format(ability.getValue2((level + 3) / 5)))
+							.replace("{value}", nf.format(ability.getValue((level + 3) / 5))));
 				}
 			}
 		}
@@ -307,13 +313,15 @@ public class LevelProgressionMenu implements InventoryProvider {
 				if (level == 7) {
 					lore.add(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK)
 							.replace("{mana_ability}", mAbility.getDisplayName())
-							.replace("{desc}", mAbility.getDescription()));
+							.replace("{desc}", mAbility.getDescription()
+									.replace("{value}", String.valueOf(mAbility.getValue(level / 7)))));
 				}
 				else {
 					lore.add(Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL)
 							.replace("{mana_ability}", mAbility.getDisplayName())
 							.replace("{level}", RomanNumber.toRoman(level / 7))
-							.replace("{desc}", mAbility.getDescription()));
+							.replace("{desc}", mAbility.getDescription()
+									.replace("{value}", String.valueOf(mAbility.getValue(level / 7)))));
 				}
 			}
 		}
@@ -322,21 +330,21 @@ public class LevelProgressionMenu implements InventoryProvider {
 	}
 	
 	public Ability getAbility(int level) {
-		if (skill.getAbilities().length == 5) {
+		if (skill.getAbilities().size() == 5) {
 			if (level % 5 == 2) {
-				return skill.getAbilities()[0];
+				return skill.getAbilities().get(0).get();
 			}
 			else if (level % 5 == 3) {
-				return skill.getAbilities()[1];
+				return skill.getAbilities().get(1).get();
 			}
 			else if (level % 5 == 4) {
-				return skill.getAbilities()[2];
+				return skill.getAbilities().get(2).get();
 			}
 			else if (level % 5 == 0) {
-				return skill.getAbilities()[3];
+				return skill.getAbilities().get(3).get();
 			}
 			else if (level % 5 == 1) {
-				return skill.getAbilities()[4];
+				return skill.getAbilities().get(4).get();
 			}
 		}
 		return null;

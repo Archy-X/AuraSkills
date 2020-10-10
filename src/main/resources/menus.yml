@@ -23,21 +23,21 @@ skills_menu:
   templates:
     skill:
       material:
-        - farming DIAMOND_HOE
-        - foraging STONE_AXE
-        - mining IRON_PICKAXE
-        - fishing FISHING_ROD
-        - excavation GOLDEN_SHOVEL
-        - archery BOW
-        - defense CHAINMAIL_CHESTPLATE
-        - fighting DIAMOND_SWORD
-        - endurance GOLDEN_APPLE
-        - agility FEATEHR
-        - alchemy POTION potion_type:INSTANT_HEAL
-        - enchanting ENCHANTING_TABLE
-        - sorcery BLAZE_ROD
-        - healing SPLASH_POTION potion_type:INSTANT_HEAL
-        - forging ANVIL
+        - FARMING DIAMOND_HOE
+        - FORAGING STONE_AXE
+        - MINING IRON_PICKAXE
+        - FISHING FISHING_ROD
+        - EXCAVATION GOLDEN_SHOVEL
+        - ARCHERY BOW
+        - DEFENSE CHAINMAIL_CHESTPLATE
+        - FIGHTING DIAMOND_SWORD
+        - ENDURANCE GOLDEN_APPLE
+        - AGILITY FEATHER
+        - ALCHEMY POTION potion_type:INSTANT_HEAL
+        - ENCHANTING ENCHANTING_TABLE
+        - SORCERY BLAZE_ROD
+        - HEALING SPLASH_POTION potion_type:INSTANT_HEAL
+        - FORGING ANVIL
       display_name: '&b{skill} &3{level}'
       lore:
         - '{skill_desc}'
@@ -54,21 +54,21 @@ skills_menu:
         - ' '
         - '{skill_click}'
       pos:
-        - farming 1 2
-        - foraging 1 3
-        - mining 1 4
-        - fishing 1 5
-        - excavation 1 6
-        - archery 2 2
-        - defense 2 3
-        - fighting 2 4
-        - endurance 2 5
-        - agility 2 6
-        - alchemy 3 2
-        - enchanting 3 3
-        - sorcery 3 4
-        - healing 3 5
-        - forging 3 6
+        - FARMING 1 2
+        - FORAGING 1 3
+        - MINING 1 4
+        - FISHING 1 5
+        - EXCAVATION 1 6
+        - ARCHERY 2 2
+        - DEFENSE 2 3
+        - FIGHTING 2 4
+        - ENDURANCE 2 5
+        - AGILITY 2 6
+        - ALCHEMY 3 2
+        - ENCHANTING 3 3
+        - SORCERY 3 4
+        - HEALING 3 5
+        - FORGING 3 6
 stats_menu:
   title: '{stats_menu_title}'
   rows: 3
@@ -79,7 +79,7 @@ stats_menu:
     skull:
       row: 1
       column: 4
-      material: SKULL:3 skull_owner:{player_name}
+      material: PLAYER_HEAD skull_owner:{player_name}
       display_name: '&e{player_name}'
       lore:
         - '{player_stat_entry:strength}'
@@ -91,12 +91,12 @@ stats_menu:
   templates:
     stat:
       material:
-        - strength RED_STAINED_GLASS_PANE
-        - health ORANGE_STAINED_GLASS_PANE
-        - regeneration YELLOW_STAINED_GLASS_PANE
-        - luck GREEN_STAINED_GLASS_PANE
-        - wisdom BLUE_STAINED_GLASS_PANE
-        - toughness PURPLE_STAINED_GLASS_PANE
+        - STRENGTH RED_STAINED_GLASS_PANE
+        - HEALTH ORANGE_STAINED_GLASS_PANE
+        - REGENERATION YELLOW_STAINED_GLASS_PANE
+        - LUCK GREEN_STAINED_GLASS_PANE
+        - WISDOM BLUE_STAINED_GLASS_PANE
+        - TOUGHNESS PURPLE_STAINED_GLASS_PANE
       display_name: '{stat_color}{stat_name}'
       lore:
         - '{stat_desc}'
@@ -108,12 +108,12 @@ stats_menu:
         - ' '
         - '{descriptors}'
       pos:
-        - strength 1 1
-        - health 1 2
-        - regeneration 1 3
-        - luck 1 4
-        - wisdom 1 5
-        - toughness 1 6
+        - STRENGTH 1 1
+        - HEALTH 1 2
+        - REGENERATION 1 3
+        - LUCK 1 4
+        - WISDOM 1 5
+        - TOUGHNESS 1 6
 level_progression_menu:
   title: '{level_progression_menu_title}'
   rows: 6
@@ -159,21 +159,21 @@ level_progression_menu:
       row: 0
       column: 0
       material:
-        - farming DIAMOND_HOE
-        - foraging STONE_AXE
-        - mining IRON_PICKAXE
-        - fishing FISHING_ROD
-        - excavation GOLDEN_SHOVEL
-        - archery BOW
-        - defense CHAINMAIL_CHESTPLATE
-        - fighting DIAMOND_SWORD
-        - endurance GOLDEN_APPLE
-        - agility FEATEHR
-        - alchemy POTION potion_type:INSTANT_HEAL
-        - enchanting ENCHANTING_TABLE
-        - sorcery BLAZE_ROD
-        - healing SPLASH_POTION potion_type:INSTANT_HEAL
-        - forging ANVIL
+        - FARMING DIAMOND_HOE
+        - FORAGING STONE_AXE
+        - MINING IRON_PICKAXE
+        - FISHING FISHING_ROD
+        - EXCAVATION GOLDEN_SHOVEL
+        - ARCHERY BOW
+        - DEFENSE CHAINMAIL_CHESTPLATE
+        - FIGHTING DIAMOND_SWORD
+        - ENDURANCE GOLDEN_APPLE
+        - AGILITY FEATHER
+        - ALCHEMY POTION potion_type:INSTANT_HEAL
+        - ENCHANTING ENCHANTING_TABLE
+        - SORCERY BLAZE_ROD
+        - HEALING SPLASH_POTION potion_type:INSTANT_HEAL
+        - FORGING ANVIL
       display_name: '&b{skill} &3{level}'
       lore:
         - '{skill_desc}'
@@ -226,3 +226,6 @@ level_progression_menu:
         - '?hasManaAbility{mana_ability_unlock}||{mana_ability_level}'
         - '?hasManaAbility '
         - '{locked}'
+
+# DO NOT TOUCH
+file_version: 1

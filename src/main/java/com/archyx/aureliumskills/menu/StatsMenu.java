@@ -24,7 +24,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,22 +41,22 @@ public class StatsMenu implements InventoryProvider{
 		contents.set(SlotPos.of(1, 4), ClickableItem.empty(getPlayerHead(SkillLoader.playerStats.get(player.getUniqueId()))));
 		contents.set(SlotPos.of(1, 1), ClickableItem.empty(getStatItem(
 			Stat.STRENGTH, 14, new Skill[] {Skill.FORAGING, Skill.FIGHTING, Skill.SORCERY}, 
-			new Skill[] {Skill.FARMING, Skill.ARCHERY}, ChatColor.DARK_RED)));
+			new Skill[] {Skill.FARMING, Skill.ARCHERY})));
 		contents.set(SlotPos.of(1, 2), ClickableItem.empty(getStatItem(
 			Stat.HEALTH, 1, new Skill[] {Skill.FARMING, Skill.ALCHEMY}, 
-			new Skill[] {Skill.FISHING, Skill.DEFENSE, Skill.HEALING}, ChatColor.RED)));
+			new Skill[] {Skill.FISHING, Skill.DEFENSE, Skill.HEALING})));
 		contents.set(SlotPos.of(1, 3), ClickableItem.empty(getStatItem(
 			Stat.REGENERATION, 4, new Skill[] {Skill.EXCAVATION, Skill.ENDURANCE, Skill.HEALING},
-			new Skill[] {Skill.FIGHTING, Skill.AGILITY}, ChatColor.GOLD)));
+			new Skill[] {Skill.FIGHTING, Skill.AGILITY})));
 		contents.set(SlotPos.of(1, 5), ClickableItem.empty(getStatItem(
 			Stat.LUCK, 13, new Skill[] {Skill.FISHING, Skill.ARCHERY}, 
-			new Skill[] {Skill.MINING, Skill.EXCAVATION, Skill.ENCHANTING}, ChatColor.DARK_GREEN)));
+			new Skill[] {Skill.MINING, Skill.EXCAVATION, Skill.ENCHANTING})));
 		contents.set(SlotPos.of(1, 6), ClickableItem.empty(getStatItem(
 			Stat.WISDOM, 11, new Skill[] {Skill.AGILITY, Skill.ENCHANTING}, 
-			new Skill[] {Skill.ALCHEMY, Skill.SORCERY, Skill.FORAGING}, ChatColor.BLUE)));
+			new Skill[] {Skill.ALCHEMY, Skill.SORCERY, Skill.FORAGING})));
 		contents.set(SlotPos.of(1, 7), ClickableItem.empty(getStatItem(
 			Stat.TOUGHNESS, 10, new Skill[] {Skill.MINING, Skill.DEFENSE, Skill.FORAGING}, 
-			new Skill[] {Skill.FORAGING, Skill.ENDURANCE}, ChatColor.DARK_PURPLE)));
+			new Skill[] {Skill.FORAGING, Skill.ENDURANCE})));
 	}
 
 	@Override
@@ -66,7 +65,7 @@ public class StatsMenu implements InventoryProvider{
 		
 	}
 
-	private ItemStack getStatItem(Stat stat, int color, Skill[] primarySkills, Skill[] secondarySkills, ChatColor chatColor) {
+	private ItemStack getStatItem(Stat stat, int color, Skill[] primarySkills, Skill[] secondarySkills) {
 		//Creates item and sets it to correct color
 		ItemStack item = XMaterial.WHITE_STAINED_GLASS_PANE.parseItem();
 		if (color == 14) {
@@ -91,9 +90,10 @@ public class StatsMenu implements InventoryProvider{
 		if (item != null) {
 			ItemMeta meta = item.getItemMeta();
 			if (meta != null) {
-				meta.setDisplayName(chatColor + stat.getDisplayName());
+				meta.setDisplayName(stat.getColor() + stat.getDisplayName());
 				//Adds name
-				List<String> lore = new LinkedList<>(Arrays.asList(stat.getDisplayName().split("\n")));
+				List<String> lore = new LinkedList<>();
+				lore.add(stat.getDescription());
 				lore.add(" ");
 				//Add primary and secondary skill lists
 				if (primarySkills.length == 2) {
@@ -124,7 +124,7 @@ public class StatsMenu implements InventoryProvider{
 							.replace("{color}", stat.getColor())
 							.replace("{level}", String.valueOf(playerStat.getStatLevel(stat))));
 					lore.add(" ");
-					lore.addAll(Arrays.asList(getStatValue(stat, playerStat).split("\n")));
+					lore.add(getStatValue(stat, playerStat));
 				}
 				meta.setLore(ItemUtils.formatLore(lore));
 				item.setItemMeta(meta);

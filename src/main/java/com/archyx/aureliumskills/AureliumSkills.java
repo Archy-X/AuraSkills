@@ -16,6 +16,7 @@ import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.magic.ManaManager;
+import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.skills.Leaderboard;
@@ -53,7 +54,7 @@ public class AureliumSkills extends JavaPlugin{
 	private final FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
 	private final SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
 	public MySqlSupport mySqlSupport;
-	private Lang lang;
+	private MenuLoader menuLoader;
 	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
 	public static AbilityOptionManager abilityOptionManager;
@@ -120,9 +121,12 @@ public class AureliumSkills extends JavaPlugin{
 			holographicDisplaysEnabled = false;
 		}
 		//Load languages
-		lang = new Lang(this);
+		Lang lang = new Lang(this);
 		lang.loadDefaultMessages();
 		lang.loadLanguages();
+		//Load menu
+		menuLoader = new MenuLoader(this);
+		menuLoader.load();
 		//Load leaderboard
 		leaderboard = new Leaderboard(this);
 		//Registers Commands
@@ -369,6 +373,10 @@ public class AureliumSkills extends JavaPlugin{
 
 	public static Economy getEconomy() {
 		return economy;
+	}
+
+	public MenuLoader getMenuLoader() {
+		return menuLoader;
 	}
 
 }

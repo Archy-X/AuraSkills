@@ -123,12 +123,12 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets skill levels
         for (Skill skill : Skill.values()) {
-            if (identifier.equals(skill.getName().toLowerCase())) {
+            if (identifier.equals(skill.name().toLowerCase())) {
                 if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                     return String.valueOf(SkillLoader.playerSkills.get(player.getUniqueId()).getSkillLevel(skill));
                 }
             }
-            else if (identifier.equals(skill.getName().toLowerCase() + "_roman")) {
+            else if (identifier.equals(skill.name().toLowerCase() + "_roman")) {
                 if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                     return RomanNumber.toRoman(SkillLoader.playerSkills.get(player.getUniqueId()).getSkillLevel(skill));
                 }
