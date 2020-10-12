@@ -28,6 +28,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -193,11 +194,24 @@ public class Leveler {
 					SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, currentLevel + 1);
 					Bukkit.getPluginManager().callEvent(event);
 					//Sends messages
-					player.sendTitle(Lang.getMessage(LevelerMessage.TITLE).replace("{skill}", skill.getDisplayName()),
-							Lang.getMessage(LevelerMessage.SUBTITLE)
-									.replace("{old}", RomanNumber.toRoman(currentLevel))
-									.replace("{new}", RomanNumber.toRoman(currentLevel + 1)), 5, 100, 5);
-					player.playSound(player.getLocation(), "entity.player.levelup", SoundCategory.MASTER, 1f, 0.5f);
+					if (OptionL.getBoolean(Option.LEVELER_TITLE_ENABLED)) {
+						player.sendTitle(Lang.getMessage(LevelerMessage.TITLE).replace("{skill}", skill.getDisplayName()),
+								Lang.getMessage(LevelerMessage.SUBTITLE)
+										.replace("{old}", RomanNumber.toRoman(currentLevel))
+										.replace("{new}", RomanNumber.toRoman(currentLevel + 1))
+								, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
+					}
+					if (OptionL.getBoolean(Option.LEVELER_SOUND_ENABLED)) {
+						try {
+							player.playSound(player.getLocation(), Sound.valueOf(OptionL.getString(Option.LEVELER_SOUND_TYPE))
+									, SoundCategory.valueOf(OptionL.getString(Option.LEVELER_SOUND_CATEGORY))
+									, (float) OptionL.getDouble(Option.LEVELER_SOUND_VOLUME), (float) OptionL.getDouble(Option.LEVELER_SOUND_PITCH));
+						}
+						catch (Exception e) {
+							Bukkit.getLogger().warning("[AureliumSkills] Error playing level up sound (Check config) Played the default sound instead");
+							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1f, 0.5f);
+						}
+					}
 					player.sendMessage(getLevelUpMessage(player, playerSkill, skill, currentLevel + 1));
 					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), 20L);
 				}
@@ -218,7 +232,7 @@ public class Leveler {
 						.replace("{stat}", skill.getPrimaryStat().getDisplayName())));
 		StringBuilder message = new StringBuilder();
 		//For every line
-		for (String line : originalMessage.split("\n")) {
+		for (String line : originalMessage.split("(\\u005C\\u006E)|(\\n)")) {
 			if (line.contains("{stat_level_2}")) {
 				//If level has secondary stat
 				if (newLevel % 2 == 0) {
@@ -252,7 +266,7 @@ public class Leveler {
 						if (playerSkill.getAbilityLevel(ability) > 1) {
 							message.append("\n").append(line.replace("{ability_level_up}", Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP)
 									.replace("{ability}", ability.getDisplayName())
-									.replace("{level}", String.valueOf(playerSkill.getAbilityLevel(ability)))));
+									.replace("{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)))));
 						}
 					}
 				}
@@ -271,7 +285,7 @@ public class Leveler {
 				message.append("\n").append(line);
 			}
 		}
-		message.delete(0, 2); //Delete the first new line
+		message.delete(0, 1); //Delete the first new line
 		return message.toString();
 	}
 

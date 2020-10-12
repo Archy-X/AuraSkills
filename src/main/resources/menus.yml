@@ -45,12 +45,10 @@ skills_menu:
         - '{primary_stat}'
         - '{secondary_stat}'
         - ' '
-        - '{ability_levels}'
-        - ' '
-        - '{mana_ability}'
+        - '{ability_levels}{mana_ability}'
         - ' '
         - '{level}'
-        - '{progress_to_level}||{max_level}'
+        - '{progress_to_level}{max_level}'
         - ' '
         - '{skill_click}'
       pos:
@@ -79,8 +77,8 @@ stats_menu:
     skull:
       row: 1
       column: 4
-      material: PLAYER_HEAD skull_owner:{player_name}
-      display_name: '&e{player_name}'
+      material: PLAYER_HEAD
+      display_name: '&e{player}'
       lore:
         - '{player_stat_entry:strength}'
         - '{player_stat_entry:health}'
@@ -97,12 +95,12 @@ stats_menu:
         - LUCK GREEN_STAINED_GLASS_PANE
         - WISDOM BLUE_STAINED_GLASS_PANE
         - TOUGHNESS PURPLE_STAINED_GLASS_PANE
-      display_name: '{stat_color}{stat_name}'
+      display_name: '{color}{stat}'
       lore:
         - '{stat_desc}'
         - ' '
-        - '{primary_skills_two}||{primary_skills_three}'
-        - '{secondary_skills_two}||{secondary_skills_three}'
+        - '{primary_skills_two}{primary_skills_three}'
+        - '{secondary_skills_two}{secondary_skills_three}'
         - ' '
         - '{your_level}'
         - ' '
@@ -111,9 +109,9 @@ stats_menu:
         - STRENGTH 1 1
         - HEALTH 1 2
         - REGENERATION 1 3
-        - LUCK 1 4
-        - WISDOM 1 5
-        - TOUGHNESS 1 6
+        - LUCK 1 5
+        - WISDOM 1 6
+        - TOUGHNESS 1 7
 level_progression_menu:
   title: '{level_progression_menu_title}'
   rows: 6
@@ -181,23 +179,21 @@ level_progression_menu:
         - '{primary_stat}'
         - '{secondary_stat}'
         - ' '
-        - '{ability_levels}'
-        - ' '
-        - '{mana_ability}'
+        - '{ability_levels}{mana_ability}'
         - ' '
         - '{level}'
-        - '{progress_to_level}||{max_level}'
+        - '{progress_to_level}{max_level}'
   templates:
     unlocked:
       material: LIME_STAINED_GLASS_PANE
       display_name: '{level_unlocked}'
       lore:
         - '{level_number}'
-        - '{rewards_one}||{rewards_two}'
+        - '{rewards_one}{rewards_two}'
         - ' '
-        - '{ability_unlock}||{ability_level}'
-        - ' '
-        - '?hasManaAbility{mana_ability_unlock}||{mana_ability_level}'
+        - '?hasAbility{ability_unlock}{ability_level}'
+        - '?hasAbility '
+        - '?hasManaAbility{mana_ability_unlock}{mana_ability_level}'
         - '?hasManaAbility '
         - '{unlocked}'
     in_progress:
@@ -205,11 +201,11 @@ level_progression_menu:
       display_name: '{level_in_progress}'
       lore:
         - '{level_number}'
-        - '{rewards_one}||{rewards_two}'
+        - '{rewards_one}{rewards_two}'
         - ' '
-        - '{ability_unlock}||{ability_level}'
-        - ' '
-        - '?hasManaAbility{mana_ability_unlock}||{mana_ability_level}'
+        - '?hasAbility{ability_unlock}{ability_level}'
+        - '?hasAbility '
+        - '?hasManaAbility{mana_ability_unlock}{mana_ability_level}'
         - '?hasManaAbility '
         - '{progress}'
         - ' '
@@ -219,11 +215,11 @@ level_progression_menu:
       display_name: '{level_locked}'
       lore:
         - '{level_number}'
-        - '{rewards_one}||{rewards_two}'
+        - '{rewards_one}{rewards_two}'
         - ' '
-        - '{ability_unlock}||{ability_level}'
-        - ' '
-        - '?hasManaAbility{mana_ability_unlock}||{mana_ability_level}'
+        - '?hasAbility{ability_unlock}{ability_level}'
+        - '?hasAbility '
+        - '?hasManaAbility{mana_ability_unlock}{mana_ability_level}'
         - '?hasManaAbility '
         - '{locked}'
 

@@ -49,10 +49,19 @@ public enum Option {
     SKILL_MONEY_REWARDS_ENABLED("skill-money-rewards.enabled", OptionType.BOOLEAN),
     SKILL_MONEY_REWARDS_BASE("skill-money-rewards.base", OptionType.DOUBLE),
     SKILL_MONEY_REWARDS_MULTIPLIER("skill-money-rewards.multiplier", OptionType.DOUBLE),
-    SKILL_LEVEL_UP_MESSAGE("skill-level-up-message", OptionType.LIST),
+    // Leveler options
+    LEVELER_TITLE_ENABLED("leveler.title.enabled", OptionType.BOOLEAN),
+    LEVELER_TITLE_FADE_IN("leveler.title.fade-in", OptionType.INT),
+    LEVELER_TITLE_STAY("leveler.title.stay", OptionType.INT),
+    LEVELER_TITLE_FADE_OUT("leveler.title.fade-out", OptionType.INT),
+    LEVELER_SOUND_ENABLED("leveler.sound.enabled", OptionType.BOOLEAN),
+    LEVELER_SOUND_TYPE("leveler.sound.type", OptionType.STRING),
+    LEVELER_SOUND_CATEGORY("leveler.sound.category", OptionType.STRING),
+    LEVELER_SOUND_VOLUME("leveler.sound.volume", OptionType.DOUBLE),
+    LEVELER_SOUND_PITCH("leveler.sound.pitch", OptionType.DOUBLE),
+    // Modifier options
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip-blocked-materials", OptionType.LIST),
     MODIFIER_ITEM_CHECK_PERIOD("modifier.item.check-period", OptionType.INT),
-    LEVEL_PROGRESSION_MENU_FILL_PANE("level-progression-menu-fill-pane", OptionType.BOOLEAN),
     //Critical options
     CRITICAL_BASE_MULTIPLIER("critical.base-multiplier", OptionType.DOUBLE),
     CRITICAL_ENABLED_SWORD("critical.enabled.sword", OptionType.BOOLEAN),

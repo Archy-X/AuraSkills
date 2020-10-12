@@ -234,6 +234,26 @@ abilities:
       name: Wise Effect
       desc: 'Gain {value} Wisdom for every unique active\n&7  potion effect.'
       info: '+{value} Wisdom/Effect'
+  enchanting:
+    enchanter:
+      name: Enchanter
+      desc: 'Earn {value}% more Enchanting XP'
+      info: '+{value}% XP'
+  sorcery:
+    sorcerer:
+      name: Sorcerer
+      desc: 'Earn {value}% more Sorcery XP'
+      info: '+{value}% XP'
+  healing:
+    healer:
+      name: Healer
+      desc: 'Earn {value}% more Healing XP'
+      info: '+{value}% XP'
+  forging:
+    forger:
+      name: Forger
+      desc: 'Earn {value}% more Forging XP'
+      info: '+{value}% XP'
 acf:
   core:
     permission_denied: '&cI''m sorry, but you do not have permission to perform this command.'
@@ -380,7 +400,7 @@ commands:
 leveler:
   title: '&a{skill} Level Up'
   subtitle: '&6{old} ➜ {new}'
-  level_up: '&3&l----------------------------------------\n &3Skill Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&l----------------------------------------'
+  level_up: '&3&m----------------------------------------\n &3Skill Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&m----------------------------------------'
   stat_level: '{color}+1{symbol} {stat}'
   ability_unlock: '&aAbility Unlock! &6&l{ability} &7has been unlocked'
   ability_level_up: '&aAbility Level Up! &6&l{ability} &7is now level &6{level}'
@@ -391,12 +411,12 @@ menus:
     level: '&7Level: &e{level}'
     progress_to_level: '&7Progress to Level {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
     max_level: '&6MAX LEVEL'
-    ability_levels: '&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}'
-    ability_level_entry: '&6{ability} {level} &8({info})'
-    ability_level_entry_locked: '&8&m{ability}'
+    ability_levels: '&7Ability Levels:{ability_1}{ability_2}{ability_3}{ability_4}{ability_5}'
+    ability_level_entry: '\n  &6{ability} {level} &8({info})'
+    ability_level_entry_locked: '\n  &8&m{ability}'
     primary_stat: '&7Primary Stat: {color}{stat}'
     secondary_stat: '&7Secondary Stat: {color}{stat}'
-    mana_ability: '&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s'
+    mana_ability: '\n\n&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s'
   skills_menu:
     skills_menu_title: Your Skills
     your_skills: '&bYour Skills - &6{player}'

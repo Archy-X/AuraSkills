@@ -303,6 +303,7 @@ public class SkillsCommand extends BaseCommand {
 		AureliumSkills.optionLoader.loadOptions();
 		lang.loadDefaultMessages();
 		lang.loadLanguages();
+		AureliumSkills.getMenuLoader().load();
 		AureliumSkills.abilityOptionManager.loadOptions();
 		Leveler.loadLevelReqs();
 		AureliumSkills.lootTableManager.loadLootTables();

@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
@@ -58,15 +57,25 @@ public class MenuLoader {
                 menuOption.setFillEnabled(menu.getBoolean("fill.enabled", true));
                 //Load fill material
                 String materialString = menu.getString("fill.material", "BLACK_STAINED_GLASS_PANE");
+                ItemStack fillItem;
                 if (materialString != null) {
                     try {
-                        menuOption.setFillItem(XMaterial.valueOf(materialString.toUpperCase()).parseItem());
+                        fillItem = XMaterial.valueOf(materialString.toUpperCase()).parseItem();
                     } catch (IllegalArgumentException e) {
-                        menuOption.setFillItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem());
+                        fillItem = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem();
                     }
-                } else {
-                    menuOption.setFillItem(XMaterial.BLACK_STAINED_GLASS_PANE.parseItem());
                 }
+                else {
+                    fillItem = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem();
+                }
+                if (fillItem != null) {
+                    ItemMeta meta = fillItem.getItemMeta();
+                    if (meta != null) {
+                        meta.setDisplayName(" ");
+                        fillItem.setItemMeta(meta);
+                    }
+                }
+                menuOption.setFillItem(fillItem);
                 //Load items
                 for (String itemName : MenuConstants.menuItems.get(menuName)) {
                     ConfigurationSection item = config.getConfigurationSection(menuName + ".items." + itemName);
@@ -80,6 +89,13 @@ public class MenuLoader {
                             if (baseItem == null) {
                                 baseItem = new ItemStack(Material.STONE);
                             }
+                            ItemMeta meta = baseItem.getItemMeta();
+                            if (meta != null) {
+                                meta.setDisplayName(Objects.requireNonNull(item.getString("display_name"), "Item " + itemName + " cannot have a null display_name!").replace('&', '§'));
+                                List<String> lore = item.getStringList("lore").stream().map(line -> line.replace('&', '§')).collect(Collectors.toList());
+                                meta.setLore(lore);
+                                baseItem.setItemMeta(meta);
+                            }
                         }
                         else {
                             for (String line : item.getStringList("material")) {
@@ -89,18 +105,23 @@ public class MenuLoader {
                                     if (itemStack == null) {
                                         itemStack = new ItemStack(Material.STONE);
                                     }
+                                    ItemMeta itemMeta = itemStack.getItemMeta();
+                                    if (itemMeta != null) {
+                                        itemMeta.setDisplayName(Objects.requireNonNull(item.getString("display_name"), "Item " + itemName + " cannot have a null display_name!").replace('&', '§'));
+                                        List<String> lore = item.getStringList("lore").stream().map(l -> l.replace('&', '§')).collect(Collectors.toList());
+                                        itemMeta.setLore(lore);
+                                        itemStack.setItemMeta(itemMeta);
+                                    }
                                     baseItems.put(skill, itemStack);
                                 }
                             }
                         }
-                        String displayName = Objects.requireNonNull(item.getString("display_name"), "Item " + itemName + " cannot have a null display_name!").replace('&', '§');
-                        List<String> lore = item.getStringList("lore").stream().map(line -> line.replace('&', '§')).collect(Collectors.toList());
                         ItemOption itemOption;
                         if (itemName.equals("skill")) {
-                            itemOption = new ItemOption(itemName, row, column, baseItems, displayName, lore);
+                            itemOption = new ItemOption(itemName, row, column, baseItems);
                         }
                         else {
-                            itemOption = new ItemOption(itemName, row, column, baseItem, displayName, lore);
+                            itemOption = new ItemOption(itemName, row, column, baseItem);
                         }
                         menuOption.putItem(itemOption);
                         itemsLoaded++;
@@ -110,7 +131,7 @@ public class MenuLoader {
                 for (String templateName : MenuConstants.menuTemplates.get(menuName)) {
                     ConfigurationSection template = config.getConfigurationSection(menuName + ".templates." + templateName);
                     if (template != null) {
-                        String displayName = Objects.requireNonNull(template.getString("display_name"), "Template " + templateName + " cannot have a null display_name!");
+                        String displayName = Objects.requireNonNull(template.getString("display_name"), "Template " + templateName + " cannot have a null display_name!").replace('&', '§');
                         List<String> lore = template.getStringList("lore");
                         Map<Object, ItemStack> baseItems = new HashMap<>();
                         Map<Object, SlotPos> positions = new HashMap<>();
@@ -123,6 +144,12 @@ public class MenuLoader {
                                         ItemStack baseItem = parseItem(line.split(" ")[1]);
                                         if (baseItem == null) {
                                             baseItem = new ItemStack(Material.STONE);
+                                        }
+                                        ItemMeta meta = baseItem.getItemMeta();
+                                        if (meta != null) {
+                                            meta.setDisplayName(displayName);
+                                            meta.setLore(lore);
+                                            baseItem.setItemMeta(meta);
                                         }
                                         baseItems.put(skill, baseItem);
                                     }
@@ -143,6 +170,12 @@ public class MenuLoader {
                                         if (baseItem == null) {
                                             baseItem = new ItemStack(Material.STONE);
                                         }
+                                        ItemMeta meta = baseItem.getItemMeta();
+                                        if (meta != null) {
+                                            meta.setDisplayName(displayName);
+                                            meta.setLore(lore);
+                                            baseItem.setItemMeta(meta);
+                                        }
                                         baseItems.put(stat, baseItem);
                                     }
                                 }
@@ -157,11 +190,21 @@ public class MenuLoader {
                             case "unlocked":
                             case "in_progress":
                             case "locked":
-                                baseItems.put("constant", parseItem(template.getString("material")));
+                                ItemStack baseItem = parseItem(template.getString("material"));
+                                if (baseItem == null) {
+                                    baseItem = new ItemStack(Material.STONE);
+                                }
+                                ItemMeta meta = baseItem.getItemMeta();
+                                if (meta != null) {
+                                    meta.setDisplayName(displayName);
+                                    meta.setLore(lore);
+                                    baseItem.setItemMeta(meta);
+                                }
+                                baseItems.put("constant", baseItem);
                                 positions.put("constant", SlotPos.of(0, 0));
                                 break;
                         }
-                        ItemTemplate itemTemplate = new ItemTemplate(templateName, baseItems, displayName, lore, positions);
+                        ItemTemplate itemTemplate = new ItemTemplate(templateName, baseItems, positions);
                         menuOption.putTemplate(itemTemplate);
                         templatesLoaded++;
                     }
@@ -203,9 +246,6 @@ public class MenuLoader {
                                         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                                         item.setItemMeta(meta);
                                     }
-                                }
-                                else if (key.equalsIgnoreCase("skull_owner") && item.getItemMeta() instanceof SkullMeta) {
-                                    // Add skull meta code
                                 }
                             }
                         }

@@ -54,7 +54,7 @@ public class AureliumSkills extends JavaPlugin{
 	private final FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
 	private final SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
 	public MySqlSupport mySqlSupport;
-	private MenuLoader menuLoader;
+	private static MenuLoader menuLoader;
 	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
 	public static AbilityOptionManager abilityOptionManager;
@@ -375,7 +375,7 @@ public class AureliumSkills extends JavaPlugin{
 		return economy;
 	}
 
-	public MenuLoader getMenuLoader() {
+	public static MenuLoader getMenuLoader() {
 		return menuLoader;
 	}
 

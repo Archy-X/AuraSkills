@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.skills.abilities.Ability;
 
 public enum AbilityMessage implements MessageKey {
 
-    //Farming
+    // Farming
     BOUNTIFUL_HARVEST_NAME,
     BOUNTIFUL_HARVEST_DESC,
     BOUNTIFUL_HARVEST_INFO,
@@ -20,7 +20,7 @@ public enum AbilityMessage implements MessageKey {
     TRIPLE_HARVEST_NAME,
     TRIPLE_HARVEST_DESC,
     TRIPLE_HARVEST_INFO,
-    //Foraging
+    // Foraging
     LUMBERJACK_NAME,
     LUMBERJACK_DESC,
     LUMBERJACK_INFO,
@@ -36,7 +36,7 @@ public enum AbilityMessage implements MessageKey {
     SHREDDER_NAME,
     SHREDDER_DESC,
     SHREDDER_INFO,
-    //Mining
+    // Mining
     LUCKY_MINER_NAME,
     LUCKY_MINER_DESC,
     LUCKY_MINER_INFO,
@@ -52,7 +52,7 @@ public enum AbilityMessage implements MessageKey {
     HARDENED_ARMOR_NAME,
     HARDENED_ARMOR_DESC,
     HARDENED_ARMOR_INFO,
-    //Fishing
+    // Fishing
     LUCKY_CATCH_NAME,
     LUCKY_CATCH_DESC,
     LUCKY_CATCH_INFO,
@@ -68,7 +68,7 @@ public enum AbilityMessage implements MessageKey {
     EPIC_CATCH_NAME,
     EPIC_CATCH_DESC,
     EPIC_CATCH_INFO,
-    //Excavation
+    // Excavation
     METAL_DETECTOR_NAME,
     METAL_DETECTOR_DESC,
     METAL_DETECTOR_INFO,
@@ -84,7 +84,7 @@ public enum AbilityMessage implements MessageKey {
     LUCKY_SPADES_NAME,
     LUCKY_SPADES_DESC,
     LUCKY_SPADES_INFO,
-    //Archery
+    // Archery
     CRIT_CHANCE_NAME,
     CRIT_CHANCE_DESC,
     CRIT_CHANCE_INFO,
@@ -100,7 +100,7 @@ public enum AbilityMessage implements MessageKey {
     STUN_NAME,
     STUN_DESC,
     STUN_INFO,
-    //Defense
+    // Defense
     SHIELDING_NAME,
     SHIELDING_DESC,
     SHIELDING_INFO,
@@ -116,7 +116,7 @@ public enum AbilityMessage implements MessageKey {
     NO_DEBUFF_NAME,
     NO_DEBUFF_DESC,
     NO_DEBUFF_INFO,
-    //Fighting
+    // Fighting
     CRIT_DAMAGE_NAME,
     CRIT_DAMAGE_DESC,
     CRIT_DAMAGE_INFO,
@@ -136,7 +136,7 @@ public enum AbilityMessage implements MessageKey {
     BLEED_ENEMY_BLEEDING,
     BLEED_SELF_BLEEDING,
     BLEED_STOP,
-    //Endurance
+    // Endurance
     ANTI_HUNGER_NAME,
     ANTI_HUNGER_DESC,
     ANTI_HUNGER_INFO,
@@ -152,7 +152,7 @@ public enum AbilityMessage implements MessageKey {
     MEAL_STEAL_NAME,
     MEAL_STEAL_DESC,
     MEAL_STEAL_INFO,
-    //Agility
+    // Agility
     LIGHT_FALL_NAME,
     LIGHT_FALL_DESC,
     LIGHT_FALL_INFO,
@@ -168,7 +168,7 @@ public enum AbilityMessage implements MessageKey {
     THUNDER_FALL_NAME,
     THUNDER_FALL_DESC,
     THUNDER_FALL_INFO,
-    //Alchemy
+    // Alchemy
     ALCHEMIST_NAME,
     ALCHEMIST_DESC,
     ALCHEMIST_INFO,
@@ -183,7 +183,20 @@ public enum AbilityMessage implements MessageKey {
     LINGERING_INFO,
     WISE_EFFECT_NAME,
     WISE_EFFECT_DESC,
-    WISE_EFFECT_INFO;
+    WISE_EFFECT_INFO,
+    // Enchanting
+    ENCHANTER_NAME,
+    ENCHANTER_DESC,
+    ENCHANTER_INFO,
+    SORCERER_NAME,
+    SORCERER_DESC,
+    SORCERER_INFO,
+    HEALER_NAME,
+    HEALER_DESC,
+    HEALER_INFO,
+    FORGER_NAME,
+    FORGER_DESC,
+    FORGER_INFO;
 
     private final String path;
 

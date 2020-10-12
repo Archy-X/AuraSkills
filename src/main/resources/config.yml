@@ -101,19 +101,18 @@ skill-money-rewards:
     base: 100
     multiplier: 10
 
-skill-level-up-message:
-    - '&3&l----------------------------------------'
-    - ' &3Skill Level Up! &b&l$skill_name$ &8$level_old$➜&3&l$level_new$'
-    - ' '
-    - ' &bRewards:'
-    - '  $primary_stat_color$+1$primary_stat_symbol$ $primary_stat_name$'
-    - '  $secondary_stat_color$+1$secondary_stat_symbol$ $secondary_stat_name$'
-    - '  $ability_unlock$'
-    - '  $ability_level_up$'
-    - '  $mana_ability_unlock$'
-    - '  $mana_ability_level_up$'
-    - '  &a$$money_amount$'
-    - '&3&l----------------------------------------'
+leveler:
+    title:
+        enabled: true
+        fade-in: 5
+        stay: 100
+        fade-out: 5
+    sound:
+        enabled: true
+        type: ENTITY_PLAYER_LEVELUP
+        category: MASTER
+        volume: 1.0
+        pitch: 0.5
 
 modifier:
     armor:
@@ -121,8 +120,6 @@ modifier:
             - EXAMPLE
     item:
         check-period: 2
-
-level-progression-menu-fill-pane: false
 
 critical:
     base-multiplier: 1.5
