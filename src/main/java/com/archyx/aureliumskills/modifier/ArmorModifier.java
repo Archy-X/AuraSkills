@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class ArmorModifier {
 
@@ -71,7 +72,7 @@ public class ArmorModifier {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, ChatColor.GRAY + stat.getDisplayName() + ":" + stat.getColor() + " +" + value);
+            lore.add(0, ChatColor.GRAY + stat.getDisplayName(Locale.ENGLISH) + ":" + stat.getColor(Locale.ENGLISH) + " +" + value);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);

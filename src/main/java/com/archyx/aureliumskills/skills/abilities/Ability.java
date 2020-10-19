@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 
+import java.util.Locale;
 import java.util.function.Supplier;
 
 public enum Ability {
@@ -91,8 +92,8 @@ public enum Ability {
 		this.valuePerLevel2 = valuePerLevel2;
 	}
 
-	public String getMiniDescription() {
-		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_INFO"));
+	public String getInfo(Locale locale) {
+		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_INFO"), locale);
 	}
 	
 	public Skill getSkill() {
@@ -153,11 +154,11 @@ public enum Ability {
 		return valuePerLevel;
 	}
 
-	public String getDisplayName() {
-		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_NAME"));
+	public String getDisplayName(Locale locale) {
+		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_NAME"), locale);
 	}
 	
-	public String getDescription() {
-		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_DESC"));
+	public String getDescription(Locale locale) {
+		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_DESC"), locale);
 	}
 }

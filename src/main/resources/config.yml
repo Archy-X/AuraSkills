@@ -20,6 +20,9 @@ mysql:
 
 default-language: en
 
+languages:
+    - en
+
 # Action Bar Options
 enable-action-bar: true
 

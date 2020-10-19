@@ -34,6 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Locale;
 import java.util.Random;
 
 public class ForagingAbilities implements Listener {
@@ -160,6 +161,7 @@ public class ForagingAbilities implements Listener {
 			if (blockMat.equals(XMaterial.OAK_LOG.parseMaterial()) || blockMat.equals(XMaterial.BIRCH_LOG.parseMaterial()) || blockMat.equals(XMaterial.SPRUCE_LOG.parseMaterial())
 					|| blockMat.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || blockMat.equals(XMaterial.ACACIA_LOG.parseMaterial()) || blockMat.equals(XMaterial.DARK_OAK_LOG.parseMaterial())) {
 				Player player = event.getPlayer();
+				Locale locale = Lang.getLanguage(player);
 				//Checks if treecapitator is already activated
 				if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 					return;
@@ -176,7 +178,7 @@ public class ForagingAbilities implements Listener {
 								treeCapitator(event);
 							}
 							else {
-								player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA).replace("{mana}", String.valueOf(MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)))));
+								player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)))));
 							}
 						}
 					}
@@ -266,6 +268,7 @@ public class ForagingAbilities implements Listener {
 					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
 					if (mat.name().toUpperCase().contains("_AXE")) {
 						Player player = event.getPlayer();
+						Locale locale = Lang.getLanguage(player);
 						//Check permission
 						if (!player.hasPermission("aureliumskills.foraging")) {
 							return;
@@ -287,21 +290,21 @@ public class ForagingAbilities implements Listener {
 								//Checks if cooldown is reached
 								if (AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
 									AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, true);
-									player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_RAISE));
+									player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_RAISE, locale));
 									new BukkitRunnable() {
 										@Override
 										public void run() {
 											if (!AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 												if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 													AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, false);
-													player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_LOWER));
+													player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_LOWER, locale));
 												}
 											}
 										}
 									}.runTaskLater(plugin, 50L);
 								} else {
 									if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
-										player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_READY).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR))));
+										player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR))));
 										AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR, 2);
 									}
 								}

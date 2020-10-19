@@ -1,15 +1,11 @@
 package com.archyx.aureliumskills;
 
-import co.aikar.commands.MessageKeys;
-import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.lang.ACFCoreMessage;
-import com.archyx.aureliumskills.lang.ACFMinecraftMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
@@ -46,7 +42,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class AureliumSkills extends JavaPlugin{
 
@@ -70,6 +65,7 @@ public class AureliumSkills extends JavaPlugin{
 	public static boolean protocolLibEnabled;
 	public static Leaderboard leaderboard;
 	private static Economy economy = null;
+	private PaperCommandManager commandManager;
 	
 	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
 	
@@ -120,17 +116,23 @@ public class AureliumSkills extends JavaPlugin{
 		else {
 			holographicDisplaysEnabled = false;
 		}
-		//Load languages
-		Lang lang = new Lang(this);
-		lang.loadDefaultMessages();
-		lang.loadLanguages();
-		//Load menu
-		menuLoader = new MenuLoader(this);
-		menuLoader.load();
-		//Load leaderboard
-		leaderboard = new Leaderboard(this);
 		//Registers Commands
 		registerCommands();
+		//Load languages
+		Lang lang = new Lang(this);
+		lang.loadEmbeddedMessages(commandManager);
+		lang.loadLanguages(commandManager);
+		//Load menu
+		menuLoader = new MenuLoader(this);
+		try {
+			menuLoader.load();
+		}
+		catch (IllegalAccessException|InstantiationException e) {
+			e.printStackTrace();
+			Bukkit.getLogger().warning("[AureliumSkills] Error loading menus!");
+		}
+		//Load leaderboard
+		leaderboard = new Leaderboard(this);
 		//Registers events
 		registerEvents();
 		//Load ability manager
@@ -263,7 +265,7 @@ public class AureliumSkills extends JavaPlugin{
 	}
 
 	private void registerCommands() {
-		PaperCommandManager commandManager = new PaperCommandManager(this);
+		commandManager = new PaperCommandManager(this);
 		commandManager.enableUnstableAPI("help");
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
@@ -306,18 +308,6 @@ public class AureliumSkills extends JavaPlugin{
 			if (OptionL.isEnabled(Skill.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand()); }
 			if (OptionL.isEnabled(Skill.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand()); }
 			if (OptionL.isEnabled(Skill.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand()); }
-		}
-		//Load messages
-		File file = new File(getDataFolder(), "messages_" + Lang.language + ".yml");
-		FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-		//Load core messages
-		for (ACFCoreMessage message : ACFCoreMessage.values()) {
-			String path = message.getPath();
-			commandManager.getLocales().addMessage(new Locale(Lang.language), MessageKeys.valueOf(message.name()), config.getString(path));
-		}
-		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
-			String path = message.getPath();
-			commandManager.getLocales().addMessage(new Locale(Lang.language), MinecraftMessageKeys.valueOf(message.name()), config.getString(path));
 		}
 	}
 
@@ -377,6 +367,10 @@ public class AureliumSkills extends JavaPlugin{
 
 	public static MenuLoader getMenuLoader() {
 		return menuLoader;
+	}
+
+	public PaperCommandManager getCommandManager() {
+		return commandManager;
 	}
 
 }

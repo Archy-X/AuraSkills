@@ -1,5 +1,9 @@
 package com.archyx.aureliumskills.menu;
 
+import com.archyx.aureliumskills.menu.items.ConfigurableItem;
+import com.archyx.aureliumskills.menu.items.ItemType;
+import com.archyx.aureliumskills.menu.templates.ConfigurableTemplate;
+import com.archyx.aureliumskills.menu.templates.TemplateType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -7,22 +11,22 @@ import java.util.Map;
 
 public class MenuOption {
 
-    private final String name;
+    private final MenuType type;
     private String title;
     private int rows;
     private boolean fillEnabled;
     private ItemStack fillItem;
-    private final Map<String, ItemOption> items;
-    private final Map<String, ItemTemplate> templates;
+    private final Map<ItemType, ConfigurableItem> items;
+    private final Map<TemplateType, ConfigurableTemplate> templates;
 
-    public MenuOption(String name) {
-        this.name = name;
+    public MenuOption(MenuType type) {
+        this.type = type;
         this.items = new HashMap<>();
         this.templates = new HashMap<>();
     }
 
-    public String getName() {
-        return name;
+    public MenuType getType() {
+        return type;
     }
 
     public String getTitle() {
@@ -57,20 +61,20 @@ public class MenuOption {
         this.fillItem = fillItem;
     }
 
-    public ItemOption getItem(String name) {
-        return items.get(name);
+    public ConfigurableItem getItem(ItemType type) {
+        return items.get(type);
     }
 
-    public void putItem(ItemOption option) {
-        items.put(option.getName(), option);
+    public void putItem(ConfigurableItem item) {
+        items.put(item.getType(), item);
     }
 
-    public ItemTemplate getTemplate(String name) {
-        return templates.get(name);
+    public ConfigurableTemplate getTemplate(TemplateType type) {
+        return templates.get(type);
     }
 
-    public void putTemplate(ItemTemplate template) {
-        templates.put(template.getName(), template);
+    public void putTemplate(ConfigurableTemplate template) {
+        templates.put(template.getType(), template);
     }
 
 }

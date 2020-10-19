@@ -20,10 +20,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class FightingAbilities implements Listener {
 
@@ -66,10 +63,11 @@ public class FightingAbilities implements Listener {
             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FIRST_STRIKE)) {
                 if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
                     if (playerSkill.getAbilityLevel(Ability.FIRST_STRIKE) > 0) {
+                        Locale locale = Lang.getLanguage(player);
                         //Modifies damage
                         double modifier = Ability.FIRST_STRIKE.getValue(playerSkill.getAbilityLevel(Ability.FIRST_STRIKE)) / 100;
                         event.setDamage(event.getDamage() * (1 + modifier));
-                        event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.FIRST_STRIKE_DEALT));
+                        event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.FIRST_STRIKE_DEALT, locale));
                         //Adds metadata
                         player.setMetadata("AureliumSkills-FirstStrike", new FixedMetadataValue(plugin, true));
                         //Increments counter
@@ -101,10 +99,12 @@ public class FightingAbilities implements Listener {
         if (r.nextDouble() < (Ability.BLEED.getValue(playerSkill.getAbilityLevel(Ability.BLEED)) / 100)) {
             if (event.getFinalDamage() < entity.getHealth()) {
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
+                    Locale locale = Lang.getLanguage(event.getDamager());
                     entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, 3));
-                    event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_ENEMY_BLEEDING));
+                    event.getDamager().sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_ENEMY_BLEEDING, locale));
                     if (entity instanceof Player) {
-                        entity.sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_SELF_BLEEDING));
+                        Locale damagedLocale = Lang.getLanguage(entity);
+                        entity.sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_SELF_BLEEDING, damagedLocale));
                     }
                     //Schedules bleed ticks
                     new BukkitRunnable() {
@@ -126,7 +126,8 @@ public class FightingAbilities implements Listener {
                                 }
                             }
                             if (entity instanceof Player) {
-                                entity.sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_STOP));
+                                Locale damagedLocale = Lang.getLanguage(entity);
+                                entity.sendMessage(AureliumSkills.tag + Lang.getMessage(AbilityMessage.BLEED_STOP, damagedLocale));
                             }
                             cancel();
                         }

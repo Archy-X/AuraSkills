@@ -6,6 +6,8 @@ import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.abilities.AbilityOptionManager;
 
+import java.util.Locale;
+
 public enum MAbility {
 
     REPLENISH(Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20),
@@ -110,12 +112,12 @@ public enum MAbility {
         return manaCostPerLevel;
     }
 
-    public String getDisplayName() {
-        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_NAME"));
+    public String getDisplayName(Locale locale) {
+        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_NAME"), locale);
     }
 
-    public String getDescription() {
-        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_DESC"));
+    public String getDescription(Locale locale) {
+        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_DESC"), locale);
     }
 
 }

@@ -11,10 +11,10 @@ skills_menu:
       material: DIAMOND_AXE
       display_name: '{your_skills}'
       lore:
-        - '{your_skills_desc}'
+        - '{desc}'
         - ' '
-        - '{your_skills_hover}'
-        - '{your_skills_click}'
+        - '{hover}'
+        - '{click}'
     close:
       row: 4
       column: 8
@@ -44,10 +44,9 @@ skills_menu:
         - ' '
         - '{primary_stat}'
         - '{secondary_stat}'
-        - ' '
         - '{ability_levels}{mana_ability}'
-        - ' '
         - '{level}'
+        - ' '
         - '{progress_to_level}{max_level}'
         - ' '
         - '{skill_click}'
@@ -80,12 +79,12 @@ stats_menu:
       material: PLAYER_HEAD
       display_name: '&e{player}'
       lore:
-        - '{player_stat_entry:strength}'
-        - '{player_stat_entry:health}'
-        - '{player_stat_entry:regeneration}'
-        - '{player_stat_entry:luck}'
-        - '{player_stat_entry:wisdom}'
-        - '{player_stat_entry:toughness}'
+        - '{strength}'
+        - '{health}'
+        - '{regeneration}'
+        - '{luck}'
+        - '{wisdom}'
+        - '{toughness}'
   templates:
     stat:
       material:
@@ -125,8 +124,8 @@ level_progression_menu:
       material: PAPER
       display_name: '{your_ranking}'
       lore:
-        - '{rank_out_of}'
-        - '{rank_percent}'
+        - '{out_of}'
+        - '{percent}'
     back:
       row: 5
       column: 0
@@ -178,10 +177,9 @@ level_progression_menu:
         - ' '
         - '{primary_stat}'
         - '{secondary_stat}'
-        - ' '
         - '{ability_levels}{mana_ability}'
-        - ' '
         - '{level}'
+        - ' '
         - '{progress_to_level}{max_level}'
   templates:
     unlocked:
@@ -189,24 +187,16 @@ level_progression_menu:
       display_name: '{level_unlocked}'
       lore:
         - '{level_number}'
-        - '{rewards_one}{rewards_two}'
-        - ' '
-        - '?hasAbility{ability_unlock}{ability_level}'
-        - '?hasAbility '
-        - '?hasManaAbility{mana_ability_unlock}{mana_ability_level}'
-        - '?hasManaAbility '
+        - '{rewards}'
+        - '{ability}{mana_ability}'
         - '{unlocked}'
     in_progress:
       material: YELLOW_STAINED_GLASS_PANE
       display_name: '{level_in_progress}'
       lore:
         - '{level_number}'
-        - '{rewards_one}{rewards_two}'
-        - ' '
-        - '?hasAbility{ability_unlock}{ability_level}'
-        - '?hasAbility '
-        - '?hasManaAbility{mana_ability_unlock}{mana_ability_level}'
-        - '?hasManaAbility '
+        - '{rewards}'
+        - '{ability}{mana_ability}'
         - '{progress}'
         - ' '
         - '{in_progress}'
@@ -215,12 +205,8 @@ level_progression_menu:
       display_name: '{level_locked}'
       lore:
         - '{level_number}'
-        - '{rewards_one}{rewards_two}'
-        - ' '
-        - '?hasAbility{ability_unlock}{ability_level}'
-        - '?hasAbility '
-        - '?hasManaAbility{mana_ability_unlock}{mana_ability_level}'
-        - '?hasManaAbility '
+        - '{rewards}'
+        - '{ability}{mana_ability}'
         - '{locked}'
 
 # DO NOT TOUCH

@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class ItemModifier {
 
@@ -68,7 +69,7 @@ public class ItemModifier {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, ChatColor.GRAY + stat.getDisplayName() + ":" + stat.getColor() + " +" + value);
+            lore.add(0, ChatColor.GRAY + stat.getDisplayName(Locale.ENGLISH) + ":" + stat.getColor(Locale.ENGLISH) + " +" + value);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
@@ -79,7 +80,7 @@ public class ItemModifier {
         if (meta != null) {
             List<String> lore = meta.getLore();
             if (lore != null && lore.size() > 0) {
-                lore.removeIf(line -> line.contains(ChatColor.GRAY + stat.getDisplayName() + ":"));
+                lore.removeIf(line -> line.contains(ChatColor.GRAY + stat.getDisplayName(Locale.ENGLISH) + ":"));
             }
             meta.setLore(lore);
         }

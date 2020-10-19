@@ -207,7 +207,7 @@ abilities:
       info: '{value}% Longer Speed'
     fleeting:
       name: Fleeting
-      desc: 'Gain +{value}% movement speed when under 20% health'
+      desc: 'Gain +{value}% movement speed when below 20% health'
       info: '+{value}% Speed'
     thunder_fall:
       name: Thunder Fall
@@ -411,12 +411,12 @@ menus:
     level: '&7Level: &e{level}'
     progress_to_level: '&7Progress to Level {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
     max_level: '&6MAX LEVEL'
-    ability_levels: '&7Ability Levels:{ability_1}{ability_2}{ability_3}{ability_4}{ability_5}'
-    ability_level_entry: '\n  &6{ability} {level} &8({info})'
-    ability_level_entry_locked: '\n  &8&m{ability}'
+    ability_levels: '\n&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
+    ability_level_entry: '&6{ability} {level} &8({info})'
+    ability_level_entry_locked: '&8&m{ability}'
     primary_stat: '&7Primary Stat: {color}{stat}'
     secondary_stat: '&7Secondary Stat: {color}{stat}'
-    mana_ability: '\n\n&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s'
+    mana_ability: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   skills_menu:
     skills_menu_title: Your Skills
     your_skills: '&bYour Skills - &6{player}'
@@ -443,12 +443,12 @@ menus:
     unlocked: '&aUNLOCKED'
     in_progress: '&eIN PROGRESS'
     locked: '&cLOCKED'
-    rewards_one: '&7Rewards:\n  {color}+{num} {symbol} {stat}'
-    rewards_two: '&7Rewards:\n  {color_1}+{num_1} {symbol_1} {stat_1}\n  {color_2}+{num_2} {symbol_2} {stat_2}'
-    ability_unlock: '&6{ability} &a&lAbility Unlock\n&7  {desc}'
-    ability_level: '&6{ability} {level}\n&7  {desc}'
-    mana_ability_unlock: '&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}'
-    mana_ability_level: '&9{mana_ability} {level}\n&7  {desc}'
+    rewards: '&7Rewards:{rewards}'
+    rewards_entry: '\n  {color}+{num} {symbol} {stat}'
+    ability_unlock: '\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n '
+    ability_level: '\n&6{ability} {level}\n&7  {desc}\n '
+    mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
+    mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
     progress: '&7Progress: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
   stats_menu:
     stats_menu_title: Your Stats

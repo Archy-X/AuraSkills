@@ -17,6 +17,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.UUID;
 
 public class ActionBar {
@@ -38,6 +39,7 @@ public class ActionBar {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
+					Locale locale = Lang.getLanguage(player);
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
 						if (!AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
@@ -48,7 +50,7 @@ public class ActionBar {
 								if (!isGainingXp.get(player.getUniqueId())) {
 									AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 									if (attribute != null) {
-										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Lang.getMessage(ActionBarMessage.IDLE)
+										player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Lang.getMessage(ActionBarMessage.IDLE, locale)
 												.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
 												.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
 												.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
@@ -84,6 +86,7 @@ public class ActionBar {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
+					Locale locale = Lang.getLanguage(player);
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
 						if (!AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
@@ -94,7 +97,7 @@ public class ActionBar {
 								if (!isGainingXp.get(player.getUniqueId())) {
 									AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 									if (attribute != null) {
-										ProtocolUtil.sendActionBar(player, Lang.getMessage(ActionBarMessage.IDLE)
+										ProtocolUtil.sendActionBar(player, Lang.getMessage(ActionBarMessage.IDLE, locale)
 												.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
 												.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
 												.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))

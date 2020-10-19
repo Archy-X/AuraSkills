@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.StatMessage;
 import com.archyx.aureliumskills.skills.Skill;
 
+import java.util.Locale;
 import java.util.function.Supplier;
 
 public enum Stat {
@@ -37,20 +38,20 @@ public enum Stat {
 		return secondarySkills;
 	}
 
-	public String getDisplayName() {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"));
+	public String getDisplayName(Locale locale) {
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"), locale);
 	}
 	
-	public String getColor() {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"));
+	public String getColor(Locale locale) {
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"), locale);
 	}
 	
-	public String getSymbol() {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"));
+	public String getSymbol(Locale locale) {
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"), locale);
 	}
 
-	public String getDescription() {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"));
+	public String getDescription(Locale locale) {
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"), locale);
 	}
 
 }

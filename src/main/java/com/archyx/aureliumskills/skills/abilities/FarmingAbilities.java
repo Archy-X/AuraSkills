@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Locale;
 import java.util.Random;
 
 public class FarmingAbilities implements Listener {
@@ -128,6 +129,7 @@ public class FarmingAbilities implements Listener {
 		Material blockMat = event.getBlock().getType();
 		if (BlockUtil.isReplenishable(blockMat)) {
 			Player player = event.getPlayer();
+			Locale locale = Lang.getLanguage(player);
 			if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
 				return;
 			}
@@ -140,7 +142,7 @@ public class FarmingAbilities implements Listener {
 							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.REPLENISH, (int) (MAbility.REPLENISH.getValue(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20), new Replenish());
 						}
 						else {
-							player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA)
+							player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
 									.replace("{mana}", String.valueOf(MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH)))));
 						}
 					}

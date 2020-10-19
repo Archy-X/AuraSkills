@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.menu.items.ConfigurableItem;
+import com.archyx.aureliumskills.menu.items.ItemType;
+import com.archyx.aureliumskills.menu.templates.ConfigurableTemplate;
+import com.archyx.aureliumskills.menu.templates.TemplateType;
 import com.cryptomorin.xseries.XMaterial;
-import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -22,14 +22,12 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class MenuLoader {
 
-    private final Map<String, MenuOption> menus;
+    private final Map<MenuType, MenuOption> menus;
     private final AureliumSkills plugin;
 
     public MenuLoader(AureliumSkills plugin) {
@@ -37,7 +35,7 @@ public class MenuLoader {
         menus = new HashMap<>();
     }
 
-    public void load() {
+    public void load() throws IllegalAccessException, InstantiationException {
         File file = new File(plugin.getDataFolder(), "menus.yml");
         if (!file.exists()) {
             plugin.saveResource("menus.yml", false);
@@ -48,10 +46,10 @@ public class MenuLoader {
         int templatesLoaded = 0;
         long start = System.currentTimeMillis();
         //Load skills menu
-        for (String menuName : MenuConstants.MENU_NAMES) {
-            ConfigurationSection menu = config.getConfigurationSection(menuName);
+        for (MenuType menuType : MenuType.values()) {
+            ConfigurationSection menu = config.getConfigurationSection(menuType.getPath());
             if (menu != null) {
-                MenuOption menuOption = new MenuOption(menuName);
+                MenuOption menuOption = new MenuOption(menuType);
                 menuOption.setTitle(menu.getString("title"));
                 menuOption.setRows(menu.getInt("rows"));
                 menuOption.setFillEnabled(menu.getBoolean("fill.enabled", true));
@@ -76,140 +74,23 @@ public class MenuLoader {
                     }
                 }
                 menuOption.setFillItem(fillItem);
-                //Load items
-                for (String itemName : MenuConstants.menuItems.get(menuName)) {
-                    ConfigurationSection item = config.getConfigurationSection(menuName + ".items." + itemName);
-                    if (item != null) {
-                        int row = item.getInt("row");
-                        int column = item.getInt("column");
-                        ItemStack baseItem = null;
-                        Map<Object, ItemStack> baseItems = new HashMap<>();
-                        if (!itemName.equals("skill")) {
-                            baseItem = parseItem(item.getString("material"));
-                            if (baseItem == null) {
-                                baseItem = new ItemStack(Material.STONE);
-                            }
-                            ItemMeta meta = baseItem.getItemMeta();
-                            if (meta != null) {
-                                meta.setDisplayName(Objects.requireNonNull(item.getString("display_name"), "Item " + itemName + " cannot have a null display_name!").replace('&', '§'));
-                                List<String> lore = item.getStringList("lore").stream().map(line -> line.replace('&', '§')).collect(Collectors.toList());
-                                meta.setLore(lore);
-                                baseItem.setItemMeta(meta);
-                            }
-                        }
-                        else {
-                            for (String line : item.getStringList("material")) {
-                                if (line.split(" ").length > 1) {
-                                    Skill skill = Skill.valueOf(line.split(" ")[0]);
-                                    ItemStack itemStack = parseItem(line.split(" ")[1]);
-                                    if (itemStack == null) {
-                                        itemStack = new ItemStack(Material.STONE);
-                                    }
-                                    ItemMeta itemMeta = itemStack.getItemMeta();
-                                    if (itemMeta != null) {
-                                        itemMeta.setDisplayName(Objects.requireNonNull(item.getString("display_name"), "Item " + itemName + " cannot have a null display_name!").replace('&', '§'));
-                                        List<String> lore = item.getStringList("lore").stream().map(l -> l.replace('&', '§')).collect(Collectors.toList());
-                                        itemMeta.setLore(lore);
-                                        itemStack.setItemMeta(itemMeta);
-                                    }
-                                    baseItems.put(skill, itemStack);
-                                }
-                            }
-                        }
-                        ItemOption itemOption;
-                        if (itemName.equals("skill")) {
-                            itemOption = new ItemOption(itemName, row, column, baseItems);
-                        }
-                        else {
-                            itemOption = new ItemOption(itemName, row, column, baseItem);
-                        }
-                        menuOption.putItem(itemOption);
-                        itemsLoaded++;
-                    }
+                // Load items
+                for (ItemType itemType : menuType.getItems()) {
+                    Class<?> loader = itemType.getLoader();
+                    ConfigurableItem configurableItem = (ConfigurableItem) loader.newInstance();
+                    configurableItem.load(Objects.requireNonNull(menu.getConfigurationSection("items." + itemType.name().toLowerCase())));
+                    menuOption.putItem(configurableItem);
+                    itemsLoaded++;
                 }
-                //Load templates
-                for (String templateName : MenuConstants.menuTemplates.get(menuName)) {
-                    ConfigurationSection template = config.getConfigurationSection(menuName + ".templates." + templateName);
-                    if (template != null) {
-                        String displayName = Objects.requireNonNull(template.getString("display_name"), "Template " + templateName + " cannot have a null display_name!").replace('&', '§');
-                        List<String> lore = template.getStringList("lore");
-                        Map<Object, ItemStack> baseItems = new HashMap<>();
-                        Map<Object, SlotPos> positions = new HashMap<>();
-                        //Load skill template
-                        switch (templateName) {
-                            case "skill":
-                                for (String line : template.getStringList("material")) {
-                                    if (line.split(" ").length > 1) {
-                                        Skill skill = Skill.valueOf(line.split(" ")[0]);
-                                        ItemStack baseItem = parseItem(line.split(" ")[1]);
-                                        if (baseItem == null) {
-                                            baseItem = new ItemStack(Material.STONE);
-                                        }
-                                        ItemMeta meta = baseItem.getItemMeta();
-                                        if (meta != null) {
-                                            meta.setDisplayName(displayName);
-                                            meta.setLore(lore);
-                                            baseItem.setItemMeta(meta);
-                                        }
-                                        baseItems.put(skill, baseItem);
-                                    }
-                                }
-                                for (String line : template.getStringList("pos")) {
-                                    if (line.split(" ").length > 2) {
-                                        Skill skill = Skill.valueOf(line.split(" ")[0]);
-                                        SlotPos pos = SlotPos.of(Integer.parseInt(line.split(" ")[1]), Integer.parseInt(line.split(" ")[2]));
-                                        positions.put(skill, pos);
-                                    }
-                                }
-                                break;
-                            case "stat":
-                                for (String line : template.getStringList("material")) {
-                                    if (line.split(" ").length > 1) {
-                                        Stat stat = Stat.valueOf(line.split(" ")[0]);
-                                        ItemStack baseItem = parseItem(line.split(" ")[1]);
-                                        if (baseItem == null) {
-                                            baseItem = new ItemStack(Material.STONE);
-                                        }
-                                        ItemMeta meta = baseItem.getItemMeta();
-                                        if (meta != null) {
-                                            meta.setDisplayName(displayName);
-                                            meta.setLore(lore);
-                                            baseItem.setItemMeta(meta);
-                                        }
-                                        baseItems.put(stat, baseItem);
-                                    }
-                                }
-                                for (String line : template.getStringList("pos")) {
-                                    if (line.split(" ").length > 2) {
-                                        Stat stat = Stat.valueOf(line.split(" ")[0]);
-                                        SlotPos pos = SlotPos.of(Integer.parseInt(line.split(" ")[1]), Integer.parseInt(line.split(" ")[2]));
-                                        positions.put(stat, pos);
-                                    }
-                                }
-                                break;
-                            case "unlocked":
-                            case "in_progress":
-                            case "locked":
-                                ItemStack baseItem = parseItem(template.getString("material"));
-                                if (baseItem == null) {
-                                    baseItem = new ItemStack(Material.STONE);
-                                }
-                                ItemMeta meta = baseItem.getItemMeta();
-                                if (meta != null) {
-                                    meta.setDisplayName(displayName);
-                                    meta.setLore(lore);
-                                    baseItem.setItemMeta(meta);
-                                }
-                                baseItems.put("constant", baseItem);
-                                positions.put("constant", SlotPos.of(0, 0));
-                                break;
-                        }
-                        ItemTemplate itemTemplate = new ItemTemplate(templateName, baseItems, positions);
-                        menuOption.putTemplate(itemTemplate);
-                        templatesLoaded++;
-                    }
+                // Load templates
+                for (TemplateType templateType : menuType.getTemplates()) {
+                    Class<?> loader = templateType.getLoader();
+                    ConfigurableTemplate configurableTemplate = (ConfigurableTemplate) loader.newInstance();
+                    configurableTemplate.load(Objects.requireNonNull(menu.getConfigurationSection("templates." + templateType.name().toLowerCase())));
+                    menuOption.putTemplate(configurableTemplate);
+                    templatesLoaded++;
                 }
-                menus.put(menuName, menuOption);
+                menus.put(menuType, menuOption);
                 menusLoaded++;
             }
         }
@@ -217,11 +98,11 @@ public class MenuLoader {
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + menusLoaded + " menus, " + itemsLoaded + " items, and " + templatesLoaded + " templates in " + (end - start) + " ms");
     }
 
-    public MenuOption getMenu(String menuName) {
-        return menus.get(menuName);
+    public MenuOption getMenu(MenuType type) {
+        return menus.get(type);
     }
 
-    private ItemStack parseItem(String input) {
+    public static ItemStack parseItem(String input) {
         if (input != null) {
             String material = input.split(" ")[0];
             try {
