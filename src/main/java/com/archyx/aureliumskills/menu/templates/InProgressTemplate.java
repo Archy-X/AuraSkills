@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
+import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.Bukkit;
@@ -43,13 +44,13 @@ public class InProgressTemplate implements ConfigurableTemplate {
     public void load(ConfigurationSection config) {
         try {
             baseItem = MenuLoader.parseItem(Objects.requireNonNull(config.getString("material")));
-            displayName = Objects.requireNonNull(config.getString("display_name")).replace('&', '§');
+            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             lore = new ArrayList<>();
             lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(line.replace('&', '§'));
+                lore.add(LoreUtil.replace(line,"&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {
@@ -66,12 +67,12 @@ public class InProgressTemplate implements ConfigurableTemplate {
         }
     }
 
-    public ItemStack getItem(Skill skill, PlayerSkill playerSkill, int level, Locale locale) {
+    public ItemStack getItem(Skill skill, PlayerSkill playerSkill, int level, Locale locale, Map<Ability, String> abilityNames, Map<Ability, String> abilityDescriptions) {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         ImmutableList<Supplier<Ability>> abilities = skill.getAbilities();
         if (meta != null) {
-            meta.setDisplayName(displayName.replace("{level_in_progress}", Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS, locale).replace("{level}", RomanNumber.toRoman(level))));
+            meta.setDisplayName(LoreUtil.replace(displayName,"{level_in_progress}", LoreUtil.replace(Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS, locale),"{level}", RomanNumber.toRoman(level))));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
@@ -79,50 +80,50 @@ public class InProgressTemplate implements ConfigurableTemplate {
                 for (String placeholder : placeholders) {
                     switch (placeholder) {
                         case "level_number":
-                            line = line.replace("{level_number}", Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale).replace("{level}", String.valueOf(level)));
+                            line = LoreUtil.replace(line,"{level_number}", LoreUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale),"{level}", String.valueOf(level)));
                             break;
                         case "rewards":
                             Stat primaryStat = skill.getPrimaryStat();
-                            String rewards = Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
-                                    .replace("{color}", primaryStat.getColor(locale))
-                                    .replace("{num}", String.valueOf(1))
-                                    .replace("{symbol}", primaryStat.getSymbol(locale))
-                                    .replace("{stat}", primaryStat.getDisplayName(locale));
+                            String rewards = LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
+                                    ,"{color}", primaryStat.getColor(locale)
+                                    ,"{num}", String.valueOf(1)
+                                    ,"{symbol}", primaryStat.getSymbol(locale)
+                                    ,"{stat}", primaryStat.getDisplayName(locale));
                             // If level has secondary stat
                             if (level % 2 == 0) {
                                 Stat secondaryStat = skill.getSecondaryStat();
-                                rewards += Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
-                                        .replace("{color}", secondaryStat.getColor(locale))
-                                        .replace("{num}", String.valueOf(1))
-                                        .replace("{symbol}", secondaryStat.getSymbol(locale))
-                                        .replace("{stat}", secondaryStat.getDisplayName(locale));
+                                rewards += LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
+                                        ,"{color}", secondaryStat.getColor(locale)
+                                        ,"{num}", String.valueOf(1)
+                                        ,"{symbol}", secondaryStat.getSymbol(locale)
+                                        ,"{stat}", secondaryStat.getDisplayName(locale));
                             }
-                            line = line.replace("{rewards}", Lang.getMessage(MenuMessage.REWARDS, locale).replace("{rewards}", rewards));
+                            line = LoreUtil.replace(line,"{rewards}", LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", rewards));
                             break;
                         case "ability":
                             if (abilities.size() == 5) {
                                 Ability ability = abilities.get((level - 2) % 5).get();
                                 // Unlock
                                 if (level <= 6) {
-                                    line = line.replace("{ability}", Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
-                                            .replace("{ability}", ability.getDisplayName(locale))
-                                            .replace("{desc}", ability.getDescription(locale)
-                                                    .replace("{value_2}", nf1.format(ability.getValue2(1)))
-                                                    .replace("{value}", nf1.format(ability.getValue(1)))));
+                                    line = LoreUtil.replace(line,"{ability}", Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
+                                            ,"{ability}", abilityNames.get(ability)
+                                            ,"{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
+                                                    ,"{value_2}", nf1.format(ability.getValue2(1))
+                                                    ,"{value}", nf1.format(ability.getValue(1))));
                                 }
                                 // Level
                                 else {
                                     int abilityLevel = (level + 3) / 5;
-                                    line = line.replace("{ability}", Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
-                                            .replace("{ability}", ability.getDisplayName(locale))
-                                            .replace("{level}", RomanNumber.toRoman(abilityLevel))
-                                            .replace("{desc}", ability.getDescription(locale)
-                                                    .replace("{value_2}", nf1.format(ability.getValue2(abilityLevel)))
-                                                    .replace("{value}", nf1.format(ability.getValue(abilityLevel)))));
+                                    line = LoreUtil.replace(line,"{ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
+                                            ,"{ability}", abilityNames.get(ability)
+                                            ,"{level}", RomanNumber.toRoman(abilityLevel)
+                                            ,"{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
+                                                    ,"{value_2}", nf1.format(ability.getValue2(abilityLevel))
+                                                    ,"{value}", nf1.format(ability.getValue(abilityLevel)))));
                                 }
                             }
                             else {
-                                line = line.replace("{ability}", "");
+                                line = LoreUtil.replace(line,"{ability}", "");
                             }
                             break;
                         case "mana_ability":
@@ -130,35 +131,35 @@ public class InProgressTemplate implements ConfigurableTemplate {
                             if (level % 7 == 0 && mAbility != MAbility.ABSORPTION) {
                                 // Mana Ability Unlocked
                                 if (level == 7) {
-                                    line = line.replace("{mana_ability}", Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)
-                                            .replace("{mana_ability}", mAbility.getDisplayName(locale))
-                                            .replace("{desc}", mAbility.getDescription(locale)
-                                                    .replace("{value}", nf1.format(mAbility.getValue(1)))));
+                                    line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)
+                                            ,"{mana_ability}", mAbility.getDisplayName(locale)
+                                            ,"{desc}", LoreUtil.replace(mAbility.getDescription(locale)
+                                                    ,"{value}", nf1.format(mAbility.getValue(1)))));
                                 }
                                 // Mana Ability Level
                                 else {
                                     int manaAbilityLevel = level / 7;
-                                    line = line.replace("{mana_ability}", Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL, locale)
-                                            .replace("{mana_ability}", mAbility.getDisplayName(locale))
-                                            .replace("{level}", RomanNumber.toRoman(manaAbilityLevel))
-                                            .replace("{desc}", mAbility.getDescription(locale)
-                                                    .replace("{value}", nf1.format(mAbility.getValue(manaAbilityLevel)))));
+                                    line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL, locale)
+                                            ,"{mana_ability}", mAbility.getDisplayName(locale)
+                                            ,"{level}", RomanNumber.toRoman(manaAbilityLevel)
+                                            ,"{desc}", LoreUtil.replace(mAbility.getDescription(locale)
+                                                    ,"{value}", nf1.format(mAbility.getValue(manaAbilityLevel)))));
                                 }
                             }
                             else {
-                                line = line.replace("{mana_ability}", "");
+                                line = LoreUtil.replace(line,"{mana_ability}", "");
                             }
                             break;
                         case "progress":
                             double currentXp = playerSkill.getXp(skill);
                             double xpToNext = Leveler.levelReqs.get(level - 2);
-                            line = line.replace("{progress}", Lang.getMessage(MenuMessage.PROGRESS, locale)
-                                    .replace("{percent}", nf2.format(currentXp / xpToNext * 100))
-                                    .replace("{current_xp}", nf2.format(currentXp))
-                                    .replace("{level_xp}", String.valueOf((int) xpToNext)));
+                            line = LoreUtil.replace(line,"{progress}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
+                                    ,"{percent}", nf2.format(currentXp / xpToNext * 100)
+                                    ,"{current_xp}", nf2.format(currentXp)
+                                    ,"{level_xp}", String.valueOf((int) xpToNext)));
                             break;
                         case "in_progress":
-                            line = line.replace("{in_progress}", Lang.getMessage(MenuMessage.IN_PROGRESS, locale));
+                            line = LoreUtil.replace(line,"{in_progress}", Lang.getMessage(MenuMessage.IN_PROGRESS, locale));
                             break;
                     }
                 }

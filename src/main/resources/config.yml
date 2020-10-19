@@ -27,7 +27,7 @@ languages:
 enable-action-bar: true
 
 # If action bar is enabled, these settings will be applied
-action-bar-update-period: 2
+action-bar-update-period: 5
 
 enable-health-on-action-bar: true
 

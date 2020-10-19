@@ -52,14 +52,14 @@ public class SkillItem implements ConfigurableItem {
                 Skill skill = Skill.valueOf(splitInput[0]);
                 baseItems.put(skill, MenuLoader.parseItem(splitInput[1]));
             }
-            displayName = Objects.requireNonNull(config.getString("display_name")).replace('&', '§');
+            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             // Load lore
             List<String> lore = new ArrayList<>();
             Map<Integer, Set<String>> lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(line.replace('&', '§'));
+                lore.add(LoreUtil.replace(line,"&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {
@@ -83,8 +83,7 @@ public class SkillItem implements ConfigurableItem {
         ItemMeta meta = item.getItemMeta();
         int skillLevel = playerSkill.getSkillLevel(skill);
         if (meta != null) {
-            meta.setDisplayName(displayName.replace("{skill}", skill.getDisplayName(locale))
-                    .replace("{level}", RomanNumber.toRoman(skillLevel)));
+            meta.setDisplayName(LoreUtil.replace(displayName,"{skill}", skill.getDisplayName(locale),"{level}", RomanNumber.toRoman(skillLevel)));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
@@ -96,15 +95,15 @@ public class SkillItem implements ConfigurableItem {
                             break;
                         case "primary_stat":
                             Stat primaryStat = skill.getPrimaryStat();
-                            line = line.replace("{primary_stat}", Lang.getMessage(MenuMessage.PRIMARY_STAT, locale)
-                                    .replace("{color}", primaryStat.getColor(locale))
-                                    .replace("{stat}", primaryStat.getDisplayName(locale)));
+                            line = LoreUtil.replace(line,"{primary_stat}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_STAT, locale)
+                                    ,"{color}", primaryStat.getColor(locale)
+                                    ,"{stat}", primaryStat.getDisplayName(locale)));
                             break;
                         case "secondary_stat":
                             Stat secondaryStat = skill.getSecondaryStat();
-                            line = line.replace("{secondary_stat}", Lang.getMessage(MenuMessage.SECONDARY_STAT, locale)
-                                    .replace("{color}", secondaryStat.getColor(locale))
-                                    .replace("{stat}", secondaryStat.getDisplayName(locale)));
+                            line = LoreUtil.replace(line,"{secondary_stat}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_STAT, locale)
+                                    ,"{color}", secondaryStat.getColor(locale)
+                                    ,"{stat}", secondaryStat.getDisplayName(locale)));
                             break;
                         case "ability_levels":
                             if (skill.getAbilities().size() == 5) {
@@ -114,61 +113,61 @@ public class SkillItem implements ConfigurableItem {
                                     Ability ability = abilitySupplier.get();
                                     if (playerSkill.getAbilityLevel(ability) > 0) {
                                         int abilityLevel = playerSkill.getAbilityLevel(ability);
-                                        line = line.replace("{ability_" + num + "}", Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
-                                                .replace("{ability}", ability.getDisplayName(locale))
-                                                .replace("{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)))
-                                                .replace("{info}", ability.getInfo(locale)
-                                                        .replace("{value}", nf.format(ability.getValue(abilityLevel)))));
+                                        line = LoreUtil.replace(line,"{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
+                                                ,"{ability}", ability.getDisplayName(locale)
+                                                ,"{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability))
+                                                ,"{info}", LoreUtil.replace(ability.getInfo(locale)
+                                                        ,"{value}", nf.format(ability.getValue(abilityLevel)))));
                                     }
                                     else {
-                                        line = line.replace("{ability_" + num + "}", Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)
-                                                .replace("{ability}", ability.getDisplayName(locale)));
+                                        line = LoreUtil.replace(line,"{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)
+                                                ,"{ability}", ability.getDisplayName(locale)));
                                     }
                                     num++;
                                 }
                             }
                             else {
-                                line = line.replace("{ability_levels}", "");
+                                line = LoreUtil.replace(line,"{ability_levels}", "");
                             }
                             break;
                         case "mana_ability":
                             MAbility mAbility = skill.getManaAbility();
                             int level = playerSkill.getManaAbilityLevel(mAbility);
                             if (mAbility != MAbility.ABSORPTION && level > 0) {
-                                line = line.replace("{mana_ability}", Lang.getMessage(MenuMessage.MANA_ABILITY, locale)
-                                        .replace("{mana_ability}", mAbility.getDisplayName(locale))
-                                        .replace("{level}", RomanNumber.toRoman(level))
-                                        .replace("{duration}", nf.format(mAbility.getValue(level)))
-                                        .replace("{mana_cost}", String.valueOf(mAbility.getManaCost(level)))
-                                        .replace("{cooldown}", nf.format(mAbility.getCooldown(level))));
+                                line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY, locale)
+                                        ,"{mana_ability}", mAbility.getDisplayName(locale)
+                                        ,"{level}", RomanNumber.toRoman(level)
+                                        ,"{duration}", nf.format(mAbility.getValue(level))
+                                        ,"{mana_cost}", String.valueOf(mAbility.getManaCost(level))
+                                        ,"{cooldown}", nf.format(mAbility.getCooldown(level))));
                             }
                             else {
-                                line = line.replace("{mana_ability}", "");
+                                line = LoreUtil.replace(line,"{mana_ability}", "");
                             }
                             break;
                         case "level":
-                            line = line.replace("{level}", Lang.getMessage(MenuMessage.LEVEL, locale).replace("{level}", RomanNumber.toRoman(skillLevel)));
+                            line = LoreUtil.replace(line,"{level}", LoreUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale),"{level}", RomanNumber.toRoman(skillLevel)));
                             break;
                         case "progress_to_level":
                             if (skillLevel < OptionL.getMaxLevel(skill)) {
                                 double currentXp = playerSkill.getXp(skill);
                                 double xpToNext = Leveler.levelReqs.get(skillLevel - 1);
-                                line = line.replace("{progress_to_level}", Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
-                                        .replace("{level}", RomanNumber.toRoman(skillLevel))
-                                        .replace("{percent}", nf2.format(currentXp / xpToNext * 100))
-                                        .replace("{current_xp}", nf2.format(currentXp))
-                                        .replace("{level_xp}", String.valueOf((int) xpToNext)));
+                                line = LoreUtil.replace(line,"{progress_to_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
+                                        ,"{level}", RomanNumber.toRoman(skillLevel)
+                                        ,"{percent}", nf2.format(currentXp / xpToNext * 100)
+                                        ,"{current_xp}", nf2.format(currentXp)
+                                        ,"{level_xp}", String.valueOf((int) xpToNext)));
                             }
                             else {
-                                line = line.replace("{progress_to_level}", "");
+                                line = LoreUtil.replace(line,"{progress_to_level}", "");
                             }
                             break;
                         case "max_level":
                             if (skillLevel >= OptionL.getMaxLevel(skill)) {
-                                line = line.replace("{max_level}", Lang.getMessage(MenuMessage.MAX_LEVEL, locale));
+                                line = LoreUtil.replace(line,"{max_level}", Lang.getMessage(MenuMessage.MAX_LEVEL, locale));
                             }
                             else {
-                                line = line.replace("{max_level}", "");
+                                line = LoreUtil.replace(line,"{max_level}", "");
                             }
                             break;
                     }

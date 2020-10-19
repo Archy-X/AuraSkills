@@ -12,19 +12,19 @@ import com.archyx.aureliumskills.menu.templates.UnlockedTemplate;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.abilities.Ability;
+import com.google.common.collect.ImmutableList;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.Pagination;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class LevelProgressionMenu implements InventoryProvider {
 
@@ -63,7 +63,6 @@ public class LevelProgressionMenu implements InventoryProvider {
 	
 	@Override
 	public void init(Player player, InventoryContents contents) {
-		long start = System.nanoTime();
 		PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 		int currentLevel = playerSkill.getSkillLevel(skill);
 
@@ -97,14 +96,26 @@ public class LevelProgressionMenu implements InventoryProvider {
 		InProgressTemplate inProgress = (InProgressTemplate) options.getTemplate(TemplateType.IN_PROGRESS);
 		LockedTemplate locked = (LockedTemplate) options.getTemplate(TemplateType.LOCKED);
 
-		for (int i = 0; i < pages * 24; i++) {
+		ImmutableList<Supplier<Ability>> abilities = skill.getAbilities();
+		Map<Ability, String> abilityNames = new HashMap<>();
+		Map<Ability, String> abilityDescriptions = new HashMap<>();
+
+		if (abilities.size() == 5) {
+			for (int i = 0; i < 5; i++) {
+				Ability ability = abilities.get(i).get();
+				abilityNames.put(ability, ability.getDisplayName(locale));
+				abilityDescriptions.put(ability, ability.getDescription(locale));
+			}
+		}
+
+		for (int i = pagination.getPage() * 24; i < pagination.getPage() * 24 + 24; i++) {
 			if (i + 2 <= OptionL.getMaxLevel(skill)) {
 				if (i + 2 <= currentLevel) {
-					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, locale));
+					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, locale, abilityNames, abilityDescriptions));
 				} else if (i + 2 == currentLevel + 1) {
-					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, locale));
+					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, locale, abilityNames, abilityDescriptions));
 				} else {
-					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, locale));
+					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, locale, abilityNames, abilityDescriptions));
 				}
 			}
 			else {
@@ -143,8 +154,6 @@ public class LevelProgressionMenu implements InventoryProvider {
 				getInventory(player, skill, previous).open(player, previous);
 			}));
 		}
-		long end = System.nanoTime();
-		player.sendMessage(ChatColor.YELLOW + "Menu opened in " + ((double) (end - start))/1000000 + " ms");
 	}
 
 	@Override

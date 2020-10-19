@@ -33,7 +33,6 @@ public class SkillsMenu implements InventoryProvider{
 	}
 
 	public void init(Player player, InventoryContents contents) {
-		long start = System.nanoTime();
 		// Fill item
 		if (options.isFillEnabled()) {
 			contents.fill(ClickableItem.empty(options.getFillItem()));
@@ -175,8 +174,6 @@ public class SkillsMenu implements InventoryProvider{
 			player.closeInventory();
 			player.sendMessage(AureliumSkills.tag + ChatColor.RED + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
 		}
-		long end = System.nanoTime();
-		player.sendMessage("Menu opened in " + ((double) (end - start))/1000000 + " ms");
 	}
 
 	public void update(Player player, InventoryContents contents) {

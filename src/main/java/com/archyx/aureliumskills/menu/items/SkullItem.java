@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
+import com.archyx.aureliumskills.util.LoreUtil;
 import dev.dbassett.skullcreator.SkullCreator;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
@@ -34,14 +35,14 @@ public class SkullItem implements ConfigurableItem {
     public void load(ConfigurationSection config) {
         try {
             pos = SlotPos.of(config.getInt("row"), config.getInt("column"));
-            displayName = Objects.requireNonNull(config.getString("display_name")).replace('&', '§');
+            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             // Load lore
             List<String> lore = new ArrayList<>();
             Map<Integer, Set<String>> lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(line.replace('&', '§'));
+                lore.add(LoreUtil.replace(line,"&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {
@@ -64,18 +65,18 @@ public class SkullItem implements ConfigurableItem {
         ItemStack item = SkullCreator.itemFromUuid(player.getUniqueId());
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(displayName.replace("{player}", player.getName()));
+            meta.setDisplayName(LoreUtil.replace(displayName,"{player}", player.getName()));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
                 Set<String> placeholders = lorePlaceholders.get(i);
                 for (String placeholder : placeholders) {
                     Stat stat = Stat.valueOf(placeholder.toUpperCase());
-                    line = line.replace("{" + placeholder + "}", Lang.getMessage(MenuMessage.PLAYER_STAT_ENTRY, locale)
-                            .replace("{color}", stat.getColor(locale))
-                            .replace("{symbol}", stat.getSymbol(locale))
-                            .replace("{stat}", stat.getDisplayName(locale))
-                            .replace("{level}", String.valueOf(playerStat.getStatLevel(stat))));
+                    line = LoreUtil.replace(line,"{" + placeholder + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.PLAYER_STAT_ENTRY, locale)
+                            ,"{color}", stat.getColor(locale)
+                            ,"{symbol}", stat.getSymbol(locale)
+                            ,"{stat}", stat.getDisplayName(locale)
+                            ,"{level}", String.valueOf(playerStat.getStatLevel(stat))));
                 }
                 builtLore.add(line);
             }

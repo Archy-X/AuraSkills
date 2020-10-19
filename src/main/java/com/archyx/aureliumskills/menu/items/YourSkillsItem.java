@@ -35,13 +35,13 @@ public class YourSkillsItem implements ConfigurableItem {
         try {
             pos = SlotPos.of(config.getInt("row"), config.getInt("column"));
             baseItem = MenuLoader.parseItem(Objects.requireNonNull(config.getString("material")));
-            displayName = Objects.requireNonNull(config.getString("display_name")).replace('&', '§');
+            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             lore = new ArrayList<>();
             lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(line.replace('&', '§'));
+                lore.add(LoreUtil.replace(line,"&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {
@@ -62,8 +62,8 @@ public class YourSkillsItem implements ConfigurableItem {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(displayName.replace("{your_skills}", Lang.getMessage(MenuMessage.YOUR_SKILLS, locale)
-                    .replace("{player}", player.getName())));
+            meta.setDisplayName(LoreUtil.replace(displayName,"{your_skills}", LoreUtil.replace(Lang.getMessage(MenuMessage.YOUR_SKILLS, locale)
+                    ,"{player}", player.getName())));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);

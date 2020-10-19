@@ -30,7 +30,6 @@ public class StatsMenu implements InventoryProvider{
 	
 	@Override
 	public void init(Player player, InventoryContents contents) {
-		long start = System.nanoTime();
 		PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
 		if (playerStat != null) {
 			// Fill item
@@ -46,8 +45,6 @@ public class StatsMenu implements InventoryProvider{
 			contents.set(statTemplate.getPos(Stat.LUCK), ClickableItem.empty(statTemplate.getItem(Stat.LUCK, playerStat, locale)));
 			contents.set(statTemplate.getPos(Stat.WISDOM), ClickableItem.empty(statTemplate.getItem(Stat.WISDOM, playerStat, locale)));
 			contents.set(statTemplate.getPos(Stat.TOUGHNESS), ClickableItem.empty(statTemplate.getItem(Stat.TOUGHNESS, playerStat, locale)));
-			long end = System.nanoTime();
-			player.sendMessage("Menu opened in " + ((double) (end - start)) / 1000000 + " ms");
 		}
 	}
 

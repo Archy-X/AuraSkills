@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.ItemUtils;
+import com.archyx.aureliumskills.util.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -39,14 +40,14 @@ public class RankItem implements ConfigurableItem {
         try {
             pos = SlotPos.of(config.getInt("row"), config.getInt("column"));
             baseItem = MenuLoader.parseItem(Objects.requireNonNull(config.getString("material")));
-            displayName = Objects.requireNonNull(config.getString("display_name")).replace('&', '§');
+            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             // Load lore
             lore = new ArrayList<>();
             lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(line.replace('&', '§'));
+                lore.add(LoreUtil.replace(line,"&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {
@@ -69,24 +70,22 @@ public class RankItem implements ConfigurableItem {
         int rank = AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId());
         int size = AureliumSkills.leaderboard.getSize();
         if (meta != null) {
-            meta.setDisplayName(displayName.replace("{your_ranking}", Lang.getMessage(MenuMessage.YOUR_RANKING, locale)));
+            meta.setDisplayName(LoreUtil.replace(displayName,"{your_ranking}", Lang.getMessage(MenuMessage.YOUR_RANKING, locale)));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
                 Set<String> placeholders = lorePlaceholders.get(i);
                 for (String placeholder : placeholders) {
                     if (placeholder.equals("out_of")) {
-                        line = line.replace("{out_of}", Lang.getMessage(MenuMessage.RANK_OUT_OF, locale)
-                                .replace("{rank}", String.valueOf(rank))
-                                .replace("{total}", String.valueOf(size)));
+                        line = LoreUtil.replace(line,"{out_of}", LoreUtil.replace(Lang.getMessage(MenuMessage.RANK_OUT_OF, locale),"{rank}", String.valueOf(rank), "{total}", String.valueOf(size)));
                     }
                     else if (placeholder.equals("percent")) {
                         double percent = (double) rank / (double) size * 100;
                         if (percent > 1) {
-                            line = line.replace("{percent}", Lang.getMessage(MenuMessage.RANK_PERCENT, locale).replace("{percent}", String.valueOf((int) percent)));
+                            line = LoreUtil.replace(line,"{percent}", LoreUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),"{percent}", String.valueOf((int) percent)));
                         }
                         else {
-                            line = line.replace("{percent}", Lang.getMessage(MenuMessage.RANK_PERCENT, locale).replace("{percent}", nf.format(percent)));
+                            line = LoreUtil.replace(line,"{percent}", LoreUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),"{percent}", nf.format(percent)));
                         }
                     }
                 }

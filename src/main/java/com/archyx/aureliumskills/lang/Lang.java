@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.lang;
 import co.aikar.commands.MessageKeys;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
+import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -101,22 +102,22 @@ public class Lang implements Listener {
 		for (MessageKey key : MessageKey.values()) {
 			String message = config.getString(key.getPath());
 			if (message != null) {
-				messages.put(key, message
-						.replace('&', '§')
-						.replace("{mana_unit}", units.get(UnitMessage.MANA))
-						.replace("{hp_unit}", units.get(UnitMessage.HP))
-						.replace("{xp_unit}", units.get(UnitMessage.XP)));
+				messages.put(key, LoreUtil.replace(message
+						,"&", "§"
+						,"{mana_unit}", units.get(UnitMessage.MANA)
+						,"{hp_unit}", units.get(UnitMessage.HP)
+						,"{xp_unit}", units.get(UnitMessage.XP)));
 			} else {
 				Bukkit.getLogger().severe("[AureliumSkills] Message with path " + key.getPath() + " was null!");
 			}
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), config.getString(path));
+			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), LoreUtil.replace(config.getString(path), "&", "§"));
 		}
 		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), config.getString(path));
+			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), LoreUtil.replace(config.getString(path), "&", "§"));
 		}
 		Lang.messages.put(locale, messages);
 	}

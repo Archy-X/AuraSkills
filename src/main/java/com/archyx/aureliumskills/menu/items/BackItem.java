@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.util.ItemUtils;
+import com.archyx.aureliumskills.util.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -33,14 +34,14 @@ public class BackItem implements ConfigurableItem {
         try {
             pos = SlotPos.of(config.getInt("row"), config.getInt("column"));
             baseItem = MenuLoader.parseItem(Objects.requireNonNull(config.getString("material")));
-            displayName = Objects.requireNonNull(config.getString("display_name")).replace('&', '§');
+            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")), "&", "§");
             // Load lore
             lore = new ArrayList<>();
             lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(line.replace('&', '§'));
+                lore.add(LoreUtil.replace(line, "&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {
@@ -61,14 +62,14 @@ public class BackItem implements ConfigurableItem {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(displayName.replace("{back}", Lang.getMessage(MenuMessage.BACK, locale)));
+            meta.setDisplayName(LoreUtil.replace(displayName,"{back}", Lang.getMessage(MenuMessage.BACK, locale)));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
                 Set<String> placeholders = lorePlaceholders.get(i);
                 for (String placeholder : placeholders) {
                     if (placeholder.equals("back_click")) {
-                        line = line.replace("{back_click}", Lang.getMessage(MenuMessage.BACK_CLICK, locale));
+                        line = LoreUtil.replace(line, "{back_click}", Lang.getMessage(MenuMessage.BACK_CLICK, locale));
                     }
                 }
                 builtLore.add(line);

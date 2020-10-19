@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.menu.items;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
+import com.archyx.aureliumskills.util.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -30,7 +31,7 @@ public class CloseItem implements ConfigurableItem {
         try {
             pos = SlotPos.of(config.getInt("row"), config.getInt("column"));
             baseItem = MenuLoader.parseItem(Objects.requireNonNull(config.getString("material")));
-            displayName = Objects.requireNonNull(config.getString("display_name")).replace('&', '§');
+            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -42,7 +43,7 @@ public class CloseItem implements ConfigurableItem {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(displayName.replace("{close}", Lang.getMessage(MenuMessage.CLOSE, locale)));
+            meta.setDisplayName(LoreUtil.replace(displayName,"{close}", Lang.getMessage(MenuMessage.CLOSE, locale)));
             item.setItemMeta(meta);
         }
         return item;
