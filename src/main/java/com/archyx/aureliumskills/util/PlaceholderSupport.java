@@ -3,10 +3,13 @@ package com.archyx.aureliumskills.util;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.apache.commons.lang.math.NumberUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -14,6 +17,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.List;
 
 public class PlaceholderSupport extends PlaceholderExpansion {
 
@@ -135,6 +139,84 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
         }
 
+        if (identifier.startsWith("lb_")) {
+            String leaderboardType = LoreUtil.replace(identifier, "lb_", "");
+            if (leaderboardType.startsWith("power_")) {
+                int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", ""));
+                if (place > 0) {
+                    List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readPowerLeaderboard(place, 1);
+                    if (list.size() > 0) {
+                        PlayerSkillInstance playerSkill = list.get(0);
+                        return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName() + " - " + playerSkill.getPowerLevel();
+                    }
+                    else return "";
+                }
+                else {
+                    if (identifier.endsWith("name")) {
+                        int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_name", ""));
+                        if (namePlace > 0) {
+                            List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readPowerLeaderboard(namePlace, 1);
+                            if (list.size() > 0) {
+                                PlayerSkillInstance playerSkill = list.get(0);
+                                return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName();
+                            }
+                            else return "";
+                        }
+                    }
+                    else if (identifier.endsWith("value")) {
+                        int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_value", ""));
+                        if (valuePlace > 0) {
+                            List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readPowerLeaderboard(valuePlace, 1);
+                            if (list.size() > 0) {
+                                PlayerSkillInstance playerSkill = list.get(0);
+                                return String.valueOf(playerSkill.getPowerLevel());
+                            }
+                            else return "";
+                        }
+                    }
+                }
+            }
+            else {
+                for (Skill skill : Skill.values()) {
+                    if (leaderboardType.startsWith(skill.name().toLowerCase() + "_")) {
+                        int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", ""));
+                        if (place > 0) {
+                            List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readSkillLeaderboard(skill, 1, 1);
+                            if (list.size() > 0) {
+                                PlayerSkillInstance playerSkill = list.get(0);
+                                return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName() + " - " + playerSkill.getSkillLevel(skill);
+                            }
+                            else return "";
+                        }
+                        else {
+                            if (identifier.endsWith("name")) {
+                                int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", "", "_name", ""));
+                                if (namePlace > 0) {
+                                    List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readSkillLeaderboard(skill, namePlace, 1);
+                                    if (list.size() > 0) {
+                                        PlayerSkillInstance playerSkill = list.get(0);
+                                        return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName();
+                                    }
+                                    else return "";
+                                }
+                            }
+                            else if (identifier.endsWith("value")) {
+                                int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", "", "_value", ""));
+                                if (valuePlace > 0) {
+                                    List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readSkillLeaderboard(skill, valuePlace, 1);
+                                    if (list.size() > 0) {
+                                        PlayerSkillInstance playerSkill = list.get(0);
+                                        return String.valueOf(playerSkill.getSkillLevel(skill));
+                                    }
+                                    else return "";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
+
 }
