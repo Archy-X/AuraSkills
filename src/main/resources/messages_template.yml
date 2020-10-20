@@ -234,26 +234,6 @@ abilities:
       name:
       desc:
       info:
-  enchanting:
-    enchanter:
-      name:
-      desc:
-      info:
-  sorcery:
-    sorcerer:
-      name:
-      desc:
-      info:
-  healing:
-    healer:
-      name:
-      desc:
-      info:
-  forging:
-    forger:
-      name:
-      desc:
-      info:
 acf:
   core:
     permission_denied:
@@ -581,4 +561,4 @@ units:
   mana:
   hp:
   xp:
-file_version:
+file_version: 1

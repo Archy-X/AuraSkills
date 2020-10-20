@@ -183,20 +183,7 @@ public enum AbilityMessage implements MessageKey {
     LINGERING_INFO,
     WISE_EFFECT_NAME,
     WISE_EFFECT_DESC,
-    WISE_EFFECT_INFO,
-    // Enchanting
-    ENCHANTER_NAME,
-    ENCHANTER_DESC,
-    ENCHANTER_INFO,
-    SORCERER_NAME,
-    SORCERER_DESC,
-    SORCERER_INFO,
-    HEALER_NAME,
-    HEALER_DESC,
-    HEALER_INFO,
-    FORGER_NAME,
-    FORGER_DESC,
-    FORGER_INFO;
+    WISE_EFFECT_INFO;
 
     private final String path;
 

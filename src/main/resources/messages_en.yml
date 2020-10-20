@@ -234,26 +234,6 @@ abilities:
       name: Wise Effect
       desc: 'Gain {value} Wisdom for every unique active\n&7  potion effect.'
       info: '+{value} Wisdom/Effect'
-  enchanting:
-    enchanter:
-      name: Enchanter
-      desc: 'Earn {value}% more Enchanting XP'
-      info: '+{value}% XP'
-  sorcery:
-    sorcerer:
-      name: Sorcerer
-      desc: 'Earn {value}% more Sorcery XP'
-      info: '+{value}% XP'
-  healing:
-    healer:
-      name: Healer
-      desc: 'Earn {value}% more Healing XP'
-      info: '+{value}% XP'
-  forging:
-    forger:
-      name: Forger
-      desc: 'Earn {value}% more Forging XP'
-      info: '+{value}% XP'
 acf:
   core:
     permission_denied: '&cI''m sorry, but you do not have permission to perform this command.'
