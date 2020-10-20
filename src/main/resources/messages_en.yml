@@ -316,7 +316,9 @@ commands:
       removeall:
         must_hold_item: '&eYou must be holding an item to remove all modifiers!'
         removed: '&7All item modifiers have been removed from your item'
-  lang: '&7Language set to &b{lang}'
+  lang:
+    set: '&7Language set to &b{lang}'
+    not_found: '&eLanguage not found!'
   modifier:
     add:
       added: '{color}{stat} &7modifier level &b{value} &7 with name &f{name} &7added to player &6{player}'

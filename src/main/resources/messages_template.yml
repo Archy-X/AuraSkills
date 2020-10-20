@@ -317,6 +317,8 @@ commands:
         must_hold_item:
         removed:
   lang:
+    set:
+    not_found:
   modifier:
     add:
       added:
