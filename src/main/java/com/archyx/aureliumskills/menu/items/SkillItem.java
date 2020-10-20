@@ -117,7 +117,8 @@ public class SkillItem implements ConfigurableItem {
                                                 ,"{ability}", ability.getDisplayName(locale)
                                                 ,"{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability))
                                                 ,"{info}", LoreUtil.replace(ability.getInfo(locale)
-                                                        ,"{value}", nf.format(ability.getValue(abilityLevel)))));
+                                                        ,"{value}", nf.format(ability.getValue(abilityLevel))
+                                                        ,"{value_2}", nf.format(ability.getValue2(abilityLevel)))));
                                     }
                                     else {
                                         line = LoreUtil.replace(line,"{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)

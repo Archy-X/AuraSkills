@@ -211,8 +211,8 @@ abilities:
       info: '+{value}% Speed'
     thunder_fall:
       name: Thunder Fall
-      desc: 'When sneaking during a fall, you have a {value}% chance\n&7  to deal {1}% of the fall damage expected to mobs\n&7  in a 3 block radius'
-      info: '{value}% Chance, {1}% Damage'
+      desc: 'When sneaking during a fall, you have a {value}% chance\n&7  to deal {value_2}% of the fall damage expected to mobs\n&7  in a 3 block radius'
+      info: '{value}% Chance, {value_2}% Damage'
   alchemy:
     alchemist:
       name: Alchemist
@@ -228,8 +228,8 @@ abilities:
       info: '+{value}% Duration/Player'
     lingering:
       name: Lingering
-      desc: 'Lingering potions naturally decay {value}%\n&7  slower and decay {1}% less per affected entity.'
-      info: '-{value}% Natural, -{1}% Entity Decay'
+      desc: 'Lingering potions naturally decay {value}%\n&7  slower and decay {value_2}% less per affected entity.'
+      info: '-{value}% Natural, -{value_2}% Entity Decay'
     wise_effect:
       name: Wise Effect
       desc: 'Gain {value} Wisdom for every unique active\n&7  potion effect.'

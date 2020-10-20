@@ -26,7 +26,7 @@ public class SpeedMine implements ManaAbility {
             //Consume mana
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
-            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }
 
@@ -41,7 +41,7 @@ public class SpeedMine implements ManaAbility {
             Locale locale = Lang.getLanguage(player);
             PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
             AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SPEED_MINE, MAbility.SPEED_MINE.getCooldown(skill.getManaAbilityLevel(MAbility.SPEED_MINE)));
-            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, locale));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, locale));
         }
     }
 }

@@ -20,7 +20,7 @@ public class Replenish implements ManaAbility {
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.REPLENISH));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
-            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.REPLENISH_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }
 
@@ -35,7 +35,7 @@ public class Replenish implements ManaAbility {
             Locale locale = Lang.getLanguage(player);
             PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
             AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.REPLENISH, MAbility.REPLENISH.getCooldown(skill.getManaAbilityLevel(MAbility.REPLENISH)));
-            player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.REPLENISH_END, locale));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_END, locale));
         }
     }
 }

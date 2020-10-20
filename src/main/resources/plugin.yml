@@ -45,7 +45,7 @@ permissions:
     aureliumskills.reload:
         default: op
     aureliumskills.lang:
-        default: op
+        default: true
     aureliumskills.xp.add:
         default: op
     aureliumskills.xp.set:

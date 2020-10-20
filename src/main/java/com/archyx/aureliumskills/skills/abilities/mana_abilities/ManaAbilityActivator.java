@@ -84,21 +84,21 @@ public class ManaAbilityActivator {
                                 // Checks if cooldown is reached
                                 if (AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), skill.getManaAbility()) == 0) {
                                     AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), skill.getManaAbility(), true);
-                                    player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_RAISE"), locale));
+                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_RAISE"), locale));
                                     new BukkitRunnable() {
                                         @Override
                                         public void run() {
                                             if (!AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), skill.getManaAbility())) {
                                                 if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), skill.getManaAbility())) {
                                                     AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), skill.getManaAbility(), false);
-                                                    player.sendMessage(AureliumSkills.tag + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_LOWER"), locale));
+                                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_LOWER"), locale));
                                                 }
                                             }
                                         }
                                     }.runTaskLater(plugin, 50L);
                                 } else {
                                     if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), skill.getManaAbility()) == 0) {
-                                        player.sendMessage(AureliumSkills.tag + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), skill.getManaAbility()))));
+                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), skill.getManaAbility()))));
                                         AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), skill.getManaAbility(), 2);
                                     }
                                 }

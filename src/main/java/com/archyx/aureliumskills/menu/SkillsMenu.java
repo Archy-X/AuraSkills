@@ -172,7 +172,7 @@ public class SkillsMenu implements InventoryProvider{
 		}
 		else {
 			player.closeInventory();
-			player.sendMessage(AureliumSkills.tag + ChatColor.RED + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.RED + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
 		}
 	}
 

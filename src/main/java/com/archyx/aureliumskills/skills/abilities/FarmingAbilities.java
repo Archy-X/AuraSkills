@@ -142,7 +142,7 @@ public class FarmingAbilities implements Listener {
 							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.REPLENISH, (int) (MAbility.REPLENISH.getValue(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20), new Replenish());
 						}
 						else {
-							player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+							player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
 									.replace("{mana}", String.valueOf(MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH)))));
 						}
 					}

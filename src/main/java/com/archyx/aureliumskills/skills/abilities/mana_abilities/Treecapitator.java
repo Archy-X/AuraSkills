@@ -22,7 +22,7 @@ public class Treecapitator implements ManaAbility {
             //Consume mana
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }
 
@@ -37,7 +37,7 @@ public class Treecapitator implements ManaAbility {
             Locale locale = Lang.getLanguage(player);
             PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
             AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.TREECAPITATOR, MAbility.TREECAPITATOR.getCooldown(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)));
-            player.sendMessage(AureliumSkills.tag + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_END, locale));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_END, locale));
         }
     }
 }

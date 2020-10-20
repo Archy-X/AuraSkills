@@ -173,7 +173,7 @@ public class MiningAbilities implements Listener {
 							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SPEED_MINE, (int) (MAbility.SPEED_MINE.getValue(skill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), new SpeedMine());
 						}
 						else {
-							player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(MAbility.SPEED_MINE.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE)))));
+							player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(MAbility.SPEED_MINE.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE)))));
 						}
 					}
 				}
@@ -212,21 +212,21 @@ public class MiningAbilities implements Listener {
 								//Checks if cooldown is reached
 								if (AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
 									AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, true);
-									player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_RAISE, locale));
+									player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_RAISE, locale));
 									new BukkitRunnable() {
 										@Override
 										public void run() {
 											if (!AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
 												if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
 													AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, false);
-													player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_LOWER, locale));
+													player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_LOWER, locale));
 												}
 											}
 										}
 									}.runTaskLater(plugin, 50L);
 								} else {
 									if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
-										player.sendMessage(AureliumSkills.tag + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SPEED_MINE))));
+										player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SPEED_MINE))));
 										AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE, 2);
 									}
 								}

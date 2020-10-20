@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
@@ -28,7 +29,6 @@ import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AureliumSkills extends JavaPlugin{
 
@@ -66,8 +67,6 @@ public class AureliumSkills extends JavaPlugin{
 	public static Leaderboard leaderboard;
 	private static Economy economy = null;
 	private PaperCommandManager commandManager;
-	
-	public static String tag = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Skills" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
 	
 	public void onEnable() {
 		invManager = new InventoryManager(this);
@@ -120,6 +119,7 @@ public class AureliumSkills extends JavaPlugin{
 		registerCommands();
 		//Load languages
 		Lang lang = new Lang(this);
+		getServer().getPluginManager().registerEvents(lang, this);
 		lang.loadEmbeddedMessages(commandManager);
 		lang.loadLanguages(commandManager);
 		//Load menu
@@ -267,19 +267,13 @@ public class AureliumSkills extends JavaPlugin{
 	private void registerCommands() {
 		commandManager = new PaperCommandManager(this);
 		commandManager.enableUnstableAPI("help");
+		commandManager.usePerIssuerLocale(true, false);
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : Skill.values()) {
 				if (OptionL.isEnabled(skill)) {
 					values.add(skill.toString().toLowerCase());
 				}
-			}
-			return values;
-		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("abilities", c -> {
-			List<String> values = new ArrayList<>();
-			for (Ability value : Ability.values()) {
-				values.add(value.toString().toLowerCase());
 			}
 			return values;
 		});
@@ -290,6 +284,7 @@ public class AureliumSkills extends JavaPlugin{
 			}
 			return values;
 		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> Lang.getLanguages());
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
@@ -371,6 +366,10 @@ public class AureliumSkills extends JavaPlugin{
 
 	public PaperCommandManager getCommandManager() {
 		return commandManager;
+	}
+
+	public static String getPrefix(Locale locale) {
+		return Lang.getMessage(CommandMessage.PREFIX, locale);
 	}
 
 }

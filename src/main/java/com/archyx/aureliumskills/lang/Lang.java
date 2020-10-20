@@ -13,23 +13,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Lang implements Listener {
 
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
-	private static final Map<UnitMessage, String> units = new HashMap<>();
-	private static final Map<Player, Locale> playerLanguages = new HashMap<>();
+	private static final Map<UUID, Locale> playerLanguages = new HashMap<>();
 	public static Locale defaultLanguage;
 	private final Plugin plugin;
 
@@ -38,6 +33,9 @@ public class Lang implements Listener {
 		File file = new File(plugin.getDataFolder(), "messages_en.yml");
 		if (!file.exists()) {
 			plugin.saveResource("messages_en.yml", false);
+		}
+		if (!new File(plugin.getDataFolder(), "messages_id.yml").exists()) {
+			plugin.saveResource("messages_id.yml", false);
 		}
 	}
 
@@ -91,6 +89,7 @@ public class Lang implements Listener {
 
 	private void loadMessages(FileConfiguration config, Locale locale, PaperCommandManager commandManager) {
 		// Load units
+		Map<UnitMessage, String> units = new HashMap<>();
 		for (UnitMessage key : UnitMessage.values()) {
 			String message = config.getString(key.getPath());
 			if (message != null) {
@@ -167,13 +166,13 @@ public class Lang implements Listener {
 	}
 
 	public static Locale getLanguage(Player player) {
-		Locale locale = playerLanguages.get(player);
+		Locale locale = playerLanguages.get(player.getUniqueId());
 		return locale != null ? locale : Locale.ENGLISH;
 	}
 
 	public static Locale getLanguage(CommandSender sender) {
 		if (sender instanceof Player) {
-			Locale locale = playerLanguages.get(sender);
+			Locale locale = playerLanguages.get(((Player) sender).getUniqueId());
 			return locale != null ? locale : Locale.ENGLISH;
 		}
 		else {
@@ -182,33 +181,31 @@ public class Lang implements Listener {
 	}
 
 	public static void setLanguage(Player player, Locale locale) {
-		Lang.playerLanguages.put(player, locale);
+		Lang.playerLanguages.put(player.getUniqueId(), locale);
 	}
 
 	public static boolean hasLocale(Locale locale) {
 		return messages.containsKey(locale);
 	}
 
+	public static Set<String> getLanguages() {
+		return messages.keySet().stream().map(Locale::toLanguageTag).collect(Collectors.toSet());
+	}
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		try {
-			Locale locale = new Locale(event.getPlayer().getLocale().split("_")[0].toLowerCase());
-			if (messages.containsKey(locale)) {
-				playerLanguages.put(event.getPlayer(), locale);
-			}
-			else {
-				playerLanguages.put(event.getPlayer(), Locale.ENGLISH);
+		if (!playerLanguages.containsKey(event.getPlayer().getUniqueId())) {
+			try {
+				Locale locale = new Locale(event.getPlayer().getLocale().split("_")[0].toLowerCase());
+				if (messages.containsKey(locale)) {
+					playerLanguages.put(event.getPlayer().getUniqueId(), locale);
+				} else {
+					playerLanguages.put(event.getPlayer().getUniqueId(), Locale.ENGLISH);
+				}
+			} catch (Exception e) {
+				playerLanguages.put(event.getPlayer().getUniqueId(), Locale.ENGLISH);
 			}
 		}
-		catch (Exception e) {
-			playerLanguages.put(event.getPlayer(), Locale.ENGLISH);
-		}
 	}
-
-	@EventHandler
-	public void onQuit(PlayerQuitEvent event) {
-		playerLanguages.remove(event.getPlayer());
-	}
-
 
 }
