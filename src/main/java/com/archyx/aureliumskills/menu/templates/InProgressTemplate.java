@@ -63,7 +63,7 @@ public class InProgressTemplate implements ConfigurableTemplate {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning("[AureliumSkills] Error parsing item " + TYPE.toString() + ", check error above for details!");
+            Bukkit.getLogger().warning("[AureliumSkills] Error parsing template " + TYPE.toString() + ", check error above for details!");
         }
     }
 

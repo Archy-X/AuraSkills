@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.menu.templates.ConfigurableTemplate;
 import com.archyx.aureliumskills.menu.templates.TemplateType;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -104,43 +105,69 @@ public class MenuLoader {
 
     public static ItemStack parseItem(String input) {
         if (input != null) {
-            String material = input.split(" ")[0];
+            String[] splitInput = input.split(" ", 2);
+            String material = splitInput[0];
             try {
                 ItemStack item = XMaterial.valueOf(material.toUpperCase()).parseItem();
                 if (item != null) {
-                    String[] args = input.split(" ");
-                    if (args.length > 1) {
-                        for (int i = 1; i < args.length; i++) {
-                            String argument = args[i];
-                            if (argument.split(":").length > 1) {
-                                String key = argument.split(":")[0];
-                                String value = argument.split(":")[1];
-                                if (key.equalsIgnoreCase("potion_type") && item.getItemMeta() instanceof PotionMeta) {
-                                    PotionMeta meta = (PotionMeta) item.getItemMeta();
-                                    meta.setBasePotionData(new PotionData(PotionType.valueOf(value.toUpperCase())));
-                                    item.setItemMeta(meta);
-                                }
-                                else if (key.equalsIgnoreCase("glow") && value.equalsIgnoreCase("true")) {
-                                    ItemMeta meta = item.getItemMeta();
-                                    if (meta != null) {
-                                        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
-                                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                    // Set base meta options
+                    ItemMeta originalMeta = item.getItemMeta();
+                    if (originalMeta != null) {
+                        originalMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                        item.setItemMeta(originalMeta);
+                    }
+                    // Apply args
+                    if (splitInput.length > 1) {
+                        String[] args = splitInput[1].split(" ");
+                        if (args.length > 0) {
+                            for (String argument : args) {
+                                if (argument.split(":").length > 1) {
+                                    String key = argument.split(":")[0];
+                                    String value = argument.split(":")[1];
+                                    // Potion type meta
+                                    if (key.equalsIgnoreCase("potion_type") && item.getItemMeta() instanceof PotionMeta) {
+                                        PotionMeta meta = (PotionMeta) item.getItemMeta();
+                                        meta.setBasePotionData(new PotionData(PotionType.valueOf(value.toUpperCase())));
+                                        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                                         item.setItemMeta(meta);
+                                    }
+                                    // Glow meta
+                                    else if (key.equalsIgnoreCase("glow") && value.equalsIgnoreCase("true")) {
+                                        ItemMeta meta = item.getItemMeta();
+                                        if (meta != null) {
+                                            meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+                                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                                            item.setItemMeta(meta);
+                                        }
+                                    }
+                                    // Hide attributes
+                                    else if (key.equalsIgnoreCase("hide_attributes") && value.equalsIgnoreCase("false")) {
+                                        ItemMeta meta = item.getItemMeta();
+                                        if (meta != null) {
+                                            if (meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)) {
+                                                meta.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                                                item.setItemMeta(meta);
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+                else {
+                    Bukkit.getLogger().warning("[AureliumSkills] Error parsing material with input " + input + ", the input material " + material + " is invalid!");
+                    item = new ItemStack(Material.STONE);
+                }
                 return item;
             } catch (Exception e) {
-                Bukkit.getLogger().warning("[AureliumSkills] Error parsing item with input " + input);
+                Bukkit.getLogger().warning("[AureliumSkills] Error parsing material with input " + input);
                 e.printStackTrace();
-                return null;
+                return new ItemStack(Material.STONE);
             }
         }
         else {
-            return null;
+            return new ItemStack(Material.STONE);
         }
     }
 

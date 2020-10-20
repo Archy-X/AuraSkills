@@ -50,7 +50,7 @@ public class StatTemplate implements ConfigurableTemplate {
             }
             // Load base items
             for (String materialInput : config.getStringList("material")) {
-                String[] splitInput = materialInput.split(" ");
+                String[] splitInput = materialInput.split(" ", 2);
                 Stat stat = Stat.valueOf(splitInput[0]);
                 baseItems.put(stat, MenuLoader.parseItem(splitInput[1]));
             }
@@ -76,7 +76,7 @@ public class StatTemplate implements ConfigurableTemplate {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning("[AureliumSkills] Error parsing item " + TYPE.toString() + ", check error above for details!");
+            Bukkit.getLogger().warning("[AureliumSkills] Error parsing template " + TYPE.toString() + ", check error above for details!");
         }
     }
 

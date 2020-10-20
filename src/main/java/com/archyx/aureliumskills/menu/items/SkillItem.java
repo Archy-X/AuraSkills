@@ -48,7 +48,7 @@ public class SkillItem implements ConfigurableItem {
             pos = SlotPos.of(config.getInt("row"), config.getInt("column"));
             // Load base items
             for (String materialInput : config.getStringList("material")) {
-                String[] splitInput = materialInput.split(" ");
+                String[] splitInput = materialInput.split(" ", 2);
                 Skill skill = Skill.valueOf(splitInput[0]);
                 baseItems.put(skill, MenuLoader.parseItem(splitInput[1]));
             }

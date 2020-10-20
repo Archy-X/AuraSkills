@@ -54,8 +54,15 @@ public class SkillTemplate implements ConfigurableTemplate {
             }
             // Load base items
             for (String materialInput : config.getStringList("material")) {
-                String[] splitInput = materialInput.split(" ");
-                Skill skill = Skill.valueOf(splitInput[0]);
+                String[] splitInput = materialInput.split(" ", 2);
+                Skill skill;
+                try {
+                    skill = Skill.valueOf(splitInput[0].toUpperCase());
+                }
+                catch (IllegalArgumentException e) {
+                    Bukkit.getLogger().warning("[AureliumSkills] Error while loading SKILL template, " + splitInput[0].toUpperCase() + " is not a valid skill! Using FARMING as a default");
+                    skill = Skill.FARMING;
+                }
                 baseItems.put(skill, MenuLoader.parseItem(splitInput[1]));
             }
             displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
@@ -80,7 +87,7 @@ public class SkillTemplate implements ConfigurableTemplate {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning("[AureliumSkills] Error parsing item " + TYPE.toString() + ", check error above for details!");
+            Bukkit.getLogger().warning("[AureliumSkills] Error parsing template " + TYPE.toString() + ", check error above for details!");
         }
     }
 

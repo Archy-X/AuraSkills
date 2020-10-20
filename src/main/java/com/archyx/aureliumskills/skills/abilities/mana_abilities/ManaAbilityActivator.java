@@ -6,8 +6,10 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,6 +30,35 @@ public class ManaAbilityActivator {
         if (OptionL.isEnabled(skill)) {
             if (AureliumSkills.abilityOptionManager.isEnabled(skill.getManaAbility())) {
                 if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                    // Check for hoe tilling
+                    if (matchMaterial.equals("HOE") && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                        Block clickedBlock = event.getClickedBlock();
+                        if (clickedBlock != null) {
+                            if (XMaterial.isNewVersion()) {
+                                if (clickedBlock.getType() == XMaterial.DIRT.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.GRASS_BLOCK.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.COARSE_DIRT.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.GRASS_PATH.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.FARMLAND.parseMaterial()) {
+                                    return;
+                                }
+                            }
+                            else {
+                                if (clickedBlock.getType() == XMaterial.GRASS_BLOCK.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.GRASS_PATH.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.FARMLAND.parseMaterial()) {
+                                    return;
+                                }
+                                else if (clickedBlock.getType() == Material.DIRT) {
+                                    switch (clickedBlock.getData()) {
+                                        case 0:
+                                        case 1:
+                                            return;
+                                    }
+                                }
+                            }
+                        }
+                    }
                     Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
                     if (mat.name().toUpperCase().contains(matchMaterial)) {
                         Player player = event.getPlayer();
