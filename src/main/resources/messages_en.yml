@@ -209,6 +209,8 @@ abilities:
       name: Fleeting
       desc: 'Gain +{value}% movement speed when below 20% health'
       info: '+{value}% Speed'
+      start: '&fYou have gained a fleeting speed boost! &7(+{value}% Speed)'
+      end: '&7Fleeting speed boost has worn off'
     thunder_fall:
       name: Thunder Fall
       desc: 'When sneaking during a fall, you have a {value}% chance\n&7  to deal {value_2}% of the fall damage expected to mobs\n&7  in a 3 block radius'

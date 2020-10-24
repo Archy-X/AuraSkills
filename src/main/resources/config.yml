@@ -308,6 +308,7 @@ sorcery:
     enabled: true
     max-level: 97
     types:
+        mana-ability-use: 0.5
 healing:
     enabled: true
     check-cancelled: true
@@ -541,8 +542,30 @@ abilities:
         enabled: true
         base: 1.0
         per-level: 2.0
+    light-fall:
+        enabled: true
+        base: 2.0
+        per-level: 1.5
+    jumper:
+        enabled: true
+        base: 10.0
+        per-level: 10.0
+    sugar-rush:
+        enabled: true
+        base: 5.0
+        per-level: 7.0
+    fleeting:
+        enabled: true
+        base: 5.0
+        per-level: 4.0
+    thunder-fall:
+        enabled: true
+        base: 3.0
+        per-level: 2.0
+        base-2: 10.0
+        per-level-2: 5.0
 mana-abilities:
-    speed-mine:
+    replenish:
         enabled: true
         base-value: 5.0
         value-per-level: 5.0
@@ -551,6 +574,14 @@ mana-abilities:
         mana-cost: 20
         mana-cost-per-level: 20
     treecapitator:
+        enabled: true
+        base-value: 5.0
+        value-per-level: 5.0
+        cooldown: 200
+        cooldown-per-level: -5
+        mana-cost: 20
+        mana-cost-per-level: 20
+    speed-mine:
         enabled: true
         base-value: 5.0
         value-per-level: 5.0

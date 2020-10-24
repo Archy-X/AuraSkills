@@ -209,6 +209,8 @@ abilities:
       name: Sekilas
       desc: 'Mendapatkan +{value}% kecepatan berlari ketika darah\n&7  dibawah 20%'
       info: '+{value}% Kecepatan'
+      start: '&fYou have gained a fleeting speed boost! &7(+{value}% Speed)'
+      end: '&7Fleeting speed boost has worn off'
     thunder_fall:
       name: Petir Yang Jatuh
       desc: 'Ketika menyelinap saat jatuh, memiliki {value}% kesempatan untuk\n&7  memberikan {value_2}% kerusakan ke mobs dalam radius 3 block'
@@ -393,7 +395,7 @@ menus:
     level: '&7Level: &e{level}'
     progress_to_level: '&7Perjalanan ke level {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
     max_level: '&6MAX LEVEL'
-    ability_levels: '\n&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
+    ability_levels: '\n&7Level Ability:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
     primary_stat: '&7Statistik Utama: {color}{stat}'

@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -17,15 +18,17 @@ public class SpeedMine implements ManaAbility {
     @Override
     public void activate(Player player) {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-            PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
             Locale locale = Lang.getLanguage(player);
             //Apply haste
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (MAbility.SPEED_MINE.getValue(skill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), 9, false, false), true);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (MAbility.SPEED_MINE.getValue(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), 9, false, false), true);
             //Play sound
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             //Consume mana
-            int manaConsumed = MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE));
+            int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
+            // Level Sorcery
+            SorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }

@@ -165,6 +165,8 @@ public enum AbilityMessage implements MessageKey {
     FLEETING_NAME,
     FLEETING_DESC,
     FLEETING_INFO,
+    FLEETING_START,
+    FLEETING_END,
     THUNDER_FALL_NAME,
     THUNDER_FALL_DESC,
     THUNDER_FALL_INFO,

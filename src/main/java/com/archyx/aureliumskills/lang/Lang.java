@@ -75,7 +75,7 @@ public class Lang implements Listener {
 				Locale locale = new Locale(language);
 				File file = new File(plugin.getDataFolder(), "messages_" + language + ".yml");
 				// Load and update file
-				FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
+				FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file), locale);
 				// Load messages
 				loadMessages(config, locale, commandManager);
 			} catch (Exception e) {
@@ -121,7 +121,7 @@ public class Lang implements Listener {
 		Lang.messages.put(locale, messages);
 	}
 
-	private FileConfiguration updateFile(File file, FileConfiguration config) {
+	private FileConfiguration updateFile(File file, FileConfiguration config, Locale locale) {
 		if (config.contains("file_version")) {
 			InputStream stream = plugin.getResource("messages_en.yml");
 			if (stream != null) {
@@ -141,8 +141,9 @@ public class Lang implements Listener {
 								}
 							}
 						}
+						config.set("file_version", imbVersion);
 						config.save(file);
-						Bukkit.getLogger().info("[AureliumSkills] messages_" + defaultLanguage + ".yml was updated to a new file version, " + keysAdded + " new keys were added.");
+						Bukkit.getLogger().info("[AureliumSkills] messages_" + locale.toLanguageTag() + ".yml was updated to a new file version, " + keysAdded + " new keys were added.");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

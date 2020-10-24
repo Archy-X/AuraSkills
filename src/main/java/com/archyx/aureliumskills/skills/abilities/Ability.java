@@ -59,7 +59,7 @@ public enum Ability {
 	JUMPER(() -> Skill.AGILITY, 10.0, 10.0),
 	SUGAR_RUSH(() -> Skill.AGILITY, 5.0, 7.0),
 	FLEETING(() -> Skill.AGILITY, 5.0, 4.0),
-	THUNDER_FALL(() -> Skill.AGILITY, 3.0, 2.0, 10, 10),
+	THUNDER_FALL(() -> Skill.AGILITY, 3.0, 2.0, 10, 5),
 	ALCHEMIST(() -> Skill.ALCHEMY, 3.0, 4.0),
 	BREWER(() -> Skill.ALCHEMY, 10.0, 10.0),
 	SPLASHER(() -> Skill.ALCHEMY, 0.5, 0.25),

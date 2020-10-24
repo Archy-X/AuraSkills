@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.abilities.AgilityAbilities;
 import com.google.common.collect.Sets;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -64,7 +65,7 @@ public class AgilityLeveler implements Listener {
 						}
 					}
 					if (event.getFinalDamage() < player.getHealth()) {
-						Leveler.addXp(player, Skill.AGILITY, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * OptionL.getXp(Source.FALL_DAMAGE));
+						Leveler.addXp(player, Skill.AGILITY, AgilityAbilities.getModifiedXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * OptionL.getXp(Source.FALL_DAMAGE)));
 					}
 				}
 			}
@@ -111,7 +112,7 @@ public class AgilityLeveler implements Listener {
 	                	if (player.hasMetadata("skillsJumps")) {
 	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
 	                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 100) {
-	                			Leveler.addXp(player, Skill.AGILITY, Source.JUMP_PER_100);
+	                			Leveler.addXp(player, Skill.AGILITY, AgilityAbilities.getModifiedXp(player, Source.JUMP_PER_100));
 	                			player.removeMetadata("skillsJumps", plugin);
 	                		}
 	                	}

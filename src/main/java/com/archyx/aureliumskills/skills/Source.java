@@ -110,6 +110,7 @@ public enum Source {
 	ARMOR_PER_LEVEL("enchanting.types.armor-per-level"),
 	TOOL_PER_LEVEL("enchanting.types.tool-per-level"),
 	BOOK_PER_LEVEL("enchanting.types.book-per-level"),
+	MANA_ABILITY_USE("sorcery.types.mana-ability-use"),
 	DRINK_REGULAR("healing.types.drink-regular"),
 	DRINK_EXTENDED("healing.types.drink-extended"),
 	DRINK_UPGRADED("healing.types.drink-upgraded"),

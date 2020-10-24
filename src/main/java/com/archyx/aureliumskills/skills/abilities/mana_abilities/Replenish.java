@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -20,6 +21,8 @@ public class Replenish implements ManaAbility {
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.REPLENISH));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
+            // Level Sorcery
+            SorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }
