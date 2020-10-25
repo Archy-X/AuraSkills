@@ -153,7 +153,7 @@ public class ForagingAbilities implements Listener {
 	}
 
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void applyTreecapitator(BlockBreakEvent event) {
 		if (!event.isCancelled()) {
 			//Checks if block broken is log
@@ -269,6 +269,12 @@ public class ForagingAbilities implements Listener {
 					if (mat.name().toUpperCase().contains("_AXE")) {
 						Player player = event.getPlayer();
 						Locale locale = Lang.getLanguage(player);
+						// Check WorldEdit wand
+						if (mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
+							if (plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit")) {
+								return;
+							}
+						}
 						//Check permission
 						if (!player.hasPermission("aureliumskills.foraging")) {
 							return;

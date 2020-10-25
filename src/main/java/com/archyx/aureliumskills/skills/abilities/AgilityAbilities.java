@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
@@ -10,6 +11,7 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -86,6 +88,20 @@ public class AgilityAbilities implements Listener {
                             for (LivingEntity entity : event.getAffectedEntities()) {
                                 if (entity instanceof Player) {
                                     Player player = (Player) entity;
+                                    //Checks if in blocked world
+                                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                                        return;
+                                    }
+                                    //Check for permission
+                                    if (!player.hasPermission("aureliumskills.agility")) {
+                                        return;
+                                    }
+                                    //Check creative mode disable
+                                    if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+                                        if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                                            return;
+                                        }
+                                    }
                                     PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                                     if (playerSkill != null) {
                                         if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
@@ -110,6 +126,20 @@ public class AgilityAbilities implements Listener {
             if (OptionL.isEnabled(Skill.ALCHEMY)) {
                 if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SUGAR_RUSH)) {
                     Player player = event.getPlayer();
+                    //Checks if in blocked world
+                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                        return;
+                    }
+                    //Check for permission
+                    if (!player.hasPermission("aureliumskills.agility")) {
+                        return;
+                    }
+                    //Check creative mode disable
+                    if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+                        if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                            return;
+                        }
+                    }
                     PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                     if (playerSkill != null) {
                         if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
@@ -118,6 +148,7 @@ public class AgilityAbilities implements Listener {
                                 if (item.getItemMeta() instanceof PotionMeta) {
                                     PotionMeta meta = (PotionMeta) item.getItemMeta();
                                     PotionData potion = meta.getBasePotionData();
+                                    double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
                                     if (potion.getType() == PotionType.SPEED || potion.getType() == PotionType.JUMP) {
                                         int amplifier = 0;
                                         if (potion.isUpgraded()) {
@@ -137,15 +168,14 @@ public class AgilityAbilities implements Listener {
                                         } else {
                                             duration = 180;
                                         }
-                                        double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
                                         duration = (int) (multiplier * duration);
                                         applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
-                                        // Apply custom effects
-                                        if (meta.hasCustomEffects()) {
-                                            for (PotionEffect effect : meta.getCustomEffects()) {
-                                                if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
-                                                    applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
-                                                }
+                                    }
+                                    // Apply custom effects
+                                    if (meta.hasCustomEffects()) {
+                                        for (PotionEffect effect : meta.getCustomEffects()) {
+                                            if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
+                                                applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
                                             }
                                         }
                                     }
@@ -206,6 +236,20 @@ public class AgilityAbilities implements Listener {
         if (!event.isCancelled()) {
             if (event.getEntity() instanceof Player) {
                 Player player = (Player) event.getEntity();
+                //Checks if in blocked world
+                if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                    return;
+                }
+                //Check for permission
+                if (!player.hasPermission("aureliumskills.agility")) {
+                    return;
+                }
+                //Check creative mode disable
+                if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+                    if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                        return;
+                    }
+                }
                 AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
                 double maxHealth = attribute.getValue();
                 if (player.getHealth() + event.getAmount() >= 0.2 * maxHealth) {
@@ -258,6 +302,20 @@ public class AgilityAbilities implements Listener {
                 if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                     if (event.getEntity() instanceof Player) {
                         Player player = (Player) event.getEntity();
+                        //Checks if in blocked world
+                        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                            return;
+                        }
+                        //Check for permission
+                        if (!player.hasPermission("aureliumskills.agility")) {
+                            return;
+                        }
+                        //Check creative mode disable
+                        if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+                            if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                                return;
+                            }
+                        }
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                         if (playerSkill != null) {
                             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.THUNDER_FALL)) {

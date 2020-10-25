@@ -29,24 +29,6 @@ enable-action-bar: true
 # If action bar is enabled, these settings will be applied
 action-bar-update-period: 5
 
-enable-health-on-action-bar: true
-
-health-text-color: RED
-
-enable-mana-on-action-bar: true
-
-mana-text-color: AQUA
-
-# Color of text when gaining xp
-skill-xp-text-color: GOLD
-
-# Color of text in parenthesis showing xp progress
-xp-progress-text-color: GRAY
-
-prefix-bracket-color: DARK_GRAY
-
-prefix-text: "&bSkills"
-
 # The base mana amount
 base-mana: 20
 

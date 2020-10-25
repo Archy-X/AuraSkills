@@ -13,4 +13,8 @@ public class VersionUtils {
             return type.name().equals("PIG_ZOMBIE");
         }
     }
+
+    public void isAboveVersion(String version) {
+
+    }
 }

@@ -209,8 +209,8 @@ abilities:
       name: Sekilas
       desc: 'Mendapatkan +{value}% kecepatan berlari ketika darah\n&7  dibawah 20%'
       info: '+{value}% Kecepatan'
-      start: '&fYou have gained a fleeting speed boost! &7(+{value}% Speed)'
-      end: '&7Fleeting speed boost has worn off'
+      start: '&fKamu telah mendapatkan sepatu secepat kilat! &7(+{value}% Speed)'
+      end: '&7Sepatu kilat dinonaktifkan'
     thunder_fall:
       name: Petir Yang Jatuh
       desc: 'Ketika menyelinap saat jatuh, memiliki {value}% kesempatan untuk\n&7  memberikan {value_2}% kerusakan ke mobs dalam radius 3 block'

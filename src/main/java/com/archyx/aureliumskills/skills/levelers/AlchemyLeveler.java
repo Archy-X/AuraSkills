@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.abilities.AlchemyAbilities;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -71,17 +72,17 @@ public class AlchemyLeveler implements Listener {
 							Skill s = Skill.ALCHEMY;
 							Material mat = event.getContents().getIngredient().getType();
 							if (mat.equals(Material.REDSTONE)) {
-								Leveler.addXp(p, s, Source.EXTENDED);
+								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.EXTENDED));
 							} else if (mat.equals(Material.GLOWSTONE_DUST)) {
-								Leveler.addXp(p, s, Source.UPGRADED);
+								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.UPGRADED));
 							} else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
-								Leveler.addXp(p, s, Source.AWKWARD);
+								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.AWKWARD));
 							} else if (mat.equals(XMaterial.GUNPOWDER.parseMaterial())) {
-								Leveler.addXp(p, s, Source.SPLASH);
+								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.SPLASH));
 							} else if (mat.equals(XMaterial.DRAGON_BREATH.parseMaterial())) {
-								Leveler.addXp(p, s, Source.LINGERING);
+								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.LINGERING));
 							} else {
-								Leveler.addXp(p, s, Source.REGULAR);
+								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.REGULAR));
 							}
 						}
 					}

@@ -191,16 +191,16 @@ public class AureliumSkills extends JavaPlugin{
 		worldManager.loadWorlds();
 		//B-stats
 		int pluginId = 8629;
-		Metrics metrics = new Metrics(this, pluginId);
+		new Metrics(this, pluginId);
 		Bukkit.getLogger().info("[AureliumSkills] Aurelium Skills has been enabled");
 		checkUpdates();
 	}
 	
 	public void onDisable() {
 		//Reloads config
-		reloadConfig();
+		// reloadConfig();
 		//Save config
-		saveConfig();
+		// saveConfig();
 		//Save Data
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (mySqlSupport != null) {
@@ -242,6 +242,7 @@ public class AureliumSkills extends JavaPlugin{
 		saveDefaultConfig();
 		try {
 			InputStream is = getResource("config.yml");
+			boolean changed = false;
 			if (is != null) {
 				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
 				ConfigurationSection config = defConfig.getConfigurationSection("");
@@ -249,10 +250,15 @@ public class AureliumSkills extends JavaPlugin{
 					for (String key : config.getKeys(true)) {
 						if (!getConfig().contains(key)) {
 							getConfig().set(key, defConfig.get(key));
+							if (!changed) {
+								changed = true;
+							}
 						}
 					}
 				}
-				saveConfig();
+				if (changed) {
+					saveConfig();
+				}
 			}
 		} catch (Exception e) {
             e.printStackTrace();

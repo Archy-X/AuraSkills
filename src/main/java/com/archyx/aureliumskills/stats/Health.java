@@ -15,7 +15,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class Health implements Listener {
+
+	private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent event) {
@@ -30,7 +36,17 @@ public class Health implements Listener {
 
 	@EventHandler
 	public void worldChange(PlayerChangedWorldEvent event) {
-		setHealth(event.getPlayer());
+		Player player = event.getPlayer();
+		if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation()) && !AureliumSkills.worldManager.isDisabledWorld(event.getFrom())) {
+			worldChangeHealth.put(player.getUniqueId(), player.getHealth());
+		}
+		setHealth(player);
+		if (AureliumSkills.worldManager.isDisabledWorld(event.getFrom()) && !AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+			if (worldChangeHealth.containsKey(player.getUniqueId())) {
+				player.setHealth(worldChangeHealth.get(player.getUniqueId()));
+				worldChangeHealth.remove(player.getUniqueId());
+			}
+		}
 	}
 
 	private static void setHealth(Player player) {
@@ -55,9 +71,14 @@ public class Health implements Listener {
 						}
 					}
 				}
-				//Disable health scaling if in disable world
+				//Disable health if in disable world
 				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
 					player.setHealthScaled(false);
+					for (AttributeModifier am : attribute.getModifiers()) {
+						if (am.getName().equals("skillsHealth")) {
+							attribute.removeModifier(am);
+						}
+					}
 					return;
 				}
 				//Return if no change

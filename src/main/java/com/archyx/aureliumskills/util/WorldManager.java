@@ -64,4 +64,8 @@ public class WorldManager {
         World world = location.getWorld();
         return blockedCheckBlockReplaceWorlds.contains(world.getName());
     }
+
+    public boolean isDisabledWorld(World world) {
+        return disabledWorlds.contains(world.getName());
+    }
 }

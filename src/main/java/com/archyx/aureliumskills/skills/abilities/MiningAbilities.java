@@ -147,7 +147,7 @@ public class MiningAbilities implements Listener {
 	}
 
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void applySpeedMine(BlockBreakEvent event) {
 		//Checks if block broken is ore/stone
 		Material blockMat = event.getBlock().getType();
