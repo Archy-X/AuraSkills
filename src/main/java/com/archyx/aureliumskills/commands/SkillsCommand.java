@@ -136,7 +136,7 @@ public class SkillsCommand extends BaseCommand {
 				try {
 					Skill skill = Skill.valueOf(args[0].toUpperCase());
 					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, 1, 10);
-					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER, locale).replace("&", "§").replace("$skill$", skill.getDisplayName(locale)));
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER, locale).replace("&", "§").replace("{skill}", skill.getDisplayName(locale)));
 					for (PlayerSkillInstance playerSkill : lb) {
 						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
 						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY, locale)
@@ -287,16 +287,19 @@ public class SkillsCommand extends BaseCommand {
 				.replace("{rank}", String.valueOf(AureliumSkills.leaderboard.getPowerRank(player.getUniqueId())))
 				.replace("{total}", String.valueOf(AureliumSkills.leaderboard.getSize())));
 		for (Skill skill : Skill.values()) {
-			player.sendMessage(Lang.getMessage(CommandMessage.RANK_ENTRY, locale)
-					.replace("$rank$", String.valueOf(AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId())))
-					.replace("$total$", String.valueOf(AureliumSkills.leaderboard.getSize())));
+			if (OptionL.isEnabled(skill)) {
+				player.sendMessage(Lang.getMessage(CommandMessage.RANK_ENTRY, locale)
+						.replace("{skill}", String.valueOf(skill.getDisplayName(locale)))
+						.replace("{rank}", String.valueOf(AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId())))
+						.replace("{total}", String.valueOf(AureliumSkills.leaderboard.getSize())));
+			}
 		}
 	}
 
 	@Subcommand("lang")
 	@CommandCompletion("@lang")
 	@CommandPermission("aureliumskills.lang")
-	@Description("Sets the language displayed to a certain language defined in messages.yml, but will not change the default language set in the file.")
+	@Description("Changes your player language")
 	public void onLanguage(Player player, String language) {
 		Locale locale = new Locale(language.toLowerCase());
 		if (Lang.hasLocale(locale)) {
@@ -305,7 +308,7 @@ public class SkillsCommand extends BaseCommand {
 			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_SET, locale).replace("{lang}", locale.toLanguageTag()));
 		}
 		else {
-			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_NOT_FOUND, locale));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_NOT_FOUND, Lang.getLanguage(player)));
 		}
 	}
 	

@@ -117,6 +117,8 @@ public enum Source {
 	SPLASH_REGULAR("healing.types.splash-regular"),
 	SPLASH_EXTENDED("healing.types.splash-extended"),
 	SPLASH_UPGRADED("healing.types.splash-upgraded"),
+	GOLDEN_APPLE("healing.types.golden-apple"),
+	ENCHANTED_GOLDEN_APPLE("healing.types.enchanted-golden-apple"),
 	COMBINE_BOOKS_PER_LEVEL("forging.types.combine-books-per-level"),
 	COMBINE_WEAPON_PER_LEVEL("forging.types.combine-weapon-per-level"),
 	COMBINE_ARMOR_PER_LEVEL("forging.types.combine-armor-per-level"),

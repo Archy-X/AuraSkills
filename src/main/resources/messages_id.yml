@@ -384,7 +384,7 @@ commands:
 leveler:
   title: '&aLevel {skill} Meningkat'
   subtitle: '&6{old} ➜ {new}'
-  level_up: '&3&m----------------------------------------\n &3Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRHadiah\:n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&m----------------------------------------'
+  level_up: '&3&m----------------------------------------\n&r &3Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRHadiah\:n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&m----------------------------------------'
   stat_level: '{color}+1{symbol} {stat}'
   ability_unlock: '&aAbility Terbuka! &6&l{ability} &7Terbuka'
   ability_level_up: '&aAbility Meningkat! &6&l{ability} &7sekarang level &6{level}'

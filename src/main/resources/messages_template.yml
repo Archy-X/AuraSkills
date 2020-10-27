@@ -209,6 +209,8 @@ abilities:
       name:
       desc:
       info:
+      start:
+      end:
     thunder_fall:
       name:
       desc:

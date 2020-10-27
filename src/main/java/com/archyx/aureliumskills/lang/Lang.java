@@ -25,6 +25,7 @@ public class Lang implements Listener {
 
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static final Map<UUID, Locale> playerLanguages = new HashMap<>();
+	public static List<String> definedLanguages;
 	public static Locale defaultLanguage;
 	private final Plugin plugin;
 
@@ -34,8 +35,15 @@ public class Lang implements Listener {
 		if (!file.exists()) {
 			plugin.saveResource("messages_en.yml", false);
 		}
+		loadLanguageFiles();
+	}
+
+	private void loadLanguageFiles() {
 		if (!new File(plugin.getDataFolder(), "messages_id.yml").exists()) {
 			plugin.saveResource("messages_id.yml", false);
+		}
+		if (!new File(plugin.getDataFolder(), "messages_es.yml").exists()) {
+			plugin.saveResource("messages_es.yml", false);
 		}
 	}
 
@@ -68,7 +76,9 @@ public class Lang implements Listener {
 		}
 		// Sets default language
 		defaultLanguage = new Locale(defaultLanguageString);
+		definedLanguages = new ArrayList<>();
 		// Load languages
+		int languagesLoaded = 0;
 		for (String language : languages) {
 			// Load file
 			try {
@@ -76,15 +86,22 @@ public class Lang implements Listener {
 				File file = new File(plugin.getDataFolder(), "messages_" + language + ".yml");
 				// Load and update file
 				FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file), locale);
-				// Load messages
-				loadMessages(config, locale, commandManager);
+				if (config.contains("file_version")) {
+					// Load messages
+					loadMessages(config, locale, commandManager);
+					languagesLoaded++;
+					definedLanguages.add(language);
+				}
+				else {
+					Bukkit.getLogger().warning("[AureliumSkills] Could not load file messages_" + language + ".yml! Does this file exist and does it contain a file_version?");
+				}
 			} catch (Exception e) {
 				Bukkit.getLogger().warning("[AureliumSkills] Error loading messages file messages_" + language + ".yml");
 				e.printStackTrace();
 			}
 		}
 		long endTime = System.currentTimeMillis();
-		Bukkit.getLogger().info("[AureliumSkills] Loaded " + languages.size() + " languages in " + (endTime - startTime) + "ms");
+		Bukkit.getLogger().info("[AureliumSkills] Loaded " + languagesLoaded + " languages in " + (endTime - startTime) + "ms");
 	}
 
 	private void loadMessages(FileConfiguration config, Locale locale, PaperCommandManager commandManager) {
@@ -107,7 +124,7 @@ public class Lang implements Listener {
 						,"{hp_unit}", units.get(UnitMessage.HP)
 						,"{xp_unit}", units.get(UnitMessage.XP)));
 			} else {
-				Bukkit.getLogger().severe("[AureliumSkills] Message with path " + key.getPath() + " was null!");
+				Bukkit.getLogger().warning("[AureliumSkills] [" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
 			}
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
