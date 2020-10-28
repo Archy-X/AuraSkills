@@ -456,113 +456,113 @@ menus:
 mana_abilities:
   replenish:
     name: Replantar
-    desc: "&7Replants crops automatically for \n&7  {value} seconds. &e[Right Click to Activate]"
-    raise: '&7You raise your hoe'
-    lower: '&7You lower your hoe'
-    start: '&6Replenish Activated! &7(-{mana} {mana_unit})'
-    end: '&6Replenish has worn off'
+    desc: "&7Replanta semillas automáticamente por \n&7  {value} segundos. &e[Click derecho para activar]"
+    raise: '&7Levantaste tu azada'
+    lower: '&7Bajaste tu azada'
+    start: '&6¡Replantación Activada! &7(-{mana} {mana_unit})'
+    end: '&6La habilidad Replantar se ha agotado'
   treecapitator:
     name: Treecapitator
-    desc: "&7Breaks entire trees instantly for \n&7  {value} seconds. &e[Right Click to Activate]"
-    raise: '&7You raise your axe'
-    lower: '&7You lower your axe'
-    start: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
-    end: '&6Treecapitator has worn off'
+    desc: "&7Rompe árboles enteros instantáneamente por \n&7  {value} segundos. &e[Click Derecho para Activar]"
+    raise: '&7Levantaste tu hacha'
+    lower: '&7Bajaste tu hacha'
+    start: '&6¡Treecapitator Activado! &7(-{mana} {mana_unit})'
+    end: '&6La habilitad Treecapitator se ha agotado'
   speed_mine:
-    name: Speed Mine
-    desc: "&7Gives Haste 10 for {value} \n&7  seconds. &e[Right Click to Activate]"
-    raise: '&7You raise your pickaxe'
-    lower: '&7You lower your pickaxe'
-    start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
-    end: '&7Speed Mine has worn off'
+    name: Mina Veloz
+    desc: "&7Otorga Velocidad Minera 10 por {value} \n&7  segundos. &e[Click Derecho para Activar]"
+    raise: '&7Levantaste tu pico'
+    lower: '&7Bajaste tu pico'
+    start: '&6¡Mina Veloz Activada! &7(-{mana} {mana_unit})'
+    end: '&7La habilidad Mina Veloz se ha agotado'
   absorption:
-    name: Absorption
-    desc: "Heal 50% of the damage you take \n&7  for {value} seconds."
-    raise: '&7You raise your shield'
-    lower: '&7You lower your shield'
-    start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
-    end: '&6Absorption has worn off'
-  not_ready: '&cAbility not ready! &7({cooldown}s)'
-  not_enough_mana: '&eNot enough mana! &7({mana} {mana_unit} required)'
+    name: Absorción
+    desc: "Cura el 50% del daño que recibas \n&7  por {value} segundos."
+    raise: '&7Levantaste tu escudo'
+    lower: '&7Bajaste tu escudo'
+    start: '&6¡Habilidad Absorción activada! &7(-{mana} {mana_unit})'
+    end: '&6La habilidad absorción se ha agotado'
+  not_ready: '&c¡La habilitad no está lista! &7({cooldown}s)'
+  not_enough_mana: '&e¡No tienes suficiente mana! &7(Requerido: {mana} {mana_unit})'
 skills:
   farming:
-    name: Farming
-    desc: '&7Harvest crops to earn Farming {xp_unit}'
+    name: Agricultura
+    desc: '&7Cosecha semillas para ganar XP de Agricultura {xp_unit}'
   foraging:
-    name: Foraging
-    desc: '&7Cut trees to earn Foraging {xp_unit}'
+    name: Forrajeo
+    desc: '&7Corta árboles para ganar XP de Forrajeo {xp_unit}'
   mining:
-    name: Mining
-    desc: '&7Mine stone and ores to earn Mining {xp_unit}'
+    name: Minería
+    desc: '&7Mina piedra y minerales para ganar XP de Minería {xp_unit}'
   fishing:
-    name: Fishing
-    desc: '&7Catch fish to earn Fishing {xp_unit}'
+    name: Pescadería
+    desc: '&7Captura pescados para ganar XP de Pescadería {xp_unit}'
   excavation:
-    name: Excavation
-    desc: '&7Dig with a shovel to earn Excavation {xp_unit}'
+    name: Excavación
+    desc: '&7Cava con una pala para ganar XP de Excavación {xp_unit}'
   archery:
-    name: Archery
-    desc: "&7Shoot mobs and players with a bow to\n&7earn Archery {xp_unit}"
+    name: Arquería
+    desc: "&7Dispara a los mobs y jugadores con arco\n&7para ganar XP de Arquería {xp_unit}"
   defense:
-    name: Defense
-    desc: '&7Take damage from entities to earn Defense {xp_unit}'
+    name: Defensa
+    desc: '&7Recibe daño de las entidades para ganar XP de Defensa {xp_unit}'
   fighting:
-    name: Fighting
-    desc: "&7Fight mobs with melee weapons to earn\n&7Fighting {xp_unit}"
+    name: Lucha
+    desc: "&7Lucha con armas cuerpo a cuerpo para ganar\n&7XP de Lucha {xp_unit}"
   endurance:
-    name: Endurance
-    desc: '&7Walk and run to earn Endurance {xp_unit}'
+    name: Resistencia
+    desc: '&7Camina y corre para ganar XP de Resistencia {xp_unit}'
   agility:
-    name: Agility
-    desc: "&7Jump and take fall damage to earn\n&7Agility {xp_unit}"
+    name: Agilidad
+    desc: "&7Salta y recibe daño por caída para\n&7ganar XP de Agilidad {xp_unit}"
   alchemy:
-    name: Alchemy
-    desc: '&7Brew potions to earn Alchemy {xp_unit}'
+    name: Alquimia
+    desc: '&7Haz pociones para ganar XP de Alquimia {xp_unit}'
   enchanting:
-    name: Enchanting
-    desc: "&7Enchant items and books to earn\n&7Enchanting {xp_unit}"
+    name: Encantador
+    desc: "&7Encanta items y libros para ganar\n&7XP de Encantador {xp_unit}"
   sorcery:
-    name: Sorcery
-    desc: '&7Cast spells to earn Sorcery {xp_unit}'
+    name: Brujería
+    desc: '&7Lanza hechizos para ganar XP de Brujería {xp_unit}'
   healing:
-    name: Healing
-    desc: "&7Drink and splash potions to earn\n&7Healing {xp_unit}"
+    name: Curación
+    desc: "&7Bebe y salpica pociones para\n&7ganar XP de Curación {xp_unit}"
   forging:
-    name: Forging
-    desc: "&7Combine and apply books in an anvil to\n&7earn Forging {xp_unit}"
+    name: Forjar
+    desc: "&7Combina y aplica libros en un yunque\n&7para ganar XP de Forja {xp_unit}"
 stats:
   strength:
-    name: Strength
-    desc: "&7Strength increases your attack damage\n&7with various different weapons"
+    name: Fuerza
+    desc: "&7La fuerza incrementa tu daño de ataque\n&7con diferentes armas"
     color: '&4'
     symbol: '➽'
   health:
-    name: Health
-    desc: "&7Health increases the amount of {hp_unit} you\n&7have, allowing you to last longer in\n&7fights"
+    name: Vida
+    desc: "&7La salud incrementa la cantidad de {hp_unit} que\n&7tienes y te permite durar más tiempo en\n&7peleas"
     color: '&c'
     symbol: '❤'
   regeneration:
-    name: Regeneration
-    desc: "&7Regeneration increases how fast you\n&7recover both health and mana"
+    name: Regeneración
+    desc: "&7La regeneración incrementa la rapidez con la que\n&7recuperas salud y maná"
     color: '&6'
     symbol: '❥'
   luck:
-    name: Luck
-    desc: "&7Luck increases your chances of getting\n&7rare loot from mobs, fishing, and more"
+    name: Suerte
+    desc: "&7La suerte aumenta tus posibilidades de obtener\n&7botínes raros de los mobs, pescar y más"
     color: '&2'
     symbol: '☘'
   wisdom:
-    name: Wisdom
-    desc: "&7Wisdom increases your max mana, increases\n&7experience gain, and decreases anvil costs"
+    name: Sabiduría
+    desc: "&7La sabiduría incrementa tu maná máximo, incrementa\n&7la experiencia ganada y reduce el costo del yunque"
     color: '&9'
     symbol: '✿'
   toughness:
-    name: Toughness
-    desc: "&7Toughness increases the amount of\n&7damage reduced from enemy attacks"
+    name: Resistencia
+    desc: "&7La Resistencia incrementa la cantidad de\n&7de daño reducido de los ataques enemigos"
     color: '&5'
     symbol: '✦'
 units:
-  mana: Mana
+  mana: Maná
   hp: HP
   xp: XP
 file_version: 1

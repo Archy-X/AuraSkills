@@ -1,8 +1,9 @@
+---
 abilities:
   farming:
     bountiful_harvest:
       name: Panen Melimpah
-      desc: '{value}% kesempatan untuk hasil panen menjadi\n&7  2 kali lipat dari tanaman.'
+      desc: "{value}% kesempatan untuk hasil panen menjadi\n&7  2 kali lipat dari tanaman."
       info: '{value}% Hasil Ganda'
     farmer:
       name: Petani
@@ -10,20 +11,20 @@ abilities:
       info: '+{value}% EXP'
     scythe_master:
       name: Master Sabit
-      desc: 'Meningkatkan {value}% Kerusakan yang disebabka\n&7  olehn sabit'
+      desc: "Meningkatkan {value}% Kerusakan yang disebabka\n&7  olehn sabit"
       info: '+{value}% Kerusakan'
     geneticist:
       name: Ahli Genetika
-      desc: 'Meningkatkan Kekenyangan yang didapat dari\n&7  tanaman yang dimakan sebanyak {value}.'
+      desc: "Meningkatkan Kekenyangan yang didapat dari\n&7  tanaman yang dimakan sebanyak {value}."
       info: '+{value} Kekenyangan'
     triple_harvest:
       name: Panen 3x
-      desc: '{value}% kesempatan untuk mendapatkan hasil 3x lipat\n&7  dari tanaman.'
+      desc: "{value}% kesempatan untuk mendapatkan hasil 3x lipat\n&7  dari tanaman."
       info: '{value}% Hasil 3x lipat'
   foraging:
     lumberjack:
       name: Penebang
-      desc: '{value}% kesempatan untuk hasil tebang menjadi\n&7  2 kali lipat dari kayu.'
+      desc: "{value}% kesempatan untuk hasil tebang menjadi\n&7  2 kali lipat dari kayu."
       info: '{value}% Hasil Ganda'
     forager:
       name: Penjelajah
@@ -31,20 +32,20 @@ abilities:
       info: '+{value}% EXP'
     axe_master:
       name: Ahli Kapak
-      desc: 'Meningkatkan {value}% Kerusakan yang disebabkan\n&7  oleh kapak.'
+      desc: "Meningkatkan {value}% Kerusakan yang disebabkan\n&7  oleh kapak."
       info: '+{value}% Kerusakan'
     valor:
       name: Kewiraan
-      desc: 'Mendpatkan tambahan +{value} Kekuatan ketika sedang\n&7  memegang kapak'
+      desc: "Mendpatkan tambahan +{value} Kekuatan ketika sedang\n&7  memegang kapak"
       info: '+{value} Kekuatan'
     shredder:
       name: Penghancur
-      desc: '{value}% kesempatan untuk menghasilkan kerusakan\n&7  sebanyak 3x lipat dengan kapak.'
+      desc: "{value}% kesempatan untuk menghasilkan kerusakan\n&7  sebanyak 3x lipat dengan kapak."
       info: '{value}% 3x lipat kerusakan'
   mining:
     lucky_miner:
       name: Penambang Beruntung
-      desc: '{value}% kesempatan untuk hasil tambang menjadi 2 kali lipat\n&7  dari mineral.'
+      desc: "{value}% kesempatan untuk hasil tambang menjadi 2 kali lipat\n&7  dari mineral."
       info: '{value}% Hasil Ganda'
     miner:
       name: Penambang
@@ -52,20 +53,20 @@ abilities:
       info: '+{value}% EXP'
     pick_master:
       name: Ahli Beliung
-      desc: 'Meningkatkan {value}% Kerusakan yang disebabkan\n&7  oleh beliung.'
+      desc: "Meningkatkan {value}% Kerusakan yang disebabkan\n&7  oleh beliung."
       info: '+{value}% Kerusakan'
     stamina:
       name: Stamina
-      desc: 'Meningkatkan +{value} Ketahanan ketika\n&7  memegang beliung'
+      desc: "Meningkatkan +{value} Ketahanan ketika\n&7  memegang beliung"
       info: '+{value} Ketahanan'
     hardened_armor:
       name: Armor Yang Keras
-      desc: '{value}% kesempatan untuk tidak memeberi\n&7  kerusakan kepada armor.'
+      desc: "{value}% kesempatan untuk tidak memeberi\n&7  kerusakan kepada armor."
       info: '{value}% Tidak ada kerusakan'
   fishing:
     lucky_catch:
       name: Tangkapan Beruntung
-      desc: '{value}% kesempatan untuk menangkap ikan lebih banyak\n&7  dari memancing.'
+      desc: "{value}% kesempatan untuk menangkap ikan lebih banyak\n&7  dari memancing."
       info: '{value}% 2x Drops'
     fisher:
       name: Nelayan
@@ -73,7 +74,7 @@ abilities:
       info: '+{value}% EXP'
     treasure_hunter:
       name: Pemburu Harta Karun
-      desc: '{value}% kesempatan mendapatkan barang langka\n&7  dari memancing.'
+      desc: "{value}% kesempatan mendapatkan barang langka\n&7  dari memancing."
       info: '{value}% Barang langka'
     grappler:
       name: Penangkap
@@ -81,12 +82,12 @@ abilities:
       info: '+{value}% Tangkapan cepat'
     epic_catch:
       name: Tangkapan Epik
-      desc: '{value}% kesempatan mendapatkan barang sangat\n&7  langka dari memancing.'
+      desc: "{value}% kesempatan mendapatkan barang sangat\n&7  langka dari memancing."
       info: '{value}% Barang sangat langka'
   excavation:
     metal_detector:
       name: Pendeteksi Besi
-      desc: '{value}% kesempatan mendapatkan barang langka\n&7  dari menggali.'
+      desc: "{value}% kesempatan mendapatkan barang langka\n&7  dari menggali."
       info: '{value}% Barang Langka'
     excavator:
       name: Penggali
@@ -98,11 +99,11 @@ abilities:
       info: '+{value}% Kerusakan'
     bigger_scoop:
       name: Sekop Raksasa
-      desc: '{value}% kesempatan untuk mendapatkan hasil 3x lipat\n&7  dari menggali.'
+      desc: "{value}% kesempatan untuk mendapatkan hasil 3x lipat\n&7  dari menggali."
       info: '{value}% 3x lipat hasil'
     lucky_spades:
       name: Sekop Keberuntungan
-      desc: '{value}% kesempatan mendapatkan barang sangat\n&7  langka dari menggali.'
+      desc: "{value}% kesempatan mendapatkan barang sangat\n&7  langka dari menggali."
       info: '{value}% Barang sangat langka'
   archery:
     crit_chance:
@@ -123,28 +124,28 @@ abilities:
       info: '{value}% Tembus'
     stun:
       name: Stun
-      desc: '{value}% kesempatan untuk membuat kecepatan lawan\n&7  menurun sebanyak 20% untuk 2 detik.'
+      desc: "{value}% kesempatan untuk membuat kecepatan lawan\n&7  menurun sebanyak 20% untuk 2 detik."
       info: '{value}% Kesempatan'
   defense:
     shielding:
       name: Perisai
-      desc: 'Mengurangi penerimaan kerusakan sebanyak {value}%\n&7  ketika sedang menyelinap.'
+      desc: "Mengurangi penerimaan kerusakan sebanyak {value}%\n&7  ketika sedang menyelinap."
       info: '-{value}% Kerusakan saat menyelinap'
     defender:
       name: Pertahanan
-      desc: 'Mendapatkan {value}% EXP lebih banyak untuk skill\n&7  pertahanan'
+      desc: "Mendapatkan {value}% EXP lebih banyak untuk skill\n&7  pertahanan"
       info: '+{value}% EXP'
     mob_master:
       name: Master Mob
-      desc: 'Mengurangi penerimaan kerusakan dari mobs\n&7  sebanyak {value}%'
+      desc: "Mengurangi penerimaan kerusakan dari mobs\n&7  sebanyak {value}%"
       info: '-{value}% Kerusakan mob'
     immunity:
       name: Ketahanan
-      desc: '{value}% kesempatan tidak menerima kerusakan\n&7  dari serangan musuh.'
+      desc: "{value}% kesempatan tidak menerima kerusakan\n&7  dari serangan musuh."
       info: '{value}% Kebal'
     no_debuff:
       name: Anti Efek Buruk
-      desc: '{value}% kesempatan untuk tidak menerima efek\n&7  yang merugikan dari ramuan.'
+      desc: "{value}% kesempatan untuk tidak menerima efek\n&7  yang merugikan dari ramuan."
       info: '{value}% Tidak ada efek buruk'
   fighting:
     crit_damage:
@@ -161,12 +162,12 @@ abilities:
       info: '+{value}% Kerusakan'
     first_strike:
       name: Serangan Pertama
-      desc: 'Memberikan {value}% kerusakan tambahan untuk\n&7  serangan pertama.'
+      desc: "Memberikan {value}% kerusakan tambahan untuk\n&7  serangan pertama."
       info: '+{value}% Kerusakan'
       dealt: '&cSerangan pertama diluncurkan'
     bleed:
       name: Pendarahan
-      desc: '{value}% kesempatan untuk membuat musuh berdarah selama\n&7  3 ticks, memberikan {value_2} kerusakan untuk setiap tick.'
+      desc: "{value}% kesempatan untuk membuat musuh berdarah selama\n&7  3 ticks, memberikan {value_2} kerusakan untuk setiap tick."
       info: '{value}% Kesempatan, {value_2} Kerusakan'
       enemy_bleeding: '&cMusuh Berdarah!'
       self_bleeding: '&cAwas Kamu berdarah!'
@@ -182,15 +183,15 @@ abilities:
       info: '+{value}% EXP'
     golden_heal:
       name: Pemulihan Emas
-      desc: 'Meningkatan regenerasi yang\n&7  didapat sebanyak {value}%'
+      desc: "Meningkatan regenerasi yang\n&7  didapat sebanyak {value}%"
       info: '+{value}% Regenerasi Tambahan'
     recovery:
       name: Recovery
-      desc: 'Meningkatkan regenerasi alami ketika\n&7  darah dibawah 50% sebanyak {value}%'
+      desc: "Meningkatkan regenerasi alami ketika\n&7  darah dibawah 50% sebanyak {value}%"
       info: '+{value} Regenerasi ketika darah rendah'
     meal_steal:
       name: Pencuri makanan
-      desc: '{value}% kesempatan mencuri 1 point kekeyangan\n&7  ketika menyerang manusia.'
+      desc: "{value}% kesempatan mencuri 1 point kekeyangan\n&7  ketika menyerang manusia."
       info: '{value}% Menncuri Makanan'
   agility:
     light_fall:
@@ -199,26 +200,26 @@ abilities:
       info: '-{value}% Kerusakan'
     jumper:
       name: Peloncat
-      desc: 'Meningkatkan {value}% EXP yang diterima untuk skill\n&7  kelincahan'
+      desc: "Meningkatkan {value}% EXP yang diterima untuk skill\n&7  kelincahan"
       info: '+{value}% EXP'
     sugar_rush:
       name: Pelari Yang Manis
-      desc: 'Meningkatkan durasi ramuan kecepatan dan loncatan\n&7  selama {value}% lebih lama.'
+      desc: "Meningkatkan durasi ramuan kecepatan dan loncatan\n&7  selama {value}% lebih lama."
       info: '{value}% Durasi Tambahan'
     fleeting:
       name: Sekilas
-      desc: 'Mendapatkan +{value}% kecepatan berlari ketika darah\n&7  dibawah 20%'
+      desc: "Mendapatkan +{value}% kecepatan berlari ketika darah\n&7  dibawah 20%"
       info: '+{value}% Kecepatan'
       start: '&fKamu telah mendapatkan sepatu secepat kilat! &7(+{value}% Speed)'
       end: '&7Sepatu kilat dinonaktifkan'
     thunder_fall:
       name: Petir Yang Jatuh
-      desc: 'Ketika menyelinap saat jatuh, memiliki {value}% kesempatan untuk\n&7  memberikan {value_2}% kerusakan ke mobs dalam radius 3 block'
+      desc: "Ketika menyelinap saat jatuh, memiliki {value}% kesempatan untuk\n&7  memberikan {value_2}% kerusakan ke mobs dalam radius 3 block"
       info: '{value}% Kesempatan, {value_2}% Kerusakan'
   alchemy:
     alchemist:
       name: Alkimia
-      desc: 'Ramuan yang kamu racik memiliki {value}% durasi\n&7  lebih lama.'
+      desc: "Ramuan yang kamu racik memiliki {value}% durasi\n&7  lebih lama."
       info: '+{value}% Durasi Ramuan'
     brewer:
       name: Peracik
@@ -226,15 +227,15 @@ abilities:
       info: '+{value}% EXP'
     splasher:
       name: Pemercik
-      desc: 'Ramuan yang dipercikan memiliki durasi {value}% lebih lama\n&7  durasi untuk setiap manusia berbeda.'
+      desc: "Ramuan yang dipercikan memiliki durasi {value}% lebih lama\n&7  durasi untuk setiap manusia berbeda."
       info: '+{value}% Durasi'
     lingering:
       name: Efek yang lama
-      desc: 'Ramua yang dilemparkan memiliki waktu {value}%\n&7  lebih lama dan menperlama {value_2}% durasi entitas.'
+      desc: "Ramua yang dilemparkan memiliki waktu {value}%\n&7  lebih lama dan menperlama {value_2}% durasi entitas."
       info: '-{value}% Alami, -{value_2}% durasi entitas'
     wise_effect:
       name: Kepintaran
-      desc: 'Memberikan {value} Kepintaran untuk setiap efek aktif dari\n&7  ramuan.'
+      desc: "Memberikan {value} Kepintaran untuk setiap efek aktif dari\n&7  ramuan."
       info: '+{value} Kepintaran/Efek'
 acf:
   core:
@@ -266,7 +267,7 @@ acf:
   minecraft:
     invalid_world: '&cKesalahan: Dunia ini tidak ada.'
     you_must_be_holding_item: '&cKesalahan: Kamu harus memegang benda ditanganmu.'
-    player_is_vanish_confirm: '&ePeringatan: &a{vanished} &esedang menyamar. Jangan buka kedok dia!\n&eUntuk mengkorfimasi tindakan anda tambahkan &a:confirm &ediakhirnama dia.\n&eContoh: {vanished}:confirm'
+    player_is_vanish_confirm: "&ePeringatan: &a{vanished} &esedang menyamar. Jangan buka kedok dia!\n&eUntuk mengkorfimasi tindakan anda tambahkan &a:confirm &ediakhirnama dia.\n&eContoh: {vanished}:confirm"
     username_too_short: '&cKesalahan: Nama terlalu pendak, setidaknya harus 3 huruf.'
     is_not_a_valid_name: '&cKesalahan: &e{name} &cbukanlah nama yang valid.'
     multiple_players_match: '&cKesalahan: Pemain dengan nama yang sama dideteksi &b{search} &e({all})&c, mohon untuk lebih spesifik.'
@@ -384,7 +385,7 @@ commands:
 leveler:
   title: '&aLevel {skill} Meningkat'
   subtitle: '&6{old} ➜ {new}'
-  level_up: '&3&m----------------------------------------\n&r &3Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRHadiah\:n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&m----------------------------------------'
+  level_up: "&3&m----------------------------------------\n&r &3Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRHadiah\\:n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
   stat_level: '{color}+1{symbol} {stat}'
   ability_unlock: '&aAbility Terbuka! &6&l{ability} &7Terbuka'
   ability_level_up: '&aAbility Meningkat! &6&l{ability} &7sekarang level &6{level}'
@@ -393,18 +394,18 @@ menus:
   common:
     close: '&cTutup'
     level: '&7Level: &e{level}'
-    progress_to_level: '&7Perjalanan ke level {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
+    progress_to_level: "&7Perjalanan ke level {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6MAX LEVEL'
-    ability_levels: '\n&7Level Ability:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
+    ability_levels: "\n&7Level Ability:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
     primary_stat: '&7Statistik Utama: {color}{stat}'
     secondary_stat: '&7Statistik Kedua: {color}{stat}'
-    mana_ability: '\n&d&lAbility Sihir &9{mana_ability} {level}\n &7Durasi: &a{duration}s &7Sihir dibutuhkan: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
+    mana_ability: "\n&d&lAbility Sihir &9{mana_ability} {level}\n &7Durasi: &a{duration}s &7Sihir dibutuhkan: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Skills kamu
     your_skills: '&bSkill Kamu - &6{player}'
-    your_skills_desc: '&7Tingkatkan Skill memalui tugas\n&7untuk membuka kemampuan,\n&7ability, dan lain-lain!'
+    your_skills_desc: "&7Tingkatkan Skill memalui tugas\n&7untuk membuka kemampuan,\n&7ability, dan lain-lain!"
     your_skills_hover: '&eArahkan kursor ke atas Keterampilan untuk informasi lebih lanjut!'
     your_skills_click: '&eKlik skill untuk melihat perjalanannya!'
     skill_click: '&eKlik level untuk melihat perjalanannya!'
@@ -428,12 +429,12 @@ menus:
     in_progress: '&eDALAM PERJALANAN'
     locked: '&cTERKUNCI'
     rewards: '&7Hadiah:{rewards}'
-    rewards_entry: '\n  {color}+{num} {symbol} {stat}'
-    ability_unlock: '\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n '
-    ability_level: '\n&6{ability} {level}\n&7  {desc}\n '
-    mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
-    mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
-    progress: '&7Perjalanan: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
+    rewards_entry: "\n  {color}+{num} {symbol} {stat}"
+    ability_unlock: "\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n "
+    ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
+    mana_ability_unlock: "\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n "
+    mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
+    progress: "&7Perjalanan: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
     stats_menu_title: Statistik kamu
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -456,28 +457,28 @@ menus:
 mana_abilities:
   replenish:
     name: Penanaman Kembali
-    desc: '&7Menanam kembali otomatis untuk selama \n&7  {value} detik. &e[Right Click to Activate]'
+    desc: "&7Menanam kembali otomatis untuk selama \n&7  {value} detik. &e[Right Click to Activate]"
     raise: '&7Kamu mengaktifkan sabitmu'
     lower: '&7Kamu menonaktifkan sabitmu'
     start: '&6Penanaman Kembali Active! &7(-{mana} {mana_unit})'
     end: '&6Durasi Penanaman Kembali Sudah Selesai'
   treecapitator:
     name: Treecapitator
-    desc: '&7Menebang sampai akar pohon selama \n&7  {value} detik. &e[Right Click to Activate]'
+    desc: "&7Menebang sampai akar pohon selama \n&7  {value} detik. &e[Right Click to Activate]"
     raise: '&7Kamu mengaktifkan kapakmu'
     lower: '&7Kamu menonaktifkan kapakmu'
     start: '&6Treecapitator Active! &7(-{mana} {mana_unit})'
     end: '&6Durasi Treecapitator Sudah Selesai'
   speed_mine:
     name: Penggali Cepat
-    desc: '&7Menggali dengan cepat selama {value} \n&7  detik. &e[Right Click to Activate]'
+    desc: "&7Menggali dengan cepat selama {value} \n&7  detik. &e[Right Click to Activate]"
     raise: '&7Kamu mengatifkan beliungmu'
     lower: '&7Kamu menonaktifkan beliungmu'
     start: '&6Menggali Cepat Active! &7(-{mana} {mana_unit})'
     end: '&7Durasi Menggali Cepat Sudah Selesai'
   absorption:
     name: Kekebalan
-    desc: 'Menyembuhkan 50% kerusakan yang diterima \n&7  selama {value} detik.'
+    desc: "Menyembuhkan 50% kerusakan yang diterima \n&7  selama {value} detik."
     raise: '&7Kamu mengaktifkan perisaimu'
     lower: '&7Kamu menonaktifkan perisaimu'
     start: '&6Kekebalan Active! &7(-{mana} {mana_unit})'
@@ -493,72 +494,72 @@ skills:
     desc: '&7Tebang pohon untuk mendapatkan skill Penebang {xp_unit}'
   mining:
     name: Penambang
-    desc: '&7Galilah batu dan mineral untuk mendapatkan\n&7skill Penambang {xp_unit}'
+    desc: "&7Galilah batu dan mineral untuk mendapatkan\n&7skill Penambang {xp_unit}"
   fishing:
     name: Nelayan
     desc: '&7Tangkap ikan untuk mendapatkan skill Nelayan {xp_unit}'
   excavation:
     name: Penggali
-    desc: '&7menggalilah dengan sekop untuk mendapatkan\n&7skill Penggali {xp_unit}'
+    desc: "&7menggalilah dengan sekop untuk mendapatkan\n&7skill Penggali {xp_unit}"
   archery:
     name: Pemanah
-    desc: '&7Tembak mobs dengan busu untuk mendaptakan\n&7earn skill Pemanah {xp_unit}'
+    desc: "&7Tembak mobs dengan busu untuk mendaptakan\n&7earn skill Pemanah {xp_unit}"
   defense:
     name: Pertahanan
-    desc: '&7Terima kerusakan dari mobs untuk meningkatkan\n&7Pertahan {xp_unit}'
+    desc: "&7Terima kerusakan dari mobs untuk meningkatkan\n&7Pertahan {xp_unit}"
   fighting:
     name: Petarung
-    desc: '&7Bertarung dengan mobs menggunakan senjata\n&7jarak dekat untuk skill Petarung {xp_unit}'
+    desc: "&7Bertarung dengan mobs menggunakan senjata\n&7jarak dekat untuk skill Petarung {xp_unit}"
   endurance:
     name: Petualang
-    desc: '&7Berjalan dan Berlarilah untuk meningkatkan\n&7skill Petualang {xp_unit}'
+    desc: "&7Berjalan dan Berlarilah untuk meningkatkan\n&7skill Petualang {xp_unit}"
   agility:
     name: Kelincahan
-    desc: '&7Loncat dan jatuhlah untuk meningkatkan\n&7skill Kelincahan {xp_unit}'
+    desc: "&7Loncat dan jatuhlah untuk meningkatkan\n&7skill Kelincahan {xp_unit}"
   alchemy:
     name: Alkemi
     desc: '&7Racik ramuan untuk meningkatkan skill Alkemi {xp_unit}'
   enchanting:
     name: Sihir
-    desc: '&7Sihirlah benda atau buku untuk meningkatkan\n&7skill Sihir {xp_unit}'
+    desc: "&7Sihirlah benda atau buku untuk meningkatkan\n&7skill Sihir {xp_unit}"
   sorcery:
     name: Penyihir
     desc: '&7Gunakan spell untuk meingkatkan skill Penyihir {xp_unit}'
   healing:
     name: Penyembuh
-    desc: '&7Minum dan percikan ramuan penyembuhan untuk\n&7menigkatkan skill Penyembuh {xp_unit}'
+    desc: "&7Minum dan percikan ramuan penyembuhan untuk\n&7menigkatkan skill Penyembuh {xp_unit}"
   forging:
     name: Penempa
-    desc: '&7Gabungkan buku sihir untu meningkatkan\n&7skill Penempa {xp_unit}'
+    desc: "&7Gabungkan buku sihir untu meningkatkan\n&7skill Penempa {xp_unit}"
 stats:
   strength:
     name: Kekuatan
-    desc: '&7Meningkatkan kerusakan yang diberikan menggunakan\n&7senjata yang bervariasi'
+    desc: "&7Meningkatkan kerusakan yang diberikan menggunakan\n&7senjata yang bervariasi"
     color: '&4'
     symbol: '➽'
   health:
     name: Darah
-    desc: '&7Meningkatkan darah yang kamu{hp_unit}\n&7miliki, membuatmu bertahan lebih lama di\n&7pertarungan'
+    desc: "&7Meningkatkan darah yang kamu{hp_unit}\n&7miliki, membuatmu bertahan lebih lama di\n&7pertarungan"
     color: '&c'
     symbol: '❤'
   regeneration:
     name: Pemulihan
-    desc: '&7Meningkatkan kecepatan beregenerasi\n&7memulihkan darah dan sihir'
+    desc: "&7Meningkatkan kecepatan beregenerasi\n&7memulihkan darah dan sihir"
     color: '&6'
     symbol: '❥'
   luck:
     name: Keberuntungan
-    desc: '&7Meningkatkan kesempatan mendapatkan\n&7barang langka dari mobs, memancing, dan lain-lain'
+    desc: "&7Meningkatkan kesempatan mendapatkan\n&7barang langka dari mobs, memancing, dan lain-lain"
     color: '&2'
     symbol: '☘'
   wisdom:
     name: Kepintaran
-    desc: '&7Meningkatkan kapasitas sihir yang bisa ditampung,\n&7kerusakan serangan sihir, dan\n&7keberuntungan sihir'
+    desc: "&7Kepintaran meningkatkan kapasitas sihirmu, menigkatkan\n&7pengalaman yang didapatkan, dan mengurangi baharan untuk anvil"
     color: '&9'
     symbol: '✿'
   toughness:
     name: Ketahanan
-    desc: '&7Meningkatkan pengurangan kerusakan\n&7yang diterima dari musuh'
+    desc: "&7Meningkatkan pengurangan kerusakan\n&7yang diterima dari musuh"
     color: '&5'
     symbol: '✦'
 units:
