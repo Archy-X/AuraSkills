@@ -14,15 +14,7 @@ public enum Option {
     //Action bar options
     ENABLE_ACTION_BAR("enable-action-bar", OptionType.BOOLEAN),
     ACTION_BAR_UPDATE_PERIOD("action-bar-update-period", OptionType.INT),
-    ENABLE_HEALTH_ON_ACTION_BAR("enable-health-on-action-bar", OptionType.BOOLEAN),
-    HEALTH_TEXT_COLOR("health-text-color", OptionType.COLOR),
-    ENABLE_MANA_ON_ACTION_BAR("enable-mana-on-action-bar", OptionType.BOOLEAN),
-    MANA_TEXT_COLOR("mana-text-color", OptionType.COLOR),
-    SKILL_XP_TEXT_COLOR("skill-xp-text-color", OptionType.COLOR),
-    XP_PROGRESS_TEXT_COLOR("xp-progress-text-color", OptionType.COLOR),
     //Prefix options
-    PREFIX_BRACKET_COLOR("prefix-bracket-color", OptionType.COLOR),
-    PREFIX_TEXT("prefix-text", OptionType.STRING),
     BASE_MANA("base-mana", OptionType.INT),
     ENABLE_ROMAN_NUMERALS("enable-roman-numerals", OptionType.BOOLEAN),
     //Damage hologram options

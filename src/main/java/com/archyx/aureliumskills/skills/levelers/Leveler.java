@@ -21,6 +21,7 @@ import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.util.BigNumber;
+import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.ProtocolUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -197,10 +198,10 @@ public class Leveler {
 					Bukkit.getPluginManager().callEvent(event);
 					//Sends messages
 					if (OptionL.getBoolean(Option.LEVELER_TITLE_ENABLED)) {
-						player.sendTitle(Lang.getMessage(LevelerMessage.TITLE, locale).replace("{skill}", skill.getDisplayName(locale)),
-								Lang.getMessage(LevelerMessage.SUBTITLE, locale)
-										.replace("{old}", RomanNumber.toRoman(currentLevel))
-										.replace("{new}", RomanNumber.toRoman(currentLevel + 1))
+						player.sendTitle(LoreUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
+								LoreUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
+										,"{old}", RomanNumber.toRoman(currentLevel)
+										,"{new}", RomanNumber.toRoman(currentLevel + 1))
 								, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
 					}
 					if (OptionL.getBoolean(Option.LEVELER_SOUND_ENABLED)) {
@@ -224,24 +225,27 @@ public class Leveler {
 
 	private static String getLevelUpMessage(Player player, PlayerSkill playerSkill, Skill skill, int newLevel, Locale locale) {
 		//Build original message with placeholders that are always there
-		String originalMessage = PlaceholderAPI.setPlaceholders(player,Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
-				.replace("{skill}", skill.getDisplayName(locale))
-				.replace("{old}", RomanNumber.toRoman(newLevel - 1))
-				.replace("{new}", RomanNumber.toRoman(newLevel))
-				.replace("{stat_level_1}", Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-						.replace("{color}", skill.getPrimaryStat().getColor(locale))
-						.replace("{symbol}", skill.getPrimaryStat().getSymbol(locale))
-						.replace("{stat}", skill.getPrimaryStat().getDisplayName(locale))));
+		String originalMessage = LoreUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
+				,"{skill}", skill.getDisplayName(locale)
+				,"{old}", RomanNumber.toRoman(newLevel - 1)
+				,"{new}", RomanNumber.toRoman(newLevel)
+				,"{stat_level_1}", LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
+						,"{color}", skill.getPrimaryStat().getColor(locale)
+						,"{symbol}", skill.getPrimaryStat().getSymbol(locale)
+						,"{stat}", skill.getPrimaryStat().getDisplayName(locale)));
+		if (AureliumSkills.placeholderAPIEnabled) {
+			originalMessage = PlaceholderAPI.setPlaceholders(player, originalMessage);
+		}
 		StringBuilder message = new StringBuilder();
 		//For every line
 		for (String line : originalMessage.split("(\\u005C\\u006E)|(\\n)")) {
 			if (line.contains("{stat_level_2}")) {
 				//If level has secondary stat
 				if (newLevel % 2 == 0) {
-					message.append("\n").append(line.replace("{stat_level_2}", Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-							.replace("{color}", skill.getSecondaryStat().getColor(locale))
-							.replace("{symbol}", skill.getSecondaryStat().getSymbol(locale))
-							.replace("{stat}", skill.getSecondaryStat().getDisplayName(locale))));
+					message.append("\n").append(LoreUtil.replace(line, "{stat_level_2}", LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
+							,"{color}", skill.getSecondaryStat().getColor(locale)
+							,"{symbol}", skill.getSecondaryStat().getSymbol(locale)
+							,"{stat}", skill.getSecondaryStat().getDisplayName(locale))));
 				}
 			}
 			else if (line.contains("{ability_unlock}")) {
@@ -252,8 +256,8 @@ public class Leveler {
 					if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
 						//If ability is unlocked
 						if (!(playerSkill.getAbilityLevel(ability) > 1)) {
-							message.append("\n").append(line.replace("{ability_unlock}", Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale)
-									.replace("{ability}", ability.getDisplayName(locale))));
+							message.append("\n").append(LoreUtil.replace(line,"{ability_unlock}", LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale)
+									,"{ability}", ability.getDisplayName(locale))));
 						}
 					}
 				}
@@ -266,9 +270,9 @@ public class Leveler {
 					if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
 						//If ability is leveled up
 						if (playerSkill.getAbilityLevel(ability) > 1) {
-							message.append("\n").append(line.replace("{ability_level_up}", Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
-									.replace("{ability}", ability.getDisplayName(locale))
-									.replace("{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)))));
+							message.append("\n").append(LoreUtil.replace(line,"{ability_level_up}", LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
+									,"{ability}", ability.getDisplayName(locale)
+									,"{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)))));
 						}
 					}
 				}
@@ -279,7 +283,7 @@ public class Leveler {
 					if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
 						double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 						double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-						message.append("\n").append(line.replace("{amount}", String.valueOf(base + (multiplier * newLevel * newLevel))));
+						message.append("\n").append(LoreUtil.replace(line,"{amount}", String.valueOf(base + (multiplier * newLevel * newLevel))));
 					}
 				}
 			}
@@ -333,50 +337,50 @@ public class Leveler {
 										if (Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill)) {
 											//Xp gained
 											if (xpAmount >= 0) {
-												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.XP, locale)
-														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{xp_gained}", nf.format(xpAmount))
-														.replace("{skill}", skill.getDisplayName(locale))
-														.replace("{current_xp}", nf.format(playerSkill.getXp(skill)))
-														.replace("{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)))
-														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{xp_gained}", nf.format(xpAmount)
+														,"{skill}", skill.getDisplayName(locale)
+														,"{current_xp}", nf.format(playerSkill.getXp(skill)))
+														,"{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
+														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
+														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
 											//Xp removed
 											else {
-												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
-														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{xp_removed}", nf.format(xpAmount))
-														.replace("{skill}", skill.getDisplayName(locale))
-														.replace("{current_xp}", nf.format(playerSkill.getXp(skill)))
-														.replace("{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)))
-														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
+														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{xp_removed}", nf.format(xpAmount)
+														,"{skill}", skill.getDisplayName(locale)
+														,"{current_xp}", nf.format(playerSkill.getXp(skill)))
+														,"{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
+														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
+														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
 										}
 										//Maxed
 										else {
 											//Xp gained
 											if (xpAmount >= 0) {
-												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.MAXED, locale)
-														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{xp_gained}", nf.format(xpAmount))
-														.replace("{skill}", skill.getDisplayName(locale))
-														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
+														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{xp_gained}", nf.format(xpAmount)
+														,"{skill}", skill.getDisplayName(locale)
+														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
+														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
 											//Xp removed
 											else {
-												handleActionBarSend(player, Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
-														.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-														.replace("{xp_removed}", nf.format(xpAmount))
-														.replace("{skill}", skill.getDisplayName(locale))
-														.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-														.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
+														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
+														,"{xp_removed}", nf.format(xpAmount)
+														,"{skill}", skill.getDisplayName(locale)
+														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
+														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
 											}
 										}
 									}

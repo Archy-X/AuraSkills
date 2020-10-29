@@ -45,7 +45,7 @@ public enum Skill {
 			ImmutableList.of(() -> Ability.LIGHT_FALL, () -> Ability.JUMPER, () -> Ability.SUGAR_RUSH, () -> Ability.FLEETING, () -> Ability.THUNDER_FALL),
 			MAbility.ABSORPTION),
 	ALCHEMY(Stat.HEALTH, Stat.WISDOM,
-			ImmutableList.of(() -> Ability.ALCHEMIST, () -> Ability.BREWER, () -> Ability.SPLASHER, () -> Ability.LINGERING, () -> Ability.WISE_EFFECT),
+			ImmutableList.of(() -> Ability.BREWER, () -> Ability.SPLASHER, () -> Ability.LINGERING, () -> Ability.WISE_EFFECT),
 			MAbility.ABSORPTION),
 	ENCHANTING(Stat.WISDOM, Stat.LUCK, ImmutableList.of(() -> Ability.ENCHANTER),
 			MAbility.ABSORPTION),

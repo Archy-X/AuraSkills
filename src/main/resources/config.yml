@@ -24,6 +24,7 @@ languages:
     - en
     - es
     - id
+    - fr
 
 # Action Bar Options
 enable-action-bar: true
