@@ -2,11 +2,13 @@ package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -104,11 +106,20 @@ public class FishingAbilities implements Listener {
 							if (r.nextDouble() < (Ability.EPIC_CATCH.getValue(skill.getAbilityLevel(Ability.EPIC_CATCH)) / 100)) {
 								if (AureliumSkills.abilityOptionManager.isEnabled(Ability.EPIC_CATCH)) {
 									Item item = (Item) event.getCaught();
-									if (AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().size() > 0) {
-										ItemStack drop = AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().size())).getDrop();
-										if (drop != null) {
-											item.setItemStack(drop);
-											Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_EPIC));
+									int lootTableSize = AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().size();
+									if (lootTableSize > 0) {
+										Loot loot = AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().get(r.nextInt(lootTableSize));
+										// If has item
+										if (loot.hasItem()) {
+											ItemStack drop = loot.getDrop();
+											if (drop != null) {
+												item.setItemStack(drop);
+												Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_EPIC));
+											}
+										}
+										// If has command
+										else if (loot.hasCommand()) {
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
 										}
 									}
 								}

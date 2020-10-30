@@ -7,16 +7,21 @@ import java.util.Random;
 public class Loot {
 
 	private ItemStack item;
+	private String command;
 	private int minAmount;
 	private int maxAmount;
-	private Random r = new Random();
+	private final Random r = new Random();
 	
 	public Loot(ItemStack item, int minAmount, int maxAmount) {
 		this.item = item;
 		this.minAmount = minAmount;
 		this.maxAmount = maxAmount;
 	}
-	
+
+	public Loot(String command) {
+		this.command = command;
+	}
+
 	public ItemStack getItem() {
 		return item;
 	}
@@ -40,4 +45,17 @@ public class Loot {
 			return null;
 		}
 	}
+
+	public boolean hasItem() {
+		return item != null;
+	}
+
+	public String getCommand() {
+		return command;
+	}
+
+	public boolean hasCommand() {
+		return command != null;
+	}
+
 }
