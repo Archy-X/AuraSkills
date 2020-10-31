@@ -51,7 +51,6 @@ public class AureliumAPI {
         if (playerSkill != null) {
             playerSkill.addXp(skill, amount);
             Leveler.checkLevelUp(player, skill);
-            Leveler.sendActionBarMessage(player, skill, amount);
         }
     }
 

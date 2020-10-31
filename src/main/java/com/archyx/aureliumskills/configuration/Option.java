@@ -12,8 +12,12 @@ public enum Option {
     MYSQL_USERNAME("mysql.username", OptionType.STRING),
     MYSQL_PASSWORD("mysql.password", OptionType.STRING),
     //Action bar options
-    ENABLE_ACTION_BAR("enable-action-bar", OptionType.BOOLEAN),
-    ACTION_BAR_UPDATE_PERIOD("action-bar-update-period", OptionType.INT),
+    ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),
+    ACTION_BAR_IDLE("action-bar.idle", OptionType.BOOLEAN),
+    ACTION_BAR_XP("action-bar.xp", OptionType.BOOLEAN),
+    ACTION_BAR_MAXED("action-bar.maxed", OptionType.BOOLEAN),
+    ACTION_BAR_UPDATE_PERIOD("action-bar.update-period", OptionType.INT),
+    ACTION_BAR_PLACEHOLDER_API("action-bar.placeholder-api", OptionType.BOOLEAN),
     //Prefix options
     BASE_MANA("base-mana", OptionType.INT),
     ENABLE_ROMAN_NUMERALS("enable-roman-numerals", OptionType.BOOLEAN),

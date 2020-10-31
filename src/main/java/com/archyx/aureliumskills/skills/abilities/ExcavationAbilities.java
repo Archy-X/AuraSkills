@@ -2,11 +2,13 @@ package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -117,10 +119,19 @@ public class ExcavationAbilities implements Listener {
 	public void metalDetector(PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.METAL_DETECTOR.getValue(playerSkill.getAbilityLevel(Ability.METAL_DETECTOR)) / 100)) {
-				if (AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size() > 0) {
-					ItemStack drop = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size())).getDrop();
-					if (drop != null) {
-						block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+				int lootTableSize = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size();
+				if (lootTableSize > 0) {
+					Loot loot = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().get(r.nextInt(lootTableSize));
+					// If has item
+					if (loot.hasItem()) {
+						ItemStack drop = loot.getDrop();
+						if (drop != null) {
+							block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+						}
+					}
+					// If has command
+					else if (loot.hasCommand()) {
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
 					}
 				}
 			}
@@ -130,10 +141,19 @@ public class ExcavationAbilities implements Listener {
 	public void luckySpades(PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.LUCKY_SPADES.getValue(playerSkill.getAbilityLevel(Ability.LUCKY_SPADES)) / 100)) {
-				if (AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size() > 0) {
-					ItemStack drop = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size())).getDrop();
-					if (drop != null) {
-						block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+				int lootTableSize = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size();
+				if (lootTableSize > 0) {
+					Loot loot = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().get(r.nextInt(lootTableSize));
+					// If has item
+					if (loot.hasItem()) {
+						ItemStack drop = loot.getDrop();
+						if (drop != null) {
+							block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+						}
+					}
+					// If has command
+					else if (loot.hasCommand()) {
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
 					}
 				}
 			}

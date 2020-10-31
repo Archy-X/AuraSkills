@@ -27,10 +27,13 @@ languages:
     - fr
 
 # Action Bar Options
-enable-action-bar: true
-
-# If action bar is enabled, these settings will be applied
-action-bar-update-period: 5
+action-bar:
+    enabled: true
+    idle: true
+    xp: true
+    maxed: true
+    update-period: 5
+    placeholder-api: true
 
 # The base mana amount
 base-mana: 20
@@ -135,8 +138,6 @@ farming:
         melon: 3.4
         sugar-cane: 1.7
         bamboo: 1.0
-    custom-types:
-        - cocoa:2.8
 foraging:
     enabled: true
     max-level: 97
@@ -158,8 +159,6 @@ foraging:
         warped-stem: 5.0
         nether-wart-block: 0.5
         warped-wart-block: 0.5
-    custom-types:
-        - vine:1.0
 mining:
     enabled: true
     max-level: 97
@@ -193,8 +192,6 @@ mining:
         ancient-debris: 500.0
         end-stone: 0.5
         obsidian: 10.0
-    custom-types:
-        - sandstone:0.3
 fishing:
     enabled: true
     max-level: 97
@@ -224,8 +221,6 @@ excavation:
         podzol: 2.5
         soul-soil: 3.0
         red-sand: 0.7
-    custom-types:
-        - snow_block:0.5
 archery:
     enabled: true
     max-level: 97

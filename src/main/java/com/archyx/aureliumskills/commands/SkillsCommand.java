@@ -161,7 +161,7 @@ public class SkillsCommand extends BaseCommand {
 						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
 						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY, locale)
 								.replace("{rank}", String.valueOf((page - 1) * 10 + lb.indexOf(playerSkill) + 1))
-								.replace("{player_name}", player.getName() != null ? player.getName() : "?")
+								.replace("{player}", player.getName() != null ? player.getName() : "?")
 								.replace("{level}", String.valueOf(playerSkill.getSkillLevel(skill))));
 					}
 				}
@@ -261,13 +261,14 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Toggle your own action bar")
 	public void onActionBarToggle(Player player) {
 		Locale locale = Lang.getLanguage(player);
-		if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) {
-			if (ActionBar.actionBarDisabled.contains(player.getUniqueId())) {
-				ActionBar.actionBarDisabled.remove(player.getUniqueId());
+		ActionBar actionBar = plugin.getActionBar();
+		if (OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) {
+			if (actionBar.getActionBarDisabled().contains(player.getUniqueId())) {
+				actionBar.getActionBarDisabled().remove(player.getUniqueId());
 				player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.TOGGLE_ENABLED, locale));
 			}
 			else {
-				ActionBar.actionBarDisabled.add(player.getUniqueId());
+				actionBar.getActionBarDisabled().add(player.getUniqueId());
 				player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.TOGGLE_DISABLED, locale));
 			}
 		}
@@ -340,6 +341,8 @@ public class SkillsCommand extends BaseCommand {
 			Health.reload(player);
 			Luck.reload(player);
 		}
+		// Resets all action bars
+		plugin.getActionBar().resetActionBars();
 		sender.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GREEN + Lang.getMessage(CommandMessage.RELOAD, locale));
 	}
 	
@@ -463,7 +466,7 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("modifier remove")
 	@CommandPermission("aureliumskills.modifier.remove")
-	@CommandCompletion("@players @nothing true")
+	@CommandCompletion("@players @modifiers true")
 	@Description("Removes a specific stat modifier from a player.")
 	public void onRemove(CommandSender sender, @Flags("other") Player player, String name, @Default("false") boolean silent) {
 		Locale locale = Lang.getLanguage(sender);

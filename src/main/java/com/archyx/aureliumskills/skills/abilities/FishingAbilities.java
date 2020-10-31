@@ -126,11 +126,20 @@ public class FishingAbilities implements Listener {
 							} else if (r.nextDouble() < (Ability.TREASURE_HUNTER.getValue(skill.getAbilityLevel(Ability.TREASURE_HUNTER)) / 100)) {
 								if (AureliumSkills.abilityOptionManager.isEnabled(Ability.TREASURE_HUNTER)) {
 									Item item = (Item) event.getCaught();
-									if (AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().size() > 0) {
-										ItemStack drop = AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().get(r.nextInt(AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().size())).getDrop();
-										if (drop != null) {
-											item.setItemStack(drop);
-											Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_RARE));
+									int lootTableSize = AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().size();
+									if (lootTableSize > 0) {
+										Loot loot = AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().get(r.nextInt(lootTableSize));
+										// If has item
+										if (loot.hasItem()) {
+											ItemStack drop = loot.getDrop();
+											if (drop != null) {
+												item.setItemStack(drop);
+												Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_RARE));
+											}
+										}
+										// If has commaand
+										else if (loot.hasCommand()) {
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
 										}
 									}
 								}

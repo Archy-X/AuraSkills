@@ -324,9 +324,9 @@ commands:
   modifier:
     add:
       added: '{color}{stat} &7modifier level &b{value} &7 with name &f{name} &7added to player &6{player}'
-      already_exists: '&eModifier with name {name} &ealready exists on player &6{player}&e! Remove it with &6/sk modifier remove {player} {name}'
+      already_exists: '&eModifier with name {name} already exists on player &6{player}&e! Remove it with &6/sk modifier remove {player} {name}'
     remove:
-      not_found: '&eModifier {name} &7enot found for player &6{player}'
+      not_found: '&eModifier {name} not found for player &6{player}'
       removed: '&7Modifier &f{name} &7removed from player &6{player}'
     list:
       all_stats_header: '&7Stat modifiers for player &6{player}:'

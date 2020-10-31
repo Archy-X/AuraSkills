@@ -32,6 +32,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -67,6 +68,7 @@ public class AureliumSkills extends JavaPlugin{
 	public static Leaderboard leaderboard;
 	private static Economy economy = null;
 	private PaperCommandManager commandManager;
+	private ActionBar actionBar;
 	
 	public void onEnable() {
 		invManager = new InventoryManager(this);
@@ -154,14 +156,11 @@ public class AureliumSkills extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(manaManager, this);
 		manaManager.startRegen();
 		//Load Action Bar
-		ActionBar actionBar = new ActionBar(this);
+		actionBar = new ActionBar(this);
 		if (protocolLibEnabled) {
-			actionBar.startUpdatingActionBarProtocolLib();
 			ProtocolUtil.init();
 		}
-		else {
-			actionBar.startUpdateActionBar();
-		}
+		actionBar.startUpdateActionBar();
 		//Load Data
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			//Mysql
@@ -284,6 +283,14 @@ public class AureliumSkills extends JavaPlugin{
 			return values;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> Lang.getLanguages());
+		commandManager.getCommandCompletions().registerAsyncCompletion("modifiers", c -> {
+			Player player = c.getPlayer();
+			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+			if (playerStat != null) {
+				return playerStat.getModifiers().keySet();
+			}
+			return null;
+		});
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
@@ -370,6 +377,10 @@ public class AureliumSkills extends JavaPlugin{
 
 	public static String getPrefix(Locale locale) {
 		return Lang.getMessage(CommandMessage.PREFIX, locale);
+	}
+
+	public ActionBar getActionBar() {
+		return actionBar;
 	}
 
 }

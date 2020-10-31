@@ -3,9 +3,9 @@ package com.archyx.aureliumskills.loot;
 import com.archyx.aureliumskills.configuration.ASLogger;
 import com.archyx.aureliumskills.configuration.LogType;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.cryptomorin.xseries.XEnchantment;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -75,7 +75,7 @@ public class LootTableManager {
 				lootTablesLoaded++;
 			}
 		}
-		Bukkit.getLogger().info("[AureliumSkills] Loaded " + itemsLoaded + " items in " + lootTablesLoaded + " loot tables.");
+		Bukkit.getLogger().info("[AureliumSkills] Loaded " + itemsLoaded + " items and " + commandsLoaded + " commands in " + lootTablesLoaded + " loot tables.");
 	}
 	
 	public LootTable getLootTable(String name) {
@@ -134,9 +134,11 @@ public class LootTableManager {
 				meta = item.getItemMeta();
 				if (meta != null) {
 					for (int i = 1; i < textArray.length; i++) {
-						if (textArray[i].split(":", 2).length == 2) {
-							String key = textArray[i].split(":")[0];
-							String value = textArray[i].split(":")[1].replace("_", " ").replace("&", "§");
+						String[] splitPair = textArray[i].split(":", 2);
+						if (splitPair.length == 2) {
+							String key = splitPair[0];
+							String value = splitPair[1].replace("_", " ").replace("&", "§");
+							String originalValue = splitPair[1];
 							switch (key) {
 								case "name":
 									meta.setDisplayName(value);
@@ -152,17 +154,22 @@ public class LootTableManager {
 									}
 									break;
 								case "enchantments":
-									List<String> enchantments = new ArrayList<>(Arrays.asList(value.split("\\n")));
+									List<String> enchantments = new ArrayList<>(Arrays.asList(originalValue.split("\\|")));
 									for (String enchantString : enchantments) {
 										String[] splitEnchantString = enchantString.split(":", 2);
-										String enchantName = enchantString.split(":")[0];
+										String enchantName = splitEnchantString[0];
 										int enchantLevel = 1;
 										if (splitEnchantString.length == 2) {
 											enchantLevel = Integer.parseInt(splitEnchantString[1]);
 										}
-										Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(enchantName));
-										if (enchantment != null) {
-											meta.addEnchant(enchantment, enchantLevel, true);
+										Optional<XEnchantment> xEnchantment = XEnchantment.matchXEnchantment(enchantName);
+										if (xEnchantment.isPresent()) {
+											Enchantment enchantment = xEnchantment.get().parseEnchantment();
+											if (enchantment != null) {
+												meta.addEnchant(enchantment, enchantLevel, true);
+											} else {
+												ASLogger.logWarn(LogType.UNKNOWN_ENCHANTMENT, "Enchantment " + enchantName + " invalid for item with input " + text);
+											}
 										}
 										else {
 											ASLogger.logWarn(LogType.UNKNOWN_ENCHANTMENT, "Enchantment " + enchantName + " invalid for item with input " + text);
@@ -179,8 +186,9 @@ public class LootTableManager {
 		}
 		catch (Exception e) {
 			Bukkit.getLogger().warning("[AureliumSkills] Error loading item " + text + " from loot.yml. Try checking if the material is valid!");
+			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 }

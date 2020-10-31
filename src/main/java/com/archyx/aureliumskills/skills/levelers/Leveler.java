@@ -5,10 +5,8 @@ import com.archyx.aureliumskills.api.SkillLevelUpEvent;
 import com.archyx.aureliumskills.api.XpGainEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.LevelerMessage;
-import com.archyx.aureliumskills.magic.ManaManager;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
@@ -16,30 +14,19 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
-import com.archyx.aureliumskills.stats.ActionBar;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
-import com.archyx.aureliumskills.util.BigNumber;
 import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.ProtocolUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -49,14 +36,11 @@ import java.util.regex.Pattern;
 public class Leveler {
 
 	public static List<Integer> levelReqs = new LinkedList<>();
-	public static Plugin plugin;
+	public static AureliumSkills plugin;
 
-	private static ManaManager mana;
-	private static final NumberFormat nf = new DecimalFormat("##.#");
 	private static final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public static void loadLevelReqs() {
-		mana = AureliumSkills.manaManager;
 		levelReqs.clear();
 		for (int i = 0; i < 96; i++) {
 			levelReqs.add((int) OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100);
@@ -92,7 +76,7 @@ public class Leveler {
 					//Check if player leveled up
 					Leveler.checkLevelUp(player, skill);
 					//Sends action bar message
-					Leveler.sendActionBarMessage(player, skill, event.getAmount());
+					plugin.getActionBar().sendXpActionBar(player, skill, event.getAmount());
 				}
 			}
 		}
@@ -115,7 +99,7 @@ public class Leveler {
 					//Check if player leveled up
 					Leveler.checkLevelUp(player, skill);
 					//Sends action bar message
-					Leveler.sendActionBarMessage(player, skill, event.getAmount());
+					plugin.getActionBar().sendXpActionBar(player, skill, event.getAmount());
 				}
 			}
 		}
@@ -131,7 +115,7 @@ public class Leveler {
 			//Check if player leveled up
 			Leveler.checkLevelUp(player, skill);
 			//Sends action bar message
-			Leveler.sendActionBarMessage(player, skill, amount - originalAmount);
+			plugin.getActionBar().sendXpActionBar(player, skill, amount - originalAmount);
 		}
 	}
 	
@@ -283,7 +267,8 @@ public class Leveler {
 					if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
 						double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 						double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-						message.append("\n").append(LoreUtil.replace(line,"{amount}", String.valueOf(base + (multiplier * newLevel * newLevel))));
+						message.append("\n").append(LoreUtil.replace(line, "{money_reward}",
+								LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", String.valueOf(base + (multiplier * newLevel * newLevel)))));
 					}
 				}
 			}
@@ -303,115 +288,6 @@ public class Leveler {
 				playerSkill.setAbilityLevel(skill.getAbilities().get(i).get(), (playerSkill.getSkillLevel(skill) + 3 - i) / 5);
 			}
 			playerSkill.setManaAbilityLevel(skill.getManaAbility(), playerSkill.getSkillLevel(skill) / 7);
-		}
-	}
-
-	public static void sendActionBarMessage(Player player, Skill skill, double xpAmount) {
-		if (OptionL.getBoolean(Option.ENABLE_ACTION_BAR)) { //If action bar enabled
-			if (!ActionBar.actionBarDisabled.contains(player.getUniqueId())) { //If the player's action bar is enabled
-				//Get player skill data
-				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-				Locale locale = Lang.getLanguage(player);
-				if (playerSkill != null) {
-					//Set timer and is gaining xp
-					ActionBar.isGainingXp.put(player.getUniqueId(), true);
-					ActionBar.timer.put(player.getUniqueId(), 20);
-					//Put current action if not present
-					if (!ActionBar.currentAction.containsKey(player.getUniqueId())) {
-						ActionBar.currentAction.put(player.getUniqueId(), 0);
-					}
-					//Add to current action
-					ActionBar.currentAction.put(player.getUniqueId(), ActionBar.currentAction.get(player.getUniqueId()) + 1);
-					int currentAction = ActionBar.currentAction.get(player.getUniqueId());
-					new BukkitRunnable() {
-						@Override
-						public void run() {
-							//If is gaining xp
-							if (ActionBar.isGainingXp.get(player.getUniqueId())) {
-								//If latest action
-								if (currentAction == ActionBar.currentAction.get(player.getUniqueId())) {
-									//Get health attribute
-									AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-									if (attribute != null) {
-										//Not maxed
-										if (Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill)) {
-											//Xp gained
-											if (xpAmount >= 0) {
-												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
-														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{xp_gained}", nf.format(xpAmount)
-														,"{skill}", skill.getDisplayName(locale)
-														,"{current_xp}", nf.format(playerSkill.getXp(skill)))
-														,"{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
-														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
-														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
-											}
-											//Xp removed
-											else {
-												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
-														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{xp_removed}", nf.format(xpAmount)
-														,"{skill}", skill.getDisplayName(locale)
-														,"{current_xp}", nf.format(playerSkill.getXp(skill)))
-														,"{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
-														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
-														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
-											}
-										}
-										//Maxed
-										else {
-											//Xp gained
-											if (xpAmount >= 0) {
-												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
-														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{xp_gained}", nf.format(xpAmount)
-														,"{skill}", skill.getDisplayName(locale)
-														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
-											}
-											//Xp removed
-											else {
-												handleActionBarSend(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
-														,"{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-														,"{xp_removed}", nf.format(xpAmount)
-														,"{skill}", skill.getDisplayName(locale)
-														,"{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-														,"{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
-											}
-										}
-									}
-								} else {
-									cancel();
-								}
-							} else {
-								cancel();
-							}
-						}
-					}.runTaskTimer(plugin, 0L, OptionL.getInt(Option.ACTION_BAR_UPDATE_PERIOD));
-					//Schedule stop gaining xp
-					new BukkitRunnable() {
-						@Override
-						public void run() {
-							if (ActionBar.timer.get(player.getUniqueId()).equals(0)) {
-								ActionBar.isGainingXp.put(player.getUniqueId(), false);
-							}
-						}
-					}.runTaskLater(plugin, 41L);
-				}
-			}
-		}
-	}
-
-	private static void handleActionBarSend(Player player, String message) {
-		if (AureliumSkills.protocolLibEnabled) {
-			ProtocolUtil.sendActionBar(player, message);
-		}
-		else {
-			player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
 		}
 	}
 
