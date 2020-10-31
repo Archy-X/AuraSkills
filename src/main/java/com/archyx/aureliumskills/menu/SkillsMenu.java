@@ -27,9 +27,9 @@ public class SkillsMenu implements InventoryProvider{
 	private final Locale locale;
 	private final MenuOption options;
 
-	public SkillsMenu(Locale locale) {
+	public SkillsMenu(Locale locale, MenuOption menuOption) {
 		this.locale = locale;
-		options = AureliumSkills.getMenuLoader().getMenu(MenuType.SKILLS);
+		this.options = menuOption;
 	}
 
 	public void init(Player player, InventoryContents contents) {
@@ -194,9 +194,10 @@ public class SkillsMenu implements InventoryProvider{
 
 	public static SmartInventory getInventory(Player player) {
 		Locale locale = Lang.getLanguage(player);
+		MenuOption menuOption = AureliumSkills.getMenuLoader().getMenu(MenuType.SKILLS);
 		return SmartInventory.builder()
-				.provider(new SkillsMenu(locale))
-				.size(5, 9)
+				.provider(new SkillsMenu(locale, menuOption))
+				.size(menuOption.getRows(), 9)
 				.title(Lang.getMessage(MenuMessage.SKILLS_MENU_TITLE, locale))
 				.manager(AureliumSkills.invManager)
 				.build();

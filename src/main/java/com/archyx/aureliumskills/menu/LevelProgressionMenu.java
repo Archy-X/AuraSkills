@@ -45,10 +45,10 @@ public class LevelProgressionMenu implements InventoryProvider {
 		}
 	}
 
-	public LevelProgressionMenu(Locale locale, Skill skill) {
+	public LevelProgressionMenu(Locale locale, Skill skill, MenuOption menuOption) {
 		this.locale = locale;
 		this.skill = skill;
-		options = AureliumSkills.getMenuLoader().getMenu(MenuType.LEVEL_PROGRESSION);
+		this.options = menuOption;
 		int maxLevel = OptionL.getMaxLevel(skill);
 		if (maxLevel < 26) {
 			pages = 1;
@@ -164,9 +164,10 @@ public class LevelProgressionMenu implements InventoryProvider {
 
 	public static SmartInventory getInventory(Player player, Skill skill, int page) {
 		Locale locale = Lang.getLanguage(player);
+		MenuOption menuOption = AureliumSkills.getMenuLoader().getMenu(MenuType.LEVEL_PROGRESSION);
 		return SmartInventory.builder()
-				.provider(new LevelProgressionMenu(locale, skill))
-				.size(6, 9)
+				.provider(new LevelProgressionMenu(locale, skill, menuOption))
+				.size(menuOption.getRows(), 9)
 				.title(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale).replace("{skill}", skill.getDisplayName(locale)).replace("{page}", String.valueOf(page + 1)))
 				.manager(AureliumSkills.invManager)
 				.build();
