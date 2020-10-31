@@ -78,7 +78,7 @@ public class MiningAbilities implements Listener {
 								Collection<ItemStack> drops = block.getDrops(tool);
 								for (ItemStack item : drops) {
 									World world = block.getWorld();
-									world.dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), item);
+									world.dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
 								}
 							}
 						}

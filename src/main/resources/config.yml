@@ -104,6 +104,7 @@ leveler:
         category: MASTER
         volume: 1.0
         pitch: 0.5
+    double-check-delay: 20
 
 modifier:
     armor:
@@ -352,6 +353,7 @@ luck:
 wisdom:
     anvil-cost-modifier: 0.25
     experience-modifier: 0.01
+    allow-over-max-mana: false
 
 # Ability Options
 abilities:

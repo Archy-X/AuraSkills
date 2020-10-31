@@ -66,7 +66,7 @@ public class ForagingAbilities implements Listener {
 					if (skill.getAbilityLevel(Ability.LUMBERJACK) > 0) {
 						if (r.nextDouble() < ((Ability.LUMBERJACK.getValue(skill.getAbilityLevel(Ability.LUMBERJACK))) / 100)) {
 							for (ItemStack item : block.getDrops()) {
-								player.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), item);
+								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
 							}
 						}
 					}

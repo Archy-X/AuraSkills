@@ -69,10 +69,10 @@ public class MiningLeveler implements Listener {
 						case 1:
 							Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.GRANITE));
 							break;
-						case 2:
+						case 3:
 							Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.DIORITE));
 							break;
-						case 3:
+						case 5:
 							Leveler.addXp(p, s, MiningAbilities.getModifiedXp(p, Source.ANDESITE));
 							break;
 					}

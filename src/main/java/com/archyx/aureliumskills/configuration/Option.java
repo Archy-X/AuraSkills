@@ -55,6 +55,7 @@ public enum Option {
     LEVELER_SOUND_CATEGORY("leveler.sound.category", OptionType.STRING),
     LEVELER_SOUND_VOLUME("leveler.sound.volume", OptionType.DOUBLE),
     LEVELER_SOUND_PITCH("leveler.sound.pitch", OptionType.DOUBLE),
+    LEVELER_DOUBLE_CHECK_DELAY("leveler.double-check-delay", OptionType.INT),
     // Modifier options
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip-blocked-materials", OptionType.LIST),
     MODIFIER_ITEM_CHECK_PERIOD("modifier.item.check-period", OptionType.INT),
@@ -136,7 +137,8 @@ public enum Option {
     LUCK_DOUBLE_DROP_MODIFIER("luck.double-drop-modifier", OptionType.DOUBLE),
     LUCK_DOUBLE_DROP_PERCENT_MAX("luck.double-drop-percent-max", OptionType.DOUBLE),
     WISDOM_ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifier", OptionType.DOUBLE),
-    WISDOM_EXPERIENCE_MODIFIER("wisdom.experience-modifier", OptionType.DOUBLE);
+    WISDOM_EXPERIENCE_MODIFIER("wisdom.experience-modifier", OptionType.DOUBLE),
+    WISDOM_ALLOW_OVER_MAX_MANA("wisdom.allow-over-max-mana", OptionType.BOOLEAN);
 
     private final String path;
     private final OptionType type;

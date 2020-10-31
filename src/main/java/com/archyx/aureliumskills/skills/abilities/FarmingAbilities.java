@@ -59,7 +59,7 @@ public class FarmingAbilities implements Listener {
 					if (skill.getAbilityLevel(Ability.BOUNTIFUL_HARVEST) > 0) {
 						if (r.nextDouble() < (Ability.BOUNTIFUL_HARVEST.getValue(skill.getAbilityLevel(Ability.BOUNTIFUL_HARVEST))) / 100) {
 							for (ItemStack item : block.getDrops()) {
-								player.getWorld().dropItemNaturally(block.getLocation(), item);
+								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
 							}
 						}
 					}
@@ -76,8 +76,8 @@ public class FarmingAbilities implements Listener {
 					if (skill.getAbilityLevel(Ability.TRIPLE_HARVEST) > 0) {
 						if (r.nextDouble() < (Ability.TRIPLE_HARVEST.getValue(skill.getAbilityLevel(Ability.TRIPLE_HARVEST))) / 100) {
 							for (ItemStack item : block.getDrops()) {
-								player.getWorld().dropItemNaturally(block.getLocation(), item);
-								player.getWorld().dropItemNaturally(block.getLocation(), item);
+								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
+								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
 							}
 						}
 					}

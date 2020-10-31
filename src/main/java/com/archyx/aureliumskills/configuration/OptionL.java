@@ -143,6 +143,17 @@ public class OptionL {
         return getInt(Option.valueOf(skill.name() + "_MAX_LEVEL"));
     }
 
+    public static int getHighestMaxLevel() {
+        int highest = 96;
+        for (Skill skill : Skill.values()) {
+            int maxLevel = getInt(Option.valueOf(skill.name() + "_MAX_LEVEL"));
+            if (maxLevel > highest) {
+                highest = maxLevel;
+            }
+        }
+        return highest;
+    }
+
     public static boolean criticalEnabled(DamageType type) {
         return getBoolean(Option.valueOf("CRITICAL_ENABLED_" + type.name()));
     }

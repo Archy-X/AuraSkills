@@ -154,7 +154,7 @@ public class SkillItem implements ConfigurableItem {
                                 double currentXp = playerSkill.getXp(skill);
                                 double xpToNext = Leveler.levelReqs.get(skillLevel - 1);
                                 line = LoreUtil.replace(line,"{progress_to_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
-                                        ,"{level}", RomanNumber.toRoman(skillLevel)
+                                        ,"{level}", RomanNumber.toRoman(skillLevel + 1)
                                         ,"{percent}", nf2.format(currentXp / xpToNext * 100)
                                         ,"{current_xp}", nf2.format(currentXp)
                                         ,"{level_xp}", String.valueOf((int) xpToNext)));

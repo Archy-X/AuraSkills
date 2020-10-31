@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
+import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -119,7 +120,7 @@ public class FishingAbilities implements Listener {
 										}
 										// If has command
 										else if (loot.hasCommand()) {
-											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(loot.getCommand(), "{player}", player.getName()));
 										}
 									}
 								}
@@ -139,7 +140,7 @@ public class FishingAbilities implements Listener {
 										}
 										// If has commaand
 										else if (loot.hasCommand()) {
-											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(loot.getCommand(), "{player}", player.getName()));
 										}
 									}
 								}

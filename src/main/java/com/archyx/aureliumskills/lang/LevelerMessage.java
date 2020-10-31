@@ -8,6 +8,8 @@ public enum LevelerMessage implements MessageKey {
     STAT_LEVEL,
     ABILITY_UNLOCK,
     ABILITY_LEVEL_UP,
+    MANA_ABILITY_UNLOCK,
+    MANA_ABILITY_LEVEL_UP,
     MONEY_REWARD;
 
     public String getPath() {

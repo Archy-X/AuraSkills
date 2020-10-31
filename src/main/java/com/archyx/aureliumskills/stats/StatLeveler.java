@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.magic.ManaManager;
 import org.bukkit.entity.Player;
 
@@ -14,9 +16,11 @@ public class StatLeveler {
 			Luck.reload(player);
 		}
 		else if (stat.equals(Stat.WISDOM)) {
-			ManaManager manaManager = AureliumSkills.manaManager;
-			if (manaManager.getMana(player.getUniqueId()) > manaManager.getMaxMana(player.getUniqueId())) {
-				manaManager.setMana(player.getUniqueId(), manaManager.getMaxMana(player.getUniqueId()));
+			if (OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
+				ManaManager manaManager = AureliumSkills.manaManager;
+				if (manaManager.getMana(player.getUniqueId()) > manaManager.getMaxMana(player.getUniqueId())) {
+					manaManager.setMana(player.getUniqueId(), manaManager.getMaxMana(player.getUniqueId()));
+				}
 			}
 		}
 	}

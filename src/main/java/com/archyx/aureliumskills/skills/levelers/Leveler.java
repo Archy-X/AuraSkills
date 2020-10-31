@@ -42,7 +42,8 @@ public class Leveler {
 
 	public static void loadLevelReqs() {
 		levelReqs.clear();
-		for (int i = 0; i < 96; i++) {
+		int highestMaxLevel = OptionL.getHighestMaxLevel();
+		for (int i = 0; i < highestMaxLevel - 1; i++) {
 			levelReqs.add((int) OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100);
 		}
 	}
@@ -200,7 +201,7 @@ public class Leveler {
 						}
 					}
 					player.sendMessage(getLevelUpMessage(player, playerSkill, skill, currentLevel + 1, locale));
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), 20L);
+					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
 				}
 			}
 		}
@@ -257,6 +258,35 @@ public class Leveler {
 							message.append("\n").append(LoreUtil.replace(line,"{ability_level_up}", LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
 									,"{ability}", ability.getDisplayName(locale)
 									,"{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)))));
+						}
+					}
+				}
+			}
+			else if (line.contains("{mana_ability_unlock}")) {
+				if (skill.getManaAbility() != MAbility.ABSORPTION) {
+					MAbility mAbility = skill.getManaAbility();
+					// Check if ability is enabled
+					if (AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
+						// If ability unlocked
+						if (!(playerSkill.getManaAbilityLevel(mAbility) > 1) && newLevel == 7) {
+							message.append("\n").append(LoreUtil.replace(line, "{mana_ability_unlock}",
+									LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale)
+											, "{mana_ability}", mAbility.getDisplayName(locale))));
+						}
+					}
+				}
+			}
+			else if (line.contains("{mana_ability_level_up}")) {
+				if (skill.getManaAbility() != MAbility.ABSORPTION) {
+					MAbility mAbility = skill.getManaAbility();
+					// Check if ability is enabled
+					if (AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
+						// If ability leveled up
+						if (playerSkill.getManaAbilityLevel(mAbility) > 1 && newLevel % 7 == 0) {
+							message.append("\n").append(LoreUtil.replace(line, "{mana_ability_level_up}",
+									LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
+											, "{mana_ability}", mAbility.getDisplayName(locale)
+											, "{level}", RomanNumber.toRoman(playerSkill.getManaAbilityLevel(mAbility)))));
 						}
 					}
 				}

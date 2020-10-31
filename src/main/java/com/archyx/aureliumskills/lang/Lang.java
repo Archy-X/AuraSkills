@@ -126,8 +126,11 @@ public class Lang implements Listener {
 						,"{mana_unit}", units.get(UnitMessage.MANA)
 						,"{hp_unit}", units.get(UnitMessage.HP)
 						,"{xp_unit}", units.get(UnitMessage.XP)));
-			} else {
-				Bukkit.getLogger().warning("[AureliumSkills] [" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
+			}
+			else {
+				if (locale.equals(Locale.ENGLISH)) {
+					Bukkit.getLogger().warning("[AureliumSkills] [" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
+				}
 			}
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {

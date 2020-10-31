@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.util.LoreUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -77,30 +78,30 @@ public class ExcavationAbilities implements Listener {
 						if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
 							Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
 							if (grassBlock != null) {
-								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(grassBlock, 2));
+								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(grassBlock, 2));
 							}
 						}
 						else if (mat.equals(XMaterial.MYCELIUM.parseMaterial())) {
 							Material mycelium = XMaterial.MYCELIUM.parseMaterial();
 							if (mycelium != null) {
-								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(mycelium, 2));
+								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(mycelium, 2));
 							}
 						}
 						else if (mat.equals(XMaterial.CLAY.parseMaterial())) {
 							Material clay = XMaterial.CLAY.parseMaterial();
 							if (clay != null) {
-								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(clay, 2));
+								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(clay, 2));
 							}
 						}
 						if (XMaterial.isNewVersion()) {
 							if (mat.equals(XMaterial.PODZOL.parseMaterial())) {
-								block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.PODZOL, 2));
+								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.PODZOL, 2));
 							}
 						}
 						else {
 							if (mat.equals(Material.DIRT)) {
 								if (block.getData() == 2) {
-									block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.DIRT, 2, (short) 2));
+									block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.DIRT, 2, (short) 2));
 								}
 							}
 						}
@@ -109,14 +110,14 @@ public class ExcavationAbilities implements Listener {
 					else {
 						ItemStack drop = item.clone();
 						drop.setAmount(2);
-						block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+						block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
 					}
 				}
 			}
 		}
 	}
 
-	public void metalDetector(PlayerSkill playerSkill, Block block) {
+	public void metalDetector(Player player, PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.METAL_DETECTOR.getValue(playerSkill.getAbilityLevel(Ability.METAL_DETECTOR)) / 100)) {
 				int lootTableSize = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size();
@@ -126,19 +127,19 @@ public class ExcavationAbilities implements Listener {
 					if (loot.hasItem()) {
 						ItemStack drop = loot.getDrop();
 						if (drop != null) {
-							block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+							block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
 						}
 					}
 					// If has command
 					else if (loot.hasCommand()) {
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(loot.getCommand(), "{player}", player.getName()));
 					}
 				}
 			}
 		}
 	}
 
-	public void luckySpades(PlayerSkill playerSkill, Block block) {
+	public void luckySpades(Player player, PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.LUCKY_SPADES.getValue(playerSkill.getAbilityLevel(Ability.LUCKY_SPADES)) / 100)) {
 				int lootTableSize = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size();
@@ -148,12 +149,12 @@ public class ExcavationAbilities implements Listener {
 					if (loot.hasItem()) {
 						ItemStack drop = loot.getDrop();
 						if (drop != null) {
-							block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), drop);
+							block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
 						}
 					}
 					// If has command
 					else if (loot.hasCommand()) {
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), loot.getCommand());
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(loot.getCommand(), "{player}", player.getName()));
 					}
 				}
 			}
@@ -186,10 +187,10 @@ public class ExcavationAbilities implements Listener {
 						biggerScoop(playerSkill, block, player);
 					}
 					if (options.isEnabled(Ability.METAL_DETECTOR)) {
-						metalDetector(playerSkill, block);
+						metalDetector(player, playerSkill, block);
 					}
 					if (options.isEnabled(Ability.LUCKY_SPADES)) {
-						luckySpades(playerSkill, block);
+						luckySpades(player, playerSkill, block);
 					}
 				}
 			}
