@@ -116,18 +116,26 @@ public class ForagingLeveler implements Listener{
 				if (mat.equals(XMaterial.OAK_LOG.parseMaterial())) {
 					switch (event.getBlock().getData()) {
 						case 0:
+						case 4:
+						case 8:
 							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.OAK_LOG));
 							applyAbilities(p, b);
 							break;
 						case 1:
+						case 5:
+						case 9:
 							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.SPRUCE_LOG));
 							applyAbilities(p, b);
 							break;
 						case 2:
+						case 6:
+						case 10:
 							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.BIRCH_LOG));
 							applyAbilities(p, b);
 							break;
 						case 3:
+						case 7:
+						case 11:
 							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.JUNGLE_LOG));
 							applyAbilities(p, b);
 							break;
@@ -137,10 +145,14 @@ public class ForagingLeveler implements Listener{
 				else if (mat.equals(XMaterial.ACACIA_LOG.parseMaterial())) {
 					switch (event.getBlock().getData()) {
 						case 0:
+						case 4:
+						case 8:
 							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.ACACIA_LOG));
 							applyAbilities(p, b);
 							break;
 						case 1:
+						case 5:
+						case 9:
 							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.DARK_OAK_LOG));
 							applyAbilities(p, b);
 							break;

@@ -343,6 +343,8 @@ public class SkillsCommand extends BaseCommand {
 		}
 		// Resets all action bars
 		plugin.getActionBar().resetActionBars();
+		// Load boss bars
+		plugin.getBossBar().loadOptions();
 		sender.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GREEN + Lang.getMessage(CommandMessage.RELOAD, locale));
 	}
 	

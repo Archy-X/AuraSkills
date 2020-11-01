@@ -57,7 +57,7 @@ public class DefenseLeveler implements Listener {
 						//Player Damage
 						if (event.getDamager() instanceof Player) {
 							if (d * OptionL.getXp(Source.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
-								if (d * OptionL.getXp(Source.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (d * OptionL.getXp(Source.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
 									Leveler.addXp(p, s, d * DefenseAbilities.getModifiedXp(p, Source.PLAYER_DAMAGE));
 								}
 							} else {

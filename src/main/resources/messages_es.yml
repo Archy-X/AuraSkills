@@ -187,7 +187,7 @@ abilities:
     recovery:
       name: Recuperación
       desc: "Aumenta la regeneración natural cuando\n&7  tiene menos de la mitad de salud en un {value}%"
-      info: '+{value} Regeneración de Salud Baja'
+      info: '+{value}% Regeneración de Salud Baja'
     meal_steal:
       name: Robo de Comida
       desc: "{value}% de probabilidad de robar 1 punto\n&7  de hambre al atacar a un jugador."
@@ -282,6 +282,8 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
+  boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
+  boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
 commands:
   prefix: '&8[&bSkills&8] '
   armor:
@@ -565,4 +567,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 1
+file_version: 3

@@ -66,7 +66,7 @@ public class ItemListener implements Listener {
                         //Gets stored and held items
                         ItemStack stored = heldItems.get(player);
                         ItemStack held = player.getInventory().getItemInMainHand();
-                        //If stored item is no null
+                        //If stored item is not null
                         if (stored != null) {
                             //If stored item is different than held
                             if (!stored.equals(held)) {

@@ -1,10 +1,10 @@
-############################################################
-# +------------------------------------------------------+ #
-# |            Aurelium Skills Configuration             | #
-# +------------------------------------------------------+ #
-############################################################
+# +----------------------------------------------------------------------------+ #
+# |                       Aurelium Skills Configuration                        | #
+# |                    Discord: https://discord.gg/Bh2EZfB                     | #
+# | Config Guide: https://github.com/Archy-X/AureliumSkills/wiki/Configuration | #
+# +----------------------------------------------------------------------------+ #
 
-# Version Pre-Alpha 1.1.0
+# Version Alpha 1.5.0
 
 # Plugin made by Archy (DM Archy#2011 on discord for plugin support)
 data-save-period: 6000
@@ -33,7 +33,32 @@ action-bar:
     xp: true
     maxed: true
     update-period: 5
+    round-xp: false
     placeholder-api: true
+
+# Boss Bar Options
+boss-bar:
+    enabled: false
+    mode: multi
+    stay-time: 60
+    update-every: 1
+    round-xp: false
+    format:
+        - 'FARMING GREEN SOLID'
+        - 'FORAGING RED SOLID'
+        - 'MINING PURPLE SOLID'
+        - 'FISHING BLUE SOLID'
+        - 'EXCAVATION YELLOW SOLID'
+        - 'ARCHERY PINK SOLID'
+        - 'DEFENSE BLUE SOLID'
+        - 'FIGHTING RED SOLID'
+        - 'ENDURANCE PURPLE SOLID'
+        - 'AGILITY WHITE SOLID'
+        - 'ALCHEMY PINK SOLID'
+        - 'ENCHANTING PURPLE SOLID'
+        - 'SORCERY BLUE SOLID'
+        - 'HEALING WHITE SOLID'
+        - 'FORGING YELLOW SOLID'
 
 # The base mana amount
 base-mana: 20
@@ -111,7 +136,7 @@ modifier:
         equip-blocked-materials:
             - EXAMPLE
     item:
-        check-period: 2
+        check-period: 3
 
 critical:
     base-multiplier: 1.5

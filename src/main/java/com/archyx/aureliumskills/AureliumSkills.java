@@ -18,6 +18,7 @@ import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.skills.Leaderboard;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillBossBar;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.abilities.*;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityManager;
@@ -69,7 +70,8 @@ public class AureliumSkills extends JavaPlugin{
 	private static Economy economy = null;
 	private PaperCommandManager commandManager;
 	private ActionBar actionBar;
-	
+	private SkillBossBar bossBar;
+
 	public void onEnable() {
 		invManager = new InventoryManager(this);
 		invManager.init();
@@ -103,12 +105,15 @@ public class AureliumSkills extends JavaPlugin{
 		}
 		//Check for protocol lib
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
-		//Load config
+		// Load config
 		loadConfig();
-		//Load config
+		// Load config
 		optionLoader = new OptionL(this);
 		optionLoader.loadOptions();
-		//Checks for holographic displays
+		// Load boss bar
+		bossBar = new SkillBossBar(this);
+		bossBar.loadOptions();
+		// Checks for holographic displays
 		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
 			holographicDisplaysEnabled = true;
 			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
@@ -381,6 +386,10 @@ public class AureliumSkills extends JavaPlugin{
 
 	public ActionBar getActionBar() {
 		return actionBar;
+	}
+
+	public SkillBossBar getBossBar() {
+		return bossBar;
 	}
 
 }

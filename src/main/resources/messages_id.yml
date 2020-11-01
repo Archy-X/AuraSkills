@@ -188,7 +188,7 @@ abilities:
     recovery:
       name: Recovery
       desc: "Meningkatkan regenerasi alami ketika\n&7  darah dibawah 50% sebanyak {value}%"
-      info: '+{value} Regenerasi ketika darah rendah'
+      info: '+{value}% Regenerasi ketika darah rendah'
     meal_steal:
       name: Pencuri makanan
       desc: "{value}% kesempatan mencuri 1 point kekeyangan\n&7  ketika menyerang manusia."
@@ -283,6 +283,8 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
+  boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
+  boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
 commands:
   prefix: '&8[&bSkills&8] '
   armor:
@@ -566,4 +568,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: EXP
-file_version: 1
+file_version: 3

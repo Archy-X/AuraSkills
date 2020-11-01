@@ -6,7 +6,9 @@ public enum ActionBarMessage implements MessageKey {
     XP,
     XP_REMOVED,
     MAXED,
-    MAXED_REMOVED;
+    MAXED_REMOVED,
+    BOSS_BAR_XP,
+    BOSS_BAR_MAXED;
 
     public String getPath() {
         return "action_bar." + this.name().toLowerCase();

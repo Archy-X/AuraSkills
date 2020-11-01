@@ -187,7 +187,7 @@ abilities:
     recovery:
       name: Récupération
       desc: "Augmente la régénération naturelle lorsque\n&7  à moins de la moitié des points de vie de {value}%"
-      info: '+{value} Régénération Basse de PV'
+      info: '+{value}% Régénération Basse de PV'
     meal_steal:
       name: Vol de Repas
       desc: "{value}% de chance de voler 1 point de faim\n&7  en attaquant un joueur."
@@ -282,6 +282,8 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(Max) &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(Max) &b{mana}/{max_mana} {mana_unit}'
+  boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
+  boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
 commands:
   prefix: '&8[&bCompétences&8] '
   armor:
@@ -565,4 +567,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 1
+file_version: 3

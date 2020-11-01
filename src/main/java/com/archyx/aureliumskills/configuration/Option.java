@@ -4,24 +4,32 @@ package com.archyx.aureliumskills.configuration;
 public enum Option {
 
     DATA_SAVE_PERIOD("data-save-period", OptionType.INT),
-    //Mysql Options
+    // Mysql Options
     MYSQL_ENABLED("mysql.enabled", OptionType.BOOLEAN),
     MYSQL_HOST("mysql.host", OptionType.STRING),
     MYSQL_PORT("mysql.port", OptionType.INT),
     MYSQL_DATABASE("mysql.database", OptionType.STRING),
     MYSQL_USERNAME("mysql.username", OptionType.STRING),
     MYSQL_PASSWORD("mysql.password", OptionType.STRING),
-    //Action bar options
+    // Action bar options
     ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),
     ACTION_BAR_IDLE("action-bar.idle", OptionType.BOOLEAN),
     ACTION_BAR_XP("action-bar.xp", OptionType.BOOLEAN),
     ACTION_BAR_MAXED("action-bar.maxed", OptionType.BOOLEAN),
     ACTION_BAR_UPDATE_PERIOD("action-bar.update-period", OptionType.INT),
+    ACTION_BAR_ROUND_XP("action-bar.round-xp", OptionType.BOOLEAN),
     ACTION_BAR_PLACEHOLDER_API("action-bar.placeholder-api", OptionType.BOOLEAN),
-    //Prefix options
+    // Boss bar options
+    BOSS_BAR_ENABLED("boss-bar.enabled", OptionType.BOOLEAN),
+    BOSS_BAR_MODE("boss-bar.mode", OptionType.STRING),
+    BOSS_BAR_STAY_TIME("boss-bar.stay-time", OptionType.INT),
+    BOSS_BAR_UPDATE_EVERY("boss-bar.update-every", OptionType.INT),
+    BOSS_BAR_ROUND_XP("boss-bar.round-xp", OptionType.BOOLEAN),
+    BOSS_BAR_FORMAT("boss-bar.format", OptionType.LIST),
+    // Prefix options
     BASE_MANA("base-mana", OptionType.INT),
     ENABLE_ROMAN_NUMERALS("enable-roman-numerals", OptionType.BOOLEAN),
-    //Damage hologram options
+    // Damage hologram options
     DAMAGE_HOLOGRAMS("damage-holograms", OptionType.BOOLEAN),
     DAMAGE_HOLOGRAMS_SCALING("damage-holograms-scaling", OptionType.BOOLEAN),
     DAMAGE_HOLOGRAMS_DECIMAL_MAX("damage-holograms-decimal.decimal-max-amount", OptionType.INT),
@@ -59,7 +67,7 @@ public enum Option {
     // Modifier options
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip-blocked-materials", OptionType.LIST),
     MODIFIER_ITEM_CHECK_PERIOD("modifier.item.check-period", OptionType.INT),
-    //Critical options
+    // Critical options
     CRITICAL_BASE_MULTIPLIER("critical.base-multiplier", OptionType.DOUBLE),
     CRITICAL_ENABLED_SWORD("critical.enabled.sword", OptionType.BOOLEAN),
     CRITICAL_ENABLED_BOW("critical.enabled.bow", OptionType.BOOLEAN),
@@ -114,7 +122,7 @@ public enum Option {
     FORGING_ENABLED("forging.enabled", OptionType.BOOLEAN),
     FORGING_MAX_LEVEL("forging.max-level", OptionType.INT),
     FORGING_CHECK_CANCELLED("forging.check-cancelled", OptionType.BOOLEAN),
-    //Stat options
+    // Stat options
     HEALTH_MODIFIER("health.modifier", OptionType.DOUBLE),
     HEALTH_HEALTH_SCALING("health.health-scaling", OptionType.BOOLEAN),
     HEALTH_HP_INDICATOR_SCALING("health.hp-indicator-scaling", OptionType.DOUBLE),

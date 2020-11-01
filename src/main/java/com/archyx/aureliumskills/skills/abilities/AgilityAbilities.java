@@ -298,35 +298,41 @@ public class AgilityAbilities implements Listener {
     public void agilityListener(EntityDamageEvent event) {
         if (!event.isCancelled()) {
             if (OptionL.isEnabled(Skill.AGILITY)) {
-                // If from fall damage
-                if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                    if (event.getEntity() instanceof Player) {
-                        Player player = (Player) event.getEntity();
-                        //Checks if in blocked world
-                        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                if (event.getEntity() instanceof Player) {
+                    Player player = (Player) event.getEntity();
+                    //Checks if in blocked world
+                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                        return;
+                    }
+                    //Check for permission
+                    if (!player.hasPermission("aureliumskills.agility")) {
+                        return;
+                    }
+                    //Check creative mode disable
+                    if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+                        if (player.getGameMode().equals(GameMode.CREATIVE)) {
                             return;
                         }
-                        //Check for permission
-                        if (!player.hasPermission("aureliumskills.agility")) {
-                            return;
-                        }
-                        //Check creative mode disable
-                        if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-                            if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                                return;
-                            }
-                        }
-                        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                        if (playerSkill != null) {
+                    }
+                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                    if (playerSkill != null) {
+                        // If from fall damage
+                        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.THUNDER_FALL)) {
-                                // Activate thunder fall
-                                thunderFall(event, playerSkill, player);
+                                if (playerSkill.getAbilityLevel(Ability.THUNDER_FALL) > 0) {
+                                    // Activate thunder fall
+                                    thunderFall(event, playerSkill, player);
+                                }
                             }
                             if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LIGHT_FALL)) {
-                                // Activate light fall
-                                lightFall(event, playerSkill);
+                                if (playerSkill.getAbilityLevel(Ability.LIGHT_FALL) > 0) {
+                                    // Activate light fall
+                                    lightFall(event, playerSkill);
+                                }
                             }
-                            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FLEETING)) {
+                        }
+                        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FLEETING)) {
+                            if (playerSkill.getAbilityLevel(Ability.FLEETING) > 0) {
                                 // Activate fleeting
                                 fleeting(event, playerSkill, player);
                             }
