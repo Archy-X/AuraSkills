@@ -315,7 +315,7 @@ public class SkillsCommand extends BaseCommand {
 	
 	@Subcommand("reload")
 	@CommandPermission("aureliumskills.reload")
-	@Description("Reloads the config, messages, loot tables, and health and luck stats.")
+	@Description("Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.")
 	public void reload(CommandSender sender) {
 		Locale locale = Lang.getLanguage(sender);
 		plugin.reloadConfig();
@@ -812,13 +812,13 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("multiplier")
 	@CommandCompletion("@players")
-	@CommandPermission("aureliumskills.multiplier")
+	@CommandPermission("aureliumskills.multipliercommand")
 	@Description("Shows a player's current XP multiplier based on their permissions.")
 	public void onMultiplier(CommandSender sender, @Optional @Flags("other") Player player) {
-		Locale locale = Lang.getLanguage(player);
 		if (player == null) {
 			if (sender instanceof Player) {
 				Player target = (Player) sender;
+				Locale locale = Lang.getLanguage(sender);
 				double multiplier = Leveler.getMultiplier(target);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
 						.replace("{player}", target.getName())
@@ -826,10 +826,12 @@ public class SkillsCommand extends BaseCommand {
 						.replace("{percent}", String.valueOf((multiplier - 1) * 100)));
 			}
 			else {
+				Locale locale = Locale.ENGLISH;
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_PLAYERS_ONLY, locale));
 			}
 		}
 		else {
+			Locale locale = Lang.getLanguage(player);
 			double multiplier = Leveler.getMultiplier(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
 					.replace("{player}", player.getName())

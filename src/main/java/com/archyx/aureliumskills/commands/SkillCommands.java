@@ -5,6 +5,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import com.archyx.aureliumskills.menu.LevelProgressionMenu;
 import com.archyx.aureliumskills.menu.SkillsMenu;
+import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.entity.Player;
@@ -15,8 +16,9 @@ public class SkillCommands {
     public static class FarmingCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.FARMING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.FARMING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.FARMING, page).open(player, page);
             }
         }
@@ -25,8 +27,9 @@ public class SkillCommands {
     public static class ForagingCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.FORAGING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.FORAGING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.FORAGING, page).open(player, page);
             }
         }
@@ -35,8 +38,9 @@ public class SkillCommands {
     public static class MiningCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.MINING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.MINING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.MINING, page).open(player, page);
             }
         }
@@ -45,8 +49,9 @@ public class SkillCommands {
     public static class FishingCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.FISHING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.FISHING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.FISHING, page).open(player, page);
             }
         }
@@ -55,8 +60,9 @@ public class SkillCommands {
     public static class ExcavationCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.EXCAVATION, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.EXCAVATION, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.EXCAVATION, page).open(player, page);
             }
         }
@@ -65,8 +71,9 @@ public class SkillCommands {
     public static class ArcheryCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.ARCHERY, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.ARCHERY, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.ARCHERY, page).open(player, page);
             }
         }
@@ -75,8 +82,9 @@ public class SkillCommands {
     public static class DefenseCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.DEFENSE, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.DEFENSE, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.DEFENSE, page).open(player, page);
             }
         }
@@ -85,8 +93,9 @@ public class SkillCommands {
     public static class FightingCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.FIGHTING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.FIGHTING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.FIGHTING, page).open(player, page);
             }
         }
@@ -95,8 +104,9 @@ public class SkillCommands {
     public static class EnduranceCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.ENDURANCE, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.ENDURANCE, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.ENDURANCE, page).open(player, page);
             }
         }
@@ -105,8 +115,9 @@ public class SkillCommands {
     public static class AgilityCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.AGILITY, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.AGILITY, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.AGILITY, page).open(player, page);
             }
         }
@@ -115,8 +126,9 @@ public class SkillCommands {
     public static class AlchemyCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.ALCHEMY, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.ALCHEMY, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.ALCHEMY, page).open(player, page);
             }
         }
@@ -125,8 +137,9 @@ public class SkillCommands {
     public static class EnchantingCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.ENCHANTING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.ENCHANTING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.ENCHANTING, page).open(player, page);
             }
         }
@@ -135,8 +148,9 @@ public class SkillCommands {
     public static class SorceryCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.SORCERY, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.SORCERY, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.SORCERY, page).open(player, page);
             }
         }
@@ -145,8 +159,9 @@ public class SkillCommands {
     public static class HealingCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.HEALING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.HEALING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.HEALING, page).open(player, page);
             }
         }
@@ -155,8 +170,9 @@ public class SkillCommands {
     public static class ForgingCommand extends BaseCommand {
         @Default
         public void onCommand(Player player) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                int page = SkillsMenu.getPage(Skill.FORGING, SkillLoader.playerSkills.get(player.getUniqueId()));
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                int page = SkillsMenu.getPage(Skill.FORGING, playerSkill);
                 LevelProgressionMenu.getInventory(player, Skill.FORGING, page).open(player, page);
             }
         }

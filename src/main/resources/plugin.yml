@@ -40,8 +40,6 @@ permissions:
             aureliumskills.rank: true
     aureliumskills.skill.setlevel:
         default: op
-    aureliumskills.ability.setlevel:
-        default: op
     aureliumskills.reload:
         default: op
     aureliumskills.lang:
