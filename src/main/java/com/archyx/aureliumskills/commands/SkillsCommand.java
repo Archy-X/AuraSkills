@@ -306,7 +306,7 @@ public class SkillsCommand extends BaseCommand {
 		if (Lang.hasLocale(locale)) {
 			Lang.setLanguage(player, locale);
 			plugin.getCommandManager().setPlayerLocale(player, locale);
-			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_SET, locale).replace("{lang}", locale.toLanguageTag()));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_SET, locale).replace("{lang}", Lang.getDefinedLanguages().get(locale)));
 		}
 		else {
 			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_NOT_FOUND, Lang.getLanguage(player)));

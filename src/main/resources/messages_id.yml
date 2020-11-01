@@ -1,4 +1,3 @@
----
 abilities:
   farming:
     bountiful_harvest:
@@ -284,7 +283,7 @@ action_bar:
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
-  boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
+  boss_bar_maxed: '&6{skill} {level} &7(TERTINGGI)'
 commands:
   prefix: '&8[&bSkills&8] '
   armor:
@@ -387,10 +386,12 @@ commands:
 leveler:
   title: '&aLevel {skill} Meningkat'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRHadiah\\:n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
+  level_up: "&3&m----------------------------------------\n&r &3Level Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bHadiah:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
   stat_level: '{color}+1{symbol} {stat}'
   ability_unlock: '&aAbility Terbuka! &6&l{ability} &7Terbuka'
   ability_level_up: '&aAbility Meningkat! &6&l{ability} &7sekarang level &6{level}'
+  mana_ability_unlock: '&aAbility Terbuka! &9&l{mana_ability} &7Terbuka'
+  mana_ability_level_up: '&aAbility Meningkat! &9&l{mana_ability} &7sekarang level &6{level}'
   money_reward: '&a${amount}'
 menus:
   common:

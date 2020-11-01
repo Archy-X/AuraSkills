@@ -1,12 +1,13 @@
 # +----------------------------------------------------------------------------+ #
 # |                       Aurelium Skills Configuration                        | #
+# |                                                                            | #
 # |                    Discord: https://discord.gg/Bh2EZfB                     | #
+# |            Source Code: https://github.com/Archy-X/AureliumSkills          | #
 # | Config Guide: https://github.com/Archy-X/AureliumSkills/wiki/Configuration | #
 # +----------------------------------------------------------------------------+ #
+# This file was generated on version Alpha 1.5.0
+# Plugin made by Archy
 
-# Version Alpha 1.5.0
-
-# Plugin made by Archy (DM Archy#2011 on discord for plugin support)
 data-save-period: 6000
 
 # MySql Options
@@ -25,6 +26,7 @@ languages:
     - es
     - id
     - fr
+    - zh-TW
 
 # Action Bar Options
 action-bar:

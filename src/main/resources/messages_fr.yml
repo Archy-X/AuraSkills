@@ -2,7 +2,7 @@ abilities:
   farming:
     bountiful_harvest:
       name: Récolte abondante
-      desc: "{value}% de chance d'obtenir deux fois plus \n&7  de récoltes."
+      desc: "{value}% de chance d'obtenir deux fois plus\n&7  de récoltes."
       info: '{value}% 2 fois de réduction'
     farmer:
       name: Fermier
@@ -386,10 +386,12 @@ commands:
 leveler:
   title: '&a niveau suivant de{skill}'
   subtitle: '&6{old} <unk> {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Niveau de Compétence! &b&l{skill} &8{old}<unk> &3&l{new}\n \n &bRécompenses :\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
+  level_up: "&3&m----------------------------------------\n&r &3Niveau de Compétence! &b&l{skill} &8{old}<unk> &3&l{new}\n \n &bRécompenses :\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
   stat_level: '{color}+1{symbol} {stat}'
   ability_unlock: '&aCapacité débloquée! &6&l{ability} &7a été déverrouillé'
   ability_level_up: '&aAmélioration de niveau de capacité! &6&l{ability} &7est maintenant niveau &6{level}'
+  mana_ability_unlock: '&dCapacité de mana débloquée ! &9&l{mana_ability} &7a été déverrouillée'
+  mana_ability_level_up: '&aAmélioration de niveau de capacité! &9&l{mana_ability} &7est maintenant niveau &6{level}'
   money_reward: '&a${amount}'
 menus:
   common:
@@ -430,7 +432,7 @@ menus:
     in_progress: '&eEn progression'
     locked: '&cVerrouillé'
     rewards: '&7Récompenses :{rewards}'
-    rewards_entry: '\n  {color}+1{symbol} {stat}'
+    rewards_entry: "\n  {color}+1{symbol} {stat}"
     ability_unlock: "\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
     mana_ability_unlock: "\n&9{mana_ability} &d&lMana Déblocage de capacité\n&7  {desc}\n "

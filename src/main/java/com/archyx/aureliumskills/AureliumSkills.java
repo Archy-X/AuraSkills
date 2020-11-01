@@ -287,7 +287,7 @@ public class AureliumSkills extends JavaPlugin{
 			}
 			return values;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> Lang.getLanguages());
+		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> Lang.getDefinedLanguagesSet());
 		commandManager.getCommandCompletions().registerAsyncCompletion("modifiers", c -> {
 			Player player = c.getPlayer();
 			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());

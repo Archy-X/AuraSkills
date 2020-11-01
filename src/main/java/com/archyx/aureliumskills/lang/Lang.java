@@ -19,13 +19,12 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Lang implements Listener {
 
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static final Map<UUID, Locale> playerLanguages = new HashMap<>();
-	public static List<String> definedLanguages;
+	private static Map<Locale, String> definedLanguages;
 	public static Locale defaultLanguage;
 	private final Plugin plugin;
 
@@ -48,6 +47,9 @@ public class Lang implements Listener {
 		if (!new File(plugin.getDataFolder(), "messages_fr.yml").exists()) {
 			plugin.saveResource("messages_fr.yml", false);
 		}
+		if (!new File(plugin.getDataFolder(), "messages_zh-TW.yml").exists()) {
+			plugin.saveResource("messages_zh-TW.yml", false);
+		}
 	}
 
 	public void loadEmbeddedMessages(PaperCommandManager commandManager) {
@@ -66,7 +68,7 @@ public class Lang implements Listener {
 		long startTime = System.currentTimeMillis();
 		FileConfiguration pluginConfig = plugin.getConfig();
 		// Load languages list and default, add to default if not present
-		List<String> languages = pluginConfig.getStringList("languages").stream().map(String::toLowerCase).collect(Collectors.toList());
+		List<String> languages = new ArrayList<>(pluginConfig.getStringList("languages"));
 		String defaultLanguageString = pluginConfig.getString("default-language");
 		if (defaultLanguageString == null) {
 			defaultLanguageString = "en";
@@ -79,7 +81,7 @@ public class Lang implements Listener {
 		}
 		// Sets default language
 		defaultLanguage = new Locale(defaultLanguageString);
-		definedLanguages = new ArrayList<>();
+		definedLanguages = new HashMap<>();
 		// Load languages
 		int languagesLoaded = 0;
 		for (String language : languages) {
@@ -93,7 +95,7 @@ public class Lang implements Listener {
 					// Load messages
 					loadMessages(config, locale, commandManager);
 					languagesLoaded++;
-					definedLanguages.add(language);
+					definedLanguages.put(locale, language);
 				}
 				else {
 					Bukkit.getLogger().warning("[AureliumSkills] Could not load file messages_" + language + ".yml! Does this file exist and does it contain a file_version?");
@@ -212,8 +214,16 @@ public class Lang implements Listener {
 		return messages.containsKey(locale);
 	}
 
-	public static Set<String> getLanguages() {
-		return messages.keySet().stream().map(Locale::toLanguageTag).collect(Collectors.toSet());
+	public static Map<Locale, String> getDefinedLanguages() {
+		return definedLanguages;
+	}
+
+	public static Set<String> getDefinedLanguagesSet() {
+		Set<String> languages = new HashSet<>();
+		for (Map.Entry<Locale, String> entry : definedLanguages.entrySet()) {
+			languages.add(entry.getValue());
+		}
+		return languages;
 	}
 
 	@EventHandler
