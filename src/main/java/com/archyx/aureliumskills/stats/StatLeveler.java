@@ -16,7 +16,7 @@ public class StatLeveler {
 			Luck.reload(player);
 		}
 		else if (stat.equals(Stat.WISDOM)) {
-			if (OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
+			if (!OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
 				ManaManager manaManager = AureliumSkills.manaManager;
 				if (manaManager.getMana(player.getUniqueId()) > manaManager.getMaxMana(player.getUniqueId())) {
 					manaManager.setMana(player.getUniqueId(), manaManager.getMaxMana(player.getUniqueId()));

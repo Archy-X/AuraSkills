@@ -126,6 +126,8 @@ public enum Option {
     HEALTH_MODIFIER("health.modifier", OptionType.DOUBLE),
     HEALTH_HEALTH_SCALING("health.health-scaling", OptionType.BOOLEAN),
     HEALTH_HP_INDICATOR_SCALING("health.hp-indicator-scaling", OptionType.DOUBLE),
+    HEALTH_UPDATE_DELAY("health.update-delay", OptionType.INT),
+    HEALTH_FORCE_BASE_HEALTH("health.force-base-health", OptionType.BOOLEAN),
     STRENGTH_MODIFIER("strength.modifier", OptionType.DOUBLE),
     STRENGTH_HAND_DAMAGE("strength.hand-damage", OptionType.BOOLEAN),
     STRENGTH_BOW_DAMAGE("strength.bow-damage", OptionType.BOOLEAN),

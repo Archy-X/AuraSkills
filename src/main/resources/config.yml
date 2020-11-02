@@ -354,6 +354,8 @@ health:
     modifier: 0.5
     health-scaling: true
     hp-indicator-scaling: 5
+    update-delay: 0
+    force-base-health: false
 strength:
     modifier: 0.05
     hand-damage: true

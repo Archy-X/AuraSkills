@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,12 @@ import java.util.UUID;
 
 public class Health implements Listener {
 
+	private final AureliumSkills plugin;
 	private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
+
+	public Health(AureliumSkills plugin) {
+		this.plugin = plugin;
+	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onJoin(PlayerJoinEvent event) {
@@ -34,17 +40,33 @@ public class Health implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void worldChange(PlayerChangedWorldEvent event) {
 		Player player = event.getPlayer();
 		if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation()) && !AureliumSkills.worldManager.isDisabledWorld(event.getFrom())) {
 			worldChangeHealth.put(player.getUniqueId(), player.getHealth());
 		}
-		setHealth(player);
-		if (AureliumSkills.worldManager.isDisabledWorld(event.getFrom()) && !AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-			if (worldChangeHealth.containsKey(player.getUniqueId())) {
-				player.setHealth(worldChangeHealth.get(player.getUniqueId()));
-				worldChangeHealth.remove(player.getUniqueId());
+		if (OptionL.getInt(Option.HEALTH_UPDATE_DELAY) > 0) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					setHealth(player);
+					if (AureliumSkills.worldManager.isDisabledWorld(event.getFrom()) && !AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+						if (worldChangeHealth.containsKey(player.getUniqueId())) {
+							player.setHealth(worldChangeHealth.get(player.getUniqueId()));
+							worldChangeHealth.remove(player.getUniqueId());
+						}
+					}
+				}
+			}.runTaskLater(plugin, OptionL.getInt(Option.HEALTH_UPDATE_DELAY));
+		}
+		else {
+			setHealth(player);
+			if (AureliumSkills.worldManager.isDisabledWorld(event.getFrom()) && !AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				if (worldChangeHealth.containsKey(player.getUniqueId())) {
+					player.setHealth(worldChangeHealth.get(player.getUniqueId()));
+					worldChangeHealth.remove(player.getUniqueId());
+				}
 			}
 		}
 	}
@@ -81,7 +103,11 @@ public class Health implements Listener {
 					}
 					return;
 				}
-				//Return if no change
+				// Force base health if enabled
+				if (OptionL.getBoolean(Option.HEALTH_FORCE_BASE_HEALTH)) {
+					attribute.setBaseValue(20.0);
+				}
+				// Return if no change
 				if (hasChange) {
 					//Applies modifier
 					attribute.addModifier(new AttributeModifier("skillsHealth", modifier, Operation.ADD_NUMBER));

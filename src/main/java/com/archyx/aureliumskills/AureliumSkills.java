@@ -201,10 +201,13 @@ public class AureliumSkills extends JavaPlugin{
 	}
 	
 	public void onDisable() {
-		//Reloads config
-		reloadConfig();
-		//Save config
-		saveConfig();
+		File file = new File(this.getDataFolder(), "config.yml");
+		if (file.exists()) {
+			//Reloads config
+			reloadConfig();
+			//Save config
+			saveConfig();
+		}
 		//Save Data
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (mySqlSupport != null) {
@@ -335,7 +338,7 @@ public class AureliumSkills extends JavaPlugin{
 		pm.registerEvents(new EnchantingLeveler(), this);
 		pm.registerEvents(new ForgingLeveler(), this);
 		pm.registerEvents(new HealingLeveler(), this);
-		pm.registerEvents(new Health(), this);
+		pm.registerEvents(new Health(this), this);
 		pm.registerEvents(new Luck(), this);
 		pm.registerEvents(new Wisdom(), this);
 		pm.registerEvents(new FarmingAbilities(this), this);
