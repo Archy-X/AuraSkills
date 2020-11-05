@@ -55,3 +55,28 @@ Every Skill has a unique combination of 2 stats that it levels up! These are cat
 - /sk top [skill] - Shows skill leaderboard (aureliumskills.top)
 - /sk lang <lang> - Changes language (aureliumskills.lang)
 - /sk reload - Reloads config files (aureliumskill.reload)
+
+## Developer API
+
+Aurelium Skills provides a developer API to interact with the plugin.
+
+**Repository:**
+```
+<repository>
+ 	<id>jitpack.io</id>
+ 	<url>https://jitpack.io</url>
+</repository>
+```
+
+**Dependency:**
+```
+<dependency>
+   	<groupId>com.github.Archy-x</groupId>
+   	<artifactId>AureliumSkills</artifactId>
+   	<version>Alpha1.5.0</version>
+</dependency>
+```
+
+The main class to use for the API is AureliumAPI, which has many static methods for skills, xp, stats, and mana.
+There are also a few events, including ManaRegenerateEvent, SkillLevelUpEvent, and XpGainEvent.
+

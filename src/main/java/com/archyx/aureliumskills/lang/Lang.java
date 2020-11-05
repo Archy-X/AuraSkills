@@ -3,6 +3,8 @@ package com.archyx.aureliumskills.lang;
 import co.aikar.commands.MessageKeys;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -99,6 +101,10 @@ public class Lang implements Listener {
 				}
 				else {
 					Bukkit.getLogger().warning("[AureliumSkills] Could not load file messages_" + language + ".yml! Does this file exist and does it contain a file_version?");
+					if (language.equals(defaultLanguageString)) {
+						Bukkit.getLogger().warning("[AureliumSkills] The default-language could not be loaded, setting the default language to en!");
+						defaultLanguage = Locale.ENGLISH;
+					}
 				}
 			} catch (Exception e) {
 				Bukkit.getLogger().warning("[AureliumSkills] Error loading messages file messages_" + language + ".yml");
@@ -181,28 +187,28 @@ public class Lang implements Listener {
 	public static String getMessage(MessageKey key, Locale locale) {
 		// Set default locale if locale not present
 		if (!messages.containsKey(locale)) {
-			locale = Locale.ENGLISH;
+			locale = defaultLanguage;
 		}
 		String message = messages.get(locale).get(key);
 		if (message != null) {
 			return message;
 		} else {
-			return Lang.messages.get(Locale.ENGLISH).get(key);
+			return Lang.messages.get(defaultLanguage).get(key);
 		}
 	}
 
 	public static Locale getLanguage(Player player) {
 		Locale locale = playerLanguages.get(player.getUniqueId());
-		return locale != null ? locale : Locale.ENGLISH;
+		return locale != null ? locale : defaultLanguage;
 	}
 
 	public static Locale getLanguage(CommandSender sender) {
 		if (sender instanceof Player) {
 			Locale locale = playerLanguages.get(((Player) sender).getUniqueId());
-			return locale != null ? locale : Locale.ENGLISH;
+			return locale != null ? locale : defaultLanguage;
 		}
 		else {
-			return Locale.ENGLISH;
+			return defaultLanguage;
 		}
 	}
 
@@ -228,16 +234,24 @@ public class Lang implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		if (!playerLanguages.containsKey(event.getPlayer().getUniqueId())) {
-			try {
-				Locale locale = new Locale(event.getPlayer().getLocale().split("_")[0].toLowerCase());
-				if (messages.containsKey(locale)) {
-					playerLanguages.put(event.getPlayer().getUniqueId(), locale);
-				} else {
-					playerLanguages.put(event.getPlayer().getUniqueId(), Locale.ENGLISH);
+		Player player = event.getPlayer();
+		if (!playerLanguages.containsKey(player.getUniqueId())) {
+			// Try to detect client locale if option is enabled
+			if (OptionL.getBoolean(Option.TRY_DETECT_CLIENT_LANGUAGE)) {
+				try {
+					Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase());
+					if (messages.containsKey(locale)) {
+						playerLanguages.put(player.getUniqueId(), locale);
+					} else {
+						playerLanguages.put(player.getUniqueId(), defaultLanguage);
+					}
+				} catch (Exception e) {
+					playerLanguages.put(player.getUniqueId(), defaultLanguage);
 				}
-			} catch (Exception e) {
-				playerLanguages.put(event.getPlayer().getUniqueId(), Locale.ENGLISH);
+			}
+			// Otherwise set to default
+			else {
+				playerLanguages.put(player.getUniqueId(), defaultLanguage);
 			}
 		}
 	}

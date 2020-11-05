@@ -216,6 +216,22 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 }
             }
         }
+
+        if (identifier.equals("rank")) {
+            return String.valueOf(AureliumSkills.leaderboard.getPowerRank(player.getUniqueId()));
+        }
+
+        if (identifier.startsWith("rank_")) {
+            String skillName = LoreUtil.replace(identifier, "rank_", "");
+            try {
+                Skill skill = Skill.valueOf(skillName.toUpperCase());
+                return String.valueOf(AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId()));
+            }
+            catch (Exception e) {
+                return "";
+            }
+        }
+
         return null;
     }
 

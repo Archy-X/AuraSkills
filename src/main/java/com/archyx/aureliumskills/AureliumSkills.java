@@ -71,6 +71,7 @@ public class AureliumSkills extends JavaPlugin{
 	private PaperCommandManager commandManager;
 	private ActionBar actionBar;
 	private SkillBossBar bossBar;
+	public static long releaseTime = 1604559709804L;
 
 	public void onEnable() {
 		invManager = new InventoryManager(this);
@@ -197,7 +198,9 @@ public class AureliumSkills extends JavaPlugin{
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
 		Bukkit.getLogger().info("[AureliumSkills] Aurelium Skills has been enabled");
-		checkUpdates();
+		if (System.currentTimeMillis() > releaseTime + 21600000L) {
+			checkUpdates();
+		}
 	}
 	
 	public void onDisable() {

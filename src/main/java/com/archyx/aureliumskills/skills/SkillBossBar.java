@@ -86,6 +86,17 @@ public class SkillBossBar implements Listener {
             colors.put(skill, color);
             styles.put(skill, style);
         }
+        for (Map.Entry<Player, BossBar> entry : singleBossBars.entrySet()) {
+            entry.getValue().setVisible(false);
+            entry.getValue().removeAll();
+        }
+        for (Map.Entry<Player, Map<Skill, BossBar>> entry : bossBars.entrySet()) {
+            Map<Skill, BossBar> bossBars = entry.getValue();
+            for (Map.Entry<Skill, BossBar> bossBarEntry : bossBars.entrySet()) {
+                bossBarEntry.getValue().setVisible(false);
+                bossBarEntry.getValue().removeAll();
+            }
+        }
         bossBars.clear();
         singleBossBars.clear();
     }
@@ -126,7 +137,13 @@ public class SkillBossBar implements Listener {
                         "{skill}", skill.getDisplayName(locale),
                         "{level}", RomanNumber.toRoman(level)), color, style);
             }
-            bossBar.setProgress(currentXp / levelXp);
+            double progress = currentXp / levelXp;
+            if (progress <= 1 && progress >= 0) {
+                bossBar.setProgress(currentXp / levelXp);
+            }
+            else {
+                bossBar.setProgress(1.0);
+            }
             bossBar.addPlayer(player);
             // Add to maps
             if (mode.equals("single")) {
@@ -159,7 +176,13 @@ public class SkillBossBar implements Listener {
                         "{level}", RomanNumber.toRoman(level),
                         "{skill}", skill.getDisplayName(locale)));
             }
-            bossBar.setProgress(currentXp / levelXp);
+            double progress = currentXp / levelXp;
+            if (progress <= 1 && progress >= 0) {
+                bossBar.setProgress(currentXp / levelXp);
+            }
+            else {
+                bossBar.setProgress(1.0);
+            }
             bossBar.setVisible(true);
         }
         // Increment current action

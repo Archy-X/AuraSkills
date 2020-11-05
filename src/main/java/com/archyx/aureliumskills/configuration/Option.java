@@ -11,6 +11,7 @@ public enum Option {
     MYSQL_DATABASE("mysql.database", OptionType.STRING),
     MYSQL_USERNAME("mysql.username", OptionType.STRING),
     MYSQL_PASSWORD("mysql.password", OptionType.STRING),
+    TRY_DETECT_CLIENT_LANGUAGE("try-detect-client-language", OptionType.BOOLEAN),
     // Action bar options
     ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),
     ACTION_BAR_IDLE("action-bar.idle", OptionType.BOOLEAN),

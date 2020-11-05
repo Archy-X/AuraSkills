@@ -21,6 +21,8 @@ mysql:
 
 default-language: en
 
+try-detect-client-language: true
+
 languages:
     - en
     - es

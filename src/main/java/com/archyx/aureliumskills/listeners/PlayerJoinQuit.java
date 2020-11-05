@@ -50,16 +50,18 @@ public class PlayerJoinQuit implements Listener {
 		state.update(true);
 		//Update message
 		if (player.isOp()) {
-			//Check for updates
-			new UpdateChecker(plugin, 81069).getVersion(version -> {
-				if (!plugin.getDescription().getVersion().contains("Pre-Release")) {
-					if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-						Locale locale = Lang.getLanguage(player);
-						player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
-						player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.WHITE + "Download it on Spigot: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "http://spigotmc.org/resources/81069");
+			if (System.currentTimeMillis() > AureliumSkills.releaseTime + 21600000L) {
+				//Check for updates
+				new UpdateChecker(plugin, 81069).getVersion(version -> {
+					if (!plugin.getDescription().getVersion().contains("Pre-Release")) {
+						if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
+							Locale locale = Lang.getLanguage(player);
+							player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
+							player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.WHITE + "Download it on Spigot: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "http://spigotmc.org/resources/81069");
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 	}
 
