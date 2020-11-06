@@ -29,6 +29,7 @@ languages:
     - id
     - fr
     - zh-TW
+    - tr
 
 # Action Bar Options
 action-bar:
