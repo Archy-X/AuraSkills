@@ -49,13 +49,16 @@ public class ForagingAbilities implements Listener {
 	
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = OptionL.getXp(source);
-		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FORAGER)) {
-			double modifier = 1;
-			modifier += Ability.FORAGER.getValue(skill.getAbilityLevel(Ability.FORAGER)) / 100;
-			output *= modifier;
+		if (skill != null) {
+			double output = OptionL.getXp(source);
+			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FORAGER)) {
+				double modifier = 1;
+				modifier += Ability.FORAGER.getValue(skill.getAbilityLevel(Ability.FORAGER)) / 100;
+				output *= modifier;
+			}
+			return output;
 		}
-		return output;
+		return 0.0;
 	}
 	
 	public static void lumberjack(Player player, Block block) {

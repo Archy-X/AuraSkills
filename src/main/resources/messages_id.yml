@@ -114,7 +114,7 @@ abilities:
       desc: 'Mendapatkan {value}% EXP lebih banyak untuk skill pemanah'
       info: '+{value}% EXP'
     bow_master:
-      name: Pemanah Expert
+      name: Pemanah Terlatih
       desc: 'Memberikan {value}% kerusakan lebih banyak dengan busur.'
       info: '+{value}% Kerusakan'
     piercing:
@@ -174,7 +174,7 @@ abilities:
   endurance:
     anti_hunger:
       name: Tidak Lapar
-      desc: '{value}% kesempatan untuk tidak lapar.'
+      desc: '{value}% kesempatan untuk tidak merasakan lapar.'
       info: '{value}% Kesempatan'
     runner:
       name: Atlet Lari
@@ -185,13 +185,13 @@ abilities:
       desc: "Meningkatan regenerasi yang\n&7  didapat sebanyak {value}%"
       info: '+{value}% Regenerasi Tambahan'
     recovery:
-      name: Recovery
+      name: Membalikkan
       desc: "Meningkatkan regenerasi alami ketika\n&7  darah dibawah 50% sebanyak {value}%"
       info: '+{value}% Regenerasi ketika darah rendah'
     meal_steal:
       name: Pencuri makanan
-      desc: "{value}% kesempatan mencuri 1 point kekeyangan\n&7  ketika menyerang manusia."
-      info: '{value}% Menncuri Makanan'
+      desc: "{value}% kesempatan mencuri 1 poin kekenyangan\n&7  ketika menyerang pemain."
+      info: '{value}% Mencuri Makanan'
   agility:
     light_fall:
       name: Cahaya Jatuh
@@ -253,7 +253,7 @@ acf:
     please_specify_at_most: '&cKesalahan: Mohon Ketikkan jumlah yang paling banyak {max}.'
     please_specify_at_least: '&cKesalahan: Mohon Ketikkan jumlah yang paling sedikit {min}.'
     not_allowed_on_console: '&cKesalahan: Konsol tidak bisa menjalankan perintah ini.'
-    could_not_find_player: '&cKesalahan: Tidak bisa menemukan mana pemain: &e{search}'
+    could_not_find_player: '&cKesalahan: Tidak bisa menemukan nama pemain: &e{search}'
     no_command_matched_search: '&cTidak ada perintah yang cocok &e{search}.'
     help_page_information: '&b - Halaman &a{page} &bdari &a{totalpages} &b(&e{results}&b results).'
     help_no_results: '&bKesalahan: Tidak ada hasil.'
@@ -266,8 +266,8 @@ acf:
   minecraft:
     invalid_world: '&cKesalahan: Dunia ini tidak ada.'
     you_must_be_holding_item: '&cKesalahan: Kamu harus memegang benda ditanganmu.'
-    player_is_vanish_confirm: "&ePeringatan: &a{vanished} &esedang menyamar. Jangan buka kedok dia!\n&eUntuk mengkorfimasi tindakan anda tambahkan &a:confirm &ediakhirnama dia.\n&eContoh: {vanished}:confirm"
-    username_too_short: '&cKesalahan: Nama terlalu pendak, setidaknya harus 3 huruf.'
+    player_is_vanish_confirm: "&ePeringatan: &a{vanished} &esedang menyamar. Jangan buka kedok dia!\n&eUntuk mengkorfimasi tindakan anda tambahkan &a:confirm &ediakhir nama dia.\n&eContoh: {vanished}:confirm"
+    username_too_short: '&cKesalahan: Nama terlalu pendek, setidaknya harus 3 huruf.'
     is_not_a_valid_name: '&cKesalahan: &e{name} &cbukanlah nama yang valid.'
     multiple_players_match: '&cKesalahan: Pemain dengan nama yang sama dideteksi &b{search} &e({all})&c, mohon untuk lebih spesifik.'
     no_player_found_server: '&cTidak ada pemain yang cocok &e{search} &cyang sedang ada di server ini.'
@@ -388,23 +388,23 @@ leveler:
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Level Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bHadiah:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
   stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&aAbility Terbuka! &6&l{ability} &7Terbuka'
-  ability_level_up: '&aAbility Meningkat! &6&l{ability} &7sekarang level &6{level}'
-  mana_ability_unlock: '&aAbility Terbuka! &9&l{mana_ability} &7Terbuka'
-  mana_ability_level_up: '&aAbility Meningkat! &9&l{mana_ability} &7sekarang level &6{level}'
+  ability_unlock: '&aKemampuan Terbuka! &6&l{ability} &7Terbuka'
+  ability_level_up: '&aKemampuan Meningkat! &6&l{ability} &7sekarang level &6{level}'
+  mana_ability_unlock: '&aKemampuan Terbuka! &9&l{mana_ability} &7Terbuka'
+  mana_ability_level_up: '&aKemampuan Meningkat! &9&l{mana_ability} &7sekarang level &6{level}'
   money_reward: '&a${amount}'
 menus:
   common:
     close: '&cTutup'
     level: '&7Level: &e{level}'
     progress_to_level: "&7Perjalanan ke level {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
-    max_level: '&6MAX LEVEL'
+    max_level: '&6LEVEL MAKSIMAL'
     ability_levels: "\n&7Level Ability:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
     primary_stat: '&7Statistik Utama: {color}{stat}'
     secondary_stat: '&7Statistik Kedua: {color}{stat}'
-    mana_ability: "\n&d&lAbility Sihir &9{mana_ability} {level}\n &7Durasi: &a{duration}s &7Sihir dibutuhkan: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+    mana_ability: "\n&d&lKemampuan Sihir &9{mana_ability} {level}\n &7Durasi: &a{duration}s &7Sihir dibutuhkan: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Skills kamu
     your_skills: '&bSkill Kamu - &6{player}'
@@ -418,7 +418,7 @@ menus:
     your_ranking: '&eSkill Rank Kamu'
     rank_out_of: '&fKamu Berada diranl &6{rank}&f dari {total} pemain'
     rank_percent: '&fKamu berada diatas &6{percent}%&f pemain'
-    back: '&aGKembali'
+    back: '&aKembali'
     back_click: '&7Kembali Skills Menu'
     next_page: '&6Halaman selanjutnya'
     next_page_click: '&eKlik untuk ke halaman selanjutnya'
@@ -435,7 +435,7 @@ menus:
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
     ability_unlock: "\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
-    mana_ability_unlock: "\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n "
+    mana_ability_unlock: "\n&9{mana_ability} &d&lKemampuan Sihir Terbuka\n&7  {desc}\n "
     mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
     progress: "&7Perjalanan: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -486,7 +486,7 @@ mana_abilities:
     lower: '&7Kamu menonaktifkan perisaimu'
     start: '&6Kekebalan Active! &7(-{mana} {mana_unit})'
     end: '&6Durasi Kekebalan Sudah Selesai'
-  not_ready: '&cAbility sedang cooldown! &7({cooldown}s)'
+  not_ready: '&cKemampuan sedang cooldown! &7({cooldown}s)'
   not_enough_mana: '&eSihir tidak cukup! &7({mana} {mana_unit} required)'
 skills:
   farming:
@@ -527,7 +527,7 @@ skills:
     desc: "&7Sihirlah benda atau buku untuk meningkatkan\n&7skill Sihir {xp_unit}"
   sorcery:
     name: Penyihir
-    desc: '&7Gunakan spell untuk meingkatkan skill Penyihir {xp_unit}'
+    desc: '&7Gunakan mantra untuk meingkatkan skill Penyihir {xp_unit}'
   healing:
     name: Penyembuh
     desc: "&7Minum dan percikan ramuan penyembuhan untuk\n&7menigkatkan skill Penyembuh {xp_unit}"

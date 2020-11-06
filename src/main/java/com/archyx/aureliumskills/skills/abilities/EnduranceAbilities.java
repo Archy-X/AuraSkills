@@ -24,13 +24,16 @@ public class EnduranceAbilities implements Listener {
 
     public static double getModifiedXp(Player player, Source source) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = OptionL.getXp(source);
-        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.RUNNER)) {
-            double modifier = 1;
-            modifier += Ability.RUNNER.getValue(skill.getAbilityLevel(Ability.RUNNER)) / 100;
-            output *= modifier;
+        if (skill != null) {
+            double output = OptionL.getXp(source);
+            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.RUNNER)) {
+                double modifier = 1;
+                modifier += Ability.RUNNER.getValue(skill.getAbilityLevel(Ability.RUNNER)) / 100;
+                output *= modifier;
+            }
+            return output;
         }
-        return output;
+        return 0.0;
     }
 
     @EventHandler(priority = EventPriority.HIGH)

@@ -34,13 +34,16 @@ public class FightingAbilities implements Listener {
 
     public static double getModifiedXp(Player player, Source source) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = OptionL.getXp(source);
-        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FIGHTER)) {
-            double modifier = 1;
-            modifier += Ability.FIGHTER.getValue(skill.getAbilityLevel(Ability.FIGHTER)) / 100;
-            output *= modifier;
+        if (skill != null) {
+            double output = OptionL.getXp(source);
+            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FIGHTER)) {
+                double modifier = 1;
+                modifier += Ability.FIGHTER.getValue(skill.getAbilityLevel(Ability.FIGHTER)) / 100;
+                output *= modifier;
+            }
+            return output;
         }
-        return output;
+        return 0.0;
     }
 
     public static void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {

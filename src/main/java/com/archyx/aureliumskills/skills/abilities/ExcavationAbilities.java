@@ -44,13 +44,16 @@ public class ExcavationAbilities implements Listener {
 
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = OptionL.getXp(source);
-		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.EXCAVATOR)) {
-			double modifier = 1;
-			modifier += Ability.EXCAVATOR.getValue(skill.getAbilityLevel(Ability.EXCAVATOR)) / 100;
-			output *= modifier;
+		if (skill != null) {
+			double output = OptionL.getXp(source);
+			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.EXCAVATOR)) {
+				double modifier = 1;
+				modifier += Ability.EXCAVATOR.getValue(skill.getAbilityLevel(Ability.EXCAVATOR)) / 100;
+				output *= modifier;
+			}
+			return output;
 		}
-		return output;
+		return 0.0;
 	}
 
 	public static void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {

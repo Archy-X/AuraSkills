@@ -48,13 +48,16 @@ public class MiningAbilities implements Listener {
 	
 	public static double getModifiedXp(Player player, Source source) {
 		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		double output = OptionL.getXp(source);
-		if (AureliumSkills.abilityOptionManager.isEnabled(Ability.MINER)) {
-			double modifier = 1;
-			modifier += Ability.MINER.getValue(skill.getAbilityLevel(Ability.MINER)) / 100;
-			output *= modifier;
+		if (skill != null) {
+			double output = OptionL.getXp(source);
+			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.MINER)) {
+				double modifier = 1;
+				modifier += Ability.MINER.getValue(skill.getAbilityLevel(Ability.MINER)) / 100;
+				output *= modifier;
+			}
+			return output;
 		}
-		return output;
+		return 0.0;
 	}
 	
 	public static void luckyMiner(Player player, Block block) {
