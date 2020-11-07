@@ -38,6 +38,12 @@ permissions:
             aureliumskills.save: true
             aureliumskills.updateleaderboards: true
             aureliumskills.rank: true
+            aureliumskills.item.requirement.add: true
+            aureliumskills.item.requirement.remove: true
+            aureliumskills.item.requirement.removeall: true
+            aureliumskills.armor.requirement.add: true
+            aureliumskills.armor.requirement.remove: true
+            aureliumskills.armor.requirement.removeall: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.reload:
@@ -77,6 +83,22 @@ permissions:
     aureliumskills.armor.modifier.list:
         default: op
     aureliumskills.armor.modifier.removeall:
+        default: op
+    aureliumskills.item.requirement.add:
+        default: op
+    aureliumskills.item.requirement.remove:
+        default: op
+    aureliumskills.item.requirement.removeall:
+        default: op
+    aureliumskills.item.requirement.list:
+        default: op
+    aureliumskills.armor.requirement.add:
+        default: op
+    aureliumskills.armor.requirement.remove:
+        default: op
+    aureliumskills.armor.requirement.removeall:
+        default: op
+    aureliumskills.armor.requirement.list:
         default: op
     aureliumskills.multipliercommand:
         default: op

@@ -213,7 +213,7 @@ public class ArmorListener implements Listener{
                 event.setCancelled(true);
             }
         }
-        // Debug shit
+        // Debug
 		/*System.out.println("Slots: " + event.getInventorySlots().toString());
 		System.out.println("Raw Slots: " + event.getRawSlots().toString());
 		if(event.getCursor() != null){

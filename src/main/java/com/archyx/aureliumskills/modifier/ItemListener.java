@@ -88,8 +88,10 @@ public class ItemListener implements Listener {
                             if (!held.getType().equals(Material.AIR)) {
                                 PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
                                 if (playerStat != null) {
-                                    for (StatModifier modifier : ItemModifier.getItemModifiers(held)) {
-                                        playerStat.addModifier(modifier);
+                                    if (ItemRequirement.meetsRequirements(player, held)) {
+                                        for (StatModifier modifier : ItemModifier.getItemModifiers(held)) {
+                                            playerStat.addModifier(modifier);
+                                        }
                                     }
                                     //Apply valor
                                     if (ItemUtils.isAxe(held.getType())) {

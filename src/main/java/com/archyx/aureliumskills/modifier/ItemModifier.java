@@ -1,8 +1,10 @@
 package com.archyx.aureliumskills.modifier;
 
+import com.archyx.aureliumskills.lang.CommandMessage;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.util.LoreUtil;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -54,7 +56,7 @@ public class ItemModifier {
         return modifiers;
     }
 
-    public static void addLore(ItemStack item, Stat stat, int value) {
+    public static void addLore(ItemStack item, Stat stat, int value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore;
@@ -69,18 +71,20 @@ public class ItemModifier {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, ChatColor.GRAY + stat.getDisplayName(Locale.ENGLISH) + ":" + stat.getColor(Locale.ENGLISH) + " +" + value);
+            lore.add(0, LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_LORE, locale), "{stat}", stat.getDisplayName(locale),
+                    "{value}", String.valueOf(value),
+                    "{color}", stat.getColor(locale)));
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
     }
 
-    public static void removeLore(ItemStack item, Stat stat) {
+    public static void removeLore(ItemStack item, Stat stat, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore = meta.getLore();
             if (lore != null && lore.size() > 0) {
-                lore.removeIf(line -> line.contains(ChatColor.GRAY + stat.getDisplayName(Locale.ENGLISH) + ":"));
+                lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
             }
             meta.setLore(lore);
         }

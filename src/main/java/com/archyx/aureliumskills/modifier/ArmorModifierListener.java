@@ -21,8 +21,10 @@ public class ArmorModifierListener implements Listener {
             for (ItemStack armor : player.getInventory().getArmorContents()) {
                 if (armor != null) {
                     if (!armor.getType().equals(Material.AIR)) {
-                        for (StatModifier modifier : ArmorModifier.getArmorModifiers(armor)) {
-                            playerStat.addModifier(modifier, false);
+                        if (ArmorRequirement.meetsRequirements(player, armor)) {
+                            for (StatModifier modifier : ArmorModifier.getArmorModifiers(armor)) {
+                                playerStat.addModifier(modifier, false);
+                            }
                         }
                     }
                 }
@@ -38,8 +40,10 @@ public class ArmorModifierListener implements Listener {
             //Equip
             if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR) {
                 ItemStack item = event.getNewArmorPiece();
-                for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
-                    playerStat.addModifier(modifier);
+                if (ArmorRequirement.meetsRequirements(player, item)) {
+                    for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
+                        playerStat.addModifier(modifier);
+                    }
                 }
             }
             //Un-equip

@@ -235,6 +235,10 @@ public class Lang implements Listener {
 		return languages;
 	}
 
+	public static Locale getDefaultLanguage() {
+		return defaultLanguage;
+	}
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();

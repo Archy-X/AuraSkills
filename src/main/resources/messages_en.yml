@@ -291,35 +291,55 @@ commands:
       add:
         added: '{color}{stat} &7modifier with level &b{value} &7was added to your item'
         already_exists: '&eAn armor modifier with stat {color}{stat} &ealready exists on your armor! Remove it first with /sk armor modifier remove'
-        must_hold_item: '&eYou must be holding an item to add modifiers!'
+        lore: '&7{stat}: +{color}{value}'
       remove:
         does_not_exist: '&eYour item does not have a {color}{stat} &emodifier!'
-        must_hold_item: '&eYou must be holding an item to remove modifiers!'
         removed: '{color}{stat} &7modifier was removed from your item'
       list:
         header: '&fArmor modifiers found:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&eYou must be holding an item to list modifiers!'
       removeall:
-        must_hold_item: '&eYou must be holding an item to remove all modifiers!'
         removed: '&7All armor modifiers have been removed from your item'
+    requirement:
+      add:
+        added: '&3{skill}&7 armor requirement with level &b{level}&7 was added to your item'
+        already_exists: '&eItem already has a &3{skill}&e armor requirement! Remove it first with &6/sk armor requirement remove'
+        lore: '&cRequires &3{skill} {level}'
+      remove:
+        does_not_exist: '&eYour item does not have a &3{skill}&e armor requirement!'
+        removed: '&3{skill}&7 armor requirement was removed from your item'
+      list:
+        header: '&fArmor requirements found:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7All armor requirements have been removed from your item'
   item:
     modifier:
       add:
         added: '{color}{stat} &7modifier with level &b{value} &7was added to your item'
         already_exists: '&eAn item modifier with stat {color}{stat} &ealready exists on your armor! Remove it first with /sk item modifier remove'
-        must_hold_item: '&eYou must be holding an item to add modifiers!'
+        lore: '&7{stat}: +{color}{value}'
       remove:
         does_not_exist: '&eYour item does not have a {color}{stat} &emodifier!'
-        must_hold_item: '&eYou must be holding an item to remove modifiers!'
         removed: '{color}{stat} &7modifier was removed from your item'
       list:
         header: '&fItem modifiers found:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&eYou must be holding an item to list modifiers!'
       removeall:
-        must_hold_item: '&eYou must be holding an item to remove all modifiers!'
         removed: '&7All item modifiers have been removed from your item'
+    requirement:
+      add:
+        added: '&3{skill}&7 item requirement with level &b{level}&7 was added to your item'
+        already_exists: '&eItem already has a &3{skill}&e item requirement! Remove it first with &6/sk item requirement remove'
+        lore: '&cRequires &3{skill} {level}'
+      remove:
+        does_not_exist: '&eYour item does not have a &3{skill}&e item requirement!'
+        removed: '&3{skill}&7 item requirement was removed from your item'
+      list:
+        header: '&fItem requirements found:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7All item requirements have been removed from your item'
   lang:
     set: '&7Language set to &b{lang}'
     not_found: '&eLanguage not found!'
@@ -569,4 +589,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 3
+file_version: 4
