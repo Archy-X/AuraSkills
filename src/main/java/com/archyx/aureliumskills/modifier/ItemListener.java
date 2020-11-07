@@ -60,18 +60,17 @@ public class ItemListener implements Listener {
             public void run() {
                 //For every player
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    //Gets stats profile
-                    PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-                    if (playerStat != null) {
-                        //Gets stored and held items
-                        ItemStack stored = heldItems.get(player);
-                        ItemStack held = player.getInventory().getItemInMainHand();
-                        //If stored item is not null
-                        if (stored != null) {
-                            //If stored item is different than held
-                            if (!stored.equals(held)) {
-                                //Remove modifiers from stored item
-                                if (!stored.getType().equals(Material.AIR)) {
+                    //Gets stored and held items
+                    ItemStack stored = heldItems.get(player);
+                    ItemStack held = player.getInventory().getItemInMainHand();
+                    //If stored item is not null
+                    if (stored != null) {
+                        //If stored item is different than held
+                        if (!stored.equals(held)) {
+                            //Remove modifiers from stored item
+                            if (!stored.getType().equals(Material.AIR)) {
+                                PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+                                if (playerStat != null) {
                                     for (StatModifier modifier : ItemModifier.getItemModifiers(stored)) {
                                         playerStat.removeModifier(modifier.getName());
                                     }
@@ -84,8 +83,11 @@ public class ItemListener implements Listener {
                                         MiningAbilities.removeStamina(playerStat);
                                     }
                                 }
-                                //Add modifiers from held item
-                                if (!held.getType().equals(Material.AIR)) {
+                            }
+                            //Add modifiers from held item
+                            if (!held.getType().equals(Material.AIR)) {
+                                PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+                                if (playerStat != null) {
                                     for (StatModifier modifier : ItemModifier.getItemModifiers(held)) {
                                         playerStat.addModifier(modifier);
                                     }
@@ -98,14 +100,14 @@ public class ItemListener implements Listener {
                                         MiningAbilities.applyStamina(player, playerStat);
                                     }
                                 }
-                                //Set stored item to held item
-                                heldItems.put(player, held);
                             }
+                            //Set stored item to held item
+                            heldItems.put(player, held.clone());
                         }
-                        //If no mapping exists, add held item
-                        else {
-                            heldItems.put(player, held);
-                        }
+                    }
+                    //If no mapping exists, add held item
+                    else {
+                        heldItems.put(player, held.clone());
                     }
                 }
             }

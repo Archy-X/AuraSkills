@@ -31,7 +31,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -46,11 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class AureliumSkills extends JavaPlugin{
+public class AureliumSkills extends JavaPlugin {
 
-	private final File dataFile = new File(getDataFolder(), "data.yml");
-	private final FileConfiguration config = YamlConfiguration.loadConfiguration(dataFile);
-	private final SkillLoader skillLoader = new SkillLoader(dataFile, config, this);
+	private SkillLoader skillLoader;
 	public MySqlSupport mySqlSupport;
 	private static MenuLoader menuLoader;
 	public static LootTableManager lootTableManager;
@@ -168,6 +165,7 @@ public class AureliumSkills extends JavaPlugin{
 		}
 		actionBar.startUpdateActionBar();
 		//Load Data
+		skillLoader = new SkillLoader(this);
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			//Mysql
 			mySqlSupport = new MySqlSupport(this, this);
@@ -179,11 +177,7 @@ public class AureliumSkills extends JavaPlugin{
 			}.runTaskAsynchronously(this);
 		}
 		else {
-			if (dataFile.exists()) {
-				skillLoader.loadSkillData();
-			} else {
-				saveResource("data.yml", false);
-			}
+			skillLoader.loadSkillData();
 			skillLoader.startSaving();
 		}
 		//Load leveler
