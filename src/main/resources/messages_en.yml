@@ -291,7 +291,7 @@ commands:
       add:
         added: '{color}{stat} &7modifier with level &b{value} &7was added to your item'
         already_exists: '&eAn armor modifier with stat {color}{stat} &ealready exists on your armor! Remove it first with /sk armor modifier remove'
-        lore: '&7{stat}: +{color}{value}'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eYour item does not have a {color}{stat} &emodifier!'
         removed: '{color}{stat} &7modifier was removed from your item'
@@ -318,7 +318,7 @@ commands:
       add:
         added: '{color}{stat} &7modifier with level &b{value} &7was added to your item'
         already_exists: '&eAn item modifier with stat {color}{stat} &ealready exists on your armor! Remove it first with /sk item modifier remove'
-        lore: '&7{stat}: +{color}{value}'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eYour item does not have a {color}{stat} &emodifier!'
         removed: '{color}{stat} &7modifier was removed from your item'

@@ -71,7 +71,8 @@ public class ItemModifier {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_LORE, locale), "{stat}", stat.getDisplayName(locale),
+            lore.add(0, LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_LORE, locale),
+                    "{stat}", stat.getDisplayName(locale),
                     "{value}", String.valueOf(value),
                     "{color}", stat.getColor(locale)));
             meta.setLore(lore);
