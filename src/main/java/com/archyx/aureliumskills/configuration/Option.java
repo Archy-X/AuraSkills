@@ -68,6 +68,7 @@ public enum Option {
     // Modifier options
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip-blocked-materials", OptionType.LIST),
     MODIFIER_ITEM_CHECK_PERIOD("modifier.item.check-period", OptionType.INT),
+    MODIFIER_ITEM_ENABLE_OFF_HAND("modifier.item.enable-off-hand", OptionType.BOOLEAN),
     // Critical options
     CRITICAL_BASE_MULTIPLIER("critical.base-multiplier", OptionType.DOUBLE),
     CRITICAL_ENABLED_SWORD("critical.enabled.sword", OptionType.BOOLEAN),

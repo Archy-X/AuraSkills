@@ -100,7 +100,7 @@ public class PlayerStat {
 			if (oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
 				return;
 			}
-			removeModifier(modifier.getName());
+			removeModifier(modifier.getName(), reload);
 		}
 		//Adds the modifier
 		modifiers.put(modifier.getName(), modifier);
@@ -136,6 +136,29 @@ public class PlayerStat {
 				}
 				else if (modifier.getStat() == Stat.LUCK) {
 					Luck.reload(Bukkit.getPlayer(playerId));
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public boolean removeModifier(String name, boolean reload) {
+		//Gets the modifier to remove
+		StatModifier modifier = modifiers.get(name);
+		if (modifier != null) {
+			//Changes the stat level
+			setStatLevel(modifier.getStat(), stats.get(modifier.getStat()) - modifier.getValue());
+			//Removes the modifier
+			modifiers.remove(name);
+			//Reloads stats
+			if (Bukkit.getPlayer(playerId) != null) {
+				if (reload) {
+					if (modifier.getStat() == Stat.HEALTH) {
+						Health.reload(Bukkit.getPlayer(playerId));
+					} else if (modifier.getStat() == Stat.LUCK) {
+						Luck.reload(Bukkit.getPlayer(playerId));
+					}
 				}
 			}
 			return true;

@@ -74,7 +74,7 @@ public class ArmorModifier {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, LoreUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_ADD_LORE, locale),
+            lore.add(0, LoreUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_LORE, locale),
                     "{stat}", stat.getDisplayName(locale),
                     "{value}", String.valueOf(value),
                     "{color}", stat.getColor(locale)));

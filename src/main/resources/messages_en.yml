@@ -547,7 +547,7 @@ skills:
     desc: '&7Enchant items and books to earn\n&7Enchanting {xp_unit}'
   sorcery:
     name: Sorcery
-    desc: '&7Cast spells to earn Sorcery {xp_unit}'
+    desc: '&7Use mana abilities to earn Sorcery {xp_unit}'
   healing:
     name: Healing
     desc: '&7Drink and splash potions to earn\n&7Healing {xp_unit}'

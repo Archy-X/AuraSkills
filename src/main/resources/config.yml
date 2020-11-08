@@ -142,6 +142,7 @@ modifier:
             - EXAMPLE
     item:
         check-period: 3
+        enable-off-hand: true
 
 critical:
     base-multiplier: 1.5

@@ -24,6 +24,7 @@ public class Health implements Listener {
 
 	private final AureliumSkills plugin;
 	private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
+	private static final double threshold = 0.1;
 
 	public Health(AureliumSkills plugin) {
 		this.plugin = plugin;
@@ -84,7 +85,7 @@ public class Health implements Listener {
 				for (AttributeModifier am : attribute.getModifiers()) {
 					if (am.getName().equals("skillsHealth")) {
 						//Check for any changes, if not, return
-						if (originalMaxHealth == originalMaxHealth - am.getAmount() + modifier) {
+						if (Math.abs(originalMaxHealth - (originalMaxHealth - am.getAmount() + modifier)) <= threshold) {
 							hasChange = false;
 						}
 						//Removes if has change
