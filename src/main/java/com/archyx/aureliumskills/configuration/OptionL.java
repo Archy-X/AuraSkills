@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.configuration;
 
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.DamageType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,7 +18,6 @@ public class OptionL {
 
     private final Plugin plugin;
     private static final Map<Option, OptionValue> options = new HashMap<>();
-    private static final Map<Source, Double> sources = new HashMap<>();
 
     public OptionL(Plugin plugin) {
         this.plugin = plugin;
@@ -77,11 +75,6 @@ public class OptionL {
                 ASLogger.logWarn(LogType.CONFIG_MISSING_VALUE, "Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
             }
         }
-        //Load sources
-        for (Source source : Source.values()) {
-            sources.put(source, config.getDouble(source.getPath()));
-            loaded++;
-        }
         long end = System.currentTimeMillis();
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + loaded + " config options in " + (end - start) + " ms");
     }
@@ -100,9 +93,6 @@ public class OptionL {
                 else if (option.getType() == OptionType.BOOLEAN) {
                     options.put(option, new OptionValue(config.getBoolean(option.getPath())));
                 }
-            }
-            for (Source source : Source.values()) {
-                sources.put(source, config.getDouble(source.getPath()));
             }
         }
     }
@@ -129,10 +119,6 @@ public class OptionL {
 
     public static ChatColor getColor(Option option) {
         return options.get(option).asColor();
-    }
-
-    public static double getXp(Source source) {
-        return sources.get(source);
     }
 
     public static boolean isEnabled(Skill skill) {

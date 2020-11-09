@@ -7,7 +7,6 @@ import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.Replenish;
 import com.archyx.aureliumskills.util.BlockUtil;
@@ -25,7 +24,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Locale;
@@ -34,26 +32,12 @@ import java.util.Random;
 public class FarmingAbilities implements Listener {
 
 	private static final Random r = new Random();
-	private final Plugin plugin;
+	private final AureliumSkills plugin;
 
-	public FarmingAbilities(Plugin plugin) {
+	public FarmingAbilities(AureliumSkills plugin) {
 		this.plugin = plugin;
 	}
 
-	public static double getModifiedXp(Player player, Source source) {
-		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		if (skill != null) {
-			double output = OptionL.getXp(source);
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FARMER)) {
-				double modifier = 1;
-				modifier += Ability.FARMER.getValue(skill.getAbilityLevel(Ability.FARMER)) / 100;
-				output *= modifier;
-			}
-			return output;
-		}
-		return 0.0;
-	}
-	
 	public static void bountifulHarvest(Player player, Block block) {
 		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.BOUNTIFUL_HARVEST)) {
@@ -143,7 +127,7 @@ public class FarmingAbilities implements Listener {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH))) {
-							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.REPLENISH, (int) (MAbility.REPLENISH.getValue(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20), new Replenish());
+							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.REPLENISH, (int) (MAbility.REPLENISH.getValue(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20), new Replenish(plugin));
 						}
 						else {
 							player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)

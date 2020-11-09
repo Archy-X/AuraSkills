@@ -16,10 +16,7 @@ import com.archyx.aureliumskills.magic.ManaManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
-import com.archyx.aureliumskills.skills.Leaderboard;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillBossBar;
-import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.skills.abilities.*;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.levelers.*;
@@ -68,12 +65,15 @@ public class AureliumSkills extends JavaPlugin {
 	private PaperCommandManager commandManager;
 	private ActionBar actionBar;
 	private SkillBossBar bossBar;
+	private SourceManager sourceManager;
+	private SorceryLeveler sorceryLeveler;
+	private CheckBlockReplace checkBlockReplace;
 	public static long releaseTime = 1604559709804L;
 
 	public void onEnable() {
 		invManager = new InventoryManager(this);
 		invManager.init();
-		//Checks for world guard
+		// Checks for world guard
 		if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
 			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
 				worldGuardEnabled = true;
@@ -84,7 +84,7 @@ public class AureliumSkills extends JavaPlugin {
 		else {
 			worldGuardEnabled = false;
 		}
-		//Checks for PlaceholderAPI
+		// Checks for PlaceholderAPI
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			new PlaceholderSupport(this).register();
 			placeholderAPIEnabled = true;
@@ -93,7 +93,7 @@ public class AureliumSkills extends JavaPlugin {
 		else {
 			placeholderAPIEnabled = false;
 		}
-		//Checks for Vault
+		// Checks for Vault
 		if (setupEconomy()) {
 			vaultEnabled = true;
 			Bukkit.getLogger().info("[AureliumSkills] Vault Support Enabled!");
@@ -101,13 +101,16 @@ public class AureliumSkills extends JavaPlugin {
 		else {
 			vaultEnabled = false;
 		}
-		//Check for protocol lib
+		// Check for protocol lib
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
 		// Load config
 		loadConfig();
 		// Load config
 		optionLoader = new OptionL(this);
 		optionLoader.loadOptions();
+		// Load sources
+		sourceManager = new SourceManager(this);
+		sourceManager.loadSources();
 		// Load boss bar
 		bossBar = new SkillBossBar(this);
 		bossBar.loadOptions();
@@ -120,14 +123,14 @@ public class AureliumSkills extends JavaPlugin {
 		else {
 			holographicDisplaysEnabled = false;
 		}
-		//Registers Commands
+		// Registers Commands
 		registerCommands();
-		//Load languages
+		// Load languages
 		Lang lang = new Lang(this);
 		getServer().getPluginManager().registerEvents(lang, this);
 		lang.loadEmbeddedMessages(commandManager);
 		lang.loadLanguages(commandManager);
-		//Load menu
+		// Load menu
 		menuLoader = new MenuLoader(this);
 		try {
 			menuLoader.load();
@@ -136,35 +139,35 @@ public class AureliumSkills extends JavaPlugin {
 			e.printStackTrace();
 			Bukkit.getLogger().warning("[AureliumSkills] Error loading menus!");
 		}
-		//Load leaderboard
+		// Load leaderboard
 		leaderboard = new Leaderboard(this);
-		//Registers events
+		// Registers events
 		registerEvents();
-		//Load ability manager
+		// Load ability manager
 		manaAbilityManager = new ManaAbilityManager(this);
 		getServer().getPluginManager().registerEvents(manaAbilityManager, this);
 		manaAbilityManager.init();
-		//Load ability options
+		// Load ability options
 		abilityOptionManager = new AbilityOptionManager(this);
 		abilityOptionManager.loadOptions();
-		//Load stats
+		// Load stats
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);
 		regeneration.startRegen();
 		regeneration.startSaturationRegen();
 		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
 		enduranceLeveler.startTracking();
-		//Load mana manager
+		// Load mana manager
 		manaManager = new ManaManager(this);
 		getServer().getPluginManager().registerEvents(manaManager, this);
 		manaManager.startRegen();
-		//Load Action Bar
+		// Load Action Bar
 		actionBar = new ActionBar(this);
 		if (protocolLibEnabled) {
 			ProtocolUtil.init();
 		}
 		actionBar.startUpdateActionBar();
-		//Load Data
+		// Load Data
 		skillLoader = new SkillLoader(this);
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			//Mysql
@@ -180,15 +183,15 @@ public class AureliumSkills extends JavaPlugin {
 			skillLoader.loadSkillData();
 			skillLoader.startSaving();
 		}
-		//Load leveler
+		// Load leveler
 		Leveler.plugin = this;
 		Leveler.loadLevelReqs();
-		//Load loot tables
+		// Load loot tables
 		lootTableManager = new LootTableManager(this);
-		//Load world manager
+		// Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
-		//B-stats
+		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
 		Bukkit.getLogger().info("[AureliumSkills] Aurelium Skills has been enabled");
@@ -200,12 +203,12 @@ public class AureliumSkills extends JavaPlugin {
 	public void onDisable() {
 		File file = new File(this.getDataFolder(), "config.yml");
 		if (file.exists()) {
-			//Reloads config
+			// Reloads config
 			reloadConfig();
-			//Save config
+			// Save config
 			saveConfig();
 		}
-		//Save Data
+		// Save Data
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (mySqlSupport != null) {
 				mySqlSupport.saveData(false);
@@ -222,7 +225,7 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public void checkUpdates() {
-		//Check for updates
+		// Check for updates
 		new UpdateChecker(this, 81069).getVersion(version -> {
 			if (!this.getDescription().getVersion().contains("Pre-Release")) {
 				if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
@@ -318,30 +321,32 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public void registerEvents() {
-		//Registers Events
+		// Registers Events
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerJoinQuit(this), this);
-		pm.registerEvents(new CheckBlockReplace(this), this);
-		pm.registerEvents(new FarmingLeveler(), this);
-		pm.registerEvents(new ForagingLeveler(), this);
-		pm.registerEvents(new MiningLeveler(), this);
-		pm.registerEvents(new ExcavationLeveler(), this);
-		pm.registerEvents(new FishingLeveler(), this);
-		pm.registerEvents(new FightingLeveler(), this);
-		pm.registerEvents(new ArcheryLeveler(), this);
-		pm.registerEvents(new DefenseLeveler(), this);
+		checkBlockReplace = new CheckBlockReplace(this);
+		pm.registerEvents(checkBlockReplace, this);
+		pm.registerEvents(new FarmingLeveler(this), this);
+		pm.registerEvents(new ForagingLeveler(this), this);
+		pm.registerEvents(new MiningLeveler(this), this);
+		pm.registerEvents(new ExcavationLeveler(this), this);
+		pm.registerEvents(new FishingLeveler(this), this);
+		pm.registerEvents(new FightingLeveler(this), this);
+		pm.registerEvents(new ArcheryLeveler(this), this);
+		pm.registerEvents(new DefenseLeveler(this), this);
 		pm.registerEvents(new AgilityLeveler(this), this);
 		pm.registerEvents(new AlchemyLeveler(this), this);
-		pm.registerEvents(new EnchantingLeveler(), this);
-		pm.registerEvents(new ForgingLeveler(), this);
-		pm.registerEvents(new HealingLeveler(), this);
+		pm.registerEvents(new EnchantingLeveler(this), this);
+		sorceryLeveler = new SorceryLeveler(this);
+		pm.registerEvents(new HealingLeveler(this), this);
+		pm.registerEvents(new ForgingLeveler(this), this);
 		pm.registerEvents(new Health(this), this);
 		pm.registerEvents(new Luck(), this);
 		pm.registerEvents(new Wisdom(), this);
 		pm.registerEvents(new FarmingAbilities(this), this);
 		pm.registerEvents(new ForagingAbilities(this), this);
 		pm.registerEvents(new MiningAbilities(this), this);
-		pm.registerEvents(new FishingAbilities(), this);
+		pm.registerEvents(new FishingAbilities(this), this);
 		pm.registerEvents(new ExcavationAbilities(), this);
 		pm.registerEvents(new ArcheryAbilities(this), this);
 		pm.registerEvents(new DefenseAbilities(this), this);
@@ -390,6 +395,18 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SkillBossBar getBossBar() {
 		return bossBar;
+	}
+
+	public SourceManager getSourceManager() {
+		return sourceManager;
+	}
+
+	public SorceryLeveler getSorceryLeveler() {
+		return sorceryLeveler;
+	}
+
+	public CheckBlockReplace getCheckBlockReplace() {
+		return checkBlockReplace;
 	}
 
 }

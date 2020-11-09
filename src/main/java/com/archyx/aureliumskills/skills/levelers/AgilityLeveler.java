@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.skills.abilities.AgilityAbilities;
+import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.google.common.collect.Sets;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -17,22 +17,22 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Set;
 import java.util.UUID;
 
-public class AgilityLeveler implements Listener {
+public class AgilityLeveler extends SkillLeveler implements Listener {
 	
 	private final Set<UUID> prevPlayersOnGround = Sets.newHashSet();
-	private final Plugin plugin;
 	
-	public AgilityLeveler(Plugin plugin) {
-		this.plugin = plugin;
+	public AgilityLeveler(AureliumSkills plugin) {
+		super(plugin, Ability.JUMPER);
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
+	@SuppressWarnings("deprecation")
 	public void onFall(EntityDamageEvent event) {
 		if (OptionL.isEnabled(Skill.AGILITY)) {
 			//Check cancelled
@@ -65,7 +65,7 @@ public class AgilityLeveler implements Listener {
 						}
 					}
 					if (event.getFinalDamage() < player.getHealth()) {
-						Leveler.addXp(player, Skill.AGILITY, AgilityAbilities.getModifiedXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * OptionL.getXp(Source.FALL_DAMAGE)));
+						Leveler.addXp(player, Skill.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(Source.FALL_DAMAGE)));
 					}
 				}
 			}
@@ -73,6 +73,7 @@ public class AgilityLeveler implements Listener {
 	}
 	
     @EventHandler
+	@SuppressWarnings("deprecation")
     public void onMove(PlayerMoveEvent e) {
     	if (OptionL.isEnabled(Skill.AGILITY)) {
     		//Check cancelled
@@ -105,14 +106,17 @@ public class AgilityLeveler implements Listener {
 	        if (player.getVelocity().getY() > 0) {
 	            double jumpVelocity = 0.42F;
 	            if (player.hasPotionEffect(PotionEffectType.JUMP)) {
-	                jumpVelocity +=  ((float) (player.getPotionEffect(PotionEffectType.JUMP).getAmplifier() + 1) * 0.1F);
+					PotionEffect effect = player.getPotionEffect(PotionEffectType.JUMP);
+					if (effect != null) {
+						jumpVelocity += ((float) (effect.getAmplifier() + 1) * 0.1F);
+					}
 	            }
 	            if (e.getPlayer().getLocation().getBlock().getType() != Material.LADDER && prevPlayersOnGround.contains(player.getUniqueId())) {
 	                if (!player.isOnGround() && Double.compare(player.getVelocity().getY(), jumpVelocity) == 0) {
 	                	if (player.hasMetadata("skillsJumps")) {
 	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
 	                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 100) {
-	                			Leveler.addXp(player, Skill.AGILITY, AgilityAbilities.getModifiedXp(player, Source.JUMP_PER_100));
+	                			Leveler.addXp(player, Skill.AGILITY, getXp(player, Source.JUMP_PER_100));
 	                			player.removeMetadata("skillsJumps", plugin);
 	                		}
 	                	}

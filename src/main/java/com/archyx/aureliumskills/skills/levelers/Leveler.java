@@ -11,7 +11,6 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.stats.PlayerStat;
@@ -58,44 +57,6 @@ public class Leveler {
 				.mapToDouble(Double::parseDouble)
 				.map(it -> it/100)
 				.sum();
-	}
-
-	//Method for adding xp
-	public static void addXp(Player player, Skill skill, Source source) {
-		PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-		//Checks if player has a skill profile for safety
-		if (playerSkill != null) {
-			//Checks if xp amount is not zero
-			if (OptionL.getXp(source) != 0) {
-				//Gets amount
-				double amount = OptionL.getXp(source) * getMultiplier(player);
-				//Calls event
-				XpGainEvent event = new XpGainEvent(player, skill, amount);
-				Bukkit.getPluginManager().callEvent(event);
-				if (!event.isCancelled()) {
-					//Adds Xp
-					playerSkill.addXp(skill, event.getAmount());
-					//Check if player leveled up
-					Leveler.checkLevelUp(player, skill);
-					//Sends action bar message
-					plugin.getActionBar().sendXpActionBar(player, skill, event.getAmount());
-					// Sends boss bar if enabled
-					if (OptionL.getBoolean(Option.BOSS_BAR_ENABLED)) {
-						// Check whether should update
-						plugin.getBossBar().incrementAction(player, skill);
-						int currentAction = plugin.getBossBar().getCurrentAction(player, skill);
-						if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
-							boolean notMaxed = Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
-							if (notMaxed) {
-								plugin.getBossBar().sendBossBar(player, skill, playerSkill.getXp(skill), Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1), playerSkill.getSkillLevel(skill), false);
-							} else {
-								plugin.getBossBar().sendBossBar(player, skill, 1, 1, playerSkill.getSkillLevel(skill), true);
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 	
 	//Method for adding xp with a defined amount

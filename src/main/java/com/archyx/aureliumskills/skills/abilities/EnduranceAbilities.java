@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -21,20 +20,6 @@ import java.util.Random;
 public class EnduranceAbilities implements Listener {
 
     private final Random r = new Random();
-
-    public static double getModifiedXp(Player player, Source source) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            double output = OptionL.getXp(source);
-            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.RUNNER)) {
-                double modifier = 1;
-                modifier += Ability.RUNNER.getValue(skill.getAbilityLevel(Ability.RUNNER)) / 100;
-                output *= modifier;
-            }
-            return output;
-        }
-        return 0.0;
-    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void antiHunger(FoodLevelChangeEvent event) {

@@ -13,6 +13,13 @@ import java.util.Locale;
 
 public class Replenish implements ManaAbility {
 
+    private final SorceryLeveler sorceryLeveler;
+
+    public Replenish(AureliumSkills plugin) {
+        this.sorceryLeveler = plugin.getSorceryLeveler();
+    }
+
+
     @Override
     public void activate(Player player) {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -22,7 +29,7 @@ public class Replenish implements ManaAbility {
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.REPLENISH));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
-            SorceryLeveler.level(player, manaConsumed);
+            sorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }

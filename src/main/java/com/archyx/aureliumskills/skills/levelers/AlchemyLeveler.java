@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.skills.abilities.AlchemyAbilities;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -22,16 +21,13 @@ import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
-public class AlchemyLeveler implements Listener {
-
-	private final Plugin plugin;
+public class AlchemyLeveler extends SkillLeveler implements Listener {
 	
-	public AlchemyLeveler(Plugin plugin) {
-		this.plugin = plugin;
+	public AlchemyLeveler(AureliumSkills plugin) {
+		super(plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -52,6 +48,7 @@ public class AlchemyLeveler implements Listener {
 				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {
 					return;
 				}
+
 			}
 			if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
 				OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
@@ -72,17 +69,17 @@ public class AlchemyLeveler implements Listener {
 							Skill s = Skill.ALCHEMY;
 							Material mat = event.getContents().getIngredient().getType();
 							if (mat.equals(Material.REDSTONE)) {
-								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.EXTENDED));
+								Leveler.addXp(p, s, getXp(p, Source.EXTENDED));
 							} else if (mat.equals(Material.GLOWSTONE_DUST)) {
-								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.UPGRADED));
+								Leveler.addXp(p, s, getXp(p, Source.UPGRADED));
 							} else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
-								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.AWKWARD));
+								Leveler.addXp(p, s, getXp(p, Source.AWKWARD));
 							} else if (mat.equals(XMaterial.GUNPOWDER.parseMaterial())) {
-								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.SPLASH));
+								Leveler.addXp(p, s, getXp(p, Source.SPLASH));
 							} else if (mat.equals(XMaterial.DRAGON_BREATH.parseMaterial())) {
-								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.LINGERING));
+								Leveler.addXp(p, s, getXp(p, Source.LINGERING));
 							} else {
-								Leveler.addXp(p, s, AlchemyAbilities.getModifiedXp(p, Source.REGULAR));
+								Leveler.addXp(p, s, getXp(p, Source.REGULAR));
 							}
 						}
 					}

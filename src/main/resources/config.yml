@@ -169,7 +169,6 @@ farming:
         pumpkin: 3.4
         melon: 3.4
         sugar-cane: 1.7
-        bamboo: 1.0
 foraging:
     enabled: true
     max-level: 97

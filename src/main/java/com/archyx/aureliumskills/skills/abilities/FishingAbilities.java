@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
+import com.archyx.aureliumskills.skills.levelers.SkillLeveler;
 import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
@@ -20,22 +21,12 @@ import org.bukkit.util.Vector;
 
 import java.util.Random;
 
-public class FishingAbilities implements Listener {
+public class FishingAbilities extends SkillLeveler implements Listener {
 
 	private final Random r = new Random();
-	
-	public static double getModifiedXp(Player player, Source source) {
-		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		if (skill != null) {
-			double output = OptionL.getXp(source);
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FISHER)) {
-				double modifier = 1;
-				modifier += Ability.FISHER.getValue(skill.getAbilityLevel(Ability.FISHER)) / 100;
-				output *= modifier;
-			}
-			return output;
-		}
-		return 0.0;
+
+	public FishingAbilities(AureliumSkills plugin) {
+		super(plugin, Ability.FISHER);
 	}
 	
 	@EventHandler
@@ -118,7 +109,7 @@ public class FishingAbilities implements Listener {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
 												item.setItemStack(drop);
-												Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_EPIC));
+												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC));
 											}
 										}
 										// If has command
@@ -138,7 +129,7 @@ public class FishingAbilities implements Listener {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
 												item.setItemStack(drop);
-												Leveler.addXp(event.getPlayer(), Skill.FISHING, getModifiedXp(event.getPlayer(), Source.FISHING_RARE));
+												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE));
 											}
 										}
 										// If has commaand

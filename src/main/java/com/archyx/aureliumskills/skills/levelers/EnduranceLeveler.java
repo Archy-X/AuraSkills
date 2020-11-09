@@ -6,20 +6,17 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.skills.abilities.EnduranceAbilities;
+import com.archyx.aureliumskills.skills.abilities.Ability;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
-public class EnduranceLeveler {
-
-	private final Plugin plugin;
+public class EnduranceLeveler extends SkillLeveler {
 	
-	public EnduranceLeveler(Plugin plugin) {
-		this.plugin = plugin;
+	public EnduranceLeveler(AureliumSkills plugin) {
+		super(plugin, Ability.RUNNER);
 	}
 	
 	public void startTracking() {
@@ -51,7 +48,7 @@ public class EnduranceLeveler {
 						if (player.hasMetadata("skillsLastSprintDist")) {
 							int sprintDist = player.getStatistic(Statistic.SPRINT_ONE_CM) - player.getMetadata("skillsLastSprintDist").get(0).asInt();
 							if (sprintDist > 1000) {
-								xpAmount += (sprintDist / 100) * EnduranceAbilities.getModifiedXp(player, Source.SPRINT_PER_METER);
+								xpAmount += (sprintDist / 100) * getXp(player, Source.SPRINT_PER_METER);
 								player.setMetadata("skillsLastSprintDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.SPRINT_ONE_CM)));
 							}
 						}
@@ -61,7 +58,7 @@ public class EnduranceLeveler {
 						if (player.hasMetadata("skillsLastWalkDist")) {
 							int walkDist = player.getStatistic(Statistic.WALK_ONE_CM) - player.getMetadata("skillsLastWalkDist").get(0).asInt();
 							if (walkDist > 100) {
-								xpAmount += (walkDist / 100) * EnduranceAbilities.getModifiedXp(player, Source.WALK_PER_METER);
+								xpAmount += (walkDist / 100) * getXp(player, Source.WALK_PER_METER);
 								player.setMetadata("skillsLastWalkDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.WALK_ONE_CM)));
 							}
 						}

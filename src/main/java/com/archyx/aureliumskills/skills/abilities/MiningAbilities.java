@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.SpeedMine;
 import com.archyx.aureliumskills.stats.PlayerStat;
@@ -30,7 +29,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
@@ -40,26 +38,12 @@ import java.util.Random;
 public class MiningAbilities implements Listener {
 
 	private static final Random r = new Random();
-	private static Plugin plugin;
+	private static AureliumSkills plugin;
 	
-	public MiningAbilities(Plugin plugin) {
+	public MiningAbilities(AureliumSkills plugin) {
 		MiningAbilities.plugin = plugin;
 	}
-	
-	public static double getModifiedXp(Player player, Source source) {
-		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		if (skill != null) {
-			double output = OptionL.getXp(source);
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.MINER)) {
-				double modifier = 1;
-				modifier += Ability.MINER.getValue(skill.getAbilityLevel(Ability.MINER)) / 100;
-				output *= modifier;
-			}
-			return output;
-		}
-		return 0.0;
-	}
-	
+
 	public static void luckyMiner(Player player, Block block) {
 		if (OptionL.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUCKY_MINER)) {
@@ -173,7 +157,7 @@ public class MiningAbilities implements Listener {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.SPEED_MINE.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE))) {
-							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SPEED_MINE, (int) (MAbility.SPEED_MINE.getValue(skill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), new SpeedMine());
+							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SPEED_MINE, (int) (MAbility.SPEED_MINE.getValue(skill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), new SpeedMine(plugin));
 						}
 						else {
 							player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(MAbility.SPEED_MINE.getManaCost(skill.getManaAbilityLevel(MAbility.SPEED_MINE)))));

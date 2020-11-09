@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
@@ -46,31 +45,6 @@ public class AgilityAbilities implements Listener {
 
     public AgilityAbilities(Plugin plugin) {
         this.plugin = plugin;
-    }
-
-    public static double getModifiedXp(Player player, Source source) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            double output = OptionL.getXp(source);
-            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.JUMPER)) {
-                double modifier = 1;
-                modifier += Ability.JUMPER.getValue(skill.getAbilityLevel(Ability.JUMPER)) / 100;
-                output *= modifier;
-            }
-            return output;
-        }
-        return 0.0;
-    }
-
-    public static double getModifiedXp(Player player, double xp) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = xp;
-        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.JUMPER)) {
-            double modifier = 1;
-            modifier += Ability.JUMPER.getValue(skill.getAbilityLevel(Ability.JUMPER)) / 100;
-            output *= modifier;
-        }
-        return output;
     }
 
     private void lightFall(EntityDamageEvent event, PlayerSkill playerSkill) {

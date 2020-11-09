@@ -14,7 +14,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 
-public class EnchantingLeveler implements Listener {
+public class EnchantingLeveler extends SkillLeveler implements Listener {
+
+	public EnchantingLeveler(AureliumSkills plugin) {
+		super(plugin);
+	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEnchant(EnchantItemEvent event) {
@@ -48,16 +52,16 @@ public class EnchantingLeveler implements Listener {
 				}
 			}
 			if (ItemUtils.isArmor(mat)) {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * OptionL.getXp(Source.ARMOR_PER_LEVEL));
+				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.ARMOR_PER_LEVEL));
 			}
 			else if (ItemUtils.isWeapon(mat)) {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * OptionL.getXp(Source.WEAPON_PER_LEVEL));
+				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.WEAPON_PER_LEVEL));
 			}
 			else if (mat.equals(Material.BOOK)) {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * OptionL.getXp(Source.BOOK_PER_LEVEL));
+				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.BOOK_PER_LEVEL));
 			}
 			else {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * OptionL.getXp(Source.TOOL_PER_LEVEL));
+				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.TOOL_PER_LEVEL));
 			}
 		}
 	}

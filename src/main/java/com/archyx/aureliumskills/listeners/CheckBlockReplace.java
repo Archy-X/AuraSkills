@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.listeners;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.skills.SourceManager;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -16,7 +17,6 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 
 public class CheckBlockReplace implements Listener {
 
@@ -62,6 +62,7 @@ public class CheckBlockReplace implements Listener {
             XMaterial.PUMPKIN,
             XMaterial.MELON,
             XMaterial.SUGAR_CANE,
+            XMaterial.BAMBOO,
             XMaterial.OAK_LEAVES,
             XMaterial.BIRCH_LEAVES,
             XMaterial.SPRUCE_LEAVES,
@@ -92,11 +93,13 @@ public class CheckBlockReplace implements Listener {
     };
 
     private final Material[] materials = new Material[checkedMaterials.length];
+    private Material[] customMaterials;
 
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
 
-    public CheckBlockReplace(Plugin plugin) {
+    public CheckBlockReplace(AureliumSkills plugin) {
         this.plugin = plugin;
+        SourceManager sourceManager = plugin.getSourceManager();
         for (int i = 0; i < checkedMaterials.length; i++) {
             if (checkedMaterials[i].equals(XMaterial.SUGAR_CANE) && !XMaterial.isNewVersion()) {
                 materials[i] = Material.getMaterial("SUGAR_CANE_BLOCK");
@@ -104,6 +107,22 @@ public class CheckBlockReplace implements Listener {
             else {
                 materials[i] = checkedMaterials[i].parseMaterial();
             }
+        }
+        customMaterials = new Material[sourceManager.getCustomBlockSet().size()];
+        int pos = 0;
+        for (XMaterial material : sourceManager.getCustomBlockSet()) {
+            customMaterials[pos] = material.parseMaterial();
+            pos++;
+        }
+    }
+
+    public void reloadCustomBlocks() {
+        SourceManager sourceManager = plugin.getSourceManager();
+        customMaterials = new Material[sourceManager.getCustomBlockSet().size()];
+        int pos = 0;
+        for (XMaterial material : sourceManager.getCustomBlockSet()) {
+            customMaterials[pos] = material.parseMaterial();
+            pos++;
         }
     }
 
@@ -123,6 +142,12 @@ public class CheckBlockReplace implements Listener {
         if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
             Material material = event.getBlock().getType();
             for (Material checkedMaterial : materials) {
+                if (material.equals(checkedMaterial)) {
+                    event.getBlock().setMetadata("skillsPlaced", new FixedMetadataValue(plugin, true));
+                    break;
+                }
+            }
+            for (Material checkedMaterial : customMaterials) {
                 if (material.equals(checkedMaterial)) {
                     event.getBlock().setMetadata("skillsPlaced", new FixedMetadataValue(plugin, true));
                     break;

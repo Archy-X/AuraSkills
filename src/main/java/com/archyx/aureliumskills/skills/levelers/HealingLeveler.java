@@ -19,9 +19,14 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-public class HealingLeveler implements Listener {
+public class HealingLeveler extends SkillLeveler implements Listener {
+
+	public HealingLeveler(AureliumSkills plugin) {
+		super(plugin);
+	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
+	@SuppressWarnings("deprecation")
 	public void onConsume(PlayerItemConsumeEvent event) {
 		if (OptionL.isEnabled(Skill.HEALING)) {
 			//Check cancelled
@@ -59,13 +64,13 @@ public class HealingLeveler implements Listener {
 					if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 							&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 						if (data.isExtended()) {
-							Leveler.addXp(p, s, Source.DRINK_EXTENDED);
+							Leveler.addXp(p, s, getXp(Source.DRINK_EXTENDED));
 						}
 						else if (data.isUpgraded()) {
-							Leveler.addXp(p, s, Source.DRINK_UPGRADED);
+							Leveler.addXp(p, s, getXp(Source.DRINK_UPGRADED));
 						}
 						else {
-							Leveler.addXp(p, s, Source.DRINK_REGULAR);
+							Leveler.addXp(p, s, getXp(Source.DRINK_REGULAR));
 						}
 					}
 
@@ -73,10 +78,10 @@ public class HealingLeveler implements Listener {
 			}
 			else if (XMaterial.isNewVersion()) {
 				if (event.getItem().getType().equals(Material.GOLDEN_APPLE)) {
-					Leveler.addXp(p, s, Source.GOLDEN_APPLE);
+					Leveler.addXp(p, s, getXp(Source.GOLDEN_APPLE));
 				}
 				else if (event.getItem().getType().equals(XMaterial.ENCHANTED_GOLDEN_APPLE.parseMaterial())) {
-					Leveler.addXp(p, s, Source.ENCHANTED_GOLDEN_APPLE);
+					Leveler.addXp(p, s, getXp(Source.ENCHANTED_GOLDEN_APPLE));
 				}
 			}
 			else {
@@ -84,10 +89,10 @@ public class HealingLeveler implements Listener {
 					MaterialData materialData = event.getItem().getData();
 					if (materialData != null) {
 						if (materialData.getData() == 0) {
-							Leveler.addXp(p, s, Source.GOLDEN_APPLE);
+							Leveler.addXp(p, s, getXp(Source.GOLDEN_APPLE));
 						}
 						else if (materialData.getData() == 1) {
-							Leveler.addXp(p, s, Source.ENCHANTED_GOLDEN_APPLE);
+							Leveler.addXp(p, s, getXp(Source.ENCHANTED_GOLDEN_APPLE));
 						}
 					}
 				}
@@ -124,13 +129,13 @@ public class HealingLeveler implements Listener {
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 							if (data.isExtended()) {
-								Leveler.addXp(p, s, Source.SPLASH_EXTENDED);
+								Leveler.addXp(p, s, getXp(Source.SPLASH_EXTENDED));
 							}
 							else if (data.isUpgraded()) {
-								Leveler.addXp(p, s, Source.SPLASH_UPGRADED);
+								Leveler.addXp(p, s, getXp(Source.SPLASH_UPGRADED));
 							}
 							else {
-								Leveler.addXp(p, s, Source.SPLASH_REGULAR);
+								Leveler.addXp(p, s, getXp(Source.SPLASH_REGULAR));
 							}
 						}
 					}

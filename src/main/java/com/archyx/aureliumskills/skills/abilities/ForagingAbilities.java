@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.Treecapitator;
 import com.archyx.aureliumskills.stats.PlayerStat;
@@ -31,7 +30,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Locale;
@@ -41,24 +39,10 @@ public class ForagingAbilities implements Listener {
 
 	private static final Random r = new Random();
 	
-	private final Plugin plugin;
+	private final AureliumSkills plugin;
 	
-	public ForagingAbilities(Plugin plugin) {
+	public ForagingAbilities(AureliumSkills plugin) {
 		this.plugin = plugin;
-	}
-	
-	public static double getModifiedXp(Player player, Source source) {
-		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		if (skill != null) {
-			double output = OptionL.getXp(source);
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FORAGER)) {
-				double modifier = 1;
-				modifier += Ability.FORAGER.getValue(skill.getAbilityLevel(Ability.FORAGER)) / 100;
-				output *= modifier;
-			}
-			return output;
-		}
-		return 0.0;
 	}
 	
 	public static void lumberjack(Player player, Block block) {
@@ -177,7 +161,7 @@ public class ForagingAbilities implements Listener {
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 							if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.TREECAPITATOR.getManaCost(skill.getManaAbilityLevel(MAbility.TREECAPITATOR))) {
-								AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.TREECAPITATOR, (int) (MAbility.TREECAPITATOR.getValue(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)) * 20), new Treecapitator());
+								AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.TREECAPITATOR, (int) (MAbility.TREECAPITATOR.getValue(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)) * 20), new Treecapitator(plugin));
 								treeCapitator(event);
 							}
 							else {

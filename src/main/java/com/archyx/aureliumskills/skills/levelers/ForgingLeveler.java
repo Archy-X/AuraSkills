@@ -18,7 +18,11 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 
-public class ForgingLeveler implements Listener {
+public class ForgingLeveler extends SkillLeveler implements Listener {
+
+	public ForgingLeveler(AureliumSkills plugin) {
+		super(plugin);
+	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onForge(InventoryClickEvent event) {
@@ -71,13 +75,13 @@ public class ForgingLeveler implements Listener {
 								if (addedItem != null && baseItem != null) {
 									if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
 										if (ItemUtils.isArmor(baseItem.getType())) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_ARMOR_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_ARMOR_PER_LEVEL));
 										} else if (ItemUtils.isWeapon(baseItem.getType())) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_WEAPON_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_WEAPON_PER_LEVEL));
 										} else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
-											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_BOOKS_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_BOOKS_PER_LEVEL));
 										} else {
-											Leveler.addXp(p, s, inventory.getRepairCost() * OptionL.getXp(Source.COMBINE_TOOL_PER_LEVEL));
+											Leveler.addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_TOOL_PER_LEVEL));
 										}
 									}
 								}

@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -27,31 +26,6 @@ public class DefenseAbilities implements Listener {
 
     public DefenseAbilities(Plugin plugin) {
         this.plugin = plugin;
-    }
-
-    public static double getModifiedXp(Player player, Source source) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            double output = OptionL.getXp(source);
-            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.DEFENDER)) {
-                double modifier = 1;
-                modifier += Ability.DEFENDER.getValue(skill.getAbilityLevel(Ability.DEFENDER)) / 100;
-                output *= modifier;
-            }
-            return output;
-        }
-        return 0.0;
-    }
-
-    public static double getModifiedXp(Player player, double base) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        double output = base;
-        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.DEFENDER)) {
-            double modifier = 1;
-            modifier += Ability.DEFENDER.getValue(skill.getAbilityLevel(Ability.DEFENDER)) / 100;
-            output *= modifier;
-        }
-        return output;
     }
 
     public static void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {

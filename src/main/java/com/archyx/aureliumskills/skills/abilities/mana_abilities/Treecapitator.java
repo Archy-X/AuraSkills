@@ -14,6 +14,13 @@ import java.util.Locale;
 
 public class Treecapitator implements ManaAbility {
 
+    private final SorceryLeveler sorceryLeveler;
+
+    public Treecapitator(AureliumSkills plugin) {
+        this.sorceryLeveler = plugin.getSorceryLeveler();
+    }
+
+
     @Override
     public void activate(Player player) {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -24,7 +31,7 @@ public class Treecapitator implements ManaAbility {
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.TREECAPITATOR));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
-            SorceryLeveler.level(player, manaConsumed);
+            sorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }

@@ -320,6 +320,8 @@ public class SkillsCommand extends BaseCommand {
 		plugin.reloadConfig();
 		plugin.saveDefaultConfig();
 		AureliumSkills.optionLoader.loadOptions();
+		plugin.getSourceManager().loadSources();
+		plugin.getCheckBlockReplace().reloadCustomBlocks();
 		lang.loadEmbeddedMessages(plugin.getCommandManager());
 		lang.loadLanguages(plugin.getCommandManager());
 		try {

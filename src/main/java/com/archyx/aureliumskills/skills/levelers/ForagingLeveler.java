@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.skills.abilities.ForagingAbilities;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
@@ -16,8 +17,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-public class ForagingLeveler implements Listener{
-	
+public class ForagingLeveler extends SkillLeveler implements Listener{
+
+	public ForagingLeveler(AureliumSkills plugin) {
+		super(plugin, Ability.FORAGER);
+	}
+
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
@@ -61,52 +66,52 @@ public class ForagingLeveler implements Listener{
 			//If 1.13+
 			if (XMaterial.isNewVersion()) {
 				if (mat.equals(XMaterial.OAK_LOG.parseMaterial()) || mat.equals(XMaterial.OAK_WOOD.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.OAK_LOG));
+					Leveler.addXp(p, s, getXp(p, Source.OAK_LOG));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.SPRUCE_LOG.parseMaterial()) || mat.equals(XMaterial.SPRUCE_WOOD.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.SPRUCE_LOG));
+					Leveler.addXp(p, s, getXp(p, Source.SPRUCE_LOG));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.BIRCH_LOG.parseMaterial()) || mat.equals(XMaterial.BIRCH_WOOD.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.BIRCH_LOG));
+					Leveler.addXp(p, s, getXp(p, Source.BIRCH_LOG));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || mat.equals(XMaterial.JUNGLE_WOOD.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.JUNGLE_LOG));
+					Leveler.addXp(p, s, getXp(p, Source.JUNGLE_LOG));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.ACACIA_LOG.parseMaterial()) || mat.equals(XMaterial.ACACIA_WOOD.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.ACACIA_LOG));
+					Leveler.addXp(p, s, getXp(p, Source.ACACIA_LOG));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.DARK_OAK_LOG.parseMaterial()) || mat.equals(XMaterial.DARK_OAK_WOOD.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.DARK_OAK_LOG));
+					Leveler.addXp(p, s, getXp(p, Source.DARK_OAK_LOG));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.OAK_LEAVES.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.OAK_LEAVES));
+					Leveler.addXp(p, s, getXp(p, Source.OAK_LEAVES));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.SPRUCE_LEAVES.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.SPRUCE_LEAVES));
+					Leveler.addXp(p, s, getXp(p, Source.SPRUCE_LEAVES));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.BIRCH_LEAVES.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.BIRCH_LEAVES));
+					Leveler.addXp(p, s, getXp(p, Source.BIRCH_LEAVES));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.JUNGLE_LEAVES.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.JUNGLE_LEAVES));
+					Leveler.addXp(p, s, getXp(p, Source.JUNGLE_LEAVES));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.ACACIA_LEAVES.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.ACACIA_LEAVES));
+					Leveler.addXp(p, s, getXp(p, Source.ACACIA_LEAVES));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.DARK_OAK_LEAVES.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.DARK_OAK_LEAVES));
+					Leveler.addXp(p, s, getXp(p, Source.DARK_OAK_LEAVES));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.CRIMSON_STEM.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.CRIMSON_STEM));
+					Leveler.addXp(p, s, getXp(p, Source.CRIMSON_STEM));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.WARPED_STEM.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.WARPED_STEM));
+					Leveler.addXp(p, s, getXp(p, Source.WARPED_STEM));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.NETHER_WART_BLOCK.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.NETHER_WART_BLOCK));
+					Leveler.addXp(p, s, getXp(p, Source.NETHER_WART_BLOCK));
 					applyAbilities(p, b);
 				} else if (mat.equals(XMaterial.WARPED_WART_BLOCK.parseMaterial())) {
-					Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.WARPED_WART_BLOCK));
+					Leveler.addXp(p, s, getXp(p, Source.WARPED_WART_BLOCK));
 					applyAbilities(p, b);
 				}
 			}
@@ -118,25 +123,25 @@ public class ForagingLeveler implements Listener{
 						case 0:
 						case 4:
 						case 8:
-							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.OAK_LOG));
+							Leveler.addXp(p, s, getXp(p, Source.OAK_LOG));
 							applyAbilities(p, b);
 							break;
 						case 1:
 						case 5:
 						case 9:
-							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.SPRUCE_LOG));
+							Leveler.addXp(p, s, getXp(p, Source.SPRUCE_LOG));
 							applyAbilities(p, b);
 							break;
 						case 2:
 						case 6:
 						case 10:
-							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.BIRCH_LOG));
+							Leveler.addXp(p, s, getXp(p, Source.BIRCH_LOG));
 							applyAbilities(p, b);
 							break;
 						case 3:
 						case 7:
 						case 11:
-							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.JUNGLE_LOG));
+							Leveler.addXp(p, s, getXp(p, Source.JUNGLE_LOG));
 							applyAbilities(p, b);
 							break;
 					}
@@ -147,13 +152,13 @@ public class ForagingLeveler implements Listener{
 						case 0:
 						case 4:
 						case 8:
-							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.ACACIA_LOG));
+							Leveler.addXp(p, s, getXp(p, Source.ACACIA_LOG));
 							applyAbilities(p, b);
 							break;
 						case 1:
 						case 5:
 						case 9:
-							Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.DARK_OAK_LOG));
+							Leveler.addXp(p, s, getXp(p, Source.DARK_OAK_LOG));
 							applyAbilities(p, b);
 							break;
 					}
@@ -162,16 +167,16 @@ public class ForagingLeveler implements Listener{
 				else if (mat.equals(XMaterial.OAK_LEAVES.parseMaterial())) {
 					byte data = event.getBlock().getData();
 					if (data == 0 || data == 8) {
-						Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.OAK_LEAVES));
+						Leveler.addXp(p, s, getXp(p, Source.OAK_LEAVES));
 						applyAbilities(p, b);
 					} else if (data == 1 || data == 9) {
-						Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.SPRUCE_LEAVES));
+						Leveler.addXp(p, s, getXp(p, Source.SPRUCE_LEAVES));
 						applyAbilities(p, b);
 					} else if (data == 2 || data == 10) {
-						Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.BIRCH_LEAVES));
+						Leveler.addXp(p, s, getXp(p, Source.BIRCH_LEAVES));
 						applyAbilities(p, b);
 					} else if (data == 3 || data == 11) {
-						Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.JUNGLE_LEAVES));
+						Leveler.addXp(p, s, getXp(p, Source.JUNGLE_LEAVES));
 						applyAbilities(p, b);
 					}
 				}
@@ -179,14 +184,16 @@ public class ForagingLeveler implements Listener{
 				else if (mat.equals(XMaterial.ACACIA_LEAVES.parseMaterial())) {
 					byte data = event.getBlock().getData();
 					if (data == 0 || data == 8) {
-						Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.ACACIA_LEAVES));
+						Leveler.addXp(p, s, getXp(p, Source.ACACIA_LEAVES));
 						applyAbilities(p, b);
 					} else if (data == 1 || data == 9) {
-						Leveler.addXp(p, s, ForagingAbilities.getModifiedXp(p, Source.DARK_OAK_LEAVES));
+						Leveler.addXp(p, s, getXp(p, Source.DARK_OAK_LEAVES));
 						applyAbilities(p, b);
 					}
 				}
 			}
+			// Check custom blocks
+			checkCustomBlocks(p, b, s);
 		}
 	}
 	

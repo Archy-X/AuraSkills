@@ -15,6 +15,12 @@ import java.util.Locale;
 
 public class SpeedMine implements ManaAbility {
 
+    private final SorceryLeveler sorceryLeveler;
+
+    public SpeedMine(AureliumSkills plugin) {
+        this.sorceryLeveler = plugin.getSorceryLeveler();
+    }
+
     @Override
     public void activate(Player player) {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -28,7 +34,7 @@ public class SpeedMine implements ManaAbility {
             int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
-            SorceryLeveler.level(player, manaConsumed);
+            sorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
         }
     }

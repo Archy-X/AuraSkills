@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
@@ -40,20 +39,6 @@ public class ExcavationAbilities implements Listener {
 		for (int i = 0; i < loadedMaterials.length; i++) {
 			loadedMaterials[i] = materials[i].parseMaterial();
 		}
-	}
-
-	public static double getModifiedXp(Player player, Source source) {
-		PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-		if (skill != null) {
-			double output = OptionL.getXp(source);
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.EXCAVATOR)) {
-				double modifier = 1;
-				modifier += Ability.EXCAVATOR.getValue(skill.getAbilityLevel(Ability.EXCAVATOR)) / 100;
-				output *= modifier;
-			}
-			return output;
-		}
-		return 0.0;
 	}
 
 	public static void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {

@@ -5,8 +5,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.skills.abilities.FightingAbilities;
-import com.archyx.aureliumskills.util.VersionUtils;
+import com.archyx.aureliumskills.skills.abilities.Ability;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
@@ -18,7 +17,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-public class FightingLeveler implements Listener {
+public class FightingLeveler extends SkillLeveler implements Listener {
+
+	public FightingLeveler(AureliumSkills plugin) {
+		super(plugin, Ability.FIGHTER);
+	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event) {
@@ -51,40 +54,13 @@ public class FightingLeveler implements Listener {
 								return;
 							}
 						}
-						if (type.equals(EntityType.CHICKEN) || type.equals(EntityType.BAT) || type.equals(EntityType.OCELOT) || type.equals(EntityType.RABBIT)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_SMALL_PASSIVE));
+						try {
+							Leveler.addXp(p, s, getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
 						}
-						else if (type.equals(EntityType.COW) || type.equals(EntityType.PIG) || type.equals(EntityType.SHEEP) || type.equals(EntityType.MUSHROOM_COW) ||
-								type.equals(EntityType.SQUID) || type.equals(EntityType.HORSE) || type.equals(EntityType.SNOWMAN) || type.equals(EntityType.MULE) ||
-								type.equals(EntityType.DONKEY) || type.equals(EntityType.PARROT)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_PASSIVE));
-						}
-						else if (type.equals(EntityType.LLAMA) || type.equals(EntityType.WOLF) || type.equals(EntityType.SILVERFISH) || type.equals(EntityType.ENDERMITE)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_WEAK_HOSTILE));
-						}
-						else if (type.equals(EntityType.ZOMBIE) || type.equals(EntityType.SKELETON) || type.equals(EntityType.SPIDER) || type.equals(EntityType.ZOMBIE_VILLAGER)
-								|| type.toString().equals("DROWNED") || VersionUtils.isPigman(type)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_COMMON_HOSTILE));
-						}
-						else if (type.equals(EntityType.CREEPER) || type.equals(EntityType.STRAY) || type.equals(EntityType.HUSK) || type.equals(EntityType.CAVE_SPIDER) ||
-								type.equals(EntityType.SLIME) || type.equals(EntityType.MAGMA_CUBE) || type.equals(EntityType.VEX) || type.equals(EntityType.GUARDIAN)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_UNCOMMON_HOSTILE));
-						}
-						else if (type.equals(EntityType.GHAST) || type.equals(EntityType.BLAZE) || type.equals(EntityType.ENDERMAN) || type.equals(EntityType.WITCH)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_STRONG_HOSTILE));
-						}
-						else if (type.equals(EntityType.WITHER_SKELETON) || type.equals(EntityType.VINDICATOR) || type.equals(EntityType.POLAR_BEAR) || 
-								type.equals(EntityType.SHULKER) || type.equals(EntityType.IRON_GOLEM)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_STRONGER_HOSTILE));
-						}
-						else if (type.equals(EntityType.ELDER_GUARDIAN) || type.equals(EntityType.EVOKER)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_MINI_BOSS));
-						}
-						else if (type.equals(EntityType.WITHER) || type.equals(EntityType.ENDER_DRAGON)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_BOSS));
-						}
-						else if (type.equals(EntityType.PLAYER)) {
-							Leveler.addXp(p, s, FightingAbilities.getModifiedXp(p, Source.FIGHTING_PLAYER));
+						catch (IllegalArgumentException exception) {
+							if (type.toString().equals("PIG_ZOMBIE")) {
+								Leveler.addXp(p, s, getXp(p, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+							}
 						}
 					}
 				}

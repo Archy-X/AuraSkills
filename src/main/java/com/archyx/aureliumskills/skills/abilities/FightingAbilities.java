@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,20 +29,6 @@ public class FightingAbilities implements Listener {
 
     public FightingAbilities(Plugin plugin) {
         this.plugin = plugin;
-    }
-
-    public static double getModifiedXp(Player player, Source source) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            double output = OptionL.getXp(source);
-            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FIGHTER)) {
-                double modifier = 1;
-                modifier += Ability.FIGHTER.getValue(skill.getAbilityLevel(Ability.FIGHTER)) / 100;
-                output *= modifier;
-            }
-            return output;
-        }
-        return 0.0;
     }
 
     public static void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {

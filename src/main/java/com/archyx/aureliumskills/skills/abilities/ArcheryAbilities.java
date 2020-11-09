@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
@@ -30,20 +29,6 @@ public class ArcheryAbilities implements Listener {
 
     public ArcheryAbilities(Plugin plugin) {
         this.plugin = plugin;
-    }
-
-    public static double getModifiedXp(Player player, Source source) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            double output = OptionL.getXp(source);
-            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.ARCHER)) {
-                double modifier = 1;
-                modifier += Ability.ARCHER.getValue(skill.getAbilityLevel(Ability.ARCHER)) / 100;
-                output *= modifier;
-            }
-            return output;
-        }
-        return 0.0;
     }
 
     public static void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
