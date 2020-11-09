@@ -11,6 +11,8 @@ import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class AureliumAPI {
 
     /**
@@ -21,6 +23,10 @@ public class AureliumAPI {
         return AureliumSkills.manaManager.getMana(player.getUniqueId());
     }
 
+    public static int getMana(UUID playerId) {
+        return AureliumSkills.manaManager.getMana(playerId);
+    }
+
     /**
      * Gets the max mana of a player
      * @return the max mana of a player
@@ -29,11 +35,19 @@ public class AureliumAPI {
         return AureliumSkills.manaManager.getMaxMana(player.getUniqueId());
     }
 
+    public static int getMaxMana(UUID playerId) {
+        return AureliumSkills.manaManager.getMaxMana(playerId);
+    }
+
     /**
      * Sets a player's mana to an amount
      */
     public static void setMana(Player player, int amount) {
         AureliumSkills.manaManager.setMana(player.getUniqueId(), amount);
+    }
+
+    public static void setMana(UUID playerId, int amount) {
+        AureliumSkills.manaManager.setMana(playerId, amount);
     }
 
     /**
@@ -68,12 +82,33 @@ public class AureliumAPI {
         }
     }
 
+    public static boolean addXpOffline(UUID playerId, Skill skill, double amount) {
+        PlayerSkill playerSkill = SkillLoader.playerSkills.get(playerId);
+        if (playerSkill != null) {
+            playerSkill.addXp(skill, amount);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     /**
      * Gets the skill level of a player
      * @return the skill level of a player, or 1 if player does not have a skills profile
      */
     public static int getSkillLevel(Player player, Skill skill) {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+        if (playerSkill != null) {
+            return playerSkill.getSkillLevel(skill);
+        }
+        else {
+            return 1;
+        }
+    }
+
+    public static int getSkillLevel(UUID playerId, Skill skill) {
+        PlayerSkill playerSkill = SkillLoader.playerSkills.get(playerId);
         if (playerSkill != null) {
             return playerSkill.getSkillLevel(skill);
         }
@@ -98,6 +133,16 @@ public class AureliumAPI {
         }
     }
 
+    public static double getXp(UUID playerId, Skill skill) {
+        PlayerSkill playerSkill = SkillLoader.playerSkills.get(playerId);
+        if (playerSkill != null) {
+            return playerSkill.getXp(skill);
+        }
+        else {
+            return 1;
+        }
+    }
+
     /**
      * Gets the stat level of a player
      * @param player The player to get from
@@ -114,6 +159,16 @@ public class AureliumAPI {
         }
     }
 
+    public static int getStatLevel(UUID playerId, Stat stat) {
+        PlayerStat playerStat = SkillLoader.playerStats.get(playerId);
+        if (playerStat != null) {
+            return playerStat.getStatLevel(stat);
+        }
+        else {
+            return 0;
+        }
+    }
+
     /**
      * Gets the base stat level of a player, without modifiers
      * @param player The player to get from
@@ -122,6 +177,16 @@ public class AureliumAPI {
      */
     public static int getBaseStatLevel(Player player, Stat stat) {
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+        if (playerStat != null) {
+            return playerStat.getBaseStatLevel(stat);
+        }
+        else {
+            return 0;
+        }
+    }
+
+    public static int getBaseStatLevel(UUID playerId, Stat stat) {
+        PlayerStat playerStat = SkillLoader.playerStats.get(playerId);
         if (playerStat != null) {
             return playerStat.getBaseStatLevel(stat);
         }
@@ -147,6 +212,15 @@ public class AureliumAPI {
         return false;
     }
 
+    public static boolean addStatModifier(UUID playerId, String name, Stat stat, int value) {
+        PlayerStat playerStat = SkillLoader.playerStats.get(playerId);
+        if (playerStat != null) {
+            playerStat.addModifier(new StatModifier(name, stat, value));
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Removes a stat modifier from a player
      * @param player The player to remove from
@@ -155,6 +229,14 @@ public class AureliumAPI {
      */
     public static boolean removeStatModifier(Player player, String name) {
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+        if (playerStat != null) {
+            return playerStat.removeModifier(name);
+        }
+        return false;
+    }
+
+    public static boolean removeStatModifier(UUID playerId, String name) {
+        PlayerStat playerStat = SkillLoader.playerStats.get(playerId);
         if (playerStat != null) {
             return playerStat.removeModifier(name);
         }
