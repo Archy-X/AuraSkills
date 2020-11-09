@@ -160,197 +160,61 @@ farming:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        wheat: 2.0
-        potato: 2.5
-        carrot: 2.7
-        beetroot: 3.0
-        nether-wart: 3.0
-        pumpkin: 3.4
-        melon: 3.4
-        sugar-cane: 1.7
 foraging:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        oak-log: 4.0
-        spruce-log: 4.0
-        birch-log: 4.0
-        jungle-log: 4.0
-        acacia-log: 4.0
-        dark-oak-log: 4.0
-        oak-leaves: 0.4
-        spruce-leaves: 0.4
-        birch-leaves: 0.4
-        jungle-leaves: 0.4
-        acacia-leaves: 0.4
-        dark-oak-leaves: 0.4
-        crimson-stem: 5.0
-        warped-stem: 5.0
-        nether-wart-block: 0.5
-        warped-wart-block: 0.5
 mining:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        stone: 0.2
-        cobblestone: 0.2
-        andesite: 0.2
-        diorite: 0.2
-        granite: 0.2
-        coal-ore: 1
-        quartz-ore: 1.8
-        iron-ore: 1.8
-        lapis-ore: 40.6
-        redstone-ore: 5.7
-        gold-ore: 17.8
-        diamond-ore: 47.3
-        emerald-ore: 142
-        terracotta: 0.5
-        white-terracotta: 0.5
-        orange-terracotta: 0.5
-        yellow-terracotta: 0.5
-        light-gray-terracotta: 0.5
-        brown-terracotta: 0.5
-        red-terracotta: 0.5
-        netherrack: 0.1
-        blackstone: 0.3
-        basalt: 0.4
-        magma-block: 0.7
-        nether-gold-ore: 10.0
-        ancient-debris: 500.0
-        end-stone: 0.5
-        obsidian: 10.0
 fishing:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        raw-fish: 25
-        raw-salmon: 60
-        clownfish: 750
-        pufferfish: 115
-        treasure: 1000
-        junk: 30
-        rare: 2000
-        epic: 5000
 excavation:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        dirt: 0.3
-        grass-block: 0.7
-        sand: 0.4
-        gravel: 1.5
-        mycelium: 3.7
-        clay: 2.4
-        soul-sand: 2.7
-        coarse-dirt: 2.3
-        podzol: 2.5
-        soul-soil: 3.0
-        red-sand: 0.7
 archery:
     enabled: true
     max-level: 97
-    types:
-        small-passive: 1
-        passive: 2
-        weak-hostile: 5
-        common-hostile: 7
-        uncommon-hostile: 10
-        strong-hostile: 17
-        stronger-hostile: 35
-        mini-boss: 100
-        boss: 7000
-        player: 50
 defense:
     enabled: true
     max-level: 97
     check-cancelled: true
     max: 100.0
     min: 0
-    types:
-        mob-damage: 1
-        player-damage: 2
 fighting:
     enabled: true
     max-level: 97
-    types:
-        small-passive: 1
-        passive: 2
-        weak-hostile: 5
-        common-hostile: 7
-        uncommon-hostile: 10
-        strong-hostile: 17
-        stronger-hostile: 35
-        mini-boss: 100
-        boss: 7000
-        player: 50
 endurance:
     enabled: true
     max-level: 97
     xp-gain-period: 12000
-    types:
-        walk-per-meter: 0.333
-        sprint-per-meter: 0.1
-        swim-per-meter: 1
 agility:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        jump-per-100: 10
-        fall-damage: 2
 alchemy:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        awkward: 10
-        regular: 15
-        extended: 25
-        upgraded: 25
-        splash: 35
-        lingering: 50
 enchanting:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        weapon-per-level: 2
-        armor-per-level: 2
-        tool-per-level: 2
-        book-per-level: 2
 sorcery:
     enabled: true
     max-level: 97
-    types:
-        mana-ability-use: 0.5
 healing:
     enabled: true
     check-cancelled: true
     max-level: 97
-    types:
-        drink-regular: 10
-        drink-extended: 15
-        drink-upgraded: 15
-        splash-regular: 20
-        splash-extended: 25
-        splash-upgraded: 25
-        golden-apple: 5
-        enchanted-golden-apple: 50
 forging:
     enabled: true
     max-level: 97
     check-cancelled: true
-    types:
-        combine-books-per-level: 10
-        combine-weapon-per-level: 15
-        combine-armor-per-level: 20
-        combine-tool-per-level: 25
 
 # Stat Options
 health:
