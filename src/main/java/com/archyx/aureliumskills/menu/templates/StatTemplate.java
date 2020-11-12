@@ -83,8 +83,18 @@ public class StatTemplate implements ConfigurableTemplate {
     public ItemStack getItem(Stat stat, PlayerStat playerStat, Locale locale) {
         ItemStack item = baseItems.get(stat).clone();
         ItemMeta meta = item.getItemMeta();
-        Supplier<Skill>[] primarySkills = stat.getPrimarySkills();
-        Supplier<Skill>[] secondarySkills = stat.getSecondarySkills();
+        List<Supplier<Skill>> primarySkills = new ArrayList<>();
+        for (Supplier<Skill> primarySkill : stat.getPrimarySkills()) {
+            if (OptionL.isEnabled(primarySkill.get())) {
+                primarySkills.add(primarySkill);
+            }
+        }
+        List<Supplier<Skill>> secondarySkills = new ArrayList<>();
+        for (Supplier<Skill> secondarySkill : stat.getSecondarySkills()) {
+            if (OptionL.isEnabled(secondarySkill.get())) {
+                secondarySkills.add(secondarySkill);
+            }
+        }
         if (meta != null) {
             meta.setDisplayName(LoreUtil.replace(displayName,"{color}", stat.getColor(locale),"{stat}", stat.getDisplayName(locale)));
             List<String> builtLore = new ArrayList<>();
@@ -97,42 +107,54 @@ public class StatTemplate implements ConfigurableTemplate {
                             line = LoreUtil.replace(line,"{stat_desc}", stat.getDescription(locale));
                             break;
                         case "primary_skills_two":
-                            if (primarySkills.length == 2) {
+                            if (primarySkills.size() == 2) {
                                 line = LoreUtil.replace(line,"{primary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
-                                        ,"{skill_1}", primarySkills[0].get().getDisplayName(locale)
-                                        ,"{skill_2}", primarySkills[1].get().getDisplayName(locale)));
+                                        ,"{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
+                                        ,"{skill_2}", primarySkills.get(0).get().getDisplayName(locale)));
+                            }
+                            else if (primarySkills.size() == 1) {
+                                line = LoreUtil.replace(line, "{primary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
+                                        , "{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
+                                        , ", {skill_2}", ""
+                                        , "{skill_2}", ""));
                             }
                             else {
                                 line = LoreUtil.replace(line,"{primary_skills_two}", "");
                             }
                             break;
                         case "primary_skills_three":
-                            if (primarySkills.length == 3) {
+                            if (primarySkills.size() == 3) {
                                 line = LoreUtil.replace(line,"{primary_skills_three}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_THREE, locale)
-                                        ,"{skill_1}", primarySkills[0].get().getDisplayName(locale)
-                                        ,"{skill_2}", primarySkills[1].get().getDisplayName(locale)
-                                        ,"{skill_3}", primarySkills[2].get().getDisplayName(locale)));
+                                        ,"{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
+                                        ,"{skill_2}", primarySkills.get(1).get().getDisplayName(locale)
+                                        ,"{skill_3}", primarySkills.get(2).get().getDisplayName(locale)));
                             }
                             else {
                                 line = LoreUtil.replace(line,"{primary_skills_three}", "");
                             }
                             break;
                         case "secondary_skills_two":
-                            if (secondarySkills.length == 2) {
+                            if (secondarySkills.size() == 2) {
                                 line = LoreUtil.replace(line,"{secondary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
-                                        ,"{skill_1}", secondarySkills[0].get().getDisplayName(locale)
-                                        ,"{skill_2}", secondarySkills[1].get().getDisplayName(locale)));
+                                        ,"{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
+                                        ,"{skill_2}", secondarySkills.get(1).get().getDisplayName(locale)));
+                            }
+                            else if (secondarySkills.size() == 1) {
+                                line = LoreUtil.replace(line, "{secondary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
+                                        , "{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
+                                        , ", {skill_2}", ""
+                                        , "{skill_2}", ""));
                             }
                             else {
                                 line = LoreUtil.replace(line,"{secondary_skills_two}", "");
                             }
                             break;
                         case "secondary_skills_three":
-                            if (secondarySkills.length == 3) {
+                            if (secondarySkills.size() == 3) {
                                 line = LoreUtil.replace(line,"{secondary_skills_three}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_THREE, locale)
-                                        ,"{skill_1}", secondarySkills[0].get().getDisplayName(locale)
-                                        ,"{skill_2}", secondarySkills[1].get().getDisplayName(locale)
-                                        ,"{skill_3}", secondarySkills[2].get().getDisplayName(locale)));
+                                        ,"{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
+                                        ,"{skill_2}", secondarySkills.get(1).get().getDisplayName(locale)
+                                        ,"{skill_3}", secondarySkills.get(2).get().getDisplayName(locale)));
                             }
                             else {
                                 line = LoreUtil.replace(line,"{secondary_skills_three}", "");
