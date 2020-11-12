@@ -26,6 +26,8 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -303,8 +305,9 @@ public class Leveler {
 					if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
 						double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 						double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
+						NumberFormat nf = new DecimalFormat("#.##");
 						message.append("\n").append(LoreUtil.replace(line, "{money_reward}",
-								LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", String.valueOf(base + (multiplier * newLevel * newLevel)))));
+								LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", nf.format(base + (multiplier * newLevel * newLevel)))));
 					}
 				}
 			}

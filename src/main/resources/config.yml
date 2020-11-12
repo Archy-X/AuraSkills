@@ -30,6 +30,7 @@ languages:
     - fr
     - zh-TW
     - tr
+    - pl
 
 # Action Bar Options
 action-bar:

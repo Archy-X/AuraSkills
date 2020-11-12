@@ -14,7 +14,8 @@ public class VersionUtils {
         }
     }
 
-    public void isAboveVersion(String version) {
-
+    public static boolean isAboveVersion(int version) {
+        return XMaterial.getVersion() >= version;
     }
+
 }

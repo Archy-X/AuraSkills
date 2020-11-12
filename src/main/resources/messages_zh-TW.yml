@@ -6,8 +6,8 @@ abilities:
       info: '{value}% 兩倍掉落'
     farmer:
       name: 農夫
-      desc: '獲得{value}% 農業經驗.'
-      info: '+{value}% 農業經驗'
+      desc: '獲得{value}% 額外的農業經驗.'
+      info: '+{value}% 經驗'
     scythe_master:
       name: 鐮刀大師
       desc: '增加鋤頭{value}% 傷害'
@@ -28,19 +28,19 @@ abilities:
     forager:
       name: 伐木
       desc: '獲得{value}% 伐木經驗.'
-      info: '+{value}% 伐木經驗'
+      info: '+{value}% 經驗'
     axe_master:
       name: 斧頭大師
       desc: '增加斧頭{value}% 傷害'
       info: '+{value}% 斧頭傷害'
     valor:
       name: 勇者
-      desc: '手持斧頭時可獲得+{value} 力量'
-      info: '+{value} 力量'
+      desc: '手持斧頭時可獲得+{value} 強度'
+      info: '+{value} 強度'
     shredder:
       name: 粉碎機
       desc: '使用斧頭時有{value}% 機率對護甲造成三倍傷害.'
-      info: '{value}% 三倍耐久傷害'
+      info: '{value}% 三倍耐久度損壞'
   mining:
     lucky_miner:
       name: 幸運礦工
@@ -56,12 +56,12 @@ abilities:
       info: '+{value}% 傷害'
     stamina:
       name: 耐力
-      desc: '手持鎬子時可獲得+{value} 強度'
-      info: '+{value} 強度'
+      desc: '手持鎬子時可獲得+{value} 剛性'
+      info: '+{value} 剛性'
     hardened_armor:
       name: 硬化裝甲
       desc: '有{value}% 機率不會對護甲耐久度造成損耗.'
-      info: '{value}% 沒有耐久度損耗'
+      info: '{value}% 不會對耐久度造成損耗'
   fishing:
     lucky_catch:
       name: 幸運爪子
@@ -69,8 +69,8 @@ abilities:
       info: '{value}% 兩倍漁獲'
     fisher:
       name: 漁夫
-      desc: '獲得{value}% 釣魚經驗'
-      info: '+{value}% 釣魚經驗'
+      desc: '獲得{value}% 額外的釣魚經驗'
+      info: '+{value}% 經驗'
     treasure_hunter:
       name: 寶藏獵人
       desc: '有{value}% 機率釣到罕見寶物.'
@@ -90,8 +90,8 @@ abilities:
       info: '{value}% 罕見寶物'
     excavator:
       name: 挖掘机
-      desc: '獲得{value}% 挖礦經驗'
-      info: '+{value}% 挖礦經驗'
+      desc: '獲得{value}% 額外的挖礦經驗'
+      info: '+{value}% 經驗'
     spade_master:
       name: 圓鍬大師
       desc: '增加{value}% 鏟子造成的傷害'
@@ -112,7 +112,7 @@ abilities:
     archer:
       name: 弓箭手
       desc: '獲得{value}% 射箭經驗.'
-      info: '+{value}% 射箭經驗'
+      info: '+{value}% 經驗'
     bow_master:
       name: 弓箭大師
       desc: '增加{value}% 弓箭造成的傷害'
@@ -133,7 +133,7 @@ abilities:
     defender:
       name: 防禦
       desc: '獲得{value}% 防禦經驗'
-      info: '+{value}% 防禦經驗'
+      info: '+{value}% 經驗'
     mob_master:
       name: 怪物大師
       desc: '減少{value}% 怪物攻擊傷害'
@@ -143,9 +143,9 @@ abilities:
       desc: '{value}% 機率不受敵人攻擊傷害.'
       info: '{value}% 免受傷害'
     no_debuff:
-      name: 沒有減益
+      name: 無負面狀態
       desc: '有{value}% 機率消除傷害性藥水效果'
-      info: '{value}%'
+      info: '{value}% 無負面狀態'
   fighting:
     crit_damage:
       name: 暴擊傷害
@@ -154,7 +154,7 @@ abilities:
     fighter:
       name: 戰鬥
       desc: '獲得{value}% 戰鬥經驗'
-      info: '+{value}% 戰鬥經驗'
+      info: '+{value}% 經驗'
     sword_master:
       name: 劍術師
       desc: '增加{value}% 劍造成的傷害'
@@ -165,10 +165,10 @@ abilities:
       info: '+{value}% 第一擊'
       dealt: '&c第一擊!'
     bleed:
-      name: 出血
+      name: 流血
       desc: "{value}%使敵人流血3個ticks, \n&7每個ticks造成 {value_2} 個傷害."
       info: '{value}% 機率, 造成 {value_2} 個傷害'
-      enemy_bleeding: '&c敵人流血了!'
+      enemy_bleeding: '&c敵人在流血了!'
       self_bleeding: '&c你流血了!'
       stop: '&f已停止流血'
   endurance:
@@ -178,12 +178,12 @@ abilities:
       info: '{value}% 沒有飢餓值損耗'
     runner:
       name: 跑者
-      desc: '獲得{value}%跑者經驗.'
-      info: '+{value}% 跑者經驗'
+      desc: '獲得{value}%耐力經驗.'
+      info: '+{value}% 經驗'
     golden_heal:
       name: 黃金治療
-      desc: '使再生效果生命值提升{value}%'
-      info: '+{value}% 再生效果'
+      desc: '加強恢復效果使生命值提升{value}%'
+      info: '+{value}% 恢復效果'
     recovery:
       name: 恢復
       desc: '生命值不足一半時提高自然恢復 {value}%'
@@ -203,7 +203,7 @@ abilities:
       info: '+{value}% 敏捷經驗'
     sugar_rush:
       name: 衝刺之糖
-      desc: '提升飛濺速度藥水與跳躍藥水{value}% 持續時間'
+      desc: '提升飛濺速度藥水與跳躍藥水{value}% 的持續時間'
       info: '{value}% 持續速度'
     fleeting:
       name: 迅速
@@ -214,7 +214,7 @@ abilities:
     thunder_fall:
       name: 雷暴
       desc: "在摔落時潛行, 有 {value}%機率對3格範圍的\n&7  怪物造成{value_2}% 摔落傷害"
-      info: '{value}% 機率, 造成 {value_2} 個傷害'
+      info: '{value}% 機率, 造成 {value_2} 傷害'
   alchemy:
     alchemist:
       name: 釀造師
@@ -247,13 +247,13 @@ acf:
     error_performing_command: "&c很抱歉, 在執行指令的時候產生了一個錯誤."
     info_message: '{message}'
     please_specify_one_of: '&c錯誤: 請指定一個 (&e{valid}&c)'
-    must_be_a_number: '&c錯誤: {num} 必須為數字.'
+    must_be_a_number: '&c錯誤: {num} 必須是數字.'
     must_be_min_length: '&c錯誤: 至少需要 {min} 個字.'
     must_be_max_length: '&c錯誤: 最多 {max} 個字.'
     please_specify_at_most: '&c錯誤: 指定的值最大 {max}.'
     please_specify_at_least: '&c錯誤: 指定的值最小 {min}.'
     not_allowed_on_console: '&c錯誤: 控制台不能執行這個指令.'
-    could_not_find_player: '&c錯誤: 找不到 &e{search} &7名子的玩家'
+    could_not_find_player: '&c錯誤: 找不到叫 &e{search} &7的玩家'
     no_command_matched_search: '&c找不到 &e{search} 指令.'
     help_page_information: '&b - 頁面 &a{page} &b共 &a{totalpages} 頁&b(&e{results}&b 結果).'
     help_no_results: '&b錯誤: 沒有其他結果.'
@@ -291,35 +291,55 @@ commands:
       add:
         added: '物品已添加{color}{stat} &b{value} 屬性'
         already_exists: '&e裝備屬性 {color}{stat} &e已經存在! 請先使用 /sk armor modifier remove 刪除'
-        must_hold_item: '&e你必須手持物品才能新增屬性!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&e你的物品沒有 {color}{stat} &e的屬性!'
-        must_hold_item: '&e你必須手持物品才能刪除屬性!'
         removed: '已經從你的物品刪除{color}{stat} &7屬性'
       list:
-        header: '&f找到裝備屬性:'
+        header: '&f找到的裝備屬性:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&e你必須手持物品以顯示屬性列表!'
       removeall:
-        must_hold_item: '&e你必須手持物品才能刪除全部屬性!'
-        removed: '&7你的物品已刪除裝備屬性'
+        removed: '&7物品已刪除全部裝備屬性'
+    requirement:
+      add:
+        added: '已將&3{skill}&7 &b {level} &7的裝備要求添加到你的物品中'
+        already_exists: '&e物品已經具有 &3{skill}&e 裝備要求! 請先刪除&6/sk armor requirement remove'
+        lore: '&c需要 &3{skill} {level}'
+      remove:
+        does_not_exist: '&e你的物品沒有 &3{skill}&e 裝備要求!'
+        removed: '已經將 &3{skill}&7 裝備要求從你的物品中移除'
+      list:
+        header: '&f找到的裝備要求:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7全部裝備要求已從你的物品刪除'
   item:
     modifier:
       add:
         added: '物品已添加{color}{stat} &b{value} 屬性'
         already_exists: '&e裝備屬性 {color}{stat} &e已經存在! 請先使用 /sk armor modifier remove 刪除'
-        must_hold_item: '&e你必須手持物品才能新增屬性!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&e你的物品沒有 {color}{stat} &e的屬性!'
-        must_hold_item: '&e你必須手持物品才能刪除屬性!'
         removed: '&7已經從你的物品刪除{color}{stat} 屬性'
       list:
-        header: '&f找到物品屬性:'
+        header: '&f找到的物品屬性:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&e你必須手持物品才能顯示屬性列表!'
       removeall:
-        must_hold_item: '&e你必須手持物品才能刪除全部屬性!'
         removed: '&7你的物品已刪除全部屬性'
+    requirement:
+      add:
+        added: '已將&3{skill}&7 &b{level}&7 的物品要求添加到你的物品中'
+        already_exists: '&e物品已經有 &3{skill}&e 物品要求! 請先刪除 &6/sk item requirement remove'
+        lore: '&c需要 &3{skill} {level}'
+      remove:
+        does_not_exist: '&e你的物品沒有 &3{skill}&e 物品要求!'
+        removed: '&3{skill}&7 物品要求從你的物品中移除'
+      list:
+        header: '&f找到的物品要求:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7全部物品要求已從你的物品刪除'
   lang:
     set: '&7語言設定成 &b{lang}'
     not_found: '&e這個語言不存在!'
@@ -344,7 +364,7 @@ commands:
     list: '&6{player}&f的經驗值倍數: &b{multiplier}x / +{percent}%'
     players_only: '&e只有玩家才能列出自己的倍數! 請指定一個玩家!'
   rank:
-    header: '&b&l你的技能排名'
+    header: '&b&l你的技能排行'
     power: '&ePower &7(全部技能): &f#{rank} 共 {total}'
     entry: '&b{skill}&7: &f#{rank} 共 {total}'
   reload: '&a已重新載入設定!'
@@ -363,8 +383,8 @@ commands:
       at_least_one: '&e等級最少必須要1等!'
       set: '&7將玩家&6{player}&7的技能&b{skill} 設定成等級&b{level}'
   toggle:
-    enabled: '&a你的技能Actionbar已啟用'
-    disabled: '&a你的技能Actionbar已停用'
+    enabled: '&a狀態列已啟用'
+    disabled: '&a狀態列已停用'
     not_enabled: '&a這個伺服器沒有啟用技能Actionbar!'
   top:
     power_entry: '&f{rank}. &b{player} &f- {level}'
@@ -384,14 +404,14 @@ commands:
   unknown_skill: '&e未知的技能!'
   no_profile: '&e玩家沒有技能資料!'
 leveler:
-  title: '&a{skill} 等級已升級'
+  title: '&a{skill} 升級'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3技能等級已升級! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
+  level_up: "&3&m----------------------------------------\n&r &3技能升級! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
   stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&a能力已解鎖! &6&l{ability} &7已經解鎖'
-  ability_level_up: '&a能力已升級! &6&l{ability} &7現在為等級&6{level}'
-  mana_ability_unlock: '&d法力能力已解鎖! &9&l{mana_ability} &7已經解鎖'
-  mana_ability_level_up: '&a法力能力已升級! &9&l{mana_ability}&7現在為等級&6{level}'
+  ability_unlock: '&a能力解鎖! &6&l{ability} &7已經解鎖'
+  ability_level_up: '&a能力升級! &6&l{ability} &7現在為等級&6{level}'
+  mana_ability_unlock: '&d法術能力解鎖! &9&l{mana_ability} &7已經解鎖'
+  mana_ability_level_up: '&a法術能力升級! &9&l{mana_ability}&7現在為等級&6{level}'
   money_reward: '&a${amount}'
 menus:
   common:
@@ -404,20 +424,20 @@ menus:
     ability_level_entry_locked: '&8&m{ability}'
     primary_stat: '&7主要: {color}{stat}'
     secondary_stat: '&7次要: {color}{stat}'
-    mana_ability: "\n&d&l法力能力 &9{mana_ability} {level}\n &7持續時間: &a{duration}秒 &7法力成本: &b{mana_cost} &7冷卻時間: &e{cooldown}秒\n "
+    mana_ability: "\n&d&l法術能力 &9{mana_ability} {level}\n &7持續時間: &a{duration}秒 &7法力成本: &b{mana_cost} &7冷卻時間: &e{cooldown}秒\n "
   skills_menu:
     skills_menu_title: 你的技能
     your_skills: '&b你的技能 - &6{player}'
-    your_skills_desc: "&7通過執行各種任務來升級技能, \n&7以解鎖寶貴的屬性, 能力等提升!"
-    your_skills_hover: '&e將滑鼠指在技能上以指取得更多資訊!'
+    your_skills_desc: "&7通過執行各種任務來升級技能, \n&7以解鎖寶貴的屬性, 能力!"
+    your_skills_hover: '&e滑鼠指在技能上取得更多資訊!'
     your_skills_click: '&e點擊一項技能可以查看等級進度!'
-    skill_click: '&e單擊查看等級進度!'
+    skill_click: '&e點擊查看等級進度!'
     skill_locked: '&c你沒有權限查看這個技能!'
   level_progression_menu:
     level_progression_menu_title: '{skill} 等級 - 第 {page} 頁'
-    your_ranking: '&e你得技能排行'
+    your_ranking: '&e你的技能排行'
     rank_out_of: '&f你的排名是 &6{total} &f玩家中的第&6{rank} &f位'
-    rank_percent: '&f你排行在 &6{percent}%&f的玩家之上'
+    rank_percent: '&f你的排行超過 &6{percent}%&f的玩家'
     back: '&a返回'
     back_click: '&7返回技能選單'
     next_page: '&6下一頁'
@@ -435,7 +455,7 @@ menus:
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
     ability_unlock: "\n&6{ability} &a&l能力解鎖\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
-    mana_ability_unlock: "\n&9{mana_ability} &d&l法力能力解鎖\n&7  {desc}\n "
+    mana_ability_unlock: "\n&9{mana_ability} &d&l法術能力解鎖\n&7  {desc}\n "
     mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
     progress: "&7進度: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -448,9 +468,9 @@ menus:
     your_level: '&7你的等級: {color}{level}'
     attack_damage: '&4+{value} 攻擊傷害'
     hp: '&c+{value} {hp_unit}'
-    saturated_regen: '&6+{value} 飽和度再生'
-    full_hunger_regen: '&6+{value} 飢餓值再生'
-    almost_full_hunger_regen: '&6+{value} 再生全部飢餓值'
+    saturated_regen: '&6+{value} 飽和度'
+    full_hunger_regen: '&6+{value} 飢餓值'
+    almost_full_hunger_regen: '&6+{value} 飢餓值'
     mana_regen: '&b+{value} 法力再生'
     luck: '&2+{value} 運氣'
     double_drop_chance: '&2兩倍掉落機率: {value}%'
@@ -494,60 +514,60 @@ skills:
     desc: '&7收割農作物來獲得經驗點數 {xp_unit}'
   foraging:
     name: 伐木
-    desc: '&7砍伐樹木來獲得經驗點數 {xp_unit}'
+    desc: '&7砍伐樹木來獲得伐木{xp_unit}'
   mining:
     name: 挖礦
-    desc: '&7挖石頭或礦物來獲得經驗點數 {xp_unit}'
+    desc: '&7挖石頭或礦物來獲得挖礦{xp_unit}'
   fishing:
     name: 釣魚
-    desc: '&7釣魚來獲得經驗點數 {xp_unit}'
+    desc: '&7釣魚來獲得釣魚{xp_unit}'
   excavation:
     name: 挖掘
-    desc: '&7用鏟子挖掘來獲取經驗值 {xp_unit}'
+    desc: '&7用鏟子挖掘來獲取挖掘{xp_unit}'
   archery:
     name: 射箭
-    desc: '&7用弓箭射擊怪物和玩家來獲得經驗點數 {xp_unit}'
+    desc: '&7用弓箭射擊怪物和玩家來獲得射箭{xp_unit}'
   defense:
     name: 防禦
-    desc: '&7承受實體傷害來獲得經驗點數{xp_unit}'
+    desc: '&7承受實體傷害來獲得防禦{xp_unit}'
   fighting:
     name: 戰鬥
-    desc: '&7使用近戰武器與生物戰鬥來獲得經驗點數 {xp_unit}'
+    desc: '&7使用近戰武器與生物戰鬥來獲得戰鬥{xp_unit}'
   endurance:
     name: 耐力
-    desc: '&7走路或跑步來獲得經驗點數 {xp_unit}'
+    desc: '&7走路或跑步來獲得耐力{xp_unit}'
   agility:
     name: 敏捷
-    desc: '&7跳躍並遭受傷害來獲得經驗點數{xp_unit}'
+    desc: '&7跳躍並遭受傷害來獲得敏捷{xp_unit}'
   alchemy:
     name: 釀造
-    desc: '&7釀造藥水來獲得經驗點數{xp_unit}'
+    desc: '&7釀造藥水來獲得釀造{xp_unit}'
   enchanting:
     name: 附魔
-    desc: '&7附魔物品和書籍來獲得經驗點數{xp_unit}'
+    desc: '&7附魔物品和書籍來獲得附魔{xp_unit}'
   sorcery:
     name: 法術
-    desc: '&7施法來獲得經驗點數{xp_unit}'
+    desc: '&7使用使用魔法能力來獲得法術{xp_unit}'
   healing:
     name: 治療
-    desc: '&7喝藥水或使用飛濺藥水來獲得經驗點數{xp_unit}'
+    desc: '&7喝藥水或使用飛濺藥水來獲得治療{xp_unit}'
   forging:
     name: 鍛造
-    desc: '&7在鐵砧上使用書籍將物品結合來獲得經驗點數{xp_unit}'
+    desc: '&7在鐵砧上使用書籍將物品結合來獲得鍛造{xp_unit}'
 stats:
   strength:
-    name: 力量
-    desc: '&7力量會增加各種武器的攻擊力'
+    name: 強度
+    desc: '&7強度會增加各種武器的攻擊力'
     color: '&4'
     symbol: '➽'
   health:
-    name: 血量
-    desc: '&7血量會增加你的{hp_unit} 數量, 使您在戰鬥中的壽命更長'
+    name: 健康
+    desc: '&7健康會增加你的{hp_unit} 數量, 使您在戰鬥中的壽命更長'
     color: '&c'
     symbol: '❤'
   regeneration:
-    name: 再生
-    desc: '&7再生可以增加恢復生命值和法力值的速度'
+    name: 恢復
+    desc: '&7恢復可以增加恢復生命值和法力值的速度'
     color: '&6'
     symbol: '❥'
   luck:
@@ -561,12 +581,12 @@ stats:
     color: '&9'
     symbol: '✿'
   toughness:
-    name: 強度
-    desc: '&7強度增加了敵人攻擊所減少的傷害'
+    name: 剛性
+    desc: '&7剛性增加了敵人攻擊所減少的傷害'
     color: '&5'
     symbol: '✦'
 units:
   mana: 法力
-  hp: HP
-  xp: XP
-file_version: 3
+  hp: 血量
+  xp: 經驗
+file_version: 4

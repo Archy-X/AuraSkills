@@ -291,35 +291,55 @@ commands:
       add:
         added: '{color}{stat} &7modifikasi dengan level &b{value} &7telah berhasil ditambahkan ke armor ini'
         already_exists: '&eModifikasi armor dengan statistik ini{color}{stat} &esudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove'
-        must_hold_item: '&eKamu harus memegang barang untuk menambahkan modifikasi!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eItem ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}'
-        must_hold_item: '&eKamu harus memegang barang untuk menghapus modifikasi!'
         removed: '{color}{stat} &7modifikasi telah di hapus'
       list:
         header: '&fModifikasi yang ditemukan:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&eKamu harus memegang barang untuk melihat daftar modifikasi!'
       removeall:
-        must_hold_item: '&eKamu harus memegang barang untuk menghapus semua modifikasi!'
         removed: '&7semua modifikasi telah di hapus'
+    requirement:
+      add:
+        added: '&3{skill}&7 Armor requirement with level &b{level}&7 telah ditambahkan ke itemmu'
+        already_exists: '&eItem telah memiliki persyaratan memiliki &3{skill}! Hapus terlebih dahulu dengan &6/sk qrmor requirement remove'
+        lore: '&cMembutuhkan &3{skill} {level}'
+      remove:
+        does_not_exist: '&eItem kamu tidak memiliki persyaratan armor, &3{skill} dibutuhkan!'
+        removed: '&{skill} &7persyaratan armor telah di hapus'
+      list:
+        header: '&fPersyaratan armor ditemukan:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7semua persyaratan armor telah di hapus'
   item:
     modifier:
       add:
         added: '{color}{stat} &7modifikasi dengan level &b{value} &7telah berhasil ditambahkan ke armor ini'
         already_exists: '&eModifikasi armor dengan statistik ini{color}{stat} &esudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove'
-        must_hold_item: '&eKamu harus memegang barang untuk menambahkan modifikasi!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eItem ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}'
-        must_hold_item: '&eKamu harus memegang barang untuk menghapus modifikasi!'
         removed: '{color}{stat} &7modifikasi telah di hapus'
       list:
         header: '&fModifikasi yang ditemukan:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&eKamu harus memegang barang untuk melihat daftar modifikasi!'
       removeall:
-        must_hold_item: '&eKamu harus memegang barang untuk menghapus semua modifikasi!'
         removed: '&7semua modifikasi telah di hapus'
+    requirement:
+      add:
+        added: '&3{skill}&7 Persyaratan armor dengan level &b{level}&7 telah ditambahkan ke itemmu'
+        already_exists: '&eItem telah memiliki persyaratan memiliki &3{skill}! Hapus terlebih dahulu dengan &6/sk qrmor requirement remove'
+        lore: '&cMembutuhkan &3{skill} {level}'
+      remove:
+        does_not_exist: '&eItem kamu tidak memiliki persyaratan armor, &3{skill} dibutuhkan!'
+        removed: '&{skill} &7persyaratan armor telah di hapus dari itemmu'
+      list:
+        header: '&fPersyaratan armor ditemukan:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7semua persyaratan armor telah di hapus'
   lang:
     set: '&7Bahasa disetel ke &b{lang}'
     not_found: '&eBahasa tidak ditemukan!'
@@ -527,7 +547,7 @@ skills:
     desc: "&7Sihirlah benda atau buku untuk meningkatkan\n&7skill Sihir {xp_unit}"
   sorcery:
     name: Penyihir
-    desc: '&7Gunakan mantra untuk meingkatkan skill Penyihir {xp_unit}'
+    desc: '&7Gunakan sihir untuk mendapatkan {xp_unit} EXP Sorcery'
   healing:
     name: Penyembuh
     desc: "&7Minum dan percikan ramuan penyembuhan untuk\n&7menigkatkan skill Penyembuh {xp_unit}"
@@ -569,4 +589,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: EXP
-file_version: 3
+file_version: 4

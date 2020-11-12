@@ -55,6 +55,9 @@ public class Lang implements Listener {
 		if (!new File(plugin.getDataFolder(), "messages_tr.yml").exists()) {
 			plugin.saveResource("messages_tr.yml", false);
 		}
+		if (!new File(plugin.getDataFolder(), "messages_pl.yml").exists()) {
+			plugin.saveResource("messages_pl.yml", false);
+		}
 	}
 
 	public void loadEmbeddedMessages(PaperCommandManager commandManager) {
@@ -95,7 +98,7 @@ public class Lang implements Listener {
 				Locale locale = new Locale(language);
 				File file = new File(plugin.getDataFolder(), "messages_" + language + ".yml");
 				// Load and update file
-				FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file), locale);
+				FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file), language);
 				if (config.contains("file_version")) {
 					// Load messages
 					loadMessages(config, locale, commandManager);
@@ -155,9 +158,9 @@ public class Lang implements Listener {
 		Lang.messages.put(locale, messages);
 	}
 
-	private FileConfiguration updateFile(File file, FileConfiguration config, Locale locale) {
+	private FileConfiguration updateFile(File file, FileConfiguration config, String language) {
 		if (config.contains("file_version")) {
-			InputStream stream = plugin.getResource("messages_en.yml");
+			InputStream stream = plugin.getResource("messages_" + language + ".yml");
 			if (stream != null) {
 				int currentVersion = config.getInt("file_version");
 				FileConfiguration imbConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
@@ -177,7 +180,7 @@ public class Lang implements Listener {
 						}
 						config.set("file_version", imbVersion);
 						config.save(file);
-						Bukkit.getLogger().info("[AureliumSkills] messages_" + locale.toLanguageTag() + ".yml was updated to a new file version, " + keysAdded + " new keys were added.");
+						Bukkit.getLogger().info("[AureliumSkills] messages_" + language + ".yml was updated to a new file version, " + keysAdded + " new keys were added.");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

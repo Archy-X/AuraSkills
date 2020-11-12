@@ -123,7 +123,7 @@ abilities:
       info: '{value}% Delme şansı'
     stun:
       name: Sersemletme
-      desc: "Düşmanı 2 Saniye Boyunca %20 Yavaşlatma Şansı {value}%"
+      desc: 'Düşmanı 2 Saniye Boyunca %20 Yavaşlatma Şansı {value}%'
       info: '{value}% Sersemletmek şansı'
   defense:
     shielding:
@@ -291,35 +291,55 @@ commands:
       add:
         added: '{color}{stat} &7düzey değiştirici &b{value} &7öğenize eklendi'
         already_exists: '&eİstatistik içeren bir zırh değiştirici {color}{stat} &ezırhınızda zaten var! Önce şunu çıkarın: /sk armor modifier remove'
-        must_hold_item: '&eEklenti Eklemek İçin Elinde Eşya Tutmak Gerek!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eÖğenizin bir {color}{stat} &edeğiştirici!'
-        must_hold_item: '&eDeğiştiricileri kaldırmak için bir öğeyi tutmanız gerekir!'
         removed: '{color}{stat} &7değiştirici, öğenizden kaldırıldı'
       list:
         header: '&fZırh değiştiriciler bulundu:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&eDeğiştiricileri listelemek için bir öğeyi tutmanız gerekir!'
       removeall:
-        must_hold_item: '&eTüm değiştiricileri kaldırmak için bir öğeyi tutmanız gerekir!'
         removed: '&7Tüm zırh değiştiriciler eşyanızdan kaldırıldı'
+    requirement:
+      add:
+        added: '&3{skill} &7 öğe gereksinimi &b{level} level &7 Zırhınıza Eklendi'
+        already_exists: '&eZırhınızda zaten &3{skill}&e Zırh gereksinimi var! Öcelike &6/sk armor requirement remove komudu ile Kaldırın'
+        lore: '&cGerekir &3{skill} {level}'
+      remove:
+        does_not_exist: '&eÖğenizin &3{skill}&e zırh gereksinimi yok!'
+        removed: '&3{skill}&7zırh gereksinimi öğenizden kaldırıldı'
+      list:
+        header: '&fZırh gereksinimleri bulundu:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7Öğenizden tüm zırh gereksinimleri kaldırıldı'
   item:
     modifier:
       add:
         added: '{color}{stat} &7seviye ile değiştirici &b{value} &7öğenize eklendi'
         already_exists: '&e{color} {stat} statüsüne sahip bir eşya değiştirici ve zırhınızda zaten var! İlk Önce Onu /sk item modifier remove ile silin'
-        must_hold_item: '&eDeğiştiricileri listelemek için bir öğeyi tutmanız gerekir!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eEşyanızın {color}{stat} &eDeğiştiricisi Yok!'
-        must_hold_item: '&eDeğiştiricileri kaldırmak için bir öğeyi tutmanız gerekir!'
         removed: '{color}{stat} &7değiştirici, öğenizden kaldırıldı'
       list:
         header: '&fEşya Değiştiricileri Bulundu:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&eEklentileri Listelemek İçin Bir Öğe Tutmanız Gerekmekte!'
       removeall:
-        must_hold_item: '&e Tüm eklentileri Silmek İçin Bir Öğeyi Tutmanız Gerekmekte!'
         removed: '&7Öğenizden Tüm Eklentiler Kaldırıldı'
+    requirement:
+      add:
+        added: '&3{skill} &7 öğe gereksinimi &b{level} level &7 Öğenize Eklendi'
+        already_exists: '&eÖğede zaten &3{skill}&e öğe gereksinimi var! Öcelike &6/sk item requirement remove komudu ile Kaldırın'
+        lore: '&cGerekir &3{skill} {level}'
+      remove:
+        does_not_exist: '&eÖğenizin &3{skill}&eöğe gereksinimi yok!'
+        removed: '&3{skill}&7 öğe gereksinimi öğenizden kaldırıldı'
+      list:
+        header: '&fÖğe gereksinimleri bulundu:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7Öğenizden tüm öğe gereksinimleri kaldırıldı'
   lang:
     set: '&7Dil &b{lang} &7olarak ayarlandı'
     not_found: '&eDil Bulunamadı!'
@@ -527,7 +547,7 @@ skills:
     desc: "&7Büyücülük öğrenmek için öğeleri ve kitapları büyüleyin\n&7kitapları büyüleyin {xp_unit}"
   sorcery:
     name: Büyücülük
-    desc: '&7Büyücülük Kazanmak İçin Büyü Yapın {xp_unit}'
+    desc: '&7Büyücülük kazanmak için mana yeteneklerini kullanın {xp_unit}'
   healing:
     name: İyileştirme
     desc: "&7Kazanmak İçin İksir İç Ya Da Fırlat\n&7İyileştirme {xp_unit}"
@@ -569,4 +589,4 @@ units:
   mana: Mana
   hp: Can
   xp: Level
-file_version: 3
+file_version: 4

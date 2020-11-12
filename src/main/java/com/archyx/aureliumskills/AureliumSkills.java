@@ -68,7 +68,7 @@ public class AureliumSkills extends JavaPlugin {
 	private SourceManager sourceManager;
 	private SorceryLeveler sorceryLeveler;
 	private CheckBlockReplace checkBlockReplace;
-	public static long releaseTime = 1604559709804L;
+	public static long releaseTime = 1605145563240L;
 
 	public void onEnable() {
 		invManager = new InventoryManager(this);
