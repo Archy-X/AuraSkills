@@ -364,7 +364,7 @@ commands:
       players_only: '&eOnly players can remove their own modifiers! Try specifying a player'
   multiplier:
     list: '&fXP multiplier for &6{player}&f: &b{multiplier}x / +{percent}%'
-    players_only: 'Only players can list their own multiplier! Specify a player!'
+    players_only: '&eOnly players can list their own multiplier! Specify a player!'
   rank:
     header: '&b&lYour Skill Rankings'
     power: '&ePower &7(All Skills): &f#{rank} of {total}'

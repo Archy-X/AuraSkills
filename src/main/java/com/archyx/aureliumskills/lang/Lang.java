@@ -58,6 +58,9 @@ public class Lang implements Listener {
 		if (!new File(plugin.getDataFolder(), "messages_pl.yml").exists()) {
 			plugin.saveResource("messages_pl.yml", false);
 		}
+		if (!new File(plugin.getDataFolder(), "messages_pt-BR.yml").exists()) {
+			plugin.saveResource("messages_pt-BR.yml", false);
+		}
 	}
 
 	public void loadEmbeddedMessages(PaperCommandManager commandManager) {
