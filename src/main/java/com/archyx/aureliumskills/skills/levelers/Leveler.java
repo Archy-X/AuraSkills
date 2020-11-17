@@ -186,10 +186,12 @@ public class Leveler {
 							economy.depositPlayer(player, base + (multiplier * (currentLevel + 1) * (currentLevel + 1)));
 						}
 					}
-					//Calls event
+					// Reload items and armor to check for newly met requirements
+					plugin.getModifierManager().reloadPlayer(player);
+					// Calls event
 					SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, currentLevel + 1);
 					Bukkit.getPluginManager().callEvent(event);
-					//Sends messages
+					// Sends messages
 					if (OptionL.getBoolean(Option.LEVELER_TITLE_ENABLED)) {
 						player.sendTitle(LoreUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
 								LoreUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)

@@ -16,6 +16,10 @@ import com.archyx.aureliumskills.magic.ManaManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
+import com.archyx.aureliumskills.modifier.ModifierManager;
+import com.archyx.aureliumskills.requirement.ArmorRequirementListener;
+import com.archyx.aureliumskills.requirement.ItemRequirementListener;
+import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.skills.abilities.*;
 import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityManager;
@@ -54,7 +58,6 @@ public class AureliumSkills extends JavaPlugin {
 	public static WorldManager worldManager;
 	public static ManaManager manaManager;
 	public static ManaAbilityManager manaAbilityManager;
-	public static OptionL optionLoader;
 	public static boolean holographicDisplaysEnabled;
 	public static boolean worldGuardEnabled;
 	public static boolean placeholderAPIEnabled;
@@ -62,12 +65,15 @@ public class AureliumSkills extends JavaPlugin {
 	public static boolean protocolLibEnabled;
 	public static Leaderboard leaderboard;
 	private static Economy economy = null;
+	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
 	private ActionBar actionBar;
 	private SkillBossBar bossBar;
 	private SourceManager sourceManager;
 	private SorceryLeveler sorceryLeveler;
 	private CheckBlockReplace checkBlockReplace;
+	private RequirementManager requirementManager;
+	private ModifierManager modifierManager;
 	public static long releaseTime = 1605145563240L;
 
 	public void onEnable() {
@@ -106,8 +112,11 @@ public class AureliumSkills extends JavaPlugin {
 		// Load config
 		loadConfig();
 		// Load config
+		this.requirementManager = new RequirementManager(this);
 		optionLoader = new OptionL(this);
 		optionLoader.loadOptions();
+		requirementManager.load();
+		this.modifierManager = new ModifierManager(this);
 		// Load sources
 		sourceManager = new SourceManager(this);
 		sourceManager.loadSources();
@@ -358,7 +367,10 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(itemListener, this);
 		itemListener.scheduleTask();
 		pm.registerEvents(new ArmorListener(OptionL.getList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
-		pm.registerEvents(new ArmorModifierListener(), this);
+		pm.registerEvents(new ArmorModifierListener(requirementManager), this);
+		ItemRequirementListener itemRequirementListener = new ItemRequirementListener(requirementManager);
+		pm.registerEvents(itemRequirementListener, this);
+		pm.registerEvents(new ArmorRequirementListener(requirementManager), this);
 	}
 
 	private boolean setupEconomy() {
@@ -407,6 +419,18 @@ public class AureliumSkills extends JavaPlugin {
 
 	public CheckBlockReplace getCheckBlockReplace() {
 		return checkBlockReplace;
+	}
+
+	public RequirementManager getRequirementManager() {
+		return requirementManager;
+	}
+
+	public OptionL getOptionLoader() {
+		return optionLoader;
+	}
+
+	public ModifierManager getModifierManager() {
+		return modifierManager;
 	}
 
 }

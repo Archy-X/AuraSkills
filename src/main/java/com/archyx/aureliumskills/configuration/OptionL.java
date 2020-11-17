@@ -75,6 +75,7 @@ public class OptionL {
                 ASLogger.logWarn(LogType.CONFIG_MISSING_VALUE, "Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
             }
         }
+
         long end = System.currentTimeMillis();
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + loaded + " config options in " + (end - start) + " ms");
     }

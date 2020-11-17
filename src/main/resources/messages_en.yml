@@ -313,6 +313,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7All armor requirements have been removed from your item'
+      equip: '&eYou do not meet the requirements to equip this item!'
   item:
     modifier:
       add:
@@ -340,6 +341,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7All item requirements have been removed from your item'
+      use: '&eYou do not meet the requirements to use this item!'
   lang:
     set: '&7Language set to &b{lang}'
     not_found: '&eLanguage not found!'
@@ -589,4 +591,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 4
+file_version: 5

@@ -145,6 +145,16 @@ modifier:
         check-period: 3
         enable-off-hand: true
 
+requirement:
+    item:
+        prevent-tool-use: true
+        prevent-weapon-use: true
+        prevent-block-place: true
+        global:
+    armor:
+        prevent-armor-equip: true
+        global:
+
 critical:
     base-multiplier: 1.5
     enabled:

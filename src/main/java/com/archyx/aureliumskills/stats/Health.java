@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.abilities.AgilityAbilities;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
@@ -38,6 +39,7 @@ public class Health implements Listener {
 	public static void reload(Player player) {
 		if (player != null) {
 			setHealth(player);
+			AgilityAbilities.removeFleeting(player);
 		}
 	}
 

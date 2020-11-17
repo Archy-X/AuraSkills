@@ -41,10 +41,10 @@ import java.util.Random;
 public class AgilityAbilities implements Listener {
 
     private final Random r = new Random();
-    private final Plugin plugin;
+    private static Plugin plugin;
 
     public AgilityAbilities(Plugin plugin) {
-        this.plugin = plugin;
+        AgilityAbilities.plugin = plugin;
     }
 
     private void lightFall(EntityDamageEvent event, PlayerSkill playerSkill) {
@@ -193,7 +193,7 @@ public class AgilityAbilities implements Listener {
         if (player.getHealth() - event.getFinalDamage() < 0.2 * maxHealth) {
             if (!player.hasMetadata("AureliumSkills-Fleeting")) {
                 double percent = Ability.FLEETING.getValue(playerSkill.getAbilityLevel(Ability.FLEETING));
-                float boostFactor = 1 + ((float) percent/ 100);
+                float boostFactor = 1 + ((float) percent / 100);
                 float newSpeed = player.getWalkSpeed() * boostFactor;
                 if (newSpeed > 1) {
                     newSpeed = 1.0f;
@@ -204,6 +204,20 @@ public class AgilityAbilities implements Listener {
                 player.setMetadata("AureliumSkills-Fleeting", new FixedMetadataValue(plugin, walkSpeedChange));
                 Locale locale = Lang.getLanguage(player);
                 player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
+            }
+        }
+    }
+
+    public static void removeFleeting(Player player) {
+        AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
+        double maxHealth = attribute.getValue();
+        if (player.getHealth() >= 0.2 * maxHealth) {
+            if (player.hasMetadata("AureliumSkills-Fleeting")) {
+                float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
+                player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
+                player.removeMetadata("AureliumSkills-Fleeting", plugin);
+                Locale locale = Lang.getLanguage(player);
+                player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(AbilityMessage.FLEETING_END, locale));
             }
         }
     }

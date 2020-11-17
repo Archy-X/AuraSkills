@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.modifier;
 
+import com.archyx.aureliumskills.requirement.ArmorRequirement;
+import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.util.ArmorEquipEvent;
@@ -13,6 +15,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class ArmorModifierListener implements Listener {
 
+    private final RequirementManager requirementManager;
+
+    public ArmorModifierListener(RequirementManager requirementManager) {
+        this.requirementManager = requirementManager;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -21,7 +29,8 @@ public class ArmorModifierListener implements Listener {
             for (ItemStack armor : player.getInventory().getArmorContents()) {
                 if (armor != null) {
                     if (!armor.getType().equals(Material.AIR)) {
-                        if (ArmorRequirement.meetsRequirements(player, armor)) {
+                        ArmorRequirement armorRequirement = new ArmorRequirement(requirementManager);
+                        if (armorRequirement.meetsRequirements(player, armor)) {
                             for (StatModifier modifier : ArmorModifier.getArmorModifiers(armor)) {
                                 playerStat.addModifier(modifier, false);
                             }
@@ -40,7 +49,8 @@ public class ArmorModifierListener implements Listener {
             //Equip
             if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR) {
                 ItemStack item = event.getNewArmorPiece();
-                if (ArmorRequirement.meetsRequirements(player, item)) {
+                ArmorRequirement armorRequirement = new ArmorRequirement(requirementManager);
+                if (armorRequirement.meetsRequirements(player, item)) {
                     for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
                         playerStat.addModifier(modifier);
                     }

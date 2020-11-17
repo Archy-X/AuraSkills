@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.modifier;
+package com.archyx.aureliumskills.requirement;
 
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
@@ -6,18 +6,26 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.MaterialData;
 
 import java.util.*;
 
 public class ArmorRequirement {
 
-    public static ItemStack addArmorRequirement(ItemStack item, Skill skill, int level) {
+    private RequirementManager manager;
+
+    public ArmorRequirement(RequirementManager manager) {
+        this.manager = manager;
+    }
+
+    public ItemStack addArmorRequirement(ItemStack item, Skill skill, int level) {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = nbtItem.getCompound("skillRequirements");
         // If compound does not exist
@@ -32,7 +40,7 @@ public class ArmorRequirement {
         return nbtItem.getItem();
     }
 
-    public static Map<Skill, Integer> getArmorRequirements(ItemStack item) {
+    public Map<Skill, Integer> getArmorRequirements(ItemStack item) {
         NBTItem nbtItem = new NBTItem(item);
         Map<Skill, Integer> requirements = new HashMap<>();
         NBTCompound requirementCompound = nbtItem.getCompound("skillRequirements");
@@ -52,7 +60,7 @@ public class ArmorRequirement {
         return requirements;
     }
 
-    public static ItemStack removeArmorRequirement(ItemStack item, Skill skill) {
+    public ItemStack removeArmorRequirement(ItemStack item, Skill skill) {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound requirementCompound = nbtItem.getCompound("skillRequirements");
         if (requirementCompound != null) {
@@ -74,7 +82,7 @@ public class ArmorRequirement {
         return nbtItem.getItem();
     }
 
-    public static ItemStack removeAllArmorRequirements(ItemStack item) {
+    public ItemStack removeAllArmorRequirements(ItemStack item) {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound requirementCompound = nbtItem.getCompound("skillRequirements");
         if (requirementCompound != null) {
@@ -94,7 +102,7 @@ public class ArmorRequirement {
         return nbtItem.getItem();
     }
 
-    public static boolean hasArmorRequirement(ItemStack item, Skill skill) {
+    public boolean hasArmorRequirement(ItemStack item, Skill skill) {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound requirementCompound = nbtItem.getCompound("skillRequirements");
         if (requirementCompound != null) {
@@ -110,7 +118,7 @@ public class ArmorRequirement {
         return false;
     }
 
-    public static void addLore(ItemStack item, Skill skill, int level, Locale locale) {
+    public void addLore(ItemStack item, Skill skill, int level, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             String text = LoreUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_ADD_LORE, locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
@@ -129,7 +137,7 @@ public class ArmorRequirement {
         }
     }
 
-    public static void removeLore(ItemStack item, Skill skill) {
+    public void removeLore(ItemStack item, Skill skill) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore = meta.getLore();
@@ -146,9 +154,36 @@ public class ArmorRequirement {
         }
     }
 
-    public static boolean meetsRequirements(Player player, ItemStack item) {
+    public boolean meetsRequirements(Player player, ItemStack item) {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (playerSkill != null) {
+            // Check global requirements
+            for (GlobalRequirement global : manager.getGlobalArmorRequirements()) {
+                if (XMaterial.isNewVersion()) {
+                    if (global.getMaterial().parseMaterial() == item.getType()) {
+                        for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
+                            if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (global.getMaterial().parseMaterial() == item.getType()) {
+                        MaterialData materialData = item.getData();
+                        if (materialData != null) {
+                            if (materialData.getData() == global.getMaterial().getData()) {
+                                for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
+                                    if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // Check armor requirements
             for (Map.Entry<Skill, Integer> entry : getArmorRequirements(item).entrySet()) {
                 if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
                     return false;
