@@ -39,7 +39,7 @@ public class RequirementManager implements Listener {
                 for (int i = 1; i < splitText.length; i++) {
                     String requirementText = splitText[i];
                     try {
-                        Skill skill = Skill.valueOf(requirementText.split(":")[0]);
+                        Skill skill = Skill.valueOf(requirementText.split(":")[0].toUpperCase());
                         int level = Integer.parseInt(requirementText.split(":")[1]);
                         requirements.put(skill, level);
                     }
@@ -64,7 +64,7 @@ public class RequirementManager implements Listener {
                 for (int i = 1; i < splitText.length; i++) {
                     String requirementText = splitText[i];
                     try {
-                        Skill skill = Skill.valueOf(requirementText.split(":")[0]);
+                        Skill skill = Skill.valueOf(requirementText.split(":")[0].toUpperCase());
                         int level = Integer.parseInt(requirementText.split(":")[1]);
                         requirements.put(skill, level);
                     }

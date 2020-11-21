@@ -1,0 +1,623 @@
+Version Alpha 1.5.2 (IN PROGRESS)
+  New Features:
+    - Added Item and Armor Requirements:
+      - Require at least a certain skill level to use modifiers on an item/armor
+      - New commands for requirements:
+        - /sk item requirement add
+        - /sk item requirement remove
+        - /sk item requirement list
+        - /sk item requirement removeall
+        - /sk armor requirement add
+        - /sk armor requirement remove
+        - /sk armor requirement list
+        - /sk armor requirement removeall
+      - Multiple requirements for different skills can be added on the same item
+      - Added new messages for requirement commands and lore
+      - Added new permissions for requirement commands (Ex: aureliumskills.item.requirement.add)
+      - Added config section for requirements:
+        - item:
+          - 'prevent-tool-use' - Whether block breaking should be blocked when a player does not meet a requirement
+          - 'prevent-weapon-use' - Whether attacking entities should be blocked when a player does not meet a requirement
+          - 'prevent-block-place' - Whether block placing should be blocked when a player does not meet a requirement
+        - armor:
+          - 'prevent-armor-equip' - Whether armor should be unable to be equipped when a player does not meet a requirement
+      - Global requirements:
+        - Global requirements apply to every item of a specific material
+        - Defined in the 'requirements.item.global' and 'requirements.item.global' as lists
+        - Format: '- [material] [skill_1]:[level_1] [skill_2]:[level_2] ...'
+        - Ex: '- IRON_PICKAXE MINING:10 ENDURANCE:5' <- This would require Mining 10 and Endurance 5 to use ANY iron pickaxe
+    - Added new "sources_config.yml":
+      - Options in this file will be used instead of the old options in the main config
+      - You must migrate your old values to the new file
+      - Archery and Fighting sources are now for every mob type
+      - Mob types include all mobs up to 1.16
+    - Added custom block XP sources:
+      - Applicable to Farming, Foraging, Mining, and Excavation
+      - Add "custom:" section under the specific skill section in "sources_config.yml"
+      - In the custom section, keys are the block name and values are the xp amount
+      - Use 1.13+ block names even if in 1.12
+      - Example path: sources.mining.custom.sandstone: 4.0
+      - Custom blocks are checked for block replace automatically
+    - Item modifiers now support the offhand:
+      - The same type of stat can have a modifier on both the main hand and offhand
+      - The modifier name visible in /sk modifier list has a "-offhand" at the end to denote an offhand modifier
+      - All existing item modifiers will work with both hands
+      - Added option "modifier.item.enable-off-hand" to enable/disable
+    - Added Turkish messages
+    - Added Polish messages
+    - Added Portuguese, Brazilian messages
+  Changes:
+    - Updated Indonesian messages
+    - Updated Chinese, Traditional messages
+    - SkillLoader optimizations
+    - Bamboo implemented as a farming source (previously didn't work):
+      - Every bamboo above that breaks from physics still gives XP
+      - Reduced default XP amount to 0.25
+    - Removed now unused skill xp types from "config.yml"
+    - Added API methods with UUID parameters for each existing method when possible
+    - Individual language files will now only update if the embedded language file for that language has a different file_version
+  Bug Fixes:
+    - Fixed NPC null pointers
+    - Fixed bug with item modifiers not removing stat modifiers when moving in inventory
+    - The screen will now shake less often when applying health modifiers (will only shake if necessary)
+    - Disabled skills will no longer display on the stats menu lists of primary and secondary skills
+    - Money rewards are now formatted to 2 decimal places
+
+Version Alpha 1.5.1
+  New Features:
+    - Added 'aureliumskills_rank' and 'aureliumskills_rank_<skill>' placeholders to get a player's leaderboard position
+    - Added 'try-detect-client-language' option to disable trying to detect client language on join if player does not have a language set
+  Changes:
+    - Updated NBT API to support 1.16.4
+    - Updated spigot-api to 1.16.4
+    - Plugin will no longer check for updates until 6 hours after the plugin is released
+  Bug Fixes:
+    - Fixed default-language not working
+    - Fixed error when adding large amounts of xp with boss bar enabled
+    - Fixed boss bars not going away when gaining xp during a reload
+
+Version Alpha 1.5.0
+  New Features:
+    - New Messages System:
+      - Each language is now in own separate file, old messages.yml is no longer used
+      - Per-player multi language support (/sk lang <language>)
+      - Universal color code and newline support
+      - ACF, Action Bar, Leveler, prefix, and more messages supported
+      - Integrated with new configurable menus
+      - Guide to the new system: https://github.com/Archy-X/AureliumSkills/wiki/Messages-Guide
+    - Configurable Menus:
+      - All menus are now fully customizable in the new menus.yml fil
+      - Change any item material, position, display name, and lore format
+      - Change menu title, size, and fill item
+      - Works with any language, as it is only to determine menu format, message placeholders are replaced with messages defined under the "menus" section of the new messages files
+      - Items are used for single items, templates are used for repeating items
+    - Mana Abilities:
+      - Moved abilities that cost mana separate from regular passive abilities and added new mana abilities
+      - Mana Abilities now show separate in menus
+      - Mana Abilities unlock at level 7 and level up every 7 levels
+      - Using Mana Abilities gives Sorcery XP
+      - New Mana Abilities:
+        - Replenish (Farming) - Automatically replants crops when harvested
+    - New Abilities:
+      - Valor (Foraging) - Grants strength while holding an axe
+      - Stamina (Mining) - Grants toughness while holding a pickaxe
+      - Light Fall (Agility) - Reduces all fall damage by a percentage
+      - Jumper (Agility) - Earn more Agility XP
+      - Sugar Rush (Agility) - Consumed and splashed speed and jump boost potions last longer
+      - Fleeting (Agility) - Gain movement speed when under 20% health
+      - Thunder Fall (Agility) - When sneaking during a fall, you have a chance to deal a percentage of the fall damage expected to mobs in a 3 block radius
+    - Added options to change skill max levels (UNLIMITED LEVELS!)
+    - Added leveler section to config:
+      - Enable/disable the level up title, change fade in, stay, and fade out
+      - Enable/disable the level up sound, change sound type, category, volume, and pitch
+    - Added Boss Bars:
+      - Boss Bars can be enabled and configured in the "boss-bar" config section
+      - "mode" option can be either "single" or "multi". Multi means multiple boss bars will display if gaining xp from different types of skills, single is only one at a time.
+      - "stay-time" is how long the Boss Bar will stay up after not gaining xp, in ticks
+      - "update-every" controls how often the boss bar should update when gaining xp consecutively, increase if having lag issues
+      - If "round-xp" is enabled, the current xp will be rounded to an integer
+      - The "format" list allows you to change the boss bar color and style for each skill:
+        - Format: '<SKILL> <COLOR> <STYLE>'
+        - Available colors are BLUE, GREEN, PINK, PURPLE, WHITE, RED, and YELLOW
+        - Available styles are SOLID, SEGMENTED_6, SEGMENTED_10, SEGMENTED_12, and SEGMENTED_20
+    - Added "action-bar.round-xp" option to round current xp to an integer
+    - Added new placeholders:
+      - "aureliumskills_hp_max" - Gets max hp with scaling
+      - "aureliumskills_mana_max" - Gets max mana
+      - "aureliumskills_hp_percent" - Gets percent hp as integer
+      - "aureliumskills_lb_power_<place>" - Gets the entry of the power leaderboard at a specified place formatted as <name> - <value>
+      - "aureliumskills_lb_power_<place>_name" - Gets the username at the specified place in the power leaderboard
+      - "aureliumskills_lb_power_<place>_value" - Gets the value at the specified place in the power leaderboard
+      - "aureliumskills_lb_<skill>_<place>" - Gets the entry of a skill leaderboard at a specified place formatted as <name> - <value>
+      - "aureliumskills_lb_<skill>_<place>_name" - Gets the username at the specified place in a skill leaderboard
+      - "aureliumskills_lb_<skill>_<place>_value" - Gets the value at the specified place in a skill leaderboard
+    - Added bStats
+    - Added Stat methods to the API
+    - Added Indonesion messages (id)
+    - Added Spanish messages (es)
+    - Added French messages (fr)
+    - Added Chinese Traditional messages (zh-TW)
+    - Added consuming golden apples and enchanted golden apples as a Healing XP source
+    - Added command support to loot tables:
+      - Prefix an entry with "cmd:" with a command right after (no /)
+      - Commands will be run through console, use {player} placeholder to replace player username
+      - You cannot have both a command and an item in the same entry
+    - Added enchantment support for loot table items:
+      - Add the "enchantments:" flag after the material name
+      - Example: '1 1 ENCHANTED_BOOK enchantments:protection:3'
+      - Generally any format of enchantment name is acceptable (in game names or bukkit names)
+      - Multiple enchantments are separated by a "|", for example: 'enchantments:protection:3|fire_aspect:2'
+    - Added PlaceholderAPI support for action bar messages
+    - Added action-bar options to config:
+      - "enabled" - Global action bar control (must be true to have action bar at all)
+      - "idle" - Whether the idle action bar should be enabled
+      - "xp" - Whether the action bar for gaining xp should be enabled
+      - "maxed" - Whether the action bar for gaining xp in a maxed skill should be enabled
+      - "update-period" - Same option as before, just moved locations
+      - "placeholder-api" - Whether action bar should replace PlaceholderAPI placeholders, given PlacholderAPI is present
+    - Added tab completion for modifier names for /sk modifier remove
+    - Added "leveler.double-check-delay" option for the level up check speed for large xp gains
+    - Added "wisdom.allow-over-max-mana" option for whether current mana retains when wisdom stat decreases lower than current mana
+    - Added new leveler messages for mana abilities
+  Changes:
+    - New internal config system
+    - Players that have never gained any xp will no longer be saved and will be purged from data.yml file
+    - Improved menu and action bar performance using faster String replace method
+    - Health is now stored while in a disabled world and is set back when returning
+    - The aureliumskills.lang permission is now true by default
+    - Removed unnecessary config options that have been moved to messages
+    - Items dropped from abilities now drop with less speed/distance
+    - Improved action bar performance
+    - Changed default "modifier.item.check-period" to 3
+    - A blank config will no longer be saved on server shutdown if the config was deleted
+  Bug Fixes:
+    - Fixed XpGainEvent calling without permission multipliers
+    - Treecapitator will no longer raise a wooden axe if WorldEdit is enabled
+    - Fixed extra health not being removed when entering a disabled world
+    - Fixed NPE in save command when switching to MySQL without restart
+    - Fixed abilities dropping wrong item if using silk touch
+    - Rank command no longer shows disabled skills
+    - Fixed andesite not giving xp and diorite giving wrong xp on 1.12
+    - Farming abilities now drop items from the center of the block (like all other abilities)
+    - Fixed Defense XP not giving during PVP if damage is less than 'defense.max'
+    - Fixed Foraging XP not gaining for sideways oriented logs on 1.12
+    - Added "health.update-delay" and "health.force-base-health" options to fix some plugin compatibility issues related to world switches
+
+Version Alpha 1.4.3
+  New Features:
+    - Added a basic API:
+      - AureliumAPI class for static methods related to mana, xp, and skill level
+      - XpGainEvent - Called when xp is gained internally (cancelable)
+      - SkillLevelUpEvent - Called when a skill levels up (not cancelable)
+      - ManaRegenerateEvent - Called when a player's mana regenerates (cancelable)
+    - Added wood blocks (six sided logs) to the respective regular log xp source
+    - Added /sk rank (/skillrank) command to see rankings
+    - Added a ranking item in the level progression menu
+    - Added a /sk toggle (/abtoggle) command to toggle your own skills action bar
+    - Added a /sk save command to save skill data (async) [aureliumskills.save permission]
+    - Added a /sk updateleaderboards command that updates and sorts the leaderboard forcibly (async)
+    - New permissions:
+      - aureliumskills.abtoggle (default: true)
+      - aureliumskills.updateleaderboards (default: op)
+      - aureliumskills.save (default: op)
+      - aureliumskills.rank (default: true)
+  Changes:
+    - Better and more optimized leaderboards:
+      - Added pages for /sk top commands (/sk top <page> or /sk top [skill] <page>)
+      - Leaderboard caching and asynchronous periodic leaderboard updating (configurable)
+      - Message support for /sk top and /sk rank
+      - /skilltop command alias for /sk top
+      - Added sorting by XP if level is the same for more precise sorting
+    - MySQL data saving is now much more efficient (recommended for large player counts)
+    - Data saving to file is now asynchronous
+    - Accessing/modifying skill and stat data is now thread safe
+    - Mana no longer regenerates for offline players
+    - Updated spigot-api version to 1.16.3
+    - Mana now regenerates synchronously to support new ManaRegenerateEvent
+  Bug Fixes:
+    - Fixed plugin disabling when loading skill data with an invalid format, added warning
+    - Fixed action bar and regeneration not working for all players when a player is in a disabled world
+    - Fixed action bar only displaying as white in some versions (requires ProtocolLib)
+    - Fixed level progression menu in progress item displaying incorrect xp needed to level up and percent
+    - Fixed wisdom description grammar
+
+Version Alpha 1.4.2
+  New Features:
+    - Stat Modifiers:
+      - Stat modifiers add levels temporarily to a stat, and can be added/removed in a number of ways
+      - Stat modifiers do not persist between restarts and are not stored on file
+      - Every stat modifier has a name to identify it, the stat that it applies to, and a value for the amount levels it changes
+      - Stat modifiers can be interacted with directly using commands:
+        - /sk modifier add [player] [stat] [name] [value] <silent> - Adds a stat modifier to a player.
+        - /sk modifier remove [player] [name] <silent> - Removes a specific stat modifier for a player.
+        - /sk modifier list [player] <stat> - Lists all or a specific stat's modifiers for a player.
+        - /sk modifier removeall [player] <stat> <silent> - Removes all stat modifiers for a player.
+    - Item Modifiers:
+      - Stat modifiers can also be added to items, which will only apply when the item is held in a player's hand
+      - Item modifiers behave like regular stat modifiers, they are just attached to a specific item and automatically added/removed
+      - Item modifiers persist between restarts and are stored using NBT data on the item
+      - Option to automatically add lore that describes the stat modifier
+      - Commands:
+        - /sk item modifier add [stat] [value] <lore> - Adds an item stat modifier to the item held, along with lore by default.
+        - /sk item modifier remove [stat] <lore> - Removes an item stat modifier from the item held, and the lore associated with it by default.
+        - /sk item modifier list - Lists all item stat modifiers on the item held.
+        - /sk item modifier removeall - Removes all item stat modifiers from the item held.
+    - Armor Modifiers:
+      - Stat modifiers can also be added to armor, which will only apply when the item is worn
+      - Stored exactly like item modifiers
+      - Option to automatically add lore that describes the stat modifier
+      - Option to block certain materials from adding modifiers when interacting (blocks that don't equip armor when right clicked), most blocks that don't equip armor are already blocked internally, this adds the option to block more
+      - Works on skulls and heads too!
+      - Commands:
+        - /sk armor modifier add [stat] [value] <lore> - Adds an armor stat modifier to the item held, along with lore by default.
+        - /sk armor modifier remove [stat] <lore> - Removes an armor stat modifier from the item held, and the lore associated with it by default.
+        - /sk armor modifier list - Lists all armor stat modifiers on the item held.
+        - /sk armor modifier removeall - Removes all armor stat modifiers from the item held
+    - Added XP multiplier permissions:
+      - Use permissions to add XP multipliers for all skills!
+      - Format: aureliumskills.multiplier.<mulitply_percent>
+      - multiply_percent can be an integer or decimal describing by what percent XP is boosted by
+      - For example, "aureliumskills.multiplier.50" is 50% more XP, or 1.5x
+      - Multipliers can stack! The value for all multipliers is added together and applied at the same time, so a 50 and 100 multiplier together will yield 150% more XP (2.5x)
+      - Multipliers are applied after abilities that increase skill XP
+      - Check a player's current multiplier using the command /sk multiplier <player>
+    - New permissions (Permission - Default):
+      - aureliumskills.modifier.add - op
+      - aureliumskills.modifier.remove - op
+      - aureliumskills.modifier.list - op
+      - aureliumskills.modifier.removeall - op
+      - aureliumskills.item.modifier.add - op
+      - aureliumskills.item.modifier.remove - op
+      - aureliumskills.item.modifier.list - op
+      - aureliumskills.item.modifier.removeall - op
+      - aureliumskills.armor.modifier.add - op
+      - aureliumskills.armor.modifier.remove - op
+      - aureliumskills.armor.modifier.list - op
+      - aureliumskills.armor.modifier.removeall - op
+      - aureliumskills.multipliercommand - op
+      - aureliumskills.multiplier - false (Does not do anything on its own, must specify value after)
+      - aureliumskills.skills - true (Permission for Skills menu)
+      - aureliumskills.stats - true (Permission for Stats menu)
+      - aureliumskills.help - true
+    - Added a help menu (/sk help)
+    - Added damage hologram offset and randomization options
+    - Added damage hologram decimal options
+  Changes:
+    - Health will no longer update if there is no change in the amount of health
+    - Added messages for modifier commands under the new modifier section
+    - Added message for /sk multiplier command
+    - Added option "modifier.item.check-period" to change how often held items will be checked (in ticks)
+    - Added Drowned to Fighting and Archery common hostile groups
+    - Updated Spigot API to 1.16.2
+  Bug Fixes:
+    - Fixed error with empty loot tables
+    - Fixed error with loot when both min and max are set to 0 (Now works properly)
+    - Fixed aureliumskills.xp.remove mistakenly set to true by default (Now defaults to op)
+
+Version Alpha 1.4.1
+  New Features:
+    - Added MySql database support:
+      - "mysql.enabled" must be set to true
+      - "host, port, database, username, and password" must be filled out correctly
+      - Database must already exist
+      - MySql must be enabled at server startup for it to work (restart server to work)
+      - Data saves periodically asynchronously based on "data-save-period", and at server shut down
+    - Added better and customizable skill level up message
+      - Edit "skill-level-up-message" in config, each list item is a line
+      - Lines with certain placeholders will only show up if applicable (ex: Line with $secondary_stat_name$')
+      - Multiple placeholders available, works with color codes
+      - PlaceholderAPI placeholders work
+    - Added Vault support for Skill level up money rewards
+      - See "skill-money-rewards" to enable and configure
+      - Calculation: Amount = level^2 * multiplier + base
+      - "$money_amount$ placeholder in skill-level-up-message
+    - Added "/sk xp set [player] [skill] [amount]" and "/sk xp remove [player] [skill] [amount]" commands
+    - Added command feedback messages for xp commands
+    - Added "disable-in-creative-mode" config option to disable skill xp gain in creative mode (false be default)
+    - Added "base-mana" and "regeneration.base-mana-regen" options
+    - Added options to change what items can apply critical hits ("critical.enabled")
+    - Added "damage-holograms-scaling" option to enable/disable whether the damage shown should scale with HP on the action bar
+  Changes:
+    - Combat changes:
+      - Reordered and organized how damage is changed on attacks
+      - New order, from first to last (Parenthesis indicates PVP only)
+        - Strength -> Master Abilities -> First Strike -> Critical -> (Toughness -> Mob Master -> Shielding)
+      - Toughness now only protects from entity attacks
+      - Reduced base critical multiplier to 1.5 and added "critical.base-multiplier" option to change it
+      - Applying bleed when the enemy is already bleeding now adds 2 bleed ticks instead of 3
+      - Added new messages for when you start bleeding and when you stop
+      - By default, axes, pickaxes, shovels, and hoes can now apply critical hits
+      - Balance Changes (Highly recommend changing if updating)
+        - Changes only default values, must change manually if updating from older versions and want these values
+        - Reduced default strength modifier to 0.05
+        - Reduced default toughness modifier to 0.25
+        - Reduced regeneration saturated modifier to 0.007
+        - Reduced regeneration hunger full modifier to 0.006
+        - Reduced regeneration almost full modifier to 0.005
+        - Increased default axe-master base and per-level values to 4.0 and 3.0 respectively
+        - Reduced default mob-master base and per-level values to 2.0 and 3.0 respectively
+        - Reduced default immunity per-level value to 0.4
+        - Reduced default crit-damage per-level value to 4.0
+    - Lucky Miner no longer works with Silk Touch on ores that don't usually drop in block form
+    - Mana now regenerates at 1 mana/second by default if regeneration stat is 0
+    - Action bar now displays xp removal with - sign
+    - Added a check and warning in the skills menu for if player does not have a skills profile
+    - Damage holograms now use the "health.hp-indicator-scaling" for scaling instead of the default of 5 if "damage-hologram-scaling" is set to true
+    - Tweaked default excavation loot tables
+    - Nerfed default metal-detector and lucky-spades values
+  Bug Fixes:
+    - Bleed ticks now reset on death
+    - Fixed bleed not working at high skill levels
+    - Fixed obsidian, mycelium, gravel, nether-gold-ore, basalt, and blackstone not being checked for replace
+    - Fixed magma-block not giving Mining XP
+    - Fixed Shielding not working
+    - Fixed holographic damage indicators showing up for non-living entities
+    - Fixed master abilities slightly affecting damage when at level 0
+    - Fixed health above max health when max health is reduced below health
+
+Version Alpha 1.4.0
+  New Features:
+    - Fighting Abilities:
+      - Crit Damage (Increases critical hit damage by _%)
+      - Fighter (Earn _% more Fighting XP)
+      - Sword Master (Deal _% more damage with swords)
+      - First Strike (Deal _% more damage on the first hit)
+      - Bleed (_% chance to make the enemy bleed for 3 bleed ticks, dealing _ damage per tick.)
+    - Endurance Abilities:
+      - Anti Hunger (_% chance to stop hunger loss)
+      - Runner (Earn _% more Endurance XP)
+      - Golden Heal (Increases regeneration effect health gain by _%)
+      - Recovery (Increases natural regeneration when at less than half health by _%)
+      - Meal Steal (_% chance to steal 1 hunger point when attacking a player)
+    - Added Skill Permissions
+      - 'aureliumskills.<skill>'
+      - True by default
+      - Players without that skill permission will not be able to level up the skill, access the level progression menu, or use its abilities
+    - Added disabled-worlds feature:
+      - Disabled worlds block xp gain, stats, action bar, or abilities from applying
+    - Added aureliumskills.* permission
+    - Added update checker
+  Changes:
+    - Added messages for fighting abilities
+    - Added config options for fighting abilities
+    - Added custom messages for ability unlock, level up
+    - Added new excavation blocks to ability checks
+    - Made default messages load from embedded resource and removed hard coded messages
+    - Getting custom message will no longer return null if not found
+    - Optimized and cleaned up combat ability code
+    - Tweaked console load messages (removed color)
+    - Removed SmartInvs depend (Can delete from plugins folder, already included in plugin jar)
+  Bug Fixes:
+    - Fixed Your Level custom message not working in stats menu
+    - Fixed Agility Leveler not checking for blocked worlds
+    - Fixed reload permission typo
+    - Fixed potential null pointer with fishing leveler
+    - Fixed inaccurate time elapsed displayed when loading ability options
+    - Fixed netherite tools not working for mana abilities
+    - Code cleanup and optimizations
+
+Version Alpha 1.3.1
+  New Features:
+    - Added new XP sources:
+      - Mining: netherrack, blackstone, basalt, nether-gold-ore, ancient-debris, end-stone, obsidian
+      - Foraging: crimson-stem, warped-stem, nether-wart-block, warped-wart, block
+      - Excavation: soul-soil, coarse-dirt, podzol, red-sand
+    - Added Skill Name Commands that go directly to that skill's level progression menu (can be disabled in config "enable-skill-commands")
+  Changes:
+    - Optimized block replace checking metadata adding
+  Bug Fixes:
+    - Fixed plugin failing to load if WorldGuard support failed to load
+    - Potentially fixed piercing arrow crashes?
+
+Version Alpha 1.3.0
+  New Features:
+    - Defense abilities:
+      - Shielding (Decreases damage while sneaking)
+      - Defender (Increases Defense XP gain)
+      - Mob Master (Decreases damage from mobs)
+      - Immunity (Chance to compelely negate an attack)
+      - No Debuff (Chance to stop harmful effects from splash potions and fire aspect from being applied)
+    - Added Sugar Cane as a Farming XP source
+    - Added all naturally generated terracotta types as mining XP sources
+      - Regular, White, Orange, Yellow, Light Gray, Brown, Red
+    - Added players as Archery and Fighting XP Sources
+    - Added options to disable individual abilities
+      - Disabled abilities will not appear on menus and have no functionality
+    - Added option to disable luck double drop
+  Changes:
+    - Xp types set to 0 in config no longer send action bar message
+    - Block replace metadata is now removed the same tick the block is broken
+    - Added checks to remove block replace metadata from sugar cane indirectly broken
+    - Added block replace metadata setting to new Xp types
+    - New Xp types added to config.yml
+    - Added work in progress framework for better message and gui customization (coming later)
+    - Added new messages for defense abilities
+    - Added Zombie Pigman/Zombified Pigman to Archery and Defense Levelers as common-hostile
+  Bug Fixes:
+    - Fixed issue where disabling a skill would not disable that skill's abilities
+    - Fixed bug where Bountiful Harvest and Triple Harvest abilities applying in non-survival gamemodes
+    - Fixed bug where Agility XP was not rewarded if fall damage before modifiers was greater than player health
+    - Fixed inconsistent Defense XP gain amounts
+    - Fixed bug where players could obtain defense xp when an attack kills them
+    - Fixed bug where players could obtain defense xp when taking fall damage
+    - Fixed Lucky Catch duplication glitch
+    - Fixed Luck double drops activating in areas where player could not break blocks
+
+Version Alpha 1.2.0
+  New Features:
+    - Archery Abilities:
+      - Crit Chance - Increases chance of critical hit (x2 damage)
+      - Archer - Increase in Archery XP
+      - Bow Master - Increases damage from bows
+      - Piercing - Chance for arrows to shoot through mobs
+      - Stun - Chance to reduce movement speed of enemy by 20% for 2 seconds
+    - Added holographic damage indicators with HolographicDisplays support
+      - Disable with "damage-holograms"
+      - Special colors with critical hits (bows only currently)
+      - Scaled with hp indicator scaling
+    - Added options to change command message prefix "prefix-bracket-color" and "prefix-text"
+  Changes:
+    - Right Click Ability changes:
+      - Added mana cost
+      - Added separate section mana-abilities in config, can now change mana-cost, mana-cost-per-level, cooldown, and cooldown-per-level
+    - Added strength modifiers for bow damage (can disable in config)
+    - Lucky Miner now drops items at the center of the block
+    - Lucky Miner now only works in survival mode
+    - Defense XP can no longer be gained while a shield is active
+    - Added new messages related to abilities
+    - Added mana regen info in /stats
+  Bug Fixes:
+    - Fixed treecapitator description being set to wrong language
+    - Fixed check-block-replace option in config not working properly
+    - Fixed NullPointerExceptions related to abilities
+    - Fixed netherite tool compatibility with Speed Mine and Treecapitator
+
+Version Alpha 1.1.4
+  New Features:
+    - Added PlaceholderAPI support:
+      - %aureliumskills_power% - Gets the combined level of all of a player's skills
+      - %aureliumskills_<skillName>% - Gets the skill level for a player
+      - %aureliumskills_<skillName>_roman% - Gets skill level as roman numerals
+      - %aureliumskills_<statName>% - Gets the stat level for a player
+      - %aureliumskills_hp% - Gets current hp with scaling as an integer
+      - %aureliumskills_hp_1% - Gets current hp with scaling to 1 decimal place
+      - %aureliumskills_hp_2% - Gets current hp with scaling to 2 decimal places
+      - %aureliumskills_mana% - Gets current mana
+      - No ecloud expansion needed, loaded with the plugin automatically
+    - Added /sk skill reset <player> [skill] - Resets the skill level for all skills or a specific skill
+    - Added /sk skill setall <player> <level> - Sets all skills to a level
+    - Added mana regen mechanics
+      - manaRegened = Stat.REGENERATION * "regeneration.mana-modifier"
+      - Mana regens once per second
+      - Fully asynchronous
+      - Shouldn't really be noticeable because player joins at max mana, and there is no way to lose mana yet
+    - Added defense.max and defense.min options
+  Changes:
+    - "regeneration.custom-regen-mechanics" is now false by default
+    - Player now joins with max mana if their mana isn't saved (Right after server restart)
+    - Nerfed default per level values for metal detector and lucky spades abilities
+  Bug Fixes:
+    - Fixed incorrect toughness damage reduction info in the stats menu
+    - Fixed incorrect wisdom xp boost info in the stats menu
+    - Fixed certain crops not giving farming xp on higher versions
+    - Fixed exploit with pistons that allowed repeated xp gain from the same block
+    - Fixed certain messages not formatted correctly in config
+
+Version Alpha 1.1.3
+  Bug Fixes:
+    - Fixed plugin loading issue with WorldGuard on 1.14+
+
+Version Alpha 1.1.2
+  New Features:
+    - Added Skill Leaderboards
+      - /sk top [skill]
+      - Shows the top 10 players in that skill, leave empty for all skill leaderboard
+      - Players have to log in to have the username show up
+      - Currently pretty inefficient, better implementation later
+      - Permission aureliumskills.top (defaults to true)
+  Changes:
+    - Added ability-levels, skill-leaderboard, all-skills, unknown-skill, config-reloaded, language-set-to, language-not-found, and prefix messages
+  Bug Fixes:
+    - Fixed player getting message every time they are damaged by entity
+    - Fixed skill data loading/saving issues with certain locales
+
+Version Alpha 1.1.1
+  New Features:
+    - Added a blocked-worlds option in config, which prevents skill xp gain in certain worlds
+  Changes:
+    - Config files should no longer delete unnecessary entries
+    - Removed RECORD_WAIT from the default loot.yml, this should prevent errors when loading different versions
+    - Added better error messages for invalid loot.yml entries
+  Bug Fixes:
+    - Fixed color codes not working in names and lore in loot tables
+    - Fixed incorrect drop chance for ability Lucky Spades
+
+Version Alpha 1.1.0
+  New Features:
+    - Skill Abilities (Part 1):
+      - New Abilities:
+        - Farming: Bountiful Harvest, Farmer, Scythe Master, Geneticist, Triple Harvest
+        - Foraging: Lumberjack, Forager, Axe Master, Treecapitator (WIP), Shredder
+        - Mining: Lucky Miner, Miner, Pick Master, Speed Mine, Hardened Armor
+        - Fishing: Lucky Catch, Fisher, Treasure Hunter, Grappler, Epic Catch
+        - Excavation: Metal Detector, Excavator, Spade Master, Bigger Scoop, Lucky Spades
+      - Abilities are leveled along side the skill (Every 5 skill levels = 1 ability level for a certain ability)
+      - View ability level information in the level progression menu
+      - Overview of current ability levels in skills menu (/sk)
+      - Some abilities are activated by right clicking with a tool, then doing a certain action (breaking block)
+      - Right click abilities have a cooldown and leveling increases the time ability is activated for
+      - Some abilities allow you to gain special drops from certain actions (Treasure Hunter, Epic Catch, Metal Detector, Lucky Spades)
+      - The loot dropped from these abilities can be modified/added/customized in "loot.yml"
+        - Do not change loot table name, that will break the loot table
+        - Format: minAmount maxAmount MATERIAL(:optionalDataValue) (option1:value1) (option2:value2) ...
+          - Example: 1 4 DIAMOND name:Shiny_Diamond lore:_|Lore_Line_2|_|RARE glow:true
+    - Ability Options:
+      - Each ability has 2 values, base (value at level 1), and per-level (value added per ability level)
+      - Can be changed for every ability in the config
+      - Values in config always represent the display value in game (in menus), this means percentages are just like other values (50% = 50)
+    - New messages for custom languages added for abilities
+    - Added useful stat information based on stat level on each stat pane in the /stats menu to show how stat levels translate into game buffs
+    - Added action bar update period config option (in ticks)
+    - Added WorldGuard support for WorldGuard version 7.0.3 ONLY (1.14/1.15)
+      - Specify regions where skill xp should not be gained in "blocked-regions" in config
+    - Added option to disable strength applying on non-weapon/tool attacks (punching)
+  Changes:
+    - Max skill level has been increased to 97 (4 pages)
+    - Removed the skill tree/skill point system, moved to new ability system
+    - Skill data now periodically saves (change in config, in ticks)
+    - Custom languages and messages have been moved to separate file ("messages.yml")
+    - Clicking into the level progression menu now takes you to the page with the level you are currently on instead of always the first page
+    - Removed unnecessary back and next menu items in the level progression menu if they were unusable (first and last page)
+    - Changed the toughness stat from attribute modifying to damage event based (Prevents invincibility)
+      - To migrate players to the new system, player generic_armor attribute base value is set to 0 on join (Disable in toughness.reset-armor-attribute)
+      - Config option "toughness.modifier" is no longer used, use new "toughness.new-modifier" (Default changed to 1)
+    - Changed the health stat from changing the base attribute value to a attribute modifier system (Should fix plugin compatibility issues)
+    - Added new XP Source options for fishing custom loot
+    - Changing the language with commands no longer changes the default lang value in config
+  Bug Fixes:
+    - Fixed inaccurate action bar max health scaling when xp is gained from a maxed skill
+    - Fixed config not saving changes if changes were made while server is running and /sk reload was not executed
+
+Version Alpha 1.0.0
+  New Features:
+    - Added configuration for every action that grants Skill XP (change the amount of XP given per action)
+    - Added options to disable unnecessary skills and disable skill points
+    - Added Stat configuration, including level modifiers, health scaling options, custom regeneration options and more!
+    - Added basic Luck Stat implementation:
+      - Increases generic_luck attribute
+      - Chance to double drop certain basic blocks (dirt, sand, stone)
+    - Added basic Wisdom Stat implementation:
+      - Increases all experience gained
+      - Decreases anvil XP costs
+    - Added Polish translations (by Kaspian#8508 on discord)
+  Bug Fixes:
+     - Fixed wheat XP gain on 1.12
+     - Fixed glowing redstone XP gain on 1.12
+
+Version Pre-Alpha1.1.0
+  New Features:
+    - Multi-language support/custom messages
+      - Define your own languages in the config.yml under "languages" entry as a list
+      - Write your own messages in the messages section, making the key the name of the language the same as one of the languages defined in "languages"
+      - Set the default language that displays for all players under "default-language"
+      - /sk lang <language> (Sets default language in game (Case-Sensitive))
+    - Configuration options:
+      - config.yml now provides many configuration options for the plugin
+      - /sk reload (Reloads config)
+      - Enable/disable action bar or parts of the action bar such as health or mana
+      - Change the colors of the action bar
+      - Change the skill XP requirements multiplier (Default: 100)
+      - Change the skill point rewards multiplier (Default: 1.032) (WARNING: Number scales very quickly, keep close to 1)
+      - Enable/disable roman numerals
+
+Version Pre-Alpha1.0.2
+  New Features:
+    - Added support for server versions 1.13-1.16
+  Bug Fixes:
+    - Removed skill tree icon from unimplemented skill level progression menus
+
+Version Pre-Alpha1.0.1
+    - Changed targeted version of SmartInvs to 1.2.7 for easier user download. Plugin still works with SmartInvs 1.3.0
+
+Version Pre-Alpha1.0.0
+    - Released plugin
