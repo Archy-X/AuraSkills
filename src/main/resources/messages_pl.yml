@@ -1,3 +1,6 @@
+# Aurelium Skills Polish (pl) messages
+# Translators: Kaspian, Xeymoi
+# Contribute here: https://crowdin.com/project/aureliumskills/pl#
 abilities:
   farming:
     bountiful_harvest:
@@ -313,6 +316,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Wszystkie wymagania zbroi zostały usunięte z twojego przedmiotu'
+      equip: '&eNie spełniasz wymagań do wyposażenia się w ten przedmiot!'
   item:
     modifier:
       add:
@@ -340,6 +344,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Wszystkie wymagania przedmiotu zostały usunięte z twojego przedmiotu'
+      use: '&eNie spełniasz wymagań do użycia tego przedmiotu!'
   lang:
     set: '&7Język ustawiony na &b{lang}'
     not_found: '&eJęzyk nie został znaleziony!'
@@ -589,4 +594,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 4
+file_version: 5

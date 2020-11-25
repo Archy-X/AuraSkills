@@ -1,3 +1,6 @@
+# Aurelium Skills Spanish (es) messages
+# Translators: Adrián
+# Contribute here: https://crowdin.com/project/aureliumskills/es#
 abilities:
   farming:
     bountiful_harvest:
@@ -291,35 +294,57 @@ commands:
       add:
         added: '&7Modificador de {color}{stat} &7con nivel &b{value} &7ha sido añadido a tu objeto'
         already_exists: '&e¡Ya existe un modificador de armadura con la estadística {color}{stat}&e! Quítalo con /sk armor modifier remove'
-        must_hold_item: '&e¡Debes sostener un objeto para añadir modificadores!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&e¡Tu objeto no tiene un modificador para {color}{stat}&e!'
-        must_hold_item: '&e¡Debes sostener un objeto para eliminar modificadores!'
         removed: '&7Modificador de {color}{stat} &7fue eliminado de tu objeto'
       list:
         header: '&fModificadores de armadura encontrados:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&e¡Debes sostener un objeto para ver la lista de modificadores!'
       removeall:
-        must_hold_item: '&e¡Debes sostener un objeto para eliminar todos los modificadores!'
         removed: '&7Todos los modificadores de armadura fueron removidos de tu objeto'
+    requirement:
+      add:
+        added: '&3{skill}&7 requisito de armadura con nivel &b{level}&7 fue agregado a tu artículo'
+        already_exists: '&eEl objeto ya tiene un &3{skill}&e requerimiento de armadura! Primero debes quitarlo, usa &6/sk item requirement remove'
+        lore: '&cRequiere &3{skill} {level}'
+      remove:
+        does_not_exist: '&eTu objeto no tiene un &3{skill}&e requerimiento de armadura!'
+        removed: '&3{skill}&7 requerimientos de armadura fueron eliminados de tu objeto'
+      list:
+        header: '&fRequisitos de armadura encontrados:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7Todos los requerimientos de armadura han sido removidos'
+      equip: '&eNo cumples los requisitos para usar este objeto!'
   item:
     modifier:
       add:
         added: '&7Modificador de {color}{stat} &7con nivel &b{value} &7ha sido añadido a tu objeto'
         already_exists: '&e¡Ya existe un modificador de objeto con la estadística {color}{stat}&e! Quítalo con /sk item modifier remove'
-        must_hold_item: '&e¡Debes sostener un objeto para añadir modificadores!'
+        lore: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&e¡Tu objeto no tiene un modificador de {color}{stat}&e!'
-        must_hold_item: '&e¡Debes sostener un objeto para eliminar modificadores!'
         removed: '&7Modificador de {color}{stat} &7fue eliminado de tu objeto'
       list:
         header: '&fModificadores de Objetos encontrados:'
         entry: '  {color}{stat}&f - {value}'
-        must_hold_item: '&e¡Debes sostener un objeto para ver la lista de modificadores!'
       removeall:
-        must_hold_item: '&e¡Debes sostener un objetro para eliminar todos los modificadores!'
         removed: '&7Todos los modificadores fueron removidos de tu objeto'
+    requirement:
+      add:
+        added: '&3{skill}&7 requisito de artículo con nivel &b{level}&7 fue agregado a tu artículo'
+        already_exists: '&eEl objeto ya tiene un &3{skill}&e objeto requerido! Primero debes quitarlo, usa &6/sk item requirement remove'
+        lore: '&cRequiere &3{skill} {level}'
+      remove:
+        does_not_exist: '&eTu objeto no tiene un &3{skill}&e requerimiento!'
+        removed: '&3{skill}&7 elementos requeridos fueron eliminados de tu objeto'
+      list:
+        header: '&fRequisitos encontrados:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7Todos los requerimientos han sido removidos de tu objeto'
+      use: '&eNo cumples los requisitos para usar este objeto!'
   lang:
     set: '&7Idioma establecido en &b{lang}'
     not_found: '&e¡Idioma no encontrado!'
@@ -527,7 +552,7 @@ skills:
     desc: "&7Encanta items y libros para ganar\n&7XP de Encantador {xp_unit}"
   sorcery:
     name: Brujería
-    desc: '&7Lanza hechizos para ganar XP de Brujería {xp_unit}'
+    desc: '&7Usa habilidades de maná para ganar {xp_unit} de Hechicería'
   healing:
     name: Curación
     desc: "&7Bebe y salpica pociones para\n&7ganar XP de Curación {xp_unit}"
@@ -569,4 +594,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 3
+file_version: 5

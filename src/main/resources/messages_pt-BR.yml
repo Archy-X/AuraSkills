@@ -1,3 +1,6 @@
+# Aurelium Skills Portuguese, Brazilian (pt-BR) messages
+# Translators: LordLucas_
+# Contribute here: https://crowdin.com/project/aureliumskills/pt-BR#
 abilities:
   farming:
     bountiful_harvest:
@@ -207,7 +210,7 @@ abilities:
       info: 'Velocidade Longa do {value}'
     fleeting:
       name: Fugir
-      desc: 'Ganhe +{value}% de velocidade de movimento quando\n&7  abaixo de 20% de vida'
+      desc: "Ganhe +{value}% de velocidade de movimento quando\n&7  abaixo de 20% de vida"
       info: '+{value}% de Velocidade'
       start: '&fVocê ganhou um impulso de velocidade de fuga! &7(+{value}% de Velocidade)'
       end: '&7O impulso de velocidade de flexibilização acabou'
@@ -313,6 +316,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Todos os requisitos de armadura foram removidos do seu item'
+      equip: '&eVocê não tem os requisitos para equipar este item!'
   item:
     modifier:
       add:
@@ -340,6 +344,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Todos os itens necessários foram removidos do seu item'
+      use: '&eVocê não tem os requisitos para usar este item!'
   lang:
     set: '&7Idioma definido para &b{lang}'
     not_found: '&eIdioma não encontrado!'
@@ -589,4 +594,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 4
+file_version: 5

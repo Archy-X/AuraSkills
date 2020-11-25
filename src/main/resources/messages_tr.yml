@@ -1,3 +1,6 @@
+# Aurelium Skills Turkish (tr) messages
+# Translators: Arda Tuna, Tapimur_, HalilEmreK_
+# Contribute here: https://crowdin.com/project/aureliumskills/tr#
 abilities:
   farming:
     bountiful_harvest:
@@ -313,6 +316,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Öğenizden tüm zırh gereksinimleri kaldırıldı'
+      equip: '& e Bu eşyayı donanmak için gereksinimleri karşılamıyorsunuz!'
   item:
     modifier:
       add:
@@ -340,6 +344,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Öğenizden tüm öğe gereksinimleri kaldırıldı'
+      use: '&eBu öğeyi kullanma gereksinimlerini karşılamıyorsunuz!'
   lang:
     set: '&7Dil &b{lang} &7olarak ayarlandı'
     not_found: '&eDil Bulunamadı!'
@@ -589,4 +594,4 @@ units:
   mana: Mana
   hp: Can
   xp: Level
-file_version: 4
+file_version: 5

@@ -1,3 +1,6 @@
+# Aurelium Skills Indonesian (id) messages
+# Translators: Moncimon
+# Contribute here: https://crowdin.com/project/aureliumskills/id#
 abilities:
   farming:
     bountiful_harvest:
@@ -313,6 +316,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7semua persyaratan armor telah di hapus'
+      equip: '&eKamu tidak memenuhi persyaratan untuk memakai item ini!'
   item:
     modifier:
       add:
@@ -340,6 +344,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7semua persyaratan armor telah di hapus'
+      use: '&eKamu tidak memenuhi persyaratan untuk menggunakan item ini!'
   lang:
     set: '&7Bahasa disetel ke &b{lang}'
     not_found: '&eBahasa tidak ditemukan!'
@@ -589,4 +594,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: EXP
-file_version: 4
+file_version: 5
