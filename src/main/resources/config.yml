@@ -465,6 +465,28 @@ abilities:
         per-level: 2.0
         base-2: 10.0
         per-level-2: 5.0
+    alchemist:
+        enabled: true
+        base: 3.0
+        per-level: 4.0
+    brewer:
+        enabled: true
+        base: 10.0
+        per-level: 10.0
+    splasher:
+        enabled: true
+        base: 0.5
+        per-level: 0.25
+    lingering:
+        enabled: true
+        base: 5.0
+        per-level: 4.0
+        base-2: 3.0
+        per-level-2: 2.0
+    wise-effect:
+        enabled: true
+        base: 1.0
+        per-level: 1.0
 mana-abilities:
     replenish:
         enabled: true

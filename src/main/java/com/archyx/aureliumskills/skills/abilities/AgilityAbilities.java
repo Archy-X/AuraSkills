@@ -9,7 +9,7 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.LoreUtil;
-import com.cryptomorin.xseries.XMaterial;
+import com.archyx.aureliumskills.util.PotionUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -54,9 +54,9 @@ public class AgilityAbilities implements Listener {
         }
     }
 
-    // For potion splashes
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void sugarRush(PotionSplashEvent event) {
+// For potion splashes
+    @EventHandler(priority = EventPriority.HIGH)
+    public void sugarRushSplash(PotionSplashEvent event) {
         if (!event.isCancelled()) {
             if (OptionL.isEnabled(Skill.ALCHEMY)) {
                 if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SUGAR_RUSH)) {
@@ -84,7 +84,7 @@ public class AgilityAbilities implements Listener {
                                         if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
                                             double intensity = event.getIntensity(player);
                                             double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
-                                            applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
+                                            PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
                                         }
                                     }
                                 }
@@ -96,8 +96,20 @@ public class AgilityAbilities implements Listener {
         }
     }
 
+    public static double getSugarRushSplashMultiplier(Player player) {
+        if (player.hasPermission("aureliumskills.agility") && AureliumSkills.abilityOptionManager.isEnabled(Ability.SUGAR_RUSH)) {
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
+                    return 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
+                }
+            }
+        }
+        return 1.0;
+    }
+
     // For potion drinking
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     public void sugarRushDrink(PlayerItemConsumeEvent event) {
         if (!event.isCancelled()) {
             if (OptionL.isEnabled(Skill.ALCHEMY)) {
@@ -146,13 +158,13 @@ public class AgilityAbilities implements Listener {
                                             duration = 180;
                                         }
                                         duration = (int) (multiplier * duration);
-                                        applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
+                                        PotionUtil.applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
                                     }
                                     // Apply custom effects
                                     if (meta.hasCustomEffects()) {
                                         for (PotionEffect effect : meta.getCustomEffects()) {
                                             if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
-                                                applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
+                                                PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
                                             }
                                         }
                                     }
@@ -161,27 +173,6 @@ public class AgilityAbilities implements Listener {
                         }
                     }
                 }
-            }
-        }
-    }
-
-    private void applyEffect(Player player, PotionEffect effect) {
-        if (XMaterial.isNewVersion()) {
-            player.addPotionEffect(effect);
-        }
-        else {
-            PotionEffect currentEffect = player.getPotionEffect(effect.getType());
-            // Force apply the effect if effect has greater amplifier or longer duration if same amplifier
-            if (currentEffect != null) {
-                if (effect.getDuration() > currentEffect.getDuration() && effect.getAmplifier() == currentEffect.getAmplifier()) {
-                    player.addPotionEffect(effect, true);
-                }
-                else if (effect.getAmplifier() > currentEffect.getAmplifier()) {
-                    player.addPotionEffect(effect, true);
-                }
-            }
-            else {
-                player.addPotionEffect(effect);
             }
         }
     }

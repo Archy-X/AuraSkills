@@ -362,6 +362,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new FightingAbilities(this), this);
 		pm.registerEvents(new EnduranceAbilities(), this);
 		pm.registerEvents(new AgilityAbilities(this), this);
+		pm.registerEvents(new AlchemyAbilities(this), this);
 		pm.registerEvents(new DamageListener(this), this);
 		ItemListener itemListener = new ItemListener(this);
 		pm.registerEvents(itemListener, this);

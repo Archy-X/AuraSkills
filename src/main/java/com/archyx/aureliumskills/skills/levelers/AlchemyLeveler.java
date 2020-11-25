@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -27,7 +28,7 @@ import java.util.UUID;
 public class AlchemyLeveler extends SkillLeveler implements Listener {
 	
 	public AlchemyLeveler(AureliumSkills plugin) {
-		super(plugin);
+		super(plugin, Ability.BREWER);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
