@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.menu.templates;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
@@ -100,23 +101,27 @@ public class UnlockedTemplate implements ConfigurableTemplate {
                         case "ability":
                             if (abilities.size() == 5) {
                                 Ability ability = abilities.get((level - 2) % 5).get();
-                                // Unlock
-                                if (level <= 6) {
-                                    line = LoreUtil.replace(line,"{ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
-                                            ,"{ability}", abilityNames.get(ability)
-                                            ,"{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
-                                                    ,"{value_2}", nf1.format(ability.getValue2(1))
-                                                    ,"{value}", nf1.format(ability.getValue(1)))));
-                                }
-                                // Level
-                                else {
-                                    int abilityLevel = (level + 3) / 5;
-                                    line = LoreUtil.replace(line,"{ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
-                                            ,"{ability}", abilityNames.get(ability)
-                                            ,"{level}", RomanNumber.toRoman(abilityLevel)
-                                            ,"{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
-                                                    ,"{value_2}", nf1.format(ability.getValue2(abilityLevel))
-                                                    ,"{value}", nf1.format(ability.getValue(abilityLevel)))));
+                                if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+                                    // Unlock
+                                    if (level <= 6) {
+                                        line = LoreUtil.replace(line, "{ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
+                                                , "{ability}", abilityNames.get(ability)
+                                                , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
+                                                        , "{value_2}", nf1.format(ability.getValue2(1))
+                                                        , "{value}", nf1.format(ability.getValue(1)))));
+                                    }
+                                    // Level
+                                    else {
+                                        int abilityLevel = (level + 3) / 5;
+                                        line = LoreUtil.replace(line, "{ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
+                                                , "{ability}", abilityNames.get(ability)
+                                                , "{level}", RomanNumber.toRoman(abilityLevel)
+                                                , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
+                                                        , "{value_2}", nf1.format(ability.getValue2(abilityLevel))
+                                                        , "{value}", nf1.format(ability.getValue(abilityLevel)))));
+                                    }
+                                } else {
+                                    line = LoreUtil.replace(line,"{ability}", "");
                                 }
                             }
                             else {
@@ -125,7 +130,7 @@ public class UnlockedTemplate implements ConfigurableTemplate {
                             break;
                         case "mana_ability":
                             MAbility mAbility = skill.getManaAbility();
-                            if (level % 7 == 0 && mAbility != MAbility.ABSORPTION) {
+                            if (level % 7 == 0 && mAbility != MAbility.ABSORPTION && AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
                                 // Mana Ability Unlocked
                                 if (level == 7) {
                                     line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)

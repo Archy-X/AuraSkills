@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.menu.templates;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
@@ -125,17 +126,22 @@ public class SkillTemplate implements ConfigurableTemplate {
                                 int num = 1;
                                 for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
                                     Ability ability = abilitySupplier.get();
-                                    if (playerSkill.getAbilityLevel(ability) > 0) {
-                                        int abilityLevel = playerSkill.getAbilityLevel(ability);
-                                        line = LoreUtil.replace(line,"{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
-                                                ,"{ability}", ability.getDisplayName(locale)
-                                                ,"{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability))
-                                                ,"{info}", LoreUtil.replace(ability.getInfo(locale)
-                                                        ,"{value}", nf.format(ability.getValue(abilityLevel))
-                                                        ,"{value_2}", nf.format(ability.getValue2(abilityLevel)))));
+                                    if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+                                        if (playerSkill.getAbilityLevel(ability) > 0) {
+                                            int abilityLevel = playerSkill.getAbilityLevel(ability);
+                                            line = LoreUtil.replace(line, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
+                                                    , "{ability}", ability.getDisplayName(locale)
+                                                    , "{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability))
+                                                    , "{info}", LoreUtil.replace(ability.getInfo(locale)
+                                                            , "{value}", nf.format(ability.getValue(abilityLevel))
+                                                            , "{value_2}", nf.format(ability.getValue2(abilityLevel)))));
+                                        } else {
+                                            line = LoreUtil.replace(line, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)
+                                                    , "{ability}", ability.getDisplayName(locale)));
+                                        }
                                     } else {
-                                        line = LoreUtil.replace(line,"{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)
-                                                ,"{ability}", ability.getDisplayName(locale)));
+                                        line = LoreUtil.replace(line, "\\n  {ability_" + num + "}", ""
+                                                , "{ability_" + num + "}", "");
                                     }
                                     num++;
                                 }
@@ -146,7 +152,7 @@ public class SkillTemplate implements ConfigurableTemplate {
                         case "mana_ability":
                             MAbility mAbility = skill.getManaAbility();
                             int level = playerSkill.getManaAbilityLevel(mAbility);
-                            if (mAbility != MAbility.ABSORPTION && level > 0) {
+                            if (mAbility != MAbility.ABSORPTION && level > 0 && AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
                                 line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY, locale)
                                         ,"{mana_ability}", mAbility.getDisplayName(locale)
                                         ,"{level}", RomanNumber.toRoman(level)
