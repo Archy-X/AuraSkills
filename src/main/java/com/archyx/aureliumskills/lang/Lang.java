@@ -24,6 +24,7 @@ import java.util.*;
 
 public class Lang implements Listener {
 
+	private final String[] embeddedLanguages = new String[] {"id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN"};
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static final Map<UUID, Locale> playerLanguages = new HashMap<>();
 	private static Map<Locale, String> definedLanguages;
@@ -40,26 +41,10 @@ public class Lang implements Listener {
 	}
 
 	private void loadLanguageFiles() {
-		if (!new File(plugin.getDataFolder(), "messages_id.yml").exists()) {
-			plugin.saveResource("messages_id.yml", false);
-		}
-		if (!new File(plugin.getDataFolder(), "messages_es.yml").exists()) {
-			plugin.saveResource("messages_es.yml", false);
-		}
-		if (!new File(plugin.getDataFolder(), "messages_fr.yml").exists()) {
-			plugin.saveResource("messages_fr.yml", false);
-		}
-		if (!new File(plugin.getDataFolder(), "messages_zh-TW.yml").exists()) {
-			plugin.saveResource("messages_zh-TW.yml", false);
-		}
-		if (!new File(plugin.getDataFolder(), "messages_tr.yml").exists()) {
-			plugin.saveResource("messages_tr.yml", false);
-		}
-		if (!new File(plugin.getDataFolder(), "messages_pl.yml").exists()) {
-			plugin.saveResource("messages_pl.yml", false);
-		}
-		if (!new File(plugin.getDataFolder(), "messages_pt-BR.yml").exists()) {
-			plugin.saveResource("messages_pt-BR.yml", false);
+		for (String language : embeddedLanguages) {
+			if (!new File(plugin.getDataFolder(), "messages_" + language + ".yml").exists()) {
+				plugin.saveResource("messages_" + language + ".yml", false);
+			}
 		}
 	}
 

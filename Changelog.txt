@@ -1,5 +1,11 @@
 Version Alpha 1.5.2 (IN PROGRESS)
   New Features:
+    - Added Alchemy abilities:
+      - Alchemist - Potions you brew have a percent longer duration.
+      - Brewer - Earn more Alchemy XP
+      - Splasher - Potions you splash gain a longer duration for each player affected.
+      - Lingering - Lingering potions naturally decay slower and decay less per affected entity.
+      - Wise Effect - Gain Wisdom for every unique active potion effect.
     - Added Item and Armor Requirements:
       - Require at least a certain skill level to use modifiers on an item/armor
       - New commands for requirements:
@@ -43,12 +49,12 @@ Version Alpha 1.5.2 (IN PROGRESS)
       - The modifier name visible in /sk modifier list has a "-offhand" at the end to denote an offhand modifier
       - All existing item modifiers will work with both hands
       - Added option "modifier.item.enable-off-hand" to enable/disable
-    - Added Turkish messages
-    - Added Polish messages
-    - Added Portuguese, Brazilian messages
+    - Added Turkish messages (tr)
+    - Added Polish messages (pl)
+    - Added Portuguese, Brazilian messages (pt-BR)
+    - Added Chinese, Simplified messages (zh-CN)
   Changes:
-    - Updated Indonesian messages
-    - Updated Chinese, Traditional messages
+    - Updated es, fr, id, and zh-TW messages
     - SkillLoader optimizations
     - Bamboo implemented as a farming source (previously didn't work):
       - Every bamboo above that breaks from physics still gives XP
@@ -62,6 +68,7 @@ Version Alpha 1.5.2 (IN PROGRESS)
     - The screen will now shake less often when applying health modifiers (will only shake if necessary)
     - Disabled skills will no longer display on the stats menu lists of primary and secondary skills
     - Money rewards are now formatted to 2 decimal places
+    - Disabled abilities will no longer show up on menus
 
 Version Alpha 1.5.1
   New Features:
