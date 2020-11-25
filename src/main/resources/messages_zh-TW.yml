@@ -1,3 +1,5 @@
+# Aurelium Skills Chinese, Traditional (zh-TW) messages
+# Contributors: 糟糕的頻道
 abilities:
   farming:
     bountiful_harvest:
@@ -313,6 +315,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7全部裝備要求已從你的物品刪除'
+      equip: '&e你沒有裝備這個物品的條件!'
   item:
     modifier:
       add:
@@ -340,6 +343,7 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7全部物品要求已從你的物品刪除'
+      use: '&e你沒有使用這個物品的條件!'
   lang:
     set: '&7語言設定成 &b{lang}'
     not_found: '&e這個語言不存在!'
@@ -589,4 +593,4 @@ units:
   mana: 法力
   hp: 血量
   xp: 經驗
-file_version: 4
+file_version: 5
