@@ -119,7 +119,10 @@ public class Lang implements Listener {
 			}
 		}
 		// Load message keys
-		Map<MessageKey, String> messages = new HashMap<>();
+		Map<MessageKey, String> messages = Lang.messages.get(locale);
+		if (messages == null) {
+			messages = new HashMap<>();
+		}
 		for (MessageKey key : MessageKey.values()) {
 			String message = config.getString(key.getPath());
 			if (message != null) {

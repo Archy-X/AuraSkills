@@ -1,11 +1,15 @@
 package com.archyx.aureliumskills.skills.abilities.mana_abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
+import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -29,6 +33,13 @@ public class SharpHook implements ManaAbility {
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale));
+            if (OptionL.getBoolean(Option.SHARP_HOOK_ENABLE_SOUND)) {
+                if (XMaterial.isNewVersion()) {
+                    player.playSound(player.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1f, 1.5f);
+                } else {
+                    player.playSound(player.getLocation(), "entity.bobber.retrieve", 1f, 1.5f);
+                }
+            }
         }
     }
 

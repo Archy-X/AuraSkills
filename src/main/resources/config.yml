@@ -524,3 +524,4 @@ mana-abilities:
         mana-cost: 5
         mana-cost-per-level: 2
         display-damage-with-scaling: true
+        enable-sound: true

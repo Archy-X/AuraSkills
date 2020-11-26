@@ -240,6 +240,7 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 															AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 														}
 													}
+													break;
 												}
 											}
 										}

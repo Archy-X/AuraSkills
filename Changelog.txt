@@ -8,6 +8,7 @@ Version Alpha 1.5.2 (IN PROGRESS)
       - Wise Effect - Gain Wisdom for every unique active potion effect.
     - Added Sharp Hook Mana Ability for Fishing:
       - Deal damage to a hooked entity when left clicking with a fishing rod
+      - Options to display-damage-with-scaling and enable-sound (both true by default)
     - Added Item and Armor Requirements:
       - Require at least a certain skill level to use modifiers on an item/armor
       - New commands for requirements:
@@ -75,6 +76,7 @@ Version Alpha 1.5.2 (IN PROGRESS)
     - Moved messages files to a new messages directory. If the directory does not exist yet, old message files will be moved to the new directory.
     - Mana Ability cooldowns now support decimals
     - Speed Mine will now activate on netherrack, basalt, and blackstone
+    - Added spectral arrows, tipped arrows, and tridents as ways to level Archery and now work with the strength stat
   Bug Fixes:
     - Fixed NPC null pointers
     - Fixed bug with item modifiers not removing stat modifiers when moving in inventory
@@ -82,6 +84,7 @@ Version Alpha 1.5.2 (IN PROGRESS)
     - Disabled skills will no longer display on the stats menu lists of primary and secondary skills
     - Money rewards are now formatted to 2 decimal places
     - Disabled abilities will no longer show up on menus
+    - Embedded English messages will now be used when a message is missing in messages_en.yml (fixes NPEs)
 
 Version Alpha 1.5.1
   New Features:

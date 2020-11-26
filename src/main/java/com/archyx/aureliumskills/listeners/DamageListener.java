@@ -9,10 +9,9 @@ import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Strength;
 import com.archyx.aureliumskills.stats.Toughness;
 import com.archyx.aureliumskills.util.DamageType;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -119,8 +118,9 @@ public class DamageListener implements Listener {
         DefenseAbilities.shielding(event, playerSkill, player);
     }
 
+    @SuppressWarnings("deprecation")
     private DamageType getDamageType(EntityDamageByEntityEvent event, Player player) {
-        if (event.getDamager() instanceof Arrow) {
+        if (event.getDamager() instanceof Arrow || event.getDamager() instanceof SpectralArrow || event.getDamager() instanceof TippedArrow) {
             return DamageType.BOW;
         }
         Material material = player.getInventory().getItemInMainHand().getType();
@@ -142,9 +142,12 @@ public class DamageListener implements Listener {
         else if (material.equals(Material.AIR)) {
             return DamageType.HAND;
         }
-        else {
-            return DamageType.OTHER;
+        else if (XMaterial.isNewVersion()) {
+            if (event.getDamager() instanceof Trident) {
+                return DamageType.BOW;
+            }
         }
+        return DamageType.OTHER;
     }
 
     private Player getDamager(Entity entity) {

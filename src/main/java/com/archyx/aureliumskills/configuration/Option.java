@@ -157,7 +157,8 @@ public enum Option {
     WISDOM_ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifier", OptionType.DOUBLE),
     WISDOM_EXPERIENCE_MODIFIER("wisdom.experience-modifier", OptionType.DOUBLE),
     WISDOM_ALLOW_OVER_MAX_MANA("wisdom.allow-over-max-mana", OptionType.BOOLEAN),
-    SHARP_HOOK_DISPLAY_DAMAGE_WITH_SCALING("mana-abilities.sharp-hook.display-damage-with-scaling", OptionType.BOOLEAN);
+    SHARP_HOOK_DISPLAY_DAMAGE_WITH_SCALING("mana-abilities.sharp-hook.display-damage-with-scaling", OptionType.BOOLEAN),
+    SHARP_HOOK_ENABLE_SOUND("mana-abilities.sharp-hook.enable-sound", OptionType.BOOLEAN);
 
     private final String path;
     private final OptionType type;
