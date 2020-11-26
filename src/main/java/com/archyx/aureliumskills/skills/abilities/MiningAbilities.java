@@ -31,6 +31,8 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Random;
@@ -39,7 +41,8 @@ public class MiningAbilities implements Listener {
 
 	private static final Random r = new Random();
 	private static AureliumSkills plugin;
-	
+	private final NumberFormat nf = new DecimalFormat("#.#");
+
 	public MiningAbilities(AureliumSkills plugin) {
 		MiningAbilities.plugin = plugin;
 	}
@@ -142,7 +145,8 @@ public class MiningAbilities implements Listener {
 				|| blockMat.equals(Material.IRON_ORE) || blockMat.equals(Material.GOLD_ORE) || blockMat.equals(Material.DIAMOND_ORE)
 				|| blockMat.equals(Material.EMERALD_ORE) || blockMat.equals(Material.REDSTONE_ORE) || blockMat.equals(Material.LAPIS_ORE)
 				|| blockMat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) || blockMat.equals(XMaterial.GRANITE.parseMaterial())
-				|| blockMat.equals(XMaterial.DIORITE.parseMaterial()) || blockMat.equals(XMaterial.ANDESITE.parseMaterial())) {
+				|| blockMat.equals(XMaterial.DIORITE.parseMaterial()) || blockMat.equals(XMaterial.ANDESITE.parseMaterial())
+				|| blockMat.equals(Material.NETHERRACK) || blockMat.equals(XMaterial.BASALT.parseMaterial()) || blockMat.equals(XMaterial.BLACKSTONE.parseMaterial())) {
 			Player player = event.getPlayer();
 			Locale locale = Lang.getLanguage(player);
 			//Checks if speed mine is already activated
@@ -213,7 +217,7 @@ public class MiningAbilities implements Listener {
 									}.runTaskLater(plugin, 50L);
 								} else {
 									if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
-										player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SPEED_MINE))));
+										player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", nf.format(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SPEED_MINE) / 20)));
 										AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE, 2);
 									}
 								}

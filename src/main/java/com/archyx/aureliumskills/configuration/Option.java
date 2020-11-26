@@ -139,6 +139,7 @@ public enum Option {
     STRENGTH_HAND_DAMAGE("strength.hand-damage", OptionType.BOOLEAN),
     STRENGTH_BOW_DAMAGE("strength.bow-damage", OptionType.BOOLEAN),
     STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING("strength.display-damage-with-health-scaling", OptionType.BOOLEAN),
+    STRENGTH_USE_PERCENT("strength.use-percent", OptionType.BOOLEAN),
     TOUGHNESS_NEW_MODIFIER("toughness.new-modifier", OptionType.DOUBLE),
     REGENERATION_CUSTOM_REGEN_MECHANICS("regeneration.custom-regen-mechanics", OptionType.BOOLEAN),
     REGENERATION_BASE_REGEN("regeneration.base-regen", OptionType.DOUBLE),
@@ -155,7 +156,8 @@ public enum Option {
     LUCK_DOUBLE_DROP_PERCENT_MAX("luck.double-drop-percent-max", OptionType.DOUBLE),
     WISDOM_ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifier", OptionType.DOUBLE),
     WISDOM_EXPERIENCE_MODIFIER("wisdom.experience-modifier", OptionType.DOUBLE),
-    WISDOM_ALLOW_OVER_MAX_MANA("wisdom.allow-over-max-mana", OptionType.BOOLEAN);
+    WISDOM_ALLOW_OVER_MAX_MANA("wisdom.allow-over-max-mana", OptionType.BOOLEAN),
+    SHARP_HOOK_DISPLAY_DAMAGE_WITH_SCALING("mana-abilities.sharp-hook.display-damage-with-scaling", OptionType.BOOLEAN);
 
     private final String path;
     private final OptionType type;

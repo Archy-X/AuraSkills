@@ -136,7 +136,7 @@ public class LockedTemplate implements ConfigurableTemplate {
                                     line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)
                                             ,"{mana_ability}", mAbility.getDisplayName(locale)
                                             ,"{desc}", LoreUtil.replace(mAbility.getDescription(locale)
-                                                    ,"{value}", nf1.format(mAbility.getValue(1)))));
+                                                    ,"{value}", nf1.format(mAbility.getDisplayValue(1)))));
                                 }
                                 // Mana Ability Level
                                 else {
@@ -145,7 +145,7 @@ public class LockedTemplate implements ConfigurableTemplate {
                                             ,"{mana_ability}", mAbility.getDisplayName(locale)
                                             ,"{level}", RomanNumber.toRoman(manaAbilityLevel)
                                             ,"{desc}",LoreUtil.replace( mAbility.getDescription(locale)
-                                                    ,"{value}", nf1.format(mAbility.getValue(manaAbilityLevel)))));
+                                                    ,"{value}", nf1.format(mAbility.getDisplayValue(manaAbilityLevel)))));
                                 }
                             }
                             else {

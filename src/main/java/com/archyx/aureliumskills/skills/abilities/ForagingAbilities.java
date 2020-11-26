@@ -32,13 +32,16 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
 
 public class ForagingAbilities implements Listener {
 
 	private static final Random r = new Random();
-	
+	private final NumberFormat nf = new DecimalFormat("#.#");
+
 	private final AureliumSkills plugin;
 	
 	public ForagingAbilities(AureliumSkills plugin) {
@@ -297,7 +300,7 @@ public class ForagingAbilities implements Listener {
 									}.runTaskLater(plugin, 50L);
 								} else {
 									if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
-										player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR))));
+										player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", nf.format(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) / 20)));
 										AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR, 2);
 									}
 								}

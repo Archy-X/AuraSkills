@@ -25,17 +25,19 @@ public class SpeedMine implements ManaAbility {
     public void activate(Player player) {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            Locale locale = Lang.getLanguage(player);
-            //Apply haste
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (MAbility.SPEED_MINE.getValue(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), 9, false, false), true);
-            //Play sound
-            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            //Consume mana
-            int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE));
-            AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
-            // Level Sorcery
-            sorceryLeveler.level(player, manaConsumed);
-            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
+            if (playerSkill != null) {
+                Locale locale = Lang.getLanguage(player);
+                //Apply haste
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (MAbility.SPEED_MINE.getValue(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20), 9, false, false), true);
+                //Play sound
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                //Consume mana
+                int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE));
+                AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
+                // Level Sorcery
+                sorceryLeveler.level(player, manaConsumed);
+                player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
+            }
         }
     }
 
@@ -46,10 +48,10 @@ public class SpeedMine implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+        if (skill != null) {
             Locale locale = Lang.getLanguage(player);
-            PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SPEED_MINE, MAbility.SPEED_MINE.getCooldown(skill.getManaAbilityLevel(MAbility.SPEED_MINE)));
+            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SPEED_MINE, (int) (MAbility.SPEED_MINE.getCooldown(skill.getManaAbilityLevel(MAbility.SPEED_MINE) * 20)));
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, locale));
         }
     }

@@ -157,6 +157,11 @@ public class ManaAbilityManager implements Listener {
                         }
                     }
                 }
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
                 for (UUID id : errorTimer.keySet()) {
                     for (MAbility ab : errorTimer.get(id).keySet()) {
                         if (errorTimer.get(id).get(ab) > 0) {

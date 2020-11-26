@@ -5,12 +5,12 @@ public class ManaAbilityOption {
     private final boolean enabled;
     private final double baseValue;
     private final double valuePerLevel;
-    private final int baseCooldown;
-    private final int cooldownPerLevel;
+    private final double baseCooldown;
+    private final double cooldownPerLevel;
     private final int baseManaCost;
     private final int manaCostPerLevel;
 
-    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, int baseCooldown, int cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
+    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
         this.enabled = enabled;
         this.baseValue = baseValue;
         this.valuePerLevel = valuePerLevel;
@@ -32,11 +32,11 @@ public class ManaAbilityOption {
         return valuePerLevel;
     }
 
-    public int getBaseCooldown() {
+    public double getBaseCooldown() {
         return baseCooldown;
     }
 
-    public int getCooldownPerLevel() {
+    public double getCooldownPerLevel() {
         return cooldownPerLevel;
     }
 

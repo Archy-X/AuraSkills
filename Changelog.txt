@@ -6,6 +6,8 @@ Version Alpha 1.5.2 (IN PROGRESS)
       - Splasher - Potions you splash gain a longer duration for each player affected.
       - Lingering - Lingering potions naturally decay slower and decay less per affected entity.
       - Wise Effect - Gain Wisdom for every unique active potion effect.
+    - Added Sharp Hook Mana Ability for Fishing:
+      - Deal damage to a hooked entity when left clicking with a fishing rod
     - Added Item and Armor Requirements:
       - Require at least a certain skill level to use modifiers on an item/armor
       - New commands for requirements:
@@ -49,6 +51,11 @@ Version Alpha 1.5.2 (IN PROGRESS)
       - The modifier name visible in /sk modifier list has a "-offhand" at the end to denote an offhand modifier
       - All existing item modifiers will work with both hands
       - Added option "modifier.item.enable-off-hand" to enable/disable
+    - Added new 'strength.use-percent' option to use a percent increase damage system instead of adding:
+      - This option makes the base weapon damage, enchantments, and attack cooldown more important because the percent is applied on the base vanilla damage (with enchantments).
+      - In order to show the correct percent on the stats menu, disable 'display-damage-with-health-scaling'
+      - Add a percent symbol in the message 'menus.stats_menu.attack_damage' for display
+      - It is recommended to increase the 'strength.modifier' if this option is enabled, but do your own testing
     - Added new message languages:
       - IMPORTANT: To use these languages, you MUST add them to the languages list in config.yml!
       - Turkish (tr)
@@ -66,6 +73,8 @@ Version Alpha 1.5.2 (IN PROGRESS)
     - Added API methods with UUID parameters for each existing method when possible
     - Individual language files will now only update if the embedded language file for that language has a different file_version
     - Moved messages files to a new messages directory. If the directory does not exist yet, old message files will be moved to the new directory.
+    - Mana Ability cooldowns now support decimals
+    - Speed Mine will now activate on netherrack, basalt, and blackstone
   Bug Fixes:
     - Fixed NPC null pointers
     - Fixed bug with item modifiers not removing stat modifiers when moving in inventory

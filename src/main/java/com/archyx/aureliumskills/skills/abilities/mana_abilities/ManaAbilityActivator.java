@@ -16,11 +16,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 public class ManaAbilityActivator {
 
     private final Plugin plugin;
+    private final NumberFormat nf = new DecimalFormat("#.#");
 
     public ManaAbilityActivator(Plugin plugin) {
         this.plugin = plugin;
@@ -98,7 +101,7 @@ public class ManaAbilityActivator {
                                     }.runTaskLater(plugin, 50L);
                                 } else {
                                     if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), skill.getManaAbility()) == 0) {
-                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", String.valueOf(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), skill.getManaAbility()))));
+                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", nf.format(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), skill.getManaAbility()) / 20)));
                                         AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), skill.getManaAbility(), 2);
                                     }
                                 }

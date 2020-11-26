@@ -242,6 +242,7 @@ strength:
     hand-damage: true
     bow-damage: true
     display-damage-with-health-scaling: true
+    use-percent: false
 toughness:
     new-modifier: 0.3
 regeneration:
@@ -514,3 +515,12 @@ mana-abilities:
         cooldown-per-level: -5
         mana-cost: 20
         mana-cost-per-level: 20
+    sharp-hook:
+        enabled: true
+        base-value: 0.5
+        value-per-level: 0.5
+        cooldown: 2
+        cooldown-per-level: -0.1
+        mana-cost: 5
+        mana-cost-per-level: 2
+        display-damage-with-scaling: true

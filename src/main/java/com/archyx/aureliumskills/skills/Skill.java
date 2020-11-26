@@ -25,7 +25,7 @@ public enum Skill {
 			MAbility.SPEED_MINE),
 	FISHING(Stat.LUCK, Stat.HEALTH,
 			ImmutableList.of(() -> Ability.LUCKY_CATCH, () -> Ability.FISHER, () -> Ability.TREASURE_HUNTER, () -> Ability.GRAPPLER, () -> Ability.EPIC_CATCH),
-			MAbility.ABSORPTION),
+			MAbility.SHARP_HOOK),
 	EXCAVATION(Stat.REGENERATION, Stat.LUCK,
 			ImmutableList.of(() -> Ability.METAL_DETECTOR, () -> Ability.EXCAVATOR, () -> Ability.SPADE_MASTER, () -> Ability.BIGGER_SCOOP, () -> Ability.LUCKY_SPADES),
 			MAbility.ABSORPTION),

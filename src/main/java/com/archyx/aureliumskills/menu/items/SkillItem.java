@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.menu.items;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.PlayerSkill;
@@ -140,12 +141,22 @@ public class SkillItem implements ConfigurableItem {
                             MAbility mAbility = skill.getManaAbility();
                             int level = playerSkill.getManaAbilityLevel(mAbility);
                             if (mAbility != MAbility.ABSORPTION && level > 0 && AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
-                                line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY, locale)
-                                        ,"{mana_ability}", mAbility.getDisplayName(locale)
-                                        ,"{level}", RomanNumber.toRoman(level)
-                                        ,"{duration}", nf.format(mAbility.getValue(level))
-                                        ,"{mana_cost}", String.valueOf(mAbility.getManaCost(level))
-                                        ,"{cooldown}", nf.format(mAbility.getCooldown(level))));
+                                if (mAbility != MAbility.SHARP_HOOK) {
+                                    line = LoreUtil.replace(line, "{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY, locale)
+                                            , "{mana_ability}", mAbility.getDisplayName(locale)
+                                            , "{level}", RomanNumber.toRoman(level)
+                                            , "{duration}", nf.format(mAbility.getValue(level))
+                                            , "{mana_cost}", String.valueOf(mAbility.getManaCost(level))
+                                            , "{cooldown}", nf.format(mAbility.getCooldown(level))));
+                                }
+                                else {
+                                    line = LoreUtil.replace(line, "{mana_ability}", LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_MENU, locale)
+                                            , "{mana_ability}", mAbility.getDisplayName(locale)
+                                            , "{level}", RomanNumber.toRoman(level)
+                                            , "{value}", nf.format(mAbility.getDisplayValue(level))
+                                            , "{mana_cost}", String.valueOf(mAbility.getManaCost(level))
+                                            , "{cooldown}", nf.format(mAbility.getCooldown(level))));
+                                }
                             }
                             else {
                                 line = LoreUtil.replace(line,"{mana_ability}", "");

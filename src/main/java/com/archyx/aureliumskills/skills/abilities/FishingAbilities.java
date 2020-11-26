@@ -2,28 +2,39 @@ package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
+import com.archyx.aureliumskills.skills.abilities.mana_abilities.SharpHook;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.skills.levelers.SkillLeveler;
 import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Random;
 
 public class FishingAbilities extends SkillLeveler implements Listener {
 
 	private final Random r = new Random();
+	private final NumberFormat nf = new DecimalFormat("#.#");
 
 	public FishingAbilities(AureliumSkills plugin) {
 		super(plugin, Ability.FISHER);
@@ -171,4 +182,91 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 			}
 		}
 	}
+
+	@EventHandler
+	public void sharpHook(PlayerInteractEvent event) {
+		if (OptionL.isEnabled(Skill.FISHING) && AureliumSkills.abilityOptionManager.isEnabled(MAbility.SHARP_HOOK)) {
+			Player player = event.getPlayer();
+			//Check disabled worlds
+			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				return;
+			}
+			//Check permission
+			if (!player.hasPermission("aureliumskills.fishing")) {
+				return;
+			}
+			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+			if (playerSkill == null) {
+				return;
+			}
+			if (playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK) <= 0) {
+				return;
+			}
+			// If left click
+			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+				ItemStack item = event.getItem();
+				if (item != null) {
+					if (item.getType() == Material.FISHING_ROD) {
+						// Check for player just casting rod
+						for (Entity entity : player.getNearbyEntities(0.1, 0.1, 0.1)) {
+							if (entity instanceof FishHook) {
+								FishHook fishHook = (FishHook) entity;
+								ProjectileSource source = fishHook.getShooter();
+								if (fishHook.isValid() && source instanceof Player) {
+									if (source.equals(player)) {
+										return;
+									}
+								}
+							}
+						}
+						// Check entities
+						for (Entity entity : player.getNearbyEntities(33, 33 ,33)) {
+							if (entity instanceof FishHook) {
+								FishHook fishHook = (FishHook) entity;
+								ProjectileSource source = fishHook.getShooter();
+								if (fishHook.isValid() && source instanceof Player) {
+									if (source.equals(player)) {
+										for (Entity hooked : fishHook.getNearbyEntities(0.1, 0.1, 0.1)) {
+											if (hooked instanceof LivingEntity) {
+												LivingEntity livingEntity = (LivingEntity) hooked;
+												if (!livingEntity.isDead() && livingEntity.isValid()) {
+													int cooldown = AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
+													if (cooldown == 0) {
+														activateSharpHook(player, playerSkill, livingEntity);
+													} else {
+														if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
+															Locale locale = Lang.getLanguage(player);
+															player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", nf.format((double) (cooldown) / 20)));
+															AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
+														}
+													}
+												}
+											}
+										}
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void activateSharpHook(Player player, PlayerSkill playerSkill, LivingEntity caught) {
+		Locale locale = Lang.getLanguage(player);
+		if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.SHARP_HOOK.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK))) {
+			double damage = MAbility.SHARP_HOOK.getValue(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK));
+			caught.damage(damage, player);
+			AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SHARP_HOOK, 1, new SharpHook(plugin));
+		}
+		else {
+			if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
+				player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(MAbility.SHARP_HOOK.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK)))));
+				AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
+			}
+		}
+	}
+
 }

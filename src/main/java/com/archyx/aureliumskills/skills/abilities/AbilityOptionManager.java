@@ -79,8 +79,8 @@ public class AbilityOptionManager {
                         }
                         double baseValue = config.getDouble("mana-abilities." + manaAbility + ".base-value");
                         double valuePerLevel = config.getDouble("mana-abilities." + manaAbility + ".value-per-level");
-                        int cooldown = config.getInt("mana-abilities." + manaAbility + ".cooldown");
-                        int cooldownPerLevel = config.getInt("mana-abilities." + manaAbility + ".cooldown-per-level");
+                        double cooldown = config.getDouble("mana-abilities." + manaAbility + ".cooldown");
+                        double cooldownPerLevel = config.getDouble("mana-abilities." + manaAbility + ".cooldown-per-level");
                         int manaCost = config.getInt("mana-abilities." + manaAbility + ".mana-cost");
                         int manaCostPerLevel = config.getInt("mana-abilities." + manaAbility + ".mana-cost-per-level");
                         ManaAbilityOption option = new ManaAbilityOption(enabled, baseValue, valuePerLevel, cooldown, cooldownPerLevel, manaCost, manaCostPerLevel);
