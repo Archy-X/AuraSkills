@@ -33,6 +33,7 @@ languages:
     - pl
     - pt-BR
     - zh-CN
+    - de
 
 # Action Bar Options
 action-bar:

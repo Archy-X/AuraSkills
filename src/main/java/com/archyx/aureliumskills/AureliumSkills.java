@@ -74,6 +74,7 @@ public class AureliumSkills extends JavaPlugin {
 	private CheckBlockReplace checkBlockReplace;
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
+	private Lang lang;
 	public static long releaseTime = 1605145563240L;
 
 	public void onEnable() {
@@ -135,8 +136,9 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers Commands
 		registerCommands();
 		// Load languages
-		Lang lang = new Lang(this);
+		lang = new Lang(this);
 		getServer().getPluginManager().registerEvents(lang, this);
+		lang.init();
 		lang.loadEmbeddedMessages(commandManager);
 		lang.loadLanguages(commandManager);
 		// Load menu
@@ -432,6 +434,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public ModifierManager getModifierManager() {
 		return modifierManager;
+	}
+
+	public Lang getLang() {
+		return lang;
 	}
 
 }
