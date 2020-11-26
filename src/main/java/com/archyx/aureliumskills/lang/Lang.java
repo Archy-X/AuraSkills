@@ -50,7 +50,7 @@ public class Lang implements Listener {
 
 	public void loadEmbeddedMessages(PaperCommandManager commandManager) {
 		// Loads default file from embedded resource
-		InputStream inputStream = plugin.getResource("messages_en.yml");
+		InputStream inputStream = plugin.getResource("messages/messages_en.yml");
 		if (inputStream != null) {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
 			Locale locale = new Locale("en");
@@ -179,7 +179,7 @@ public class Lang implements Listener {
 
 	private FileConfiguration updateFile(File file, FileConfiguration config, String language) {
 		if (config.contains("file_version")) {
-			InputStream stream = plugin.getResource("messages_" + language + ".yml");
+			InputStream stream = plugin.getResource("messages/messages_" + language + ".yml");
 			if (stream != null) {
 				int currentVersion = config.getInt("file_version");
 				FileConfiguration imbConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
