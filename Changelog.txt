@@ -49,10 +49,13 @@ Version Alpha 1.5.2 (IN PROGRESS)
       - The modifier name visible in /sk modifier list has a "-offhand" at the end to denote an offhand modifier
       - All existing item modifiers will work with both hands
       - Added option "modifier.item.enable-off-hand" to enable/disable
-    - Added Turkish messages (tr)
-    - Added Polish messages (pl)
-    - Added Portuguese, Brazilian messages (pt-BR)
-    - Added Chinese, Simplified messages (zh-CN)
+    - Added new message languages:
+      - IMPORTANT: To use these languages, you MUST add them to the languages list in config.yml!
+      - Turkish (tr)
+      - Polish (pl)
+      - Portuguese, Brazilian (pt-BR)
+      - Chinese, Simplified (zh-CN)
+      - German (de)
   Changes:
     - Updated es, fr, id, and zh-TW messages
     - SkillLoader optimizations
@@ -62,6 +65,7 @@ Version Alpha 1.5.2 (IN PROGRESS)
     - Removed now unused skill xp types from "config.yml"
     - Added API methods with UUID parameters for each existing method when possible
     - Individual language files will now only update if the embedded language file for that language has a different file_version
+    - Moved messages files to a new messages directory. If the directory does not exist yet, old message files will be moved to the new directory.
   Bug Fixes:
     - Fixed NPC null pointers
     - Fixed bug with item modifiers not removing stat modifiers when moving in inventory
