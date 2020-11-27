@@ -367,7 +367,7 @@ commands:
       players_only: '&eSomente jogadores podem remover seus próprios modificadores! Tente especificar um jogador'
   multiplier:
     list: '&fMultiplicador de &fXP para &6{player}&f: &b{multiplier}x / +{percent}%'
-    players_only: '&eApenas jogadores podem listar seu próprio multiplicador! Especifique um jogador!'
+    players_only: '&eSomente jogadores podem listar seu próprio multiplicador! Especifique um jogador!'
   rank:
     header: '&b&lSua Classificação de Habilidade'
     power: '&ePoder &7(Todas as Habilidades): &f#{rank} de {total}'
@@ -511,6 +511,11 @@ mana_abilities:
     lower: '&7Você abaixa seu escudo'
     start: '&6Absorção ativada! &7(-{mana} {mana_unit})'
     end: '&6A Absorção acabou'
+  sharp_hook:
+    name: Gancho Afiado
+    desc: "Cause {value} de dano a uma entidade vinculada\n&7  quando clicar com uma vara de pesca"
+    use: '&6Gancho Afiado usado!'
+    menu: "\n&d&Habilidade da Mana &9{mana_ability} {level}\n &7Dano: &c{value} &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   not_ready: '&cHabilidade não está pronta! &7({cooldown})'
   not_enough_mana: '&eMana insuficiente! &7({mana} {mana_unit} necessário)'
 skills:
@@ -594,4 +599,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 5
+file_version: 6
