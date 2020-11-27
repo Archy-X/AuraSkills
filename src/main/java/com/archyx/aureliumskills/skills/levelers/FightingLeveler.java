@@ -54,6 +54,10 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 								return;
 							}
 						}
+						// Make sure not MythicMob
+						if (isMythicMob(e)) {
+							return;
+						}
 						try {
 							Leveler.addXp(p, s, getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
 						}

@@ -6,7 +6,9 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.cryptomorin.xseries.XMaterial;
+import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -15,17 +17,24 @@ public class SkillLeveler {
 
     public final AureliumSkills plugin;
     private final SourceManager sourceManager;
+    private BukkitAPIHelper bukkitAPIHelper;
     private Ability ability;
 
     public SkillLeveler(AureliumSkills plugin) {
         this.plugin = plugin;
         this.sourceManager = plugin.getSourceManager();
+        if (AureliumSkills.mythicMobsEnabled) {
+            bukkitAPIHelper = new BukkitAPIHelper();
+        }
     }
 
     public SkillLeveler(AureliumSkills plugin, Ability ability) {
         this.plugin = plugin;
         this.ability = ability;
         this.sourceManager = plugin.getSourceManager();
+        if (AureliumSkills.mythicMobsEnabled) {
+            bukkitAPIHelper = new BukkitAPIHelper();
+        }
     }
 
     public double getXp(Source source) {
@@ -64,6 +73,22 @@ public class SkillLeveler {
         return 0.0;
     }
 
+    public double getXp(Player player, double input, Ability ability) {
+        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+        if (playerSkill != null) {
+            double output = input;
+            if (ability != null) {
+                if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+                    double modifier = 1;
+                    modifier += ability.getValue(playerSkill.getAbilityLevel(ability)) / 100;
+                    output *= modifier;
+                }
+            }
+            return output;
+        }
+        return 0.0;
+    }
+
     public void checkCustomBlocks(Player player, Block block, Skill skill) {
         // Check custom blocks
         Map<XMaterial, Double> customBlocks = sourceManager.getCustomBlocks(skill);
@@ -75,6 +100,7 @@ public class SkillLeveler {
                             return;
                         }
                         Leveler.addXp(player, skill, getXp(player, entry.getValue()));
+                        break;
                     }
                 }
                 else {
@@ -83,10 +109,22 @@ public class SkillLeveler {
                             return;
                         }
                         Leveler.addXp(player, skill, getXp(player, entry.getValue()));
+                        break;
                     }
                 }
             }
         }
+    }
+
+    public boolean isMythicMob(Entity entity) {
+        if (AureliumSkills.mythicMobsEnabled) {
+            if (bukkitAPIHelper != null) {
+                if (bukkitAPIHelper.isMythicMob(entity)) {
+                    return sourceManager.getCustomMobSet().contains(bukkitAPIHelper.getMythicMobInstance(entity).getType().getInternalName());
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -52,6 +52,11 @@ Version Alpha 1.5.2 (IN PROGRESS)
       - The modifier name visible in /sk modifier list has a "-offhand" at the end to denote an offhand modifier
       - All existing item modifiers will work with both hands
       - Added option "modifier.item.enable-off-hand" to enable/disable
+    - Added MythicMobs support:
+      - Just like custom block XP sources, add the "custom:" section under fighting and archery in "sources_config.yml"
+      - Under the section, the keys are the MythicMobs mob internal name and the value is the xp amount
+      - Killing a MythicMob that is defined in the sources config will override the default value for that mob type
+      - Killing a MythicMob that has not been defined in the sources config will give the default xp for that mob type
     - Added new 'strength.use-percent' option to use a percent increase damage system instead of adding:
       - This option makes the base weapon damage, enchantments, and attack cooldown more important because the percent is applied on the base vanilla damage (with enchantments).
       - In order to show the correct percent on the stats menu, disable 'display-damage-with-health-scaling'

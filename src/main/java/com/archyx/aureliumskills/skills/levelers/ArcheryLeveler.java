@@ -68,6 +68,10 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 								return;
 							}
 						}
+						// Make sure not MythicMob
+						if (isMythicMob(e)) {
+							return;
+						}
 						try {
 							Leveler.addXp(p, s, getXp(p, Source.valueOf("ARCHERY_" + type.toString())));
 						} catch (IllegalArgumentException exception) {

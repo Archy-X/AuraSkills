@@ -63,6 +63,7 @@ public class AureliumSkills extends JavaPlugin {
 	public static boolean placeholderAPIEnabled;
 	public static boolean vaultEnabled;
 	public static boolean protocolLibEnabled;
+	public static boolean mythicMobsEnabled;
 	public static Leaderboard leaderboard;
 	private static Economy economy = null;
 	private OptionL optionLoader;
@@ -81,7 +82,7 @@ public class AureliumSkills extends JavaPlugin {
 		invManager = new InventoryManager(this);
 		invManager.init();
 		// Checks for world guard
-		if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+		if (getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
 			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
 				worldGuardEnabled = true;
 				worldGuardSupport = new WorldGuardSupport(this);
@@ -92,7 +93,7 @@ public class AureliumSkills extends JavaPlugin {
 			worldGuardEnabled = false;
 		}
 		// Checks for PlaceholderAPI
-		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			new PlaceholderSupport(this).register();
 			placeholderAPIEnabled = true;
 			Bukkit.getLogger().info("[AureliumSkills] PlaceholderAPI Support Enabled!");
@@ -121,6 +122,14 @@ public class AureliumSkills extends JavaPlugin {
 		// Load sources
 		sourceManager = new SourceManager(this);
 		sourceManager.loadSources();
+		// Check for MythicMobs
+		if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
+			mythicMobsEnabled = true;
+			Bukkit.getPluginManager().registerEvents(new MythicMobsSupport(this), this);
+			Bukkit.getLogger().info("[AureliumSkills] MythicMobs Support Enabled!");
+		} else {
+			mythicMobsEnabled = false;
+		}
 		// Load boss bar
 		bossBar = new SkillBossBar(this);
 		bossBar.loadOptions();

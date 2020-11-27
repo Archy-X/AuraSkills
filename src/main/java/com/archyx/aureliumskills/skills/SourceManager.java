@@ -17,7 +17,9 @@ public class SourceManager {
     private final AureliumSkills plugin;
     private final Map<Source, Double> sources;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
+    private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
+    private Set<String> customMobSet;
 
     public SourceManager(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -72,6 +74,23 @@ public class SourceManager {
                 customBlocks.put(skill, blockMap);
             }
         }
+        // Load custom mobs
+        customMobs = new HashMap<>();
+        customMobSet = new HashSet<>();
+        Skill[] customMobSkills = new Skill[] {Skill.FIGHTING, Skill.ARCHERY};
+        for (Skill skill : customMobSkills) {
+            ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase() + ".custom");
+            if (section != null) {
+                Map<String, Double> mobMap = new HashMap<>();
+                for (String key : section.getKeys(false)) {
+                    double value = section.getDouble(key);
+                    mobMap.put(key, value);
+                    customMobSet.add(key);
+                    sourcesLoaded++;
+                }
+                customMobs.put(skill, mobMap);
+            }
+        }
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources in " + (System.currentTimeMillis() - start) + "ms");
     }
 
@@ -117,6 +136,14 @@ public class SourceManager {
 
     public Set<XMaterial> getCustomBlockSet() {
         return customBlockSet;
+    }
+
+    public Map<String, Double> getCustomMobs(Skill skill) {
+        return customMobs.get(skill);
+    }
+
+    public Set<String> getCustomMobSet() {
+        return customMobSet;
     }
 
 }
