@@ -223,6 +223,7 @@ abilities:
       name: Alquimista
       desc: "As poções que você bebe ficam com {value}% a mais\n&7  de duração."
       info: '+{value}% de Duração da Poção'
+      lore: '&a(+{duration})'
     brewer:
       name: Cervejeiro
       desc: 'Ganhe {value}% mais XP de Alquimia'
@@ -514,7 +515,7 @@ mana_abilities:
   sharp_hook:
     name: Gancho Afiado
     desc: "Cause {value} de dano a uma entidade vinculada\n&7  quando clicar com uma vara de pesca"
-    use: '&6Gancho Afiado usado!'
+    use: '&6Gancho Afiado Usado! &7(-{mana} {mana_unit})'
     menu: "\n&d&Habilidade da Mana &9{mana_ability} {level}\n &7Dano: &c{value} &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   not_ready: '&cHabilidade não está pronta! &7({cooldown})'
   not_enough_mana: '&eMana insuficiente! &7({mana} {mana_unit} necessário)'
@@ -599,4 +600,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 6
+file_version: 7

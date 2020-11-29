@@ -223,6 +223,7 @@ abilities:
       name: 炼金术士
       desc: '制作的药水持续时间延长 {value}%'
       info: '+{value}% 药水持续时间'
+      lore: '&a(+{duration})'
     brewer:
       name: 酿造专精
       desc: '获得额外的 {value}% 酿造熟练度'
@@ -511,6 +512,11 @@ mana_abilities:
     lower: '&7你放下了你的盾牌'
     start: '&6超级吸收已激活! &7(-{mana} {mana_unit})'
     end: '&6超级吸收已关闭'
+  sharp_hook:
+    name: 锋利鱼钩
+    desc: '持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害'
+    use: '&6使用了锋利鱼钩! &7(-{mana} {mana_unit})'
+    menu: "\n&d&魔法技能 &9{mana_ability} {level}\n &7攻击力: &c{value} &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
   not_ready: '&c&o技能还没有准备好! &7({cooldown}s)'
   not_enough_mana: '&e&o没有足够的魔力! &7(需要 {mana} {mana_unit})'
 skills:
@@ -594,4 +600,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 5
+file_version: 7

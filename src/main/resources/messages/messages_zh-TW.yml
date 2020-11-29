@@ -223,6 +223,7 @@ abilities:
       name: 釀造師
       desc: '釀造的藥水延長{value}% 持續時間'
       info: '+{value}% 藥水持續時間'
+      lore: '&a(+{duration})'
     brewer:
       name: 釀造
       desc: '獲得{value}% 釀造經驗'
@@ -367,7 +368,7 @@ commands:
       players_only: '&e只有玩家才能刪除自己的屬性! 請指定一個玩家'
   multiplier:
     list: '&6{player}&f的經驗值倍數: &b{multiplier}x / +{percent}%'
-    players_only: '&e只有玩家才能列出自己的倍數! 請指定一個玩家!'
+    players_only: '&e只有玩家才能列出自己的經驗值倍數! 請指定一個玩家!'
   rank:
     header: '&b&l你的技能排行'
     power: '&ePower &7(全部技能): &f#{rank} 共 {total}'
@@ -511,6 +512,11 @@ mana_abilities:
     lower: '&7你放下你的盾牌'
     start: '&6吸收已啟用! &7(-{mana} {mana_unit})'
     end: '&6吸收已消耗完'
+  sharp_hook:
+    name: 釣鉤
+    desc: "＆7使用釣魚竿左鍵點擊時\n被鉤到的實體造成 {value} 傷害"
+    use: '&6使用了锋利釣鉤! &7(-{mana} {mana_unit})'
+    menu: "\n&d&l法力能力 &9{mana_ability} {level}\n &7傷害: &c{value} &7法力消耗: &b{mana_cost} &7冷卻時間: &e{cooldown} 秒 "
   not_ready: '&c能力尚未準備好! &7({cooldown}秒)'
   not_enough_mana: '&e法力值不夠! &7(需要{mana} {mana_unit})'
 skills:
@@ -594,4 +600,4 @@ units:
   mana: 法力
   hp: 血量
   xp: 經驗
-file_version: 5
+file_version: 7
