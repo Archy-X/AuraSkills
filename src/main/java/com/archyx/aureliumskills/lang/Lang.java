@@ -20,6 +20,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Lang implements Listener {
@@ -185,7 +186,7 @@ public class Lang implements Listener {
 			InputStream stream = plugin.getResource("messages/messages_" + language + ".yml");
 			if (stream != null) {
 				int currentVersion = config.getInt("file_version");
-				FileConfiguration imbConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
+				FileConfiguration imbConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream, StandardCharsets.UTF_8));
 				int imbVersion = imbConfig.getInt("file_version");
 				//If versions do not match
 				if (currentVersion != imbVersion) {
@@ -194,9 +195,11 @@ public class Lang implements Listener {
 						int keysAdded = 0;
 						if (configSection != null) {
 							for (String key : configSection.getKeys(true)) {
-								if (!config.contains(key)) {
-									config.set(key, imbConfig.get(key));
-									keysAdded++;
+								if (!configSection.isConfigurationSection(key)) {
+									if (!config.contains(key)) {
+										config.set(key, imbConfig.get(key));
+										keysAdded++;
+									}
 								}
 							}
 						}

@@ -513,10 +513,10 @@ mana_abilities:
     start: '&6吸收已啟用! &7(-{mana} {mana_unit})'
     end: '&6吸收已消耗完'
   sharp_hook:
-    name: 釣鉤
-    desc: "＆7使用釣魚竿左鍵點擊時\n被鉤到的實體造成 {value} 傷害"
+    name: '釣鉤'
+    desc: '＆7使用釣魚竿左鍵點擊時\n被鉤到的實體造成 {value} 傷害'
     use: '&6使用了锋利釣鉤! &7(-{mana} {mana_unit})'
-    menu: "\n&d&l法力能力 &9{mana_ability} {level}\n &7傷害: &c{value} &7法力消耗: &b{mana_cost} &7冷卻時間: &e{cooldown} 秒 "
+    menu: '\n&d&l法力能力 &9{mana_ability} {level}\n &7傷害: &c{value} &7法力消耗: &b{mana_cost} &7冷卻時間: &e{cooldown} 秒\n '
   not_ready: '&c能力尚未準備好! &7({cooldown}秒)'
   not_enough_mana: '&e法力值不夠! &7(需要{mana} {mana_unit})'
 skills:

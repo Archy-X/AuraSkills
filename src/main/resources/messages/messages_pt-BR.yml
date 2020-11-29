@@ -516,7 +516,7 @@ mana_abilities:
     name: Gancho Afiado
     desc: "Cause {value} de dano a uma entidade vinculada\n&7  quando clicar com uma vara de pesca"
     use: '&6Gancho Afiado Usado! &7(-{mana} {mana_unit})'
-    menu: "\n&d&Habilidade da Mana &9{mana_ability} {level}\n &7Dano: &c{value} &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+    menu: "\n&d&lHabilidade da Mana &9{mana_ability} {level}\n &7Dano: &c{value} &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   not_ready: '&cHabilidade não está pronta! &7({cooldown})'
   not_enough_mana: '&eMana insuficiente! &7({mana} {mana_unit} necessário)'
 skills:

@@ -1,4 +1,4 @@
-Version Alpha 1.5.2 (IN PROGRESS)
+Version Alpha 1.5.2
   New Features:
     - Added Alchemy abilities:
       - Alchemist - Potions you brew have a percent longer duration.
@@ -90,6 +90,7 @@ Version Alpha 1.5.2 (IN PROGRESS)
     - Money rewards are now formatted to 2 decimal places
     - Disabled abilities will no longer show up on menus
     - Embedded English messages will now be used when a message is missing in messages_en.yml (fixes NPEs)
+    - Fixed encoding issues with updating message files
 
 Version Alpha 1.5.1
   New Features:
