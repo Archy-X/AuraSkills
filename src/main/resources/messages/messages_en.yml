@@ -221,6 +221,7 @@ abilities:
       name: Alchemist
       desc: 'Potions you brew have a {value}% longer\n&7  duration.'
       info: '+{value}% Potion Duration'
+      lore: '&a(+{duration})'
     brewer:
       name: Brewer
       desc: 'Earn {value}% more Alchemy XP'
@@ -512,7 +513,7 @@ mana_abilities:
   sharp_hook:
     name: Sharp Hook
     desc: 'Deal {value} damage to a hooked entity\n&7  when left clicking with a fishing rod'
-    use: '&6Used Sharp Hook!'
+    use: '&6Used Sharp Hook! &7(-{mana} {mana_unit})'
     menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Damage: &c{value} &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   not_ready: '&cAbility not ready! &7({cooldown}s)'
   not_enough_mana: '&eNot enough mana! &7({mana} {mana_unit} required)'
@@ -597,4 +598,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 6
+file_version: 7

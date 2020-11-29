@@ -174,6 +174,7 @@ public enum AbilityMessage implements MessageKey {
     ALCHEMIST_NAME,
     ALCHEMIST_DESC,
     ALCHEMIST_INFO,
+    ALCHEMIST_LORE,
     BREWER_NAME,
     BREWER_DESC,
     BREWER_INFO,

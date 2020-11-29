@@ -3,16 +3,22 @@ package com.archyx.aureliumskills.skills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.AbilityMessage;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.PotionUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -34,6 +40,8 @@ import org.bukkit.potion.PotionType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class AlchemyAbilities implements Listener {
@@ -72,7 +80,7 @@ public class AlchemyAbilities implements Listener {
                             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                             if (playerSkill != null) {
                                 if (playerSkill.getAbilityLevel(Ability.ALCHEMIST) > 0) {
-                                    updateBrewingStand(inventory, playerSkill);
+                                    updateBrewingStand(inventory, playerSkill, Lang.getLanguage(player));
                                 }
                             }
                         }
@@ -82,7 +90,7 @@ public class AlchemyAbilities implements Listener {
         }
     }
 
-    private void updateBrewingStand(BrewerInventory inventory, PlayerSkill playerSkill) {
+    private void updateBrewingStand(BrewerInventory inventory, PlayerSkill playerSkill, Locale locale) {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -92,7 +100,7 @@ public class AlchemyAbilities implements Listener {
                     ItemStack item = contents[i];
                     if (item != null) {
                         if (item.getItemMeta() instanceof PotionMeta) {
-                            contents[i] = applyDurationData(item, multiplier);
+                            contents[i] = applyDurationData(item, multiplier, locale);
                         }
                     }
                 }
@@ -115,7 +123,7 @@ public class AlchemyAbilities implements Listener {
         }
     }
 
-    private ItemStack applyDurationData(ItemStack originalItem, double multiplier) {
+    private ItemStack applyDurationData(ItemStack originalItem, double multiplier, Locale locale) {
         PotionMeta potionMeta = (PotionMeta) originalItem.getItemMeta();
         if (potionMeta != null) {
             PotionData potionData = potionMeta.getBasePotionData();
@@ -136,8 +144,11 @@ public class AlchemyAbilities implements Listener {
                 ItemMeta meta = item.getItemMeta();
                 if (duration != 0 && meta != null) {
                     // Add lore
+                    NumberFormat nf = new DecimalFormat("#.#");
                     List<String> lore = new ArrayList<>();
-                    lore.add(ChatColor.GREEN + "(+" + PotionUtil.formatDuration(durationBonus) + ")");
+                    lore.add(LoreUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
+                            , "{duration}", PotionUtil.formatDuration(durationBonus)
+                            , "{value}", nf.format((multiplier - 1) * 100)));
                     meta.setLore(lore);
                     item.setItemMeta(meta);
                 }
