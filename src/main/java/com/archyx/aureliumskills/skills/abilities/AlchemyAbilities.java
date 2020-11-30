@@ -13,6 +13,7 @@ import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.PotionUtil;
+import com.archyx.aureliumskills.util.VersionUtils;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
@@ -20,6 +21,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.AreaEffectCloud;
+import org.bukkit.entity.LingeringPotion;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,6 +42,7 @@ import org.bukkit.potion.PotionType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
@@ -307,10 +310,26 @@ public class AlchemyAbilities implements Listener {
 
     // Handles the Lingering ability
     @EventHandler
+    @SuppressWarnings("deprecation")
     public void lingering(LingeringPotionSplashEvent event) {
         if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityOptionManager.isEnabled(Ability.LINGERING) && !event.isCancelled()) {
-            if (event.getEntity().getShooter() instanceof Player) {
-                Player player = (Player) event.getEntity().getShooter();
+            Player player = null;
+            if (VersionUtils.isAboveVersion(14)) {
+                if (event.getEntity().getShooter() instanceof Player) {
+                    player = (Player) event.getEntity().getShooter();
+                }
+            } else {
+                try {
+                    Object lingeringPotionObject = event.getClass().getDeclaredMethod("getEntity").invoke(event);
+                    if (lingeringPotionObject instanceof LingeringPotion) {
+                        LingeringPotion lingeringPotion = (LingeringPotion) lingeringPotionObject;
+                        if (lingeringPotion.getShooter() instanceof Player) {
+                            player = (Player) lingeringPotion.getShooter();
+                        }
+                    }
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) { }
+            }
+            if (player != null) {
                 //Checks if in blocked world
                 if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
                     return;

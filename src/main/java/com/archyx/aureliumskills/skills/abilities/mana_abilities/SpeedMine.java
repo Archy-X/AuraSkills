@@ -32,7 +32,7 @@ public class SpeedMine implements ManaAbility {
                 //Play sound
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 //Consume mana
-                int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE));
+                int manaConsumed = MAbility.SPEED_MINE.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SPEED_MINE));
                 AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
                 // Level Sorcery
                 sorceryLeveler.level(player, manaConsumed);
@@ -51,7 +51,7 @@ public class SpeedMine implements ManaAbility {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (skill != null) {
             Locale locale = Lang.getLanguage(player);
-            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SPEED_MINE, (int) (MAbility.SPEED_MINE.getCooldown(skill.getManaAbilityLevel(MAbility.SPEED_MINE) * 20)));
+            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SPEED_MINE, (int) (MAbility.SPEED_MINE.getCooldown(skill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20));
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, locale));
         }
     }

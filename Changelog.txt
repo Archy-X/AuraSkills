@@ -1,3 +1,8 @@
+Version Alpha 1.5.3
+  Bug Fixes:
+    - Fixed NoSuchMethodError with lingering potions on versions 1.12-1.13
+    - Fixed Speed Mine cooldown being too short
+
 Version Alpha 1.5.2
   New Features:
     - Added Alchemy abilities:
