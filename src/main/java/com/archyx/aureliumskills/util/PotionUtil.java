@@ -61,22 +61,21 @@ public class PotionUtil {
     }
 
     public static void applyEffect(Player player, PotionEffect effect) {
-        if (XMaterial.isNewVersion()) {
-            player.addPotionEffect(effect);
-        }
-        else {
-            PotionEffect currentEffect = player.getPotionEffect(effect.getType());
-            // Force apply the effect if effect has greater amplifier or longer duration if same amplifier
-            if (currentEffect != null) {
-                if (effect.getDuration() > currentEffect.getDuration() && effect.getAmplifier() == currentEffect.getAmplifier()) {
-                    player.addPotionEffect(effect, true);
-                }
-                else if (effect.getAmplifier() > currentEffect.getAmplifier()) {
-                    player.addPotionEffect(effect, true);
-                }
-            }
-            else {
+        if (!effect.getType().isInstant()) {
+            if (XMaterial.isNewVersion()) {
                 player.addPotionEffect(effect);
+            } else {
+                PotionEffect currentEffect = player.getPotionEffect(effect.getType());
+                // Force apply the effect if effect has greater amplifier or longer duration if same amplifier
+                if (currentEffect != null) {
+                    if (effect.getDuration() > currentEffect.getDuration() && effect.getAmplifier() == currentEffect.getAmplifier()) {
+                        player.addPotionEffect(effect, true);
+                    } else if (effect.getAmplifier() > currentEffect.getAmplifier()) {
+                        player.addPotionEffect(effect, true);
+                    }
+                } else {
+                    player.addPotionEffect(effect);
+                }
             }
         }
     }
