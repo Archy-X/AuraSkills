@@ -19,14 +19,19 @@ import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.MySqlSupport;
+import de.tr7zw.changeme.nbtapi.NBTCompoundList;
+import de.tr7zw.changeme.nbtapi.NBTFile;
+import de.tr7zw.changeme.nbtapi.NBTListCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -951,6 +956,71 @@ public class SkillsCommand extends BaseCommand {
 					.replace("{player}", player.getName())
 					.replace("{multiplier}", String.valueOf(multiplier))
 					.replace("{percent}", String.valueOf((multiplier - 1) * 100)));
+		}
+	}
+
+	@Subcommand("resethealth")
+	@CommandPermission("aureliumskills.*")
+	@Description("Removes all attribute modifiers by Aurelium Skills for easy uninstalling. This only works on offline players.")
+	public void onResetHealth(CommandSender sender) {
+		if (sender instanceof ConsoleCommandSender) {
+			File playerDataFolder = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "playerdata");
+			int successful = 0;
+			int error = 0;
+			int total = 0;
+			for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+				if (!player.isOnline()) {
+					total++;
+					File playerFile = new File(playerDataFolder, player.getUniqueId().toString() + ".dat");
+					if (playerFile.exists() && playerFile.canWrite()) {
+						try {
+							NBTFile nbtFile = new NBTFile(playerFile);
+							NBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
+							if (compoundList != null) {
+								boolean save = false;
+								for (NBTListCompound listCompound : compoundList.subList(0, compoundList.size())) {
+									if (listCompound.getString("Name").equals("generic.maxHealth") || listCompound.getString("Name").equals("minecraft:generic.max_health")) {
+										NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+										if (modifierList != null) {
+											for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+												if (modifier.getString("Name").equals("skillsHealth")) {
+													modifierList.remove(modifier);
+													if (modifierList.size() == 0) {
+														listCompound.removeKey("Modifiers");
+													}
+													save = true;
+												}
+											}
+										}
+									} else if (listCompound.getString("Name").equals("generic.luck") || listCompound.getString("Name").equals("minecraft:generic.luck")) {
+										NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+										if (modifierList != null) {
+											for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+												if (modifier.getString("Name").equals("AureliumSkills-Luck")) {
+													modifierList.remove(modifier);
+													if (modifierList.size() == 0) {
+														listCompound.removeKey("Modifiers");
+													}
+													save = true;
+												}
+											}
+										}
+									}
+								}
+								if (save) {
+									nbtFile.save();
+									successful++;
+								}
+							}
+						} catch (Exception e) {
+							error++;
+						}
+					}
+				}
+			}
+			sender.sendMessage("Searched " + total + " offline players. Successfully removed attributes from " + successful + " players. Failed to remove on " + error + " players.");
+		} else {
+			sender.sendMessage(ChatColor.RED + "Only console may execute this command!");
 		}
 	}
 
