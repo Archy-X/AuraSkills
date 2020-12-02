@@ -1,3 +1,11 @@
+Version Alpha 1.5.4
+  New Features:
+    - Added 'skills resethealth' command that removes Aurelium Skills attribute modifiers from all offline players
+      - This command can only be run through console and does not affect online players
+      - Useful for uninstalling the plugin without extra health or luck
+  Bug Fixes:
+    - Fixed instant health and damage potions giving an effect with duration
+
 Version Alpha 1.5.3
   Bug Fixes:
     - Fixed NoSuchMethodError with lingering potions on versions 1.12-1.13
