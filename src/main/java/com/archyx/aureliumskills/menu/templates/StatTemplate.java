@@ -110,7 +110,7 @@ public class StatTemplate implements ConfigurableTemplate {
                             if (primarySkills.size() == 2) {
                                 line = LoreUtil.replace(line,"{primary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
                                         ,"{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
-                                        ,"{skill_2}", primarySkills.get(0).get().getDisplayName(locale)));
+                                        ,"{skill_2}", primarySkills.get(1).get().getDisplayName(locale)));
                             }
                             else if (primarySkills.size() == 1) {
                                 line = LoreUtil.replace(line, "{primary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
