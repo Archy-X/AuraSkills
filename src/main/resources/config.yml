@@ -264,7 +264,7 @@ luck:
 wisdom:
     anvil-cost-modifier: 0.25
     experience-modifier: 0.01
-    allow-over-max-mana: false
+    allow-over-max-mana: true
 
 # Ability Options
 abilities:

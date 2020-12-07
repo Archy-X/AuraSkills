@@ -224,7 +224,12 @@ public class Lang implements Listener {
 		if (message != null) {
 			return message;
 		} else {
-			return Lang.messages.get(defaultLanguage).get(key);
+			String defaultMessage = Lang.messages.get(defaultLanguage).get(key);
+			if (defaultMessage != null) {
+				return defaultMessage;
+			} else {
+				return Lang.messages.get(Locale.ENGLISH).get(key);
+			}
 		}
 	}
 

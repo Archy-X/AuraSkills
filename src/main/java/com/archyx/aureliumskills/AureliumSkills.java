@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills;
 
 import co.aikar.commands.PaperCommandManager;
+import com.archyx.aureliumskills.commands.ManaCommand;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
@@ -321,6 +322,7 @@ public class AureliumSkills extends JavaPlugin {
 		});
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand());
+		commandManager.registerCommand(new ManaCommand());
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
 			if (OptionL.isEnabled(Skill.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand()); }
 			if (OptionL.isEnabled(Skill.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand()); }

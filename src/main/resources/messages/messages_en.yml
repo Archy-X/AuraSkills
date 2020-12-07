@@ -347,6 +347,14 @@ commands:
   lang:
     set: '&7Language set to &b{lang}'
     not_found: '&eLanguage not found!'
+  mana:
+    display: '&fYour {mana_unit}: &b{current}/{max}'
+    display_other: '&f{mana_unit} of {player}: &b{current}/{max}'
+    add: '&7Added &b{amount} {mana_unit} &7to player &6{player}'
+    remove: '&7Removed &b{amount} {mana_unit} &7from player &6{player}'
+    set: '&7Set player &6{player} &7to &b{amount} {mana_unit}'
+    at_least_zero: '&e{mana_unit} must be at least zero!'
+    console_specify_player: '&eConsole must specify a player!'
   modifier:
     add:
       added: '{color}{stat} &7modifier level &b{value} &7 with name &f{name} &7added to player &6{player}'
@@ -598,4 +606,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 7
+file_version: 8

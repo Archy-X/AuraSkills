@@ -44,6 +44,10 @@ permissions:
             aureliumskills.armor.requirement.add: true
             aureliumskills.armor.requirement.remove: true
             aureliumskills.armor.requirement.removeall: true
+            aureliumskills.mana.add: true
+            aureliumskills.mana.remove: true
+            aureliumskills.mana.set: true
+            aureliumskills.mana.other: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.reload:
@@ -59,6 +63,16 @@ permissions:
     aureliumskills.top:
         default: true
     aureliumskills.skill.reset:
+        default: op
+    aureliumskills.mana:
+        default: true
+    aureliumskills.mana.add:
+        default: op
+    aureliumskills.mana.remove:
+        default: op
+    aureliumskills.mana.set:
+        default: op
+    aureliumskills.mana.other:
         default: op
     aureliumskills.modifier.add:
         default: op
