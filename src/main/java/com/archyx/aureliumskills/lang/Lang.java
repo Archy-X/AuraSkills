@@ -41,7 +41,7 @@ public class Lang implements Listener {
 		loadLanguageFiles();
 	}
 
-	private void loadLanguageFiles() {
+	public void loadLanguageFiles() {
 		for (String language : embeddedLanguages) {
 			if (!new File(plugin.getDataFolder() + "/messages", "messages_" + language + ".yml").exists()) {
 				plugin.saveResource("messages/messages_" + language + ".yml", false);

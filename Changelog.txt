@@ -15,6 +15,8 @@ Version Alpha 1.5.5 (IN PROGRESS)
         - Mana can never go below 0
   Changes:
     - Option 'wisdom.allow-over-max-mana' is now true by default
+    - Updated French (fr) messages
+    - Deleted message files included in the plugin will now regenerate on /sk reload
   Bug Fixes:
     - Fixed NullPointers with messages by using the English message if the default-language is set to a language with an outdated message file
     - Fixed primary skills word duplicate in stats menu

@@ -332,6 +332,7 @@ public class SkillsCommand extends BaseCommand {
 		plugin.getRequirementManager().load();
 		plugin.getSourceManager().loadSources();
 		plugin.getCheckBlockReplace().reloadCustomBlocks();
+		lang.loadLanguageFiles();
 		lang.loadEmbeddedMessages(plugin.getCommandManager());
 		lang.loadLanguages(plugin.getCommandManager());
 		try {
