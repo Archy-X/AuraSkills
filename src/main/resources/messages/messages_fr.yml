@@ -1,5 +1,5 @@
 # Aurelium Skills French (fr) messages
-# Translators: superhize, Kilian Simon
+# Translators: superhize, Kilian Simon, HamtaBot TV
 # Contribute here: https://crowdin.com/project/aureliumskills/fr#
 abilities:
   farming:
@@ -62,7 +62,7 @@ abilities:
       desc: "Confère +{value} de robustesse\n&7  en tenant une pioche"
       info: '+{value} Robustesse'
     hardened_armor:
-      name: Armrue renforcé
+      name: Armure renforcé
       desc: "{value}% de chance d'annuler les dégâts de durabilité\n&7  sur l'armure."
       info: '{value}% Aucune perte de durabilité'
   fishing:
@@ -177,7 +177,7 @@ abilities:
   endurance:
     anti_hunger:
       name: Lutter contre la Faim
-      desc: '{value}% de chance de ne pas consommer votre barre de\n&7  nourriture.'
+      desc: "{value}% de chance de ne pas consommer votre barre de\n&7  nourriture."
       info: '{value}% de pertes de faim'
     runner:
       name: Coureur
@@ -210,7 +210,7 @@ abilities:
       info: '{value}% Vitesse plus longue'
     fleeting:
       name: Fugace
-      desc: 'Gagnez +{value}% de vitesse de déplacement lorsque\n&7  vous êtes à moins de 20% de votre vie'
+      desc: "Gagnez +{value}% de vitesse de déplacement lorsque\n&7  vous êtes à moins de 20% de votre vie"
       info: '+{value}% De vitesse'
       start: '&fVous avez gagné un boost de vitesse de déplacement! &7(+{value}% de vitesse)'
       end: '&7Le gain de vitesse s''est dissipé.'
@@ -223,6 +223,7 @@ abilities:
       name: Alchimiste
       desc: "Les potions que vous brassez ont une durée\n&7  de {value}% plus longue."
       info: '+{value}% de durée de potion'
+      lore: '&a(+{duration})'
     brewer:
       name: Brasseur
       desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
@@ -367,7 +368,7 @@ commands:
       players_only: '&eSeul un joueur peut supprimer ses propre modificateurs! Essayez de spécifier un joueur.'
   multiplier:
     list: '&fMultiplicateur d''xp pour &6{player}&f: &b{multiplier}x / +{percent}%'
-    players_only: '&eSeul les joueurs peuvent lister leurs multiplicateur! Spécifiez un joueur!'
+    players_only: '&eSeuls les joueurs peuvent lister leur propre multiplicateur! Spécifiez un joueur!'
   rank:
     header: '&b&lVos classements de compétences'
     power: '&ePuissance &7(Toutes les compétences): &f#{rank} of {total}'
@@ -410,7 +411,7 @@ commands:
   no_profile: '&Le joueur n''a pas un profile de compétences!'
 leveler:
   title: '&a{skill} Niveau supérieur'
-  subtitle: '&6{old} <unk> {new}'
+  subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Niveau supérieur! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRécompenses:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
   stat_level: '{color}+1{symbol} {stat}'
   ability_unlock: '&aCompétence débloquée! &6&l{ability} &7a été débloquée'
@@ -511,6 +512,11 @@ mana_abilities:
     lower: '&7Vous baissez votre bouclier'
     start: '&6Absorption activé! &7(-{mana} {mana_unit})'
     end: '&6Absorption a été désactivée'
+  sharp_hook:
+    name: Crochet pointu
+    desc: "Inflige {value} dégats à une entité accrochée\n&7  clic gauche avec une canne à pêche"
+    use: '&6Crochet pointu utilisé &7(-{mana} {mana_unit})'
+    menu: "\n&d&lCapacité de mana &9{mana_ability} {level}\n &7Dégats: &c{value} &7Coût en mana: &b{mana_cost} &7Rechargement: &e{cooldown}s\n "
   not_ready: '&cCompétence non chargée! &7({cooldown}s)'
   not_enough_mana: '&ePas assez de mana! &7({mana} {mana_unit} requis)'
 skills:
@@ -522,7 +528,7 @@ skills:
     desc: '&7Coupez du bois pour gagner de l''{xp_unit} Bûcheron'
   mining:
     name: Mineur
-    desc: '&7Miner de la pierre ou des minerais pour gagner\n&7de l''{xp_unit} Mineur'
+    desc: "&7Miner de la pierre ou des minerais pour gagner\n&7de l'{xp_unit} Mineur"
   fishing:
     name: Pêcheur
     desc: '&7Pêcher du poisson pour gagner de l''{xp_unit} Pecheur'
@@ -534,7 +540,7 @@ skills:
     desc: "&7Tirez sur les mobs et les joueurs avec un arc pour\n&7gagnez de l'{xp_unit} Archer"
   defense:
     name: Defenseur
-    desc: '&7Subissez des dégâts d''un joueur ou d''un mobs\n&7pour gagnez de l''{xp_unit} Defenseur'
+    desc: "&7Subissez des dégâts d'un joueur ou d'un mobs\n&7pour gagnez de l'{xp_unit} Defenseur"
   fighting:
     name: Combatant
     desc: "&7Combattez les mobs avec une arme de corps à corps\n&7pour gagnez de l'{xp_unit} Combatant"
@@ -552,7 +558,7 @@ skills:
     desc: "&7Enchantez des objets ou des livres pour\n&7gagner de l'{xp_unit} Enchanteur"
   sorcery:
     name: Sorcier
-    desc: '&7Utilisez des compétences à mana pour gagnez\n&7de l''{xp_unit} Sorcier'
+    desc: "&7Utilisez des compétences à mana pour gagnez\n&7de l'{xp_unit} Sorcier"
   healing:
     name: Guérison
     desc: "&7Buvez et lancez des potions pour gagner\n&7de l'{xp_unit} en Guérison"
@@ -572,7 +578,7 @@ stats:
     symbol: '❤'
   regeneration:
     name: Régénération
-    desc: "&7La régénération augmente la vitess à laquelle\n&7 vousrécupérer à la fois de la vie et du mana"
+    desc: "&7La régénération augmente la vitess à laquelle\n&7vous récupérez à la fois de la vie et du mana"
     color: '&6'
     symbol: '❥'
   luck:
@@ -594,4 +600,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 5
+file_version: 7
