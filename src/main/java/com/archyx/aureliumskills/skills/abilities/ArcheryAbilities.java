@@ -16,19 +16,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
 
-public class ArcheryAbilities implements Listener {
+public class ArcheryAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
-    private final Plugin plugin;
 
-    public ArcheryAbilities(Plugin plugin) {
-        this.plugin = plugin;
+    public ArcheryAbilities(AureliumSkills plugin) {
+        super(plugin, Skill.ARCHERY);
     }
 
     public static void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
@@ -104,14 +102,7 @@ public class ArcheryAbilities implements Listener {
                     Arrow arrow = (Arrow) event.getDamager();
                     if (arrow.getShooter() instanceof Player) {
                         Player player = (Player) arrow.getShooter();
-                        //Check disabled worlds
-                        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                            return;
-                        }
-                        //Check for permission
-                        if (!player.hasPermission("aureliumskills.archery")) {
-                            return;
-                        }
+                        if (blockAbility(player)) return;
                         //Applies abilities
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());

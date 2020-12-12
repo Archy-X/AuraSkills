@@ -17,9 +17,13 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 import java.util.Random;
 
-public class EnduranceAbilities implements Listener {
+public class EnduranceAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
+
+    public EnduranceAbilities(AureliumSkills plugin) {
+        super(plugin, Skill.ENDURANCE);
+    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void antiHunger(FoodLevelChangeEvent event) {
@@ -27,14 +31,7 @@ public class EnduranceAbilities implements Listener {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
-                    //Checks disabled worlds
-                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                        return;
-                    }
-                    //Checks for permission
-                    if (!player.hasPermission("aureliumskills.endurance")) {
-                        return;
-                    }
+                    if (blockAbility(player)) return;
                     //Checks if food level would be decreased
                     if (player.getFoodLevel() > event.getFoodLevel()) {
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -56,14 +53,7 @@ public class EnduranceAbilities implements Listener {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
-                    //Checks disabled worlds
-                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                        return;
-                    }
-                    //Checks for permission
-                    if (!player.hasPermission("aureliumskills.endurance")) {
-                        return;
-                    }
+                    if (blockAbility(player)) return;
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                         //Golden Heal
@@ -101,14 +91,7 @@ public class EnduranceAbilities implements Listener {
                 if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
                     Player player = (Player) event.getDamager();
                     Player enemy = (Player) event.getEntity();
-                    //Checks disabled worlds
-                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                        return;
-                    }
-                    //Checks for permission
-                    if (!player.hasPermission("aureliumskills.endurance")) {
-                        return;
-                    }
+                    if (blockAbility(player)) return;
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                         //Calculates chance

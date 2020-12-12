@@ -45,24 +45,7 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 		if (OptionL.isEnabled(Skill.FISHING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUCKY_CATCH)) {
 				Player player = event.getPlayer();
-				//Check disabled worlds
-				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-					return;
-				}
-				//Checks if in blocked world
-				if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
-					return;
-				}
-				//Checks if in blocked region
-				if (AureliumSkills.worldGuardEnabled) {
-					if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
-						return;
-					}
-				}
-				//Check permission
-				if (!player.hasPermission("aureliumskills.fishing")) {
-					return;
-				}
+				if (blockAbility(player)) return;
 				if (event.getCaught() instanceof Item) {
 					if (event.getExpToDrop() > 0) {
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -86,24 +69,7 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 	public void treasureHunterAndEpicCatch(PlayerFishEvent event) {
 		if (OptionL.isEnabled(Skill.FISHING)) {
 			Player player = event.getPlayer();
-			//Check disabled worlds
-			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-				return;
-			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
-					return;
-				}
-			}
-			//Check permission
-			if (!player.hasPermission("aureliumskills.fishing")) {
-				return;
-			}
+			if (blockXpGain(player)) return;
 			if (event.getCaught() instanceof Item) {
 				if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
 					if (event.getExpToDrop() > 0) {
@@ -166,14 +132,7 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 						if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
 							PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
 							Player player = event.getPlayer();
-							//Check disabled worlds
-							if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-								return;
-							}
-							//Check permission
-							if (!player.hasPermission("aureliumskills.fishing")) {
-								return;
-							}
+							if (blockAbility(player)) return;
 							Vector vector = player.getLocation().toVector().subtract(event.getCaught().getLocation().toVector());
 							event.getCaught().setVelocity(vector.multiply(0.004 + (Ability.GRAPPLER.getValue(skill.getAbilityLevel(Ability.GRAPPLER)) / 25000)));
 						}
@@ -187,14 +146,7 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 	public void sharpHook(PlayerInteractEvent event) {
 		if (OptionL.isEnabled(Skill.FISHING) && AureliumSkills.abilityOptionManager.isEnabled(MAbility.SHARP_HOOK)) {
 			Player player = event.getPlayer();
-			//Check disabled worlds
-			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-				return;
-			}
-			//Check permission
-			if (!player.hasPermission("aureliumskills.fishing")) {
-				return;
-			}
+			if (blockAbility(player)) return;
 			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 			if (playerSkill == null) {
 				return;

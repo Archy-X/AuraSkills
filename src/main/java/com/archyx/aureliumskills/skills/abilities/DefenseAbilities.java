@@ -12,20 +12,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
-public class DefenseAbilities implements Listener {
+public class DefenseAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
-    private final Plugin plugin;
 
-    public DefenseAbilities(Plugin plugin) {
-        this.plugin = plugin;
+    public DefenseAbilities(AureliumSkills plugin) {
+        super(plugin, Skill.DEFENSE);
     }
 
     public static void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
@@ -64,14 +62,7 @@ public class DefenseAbilities implements Listener {
                 for (LivingEntity entity : event.getAffectedEntities()) {
                     if (entity instanceof Player) {
                         Player player = (Player) entity;
-                        //Check disabled worlds
-                        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                            return;
-                        }
-                        //Check Permission
-                        if (!player.hasPermission("aureliumskills.defense")) {
-                            return;
-                        }
+                        if (blockAbility(player)) return;
                         for (PotionEffect effect : event.getPotion().getEffects()) {
                             PotionEffectType type = effect.getType();
                             if (type.equals(PotionEffectType.POISON) || type.equals(PotionEffectType.UNLUCK) || type.equals(PotionEffectType.WITHER) ||
@@ -117,14 +108,7 @@ public class DefenseAbilities implements Listener {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
-                    //Check disabled worlds
-                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                        return;
-                    }
-                    //Check Permission
-                    if (!player.hasPermission("aureliumskills.defense")) {
-                        return;
-                    }
+                    if (blockAbility(player)) return;
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                         AbilityOptionManager options = AureliumSkills.abilityOptionManager;

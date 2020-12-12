@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.skills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
@@ -17,7 +16,6 @@ import com.archyx.aureliumskills.util.VersionUtils;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.AreaEffectCloud;
@@ -47,11 +45,12 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.*;
 
-public class AlchemyAbilities implements Listener {
+public class AlchemyAbilities extends AbilityProvider implements Listener {
 
     private final AureliumSkills plugin;
 
     public AlchemyAbilities(AureliumSkills plugin) {
+        super(plugin, Skill.ALCHEMY);
         this.plugin = plugin;
         wiseEffect();
     }
@@ -66,20 +65,7 @@ public class AlchemyAbilities implements Listener {
                         Player player = offlinePlayer.getPlayer();
                         BrewerInventory inventory = event.getContents();
                         if (player != null) {
-                            //Checks if in blocked world
-                            if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                                return;
-                            }
-                            //Check for permission
-                            if (!player.hasPermission("aureliumskills.alchemy")) {
-                                return;
-                            }
-                            //Check creative mode disable
-                            if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-                                if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                                    return;
-                                }
-                            }
+                            if (blockAbility(player)) return;
                             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                             if (playerSkill != null) {
                                 if (playerSkill.getAbilityLevel(Ability.ALCHEMIST) > 0) {
@@ -167,20 +153,7 @@ public class AlchemyAbilities implements Listener {
             ItemStack item = event.getItem();
             if (item.getType() == Material.POTION && item.getItemMeta() instanceof PotionMeta) {
                 Player player = event.getPlayer();
-                //Checks if in blocked world
-                if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                    return;
-                }
-                //Check for permission
-                if (!player.hasPermission("aureliumskills.alchemy")) {
-                    return;
-                }
-                //Check creative mode disable
-                if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-                    if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                        return;
-                    }
-                }
+                if (blockAbility(player)) return;
                 NBTItem nbtItem = new NBTItem(item);
                 NBTCompound compound = nbtItem.getCompound("skillsPotion");
                 if (compound != null) {
@@ -247,20 +220,7 @@ public class AlchemyAbilities implements Listener {
                     for (LivingEntity entity : event.getAffectedEntities()) {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
-                            //Checks if in blocked world
-                            if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                                return;
-                            }
-                            //Check for permission
-                            if (!player.hasPermission("aureliumskills.alchemy")) {
-                                return;
-                            }
-                            //Check creative mode disable
-                            if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-                                if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                                    return;
-                                }
-                            }
+                            if (blockAbility(player)) return;
                             // Calculate and get multipliers
                             double splasherMultiplier = getSplasherMultiplier(event.getPotion().getShooter(), event.getAffectedEntities());
                             double intensity = event.getIntensity(player);
@@ -330,20 +290,7 @@ public class AlchemyAbilities implements Listener {
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) { }
             }
             if (player != null) {
-                //Checks if in blocked world
-                if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                    return;
-                }
-                //Check for permission
-                if (!player.hasPermission("aureliumskills.alchemy")) {
-                    return;
-                }
-                //Check creative mode disable
-                if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-                    if (player.getGameMode().equals(GameMode.CREATIVE)) {
-                        return;
-                    }
-                }
+                if (blockAbility(player)) return;
                 PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                 if (playerSkill != null) {
                     if (playerSkill.getAbilityLevel(Ability.LINGERING) > 0) {
@@ -373,17 +320,8 @@ public class AlchemyAbilities implements Listener {
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                         if (playerStat != null && playerSkill != null) {
                             if (player.getActivePotionEffects().size() > 0) {
-                                boolean skip = false;
-                                //Checks if in blocked world
-                                if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) skip = true;
-                                //Check for permission
-                                if (!player.hasPermission("aureliumskills.alchemy")) skip = true;
-                                //Check creative mode disable
-                                if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-                                    if (player.getGameMode().equals(GameMode.CREATIVE)) skip = true;
-                                }
                                 // Get unique active potion effects
-                                if (!skip) {
+                                if (!blockAbility(player)) {
                                     Set<PotionEffectType> uniqueTypesSet = new HashSet<>();
                                     for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                                         uniqueTypesSet.add(potionEffect.getType());

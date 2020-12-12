@@ -29,13 +29,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Locale;
 import java.util.Random;
 
-public class FarmingAbilities implements Listener {
+public class FarmingAbilities extends AbilityProvider implements Listener {
 
 	private static final Random r = new Random();
-	private final AureliumSkills plugin;
 
 	public FarmingAbilities(AureliumSkills plugin) {
-		this.plugin = plugin;
+		super(plugin, Skill.FARMING);
 	}
 
 	public static void bountifulHarvest(Player player, Block block) {
@@ -78,14 +77,7 @@ public class FarmingAbilities implements Listener {
 		if (OptionL.isEnabled(Skill.FARMING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.GENETICIST)) {
 				Player player = event.getPlayer();
-				//Check permission
-				if (!player.hasPermission("aureliumskills.farming")) {
-					return;
-				}
-				//Check disabled worlds
-				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-					return;
-				}
+				if (blockAbility(player)) return;
 				Material mat = event.getItem().getType();
 				if (mat.equals(Material.BREAD) || mat.equals(Material.APPLE) || mat.equals(Material.GOLDEN_APPLE) || mat.equals(XMaterial.POTATO.parseMaterial())
 						|| mat.equals(Material.BAKED_POTATO) || mat.equals(XMaterial.CARROT.parseMaterial()) || mat.equals(Material.GOLDEN_CARROT) || mat.equals(Material.MELON)

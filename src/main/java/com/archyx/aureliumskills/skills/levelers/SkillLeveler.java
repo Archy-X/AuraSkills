@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import java.util.Locale;
 import java.util.Map;
 
-public class SkillLeveler {
+public abstract class SkillLeveler {
 
     public final AureliumSkills plugin;
     private final SourceManager sourceManager;
@@ -95,6 +95,7 @@ public class SkillLeveler {
         return 0.0;
     }
 
+    @SuppressWarnings("deprecation")
     public void checkCustomBlocks(Player player, Block block, Skill skill) {
         // Check custom blocks
         Map<XMaterial, Double> customBlocks = sourceManager.getCustomBlocks(skill);
@@ -173,6 +174,19 @@ public class SkillLeveler {
             return true;
         }
         //Check creative mode disable
+        if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+            return player.getGameMode().equals(GameMode.CREATIVE);
+        }
+        return false;
+    }
+
+    public boolean blockAbility(Player player) {
+        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+            return true;
+        }
+        if (!player.hasPermission("aureliumskills." + skillName)) {
+            return true;
+        }
         if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
             return player.getGameMode().equals(GameMode.CREATIVE);
         }

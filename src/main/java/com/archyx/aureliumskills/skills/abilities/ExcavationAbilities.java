@@ -23,12 +23,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class ExcavationAbilities implements Listener {
+public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	private static final Random r = new Random();
 	private final Material[] loadedMaterials;
 
-	public ExcavationAbilities() {
+	public ExcavationAbilities(AureliumSkills plugin) {
+		super(plugin, Skill.EXCAVATION);
 		//Load materials
 		XMaterial[] materials = new XMaterial[]{
 				XMaterial.DIRT, XMaterial.GRASS_BLOCK, XMaterial.COARSE_DIRT, XMaterial.PODZOL,
@@ -155,14 +156,7 @@ public class ExcavationAbilities implements Listener {
 			if (!event.isCancelled()) {
 				Player player = event.getPlayer();
 				Block block = event.getBlock();
-				//Check disabled worlds
-				if (AureliumSkills.worldManager.isInDisabledWorld(block.getLocation())) {
-					return;
-				}
-				//Check permission
-				if (!player.hasPermission("aureliumskills.excavation")) {
-					return;
-				}
+				if (blockAbility(player)) return;
 				//Check game mode
 				if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
 					return;

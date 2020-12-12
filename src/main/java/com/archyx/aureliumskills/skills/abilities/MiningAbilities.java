@@ -37,14 +37,14 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Random;
 
-public class MiningAbilities implements Listener {
+public class MiningAbilities extends AbilityProvider implements Listener {
 
 	private static final Random r = new Random();
 	private static AureliumSkills plugin;
 	private final NumberFormat nf = new DecimalFormat("#.#");
 
 	public MiningAbilities(AureliumSkills plugin) {
-		MiningAbilities.plugin = plugin;
+		super(plugin, Skill.MINING);
 	}
 
 	public static void luckyMiner(Player player, Block block) {
@@ -97,14 +97,7 @@ public class MiningAbilities implements Listener {
 		if (OptionL.isEnabled(Skill.MINING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.HARDENED_ARMOR)) {
 				Player player = event.getPlayer();
-				//Check disabled worlds
-				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-					return;
-				}
-				//Check permission
-				if (!player.hasPermission("aureliumskills.mining")) {
-					return;
-				}
+				if (blockAbility(player)) return;
 				//Checks if item damaged is armor
 				if (ItemUtils.isArmor(event.getItem().getType())) {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -182,14 +175,7 @@ public class MiningAbilities implements Listener {
 					if (mat.name().toUpperCase().contains("PICKAXE")) {
 						Player player = event.getPlayer();
 						Locale locale = Lang.getLanguage(player);
-						//Check disabled worlds
-						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-							return;
-						}
-						//Check permission
-						if (!player.hasPermission("aureliumskills.mining")) {
-							return;
-						}
+						if (blockAbility(player)) return;
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(MAbility.SPEED_MINE) > 0) {
 								//Checks if speed mine is already activated

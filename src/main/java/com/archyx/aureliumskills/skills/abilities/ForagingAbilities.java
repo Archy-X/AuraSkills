@@ -37,15 +37,13 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
 
-public class ForagingAbilities implements Listener {
+public class ForagingAbilities extends AbilityProvider implements Listener {
 
 	private static final Random r = new Random();
 	private final NumberFormat nf = new DecimalFormat("#.#");
-
-	private final AureliumSkills plugin;
 	
 	public ForagingAbilities(AureliumSkills plugin) {
-		this.plugin = plugin;
+		super(plugin, Skill.FORAGING);
 	}
 	
 	public static void lumberjack(Player player, Block block) {
@@ -92,14 +90,7 @@ public class ForagingAbilities implements Listener {
 							//If last damage was from player
 							if (e.getDamager() instanceof Player) {
 								Player player = (Player) e.getDamager();
-								//Check permission
-								if (!player.hasPermission("aureliumskills.foraging")) {
-									return;
-								}
-								//Check disabled worlds
-								if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-									return;
-								}
+								if (blockAbility(player)) return;
 								if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 									//If damage was an attack
 									if (e.getCause().equals(DamageCause.ENTITY_ATTACK)) {
@@ -265,14 +256,7 @@ public class ForagingAbilities implements Listener {
 								return;
 							}
 						}
-						//Check permission
-						if (!player.hasPermission("aureliumskills.foraging")) {
-							return;
-						}
-						//Check disabled worlds
-						if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-							return;
-						}
+						if (blockAbility(player)) return;
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(MAbility.TREECAPITATOR) > 0) {
 								//Checks if speed mine is already activated

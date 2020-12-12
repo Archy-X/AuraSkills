@@ -21,14 +21,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class FightingAbilities implements Listener {
+public class FightingAbilities extends AbilityProvider implements Listener {
 
-    private final Plugin plugin;
     private static final Map<UUID, Integer> firstStrikeCounter = new HashMap<>();
     private final Random r = new Random();
 
-    public FightingAbilities(Plugin plugin) {
-        this.plugin = plugin;
+    public FightingAbilities(AureliumSkills plugin) {
+        super(plugin, Skill.FIGHTING);
     }
 
     public static void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
@@ -139,14 +138,7 @@ public class FightingAbilities implements Listener {
             if (!event.isCancelled()) {
                 if (event.getDamager() instanceof Player) {
                     Player player = (Player) event.getDamager();
-                    //Check for permission
-                    if (!player.hasPermission("aureliumskills.fighting")) {
-                        return;
-                    }
-                    //Check disabled worlds
-                    if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
-                        return;
-                    }
+                    if (blockAbility(player)) return;
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         //If player used sword
                         if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
