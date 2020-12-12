@@ -223,6 +223,7 @@ abilities:
       name: Alquimista
       desc: "Las pociones que preparas tienen un {value}%\n&7  más de duración."
       info: '+{value}% Duración de Poción'
+      lore: '&a(+{duration})'
     brewer:
       name: Cervecero
       desc: 'Gana un {value}% más de XP de Alquimia'
@@ -367,7 +368,7 @@ commands:
       players_only: '&e¡Solo los jugadores pueden eliminar sus propios modificadores! Intenta especificando un jugador'
   multiplier:
     list: '&fMultplicador de XP para &e{player}&f: &b{multiplier}x / +{percent}%'
-    players_only: '¡Solo los jugadores pueden ver su propios multiplicadores! ¡Especifique un jugador!'
+    players_only: '&e¡Solo los jugadores pueden ver sus propios modificadores! Intenta especificando un jugador!'
   rank:
     header: '&b&lTu Clasificación de Habilidades'
     power: '&ePoder &7(Todas las habilidades): &f#{rank} de {total}'
@@ -511,6 +512,11 @@ mana_abilities:
     lower: '&7Bajaste tu escudo'
     start: '&6¡Habilidad Absorción activada! &7(-{mana} {mana_unit})'
     end: '&6La habilidad absorción se ha agotado'
+  sharp_hook:
+    name: Gancho Afilado
+    desc: "Inflige {value} de daño a una entidad enganchada \n&7  al hacer click izquierdo con una caña de pescar"
+    use: '&6¡Usaste el Gancho Afilado! &7(-{mana} {mana_unit})'
+    menu: "\n&d&lHabilidad de Mana &9{mana_ability} {level}\n &7Daño: &c{value} &7Costo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   not_ready: '&c¡La habilitad no está lista! &7({cooldown}s)'
   not_enough_mana: '&e¡No tienes suficiente mana! &7(Requerido: {mana} {mana_unit})'
 skills:
@@ -594,4 +600,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 5
+file_version: 7

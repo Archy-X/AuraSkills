@@ -223,6 +223,7 @@ abilities:
       name: Alkimia
       desc: "Ramuan yang kamu racik memiliki {value}% durasi\n&7  lebih lama."
       info: '+{value}% Durasi Ramuan'
+      lore: '&a(+{duration})'
     brewer:
       name: Peracik
       desc: 'Meningkatkan {value}% EXP yang ditierima untuk skill alkimia'
@@ -367,7 +368,7 @@ commands:
       players_only: '&eHanya pemain yang bisa menghapus modifikasi pemain! Coba spesifikan pemain'
   multiplier:
     list: '&fPengganda EXP untuk pemain &6{player}&f: &b{multiplier}x / +{percent}%'
-    players_only: 'Hanya pemain yang bisa melihat daftar pengganda EXP pemain! Coba spesifikan pemain!'
+    players_only: '&eHanya pemain yang bisa melihat pengganda Exp! Spesifikasikan pemain!'
   rank:
     header: '&b&lPeringkat Skill Kamu'
     power: '&ePower &7(All Skills): &f#{rank} of {total}'
@@ -511,6 +512,11 @@ mana_abilities:
     lower: '&7Kamu menonaktifkan perisaimu'
     start: '&6Kekebalan Active! &7(-{mana} {mana_unit})'
     end: '&6Durasi Kekebalan Sudah Selesai'
+  sharp_hook:
+    name: Kail Tajam
+    desc: "Menghasilkan {value} kerusakan ke entitiy yang ditarik\n&7  ketika Left-Click kail pancing"
+    use: '&6Menggunakan Kail Tajam! &7(-{mana} {mana_unit})'
+    menu: "\n&d&lAbility Sihir &9{mana_ability} {level}\n &7Durasi: &a{value}s &7Sihir dibutuhkan: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   not_ready: '&cKemampuan sedang cooldown! &7({cooldown}s)'
   not_enough_mana: '&eSihir tidak cukup! &7({mana} {mana_unit} required)'
 skills:
@@ -594,4 +600,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: EXP
-file_version: 5
+file_version: 7

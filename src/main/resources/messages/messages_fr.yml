@@ -22,12 +22,12 @@ abilities:
     triple_harvest:
       name: Triple récolte
       desc: "{value}% de chance d'obtenir un triple drops à partir des\n&7  cultures."
-      info: '{value}% 3 fois de réduction'
+      info: '{value}% de chance de triple drop'
   foraging:
     lumberjack:
       name: Bûcheron
       desc: "{value}% de chance d'obtenir un double drops\n&7  de bûche."
-      info: '{value}% 2 fois plus de pertes'
+      info: '{value}% de chance de double drop'
     forager:
       name: Butineuse
       desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
@@ -48,7 +48,7 @@ abilities:
     lucky_miner:
       name: Mineur chanceux
       desc: "{value}% de chance d'obtenir un double drops\n&7  de minerai."
-      info: '{value}% 2 fois de réduction'
+      info: '{value}% de chance de double drop'
     miner:
       name: Mineur
       desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
@@ -69,7 +69,7 @@ abilities:
     lucky_catch:
       name: Prise chanceuse
       desc: "{value}% de chance d'obtenir un double drop\n&7  en pêchant."
-      info: '{value}% 2 fois de réduction'
+      info: '{value}% de chance de double drop'
     fisher:
       name: Pêcheur
       desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
@@ -102,7 +102,7 @@ abilities:
     bigger_scoop:
       name: Plus grande pelle
       desc: '{value}% de chance d''obtenir un triple drops en creusant.'
-      info: '{value}% 3 fois de réduction'
+      info: '{value}% de chance de triple drop'
     lucky_spades:
       name: Pelles chanceuse
       desc: '{value}% de chance d''obtenir un butin épique en creusant.'
@@ -178,7 +178,7 @@ abilities:
     anti_hunger:
       name: Lutter contre la Faim
       desc: "{value}% de chance de ne pas consommer votre barre de\n&7  nourriture."
-      info: '{value}% de pertes de faim'
+      info: '{value}% de saturation'
     runner:
       name: Coureur
       desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
@@ -207,7 +207,7 @@ abilities:
     sugar_rush:
       name: Ruée vers le sucre
       desc: "Les potions de vitesse et de saut amélioré\n&7  durent {value}% plus longtemps."
-      info: '{value}% Vitesse plus longue'
+      info: '{value}% Potions de vitesse et saut plus longue'
     fleeting:
       name: Fugace
       desc: "Gagnez +{value}% de vitesse de déplacement lorsque\n&7  vous êtes à moins de 20% de votre vie"
@@ -231,10 +231,10 @@ abilities:
     splasher:
       name: Éclaboussure
       desc: "Les potions que vous lancez gagnent {value}% plus de durée\n&7 pour chaque joueur affecté."
-      info: '+{value}% Durée/Joueur'
+      info: '+{value}% Durée par joueur éclaboussé'
     lingering:
       name: Persistant
-      desc: "Les potions persistantes se dégradent naturellement {value}%\n&7  plus lentement et décroît {value_2}% de moins par entité affectée."
+      desc: "Les potions persistantes se dégradent naturellement {value}%\n&7  plus lentement et décroîssent {value_2}% de moins par entité affectée."
       info: '-{value}% Naturel, -{value_2}% Décomposition d''Entités'
     wise_effect:
       name: Sagesse
@@ -477,7 +477,7 @@ menus:
     saturated_regen: '&6+{value} Régénération saturé'
     full_hunger_regen: '&6+{value} Régénération complète de la faim'
     almost_full_hunger_regen: '&6+{value} Régénération de la faim presque complète'
-    mana_regen: '&b+{value} Régénéraiton de mana'
+    mana_regen: '&b+{value} Régénération de mana'
     luck: '&2+{value} Chance'
     double_drop_chance: '&2Chance de double drop: {value}%'
     xp_gain: '&9+{value}% gain d''{xp_unit}'
@@ -558,13 +558,13 @@ skills:
     desc: "&7Enchantez des objets ou des livres pour\n&7gagner de l'{xp_unit} Enchanteur"
   sorcery:
     name: Sorcier
-    desc: "&7Utilisez des compétences à mana pour gagnez\n&7de l'{xp_unit} Sorcier"
+    desc: "&7Utilisez des compétences à mana pour gagner\n&7de l'{xp_unit} Sorcier"
   healing:
     name: Guérison
     desc: "&7Buvez et lancez des potions pour gagner\n&7de l'{xp_unit} en Guérison"
   forging:
     name: Forgeron
-    desc: "&7Combinez et appliquez un livre dans une enclume pour\n&7gagnez de l'{xp_unit} Forgeron"
+    desc: "&7Combinez et appliquez un livre dans une enclume pour\n&7gagner de l'{xp_unit} Forgeron"
 stats:
   strength:
     name: Force

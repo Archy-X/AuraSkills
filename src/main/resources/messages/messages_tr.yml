@@ -223,6 +223,7 @@ abilities:
       name: Simyacı
       desc: "Hazırladığınız İksirler {value}% Daha Uzun Olur\n&7  Süresi."
       info: '+{value}% İksir Süresi'
+      lore: '&a(+{duration})'
     brewer:
       name: Biracı
       desc: '{value}% Daha Fazla Kimya Xp Si Kazan'
@@ -367,7 +368,7 @@ commands:
       players_only: '&eSadece oyuncular kendi değiştiricilerini kaldırabilir! Bir oyuncu belirlemeyi deneyin'
   multiplier:
     list: '&fXP çarpanı &6{player}&f: &b{multiplier}x / +{percent}%'
-    players_only: 'Sadece oyuncular kendi çarpanlarını listeleyebilir! Bir oyuncu belirtin!'
+    players_only: '&eYalnızca oyuncular kendi çarpanlarını listeleyebilir! Bir oyuncu belirleyin!'
   rank:
     header: '&b&lBeceri Sıralamanız'
     power: '&eGüç &7(Tüm Beceriler): &f#{rank} of {total}'
@@ -511,6 +512,11 @@ mana_abilities:
     lower: '&7Kalkanını İndiriyorsun'
     start: '&6Emilim Aktifleştirildi! &7(-{mana} {mana_unit})'
     end: '&6Emili Süresi Bitti'
+  sharp_hook:
+    name: Keskin Kanca
+    desc: "Balık Oltası Bir varlığa bağlıyken\n&7  Sol Tıklayıp {value} Hasar Verin"
+    use: '&6Keskin Kanca Kullanıldı! &7(-{mana} {mana_unit})'
+    menu: "\n&d&lMana Yeteneği &9{mana_ability} {level}\n &7Hasar:&c{value} &7Mana Maliyeti: &b{mana_cost} &7Bekleme Süresi: &e{cooldown}s\n "
   not_ready: '&cYetenek Hazır Değil! &7({cooldown}sn)'
   not_enough_mana: '&eYetersiz mana! &7({mana} {mana_unit} Gerekli)'
 skills:
@@ -594,4 +600,4 @@ units:
   mana: Mana
   hp: Can
   xp: Level
-file_version: 5
+file_version: 7
