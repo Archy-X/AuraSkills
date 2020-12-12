@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class SorceryLeveler extends SkillLeveler {
 
     public SorceryLeveler(AureliumSkills plugin) {
-        super(plugin);
+        super(plugin, Skill.SORCERY);
     }
 
     public void level(Player player, int manaUsed) {

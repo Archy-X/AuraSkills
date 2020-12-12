@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.skills;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class PlayerSkillInstance {
@@ -30,10 +29,6 @@ public class PlayerSkillInstance {
 
     public int getSkillLevel(Skill skill) {
         return levels.getOrDefault(skill, 0);
-    }
-
-    public Set<Skill> getSkillSet() {
-        return levels.keySet();
     }
 
     public UUID getPlayerId() {

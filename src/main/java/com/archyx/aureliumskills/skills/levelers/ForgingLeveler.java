@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.ItemUtils;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 public class ForgingLeveler extends SkillLeveler implements Listener {
 
 	public ForgingLeveler(AureliumSkills plugin) {
-		super(plugin);
+		super(plugin, Skill.FORGING);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -35,34 +34,10 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 			}
 			if (event.getClickedInventory() != null) {
 				if (event.getClickedInventory().getType().equals(InventoryType.ANVIL)) {
-					//Checks if in blocked world
 					if (event.getClickedInventory().getLocation() != null) {
-						if (AureliumSkills.worldManager.isInBlockedWorld(event.getClickedInventory().getLocation())) {
-							return;
-						}
-					}
-					//Checks if in blocked region
-					if (AureliumSkills.worldGuardEnabled) {
-						if (event.getClickedInventory().getLocation() != null) {
-							if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getClickedInventory().getLocation())) {
-								return;
-							}
-						}
-						else {
-							if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getWhoClicked().getLocation())) {
-								return;
-							}
-						}
-					}
-					//Check for permission
-					if (!event.getWhoClicked().hasPermission("aureliumskills.forging")) {
-						return;
-					}
-					//Check creative mode disable
-					if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-						if (event.getWhoClicked().getGameMode().equals(GameMode.CREATIVE)) {
-							return;
-						}
+						if (blockXpGainLocation(event.getClickedInventory().getLocation())) return;
+					} else {
+						if (blockXpGainLocation(event.getWhoClicked().getLocation())) return;
 					}
 					if (event.getSlot() == 2) {
 						if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
@@ -70,6 +45,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 								ItemStack addedItem = event.getClickedInventory().getItem(1);
 								ItemStack baseItem = event.getClickedInventory().getItem(0);
 								Player p = (Player) event.getWhoClicked();
+								if (blockXpGainPlayer(p)) return;
 								Skill s = Skill.FORGING;
 								AnvilInventory inventory = (AnvilInventory) event.getClickedInventory();
 								if (addedItem != null && baseItem != null) {

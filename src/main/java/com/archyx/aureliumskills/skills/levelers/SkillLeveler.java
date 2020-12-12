@@ -7,10 +7,13 @@ import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.cryptomorin.xseries.XMaterial;
 import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
 import java.util.Map;
 
 public class SkillLeveler {
@@ -19,9 +22,11 @@ public class SkillLeveler {
     private final SourceManager sourceManager;
     private BukkitAPIHelper bukkitAPIHelper;
     private Ability ability;
+    private final String skillName;
 
-    public SkillLeveler(AureliumSkills plugin) {
+    public SkillLeveler(AureliumSkills plugin, Skill skill) {
         this.plugin = plugin;
+        this.skillName = skill.toString().toLowerCase(Locale.ENGLISH);
         this.sourceManager = plugin.getSourceManager();
         if (AureliumSkills.mythicMobsEnabled) {
             bukkitAPIHelper = new BukkitAPIHelper();
@@ -31,6 +36,7 @@ public class SkillLeveler {
     public SkillLeveler(AureliumSkills plugin, Ability ability) {
         this.plugin = plugin;
         this.ability = ability;
+        this.skillName = ability.getSkill().toString().toLowerCase(Locale.ENGLISH);
         this.sourceManager = plugin.getSourceManager();
         if (AureliumSkills.mythicMobsEnabled) {
             bukkitAPIHelper = new BukkitAPIHelper();
@@ -123,6 +129,52 @@ public class SkillLeveler {
                     return sourceManager.getCustomMobSet().contains(bukkitAPIHelper.getMythicMobInstance(entity).getType().getInternalName());
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean blockXpGain(Player player) {
+        //Checks if in blocked world
+        if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
+            return true;
+        }
+        //Checks if in blocked region
+        if (AureliumSkills.worldGuardEnabled) {
+            if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
+                return true;
+            }
+        }
+        //Check for permission
+        if (!player.hasPermission("aureliumskills." + skillName)) {
+            return true;
+        }
+        //Check creative mode disable
+        if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+            return player.getGameMode().equals(GameMode.CREATIVE);
+        }
+        return false;
+    }
+
+    public boolean blockXpGainLocation(Location location) {
+        //Checks if in blocked world
+        if (AureliumSkills.worldManager.isInBlockedWorld(location)) {
+            return true;
+        }
+        //Checks if in blocked region
+        if (AureliumSkills.worldGuardEnabled) {
+            return AureliumSkills.worldGuardSupport.isInBlockedRegion(location);
+        }
+        return false;
+    }
+
+    public boolean blockXpGainPlayer(Player player) {
+        //Check for permission
+        if (!player.hasPermission("aureliumskills." + skillName)) {
+            return true;
+        }
+        //Check creative mode disable
+        if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+            return player.getGameMode().equals(GameMode.CREATIVE);
         }
         return false;
     }

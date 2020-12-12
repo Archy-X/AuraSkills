@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,7 +21,7 @@ import org.bukkit.potion.PotionType;
 public class HealingLeveler extends SkillLeveler implements Listener {
 
 	public HealingLeveler(AureliumSkills plugin) {
-		super(plugin);
+		super(plugin, Skill.HEALING);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -35,26 +34,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getPlayer().getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getPlayer().getLocation())) {
-					return;
-				}
-			}
-			//Check for permission
-			if (!event.getPlayer().hasPermission("aureliumskills.healing")) {
-				return;
-			}
-			//Check creative mode disable
-			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-				if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-					return;
-				}
-			}
+			if (blockXpGain(event.getPlayer())) return;
 			Player p = event.getPlayer();
 			Skill s = Skill.HEALING;
 			if (event.getItem().getType().equals(Material.POTION)) {
@@ -116,16 +96,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 						PotionMeta meta = (PotionMeta) event.getPotion().getItem().getItemMeta();
 						PotionData data = meta.getBasePotionData();
 						Skill s = Skill.HEALING;
-						//Check for permission
-						if (!p.hasPermission("aureliumskills.healing")) {
-							return;
-						}
-						//Check creative mode disable
-						if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-							if (p.getGameMode().equals(GameMode.CREATIVE)) {
-								return;
-							}
-						}
+						if (blockXpGain(p)) return;
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 							if (data.isExtended()) {

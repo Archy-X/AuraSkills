@@ -7,7 +7,6 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.google.common.collect.Sets;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,26 +43,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 			if (event.getCause().equals(DamageCause.FALL)) {
 				if (event.getEntity() instanceof Player) {
 					Player player = (Player) event.getEntity();
-					//Checks if in blocked world
-					if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
-						return;
-					}
-					//Checks if in blocked region
-					if (AureliumSkills.worldGuardEnabled) {
-						if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
-							return;
-						}
-					}
-					//Check for permission
-					if (!player.hasPermission("aureliumskills.agility")) {
-						return;
-					}
-					//Check creative mode disable
-					if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-						if (player.getGameMode().equals(GameMode.CREATIVE)) {
-							return;
-						}
-					}
+					if (blockXpGain(player)) return;
 					if (event.getFinalDamage() < player.getHealth()) {
 						Leveler.addXp(player, Skill.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(Source.FALL_DAMAGE)));
 					}
@@ -83,26 +63,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 				}
 			}
 			Player player = e.getPlayer();
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
-					return;
-				}
-			}
-			//Check for permission
-			if (!player.hasPermission("aureliumskills.agility")) {
-				return;
-			}
-			//Check creative mode disable
-			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-				if (player.getGameMode().equals(GameMode.CREATIVE)) {
-					return;
-				}
-			}
+			if (blockXpGain(player)) return;
 	        if (player.getVelocity().getY() > 0) {
 	            double jumpVelocity = 0.42F;
 	            if (player.hasPotionEffect(PotionEffectType.JUMP)) {

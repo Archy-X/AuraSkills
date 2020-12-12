@@ -252,7 +252,7 @@ public class MySqlSupport {
                 if (!updated.contains(entry.getKey())) {
                     //Insert
                     PlayerSkill playerSkill = entry.getValue();
-                    if (!playerSkill.isEmpty()) {
+                    if (playerSkill.hasData()) {
                         insertStatement.setString(1, playerSkill.getPlayerId().toString());
                         insertStatement.setString(2, playerSkill.getPlayerName());
                         int index = 3;

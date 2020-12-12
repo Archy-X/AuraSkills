@@ -79,14 +79,8 @@ public class PlayerSkill {
 		}
 	}
 	
-	public boolean setXp(Skill skill, double amount) {
-		if (xp.containsKey(skill)) {
-			xp.put(skill, amount);
-			return true;
-		}
-		else {
-			return false;
-		}
+	public void setXp(Skill skill, double amount) {
+		xp.put(skill, amount);
 	}
 	
 	public double getXp(Skill skill) {
@@ -124,18 +118,18 @@ public class PlayerSkill {
 		return power;
 	}
 
-	public boolean isEmpty() {
+	public boolean hasData() {
 		for (Map.Entry<Skill, Integer> entry : levels.entrySet()) {
 			if (!entry.getValue().equals(1)) {
-				return false;
+				return true;
 			}
 		}
 		for (Map.Entry<Skill, Double> entry : xp.entrySet()) {
 			if (!entry.getValue().equals(0.0)) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 }

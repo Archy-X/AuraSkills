@@ -17,10 +17,12 @@ Version Alpha 1.5.5 (IN PROGRESS)
     - Option 'wisdom.allow-over-max-mana' is now true by default
     - Updated fr, id, tr, es messages
     - Deleted message files included in the plugin will now regenerate on /sk reload
+    - Endurance now gives XP every 2 minutes instead of 1
   Bug Fixes:
     - Fixed NullPointers with messages by using the English message if the default-language is set to a language with an outdated message file
     - Fixed primary skills word duplicate in stats menu
     - Fixed rare IndexOutOfBoundsException warning with action bar
+    - Fixed Endurance not giving XP sometimes
 
 Version Alpha 1.5.4
   New Features:

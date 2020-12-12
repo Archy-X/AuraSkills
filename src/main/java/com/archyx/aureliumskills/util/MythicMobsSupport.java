@@ -23,7 +23,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
     private final SourceManager sourceManager;
 
     public MythicMobsSupport(AureliumSkills plugin) {
-        super(plugin);
+        super(plugin, Skill.FIGHTING);
         this.sourceManager = plugin.getSourceManager();
     }
 
@@ -35,16 +35,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
             if (player == null) {
                 return;
             }
-            //Checks if in blocked world
-            if (AureliumSkills.worldManager.isInBlockedWorld(entity.getLocation())) {
-                return;
-            }
-            //Checks if in blocked region
-            if (AureliumSkills.worldGuardEnabled) {
-                if (AureliumSkills.worldGuardSupport.isInBlockedRegion(entity.getLocation())) {
-                    return;
-                }
-            }
+            if (blockXpGainLocation(entity.getLocation())) return;
             //Check creative mode disable
             if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
                 if (player.getGameMode().equals(GameMode.CREATIVE)) {

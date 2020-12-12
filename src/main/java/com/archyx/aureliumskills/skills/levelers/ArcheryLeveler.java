@@ -1,14 +1,12 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.util.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.GameMode;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,16 +25,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (OptionL.isEnabled(Skill.ARCHERY)) {
 			LivingEntity e = event.getEntity();
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(e.getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(e.getLocation())) {
-					return;
-				}
-			}
+			if (blockXpGainLocation(e.getLocation())) return;
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
@@ -58,16 +47,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						EntityType type = e.getType();
 						Player p = e.getKiller();
 						Skill s = Skill.ARCHERY;
-						//Check for permission
-						if (!p.hasPermission("aureliumskills.archery")) {
-							return;
-						}
-						//Check creative mode disable
-						if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-							if (p.getGameMode().equals(GameMode.CREATIVE)) {
-								return;
-							}
-						}
+						if (blockXpGainPlayer(p)) return;
 						// Make sure not MythicMob
 						if (isMythicMob(e)) {
 							return;

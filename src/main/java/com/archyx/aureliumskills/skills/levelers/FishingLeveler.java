@@ -7,7 +7,6 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -34,28 +33,9 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getPlayer().getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getPlayer().getLocation())) {
-					return;
-				}
-			}
 			if (event.getState().equals(State.CAUGHT_FISH)) {
 				Player p = event.getPlayer();
-				//Check for permission
-				if (!p.hasPermission("aureliumskills.fishing")) {
-					return;
-				}
-				//Check creative mode disable
-				if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-					if (p.getGameMode().equals(GameMode.CREATIVE)) {
-						return;
-					}
-				}
+				if (blockXpGain(p)) return;
 				Skill s = Skill.FISHING;
 				if (event.getCaught() instanceof Item) {
 					ItemStack item = ((Item) event.getCaught()).getItemStack();

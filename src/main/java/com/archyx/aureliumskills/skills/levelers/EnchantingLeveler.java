@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.ItemUtils;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +16,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 public class EnchantingLeveler extends SkillLeveler implements Listener {
 
 	public EnchantingLeveler(AureliumSkills plugin) {
-		super(plugin);
+		super(plugin, Skill.ENCHANTING);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -29,28 +28,10 @@ public class EnchantingLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getEnchantBlock().getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getEnchantBlock().getLocation())) {
-					return;
-				}
-			}
+			if (blockXpGainLocation(event.getEnchantBlock().getLocation())) return;
 			Player p = event.getEnchanter();
 			Material mat = event.getItem().getType();
-			//Check for permission
-			if (!p.hasPermission("aureliumskills.enchanting")) {
-				return;
-			}
-			//Check creative mode disable
-			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-				if (p.getGameMode().equals(GameMode.CREATIVE)) {
-					return;
-				}
-			}
+			if (blockXpGainPlayer(p)) return;
 			if (ItemUtils.isArmor(mat)) {
 				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.ARMOR_PER_LEVEL));
 			}

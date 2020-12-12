@@ -46,12 +46,13 @@ public class DamageListener implements Listener {
             if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
                 return;
             }
-            //Checks for player skill
-            if (!SkillLoader.playerSkills.containsKey(player.getUniqueId()) || !SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-                return;
-            }
+            //Gets player skill
             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
             PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+            if (playerSkill == null || playerStat == null) {
+                return;
+            }
+
             DamageType damageType = getDamageType(event, player);
 
             //Applies strength
@@ -101,13 +102,12 @@ public class DamageListener implements Listener {
         if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
             return;
         }
-        //Checks for player skill
-        if (!SkillLoader.playerSkills.containsKey(player.getUniqueId()) || !SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-            return;
-        }
+        //Gets player skill
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-
+        if (playerSkill == null || playerStat == null) {
+            return;
+        }
         //Handles toughness
         Toughness.onDamage(event, playerStat);
 

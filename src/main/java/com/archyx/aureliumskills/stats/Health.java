@@ -122,39 +122,29 @@ public class Health implements Listener {
 				//Applies health scaling
 				if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
 					double health = attribute.getValue();
+					player.setHealthScaled(true);
 					if (health < 23) {
 						player.setHealthScale(20.0);
-						player.setHealthScaled(true);
 					} else if (health < 28) {
 						player.setHealthScale(22.0);
-						player.setHealthScaled(true);
 					} else if (health < 36) {
 						player.setHealthScale(24.0);
-						player.setHealthScaled(true);
 					} else if (health < 49) {
 						player.setHealthScale(26.0);
-						player.setHealthScaled(true);
 					} else if (health < 70) {
 						player.setHealthScale(28.0);
-						player.setHealthScaled(true);
 					} else if (health < 104) {
 						player.setHealthScale(30.0);
-						player.setHealthScaled(true);
 					} else if (health < 159) {
 						player.setHealthScale(32.0);
-						player.setHealthScaled(true);
 					} else if (health < 248) {
 						player.setHealthScale(34.0);
-						player.setHealthScaled(true);
 					} else if (health < 392) {
 						player.setHealthScale(36.0);
-						player.setHealthScaled(true);
 					} else if (health < 625) {
 						player.setHealthScale(38.0);
-						player.setHealthScaled(true);
 					} else {
 						player.setHealthScale(40.0);
-						player.setHealthScaled(true);
 					}
 				} else {
 					player.setHealthScaled(false);

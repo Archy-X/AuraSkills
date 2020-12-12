@@ -109,7 +109,7 @@ public class SkillLoader {
 		long start = System.currentTimeMillis();
 		for (UUID id : playerSkills.keySet()) {
 			PlayerSkill playerSkill = playerSkills.get(id);
-			if (!playerSkill.isEmpty()) {
+			if (playerSkill.hasData()) {
 				config.set("skillData." + id.toString() + ".name", playerSkill.getPlayerName());
 				//Saving skills
 				for (Skill skill : playerSkill.getSkillSet()) {

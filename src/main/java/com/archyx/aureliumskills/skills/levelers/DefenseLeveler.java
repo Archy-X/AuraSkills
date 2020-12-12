@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -33,26 +32,7 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 			if (event.getEntity() instanceof Player) {
 				if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
 					Player p = (Player) event.getEntity();
-					//Checks if in blocked world
-					if (AureliumSkills.worldManager.isInBlockedWorld(p.getLocation())) {
-						return;
-					}
-					//Checks if in blocked region
-					if (AureliumSkills.worldGuardEnabled) {
-						if (AureliumSkills.worldGuardSupport.isInBlockedRegion(p.getLocation())) {
-							return;
-						}
-					}
-					//Check for permission
-					if (!p.hasPermission("aureliumskills.defense")) {
-						return;
-					}
-					//Check creative mode disable
-					if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-						if (p.getGameMode().equals(GameMode.CREATIVE)) {
-							return;
-						}
-					}
+					if (blockXpGain(p)) return;
 					if (p.isBlocking()) {
 						return;
 					}

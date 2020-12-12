@@ -10,7 +10,6 @@ import com.archyx.aureliumskills.skills.abilities.FarmingAbilities;
 import com.archyx.aureliumskills.util.BlockUtil;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,30 +34,12 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 					return;
 				}
 			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getBlock().getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {
-					return;
-				}
-			}
+			if (blockXpGainLocation(event.getBlock().getLocation())) return;
 			Player p = event.getPlayer();
 			Block b = event.getBlock();
 			Skill s = Skill.FARMING;
 			Material mat = b.getType();
-			//Check for permission
-			if (!p.hasPermission("aureliumskills.farming")) {
-				return;
-			}
-			//Check creative mode disable
-			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-				if (p.getGameMode().equals(GameMode.CREATIVE)) {
-					return;
-				}
-			}
+			if (blockXpGainPlayer(p)) return;
 			if (BlockUtil.isCarrot(mat) && BlockUtil.isFullyGrown(b)) {
 				Leveler.addXp(p, s, getXp(p, Source.CARROT));
 				applyAbilities(p, b);

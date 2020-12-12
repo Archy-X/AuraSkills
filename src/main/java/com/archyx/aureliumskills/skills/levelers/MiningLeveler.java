@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.skills.abilities.MiningAbilities;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -34,16 +33,8 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getBlock().getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {
-					return;
-				}
-			}
+			Block b = event.getBlock();
+			if (blockXpGainLocation(b.getLocation())) return;
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
 				if (event.getBlock().hasMetadata("skillsPlaced")) {
@@ -51,19 +42,9 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 				}
 			}
 			Player p = event.getPlayer();
-			Block b = event.getBlock();
 			Skill s = Skill.MINING;
 			Material mat = event.getBlock().getType();
-			//Check for permission
-			if (!p.hasPermission("aureliumskills.mining")) {
-				return;
-			}
-			//Check creative mode disable
-			if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-				if (p.getGameMode().equals(GameMode.CREATIVE)) {
-					return;
-				}
-			}
+			if (blockXpGainPlayer(p)) return;
 			if (mat.equals(Material.STONE)) {
 				if (XMaterial.isNewVersion()) {
 					Leveler.addXp(p, s, getXp(p, Source.STONE));

@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -40,33 +39,14 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(event.getBlock().getLocation())) {
-				return;
-			}
-			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(event.getBlock().getLocation())) {
-					return;
-				}
-
-			}
+			if (blockXpGainLocation(event.getBlock().getLocation())) return;
 			if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
 				OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
 				if (offlinePlayer.isOnline()) {
 					if (event.getContents().getIngredient() != null) {
 						Player p = offlinePlayer.getPlayer();
 						if (p != null) {
-							//Check for permission
-							if (!p.hasPermission("aureliumskills.alchemy")) {
-								return;
-							}
-							//Check creative mode disable
-							if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-								if (p.getGameMode().equals(GameMode.CREATIVE)) {
-									return;
-								}
-							}
+							if (blockXpGainPlayer(p)) return;
 							Skill s = Skill.ALCHEMY;
 							Material mat = event.getContents().getIngredient().getType();
 							if (mat.equals(Material.REDSTONE)) {
