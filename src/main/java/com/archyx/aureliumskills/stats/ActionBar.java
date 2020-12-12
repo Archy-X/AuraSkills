@@ -124,6 +124,7 @@ public class ActionBar {
 										// Get health attribute
 										AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 										if (attribute != null) {
+											boolean notMaxed = Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 											// Not maxed
 											if (notMaxed) {
 												if (OptionL.getBoolean(Option.ACTION_BAR_XP)) {
