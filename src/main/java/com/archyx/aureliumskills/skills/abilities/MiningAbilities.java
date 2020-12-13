@@ -40,7 +40,6 @@ import java.util.Random;
 public class MiningAbilities extends AbilityProvider implements Listener {
 
 	private static final Random r = new Random();
-	private static AureliumSkills plugin;
 	private final NumberFormat nf = new DecimalFormat("#.#");
 
 	public MiningAbilities(AureliumSkills plugin) {

@@ -349,6 +349,14 @@ commands:
   lang:
     set: '&7语言已设置为 &b{lang}'
     not_found: '&e语言不存在!'
+  mana:
+    display: '&f当前 {mana_unit}: &b{current}/{max}'
+    display_other: '&f玩家 {player} 当前 {mana_unit}: &b{current}/{max}'
+    add: '&7添加了 &b{amount} {mana_unit} &7至玩家 &6{player}'
+    remove: '&7移除了 &b{amount} {mana_unit} &7从玩家 &6{player}'
+    set: '&7将玩家 &6{player} &7的 {mana_unit} 设置为了 &b{amount}'
+    at_least_zero: '&e{mana_unit} 必须至少大于零!'
+    console_specify_player: '&e后台执行此命令需指定一名玩家!'
   modifier:
     add:
       added: '&7技能 {color}{stat} &7值为 &b{value} &7的属性 &f{name} &7已成功应用于玩家 &6{player}'
@@ -513,10 +521,10 @@ mana_abilities:
     start: '&6超级吸收已激活! &7(-{mana} {mana_unit})'
     end: '&6超级吸收已关闭'
   sharp_hook:
-    name: '锋利鱼钩'
+    name: 锋利鱼钩
     desc: '持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害'
     use: '&6使用了锋利鱼钩! &7(-{mana} {mana_unit})'
-    menu: '\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击力: &c{value} &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n '
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击力: &c{value} &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
   not_ready: '&c&o技能还没有准备好! &7({cooldown}s)'
   not_enough_mana: '&e&o没有足够的魔力! &7(需要 {mana} {mana_unit})'
 skills:
@@ -600,4 +608,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 7
+file_version: 8
