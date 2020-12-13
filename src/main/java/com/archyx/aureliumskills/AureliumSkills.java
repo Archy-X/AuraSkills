@@ -77,7 +77,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
 	private Lang lang;
-	public static long releaseTime = 1606946384738L;
+	public static long releaseTime = 1607886993234L;
 
 	public void onEnable() {
 		invManager = new InventoryManager(this);
