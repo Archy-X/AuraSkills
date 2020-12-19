@@ -93,19 +93,16 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void hardenedArmor(PlayerItemDamageEvent event) {
-		if (OptionL.isEnabled(Skill.MINING)) {
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.HARDENED_ARMOR)) {
-				Player player = event.getPlayer();
-				if (blockAbility(player)) return;
-				//Checks if item damaged is armor
-				if (ItemUtils.isArmor(event.getItem().getType())) {
-					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-						//Applies ability
-						if (r.nextDouble() < (Ability.HARDENED_ARMOR.getValue(skill.getAbilityLevel(Ability.HARDENED_ARMOR)) / 100)) {
-							event.setCancelled(true);
-						}
-					}
+		if (blockDisabled(Ability.HARDENED_ARMOR)) return;
+		Player player = event.getPlayer();
+		if (blockAbility(player)) return;
+		//Checks if item damaged is armor
+		if (ItemUtils.isArmor(event.getItem().getType())) {
+			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+				PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+				//Applies ability
+				if (r.nextDouble() < (Ability.HARDENED_ARMOR.getValue(skill.getAbilityLevel(Ability.HARDENED_ARMOR)) / 100)) {
+					event.setCancelled(true);
 				}
 			}
 		}

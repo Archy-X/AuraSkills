@@ -9,10 +9,10 @@ public class ManaRegenerateEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
     private final Player player;
-    private int amount;
+    private double amount;
     private boolean isCancelled;
 
-    public ManaRegenerateEvent(Player player, int amount) {
+    public ManaRegenerateEvent(Player player, double amount) {
         this.player = player;
         this.amount = amount;
         this.isCancelled = false;
@@ -22,11 +22,11 @@ public class ManaRegenerateEvent extends Event {
         return player;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

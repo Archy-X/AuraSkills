@@ -12,6 +12,7 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.util.BigNumber;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.archyx.aureliumskills.util.ProtocolUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
@@ -23,8 +24,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -34,7 +33,6 @@ public class ActionBar {
 
 	private final Plugin plugin;
 	private ManaManager mana;
-	private static final NumberFormat nf = new DecimalFormat("##.#");
 
 	public ActionBar(Plugin plugin) {
 		this.plugin = plugin;
@@ -63,8 +61,8 @@ public class ActionBar {
 									sendActionBar(player, Lang.getMessage(ActionBarMessage.IDLE, locale)
 											.replace("{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
 											.replace("{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING))))
-											.replace("{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-											.replace("{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+											.replace("{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId())))
+											.replace("{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 								}
 							}
 						}
@@ -134,23 +132,23 @@ public class ActionBar {
 															sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																	, "{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
 																	, "{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-																	, "{xp_gained}", nf.format(xpAmount)
+																	, "{xp_gained}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
-																	, "{current_xp}", nf.format(playerSkill.getXp(skill)))
+																	, "{current_xp}", NumberUtil.format1(playerSkill.getXp(skill)))
 																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
-																	, "{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
-																	, "{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
+																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}
 														else {
 															sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																	, "{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
 																	, "{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-																	, "{xp_gained}", nf.format(xpAmount)
+																	, "{xp_gained}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
 																	, "{current_xp}", String.valueOf((int) playerSkill.getXp(skill)))
 																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
-																	, "{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
-																	, "{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
+																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}
 													}
 													// Xp removed
@@ -159,23 +157,23 @@ public class ActionBar {
 															sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
 																	, "{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
 																	, "{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-																	, "{xp_removed}", nf.format(xpAmount)
+																	, "{xp_removed}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
-																	, "{current_xp}", nf.format(playerSkill.getXp(skill)))
+																	, "{current_xp}", NumberUtil.format1(playerSkill.getXp(skill)))
 																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
-																	, "{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
-																	, "{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
+																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}
 														else {
 															sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																	, "{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
 																	, "{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-																	, "{xp_gained}", nf.format(xpAmount)
+																	, "{xp_gained}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
 																	, "{current_xp}", String.valueOf((int) playerSkill.getXp(skill)))
 																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
-																	, "{mana}", String.valueOf(mana.getMana(player.getUniqueId()))
-																	, "{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
+																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}
 													}
 												}
@@ -188,20 +186,20 @@ public class ActionBar {
 														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
 																, "{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
 																, "{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-																, "{xp_gained}", nf.format(xpAmount)
+																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
-																, "{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-																,  "{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+																, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId())))
+																,  "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 													}
 													// Xp removed
 													else {
 														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
 																, "{hp}", String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
 																, "{max_hp}", String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)))
-																, "{xp_removed}", nf.format(xpAmount)
+																, "{xp_removed}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
-																, "{mana}", String.valueOf(mana.getMana(player.getUniqueId())))
-																,  "{max_mana}", String.valueOf(mana.getMaxMana(player.getUniqueId()))));
+																, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId())))
+																,  "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 													}
 												}
 											}

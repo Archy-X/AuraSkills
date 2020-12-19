@@ -1,4 +1,11 @@
-Version Alpha 1.5.5 (IN PROGRESS)
+Version Alpha 1.6.0 (IN PROGRESS)
+  Changes:
+    - Stat levels and mana now use double instead of int (decimal support)
+  Bug Fixes
+    - Fixed Endurance abilities still working when ability is disabled
+    - Fixed Foraging abilities still working when skill is disabled
+
+Version Alpha 1.5.5
   New Features:
     - Added mana commands:
       - /mana (player) - Displays your or another player's current and max mana

@@ -460,7 +460,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.modifier.add")
 	@CommandCompletion("@players @stats @nothing @nothing true")
 	@Description("Adds a stat modifier to a player.")
-	public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, int value, @Default("false") boolean silent) {
+	public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent) {
 		Locale locale = Lang.getLanguage(sender);
 		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
@@ -650,7 +650,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@stats @nothing false|true")
 	@CommandPermission("aureliumskills.item.modifier.add")
 	@Description("Adds an item stat modifier to the item held, along with lore by default.")
-	public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, int value, @Default("true") boolean lore) {
+	public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		for (StatModifier statModifier : ItemModifier.getItemModifiers(item)) {

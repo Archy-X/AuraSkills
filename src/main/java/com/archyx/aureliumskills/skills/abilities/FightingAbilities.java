@@ -143,8 +143,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                         //If player used sword
                         if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
                             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            AbilityOptionManager options = AureliumSkills.abilityOptionManager;
-                            if (options.isEnabled(Ability.BLEED)) {
+                            if (isEnabled(Ability.BLEED)) {
                                 if (event.getEntity() instanceof LivingEntity) {
                                     bleed(event, playerSkill, (LivingEntity) event.getEntity());
                                 }

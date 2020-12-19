@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import dev.dbassett.skullcreator.SkullCreator;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
@@ -76,7 +77,7 @@ public class SkullItem implements ConfigurableItem {
                             ,"{color}", stat.getColor(locale)
                             ,"{symbol}", stat.getSymbol(locale)
                             ,"{stat}", stat.getDisplayName(locale)
-                            ,"{level}", String.valueOf(playerStat.getStatLevel(stat))));
+                            ,"{level}", NumberUtil.format1(playerStat.getStatLevel(stat))));
                 }
                 builtLore.add(line);
             }

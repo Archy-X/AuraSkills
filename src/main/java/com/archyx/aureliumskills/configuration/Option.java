@@ -27,8 +27,7 @@ public enum Option {
     BOSS_BAR_UPDATE_EVERY("boss-bar.update-every", OptionType.INT),
     BOSS_BAR_ROUND_XP("boss-bar.round-xp", OptionType.BOOLEAN),
     BOSS_BAR_FORMAT("boss-bar.format", OptionType.LIST),
-    // Prefix options
-    BASE_MANA("base-mana", OptionType.INT),
+    BASE_MANA("base-mana", OptionType.DOUBLE),
     ENABLE_ROMAN_NUMERALS("enable-roman-numerals", OptionType.BOOLEAN),
     // Damage hologram options
     DAMAGE_HOLOGRAMS("damage-holograms", OptionType.BOOLEAN),
@@ -149,7 +148,7 @@ public enum Option {
     REGENERATION_SATURATED_DELAY("regeneration.custom-regen-options.saturated-delay", OptionType.INT),
     REGENERATION_HUNGER_DELAY("regeneration.custom-regen-options.hunger-delay", OptionType.INT),
     REGENERATION_MANA_MODIFIER("regeneration.mana-modifier", OptionType.DOUBLE),
-    REGENERATION_BASE_MANA_REGEN("regeneration.base-mana-regen", OptionType.INT),
+    REGENERATION_BASE_MANA_REGEN("regeneration.base-mana-regen", OptionType.DOUBLE),
     LUCK_MODIFIER("luck.modifier", OptionType.DOUBLE),
     LUCK_DOUBLE_DROP_ENABLED("luck.double-drop-enabled", OptionType.BOOLEAN),
     LUCK_DOUBLE_DROP_MODIFIER("luck.double-drop-modifier", OptionType.DOUBLE),

@@ -74,19 +74,16 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 	
 	@EventHandler
 	public void geneticist(PlayerItemConsumeEvent event) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.GENETICIST)) {
-				Player player = event.getPlayer();
-				if (blockAbility(player)) return;
-				Material mat = event.getItem().getType();
-				if (mat.equals(Material.BREAD) || mat.equals(Material.APPLE) || mat.equals(Material.GOLDEN_APPLE) || mat.equals(XMaterial.POTATO.parseMaterial())
-						|| mat.equals(Material.BAKED_POTATO) || mat.equals(XMaterial.CARROT.parseMaterial()) || mat.equals(Material.GOLDEN_CARROT) || mat.equals(Material.MELON)
-						|| mat.equals(Material.PUMPKIN_PIE) || mat.equals(Material.BEETROOT) || mat.equals(Material.BEETROOT_SOUP) || mat.equals(XMaterial.MUSHROOM_STEW.parseMaterial())
-						|| mat.equals(Material.POISONOUS_POTATO)) {
-					float amount = (float) Ability.GENETICIST.getValue(SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.GENETICIST)) / 10;
-					player.setSaturation(player.getSaturation() + amount);
-				}
-			}
+		if (blockDisabled(Ability.GENETICIST)) return;
+		Player player = event.getPlayer();
+		if (blockAbility(player)) return;
+		Material mat = event.getItem().getType();
+		if (mat.equals(Material.BREAD) || mat.equals(Material.APPLE) || mat.equals(Material.GOLDEN_APPLE) || mat.equals(XMaterial.POTATO.parseMaterial())
+				|| mat.equals(Material.BAKED_POTATO) || mat.equals(XMaterial.CARROT.parseMaterial()) || mat.equals(Material.GOLDEN_CARROT) || mat.equals(Material.MELON)
+				|| mat.equals(Material.PUMPKIN_PIE) || mat.equals(Material.BEETROOT) || mat.equals(Material.BEETROOT_SOUP) || mat.equals(XMaterial.MUSHROOM_STEW.parseMaterial())
+				|| mat.equals(Material.POISONOUS_POTATO)) {
+			float amount = (float) Ability.GENETICIST.getValue(SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.GENETICIST)) / 10;
+			player.setSaturation(player.getSaturation() + amount);
 		}
 	}
 

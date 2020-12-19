@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.util;
 
+import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -39,4 +41,45 @@ public class ItemUtils {
 		}
 		return lore;
 	}
+
+	public static NBTCompound getCompound(NBTCompound root, String name) {
+		NBTCompound compound = root.getCompound(name);
+		if (compound == null) {
+			compound = root.addCompound(name);
+		}
+		return compound;
+	}
+
+	public static NBTCompound getRootCompound(NBTItem item) {
+		NBTCompound compound = item.getCompound("AureliumSkills");
+		if (compound == null) {
+			compound = item.addCompound("AureliumSkills");
+		}
+		return compound;
+	}
+
+	public static NBTCompound getModifiersCompound(NBTItem item) {
+		return getCompound(getRootCompound(item), "Modifiers");
+	}
+
+	public static NBTCompound getItemModifiersCompound(NBTItem item) {
+		return getCompound(getModifiersCompound(item), "Item");
+	}
+
+	public static NBTCompound getArmorModifiersCompound(NBTItem item) {
+		return getCompound(getModifiersCompound(item), "Armor");
+	}
+
+	public static NBTCompound getRequirementsCompound(NBTItem item) {
+		return getCompound(getRootCompound(item), "Requirements");
+	}
+
+	public static NBTCompound getItemRequirementsCompound(NBTItem item) {
+		return getCompound(getRequirementsCompound(item), "Item");
+	}
+
+	public static NBTCompound getArmorRequirementsCompound(NBTItem item) {
+		return getCompound(getRequirementsCompound(item), "Armor");
+	}
+
 } 

@@ -32,4 +32,15 @@ public abstract class AbilityProvider {
         return false;
     }
 
+    public boolean blockDisabled(Ability ability) {
+        if (!OptionL.isEnabled(ability.getSkill())) {
+            return true;
+        }
+        return !AureliumSkills.abilityOptionManager.isEnabled(ability);
+    }
+
+    public boolean isEnabled(Ability ability) {
+        return AureliumSkills.abilityOptionManager.isEnabled(ability);
+    }
+
 }

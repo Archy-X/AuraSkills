@@ -14,7 +14,7 @@ public class PlayerStat {
 
 	private final UUID playerId;
 	
-	private final Map<Stat, Integer> stats;
+	private final Map<Stat, Double> stats;
 	private final Map<String, StatModifier> modifiers;
 
 	public PlayerStat(UUID id) {
@@ -22,19 +22,19 @@ public class PlayerStat {
 		modifiers = new HashMap<>();
 		this.playerId = id;
 		for (Stat stat : Stat.values()) {
-			stats.put(stat, 0);
+			stats.put(stat, 0.0);
 		}
 	}
 	
-	public int getStatLevel(Stat stat) {
+	public double getStatLevel(Stat stat) {
 		return stats.get(stat);
 	}
 	
-	public void addStatLevel(Stat stat, int level) {
+	public void addStatLevel(Stat stat, double level) {
 		stats.put(stat, getStatLevel(stat) + level);
 	}
 	
-	public void setStatLevel(Stat stat, int level) {
+	public void setStatLevel(Stat stat, double level) {
 		stats.put(stat, level);
 	}
 	
@@ -45,8 +45,8 @@ public class PlayerStat {
 	/*
 	Calculates the base stat level without modifiers
 	 */
-	public int getBaseStatLevel(Stat stat) {
-		int level = 0;
+	public double getBaseStatLevel(Stat stat) {
+		double level = 0;
 		//Checks if player has profile
 		if (SkillLoader.playerSkills.containsKey(playerId)) {
 			//Gets profile
@@ -59,7 +59,7 @@ public class PlayerStat {
 				}
 				//Calculates secondary
 				else if (skill.getSecondaryStat() == stat) {
-					level += playerSkill.getSkillLevel(skill) / 2;
+					level += (double) playerSkill.getSkillLevel(skill) / 2;
 				}
 			}
 		}

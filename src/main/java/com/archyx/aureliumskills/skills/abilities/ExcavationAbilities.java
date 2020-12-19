@@ -164,14 +164,13 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				//Applies abilities
 				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-					AbilityOptionManager options = AureliumSkills.abilityOptionManager;
-					if (options.isEnabled(Ability.BIGGER_SCOOP)) {
+					if (isEnabled(Ability.BIGGER_SCOOP)) {
 						biggerScoop(playerSkill, block, player);
 					}
-					if (options.isEnabled(Ability.METAL_DETECTOR)) {
+					if (isEnabled(Ability.METAL_DETECTOR)) {
 						metalDetector(player, playerSkill, block);
 					}
-					if (options.isEnabled(Ability.LUCKY_SPADES)) {
+					if (isEnabled(Ability.LUCKY_SPADES)) {
 						luckySpades(player, playerSkill, block);
 					}
 				}

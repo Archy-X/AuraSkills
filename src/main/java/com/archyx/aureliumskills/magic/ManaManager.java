@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class ManaManager implements Listener {
 
-    private final Map<UUID, Integer> mana;
+    private final Map<UUID, Double> mana;
     private final Plugin plugin;
 
     public ManaManager(Plugin plugin) {
@@ -40,11 +40,11 @@ public class ManaManager implements Listener {
                     if (player.isOnline()) {
                         if (SkillLoader.playerStats.containsKey(id)) {
                             PlayerStat stat = SkillLoader.playerStats.get(id);
-                            int originalMana = mana.get(id);
-                            int maxMana = OptionL.getInt(Option.BASE_MANA) + 2 * stat.getStatLevel(Stat.WISDOM);
+                            double originalMana = mana.get(id);
+                            double maxMana = OptionL.getDouble(Option.BASE_MANA) + 2 * stat.getStatLevel(Stat.WISDOM);
                             if (originalMana < maxMana) {
-                                int regen = OptionL.getInt(Option.REGENERATION_BASE_MANA_REGEN) + (int) (stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER));
-                                int finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
+                                double regen = OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
+                                double finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
                                 //Call Event
                                 ManaRegenerateEvent event = new ManaRegenerateEvent(player.getPlayer(), finalRegen);
                                 Bukkit.getPluginManager().callEvent(event);
@@ -59,27 +59,27 @@ public class ManaManager implements Listener {
         }.runTaskTimer(plugin, 0L, 20L);
     }
 
-    public int getMana(UUID id) {
+    public double getMana(UUID id) {
         if (mana.containsKey(id)) {
             return mana.get(id);
         }
         else {
-            mana.put(id, OptionL.getInt(Option.BASE_MANA));
+            mana.put(id, OptionL.getDouble(Option.BASE_MANA));
             return OptionL.getInt(Option.BASE_MANA);
         }
     }
 
-    public int getMaxMana(UUID id) {
+    public double getMaxMana(UUID id) {
         if (SkillLoader.playerStats.containsKey(id)) {
-            return OptionL.getInt(Option.BASE_MANA) + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
+            return OptionL.getDouble(Option.BASE_MANA) + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
         }
         else {
             SkillLoader.playerStats.put(id, new PlayerStat(id));
-            return OptionL.getInt(Option.BASE_MANA);
+            return OptionL.getDouble(Option.BASE_MANA);
         }
     }
 
-    public void setMana(UUID id, int amount) {
+    public void setMana(UUID id, double amount) {
         mana.put(id, amount);
     }
 
@@ -88,7 +88,7 @@ public class ManaManager implements Listener {
         UUID id = event.getPlayer().getUniqueId();
         if (!mana.containsKey(id)) {
             if (SkillLoader.playerStats.containsKey(id)) {
-                mana.put(event.getPlayer().getUniqueId(), OptionL.getInt(Option.BASE_MANA) + 2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
+                mana.put(event.getPlayer().getUniqueId(), OptionL.getDouble(Option.BASE_MANA) + 2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
             }
         }
     }

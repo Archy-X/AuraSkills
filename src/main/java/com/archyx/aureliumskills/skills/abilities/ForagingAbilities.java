@@ -47,7 +47,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	}
 	
 	public static void lumberjack(Player player, Block block) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FORAGING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LUMBERJACK)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -64,7 +64,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	}
 
 	public static void axeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FORAGING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.AXE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.foraging")) {
@@ -79,32 +79,29 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void shredder(PlayerItemDamageEvent event) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
-			if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SHREDDER)) {
-				if (!event.isCancelled()) {
-					//If is item taking durabilty damage is armor
-					if (ItemUtils.isArmor(event.getItem().getType())) {
-						//If last damage was from entity
-						if (event.getPlayer().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-							EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event.getPlayer().getLastDamageCause();
-							//If last damage was from player
-							if (e.getDamager() instanceof Player) {
-								Player player = (Player) e.getDamager();
-								if (blockAbility(player)) return;
-								if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-									//If damage was an attack
-									if (e.getCause().equals(DamageCause.ENTITY_ATTACK)) {
-										//If item used was an axe
-										Material mat = player.getInventory().getItemInMainHand().getType();
-										if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
-												|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
-											PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-											//Checks if shredder is used
-											if (skill.getAbilityLevel(Ability.SHREDDER) > 0) {
-												if (r.nextDouble() < (Ability.SHREDDER.getValue(skill.getAbilityLevel(Ability.SHREDDER))) / 100) {
-													event.setDamage(event.getDamage() * 3);
-												}
-											}
+		if (blockDisabled(Ability.SHREDDER)) return;
+		if (!event.isCancelled()) {
+			//If is item taking durabilty damage is armor
+			if (ItemUtils.isArmor(event.getItem().getType())) {
+				//If last damage was from entity
+				if (event.getPlayer().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
+					EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event.getPlayer().getLastDamageCause();
+					//If last damage was from player
+					if (e.getDamager() instanceof Player) {
+						Player player = (Player) e.getDamager();
+						if (blockAbility(player)) return;
+						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+							//If damage was an attack
+							if (e.getCause().equals(DamageCause.ENTITY_ATTACK)) {
+								//If item used was an axe
+								Material mat = player.getInventory().getItemInMainHand().getType();
+								if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
+										|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
+									PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+									//Checks if shredder is used
+									if (skill.getAbilityLevel(Ability.SHREDDER) > 0) {
+										if (r.nextDouble() < (Ability.SHREDDER.getValue(skill.getAbilityLevel(Ability.SHREDDER))) / 100) {
+											event.setDamage(event.getDamage() * 3);
 										}
 									}
 								}
@@ -243,7 +240,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	
 	@EventHandler
 	public void readyTreecapitator(PlayerInteractEvent event) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skill.FORAGING)) {
 			if (AureliumSkills.abilityOptionManager.isEnabled(MAbility.TREECAPITATOR)) {
 				if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();

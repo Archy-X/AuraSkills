@@ -9,9 +9,9 @@ public class StatModifier {
 
     private final String name;
     private final Stat stat;
-    private final int value;
+    private final double value;
 
-    public StatModifier(String name, Stat stat, int value) {
+    public StatModifier(String name, Stat stat, double value) {
         this.name = name;
         this.stat = stat;
         this.value = value;
@@ -25,13 +25,13 @@ public class StatModifier {
         return stat;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
     public static String applyPlaceholders(String input, StatModifier modifier, Locale locale) {
         Stat stat = modifier.getStat();
-        int value = modifier.getValue();
+        double value = modifier.getValue();
         String name = modifier.getName();
         return input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
@@ -57,7 +57,7 @@ public class StatModifier {
                 .replace("{player}", player.getName());
     }
 
-    public static String applyPlaceholders(String input, Stat stat, int value, Locale locale) {
+    public static String applyPlaceholders(String input, Stat stat, double value, Locale locale) {
         return input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale))

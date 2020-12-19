@@ -24,11 +24,11 @@ public class Strength {
 	}
 
 	private void applyStrength(EntityDamageByEntityEvent event, PlayerStat playerStat) {
-		int strength = playerStat.getStatLevel(Stat.STRENGTH);
+		double strength = playerStat.getStatLevel(Stat.STRENGTH);
 		if (OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
-			event.setDamage(event.getDamage() * (1 + ((double) strength * OptionL.getDouble(Option.STRENGTH_MODIFIER)) / 100));
+			event.setDamage(event.getDamage() * (1 + (strength * OptionL.getDouble(Option.STRENGTH_MODIFIER)) / 100));
 		} else {
-			event.setDamage(event.getDamage() + (double) strength * OptionL.getDouble(Option.STRENGTH_MODIFIER));
+			event.setDamage(event.getDamage() + strength * OptionL.getDouble(Option.STRENGTH_MODIFIER));
 		}
 	}
 

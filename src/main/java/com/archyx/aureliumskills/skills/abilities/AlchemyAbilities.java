@@ -57,20 +57,19 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void alchemist(BrewEvent event) {
-        if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityOptionManager.isEnabled(Ability.ALCHEMIST)) {
-            if (!event.isCancelled()) {
-                if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
-                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
-                    if (offlinePlayer.isOnline()) {
-                        Player player = offlinePlayer.getPlayer();
-                        BrewerInventory inventory = event.getContents();
-                        if (player != null) {
-                            if (blockAbility(player)) return;
-                            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            if (playerSkill != null) {
-                                if (playerSkill.getAbilityLevel(Ability.ALCHEMIST) > 0) {
-                                    updateBrewingStand(inventory, playerSkill, Lang.getLanguage(player));
-                                }
+        if (blockDisabled(Ability.ALCHEMIST)) return;
+        if (!event.isCancelled()) {
+            if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
+                if (offlinePlayer.isOnline()) {
+                    Player player = offlinePlayer.getPlayer();
+                    BrewerInventory inventory = event.getContents();
+                    if (player != null) {
+                        if (blockAbility(player)) return;
+                        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                        if (playerSkill != null) {
+                            if (playerSkill.getAbilityLevel(Ability.ALCHEMIST) > 0) {
+                                updateBrewingStand(inventory, playerSkill, Lang.getLanguage(player));
                             }
                         }
                     }

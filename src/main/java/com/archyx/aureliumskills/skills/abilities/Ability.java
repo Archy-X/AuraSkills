@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.skills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 
 import java.util.Locale;
@@ -65,7 +66,10 @@ public enum Ability {
 	SPLASHER(() -> Skill.ALCHEMY, 0.5, 0.25),
 	LINGERING(() -> Skill.ALCHEMY, 5.0, 4.0, 3.0, 2.0),
 	WISE_EFFECT(() -> Skill.ALCHEMY, 1.0, 1.0),
+	XP_CONVERT(() -> Skill.ENCHANTING, 10.0, 5.0),
 	ENCHANTER(() -> Skill.ENCHANTING, 10.0, 10.0),
+	XP_WARRIOR(() -> Skill.ENCHANTING, 5.0, 4.0),
+	ENCHANTED_STRENGTH(() -> Skill.ENCHANTING, 0.5, 0.5),
 	SORCERER(() -> Skill.SORCERY, 10.0, 10.0),
 	HEALER(() -> Skill.HEALING, 10.0, 10.0),
 	FORGER(() -> Skill.FORGING, 10.0, 10.0);
@@ -99,7 +103,16 @@ public enum Ability {
 	public Skill getSkill() {
 		return skill;
 	}
-	
+
+	public double getValue(PlayerSkill playerSkill) {
+		AbilityOptionManager option = AureliumSkills.abilityOptionManager;
+		if (option.containsOption(this)) {
+			AbilityOption abilityOption = option.getAbilityOption(this);
+			return abilityOption.getBaseValue() + (abilityOption.getValuePerLevel() * (playerSkill.getAbilityLevel(this) - 1));
+		}
+		return baseValue + (valuePerLevel * (playerSkill.getAbilityLevel(this) - 1));
+	}
+
 	public double getValue(int level) {
 		AbilityOptionManager option = AureliumSkills.abilityOptionManager;
 		if (option.containsOption(this)) {

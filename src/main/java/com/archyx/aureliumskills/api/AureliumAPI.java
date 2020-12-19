@@ -19,11 +19,11 @@ public class AureliumAPI {
      * Gets the current mana of a player
      * @return the current mana of a player
      */
-    public static int getMana(Player player) {
+    public static double getMana(Player player) {
         return AureliumSkills.manaManager.getMana(player.getUniqueId());
     }
 
-    public static int getMana(UUID playerId) {
+    public static double getMana(UUID playerId) {
         return AureliumSkills.manaManager.getMana(playerId);
     }
 
@@ -31,22 +31,22 @@ public class AureliumAPI {
      * Gets the max mana of a player
      * @return the max mana of a player
      */
-    public static int getMaxMana(Player player) {
+    public static double getMaxMana(Player player) {
         return AureliumSkills.manaManager.getMaxMana(player.getUniqueId());
     }
 
-    public static int getMaxMana(UUID playerId) {
+    public static double getMaxMana(UUID playerId) {
         return AureliumSkills.manaManager.getMaxMana(playerId);
     }
 
     /**
      * Sets a player's mana to an amount
      */
-    public static void setMana(Player player, int amount) {
+    public static void setMana(Player player, double amount) {
         AureliumSkills.manaManager.setMana(player.getUniqueId(), amount);
     }
 
-    public static void setMana(UUID playerId, int amount) {
+    public static void setMana(UUID playerId, double amount) {
         AureliumSkills.manaManager.setMana(playerId, amount);
     }
 
@@ -149,7 +149,7 @@ public class AureliumAPI {
      * @param stat The stat to get
      * @return The stat level
      */
-    public static int getStatLevel(Player player, Stat stat) {
+    public static double getStatLevel(Player player, Stat stat) {
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
         if (playerStat != null) {
             return playerStat.getStatLevel(stat);
@@ -159,7 +159,7 @@ public class AureliumAPI {
         }
     }
 
-    public static int getStatLevel(UUID playerId, Stat stat) {
+    public static double getStatLevel(UUID playerId, Stat stat) {
         PlayerStat playerStat = SkillLoader.playerStats.get(playerId);
         if (playerStat != null) {
             return playerStat.getStatLevel(stat);
@@ -175,7 +175,7 @@ public class AureliumAPI {
      * @param stat The stat to get
      * @return The stat level without modifiers
      */
-    public static int getBaseStatLevel(Player player, Stat stat) {
+    public static double getBaseStatLevel(Player player, Stat stat) {
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
         if (playerStat != null) {
             return playerStat.getBaseStatLevel(stat);
@@ -185,7 +185,7 @@ public class AureliumAPI {
         }
     }
 
-    public static int getBaseStatLevel(UUID playerId, Stat stat) {
+    public static double getBaseStatLevel(UUID playerId, Stat stat) {
         PlayerStat playerStat = SkillLoader.playerStats.get(playerId);
         if (playerStat != null) {
             return playerStat.getBaseStatLevel(stat);
@@ -203,7 +203,7 @@ public class AureliumAPI {
      * @param value The value of the modifier
      * @return true if a modifier was added, false if the player does not have a skills profile
      */
-    public static boolean addStatModifier(Player player, String name, Stat stat, int value) {
+    public static boolean addStatModifier(Player player, String name, Stat stat, double value) {
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
         if (playerStat != null) {
             playerStat.addModifier(new StatModifier(name, stat, value));
@@ -212,7 +212,7 @@ public class AureliumAPI {
         return false;
     }
 
-    public static boolean addStatModifier(UUID playerId, String name, Stat stat, int value) {
+    public static boolean addStatModifier(UUID playerId, String name, Stat stat, double value) {
         PlayerStat playerStat = SkillLoader.playerStats.get(playerId);
         if (playerStat != null) {
             playerStat.addModifier(new StatModifier(name, stat, value));

@@ -57,22 +57,19 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void sugarRushSplash(PotionSplashEvent event) {
         if (!event.isCancelled()) {
-            if (OptionL.isEnabled(Skill.ALCHEMY)) {
-                if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SUGAR_RUSH)) {
-                    for (PotionEffect effect : event.getPotion().getEffects()) {
-                        if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
-                            for (LivingEntity entity : event.getAffectedEntities()) {
-                                if (entity instanceof Player) {
-                                    Player player = (Player) entity;
-                                    if (blockAbility(player)) return;
-                                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                                    if (playerSkill != null) {
-                                        if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
-                                            double intensity = event.getIntensity(player);
-                                            double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
-                                            PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
-                                        }
-                                    }
+            if (blockDisabled(Ability.SUGAR_RUSH)) return;
+            for (PotionEffect effect : event.getPotion().getEffects()) {
+                if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
+                    for (LivingEntity entity : event.getAffectedEntities()) {
+                        if (entity instanceof Player) {
+                            Player player = (Player) entity;
+                            if (blockAbility(player)) return;
+                            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                            if (playerSkill != null) {
+                                if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
+                                    double intensity = event.getIntensity(player);
+                                    double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
+                                    PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
                                 }
                             }
                         }
@@ -98,48 +95,45 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void sugarRushDrink(PlayerItemConsumeEvent event) {
         if (!event.isCancelled()) {
-            if (OptionL.isEnabled(Skill.ALCHEMY)) {
-                if (AureliumSkills.abilityOptionManager.isEnabled(Ability.SUGAR_RUSH)) {
-                    Player player = event.getPlayer();
-                    if (blockAbility(player)) return;
-                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                    if (playerSkill != null) {
-                        if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
-                            ItemStack item = event.getItem();
-                            if (item.getType() == Material.POTION) {
-                                if (item.getItemMeta() instanceof PotionMeta) {
-                                    PotionMeta meta = (PotionMeta) item.getItemMeta();
-                                    PotionData potion = meta.getBasePotionData();
-                                    double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
-                                    if (potion.getType() == PotionType.SPEED || potion.getType() == PotionType.JUMP) {
-                                        int amplifier = 0;
-                                        if (potion.isUpgraded()) {
-                                            amplifier = 1;
-                                        }
-                                        PotionEffectType potionEffectType;
-                                        if (potion.getType() == PotionType.SPEED) {
-                                            potionEffectType = PotionEffectType.SPEED;
-                                        } else {
-                                            potionEffectType = PotionEffectType.JUMP;
-                                        }
-                                        int duration;
-                                        if (potion.isExtended()) {
-                                            duration = 480;
-                                        } else if (potion.isUpgraded()) {
-                                            duration = 90;
-                                        } else {
-                                            duration = 180;
-                                        }
-                                        duration = (int) (multiplier * duration);
-                                        PotionUtil.applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
-                                    }
-                                    // Apply custom effects
-                                    if (meta.hasCustomEffects()) {
-                                        for (PotionEffect effect : meta.getCustomEffects()) {
-                                            if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
-                                                PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
-                                            }
-                                        }
+            if (blockDisabled(Ability.SUGAR_RUSH)) return;
+            Player player = event.getPlayer();
+            if (blockAbility(player)) return;
+            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+            if (playerSkill != null) {
+                if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
+                    ItemStack item = event.getItem();
+                    if (item.getType() == Material.POTION) {
+                        if (item.getItemMeta() instanceof PotionMeta) {
+                            PotionMeta meta = (PotionMeta) item.getItemMeta();
+                            PotionData potion = meta.getBasePotionData();
+                            double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
+                            if (potion.getType() == PotionType.SPEED || potion.getType() == PotionType.JUMP) {
+                                int amplifier = 0;
+                                if (potion.isUpgraded()) {
+                                    amplifier = 1;
+                                }
+                                PotionEffectType potionEffectType;
+                                if (potion.getType() == PotionType.SPEED) {
+                                    potionEffectType = PotionEffectType.SPEED;
+                                } else {
+                                    potionEffectType = PotionEffectType.JUMP;
+                                }
+                                int duration;
+                                if (potion.isExtended()) {
+                                    duration = 480;
+                                } else if (potion.isUpgraded()) {
+                                    duration = 90;
+                                } else {
+                                    duration = 180;
+                                }
+                                duration = (int) (multiplier * duration);
+                                PotionUtil.applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
+                            }
+                            // Apply custom effects
+                            if (meta.hasCustomEffects()) {
+                                for (PotionEffect effect : meta.getCustomEffects()) {
+                                    if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
+                                        PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
                                     }
                                 }
                             }

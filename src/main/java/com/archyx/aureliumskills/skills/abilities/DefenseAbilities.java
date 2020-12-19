@@ -57,26 +57,23 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
 
     @EventHandler
     public void noDebuff(PotionSplashEvent event) {
-        if (OptionL.isEnabled(Skill.DEFENSE)) {
-            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.NO_DEBUFF)) {
-                for (LivingEntity entity : event.getAffectedEntities()) {
-                    if (entity instanceof Player) {
-                        Player player = (Player) entity;
-                        if (blockAbility(player)) return;
-                        for (PotionEffect effect : event.getPotion().getEffects()) {
-                            PotionEffectType type = effect.getType();
-                            if (type.equals(PotionEffectType.POISON) || type.equals(PotionEffectType.UNLUCK) || type.equals(PotionEffectType.WITHER) ||
-                                    type.equals(PotionEffectType.WEAKNESS) || type.equals(PotionEffectType.SLOW_DIGGING) || type.equals(PotionEffectType.SLOW) ||
-                                    type.equals(PotionEffectType.HUNGER) || type.equals(PotionEffectType.HARM) || type.equals(PotionEffectType.CONFUSION) ||
-                                    type.equals(PotionEffectType.BLINDNESS)) {
-                                if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                                    PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-                                    double chance = Ability.NO_DEBUFF.getValue(skill.getAbilityLevel(Ability.NO_DEBUFF)) / 100;
-                                    if (r.nextDouble() < chance) {
-                                        if (!player.hasPotionEffect(type)) {
-                                            event.setIntensity(entity, 0);
-                                        }
-                                    }
+        if (blockDisabled(Ability.NO_DEBUFF)) return;
+        for (LivingEntity entity : event.getAffectedEntities()) {
+            if (entity instanceof Player) {
+                Player player = (Player) entity;
+                if (blockAbility(player)) return;
+                for (PotionEffect effect : event.getPotion().getEffects()) {
+                    PotionEffectType type = effect.getType();
+                    if (type.equals(PotionEffectType.POISON) || type.equals(PotionEffectType.UNLUCK) || type.equals(PotionEffectType.WITHER) ||
+                            type.equals(PotionEffectType.WEAKNESS) || type.equals(PotionEffectType.SLOW_DIGGING) || type.equals(PotionEffectType.SLOW) ||
+                            type.equals(PotionEffectType.HUNGER) || type.equals(PotionEffectType.HARM) || type.equals(PotionEffectType.CONFUSION) ||
+                            type.equals(PotionEffectType.BLINDNESS)) {
+                        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+                            PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+                            double chance = Ability.NO_DEBUFF.getValue(skill.getAbilityLevel(Ability.NO_DEBUFF)) / 100;
+                            if (r.nextDouble() < chance) {
+                                if (!player.hasPotionEffect(type)) {
+                                    event.setIntensity(entity, 0);
                                 }
                             }
                         }

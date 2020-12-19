@@ -3,9 +3,11 @@ package com.archyx.aureliumskills.util;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang.math.NumberUtils;
@@ -24,6 +26,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
     private final Plugin plugin;
     private final NumberFormat format1;
     private final NumberFormat format2;
+    private final String[] xpIdentifiers = new String[] {"xp_required_formatted_", "xp_required_", "xp_progress_int", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
 
     public PlaceholderSupport(Plugin plugin) {
         this.plugin = plugin;
@@ -229,6 +232,34 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
             catch (Exception e) {
                 return "";
+            }
+        }
+
+        for (String id : xpIdentifiers) {
+            if (identifier.startsWith(id)) {
+                String skillName = LoreUtil.replace(identifier, id, "");
+                try {
+                    Skill skill = Skill.valueOf(skillName.toUpperCase());
+                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                    if (playerSkill != null) {
+                        switch (id) {
+                            case "xp_required_formatted_":
+                                return BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1));
+                            case "xp_required_":
+                                return String.valueOf(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1));
+                            case "xp_progress_int_":
+                                return String.valueOf((int) (playerSkill.getXp(skill) / (double) (Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) * 100));
+                            case "xp_progress_":
+                                return String.valueOf(playerSkill.getXp(skill) / (double) (Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) * 100);
+                            case "xp_int":
+                                return String.valueOf((int) playerSkill.getXp(skill));
+                            case "xp_formatted_":
+                                return BigNumber.withSuffix((int) playerSkill.getXp(skill));
+                            case "xp_":
+                                return String.valueOf(playerSkill.getXp(skill));
+                        }
+                    }
+                } catch (Exception e) { return ""; }
             }
         }
 
