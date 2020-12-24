@@ -15,7 +15,6 @@ public class PlayerSkill {
 
 	private final Map<Skill, Integer> levels = new HashMap<>();
 	private final Map<Skill, Double> xp = new HashMap<>();
-	private final Map<MAbility, Integer> manaAbilities = new HashMap<>();
 	
 	public PlayerSkill(UUID id, String playerName) {
 		this.playerId = id;
@@ -23,9 +22,6 @@ public class PlayerSkill {
 		for (Skill skill : Skill.values()) {
 			levels.put(skill, 1);
 			xp.put(skill, 0.0);
-		}
-		for (MAbility mAbility : MAbility.values()) {
-			manaAbilities.put(mAbility, 0);
 		}
 	}
 
@@ -38,12 +34,12 @@ public class PlayerSkill {
 	}
 
 	public int getAbilityLevel(Ability ability) {
-		int skillLevel = getSkillLevel(ability.getSkill());
-		int unlock = ability.getUnlock();
-		if (skillLevel < unlock) {
+		// Check if unlocked
+		if (getSkillLevel(ability.getSkill()) < ability.getUnlock()) {
 			return 0;
 		}
-		int level =  (skillLevel - unlock) / ability.getLevelUp() + 1;
+		int level =  (getSkillLevel(ability.getSkill()) - ability.getUnlock()) / ability.getLevelUp() + 1;
+		// Check max level
 		if (level <= ability.getMaxLevel() || ability.getMaxLevel() == 0) {
 			return level;
 		} else {
@@ -52,25 +48,21 @@ public class PlayerSkill {
 	}
 
 	public int getManaAbilityLevel(MAbility mAbility) {
-		return manaAbilities.get(mAbility);
-	}
-
-	public void setManaAbilityLevel(MAbility mAbility, int level) {
-		manaAbilities.put(mAbility, level);
-	}
-
-	public void levelUpManaAbility(MAbility mAbility) {
-		manaAbilities.put(mAbility, manaAbilities.get(mAbility) + 1);
-	}
-
-	public boolean addXp(Skill skill, double amount) {
-		if (xp.containsKey(skill)) {
-			xp.put(skill, xp.get(skill) + amount);
-			return true;
+		// Check if unlocked
+		if (getSkillLevel(mAbility.getSkill()) < mAbility.getUnlock()) {
+			return 0;
 		}
-		else {
-			return false;
+		int level = (getSkillLevel(mAbility.getSkill()) - mAbility.getUnlock()) / mAbility.getLevelUp() + 1;
+		// Check max level
+		if (level <= mAbility.getMaxLevel() || mAbility.getMaxLevel() == 0) {
+			return level;
+		} else {
+			return mAbility.getMaxLevel();
 		}
+	}
+
+	public void addXp(Skill skill, double amount) {
+		xp.merge(skill, amount, Double::sum);
 	}
 	
 	public void setXp(Skill skill, double amount) {
@@ -78,12 +70,7 @@ public class PlayerSkill {
 	}
 	
 	public double getXp(Skill skill) {
-		if (xp.containsKey(skill)) {
-			return xp.get(skill);
-		}
-		else {
-			return 0;
-		}
+		return xp.getOrDefault(skill, 0.0);
 	}
 	
 	public int getSkillLevel(Skill skill) {
@@ -95,9 +82,7 @@ public class PlayerSkill {
 	}
 	
 	public void setSkillLevel(Skill skill, int level) {
-		if (levels.containsKey(skill)) {
-			levels.put(skill, level);
-		}
+		levels.put(skill, level);
 	}
 	
 	public UUID getPlayerId() {

@@ -65,8 +65,6 @@ public class SkillLoader {
 								playerSkill.setSkillLevel(skill, level);
 								playerSkill.setXp(skill, xp);
 
-								playerSkill.setManaAbilityLevel(skill.getManaAbility(), level / 7);
-
 								playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
 								playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);
 							}

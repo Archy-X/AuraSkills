@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
@@ -13,7 +12,6 @@ import com.archyx.aureliumskills.menu.templates.UnlockedTemplate;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.google.common.collect.ImmutableList;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -23,8 +21,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class LevelProgressionMenu implements InventoryProvider {
 
@@ -85,26 +84,14 @@ public class LevelProgressionMenu implements InventoryProvider {
 		InProgressTemplate inProgress = (InProgressTemplate) options.getTemplate(TemplateType.IN_PROGRESS);
 		LockedTemplate locked = (LockedTemplate) options.getTemplate(TemplateType.LOCKED);
 
-		ImmutableList<Supplier<Ability>> abilities = skill.getAbilities();
-		Map<Ability, String> abilityNames = new HashMap<>();
-		Map<Ability, String> abilityDescriptions = new HashMap<>();
-
-		if (abilities.size() == 5) {
-			for (int i = 0; i < 5; i++) {
-				Ability ability = abilities.get(i).get();
-				abilityNames.put(ability, ability.getDisplayName(locale));
-				abilityDescriptions.put(ability, ability.getDescription(locale));
-			}
-		}
-
 		for (int i = pagination.getPage() * 24; i < pagination.getPage() * 24 + 24; i++) {
 			if (i + 2 <= OptionL.getMaxLevel(skill)) {
 				if (i + 2 <= currentLevel) {
-					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, locale, abilityNames, abilityDescriptions));
+					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, locale));
 				} else if (i + 2 == currentLevel + 1) {
-					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, locale, abilityNames, abilityDescriptions));
+					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, locale));
 				} else {
-					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, locale, abilityNames, abilityDescriptions));
+					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, locale));
 				}
 			}
 			else {

@@ -162,10 +162,6 @@ public class Leveler {
 					// When player levels up a skill
 					playerSkill.setXp(skill, currentXp - levelReqs.get(currentLevel - 1));
 					playerSkill.setSkillLevel(skill, SkillLoader.playerSkills.get(id).getSkillLevel(skill) + 1);
-					if ((currentLevel + 1) % 7 == 0) {
-						MAbility mAbility = skill.getManaAbility();
-						playerSkill.levelUpManaAbility(mAbility);
-					}
 					playerStat.addStatLevel(skill.getPrimaryStat(), 1);
 					StatLeveler.reloadStat(player, skill.getPrimaryStat());
 					if ((currentLevel + 1) % 2 == 0) {
@@ -314,14 +310,6 @@ public class Leveler {
 		}
 		message.delete(0, 1); //Delete the first new line
 		return message.toString();
-	}
-
-
-	public static void updateAbilities(Player player, Skill skill) {
-		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-			playerSkill.setManaAbilityLevel(skill.getManaAbility(), playerSkill.getSkillLevel(skill) / 7);
-		}
 	}
 
 }

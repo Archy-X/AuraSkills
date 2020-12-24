@@ -374,7 +374,6 @@ public class SkillsCommand extends BaseCommand {
 					playerSkill.setSkillLevel(skill, level);
 					playerSkill.setXp(skill, 0);
 					Leveler.updateStats(player);
-					Leveler.updateAbilities(player, skill);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale)
@@ -404,7 +403,6 @@ public class SkillsCommand extends BaseCommand {
 					playerSkill.setSkillLevel(skill, level);
 					playerSkill.setXp(skill, 0);
 					Leveler.updateStats(player);
-					Leveler.updateAbilities(player, skill);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 				}
@@ -431,7 +429,6 @@ public class SkillsCommand extends BaseCommand {
 					playerSkill.setSkillLevel(skill, 1);
 					playerSkill.setXp(skill, 0);
 					Leveler.updateStats(player);
-					Leveler.updateAbilities(player, skill);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
@@ -449,7 +446,6 @@ public class SkillsCommand extends BaseCommand {
 					playerSkill.setSkillLevel(s, 1);
 					playerSkill.setXp(s, 0);
 					Leveler.updateStats(player);
-					Leveler.updateAbilities(player, s);
 				}
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 						.replace("{player}", player.getName()));

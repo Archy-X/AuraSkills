@@ -109,35 +109,25 @@ public enum Ability {
 	}
 
 	public double getValue(PlayerSkill playerSkill) {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			AbilityOption abilityOption = option.getAbilityOption(this);
-			return abilityOption.getBaseValue() + (abilityOption.getValuePerLevel() * (playerSkill.getAbilityLevel(this) - 1));
-		}
-		return baseValue + (valuePerLevel * (playerSkill.getAbilityLevel(this) - 1));
+		return getBaseValue() + (getValuePerLevel() * (playerSkill.getAbilityLevel(this) - 1));
 	}
 
 	public double getValue(int level) {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			AbilityOption abilityOption = option.getAbilityOption(this);
-			return abilityOption.getBaseValue() + (abilityOption.getValuePerLevel() * (level - 1));
-		}
-		return baseValue + (valuePerLevel * (level - 1));
+		return getBaseValue() + (getValuePerLevel() * (level - 1));
 	}
 	
 	public double getBaseValue() {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			return option.getAbilityOption(this).getBaseValue();
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getBaseValue();
 		}
 		return baseValue;
 	}
 	
 	public double getValuePerLevel() {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			return option.getAbilityOption(this).getValuePerLevel();
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getValuePerLevel();
 		}
 		return valuePerLevel;
 	}
@@ -147,26 +137,21 @@ public enum Ability {
 	}
 
 	public double getValue2(int level) {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			AbilityOption abilityOption = option.getAbilityOption(this);
-			return abilityOption.getBaseValue2() + (abilityOption.getValuePerLevel2() * (level - 1));
-		}
-		return baseValue2 + (valuePerLevel2 * (level - 1));
+		return getBaseValue2() + (getValuePerLevel2() * (level - 1));
 	}
 
 	public double getBaseValue2() {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			return option.getAbilityOption(this).getBaseValue2();
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getBaseValue2();
 		}
 		return baseValue;
 	}
 
 	public double getValuePerLevel2() {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			return option.getAbilityOption(this).getValuePerLevel2();
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getValuePerLevel2();
 		}
 		return valuePerLevel;
 	}
@@ -196,9 +181,9 @@ public enum Ability {
 	}
 
 	public int getUnlock() {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			return option.getAbilityOption(this).getUnlock();
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getUnlock();
 		}
 		int defUnlock = 2;
 		for (int i = 0; i < skill.getAbilities().size(); i++) {
@@ -211,28 +196,33 @@ public enum Ability {
 	}
 
 	public int getLevelUp() {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			return option.getAbilityOption(this).getLevelUp();
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getLevelUp();
 		}
 		return 5;
 	}
 
 	public int getMaxLevel() {
-		AbilityManager option = AureliumSkills.abilityManager;
-		if (option.containsOption(this)) {
-			return option.getAbilityOption(this).getMaxLevel();
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getMaxLevel();
 		}
 		return 0;
 	}
 
+	/**
+	 * Gets a list of abilities unlocked or leveled up at a certain level
+	 * @param skill The skill
+	 * @param level The skill level
+	 * @return A list of abilities
+	 */
 	public static List<Ability> getAbilities(Skill skill, int level) {
 		ImmutableList<Supplier<Ability>> skillAbilities = skill.getAbilities();
 		List<Ability> abilities = new ArrayList<>();
 		for (Supplier<Ability> abilitySupplier : skillAbilities) {
 			Ability ability = abilitySupplier.get();
-			int unlock = ability.getUnlock();
-			if (level >= unlock && (level - unlock) % ability.getLevelUp() == 0) {
+			if (level >= ability.getUnlock() && (level - ability.getUnlock()) % ability.getLevelUp() == 0) {
 				abilities.add(ability);
 			}
 		}

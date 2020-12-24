@@ -148,7 +148,6 @@ public class MySqlSupport {
                     //Adds level and xp to objects
                     playerSkill.setSkillLevel(skill, level);
                     playerSkill.setXp(skill, xp);
-                    playerSkill.setManaAbilityLevel(skill.getManaAbility(), level / 7);
                     //Calculates and sets stat levels
                     playerStat.addStatLevel(skill.getPrimaryStat(), level - 1);
                     playerStat.addStatLevel(skill.getSecondaryStat(), level / 2);

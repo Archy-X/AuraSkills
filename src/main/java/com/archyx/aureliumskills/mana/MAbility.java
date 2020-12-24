@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.AbilityManager;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -41,106 +41,101 @@ public enum MAbility {
     }
 
     public double getValue(int level) {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            ManaAbilityOption abilityOption = option.getAbilityOption(this);
-            return abilityOption.getBaseValue() + (abilityOption.getValuePerLevel() * (level - 1));
-        }
-        return baseValue + (valuePerLevel * (level - 1));
+        return getBaseValue() + (getValuePerLevel() * (level - 1));
     }
 
     public double getDisplayValue(int level) {
-        AbilityManager option = AureliumSkills.abilityManager;
         if (this != MAbility.SHARP_HOOK) {
-            if (option.containsOption(this)) {
-                ManaAbilityOption abilityOption = option.getAbilityOption(this);
-                return abilityOption.getBaseValue() + (abilityOption.getValuePerLevel() * (level - 1));
-            }
-            return baseValue + (valuePerLevel * (level - 1));
+            return getBaseValue() + (getValuePerLevel() * (level - 1));
         }
         else {
-            if (option.containsOption(this)) {
-                ManaAbilityOption abilityOption = option.getAbilityOption(this);
-                if (OptionL.getBoolean(Option.SHARP_HOOK_DISPLAY_DAMAGE_WITH_SCALING)) {
-                    return (abilityOption.getBaseValue() + (abilityOption.getValuePerLevel() * (level - 1))) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-                } else {
-                    return abilityOption.getBaseValue() + (abilityOption.getValuePerLevel() * (level - 1));
-                }
-            }
             if (OptionL.getBoolean(Option.SHARP_HOOK_DISPLAY_DAMAGE_WITH_SCALING)) {
-                return (baseValue + (valuePerLevel * (level - 1))) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
+                return (getBaseValue() + (getValuePerLevel() * (level - 1))) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
             } else {
-                return baseValue + (valuePerLevel * (level - 1));
+                return getBaseValue() + (getValuePerLevel() * (level - 1));
             }
         }
     }
 
     public double getBaseValue() {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            return option.getAbilityOption(this).getBaseValue();
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getBaseValue();
         }
         return baseValue;
     }
 
     public double getValuePerLevel() {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            return option.getAbilityOption(this).getValuePerLevel();
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getValuePerLevel();
         }
         return valuePerLevel;
     }
 
     public double getCooldown(int level) {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            ManaAbilityOption abilityOption = option.getAbilityOption(this);
-            double cooldown = abilityOption.getBaseCooldown() + (abilityOption.getCooldownPerLevel() * (level - 1));
-            return cooldown > 0 ? cooldown : 0;
-        }
-        double cooldown = baseCooldown + (cooldownPerLevel * (level - 1));
+        double cooldown = getBaseCooldown() + (getCooldownPerLevel() * (level - 1));
         return cooldown > 0 ? cooldown : 0;
     }
 
     public double getBaseCooldown() {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            return option.getAbilityOption(this).getBaseCooldown();
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getBaseCooldown();
         }
         return baseCooldown;
     }
 
     public double getCooldownPerLevel() {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            return option.getAbilityOption(this).getCooldownPerLevel();
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getCooldownPerLevel();
         }
         return cooldownPerLevel;
     }
 
     public int getManaCost(int level) {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            ManaAbilityOption abilityOption = option.getAbilityOption(this);
-            return abilityOption.getBaseManaCost() + (abilityOption.getManaCostPerLevel() * (level - 1));
-        }
-        return baseManaCost + (manaCostPerLevel * (level - 1));
+        return getBaseManaCost() + (getManaCostPerLevel() * (level - 1));
     }
 
     public int getBaseManaCost() {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            return option.getAbilityOption(this).getBaseManaCost();
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getBaseManaCost();
         }
         return baseManaCost;
     }
 
     public int getManaCostPerLevel() {
-        AbilityManager option = AureliumSkills.abilityManager;
-        if (option.containsOption(this)) {
-            return option.getAbilityOption(this).getManaCostPerLevel();
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getManaCostPerLevel();
         }
         return manaCostPerLevel;
+    }
+
+    public int getUnlock() {
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getUnlock();
+        }
+        return 7;
+    }
+
+    public int getLevelUp() {
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getLevelUp();
+        }
+        return 7;
+    }
+
+    public int getMaxLevel() {
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getMaxLevel();
+        }
+        return 0;
     }
 
     public String getDisplayName(Locale locale) {
@@ -149,6 +144,23 @@ public enum MAbility {
 
     public String getDescription(Locale locale) {
         return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_DESC"), locale);
+    }
+
+    /**
+     * Gets the mana ability unlocked or leveled up at a certain level
+     * @param skill The skill
+     * @param level The skill level
+     * @return The mana ability unlocked or leveled up, or null
+     */
+    @Nullable
+    public static MAbility getManaAbility(Skill skill, int level) {
+        MAbility mAbility = skill.getManaAbility();
+        if (mAbility != MAbility.ABSORPTION) {
+            if (level >= mAbility.getUnlock() && (level - mAbility.getUnlock()) % mAbility.getLevelUp() == 0) {
+                return mAbility;
+            }
+        }
+        return null;
     }
 
 }
