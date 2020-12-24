@@ -13,7 +13,6 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
 import java.util.*;
 
@@ -167,29 +166,26 @@ public class ItemRequirement {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     if (global.getMaterial().parseMaterial() == item.getType()) {
-                        MaterialData materialData = item.getData();
-                        if (materialData != null) {
-                            if (materialData.getData() == global.getMaterial().getData()) {
-                                for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
-                                    if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
-                                        return false;
-                                    }
+                        {
+                            for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
+                                if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                                    return false;
                                 }
                             }
                         }
                     }
                 }
-            }
-            // Check item requirements
-            for (Map.Entry<Skill, Integer> entry : getItemRequirements(item).entrySet()) {
-                if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
-                    return false;
+                // Check item requirements
+                for (Map.Entry<Skill, Integer> entry : getItemRequirements(item).entrySet()) {
+                    if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                        return false;
+                    }
                 }
+                return true;
             }
-            return true;
+            return false;
         }
         return false;
     }

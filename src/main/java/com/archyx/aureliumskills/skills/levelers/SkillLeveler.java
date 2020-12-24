@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.*;
-import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.cryptomorin.xseries.XMaterial;
 import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
 import org.bukkit.GameMode;
@@ -52,7 +52,7 @@ public abstract class SkillLeveler {
         if (playerSkill != null) {
             double output = getXp(source);
             if (ability != null) {
-                if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+                if (AureliumSkills.abilityManager.isEnabled(ability)) {
                     double modifier = 1;
                     modifier += ability.getValue(playerSkill.getAbilityLevel(ability)) / 100;
                     output *= modifier;
@@ -68,7 +68,7 @@ public abstract class SkillLeveler {
         if (playerSkill != null) {
             double output = input;
             if (ability != null) {
-                if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+                if (AureliumSkills.abilityManager.isEnabled(ability)) {
                     double modifier = 1;
                     modifier += ability.getValue(playerSkill.getAbilityLevel(ability)) / 100;
                     output *= modifier;
@@ -84,7 +84,7 @@ public abstract class SkillLeveler {
         if (playerSkill != null) {
             double output = input;
             if (ability != null) {
-                if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+                if (AureliumSkills.abilityManager.isEnabled(ability)) {
                     double modifier = 1;
                     modifier += ability.getValue(playerSkill.getAbilityLevel(ability)) / 100;
                     output *= modifier;

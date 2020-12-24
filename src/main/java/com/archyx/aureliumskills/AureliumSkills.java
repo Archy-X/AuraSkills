@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills;
 
 import co.aikar.commands.PaperCommandManager;
+import com.archyx.aureliumskills.abilities.*;
 import com.archyx.aureliumskills.commands.ManaCommand;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
@@ -13,7 +14,8 @@ import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
-import com.archyx.aureliumskills.magic.ManaManager;
+import com.archyx.aureliumskills.mana.ManaAbilityManager;
+import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
@@ -22,8 +24,6 @@ import com.archyx.aureliumskills.requirement.ArmorRequirementListener;
 import com.archyx.aureliumskills.requirement.ItemRequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.skills.*;
-import com.archyx.aureliumskills.skills.abilities.*;
-import com.archyx.aureliumskills.skills.abilities.mana_abilities.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.levelers.*;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.*;
@@ -54,7 +54,7 @@ public class AureliumSkills extends JavaPlugin {
 	private static MenuLoader menuLoader;
 	public static LootTableManager lootTableManager;
 	public static InventoryManager invManager;
-	public static AbilityOptionManager abilityOptionManager;
+	public static AbilityManager abilityManager;
 	public static WorldGuardSupport worldGuardSupport;
 	public static WorldManager worldManager;
 	public static ManaManager manaManager;
@@ -169,8 +169,8 @@ public class AureliumSkills extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(manaAbilityManager, this);
 		manaAbilityManager.init();
 		// Load ability options
-		abilityOptionManager = new AbilityOptionManager(this);
-		abilityOptionManager.loadOptions();
+		abilityManager = new AbilityManager(this);
+		abilityManager.loadOptions();
 		// Load stats
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);
@@ -376,6 +376,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new EnduranceAbilities(this), this);
 		pm.registerEvents(new AgilityAbilities(this), this);
 		pm.registerEvents(new AlchemyAbilities(this), this);
+		pm.registerEvents(new EnchantingAbilities(this), this);
 		pm.registerEvents(new DamageListener(this), this);
 		ItemListener itemListener = new ItemListener(this);
 		pm.registerEvents(itemListener, this);

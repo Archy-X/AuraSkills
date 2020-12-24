@@ -1,6 +1,18 @@
 Version Alpha 1.6.0 (IN PROGRESS)
+  New Features:
+    - New abilities_config:
+      - Moved ability options from config.yml to new abilities_config.yml file
+      - Added 'unlock' option (the skill level the ability unlocks at)
+      - Added 'level_up' option (every x levels the ability should level up)
+    - Enchanting abilities:
+      - XP Convert
+      - Enchanter
+      - XP Warrior
+      - Enchanted Strength
+      - Lucky Table
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
+    - The level progression menu now supports unlimited pages
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled

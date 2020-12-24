@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.skills.abilities;
+package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
@@ -148,7 +148,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDrink(PlayerItemConsumeEvent event) {
-        if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityOptionManager.isEnabled(Ability.ALCHEMIST) && !event.isCancelled()) {
+        if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityManager.isEnabled(Ability.ALCHEMIST) && !event.isCancelled()) {
             ItemStack item = event.getItem();
             if (item.getType() == Material.POTION && item.getItemMeta() instanceof PotionMeta) {
                 Player player = event.getPlayer();
@@ -202,7 +202,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     // Handles duration boosts for splash potions. Includes Alchemist, Sugar Rush, and Splasher.
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSplash(PotionSplashEvent event) {
-        if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityOptionManager.isEnabled(Ability.ALCHEMIST) && !event.isCancelled()) {
+        if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityManager.isEnabled(Ability.ALCHEMIST) && !event.isCancelled()) {
             ItemStack item = event.getPotion().getItem();
             if (item.getItemMeta() instanceof PotionMeta && item.getItemMeta() != null) {
                 PotionMeta meta = (PotionMeta) item.getItemMeta();
@@ -256,7 +256,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         if (source instanceof Player) {
             Player player = (Player) source;
             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null && AureliumSkills.abilityOptionManager.isEnabled(Ability.SPLASHER)) {
+            if (playerSkill != null && AureliumSkills.abilityManager.isEnabled(Ability.SPLASHER)) {
                 if (playerSkill.getAbilityLevel(Ability.SPLASHER) > 0) {
                     double splasherPercent = Ability.SPLASHER.getValue(playerSkill.getAbilityLevel(Ability.SPLASHER));
                     int affectedPlayers = (int) affectedEntities.stream().filter(entity -> entity instanceof Player).filter(entity -> SkillLoader.playerSkills.containsKey(entity.getUniqueId())).count();
@@ -271,7 +271,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     @EventHandler
     @SuppressWarnings("deprecation")
     public void lingering(LingeringPotionSplashEvent event) {
-        if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityOptionManager.isEnabled(Ability.LINGERING) && !event.isCancelled()) {
+        if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityManager.isEnabled(Ability.LINGERING) && !event.isCancelled()) {
             Player player = null;
             if (VersionUtils.isAboveVersion(14)) {
                 if (event.getEntity().getShooter() instanceof Player) {
@@ -313,7 +313,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityOptionManager.isEnabled(Ability.WISE_EFFECT)) {
+                if (OptionL.isEnabled(Skill.ALCHEMY) && AureliumSkills.abilityManager.isEnabled(Ability.WISE_EFFECT)) {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());

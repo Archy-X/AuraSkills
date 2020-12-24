@@ -33,6 +33,10 @@ public class PlayerStat {
 	public void addStatLevel(Stat stat, double level) {
 		stats.put(stat, getStatLevel(stat) + level);
 	}
+
+	public void addStatLevel(Stat stat, int level) {
+		stats.put(stat, getStatLevel(stat) + level);
+	}
 	
 	public void setStatLevel(Stat stat, double level) {
 		stats.put(stat, level);

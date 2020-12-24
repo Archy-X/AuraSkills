@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.ForagingAbilities;
+import com.archyx.aureliumskills.abilities.MiningAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.requirement.ItemRequirement;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.abilities.ForagingAbilities;
-import com.archyx.aureliumskills.skills.abilities.MiningAbilities;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;

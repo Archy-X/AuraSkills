@@ -7,20 +7,17 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.magic.ManaManager;
+import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.UUID;
 
 @CommandAlias("mana")
 public class ManaCommand extends BaseCommand {
-
-    private final NumberFormat nf = new DecimalFormat("#.#");
 
     @Default
     @CommandPermission("aureliumskills.mana")
@@ -32,16 +29,16 @@ public class ManaCommand extends BaseCommand {
             UUID id = target.getUniqueId();
             ManaManager mana = AureliumSkills.manaManager;
             sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_DISPLAY, locale)
-                    , "{current}", nf.format(mana.getMana(id))
-                    , "{max}", nf.format(mana.getMaxMana(id))));
+                    , "{current}", NumberUtil.format1(mana.getMana(id))
+                    , "{max}", NumberUtil.format1(mana.getMaxMana(id))));
         } else if (player != null) {
             Locale locale = Lang.getLanguage(player);
             UUID id = player.getUniqueId();
             ManaManager mana = AureliumSkills.manaManager;
             sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_DISPLAY_OTHER, locale)
                     , "{player}", player.getName()
-                    , "{current}", nf.format(mana.getMana(id))
-                    , "{max}", nf.format(mana.getMaxMana(id))));
+                    , "{current}", NumberUtil.format1(mana.getMana(id))
+                    , "{max}", NumberUtil.format1(mana.getMaxMana(id))));
         } else {
             sender.sendMessage(AureliumSkills.getPrefix(Lang.getDefaultLanguage()) + Lang.getMessage(CommandMessage.MANA_CONSOLE_SPECIFY_PLAYER, Lang.getDefaultLanguage()));
         }
@@ -60,7 +57,7 @@ public class ManaCommand extends BaseCommand {
                 mana.setMana(id, mana.getMana(id) + amount);
                 if (!silent) {
                     sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_ADD, locale)
-                            , "{amount}", String.valueOf(amount)
+                            , "{amount}", NumberUtil.format2(amount)
                             , "{player}", player.getName()));
                 }
             } else {
@@ -68,7 +65,7 @@ public class ManaCommand extends BaseCommand {
                     mana.setMana(id, mana.getMana(id) + amount);
                     if (!silent) {
                         sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_ADD, locale)
-                                , "{amount}", String.valueOf(amount)
+                                , "{amount}", NumberUtil.format2(amount)
                                 , "{player}", player.getName()));
                     }
                 } else {
@@ -77,7 +74,7 @@ public class ManaCommand extends BaseCommand {
                         mana.setMana(id, mana.getMaxMana(id));
                         if (!silent) {
                             sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_ADD, locale)
-                                    , "{amount}", String.valueOf(added)
+                                    , "{amount}", NumberUtil.format2(added)
                                     , "{player}", player.getName()));
                         }
                     } else {
@@ -109,7 +106,7 @@ public class ManaCommand extends BaseCommand {
                 mana.setMana(id, mana.getMana(id) - amount);
                 if (!silent) {
                     sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_REMOVE, locale)
-                            , "{amount}", String.valueOf(amount)
+                            , "{amount}", NumberUtil.format2(amount)
                             , "{player}", player.getName()));
                 }
             } else {
@@ -117,7 +114,7 @@ public class ManaCommand extends BaseCommand {
                 mana.setMana(id, 0);
                 if (!silent) {
                     sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_REMOVE, locale)
-                            , "{amount}", String.valueOf(removed)
+                            , "{amount}", NumberUtil.format2(removed)
                             , "{player}", player.getName()));
                 }
             }
@@ -141,7 +138,7 @@ public class ManaCommand extends BaseCommand {
                 mana.setMana(id, amount);
                 if (!silent) {
                     sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_SET, locale)
-                            , "{amount}", String.valueOf(amount)
+                            , "{amount}", NumberUtil.format2(amount)
                             , "{player}", player.getName()));
                 }
             } else {
@@ -149,14 +146,14 @@ public class ManaCommand extends BaseCommand {
                     mana.setMana(id, amount);
                     if (!silent) {
                         sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_SET, locale)
-                                , "{amount}", String.valueOf(amount)
+                                , "{amount}", NumberUtil.format2(amount)
                                 , "{player}", player.getName()));
                     }
                 } else {
                     mana.setMana(id, mana.getMaxMana(id));
                     if (!silent) {
                         sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_SET, locale)
-                                , "{amount}", String.valueOf(mana.getMaxMana(id))
+                                , "{amount}", NumberUtil.format2(mana.getMaxMana(id))
                                 , "{player}", player.getName()));
                     }
                 }

@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.lang;
 
-import com.archyx.aureliumskills.skills.abilities.Ability;
+import com.archyx.aureliumskills.abilities.Ability;
 
 public enum AbilityMessage implements MessageKey {
 
@@ -186,7 +186,23 @@ public enum AbilityMessage implements MessageKey {
     LINGERING_INFO,
     WISE_EFFECT_NAME,
     WISE_EFFECT_DESC,
-    WISE_EFFECT_INFO;
+    WISE_EFFECT_INFO,
+    // Enchanting
+    XP_CONVERT_NAME,
+    XP_CONVERT_DESC,
+    XP_CONVERT_INFO,
+    ENCHANTER_NAME,
+    ENCHANTER_DESC,
+    ENCHANTER_INFO,
+    XP_WARRIOR_NAME,
+    XP_WARRIOR_DESC,
+    XP_WARRIOR_INFO,
+    ENCHANTED_STRENGTH_NAME,
+    ENCHANTED_STRENGTH_DESC,
+    ENCHANTED_STRENGTH_INFO,
+    LUCKY_TABLE_NAME,
+    LUCKY_TABLE_DESC,
+    LUCKY_TABLE_INFO;
 
     private final String path;
 

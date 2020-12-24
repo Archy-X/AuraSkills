@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.skills.abilities;
+package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;

@@ -1,18 +1,18 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.api.SkillLevelUpEvent;
 import com.archyx.aureliumskills.api.XpGainEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.LevelerMessage;
+import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
@@ -162,11 +162,6 @@ public class Leveler {
 					// When player levels up a skill
 					playerSkill.setXp(skill, currentXp - levelReqs.get(currentLevel - 1));
 					playerSkill.setSkillLevel(skill, SkillLoader.playerSkills.get(id).getSkillLevel(skill) + 1);
-					//Levels up ability
-					if (skill.getAbilities().size() == 5) {
-						Ability ability = skill.getAbilities().get((currentLevel + 4) % 5).get();
-						playerSkill.levelUpAbility(ability);
-					}
 					if ((currentLevel + 1) % 7 == 0) {
 						MAbility mAbility = skill.getManaAbility();
 						playerSkill.levelUpManaAbility(mAbility);
@@ -248,7 +243,7 @@ public class Leveler {
 				if (skill.getAbilities().size() == 5) {
 					Ability ability = skill.getAbilities().get((newLevel + 3) % 5).get();
 					//Check ability is enabled
-					if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+					if (AureliumSkills.abilityManager.isEnabled(ability)) {
 						//If ability is unlocked
 						if (!(playerSkill.getAbilityLevel(ability) > 1)) {
 							message.append("\n").append(LoreUtil.replace(line,"{ability_unlock}", LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale)
@@ -262,7 +257,7 @@ public class Leveler {
 				if (skill.getAbilities().size() == 5) {
 					Ability ability = skill.getAbilities().get((newLevel + 3) % 5).get();
 					//Check ability is enabled
-					if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+					if (AureliumSkills.abilityManager.isEnabled(ability)) {
 						//If ability is leveled up
 						if (playerSkill.getAbilityLevel(ability) > 1) {
 							message.append("\n").append(LoreUtil.replace(line,"{ability_level_up}", LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
@@ -276,7 +271,7 @@ public class Leveler {
 				if (skill.getManaAbility() != MAbility.ABSORPTION) {
 					MAbility mAbility = skill.getManaAbility();
 					// Check if ability is enabled
-					if (AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
+					if (AureliumSkills.abilityManager.isEnabled(mAbility)) {
 						// If ability unlocked
 						if (!(playerSkill.getManaAbilityLevel(mAbility) > 1) && newLevel == 7) {
 							message.append("\n").append(LoreUtil.replace(line, "{mana_ability_unlock}",
@@ -290,7 +285,7 @@ public class Leveler {
 				if (skill.getManaAbility() != MAbility.ABSORPTION) {
 					MAbility mAbility = skill.getManaAbility();
 					// Check if ability is enabled
-					if (AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
+					if (AureliumSkills.abilityManager.isEnabled(mAbility)) {
 						// If ability leveled up
 						if (playerSkill.getManaAbilityLevel(mAbility) > 1 && newLevel % 7 == 0) {
 							message.append("\n").append(LoreUtil.replace(line, "{mana_ability_level_up}",
@@ -325,9 +320,6 @@ public class Leveler {
 	public static void updateAbilities(Player player, Skill skill) {
 		if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-			for (int i = 0; i < skill.getAbilities().size(); i++) {
-				playerSkill.setAbilityLevel(skill.getAbilities().get(i).get(), (playerSkill.getSkillLevel(skill) + 3 - i) / 5);
-			}
 			playerSkill.setManaAbilityLevel(skill.getManaAbility(), playerSkill.getSkillLevel(skill) / 7);
 		}
 	}

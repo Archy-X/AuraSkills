@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.skills.abilities;
+package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
@@ -80,7 +80,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     public static double getSugarRushSplashMultiplier(Player player) {
-        if (player.hasPermission("aureliumskills.agility") && AureliumSkills.abilityOptionManager.isEnabled(Ability.SUGAR_RUSH)) {
+        if (player.hasPermission("aureliumskills.agility") && AureliumSkills.abilityManager.isEnabled(Ability.SUGAR_RUSH)) {
             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
             if (playerSkill != null) {
                 if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
@@ -241,20 +241,20 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                     if (playerSkill != null) {
                         // If from fall damage
                         if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.THUNDER_FALL)) {
+                            if (AureliumSkills.abilityManager.isEnabled(Ability.THUNDER_FALL)) {
                                 if (playerSkill.getAbilityLevel(Ability.THUNDER_FALL) > 0) {
                                     // Activate thunder fall
                                     thunderFall(event, playerSkill, player);
                                 }
                             }
-                            if (AureliumSkills.abilityOptionManager.isEnabled(Ability.LIGHT_FALL)) {
+                            if (AureliumSkills.abilityManager.isEnabled(Ability.LIGHT_FALL)) {
                                 if (playerSkill.getAbilityLevel(Ability.LIGHT_FALL) > 0) {
                                     // Activate light fall
                                     lightFall(event, playerSkill);
                                 }
                             }
                         }
-                        if (AureliumSkills.abilityOptionManager.isEnabled(Ability.FLEETING)) {
+                        if (AureliumSkills.abilityManager.isEnabled(Ability.FLEETING)) {
                             if (playerSkill.getAbilityLevel(Ability.FLEETING) > 0) {
                                 // Activate fleeting
                                 fleeting(event, playerSkill, player);

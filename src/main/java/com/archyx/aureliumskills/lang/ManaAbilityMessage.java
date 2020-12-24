@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.lang;
 
-import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
+import com.archyx.aureliumskills.mana.MAbility;
 
 public enum ManaAbilityMessage implements MessageKey {
     

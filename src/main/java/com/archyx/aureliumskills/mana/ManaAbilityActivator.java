@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.skills.abilities.mana_abilities;
+package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
@@ -31,7 +31,7 @@ public class ManaAbilityActivator {
 
     public void readyAbility(PlayerInteractEvent event, Skill skill, String matchMaterial) {
         if (OptionL.isEnabled(skill)) {
-            if (AureliumSkills.abilityOptionManager.isEnabled(skill.getManaAbility())) {
+            if (AureliumSkills.abilityManager.isEnabled(skill.getManaAbility())) {
                 if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                     // Check for hoe tilling
                     if (matchMaterial.equals("HOE") && event.getAction() == Action.RIGHT_CLICK_BLOCK) {

@@ -238,6 +238,27 @@ abilities:
       name: Wise Effect
       desc: 'Gain {value} Wisdom for every unique active\n&7  potion effect.'
       info: '+{value} Wisdom/Effect'
+  enchanting:
+    xp_convert:
+      name: XP Convert
+      desc: a
+      info: a
+    enchanter:
+      name: Enchanter
+      desc: a
+      info: a
+    xp_warrior:
+      name: XP Warrior
+      desc: a
+      info: a
+    enchanted_strength:
+      name: Enchanted Strength
+      desc: a
+      info: a
+    lucky_table:
+      name: Lucky Table
+      desc: a
+      info: a
 acf:
   core:
     permission_denied: '&cI''m sorry, but you do not have permission to perform this command.'
@@ -606,4 +627,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 8
+file_version: 9

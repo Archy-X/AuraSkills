@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.skills;
 
-import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
+import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.mana.MAbility;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,6 @@ public class PlayerSkill {
 
 	private final Map<Skill, Integer> levels = new HashMap<>();
 	private final Map<Skill, Double> xp = new HashMap<>();
-	private final Map<Ability, Integer> abilities = new HashMap<>();
 	private final Map<MAbility, Integer> manaAbilities = new HashMap<>();
 	
 	public PlayerSkill(UUID id, String playerName) {
@@ -24,9 +23,6 @@ public class PlayerSkill {
 		for (Skill skill : Skill.values()) {
 			levels.put(skill, 1);
 			xp.put(skill, 0.0);
-		}
-		for (Ability ability : Ability.values()) {
-			abilities.put(ability, 0);
 		}
 		for (MAbility mAbility : MAbility.values()) {
 			manaAbilities.put(mAbility, 0);
@@ -41,20 +37,13 @@ public class PlayerSkill {
 		return playerName;
 	}
 
-	public Map<Ability, Integer> getAbilities() {
-		return abilities;
-	}
-	
 	public int getAbilityLevel(Ability ability) {
-		return abilities.get(ability);
-	}
-	
-	public void setAbilityLevel(Ability ability, int level) {
-		abilities.put(ability, level);
-	}
-	
-	public void levelUpAbility(Ability ability) {
-		abilities.put(ability, abilities.get(ability) + 1);
+		int skillLevel = getSkillLevel(ability.getSkill());
+		int unlock = ability.getUnlock();
+		if (skillLevel < unlock) {
+			return 0;
+		}
+		return (skillLevel - unlock) / ability.getLevelUp() + 1;
 	}
 
 	public int getManaAbilityLevel(MAbility mAbility) {

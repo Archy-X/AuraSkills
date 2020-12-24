@@ -1,11 +1,11 @@
 package com.archyx.aureliumskills.util;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SourceManager;
-import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.skills.levelers.SkillLeveler;
 import com.cryptomorin.xseries.XMaterial;

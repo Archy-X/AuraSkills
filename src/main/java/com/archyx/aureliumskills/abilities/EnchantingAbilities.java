@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.skills.abilities;
+package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.XpGainEvent;
@@ -9,11 +9,13 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -84,6 +86,16 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
                 }
             }
         }.runTaskTimer(plugin, 1L, 10L);
+    }
+
+    @EventHandler
+    public void luckyTable(PrepareItemEnchantEvent event) {
+        if (blockDisabled(Ability.LUCKY_TABLE)) return;
+        Player player = event.getEnchanter();
+        if (blockAbility(player)) return;
+        for (EnchantmentOffer offer : event.getOffers()) {
+
+        }
     }
 
 }

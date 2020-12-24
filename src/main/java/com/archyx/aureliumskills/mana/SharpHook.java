@@ -1,36 +1,46 @@
-package com.archyx.aureliumskills.skills.abilities.mana_abilities;
+package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
+import com.archyx.aureliumskills.util.LoreUtil;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
 
-public class Replenish implements ManaAbility {
+public class SharpHook implements ManaAbility {
 
     private final SorceryLeveler sorceryLeveler;
 
-    public Replenish(AureliumSkills plugin) {
+    public SharpHook(AureliumSkills plugin) {
         this.sorceryLeveler = plugin.getSorceryLeveler();
     }
-
 
     @Override
     public void activate(Player player) {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (playerSkill != null) {
             Locale locale = Lang.getLanguage(player);
-            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.REPLENISH));
+            //Consume mana
+            int manaConsumed = MAbility.SHARP_HOOK.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK));
             AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
-            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale), "{mana}", String.valueOf(manaConsumed)));
+            if (OptionL.getBoolean(Option.SHARP_HOOK_ENABLE_SOUND)) {
+                if (XMaterial.isNewVersion()) {
+                    player.playSound(player.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1f, 1.5f);
+                } else {
+                    player.playSound(player.getLocation(), "entity.bobber.retrieve", 1f, 1.5f);
+                }
+            }
         }
     }
 
@@ -43,9 +53,7 @@ public class Replenish implements ManaAbility {
     public void stop(Player player) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (skill != null) {
-            Locale locale = Lang.getLanguage(player);
-            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.REPLENISH, (int) (MAbility.REPLENISH.getCooldown(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20));
-            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_END, locale));
+            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SHARP_HOOK, (int) (MAbility.SHARP_HOOK.getCooldown(skill.getManaAbilityLevel(MAbility.SHARP_HOOK)) * 20));
         }
     }
 }

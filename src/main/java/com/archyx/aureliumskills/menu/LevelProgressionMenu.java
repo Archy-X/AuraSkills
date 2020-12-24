@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
@@ -12,7 +13,6 @@ import com.archyx.aureliumskills.menu.templates.UnlockedTemplate;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.abilities.Ability;
 import com.google.common.collect.ImmutableList;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
@@ -30,34 +30,23 @@ public class LevelProgressionMenu implements InventoryProvider {
 
 	private final Skill skill;
 	private final Locale locale;
-	private final static List<Integer> track = new ArrayList<>();
+	private final List<Integer> track;
 	private final MenuOption options;
 
-	private int pages = 4;
-
-	static {
-		for (int i = 0; i < 4; i++) {
-			track.add(i*36); track.add(9 + i*36); track.add(18 + i*36); track.add(27 + i*36); track.add(28 + i*36);
-			track.add(29 + i*36); track.add(20 + i*36); track.add(11 + i*36); track.add(2 + i*36); track.add(3 + i*36);
-			track.add(4 + i*36); track.add(13 + i*36); track.add(22 + i*36); track.add(31 + i*36); track.add(32 + i*36);
-			track.add(33 + i*36); track.add(24 + i*36); track.add(15 + i*36); track.add(6 + i*36); track.add(7 + i*36);
-			track.add(8 + i*36); track.add(17 + i*36); track.add(26 + i*36); track.add(35 + i*36);
-		}
-	}
+	private final int pages;
 
 	public LevelProgressionMenu(Locale locale, Skill skill, MenuOption menuOption) {
 		this.locale = locale;
 		this.skill = skill;
 		this.options = menuOption;
-		int maxLevel = OptionL.getMaxLevel(skill);
-		if (maxLevel < 26) {
-			pages = 1;
-		}
-		else if (maxLevel < 50) {
-			pages = 2;
-		}
-		else if (maxLevel < 74) {
-			pages = 3;
+		pages = (OptionL.getMaxLevel(skill) - 2) / 24 + 1;
+		this.track = new ArrayList<>();
+		for (int i = 0; i < pages; i++) {
+			track.add(i*36); track.add(9 + i*36); track.add(18 + i*36); track.add(27 + i*36); track.add(28 + i*36);
+			track.add(29 + i*36); track.add(20 + i*36); track.add(11 + i*36); track.add(2 + i*36); track.add(3 + i*36);
+			track.add(4 + i*36); track.add(13 + i*36); track.add(22 + i*36); track.add(31 + i*36); track.add(32 + i*36);
+			track.add(33 + i*36); track.add(24 + i*36); track.add(15 + i*36); track.add(6 + i*36); track.add(7 + i*36);
+			track.add(8 + i*36); track.add(17 + i*36); track.add(26 + i*36); track.add(35 + i*36);
 		}
 	}
 	
@@ -84,7 +73,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		contents.set(rankItem.getPos(), ClickableItem.empty(rankItem.getItem(skill, player, locale)));
 
 		Pagination pagination = contents.pagination();
-		ClickableItem[] items = new ClickableItem[144];
+		ClickableItem[] items = new ClickableItem[36 * pages];
 
 		if (options.isFillEnabled() && options.getFillItem() != null) {
 			for (int i = 0; i < items.length; i++) {

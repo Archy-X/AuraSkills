@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.menu.templates;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
+import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
@@ -100,29 +100,27 @@ public class UnlockedTemplate implements ConfigurableTemplate {
                             break;
                         case "ability":
                             if (abilities.size() == 5) {
-                                Ability ability = abilities.get((level - 2) % 5).get();
-                                if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
-                                    // Unlock
-                                    if (level <= 6) {
-                                        line = LoreUtil.replace(line, "{ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
-                                                , "{ability}", abilityNames.get(ability)
-                                                , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
-                                                        , "{value_2}", nf1.format(ability.getValue2(1))
-                                                        , "{value}", nf1.format(ability.getValue(1)))));
+                                StringBuilder abilityLore = new StringBuilder();
+                                for (Ability ability : Ability.getAbilities(skill, level)) {
+                                    if (AureliumSkills.abilityManager.isEnabled(ability)) {
+                                        if (level == ability.getUnlock()) {
+                                            abilityLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
+                                                    , "{ability}", abilityNames.get(ability)
+                                                    , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
+                                                            , "{value_2}", nf1.format(ability.getValue2(1))
+                                                            , "{value}", nf1.format(ability.getValue(1)))));
+                                        } else {
+                                            int abilityLevel = ((level - ability.getUnlock()) / ability.getLevelUp()) + 1;
+                                            abilityLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
+                                                    , "{ability}", abilityNames.get(ability)
+                                                    , "{level}", RomanNumber.toRoman(abilityLevel)
+                                                    , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
+                                                            , "{value_2}", nf1.format(ability.getValue2(abilityLevel))
+                                                            , "{value}", nf1.format(ability.getValue(abilityLevel)))));
+                                        }
                                     }
-                                    // Level
-                                    else {
-                                        int abilityLevel = (level + 3) / 5;
-                                        line = LoreUtil.replace(line, "{ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
-                                                , "{ability}", abilityNames.get(ability)
-                                                , "{level}", RomanNumber.toRoman(abilityLevel)
-                                                , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
-                                                        , "{value_2}", nf1.format(ability.getValue2(abilityLevel))
-                                                        , "{value}", nf1.format(ability.getValue(abilityLevel)))));
-                                    }
-                                } else {
-                                    line = LoreUtil.replace(line,"{ability}", "");
                                 }
+                                line = LoreUtil.replace(line, "{ability}", abilityLore.toString());
                             }
                             else {
                                 line = LoreUtil.replace(line,"{ability}", "");
@@ -130,7 +128,7 @@ public class UnlockedTemplate implements ConfigurableTemplate {
                             break;
                         case "mana_ability":
                             MAbility mAbility = skill.getManaAbility();
-                            if (level % 7 == 0 && mAbility != MAbility.ABSORPTION && AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
+                            if (level % 7 == 0 && mAbility != MAbility.ABSORPTION && AureliumSkills.abilityManager.isEnabled(mAbility)) {
                                 // Mana Ability Unlocked
                                 if (level == 7) {
                                     line = LoreUtil.replace(line,"{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)

@@ -1,9 +1,9 @@
 package com.archyx.aureliumskills.skills;
 
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.SkillMessage;
-import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
+import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
 
@@ -47,7 +47,7 @@ public enum Skill {
 	ALCHEMY(Stat.HEALTH, Stat.WISDOM,
 			ImmutableList.of(() -> Ability.ALCHEMIST, () -> Ability.BREWER, () -> Ability.SPLASHER, () -> Ability.LINGERING, () -> Ability.WISE_EFFECT),
 			MAbility.ABSORPTION),
-	ENCHANTING(Stat.WISDOM, Stat.LUCK, ImmutableList.of(() -> Ability.ENCHANTER),
+	ENCHANTING(Stat.WISDOM, Stat.LUCK, ImmutableList.of(() -> Ability.XP_CONVERT, () -> Ability.ENCHANTER, () -> Ability.XP_WARRIOR, () -> Ability.ENCHANTED_STRENGTH, () -> Ability.LUCKY_TABLE),
 			MAbility.ABSORPTION),
 	SORCERY(Stat.STRENGTH, Stat.WISDOM, ImmutableList.of(() -> Ability.SORCERER),
 			MAbility.ABSORPTION),

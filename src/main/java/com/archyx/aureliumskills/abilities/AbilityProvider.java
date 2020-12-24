@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.skills.abilities;
+package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
@@ -36,11 +36,11 @@ public abstract class AbilityProvider {
         if (!OptionL.isEnabled(ability.getSkill())) {
             return true;
         }
-        return !AureliumSkills.abilityOptionManager.isEnabled(ability);
+        return !AureliumSkills.abilityManager.isEnabled(ability);
     }
 
     public boolean isEnabled(Ability ability) {
-        return AureliumSkills.abilityOptionManager.isEnabled(ability);
+        return AureliumSkills.abilityManager.isEnabled(ability);
     }
 
 }

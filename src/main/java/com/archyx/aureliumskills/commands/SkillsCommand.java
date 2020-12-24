@@ -19,6 +19,7 @@ import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.MySqlSupport;
+import com.archyx.aureliumskills.util.NumberUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
@@ -342,7 +343,7 @@ public class SkillsCommand extends BaseCommand {
 			e.printStackTrace();
 			Bukkit.getLogger().warning("[AureliumSkills] Error while loading menus!");
 		}
-		AureliumSkills.abilityOptionManager.loadOptions();
+		AureliumSkills.abilityManager.loadOptions();
 		Leveler.loadLevelReqs();
 		AureliumSkills.lootTableManager.loadLootTables();
 		AureliumSkills.worldManager.loadWorlds();
@@ -942,8 +943,8 @@ public class SkillsCommand extends BaseCommand {
 				double multiplier = Leveler.getMultiplier(target);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
 						.replace("{player}", target.getName())
-						.replace("{multiplier}", String.valueOf(multiplier))
-						.replace("{percent}", String.valueOf((multiplier - 1) * 100)));
+						.replace("{multiplier}", NumberUtil.format2(multiplier))
+						.replace("{percent}", NumberUtil.format2((multiplier - 1) * 100)));
 			}
 			else {
 				Locale locale = Locale.ENGLISH;
@@ -955,8 +956,8 @@ public class SkillsCommand extends BaseCommand {
 			double multiplier = Leveler.getMultiplier(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
 					.replace("{player}", player.getName())
-					.replace("{multiplier}", String.valueOf(multiplier))
-					.replace("{percent}", String.valueOf((multiplier - 1) * 100)));
+					.replace("{multiplier}", NumberUtil.format2(multiplier))
+					.replace("{percent}", NumberUtil.format2((multiplier - 1) * 100)));
 		}
 	}
 

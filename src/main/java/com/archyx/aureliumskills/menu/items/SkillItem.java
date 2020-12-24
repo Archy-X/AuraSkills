@@ -1,15 +1,15 @@
 package com.archyx.aureliumskills.menu.items;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.lang.MenuMessage;
+import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.abilities.Ability;
-import com.archyx.aureliumskills.skills.abilities.mana_abilities.MAbility;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
@@ -113,7 +113,7 @@ public class SkillItem implements ConfigurableItem {
                                 int num = 1;
                                 for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
                                     Ability ability = abilitySupplier.get();
-                                    if (AureliumSkills.abilityOptionManager.isEnabled(ability)) {
+                                    if (AureliumSkills.abilityManager.isEnabled(ability)) {
                                         if (playerSkill.getAbilityLevel(ability) > 0) {
                                             int abilityLevel = playerSkill.getAbilityLevel(ability);
                                             line = LoreUtil.replace(line, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
@@ -140,7 +140,7 @@ public class SkillItem implements ConfigurableItem {
                         case "mana_ability":
                             MAbility mAbility = skill.getManaAbility();
                             int level = playerSkill.getManaAbilityLevel(mAbility);
-                            if (mAbility != MAbility.ABSORPTION && level > 0 && AureliumSkills.abilityOptionManager.isEnabled(mAbility)) {
+                            if (mAbility != MAbility.ABSORPTION && level > 0 && AureliumSkills.abilityManager.isEnabled(mAbility)) {
                                 if (mAbility != MAbility.SHARP_HOOK) {
                                     line = LoreUtil.replace(line, "{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY, locale)
                                             , "{mana_ability}", mAbility.getDisplayName(locale)
