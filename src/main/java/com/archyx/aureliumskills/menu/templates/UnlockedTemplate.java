@@ -111,12 +111,14 @@ public class UnlockedTemplate implements ConfigurableTemplate {
                                                             , "{value}", nf1.format(ability.getValue(1)))));
                                         } else {
                                             int abilityLevel = ((level - ability.getUnlock()) / ability.getLevelUp()) + 1;
-                                            abilityLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
-                                                    , "{ability}", abilityNames.get(ability)
-                                                    , "{level}", RomanNumber.toRoman(abilityLevel)
-                                                    , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
-                                                            , "{value_2}", nf1.format(ability.getValue2(abilityLevel))
-                                                            , "{value}", nf1.format(ability.getValue(abilityLevel)))));
+                                            if (abilityLevel <= ability.getMaxLevel() || ability.getMaxLevel() == 0) { // Check max level
+                                                abilityLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
+                                                        , "{ability}", abilityNames.get(ability)
+                                                        , "{level}", RomanNumber.toRoman(abilityLevel)
+                                                        , "{desc}", LoreUtil.replace(abilityDescriptions.get(ability)
+                                                                , "{value_2}", nf1.format(ability.getValue2(abilityLevel))
+                                                                , "{value}", nf1.format(ability.getValue(abilityLevel)))));
+                                            }
                                         }
                                     }
                                 }

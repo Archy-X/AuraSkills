@@ -43,7 +43,12 @@ public class PlayerSkill {
 		if (skillLevel < unlock) {
 			return 0;
 		}
-		return (skillLevel - unlock) / ability.getLevelUp() + 1;
+		int level =  (skillLevel - unlock) / ability.getLevelUp() + 1;
+		if (level <= ability.getMaxLevel() || ability.getMaxLevel() == 0) {
+			return level;
+		} else {
+			return ability.getMaxLevel();
+		}
 	}
 
 	public int getManaAbilityLevel(MAbility mAbility) {
