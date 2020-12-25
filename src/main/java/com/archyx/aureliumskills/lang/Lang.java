@@ -202,6 +202,18 @@ public class Lang implements Listener {
 									}
 								}
 							}
+							// Messages to override
+							for (MessageUpdates update : MessageUpdates.values()) {
+								if (currentVersion < update.getVersion() && imbVersion >= update.getVersion()) {
+									ConfigurationSection section = imbConfig.getConfigurationSection(update.getSection());
+									if (section != null) {
+										for (String key : section.getKeys(false)) {
+											config.set(section.getCurrentPath() + "." + key, section.getString(key));
+										}
+										Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+									}
+								}
+							}
 						}
 						config.set("file_version", imbVersion);
 						config.save(file);

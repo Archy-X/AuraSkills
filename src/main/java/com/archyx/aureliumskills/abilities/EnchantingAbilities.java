@@ -9,25 +9,30 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.Bukkit;
-import org.bukkit.enchantments.EnchantmentOffer;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class EnchantingAbilities extends AbilityProvider implements Listener {
 
     private final Random random = new Random();
+    private final Map<Player, Double> xpConvertData;
 
     public EnchantingAbilities(AureliumSkills plugin) {
         super(plugin, Skill.ENCHANTING);
+        this.xpConvertData = new HashMap<>();
         enchantedStrength();
     }
 
@@ -39,9 +44,21 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (playerSkill != null) {
             if (playerSkill.getAbilityLevel(Ability.XP_CONVERT) > 0 && event.getAmount() > 0) {
-                player.giveExp((int) (Ability.XP_CONVERT.getValue(playerSkill) / 100 * event.getAmount()));
+                double totalXp = xpConvertData.getOrDefault(player, 0.0) + event.getAmount();
+                double value =  Ability.XP_CONVERT.getValue(playerSkill);
+                if (value > 0) {
+                    int added = (int) (totalXp / value);
+                    double remainder = totalXp - added * value;
+                    player.giveExp(added);
+                    xpConvertData.put(player, remainder);
+                }
             }
         }
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event) {
+        xpConvertData.remove(event.getPlayer());
     }
 
     @EventHandler
@@ -71,16 +88,18 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
                     PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
                     PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                     if (playerStat != null && playerSkill != null) {
-                        ItemStack item = player.getInventory().getItemInMainHand();
-                        if (item.getEnchantments().size() > 0) {
-                            if (!blockAbility(player)) {
-                                // Apply modifier
-                                double strengthPerType = Ability.ENCHANTED_STRENGTH.getValue(playerSkill);
-                                StatModifier modifier = new StatModifier("AbilityModifier-EnchantedStrength", Stat.STRENGTH, strengthPerType * item.getEnchantments().size());
-                                playerStat.addModifier(modifier, false);
+                        if (playerSkill.getAbilityLevel(Ability.ENCHANTED_STRENGTH) > 0) {
+                            ItemStack item = player.getInventory().getItemInMainHand();
+                            if (item.getEnchantments().size() > 0) {
+                                if (!blockAbility(player)) {
+                                    // Apply modifier
+                                    double strengthPerType = Ability.ENCHANTED_STRENGTH.getValue(playerSkill);
+                                    StatModifier modifier = new StatModifier("AbilityModifier-EnchantedStrength", Stat.STRENGTH, strengthPerType * item.getEnchantments().size());
+                                    playerStat.addModifier(modifier, false);
+                                }
+                            } else {
+                                playerStat.removeModifier("AbilityModifier-EnchantedStrength");
                             }
-                        } else {
-                            playerStat.removeModifier("AbilityModifier-EnchantedStrength");
                         }
                     }
                 }
@@ -89,12 +108,21 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void luckyTable(PrepareItemEnchantEvent event) {
+    public void luckyTable(EnchantItemEvent event) {
         if (blockDisabled(Ability.LUCKY_TABLE)) return;
         Player player = event.getEnchanter();
         if (blockAbility(player)) return;
-        for (EnchantmentOffer offer : event.getOffers()) {
-
+        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+        if (playerSkill != null) {
+            if (playerSkill.getAbilityLevel(Ability.LUCKY_TABLE) > 0) {
+                for (Map.Entry<Enchantment, Integer> entry : event.getEnchantsToAdd().entrySet()) {
+                    if (entry.getKey().getMaxLevel() > entry.getValue()) {
+                        if (random.nextDouble() < Ability.LUCKY_TABLE.getValue(playerSkill) / 100) {
+                            entry.setValue(entry.getValue() + 1);
+                        }
+                    }
+                }
+            }
         }
     }
 

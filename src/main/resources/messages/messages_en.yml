@@ -241,24 +241,24 @@ abilities:
   enchanting:
     xp_convert:
       name: XP Convert
-      desc: a
-      info: a
+      desc: 'Earn 1 Minecraft experience for every {value}\n&7  skill XP you gain.'
+      info: '1 EXP/{value} Skill XP'
     enchanter:
       name: Enchanter
-      desc: a
-      info: a
+      desc: 'Earn {value}% more Enchanting XP.'
+      info: '+{value}% XP'
     xp_warrior:
       name: XP Warrior
-      desc: a
-      info: a
+      desc: 'Mobs you kill have a {value}% chance of\n&7  dropping double experience.'
+      info: '{value}% 2x Mob XP'
     enchanted_strength:
       name: Enchanted Strength
-      desc: a
-      info: a
+      desc: 'Gain {value} Strength for every unique\n&7  enchantment on the item held.'
+      info: '{value} Strength/Enchant'
     lucky_table:
       name: Lucky Table
-      desc: a
-      info: a
+      desc: 'Items you enchant using the enchantment\n&7  table have a {value}% chance of upgrading the enchantment\n&7  level by 1 if not max level'
+      info: '{value}% Enchant Upgrade Chance'
 acf:
   core:
     permission_denied: '&cI''m sorry, but you do not have permission to perform this command.'
@@ -439,13 +439,13 @@ commands:
 leveler:
   title: '&a{skill} Level Up'
   subtitle: '&6{old} ➜ {new}'
-  level_up: '&3&m----------------------------------------\n&r &3Skill Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------'
-  stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&aAbility Unlock! &6&l{ability} &7has been unlocked'
-  ability_level_up: '&aAbility Level Up! &6&l{ability} &7is now level &6{level}'
-  mana_ability_unlock: '&dMana Ability Unlock! &9&l{mana_ability} &7has been unlocked'
-  mana_ability_level_up: '&dMana Ability Level Up! &9&l{mana_ability} &7is now level &6{level}'
-  money_reward: '&a${amount}'
+  level_up: '&3&m----------------------------------------\n&r &3Skill Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------'
+  stat_level: '\n  {color}+1{symbol} {stat}'
+  ability_unlock: '\n  &aAbility Unlock! &6&l{ability} &7has been unlocked'
+  ability_level_up: '\n  &aAbility Level Up! &6&l{ability} &7is now level &6{level}'
+  mana_ability_unlock: '\n  &dMana Ability Unlock! &9&l{mana_ability} &7has been unlocked'
+  mana_ability_level_up: '\n  &dMana Ability Level Up! &9&l{mana_ability} &7is now level &6{level}'
+  money_reward: '\n  &a${amount}'
 menus:
   common:
     close: '&cClose'

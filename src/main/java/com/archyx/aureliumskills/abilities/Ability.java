@@ -69,7 +69,7 @@ public enum Ability {
 	SPLASHER(() -> Skill.ALCHEMY, 0.5, 0.25),
 	LINGERING(() -> Skill.ALCHEMY, 5.0, 4.0, 3.0, 2.0),
 	WISE_EFFECT(() -> Skill.ALCHEMY, 1.0, 1.0),
-	XP_CONVERT(() -> Skill.ENCHANTING, 10.0, 5.0),
+	XP_CONVERT(() -> Skill.ENCHANTING, 20.0, -0.75),
 	ENCHANTER(() -> Skill.ENCHANTING, 10.0, 10.0),
 	XP_WARRIOR(() -> Skill.ENCHANTING, 5.0, 4.0),
 	ENCHANTED_STRENGTH(() -> Skill.ENCHANTING, 0.5, 0.5),

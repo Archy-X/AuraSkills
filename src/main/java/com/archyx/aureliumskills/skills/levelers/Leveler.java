@@ -210,106 +210,70 @@ public class Leveler {
 
 
 	private static String getLevelUpMessage(Player player, PlayerSkill playerSkill, Skill skill, int newLevel, Locale locale) {
-		//Build original message with placeholders that are always there
-		String originalMessage = LoreUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
+		String message = LoreUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
-				,"{new}", RomanNumber.toRoman(newLevel)
-				,"{stat_level_1}", LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-						,"{color}", skill.getPrimaryStat().getColor(locale)
-						,"{symbol}", skill.getPrimaryStat().getSymbol(locale)
-						,"{stat}", skill.getPrimaryStat().getDisplayName(locale)));
+				,"{new}", RomanNumber.toRoman(newLevel));
 		if (AureliumSkills.placeholderAPIEnabled) {
-			originalMessage = PlaceholderAPI.setPlaceholders(player, originalMessage);
+			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
-		StringBuilder message = new StringBuilder();
-		//For every line
-		for (String line : originalMessage.split("(\\u005C\\u006E)|(\\n)")) {
-			if (line.contains("{stat_level_2}")) {
-				//If level has secondary stat
-				if (newLevel % 2 == 0) {
-					message.append("\n").append(LoreUtil.replace(line, "{stat_level_2}", LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-							,"{color}", skill.getSecondaryStat().getColor(locale)
-							,"{symbol}", skill.getSecondaryStat().getSymbol(locale)
-							,"{stat}", skill.getSecondaryStat().getDisplayName(locale))));
+		// Stat levels
+		StringBuilder statMessage = new StringBuilder();
+		statMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
+				,"{color}", skill.getPrimaryStat().getColor(locale)
+				,"{symbol}", skill.getPrimaryStat().getSymbol(locale)
+				,"{stat}", skill.getPrimaryStat().getDisplayName(locale)));
+		if (newLevel % 2 == 0) {
+			statMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
+					,"{color}", skill.getSecondaryStat().getColor(locale)
+					,"{symbol}", skill.getSecondaryStat().getSymbol(locale)
+					,"{stat}", skill.getSecondaryStat().getDisplayName(locale)));
+		}
+		message = LoreUtil.replace(message, "{stat_level}", statMessage.toString());
+		// Ability unlocks and level ups
+		StringBuilder abilityUnlockMessage = new StringBuilder();
+		StringBuilder abilityLevelUpMessage = new StringBuilder();
+		for (Ability ability : Ability.getAbilities(skill, newLevel)) {
+			if (AureliumSkills.abilityManager.isEnabled(ability)) {
+				if (ability.getUnlock() == newLevel) {
+					abilityUnlockMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale)));
+				} else {
+					abilityLevelUpMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
+							,"{ability}", ability.getDisplayName(locale)
+							,"{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability))));
 				}
-			}
-			else if (line.contains("{ability_unlock}")) {
-				//If skill has 5 abilities
-				if (skill.getAbilities().size() == 5) {
-					Ability ability = skill.getAbilities().get((newLevel + 3) % 5).get();
-					//Check ability is enabled
-					if (AureliumSkills.abilityManager.isEnabled(ability)) {
-						//If ability is unlocked
-						if (!(playerSkill.getAbilityLevel(ability) > 1)) {
-							message.append("\n").append(LoreUtil.replace(line,"{ability_unlock}", LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale)
-									,"{ability}", ability.getDisplayName(locale))));
-						}
-					}
-				}
-			}
-			else if (line.contains("{ability_level_up}")) {
-				//If skill has 5 abilities
-				if (skill.getAbilities().size() == 5) {
-					Ability ability = skill.getAbilities().get((newLevel + 3) % 5).get();
-					//Check ability is enabled
-					if (AureliumSkills.abilityManager.isEnabled(ability)) {
-						//If ability is leveled up
-						if (playerSkill.getAbilityLevel(ability) > 1) {
-							message.append("\n").append(LoreUtil.replace(line,"{ability_level_up}", LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
-									,"{ability}", ability.getDisplayName(locale)
-									,"{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability)))));
-						}
-					}
-				}
-			}
-			else if (line.contains("{mana_ability_unlock}")) {
-				if (skill.getManaAbility() != MAbility.ABSORPTION) {
-					MAbility mAbility = skill.getManaAbility();
-					// Check if ability is enabled
-					if (AureliumSkills.abilityManager.isEnabled(mAbility)) {
-						// If ability unlocked
-						if (!(playerSkill.getManaAbilityLevel(mAbility) > 1) && newLevel == 7) {
-							message.append("\n").append(LoreUtil.replace(line, "{mana_ability_unlock}",
-									LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale)
-											, "{mana_ability}", mAbility.getDisplayName(locale))));
-						}
-					}
-				}
-			}
-			else if (line.contains("{mana_ability_level_up}")) {
-				if (skill.getManaAbility() != MAbility.ABSORPTION) {
-					MAbility mAbility = skill.getManaAbility();
-					// Check if ability is enabled
-					if (AureliumSkills.abilityManager.isEnabled(mAbility)) {
-						// If ability leveled up
-						if (playerSkill.getManaAbilityLevel(mAbility) > 1 && newLevel % 7 == 0) {
-							message.append("\n").append(LoreUtil.replace(line, "{mana_ability_level_up}",
-									LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
-											, "{mana_ability}", mAbility.getDisplayName(locale)
-											, "{level}", RomanNumber.toRoman(playerSkill.getManaAbilityLevel(mAbility)))));
-						}
-					}
-				}
-			}
-			else if (line.contains("{money_reward}")) {
-				//If money rewards are enabled
-				if (AureliumSkills.vaultEnabled) {
-					if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-						double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
-						double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-						NumberFormat nf = new DecimalFormat("#.##");
-						message.append("\n").append(LoreUtil.replace(line, "{money_reward}",
-								LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", nf.format(base + (multiplier * newLevel * newLevel)))));
-					}
-				}
-			}
-			else {
-				message.append("\n").append(line);
 			}
 		}
-		message.delete(0, 1); //Delete the first new line
-		return message.toString();
+		message = LoreUtil.replace(message, "{ability_unlock}", abilityUnlockMessage.toString(), "{ability_level_up}", abilityLevelUpMessage.toString());
+		// Mana ability unlocks and level ups
+		StringBuilder manaAbilityUnlockMessage = new StringBuilder();
+		StringBuilder manaAbilityLevelUpMessage = new StringBuilder();
+		MAbility mAbility = MAbility.getManaAbility(skill, newLevel);
+		if (mAbility != null) {
+			if (AureliumSkills.abilityManager.isEnabled(mAbility)) {
+				if (mAbility.getUnlock() == newLevel) {
+					manaAbilityUnlockMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale)));
+				} else {
+					manaAbilityLevelUpMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
+							, "{mana_ability}", mAbility.getDisplayName(locale)
+							, "{level}", RomanNumber.toRoman(playerSkill.getManaAbilityLevel(mAbility))));
+				}
+			}
+		}
+		message = LoreUtil.replace(message, "{mana_ability_unlock}", manaAbilityUnlockMessage.toString(), "{mana_ability_level_up}", manaAbilityLevelUpMessage.toString());
+		// If money rewards are enabled
+		StringBuilder moneyRewardMessage = new StringBuilder();
+		if (AureliumSkills.vaultEnabled) {
+			if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
+				double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
+				double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
+				NumberFormat nf = new DecimalFormat("#.##");
+				moneyRewardMessage.append(LoreUtil.replace(message, "{money_reward}",
+						LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", nf.format(base + (multiplier * newLevel * newLevel)))));
+			}
+		}
+		message = LoreUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
+		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
 
 }

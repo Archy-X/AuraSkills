@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
@@ -16,7 +17,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 public class EnchantingLeveler extends SkillLeveler implements Listener {
 
 	public EnchantingLeveler(AureliumSkills plugin) {
-		super(plugin, Skill.ENCHANTING);
+		super(plugin, Ability.ENCHANTER);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)

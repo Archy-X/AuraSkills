@@ -9,16 +9,17 @@ import com.archyx.aureliumskills.skills.Skill;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.function.Supplier;
 
 public enum MAbility {
 
-    REPLENISH(Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20),
-    TREECAPITATOR(Skill.FORAGING, 5.0, 5.0, 200, -5, 20, 20),
-    SPEED_MINE(Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20),
-    SHARP_HOOK(Skill.FISHING, 0.5, 0.5, 2, -0.1, 5, 2),
-    ABSORPTION(Skill.DEFENSE, 2.0, 3.0, 200, -5, 20, 20);
+    REPLENISH(() -> Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20),
+    TREECAPITATOR(() -> Skill.FORAGING, 5.0, 5.0, 200, -5, 20, 20),
+    SPEED_MINE(() -> Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20),
+    SHARP_HOOK(() -> Skill.FISHING, 0.5, 0.5, 2, -0.1, 5, 2),
+    ABSORPTION(() -> Skill.DEFENSE, 2.0, 3.0, 200, -5, 20, 20);
 
-    private final Skill skill;
+    private final Supplier<Skill> skill;
     private final double baseValue;
     private final double valuePerLevel;
     private final double baseCooldown;
@@ -26,7 +27,7 @@ public enum MAbility {
     private final int baseManaCost;
     private final int manaCostPerLevel;
 
-    MAbility(Skill skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
+    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
         this.skill = skill;
         this.baseValue = baseValue;
         this.valuePerLevel = valuePerLevel;
@@ -37,7 +38,7 @@ public enum MAbility {
     }
 
     public Skill getSkill() {
-        return skill;
+        return skill.get();
     }
 
     public double getValue(int level) {

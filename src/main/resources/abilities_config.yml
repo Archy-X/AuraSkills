@@ -409,8 +409,8 @@ abilities:
   enchanting:
     xp_convert:
       enabled: true
-      base: 10.0
-      per_level: 5.0
+      base: 20.0
+      per_level: -0.75
       unlock: 2
       level_up: 5
       max_level: 0
@@ -418,21 +418,21 @@ abilities:
       enabled: true
       base: 10.0
       per_level: 10.0
-      unlock: 2
+      unlock: 3
       level_up: 5
       max_level: 0
     xp_warrior:
       enabled: true
       base: 5.0
       per_level: 4.0
-      unlock: 2
+      unlock: 4
       level_up: 5
       max_level: 0
     enchanted_strength:
       enabled: true
       base: 0.5
       per_level: 0.5
-      unlock: 2
+      unlock: 5
       level_up: 5
       max_level: 0
     lucky_table:
