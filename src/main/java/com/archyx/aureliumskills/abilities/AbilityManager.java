@@ -11,6 +11,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +35,7 @@ public class AbilityManager {
         if (!file.exists()) {
             plugin.saveResource("abilities_config.yml", false);
         }
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
         //Loads ability options
         int amountLoaded = 0;
         int amountDisabled = 0;
@@ -156,6 +159,37 @@ public class AbilityManager {
         long timeElapsed = endTime - startTime;
         Bukkit.getLogger().info("[AureliumSkills] Disabled " + amountDisabled + " Abilities");
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + amountLoaded + " Ability Options in " + timeElapsed + "ms");
+    }
+
+    private FileConfiguration updateFile(File file, FileConfiguration config) {
+        if (config.contains("file_version")) {
+            InputStream stream = plugin.getResource("abilities_config.yml");
+            if (stream != null) {
+                int currentVersion = config.getInt("file_version");
+                FileConfiguration imbConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(stream, StandardCharsets.UTF_8));
+                int imbVersion = imbConfig.getInt("file_version");
+                //If versions do not match
+                if (currentVersion != imbVersion) {
+                    try {
+                        ConfigurationSection configSection = imbConfig.getConfigurationSection("");
+                        if (configSection != null) {
+                            for (String key : configSection.getKeys(true)) {
+                                if (!configSection.isConfigurationSection(key)) {
+                                    if (!config.contains(key)) {
+                                        config.set(key, imbConfig.get(key));
+                                    }
+                                }
+                            }
+                        }
+                        config.set("file_version", imbVersion);
+                        config.save(file);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     public AbilityOption getAbilityOption(Ability ability) {

@@ -56,6 +56,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void biggerScoop(PlayerSkill playerSkill, Block block, Player player) {
 		if (isExcavationMaterial(block.getType())) {
 			if (r.nextDouble() < (Ability.BIGGER_SCOOP.getValue(playerSkill.getAbilityLevel(Ability.BIGGER_SCOOP)) / 100)) {
@@ -165,7 +166,9 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					if (isEnabled(Ability.BIGGER_SCOOP)) {
-						biggerScoop(playerSkill, block, player);
+						if (!block.hasMetadata("skillsPlaced")) {
+							biggerScoop(playerSkill, block, player);
+						}
 					}
 					if (isEnabled(Ability.METAL_DETECTOR)) {
 						metalDetector(player, playerSkill, block);

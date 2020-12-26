@@ -52,8 +52,8 @@ public enum Ability {
 	CRIT_DAMAGE(() -> Skill.FIGHTING, 5.0, 4.0),
 	FIGHTER(() -> Skill.FIGHTING, 10.0, 10.0),
 	SWORD_MASTER(() -> Skill.FIGHTING, 3.0, 2.0),
-	FIRST_STRIKE(() -> Skill.FIGHTING, 20.0, 10.0),
-	BLEED(() -> Skill.FIGHTING, 3.0, 4.0, 0.5, 0.5),
+	FIRST_STRIKE(() -> Skill.FIGHTING, 20.0, 10.0, new String[] {"enable_message"}, new Object[] {true}),
+	BLEED(() -> Skill.FIGHTING, 3.0, 4.0, 0.5, 0.5, new String[] {"enable_enemy_message", "enable_self_message", "enable_stop_message"}, new Object[] {true, true, true}),
 	ANTI_HUNGER(() -> Skill.ENDURANCE, 5.0, 5.0),
 	RUNNER(() -> Skill.ENDURANCE, 10.0, 10.0),
 	GOLDEN_HEAL(() -> Skill.ENDURANCE, 5.0, 6.0),
@@ -111,6 +111,21 @@ public enum Ability {
 		this.valuePerLevel = valuePerLevel1;
 		this.baseValue2 = baseValue2;
 		this.valuePerLevel2 = valuePerLevel2;
+	}
+
+	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, String[] optionKeys, Object[] optionValues) {
+		this.skill = skill;
+		this.hasTwoValues = true;
+		this.baseValue = baseValue1;
+		this.valuePerLevel = valuePerLevel1;
+		this.baseValue2 = baseValue2;
+		this.valuePerLevel2 = valuePerLevel2;
+		this.options = new HashMap<>();
+		for (int i = 0; i < optionKeys.length; i++) {
+			if (i < optionValues.length) {
+				options.put(optionKeys[i], new OptionValue(optionValues[i]));
+			}
+		}
 	}
 
 	public String getInfo(Locale locale) {

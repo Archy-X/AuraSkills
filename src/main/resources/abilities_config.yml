@@ -1,6 +1,6 @@
-# +____________________________________________________________________________+ #
+# +----------------------------------------------------------------------------+ #
 # |                      Aurelium Skills Ability Config                        | #
-# +____________________________________________________________________________+ #
+# +----------------------------------------------------------------------------+ #
 
 abilities:
   farming:
@@ -293,6 +293,9 @@ abilities:
       unlock: 6
       level_up: 5
       max_level: 0
+      enable_enemy_message: true
+      enable_self_message: true
+      enable_stop_message: true
   endurance:
     anti_hunger:
       enabled: true
@@ -489,3 +492,4 @@ mana_abilities:
     max_level: 0
     display_damage_with_scaling: true
     enable_sound: true
+file_version: 1
