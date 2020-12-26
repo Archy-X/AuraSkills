@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.abilities;
 
+import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityOption;
 import com.archyx.aureliumskills.skills.Skill;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class AbilityManager {
 
@@ -70,15 +72,32 @@ public class AbilityManager {
                             int unlock = config.getInt(path + "unlock", defUnlock);
                             int levelUp = config.getInt(path + "level_up", 5);
                             int maxLevel = config.getInt(path + "max_level", 0);
+                            // Load options
+                            Set<String> optionKeys = ability.getOptionKeys();
+                            Map<String, OptionValue> options = null;
+                            if (optionKeys != null) {
+                                options = new HashMap<>();
+                                for (String key : optionKeys) {
+                                    options.put(key, new OptionValue(config.get(path + key)));
+                                }
+                            }
                             AbilityOption option;
                             //Checks if ability has 2 values
                             if (ability.hasTwoValues()) {
                                 double baseValue2 = config.getDouble(path + "base_2", ability.getDefaultBaseValue2());
                                 double valuePerLevel2 = config.getDouble(path + "per_level_2", ability.getDefaultValuePerLevel2());
-                                option = new AbilityOption(enabled, baseValue, valuePerLevel, baseValue2, valuePerLevel2, unlock, levelUp, maxLevel);
+                                if (options != null) {
+                                    option = new AbilityOption(enabled, baseValue, valuePerLevel, baseValue2, valuePerLevel2, unlock, levelUp, maxLevel, options);
+                                } else {
+                                    option = new AbilityOption(enabled, baseValue, valuePerLevel, baseValue2, valuePerLevel2, unlock, levelUp, maxLevel);
+                                }
                             }
                             else {
-                                option = new AbilityOption(enabled, baseValue, valuePerLevel, unlock, levelUp, maxLevel);
+                                if (options != null) {
+                                    option = new AbilityOption(enabled, baseValue, valuePerLevel, unlock, levelUp, maxLevel, options);
+                                } else {
+                                    option = new AbilityOption(enabled, baseValue, valuePerLevel, unlock, levelUp, maxLevel);
+                                }
                             }
                             abilityOptions.put(ability, option);
                             amountLoaded++;
@@ -87,7 +106,7 @@ public class AbilityManager {
                 }
             }
         }
-        ConfigurationSection manaAbilities = config.getConfigurationSection("mana_abilities");;
+        ConfigurationSection manaAbilities = config.getConfigurationSection("mana_abilities");
         if (manaAbilities != null) {
             for (String manaAbilityName : manaAbilities.getKeys(false)){
                 boolean hasKey = false;
@@ -98,6 +117,7 @@ public class AbilityManager {
                     }
                 }
                 if (hasKey) {
+                    MAbility mAbility = MAbility.valueOf(manaAbilityName.toUpperCase());
                     String path = "mana_abilities." + manaAbilityName + ".";
                     boolean enabled = config.getBoolean(path + "enabled");
                     if (!enabled) {
@@ -112,8 +132,22 @@ public class AbilityManager {
                     int unlock = config.getInt(path + "unlock", 7);
                     int levelUp = config.getInt(path + "level_up", 7);
                     int maxLevel = config.getInt(path + "max_level", 0);
-                    ManaAbilityOption option = new ManaAbilityOption(enabled, baseValue, valuePerLevel, cooldown, cooldownPerLevel, manaCost, manaCostPerLevel, unlock, levelUp, maxLevel);
-                    manaAbilityOptions.put(MAbility.valueOf(manaAbilityName.toUpperCase()), option);
+                    // Load options
+                    Set<String> optionKeys = mAbility.getOptionKeys();
+                    Map<String, OptionValue> options = null;
+                    if (optionKeys != null) {
+                        options = new HashMap<>();
+                        for (String key : optionKeys) {
+                            options.put(key, new OptionValue(config.get(path + key)));
+                        }
+                    }
+                    ManaAbilityOption option;
+                    if (options != null) {
+                        option = new ManaAbilityOption(enabled, baseValue, valuePerLevel, cooldown, cooldownPerLevel, manaCost, manaCostPerLevel, unlock, levelUp, maxLevel, options);
+                    } else {
+                        option = new ManaAbilityOption(enabled, baseValue, valuePerLevel, cooldown, cooldownPerLevel, manaCost, manaCostPerLevel, unlock, levelUp, maxLevel);
+                    }
+                    manaAbilityOptions.put(mAbility, option);
                     amountLoaded++;
                 }
             }
@@ -128,16 +162,8 @@ public class AbilityManager {
         return abilityOptions.get(ability);
     }
 
-    public boolean containsOption(Ability ability) {
-        return abilityOptions.containsKey(ability);
-    }
-
     public ManaAbilityOption getAbilityOption(MAbility mAbility) {
         return manaAbilityOptions.get(mAbility);
-    }
-
-    public boolean containsOption(MAbility mAbility) {
-        return manaAbilityOptions.containsKey(mAbility);
     }
 
     public boolean isEnabled(Ability ability) {

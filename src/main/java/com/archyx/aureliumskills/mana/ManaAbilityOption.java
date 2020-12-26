@@ -1,5 +1,10 @@
 package com.archyx.aureliumskills.mana;
 
+import com.archyx.aureliumskills.configuration.OptionValue;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+
 public class ManaAbilityOption {
 
     private final boolean enabled;
@@ -12,6 +17,7 @@ public class ManaAbilityOption {
     private final int unlock;
     private final int levelUp;
     private final int maxLevel;
+    private Map<String, OptionValue> options;
 
     public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, int unlock, int levelUp, int maxLevel) {
         this.enabled = enabled;
@@ -24,6 +30,20 @@ public class ManaAbilityOption {
         this.unlock = unlock;
         this.levelUp = levelUp;
         this.maxLevel = maxLevel;
+    }
+
+    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, int unlock, int levelUp, int maxLevel, Map<String, OptionValue> options) {
+        this.enabled = enabled;
+        this.baseValue = baseValue;
+        this.valuePerLevel = valuePerLevel;
+        this.baseCooldown = baseCooldown;
+        this.cooldownPerLevel = cooldownPerLevel;
+        this.baseManaCost = baseManaCost;
+        this.manaCostPerLevel = manaCostPerLevel;
+        this.unlock = unlock;
+        this.levelUp = levelUp;
+        this.maxLevel = maxLevel;
+        this.options = options;
     }
 
     public boolean isEnabled() {
@@ -64,6 +84,11 @@ public class ManaAbilityOption {
 
     public int getMaxLevel() {
         return maxLevel;
+    }
+
+    @Nullable
+    public OptionValue getOption(String key) {
+        return options.get(key);
     }
 
 }

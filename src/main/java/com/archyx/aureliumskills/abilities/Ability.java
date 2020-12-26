@@ -1,15 +1,15 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.google.common.collect.ImmutableList;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.function.Supplier;
 
 public enum Ability {
@@ -64,7 +64,7 @@ public enum Ability {
 	SUGAR_RUSH(() -> Skill.AGILITY, 5.0, 7.0),
 	FLEETING(() -> Skill.AGILITY, 5.0, 4.0),
 	THUNDER_FALL(() -> Skill.AGILITY, 3.0, 2.0, 10, 5),
-	ALCHEMIST(() -> Skill.ALCHEMY, 3.0, 4.0),
+	ALCHEMIST(() -> Skill.ALCHEMY, 3.0, 4.0, new String[] {"add_item_lore"}, new Object[] {true}),
 	BREWER(() -> Skill.ALCHEMY, 10.0, 10.0),
 	SPLASHER(() -> Skill.ALCHEMY, 0.5, 0.25),
 	LINGERING(() -> Skill.ALCHEMY, 5.0, 4.0, 3.0, 2.0),
@@ -83,16 +83,29 @@ public enum Ability {
 	private boolean hasTwoValues;
 	private double baseValue2;
 	private double valuePerLevel2;
-	private final Skill skill;
+	private final Supplier<Skill> skill;
+	private Map<String, OptionValue> options;
 	
 	Ability(Supplier<Skill> skill, double baseValue, double valuePerLevel) {
 		this.baseValue = baseValue;
 		this.valuePerLevel = valuePerLevel;
-		this.skill = skill.get();
+		this.skill = skill;
+	}
+
+	Ability(Supplier<Skill> skill, double baseValue, double valuePerLevel, String[] optionKeys, Object[] optionValues) {
+		this.baseValue = baseValue;
+		this.valuePerLevel = valuePerLevel;
+		this.skill = skill;
+		this.options = new HashMap<>();
+		for (int i = 0; i < optionKeys.length; i++) {
+			if (i < optionValues.length) {
+				options.put(optionKeys[i], new OptionValue(optionValues[i]));
+			}
+		}
 	}
 
 	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2) {
-		this.skill = skill.get();
+		this.skill = skill;
 		this.hasTwoValues = true;
 		this.baseValue = baseValue1;
 		this.valuePerLevel = valuePerLevel1;
@@ -105,7 +118,7 @@ public enum Ability {
 	}
 	
 	public Skill getSkill() {
-		return skill;
+		return skill.get();
 	}
 
 	public double getValue(PlayerSkill playerSkill) {
@@ -186,8 +199,8 @@ public enum Ability {
 			return option.getUnlock();
 		}
 		int defUnlock = 2;
-		for (int i = 0; i < skill.getAbilities().size(); i++) {
-			if (skill.getAbilities().get(i).get() == this) {
+		for (int i = 0; i < skill.get().getAbilities().size(); i++) {
+			if (skill.get().getAbilities().get(i).get() == this) {
 				defUnlock += i;
 				break;
 			}
@@ -227,6 +240,32 @@ public enum Ability {
 			}
 		}
 		return abilities;
+	}
+
+	@Nullable
+	public OptionValue getOption(String key) {
+		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+		if (option != null) {
+			return option.getOption(key);
+		} else {
+			return this.options.get(key);
+		}
+	}
+
+	public boolean getOptionAsBooleanElseTrue(String key) {
+		OptionValue value = getOption(key);
+		if (value != null) {
+			return value.asBoolean();
+		}
+		return true;
+	}
+
+	@Nullable
+	public Set<String> getOptionKeys() {
+		if (options != null) {
+			return options.keySet();
+		}
+		return null;
 	}
 
 }

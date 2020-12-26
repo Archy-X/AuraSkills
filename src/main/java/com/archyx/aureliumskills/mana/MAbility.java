@@ -3,12 +3,16 @@ package com.archyx.aureliumskills.mana;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public enum MAbility {
@@ -16,7 +20,7 @@ public enum MAbility {
     REPLENISH(() -> Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20),
     TREECAPITATOR(() -> Skill.FORAGING, 5.0, 5.0, 200, -5, 20, 20),
     SPEED_MINE(() -> Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20),
-    SHARP_HOOK(() -> Skill.FISHING, 0.5, 0.5, 2, -0.1, 5, 2),
+    SHARP_HOOK(() -> Skill.FISHING, 0.5, 0.5, 2, -0.1, 5, 2, new String[] {"display_damage_with_scaling", "enable_sound"}, new Object[] {true, true}),
     ABSORPTION(() -> Skill.DEFENSE, 2.0, 3.0, 200, -5, 20, 20);
 
     private final Supplier<Skill> skill;
@@ -26,6 +30,7 @@ public enum MAbility {
     private final double cooldownPerLevel;
     private final int baseManaCost;
     private final int manaCostPerLevel;
+    private Map<String, OptionValue> options;
 
     MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
         this.skill = skill;
@@ -35,6 +40,22 @@ public enum MAbility {
         this.cooldownPerLevel = cooldownPerLevel;
         this.baseManaCost = baseManaCost;
         this.manaCostPerLevel = manaCostPerLevel;
+    }
+
+    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues) {
+        this.skill = skill;
+        this.baseValue = baseValue;
+        this.valuePerLevel = valuePerLevel;
+        this.baseCooldown = baseCooldown;
+        this.cooldownPerLevel = cooldownPerLevel;
+        this.baseManaCost = baseManaCost;
+        this.manaCostPerLevel = manaCostPerLevel;
+        this.options = new HashMap<>();
+        for (int i = 0; i < optionKeys.length; i++) {
+            if (i < optionValues.length) {
+                options.put(optionKeys[i], new OptionValue(optionValues[i]));
+            }
+        }
     }
 
     public Skill getSkill() {
@@ -50,7 +71,7 @@ public enum MAbility {
             return getBaseValue() + (getValuePerLevel() * (level - 1));
         }
         else {
-            if (OptionL.getBoolean(Option.SHARP_HOOK_DISPLAY_DAMAGE_WITH_SCALING)) {
+            if (getOptionAsBooleanElseTrue("display_damage_with_scaling")) {
                 return (getBaseValue() + (getValuePerLevel() * (level - 1))) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
             } else {
                 return getBaseValue() + (getValuePerLevel() * (level - 1));
@@ -160,6 +181,32 @@ public enum MAbility {
             if (level >= mAbility.getUnlock() && (level - mAbility.getUnlock()) % mAbility.getLevelUp() == 0) {
                 return mAbility;
             }
+        }
+        return null;
+    }
+
+    @Nullable
+    public OptionValue getOption(String key) {
+        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
+        if (option != null) {
+            return option.getOption(key);
+        } else {
+            return this.options.get(key);
+        }
+    }
+
+    public boolean getOptionAsBooleanElseTrue(String key) {
+        OptionValue value = getOption(key);
+        if (value != null) {
+            return value.asBoolean();
+        }
+        return true;
+    }
+
+    @Nullable
+    public Set<String> getOptionKeys() {
+        if (options != null) {
+            return options.keySet();
         }
         return null;
     }

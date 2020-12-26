@@ -1,8 +1,6 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.configuration.Option;
-import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.PlayerSkill;
@@ -34,7 +32,7 @@ public class SharpHook implements ManaAbility {
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale), "{mana}", String.valueOf(manaConsumed)));
-            if (OptionL.getBoolean(Option.SHARP_HOOK_ENABLE_SOUND)) {
+            if (MAbility.SHARP_HOOK.getOptionAsBooleanElseTrue("enable_sound")) {
                 if (XMaterial.isNewVersion()) {
                     player.playSound(player.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1f, 1.5f);
                 } else {

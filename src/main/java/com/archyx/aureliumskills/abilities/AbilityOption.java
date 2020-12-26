@@ -1,5 +1,10 @@
 package com.archyx.aureliumskills.abilities;
 
+import com.archyx.aureliumskills.configuration.OptionValue;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+
 public class AbilityOption {
 
     private final boolean enabled;
@@ -10,6 +15,7 @@ public class AbilityOption {
     private final int unlock;
     private final int levelUp;
     private final int maxLevel;
+    private Map<String, OptionValue> options;
 
     public AbilityOption(boolean enabled, double baseValue, double valuePerLevel, int unlock, int levelUp, int maxLevel) {
         this.enabled = enabled;
@@ -18,6 +24,16 @@ public class AbilityOption {
         this.unlock = unlock;
         this.levelUp = levelUp;
         this.maxLevel = maxLevel;
+    }
+
+    public AbilityOption(boolean enabled, double baseValue, double valuePerLevel, int unlock, int levelUp, int maxLevel, Map<String, OptionValue> options) {
+        this.enabled = enabled;
+        this.baseValue = baseValue;
+        this.valuePerLevel = valuePerLevel;
+        this.unlock = unlock;
+        this.levelUp = levelUp;
+        this.maxLevel = maxLevel;
+        this.options = options;
     }
 
     public AbilityOption(boolean enabled, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, int unlock, int levelUp, int maxLevel) {
@@ -29,6 +45,18 @@ public class AbilityOption {
         this.unlock = unlock;
         this.levelUp = levelUp;
         this.maxLevel = maxLevel;
+    }
+
+    public AbilityOption(boolean enabled, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, int unlock, int levelUp, int maxLevel, Map<String, OptionValue> options) {
+        this.enabled = enabled;
+        this.baseValue = baseValue1;
+        this.valuePerLevel = valuePerLevel1;
+        this.baseValue2 = baseValue2;
+        this.valuePerLevel2 = valuePerLevel2;
+        this.unlock = unlock;
+        this.levelUp = levelUp;
+        this.maxLevel = maxLevel;
+        this.options = options;
     }
 
     public double getBaseValue() {
@@ -62,4 +90,10 @@ public class AbilityOption {
     public int getMaxLevel() {
         return maxLevel;
     }
+
+    @Nullable
+    public OptionValue getOption(String key) {
+        return options.get(key);
+    }
+
 }

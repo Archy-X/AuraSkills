@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.archyx.aureliumskills.util.PotionUtil;
 import com.archyx.aureliumskills.util.VersionUtils;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
@@ -41,8 +42,6 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.InvocationTargetException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 
 public class AlchemyAbilities extends AbilityProvider implements Listener {
@@ -132,13 +131,14 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                 ItemMeta meta = item.getItemMeta();
                 if (duration != 0 && meta != null) {
                     // Add lore
-                    NumberFormat nf = new DecimalFormat("#.#");
-                    List<String> lore = new ArrayList<>();
-                    lore.add(LoreUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
-                            , "{duration}", PotionUtil.formatDuration(durationBonus)
-                            , "{value}", nf.format((multiplier - 1) * 100)));
-                    meta.setLore(lore);
-                    item.setItemMeta(meta);
+                    if (Ability.ALCHEMIST.getOptionAsBooleanElseTrue("add_item_lore")) {
+                        List<String> lore = new ArrayList<>();
+                        lore.add(LoreUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
+                                , "{duration}", PotionUtil.formatDuration(durationBonus)
+                                , "{value}", NumberUtil.format1((multiplier - 1) * 100)));
+                        meta.setLore(lore);
+                        item.setItemMeta(meta);
+                    }
                 }
                 return item;
             }
