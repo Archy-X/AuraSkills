@@ -26,22 +26,22 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
         super(plugin, Skill.DEFENSE);
     }
 
-    public static void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
-        if (AureliumSkills.abilityManager.isEnabled(Ability.SHIELDING)) {
+    public void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
+        if (plugin.getAbilityManager().isEnabled(Ability.SHIELDING)) {
             if (player.isSneaking()) {
                 if (playerSkill.getAbilityLevel(Ability.SHIELDING) > 0) {
-                    double damageReduction = 1 - (Ability.SHIELDING.getValue(playerSkill.getAbilityLevel(Ability.SHIELDING)) / 100);
+                    double damageReduction = 1 - (getValue(Ability.SHIELDING, playerSkill) / 100);
                     event.setDamage(event.getDamage() * damageReduction);
                 }
             }
         }
     }
 
-    public static void mobMaster(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
-        if (AureliumSkills.abilityManager.isEnabled(Ability.MOB_MASTER)) {
+    public void mobMaster(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
+        if (plugin.getAbilityManager().isEnabled(Ability.MOB_MASTER)) {
             if (event.getDamager() instanceof LivingEntity && !(event.getDamager() instanceof Player)) {
                 if (playerSkill.getAbilityLevel(Ability.MOB_MASTER) > 0) {
-                    double damageReduction = 1 - (Ability.MOB_MASTER.getValue(playerSkill.getAbilityLevel(Ability.MOB_MASTER)) / 100);
+                    double damageReduction = 1 - (getValue(Ability.MOB_MASTER, playerSkill) / 100);
                     event.setDamage(event.getDamage() * damageReduction);
                 }
             }
@@ -49,7 +49,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
     }
 
     public void immunity(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
-        double chance = Ability.IMMUNITY.getValue(playerSkill.getAbilityLevel(Ability.IMMUNITY)) / 100;
+        double chance = getValue(Ability.IMMUNITY, playerSkill) / 100;
         if (r.nextDouble() < chance) {
             event.setCancelled(true);
         }
@@ -69,8 +69,8 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                             type.equals(PotionEffectType.HUNGER) || type.equals(PotionEffectType.HARM) || type.equals(PotionEffectType.CONFUSION) ||
                             type.equals(PotionEffectType.BLINDNESS)) {
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                            PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            double chance = Ability.NO_DEBUFF.getValue(skill.getAbilityLevel(Ability.NO_DEBUFF)) / 100;
+                            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                            double chance = getValue(Ability.NO_DEBUFF, playerSkill) / 100;
                             if (r.nextDouble() < chance) {
                                 if (!player.hasPotionEffect(type)) {
                                     event.setIntensity(entity, 0);
@@ -86,7 +86,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
     public void noDebuffFire(PlayerSkill playerSkill, Player player, LivingEntity entity) {
         if (entity.getEquipment() != null) {
             if (entity.getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.FIRE_ASPECT) > 0) {
-                double chance = Ability.NO_DEBUFF.getValue(playerSkill.getAbilityLevel(Ability.NO_DEBUFF)) / 100;
+                double chance = getValue(Ability.NO_DEBUFF, playerSkill) / 100;
                 if (r.nextDouble() < chance) {
                     new BukkitRunnable() {
                         @Override
@@ -108,14 +108,13 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                     if (blockAbility(player)) return;
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                        AbilityManager options = AureliumSkills.abilityManager;
-                        if (options.isEnabled(Ability.NO_DEBUFF)) {
+                        if (plugin.getAbilityManager().isEnabled(Ability.NO_DEBUFF)) {
                             if (event.getDamager() instanceof LivingEntity) {
                                 LivingEntity entity = (LivingEntity) event.getDamager();
                                 noDebuffFire(playerSkill, player, entity);
                             }
                         }
-                        if (options.isEnabled(Ability.IMMUNITY)) {
+                        if (plugin.getAbilityManager().isEnabled(Ability.IMMUNITY)) {
                             immunity(event, playerSkill);
                         }
                     }

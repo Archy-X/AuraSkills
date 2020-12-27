@@ -36,7 +36,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                 if (player.getFoodLevel() > event.getFoodLevel()) {
                     if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                        double chance = Ability.ANTI_HUNGER.getValue(playerSkill.getAbilityLevel(Ability.ANTI_HUNGER)) / 100;
+                        double chance = getValue(Ability.ANTI_HUNGER, playerSkill) / 100;
                         if (r.nextDouble() < chance) {
                             event.setFoodLevel(player.getFoodLevel());
                         }
@@ -59,7 +59,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                         if (event.getRegainReason().equals(EntityRegainHealthEvent.RegainReason.MAGIC_REGEN)) {
                             if (isEnabled(Ability.GOLDEN_HEAL)) {
                                 //Applies modifier
-                                double modifier = Ability.GOLDEN_HEAL.getValue(playerSkill.getAbilityLevel(Ability.GOLDEN_HEAL)) / 100;
+                                double modifier = getValue(Ability.GOLDEN_HEAL, playerSkill) / 100;
                                 event.setAmount(event.getAmount() * (1 + modifier));
                             }
                         }
@@ -74,7 +74,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                                     //Checks if health is less than half of max
                                     if (currentHealth < (maxHealth / 2)) {
                                         //Applies modifier
-                                        double modifier = Ability.RECOVERY.getValue(playerSkill.getAbilityLevel(Ability.RECOVERY)) / 100;
+                                        double modifier = getValue(Ability.RECOVERY, playerSkill) / 100;
                                         event.setAmount(event.getAmount() * (1 + modifier));
                                     }
                                 }
@@ -98,7 +98,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                 if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                     PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
                     //Calculates chance
-                    double chance = Ability.MEAL_STEAL.getValue(playerSkill.getAbilityLevel(Ability.MEAL_STEAL)) / 100;
+                    double chance = getValue(Ability.MEAL_STEAL, playerSkill) / 100;
                     if (r.nextDouble() < chance) {
                         //Removes food from enemy
                         if (enemy.getFoodLevel() >= 1) {

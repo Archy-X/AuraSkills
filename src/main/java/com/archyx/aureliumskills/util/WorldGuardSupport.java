@@ -10,7 +10,6 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,11 +17,11 @@ import java.util.List;
 public class WorldGuardSupport {
 
     private RegionContainer container;
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
     private List<String> blockedRegions;
     private List<String> blockedCheckBlockReplaceRegions;
 
-    public WorldGuardSupport(Plugin plugin) {
+    public WorldGuardSupport(AureliumSkills plugin) {
         this.plugin = plugin;
     }
 
@@ -37,7 +36,7 @@ public class WorldGuardSupport {
             Bukkit.getLogger().info("[AureliumSkills] WorldGuard Support Enabled!");
         }
         catch (Exception e) {
-            AureliumSkills.worldGuardEnabled = false;
+            plugin.setWorldGuardEnabled(false);
             Bukkit.getLogger().warning("[AureliumSkills] WorldGuard support failed to load, disabling World Guard support!");
         }
     }

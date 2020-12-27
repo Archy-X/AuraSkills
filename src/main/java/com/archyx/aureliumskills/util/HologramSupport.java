@@ -16,7 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
@@ -25,11 +24,11 @@ import java.util.Random;
 
 public class HologramSupport implements Listener {
 
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
     private final Random r = new Random();
     private final NumberFormat nf;
 
-    public HologramSupport(Plugin plugin) {
+    public HologramSupport(AureliumSkills plugin) {
         this.plugin = plugin;
         nf = new DecimalFormat("#." + StringUtils.repeat("#", OptionL.getInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
     }
@@ -38,9 +37,9 @@ public class HologramSupport implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (!event.isCancelled()) {
             if (event.getEntity() instanceof LivingEntity) {
-                if (AureliumSkills.holographicDisplaysEnabled) {
+                if (plugin.isHolographicDisplaysEnabled()) {
                     if (OptionL.getBoolean(Option.DAMAGE_HOLOGRAMS)) {
-                        if (AureliumSkills.worldManager.isInDisabledWorld(event.getEntity().getLocation())) {
+                        if (plugin.getWorldManager().isInDisabledWorld(event.getEntity().getLocation())) {
                             return;
                         }
                         if (event.getDamager() instanceof Player) {

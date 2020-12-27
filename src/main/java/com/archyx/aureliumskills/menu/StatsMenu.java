@@ -53,14 +53,14 @@ public class StatsMenu implements InventoryProvider{
 
 	}
 	
-	public static SmartInventory getInventory(Player player) {
+	public static SmartInventory getInventory(Player player, AureliumSkills plugin) {
 		Locale locale = Lang.getLanguage(player);
-		MenuOption menuOption = AureliumSkills.getMenuLoader().getMenu(MenuType.STATS);
+		MenuOption menuOption = plugin.getMenuLoader().getMenu(MenuType.STATS);
 		return SmartInventory.builder()
 				.provider(new StatsMenu(locale, menuOption))
 				.size(menuOption.getRows(), 9)
 				.title(Lang.getMessage(MenuMessage.STATS_MENU_TITLE, locale))
-				.manager(AureliumSkills.invManager)
+				.manager(plugin.getInventoryManager())
 				.build();
 	}
 	

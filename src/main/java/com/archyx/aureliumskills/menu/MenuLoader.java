@@ -22,6 +22,7 @@ import org.bukkit.potion.PotionType;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class MenuLoader {
         menus = new HashMap<>();
     }
 
-    public void load() throws IllegalAccessException, InstantiationException {
+    public void load() throws IllegalAccessException, InstantiationException, InvocationTargetException {
         File file = new File(plugin.getDataFolder(), "menus.yml");
         if (!file.exists()) {
             plugin.saveResource("menus.yml", false);
@@ -78,7 +79,12 @@ public class MenuLoader {
                 // Load items
                 for (ItemType itemType : menuType.getItems()) {
                     Class<?> loader = itemType.getLoader();
-                    ConfigurableItem configurableItem = (ConfigurableItem) loader.newInstance();
+                    ConfigurableItem configurableItem;
+                    try {
+                        configurableItem = (ConfigurableItem) loader.getConstructors()[0].newInstance(plugin);
+                    } catch (IllegalArgumentException e) {
+                        configurableItem = (ConfigurableItem) loader.newInstance();
+                    }
                     configurableItem.load(Objects.requireNonNull(menu.getConfigurationSection("items." + itemType.name().toLowerCase())));
                     menuOption.putItem(configurableItem);
                     itemsLoaded++;
@@ -86,7 +92,12 @@ public class MenuLoader {
                 // Load templates
                 for (TemplateType templateType : menuType.getTemplates()) {
                     Class<?> loader = templateType.getLoader();
-                    ConfigurableTemplate configurableTemplate = (ConfigurableTemplate) loader.newInstance();
+                    ConfigurableTemplate configurableTemplate;
+                    try {
+                        configurableTemplate = (ConfigurableTemplate) loader.getConstructors()[0].newInstance(plugin);
+                    } catch (IllegalArgumentException e) {
+                        configurableTemplate = (ConfigurableTemplate) loader.newInstance();
+                    }
                     configurableTemplate.load(Objects.requireNonNull(menu.getConfigurationSection("templates." + templateType.name().toLowerCase())));
                     menuOption.putTemplate(configurableTemplate);
                     templatesLoaded++;

@@ -31,13 +31,15 @@ public class LevelProgressionMenu implements InventoryProvider {
 	private final Locale locale;
 	private final List<Integer> track;
 	private final MenuOption options;
-
+	private final AureliumSkills plugin;
 	private final int pages;
 
-	public LevelProgressionMenu(Locale locale, Skill skill, MenuOption menuOption) {
+
+	public LevelProgressionMenu(Locale locale, Skill skill, MenuOption menuOption, AureliumSkills plugin) {
 		this.locale = locale;
 		this.skill = skill;
 		this.options = menuOption;
+		this.plugin = plugin;
 		pages = (OptionL.getMaxLevel(skill) - 2) / 24 + 1;
 		this.track = new ArrayList<>();
 		for (int i = 0; i < pages; i++) {
@@ -63,7 +65,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		contents.set(skillItem.getPos(), ClickableItem.empty(skillItem.getItem(skill, playerSkill, locale)));
 
 		BackItem backItem = (BackItem) options.getItem(ItemType.BACK);
-		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(locale), e -> SkillsMenu.getInventory(player).open(player)));
+		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(locale), e -> SkillsMenu.getInventory(player, plugin).open(player)));
 
 		CloseItem closeItem = (CloseItem) options.getItem(ItemType.CLOSE);
 		contents.set(closeItem.getPos(), ClickableItem.of(closeItem.getItem(locale), e -> player.closeInventory()));
@@ -119,7 +121,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		if (pagination.getPage() + 1 < pages) {
 			contents.set(nextPageItem.getPos(), ClickableItem.of(nextPageItem.getItem(locale), e -> {
 				int page = pagination.next().getPage();
-				getInventory(player, skill, page).open(player, page);
+				getInventory(player, skill, page, plugin).open(player, page);
 			}));
 		}
 
@@ -127,7 +129,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		if (pagination.getPage() - 1 >= 0) {
 			contents.set(previousPageItem.getPos(), ClickableItem.of(previousPageItem.getItem(locale), e -> {
 				int previous = pagination.previous().getPage();
-				getInventory(player, skill, previous).open(player, previous);
+				getInventory(player, skill, previous, plugin).open(player, previous);
 			}));
 		}
 	}
@@ -138,14 +140,14 @@ public class LevelProgressionMenu implements InventoryProvider {
 		
 	}
 
-	public static SmartInventory getInventory(Player player, Skill skill, int page) {
+	public static SmartInventory getInventory(Player player, Skill skill, int page, AureliumSkills plugin) {
 		Locale locale = Lang.getLanguage(player);
-		MenuOption menuOption = AureliumSkills.getMenuLoader().getMenu(MenuType.LEVEL_PROGRESSION);
+		MenuOption menuOption = plugin.getMenuLoader().getMenu(MenuType.LEVEL_PROGRESSION);
 		return SmartInventory.builder()
-				.provider(new LevelProgressionMenu(locale, skill, menuOption))
+				.provider(new LevelProgressionMenu(locale, skill, menuOption, plugin))
 				.size(menuOption.getRows(), 9)
 				.title(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale).replace("{skill}", skill.getDisplayName(locale)).replace("{page}", String.valueOf(page + 1)))
-				.manager(AureliumSkills.invManager)
+				.manager(plugin.getInventoryManager())
 				.build();
 	}
 	

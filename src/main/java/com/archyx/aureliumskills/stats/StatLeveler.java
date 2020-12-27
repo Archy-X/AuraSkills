@@ -8,16 +8,22 @@ import org.bukkit.entity.Player;
 
 public class StatLeveler {
 
-	public static void reloadStat(Player player, Stat stat) {
+	private final AureliumSkills plugin;
+
+	public StatLeveler(AureliumSkills plugin) {
+		this.plugin = plugin;
+	}
+
+	public void reloadStat(Player player, Stat stat) {
 		if (stat.equals(Stat.HEALTH)) {
-			Health.reload(player);
+			new Health(plugin).reload(player);
 		}
 		else if (stat.equals(Stat.LUCK)) {
-			Luck.reload(player);
+			new Luck(plugin).reload(player);
 		}
 		else if (stat.equals(Stat.WISDOM)) {
 			if (!OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
-				ManaManager manaManager = AureliumSkills.manaManager;
+				ManaManager manaManager = plugin.getManaManager();
 				if (manaManager.getMana(player.getUniqueId()) > manaManager.getMaxMana(player.getUniqueId())) {
 					manaManager.setMana(player.getUniqueId(), manaManager.getMaxMana(player.getUniqueId()));
 				}

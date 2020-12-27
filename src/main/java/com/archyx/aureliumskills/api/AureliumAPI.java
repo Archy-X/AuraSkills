@@ -15,16 +15,22 @@ import java.util.UUID;
 
 public class AureliumAPI {
 
+    private static AureliumSkills plugin;
+
+    public static void setPlugin(AureliumSkills plugin) {
+        AureliumAPI.plugin = plugin;
+    }
+
     /**
      * Gets the current mana of a player
      * @return the current mana of a player
      */
     public static double getMana(Player player) {
-        return AureliumSkills.manaManager.getMana(player.getUniqueId());
+        return plugin.getManaManager().getMana(player.getUniqueId());
     }
 
     public static double getMana(UUID playerId) {
-        return AureliumSkills.manaManager.getMana(playerId);
+        return plugin.getManaManager().getMana(playerId);
     }
 
     /**
@@ -32,22 +38,22 @@ public class AureliumAPI {
      * @return the max mana of a player
      */
     public static double getMaxMana(Player player) {
-        return AureliumSkills.manaManager.getMaxMana(player.getUniqueId());
+        return plugin.getManaManager().getMaxMana(player.getUniqueId());
     }
 
     public static double getMaxMana(UUID playerId) {
-        return AureliumSkills.manaManager.getMaxMana(playerId);
+        return plugin.getManaManager().getMaxMana(playerId);
     }
 
     /**
      * Sets a player's mana to an amount
      */
     public static void setMana(Player player, double amount) {
-        AureliumSkills.manaManager.setMana(player.getUniqueId(), amount);
+        plugin.getManaManager().setMana(player.getUniqueId(), amount);
     }
 
     public static void setMana(UUID playerId, double amount) {
-        AureliumSkills.manaManager.setMana(playerId, amount);
+        plugin.getManaManager().setMana(playerId, amount);
     }
 
     /**

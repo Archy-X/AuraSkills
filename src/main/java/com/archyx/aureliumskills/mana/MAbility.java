@@ -1,18 +1,13 @@
 package com.archyx.aureliumskills.mana;
 
-import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.configuration.Option;
-import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public enum MAbility {
@@ -62,101 +57,48 @@ public enum MAbility {
         return skill.get();
     }
 
-    public double getValue(int level) {
-        return getBaseValue() + (getValuePerLevel() * (level - 1));
-    }
-
-    public double getDisplayValue(int level) {
-        if (this != MAbility.SHARP_HOOK) {
-            return getBaseValue() + (getValuePerLevel() * (level - 1));
-        }
-        else {
-            if (getOptionAsBooleanElseTrue("display_damage_with_scaling")) {
-                return (getBaseValue() + (getValuePerLevel() * (level - 1))) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-            } else {
-                return getBaseValue() + (getValuePerLevel() * (level - 1));
-            }
-        }
-    }
-
-    public double getBaseValue() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getBaseValue();
-        }
+    public double getDefaultBaseValue() {
         return baseValue;
     }
 
-    public double getValuePerLevel() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getValuePerLevel();
-        }
+    public double getDefaultValuePerLevel() {
         return valuePerLevel;
     }
 
-    public double getCooldown(int level) {
-        double cooldown = getBaseCooldown() + (getCooldownPerLevel() * (level - 1));
+    public double getDefaultCooldown(int level) {
+        double cooldown = getDefaultBaseCooldown() + (getDefaultCooldownPerLevel() * (level - 1));
         return cooldown > 0 ? cooldown : 0;
     }
 
-    public double getBaseCooldown() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getBaseCooldown();
-        }
+    public double getDefaultBaseCooldown() {
         return baseCooldown;
     }
 
-    public double getCooldownPerLevel() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getCooldownPerLevel();
-        }
+    public double getDefaultCooldownPerLevel() {
         return cooldownPerLevel;
     }
 
-    public int getManaCost(int level) {
-        return getBaseManaCost() + (getManaCostPerLevel() * (level - 1));
+    public int getDefaultManaCost(int level) {
+        return getDefaultBaseManaCost() + (getDefaultManaCostPerLevel() * (level - 1));
     }
 
-    public int getBaseManaCost() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getBaseManaCost();
-        }
+    public int getDefaultBaseManaCost() {
         return baseManaCost;
     }
 
-    public int getManaCostPerLevel() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getManaCostPerLevel();
-        }
+    public int getDefaultManaCostPerLevel() {
         return manaCostPerLevel;
     }
 
-    public int getUnlock() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getUnlock();
-        }
+    public int getDefaultUnlock() {
         return 7;
     }
 
-    public int getLevelUp() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getLevelUp();
-        }
+    public int getDefaultLevelUp() {
         return 7;
     }
 
-    public int getMaxLevel() {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getMaxLevel();
-        }
+    public int getDefaultMaxLevel() {
         return 0;
     }
 
@@ -168,47 +110,9 @@ public enum MAbility {
         return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_DESC"), locale);
     }
 
-    /**
-     * Gets the mana ability unlocked or leveled up at a certain level
-     * @param skill The skill
-     * @param level The skill level
-     * @return The mana ability unlocked or leveled up, or null
-     */
-    @Nullable
-    public static MAbility getManaAbility(Skill skill, int level) {
-        MAbility mAbility = skill.getManaAbility();
-        if (mAbility != MAbility.ABSORPTION) {
-            if (level >= mAbility.getUnlock() && (level - mAbility.getUnlock()) % mAbility.getLevelUp() == 0) {
-                return mAbility;
-            }
-        }
-        return null;
+    public Map<String, OptionValue> getDefaultOptions() {
+        return options;
     }
 
-    @Nullable
-    public OptionValue getOption(String key) {
-        ManaAbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-        if (option != null) {
-            return option.getOption(key);
-        } else {
-            return this.options.get(key);
-        }
-    }
-
-    public boolean getOptionAsBooleanElseTrue(String key) {
-        OptionValue value = getOption(key);
-        if (value != null) {
-            return value.asBoolean();
-        }
-        return true;
-    }
-
-    @Nullable
-    public Set<String> getOptionKeys() {
-        if (options != null) {
-            return options.keySet();
-        }
-        return null;
-    }
 
 }

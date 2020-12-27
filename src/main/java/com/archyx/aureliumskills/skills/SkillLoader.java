@@ -41,8 +41,8 @@ public class SkillLoader {
 					try {
 						UUID id = UUID.fromString(stringId);
 						String name = config.getString("skillData." + stringId + ".name", stringId);
-						PlayerSkill playerSkill = new PlayerSkill(id, name);
-						PlayerStat playerStat = new PlayerStat(id);
+						PlayerSkill playerSkill = new PlayerSkill(id, name, plugin);
+						PlayerStat playerStat = new PlayerStat(id, plugin);
 						//Loading skill and stat data
 						ConfigurationSection section = config.getConfigurationSection("skillData." + stringId + ".skills");
 						if (section != null) {
@@ -88,7 +88,7 @@ public class SkillLoader {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				AureliumSkills.leaderboard.updateLeaderboards(false);
+				plugin.getLeaderboard().updateLeaderboards(false);
 			}
 		}.runTaskAsynchronously(plugin);
 	}

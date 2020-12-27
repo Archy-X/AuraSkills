@@ -13,12 +13,13 @@ import java.util.Locale;
 
 public class Replenish implements ManaAbility {
 
+    private final AureliumSkills plugin;
     private final SorceryLeveler sorceryLeveler;
 
     public Replenish(AureliumSkills plugin) {
+        this.plugin = plugin;
         this.sorceryLeveler = plugin.getSorceryLeveler();
     }
-
 
     @Override
     public void activate(Player player) {
@@ -26,8 +27,8 @@ public class Replenish implements ManaAbility {
         if (playerSkill != null) {
             Locale locale = Lang.getLanguage(player);
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.REPLENISH));
-            AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
+            double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, playerSkill);
+            plugin.getManaManager().setMana(player.getUniqueId(), plugin.getManaManager().getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
@@ -44,7 +45,7 @@ public class Replenish implements ManaAbility {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (skill != null) {
             Locale locale = Lang.getLanguage(player);
-            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.REPLENISH, (int) (MAbility.REPLENISH.getCooldown(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20));
+            plugin.getManaAbilityManager().setPlayerCooldown(player.getUniqueId(), MAbility.REPLENISH, (int) (plugin.getManaAbilityManager().getCooldown(MAbility.REPLENISH, skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20));
             player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_END, locale));
         }
     }

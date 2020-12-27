@@ -129,12 +129,12 @@ public class CheckBlockReplace implements Listener {
     @EventHandler
     public void checkPlace(BlockPlaceEvent event) {
         //Checks if world is blocked
-        if (AureliumSkills.worldManager.isInBlockedCheckWorld(event.getBlock().getLocation())) {
+        if (plugin.getWorldManager().isInBlockedCheckWorld(event.getBlock().getLocation())) {
             return;
         }
         //Checks if region is blocked
-        if (AureliumSkills.worldGuardEnabled) {
-            if (AureliumSkills.worldGuardSupport.isInBlockedCheckRegion(event.getBlock().getLocation())) {
+        if (plugin.isWorldGuardEnabled()) {
+            if (plugin.getWorldGuardSupport().isInBlockedCheckRegion(event.getBlock().getLocation())) {
                 return;
             }
         }

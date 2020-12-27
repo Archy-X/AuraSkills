@@ -18,9 +18,11 @@ import java.util.Set;
 public class ModifierManager {
 
     private final AureliumSkills plugin;
+    private final StatLeveler statLeveler;
 
     public ModifierManager(AureliumSkills plugin) {
         this.plugin = plugin;
+        this.statLeveler = new StatLeveler(plugin);
     }
 
     public void reloadPlayer(Player player) {
@@ -76,7 +78,7 @@ public class ModifierManager {
                 }
             }
             for (Stat stat : statsToReload) {
-                StatLeveler.reloadStat(player, stat);
+                statLeveler.reloadStat(player, stat);
             }
         }
     }

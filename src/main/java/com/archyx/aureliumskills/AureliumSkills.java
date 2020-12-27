@@ -2,6 +2,7 @@ package com.archyx.aureliumskills;
 
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.abilities.*;
+import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.aureliumskills.commands.ManaCommand;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
@@ -43,6 +44,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -50,23 +52,23 @@ import java.util.Locale;
 public class AureliumSkills extends JavaPlugin {
 
 	private SkillLoader skillLoader;
-	public MySqlSupport mySqlSupport;
-	private static MenuLoader menuLoader;
-	public static LootTableManager lootTableManager;
-	public static InventoryManager invManager;
-	public static AbilityManager abilityManager;
-	public static WorldGuardSupport worldGuardSupport;
-	public static WorldManager worldManager;
-	public static ManaManager manaManager;
-	public static ManaAbilityManager manaAbilityManager;
-	public static boolean holographicDisplaysEnabled;
-	public static boolean worldGuardEnabled;
-	public static boolean placeholderAPIEnabled;
-	public static boolean vaultEnabled;
-	public static boolean protocolLibEnabled;
-	public static boolean mythicMobsEnabled;
-	public static Leaderboard leaderboard;
-	private static Economy economy = null;
+	private MySqlSupport mySqlSupport;
+	private MenuLoader menuLoader;
+	private LootTableManager lootTableManager;
+	private InventoryManager inventoryManager;
+	private AbilityManager abilityManager;
+	private WorldGuardSupport worldGuardSupport;
+	private WorldManager worldManager;
+	private ManaManager manaManager;
+	private ManaAbilityManager manaAbilityManager;
+	private boolean holographicDisplaysEnabled;
+	private boolean worldGuardEnabled;
+	private boolean placeholderAPIEnabled;
+	private boolean vaultEnabled;
+	private boolean protocolLibEnabled;
+	private boolean mythicMobsEnabled;
+	private Leaderboard leaderboard;
+	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
 	private ActionBar actionBar;
@@ -77,11 +79,12 @@ public class AureliumSkills extends JavaPlugin {
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
 	private Lang lang;
-	public static long releaseTime = 1607886993234L;
+	private final long releaseTime = 1607886993234L;
 
 	public void onEnable() {
-		invManager = new InventoryManager(this);
-		invManager.init();
+		inventoryManager = new InventoryManager(this);
+		inventoryManager.init();
+		AureliumAPI.setPlugin(this);
 		// Checks for world guard
 		if (getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
 			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
@@ -156,7 +159,7 @@ public class AureliumSkills extends JavaPlugin {
 		try {
 			menuLoader.load();
 		}
-		catch (IllegalAccessException|InstantiationException e) {
+		catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
 			e.printStackTrace();
 			Bukkit.getLogger().warning("[AureliumSkills] Error loading menus!");
 		}
@@ -192,7 +195,7 @@ public class AureliumSkills extends JavaPlugin {
 		skillLoader = new SkillLoader(this);
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			//Mysql
-			mySqlSupport = new MySqlSupport(this, this);
+			mySqlSupport = new MySqlSupport(this);
 			new BukkitRunnable() {
 				@Override
 				public void run() {
@@ -207,6 +210,7 @@ public class AureliumSkills extends JavaPlugin {
 		// Load leveler
 		Leveler.plugin = this;
 		Leveler.loadLevelReqs();
+		Leveler.statLeveler = new StatLeveler(this);
 		// Load loot tables
 		lootTableManager = new LootTableManager(this);
 		// Load world manager
@@ -237,11 +241,15 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			else {
 				Bukkit.getLogger().warning("MySql wasn't enabled on server startup, saving data to file instead! MySql will be enabled next time the server starts.");
-				skillLoader.saveSkillData(false);
+				if (skillLoader != null) {
+					skillLoader.saveSkillData(false);
+				}
 			}
 		}
 		else {
-			skillLoader.saveSkillData(false);
+			if (skillLoader != null) {
+				skillLoader.saveSkillData(false);
+			}
 		}
 	}
 
@@ -321,24 +329,24 @@ public class AureliumSkills extends JavaPlugin {
 			return null;
 		});
 		commandManager.registerCommand(new SkillsCommand(this));
-		commandManager.registerCommand(new StatsCommand());
-		commandManager.registerCommand(new ManaCommand());
+		commandManager.registerCommand(new StatsCommand(this));
+		commandManager.registerCommand(new ManaCommand(this));
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
-			if (OptionL.isEnabled(Skill.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand()); }
-			if (OptionL.isEnabled(Skill.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand()); }
-			if (OptionL.isEnabled(Skill.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand()); }
-			if (OptionL.isEnabled(Skill.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand()); }
-			if (OptionL.isEnabled(Skill.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand()); }
-			if (OptionL.isEnabled(Skill.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand()); }
-			if (OptionL.isEnabled(Skill.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand()); }
-			if (OptionL.isEnabled(Skill.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand()); }
-			if (OptionL.isEnabled(Skill.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand()); }
-			if (OptionL.isEnabled(Skill.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand()); }
-			if (OptionL.isEnabled(Skill.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand()); }
-			if (OptionL.isEnabled(Skill.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand()); }
-			if (OptionL.isEnabled(Skill.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand()); }
-			if (OptionL.isEnabled(Skill.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand()); }
-			if (OptionL.isEnabled(Skill.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand()); }
+			if (OptionL.isEnabled(Skill.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand(this)); }
+			if (OptionL.isEnabled(Skill.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand(this)); }
+			if (OptionL.isEnabled(Skill.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand(this)); }
+			if (OptionL.isEnabled(Skill.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand(this)); }
+			if (OptionL.isEnabled(Skill.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand(this)); }
+			if (OptionL.isEnabled(Skill.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand(this)); }
+			if (OptionL.isEnabled(Skill.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand(this)); }
+			if (OptionL.isEnabled(Skill.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand(this)); }
+			if (OptionL.isEnabled(Skill.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand(this)); }
+			if (OptionL.isEnabled(Skill.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand(this)); }
+			if (OptionL.isEnabled(Skill.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand(this)); }
+			if (OptionL.isEnabled(Skill.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand(this)); }
+			if (OptionL.isEnabled(Skill.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand(this)); }
+			if (OptionL.isEnabled(Skill.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand(this)); }
+			if (OptionL.isEnabled(Skill.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand(this)); }
 		}
 	}
 
@@ -363,8 +371,8 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new HealingLeveler(this), this);
 		pm.registerEvents(new ForgingLeveler(this), this);
 		pm.registerEvents(new Health(this), this);
-		pm.registerEvents(new Luck(), this);
-		pm.registerEvents(new Wisdom(), this);
+		pm.registerEvents(new Luck(this), this);
+		pm.registerEvents(new Wisdom(this), this);
 		pm.registerEvents(new FarmingAbilities(this), this);
 		pm.registerEvents(new ForagingAbilities(this), this);
 		pm.registerEvents(new MiningAbilities(this), this);
@@ -400,12 +408,44 @@ public class AureliumSkills extends JavaPlugin {
 		return true;
 	}
 
-	public static Economy getEconomy() {
+	public Economy getEconomy() {
 		return economy;
 	}
 
-	public static MenuLoader getMenuLoader() {
+	public MySqlSupport getMySqlSupport() {
+		return mySqlSupport;
+	}
+
+	public MenuLoader getMenuLoader() {
 		return menuLoader;
+	}
+
+	public LootTableManager getLootTableManager() {
+		return lootTableManager;
+	}
+
+	public InventoryManager getInventoryManager() {
+		return inventoryManager;
+	}
+
+	public AbilityManager getAbilityManager() {
+		return abilityManager;
+	}
+
+	public WorldGuardSupport getWorldGuardSupport() {
+		return worldGuardSupport;
+	}
+
+	public WorldManager getWorldManager() {
+		return worldManager;
+	}
+
+	public ManaManager getManaManager() {
+		return manaManager;
+	}
+
+	public ManaAbilityManager getManaAbilityManager() {
+		return manaAbilityManager;
 	}
 
 	public PaperCommandManager getCommandManager() {
@@ -450,6 +490,42 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Lang getLang() {
 		return lang;
+	}
+
+	public Leaderboard getLeaderboard() {
+		return leaderboard;
+	}
+
+	public boolean isHolographicDisplaysEnabled() {
+		return holographicDisplaysEnabled;
+	}
+
+	public boolean isWorldGuardEnabled() {
+		return worldGuardEnabled;
+	}
+
+	public void setWorldGuardEnabled(boolean worldGuardEnabled) {
+		this.worldGuardEnabled = worldGuardEnabled;
+	}
+
+	public boolean isPlaceholderAPIEnabled() {
+		return placeholderAPIEnabled;
+	}
+
+	public boolean isVaultEnabled() {
+		return vaultEnabled;
+	}
+
+	public boolean isProtocolLibEnabled() {
+		return protocolLibEnabled;
+	}
+
+	public boolean isMythicMobsEnabled() {
+		return mythicMobsEnabled;
+	}
+
+	public long getReleaseTime() {
+		return releaseTime;
 	}
 
 }

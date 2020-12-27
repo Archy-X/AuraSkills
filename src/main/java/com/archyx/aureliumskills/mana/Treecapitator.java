@@ -14,12 +14,13 @@ import java.util.Locale;
 
 public class Treecapitator implements ManaAbility {
 
+    private final AureliumSkills plugin;
     private final SorceryLeveler sorceryLeveler;
 
     public Treecapitator(AureliumSkills plugin) {
+        this.plugin = plugin;
         this.sorceryLeveler = plugin.getSorceryLeveler();
     }
-
 
     @Override
     public void activate(Player player) {
@@ -29,8 +30,8 @@ public class Treecapitator implements ManaAbility {
             if (playerSkill != null) {
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 //Consume mana
-                int manaConsumed = MAbility.TREECAPITATOR.getManaCost(playerSkill.getManaAbilityLevel(MAbility.TREECAPITATOR));
-                AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
+                double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, playerSkill);
+                plugin.getManaManager().setMana(player.getUniqueId(), plugin.getManaManager().getMana(player.getUniqueId()) - manaConsumed);
                 // Level Sorcery
                 sorceryLeveler.level(player, manaConsumed);
                 player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_START, locale).replace("{mana}", String.valueOf(manaConsumed)));
@@ -48,7 +49,7 @@ public class Treecapitator implements ManaAbility {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
             Locale locale = Lang.getLanguage(player);
             PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.TREECAPITATOR, (int) (MAbility.TREECAPITATOR.getCooldown(skill.getManaAbilityLevel(MAbility.TREECAPITATOR)) * 20));
+            plugin.getManaAbilityManager().setPlayerCooldown(player.getUniqueId(), MAbility.TREECAPITATOR, (int) (plugin.getManaAbilityManager().getCooldown(MAbility.TREECAPITATOR, skill.getManaAbilityLevel(MAbility.TREECAPITATOR)) * 20));
             player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GOLD + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_END, locale));
         }
     }

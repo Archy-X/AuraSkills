@@ -38,6 +38,7 @@ public class Leveler {
 
 	public static List<Integer> levelReqs = new LinkedList<>();
 	public static AureliumSkills plugin;
+	public static StatLeveler statLeveler;
 
 	private static final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
@@ -144,8 +145,8 @@ public class Leveler {
 				StatModifier modifier = playerStat.getModifiers().get(key);
 				playerStat.addStatLevel(modifier.getStat(), modifier.getValue());
 			}
-			StatLeveler.reloadStat(player, Stat.HEALTH);
-			StatLeveler.reloadStat(player, Stat.WISDOM);
+			statLeveler.reloadStat(player, Stat.HEALTH);
+			statLeveler.reloadStat(player, Stat.WISDOM);
 		}
 	}
 	
@@ -163,15 +164,15 @@ public class Leveler {
 					playerSkill.setXp(skill, currentXp - levelReqs.get(currentLevel - 1));
 					playerSkill.setSkillLevel(skill, SkillLoader.playerSkills.get(id).getSkillLevel(skill) + 1);
 					playerStat.addStatLevel(skill.getPrimaryStat(), 1);
-					StatLeveler.reloadStat(player, skill.getPrimaryStat());
+					statLeveler.reloadStat(player, skill.getPrimaryStat());
 					if ((currentLevel + 1) % 2 == 0) {
 						playerStat.addStatLevel(skill.getSecondaryStat(), 1);
-						StatLeveler.reloadStat(player, skill.getSecondaryStat());
+						statLeveler.reloadStat(player, skill.getSecondaryStat());
 					}
 					//Adds money rewards if enabled
-					if (AureliumSkills.vaultEnabled) {
+					if (plugin.isVaultEnabled()) {
 						if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-							Economy economy = AureliumSkills.getEconomy();
+							Economy economy = plugin.getEconomy();
 							double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 							double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
 							economy.depositPlayer(player, base + (multiplier * (currentLevel + 1) * (currentLevel + 1)));
@@ -214,7 +215,7 @@ public class Leveler {
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
 				,"{new}", RomanNumber.toRoman(newLevel));
-		if (AureliumSkills.placeholderAPIEnabled) {
+		if (plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
 		// Stat levels
@@ -233,9 +234,9 @@ public class Leveler {
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
 		StringBuilder abilityLevelUpMessage = new StringBuilder();
-		for (Ability ability : Ability.getAbilities(skill, newLevel)) {
-			if (AureliumSkills.abilityManager.isEnabled(ability)) {
-				if (ability.getUnlock() == newLevel) {
+		for (Ability ability : plugin.getAbilityManager().getAbilities(skill, newLevel)) {
+			if (plugin.getAbilityManager().isEnabled(ability)) {
+				if (plugin.getAbilityManager().getUnlock(ability) == newLevel) {
 					abilityUnlockMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale)));
 				} else {
 					abilityLevelUpMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
@@ -248,10 +249,10 @@ public class Leveler {
 		// Mana ability unlocks and level ups
 		StringBuilder manaAbilityUnlockMessage = new StringBuilder();
 		StringBuilder manaAbilityLevelUpMessage = new StringBuilder();
-		MAbility mAbility = MAbility.getManaAbility(skill, newLevel);
+		MAbility mAbility = plugin.getManaAbilityManager().getManaAbility(skill, newLevel);
 		if (mAbility != null) {
-			if (AureliumSkills.abilityManager.isEnabled(mAbility)) {
-				if (mAbility.getUnlock() == newLevel) {
+			if (plugin.getAbilityManager().isEnabled(mAbility)) {
+				if (plugin.getManaAbilityManager().getUnlock(mAbility) == newLevel) {
 					manaAbilityUnlockMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale)));
 				} else {
 					manaAbilityLevelUpMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
@@ -263,7 +264,7 @@ public class Leveler {
 		message = LoreUtil.replace(message, "{mana_ability_unlock}", manaAbilityUnlockMessage.toString(), "{mana_ability_level_up}", manaAbilityLevelUpMessage.toString());
 		// If money rewards are enabled
 		StringBuilder moneyRewardMessage = new StringBuilder();
-		if (AureliumSkills.vaultEnabled) {
+		if (plugin.isVaultEnabled()) {
 			if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
 				double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 				double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);

@@ -7,7 +7,6 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
@@ -15,14 +14,14 @@ import java.util.Random;
 public class Critical {
 
     private final Random r = new Random();
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
 
-    public Critical(Plugin plugin) {
+    public Critical(AureliumSkills plugin) {
         this.plugin = plugin;
     }
 
     public void applyCrit(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-        if (AureliumSkills.abilityManager.isEnabled(Ability.CRIT_CHANCE)) {
+        if (plugin.getAbilityManager().isEnabled(Ability.CRIT_CHANCE)) {
             if (isCrit(playerSkill)) {
                 event.setDamage(event.getDamage() * getCritMultiplier(playerSkill));
                 player.setMetadata("skillsCritical", new FixedMetadataValue(plugin, true));
@@ -37,12 +36,12 @@ public class Critical {
     }
 
     private boolean isCrit(PlayerSkill playerSkill) {
-        return r.nextDouble() < (Ability.CRIT_CHANCE.getValue(playerSkill.getAbilityLevel(Ability.CRIT_CHANCE)) / 100);
+        return r.nextDouble() < (plugin.getAbilityManager().getValue(Ability.CRIT_CHANCE, playerSkill.getAbilityLevel(Ability.CRIT_CHANCE)) / 100);
     }
 
     private double getCritMultiplier(PlayerSkill playerSkill) {
-        if (AureliumSkills.abilityManager.isEnabled(Ability.CRIT_DAMAGE)) {
-            double multiplier = Ability.CRIT_DAMAGE.getValue(playerSkill.getAbilityLevel(Ability.CRIT_DAMAGE)) / 100;
+        if (plugin.getAbilityManager().isEnabled(Ability.CRIT_DAMAGE)) {
+            double multiplier = plugin.getAbilityManager().getValue(Ability.CRIT_DAMAGE, playerSkill.getAbilityLevel(Ability.CRIT_DAMAGE)) / 100;
             return OptionL.getDouble(Option.CRITICAL_BASE_MULTIPLIER) * (1 + multiplier);
         }
         return OptionL.getDouble(Option.CRITICAL_BASE_MULTIPLIER);

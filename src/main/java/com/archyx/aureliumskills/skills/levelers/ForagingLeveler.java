@@ -18,8 +18,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class ForagingLeveler extends SkillLeveler implements Listener{
 
+	private ForagingAbilities foragingAbilities;
+
 	public ForagingLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.FORAGER);
+		this.foragingAbilities = new ForagingAbilities(plugin);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -179,6 +182,6 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 	}
 	
 	private void applyAbilities(Player p, Block b) {
-		ForagingAbilities.lumberjack(p, b);
+		foragingAbilities.lumberjack(p, b);
 	}
 }

@@ -21,8 +21,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class FarmingLeveler extends SkillLeveler implements Listener{
 
+	private final FarmingAbilities farmingAbilities;
+
 	public FarmingLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.FARMER);
+		this.farmingAbilities = new FarmingAbilities(plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -109,8 +112,8 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 	}
 	
 	private void applyAbilities(Player player, Block block) {
-		FarmingAbilities.bountifulHarvest(player, block);
-		FarmingAbilities.tripleHarvest(player, block);
+		farmingAbilities.bountifulHarvest(player, block);
+		farmingAbilities.tripleHarvest(player, block);
 	}
 
 	private int getBamboo(Block block, int num) {

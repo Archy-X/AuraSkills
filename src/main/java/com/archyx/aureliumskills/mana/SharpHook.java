@@ -16,8 +16,10 @@ import java.util.Locale;
 public class SharpHook implements ManaAbility {
 
     private final SorceryLeveler sorceryLeveler;
+    private final AureliumSkills plugin;
 
     public SharpHook(AureliumSkills plugin) {
+        this.plugin = plugin;
         this.sorceryLeveler = plugin.getSorceryLeveler();
     }
 
@@ -27,12 +29,12 @@ public class SharpHook implements ManaAbility {
         if (playerSkill != null) {
             Locale locale = Lang.getLanguage(player);
             //Consume mana
-            int manaConsumed = MAbility.SHARP_HOOK.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK));
-            AureliumSkills.manaManager.setMana(player.getUniqueId(), AureliumSkills.manaManager.getMana(player.getUniqueId()) - manaConsumed);
+            double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerSkill);
+            plugin.getManaManager().setMana(player.getUniqueId(), plugin.getManaManager().getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
             player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale), "{mana}", String.valueOf(manaConsumed)));
-            if (MAbility.SHARP_HOOK.getOptionAsBooleanElseTrue("enable_sound")) {
+            if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.SHARP_HOOK, "enable_sound")) {
                 if (XMaterial.isNewVersion()) {
                     player.playSound(player.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1f, 1.5f);
                 } else {
@@ -51,7 +53,7 @@ public class SharpHook implements ManaAbility {
     public void stop(Player player) {
         PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (skill != null) {
-            AureliumSkills.manaAbilityManager.setCooldown(player.getUniqueId(), MAbility.SHARP_HOOK, (int) (MAbility.SHARP_HOOK.getCooldown(skill.getManaAbilityLevel(MAbility.SHARP_HOOK)) * 20));
+            plugin.getManaAbilityManager().setPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK, (int) (plugin.getManaAbilityManager().getCooldown(MAbility.SHARP_HOOK, skill.getManaAbilityLevel(MAbility.SHARP_HOOK)) * 20));
         }
     }
 }

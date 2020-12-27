@@ -16,7 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -30,31 +29,31 @@ public class FightingAbilities extends AbilityProvider implements Listener {
         super(plugin, Skill.FIGHTING);
     }
 
-    public static void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+    public void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
         if (OptionL.isEnabled(Skill.FIGHTING)) {
-            if (AureliumSkills.abilityManager.isEnabled(Ability.SWORD_MASTER)) {
+            if (plugin.getAbilityManager().isEnabled(Ability.SWORD_MASTER)) {
                 if (!player.hasPermission("aureliumskills.fighting")) {
                     return;
                 }
                 if (playerSkill.getAbilityLevel(Ability.SWORD_MASTER) > 0) {
                     //Modifies damage
-                    double modifier = Ability.SWORD_MASTER.getValue(playerSkill.getAbilityLevel(Ability.SWORD_MASTER)) / 100;
+                    double modifier = getValue(Ability.SWORD_MASTER, playerSkill) / 100;
                     event.setDamage(event.getDamage() * (1 + modifier));
                 }
             }
         }
     }
 
-    public static void firstStrike(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, Plugin plugin) {
+    public void firstStrike(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
         if (OptionL.isEnabled(Skill.FIGHTING)) {
-            if (AureliumSkills.abilityManager.isEnabled(Ability.FIRST_STRIKE)) {
+            if (plugin.getAbilityManager().isEnabled(Ability.FIRST_STRIKE)) {
                 if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
                     if (playerSkill.getAbilityLevel(Ability.FIRST_STRIKE) > 0) {
                         Locale locale = Lang.getLanguage(player);
                         //Modifies damage
-                        double modifier = Ability.FIRST_STRIKE.getValue(playerSkill.getAbilityLevel(Ability.FIRST_STRIKE)) / 100;
+                        double modifier = getValue(Ability.FIRST_STRIKE, playerSkill) / 100;
                         event.setDamage(event.getDamage() * (1 + modifier));
-                        if (Ability.FIRST_STRIKE.getOptionAsBooleanElseTrue("enable_message")) {
+                        if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.FIRST_STRIKE, "enable_message")) {
                             event.getDamager().sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(AbilityMessage.FIRST_STRIKE_DEALT, locale));
                         }
                         //Adds metadata
@@ -85,16 +84,16 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     }
 
     public void bleed(EntityDamageByEntityEvent event, PlayerSkill playerSkill, LivingEntity entity) {
-        if (r.nextDouble() < (Ability.BLEED.getValue(playerSkill.getAbilityLevel(Ability.BLEED)) / 100)) {
+        if (r.nextDouble() < (getValue(Ability.BLEED, playerSkill) / 100)) {
             if (event.getFinalDamage() < entity.getHealth()) {
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
                     entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, 3));
-                    if (Ability.BLEED.getOptionAsBooleanElseTrue("enable_enemy_message")) {
+                    if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_enemy_message")) {
                         Locale locale = Lang.getLanguage(event.getDamager());
                         event.getDamager().sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(AbilityMessage.BLEED_ENEMY_BLEEDING, locale));
                     }
                     if (entity instanceof Player) {
-                        if (Ability.BLEED.getOptionAsBooleanElseTrue("enable_self_message")) {
+                        if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_self_message")) {
                             Locale damagedLocale = Lang.getLanguage(entity);
                             entity.sendMessage(AureliumSkills.getPrefix(damagedLocale) + Lang.getMessage(AbilityMessage.BLEED_SELF_BLEEDING, damagedLocale));
                         }
@@ -107,7 +106,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                                 int bleedTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
                                 if (bleedTicks > 0) {
                                     //Apply bleed
-                                    double damage = Ability.BLEED.getValue2(playerSkill.getAbilityLevel(Ability.BLEED));
+                                    double damage = plugin.getAbilityManager().getValue2(Ability.BLEED, playerSkill.getAbilityLevel(Ability.BLEED));
                                     entity.damage(damage);
                                     //Decrement bleed ticks
                                     if (bleedTicks != 1) {
@@ -119,7 +118,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                                 }
                             }
                             if (entity instanceof Player) {
-                                if (Ability.BLEED.getOptionAsBooleanElseTrue("enable_stop_message")) {
+                                if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_stop_message")) {
                                     Locale damagedLocale = Lang.getLanguage(entity);
                                     entity.sendMessage(AureliumSkills.getPrefix(damagedLocale) + Lang.getMessage(AbilityMessage.BLEED_STOP, damagedLocale));
                                 }

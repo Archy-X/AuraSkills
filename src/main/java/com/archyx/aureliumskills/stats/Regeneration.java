@@ -13,13 +13,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
-import org.bukkit.plugin.Plugin;
 
 public class Regeneration implements Listener {
 
-	private final Plugin plugin;
+	private final AureliumSkills plugin;
 	
-	public Regeneration(Plugin plugin) {
+	public Regeneration(AureliumSkills plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -29,7 +28,7 @@ public class Regeneration implements Listener {
 			if (event.getRegainReason().equals(RegainReason.SATIATED)) {
 				Player player = (Player) event.getEntity();
 				//Check for disabled world
-				if (!AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 					if (!OptionL.getBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
 						if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 							PlayerStat stat = SkillLoader.playerStats.get(player.getUniqueId());
@@ -54,18 +53,18 @@ public class Regeneration implements Listener {
 			if (OptionL.getBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					//Check for disabled world
-					if (!AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+					if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 						if (!player.isDead()) {
 							AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 							if (attribute != null) {
 								if (player.getHealth() < attribute.getValue()) {
 									if (player.getFoodLevel() >= 14 && player.getFoodLevel() < 20) {
-										player.setHealth(Math.min((player.getHealth() + OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER)), attribute.getValue()));
+										player.setHealth(Math.min((player.getHealth() + OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER)), attribute.getValue()));
 										if (player.getFoodLevel() - 1 >= 0) {
 											player.setFoodLevel(player.getFoodLevel() - 1);
 										}
 									} else if (player.getFoodLevel() == 20 && player.getSaturation() == 0) {
-										player.setHealth(Math.min((player.getHealth() + OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER)), attribute.getValue()));
+										player.setHealth(Math.min((player.getHealth() + OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER)), attribute.getValue()));
 										if (player.getFoodLevel() - 1 >= 0) {
 											player.setFoodLevel(player.getFoodLevel() - 1);
 										}
@@ -84,12 +83,12 @@ public class Regeneration implements Listener {
 			if (OptionL.getBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					//Check for disabled world
-					if (!AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+					if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 						if (!player.isDead()) {
 							if (player.getSaturation() > 0 && player.getFoodLevel() >= 20) {
 								AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 								if (attribute != null) {
-									player.setHealth(Math.min((player.getHealth() + OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + (double) SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER)), attribute.getValue()));
+									player.setHealth(Math.min((player.getHealth() + OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER)), attribute.getValue()));
 								}
 							}
 						}

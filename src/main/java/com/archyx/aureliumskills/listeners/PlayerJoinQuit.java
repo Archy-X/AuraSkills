@@ -33,13 +33,13 @@ public class PlayerJoinQuit implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		if (!SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-			SkillLoader.playerSkills.put(player.getUniqueId(), new PlayerSkill(player.getUniqueId(), player.getName()));
-			AureliumSkills.leaderboard.queueAdd(new PlayerSkillInstance(SkillLoader.playerSkills.get(player.getUniqueId())));
+			SkillLoader.playerSkills.put(player.getUniqueId(), new PlayerSkill(player.getUniqueId(), player.getName(), plugin));
+			plugin.getLeaderboard().queueAdd(new PlayerSkillInstance(SkillLoader.playerSkills.get(player.getUniqueId())));
 		} else {
 			SkillLoader.playerSkills.get(player.getUniqueId()).setPlayerName(player.getName());
 		}
 		if (!SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-			SkillLoader.playerStats.put(player.getUniqueId(), new PlayerStat(player.getUniqueId()));
+			SkillLoader.playerStats.put(player.getUniqueId(), new PlayerStat(player.getUniqueId(), plugin));
 		}
 		//Load player skull
 		Location playerLoc = player.getLocation();
@@ -50,7 +50,7 @@ public class PlayerJoinQuit implements Listener {
 		state.update(true);
 		//Update message
 		if (player.isOp()) {
-			if (System.currentTimeMillis() > AureliumSkills.releaseTime + 21600000L) {
+			if (System.currentTimeMillis() > plugin.getReleaseTime() + 21600000L) {
 				//Check for updates
 				new UpdateChecker(plugin, 81069).getVersion(version -> {
 					if (!plugin.getDescription().getVersion().contains("Pre-Release")) {

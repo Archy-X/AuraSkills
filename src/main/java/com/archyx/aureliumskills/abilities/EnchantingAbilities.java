@@ -45,7 +45,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         if (playerSkill != null) {
             if (playerSkill.getAbilityLevel(Ability.XP_CONVERT) > 0 && event.getAmount() > 0) {
                 double totalXp = xpConvertData.getOrDefault(player, 0.0) + event.getAmount();
-                double value =  Ability.XP_CONVERT.getValue(playerSkill);
+                double value =  getValue(Ability.XP_CONVERT, playerSkill);
                 if (value > 0) {
                     int added = (int) (totalXp / value);
                     double remainder = totalXp - added * value;
@@ -71,7 +71,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
             if (playerSkill != null) {
                 if (playerSkill.getAbilityLevel(Ability.XP_WARRIOR) > 0 && event.getDroppedExp() > 0) {
-                    if (random.nextDouble() < Ability.XP_WARRIOR.getValue(playerSkill) / 100) {
+                    if (random.nextDouble() < getValue(Ability.XP_WARRIOR, playerSkill) / 100) {
                         event.setDroppedExp(event.getDroppedExp() * 2);
                     }
                 }
@@ -93,7 +93,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
                             if (item.getEnchantments().size() > 0) {
                                 if (!blockAbility(player)) {
                                     // Apply modifier
-                                    double strengthPerType = Ability.ENCHANTED_STRENGTH.getValue(playerSkill);
+                                    double strengthPerType = getValue(Ability.ENCHANTED_STRENGTH, playerSkill);
                                     StatModifier modifier = new StatModifier("AbilityModifier-EnchantedStrength", Stat.STRENGTH, strengthPerType * item.getEnchantments().size());
                                     playerStat.addModifier(modifier, false);
                                 }
@@ -117,7 +117,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
             if (playerSkill.getAbilityLevel(Ability.LUCKY_TABLE) > 0) {
                 for (Map.Entry<Enchantment, Integer> entry : event.getEnchantsToAdd().entrySet()) {
                     if (entry.getKey().getMaxLevel() > entry.getValue()) {
-                        if (random.nextDouble() < Ability.LUCKY_TABLE.getValue(playerSkill) / 100) {
+                        if (random.nextDouble() < getValue(Ability.LUCKY_TABLE, playerSkill) / 100) {
                             entry.setValue(entry.getValue() + 1);
                         }
                     }

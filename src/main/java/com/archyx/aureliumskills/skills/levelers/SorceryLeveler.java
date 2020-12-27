@@ -11,7 +11,7 @@ public class SorceryLeveler extends SkillLeveler {
         super(plugin, Skill.SORCERY);
     }
 
-    public void level(Player player, int manaUsed) {
+    public void level(Player player, double manaUsed) {
         Leveler.addXp(player, Skill.SORCERY, manaUsed * getXp(Source.MANA_ABILITY_USE));
     }
 

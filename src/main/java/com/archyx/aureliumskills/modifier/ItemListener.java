@@ -33,11 +33,17 @@ public class ItemListener implements Listener {
     private final AureliumSkills plugin;
     private final Map<Player, ItemStack> heldItems;
     private final Map<Player, ItemStack> offHandItems;
+    private final ForagingAbilities foragingAbilities;
+    private final MiningAbilities miningAbilities;
+    private final StatLeveler statLeveler;
 
     public ItemListener(AureliumSkills plugin) {
         this.plugin = plugin;
         heldItems = new HashMap<>();
         offHandItems = new HashMap<>();
+        this.foragingAbilities = new ForagingAbilities(plugin);
+        this.miningAbilities = new MiningAbilities(plugin);
+        this.statLeveler = new StatLeveler(plugin);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -96,11 +102,11 @@ public class ItemListener implements Listener {
                                     }
                                     //Remove valor
                                     if (ItemUtils.isAxe(stored.getType())) {
-                                        ForagingAbilities.removeValor(playerStat);
+                                        foragingAbilities.removeValor(playerStat);
                                     }
                                     //Remove stamina
                                     if (ItemUtils.isPickaxe(stored.getType())) {
-                                        MiningAbilities.removeStamina(playerStat);
+                                        miningAbilities.removeStamina(playerStat);
                                     }
                                 }
                             }
@@ -116,16 +122,16 @@ public class ItemListener implements Listener {
                                     }
                                     //Apply valor
                                     if (ItemUtils.isAxe(held.getType())) {
-                                        ForagingAbilities.applyValor(player, playerStat);
+                                        foragingAbilities.applyValor(player, playerStat);
                                     }
                                     //Apply stamina
                                     if (ItemUtils.isPickaxe(held.getType())) {
-                                        MiningAbilities.applyStamina(player, playerStat);
+                                        miningAbilities.applyStamina(player, playerStat);
                                     }
                                 }
                             }
                             for (Stat stat : statsToReload) {
-                                StatLeveler.reloadStat(player, stat);
+                                statLeveler.reloadStat(player, stat);
                             }
                             //Set stored item to held item
                             heldItems.put(player, held.clone());
@@ -198,7 +204,7 @@ public class ItemListener implements Listener {
                     }
                     // Reload stats
                     for (Stat stat : statsToReload) {
-                        StatLeveler.reloadStat(player, stat);
+                        statLeveler.reloadStat(player, stat);
                     }
                 }
             }

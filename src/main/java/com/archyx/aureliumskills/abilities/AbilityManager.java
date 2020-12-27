@@ -1,30 +1,31 @@
 package com.archyx.aureliumskills.abilities;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityOption;
 import com.archyx.aureliumskills.skills.Skill;
+import com.google.common.collect.ImmutableList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class AbilityManager {
 
     private final Map<Ability, AbilityOption> abilityOptions;
     private final Map<MAbility, ManaAbilityOption> manaAbilityOptions;
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
 
-    public AbilityManager(Plugin plugin) {
+    public AbilityManager(AureliumSkills plugin) {
         this.plugin = plugin;
         abilityOptions = new HashMap<>();
         manaAbilityOptions = new HashMap<>();
@@ -76,7 +77,7 @@ public class AbilityManager {
                             int levelUp = config.getInt(path + "level_up", 5);
                             int maxLevel = config.getInt(path + "max_level", 0);
                             // Load options
-                            Set<String> optionKeys = ability.getOptionKeys();
+                            Set<String> optionKeys = getOptionKeys(ability);
                             Map<String, OptionValue> options = null;
                             if (optionKeys != null) {
                                 options = new HashMap<>();
@@ -130,13 +131,13 @@ public class AbilityManager {
                     double valuePerLevel = config.getDouble(path + "value_per_level");
                     double cooldown = config.getDouble(path + "cooldown");
                     double cooldownPerLevel = config.getDouble(path + "cooldown-per-level");
-                    int manaCost = config.getInt(path + "mana_cost");
-                    int manaCostPerLevel = config.getInt(path + "mana_cost_per_level");
+                    double manaCost = config.getDouble(path + "mana_cost");
+                    double manaCostPerLevel = config.getDouble(path + "mana_cost_per_level");
                     int unlock = config.getInt(path + "unlock", 7);
                     int levelUp = config.getInt(path + "level_up", 7);
                     int maxLevel = config.getInt(path + "max_level", 0);
                     // Load options
-                    Set<String> optionKeys = mAbility.getOptionKeys();
+                    Set<String> optionKeys = plugin.getManaAbilityManager().getOptionKeys(mAbility);
                     Map<String, OptionValue> options = null;
                     if (optionKeys != null) {
                         options = new HashMap<>();
@@ -213,4 +214,121 @@ public class AbilityManager {
         }
         return true;
     }
+
+    public double getValue(Ability ability, int level) {
+        return getBaseValue(ability) + (getValuePerLevel(ability) * (level - 1));
+    }
+
+    public double getBaseValue(Ability ability) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getBaseValue();
+        }
+        return ability.getDefaultBaseValue();
+    }
+
+    public double getValuePerLevel(Ability ability) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getValuePerLevel();
+        }
+        return ability.getDefaultValuePerLevel();
+    }
+
+    public double getValue2(Ability ability, int level) {
+        return getBaseValue2(ability) + (getValuePerLevel2(ability) * (level - 1));
+    }
+
+    public double getBaseValue2(Ability ability) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getBaseValue2();
+        }
+        return ability.getDefaultBaseValue2();
+    }
+
+    public double getValuePerLevel2(Ability ability) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getValuePerLevel2();
+        }
+        return ability.getDefaultValuePerLevel2();
+    }
+
+    public int getUnlock(Ability ability) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getUnlock();
+        }
+        int defUnlock = 2;
+        Skill skill = ability.getSkill();
+        for (int i = 0; i < skill.getAbilities().size(); i++) {
+            if (skill.getAbilities().get(i).get() == ability) {
+                defUnlock += i;
+                break;
+            }
+        }
+        return defUnlock;
+    }
+
+    public int getLevelUp(Ability ability) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getLevelUp();
+        }
+        return 5;
+    }
+
+    public int getMaxLevel(Ability ability) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getMaxLevel();
+        }
+        return 0;
+    }
+
+    /**
+     * Gets a list of abilities unlocked or leveled up at a certain level
+     * @param skill The skill
+     * @param level The skill level
+     * @return A list of abilities
+     */
+    public List<Ability> getAbilities(Skill skill, int level) {
+        ImmutableList<Supplier<Ability>> skillAbilities = skill.getAbilities();
+        List<Ability> abilities = new ArrayList<>();
+        for (Supplier<Ability> abilitySupplier : skillAbilities) {
+            Ability ability = abilitySupplier.get();
+            if (level >= getUnlock(ability) && (level - getUnlock(ability)) % getLevelUp(ability) == 0) {
+                abilities.add(ability);
+            }
+        }
+        return abilities;
+    }
+
+    @Nullable
+    public OptionValue getOption(Ability ability, String key) {
+        AbilityOption option = getAbilityOption(ability);
+        if (option != null) {
+            return option.getOption(key);
+        } else {
+            return ability.getDefaultOptions().get(key);
+        }
+    }
+
+    public boolean getOptionAsBooleanElseTrue(Ability ability, String key) {
+        OptionValue value = getOption(ability, key);
+        if (value != null) {
+            return value.asBoolean();
+        }
+        return true;
+    }
+
+    @Nullable
+    public Set<String> getOptionKeys(Ability ability) {
+        if (ability.getDefaultOptions() != null) {
+            return ability.getDefaultOptions().keySet();
+        }
+        return null;
+    }
+
 }

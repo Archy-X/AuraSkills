@@ -37,13 +37,13 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 		super(plugin, Skill.FARMING);
 	}
 
-	public static void bountifulHarvest(Player player, Block block) {
+	public void bountifulHarvest(Player player, Block block) {
 		if (OptionL.isEnabled(Skill.FARMING)) {
-			if (AureliumSkills.abilityManager.isEnabled(Ability.BOUNTIFUL_HARVEST)) {
+			if (plugin.getAbilityManager().isEnabled(Ability.BOUNTIFUL_HARVEST)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
 					if (skill.getAbilityLevel(Ability.BOUNTIFUL_HARVEST) > 0) {
-						if (r.nextDouble() < (Ability.BOUNTIFUL_HARVEST.getValue(skill.getAbilityLevel(Ability.BOUNTIFUL_HARVEST))) / 100) {
+						if (r.nextDouble() < (getValue(Ability.BOUNTIFUL_HARVEST, skill)) / 100) {
 							for (ItemStack item : block.getDrops()) {
 								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
 							}
@@ -54,16 +54,18 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 		}
 	}
 	
-	public static void tripleHarvest(Player player, Block block) {
+	public void tripleHarvest(Player player, Block block) {
 		if (OptionL.isEnabled(Skill.FARMING)) {
-			if (AureliumSkills.abilityManager.isEnabled(Ability.TRIPLE_HARVEST)) {
+			if (plugin.getAbilityManager().isEnabled(Ability.TRIPLE_HARVEST)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
-					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-					if (skill.getAbilityLevel(Ability.TRIPLE_HARVEST) > 0) {
-						if (r.nextDouble() < (Ability.TRIPLE_HARVEST.getValue(skill.getAbilityLevel(Ability.TRIPLE_HARVEST))) / 100) {
-							for (ItemStack item : block.getDrops()) {
-								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
-								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
+					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+					if (playerSkill != null) {
+						if (playerSkill.getAbilityLevel(Ability.TRIPLE_HARVEST) > 0) {
+							if (r.nextDouble() < (getValue(Ability.TRIPLE_HARVEST, playerSkill)) / 100) {
+								for (ItemStack item : block.getDrops()) {
+									player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
+									player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
+								}
 							}
 						}
 					}
@@ -82,23 +84,23 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 				|| mat.equals(Material.BAKED_POTATO) || mat.equals(XMaterial.CARROT.parseMaterial()) || mat.equals(Material.GOLDEN_CARROT) || mat.equals(Material.MELON)
 				|| mat.equals(Material.PUMPKIN_PIE) || mat.equals(Material.BEETROOT) || mat.equals(Material.BEETROOT_SOUP) || mat.equals(XMaterial.MUSHROOM_STEW.parseMaterial())
 				|| mat.equals(Material.POISONOUS_POTATO)) {
-			float amount = (float) Ability.GENETICIST.getValue(SkillLoader.playerSkills.get(player.getUniqueId()).getAbilityLevel(Ability.GENETICIST)) / 10;
-			player.setSaturation(player.getSaturation() + amount);
+			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+			if (playerSkill != null) {
+				float amount = (float) getValue(Ability.GENETICIST, playerSkill) / 10;
+				player.setSaturation(player.getSaturation() + amount);
+			}
 		}
 	}
 
-	public static void scytheMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
-			if (AureliumSkills.abilityManager.isEnabled(Ability.SCYTHE_MASTER)) {
-				//Check permission
-				if (!player.hasPermission("aureliumskills.farming")) {
-					return;
-				}
-				if (playerSkill.getAbilityLevel(Ability.SCYTHE_MASTER) > 0) {
-					event.setDamage(event.getDamage() * (1 + (Ability.SCYTHE_MASTER.getValue(playerSkill.getAbilityLevel(Ability.SCYTHE_MASTER)) / 100)));
-				}
+	public void scytheMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+		if (blockDisabled(Ability.SCYTHE_MASTER)) return;
+			//Check permission
+			if (!player.hasPermission("aureliumskills.farming")) {
+				return;
 			}
-		}
+			if (playerSkill.getAbilityLevel(Ability.SCYTHE_MASTER) > 0) {
+				event.setDamage(event.getDamage() * (1 + (getValue(Ability.SCYTHE_MASTER, playerSkill) / 100)));
+			}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -107,20 +109,20 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 		if (BlockUtil.isReplenishable(blockMat)) {
 			Player player = event.getPlayer();
 			Locale locale = Lang.getLanguage(player);
-			if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
+			if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
 				return;
 			}
-			if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), MAbility.REPLENISH)) {
+			if (plugin.getManaAbilityManager().isReady(player.getUniqueId(), MAbility.REPLENISH)) {
 				Material mat = player.getInventory().getItemInMainHand().getType();
 				if (mat.name().toUpperCase().contains("HOE")) {
 					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-						if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH))) {
-							AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.REPLENISH, (int) (MAbility.REPLENISH.getValue(skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20), new Replenish(plugin));
+						if (plugin.getManaManager().getMana(player.getUniqueId()) >= plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, skill)) {
+							plugin.getManaAbilityManager().activateAbility(player, MAbility.REPLENISH, (int) (getValue(MAbility.REPLENISH, skill) * 20), new Replenish(plugin));
 						}
 						else {
 							player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-									.replace("{mana}", String.valueOf(MAbility.REPLENISH.getManaCost(skill.getManaAbilityLevel(MAbility.REPLENISH)))));
+									.replace("{mana}", String.valueOf(plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, skill))));
 						}
 					}
 				}
@@ -131,7 +133,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void readyReplenish(PlayerInteractEvent event) {
-		AureliumSkills.manaAbilityManager.activator.readyAbility(event, Skill.FARMING, "HOE");
+		plugin.getManaAbilityManager().activator.readyAbility(event, Skill.FARMING, "HOE");
 	}
 
 	@EventHandler
@@ -142,7 +144,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 			Player player = event.getPlayer();
 			Block block = event.getBlock();
 			//Checks if ability is already activated
-			if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
+			if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
 				if (BlockUtil.isFullyGrown(block) && isHoldingHoe(player) && BlockUtil.isReplenishable(mat)) {
 					replenishReplant(block, mat);
 				}

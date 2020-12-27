@@ -16,18 +16,31 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.plugin.Plugin;
 
 public class DamageListener implements Listener {
 
     private final Strength strength;
     private final Critical critical;
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
+    private final ExcavationAbilities excavationAbilities;
+    private final FarmingAbilities farmingAbilities;
+    private final MiningAbilities miningAbilities;
+    private final ForagingAbilities foragingAbilities;
+    private final ArcheryAbilities archeryAbilities;
+    private final FightingAbilities fightingAbilities;
+    private final DefenseAbilities defenseAbilities;
 
-    public DamageListener(Plugin plugin) {
+    public DamageListener(AureliumSkills plugin) {
         strength = new Strength();
         this.plugin = plugin;
         this.critical = new Critical(plugin);
+        this.excavationAbilities = new ExcavationAbilities(plugin);
+        this.farmingAbilities = new FarmingAbilities(plugin);
+        this.miningAbilities = new MiningAbilities(plugin);
+        this.foragingAbilities = new ForagingAbilities(plugin);
+        this.archeryAbilities = new ArcheryAbilities(plugin);
+        this.fightingAbilities = new FightingAbilities(plugin);
+        this.defenseAbilities = new DefenseAbilities(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -43,7 +56,7 @@ public class DamageListener implements Listener {
         if (player != null) {
 
             //Check disabled world
-            if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
                 return;
             }
             //Gets player skill
@@ -61,28 +74,28 @@ public class DamageListener implements Listener {
             //Applies master abilities
             switch (damageType) {
                 case SWORD:
-                    FightingAbilities.swordMaster(event, player, playerSkill);
+                    fightingAbilities.swordMaster(event, player, playerSkill);
                     break;
                 case BOW:
-                    ArcheryAbilities.bowMaster(event, player, playerSkill);
+                    archeryAbilities.bowMaster(event, player, playerSkill);
                     break;
                 case AXE:
-                    ForagingAbilities.axeMaster(event, player, playerSkill);
+                    foragingAbilities.axeMaster(event, player, playerSkill);
                     break;
                 case PICKAXE:
-                    MiningAbilities.pickMaster(event, player, playerSkill);
+                    miningAbilities.pickMaster(event, player, playerSkill);
                     break;
                 case HOE:
-                    FarmingAbilities.scytheMaster(event, player, playerSkill);
+                    farmingAbilities.scytheMaster(event, player, playerSkill);
                     break;
                 case SHOVEL:
-                    ExcavationAbilities.spadeMaster(event, player, playerSkill);
+                    excavationAbilities.spadeMaster(event, player, playerSkill);
                     break;
             }
 
             //First strike
             if (damageType == DamageType.SWORD) {
-                FightingAbilities.firstStrike(event, playerSkill, player, plugin);
+                fightingAbilities.firstStrike(event, playerSkill, player);
             }
 
             //Critical
@@ -99,7 +112,7 @@ public class DamageListener implements Listener {
 
     private void onDamaged(EntityDamageByEntityEvent event, Player player) {
         //Check disabled world
-        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
         }
         //Gets player skill
@@ -112,10 +125,10 @@ public class DamageListener implements Listener {
         Toughness.onDamage(event, playerStat);
 
         //Handles mob master
-        DefenseAbilities.mobMaster(event, playerSkill);
+        defenseAbilities.mobMaster(event, playerSkill);
 
         //Handles shielding
-        DefenseAbilities.shielding(event, playerSkill, player);
+        defenseAbilities.shielding(event, playerSkill, player);
     }
 
     @SuppressWarnings("deprecation")

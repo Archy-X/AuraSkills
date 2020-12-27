@@ -12,14 +12,14 @@ public class ManaAbilityOption {
     private final double valuePerLevel;
     private final double baseCooldown;
     private final double cooldownPerLevel;
-    private final int baseManaCost;
-    private final int manaCostPerLevel;
+    private final double baseManaCost;
+    private final double manaCostPerLevel;
     private final int unlock;
     private final int levelUp;
     private final int maxLevel;
     private Map<String, OptionValue> options;
 
-    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, int unlock, int levelUp, int maxLevel) {
+    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, double baseManaCost, double manaCostPerLevel, int unlock, int levelUp, int maxLevel) {
         this.enabled = enabled;
         this.baseValue = baseValue;
         this.valuePerLevel = valuePerLevel;
@@ -32,7 +32,7 @@ public class ManaAbilityOption {
         this.maxLevel = maxLevel;
     }
 
-    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, int unlock, int levelUp, int maxLevel, Map<String, OptionValue> options) {
+    public ManaAbilityOption(boolean enabled, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, double baseManaCost, double manaCostPerLevel, int unlock, int levelUp, int maxLevel, Map<String, OptionValue> options) {
         this.enabled = enabled;
         this.baseValue = baseValue;
         this.valuePerLevel = valuePerLevel;
@@ -66,11 +66,11 @@ public class ManaAbilityOption {
         return cooldownPerLevel;
     }
 
-    public int getBaseManaCost() {
+    public double getBaseManaCost() {
         return baseManaCost;
     }
 
-    public int getManaCostPerLevel() {
+    public double getManaCostPerLevel() {
         return manaCostPerLevel;
     }
 

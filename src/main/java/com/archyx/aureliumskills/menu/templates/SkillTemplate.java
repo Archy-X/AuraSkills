@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
@@ -14,6 +15,7 @@ import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
@@ -21,8 +23,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -36,9 +36,12 @@ public class SkillTemplate implements ConfigurableTemplate {
     private List<String> lore;
     private Map<Integer, Set<String>> lorePlaceholders;
     private final String[] definedPlaceholders = new String[] {"skill_desc", "primary_stat", "secondary_stat", "ability_levels", "mana_ability", "level", "progress_to_level", "max_level", "skill_click"};
-    private final NumberFormat nf = new DecimalFormat("#.#");
-    private final NumberFormat nf2 = new DecimalFormat("#.##");
-
+    private final AureliumSkills plugin;
+    
+    public SkillTemplate(AureliumSkills plugin) {
+        this.plugin = plugin;
+    }
+    
     @Override
     public TemplateType getType() {
         return TYPE;
@@ -127,15 +130,15 @@ public class SkillTemplate implements ConfigurableTemplate {
                                 int num = 1;
                                 for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
                                     Ability ability = abilitySupplier.get();
-                                    if (AureliumSkills.abilityManager.isEnabled(ability)) {
+                                    if (plugin.getAbilityManager().isEnabled(ability)) {
                                         if (playerSkill.getAbilityLevel(ability) > 0) {
                                             int abilityLevel = playerSkill.getAbilityLevel(ability);
                                             line = LoreUtil.replace(line, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
                                                     , "{ability}", ability.getDisplayName(locale)
                                                     , "{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability))
                                                     , "{info}", LoreUtil.replace(ability.getInfo(locale)
-                                                            , "{value}", nf.format(ability.getValue(abilityLevel))
-                                                            , "{value_2}", nf.format(ability.getValue2(abilityLevel)))));
+                                                            , "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, abilityLevel))
+                                                            , "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, abilityLevel)))));
                                         } else {
                                             line = LoreUtil.replace(line, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)
                                                     , "{ability}", ability.getDisplayName(locale)));
@@ -153,22 +156,23 @@ public class SkillTemplate implements ConfigurableTemplate {
                         case "mana_ability":
                             MAbility mAbility = skill.getManaAbility();
                             int level = playerSkill.getManaAbilityLevel(mAbility);
-                            if (mAbility != MAbility.ABSORPTION && level > 0 && AureliumSkills.abilityManager.isEnabled(mAbility)) {
+                            if (mAbility != MAbility.ABSORPTION && level > 0 && plugin.getAbilityManager().isEnabled(mAbility)) {
+                                ManaAbilityManager manager = plugin.getManaAbilityManager();
                                 if (mAbility != MAbility.SHARP_HOOK) {
                                     line = LoreUtil.replace(line, "{mana_ability}", LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY, locale)
                                             , "{mana_ability}", mAbility.getDisplayName(locale)
                                             , "{level}", RomanNumber.toRoman(level)
-                                            , "{duration}", nf.format(mAbility.getValue(level))
-                                            , "{mana_cost}", String.valueOf(mAbility.getManaCost(level))
-                                            , "{cooldown}", nf.format(mAbility.getCooldown(level))));
+                                            , "{duration}",  NumberUtil.format1(manager.getValue(mAbility, level))
+                                            , "{mana_cost}", String.valueOf(manager.getManaCost(mAbility, level))
+                                            , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
                                 }
                                 else {
                                     line = LoreUtil.replace(line, "{mana_ability}", LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_MENU, locale)
                                             , "{mana_ability}", mAbility.getDisplayName(locale)
                                             , "{level}", RomanNumber.toRoman(level)
-                                            , "{value}", nf.format(mAbility.getDisplayValue(level))
-                                            , "{mana_cost}", String.valueOf(mAbility.getManaCost(level))
-                                            , "{cooldown}", nf.format(mAbility.getCooldown(level))));
+                                            , "{value}", NumberUtil.format1(manager.getValue(mAbility, level))
+                                            , "{mana_cost}", String.valueOf(manager.getManaCost(mAbility, level))
+                                            , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
                                 }
                             } else {
                                 line = LoreUtil.replace(line,"{mana_ability}", "");
@@ -183,8 +187,8 @@ public class SkillTemplate implements ConfigurableTemplate {
                                 double xpToNext = Leveler.levelReqs.get(skillLevel - 1);
                                 line = LoreUtil.replace(line,"{progress_to_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
                                         ,"{level}", RomanNumber.toRoman(skillLevel + 1)
-                                        ,"{percent}", nf2.format(currentXp / xpToNext * 100)
-                                        ,"{current_xp}", nf2.format(currentXp)
+                                        ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
+                                        ,"{current_xp}", NumberUtil.format2(currentXp)
                                         ,"{level_xp}", String.valueOf((int) xpToNext)));
                             } else {
                                 line = LoreUtil.replace(line,"{progress_to_level}", "");

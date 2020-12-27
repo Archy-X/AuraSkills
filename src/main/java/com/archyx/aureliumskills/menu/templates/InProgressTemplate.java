@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.menu.templates;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
@@ -29,6 +30,10 @@ public class InProgressTemplate extends ProgressLevelItem implements Configurabl
     private final String[] definedPlaceholders = new String[] {"level_number", "rewards", "ability", "mana_ability", "progress", "in_progress"};
     private final NumberFormat nf1 = new DecimalFormat("#.#");
     private final NumberFormat nf2 = new DecimalFormat("#.##");
+
+    public InProgressTemplate(AureliumSkills plugin) {
+        super(plugin);
+    }
 
     @Override
     public TemplateType getType() {

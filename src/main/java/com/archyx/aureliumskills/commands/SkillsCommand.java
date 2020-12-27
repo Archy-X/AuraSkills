@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -52,7 +53,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.skills")
 	@Description("Opens the Skills menu, where you can browse skills, progress, and abilities.")
 	public void onSkills(Player player) {
-		SkillsMenu.getInventory(player).open(player);
+		SkillsMenu.getInventory(player, plugin).open(player);
 	}
 	
 	@Subcommand("xp add")
@@ -118,7 +119,7 @@ public class SkillsCommand extends BaseCommand {
 	public void onTop(CommandSender sender, String[] args) {
 		Locale locale = Lang.getLanguage(sender);
 		if (args.length == 0) {
-			List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(1, 10);
+			List<PlayerSkillInstance> lb = plugin.getLeaderboard().readPowerLeaderboard(1, 10);
 			sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_HEADER, locale));
 			for (PlayerSkillInstance playerSkill : lb) {
 				OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
@@ -131,7 +132,7 @@ public class SkillsCommand extends BaseCommand {
 		else if (args.length == 1) {
 			try {
 				int page = Integer.parseInt(args[0]);
-				List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readPowerLeaderboard(page, 10);
+				List<PlayerSkillInstance> lb = plugin.getLeaderboard().readPowerLeaderboard(page, 10);
 				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_HEADER_PAGE, locale).replace("{page}", String.valueOf(page)));
 				for (PlayerSkillInstance playerSkill : lb) {
 					OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
@@ -144,7 +145,7 @@ public class SkillsCommand extends BaseCommand {
 			catch (Exception e) {
 				try {
 					Skill skill = Skill.valueOf(args[0].toUpperCase());
-					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, 1, 10);
+					List<PlayerSkillInstance> lb = plugin.getLeaderboard().readSkillLeaderboard(skill, 1, 10);
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER, locale).replace("&", "§").replace("{skill}", skill.getDisplayName(locale)));
 					for (PlayerSkillInstance playerSkill : lb) {
 						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
@@ -164,7 +165,7 @@ public class SkillsCommand extends BaseCommand {
 				Skill skill = Skill.valueOf(args[0].toUpperCase());
 				try {
 					int page = Integer.parseInt(args[1]);
-					List<PlayerSkillInstance> lb = AureliumSkills.leaderboard.readSkillLeaderboard(skill, page, 10);
+					List<PlayerSkillInstance> lb = plugin.getLeaderboard().readSkillLeaderboard(skill, page, 10);
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER_PAGE, locale).replace("{page}", String.valueOf(page)).replace("{skill}", skill.getDisplayName(locale)));
 					for (PlayerSkillInstance playerSkill : lb) {
 						OfflinePlayer player = Bukkit.getOfflinePlayer(playerSkill.getPlayerId());
@@ -192,11 +193,11 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = Lang.getLanguage(sender);
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (!MySqlSupport.isSaving) {
-				if (plugin.mySqlSupport != null) {
+				if (plugin.getMySqlSupport() != null) {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
-							plugin.mySqlSupport.saveData(false);
+							plugin.getMySqlSupport().saveData(false);
 						}
 					}.runTaskAsynchronously(plugin);
 					if (sender instanceof Player) {
@@ -252,7 +253,7 @@ public class SkillsCommand extends BaseCommand {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					AureliumSkills.leaderboard.updateLeaderboards(false);
+					plugin.getLeaderboard().updateLeaderboards(false);
 				}
 			}.runTaskAsynchronously(plugin);
 			if (sender instanceof Player) {
@@ -294,14 +295,14 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = Lang.getLanguage(player);
 		player.sendMessage(Lang.getMessage(CommandMessage.RANK_HEADER, locale));
 		player.sendMessage(Lang.getMessage(CommandMessage.RANK_POWER, locale)
-				.replace("{rank}", String.valueOf(AureliumSkills.leaderboard.getPowerRank(player.getUniqueId())))
-				.replace("{total}", String.valueOf(AureliumSkills.leaderboard.getSize())));
+				.replace("{rank}", String.valueOf(plugin.getLeaderboard().getPowerRank(player.getUniqueId())))
+				.replace("{total}", String.valueOf(plugin.getLeaderboard().getSize())));
 		for (Skill skill : Skill.values()) {
 			if (OptionL.isEnabled(skill)) {
 				player.sendMessage(Lang.getMessage(CommandMessage.RANK_ENTRY, locale)
 						.replace("{skill}", String.valueOf(skill.getDisplayName(locale)))
-						.replace("{rank}", String.valueOf(AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId())))
-						.replace("{total}", String.valueOf(AureliumSkills.leaderboard.getSize())));
+						.replace("{rank}", String.valueOf(plugin.getLeaderboard().getSkillRank(skill, player.getUniqueId())))
+						.replace("{total}", String.valueOf(plugin.getLeaderboard().getSize())));
 			}
 		}
 	}
@@ -337,22 +338,24 @@ public class SkillsCommand extends BaseCommand {
 		lang.loadEmbeddedMessages(plugin.getCommandManager());
 		lang.loadLanguages(plugin.getCommandManager());
 		try {
-			AureliumSkills.getMenuLoader().load();
+			plugin.getMenuLoader().load();
 		}
-		catch (IllegalAccessException|InstantiationException e) {
+		catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
 			e.printStackTrace();
 			Bukkit.getLogger().warning("[AureliumSkills] Error while loading menus!");
 		}
-		AureliumSkills.abilityManager.loadOptions();
+		plugin.getAbilityManager().loadOptions();
 		Leveler.loadLevelReqs();
-		AureliumSkills.lootTableManager.loadLootTables();
-		AureliumSkills.worldManager.loadWorlds();
-		if (AureliumSkills.worldGuardEnabled) {
-			AureliumSkills.worldGuardSupport.loadRegions();
+		plugin.getLootTableManager().loadLootTables();
+		plugin.getWorldManager().loadWorlds();
+		if (plugin.isWorldGuardEnabled()) {
+			plugin.getWorldGuardSupport().loadRegions();
 		}
+		Luck luck = new Luck(plugin);
+		Health health = new Health(plugin);
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			Health.reload(player);
-			Luck.reload(player);
+			health.reload(player);
+			luck.reload(player);
 		}
 		// Resets all action bars
 		plugin.getActionBar().resetActionBars();

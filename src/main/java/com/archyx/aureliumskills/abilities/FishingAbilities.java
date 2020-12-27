@@ -6,13 +6,13 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SharpHook;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.levelers.Leveler;
-import com.archyx.aureliumskills.skills.levelers.SkillLeveler;
 import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,33 +31,30 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
 
-public class FishingAbilities extends SkillLeveler implements Listener {
+public class FishingAbilities extends AbilityProvider implements Listener {
 
 	private final Random r = new Random();
 	private final NumberFormat nf = new DecimalFormat("#.#");
 
 	public FishingAbilities(AureliumSkills plugin) {
-		super(plugin, Ability.FISHER);
+		super(plugin, Skill.FISHING);
 	}
 	
 	@EventHandler
 	public void luckyCatch(PlayerFishEvent event) {
-		if (OptionL.isEnabled(Skill.FISHING)) {
-			if (AureliumSkills.abilityManager.isEnabled(Ability.LUCKY_CATCH)) {
-				Player player = event.getPlayer();
-				if (blockAbility(player)) return;
-				if (event.getCaught() instanceof Item) {
-					if (event.getExpToDrop() > 0) {
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-							if (r.nextDouble() < (Ability.LUCKY_CATCH.getValue(skill.getAbilityLevel(Ability.LUCKY_CATCH)) / 100)) {
-								Item item = (Item) event.getCaught();
-								ItemStack drop = item.getItemStack();
-								if (drop.getMaxStackSize() > 1) {
-									drop.setAmount(drop.getAmount() * 2);
-									item.setItemStack(drop);
-								}
-							}
+		if (blockDisabled(Ability.LUCKY_CATCH)) return;
+		Player player = event.getPlayer();
+		if (blockAbility(player)) return;
+		if (event.getCaught() instanceof Item) {
+			if (event.getExpToDrop() > 0) {
+				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+					if (r.nextDouble() < (getValue(Ability.LUCKY_CATCH, skill) / 100)) {
+						Item item = (Item) event.getCaught();
+						ItemStack drop = item.getItemStack();
+						if (drop.getMaxStackSize() > 1) {
+							drop.setAmount(drop.getAmount() * 2);
+							item.setItemStack(drop);
 						}
 					}
 				}
@@ -69,24 +66,32 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 	public void treasureHunterAndEpicCatch(PlayerFishEvent event) {
 		if (OptionL.isEnabled(Skill.FISHING)) {
 			Player player = event.getPlayer();
-			if (blockXpGain(player)) return;
+			if (blockAbility(player)) return;
+			if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
+				return;
+			}
+			if (plugin.isWorldGuardEnabled()) {
+				if (plugin.getWorldGuardSupport().isInBlockedRegion(player.getLocation())) {
+					return;
+				}
+			}
 			if (event.getCaught() instanceof Item) {
 				if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
 					if (event.getExpToDrop() > 0) {
 						if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
 							PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
-							if (r.nextDouble() < (Ability.EPIC_CATCH.getValue(skill.getAbilityLevel(Ability.EPIC_CATCH)) / 100)) {
-								if (AureliumSkills.abilityManager.isEnabled(Ability.EPIC_CATCH)) {
+							if (r.nextDouble() < (getValue(Ability.EPIC_CATCH, skill) / 100)) {
+								if (plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
 									Item item = (Item) event.getCaught();
-									int lootTableSize = AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().size();
+									int lootTableSize = plugin.getLootTableManager().getLootTable("fishing-epic").getLoot().size();
 									if (lootTableSize > 0) {
-										Loot loot = AureliumSkills.lootTableManager.getLootTable("fishing-epic").getLoot().get(r.nextInt(lootTableSize));
+										Loot loot = plugin.getLootTableManager().getLootTable("fishing-epic").getLoot().get(r.nextInt(lootTableSize));
 										// If has item
 										if (loot.hasItem()) {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
 												item.setItemStack(drop);
-												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC));
+												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
 											}
 										}
 										// If has command
@@ -95,18 +100,18 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 										}
 									}
 								}
-							} else if (r.nextDouble() < (Ability.TREASURE_HUNTER.getValue(skill.getAbilityLevel(Ability.TREASURE_HUNTER)) / 100)) {
-								if (AureliumSkills.abilityManager.isEnabled(Ability.TREASURE_HUNTER)) {
+							} else if (r.nextDouble() < (getValue(Ability.TREASURE_HUNTER, skill) / 100)) {
+								if (plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
 									Item item = (Item) event.getCaught();
-									int lootTableSize = AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().size();
+									int lootTableSize = plugin.getLootTableManager().getLootTable("fishing-rare").getLoot().size();
 									if (lootTableSize > 0) {
-										Loot loot = AureliumSkills.lootTableManager.getLootTable("fishing-rare").getLoot().get(r.nextInt(lootTableSize));
+										Loot loot = plugin.getLootTableManager().getLootTable("fishing-rare").getLoot().get(r.nextInt(lootTableSize));
 										// If has item
 										if (loot.hasItem()) {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
 												item.setItemStack(drop);
-												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE));
+												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
 											}
 										}
 										// If has commaand
@@ -125,18 +130,15 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 	
 	@EventHandler
 	public void grappler(PlayerFishEvent event) {
-		if (OptionL.isEnabled(Skill.FISHING)) {
-			if (AureliumSkills.abilityManager.isEnabled(Ability.GRAPPLER)) {
-				if (event.getCaught() != null) {
-					if (!(event.getCaught() instanceof Item)) {
-						if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
-							PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
-							Player player = event.getPlayer();
-							if (blockAbility(player)) return;
-							Vector vector = player.getLocation().toVector().subtract(event.getCaught().getLocation().toVector());
-							event.getCaught().setVelocity(vector.multiply(0.004 + (Ability.GRAPPLER.getValue(skill.getAbilityLevel(Ability.GRAPPLER)) / 25000)));
-						}
-					}
+		if (blockDisabled(Ability.GRAPPLER)) return;
+		if (event.getCaught() != null) {
+			if (!(event.getCaught() instanceof Item)) {
+				if (SkillLoader.playerSkills.containsKey(event.getPlayer().getUniqueId())) {
+					PlayerSkill skill = SkillLoader.playerSkills.get(event.getPlayer().getUniqueId());
+					Player player = event.getPlayer();
+					if (blockAbility(player)) return;
+					Vector vector = player.getLocation().toVector().subtract(event.getCaught().getLocation().toVector());
+					event.getCaught().setVelocity(vector.multiply(0.004 + (getValue(Ability.GRAPPLER, skill) / 25000)));
 				}
 			}
 		}
@@ -144,7 +146,7 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 
 	@EventHandler
 	public void sharpHook(PlayerInteractEvent event) {
-		if (OptionL.isEnabled(Skill.FISHING) && AureliumSkills.abilityManager.isEnabled(MAbility.SHARP_HOOK)) {
+		if (OptionL.isEnabled(Skill.FISHING) && plugin.getAbilityManager().isEnabled(MAbility.SHARP_HOOK)) {
 			Player player = event.getPlayer();
 			if (blockAbility(player)) return;
 			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -182,14 +184,14 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 											if (hooked instanceof LivingEntity) {
 												LivingEntity livingEntity = (LivingEntity) hooked;
 												if (!livingEntity.isDead() && livingEntity.isValid()) {
-													int cooldown = AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
+													int cooldown = plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
 													if (cooldown == 0) {
 														activateSharpHook(player, playerSkill, livingEntity);
 													} else {
-														if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
+														if (plugin.getManaAbilityManager().getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
 															Locale locale = Lang.getLanguage(player);
 															player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", nf.format((double) (cooldown) / 20)));
-															AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
+															plugin.getManaAbilityManager().setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 														}
 													}
 													break;
@@ -209,15 +211,16 @@ public class FishingAbilities extends SkillLeveler implements Listener {
 
 	private void activateSharpHook(Player player, PlayerSkill playerSkill, LivingEntity caught) {
 		Locale locale = Lang.getLanguage(player);
-		if (AureliumSkills.manaManager.getMana(player.getUniqueId()) >= MAbility.SHARP_HOOK.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK))) {
-			double damage = MAbility.SHARP_HOOK.getValue(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK));
+		ManaAbilityManager manager = plugin.getManaAbilityManager();
+		if (plugin.getManaManager().getMana(player.getUniqueId()) >= plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerSkill)) {
+			double damage = plugin.getManaAbilityManager().getValue(MAbility.SHARP_HOOK, playerSkill);
 			caught.damage(damage, player);
-			AureliumSkills.manaAbilityManager.activateAbility(player, MAbility.SHARP_HOOK, 1, new SharpHook(plugin));
+			manager.activateAbility(player, MAbility.SHARP_HOOK, 1, new SharpHook(plugin));
 		}
 		else {
-			if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-				player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(MAbility.SHARP_HOOK.getManaCost(playerSkill.getManaAbilityLevel(MAbility.SHARP_HOOK)))));
-				AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
+			if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
+				player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(manager.getManaCost(MAbility.SHARP_HOOK, playerSkill))));
+				manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 			}
 		}
 	}

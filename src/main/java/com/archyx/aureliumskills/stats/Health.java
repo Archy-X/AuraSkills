@@ -24,11 +24,13 @@ import java.util.UUID;
 public class Health implements Listener {
 
 	private final AureliumSkills plugin;
+	private final AgilityAbilities agilityAbilities;
 	private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
 	private static final double threshold = 0.1;
 
 	public Health(AureliumSkills plugin) {
 		this.plugin = plugin;
+		this.agilityAbilities = new AgilityAbilities(plugin);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -36,17 +38,17 @@ public class Health implements Listener {
 		setHealth(event.getPlayer());
 	}
 
-	public static void reload(Player player) {
+	public void reload(Player player) {
 		if (player != null) {
 			setHealth(player);
-			AgilityAbilities.removeFleeting(player);
+			agilityAbilities.removeFleeting(player);
 		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void worldChange(PlayerChangedWorldEvent event) {
 		Player player = event.getPlayer();
-		if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation()) && !AureliumSkills.worldManager.isDisabledWorld(event.getFrom())) {
+		if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) && !plugin.getWorldManager().isDisabledWorld(event.getFrom())) {
 			worldChangeHealth.put(player.getUniqueId(), player.getHealth());
 		}
 		if (OptionL.getInt(Option.HEALTH_UPDATE_DELAY) > 0) {
@@ -54,7 +56,7 @@ public class Health implements Listener {
 				@Override
 				public void run() {
 					setHealth(player);
-					if (AureliumSkills.worldManager.isDisabledWorld(event.getFrom()) && !AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+					if (plugin.getWorldManager().isDisabledWorld(event.getFrom()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 						if (worldChangeHealth.containsKey(player.getUniqueId())) {
 							player.setHealth(worldChangeHealth.get(player.getUniqueId()));
 							worldChangeHealth.remove(player.getUniqueId());
@@ -65,7 +67,7 @@ public class Health implements Listener {
 		}
 		else {
 			setHealth(player);
-			if (AureliumSkills.worldManager.isDisabledWorld(event.getFrom()) && !AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+			if (plugin.getWorldManager().isDisabledWorld(event.getFrom()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 				if (worldChangeHealth.containsKey(player.getUniqueId())) {
 					player.setHealth(worldChangeHealth.get(player.getUniqueId()));
 					worldChangeHealth.remove(player.getUniqueId());
@@ -74,11 +76,11 @@ public class Health implements Listener {
 		}
 	}
 
-	private static void setHealth(Player player) {
+	private void setHealth(Player player) {
 		//Calculates the amount of health to add
 		PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
 		if (playerStat != null) {
-			double modifier = ((double) playerStat.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
+			double modifier = (playerStat.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
 			AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 			if (attribute != null) {
 				double originalMaxHealth = attribute.getValue();
@@ -97,7 +99,7 @@ public class Health implements Listener {
 					}
 				}
 				//Disable health if in disable world
-				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 					player.setHealthScaled(false);
 					for (AttributeModifier am : attribute.getModifiers()) {
 						if (am.getName().equals("skillsHealth")) {

@@ -19,8 +19,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class MiningLeveler extends SkillLeveler implements Listener {
 
+	private final MiningAbilities miningAbilities;
+
 	public MiningLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.MINER);
+		this.miningAbilities = new MiningAbilities(plugin);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -194,6 +197,6 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 	}
 	
 	private void applyAbilities(Player p, Block b) {
-		MiningAbilities.luckyMiner(p, b);
+		miningAbilities.luckyMiner(p, b);
 	}
 }

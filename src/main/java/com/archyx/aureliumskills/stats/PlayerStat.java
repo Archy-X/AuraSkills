@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.stats;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
@@ -13,14 +14,16 @@ import java.util.UUID;
 public class PlayerStat {
 
 	private final UUID playerId;
+	private final AureliumSkills plugin;
 	
 	private final Map<Stat, Double> stats;
 	private final Map<String, StatModifier> modifiers;
 
-	public PlayerStat(UUID id) {
+	public PlayerStat(UUID id, AureliumSkills plugin) {
 		stats = new HashMap<>();
 		modifiers = new HashMap<>();
 		this.playerId = id;
+		this.plugin = plugin;
 		for (Stat stat : Stat.values()) {
 			stats.put(stat, 0.0);
 		}
@@ -89,10 +92,10 @@ public class PlayerStat {
 		//Reloads stats
 		if (Bukkit.getPlayer(playerId) != null) {
 			if (modifier.getStat() == Stat.HEALTH) {
-				Health.reload(Bukkit.getPlayer(playerId));
+				new Health(plugin).reload(Bukkit.getPlayer(playerId));
 			}
 			else if (modifier.getStat() == Stat.LUCK) {
-				Luck.reload(Bukkit.getPlayer(playerId));
+				new Luck(plugin).reload(Bukkit.getPlayer(playerId));
 			}
 		}
 	}
@@ -114,9 +117,9 @@ public class PlayerStat {
 		if (reload) {
 			if (Bukkit.getPlayer(playerId) != null) {
 				if (modifier.getStat() == Stat.HEALTH) {
-					Health.reload(Bukkit.getPlayer(playerId));
+					new Health(plugin).reload(Bukkit.getPlayer(playerId));
 				} else if (modifier.getStat() == Stat.LUCK) {
-					Luck.reload(Bukkit.getPlayer(playerId));
+					new Luck(plugin).reload(Bukkit.getPlayer(playerId));
 				}
 			}
 		}
@@ -136,10 +139,10 @@ public class PlayerStat {
 			//Reloads stats
 			if (Bukkit.getPlayer(playerId) != null) {
 				if (modifier.getStat() == Stat.HEALTH) {
-					Health.reload(Bukkit.getPlayer(playerId));
+					new Health(plugin).reload(Bukkit.getPlayer(playerId));
 				}
 				else if (modifier.getStat() == Stat.LUCK) {
-					Luck.reload(Bukkit.getPlayer(playerId));
+					new Luck(plugin).reload(Bukkit.getPlayer(playerId));
 				}
 			}
 			return true;
@@ -159,9 +162,9 @@ public class PlayerStat {
 			if (Bukkit.getPlayer(playerId) != null) {
 				if (reload) {
 					if (modifier.getStat() == Stat.HEALTH) {
-						Health.reload(Bukkit.getPlayer(playerId));
+						new Health(plugin).reload(Bukkit.getPlayer(playerId));
 					} else if (modifier.getStat() == Stat.LUCK) {
-						Luck.reload(Bukkit.getPlayer(playerId));
+						new Luck(plugin).reload(Bukkit.getPlayer(playerId));
 					}
 				}
 			}

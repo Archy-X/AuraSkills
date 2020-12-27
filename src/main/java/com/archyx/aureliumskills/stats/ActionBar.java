@@ -21,7 +21,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -31,11 +30,12 @@ import java.util.UUID;
 
 public class ActionBar {
 
-	private final Plugin plugin;
-	private ManaManager mana;
+	private final AureliumSkills plugin;
+	private final ManaManager mana;
 
-	public ActionBar(Plugin plugin) {
+	public ActionBar(AureliumSkills plugin) {
 		this.plugin = plugin;
+		this.mana = plugin.getManaManager();
 	}
 	
 	private final HashSet<Player> isGainingXp = new HashSet<>();
@@ -44,14 +44,13 @@ public class ActionBar {
 	private final HashSet<UUID> actionBarDisabled = new HashSet<>();
 
 	public void startUpdateActionBar() {
-		mana = AureliumSkills.manaManager;
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.ACTION_BAR_ENABLED) && OptionL.getBoolean(Option.ACTION_BAR_IDLE)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					Locale locale = Lang.getLanguage(player);
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
-						if (!AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+						if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 							if (!currentAction.containsKey(player)) {
 								currentAction.put(player, 0);
 							}
@@ -239,8 +238,8 @@ public class ActionBar {
 	}
 
 	private void sendActionBar(Player player, String message) {
-		if (AureliumSkills.protocolLibEnabled) {
-			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && AureliumSkills.placeholderAPIEnabled) {
+		if (plugin.isProtocolLibEnabled()) {
+			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
 				ProtocolUtil.sendActionBar(player, PlaceholderAPI.setPlaceholders(player, message));
 			}
 			else {
@@ -248,7 +247,7 @@ public class ActionBar {
 			}
 		}
 		else {
-			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && AureliumSkills.placeholderAPIEnabled) {
+			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
 				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(PlaceholderAPI.setPlaceholders(player, message)));
 			}
 			else {

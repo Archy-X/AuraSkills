@@ -42,15 +42,15 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public static void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+	public void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
 		if (OptionL.isEnabled(Skill.EXCAVATION)) {
-			if (AureliumSkills.abilityManager.isEnabled(Ability.SPADE_MASTER)) {
+			if (plugin.getAbilityManager().isEnabled(Ability.SPADE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.excavation")) {
 					return;
 				}
 				if (playerSkill.getAbilityLevel(Ability.SPADE_MASTER) > 0) {
-					event.setDamage(event.getDamage() * (1 + (Ability.SPADE_MASTER.getValue(playerSkill.getAbilityLevel(Ability.SPADE_MASTER)) / 100)));
+					event.setDamage(event.getDamage() * (1 + (getValue(Ability.SPADE_MASTER, playerSkill) / 100)));
 				}
 			}
 		}
@@ -59,7 +59,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	@SuppressWarnings("deprecation")
 	public void biggerScoop(PlayerSkill playerSkill, Block block, Player player) {
 		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (Ability.BIGGER_SCOOP.getValue(playerSkill.getAbilityLevel(Ability.BIGGER_SCOOP)) / 100)) {
+			if (r.nextDouble() < (getValue(Ability.BIGGER_SCOOP, playerSkill) / 100)) {
 				ItemStack tool = player.getInventory().getItemInMainHand();
 				Material mat =  block.getType();
 				for (ItemStack item : block.getDrops(tool)) {
@@ -109,10 +109,10 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	public void metalDetector(Player player, PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (Ability.METAL_DETECTOR.getValue(playerSkill.getAbilityLevel(Ability.METAL_DETECTOR)) / 100)) {
-				int lootTableSize = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().size();
+			if (r.nextDouble() < (getValue(Ability.METAL_DETECTOR, playerSkill) / 100)) {
+				int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().size();
 				if (lootTableSize > 0) {
-					Loot loot = AureliumSkills.lootTableManager.getLootTable("excavation-rare").getLoot().get(r.nextInt(lootTableSize));
+					Loot loot = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().get(r.nextInt(lootTableSize));
 					// If has item
 					if (loot.hasItem()) {
 						ItemStack drop = loot.getDrop();
@@ -131,10 +131,10 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	public void luckySpades(Player player, PlayerSkill playerSkill, Block block) {
 		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (Ability.LUCKY_SPADES.getValue(playerSkill.getAbilityLevel(Ability.LUCKY_SPADES)) / 100)) {
-				int lootTableSize = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().size();
+			if (r.nextDouble() < (getValue(Ability.LUCKY_SPADES, playerSkill) / 100)) {
+				int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().size();
 				if (lootTableSize > 0) {
-					Loot loot = AureliumSkills.lootTableManager.getLootTable("excavation-epic").getLoot().get(r.nextInt(lootTableSize));
+					Loot loot = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().get(r.nextInt(lootTableSize));
 					// If has item
 					if (loot.hasItem()) {
 						ItemStack drop = loot.getDrop();

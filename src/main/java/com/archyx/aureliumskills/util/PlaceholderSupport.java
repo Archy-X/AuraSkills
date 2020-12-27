@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -23,12 +22,12 @@ import java.util.List;
 
 public class PlaceholderSupport extends PlaceholderExpansion {
 
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
     private final NumberFormat format1;
     private final NumberFormat format2;
     private final String[] xpIdentifiers = new String[] {"xp_required_formatted_", "xp_required_", "xp_progress_int", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
 
-    public PlaceholderSupport(Plugin plugin) {
+    public PlaceholderSupport(AureliumSkills plugin) {
         this.plugin = plugin;
         format1 = new DecimalFormat("#,###.#");
         format2 = new DecimalFormat("#,###.##");
@@ -111,12 +110,12 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets mana
         if (identifier.equals("mana")) {
-            return String.valueOf(AureliumSkills.manaManager.getMana(player.getUniqueId()));
+            return String.valueOf(plugin.getManaManager().getMana(player.getUniqueId()));
         }
 
         //Gets max mana
         if (identifier.equals("mana_max")) {
-            return String.valueOf(AureliumSkills.manaManager.getMaxMana(player.getUniqueId()));
+            return String.valueOf(plugin.getManaManager().getMaxMana(player.getUniqueId()));
         }
 
         //Gets stat values
@@ -147,7 +146,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             if (leaderboardType.startsWith("power_")) {
                 int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", ""));
                 if (place > 0) {
-                    List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readPowerLeaderboard(place, 1);
+                    List<PlayerSkillInstance> list = plugin.getLeaderboard().readPowerLeaderboard(place, 1);
                     if (list.size() > 0) {
                         PlayerSkillInstance playerSkill = list.get(0);
                         return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName() + " - " + playerSkill.getPowerLevel();
@@ -158,7 +157,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     if (identifier.endsWith("name")) {
                         int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_name", ""));
                         if (namePlace > 0) {
-                            List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readPowerLeaderboard(namePlace, 1);
+                            List<PlayerSkillInstance> list = plugin.getLeaderboard().readPowerLeaderboard(namePlace, 1);
                             if (list.size() > 0) {
                                 PlayerSkillInstance playerSkill = list.get(0);
                                 return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName();
@@ -169,7 +168,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     else if (identifier.endsWith("value")) {
                         int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_value", ""));
                         if (valuePlace > 0) {
-                            List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readPowerLeaderboard(valuePlace, 1);
+                            List<PlayerSkillInstance> list = plugin.getLeaderboard().readPowerLeaderboard(valuePlace, 1);
                             if (list.size() > 0) {
                                 PlayerSkillInstance playerSkill = list.get(0);
                                 return String.valueOf(playerSkill.getPowerLevel());
@@ -184,7 +183,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     if (leaderboardType.startsWith(skill.name().toLowerCase() + "_")) {
                         int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", ""));
                         if (place > 0) {
-                            List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readSkillLeaderboard(skill, 1, 1);
+                            List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, 1, 1);
                             if (list.size() > 0) {
                                 PlayerSkillInstance playerSkill = list.get(0);
                                 return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName() + " - " + playerSkill.getSkillLevel(skill);
@@ -195,7 +194,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                             if (identifier.endsWith("name")) {
                                 int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", "", "_name", ""));
                                 if (namePlace > 0) {
-                                    List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readSkillLeaderboard(skill, namePlace, 1);
+                                    List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, namePlace, 1);
                                     if (list.size() > 0) {
                                         PlayerSkillInstance playerSkill = list.get(0);
                                         return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName();
@@ -206,7 +205,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                             else if (identifier.endsWith("value")) {
                                 int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", "", "_value", ""));
                                 if (valuePlace > 0) {
-                                    List<PlayerSkillInstance> list = AureliumSkills.leaderboard.readSkillLeaderboard(skill, valuePlace, 1);
+                                    List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, valuePlace, 1);
                                     if (list.size() > 0) {
                                         PlayerSkillInstance playerSkill = list.get(0);
                                         return String.valueOf(playerSkill.getSkillLevel(skill));
@@ -221,14 +220,14 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.equals("rank")) {
-            return String.valueOf(AureliumSkills.leaderboard.getPowerRank(player.getUniqueId()));
+            return String.valueOf(plugin.getLeaderboard().getPowerRank(player.getUniqueId()));
         }
 
         if (identifier.startsWith("rank_")) {
             String skillName = LoreUtil.replace(identifier, "rank_", "");
             try {
                 Skill skill = Skill.valueOf(skillName.toUpperCase());
-                return String.valueOf(AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId()));
+                return String.valueOf(plugin.getLeaderboard().getSkillRank(skill, player.getUniqueId()));
             }
             catch (Exception e) {
                 return "";

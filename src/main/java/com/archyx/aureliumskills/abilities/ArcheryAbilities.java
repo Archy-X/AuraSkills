@@ -29,14 +29,14 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         super(plugin, Skill.ARCHERY);
     }
 
-    public static void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+    public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
         if (OptionL.isEnabled(Skill.ARCHERY)) {
-            if (AureliumSkills.abilityManager.isEnabled(Ability.BOW_MASTER)) {
+            if (plugin.getAbilityManager().isEnabled(Ability.BOW_MASTER)) {
                 if (!player.hasPermission("aureliumskills.archery")) {
                     return;
                 }
                 if (playerSkill.getAbilityLevel(Ability.BOW_MASTER) > 0) {
-                    double multiplier = 1 + (Ability.BOW_MASTER.getValue(playerSkill.getAbilityLevel(Ability.BOW_MASTER)) / 100);
+                    double multiplier = 1 + (getValue(Ability.BOW_MASTER, playerSkill) / 100);
                     event.setDamage(event.getDamage() * multiplier);
                 }
             }
@@ -44,7 +44,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
     }
 
     public void stun(PlayerSkill playerSkill, LivingEntity entity) {
-        if (r.nextDouble() < (Ability.STUN.getValue(playerSkill.getAbilityLevel(Ability.STUN)) / 100)) {
+        if (r.nextDouble() < (getValue(Ability.STUN, playerSkill) / 100)) {
             if (entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) != null) {
                 AttributeInstance speed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
                 if (speed != null) {
@@ -84,7 +84,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
     }
 
     public void piercing(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, Arrow arrow) {
-        if (r.nextDouble() < (Ability.PIERCING.getValue(playerSkill.getAbilityLevel(Ability.PIERCING)) / 100)) {
+        if (r.nextDouble() < (getValue(Ability.PIERCING, playerSkill) / 100)) {
             arrow.setBounce(false);
             Vector velocity = arrow.getVelocity();
             Arrow newArrow = event.getEntity().getWorld().spawnArrow(arrow.getLocation(), velocity, (float) velocity.length(), 0.0f);
@@ -106,7 +106,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                         //Applies abilities
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            AbilityManager options = AureliumSkills.abilityManager;
+                            AbilityManager options = plugin.getAbilityManager();
                             if (options.isEnabled(Ability.STUN)) {
                                 if (event.getEntity() instanceof LivingEntity) {
                                     LivingEntity entity = (LivingEntity) event.getEntity();

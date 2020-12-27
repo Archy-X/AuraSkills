@@ -28,7 +28,7 @@ public abstract class SkillLeveler {
         this.plugin = plugin;
         this.skillName = skill.toString().toLowerCase(Locale.ENGLISH);
         this.sourceManager = plugin.getSourceManager();
-        if (AureliumSkills.mythicMobsEnabled) {
+        if (plugin.isMythicMobsEnabled()) {
             bukkitAPIHelper = new BukkitAPIHelper();
         }
     }
@@ -38,7 +38,7 @@ public abstract class SkillLeveler {
         this.ability = ability;
         this.skillName = ability.getSkill().toString().toLowerCase(Locale.ENGLISH);
         this.sourceManager = plugin.getSourceManager();
-        if (AureliumSkills.mythicMobsEnabled) {
+        if (plugin.isMythicMobsEnabled()) {
             bukkitAPIHelper = new BukkitAPIHelper();
         }
     }
@@ -52,9 +52,9 @@ public abstract class SkillLeveler {
         if (playerSkill != null) {
             double output = getXp(source);
             if (ability != null) {
-                if (AureliumSkills.abilityManager.isEnabled(ability)) {
+                if (plugin.getAbilityManager().isEnabled(ability)) {
                     double modifier = 1;
-                    modifier += ability.getValue(playerSkill.getAbilityLevel(ability)) / 100;
+                    modifier += plugin.getAbilityManager().getValue(ability, playerSkill.getAbilityLevel(ability)) / 100;
                     output *= modifier;
                 }
             }
@@ -68,9 +68,9 @@ public abstract class SkillLeveler {
         if (playerSkill != null) {
             double output = input;
             if (ability != null) {
-                if (AureliumSkills.abilityManager.isEnabled(ability)) {
+                if (plugin.getAbilityManager().isEnabled(ability)) {
                     double modifier = 1;
-                    modifier += ability.getValue(playerSkill.getAbilityLevel(ability)) / 100;
+                    modifier += plugin.getAbilityManager().getValue(ability, playerSkill.getAbilityLevel(ability)) / 100;
                     output *= modifier;
                 }
             }
@@ -84,9 +84,9 @@ public abstract class SkillLeveler {
         if (playerSkill != null) {
             double output = input;
             if (ability != null) {
-                if (AureliumSkills.abilityManager.isEnabled(ability)) {
+                if (plugin.getAbilityManager().isEnabled(ability)) {
                     double modifier = 1;
-                    modifier += ability.getValue(playerSkill.getAbilityLevel(ability)) / 100;
+                    modifier += plugin.getAbilityManager().getValue(ability, playerSkill.getAbilityLevel(ability)) / 100;
                     output *= modifier;
                 }
             }
@@ -124,7 +124,7 @@ public abstract class SkillLeveler {
     }
 
     public boolean isMythicMob(Entity entity) {
-        if (AureliumSkills.mythicMobsEnabled) {
+        if (plugin.isMythicMobsEnabled()) {
             if (bukkitAPIHelper != null) {
                 if (bukkitAPIHelper.isMythicMob(entity)) {
                     return sourceManager.getCustomMobSet().contains(bukkitAPIHelper.getMythicMobInstance(entity).getType().getInternalName());
@@ -136,12 +136,12 @@ public abstract class SkillLeveler {
 
     public boolean blockXpGain(Player player) {
         //Checks if in blocked world
-        if (AureliumSkills.worldManager.isInBlockedWorld(player.getLocation())) {
+        if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
             return true;
         }
         //Checks if in blocked region
-        if (AureliumSkills.worldGuardEnabled) {
-            if (AureliumSkills.worldGuardSupport.isInBlockedRegion(player.getLocation())) {
+        if (plugin.isWorldGuardEnabled()) {
+            if (plugin.getWorldGuardSupport().isInBlockedRegion(player.getLocation())) {
                 return true;
             }
         }
@@ -158,12 +158,12 @@ public abstract class SkillLeveler {
 
     public boolean blockXpGainLocation(Location location) {
         //Checks if in blocked world
-        if (AureliumSkills.worldManager.isInBlockedWorld(location)) {
+        if (plugin.getWorldManager().isInBlockedWorld(location)) {
             return true;
         }
         //Checks if in blocked region
-        if (AureliumSkills.worldGuardEnabled) {
-            return AureliumSkills.worldGuardSupport.isInBlockedRegion(location);
+        if (plugin.isWorldGuardEnabled()) {
+            return plugin.getWorldGuardSupport().isInBlockedRegion(location);
         }
         return false;
     }
@@ -181,7 +181,7 @@ public abstract class SkillLeveler {
     }
 
     public boolean blockAbility(Player player) {
-        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return true;
         }
         if (!player.hasPermission("aureliumskills." + skillName)) {
@@ -191,6 +191,17 @@ public abstract class SkillLeveler {
             return player.getGameMode().equals(GameMode.CREATIVE);
         }
         return false;
+    }
+
+    public boolean blockDisabled(Ability ability) {
+        if (!OptionL.isEnabled(ability.getSkill())) {
+            return true;
+        }
+        return !plugin.getAbilityManager().isEnabled(ability);
+    }
+
+    public double getValue(Ability ability, PlayerSkill playerSkill) {
+        return plugin.getAbilityManager().getValue(ability, playerSkill.getAbilityLevel(ability));
     }
 
 }

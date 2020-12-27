@@ -1,15 +1,13 @@
 package com.archyx.aureliumskills.abilities;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.google.common.collect.ImmutableList;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public enum Ability {
@@ -136,52 +134,8 @@ public enum Ability {
 		return skill.get();
 	}
 
-	public double getValue(PlayerSkill playerSkill) {
-		return getBaseValue() + (getValuePerLevel() * (playerSkill.getAbilityLevel(this) - 1));
-	}
-
-	public double getValue(int level) {
-		return getBaseValue() + (getValuePerLevel() * (level - 1));
-	}
-	
-	public double getBaseValue() {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getBaseValue();
-		}
-		return baseValue;
-	}
-	
-	public double getValuePerLevel() {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getValuePerLevel();
-		}
-		return valuePerLevel;
-	}
-
 	public boolean hasTwoValues() {
 		return hasTwoValues;
-	}
-
-	public double getValue2(int level) {
-		return getBaseValue2() + (getValuePerLevel2() * (level - 1));
-	}
-
-	public double getBaseValue2() {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getBaseValue2();
-		}
-		return baseValue;
-	}
-
-	public double getValuePerLevel2() {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getValuePerLevel2();
-		}
-		return valuePerLevel;
 	}
 
 	public double getDefaultBaseValue() {
@@ -208,79 +162,8 @@ public enum Ability {
 		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_DESC"), locale);
 	}
 
-	public int getUnlock() {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getUnlock();
-		}
-		int defUnlock = 2;
-		for (int i = 0; i < skill.get().getAbilities().size(); i++) {
-			if (skill.get().getAbilities().get(i).get() == this) {
-				defUnlock += i;
-				break;
-			}
-		}
-		return defUnlock;
-	}
-
-	public int getLevelUp() {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getLevelUp();
-		}
-		return 5;
-	}
-
-	public int getMaxLevel() {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getMaxLevel();
-		}
-		return 0;
-	}
-
-	/**
-	 * Gets a list of abilities unlocked or leveled up at a certain level
-	 * @param skill The skill
-	 * @param level The skill level
-	 * @return A list of abilities
-	 */
-	public static List<Ability> getAbilities(Skill skill, int level) {
-		ImmutableList<Supplier<Ability>> skillAbilities = skill.getAbilities();
-		List<Ability> abilities = new ArrayList<>();
-		for (Supplier<Ability> abilitySupplier : skillAbilities) {
-			Ability ability = abilitySupplier.get();
-			if (level >= ability.getUnlock() && (level - ability.getUnlock()) % ability.getLevelUp() == 0) {
-				abilities.add(ability);
-			}
-		}
-		return abilities;
-	}
-
-	@Nullable
-	public OptionValue getOption(String key) {
-		AbilityOption option = AureliumSkills.abilityManager.getAbilityOption(this);
-		if (option != null) {
-			return option.getOption(key);
-		} else {
-			return this.options.get(key);
-		}
-	}
-
-	public boolean getOptionAsBooleanElseTrue(String key) {
-		OptionValue value = getOption(key);
-		if (value != null) {
-			return value.asBoolean();
-		}
-		return true;
-	}
-
-	@Nullable
-	public Set<String> getOptionKeys() {
-		if (options != null) {
-			return options.keySet();
-		}
-		return null;
+	public Map<String, OptionValue> getDefaultOptions() {
+		return options;
 	}
 
 }

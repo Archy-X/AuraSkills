@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.mana;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.ManaRegenerateEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
@@ -11,7 +12,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -21,9 +21,9 @@ import java.util.UUID;
 public class ManaManager implements Listener {
 
     private final Map<UUID, Double> mana;
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
 
-    public ManaManager(Plugin plugin) {
+    public ManaManager(AureliumSkills plugin) {
         this.plugin = plugin;
         mana = new HashMap<>();
     }
@@ -74,7 +74,7 @@ public class ManaManager implements Listener {
             return OptionL.getDouble(Option.BASE_MANA) + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
         }
         else {
-            SkillLoader.playerStats.put(id, new PlayerStat(id));
+            SkillLoader.playerStats.put(id, new PlayerStat(id, plugin));
             return OptionL.getDouble(Option.BASE_MANA);
         }
     }

@@ -26,13 +26,18 @@ import java.util.Random;
 public class Luck implements Listener {
 
 	private final Random r = new Random();
-	
+	private final AureliumSkills plugin;
+
+	public Luck(AureliumSkills plugin) {
+		this.plugin = plugin;
+	}
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		setLuck(event.getPlayer());
 	}
 	
-	public static void reload(Player player) {
+	public void reload(Player player) {
 		if (player != null) {
 			setLuck(player);
 		}
@@ -43,7 +48,7 @@ public class Luck implements Listener {
 		setLuck(event.getPlayer());
 	}
 
-	private static void setLuck(Player player) {
+	private void setLuck(Player player) {
 		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_LUCK);
 		if (attribute != null) {
 			boolean hasModifier = false;
@@ -57,7 +62,7 @@ public class Luck implements Listener {
 			if (!hasModifier) {
 				attribute.setBaseValue(0.0);
 			}
-			if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+			if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 				return;
 			}
 			if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
@@ -68,21 +73,18 @@ public class Luck implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
+	@SuppressWarnings("deprecation")
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (OptionL.getBoolean(Option.LUCK_DOUBLE_DROP_ENABLED) && !event.isCancelled()) {
 			Player player = event.getPlayer();
 			Block block = event.getBlock();
-			//Checks if in disabled world
-			if (AureliumSkills.worldManager.isInDisabledWorld(block.getLocation())) {
-				return;
-			}
-			//Checks if in blocked world
-			if (AureliumSkills.worldManager.isInBlockedWorld(block.getLocation())) {
+			//Checks if in blocked or disabled world
+			if (plugin.getWorldManager().isInBlockedWorld(block.getLocation())) {
 				return;
 			}
 			//Checks if in blocked region
-			if (AureliumSkills.worldGuardEnabled) {
-				if (AureliumSkills.worldGuardSupport.isInBlockedRegion(block.getLocation())) {
+			if (plugin.isWorldGuardEnabled()) {
+				if (plugin.getWorldGuardSupport().isInBlockedRegion(block.getLocation())) {
 					return;
 				}
 			}

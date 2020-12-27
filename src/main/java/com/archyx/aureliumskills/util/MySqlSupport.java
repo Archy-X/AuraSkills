@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
@@ -19,18 +18,16 @@ import java.util.UUID;
 
 public class MySqlSupport {
 
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
     private Connection connection;
     private final String host, database, username, password;
     private final int port;
-    private final AureliumSkills aureliumSkills;
     private final String updateString;
     private final String insertString;
     public static boolean isSaving;
 
-    public MySqlSupport(Plugin plugin, AureliumSkills aureliumSkills) {
+    public MySqlSupport(AureliumSkills plugin) {
         this.plugin = plugin;
-        this.aureliumSkills = aureliumSkills;
         host = OptionL.getString(Option.MYSQL_HOST);
         database = OptionL.getString(Option.MYSQL_DATABASE);
         username = OptionL.getString(Option.MYSQL_USERNAME);
@@ -138,8 +135,8 @@ public class MySqlSupport {
                 UUID id = UUID.fromString(result.getString("ID"));
                 String name = result.getString("NAME");
                 //Creates skill and stat objects
-                PlayerSkill playerSkill = new PlayerSkill(id, name);
-                PlayerStat playerStat = new PlayerStat(id);
+                PlayerSkill playerSkill = new PlayerSkill(id, name, plugin);
+                PlayerStat playerStat = new PlayerStat(id, plugin);
                 //Loops through all skills
                 for (Skill skill : Skill.values()) {
                     //Gets skill level and xp
@@ -164,13 +161,13 @@ public class MySqlSupport {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    AureliumSkills.leaderboard.updateLeaderboards(false);
+                    plugin.getLeaderboard().updateLeaderboards(false);
                 }
             }.runTaskAsynchronously(plugin);
         }
         else {
             Bukkit.getLogger().info("[AureliumSkills] MySql table doesn't exist, migrating existing data from file...");
-            aureliumSkills.getSkillLoader().loadSkillData();
+            plugin.getSkillLoader().loadSkillData();
         }
     }
 

@@ -14,11 +14,17 @@ import org.bukkit.inventory.AnvilInventory;
 
 public class Wisdom implements Listener {
 
+	private final AureliumSkills plugin;
+
+	public Wisdom(AureliumSkills plugin) {
+		this.plugin = plugin;
+	}
+
 	@EventHandler
 	public void onPlayerExpChange(PlayerExpChangeEvent event) {
 		Player player = event.getPlayer();
 		//Check for disabled world
-		if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+		if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 			return;
 		}
 		if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
@@ -35,7 +41,7 @@ public class Wisdom implements Listener {
 			if (entity instanceof Player) {
 				Player player = (Player) entity;
 				//Check for disabled world
-				if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+				if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 					return;
 				}
 				if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {

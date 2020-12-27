@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,25 +14,22 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Locale;
 
 public class ManaAbilityActivator {
 
-    private final Plugin plugin;
-    private final NumberFormat nf = new DecimalFormat("#.#");
+    private final AureliumSkills plugin;
 
-    public ManaAbilityActivator(Plugin plugin) {
+    public ManaAbilityActivator(AureliumSkills plugin) {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     public void readyAbility(PlayerInteractEvent event, Skill skill, String matchMaterial) {
         if (OptionL.isEnabled(skill)) {
-            if (AureliumSkills.abilityManager.isEnabled(skill.getManaAbility())) {
+            if (plugin.getAbilityManager().isEnabled(skill.getManaAbility())) {
                 if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                     // Check for hoe tilling
                     if (matchMaterial.equals("HOE") && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -67,7 +65,7 @@ public class ManaAbilityActivator {
                         Player player = event.getPlayer();
                         Locale locale = Lang.getLanguage(player);
                         // Check disabled worlds
-                        if (AureliumSkills.worldManager.isInDisabledWorld(player.getLocation())) {
+                        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
                             return;
                         }
                         // Check permission
@@ -76,33 +74,34 @@ public class ManaAbilityActivator {
                         }
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                             if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(skill.getManaAbility()) > 0) {
+                                ManaAbilityManager manager = plugin.getManaAbilityManager();
                                 // Checks if speed mine is already activated
-                                if (AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), skill.getManaAbility())) {
+                                if (manager.isActivated(player.getUniqueId(), skill.getManaAbility())) {
                                     return;
                                 }
                                 // Checks if speed mine is already ready
-                                if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), skill.getManaAbility())) {
+                                if (manager.isReady(player.getUniqueId(), skill.getManaAbility())) {
                                     return;
                                 }
                                 // Checks if cooldown is reached
-                                if (AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), skill.getManaAbility()) == 0) {
-                                    AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), skill.getManaAbility(), true);
+                                if (manager.getPlayerCooldown(player.getUniqueId(), skill.getManaAbility()) == 0) {
+                                    manager.setReady(player.getUniqueId(), skill.getManaAbility(), true);
                                     player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_RAISE"), locale));
                                     new BukkitRunnable() {
                                         @Override
                                         public void run() {
-                                            if (!AureliumSkills.manaAbilityManager.isActivated(player.getUniqueId(), skill.getManaAbility())) {
-                                                if (AureliumSkills.manaAbilityManager.isReady(player.getUniqueId(), skill.getManaAbility())) {
-                                                    AureliumSkills.manaAbilityManager.setReady(player.getUniqueId(), skill.getManaAbility(), false);
+                                            if (!manager.isActivated(player.getUniqueId(), skill.getManaAbility())) {
+                                                if (manager.isReady(player.getUniqueId(), skill.getManaAbility())) {
+                                                    manager.setReady(player.getUniqueId(), skill.getManaAbility(), false);
                                                     player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_LOWER"), locale));
                                                 }
                                             }
                                         }
                                     }.runTaskLater(plugin, 50L);
                                 } else {
-                                    if (AureliumSkills.manaAbilityManager.getErrorTimer(player.getUniqueId(), skill.getManaAbility()) == 0) {
-                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", nf.format(AureliumSkills.manaAbilityManager.getCooldown(player.getUniqueId(), skill.getManaAbility()) / 20)));
-                                        AureliumSkills.manaAbilityManager.setErrorTimer(player.getUniqueId(), skill.getManaAbility(), 2);
+                                    if (manager.getErrorTimer(player.getUniqueId(), skill.getManaAbility()) == 0) {
+                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format1((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), skill.getManaAbility()) / 20)));
+                                        manager.setErrorTimer(player.getUniqueId(), skill.getManaAbility(), 2);
                                     }
                                 }
                             }

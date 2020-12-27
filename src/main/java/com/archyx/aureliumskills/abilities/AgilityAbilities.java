@@ -26,7 +26,6 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -39,21 +38,19 @@ import java.util.Random;
 public class AgilityAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
-    private static Plugin plugin;
 
     public AgilityAbilities(AureliumSkills plugin) {
         super(plugin, Skill.AGILITY);
-        AgilityAbilities.plugin = plugin;
     }
 
     private void lightFall(EntityDamageEvent event, PlayerSkill playerSkill) {
         if (event.getFinalDamage() > 0.0) {
-            double percentReduction = Ability.LIGHT_FALL.getValue(playerSkill.getAbilityLevel(Ability.LIGHT_FALL));
+            double percentReduction = getValue(Ability.LIGHT_FALL, playerSkill);
             event.setDamage(event.getDamage() * (1 - (percentReduction / 100)));
         }
     }
 
-// For potion splashes
+    // For potion splashes
     @EventHandler(priority = EventPriority.HIGH)
     public void sugarRushSplash(PotionSplashEvent event) {
         if (!event.isCancelled()) {
@@ -68,7 +65,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                             if (playerSkill != null) {
                                 if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
                                     double intensity = event.getIntensity(player);
-                                    double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
+                                    double multiplier = 1 + (getValue(Ability.SUGAR_RUSH, playerSkill) / 100);
                                     PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
                                 }
                             }
@@ -79,12 +76,12 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public static double getSugarRushSplashMultiplier(Player player) {
-        if (player.hasPermission("aureliumskills.agility") && AureliumSkills.abilityManager.isEnabled(Ability.SUGAR_RUSH)) {
+    public double getSugarRushSplashMultiplier(Player player) {
+        if (player.hasPermission("aureliumskills.agility") && plugin.getAbilityManager().isEnabled(Ability.SUGAR_RUSH)) {
             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
             if (playerSkill != null) {
                 if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
-                    return 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
+                    return 1 + (getValue(Ability.SUGAR_RUSH, playerSkill) / 100);
                 }
             }
         }
@@ -106,7 +103,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                         if (item.getItemMeta() instanceof PotionMeta) {
                             PotionMeta meta = (PotionMeta) item.getItemMeta();
                             PotionData potion = meta.getBasePotionData();
-                            double multiplier = 1 + (Ability.SUGAR_RUSH.getValue(playerSkill.getAbilityLevel(Ability.SUGAR_RUSH)) / 100);
+                            double multiplier = 1 + (getValue(Ability.SUGAR_RUSH, playerSkill) / 100);
                             if (potion.getType() == PotionType.SPEED || potion.getType() == PotionType.JUMP) {
                                 int amplifier = 0;
                                 if (potion.isUpgraded()) {
@@ -150,7 +147,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         // If less than 20% health
         if (player.getHealth() - event.getFinalDamage() < 0.2 * maxHealth) {
             if (!player.hasMetadata("AureliumSkills-Fleeting")) {
-                double percent = Ability.FLEETING.getValue(playerSkill.getAbilityLevel(Ability.FLEETING));
+                double percent = getValue(Ability.FLEETING, playerSkill);
                 float boostFactor = 1 + ((float) percent / 100);
                 float newSpeed = player.getWalkSpeed() * boostFactor;
                 if (newSpeed > 1) {
@@ -166,7 +163,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public static void removeFleeting(Player player) {
+    public void removeFleeting(Player player) {
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
         if (player.getHealth() >= 0.2 * maxHealth) {
@@ -214,9 +211,9 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     public void thunderFall(EntityDamageEvent event, PlayerSkill playerSkill, Player player) {
         if (player.isSneaking()) {
             // If chance
-            if (r.nextDouble() < Ability.THUNDER_FALL.getValue(playerSkill.getAbilityLevel(Ability.THUNDER_FALL)) / 100) {
+            if (r.nextDouble() < getValue(Ability.THUNDER_FALL, playerSkill) / 100) {
                 // Get damage values
-                double percent = Ability.THUNDER_FALL.getValue2(playerSkill.getAbilityLevel(Ability.THUNDER_FALL));
+                double percent = getValue2(Ability.THUNDER_FALL, playerSkill);
                 double thunderFallDamage = (percent / 100) * event.getDamage();
                 // Get entities nearby
                 for (Entity entity : player.getWorld().getNearbyEntities(player.getLocation(), 3, 3, 1)) {
@@ -241,20 +238,20 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                     if (playerSkill != null) {
                         // If from fall damage
                         if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                            if (AureliumSkills.abilityManager.isEnabled(Ability.THUNDER_FALL)) {
+                            if (plugin.getAbilityManager().isEnabled(Ability.THUNDER_FALL)) {
                                 if (playerSkill.getAbilityLevel(Ability.THUNDER_FALL) > 0) {
                                     // Activate thunder fall
                                     thunderFall(event, playerSkill, player);
                                 }
                             }
-                            if (AureliumSkills.abilityManager.isEnabled(Ability.LIGHT_FALL)) {
+                            if (plugin.getAbilityManager().isEnabled(Ability.LIGHT_FALL)) {
                                 if (playerSkill.getAbilityLevel(Ability.LIGHT_FALL) > 0) {
                                     // Activate light fall
                                     lightFall(event, playerSkill);
                                 }
                             }
                         }
-                        if (AureliumSkills.abilityManager.isEnabled(Ability.FLEETING)) {
+                        if (plugin.getAbilityManager().isEnabled(Ability.FLEETING)) {
                             if (playerSkill.getAbilityLevel(Ability.FLEETING) > 0) {
                                 // Activate fleeting
                                 fleeting(event, playerSkill, player);

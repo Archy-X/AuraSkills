@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.menu.templates;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
@@ -12,8 +13,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 
 public class UnlockedTemplate extends ProgressLevelItem implements ConfigurableTemplate {
@@ -25,7 +24,10 @@ public class UnlockedTemplate extends ProgressLevelItem implements ConfigurableT
     private List<String> lore;
     private Map<Integer, Set<String>> lorePlaceholders;
     private final String[] definedPlaceholders = new String[] {"level_number", "rewards", "ability", "mana_ability", "unlocked"};
-    private final NumberFormat nf1 = new DecimalFormat("#.#");
+
+    public UnlockedTemplate(AureliumSkills plugin) {
+        super(plugin);
+    }
 
     @Override
     public TemplateType getType() {

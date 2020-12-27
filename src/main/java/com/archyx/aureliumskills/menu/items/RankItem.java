@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -14,8 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 
 public class RankItem implements ConfigurableItem {
@@ -28,7 +27,12 @@ public class RankItem implements ConfigurableItem {
     private List<String> lore;
     private Map<Integer, Set<String>> lorePlaceholders;
     private final String[] definedPlaceholders = new String[] {"out_of", "percent"};
-    private final NumberFormat nf = new DecimalFormat("#.##");
+    private final AureliumSkills plugin;
+
+    public RankItem(AureliumSkills plugin) {
+        this.plugin = plugin;
+    }
+
 
     @Override
     public ItemType getType() {
@@ -67,8 +71,8 @@ public class RankItem implements ConfigurableItem {
     public ItemStack getItem(Skill skill, Player player, Locale locale) {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
-        int rank = AureliumSkills.leaderboard.getSkillRank(skill, player.getUniqueId());
-        int size = AureliumSkills.leaderboard.getSize();
+        int rank = plugin.getLeaderboard().getSkillRank(skill, player.getUniqueId());
+        int size = plugin.getLeaderboard().getSize();
         if (meta != null) {
             meta.setDisplayName(LoreUtil.replace(displayName,"{your_ranking}", Lang.getMessage(MenuMessage.YOUR_RANKING, locale)));
             List<String> builtLore = new ArrayList<>();
@@ -85,7 +89,7 @@ public class RankItem implements ConfigurableItem {
                             line = LoreUtil.replace(line,"{percent}", LoreUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),"{percent}", String.valueOf((int) percent)));
                         }
                         else {
-                            line = LoreUtil.replace(line,"{percent}", LoreUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),"{percent}", nf.format(percent)));
+                            line = LoreUtil.replace(line,"{percent}", LoreUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),"{percent}",  NumberUtil.format2(percent)));
                         }
                     }
                 }
