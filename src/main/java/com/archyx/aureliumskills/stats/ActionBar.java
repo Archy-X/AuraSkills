@@ -9,7 +9,6 @@ import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.util.BigNumber;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
@@ -92,7 +91,7 @@ public class ActionBar {
 				Locale locale = Lang.getLanguage(player);
 				if (playerSkill != null) {
 					// Check enabled/disabled for max
-					boolean notMaxed = Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+					boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 					if (notMaxed && !OptionL.getBoolean(Option.ACTION_BAR_XP)) {
 						return;
 					}
@@ -121,7 +120,7 @@ public class ActionBar {
 										// Get health attribute
 										AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 										if (attribute != null) {
-											boolean notMaxed = Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+											boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 											// Not maxed
 											if (notMaxed) {
 												if (OptionL.getBoolean(Option.ACTION_BAR_XP)) {
@@ -134,7 +133,7 @@ public class ActionBar {
 																	, "{xp_gained}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
 																	, "{current_xp}", NumberUtil.format1(playerSkill.getXp(skill)))
-																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
+																	, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
 																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
 																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}
@@ -145,7 +144,7 @@ public class ActionBar {
 																	, "{xp_gained}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
 																	, "{current_xp}", String.valueOf((int) playerSkill.getXp(skill)))
-																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
+																	, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
 																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
 																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}
@@ -159,7 +158,7 @@ public class ActionBar {
 																	, "{xp_removed}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
 																	, "{current_xp}", NumberUtil.format1(playerSkill.getXp(skill)))
-																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
+																	, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
 																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
 																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}
@@ -170,7 +169,7 @@ public class ActionBar {
 																	, "{xp_gained}", NumberUtil.format1(xpAmount)
 																	, "{skill}", skill.getDisplayName(locale)
 																	, "{current_xp}", String.valueOf((int) playerSkill.getXp(skill)))
-																	, "{level_xp}", BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1))
+																	, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
 																	, "{mana}", NumberUtil.format0(mana.getMana(player.getUniqueId()))
 																	, "{max_mana}", NumberUtil.format0(mana.getMaxMana(player.getUniqueId()))));
 														}

@@ -106,7 +106,7 @@ public abstract class SkillLeveler {
                         if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && block.hasMetadata("skillsPlaced")) {
                             return;
                         }
-                        Leveler.addXp(player, skill, getXp(player, entry.getValue()));
+                        plugin.getLeveler().addXp(player, skill, getXp(player, entry.getValue()));
                         break;
                     }
                 }
@@ -115,7 +115,7 @@ public abstract class SkillLeveler {
                         if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && block.hasMetadata("skillsPlaced")) {
                             return;
                         }
-                        Leveler.addXp(player, skill, getXp(player, entry.getValue()));
+                        plugin.getLeveler().addXp(player, skill, getXp(player, entry.getValue()));
                         break;
                     }
                 }

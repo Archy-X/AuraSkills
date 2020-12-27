@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public abstract class ProgressLevelItem {
 
-    private AureliumSkills plugin;
+    private final AureliumSkills plugin;
 
     public ProgressLevelItem(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -94,6 +94,10 @@ public abstract class ProgressLevelItem {
             }
         }
         return manaAbilityLore.toString();
+    }
+
+    public AureliumSkills getPlugin() {
+        return plugin;
     }
 
 }

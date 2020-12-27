@@ -39,11 +39,11 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 							return;
 						}
 						try {
-							Leveler.addXp(p, s, getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
+							plugin.getLeveler().addXp(p, s, getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
 						}
 						catch (IllegalArgumentException exception) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
-								Leveler.addXp(p, s, getXp(p, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+								plugin.getLeveler().addXp(p, s, getXp(p, Source.FIGHTING_ZOMBIFIED_PIGLIN));
 							}
 						}
 					}

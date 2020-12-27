@@ -43,20 +43,20 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 						if (event.getDamager() instanceof Player) {
 							if (d * getXp(Source.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
 								if (d * getXp(Source.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									Leveler.addXp(p, s, d * getXp(p, Source.PLAYER_DAMAGE));
+									plugin.getLeveler().addXp(p, s, d * getXp(p, Source.PLAYER_DAMAGE));
 								}
 							} else {
-								Leveler.addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
+								plugin.getLeveler().addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 						//Mob damage
 						else {
 							if (d * getXp(Source.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
 								if (d * getXp(Source.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									Leveler.addXp(p, s, d * getXp(p, Source.MOB_DAMAGE));
+									plugin.getLeveler().addXp(p, s, d * getXp(p, Source.MOB_DAMAGE));
 								}
 							} else {
-								Leveler.addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
+								plugin.getLeveler().addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 					}

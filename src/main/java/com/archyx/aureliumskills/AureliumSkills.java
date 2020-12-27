@@ -79,6 +79,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
 	private Lang lang;
+	private Leveler leveler;
 	private final long releaseTime = 1607886993234L;
 
 	public void onEnable() {
@@ -208,9 +209,8 @@ public class AureliumSkills extends JavaPlugin {
 			skillLoader.startSaving();
 		}
 		// Load leveler
-		Leveler.plugin = this;
-		Leveler.loadLevelReqs();
-		Leveler.statLeveler = new StatLeveler(this);
+		leveler = new Leveler(this);
+		leveler.loadLevelRequirements();
 		// Load loot tables
 		lootTableManager = new LootTableManager(this);
 		// Load world manager
@@ -490,6 +490,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Lang getLang() {
 		return lang;
+	}
+
+	public Leveler getLeveler() {
+		return leveler;
 	}
 
 	public Leaderboard getLeaderboard() {

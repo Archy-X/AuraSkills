@@ -11,7 +11,6 @@ import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
@@ -170,7 +169,7 @@ public class SkillItem implements ConfigurableItem {
                         case "progress_to_level":
                             if (skillLevel < OptionL.getMaxLevel(skill)) {
                                 double currentXp = playerSkill.getXp(skill);
-                                double xpToNext = Leveler.levelReqs.get(skillLevel - 1);
+                                double xpToNext = plugin.getLeveler().getLevelRequirements().get(skillLevel - 1);
                                 line = LoreUtil.replace(line,"{progress_to_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
                                         ,"{level}", RomanNumber.toRoman(skillLevel + 1)
                                         ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)

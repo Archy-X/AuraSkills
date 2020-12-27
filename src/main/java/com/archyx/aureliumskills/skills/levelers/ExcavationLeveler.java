@@ -43,64 +43,65 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 			Player p = event.getPlayer();
 			Material mat = event.getBlock().getType();
 			if (blockXpGainPlayer(p)) return;
+			Leveler leveler = plugin.getLeveler();
 			if (mat.equals(Material.SAND)) {
 				if (XMaterial.isNewVersion()) {
-					Leveler.addXp(p, s, getXp(p, Source.SAND));
+					leveler.addXp(p, s, getXp(p, Source.SAND));
 				}
 				else {
 					switch (b.getData()) {
 						case 0:
-							Leveler.addXp(p, s, getXp(p, Source.SAND));
+							leveler.addXp(p, s, getXp(p, Source.SAND));
 							break;
 						case 1:
-							Leveler.addXp(p, s, getXp(p, Source.RED_SAND));
+							leveler.addXp(p, s, getXp(p, Source.RED_SAND));
 							break;
 					}
 				}
 			}
 			else if (mat.equals(XMaterial.RED_SAND.parseMaterial())) {
-				Leveler.addXp(p, s, getXp(p, Source.RED_SAND));
+				leveler.addXp(p, s, getXp(p, Source.RED_SAND));
 			}
 			else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
-				Leveler.addXp(p, s, getXp(p, Source.GRASS_BLOCK));
+				leveler.addXp(p, s, getXp(p, Source.GRASS_BLOCK));
 			}
 			else if (mat.equals(Material.GRAVEL)) {
-				Leveler.addXp(p, s, getXp(p, Source.GRAVEL));
+				leveler.addXp(p, s, getXp(p, Source.GRAVEL));
 			}
 			else if (mat.equals(Material.CLAY)) {
-				Leveler.addXp(p, s, getXp(p, Source.CLAY));
+				leveler.addXp(p, s, getXp(p, Source.CLAY));
 			}
 			else if (mat.equals(Material.SOUL_SAND)) {
-				Leveler.addXp(p, s, getXp(p, Source.SOUL_SAND));
+				leveler.addXp(p, s, getXp(p, Source.SOUL_SAND));
 			}
 			else if (mat.equals(XMaterial.MYCELIUM.parseMaterial())) {
-				Leveler.addXp(p, s, getXp(p, Source.MYCELIUM));
+				leveler.addXp(p, s, getXp(p, Source.MYCELIUM));
 			}
 			else if (mat.equals(XMaterial.SOUL_SOIL.parseMaterial())) {
-				Leveler.addXp(p, s, getXp(p, Source.SOUL_SOIL));
+				leveler.addXp(p, s, getXp(p, Source.SOUL_SOIL));
 			}
 			if (XMaterial.isNewVersion()) {
 				if (mat.equals(Material.DIRT)) {
-					Leveler.addXp(p, s, getXp(p, Source.DIRT));
+					leveler.addXp(p, s, getXp(p, Source.DIRT));
 				}
 				else if (mat.equals(XMaterial.COARSE_DIRT.parseMaterial())) {
-					Leveler.addXp(p, s, getXp(p, Source.COARSE_DIRT));
+					leveler.addXp(p, s, getXp(p, Source.COARSE_DIRT));
 				}
 				else if (mat.equals(XMaterial.PODZOL.parseMaterial())) {
-					Leveler.addXp(p, s, getXp(p, Source.PODZOL));
+					leveler.addXp(p, s, getXp(p, Source.PODZOL));
 				}
 			}
 			else {
 				if (mat.equals(Material.DIRT)) {
 					switch (b.getData()) {
 						case 0:
-							Leveler.addXp(p, s, getXp(p, Source.DIRT));
+							leveler.addXp(p, s, getXp(p, Source.DIRT));
 							break;
 						case 1:
-							Leveler.addXp(p, s, getXp(p, Source.COARSE_DIRT));
+							leveler.addXp(p, s, getXp(p, Source.COARSE_DIRT));
 							break;
 						case 2:
-							Leveler.addXp(p, s, getXp(p, Source.PODZOL));
+							leveler.addXp(p, s, getXp(p, Source.PODZOL));
 							break;
 					}
 				}

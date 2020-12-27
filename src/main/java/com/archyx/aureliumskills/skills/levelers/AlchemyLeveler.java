@@ -49,18 +49,19 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 							if (blockXpGainPlayer(p)) return;
 							Skill s = Skill.ALCHEMY;
 							Material mat = event.getContents().getIngredient().getType();
+							Leveler leveler = plugin.getLeveler();
 							if (mat.equals(Material.REDSTONE)) {
-								Leveler.addXp(p, s, getXp(p, Source.EXTENDED));
+								leveler.addXp(p, s, getXp(p, Source.EXTENDED));
 							} else if (mat.equals(Material.GLOWSTONE_DUST)) {
-								Leveler.addXp(p, s, getXp(p, Source.UPGRADED));
+								leveler.addXp(p, s, getXp(p, Source.UPGRADED));
 							} else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
-								Leveler.addXp(p, s, getXp(p, Source.AWKWARD));
+								leveler.addXp(p, s, getXp(p, Source.AWKWARD));
 							} else if (mat.equals(XMaterial.GUNPOWDER.parseMaterial())) {
-								Leveler.addXp(p, s, getXp(p, Source.SPLASH));
+								leveler.addXp(p, s, getXp(p, Source.SPLASH));
 							} else if (mat.equals(XMaterial.DRAGON_BREATH.parseMaterial())) {
-								Leveler.addXp(p, s, getXp(p, Source.LINGERING));
+								leveler.addXp(p, s, getXp(p, Source.LINGERING));
 							} else {
-								Leveler.addXp(p, s, getXp(p, Source.REGULAR));
+								leveler.addXp(p, s, getXp(p, Source.REGULAR));
 							}
 						}
 					}

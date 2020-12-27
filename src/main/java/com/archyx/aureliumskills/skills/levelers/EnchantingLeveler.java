@@ -34,16 +34,16 @@ public class EnchantingLeveler extends SkillLeveler implements Listener {
 			Material mat = event.getItem().getType();
 			if (blockXpGainPlayer(p)) return;
 			if (ItemUtils.isArmor(mat)) {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.ARMOR_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.ARMOR_PER_LEVEL));
 			}
 			else if (ItemUtils.isWeapon(mat)) {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.WEAPON_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.WEAPON_PER_LEVEL));
 			}
 			else if (mat.equals(Material.BOOK)) {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.BOOK_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.BOOK_PER_LEVEL));
 			}
 			else {
-				Leveler.addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.TOOL_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skill.ENCHANTING, event.getExpLevelCost() * getXp(Source.TOOL_PER_LEVEL));
 			}
 		}
 	}

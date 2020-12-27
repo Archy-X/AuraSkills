@@ -45,7 +45,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 					Player player = (Player) event.getEntity();
 					if (blockXpGain(player)) return;
 					if (event.getFinalDamage() < player.getHealth()) {
-						Leveler.addXp(player, Skill.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(Source.FALL_DAMAGE)));
+						plugin.getLeveler().addXp(player, Skill.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(Source.FALL_DAMAGE)));
 					}
 				}
 			}
@@ -77,7 +77,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 	                	if (player.hasMetadata("skillsJumps")) {
 	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
 	                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 100) {
-	                			Leveler.addXp(player, Skill.AGILITY, getXp(player, Source.JUMP_PER_100));
+								plugin.getLeveler().addXp(player, Skill.AGILITY, getXp(player, Source.JUMP_PER_100));
 	                			player.removeMetadata("skillsJumps", plugin);
 	                		}
 	                	}

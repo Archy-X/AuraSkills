@@ -43,7 +43,7 @@ public class EnduranceLeveler extends SkillLeveler {
 								player.setMetadata("skillsLastWalkDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.WALK_ONE_CM)));
 							}
 							if (xpAmount > 0) {
-								Leveler.addXp(player, Skill.ENDURANCE, xpAmount);
+								plugin.getLeveler().addXp(player, Skill.ENDURANCE, xpAmount);
 							}
 						}
 					}

@@ -35,22 +35,27 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Leveler {
+	
+	private final AureliumSkills plugin;
+	private final List<Integer> levelRequirements;
+	private final StatLeveler statLeveler;
+	private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
-	public static List<Integer> levelReqs = new LinkedList<>();
-	public static AureliumSkills plugin;
-	public static StatLeveler statLeveler;
-
-	private static final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
-
-	public static void loadLevelReqs() {
-		levelReqs.clear();
+	public Leveler(AureliumSkills plugin) {
+		this.plugin = plugin;
+		this.levelRequirements = new LinkedList<>();
+		this.statLeveler = new StatLeveler(plugin);
+	}
+	
+	public void loadLevelRequirements() {
+		levelRequirements.clear();
 		int highestMaxLevel = OptionL.getHighestMaxLevel();
 		for (int i = 0; i < highestMaxLevel - 1; i++) {
-			levelReqs.add((int) OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100);
+			levelRequirements.add((int) OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100);
 		}
 	}
 
-	public static double getMultiplier(Player player) {
+	public double getMultiplier(Player player) {
 		return 1 + player.getEffectivePermissions().stream()
 				.map(PermissionAttachmentInfo::getPermission)
 				.map(String::toLowerCase)
@@ -63,7 +68,7 @@ public class Leveler {
 	}
 	
 	//Method for adding xp with a defined amount
-	public static void addXp(Player player, Skill skill, double amount) {
+	public void addXp(Player player, Skill skill, double amount) {
 		PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 		//Checks if player has a skill profile for safety
 		if (playerSkill != null) {
@@ -78,7 +83,7 @@ public class Leveler {
 					//Adds xp
 					playerSkill.addXp(skill, event.getAmount());
 					//Check if player leveled up
-					Leveler.checkLevelUp(player, skill);
+					checkLevelUp(player, skill);
 					//Sends action bar message
 					plugin.getActionBar().sendXpActionBar(player, skill, event.getAmount());
 					// Sends boss bar if enabled
@@ -87,9 +92,9 @@ public class Leveler {
 						plugin.getBossBar().incrementAction(player, skill);
 						int currentAction = plugin.getBossBar().getCurrentAction(player, skill);
 						if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
-							boolean notMaxed = Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+							boolean notMaxed = levelRequirements.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 							if (notMaxed) {
-								plugin.getBossBar().sendBossBar(player, skill, playerSkill.getXp(skill), Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1), playerSkill.getSkillLevel(skill), false);
+								plugin.getBossBar().sendBossBar(player, skill, playerSkill.getXp(skill), levelRequirements.get(playerSkill.getSkillLevel(skill) - 1), playerSkill.getSkillLevel(skill), false);
 							} else {
 								plugin.getBossBar().sendBossBar(player, skill, 1, 1, playerSkill.getSkillLevel(skill), true);
 							}
@@ -101,7 +106,7 @@ public class Leveler {
 	}
 
 	//Method for setting xp with a defined amount
-	public static void setXp(Player player, Skill skill, double amount) {
+	public void setXp(Player player, Skill skill, double amount) {
 		PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 		//Checks if player has a skill profile for safety
 		if (playerSkill != null) {
@@ -109,7 +114,7 @@ public class Leveler {
 			//Sets Xp
 			playerSkill.setXp(skill, amount);
 			//Check if player leveled up
-			Leveler.checkLevelUp(player, skill);
+			checkLevelUp(player, skill);
 			//Sends action bar message
 			plugin.getActionBar().sendXpActionBar(player, skill, amount - originalAmount);
 			// Sends boss bar if enabled
@@ -118,9 +123,9 @@ public class Leveler {
 				plugin.getBossBar().incrementAction(player, skill);
 				int currentAction = plugin.getBossBar().getCurrentAction(player, skill);
 				if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
-					boolean notMaxed = Leveler.levelReqs.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+					boolean notMaxed = levelRequirements.size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 					if (notMaxed) {
-						plugin.getBossBar().sendBossBar(player, skill, playerSkill.getXp(skill), Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1), playerSkill.getSkillLevel(skill), false);
+						plugin.getBossBar().sendBossBar(player, skill, playerSkill.getXp(skill), levelRequirements.get(playerSkill.getSkillLevel(skill) - 1), playerSkill.getSkillLevel(skill), false);
 					} else {
 						plugin.getBossBar().sendBossBar(player, skill, 1, 1, playerSkill.getSkillLevel(skill), true);
 					}
@@ -129,7 +134,7 @@ public class Leveler {
 		}
 	}
 	
-	public static void updateStats(Player player) {
+	public void updateStats(Player player) {
 		if (SkillLoader.playerSkills.containsKey(player.getUniqueId()) && SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 			PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
@@ -150,18 +155,18 @@ public class Leveler {
 		}
 	}
 	
-	public static void checkLevelUp(Player player, Skill skill) {
+	public void checkLevelUp(Player player, Skill skill) {
 		UUID id = player.getUniqueId();
 		int currentLevel = SkillLoader.playerSkills.get(id).getSkillLevel(skill);
 		double currentXp = SkillLoader.playerSkills.get(id).getXp(skill);
 		PlayerSkill playerSkill = SkillLoader.playerSkills.get(id);
 		PlayerStat playerStat = SkillLoader.playerStats.get(id);
 		if (currentLevel < OptionL.getMaxLevel(skill)) { //Check max level options
-			if (levelReqs.size() > currentLevel - 1) {
-				if (currentXp >= levelReqs.get(currentLevel - 1)) {
+			if (levelRequirements.size() > currentLevel - 1) {
+				if (currentXp >= levelRequirements.get(currentLevel - 1)) {
 					Locale locale = Lang.getLanguage(player);
 					// When player levels up a skill
-					playerSkill.setXp(skill, currentXp - levelReqs.get(currentLevel - 1));
+					playerSkill.setXp(skill, currentXp - levelRequirements.get(currentLevel - 1));
 					playerSkill.setSkillLevel(skill, SkillLoader.playerSkills.get(id).getSkillLevel(skill) + 1);
 					playerStat.addStatLevel(skill.getPrimaryStat(), 1);
 					statLeveler.reloadStat(player, skill.getPrimaryStat());
@@ -210,7 +215,7 @@ public class Leveler {
 	}
 
 
-	private static String getLevelUpMessage(Player player, PlayerSkill playerSkill, Skill skill, int newLevel, Locale locale) {
+	private String getLevelUpMessage(Player player, PlayerSkill playerSkill, Skill skill, int newLevel, Locale locale) {
 		String message = LoreUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
@@ -275,6 +280,10 @@ public class Leveler {
 		}
 		message = LoreUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
+	}
+
+	public List<Integer> getLevelRequirements() {
+		return levelRequirements;
 	}
 
 }

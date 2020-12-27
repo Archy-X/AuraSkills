@@ -40,43 +40,44 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 				if (event.getCaught() instanceof Item) {
 					ItemStack item = ((Item) event.getCaught()).getItemStack();
 					Material mat = item.getType();
+					Leveler leveler = plugin.getLeveler();
 					if (XMaterial.isNewVersion()) {
 						if (mat.equals(XMaterial.COD.parseMaterial())) {
-							Leveler.addXp(p, s, getXp(p, Source.COD));
+							leveler.addXp(p, s, getXp(p, Source.COD));
 						} else if (mat.equals(XMaterial.SALMON.parseMaterial())) {
-							Leveler.addXp(p, s, getXp(p, Source.SALMON));
+							leveler.addXp(p, s, getXp(p, Source.SALMON));
 						} else if (mat.equals(XMaterial.TROPICAL_FISH.parseMaterial())) {
-							Leveler.addXp(p, s, getXp(p, Source.TROPICAL_FISH));
+							leveler.addXp(p, s, getXp(p, Source.TROPICAL_FISH));
 						} else if (mat.equals(XMaterial.PUFFERFISH.parseMaterial())) {
-							Leveler.addXp(p, s, getXp(p, Source.PUFFERFISH));
+							leveler.addXp(p, s, getXp(p, Source.PUFFERFISH));
 						}
 					} else if (mat.equals(XMaterial.COD.parseMaterial())) {
 						switch (item.getDurability()) {
 							case 0:
-								Leveler.addXp(p, s, getXp(p, Source.COD));
+								leveler.addXp(p, s, getXp(p, Source.COD));
 								break;
 							case 1:
-								Leveler.addXp(p, s, getXp(p, Source.SALMON));
+								leveler.addXp(p, s, getXp(p, Source.SALMON));
 								break;
 							case 2:
-								Leveler.addXp(p, s, getXp(p, Source.TROPICAL_FISH));
+								leveler.addXp(p, s, getXp(p, Source.TROPICAL_FISH));
 								break;
 							case 3:
-								Leveler.addXp(p, s, getXp(p, Source.PUFFERFISH));
+								leveler.addXp(p, s, getXp(p, Source.PUFFERFISH));
 								break;
 						}
 					}
 					if (mat.equals(Material.BOW) || mat.equals(Material.ENCHANTED_BOOK) || mat.equals(Material.NAME_TAG) || mat.equals(Material.SADDLE)) {
-						Leveler.addXp(p, s, getXp(p, Source.TREASURE));
+						leveler.addXp(p, s, getXp(p, Source.TREASURE));
 					} else if (mat.equals(Material.BOWL) || mat.equals(Material.LEATHER) || mat.equals(Material.LEATHER_BOOTS) || mat.equals(Material.ROTTEN_FLESH)
 							|| mat.equals(Material.POTION) || mat.equals(Material.BONE) || mat.equals(Material.TRIPWIRE_HOOK) || mat.equals(Material.STICK)
 							|| mat.equals(Material.STRING) || mat.equals(XMaterial.INK_SAC.parseMaterial()) || mat.equals(XMaterial.LILY_PAD.parseMaterial())) {
-						Leveler.addXp(p, s, getXp(p, Source.JUNK));
+						leveler.addXp(p, s, getXp(p, Source.JUNK));
 					} else if (mat.equals(Material.FISHING_ROD)) {
 						if (item.getEnchantments().size() != 0) {
-							Leveler.addXp(p, s, getXp(p, Source.TREASURE));
+							leveler.addXp(p, s, getXp(p, Source.TREASURE));
 						} else {
-							Leveler.addXp(p, s, getXp(p, Source.JUNK));
+							leveler.addXp(p, s, getXp(p, Source.JUNK));
 						}
 					}
 				}

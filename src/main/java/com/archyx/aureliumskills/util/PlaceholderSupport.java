@@ -7,7 +7,6 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang.math.NumberUtils;
@@ -243,13 +242,13 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     if (playerSkill != null) {
                         switch (id) {
                             case "xp_required_formatted_":
-                                return BigNumber.withSuffix(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1));
+                                return BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1));
                             case "xp_required_":
-                                return String.valueOf(Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1));
+                                return String.valueOf(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1));
                             case "xp_progress_int_":
-                                return String.valueOf((int) (playerSkill.getXp(skill) / (double) (Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) * 100));
+                                return String.valueOf((int) (playerSkill.getXp(skill) / (double) (plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1)) * 100));
                             case "xp_progress_":
-                                return String.valueOf(playerSkill.getXp(skill) / (double) (Leveler.levelReqs.get(playerSkill.getSkillLevel(skill) - 1)) * 100);
+                                return String.valueOf(playerSkill.getXp(skill) / (double) (plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1)) * 100);
                             case "xp_int":
                                 return String.valueOf((int) playerSkill.getXp(skill));
                             case "xp_formatted_":

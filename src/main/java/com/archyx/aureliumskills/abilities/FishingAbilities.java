@@ -12,7 +12,6 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -91,7 +90,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
 												item.setItemStack(drop);
-												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
+												plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
 											}
 										}
 										// If has command
@@ -111,7 +110,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
 												item.setItemStack(drop);
-												Leveler.addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
+												plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
 											}
 										}
 										// If has commaand

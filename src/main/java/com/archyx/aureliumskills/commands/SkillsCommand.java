@@ -15,7 +15,6 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.requirement.ArmorRequirement;
 import com.archyx.aureliumskills.requirement.ItemRequirement;
 import com.archyx.aureliumskills.skills.*;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.MySqlSupport;
@@ -63,7 +62,7 @@ public class SkillsCommand extends BaseCommand {
 	public void onXpAdd(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
 		Locale locale = Lang.getLanguage(player);
 		if (OptionL.isEnabled(skill)) {
-			Leveler.addXp(player, skill, amount);
+			plugin.getLeveler().addXp(player, skill, amount);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_ADD, locale).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
 		}
 		else {
@@ -78,7 +77,7 @@ public class SkillsCommand extends BaseCommand {
 	public void onXpSet(CommandSender sender, @Flags("other") Player player, Skill skill, double amount) {
 		Locale locale = Lang.getLanguage(player);
 		if (OptionL.isEnabled(skill)) {
-			Leveler.setXp(player, skill, amount);
+			plugin.getLeveler().setXp(player, skill, amount);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_SET, locale).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
 		}
 		else {
@@ -96,12 +95,12 @@ public class SkillsCommand extends BaseCommand {
 			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 				if (playerSkill.getXp(skill) - amount >= 0) {
-					Leveler.setXp(player, skill, playerSkill.getXp(skill) - amount);
+					plugin.getLeveler().setXp(player, skill, playerSkill.getXp(skill) - amount);
 					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_REMOVE, locale).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
 				}
 				else {
 					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_REMOVE, locale).replace("{amount}", String.valueOf(playerSkill.getXp(skill))).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
-					Leveler.setXp(player, skill, 0);
+					plugin.getLeveler().setXp(player, skill, 0);
 				}
 			}
 		}
@@ -345,7 +344,7 @@ public class SkillsCommand extends BaseCommand {
 			Bukkit.getLogger().warning("[AureliumSkills] Error while loading menus!");
 		}
 		plugin.getAbilityManager().loadOptions();
-		Leveler.loadLevelReqs();
+		plugin.getLeveler().loadLevelRequirements();
 		plugin.getLootTableManager().loadLootTables();
 		plugin.getWorldManager().loadWorlds();
 		if (plugin.isWorldGuardEnabled()) {
@@ -376,7 +375,7 @@ public class SkillsCommand extends BaseCommand {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					playerSkill.setSkillLevel(skill, level);
 					playerSkill.setXp(skill, 0);
-					Leveler.updateStats(player);
+					plugin.getLeveler().updateStats(player);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale)
@@ -405,7 +404,7 @@ public class SkillsCommand extends BaseCommand {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					playerSkill.setSkillLevel(skill, level);
 					playerSkill.setXp(skill, 0);
-					Leveler.updateStats(player);
+					plugin.getLeveler().updateStats(player);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 				}
@@ -431,7 +430,7 @@ public class SkillsCommand extends BaseCommand {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					playerSkill.setSkillLevel(skill, 1);
 					playerSkill.setXp(skill, 0);
-					Leveler.updateStats(player);
+					plugin.getLeveler().updateStats(player);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
@@ -448,7 +447,7 @@ public class SkillsCommand extends BaseCommand {
 					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 					playerSkill.setSkillLevel(s, 1);
 					playerSkill.setXp(s, 0);
-					Leveler.updateStats(player);
+					plugin.getLeveler().updateStats(player);
 				}
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 						.replace("{player}", player.getName()));
@@ -939,7 +938,7 @@ public class SkillsCommand extends BaseCommand {
 			if (sender instanceof Player) {
 				Player target = (Player) sender;
 				Locale locale = Lang.getLanguage(sender);
-				double multiplier = Leveler.getMultiplier(target);
+				double multiplier = plugin.getLeveler().getMultiplier(target);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
 						.replace("{player}", target.getName())
 						.replace("{multiplier}", NumberUtil.format2(multiplier))
@@ -952,7 +951,7 @@ public class SkillsCommand extends BaseCommand {
 		}
 		else {
 			Locale locale = Lang.getLanguage(player);
-			double multiplier = Leveler.getMultiplier(player);
+			double multiplier = plugin.getLeveler().getMultiplier(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
 					.replace("{player}", player.getName())
 					.replace("{multiplier}", NumberUtil.format2(multiplier))

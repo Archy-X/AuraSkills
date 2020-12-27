@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.OfflinePlayer;
@@ -60,7 +59,7 @@ public class AureliumAPI {
      * Adds Skill XP to a player for a certain skill, and includes multiplier permissions
      */
     public static void addXp(Player player, Skill skill, double amount) {
-        Leveler.addXp(player, skill, amount);
+        plugin.getLeveler().addXp(player, skill, amount);
     }
 
     /**
@@ -70,7 +69,7 @@ public class AureliumAPI {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (playerSkill != null) {
             playerSkill.addXp(skill, amount);
-            Leveler.checkLevelUp(player, skill);
+            plugin.getLeveler().checkLevelUp(player, skill);
         }
     }
 

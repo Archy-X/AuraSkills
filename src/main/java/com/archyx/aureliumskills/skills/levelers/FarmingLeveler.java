@@ -43,38 +43,39 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			Skill s = Skill.FARMING;
 			Material mat = b.getType();
 			if (blockXpGainPlayer(p)) return;
+			Leveler leveler = plugin.getLeveler();
 			if (BlockUtil.isCarrot(mat) && BlockUtil.isFullyGrown(b)) {
-				Leveler.addXp(p, s, getXp(p, Source.CARROT));
+				leveler.addXp(p, s, getXp(p, Source.CARROT));
 				applyAbilities(p, b);
 			}
 			else if (BlockUtil.isPotato(mat) && BlockUtil.isFullyGrown(b)) {
-				Leveler.addXp(p, s, getXp(p, Source.POTATO));
+				leveler.addXp(p, s, getXp(p, Source.POTATO));
 				applyAbilities(p, b);
 			}
 			else if (BlockUtil.isBeetroot(mat) && BlockUtil.isFullyGrown(b)) {
-				Leveler.addXp(p, s, getXp(p, Source.BEETROOT));
+				leveler.addXp(p, s, getXp(p, Source.BEETROOT));
 				applyAbilities(p, b);
 			}
 			else if (BlockUtil.isNetherWart(mat) && BlockUtil.isFullyGrown(b)) {
-				Leveler.addXp(p, s, getXp(p, Source.NETHER_WART));
+				leveler.addXp(p, s, getXp(p, Source.NETHER_WART));
 				applyAbilities(p, b);
 			}
 			else if (BlockUtil.isWheat(mat) && BlockUtil.isFullyGrown(b)) {
-				Leveler.addXp(p, s, getXp(p, Source.WHEAT));
+				leveler.addXp(p, s, getXp(p, Source.WHEAT));
 				applyAbilities(p, b);
 			}
 			else if (mat.equals(Material.PUMPKIN)) {
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
 					return;
 				}
-				Leveler.addXp(p, s, getXp(p, Source.PUMPKIN));
+				leveler.addXp(p, s, getXp(p, Source.PUMPKIN));
 				applyAbilities(p, b);
 			}
 			else if (mat.equals(XMaterial.MELON.parseMaterial())) {
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
 					return;
 				}
-				Leveler.addXp(p, s, getXp(p, Source.MELON));
+				leveler.addXp(p, s, getXp(p, Source.MELON));
 				applyAbilities(p, b);
 			}
 			else if (XBlock.isSugarCane(mat)) {
@@ -91,7 +92,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 						numBroken++;
 					}
 				}
-				Leveler.addXp(p, s, getXp(p, Source.SUGAR_CANE) * numBroken);
+				leveler.addXp(p, s, getXp(p, Source.SUGAR_CANE) * numBroken);
 				applyAbilities(p, b);
 			}
 			else if (mat.equals(XMaterial.BAMBOO.parseMaterial())) {
@@ -103,7 +104,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 					numBroken = 0;
 				}
 				numBroken += getBamboo(b.getRelative(BlockFace.UP), 0);
-				Leveler.addXp(p, s, getXp(p, Source.BAMBOO) * numBroken);
+				leveler.addXp(p, s, getXp(p, Source.BAMBOO) * numBroken);
 				applyAbilities(p, b);
 			}
 			// Check custom blocks

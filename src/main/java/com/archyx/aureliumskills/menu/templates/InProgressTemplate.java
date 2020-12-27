@@ -6,17 +6,15 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 
 public class InProgressTemplate extends ProgressLevelItem implements ConfigurableTemplate {
@@ -28,8 +26,6 @@ public class InProgressTemplate extends ProgressLevelItem implements Configurabl
     private List<String> lore;
     private Map<Integer, Set<String>> lorePlaceholders;
     private final String[] definedPlaceholders = new String[] {"level_number", "rewards", "ability", "mana_ability", "progress", "in_progress"};
-    private final NumberFormat nf1 = new DecimalFormat("#.#");
-    private final NumberFormat nf2 = new DecimalFormat("#.##");
 
     public InProgressTemplate(AureliumSkills plugin) {
         super(plugin);
@@ -92,10 +88,10 @@ public class InProgressTemplate extends ProgressLevelItem implements Configurabl
                             break;
                         case "progress":
                             double currentXp = playerSkill.getXp(skill);
-                            double xpToNext = Leveler.levelReqs.get(level - 2);
+                            double xpToNext = getPlugin().getLeveler().getLevelRequirements().get(level - 2);
                             line = LoreUtil.replace(line,"{progress}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
-                                    ,"{percent}", nf2.format(currentXp / xpToNext * 100)
-                                    ,"{current_xp}", nf2.format(currentXp)
+                                    ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
+                                    ,"{current_xp}", NumberUtil.format2(currentXp)
                                     ,"{level_xp}", String.valueOf((int) xpToNext)));
                             break;
                         case "in_progress":

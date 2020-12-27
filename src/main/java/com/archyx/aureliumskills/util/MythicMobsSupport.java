@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SourceManager;
-import com.archyx.aureliumskills.skills.levelers.Leveler;
 import com.archyx.aureliumskills.skills.levelers.SkillLeveler;
 import com.cryptomorin.xseries.XMaterial;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
@@ -28,6 +27,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("deprecation")
     public void onDeath(MythicMobDeathEvent event) {
         if (event.getKiller() instanceof Player) {
             Player player = (Player) event.getKiller();
@@ -67,7 +67,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
                     if (customMobs != null) {
                         for (Map.Entry<String, Double> entry : customMobs.entrySet()) {
                             if (event.getMobType().getInternalName().equals(entry.getKey())) {
-                                Leveler.addXp(player, Skill.ARCHERY, getXp(player, entry.getValue(), Ability.ARCHER));
+                                plugin.getLeveler().addXp(player, Skill.ARCHERY, getXp(player, entry.getValue(), Ability.ARCHER));
                                 break;
                             }
                         }
@@ -82,7 +82,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
                     if (customMobs != null) {
                         for (Map.Entry<String, Double> entry : customMobs.entrySet()) {
                             if (event.getMobType().getInternalName().equals(entry.getKey())) {
-                                Leveler.addXp(player, Skill.FIGHTING, getXp(player, entry.getValue(), Ability.FIGHTER));
+                                plugin.getLeveler().addXp(player, Skill.FIGHTING, getXp(player, entry.getValue(), Ability.FIGHTER));
                                 break;
                             }
                         }
