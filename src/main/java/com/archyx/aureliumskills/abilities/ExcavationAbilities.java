@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.LootDropCause;
+import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.skills.PlayerSkill;
@@ -68,30 +70,50 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 						if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
 							Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
 							if (grassBlock != null) {
-								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(grassBlock, 2));
+								PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(grassBlock, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+								Bukkit.getPluginManager().callEvent(event);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+								}
 							}
 						}
 						else if (mat.equals(XMaterial.MYCELIUM.parseMaterial())) {
 							Material mycelium = XMaterial.MYCELIUM.parseMaterial();
 							if (mycelium != null) {
-								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(mycelium, 2));
+								PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(mycelium, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+								Bukkit.getPluginManager().callEvent(event);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+								}
 							}
 						}
 						else if (mat.equals(XMaterial.CLAY.parseMaterial())) {
 							Material clay = XMaterial.CLAY.parseMaterial();
 							if (clay != null) {
-								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(clay, 2));
+								PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(clay, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+								Bukkit.getPluginManager().callEvent(event);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+								}
 							}
 						}
 						if (XMaterial.isNewVersion()) {
 							if (mat.equals(XMaterial.PODZOL.parseMaterial())) {
-								block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.PODZOL, 2));
+								PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(Material.PODZOL, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+								Bukkit.getPluginManager().callEvent(event);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+								}
 							}
 						}
 						else {
 							if (mat.equals(Material.DIRT)) {
 								if (block.getData() == 2) {
-									block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.DIRT, 2, (short) 2));
+									PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(Material.DIRT, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+									Bukkit.getPluginManager().callEvent(event);
+									if (!event.isCancelled()) {
+										block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+									}
 								}
 							}
 						}
@@ -100,7 +122,11 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					else {
 						ItemStack drop = item.clone();
 						drop.setAmount(2);
-						block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
+						PlayerLootDropEvent event = new PlayerLootDropEvent(player, drop, block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+						Bukkit.getPluginManager().callEvent(event);
+						if (!event.isCancelled()) {
+							block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+						}
 					}
 				}
 			}
@@ -117,7 +143,11 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					if (loot.hasItem()) {
 						ItemStack drop = loot.getDrop();
 						if (drop != null) {
-							block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
+							PlayerLootDropEvent event = new PlayerLootDropEvent(player, drop.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.METAL_DETECTOR);
+							Bukkit.getPluginManager().callEvent(event);
+							if (!event.isCancelled()) {
+								block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+							}
 						}
 					}
 					// If has command
@@ -139,7 +169,11 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					if (loot.hasItem()) {
 						ItemStack drop = loot.getDrop();
 						if (drop != null) {
-							block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
+							PlayerLootDropEvent event = new PlayerLootDropEvent(player, drop.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCKY_SPADES);
+							Bukkit.getPluginManager().callEvent(event);
+							if (!event.isCancelled()) {
+								block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+							}
 						}
 					}
 					// If has command

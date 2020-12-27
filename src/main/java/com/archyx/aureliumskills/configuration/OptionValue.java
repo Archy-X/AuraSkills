@@ -29,6 +29,10 @@ public class OptionValue {
         this.value = value;
     }
 
+    public Object getValue() {
+        return value;
+    }
+
     public int asInt() {
         return (int) value;
     }

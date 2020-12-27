@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.LootDropCause;
+import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
@@ -16,6 +18,7 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -53,7 +56,11 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 					if (skill.getAbilityLevel(Ability.LUMBERJACK) > 0) {
 						if (r.nextDouble() < ((getValue(Ability.LUMBERJACK, skill)) / 100)) {
 							for (ItemStack item : block.getDrops()) {
-								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
+								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUMBERJACK);
+								Bukkit.getPluginManager().callEvent(event);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+								}
 							}
 						}
 					}

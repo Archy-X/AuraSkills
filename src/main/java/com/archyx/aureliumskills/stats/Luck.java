@@ -1,10 +1,13 @@
 package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.LootDropCause;
+import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -109,23 +112,39 @@ public class Luck implements Listener {
 										if (mat.equals(Material.STONE)) {
 											if (!XMaterial.isNewVersion()) {
 												if (block.getData() == 0) {
-													block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.STONE));
+													PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(Material.STONE), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+													Bukkit.getPluginManager().callEvent(dropEvent);
+													if (!event.isCancelled()) {
+														block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+													}
 												}
 											}
 											else {
-												block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(Material.STONE));
+												PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(Material.STONE), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+												Bukkit.getPluginManager().callEvent(dropEvent);
+												if (!event.isCancelled()) {
+													block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+												}
 											}
 										}
 										else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
 											Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
 											if (grassBlock != null) {
-												block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), new ItemStack(grassBlock));
+												PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+												Bukkit.getPluginManager().callEvent(dropEvent);
+												if (!event.isCancelled()) {
+													block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+												}
 											}
 										}
 									}
 									//Drop regular item if not silk touch
 									else {
-										block.getWorld().dropItemNaturally(block.getLocation().add(0.5, 0.5, 0.5), item);
+										PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+										Bukkit.getPluginManager().callEvent(dropEvent);
+										if (!event.isCancelled()) {
+											block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+										}
 									}
 								}
 							}

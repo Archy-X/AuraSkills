@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.api.ManaRegenerateEvent;
+import com.archyx.aureliumskills.api.event.ManaRegenerateEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;

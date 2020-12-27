@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.api.XpGainEvent;
+import com.archyx.aureliumskills.api.event.XpGainEvent;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;

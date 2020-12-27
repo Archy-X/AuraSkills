@@ -284,6 +284,7 @@ abilities:
       unlock: 5
       level_up: 5
       max_level: 0
+      enable_message: true
     bleed:
       enabled: true
       base: 3.0

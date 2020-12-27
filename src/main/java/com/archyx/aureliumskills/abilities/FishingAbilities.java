@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.LootDropCause;
+import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
@@ -53,7 +55,11 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 						ItemStack drop = item.getItemStack();
 						if (drop.getMaxStackSize() > 1) {
 							drop.setAmount(drop.getAmount() * 2);
-							item.setItemStack(drop);
+							PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, item.getLocation(), LootDropCause.LUCKY_CATCH);
+							Bukkit.getPluginManager().callEvent(dropEvent);
+							if (!event.isCancelled()) {
+								item.setItemStack(dropEvent.getItemStack());
+							}
 						}
 					}
 				}
@@ -89,8 +95,12 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 										if (loot.hasItem()) {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
-												item.setItemStack(drop);
-												plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
+												PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, item.getLocation(), LootDropCause.EPIC_CATCH);
+												Bukkit.getPluginManager().callEvent(dropEvent);
+												if (!event.isCancelled()) {
+													item.setItemStack(dropEvent.getItemStack());
+													plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
+												}
 											}
 										}
 										// If has command
@@ -109,8 +119,12 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 										if (loot.hasItem()) {
 											ItemStack drop = loot.getDrop();
 											if (drop != null) {
-												item.setItemStack(drop);
-												plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
+												PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, item.getLocation(), LootDropCause.TREASURE_HUNTER);
+												Bukkit.getPluginManager().callEvent(dropEvent);
+												if (!event.isCancelled()) {
+													item.setItemStack(dropEvent.getItemStack());
+													plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
+												}
 											}
 										}
 										// If has commaand

@@ -318,7 +318,9 @@ public class AbilityManager {
     public boolean getOptionAsBooleanElseTrue(Ability ability, String key) {
         OptionValue value = getOption(ability, key);
         if (value != null) {
-            return value.asBoolean();
+            if (value.getValue() != null) {
+                return value.asBoolean();
+            }
         }
         return true;
     }

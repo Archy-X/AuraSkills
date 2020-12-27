@@ -2,8 +2,8 @@ package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
-import com.archyx.aureliumskills.api.SkillLevelUpEvent;
-import com.archyx.aureliumskills.api.XpGainEvent;
+import com.archyx.aureliumskills.api.event.SkillLevelUpEvent;
+import com.archyx.aureliumskills.api.event.XpGainEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;

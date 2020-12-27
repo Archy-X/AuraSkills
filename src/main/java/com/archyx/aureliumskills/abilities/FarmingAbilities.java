@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.LootDropCause;
+import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
@@ -11,6 +13,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.BlockUtil;
 import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -45,7 +48,11 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 					if (skill.getAbilityLevel(Ability.BOUNTIFUL_HARVEST) > 0) {
 						if (r.nextDouble() < (getValue(Ability.BOUNTIFUL_HARVEST, skill)) / 100) {
 							for (ItemStack item : block.getDrops()) {
-								player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
+								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BOUNTIFUL_HARVEST);
+								Bukkit.getPluginManager().callEvent(event);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+								}
 							}
 						}
 					}
@@ -63,8 +70,13 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 						if (playerSkill.getAbilityLevel(Ability.TRIPLE_HARVEST) > 0) {
 							if (r.nextDouble() < (getValue(Ability.TRIPLE_HARVEST, playerSkill)) / 100) {
 								for (ItemStack item : block.getDrops()) {
-									player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
-									player.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), item);
+									ItemStack droppedItem = item.clone();
+									droppedItem.setAmount(2);
+									PlayerLootDropEvent event = new PlayerLootDropEvent(player, droppedItem, block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.TRIPLE_HARVEST);
+									Bukkit.getPluginManager().callEvent(event);
+									if (!event.isCancelled()) {
+										block.getWorld().dropItem(event.getLocation(), event.getItemStack());
+									}
 								}
 							}
 						}
