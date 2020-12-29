@@ -1,8 +1,7 @@
 package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.requirement.ArmorRequirement;
-import com.archyx.aureliumskills.requirement.ItemRequirement;
+import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
@@ -27,18 +26,18 @@ public class ModifierManager {
 
     public void reloadPlayer(Player player) {
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-        ItemRequirement itemRequirement = new ItemRequirement(plugin.getRequirementManager());
-        ArmorRequirement armorRequirement = new ArmorRequirement(plugin.getRequirementManager());
+        Requirements requirements = new Requirements(plugin.getRequirementManager());
+        Modifiers modifiers = new Modifiers();
         if (playerStat != null) {
             Set<Stat> statsToReload = new HashSet<>();
             ItemStack item = player.getInventory().getItemInMainHand();
             if (!(item.getType() == Material.AIR)) {
-                for (StatModifier modifier : ItemModifier.getItemModifiers(item)) {
+                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
                     playerStat.removeModifier(modifier.getName());
                     statsToReload.add(modifier.getStat());
                 }
-                if (itemRequirement.meetsRequirements(player, item)) {
-                    for (StatModifier modifier : ItemModifier.getItemModifiers(item)) {
+                if (requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
+                    for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
                         playerStat.addModifier(modifier, false);
                         statsToReload.add(modifier.getStat());
                     }
@@ -46,13 +45,13 @@ public class ModifierManager {
             }
             ItemStack itemOffHand = player.getInventory().getItemInOffHand();
             if (!(itemOffHand.getType() == Material.AIR)) {
-                for (StatModifier modifier : ItemModifier.getItemModifiers(itemOffHand)) {
-                    playerStat.removeModifier(modifier.getName() + "-offhand");
+                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemOffHand)) {
+                    playerStat.removeModifier(modifier.getName() + ".Offhand");
                     statsToReload.add(modifier.getStat());
                 }
-                if (itemRequirement.meetsRequirements(player, itemOffHand)) {
-                    for (StatModifier modifier : ItemModifier.getItemModifiers(itemOffHand)) {
-                        StatModifier offHandModifier = new StatModifier(modifier.getName() + "-offhand", modifier.getStat(), modifier.getValue());
+                if (requirements.meetsRequirements(ModifierType.ITEM, itemOffHand, player)) {
+                    for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemOffHand)) {
+                        StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
                         playerStat.addModifier(offHandModifier, false);
                         statsToReload.add(modifier.getStat());
                     }
@@ -63,12 +62,12 @@ public class ModifierManager {
                 for (ItemStack armor : equipment.getArmorContents()) {
                     if (armor != null) {
                         if (!(armor.getType() == Material.AIR)) {
-                            for (StatModifier modifier : ArmorModifier.getArmorModifiers(armor)) {
+                            for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, armor)) {
                                 playerStat.removeModifier(modifier.getName());
                                 statsToReload.add(modifier.getStat());
                             }
-                            if (armorRequirement.meetsRequirements(player, armor)) {
-                                for (StatModifier modifier : ArmorModifier.getArmorModifiers(armor)) {
+                            if (requirements.meetsRequirements(ModifierType.ARMOR, armor, player)) {
+                                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, armor)) {
                                     playerStat.addModifier(modifier, false);
                                     statsToReload.add(modifier.getStat());
                                 }

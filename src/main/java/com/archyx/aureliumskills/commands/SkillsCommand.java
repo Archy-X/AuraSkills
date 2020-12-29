@@ -9,11 +9,10 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.menu.SkillsMenu;
-import com.archyx.aureliumskills.modifier.ArmorModifier;
-import com.archyx.aureliumskills.modifier.ItemModifier;
+import com.archyx.aureliumskills.modifier.ModifierType;
+import com.archyx.aureliumskills.modifier.Modifiers;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.requirement.ArmorRequirement;
-import com.archyx.aureliumskills.requirement.ItemRequirement;
+import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.LoreUtil;
@@ -652,16 +651,17 @@ public class SkillsCommand extends BaseCommand {
 	public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		for (StatModifier statModifier : ItemModifier.getItemModifiers(item)) {
+		Modifiers modifiers = new Modifiers();
+		for (StatModifier statModifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
 			if (statModifier.getStat() == stat) {
 				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
 				return;
 			}
 		}
 		if (lore) {
-			ItemModifier.addLore(item, stat, value, locale);
+			modifiers.addLore(ModifierType.ITEM, item, stat, value, locale);
 		}
-		ItemStack newItem = ItemModifier.addItemModifier(item, stat, value);
+		ItemStack newItem = modifiers.addModifier(ModifierType.ITEM, item, stat, value);
 		player.getInventory().setItemInMainHand(newItem);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ADDED, locale), stat, value, locale));
 	}
@@ -674,15 +674,16 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		boolean removed = false;
-		for (StatModifier modifier : ItemModifier.getItemModifiers(item)) {
+		Modifiers modifiers = new Modifiers();
+		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
 			if (modifier.getStat() == stat) {
-				item = ItemModifier.removeItemModifier(item, stat);
+				item = modifiers.removeModifier(ModifierType.ITEM, item, stat);
 				removed = true;
 				break;
 			}
 		}
 		if (lore) {
-			ItemModifier.removeLore(item, stat, locale);
+			modifiers.removeLore(item, stat, locale);
 		}
 		player.getInventory().setItemInMainHand(item);
 		if (removed) {
@@ -700,7 +701,8 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_HEADER, locale));
-		for (StatModifier modifier : ItemModifier.getItemModifiers(item)) {
+		Modifiers modifiers = new Modifiers();
+		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
 			message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_ENTRY, locale), modifier, locale));
 		}
 		player.sendMessage(message.toString());
@@ -711,7 +713,8 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes all item stat modifiers from the item held.")
 	public void onItemModifierRemoveAll(@Flags("itemheld") Player player) {
 		Locale locale = Lang.getLanguage(player);
-		ItemStack item = ItemModifier.removeAllItemModifiers(player.getInventory().getItemInMainHand());
+		Modifiers modifiers = new Modifiers();
+		ItemStack item = modifiers.removeAllModifiers(ModifierType.ITEM, player.getInventory().getItemInMainHand());
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVEALL_REMOVED, locale));
 	}
@@ -723,16 +726,17 @@ public class SkillsCommand extends BaseCommand {
 	public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, int value, @Default("true") boolean lore) {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		for (StatModifier statModifier : ArmorModifier.getArmorModifiers(item)) {
+		Modifiers modifiers = new Modifiers();
+		for (StatModifier statModifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
 			if (statModifier.getStat() == stat) {
 				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
 				return;
 			}
 		}
 		if (lore) {
-			ArmorModifier.addLore(item, stat, value, locale);
+			modifiers.addLore(ModifierType.ARMOR, item, stat, value, locale);
 		}
-		ItemStack newItem = ArmorModifier.addArmorModifier(item, stat, value);
+		ItemStack newItem = modifiers.addModifier(ModifierType.ARMOR, item, stat, value);
 		player.getInventory().setItemInMainHand(newItem);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale), stat, value, locale));
 
@@ -746,15 +750,16 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		boolean removed = false;
-		for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
+		Modifiers modifiers = new Modifiers();
+		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
 			if (modifier.getStat() == stat) {
-				item = ArmorModifier.removeArmorModifier(item, stat);
+				item = modifiers.removeModifier(ModifierType.ARMOR, item, stat);
 				removed = true;
 				break;
 			}
 		}
 		if (lore) {
-			ItemModifier.removeLore(item, stat, locale);
+			modifiers.removeLore(item, stat, locale);
 		}
 		player.getInventory().setItemInMainHand(item);
 		if (removed) {
@@ -772,7 +777,8 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_HEADER, locale));
-		for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
+		Modifiers modifiers = new Modifiers();
+		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
 			message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_ENTRY, locale), modifier, locale));
 		}
 		player.sendMessage(message.toString());
@@ -783,7 +789,8 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes all armor stat modifiers from the item held.")
 	public void onArmorModifierRemoveAll(@Flags("itemheld") Player player) {
 		Locale locale = Lang.getLanguage(player);
-		ItemStack item = ArmorModifier.removeAllArmorModifiers(player.getInventory().getItemInMainHand());
+		Modifiers modifiers = new Modifiers();
+		ItemStack item = modifiers.removeAllModifiers(ModifierType.ARMOR, player.getInventory().getItemInMainHand());
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVEALL_REMOVED, locale));
 	}
@@ -795,14 +802,14 @@ public class SkillsCommand extends BaseCommand {
 	public void onItemRequirementAdd(@Flags("itemheld") Player player, Skill skill, int level, @Default("true") boolean lore) {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		ItemRequirement itemRequirement = new ItemRequirement(plugin.getRequirementManager());
-		if (itemRequirement.hasItemRequirement(item, skill)) {
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		if (requirements.hasRequirement(ModifierType.ITEM, item, skill)) {
 			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_ADD_ALREADY_EXISTS, locale), "{skill}", skill.getDisplayName(locale)));
 			return;
 		}
-		item = itemRequirement.addItemRequirement(item, skill, level);
+		item = requirements.addRequirement(ModifierType.ITEM, item, skill, level);
 		if (lore) {
-			itemRequirement.addLore(item, skill, level, locale);
+			requirements.addLore(ModifierType.ITEM, item, skill, level, locale);
 		}
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_ADD_ADDED, locale),
@@ -817,11 +824,11 @@ public class SkillsCommand extends BaseCommand {
 	public void onItemRequirementRemove(@Flags("itemheld") Player player, Skill skill, @Default("true") boolean lore) {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		ItemRequirement itemRequirement = new ItemRequirement(plugin.getRequirementManager());
-		if (itemRequirement.hasItemRequirement(item, skill)) {
-			item = itemRequirement.removeItemRequirement(item, skill);
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		if (requirements.hasRequirement(ModifierType.ITEM, item, skill)) {
+			item = requirements.removeRequirement(ModifierType.ITEM, item, skill);
 			if (lore) {
-				itemRequirement.removeLore(item, skill);
+				requirements.removeLore(item, skill);
 			}
 			player.getInventory().setItemInMainHand(item);
 			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_REMOVE_REMOVED, locale),
@@ -839,8 +846,8 @@ public class SkillsCommand extends BaseCommand {
 	public void onItemRequirementList(@Flags("itemheld") Player player) {
 		Locale locale = Lang.getLanguage(player);
 		player.sendMessage(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_LIST_HEADER, locale));
-		ItemRequirement itemRequirement = new ItemRequirement(plugin.getRequirementManager());
-		for (Map.Entry<Skill, Integer> entry : itemRequirement.getItemRequirements(player.getInventory().getItemInMainHand()).entrySet()) {
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		for (Map.Entry<Skill, Integer> entry : requirements.getRequirements(ModifierType.ITEM, player.getInventory().getItemInMainHand()).entrySet()) {
 			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_LIST_ENTRY, locale),
 					"{skill}", entry.getKey().getDisplayName(locale),
 					"{level}", String.valueOf(entry.getValue())));
@@ -852,8 +859,8 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes all item requirements from the item held.")
 	public void onItemRequirementRemoveAll(@Flags("itemheld") Player player) {
 		Locale locale = Lang.getLanguage(player);
-		ItemRequirement itemRequirement = new ItemRequirement(plugin.getRequirementManager());
-		ItemStack item = itemRequirement.removeAllItemRequirements(player.getInventory().getItemInMainHand());
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		ItemStack item = requirements.removeAllRequirements(ModifierType.ITEM, player.getInventory().getItemInMainHand());
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_REMOVEALL_REMOVED, locale));
 	}
@@ -865,15 +872,15 @@ public class SkillsCommand extends BaseCommand {
 	public void onArmorRequirementAdd(@Flags("itemheld") Player player, Skill skill, int level, @Default("true") boolean lore) {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		ArmorRequirement armorRequirement = new ArmorRequirement(plugin.getRequirementManager());
-		if (armorRequirement.hasArmorRequirement(item, skill)) {
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		if (requirements.hasRequirement(ModifierType.ARMOR, item, skill)) {
 			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_ADD_ALREADY_EXISTS, locale),
 					"{skill}", skill.getDisplayName(locale)));
 			return;
 		}
-		item = armorRequirement.addArmorRequirement(item, skill, level);
+		item = requirements.addRequirement(ModifierType.ARMOR, item, skill, level);
 		if (lore) {
-			armorRequirement.addLore(item, skill, level, locale);
+			requirements.addLore(ModifierType.ARMOR, item, skill, level, locale);
 		}
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_ADD_ADDED, locale),
@@ -888,11 +895,11 @@ public class SkillsCommand extends BaseCommand {
 	public void onArmorRequirementRemove(@Flags("itemheld") Player player, Skill skill, @Default("true") boolean lore) {
 		Locale locale = Lang.getLanguage(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		ArmorRequirement armorRequirement = new ArmorRequirement(plugin.getRequirementManager());
-		if (armorRequirement.hasArmorRequirement(item, skill)) {
-			item = armorRequirement.removeArmorRequirement(item, skill);
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		if (requirements.hasRequirement(ModifierType.ARMOR, item, skill)) {
+			item = requirements.removeRequirement(ModifierType.ARMOR, item, skill);
 			if (lore) {
-				armorRequirement.removeLore(item, skill);
+				requirements.removeLore(item, skill);
 			}
 			player.getInventory().setItemInMainHand(item);
 			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_REMOVE_REMOVED, locale),
@@ -910,8 +917,8 @@ public class SkillsCommand extends BaseCommand {
 	public void onArmorRequirementList(@Flags("itemheld") Player player) {
 		Locale locale = Lang.getLanguage(player);
 		player.sendMessage(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_LIST_HEADER, locale));
-		ArmorRequirement armorRequirement = new ArmorRequirement(plugin.getRequirementManager());
-		for (Map.Entry<Skill, Integer> entry : armorRequirement.getArmorRequirements(player.getInventory().getItemInMainHand()).entrySet()) {
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		for (Map.Entry<Skill, Integer> entry : requirements.getRequirements(ModifierType.ARMOR, player.getInventory().getItemInMainHand()).entrySet()) {
 			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_LIST_ENTRY, locale),
 					"{skill}", entry.getKey().getDisplayName(locale),
 					"{level}", String.valueOf(entry.getValue())));
@@ -923,8 +930,8 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes all armor requirements from the item held.")
 	public void onArmorRequirementRemoveAll(@Flags("itemheld") Player player) {
 		Locale locale = Lang.getLanguage(player);
-		ArmorRequirement armorRequirement = new ArmorRequirement(plugin.getRequirementManager());
-		ItemStack item = armorRequirement.removeAllArmorRequirements(player.getInventory().getItemInMainHand());
+		Requirements requirements = new Requirements(plugin.getRequirementManager());
+		ItemStack item = requirements.removeAllRequirements(ModifierType.ARMOR, player.getInventory().getItemInMainHand());
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_REMOVEALL_REMOVED, locale));
 	}

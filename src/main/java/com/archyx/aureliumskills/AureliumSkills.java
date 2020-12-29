@@ -21,8 +21,7 @@ import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
-import com.archyx.aureliumskills.requirement.ArmorRequirementListener;
-import com.archyx.aureliumskills.requirement.ItemRequirementListener;
+import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.skills.levelers.*;
@@ -391,9 +390,7 @@ public class AureliumSkills extends JavaPlugin {
 		itemListener.scheduleTask();
 		pm.registerEvents(new ArmorListener(OptionL.getList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
 		pm.registerEvents(new ArmorModifierListener(requirementManager), this);
-		ItemRequirementListener itemRequirementListener = new ItemRequirementListener(requirementManager);
-		pm.registerEvents(itemRequirementListener, this);
-		pm.registerEvents(new ArmorRequirementListener(requirementManager), this);
+		pm.registerEvents(new RequirementListener(requirementManager), this);
 	}
 
 	private boolean setupEconomy() {

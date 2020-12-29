@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.modifier;
 
-import com.archyx.aureliumskills.requirement.ArmorRequirement;
 import com.archyx.aureliumskills.requirement.RequirementManager;
+import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.util.ArmorEquipEvent;
@@ -15,10 +15,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class ArmorModifierListener implements Listener {
 
-    private final RequirementManager requirementManager;
+    private final Modifiers modifiers;
+    private final Requirements requirements;
 
     public ArmorModifierListener(RequirementManager requirementManager) {
-        this.requirementManager = requirementManager;
+        this.modifiers = new Modifiers();
+        this.requirements = new Requirements(requirementManager);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -29,9 +31,8 @@ public class ArmorModifierListener implements Listener {
             for (ItemStack armor : player.getInventory().getArmorContents()) {
                 if (armor != null) {
                     if (!armor.getType().equals(Material.AIR)) {
-                        ArmorRequirement armorRequirement = new ArmorRequirement(requirementManager);
-                        if (armorRequirement.meetsRequirements(player, armor)) {
-                            for (StatModifier modifier : ArmorModifier.getArmorModifiers(armor)) {
+                        if (requirements.meetsRequirements(ModifierType.ARMOR, armor, player)) {
+                            for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, armor)) {
                                 playerStat.addModifier(modifier, false);
                             }
                         }
@@ -46,20 +47,19 @@ public class ArmorModifierListener implements Listener {
         Player player = event.getPlayer();
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
         if (playerStat != null) {
-            //Equip
+            // Equip
             if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR) {
                 ItemStack item = event.getNewArmorPiece();
-                ArmorRequirement armorRequirement = new ArmorRequirement(requirementManager);
-                if (armorRequirement.meetsRequirements(player, item)) {
-                    for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
+                if (requirements.meetsRequirements(ModifierType.ARMOR, item, player)) {
+                    for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
                         playerStat.addModifier(modifier);
                     }
                 }
             }
-            //Un-equip
+            // Un-equip
             if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR) {
                 ItemStack item = event.getOldArmorPiece();
-                for (StatModifier modifier : ArmorModifier.getArmorModifiers(item)) {
+                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
                     playerStat.removeModifier(modifier.getName());
                 }
             }

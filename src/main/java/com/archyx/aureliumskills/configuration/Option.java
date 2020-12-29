@@ -68,6 +68,7 @@ public enum Option {
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip-blocked-materials", OptionType.LIST),
     MODIFIER_ITEM_CHECK_PERIOD("modifier.item.check-period", OptionType.INT),
     MODIFIER_ITEM_ENABLE_OFF_HAND("modifier.item.enable-off-hand", OptionType.BOOLEAN),
+    MODIFIER_AUTO_CONVERT_FROM_LEGACY("modifier.auto-convert-from-legacy", OptionType.BOOLEAN),
     // Requirement options
     REQUIREMENT_ITEM_PREVENT_TOOL_USE("requirement.item.prevent-tool-use", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_WEAPON_USE("requirement.item.prevent-weapon-use", OptionType.BOOLEAN),

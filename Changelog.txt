@@ -4,15 +4,26 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Moved ability options from config.yml to new abilities_config.yml file
       - Added 'unlock' option (the skill level the ability unlocks at)
       - Added 'level_up' option (every x levels the ability should level up)
+      - Added 'max_level' option to control the maximum allowed ability level (set to 0 for no limit) (skill level limits still apply)
+      - Added various specific ability and mana ability options such as 'enable_message', 'enable_sound', etc.
     - Enchanting abilities:
-      - XP Convert
-      - Enchanter
-      - XP Warrior
-      - Enchanted Strength
-      - Lucky Table
+      - XP Convert - Earn 1 Minecraft experience for every certain amount of skill XP you gain.
+      - Enchanter - Earn more Enchanting XP.
+      - XP Warrior - Mobs you kill have a chance of dropping double experience.
+      - Enchanted Strength - Gain Strength for every unique enchantment on the item held.
+      - Lucky Table - Items you enchant using the enchantment table have a chance of upgrading the enchantment level by 1 if not max level.
+    - Charged Shot mana ability for Archery
+      - Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process.
+      - Left click a bow to toggle charged shot mode
+      - Damage percent increase is based on the amount of mana consumed, mana is consumed up to the max mana cost
+    - Added PlayerLootDropEvent to the api
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
     - The level progression menu now supports unlimited pages
+    - Moved api events to a new events package
+    - Changed item/armor modifier and requirement format to a nested NBT compound structure
+      - Items with the legacy format will auto convert if held in a player's hand by default (set modifier.auto-convert-from-legacy to false to disable)
+      - All item data from this plugin is now stored inside the 'AureliumSkills' root tag
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled

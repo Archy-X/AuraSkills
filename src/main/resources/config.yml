@@ -147,6 +147,7 @@ modifier:
     item:
         check-period: 3
         enable-off-hand: true
+    auto-convert-from-legacy: true
 
 requirement:
     item:
