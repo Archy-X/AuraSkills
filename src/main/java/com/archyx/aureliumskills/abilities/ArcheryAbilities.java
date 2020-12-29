@@ -2,9 +2,17 @@ package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
+import com.archyx.aureliumskills.mana.ChargedShot;
+import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
@@ -14,19 +22,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.Random;
+import java.util.*;
 
 public class ArcheryAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
+    private final Set<Player> chargedShotEnabled;
+    private final Map<Player, Integer> chargedShotToggleCooldown;
 
     public ArcheryAbilities(AureliumSkills plugin) {
         super(plugin, Skill.ARCHERY);
+        this.chargedShotEnabled = new HashSet<>();
+        this.chargedShotToggleCooldown = new HashMap<>();
+        tickChargedShotCooldown();
     }
 
     public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
@@ -120,6 +137,87 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void chargedShotToggle(PlayerInteractEvent event) {
+        if (blockDisabled(MAbility.CHARGED_SHOT)) return;
+        Player player = event.getPlayer();
+        if (blockAbility(player)) return;
+        ItemStack item = event.getItem();
+        if (item != null) {
+            if (item.getType() == Material.BOW) {
+                if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
+                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                    if (playerSkill == null) return;
+                    if (playerSkill.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
+                    Locale locale = Lang.getLanguage(player);
+                    Integer cooldown = chargedShotToggleCooldown.get(player);
+                    boolean ready = true;
+                    if (cooldown != null) {
+                        if (cooldown != 0) {
+                            ready = false;
+                        }
+                    }
+                    if (ready) {
+                        if (!chargedShotEnabled.contains(player)) { // Toggle on
+                            chargedShotEnabled.add(player);
+                            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_ENABLE, locale));
+                        } else { // Toggle off
+                            chargedShotEnabled.remove(player);
+                            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_DISABLE, locale));
+                        }
+                        chargedShotToggleCooldown.put(player, 8);
+                    }
+                }
+            }
+        }
+    }
+
+    private void tickChargedShotCooldown() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Map.Entry<Player, Integer> entry : chargedShotToggleCooldown.entrySet()) {
+                    if (entry.getValue() > 0) {
+                        entry.setValue(entry.getValue() - 1);
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 3L, 5L);
+    }
+
+    @EventHandler
+    public void chargedShotActivate(EntityShootBowEvent event) {
+        if (blockDisabled(MAbility.CHARGED_SHOT)) return;
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            if (blockAbility(player)) return;
+            if (chargedShotEnabled.contains(player)) {
+                PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                if (playerSkill == null) return;
+                if (playerSkill.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
+                ManaAbilityManager manager = plugin.getManaAbilityManager();
+                int cooldown = manager.getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
+                if (cooldown == 0) {
+                    manager.activateAbility(player, MAbility.CHARGED_SHOT, (int) (manager.getCooldown(MAbility.CHARGED_SHOT, playerSkill) * 20)
+                            , new ChargedShot(plugin, event.getProjectile(), event.getForce()));
+                } else {
+                    if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
+                        Locale locale = Lang.getLanguage(player);
+                        player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
+                        manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
+                    }
+                }
+            }
+        }
+    }
+
+    public void applyChargedShot(EntityDamageByEntityEvent event) {
+        if (event.getDamager().hasMetadata("ChargedShotMultiplier")) {
+            double multiplier = event.getDamager().getMetadata("ChargedShotMultiplier").get(0).asDouble();
+            event.setDamage(event.getDamage() * multiplier);
         }
     }
 

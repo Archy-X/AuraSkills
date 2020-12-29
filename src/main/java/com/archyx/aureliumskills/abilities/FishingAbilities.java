@@ -15,6 +15,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -27,15 +28,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
 
 public class FishingAbilities extends AbilityProvider implements Listener {
 
 	private final Random r = new Random();
-	private final NumberFormat nf = new DecimalFormat("#.#");
 
 	public FishingAbilities(AureliumSkills plugin) {
 		super(plugin, Skill.FISHING);
@@ -203,7 +201,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 													} else {
 														if (plugin.getManaAbilityManager().getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
 															Locale locale = Lang.getLanguage(player);
-															player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", nf.format((double) (cooldown) / 20)));
+															player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
 															plugin.getManaAbilityManager().setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 														}
 													}

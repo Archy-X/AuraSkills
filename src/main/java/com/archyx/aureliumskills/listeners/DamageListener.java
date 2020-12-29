@@ -103,6 +103,10 @@ public class DamageListener implements Listener {
                 critical.applyCrit(event, player, playerSkill);
             }
 
+            // Charged shot
+            if (damageType == DamageType.BOW) {
+                archeryAbilities.applyChargedShot(event);
+            }
         }
         //Handles being damaged
         if (event.getEntity() instanceof Player) {

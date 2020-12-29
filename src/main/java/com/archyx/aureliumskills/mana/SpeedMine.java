@@ -24,6 +24,16 @@ public class SpeedMine implements ManaAbility {
     }
 
     @Override
+    public AureliumSkills getPlugin() {
+        return plugin;
+    }
+
+    @Override
+    public MAbility getManaAbility() {
+        return MAbility.SPEED_MINE;
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     public void activate(Player player) {
         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
@@ -45,17 +55,9 @@ public class SpeedMine implements ManaAbility {
     }
 
     @Override
-    public void update(Player player) {
-
-    }
-
-    @Override
     public void stop(Player player) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            Locale locale = Lang.getLanguage(player);
-            plugin.getManaAbilityManager().setPlayerCooldown(player.getUniqueId(), MAbility.SPEED_MINE, (int) (plugin.getManaAbilityManager().getCooldown(MAbility.SPEED_MINE, skill.getManaAbilityLevel(MAbility.SPEED_MINE)) * 20));
-            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, locale));
-        }
+        Locale locale = Lang.getLanguage(player);
+        plugin.getManaAbilityManager().setPlayerCooldown(player, MAbility.SPEED_MINE);
+        player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, locale));
     }
 }

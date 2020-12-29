@@ -26,6 +26,12 @@ public enum ManaAbilityMessage implements MessageKey {
     SHARP_HOOK_DESC,
     SHARP_HOOK_USE,
     SHARP_HOOK_MENU,
+    CHARGED_SHOT_NAME,
+    CHARGED_SHOT_DESC,
+    CHARGED_SHOT_ENABLE,
+    CHARGED_SHOT_DISABLE,
+    CHARGED_SHOT_SHOOT,
+    CHARGED_SHOT_MENU,
     ABSORPTION_NAME,
     ABSORPTION_DESC,
     ABSORPTION_RAISE,
@@ -39,7 +45,7 @@ public enum ManaAbilityMessage implements MessageKey {
 
     ManaAbilityMessage() {
         MAbility manaAbility = MAbility.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-        this.path = "mana_abilities." + manaAbility.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();;
+        this.path = "mana_abilities." + manaAbility.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
     }
 
     ManaAbilityMessage(String path) {

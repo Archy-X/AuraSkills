@@ -82,7 +82,10 @@ public class AbilityManager {
                             if (optionKeys != null) {
                                 options = new HashMap<>();
                                 for (String key : optionKeys) {
-                                    options.put(key, new OptionValue(config.get(path + key)));
+                                    Object value = config.get(path + key);
+                                    if (value != null) {
+                                        options.put(key, new OptionValue(value));
+                                    }
                                 }
                             }
                             AbilityOption option;
@@ -123,7 +126,7 @@ public class AbilityManager {
                 if (hasKey) {
                     MAbility mAbility = MAbility.valueOf(manaAbilityName.toUpperCase());
                     String path = "mana_abilities." + manaAbilityName + ".";
-                    boolean enabled = config.getBoolean(path + "enabled");
+                    boolean enabled = config.getBoolean(path + "enabled", true);
                     if (!enabled) {
                         amountDisabled++;
                     }
@@ -142,7 +145,10 @@ public class AbilityManager {
                     if (optionKeys != null) {
                         options = new HashMap<>();
                         for (String key : optionKeys) {
-                            options.put(key, new OptionValue(config.get(path + key)));
+                            Object value = config.get(path + key);
+                            if (value != null) {
+                                options.put(key, new OptionValue(value));
+                            }
                         }
                     }
                     ManaAbilityOption option;
@@ -296,10 +302,12 @@ public class AbilityManager {
     public List<Ability> getAbilities(Skill skill, int level) {
         ImmutableList<Supplier<Ability>> skillAbilities = skill.getAbilities();
         List<Ability> abilities = new ArrayList<>();
-        for (Supplier<Ability> abilitySupplier : skillAbilities) {
-            Ability ability = abilitySupplier.get();
-            if (level >= getUnlock(ability) && (level - getUnlock(ability)) % getLevelUp(ability) == 0) {
-                abilities.add(ability);
+        if (skillAbilities.size() == 5) {
+            for (Supplier<Ability> abilitySupplier : skillAbilities) {
+                Ability ability = abilitySupplier.get();
+                if (level >= getUnlock(ability) && (level - getUnlock(ability)) % getLevelUp(ability) == 0) {
+                    abilities.add(ability);
+                }
             }
         }
         return abilities;

@@ -544,6 +544,13 @@ mana_abilities:
     desc: 'Deal {value} damage to a hooked entity\n&7  when left clicking with a fishing rod'
     use: '&6Used Sharp Hook! &7(-{mana} {mana_unit})'
     menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Damage: &c{value} &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
+  charged_shot:
+    name: Charged Shot
+    desc: 'Arrows you shoot will deal more damage\n&7  based on how far the bow was pulled back,\n&7  consuming mana in the process. &eLeft click\n&7  a bow to toggle charged shot mode.'
+    enable: '&7Charged shot mode is now enabled'
+    disable: '&7Charged shot mode is now disabled'
+    shoot: '&6Used Charged Shot! &d+{percent}% DMG &7(-{mana} {mana_unit})'
+    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Damage: &c+{value}% / Mana &7Max Mana Cost: &b{mana_cost}\n '
   not_ready: '&cAbility not ready! &7({cooldown}s)'
   not_enough_mana: '&eNot enough mana! &7({mana} {mana_unit} required)'
 skills:
@@ -627,4 +634,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 9
+file_version: 10

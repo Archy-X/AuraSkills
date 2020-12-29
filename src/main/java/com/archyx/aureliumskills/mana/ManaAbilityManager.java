@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,6 +47,16 @@ public class ManaAbilityManager implements Listener {
     //Sets cooldown
     public void setPlayerCooldown(UUID id, MAbility ability, int cooldown) {
         cooldowns.get(id).put(ability, cooldown);
+    }
+
+    public void setPlayerCooldown(Player player, MAbility mAbility) {
+        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+        if (playerSkill != null) {
+            double cooldown = getCooldown(mAbility, playerSkill);
+            if (cooldown != 0) {
+                setPlayerCooldown(player.getUniqueId(), mAbility, (int) (cooldown * 20));
+            }
+        }
     }
 
     //Gets cooldown
@@ -90,7 +101,7 @@ public class ManaAbilityManager implements Listener {
         }
     }
 
-    //Sets error timerr
+    //Sets error timer
     public void setErrorTimer(UUID id, MAbility ability, int time) {
         if (!errorTimer.containsKey(id)) {
             return;
@@ -116,16 +127,23 @@ public class ManaAbilityManager implements Listener {
         activated.get(player.getUniqueId()).put(ability, true);
         activeAbilities.get(player.getUniqueId()).add(manaAbility);
         manaAbility.activate(player);
-        //Schedules stop
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                manaAbility.stop(player);
-                activeAbilities.get(player.getUniqueId()).remove(manaAbility);
-                activated.get(player.getUniqueId()).put(ability, false);
-                ready.get(player.getUniqueId()).put(ability, false);
-            }
-        }.runTaskLater(plugin, durationTicks);
+        if (durationTicks != 0) {
+            //Schedules stop
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    manaAbility.onStop(player);
+                    activeAbilities.get(player.getUniqueId()).remove(manaAbility);
+                    activated.get(player.getUniqueId()).put(ability, false);
+                    ready.get(player.getUniqueId()).put(ability, false);
+                }
+            }.runTaskLater(plugin, durationTicks);
+        } else {
+            manaAbility.onStop(player);
+            activeAbilities.get(player.getUniqueId()).remove(manaAbility);
+            activated.get(player.getUniqueId()).put(ability, false);
+            ready.get(player.getUniqueId()).put(ability, false);
+        }
     }
 
     //Sets ability ready status
@@ -238,6 +256,11 @@ public class ManaAbilityManager implements Listener {
 
     public double getCooldown(MAbility mAbility, int level) {
         double cooldown = getBaseCooldown(mAbility) + (getCooldownPerLevel(mAbility) * (level - 1));
+        return cooldown > 0 ? cooldown : 0;
+    }
+
+    public double getCooldown(MAbility mAbility, PlayerSkill playerSkill) {
+        double cooldown = getBaseCooldown(mAbility) + (getCooldownPerLevel(mAbility) * (playerSkill.getManaAbilityLevel(mAbility) - 1));
         return cooldown > 0 ? cooldown : 0;
     }
 

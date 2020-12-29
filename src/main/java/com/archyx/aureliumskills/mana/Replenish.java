@@ -22,6 +22,16 @@ public class Replenish implements ManaAbility {
     }
 
     @Override
+    public AureliumSkills getPlugin() {
+        return plugin;
+    }
+
+    @Override
+    public MAbility getManaAbility() {
+        return MAbility.REPLENISH;
+    }
+
+    @Override
     public void activate(Player player) {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (playerSkill != null) {
@@ -36,17 +46,9 @@ public class Replenish implements ManaAbility {
     }
 
     @Override
-    public void update(Player player) {
-
-    }
-
-    @Override
     public void stop(Player player) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            Locale locale = Lang.getLanguage(player);
-            plugin.getManaAbilityManager().setPlayerCooldown(player.getUniqueId(), MAbility.REPLENISH, (int) (plugin.getManaAbilityManager().getCooldown(MAbility.REPLENISH, skill.getManaAbilityLevel(MAbility.REPLENISH)) * 20));
-            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_END, locale));
-        }
+        Locale locale = Lang.getLanguage(player);
+        plugin.getManaAbilityManager().setPlayerCooldown(player, MAbility.REPLENISH);
+        player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.REPLENISH_END, locale));
     }
 }

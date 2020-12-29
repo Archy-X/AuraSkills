@@ -31,7 +31,7 @@ public enum Skill {
 			MAbility.ABSORPTION),
 	ARCHERY(Stat.LUCK, Stat.STRENGTH,
 			ImmutableList.of(() -> Ability.CRIT_CHANCE, () -> Ability.ARCHER, () -> Ability.BOW_MASTER, () -> Ability.PIERCING, () -> Ability.STUN),
-			MAbility.ABSORPTION),
+			MAbility.CHARGED_SHOT),
 	DEFENSE(Stat.TOUGHNESS, Stat.HEALTH,
 			ImmutableList.of(() -> Ability.SHIELDING, () -> Ability.DEFENDER, () -> Ability.MOB_MASTER, () -> Ability.IMMUNITY, () -> Ability.NO_DEBUFF),
 			MAbility.ABSORPTION),

@@ -24,6 +24,16 @@ public class SharpHook implements ManaAbility {
     }
 
     @Override
+    public AureliumSkills getPlugin() {
+        return plugin;
+    }
+
+    @Override
+    public MAbility getManaAbility() {
+        return MAbility.SHARP_HOOK;
+    }
+
+    @Override
     public void activate(Player player) {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (playerSkill != null) {
@@ -51,9 +61,6 @@ public class SharpHook implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (skill != null) {
-            plugin.getManaAbilityManager().setPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK, (int) (plugin.getManaAbilityManager().getCooldown(MAbility.SHARP_HOOK, skill.getManaAbilityLevel(MAbility.SHARP_HOOK)) * 20));
-        }
+        plugin.getManaAbilityManager().setPlayerCooldown(player, MAbility.SHARP_HOOK);
     }
 }

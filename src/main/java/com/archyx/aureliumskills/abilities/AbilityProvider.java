@@ -43,6 +43,13 @@ public abstract class AbilityProvider {
         return !plugin.getAbilityManager().isEnabled(ability);
     }
 
+    public boolean blockDisabled(MAbility ability) {
+        if (!OptionL.isEnabled(ability.getSkill())) {
+            return true;
+        }
+        return !plugin.getAbilityManager().isEnabled(ability);
+    }
+
     public double getXp(Player player, Source source, Ability ability) {
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         if (playerSkill != null) {
