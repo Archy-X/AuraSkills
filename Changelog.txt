@@ -23,6 +23,10 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Left click a bow to toggle charged shot mode
       - Damage percent increase is based on the amount of mana consumed, mana is consumed up to the max mana cost
     - Added PlayerLootDropEvent to the api
+    - Added custom model data support for menu items:
+      - Add key value pair to the 'material' string
+      - Ex: 'custom_model_data:5'
+      - Only works in 1.14+
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
     - The level progression menu now supports unlimited pages

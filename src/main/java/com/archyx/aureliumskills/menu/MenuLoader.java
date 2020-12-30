@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.menu.items.ConfigurableItem;
 import com.archyx.aureliumskills.menu.items.ItemType;
 import com.archyx.aureliumskills.menu.templates.ConfigurableTemplate;
 import com.archyx.aureliumskills.menu.templates.TemplateType;
+import com.archyx.aureliumskills.util.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -157,6 +158,17 @@ public class MenuLoader {
                                         if (meta != null) {
                                             if (meta.hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)) {
                                                 meta.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                                                item.setItemMeta(meta);
+                                            }
+                                        }
+                                    }
+                                    // Custom model data
+                                    else if (key.equalsIgnoreCase("custom_model_data")) {
+                                        if (VersionUtils.isAboveVersion(14)) {
+                                            int data = Integer.parseInt(value);
+                                            ItemMeta meta = item.getItemMeta();
+                                            if (meta != null) {
+                                                meta.setCustomModelData(data);
                                                 item.setItemMeta(meta);
                                             }
                                         }

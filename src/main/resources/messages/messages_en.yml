@@ -10,7 +10,7 @@ abilities:
       desc: 'Earn {value}% more Farming XP.'
       info: '+{value}% XP'
     scythe_master:
-      name: Sycthe Master
+      name: Scythe Master
       desc: 'Increases damage from hoes by {value}%'
       info: '+{value}% Hoe Damage'
     geneticist:
