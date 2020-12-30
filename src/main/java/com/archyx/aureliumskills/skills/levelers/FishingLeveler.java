@@ -67,11 +67,12 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 								break;
 						}
 					}
-					if (mat.equals(Material.BOW) || mat.equals(Material.ENCHANTED_BOOK) || mat.equals(Material.NAME_TAG) || mat.equals(Material.SADDLE)) {
+					if (mat.equals(Material.BOW) || mat.equals(Material.ENCHANTED_BOOK) || mat.equals(Material.NAME_TAG) || mat.equals(Material.SADDLE) || mat.equals(XMaterial.NAUTILUS_SHELL.parseMaterial())) {
 						leveler.addXp(p, s, getXp(p, Source.TREASURE));
 					} else if (mat.equals(Material.BOWL) || mat.equals(Material.LEATHER) || mat.equals(Material.LEATHER_BOOTS) || mat.equals(Material.ROTTEN_FLESH)
 							|| mat.equals(Material.POTION) || mat.equals(Material.BONE) || mat.equals(Material.TRIPWIRE_HOOK) || mat.equals(Material.STICK)
-							|| mat.equals(Material.STRING) || mat.equals(XMaterial.INK_SAC.parseMaterial()) || mat.equals(XMaterial.LILY_PAD.parseMaterial())) {
+							|| mat.equals(Material.STRING) || mat.equals(XMaterial.INK_SAC.parseMaterial()) || mat.equals(XMaterial.LILY_PAD.parseMaterial())
+							|| mat.equals(XMaterial.BAMBOO.parseMaterial())) {
 						leveler.addXp(p, s, getXp(p, Source.JUNK));
 					} else if (mat.equals(Material.FISHING_ROD)) {
 						if (item.getEnchantments().size() != 0) {
