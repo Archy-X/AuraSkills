@@ -446,6 +446,45 @@ abilities:
       unlock: 6
       level_up: 5
       max_level: 0
+  healing:
+    life_essence:
+      enabled: true
+      base: 10.0
+      per_level: 7.0
+      unlock: 2
+      level_up: 5
+      max_level: 0
+    healer:
+      enabled: true
+      base: 10.0
+      per_level: 10.0
+      unlock: 3
+      level_up: 5
+      max_level: 0
+    life_steal:
+      enabled: true
+      base: 2.5
+      per_level: 1.0
+      unlock: 4
+      level_up: 5
+      max_level: 0
+    golden_heart:
+      enabled: true
+      base: 5.0
+      per_level: 3.0
+      unlock: 5
+      level_up: 5
+      max_level: 0
+    revival:
+      enabled: true
+      base: 5.0
+      per_level: 4.0
+      base_2: 7.0
+      per_level_2: 6.0
+      unlock: 6
+      level_up: 5
+      max_level: 0
+      enable_message: true
 mana_abilities:
   replenish:
     enabled: true

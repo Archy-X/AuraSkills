@@ -12,6 +12,12 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - XP Warrior - Mobs you kill have a chance of dropping double experience.
       - Enchanted Strength - Gain Strength for every unique enchantment on the item held.
       - Lucky Table - Items you enchant using the enchantment table have a chance of upgrading the enchantment level by 1 if not max level.
+    - Healing abilities:
+      - Life Essence - Instant Health potions heal more.
+      - Healer - Earn more Healing XP.
+      - Life Steal - Heal a percentage of the max HP of hostile mobs and players you kill.
+      - Golden Heart - Damage done to your absorption hearts is reduced.
+      - Revival - Gain Health and Regeneration stat boosts for 30 seconds after respawning.
     - Charged Shot mana ability for Archery
       - Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process.
       - Left click a bow to toggle charged shot mode
@@ -20,10 +26,15 @@ Version Alpha 1.6.0 (IN PROGRESS)
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
     - The level progression menu now supports unlimited pages
-    - Moved api events to a new events package
+    - Moved api events to a new event package
     - Changed item/armor modifier and requirement format to a nested NBT compound structure
       - Items with the legacy format will auto convert if held in a player's hand by default (set modifier.auto-convert-from-legacy to false to disable)
       - All item data from this plugin is now stored inside the 'AureliumSkills' root tag
+    - Default config.yml changes:
+      - 'boss-bar.enabled' is now true
+      - 'action-bar.xp' and 'action-bar.maxed' are now false
+      - 'strength.use-percent' is now true and 'strength.modifier' has been increased to 0.63 (was 0.05)
+      - The 'abilities' and 'mana-abilities' sections have been removed (moved to abilities_config.yml)
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled

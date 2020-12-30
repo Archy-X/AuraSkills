@@ -259,6 +259,28 @@ abilities:
       name: Lucky Table
       desc: 'Items you enchant using the enchantment\n&7  table have a {value}% chance of upgrading the enchantment\n&7  level by 1 if not max level'
       info: '{value}% Enchant Upgrade Chance'
+  healing:
+    life_essence:
+      name: Life Essence
+      desc: Instant Health potions heal {value}% more.
+      info: '+{value}% Instant Health'
+    healer:
+      name: Healer
+      desc: Earn {value}% more Healing XP.
+      info: '+{value}% XP'
+    life_steal:
+      name: Life Steal
+      desc: Heal {value}% of the max HP of hostile mobs\n&7  and players you kill.
+      info: 'Steal {value}% HP'
+    golden_heart:
+      name: Golden Heart
+      desc: Damage done to your absorption hearts is\n&7  reduced by {value}%
+      info: '-{value}% Absorption Dmg'
+    revival:
+      name: Revival
+      desc: Gain &c+{value} Health &7and &6+{value_2} Regeneration\n&7  for 30 seconds after respawning.
+      info: '+{value} Health, +{value_2} Regen'
+      message: '&fYou gained a revival bonus for 30 seconds! &f(&c+{value} Health, &6+{value_2} Regeneration&f)'
 acf:
   core:
     permission_denied: '&cI''m sorry, but you do not have permission to perform this command.'

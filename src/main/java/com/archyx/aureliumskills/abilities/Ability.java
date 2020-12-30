@@ -73,7 +73,11 @@ public enum Ability {
 	ENCHANTED_STRENGTH(() -> Skill.ENCHANTING, 0.5, 0.5),
 	LUCKY_TABLE(() -> Skill.ENCHANTING, 5.0, 5.0),
 	SORCERER(() -> Skill.SORCERY, 10.0, 10.0),
+	LIFE_ESSENCE(() -> Skill.HEALING, 10.0, 7.0),
 	HEALER(() -> Skill.HEALING, 10.0, 10.0),
+	LIFE_STEAL(() -> Skill.HEALING, 2.5, 1.0),
+	GOLDEN_HEART(() -> Skill.HEALING, 5.0, 3.0),
+	REVIVAL(() -> Skill.HEALING, 5.0, 4.0, 7.0, 6.0, new String[] {"enable_message"}, new Object[] {true}),
 	FORGER(() -> Skill.FORGING, 10.0, 10.0);
 	
 	private final double baseValue;

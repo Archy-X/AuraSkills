@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
@@ -21,7 +22,7 @@ import org.bukkit.potion.PotionType;
 public class HealingLeveler extends SkillLeveler implements Listener {
 
 	public HealingLeveler(AureliumSkills plugin) {
-		super(plugin, Skill.HEALING);
+		super(plugin, Ability.HEALER);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)

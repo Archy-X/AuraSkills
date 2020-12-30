@@ -39,15 +39,15 @@ languages:
 action-bar:
     enabled: true
     idle: true
-    xp: true
-    maxed: true
+    xp: false
+    maxed: false
     update-period: 5
     round-xp: false
     placeholder-api: true
 
 # Boss Bar Options
 boss-bar:
-    enabled: false
+    enabled: true
     mode: multi
     stay-time: 60
     update-every: 1
@@ -239,11 +239,11 @@ health:
     update-delay: 0
     force-base-health: false
 strength:
-    modifier: 0.05
+    modifier: 0.63
     hand-damage: true
     bow-damage: true
     display-damage-with-health-scaling: true
-    use-percent: false
+    use-percent: true
 toughness:
     new-modifier: 0.3
 regeneration:
@@ -266,263 +266,3 @@ wisdom:
     anvil-cost-modifier: 0.25
     experience-modifier: 0.01
     allow-over-max-mana: true
-
-# Ability Options
-abilities:
-    bountiful-harvest:
-        enabled: true
-        base: 10.0
-        per-level: 5.0
-    farmer:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    scythe-master:
-        enabled: true
-        base: 3.0
-        per-level: 2.0
-    geneticist:
-        enabled: true
-        base: 1.0
-        per-level: 2.0
-    triple-harvest:
-        enabled: true
-        base: 5.0
-        per-level: 3.0
-    lumberjack:
-        enabled: true
-        base: 10.0
-        per-level: 5.0
-    forager:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    axe-master:
-        enabled: true
-        base: 4.0
-        per-level: 3.0
-    valor:
-        enabled: true
-        base: 1.0
-        per-level: 1.0
-    shredder:
-        enabled: true
-        base: 3.0
-        per-level: 3.0
-    lucky-miner:
-        enabled: true
-        base: 3.0
-        per-level: 3.0
-    miner:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    pick-master:
-        enabled: true
-        base: 3.0
-        per-level: 2.0
-    hardened-armor:
-        enabled: true
-        base: 3.0
-        per-level: 3.0
-    lucky-catch:
-        enabled: true
-        base: 10.0
-        per-level: 5.0
-    fisher:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    treasure-hunter:
-        enabled: true
-        base: 1.0
-        per-level: 1.0
-    grappler:
-        enabled: true
-        base: 50.0
-        per-level: 100.0
-    epic-catch:
-        enabled: true
-        base: 0.4
-        per-level: 0.4
-    metal-detector:
-        enabled: true
-        base: 0.5
-        per-level: 0.4
-    excavator:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    spade-master:
-        enabled: true
-        base: 3.0
-        per-level: 2.0
-    bigger-scoop:
-        enabled: true
-        base: 3.0
-        per-level: 3.0
-    lucky-spades:
-        enabled: true
-        base: 0.1
-        per-level: 0.05
-    crit-chance:
-        enabled: true
-        base: 5
-        per-level: 5
-    archer:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    bow-master:
-        enabled: true
-        base: 3.0
-        per-level: 2.0
-    piercing:
-        enabled: true
-        base: 3.0
-        per-level: 3.0
-    stun:
-        enabled: true
-        base: 2.0
-        per-level: 1.0
-    shielding:
-        enabled: true
-        base: 2.0
-        per-level: 3.0
-    defender:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    mob-master:
-        enabled: true
-        base: 2.0
-        per-level: 3.0
-    immunity:
-        enabled: true
-        base: 0.5
-        per-level: 0.4
-    no-debuff:
-        enabled: true
-        base: 5.0
-        per-level: 5.0
-    crit-damage:
-        enabled: true
-        base: 5.0
-        per-level: 4.0
-    fighter:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    sword-master:
-        enabled: true
-        base: 3.0
-        per-level: 2.0
-    first-strike:
-        enabled: true
-        base: 20.0
-        per-level: 10.0
-    bleed:
-        enabled: true
-        base: 3.0
-        per-level: 4.0
-        base-2: 0.5
-        per-level-2: 0.5
-    anti-hunger:
-        enabled: true
-        base: 5.0
-        per-level: 5.0
-    runner:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    golden-heal:
-        enabled: true
-        base: 5.0
-        per-level: 6.0
-    recovery:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    meal-steal:
-        enabled: true
-        base: 1.0
-        per-level: 2.0
-    light-fall:
-        enabled: true
-        base: 2.0
-        per-level: 1.5
-    jumper:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    sugar-rush:
-        enabled: true
-        base: 5.0
-        per-level: 7.0
-    fleeting:
-        enabled: true
-        base: 5.0
-        per-level: 4.0
-    thunder-fall:
-        enabled: true
-        base: 3.0
-        per-level: 2.0
-        base-2: 10.0
-        per-level-2: 5.0
-    alchemist:
-        enabled: true
-        base: 3.0
-        per-level: 4.0
-    brewer:
-        enabled: true
-        base: 10.0
-        per-level: 10.0
-    splasher:
-        enabled: true
-        base: 0.5
-        per-level: 0.25
-    lingering:
-        enabled: true
-        base: 5.0
-        per-level: 4.0
-        base-2: 3.0
-        per-level-2: 2.0
-    wise-effect:
-        enabled: true
-        base: 1.0
-        per-level: 1.0
-mana-abilities:
-    replenish:
-        enabled: true
-        base-value: 5.0
-        value-per-level: 5.0
-        cooldown: 200
-        cooldown-per-level: -5
-        mana-cost: 20
-        mana-cost-per-level: 20
-    treecapitator:
-        enabled: true
-        base-value: 5.0
-        value-per-level: 5.0
-        cooldown: 200
-        cooldown-per-level: -5
-        mana-cost: 20
-        mana-cost-per-level: 20
-    speed-mine:
-        enabled: true
-        base-value: 5.0
-        value-per-level: 5.0
-        cooldown: 200
-        cooldown-per-level: -5
-        mana-cost: 20
-        mana-cost-per-level: 20
-    sharp-hook:
-        enabled: true
-        base-value: 0.5
-        value-per-level: 0.5
-        cooldown: 2
-        cooldown-per-level: -0.1
-        mana-cost: 5
-        mana-cost-per-level: 2
-        display-damage-with-scaling: true
-        enable-sound: true

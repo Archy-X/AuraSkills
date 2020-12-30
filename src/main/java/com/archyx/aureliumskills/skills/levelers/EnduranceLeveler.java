@@ -42,6 +42,15 @@ public class EnduranceLeveler extends SkillLeveler {
 							} else {
 								player.setMetadata("skillsLastWalkDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.WALK_ONE_CM)));
 							}
+							if (player.hasMetadata("skillsLastSwimDist")) {
+								int swimDist = player.getStatistic(Statistic.SWIM_ONE_CM) - player.getMetadata("skillsLastSwimDist").get(0).asInt();
+								if (swimDist > 1000) {
+									xpAmount += (swimDist / 100) * getXp(player, Source.SWIM_PER_METER);
+									player.setMetadata("skillsLastSwimDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.SWIM_ONE_CM)));
+								}
+							} else {
+								player.setMetadata("skillsLastSwimDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.SWIM_ONE_CM)));
+							}
 							if (xpAmount > 0) {
 								plugin.getLeveler().addXp(player, Skill.ENDURANCE, xpAmount);
 							}

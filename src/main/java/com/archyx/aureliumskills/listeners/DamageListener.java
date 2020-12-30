@@ -115,23 +115,23 @@ public class DamageListener implements Listener {
     }
 
     private void onDamaged(EntityDamageByEntityEvent event, Player player) {
-        //Check disabled world
+        // Check disabled world
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
         }
-        //Gets player skill
+        // Gets player skill
         PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
         PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
         if (playerSkill == null || playerStat == null) {
             return;
         }
-        //Handles toughness
+        // Handles toughness
         Toughness.onDamage(event, playerStat);
 
-        //Handles mob master
+        // Handles mob master
         defenseAbilities.mobMaster(event, playerSkill);
 
-        //Handles shielding
+        // Handles shielding
         defenseAbilities.shielding(event, playerSkill, player);
     }
 

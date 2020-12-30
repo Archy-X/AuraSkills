@@ -51,7 +51,7 @@ public enum Skill {
 			MAbility.ABSORPTION),
 	SORCERY(Stat.STRENGTH, Stat.WISDOM, ImmutableList.of(() -> Ability.SORCERER),
 			MAbility.ABSORPTION),
-	HEALING(Stat.REGENERATION, Stat.HEALTH, ImmutableList.of(() -> Ability.HEALER),
+	HEALING(Stat.REGENERATION, Stat.HEALTH, ImmutableList.of(() -> Ability.LIFE_ESSENCE, () -> Ability.HEALER, () -> Ability.LIFE_STEAL, () -> Ability.GOLDEN_HEART, () -> Ability.REVIVAL),
 			MAbility.ABSORPTION),
 	FORGING(Stat.TOUGHNESS, Stat.WISDOM, ImmutableList.of(() -> Ability.FORGER),
 			MAbility.ABSORPTION);
