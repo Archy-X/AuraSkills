@@ -38,6 +38,8 @@ Version Alpha 1.6.0 (IN PROGRESS)
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled
+    - Implemented swim_per_meter source in Endurance
+    - Added missing items in Fishing leveler (nautilus shell and bamboo)
 
 Version Alpha 1.5.5
   New Features:
