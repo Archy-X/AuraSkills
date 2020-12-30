@@ -1,5 +1,5 @@
 # Aurelium Skills Portuguese, Brazilian (pt-BR) messages
-# Translators: LordLucas_
+# Translators: LordLucas_, Khovovo
 # Contribute here: https://crowdin.com/project/aureliumskills/pt-BR#
 abilities:
   farming:
@@ -96,16 +96,16 @@ abilities:
       desc: 'Ganhe {value}% a mais EXP de Escavação'
       info: '+{value}% XP'
     spade_master:
-      name: Mestre das Espadas
+      name: Mestre das Pás
       desc: 'Causa {value} de dano a mais com pás.'
       info: '+{value}% de Dano de Pá'
     bigger_scoop:
-      name: Espião Maior
+      name: Grande Escavador
       desc: '{value}% de chance de conseguir itens triplos na escavação.'
       info: '{value}% 3x Drops'
     lucky_spades:
-      name: Espadas da Sorte
-      desc: '{value}% de chance de obter itens raros na escavação.'
+      name: Pá da Sorte
+      desc: '{value}% de chance de obter itens épicos na escavação.'
       info: '{value}% Saque Épico'
   archery:
     crit_chance:
@@ -349,6 +349,14 @@ commands:
   lang:
     set: '&7Idioma definido para &b{lang}'
     not_found: '&eIdioma não encontrado!'
+  mana:
+    display: '&fSua {mana_unit}: &b{current}/{max}'
+    display_other: '&f{mana_unit} de {player}: &b{current}/{max}'
+    add: '&7Adicionado &b{amount} {mana_unit} &7ao jogador &6{player}'
+    remove: '&7Removido &b{amount} de {mana_unit} &7do jogador &6{player}'
+    set: '&7Setado {mana_unit} do jogador &6{player} &7to &b{amount}'
+    at_least_zero: '&e{mana_unit} deve ser no mínimo zero!'
+    console_specify_player: '&eConsole deve especificar um jogador!'
   modifier:
     add:
       added: '{color}{stat} &7modificador de nível &b{value} &7com nome &f{name} &7adicionado ao jogador &6{player}'
@@ -416,7 +424,7 @@ leveler:
   stat_level: '{color}+1{symbol} {stat}'
   ability_unlock: '&aDesbloqueio de Especialização! &6&l{ability} &7foi desbloqueada'
   ability_level_up: '&aHabilidade Nível aumentado! &6&l{ability} &7é agora nível &6{level}'
-  mana_ability_unlock: '&dHabilidade de Mana! &9&l{mana_ability} &7foi desbloqueado'
+  mana_ability_unlock: '&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloquée'
   mana_ability_level_up: '&dMana Ability Level Up! &9&l{mana_ability} &7é agora nível &6{level}'
   money_reward: '&a${amount}'
 menus:
@@ -497,7 +505,7 @@ mana_abilities:
     raise: '&7Você aumenta seu machado'
     lower: '&7Você abaixa seu machado'
     start: '&6Treecapitator ativado! &7(-{mana} {mana_unit})'
-    end: '&6Treecapitator perdeu o uso'
+    end: '&6Découpeur d''arbre a été désactivée'
   speed_mine:
     name: Mineração Rápida
     desc: "&7Dá Pressa 10 por {value} \n&7 segundos. &e[Clique Direito para Ativar]"
@@ -600,4 +608,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 7
+file_version: 8

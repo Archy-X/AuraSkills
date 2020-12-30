@@ -349,6 +349,14 @@ commands:
   lang:
     set: '&7Bahasa disetel ke &b{lang}'
     not_found: '&eBahasa tidak ditemukan!'
+  mana:
+    display: '&fKamu {mana_unit}: &b{current}/{max}'
+    display_other: '&f{mana_unit} dari {player}: &b{current}/{max}'
+    add: '&7Menambahkan &b{amount} {mana_unit} &7ke pemain &6{player}'
+    remove: '&7Menghilangkan &b{amount} {mana_unit} &7dari pemain &6{player}'
+    set: '&7Menyetel &6{player} &7ke &b{amount} {mana_unit}'
+    at_least_zero: '&e{mana_unit} setidaknya harus 0!'
+    console_specify_player: '&eConsole harus mengspesifikasikan pemain!'
   modifier:
     add:
       added: '{color}{stat} &7modifikasi dengan level &b{value} &7 dan nama &f{name} &7berhasil ditambhkan ke pemain &6{player}'
@@ -600,4 +608,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: EXP
-file_version: 7
+file_version: 8
