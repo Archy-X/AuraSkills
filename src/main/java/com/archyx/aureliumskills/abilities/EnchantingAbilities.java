@@ -36,8 +36,9 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         enchantedStrength();
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void xpConvert(XpGainEvent event) {
+        if (event.isCancelled()) return;
         if (blockDisabled(Ability.XP_CONVERT)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
@@ -107,8 +108,9 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         }.runTaskTimer(plugin, 1L, 10L);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void luckyTable(EnchantItemEvent event) {
+        if (event.isCancelled()) return;
         if (blockDisabled(Ability.LUCKY_TABLE)) return;
         Player player = event.getEnchanter();
         if (blockAbility(player)) return;

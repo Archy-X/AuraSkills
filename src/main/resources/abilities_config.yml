@@ -485,6 +485,42 @@ abilities:
       level_up: 5
       max_level: 0
       enable_message: true
+  forging:
+    disenchanter:
+      enabled: true
+      base: 10.0
+      per_level: 7.0
+      unlock: 2
+      level_up: 5
+      max_level: 0
+    forger:
+      enabled: true
+      base: 10.0
+      per_level: 10.0
+      unlock: 3
+      level_up: 5
+      max_level: 0
+    repairing:
+      enabled: true
+      base: 5.0
+      per_level: 4.0
+      unlock: 4
+      level_up: 5
+      max_level: 0
+    anvil_master:
+      enabled: true
+      base: 43.0
+      per_level: 3.0
+      unlock: 5
+      level_up: 5
+      max_level: 0
+    skill_mender:
+      enabled: true
+      base: 2.0
+      per_level: 1.0
+      unlock: 6
+      level_up: 5
+      max_level: 0
 mana_abilities:
   replenish:
     enabled: true

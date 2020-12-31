@@ -53,7 +53,7 @@ public enum Skill {
 			MAbility.ABSORPTION),
 	HEALING(Stat.REGENERATION, Stat.HEALTH, ImmutableList.of(() -> Ability.LIFE_ESSENCE, () -> Ability.HEALER, () -> Ability.LIFE_STEAL, () -> Ability.GOLDEN_HEART, () -> Ability.REVIVAL),
 			MAbility.ABSORPTION),
-	FORGING(Stat.TOUGHNESS, Stat.WISDOM, ImmutableList.of(() -> Ability.FORGER),
+	FORGING(Stat.TOUGHNESS, Stat.WISDOM, ImmutableList.of(() -> Ability.DISENCHANTER, () -> Ability.FORGER, () -> Ability.REPAIRING, () -> Ability.ANVIL_MASTER, () -> Ability.SKILL_MENDER),
 			MAbility.ABSORPTION);
 	
 	private final Stat primaryStat;

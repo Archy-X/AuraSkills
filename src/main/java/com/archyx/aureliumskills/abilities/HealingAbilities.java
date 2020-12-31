@@ -11,6 +11,8 @@ import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.util.VersionUtils;
+import com.cryptomorin.xseries.ReflectionUtils;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
@@ -26,9 +28,13 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.Method;
 import java.util.Locale;
 
 public class HealingAbilities extends AbilityProvider implements Listener {
+
+    private Class<?> entityLivingClass;
+    private Class<?> craftPlayerClass;
 
     public HealingAbilities(AureliumSkills plugin) {
         super(plugin, Skill.HEALING);
@@ -82,7 +88,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
             if (blockAbility(player)) return;
             PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
             if (playerSkill == null) return;
-            if (player.getAbsorptionAmount() > 0 && playerSkill.getAbilityLevel(Ability.GOLDEN_HEART) > 0) {
+            if (getAbsorptionAmount(player) > 0 && playerSkill.getAbilityLevel(Ability.GOLDEN_HEART) > 0) {
                 double multiplier = 1 - getValue(Ability.GOLDEN_HEART, playerSkill) / 100;
                 if (multiplier < 0.01) { // Cap at 99% reduction
                     multiplier = 0.01;
@@ -121,6 +127,29 @@ public class HealingAbilities extends AbilityProvider implements Listener {
                 }
             }.runTaskLater(plugin, 30 * 20);
         }
+    }
+
+    private double getAbsorptionAmount(Player player) {
+        if (VersionUtils.isAboveVersion(14)) {
+            return player.getAbsorptionAmount();
+        } else {
+            if (entityLivingClass == null) {
+                entityLivingClass = ReflectionUtils.getNMSClass("EntityLiving");
+            }
+            if (craftPlayerClass == null) {
+                craftPlayerClass = ReflectionUtils.getCraftClass("entity.CraftPlayer");
+            }
+            if (craftPlayerClass != null && entityLivingClass != null) {
+                try {
+                    Method getHandle = craftPlayerClass.getDeclaredMethod("getHandle");
+                    Object o = entityLivingClass.cast(getHandle.invoke(craftPlayerClass.cast(player)));
+                    return (float) entityLivingClass.getDeclaredMethod("getAbsorptionHearts").invoke(o);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return 0.0;
     }
 
 

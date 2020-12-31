@@ -78,7 +78,11 @@ public enum Ability {
 	LIFE_STEAL(() -> Skill.HEALING, 2.5, 1.0),
 	GOLDEN_HEART(() -> Skill.HEALING, 5.0, 3.0),
 	REVIVAL(() -> Skill.HEALING, 5.0, 4.0, 7.0, 6.0, new String[] {"enable_message"}, new Object[] {true}),
-	FORGER(() -> Skill.FORGING, 10.0, 10.0);
+	DISENCHANTER(() -> Skill.FORGING, 10.0, 7.0),
+	FORGER(() -> Skill.FORGING, 10.0, 10.0),
+	REPAIRING(() -> Skill.FORGING, 5.0, 4.0),
+	ANVIL_MASTER(() -> Skill.FORGING, 43.0, 3.0),
+	SKILL_MENDER(() -> Skill.FORGING, 2.0, 1.0);
 	
 	private final double baseValue;
 	private final double valuePerLevel;

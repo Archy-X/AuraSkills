@@ -281,6 +281,27 @@ abilities:
       desc: Gain &c+{value} Health &7and &6+{value_2} Regeneration\n&7  for 30 seconds after respawning.
       info: '+{value} Health, +{value_2} Regen'
       message: '&fYou gained a revival bonus for 30 seconds! &f(&c+{value} Health, &6+{value_2} Regeneration&f)'
+  forging:
+    disenchanter:
+      name: Disenchanter
+      desc: Gain {value}% more experience when disenchanting\n&7  items using a grindstone.
+      info: '+{value}% Grindstone EXP'
+    forger:
+      name: Forger
+      desc: Earn {value}% more Forging XP.
+      info: '+{value}% XP'
+    repairing:
+      name: Repairing
+      desc: Repairing items in an anvil using the raw\n&7  material the item was made from repairs\n&7  {value}% more durability.
+      info: '+{value}% Anvil Repair'
+    anvil_master:
+      name: Anvil Master
+      desc: Increases the maximum repair cost of an anvil\n&7  before it is too expensive to {value} experience.
+      info: '{value} Max Cost'
+    skill_mender:
+      name: Skill Mender
+      desc: Gaining skill XP has a {value}% chance to repair\n&7  a held item or worn armor piece with the Mending\n&7  enchantment by 1 durability per 2 skill XP.
+      info: '{value}% Mend Chance'
 acf:
   core:
     permission_denied: '&cI''m sorry, but you do not have permission to perform this command.'
@@ -656,4 +677,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 10
+file_version: 12
