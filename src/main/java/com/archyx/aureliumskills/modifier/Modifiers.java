@@ -49,6 +49,7 @@ public class Modifiers {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         compound.removeKey(getName(stat));
+        ItemUtils.removeParentCompounds(compound);
         return nbtItem.getItem();
     }
 
@@ -56,8 +57,9 @@ public class Modifiers {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
-            nbtItem.removeKey(key);
+            compound.removeKey(key);
         }
+        ItemUtils.removeParentCompounds(compound);
         return nbtItem.getItem();
     }
 

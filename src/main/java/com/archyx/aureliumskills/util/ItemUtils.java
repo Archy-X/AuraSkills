@@ -89,6 +89,9 @@ public class ItemUtils {
 			parent.removeKey(compound.getName());
 			if (parent.getKeys().size() == 0) {
 				parent.getParent().removeKey(parent.getName());
+				if (parent.getParent().getKeys().size() == 0) {
+					parent.getParent().getParent().removeKey(parent.getParent().getName());
+				}
 			}
 		}
 	}
