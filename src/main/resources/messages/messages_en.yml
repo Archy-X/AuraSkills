@@ -542,7 +542,7 @@ menus:
     secondary_skills_two: '&7Secondary Skills: &f{skill_1}, {skill_2}'
     secondary_skills_three: '&7Secondary Skills: &f{skill_1}, {skill_2}, {skill_3}'
     your_level: '&7Your Level: {color}{level}'
-    attack_damage: '&4+{value} Attack Damage'
+    attack_damage: '&4+{value}% Attack Damage'
     hp: '&c+{value} {hp_unit}'
     saturated_regen: '&6+{value} Saturated Regen'
     full_hunger_regen: '&6+{value} Full Hunger Regen'
@@ -551,7 +551,7 @@ menus:
     luck: '&2+{value} Luck'
     double_drop_chance: '&2Double Drop Chance: {value}%'
     xp_gain: '&9+{value}% {xp_unit} Gain'
-    anvil_cost_reduction: '&9Anvil Cost Reduction: {value}'
+    anvil_cost_reduction: '&9Anvil Cost Reduction: {value}%'
     incoming_damage: '&5-{value}% Incoming Damage'
 mana_abilities:
   replenish:

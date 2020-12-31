@@ -39,11 +39,17 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - 'action-bar.xp' and 'action-bar.maxed' are now false
       - 'strength.use-percent' is now true and 'strength.modifier' has been increased to 0.63 (was 0.05)
       - The 'abilities' and 'mana-abilities' sections have been removed (moved to abilities_config.yml)
+    - Wisdom anvil cost reduction now uses a curved percent, similar to Toughness calculations
+      - newCost = originalCost * (1 - (-1 * 1.025^(-1 * wisdomLevel * wisdom.anvil-cost-modifier) + 1))
+      - newCost is rounded to an integer, must be at least 1
+    - Tweaked some messages to reflect stat mechanic changes
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled
     - Implemented swim_per_meter source in Endurance
     - Added missing items in Fishing leveler (nautilus shell and bamboo)
+    - Fixed inaccurate attack damage percent in the stats menu when use-percent and display-damage-with-health-scaling are true
+    - Fixed wisdom.allow-over-max-mana option not working sometimes when set to false
 
 Version Alpha 1.5.5
   New Features:

@@ -171,7 +171,7 @@ public class StatTemplate implements ConfigurableTemplate {
                                 case STRENGTH:
                                     double strengthLevel = playerStat.getStatLevel(Stat.STRENGTH);
                                     double attackDamage = strengthLevel * OptionL.getDouble(Option.STRENGTH_MODIFIER);
-                                    if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING)) {
+                                    if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING) && !OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
                                         attackDamage *= OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     }
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.ATTACK_DAMAGE, locale)
@@ -207,9 +207,9 @@ public class StatTemplate implements ConfigurableTemplate {
                                 case WISDOM:
                                     double wisdomLevel = playerStat.getStatLevel(Stat.WISDOM);
                                     double xpModifier = wisdomLevel * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
-                                    int anvilCostReduction = (int) (wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER));
+                                    double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", nf.format(xpModifier))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", String.valueOf(anvilCostReduction)));
+                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction)));
                                     break;
                                 case TOUGHNESS:
                                     double toughness = playerStat.getStatLevel(Stat.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);

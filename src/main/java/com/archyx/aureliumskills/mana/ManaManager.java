@@ -80,7 +80,11 @@ public class ManaManager implements Listener {
     }
 
     public void setMana(UUID id, double amount) {
-        mana.put(id, amount);
+        if (OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
+            mana.put(id, amount);
+        } else {
+            mana.put(id, Math.min(amount, getMaxMana(id)));
+        }
     }
 
     @EventHandler

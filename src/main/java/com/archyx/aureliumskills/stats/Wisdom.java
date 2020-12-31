@@ -44,24 +44,23 @@ public class Wisdom implements Listener {
 				if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 					return;
 				}
-				if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
+				PlayerStat checkedStat = SkillLoader.playerStats.get(player.getUniqueId());
+				if (checkedStat != null) {
 					if (stat == null) {
-						stat = SkillLoader.playerStats.get(player.getUniqueId());
-					}
-					else {
-						if (stat.getStatLevel(Stat.WISDOM) < SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(Stat.WISDOM)) {
-							stat = SkillLoader.playerStats.get(player.getUniqueId());
-						}
+						stat = checkedStat;
+					} else if (stat.getStatLevel(Stat.WISDOM) < checkedStat.getStatLevel(Stat.WISDOM)) {
+						stat = checkedStat;
 					}
 				}
 			}
 		}
 		if (stat != null) {
 			AnvilInventory anvil = event.getInventory();
-			if (anvil.getRepairCost() - (int) (stat.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) > 0) {
-				anvil.setRepairCost(anvil.getRepairCost() - (int) (stat.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)));
-			}
-			else {
+			double wisdom = stat.getStatLevel(Stat.WISDOM) * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER);
+			int cost = (int) Math.round(anvil.getRepairCost() * (1 - (-1.0 * Math.pow(1.025, -1.0 * wisdom) + 1)));
+			if (cost > 0) {
+				anvil.setRepairCost(cost);
+			} else {
 				anvil.setRepairCost(1);
 			}
 		}
