@@ -156,7 +156,8 @@ public enum Option {
     LUCK_DOUBLE_DROP_PERCENT_MAX("luck.double-drop-percent-max", OptionType.DOUBLE),
     WISDOM_ANVIL_COST_MODIFIER("wisdom.anvil-cost-modifier", OptionType.DOUBLE),
     WISDOM_EXPERIENCE_MODIFIER("wisdom.experience-modifier", OptionType.DOUBLE),
-    WISDOM_ALLOW_OVER_MAX_MANA("wisdom.allow-over-max-mana", OptionType.BOOLEAN);
+    WISDOM_ALLOW_OVER_MAX_MANA("wisdom.allow-over-max-mana", OptionType.BOOLEAN),
+    WISDOM_MAX_MANA_PER_WISDOM("wisdom.max-mana-per-wisdom", OptionType.DOUBLE);
 
     private final String path;
     private final OptionType type;

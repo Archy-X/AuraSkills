@@ -64,6 +64,7 @@ public enum MenuMessage implements MessageKey {
     DOUBLE_DROP_CHANCE(3),
     XP_GAIN(3),
     ANVIL_COST_REDUCTION(3),
+    MAX_MANA(3),
     INCOMING_DAMAGE(3);
     
     private String path;

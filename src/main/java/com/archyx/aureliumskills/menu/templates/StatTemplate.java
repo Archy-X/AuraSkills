@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.menu.templates;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
@@ -14,6 +15,7 @@ import com.archyx.aureliumskills.util.NumberUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -33,6 +35,11 @@ public class StatTemplate implements ConfigurableTemplate {
     private Map<Integer, Set<String>> lorePlaceholders;
     private final String[] definedPlaceholders = new String[] {"stat_desc", "primary_skills_two", "primary_skills_three", "secondary_skills_two", "secondary_skills_three", "your_level", "descriptors"};
     private final NumberFormat nf = new DecimalFormat("##.##");
+    private final AureliumSkills plugin;
+
+    public StatTemplate(AureliumSkills plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public TemplateType getType() {
@@ -81,7 +88,7 @@ public class StatTemplate implements ConfigurableTemplate {
         }
     }
 
-    public ItemStack getItem(Stat stat, PlayerStat playerStat, Locale locale) {
+    public ItemStack getItem(Stat stat, PlayerStat playerStat, Player player, Locale locale) {
         ItemStack item = baseItems.get(stat).clone();
         ItemMeta meta = item.getItemMeta();
         List<Supplier<Skill>> primarySkills = new ArrayList<>();
@@ -208,8 +215,10 @@ public class StatTemplate implements ConfigurableTemplate {
                                     double wisdomLevel = playerStat.getStatLevel(Stat.WISDOM);
                                     double xpModifier = wisdomLevel * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
                                     double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
+                                    double maxMana = plugin.getManaManager().getMaxMana(player.getUniqueId());
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", nf.format(xpModifier))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction)));
+                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction))
+                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana)));
                                     break;
                                 case TOUGHNESS:
                                     double toughness = playerStat.getStatLevel(Stat.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);

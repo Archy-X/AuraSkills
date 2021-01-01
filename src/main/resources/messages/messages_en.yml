@@ -552,6 +552,7 @@ menus:
     double_drop_chance: '&2Double Drop Chance: {value}%'
     xp_gain: '&9+{value}% {xp_unit} Gain'
     anvil_cost_reduction: '&9Anvil Cost Reduction: {value}%'
+    max_mana: '&9Max Mana: {value}'
     incoming_damage: '&5-{value}% Incoming Damage'
 mana_abilities:
   replenish:

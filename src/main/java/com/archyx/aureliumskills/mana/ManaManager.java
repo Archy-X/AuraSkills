@@ -70,8 +70,9 @@ public class ManaManager implements Listener {
     }
 
     public double getMaxMana(UUID id) {
-        if (SkillLoader.playerStats.containsKey(id)) {
-            return OptionL.getDouble(Option.BASE_MANA) + (2 * SkillLoader.playerStats.get(id).getStatLevel(Stat.WISDOM));
+        PlayerStat playerStat = SkillLoader.playerStats.get(id);
+        if (playerStat != null) {
+            return OptionL.getDouble(Option.BASE_MANA) + (OptionL.getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM) * playerStat.getStatLevel(Stat.WISDOM));
         }
         else {
             SkillLoader.playerStats.put(id, new PlayerStat(id, plugin));

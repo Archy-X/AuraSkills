@@ -266,3 +266,4 @@ wisdom:
     anvil-cost-modifier: 0.25
     experience-modifier: 0.01
     allow-over-max-mana: true
+    max-mana-per-wisdom: 2.0
