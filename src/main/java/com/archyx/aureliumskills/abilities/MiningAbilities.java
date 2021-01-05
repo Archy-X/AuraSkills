@@ -177,6 +177,11 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 						Player player = event.getPlayer();
 						Locale locale = Lang.getLanguage(player);
 						if (blockAbility(player)) return;
+						if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(MAbility.SPEED_MINE, "require_sneak")) {
+							if (!player.isSneaking()) {
+								return;
+							}
+						}
 						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
 							if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(MAbility.SPEED_MINE) > 0) {
 								ManaAbilityManager manager = plugin.getManaAbilityManager();

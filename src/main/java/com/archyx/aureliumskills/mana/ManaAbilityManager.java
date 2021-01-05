@@ -363,6 +363,14 @@ public class ManaAbilityManager implements Listener {
         return true;
     }
 
+    public boolean getOptionAsBooleanElseFalse(MAbility mAbility, String key) {
+        OptionValue value = getOption(mAbility, key);
+        if (value != null) {
+            return value.asBoolean();
+        }
+        return false;
+    }
+
     @Nullable
     public Set<String> getOptionKeys(MAbility mAbility) {
         if (mAbility.getDefaultOptions() != null) {

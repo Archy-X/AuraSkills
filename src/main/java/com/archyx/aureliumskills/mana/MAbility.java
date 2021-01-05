@@ -14,7 +14,7 @@ public enum MAbility {
 
     REPLENISH(() -> Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20),
     TREECAPITATOR(() -> Skill.FORAGING, 5.0, 5.0, 200, -5, 20, 20),
-    SPEED_MINE(() -> Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20),
+    SPEED_MINE(() -> Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20, new String[] {"require_sneak"}, new Object[] {false}),
     SHARP_HOOK(() -> Skill.FISHING, 0.5, 0.5, 2, -0.1, 5, 2, new String[] {"display_damage_with_scaling", "enable_sound"}, new Object[] {true, true}),
     CHARGED_SHOT(() -> Skill.ARCHERY, 0.5, 0.3, 0, 0, 5, 5, new String[] {"enable_message", "enable_sound"}, new Object[] {true, true}),
     ABSORPTION(() -> Skill.DEFENSE, 2.0, 3.0, 200, -5, 20, 20);
