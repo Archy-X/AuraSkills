@@ -18,6 +18,12 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Life Steal - Heal a percentage of the max HP of hostile mobs and players you kill.
       - Golden Heart - Damage done to your absorption hearts is reduced.
       - Revival - Gain Health and Regeneration stat boosts for 30 seconds after respawning.
+    - Forging abilities:
+      - Disenchanter - Gain more experience when disenchanting items using a grindstone.
+      - Forger - Earn more Forging XP.
+      - Repairing - Repairing items in an anvil using the raw material the item was made from repairs more durability.
+      - Anvil Master - Increases the maximum repair cost of an anvil before it is too expensive.
+      - Skill Mender - Gaining skill XP has a chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
     - Charged Shot mana ability for Archery
       - Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process.
       - Left click a bow to toggle charged shot mode
@@ -27,6 +33,8 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Add key value pair to the 'material' string
       - Ex: 'custom_model_data:5'
       - Only works in 1.14+
+    - Added option wisdom.max-mana-per-wisdom
+    - Added menu descriptor/message for max mana
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
     - The level progression menu now supports unlimited pages
