@@ -262,7 +262,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.equals("multiplier")) {
-            return String.valueOf(Math.round(plugin.getLeveler().getMultiplier(player)));
+            return NumberUtil.format2(plugin.getLeveler().getMultiplier(player));
         }
 
         if (identifier.equals("multiplier_percent")) {

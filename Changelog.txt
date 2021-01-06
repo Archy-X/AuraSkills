@@ -35,6 +35,7 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Only works in 1.14+
     - Added option wisdom.max-mana-per-wisdom
     - Added menu descriptor/message for max mana
+    - Added 'aureliumskills_multiplier' and 'aureliumskills_multiplier_percent' placeholders to get a player's skill XP multiplier
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
     - The level progression menu now supports unlimited pages
