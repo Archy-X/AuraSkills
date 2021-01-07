@@ -39,12 +39,12 @@ public class StatsMenu implements InventoryProvider{
 			SkullItem skullItem = (SkullItem) options.getItem(ItemType.SKULL);
 			contents.set(skullItem.getPos(), ClickableItem.empty(skullItem.getItem(player, playerStat, locale)));
 			StatTemplate statTemplate = (StatTemplate) options.getTemplate(TemplateType.STAT);
-			contents.set(statTemplate.getPos(Stat.STRENGTH), ClickableItem.empty(statTemplate.getItem(Stat.STRENGTH, playerStat, locale)));
-			contents.set(statTemplate.getPos(Stat.HEALTH), ClickableItem.empty(statTemplate.getItem(Stat.HEALTH, playerStat, locale)));
-			contents.set(statTemplate.getPos(Stat.REGENERATION), ClickableItem.empty(statTemplate.getItem(Stat.REGENERATION, playerStat, locale)));
-			contents.set(statTemplate.getPos(Stat.LUCK), ClickableItem.empty(statTemplate.getItem(Stat.LUCK, playerStat, locale)));
-			contents.set(statTemplate.getPos(Stat.WISDOM), ClickableItem.empty(statTemplate.getItem(Stat.WISDOM, playerStat, locale)));
-			contents.set(statTemplate.getPos(Stat.TOUGHNESS), ClickableItem.empty(statTemplate.getItem(Stat.TOUGHNESS, playerStat, locale)));
+			contents.set(statTemplate.getPos(Stat.STRENGTH), ClickableItem.empty(statTemplate.getItem(Stat.STRENGTH, playerStat, player, locale)));
+			contents.set(statTemplate.getPos(Stat.HEALTH), ClickableItem.empty(statTemplate.getItem(Stat.HEALTH, playerStat, player, locale)));
+			contents.set(statTemplate.getPos(Stat.REGENERATION), ClickableItem.empty(statTemplate.getItem(Stat.REGENERATION, playerStat, player, locale)));
+			contents.set(statTemplate.getPos(Stat.LUCK), ClickableItem.empty(statTemplate.getItem(Stat.LUCK, playerStat, player, locale)));
+			contents.set(statTemplate.getPos(Stat.WISDOM), ClickableItem.empty(statTemplate.getItem(Stat.WISDOM, playerStat, player, locale)));
+			contents.set(statTemplate.getPos(Stat.TOUGHNESS), ClickableItem.empty(statTemplate.getItem(Stat.TOUGHNESS, playerStat, player, locale)));
 		}
 	}
 
