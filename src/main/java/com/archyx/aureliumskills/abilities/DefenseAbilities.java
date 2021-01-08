@@ -2,28 +2,46 @@ package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
+import com.archyx.aureliumskills.mana.Absorption;
+import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.util.NumberUtil;
+import com.cryptomorin.xseries.particles.ParticleDisplay;
+import com.cryptomorin.xseries.particles.XParticle;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 
 public class DefenseAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
+    private final Set<Player> absorptionActivated;
 
     public DefenseAbilities(AureliumSkills plugin) {
         super(plugin, Skill.DEFENSE);
+        this.absorptionActivated = new HashSet<>();
     }
 
     public void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
@@ -121,5 +139,54 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        absorptionActivated.remove(event.getPlayer());
+    }
+
+    @EventHandler
+    public void readyAbsorption(PlayerInteractEvent event) {
+        plugin.getManaAbilityManager().activator.readyAbility(event, Skill.DEFENSE, "SHIELD", Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK);
+    }
+
+    public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+        ManaAbilityManager manager = plugin.getManaAbilityManager();
+        if (absorptionActivated.contains(player)) {
+            handleAbsorbedHit(event, player);
+        } else if (manager.isReady(player.getUniqueId(), MAbility.ABSORPTION)) {
+            // Activate ability if ready
+            if (manager.isActivated(player.getUniqueId(), MAbility.ABSORPTION)) {
+                return;
+            }
+            if (plugin.getManaManager().getMana(player.getUniqueId()) >= manager.getManaCost(MAbility.ABSORPTION, playerSkill)) {
+                manager.activateAbility(player, MAbility.ABSORPTION, (int) (getValue(MAbility.ABSORPTION, playerSkill) * 20), new Absorption(plugin, this));
+                handleAbsorbedHit(event, player);
+            }
+            else {
+                Locale locale = Lang.getLanguage(player);
+                player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+                        .replace("{mana}", NumberUtil.format0(manager.getManaCost(MAbility.ABSORPTION, playerSkill))));
+            }
+        }
+    }
+
+    private void handleAbsorbedHit(EntityDamageByEntityEvent event, Player player) {
+        // Decrease mana and cancel event
+        double mana = plugin.getManaManager().getMana(player.getUniqueId()) - event.getDamage() * 2;
+        if (mana > 0) {
+            plugin.getManaManager().setMana(player.getUniqueId(), mana);
+            event.setCancelled(true);
+            // Particle effects and sound
+            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GUARDIAN_HURT, 1f, 1f);
+            if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.ABSORPTION, "enable_particles")) {
+                XParticle.circle(1, 1, 1, 20, 0, ParticleDisplay.colored(player.getLocation().add(0, 1, 0), Color.MAGENTA, 1));
+            }
+        }
+    }
+
+    public Set<Player> getAbsorptionActivated() {
+        return absorptionActivated;
     }
 }

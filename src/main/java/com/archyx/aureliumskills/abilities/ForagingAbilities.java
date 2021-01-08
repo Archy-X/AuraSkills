@@ -42,7 +42,7 @@ import java.util.Random;
 
 public class ForagingAbilities extends AbilityProvider implements Listener {
 
-	private static final Random r = new Random();
+	private final Random r = new Random();
 	
 	public ForagingAbilities(AureliumSkills plugin) {
 		super(plugin, Skill.FORAGING);

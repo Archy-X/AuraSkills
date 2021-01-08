@@ -181,10 +181,6 @@ public class AureliumSkills extends JavaPlugin {
 		regeneration.startSaturationRegen();
 		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
 		enduranceLeveler.startTracking();
-		// Load mana manager
-		manaManager = new ManaManager(this);
-		getServer().getPluginManager().registerEvents(manaManager, this);
-		manaManager.startRegen();
 		// Load Action Bar
 		actionBar = new ActionBar(this);
 		if (protocolLibEnabled) {
@@ -378,7 +374,10 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new FishingAbilities(this), this);
 		pm.registerEvents(new ExcavationAbilities(this), this);
 		pm.registerEvents(new ArcheryAbilities(this), this);
-		pm.registerEvents(new DefenseAbilities(this), this);
+		DefenseAbilities defenseAbilities = new DefenseAbilities(this);
+		pm.registerEvents(defenseAbilities, this);
+		FightingAbilities fightingAbilities = new FightingAbilities(this);
+		pm.registerEvents(fightingAbilities, this);
 		pm.registerEvents(new FightingAbilities(this), this);
 		pm.registerEvents(new EnduranceAbilities(this), this);
 		pm.registerEvents(new AgilityAbilities(this), this);
@@ -386,7 +385,11 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new EnchantingAbilities(this), this);
 		pm.registerEvents(new HealingAbilities(this), this);
 		pm.registerEvents(new ForgingAbilities(this), this);
-		pm.registerEvents(new DamageListener(this), this);
+		pm.registerEvents(new DamageListener(this, defenseAbilities, fightingAbilities), this);
+		// Load mana manager
+		manaManager = new ManaManager(this, defenseAbilities);
+		getServer().getPluginManager().registerEvents(manaManager, this);
+		manaManager.startRegen();
 		ItemListener itemListener = new ItemListener(this);
 		pm.registerEvents(itemListener, this);
 		itemListener.scheduleTask();

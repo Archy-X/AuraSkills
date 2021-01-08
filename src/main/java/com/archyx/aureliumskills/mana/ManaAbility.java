@@ -13,7 +13,7 @@ public interface ManaAbility {
 
     default void update(Player player) { }
 
-    void stop(Player player);
+    default void stop(Player player) {}
 
     default void onStop(Player player) {
         getPlugin().getManaAbilityManager().setPlayerCooldown(player, getManaAbility());

@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.lang.SkillMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,33 +29,33 @@ public enum Skill {
 			MAbility.SHARP_HOOK),
 	EXCAVATION(Stat.REGENERATION, Stat.LUCK,
 			ImmutableList.of(() -> Ability.METAL_DETECTOR, () -> Ability.EXCAVATOR, () -> Ability.SPADE_MASTER, () -> Ability.BIGGER_SCOOP, () -> Ability.LUCKY_SPADES),
-			MAbility.ABSORPTION),
+			null),
 	ARCHERY(Stat.LUCK, Stat.STRENGTH,
 			ImmutableList.of(() -> Ability.CRIT_CHANCE, () -> Ability.ARCHER, () -> Ability.BOW_MASTER, () -> Ability.PIERCING, () -> Ability.STUN),
-			MAbility.CHARGED_SHOT),
+			null),
 	DEFENSE(Stat.TOUGHNESS, Stat.HEALTH,
 			ImmutableList.of(() -> Ability.SHIELDING, () -> Ability.DEFENDER, () -> Ability.MOB_MASTER, () -> Ability.IMMUNITY, () -> Ability.NO_DEBUFF),
 			MAbility.ABSORPTION),
 	FIGHTING(Stat.STRENGTH, Stat.REGENERATION,
 			ImmutableList.of(() -> Ability.CRIT_DAMAGE, () -> Ability.FIGHTER, () -> Ability.SWORD_MASTER, () -> Ability.FIRST_STRIKE, () -> Ability.BLEED),
-			MAbility.ABSORPTION),
+			null),
 	ENDURANCE(Stat.REGENERATION, Stat.TOUGHNESS,
 			ImmutableList.of(() -> Ability.ANTI_HUNGER, () -> Ability.RUNNER, () -> Ability.GOLDEN_HEAL, () -> Ability.RECOVERY, () -> Ability.MEAL_STEAL),
-			MAbility.ABSORPTION),
+			null),
 	AGILITY(Stat.WISDOM, Stat.REGENERATION,
 			ImmutableList.of(() -> Ability.LIGHT_FALL, () -> Ability.JUMPER, () -> Ability.SUGAR_RUSH, () -> Ability.FLEETING, () -> Ability.THUNDER_FALL),
-			MAbility.ABSORPTION),
+			null),
 	ALCHEMY(Stat.HEALTH, Stat.WISDOM,
 			ImmutableList.of(() -> Ability.ALCHEMIST, () -> Ability.BREWER, () -> Ability.SPLASHER, () -> Ability.LINGERING, () -> Ability.WISE_EFFECT),
-			MAbility.ABSORPTION),
+			null),
 	ENCHANTING(Stat.WISDOM, Stat.LUCK, ImmutableList.of(() -> Ability.XP_CONVERT, () -> Ability.ENCHANTER, () -> Ability.XP_WARRIOR, () -> Ability.ENCHANTED_STRENGTH, () -> Ability.LUCKY_TABLE),
-			MAbility.ABSORPTION),
+			null),
 	SORCERY(Stat.STRENGTH, Stat.WISDOM, ImmutableList.of(() -> Ability.SORCERER),
-			MAbility.ABSORPTION),
+			null),
 	HEALING(Stat.REGENERATION, Stat.HEALTH, ImmutableList.of(() -> Ability.LIFE_ESSENCE, () -> Ability.HEALER, () -> Ability.LIFE_STEAL, () -> Ability.GOLDEN_HEART, () -> Ability.REVIVAL),
-			MAbility.ABSORPTION),
+			null),
 	FORGING(Stat.TOUGHNESS, Stat.WISDOM, ImmutableList.of(() -> Ability.DISENCHANTER, () -> Ability.FORGER, () -> Ability.REPAIRING, () -> Ability.ANVIL_MASTER, () -> Ability.SKILL_MENDER),
-			MAbility.ABSORPTION);
+			null);
 	
 	private final Stat primaryStat;
 	private final Stat secondaryStat;
@@ -88,6 +89,7 @@ public enum Skill {
 		return secondaryStat;
 	}
 
+	@Nullable
 	public MAbility getManaAbility() {
 		return manaAbility;
 	}

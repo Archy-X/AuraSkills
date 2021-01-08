@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.DefenseAbilities;
 import com.archyx.aureliumskills.api.event.ManaRegenerateEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
@@ -9,6 +10,7 @@ import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -22,9 +24,11 @@ public class ManaManager implements Listener {
 
     private final Map<UUID, Double> mana;
     private final AureliumSkills plugin;
+    private final DefenseAbilities defenseAbilities;
 
-    public ManaManager(AureliumSkills plugin) {
+    public ManaManager(AureliumSkills plugin, DefenseAbilities defenseAbilities) {
         this.plugin = plugin;
+        this.defenseAbilities = defenseAbilities;
         mana = new HashMap<>();
     }
 
@@ -43,13 +47,16 @@ public class ManaManager implements Listener {
                             double originalMana = mana.get(id);
                             double maxMana = OptionL.getDouble(Option.BASE_MANA) + 2 * stat.getStatLevel(Stat.WISDOM);
                             if (originalMana < maxMana) {
-                                double regen = OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
-                                double finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
-                                //Call Event
-                                ManaRegenerateEvent event = new ManaRegenerateEvent(player.getPlayer(), finalRegen);
-                                Bukkit.getPluginManager().callEvent(event);
-                                if (!event.isCancelled()) {
-                                    mana.put(id, originalMana + event.getAmount());
+                                Player onlinePlayer = (Player) player;
+                                if (!defenseAbilities.getAbsorptionActivated().contains(player)) { // Make sure absorption is not activated
+                                    double regen = OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
+                                    double finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
+                                    //Call Event
+                                    ManaRegenerateEvent event = new ManaRegenerateEvent(player.getPlayer(), finalRegen);
+                                    Bukkit.getPluginManager().callEvent(event);
+                                    if (!event.isCancelled()) {
+                                        mana.put(id, originalMana + event.getAmount());
+                                    }
                                 }
                             }
                         }

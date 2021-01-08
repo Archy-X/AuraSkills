@@ -27,10 +27,19 @@ public class ManaAbilityActivator {
     }
 
     @SuppressWarnings("deprecation")
-    public void readyAbility(PlayerInteractEvent event, Skill skill, String matchMaterial) {
+    public void readyAbility(PlayerInteractEvent event, Skill skill, String matchMaterial, Action... actions) {
         if (OptionL.isEnabled(skill)) {
-            if (plugin.getAbilityManager().isEnabled(skill.getManaAbility())) {
-                if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            MAbility mAbility = skill.getManaAbility();
+            if (mAbility == null) return;
+            if (plugin.getAbilityManager().isEnabled(mAbility)) {
+                boolean matched = false;
+                for (Action action : actions) {
+                    if (event.getAction() == action) {
+                        matched = true;
+                        break;
+                    }
+                }
+                if (matched) {
                     // Check for hoe tilling
                     if (matchMaterial.equals("HOE") && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                         Block clickedBlock = event.getClickedBlock();
@@ -73,35 +82,35 @@ public class ManaAbilityActivator {
                             return;
                         }
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                            if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(skill.getManaAbility()) > 0) {
+                            if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(mAbility) > 0) {
                                 ManaAbilityManager manager = plugin.getManaAbilityManager();
                                 // Checks if speed mine is already activated
-                                if (manager.isActivated(player.getUniqueId(), skill.getManaAbility())) {
+                                if (manager.isActivated(player.getUniqueId(), mAbility)) {
                                     return;
                                 }
                                 // Checks if speed mine is already ready
-                                if (manager.isReady(player.getUniqueId(), skill.getManaAbility())) {
+                                if (manager.isReady(player.getUniqueId(),mAbility)) {
                                     return;
                                 }
                                 // Checks if cooldown is reached
-                                if (manager.getPlayerCooldown(player.getUniqueId(), skill.getManaAbility()) == 0) {
-                                    manager.setReady(player.getUniqueId(), skill.getManaAbility(), true);
-                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_RAISE"), locale));
+                                if (manager.getPlayerCooldown(player.getUniqueId(), mAbility) == 0) {
+                                    manager.setReady(player.getUniqueId(), mAbility, true);
+                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_RAISE"), locale));
                                     new BukkitRunnable() {
                                         @Override
                                         public void run() {
-                                            if (!manager.isActivated(player.getUniqueId(), skill.getManaAbility())) {
-                                                if (manager.isReady(player.getUniqueId(), skill.getManaAbility())) {
-                                                    manager.setReady(player.getUniqueId(), skill.getManaAbility(), false);
-                                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(skill.getManaAbility().name() + "_LOWER"), locale));
+                                            if (!manager.isActivated(player.getUniqueId(), mAbility)) {
+                                                if (manager.isReady(player.getUniqueId(), mAbility)) {
+                                                    manager.setReady(player.getUniqueId(), mAbility, false);
+                                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale));
                                                 }
                                             }
                                         }
                                     }.runTaskLater(plugin, 50L);
                                 } else {
-                                    if (manager.getErrorTimer(player.getUniqueId(), skill.getManaAbility()) == 0) {
-                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format1((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), skill.getManaAbility()) / 20)));
-                                        manager.setErrorTimer(player.getUniqueId(), skill.getManaAbility(), 2);
+                                    if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
+                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
+                                        manager.setErrorTimer(player.getUniqueId(), mAbility, 2);
                                     }
                                 }
                             }

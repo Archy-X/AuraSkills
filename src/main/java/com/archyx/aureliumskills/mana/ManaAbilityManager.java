@@ -337,7 +337,7 @@ public class ManaAbilityManager implements Listener {
     @Nullable
     public MAbility getManaAbility( Skill skill, int level) {
         MAbility mAbility = skill.getManaAbility();
-        if (mAbility != MAbility.ABSORPTION) {
+        if (mAbility != null) {
             if (level >= getUnlock(mAbility) && (level - getUnlock(mAbility)) % getLevelUp(mAbility) == 0) {
                 return mAbility;
             }

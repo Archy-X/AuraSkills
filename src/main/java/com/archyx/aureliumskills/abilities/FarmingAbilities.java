@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -145,7 +146,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void readyReplenish(PlayerInteractEvent event) {
-		plugin.getManaAbilityManager().activator.readyAbility(event, Skill.FARMING, "HOE");
+		plugin.getManaAbilityManager().activator.readyAbility(event, Skill.FARMING, "HOE", Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 
 	@EventHandler

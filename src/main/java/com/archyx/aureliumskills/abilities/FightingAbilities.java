@@ -22,7 +22,7 @@ import java.util.*;
 
 public class FightingAbilities extends AbilityProvider implements Listener {
 
-    private static final Map<UUID, Integer> firstStrikeCounter = new HashMap<>();
+    private final Map<UUID, Integer> firstStrikeCounter = new HashMap<>();
     private final Random r = new Random();
 
     public FightingAbilities(AureliumSkills plugin) {

@@ -30,7 +30,7 @@ public class DamageListener implements Listener {
     private final FightingAbilities fightingAbilities;
     private final DefenseAbilities defenseAbilities;
 
-    public DamageListener(AureliumSkills plugin) {
+    public DamageListener(AureliumSkills plugin, DefenseAbilities defenseAbilities, FightingAbilities fightingAbilities) {
         strength = new Strength();
         this.plugin = plugin;
         this.critical = new Critical(plugin);
@@ -39,8 +39,8 @@ public class DamageListener implements Listener {
         this.miningAbilities = new MiningAbilities(plugin);
         this.foragingAbilities = new ForagingAbilities(plugin);
         this.archeryAbilities = new ArcheryAbilities(plugin);
-        this.fightingAbilities = new FightingAbilities(plugin);
-        this.defenseAbilities = new DefenseAbilities(plugin);
+        this.defenseAbilities = defenseAbilities;
+        this.fightingAbilities = fightingAbilities;
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -125,6 +125,10 @@ public class DamageListener implements Listener {
         if (playerSkill == null || playerStat == null) {
             return;
         }
+        // Checks for absorption activation and applies
+        defenseAbilities.handleAbsorption(event, player, playerSkill);
+        if (event.isCancelled()) return;
+
         // Handles toughness
         Toughness.onDamage(event, playerStat);
 

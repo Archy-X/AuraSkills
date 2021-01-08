@@ -561,14 +561,14 @@ mana_abilities:
     raise: '&7You raise your hoe'
     lower: '&7You lower your hoe'
     start: '&6Replenish Activated! &7(-{mana} {mana_unit})'
-    end: '&6Replenish has worn off'
+    end: '&7Replenish has worn off'
   treecapitator:
     name: Treecapitator
     desc: '&7Breaks entire trees instantly for \n&7  {value} seconds. &e[Right Click to Activate]'
     raise: '&7You raise your axe'
     lower: '&7You lower your axe'
     start: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
-    end: '&6Treecapitator has worn off'
+    end: '&7Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
     desc: '&7Gives Haste 10 for {value} \n&7  seconds. &e[Right Click to Activate]'
@@ -578,11 +578,11 @@ mana_abilities:
     end: '&7Speed Mine has worn off'
   absorption:
     name: Absorption
-    desc: 'Heal 50% of the damage you take \n&7  for {value} seconds.'
+    desc: 'Incoming damage will decrease mana\n&7  by 2x Minecraft damage instead of your\n&7  health for {value} seconds. Mana will not\n&7  regenerate while Absorption is active.\n  &e[Left click shield and take damage to activate]'
     raise: '&7You raise your shield'
     lower: '&7You lower your shield'
     start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
-    end: '&6Absorption has worn off'
+    end: '&7Absorption has worn off'
   sharp_hook:
     name: Sharp Hook
     desc: 'Deal {value} damage to a hooked entity\n&7  when left clicking with a fishing rod'

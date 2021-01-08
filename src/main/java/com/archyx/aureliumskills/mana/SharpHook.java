@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -43,7 +44,7 @@ public class SharpHook implements ManaAbility {
             plugin.getManaManager().setMana(player.getUniqueId(), plugin.getManaManager().getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
-            player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale), "{mana}", String.valueOf(manaConsumed)));
+            player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale), "{mana}", NumberUtil.format0(manaConsumed)));
             if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.SHARP_HOOK, "enable_sound")) {
                 if (XMaterial.isNewVersion()) {
                     player.playSound(player.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1f, 1.5f);
@@ -54,13 +55,4 @@ public class SharpHook implements ManaAbility {
         }
     }
 
-    @Override
-    public void update(Player player) {
-
-    }
-
-    @Override
-    public void stop(Player player) {
-        plugin.getManaAbilityManager().setPlayerCooldown(player, MAbility.SHARP_HOOK);
-    }
 }

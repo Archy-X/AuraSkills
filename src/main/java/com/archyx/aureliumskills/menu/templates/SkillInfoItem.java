@@ -136,17 +136,19 @@ public abstract class SkillInfoItem {
     private String getManaAbilityLore(Skill skill, PlayerSkill playerSkill, Locale locale) {
         StringBuilder manaAbilityLore = new StringBuilder();
         MAbility mAbility = skill.getManaAbility();
-        int level = playerSkill.getManaAbilityLevel(mAbility);
-        if (mAbility != MAbility.ABSORPTION && level > 0 && plugin.getAbilityManager().isEnabled(mAbility)) {
-            ManaAbilityManager manager = plugin.getManaAbilityManager();
-            manaAbilityLore.append(LoreUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)
-                    , "{mana_ability}", mAbility.getDisplayName(locale)
-                    , "{level}", RomanNumber.toRoman(level)
-                    , "{duration}",  NumberUtil.format1(manager.getValue(mAbility, level))
-                    , "{value}", NumberUtil.format1(manager.getValue(mAbility, level))
-                    , "{mana_cost}", NumberUtil.format1(manager.getManaCost(mAbility, level))
-                    , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
+        if (mAbility != null) {
+            int level = playerSkill.getManaAbilityLevel(mAbility);
+            if (level > 0 && plugin.getAbilityManager().isEnabled(mAbility)) {
+                ManaAbilityManager manager = plugin.getManaAbilityManager();
+                manaAbilityLore.append(LoreUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)
+                        , "{mana_ability}", mAbility.getDisplayName(locale)
+                        , "{level}", RomanNumber.toRoman(level)
+                        , "{duration}", NumberUtil.format1(manager.getValue(mAbility, level))
+                        , "{value}", NumberUtil.format1(manager.getValue(mAbility, level))
+                        , "{mana_cost}", NumberUtil.format1(manager.getManaCost(mAbility, level))
+                        , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
 
+            }
         }
         return manaAbilityLore.toString();
     }
