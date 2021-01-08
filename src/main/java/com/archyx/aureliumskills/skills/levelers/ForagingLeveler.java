@@ -108,24 +108,28 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 						case 0:
 						case 4:
 						case 8:
+						case 12:
 							leveler.addXp(p, s, getXp(p, Source.OAK_LOG));
 							applyAbilities(p, b);
 							break;
 						case 1:
 						case 5:
 						case 9:
+						case 13:
 							leveler.addXp(p, s, getXp(p, Source.SPRUCE_LOG));
 							applyAbilities(p, b);
 							break;
 						case 2:
 						case 6:
 						case 10:
+						case 14:
 							leveler.addXp(p, s, getXp(p, Source.BIRCH_LOG));
 							applyAbilities(p, b);
 							break;
 						case 3:
 						case 7:
 						case 11:
+						case 15:
 							leveler.addXp(p, s, getXp(p, Source.JUNGLE_LOG));
 							applyAbilities(p, b);
 							break;
@@ -137,12 +141,14 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 						case 0:
 						case 4:
 						case 8:
+						case 12:
 							leveler.addXp(p, s, getXp(p, Source.ACACIA_LOG));
 							applyAbilities(p, b);
 							break;
 						case 1:
 						case 5:
 						case 9:
+						case 13:
 							leveler.addXp(p, s, getXp(p, Source.DARK_OAK_LOG));
 							applyAbilities(p, b);
 							break;
