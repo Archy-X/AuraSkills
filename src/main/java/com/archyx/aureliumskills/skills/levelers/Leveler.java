@@ -145,7 +145,7 @@ public class Leveler {
 				playerStat.addStatLevel(skill.getPrimaryStat(), playerSkill.getSkillLevel(skill) - 1);
 				playerStat.addStatLevel(skill.getSecondaryStat(), playerSkill.getSkillLevel(skill) / 2);
 			}
-			//Reloads modifiers
+			// Reloads modifiers
 			for (String key : playerStat.getModifiers().keySet()) {
 				StatModifier modifier = playerStat.getModifiers().get(key);
 				playerStat.addStatLevel(modifier.getStat(), modifier.getValue());
@@ -284,6 +284,14 @@ public class Leveler {
 
 	public List<Integer> getLevelRequirements() {
 		return levelRequirements;
+	}
+
+	public int getXpRequired(int level) {
+		if (levelRequirements.size() > level - 2) {
+			return levelRequirements.get(level - 2);
+		} else {
+			return 0;
+		}
 	}
 
 }

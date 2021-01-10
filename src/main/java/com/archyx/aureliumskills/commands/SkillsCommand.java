@@ -399,13 +399,15 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = Lang.getLanguage(sender);
 		if (level > 0) {
 			for (Skill skill : Skill.values()) {
-				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-					playerSkill.setSkillLevel(skill, level);
-					playerSkill.setXp(skill, 0);
-					plugin.getLeveler().updateStats(player);
-					// Reload items and armor to check for newly met requirements
-					this.plugin.getModifierManager().reloadPlayer(player);
+				if (OptionL.isEnabled(skill)) {
+					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+						PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+						playerSkill.setSkillLevel(skill, level);
+						playerSkill.setXp(skill, 0);
+						plugin.getLeveler().updateStats(player);
+						// Reload items and armor to check for newly met requirements
+						this.plugin.getModifierManager().reloadPlayer(player);
+					}
 				}
 			}
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETALL_SET, locale)

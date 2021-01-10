@@ -130,12 +130,12 @@ public class AbilityManager {
                     if (!enabled) {
                         amountDisabled++;
                     }
-                    double baseValue = config.getDouble(path + "base_value");
-                    double valuePerLevel = config.getDouble(path + "value_per_level");
-                    double cooldown = config.getDouble(path + "cooldown");
-                    double cooldownPerLevel = config.getDouble(path + "cooldown-per-level");
-                    double manaCost = config.getDouble(path + "mana_cost");
-                    double manaCostPerLevel = config.getDouble(path + "mana_cost_per_level");
+                    double baseValue = config.getDouble(path + "base_value", mAbility.getDefaultBaseValue());
+                    double valuePerLevel = config.getDouble(path + "value_per_level", mAbility.getDefaultValuePerLevel());
+                    double cooldown = config.getDouble(path + "cooldown", mAbility.getDefaultBaseCooldown());
+                    double cooldownPerLevel = config.getDouble(path + "cooldown-per-level", mAbility.getDefaultCooldownPerLevel());
+                    double manaCost = config.getDouble(path + "mana_cost", mAbility.getDefaultBaseManaCost());
+                    double manaCostPerLevel = config.getDouble(path + "mana_cost_per_level", mAbility.getDefaultManaCostPerLevel());
                     int unlock = config.getInt(path + "unlock", 7);
                     int levelUp = config.getInt(path + "level_up", 7);
                     int maxLevel = config.getInt(path + "max_level", 0);

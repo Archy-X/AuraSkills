@@ -28,6 +28,11 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process.
       - Left click a bow to toggle charged shot mode
       - Damage percent increase is based on the amount of mana consumed, mana is consumed up to the max mana cost
+    - Absorption mana ability for Defense
+      - Incoming damage will decrease mana by 2x Minecraft damage instead of health for a duration.
+      - Mana will not regenerate while Absorption is active.
+      - Left click a shield and take damage to activate
+      - New sounds and particle effects used
     - Added PlayerLootDropEvent to the api
     - Added custom model data support for menu items:
       - Add key value pair to the 'material' string
@@ -35,7 +40,17 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Only works in 1.14+
     - Added option wisdom.max-mana-per-wisdom
     - Added menu descriptor/message for max mana
-    - Added 'aureliumskills_multiplier' and 'aureliumskills_multiplier_percent' placeholders to get a player's skill XP multiplier
+    - Added new placeholders (only identifiers shown, use %aureliumskills_[identifier]%)
+      - xp_required_formatted_[skill] - Gets the required XP for the next level of a player formatted with suffixes (ex: 5k)
+      - xp_required_[skill] - Gets the required XP for the next level of a player as an exact number
+      - xp_progress_int_[skill] - Gets the percent progress to the next level rounded to an integer
+      - xp_progress_1_[skill] - Gets the percent progress to the next level rounded to 1 decimal place
+      - xp_progress_[skill] - Gets the exact percent progress to the next level
+      - xp_int_[skill] - Gets the current XP for a player rounded to an integer
+      - xp_formatted_[skill] - Gets the current XP for a player formatted with suffixes
+      - xp_[skill] - Gets the exact skill XP for a player
+      - multiplier - Gets a player's permission XP multiplier rounded up to 2 decimal places (1 = normal, 2 = 2x XP)
+      - multiplier_percent - Gets a player's permission XP multiplier as a percent more value rounded to an integer (40 = 40% more XP)
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
     - The level progression menu now supports unlimited pages
@@ -52,6 +67,7 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - newCost = originalCost * (1 - (-1 * 1.025^(-1 * wisdomLevel * wisdom.anvil-cost-modifier) + 1))
       - newCost is rounded to an integer, must be at least 1
     - Tweaked some messages to reflect stat mechanic changes
+    - Updated NBT API version
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled
@@ -59,6 +75,8 @@ Version Alpha 1.6.0 (IN PROGRESS)
     - Added missing items in Fishing leveler (nautilus shell and bamboo)
     - Fixed inaccurate attack damage percent in the stats menu when use-percent and display-damage-with-health-scaling are true
     - Fixed wisdom.allow-over-max-mana option not working sometimes when set to false
+    - Fixed six-sided logs not giving Foraging XP in 1.12
+    - Fixed the 'skill setall' command affecting disabled skills
 
 Version Alpha 1.5.5
   New Features:
