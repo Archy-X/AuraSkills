@@ -77,6 +77,7 @@ Version Alpha 1.6.0 (IN PROGRESS)
     - Fixed wisdom.allow-over-max-mana option not working sometimes when set to false
     - Fixed six-sided logs not giving Foraging XP in 1.12
     - Fixed the 'skill setall' command affecting disabled skills
+    - Fixed Jungle Log not checking for block replace
 
 Version Alpha 1.5.5
   New Features:

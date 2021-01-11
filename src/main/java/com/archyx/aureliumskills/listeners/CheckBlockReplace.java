@@ -37,6 +37,7 @@ public class CheckBlockReplace implements Listener {
             XMaterial.DIORITE,
             XMaterial.ANDESITE,
             //Uncommon
+            XMaterial.JUNGLE_LOG,
             XMaterial.DARK_OAK_LOG,
             XMaterial.ACACIA_LOG,
             XMaterial.CRIMSON_STEM,
