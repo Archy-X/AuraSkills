@@ -586,7 +586,7 @@ mana_abilities:
     end: '&7Absorption has worn off'
   terraform:
     name: Terraform
-    desc: 'Break blocks instantly in a 4 block radius\n&7  in the same layer when digging. You must use a\n&7  shovel and extra blocks broken must be\n&7  the same type and in a single connected vein.\n&7  &e[Right click shovel and dig block to activate]'
+    desc: 'Break blocks instantly in a 4 block radius\n&7  in the same layer when digging for {value} seconds. You\n&7  must use a shovel and extra blocks broken must be\n&7  the same type and in a single connected vein.\n&7  &e[Right click shovel and dig block to activate]'
     raise: '&7You raise your shovel'
     lower: '&7You lower your shovel'
     start: '&6Terraform Activated! &7(-{mana} {mana_unit})'
@@ -598,7 +598,7 @@ mana_abilities:
     menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Damage: &c{value} &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   charged_shot:
     name: Charged Shot
-    desc: 'Arrows you shoot will deal more damage\n&7  based on how far the bow was pulled back,\n&7  consuming mana in the process. &e[Left click\n&e  a bow to toggle charged shot mode]'
+    desc: 'Arrows you shoot will deal more damage\n&7  based on how far the bow was pulled back,\n&7  consuming mana in the process. Does {value}% more\n&7  damage per mana consumed. &e[Left click\n&e  a bow to toggle charged shot mode]'
     enable: '&7Charged shot mode is now enabled'
     disable: '&7Charged shot mode is now disabled'
     shoot: '&6Used Charged Shot! &d+{percent}% DMG &7(-{mana} {mana_unit})'
