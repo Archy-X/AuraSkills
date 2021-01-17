@@ -89,7 +89,20 @@ public class Modifiers {
         for (String key : compound.getKeys()) {
             Stat stat = Stat.valueOf(key.toUpperCase());
             double value = compound.getDouble(key);
-            modifiers.add(new StatModifier("AureliumSkills.Modifiers.Item." + getName(stat), stat, value));
+            if (type == ModifierType.ITEM) {
+                modifiers.add(new StatModifier("AureliumSkills.Modifiers.Item." + getName(stat), stat, value));
+            } else if (type == ModifierType.ARMOR) {
+                String slot = "Helmet";
+                String mat = item.getType().toString();
+                if (mat.contains("CHESTPLATE")) {
+                    slot = "Chestplate";
+                } else if (mat.contains("LEGGINGS")) {
+                    slot = "Leggings";
+                } else if (mat.contains("BOOTS")) {
+                    slot = "Boots";
+                }
+                modifiers.add(new StatModifier("AureliumSkills.Modifiers.Armor." + slot + "." + getName(stat), stat, value));
+            }
         }
         return modifiers;
     }
