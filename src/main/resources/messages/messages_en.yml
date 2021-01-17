@@ -558,21 +558,21 @@ menus:
 mana_abilities:
   replenish:
     name: Replenish
-    desc: '&7Replants crops automatically for \n&7  {value} seconds. &e[Right Click to Activate]'
+    desc: '&7Replants crops automatically for \n&7  {value} seconds. &e[Right click hoe and\n&e  break crop to activate]'
     raise: '&7You raise your hoe'
     lower: '&7You lower your hoe'
     start: '&6Replenish Activated! &7(-{mana} {mana_unit})'
     end: '&7Replenish has worn off'
   treecapitator:
     name: Treecapitator
-    desc: '&7Breaks entire trees instantly for \n&7  {value} seconds. &e[Right Click to Activate]'
+    desc: '&7Breaks entire trees instantly for \n&7  {value} seconds. &e[Right click axe and\n&e  break log to activate]'
     raise: '&7You raise your axe'
     lower: '&7You lower your axe'
     start: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
     end: '&7Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
-    desc: '&7Gives Haste 10 for {value} \n&7  seconds. &e[Right Click to Activate]'
+    desc: '&7Gives Haste 10 for {value} seconds.\n&e  [Right click pickaxe and mine\n&e  block to activate]'
     raise: '&7You raise your pickaxe'
     lower: '&7You lower your pickaxe'
     start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
@@ -598,7 +598,7 @@ mana_abilities:
     menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Damage: &c{value} &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   charged_shot:
     name: Charged Shot
-    desc: 'Arrows you shoot will deal more damage\n&7  based on how far the bow was pulled back,\n&7  consuming mana in the process. &eLeft click\n&7  a bow to toggle charged shot mode.'
+    desc: 'Arrows you shoot will deal more damage\n&7  based on how far the bow was pulled back,\n&7  consuming mana in the process. &e[Left click\n&e  a bow to toggle charged shot mode]'
     enable: '&7Charged shot mode is now enabled'
     disable: '&7Charged shot mode is now disabled'
     shoot: '&6Used Charged Shot! &d+{percent}% DMG &7(-{mana} {mana_unit})'
