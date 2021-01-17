@@ -7,7 +7,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.MAbility;
-import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.Treecapitator;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.PlayerSkill;
@@ -16,7 +15,6 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -246,57 +244,11 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	
 	@EventHandler
 	public void readyTreecapitator(PlayerInteractEvent event) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
-			if (plugin.getAbilityManager().isEnabled(MAbility.TREECAPITATOR)) {
-				if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
-					if (mat.name().toUpperCase().contains("_AXE")) {
-						Player player = event.getPlayer();
-						Locale locale = Lang.getLanguage(player);
-						// Check WorldEdit wand
-						if (mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
-							if (plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit")) {
-								return;
-							}
-						}
-						if (blockAbility(player)) return;
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(MAbility.TREECAPITATOR) > 0) {
-								ManaAbilityManager manager = plugin.getManaAbilityManager();
-								//Checks if speed mine is already activated
-								if (manager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
-									return;
-								}
-								//Checks if speed mine is already ready
-								if (manager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
-									return;
-								}
-								//Checks if cooldown is reached
-								if (manager.getPlayerCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
-									manager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, true);
-									plugin.getAbilityManager().sendMessage(player,  Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_RAISE, locale));
-									new BukkitRunnable() {
-										@Override
-										public void run() {
-											if (!manager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
-												if (manager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
-													manager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, false);
-													plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_LOWER, locale));
-												}
-											}
-										}
-									}.runTaskLater(plugin, 50L);
-								} else {
-									if (manager.getErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
-										plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) manager.getPlayerCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) / 20)));
-										manager.setErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR, 2);
-									}
-								}
-							}
-						}
-					}
-				}
+		if (event.getPlayer().getInventory().getItemInMainHand().getType().equals(XMaterial.WOODEN_AXE.parseMaterial())) {
+			if (plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit")) {
+				return;
 			}
 		}
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.FORAGING, new String[]{"_AXE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 }

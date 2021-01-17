@@ -104,7 +104,7 @@ public class ManaAbilityActivator {
                                                 }
                                             }
                                         }
-                                    }.runTaskLater(plugin, 50L);
+                                    }.runTaskLater(plugin, 80L);
                                 } else {
                                     if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
                                         plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));

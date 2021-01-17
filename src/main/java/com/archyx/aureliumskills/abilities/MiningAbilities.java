@@ -16,7 +16,6 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -33,7 +32,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
 import java.util.Locale;
@@ -169,56 +167,11 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void readySpeedMine(PlayerInteractEvent event) {
-		if (OptionL.isEnabled(Skill.MINING)) {
-			if (plugin.getAbilityManager().isEnabled(MAbility.SPEED_MINE)) {
-				if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-					Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
-					if (mat.name().toUpperCase().contains("PICKAXE")) {
-						Player player = event.getPlayer();
-						Locale locale = Lang.getLanguage(player);
-						if (blockAbility(player)) return;
-						if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(MAbility.SPEED_MINE, "require_sneak")) {
-							if (!player.isSneaking()) {
-								return;
-							}
-						}
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(MAbility.SPEED_MINE) > 0) {
-								ManaAbilityManager manager = plugin.getManaAbilityManager();
-								//Checks if speed mine is already activated
-								if (manager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
-									return;
-								}
-								//Checks if speed mine is already ready
-								if (manager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
-									return;
-								}
-								//Checks if cooldown is reached
-								if (manager.getPlayerCooldown(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
-									manager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, true);
-									plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_RAISE, locale));
-									new BukkitRunnable() {
-										@Override
-										public void run() {
-											if (!manager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
-												if (manager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
-													manager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, false);
-													plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_LOWER, locale));
-												}
-											}
-										}
-									}.runTaskLater(plugin, 50L);
-								} else {
-									if (manager.getErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
-										plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) manager.getPlayerCooldown(player.getUniqueId(), MAbility.SPEED_MINE) / 20)));
-										manager.setErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE, 2);
-									}
-								}
-							}
-						}
-					}
-				}
+		if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(MAbility.SPEED_MINE, "require_sneak")) {
+			if (!event.getPlayer().isSneaking()) {
+				return;
 			}
 		}
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.MINING, new String[] {"PICKAXE"}, Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR);
 	}
 }

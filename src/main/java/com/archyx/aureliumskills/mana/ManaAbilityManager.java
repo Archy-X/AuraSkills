@@ -25,7 +25,7 @@ public class ManaAbilityManager implements Listener {
     private final Map<UUID, Map<MAbility, Integer>> errorTimer;
 
     private final Map<UUID, List<ManaAbility>> activeAbilities;
-    public ManaAbilityActivator activator;
+    private final ManaAbilityActivator activator;
 
     private final AureliumSkills plugin;
 
@@ -42,6 +42,10 @@ public class ManaAbilityManager implements Listener {
     public void init() {
         startTimer();
         startUpdating();
+    }
+
+    public ManaAbilityActivator getActivator() {
+        return activator;
     }
 
     //Sets cooldown

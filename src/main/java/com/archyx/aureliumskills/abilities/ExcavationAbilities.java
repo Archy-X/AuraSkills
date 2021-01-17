@@ -268,7 +268,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	private void readyTerraform(PlayerInteractEvent event) {
-		plugin.getManaAbilityManager().activator.readyAbility(event, Skill.EXCAVATION, new String[] {"SHOVEL", "SPADE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.EXCAVATION, new String[] {"SHOVEL", "SPADE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 
 	private void terraformBreak(Player player, Block block) {
