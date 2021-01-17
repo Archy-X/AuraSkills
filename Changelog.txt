@@ -1,4 +1,4 @@
-Version Alpha 1.6.0 (IN PROGRESS)
+Version Alpha 1.6.0
   New Features:
     - New abilities_config:
       - Moved ability options from config.yml to new abilities_config.yml file
@@ -6,6 +6,8 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Added 'level_up' option (every x levels the ability should level up)
       - Added 'max_level' option to control the maximum allowed ability level (set to 0 for no limit) (skill level limits still apply)
       - Added various specific options for some abilities such as 'enable_message', 'enable_sound', etc.
+      - Changing the new options will automatically change the order on menus and level up messages
+      - Your existing ability options will be automatically migrated to the new abilities_config.yml file when updating and old options will be deleted
     - Enchanting abilities:
       - XP Convert - Earn 1 Minecraft experience for every certain amount of skill XP you gain.
       - Enchanter - Earn more Enchanting XP.
@@ -28,6 +30,7 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Break blocks instantly in a 4 block radius in the same layer when digging
       - You must use a shovel and extra blocks broken must be the same type and in a single connected vein
       - Right click shovel and dig block to activate
+      - Blocks broken will call BlockBreakEvent so there shouldn't be plugin compatibility issues
     - Charged Shot mana ability for Archery
       - Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process.
       - Left click a bow to toggle charged shot mode
@@ -57,8 +60,9 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - multiplier_percent - Gets a player's permission XP multiplier as a percent more value rounded to an integer (40 = 40% more XP)
   Changes:
     - Stat levels and mana now use double instead of int (decimal support)
+      - API BREAKAGE (You must recompile plugins that use mana and stat methods!)
     - The level progression menu now supports unlimited pages
-    - Moved api events to a new event package
+    - Moved api events to a new event package (API BREAKAGE)
     - Changed item/armor modifier and requirement format to a nested NBT compound structure
       - Items with the legacy format will auto convert if held in a player's hand by default (set modifier.auto-convert-from-legacy to false to disable)
       - All item data from this plugin is now stored inside the 'AureliumSkills' root tag
@@ -83,6 +87,7 @@ Version Alpha 1.6.0 (IN PROGRESS)
         - Bed messages (monsters nearby, only at night, too far away)
         - Jukebox playing messages
         - Height limit messages (may not work sometimes on older versions)
+    - Code cleanup and optimizations
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled
