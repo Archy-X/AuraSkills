@@ -148,7 +148,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
 
     @EventHandler
     public void readyAbsorption(PlayerInteractEvent event) {
-        plugin.getManaAbilityManager().activator.readyAbility(event, Skill.DEFENSE, "SHIELD", Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK);
+        plugin.getManaAbilityManager().activator.readyAbility(event, Skill.DEFENSE, new String[] {"SHIELD"}, Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK);
     }
 
     public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {

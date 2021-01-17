@@ -27,7 +27,7 @@ public class ManaAbilityActivator {
     }
 
     @SuppressWarnings("deprecation")
-    public void readyAbility(PlayerInteractEvent event, Skill skill, String matchMaterial, Action... actions) {
+    public void readyAbility(PlayerInteractEvent event, Skill skill, String[] matchMaterial, Action... actions) {
         if (OptionL.isEnabled(skill)) {
             MAbility mAbility = skill.getManaAbility();
             if (mAbility == null) return;
@@ -41,7 +41,7 @@ public class ManaAbilityActivator {
                 }
                 if (matched) {
                     // Check for hoe tilling
-                    if (matchMaterial.equals("HOE") && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    if (hasMatch(matchMaterial, "HOE") && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                         Block clickedBlock = event.getClickedBlock();
                         if (clickedBlock != null) {
                             if (XMaterial.isNewVersion()) {
@@ -52,14 +52,12 @@ public class ManaAbilityActivator {
                                         || clickedBlock.getType() == XMaterial.FARMLAND.parseMaterial()) {
                                     return;
                                 }
-                            }
-                            else {
+                            } else {
                                 if (clickedBlock.getType() == XMaterial.GRASS_BLOCK.parseMaterial()
                                         || clickedBlock.getType() == XMaterial.GRASS_PATH.parseMaterial()
                                         || clickedBlock.getType() == XMaterial.FARMLAND.parseMaterial()) {
                                     return;
-                                }
-                                else if (clickedBlock.getType() == Material.DIRT) {
+                                } else if (clickedBlock.getType() == Material.DIRT) {
                                     switch (clickedBlock.getData()) {
                                         case 0:
                                         case 1:
@@ -70,7 +68,7 @@ public class ManaAbilityActivator {
                         }
                     }
                     Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
-                    if (mat.name().toUpperCase().contains(matchMaterial)) {
+                    if (hasMatch(matchMaterial, mat.name())) {
                         Player player = event.getPlayer();
                         Locale locale = Lang.getLanguage(player);
                         // Check disabled worlds
@@ -89,7 +87,7 @@ public class ManaAbilityActivator {
                                     return;
                                 }
                                 // Checks if speed mine is already ready
-                                if (manager.isReady(player.getUniqueId(),mAbility)) {
+                                if (manager.isReady(player.getUniqueId(), mAbility)) {
                                     return;
                                 }
                                 // Checks if cooldown is reached
@@ -120,4 +118,14 @@ public class ManaAbilityActivator {
             }
         }
     }
+
+    private boolean hasMatch(String[] matchMaterials, String checked) {
+        for (String matchMaterial : matchMaterials) {
+            if (checked.contains(matchMaterial)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

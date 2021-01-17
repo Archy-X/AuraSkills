@@ -5,7 +5,7 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Added 'unlock' option (the skill level the ability unlocks at)
       - Added 'level_up' option (every x levels the ability should level up)
       - Added 'max_level' option to control the maximum allowed ability level (set to 0 for no limit) (skill level limits still apply)
-      - Added various specific ability and mana ability options such as 'enable_message', 'enable_sound', etc.
+      - Added various specific options for some abilities such as 'enable_message', 'enable_sound', etc.
     - Enchanting abilities:
       - XP Convert - Earn 1 Minecraft experience for every certain amount of skill XP you gain.
       - Enchanter - Earn more Enchanting XP.
@@ -24,6 +24,10 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Repairing - Repairing items in an anvil using the raw material the item was made from repairs more durability.
       - Anvil Master - Increases the maximum repair cost of an anvil before it is too expensive.
       - Skill Mender - Gaining skill XP has a chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
+    - Terraform mana ability for Excavation
+      - Break blocks instantly in a 4 block radius in the same layer when digging
+      - You must use a shovel and extra blocks broken must be the same type and in a single connected vein
+      - Right click shovel and dig block to activate
     - Charged Shot mana ability for Archery
       - Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process.
       - Left click a bow to toggle charged shot mode
@@ -68,6 +72,8 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - newCost is rounded to an integer, must be at least 1
     - Tweaked some messages to reflect stat mechanic changes
     - Updated NBT API version
+    - Added items to the default loot table and nerfed some
+    - Updated Spigot-API version to 1.16.5
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled
@@ -78,6 +84,7 @@ Version Alpha 1.6.0 (IN PROGRESS)
     - Fixed six-sided logs not giving Foraging XP in 1.12
     - Fixed the 'skill setall' command affecting disabled skills
     - Fixed Jungle Log not checking for block replace
+    - Fixed Excavation abilities not working when Archery was disabled
 
 Version Alpha 1.5.5
   New Features:

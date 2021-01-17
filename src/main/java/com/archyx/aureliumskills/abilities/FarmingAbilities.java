@@ -146,7 +146,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void readyReplenish(PlayerInteractEvent event) {
-		plugin.getManaAbilityManager().activator.readyAbility(event, Skill.FARMING, "HOE", Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+		plugin.getManaAbilityManager().activator.readyAbility(event, Skill.FARMING, new String[] {"HOE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 
 	@EventHandler

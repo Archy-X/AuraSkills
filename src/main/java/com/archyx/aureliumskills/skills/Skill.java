@@ -29,7 +29,7 @@ public enum Skill {
 			MAbility.SHARP_HOOK),
 	EXCAVATION(Stat.REGENERATION, Stat.LUCK,
 			ImmutableList.of(() -> Ability.METAL_DETECTOR, () -> Ability.EXCAVATOR, () -> Ability.SPADE_MASTER, () -> Ability.BIGGER_SCOOP, () -> Ability.LUCKY_SPADES),
-			null),
+			MAbility.TERRAFORM),
 	ARCHERY(Stat.LUCK, Stat.STRENGTH,
 			ImmutableList.of(() -> Ability.CRIT_CHANCE, () -> Ability.ARCHER, () -> Ability.BOW_MASTER, () -> Ability.PIERCING, () -> Ability.STUN),
 			null),

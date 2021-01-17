@@ -583,6 +583,13 @@ mana_abilities:
     lower: '&7You lower your shield'
     start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
     end: '&7Absorption has worn off'
+  terraform:
+    name: Terraform
+    desc: 'Break blocks instantly in a 4 block radius\n&7  in the same layer when digging. You must use a\n&7  shovel and extra blocks broken must be\n&7  the same type and in a single connected vein.\n&7  &e[Right click shovel and dig block to activate]'
+    raise: '&7You raise your shovel'
+    lower: '&7You lower your shovel'
+    start: '&6Terraform Activated! &7(-{mana} {mana_unit})'
+    end: '&7Terraform has worn off'
   sharp_hook:
     name: Sharp Hook
     desc: 'Deal {value} damage to a hooked entity\n&7  when left clicking with a fishing rod'
@@ -678,4 +685,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 12
+file_version: 13

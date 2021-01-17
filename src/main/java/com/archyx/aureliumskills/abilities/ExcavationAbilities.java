@@ -4,7 +4,12 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.loot.Loot;
+import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.mana.ManaAbilityManager;
+import com.archyx.aureliumskills.mana.Terraform;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
@@ -14,15 +19,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Random;
 
 public class ExcavationAbilities extends AbilityProvider implements Listener {
@@ -187,22 +198,26 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void excavationListener(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.ARCHERY)) {
+		if (OptionL.isEnabled(Skill.EXCAVATION)) {
 			if (!event.isCancelled()) {
 				Player player = event.getPlayer();
 				Block block = event.getBlock();
 				if (blockAbility(player)) return;
+				//Applies abilities
+				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+				if (playerSkill == null) return;
+				if (plugin.getAbilityManager().isEnabled(MAbility.TERRAFORM)) {
+					if (!block.hasMetadata("AureliumSkills-Terraform")) {
+						applyTerraform(player, block);
+					}
+				}
 				//Check game mode
 				if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
 					return;
 				}
-				//Applies abilities
-				if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-					PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+				if (!block.hasMetadata("skillsPlaced")) {
 					if (isEnabled(Ability.BIGGER_SCOOP)) {
-						if (!block.hasMetadata("skillsPlaced")) {
-							biggerScoop(playerSkill, block, player);
-						}
+						biggerScoop(playerSkill, block, player);
 					}
 					if (isEnabled(Ability.METAL_DETECTOR)) {
 						metalDetector(player, playerSkill, block);
@@ -223,4 +238,64 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		}
 		return false;
 	}
+
+	private void applyTerraform(Player player, Block block) {
+		Locale locale = Lang.getLanguage(player);
+		ManaAbilityManager manager = plugin.getManaAbilityManager();
+		if (!isExcavationMaterial(block.getType())) return;
+		// Apply if activated
+		if (manager.isActivated(player.getUniqueId(), MAbility.TERRAFORM)) {
+			terraformBreak(player, block);
+			return;
+		}
+		//Checks if speed mine is ready
+		if (manager.isReady(player.getUniqueId(), MAbility.TERRAFORM)) {
+			//Checks if holding pickaxe
+			Material mat = player.getInventory().getItemInMainHand().getType();
+			if (mat.name().contains("SHOVEL") || mat.name().contains("SPADE")) {
+				PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
+				if (skill == null) return;
+				if (plugin.getManaManager().getMana(player.getUniqueId()) >= getManaCost(MAbility.TERRAFORM, skill)) {
+					manager.activateAbility(player, MAbility.TERRAFORM, (int) (getValue(MAbility.TERRAFORM, skill) * 20), new Terraform(plugin));
+					terraformBreak(player, block);
+				}
+				else {
+					player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TERRAFORM, skill))));
+				}
+			}
+		}
+	}
+
+	@EventHandler
+	private void readyTerraform(PlayerInteractEvent event) {
+		plugin.getManaAbilityManager().activator.readyAbility(event, Skill.EXCAVATION, new String[] {"SHOVEL", "SPADE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+	}
+
+	private void terraformBreak(Player player, Block block) {
+		Material material = block.getType();
+		BlockFace[] faces = new BlockFace[] {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
+		LinkedList<Block> toCheck = new LinkedList<>();
+		toCheck.add(block);
+		int count = 0;
+		while ((block = toCheck.poll()) != null && count < 61) {
+			if (block.getType() == material) {
+				block.setMetadata("AureliumSkills-Terraform", new FixedMetadataValue(plugin, true));
+				breakBlock(player, block);
+				for (BlockFace face : faces) {
+					toCheck.add(block.getRelative(face));
+				}
+				count++;
+			}
+		}
+	}
+
+	private void breakBlock(Player player, Block block) {
+		BlockBreakEvent event = new BlockBreakEvent(block, player);
+		Bukkit.getPluginManager().callEvent(event);
+		if (!event.isCancelled()) {
+			block.breakNaturally(player.getInventory().getItemInMainHand());
+		}
+		block.removeMetadata("AureliumSkills-Terraform", plugin);
+	}
+
 }
