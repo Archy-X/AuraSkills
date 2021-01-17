@@ -19,10 +19,10 @@ Version Alpha 1.6.0 (IN PROGRESS)
       - Golden Heart - Damage done to your absorption hearts is reduced.
       - Revival - Gain Health and Regeneration stat boosts for 30 seconds after respawning.
     - Forging abilities:
-      - Disenchanter - Gain more experience when disenchanting items using a grindstone.
+      - Disenchanter - Gain more experience when disenchanting items using a grindstone. (1.14+ only)
       - Forger - Earn more Forging XP.
       - Repairing - Repairing items in an anvil using the raw material the item was made from repairs more durability.
-      - Anvil Master - Increases the maximum repair cost of an anvil before it is too expensive.
+      - Anvil Master - Increases the maximum repair cost of an anvil before it is too expensive. (1.13+ only)
       - Skill Mender - Gaining skill XP has a chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
     - Terraform mana ability for Excavation
       - Break blocks instantly in a 4 block radius in the same layer when digging

@@ -13,6 +13,7 @@ import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import com.archyx.aureliumskills.util.VersionUtils;
 import com.cryptomorin.xseries.ReflectionUtils;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
@@ -61,7 +62,16 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     public void lifeSteal(EntityDeathEvent event) {
         if (blockDisabled(Ability.LIFE_STEAL)) return;
         LivingEntity entity = event.getEntity();
-        if (entity instanceof Monster || entity instanceof Player || entity instanceof Phantom) {
+        boolean hostile = false;
+        if (entity instanceof Monster || entity instanceof Player) {
+            hostile = true;
+        }
+        if (XMaterial.isNewVersion()) {
+            if (entity instanceof Phantom) {
+                hostile = true;
+            }
+        }
+        if (hostile) {
             if (entity.getKiller() == null) return;
             Player player = entity.getKiller();
             if (blockAbility(player)) return;

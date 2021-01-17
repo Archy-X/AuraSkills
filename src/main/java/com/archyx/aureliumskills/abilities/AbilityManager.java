@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityOption;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.LoreUtil;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -41,6 +42,7 @@ public class AbilityManager {
             plugin.saveResource("abilities_config.yml", false);
         }
         FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
+        migrateOptions(file, config);
         //Loads ability options
         int amountLoaded = 0;
         int amountDisabled = 0;
@@ -201,6 +203,61 @@ public class AbilityManager {
             }
         }
         return YamlConfiguration.loadConfiguration(file);
+    }
+
+    private void migrateOptions(File file, FileConfiguration abilitiesConfig) {
+        FileConfiguration config = plugin.getConfig();
+        ConfigurationSection abilities = config.getConfigurationSection("abilities");
+        if (abilities == null) return;
+        try {
+            for (String abilityName : abilities.getKeys(false)) {
+                String newKey = LoreUtil.replace(abilityName, "-", "_").toUpperCase();
+                Ability ability = Ability.valueOf(newKey);
+                boolean enabled = abilities.getBoolean(abilityName + ".enabled", true);
+                double base = abilities.getDouble(abilityName + ".base", ability.getDefaultBaseValue());
+                double per_level = abilities.getDouble(abilityName + ".per-level", ability.getDefaultValuePerLevel());
+                String path = "abilities." + ability.getSkill().name().toLowerCase() + "." + newKey.toLowerCase() + ".";
+                abilitiesConfig.set(path + "enabled", enabled);
+                abilitiesConfig.set(path + "base", base);
+                abilitiesConfig.set(path + "per_level", per_level);
+                if (ability.hasTwoValues()) {
+                    double base_2 = abilities.getDouble(abilityName + ".base-2", ability.getDefaultBaseValue2());
+                    double per_level_2 = abilities.getDouble(abilityName + ".per_level-2", ability.getDefaultValuePerLevel2());
+                    abilitiesConfig.set(path + "base_2", base_2);
+                    abilitiesConfig.set(path + "per_level_2", per_level_2);
+                }
+            }
+            config.set("abilities", null);
+            ConfigurationSection manaAbilities = config.getConfigurationSection("mana-abilities");
+            if (manaAbilities != null) {
+                for (String manaAbilityName : manaAbilities.getKeys(false)) {
+                    String newKey = LoreUtil.replace(manaAbilityName, "-", "_").toUpperCase();
+                    MAbility mAbility = MAbility.valueOf(newKey);
+                    boolean enabled = manaAbilities.getBoolean(manaAbilityName + ".enabled", true);
+                    double base = manaAbilities.getDouble(manaAbilityName + ".base-value", mAbility.getDefaultBaseValue());
+                    double per_level = manaAbilities.getDouble(manaAbilityName + ".value-per-level", mAbility.getDefaultValuePerLevel());
+                    double cooldown = manaAbilities.getDouble(manaAbilityName + ".cooldown", mAbility.getDefaultBaseCooldown());
+                    double cooldown_per_level = manaAbilities.getDouble(manaAbilityName + ".cooldown-per-level", mAbility.getDefaultCooldownPerLevel());
+                    double mana_cost = manaAbilities.getDouble(manaAbilityName + ".mana-cost", mAbility.getDefaultBaseManaCost());
+                    double mana_cost_per_level = manaAbilities.getDouble(manaAbilityName + ".mana-cost-per-level", mAbility.getDefaultManaCostPerLevel());
+                    String path = "mana_abilities." + newKey.toLowerCase() + ".";
+                    abilitiesConfig.set(path + "enabled", enabled);
+                    abilitiesConfig.set(path + "base_value", base);
+                    abilitiesConfig.set(path + "value_per_level", per_level);
+                    abilitiesConfig.set(path + "cooldown", cooldown);
+                    abilitiesConfig.set(path + "cooldown_per_level", cooldown_per_level);
+                    abilitiesConfig.set(path + "mana_cost", mana_cost);
+                    abilitiesConfig.set(path + "mana_cost_per_level", mana_cost_per_level);
+                }
+                config.set("mana-abilities", null);
+            }
+            plugin.saveConfig();
+            abilitiesConfig.save(file);
+            Bukkit.getLogger().warning("[AureliumSkills] Your existing ability options have been migrated to abilities_config.yml and the old options in config.yml have been deleted, this is normal if you are updating to Alpha 1.6.0 or above from before Alpha 1.6.0!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Bukkit.getLogger().severe("[AureliumSkills] An error occurred while migrating ability options, please report this as a bug!");
+        }
     }
 
     public AbilityOption getAbilityOption(Ability ability) {

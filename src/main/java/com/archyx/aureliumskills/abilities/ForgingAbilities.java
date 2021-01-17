@@ -9,7 +9,6 @@ import com.archyx.aureliumskills.util.EnchantmentValue;
 import com.archyx.aureliumskills.util.GrindstoneEnchant;
 import com.archyx.aureliumskills.util.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -136,6 +135,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     public void anvilMaster(InventoryOpenEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.ANVIL_MASTER)) return;
+        if (!XMaterial.isNewVersion()) return;
         Inventory inventory = event.getInventory();
         if (inventory.getType() == InventoryType.ANVIL && inventory instanceof AnvilInventory) {
             AnvilInventory anvil = (AnvilInventory) inventory;
@@ -148,7 +148,6 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                     int maxCost = (int) Math.round(getValue(Ability.ANVIL_MASTER, playerSkill));
                     anvil.setMaximumRepairCost(maxCost);
                 }
-                Bukkit.broadcastMessage("Max cost: " + anvil.getMaximumRepairCost());
             }
         }
     }
