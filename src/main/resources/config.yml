@@ -39,6 +39,7 @@ languages:
 action-bar:
     enabled: true
     idle: true
+    ability: true
     xp: false
     maxed: false
     update-period: 5

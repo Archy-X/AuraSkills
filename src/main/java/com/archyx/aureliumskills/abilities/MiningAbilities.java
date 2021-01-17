@@ -158,7 +158,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 							manager.activateAbility(player, MAbility.SPEED_MINE, (int) (getValue(MAbility.SPEED_MINE, skill) * 20), new SpeedMine(plugin));
 						}
 						else {
-							player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.SPEED_MINE, skill))));
+							plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.SPEED_MINE, skill))));
 						}
 					}
 				}
@@ -196,21 +196,21 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 								//Checks if cooldown is reached
 								if (manager.getPlayerCooldown(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
 									manager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, true);
-									player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_RAISE, locale));
+									plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_RAISE, locale));
 									new BukkitRunnable() {
 										@Override
 										public void run() {
 											if (!manager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
 												if (manager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
 													manager.setReady(player.getUniqueId(), MAbility.SPEED_MINE, false);
-													player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_LOWER, locale));
+													plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_LOWER, locale));
 												}
 											}
 										}
 									}.runTaskLater(plugin, 50L);
 								} else {
 									if (manager.getErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE) == 0) {
-										player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format1((double) manager.getPlayerCooldown(player.getUniqueId(), MAbility.SPEED_MINE) / 20)));
+										plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) manager.getPlayerCooldown(player.getUniqueId(), MAbility.SPEED_MINE) / 20)));
 										manager.setErrorTimer(player.getUniqueId(), MAbility.SPEED_MINE, 2);
 									}
 								}

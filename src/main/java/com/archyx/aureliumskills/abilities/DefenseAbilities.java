@@ -166,7 +166,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
             }
             else {
                 Locale locale = Lang.getLanguage(player);
-                player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+                plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
                         .replace("{mana}", NumberUtil.format0(manager.getManaCost(MAbility.ABSORPTION, playerSkill))));
             }
         }

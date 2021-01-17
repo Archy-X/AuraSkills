@@ -201,7 +201,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 													} else {
 														if (plugin.getManaAbilityManager().getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
 															Locale locale = Lang.getLanguage(player);
-															player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
+															plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
 															plugin.getManaAbilityManager().setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 														}
 													}
@@ -230,7 +230,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 		}
 		else {
 			if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-				player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(manager.getManaCost(MAbility.SHARP_HOOK, playerSkill))));
+				plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(manager.getManaCost(MAbility.SHARP_HOOK, playerSkill))));
 				manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 			}
 		}

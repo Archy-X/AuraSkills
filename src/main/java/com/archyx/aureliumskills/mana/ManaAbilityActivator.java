@@ -93,21 +93,21 @@ public class ManaAbilityActivator {
                                 // Checks if cooldown is reached
                                 if (manager.getPlayerCooldown(player.getUniqueId(), mAbility) == 0) {
                                     manager.setReady(player.getUniqueId(), mAbility, true);
-                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_RAISE"), locale));
+                                    plugin.getAbilityManager().sendMessage(player, ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_RAISE"), locale));
                                     new BukkitRunnable() {
                                         @Override
                                         public void run() {
                                             if (!manager.isActivated(player.getUniqueId(), mAbility)) {
                                                 if (manager.isReady(player.getUniqueId(), mAbility)) {
                                                     manager.setReady(player.getUniqueId(), mAbility, false);
-                                                    player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale));
+                                                    plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale));
                                                 }
                                             }
                                         }
                                     }.runTaskLater(plugin, 50L);
                                 } else {
                                     if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
-                                        player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
+                                        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
                                         manager.setErrorTimer(player.getUniqueId(), mAbility, 2);
                                     }
                                 }

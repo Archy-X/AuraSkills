@@ -134,7 +134,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 							plugin.getManaAbilityManager().activateAbility(player, MAbility.REPLENISH, (int) (getValue(MAbility.REPLENISH, skill) * 20), new Replenish(plugin));
 						}
 						else {
-							player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+							plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
 									.replace("{mana}", String.valueOf(plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, skill))));
 						}
 					}

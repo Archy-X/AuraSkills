@@ -182,7 +182,6 @@ public class AureliumSkills extends JavaPlugin {
 		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
 		enduranceLeveler.startTracking();
 		// Load Action Bar
-		actionBar = new ActionBar(this);
 		if (protocolLibEnabled) {
 			ProtocolUtil.init();
 		}
@@ -396,6 +395,8 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ArmorListener(OptionL.getList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
 		pm.registerEvents(new ArmorModifierListener(requirementManager), this);
 		pm.registerEvents(new RequirementListener(requirementManager), this);
+		this.actionBar = new ActionBar(this);
+		pm.registerEvents(actionBar, this);
 	}
 
 	private boolean setupEconomy() {

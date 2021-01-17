@@ -54,7 +54,7 @@ public class ChargedShot implements ManaAbility {
         plugin.getSorceryLeveler().level(player, manaConsumed);
         projectile.setMetadata("ChargedShotMultiplier", new FixedMetadataValue(plugin, 1 + damagePercent / 100));
         if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.CHARGED_SHOT, "enable_message")) {
-            player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_SHOOT, locale)
+            plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_SHOOT, locale)
                     , "{mana}", NumberUtil.format0(manaConsumed)
                     , "{percent}", NumberUtil.format0(damagePercent)));
         }

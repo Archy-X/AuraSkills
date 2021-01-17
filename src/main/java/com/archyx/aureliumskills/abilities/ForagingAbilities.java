@@ -162,7 +162,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 								treeCapitator(event);
 							}
 							else {
-								player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TREECAPITATOR, skill))));
+								plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TREECAPITATOR, skill))));
 							}
 						}
 					}
@@ -274,21 +274,21 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 								//Checks if cooldown is reached
 								if (manager.getPlayerCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
 									manager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, true);
-									player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_RAISE, locale));
+									plugin.getAbilityManager().sendMessage(player,  Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_RAISE, locale));
 									new BukkitRunnable() {
 										@Override
 										public void run() {
 											if (!manager.isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 												if (manager.isReady(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 													manager.setReady(player.getUniqueId(), MAbility.TREECAPITATOR, false);
-													player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_LOWER, locale));
+													plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_LOWER, locale));
 												}
 											}
 										}
 									}.runTaskLater(plugin, 50L);
 								} else {
 									if (manager.getErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR) == 0) {
-										player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format1((double) manager.getPlayerCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) / 20)));
+										plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) manager.getPlayerCooldown(player.getUniqueId(), MAbility.TREECAPITATOR) / 20)));
 										manager.setErrorTimer(player.getUniqueId(), MAbility.TREECAPITATOR, 2);
 									}
 								}

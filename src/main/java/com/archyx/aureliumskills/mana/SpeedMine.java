@@ -49,13 +49,12 @@ public class SpeedMine implements ManaAbility {
             plugin.getManaManager().setMana(player.getUniqueId(), plugin.getManaManager().getMana(player.getUniqueId()) - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
-            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", NumberUtil.format0(manaConsumed)));
+            plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_START, locale).replace("{mana}", NumberUtil.format0(manaConsumed)));
         }
     }
 
     @Override
     public void stop(Player player) {
-        Locale locale = Lang.getLanguage(player);
-        player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, locale));
+        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, Lang.getLanguage(player)));
     }
 }

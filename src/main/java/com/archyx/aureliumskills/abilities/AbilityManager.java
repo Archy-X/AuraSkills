@@ -1,7 +1,10 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityOption;
 import com.archyx.aureliumskills.skills.Skill;
@@ -10,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -339,6 +343,14 @@ public class AbilityManager {
             return ability.getDefaultOptions().keySet();
         }
         return null;
+    }
+
+    public void sendMessage(Player player, String message) {
+        if (OptionL.getBoolean(Option.ACTION_BAR_ABILITY) && OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) {
+            plugin.getActionBar().sendAbilityActionBar(player, message);
+        } else {
+            player.sendMessage(AureliumSkills.getPrefix(Lang.getLanguage(player)) + message);
+        }
     }
 
 }

@@ -158,7 +158,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 player.setWalkSpeed(newSpeed);
                 player.setMetadata("AureliumSkills-Fleeting", new FixedMetadataValue(plugin, walkSpeedChange));
                 Locale locale = Lang.getLanguage(player);
-                player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
+                plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
             }
         }
     }
@@ -172,7 +172,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
                 player.removeMetadata("AureliumSkills-Fleeting", plugin);
                 Locale locale = Lang.getLanguage(player);
-                player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(AbilityMessage.FLEETING_END, locale));
+                plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.FLEETING_END, locale));
             }
         }
     }
@@ -191,7 +191,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                         player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
                         player.removeMetadata("AureliumSkills-Fleeting", plugin);
                         Locale locale = Lang.getLanguage(player);
-                        player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(AbilityMessage.FLEETING_END, locale));
+                        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.FLEETING_END, locale));
                     }
                 }
             }

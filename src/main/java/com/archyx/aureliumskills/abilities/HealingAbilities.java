@@ -115,7 +115,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
             playerStat.addModifier(regenerationModifier);
             if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.REVIVAL, "enable_message")) {
                 Locale locale = Lang.getLanguage(player);
-                player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(AbilityMessage.REVIVAL_MESSAGE, locale)
+                plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(AbilityMessage.REVIVAL_MESSAGE, locale)
                         , "{value}", NumberUtil.format1(healthBonus)
                         , "{value_2}", NumberUtil.format1(regenerationBonus)));
             }

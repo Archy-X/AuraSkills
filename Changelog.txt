@@ -74,6 +74,15 @@ Version Alpha 1.6.0 (IN PROGRESS)
     - Updated NBT API version
     - Added items to the default loot table and nerfed some
     - Updated Spigot-API version to 1.16.5
+    - Action Bar improvements
+      - Added action-bar.ability option and action_bar.ability message for using the action bar instead of chat for ability messages
+        - Ability messages include raise/lower tools, activate/worn off mana abilities, bleed, first strike, etc
+        - action-bar.ability is true by default
+      - Improved idle action bar performance
+      - The action bar should no longer interfere with vanilla action bars, these include:
+        - Bed messages (monsters nearby, only at night, too far away)
+        - Jukebox playing messages
+        - Height limit messages (may not work sometimes on older versions)
   Bug Fixes
     - Fixed Endurance abilities still working when ability is disabled
     - Fixed Foraging abilities still working when skill is disabled

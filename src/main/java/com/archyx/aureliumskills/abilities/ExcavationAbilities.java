@@ -260,7 +260,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					terraformBreak(player, block);
 				}
 				else {
-					player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TERRAFORM, skill))));
+					plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TERRAFORM, skill))));
 				}
 			}
 		}

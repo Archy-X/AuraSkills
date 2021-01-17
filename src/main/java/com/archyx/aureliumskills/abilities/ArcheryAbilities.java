@@ -163,10 +163,10 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                     if (ready) {
                         if (!chargedShotEnabled.contains(player)) { // Toggle on
                             chargedShotEnabled.add(player);
-                            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_ENABLE, locale));
+                            plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_ENABLE, locale));
                         } else { // Toggle off
                             chargedShotEnabled.remove(player);
-                            player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_DISABLE, locale));
+                            plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_DISABLE, locale));
                         }
                         chargedShotToggleCooldown.put(player, 8);
                     }
@@ -206,7 +206,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                 } else {
                     if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
                         Locale locale = Lang.getLanguage(player);
-                        player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
+                        plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
                         manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
                     }
                 }

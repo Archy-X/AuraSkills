@@ -15,6 +15,7 @@ public enum Option {
     // Action bar options
     ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),
     ACTION_BAR_IDLE("action-bar.idle", OptionType.BOOLEAN),
+    ACTION_BAR_ABILITY("action-bar.ability", OptionType.BOOLEAN),
     ACTION_BAR_XP("action-bar.xp", OptionType.BOOLEAN),
     ACTION_BAR_MAXED("action-bar.maxed", OptionType.BOOLEAN),
     ACTION_BAR_UPDATE_PERIOD("action-bar.update-period", OptionType.INT),
