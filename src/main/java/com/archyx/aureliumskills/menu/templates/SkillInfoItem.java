@@ -107,8 +107,12 @@ public abstract class SkillInfoItem {
         if (skill.getAbilities().size() == 5) {
             String levelsMessage = Lang.getMessage(MenuMessage.ABILITY_LEVELS, locale);
             int num = 1;
+            List<Ability> abilities = new ArrayList<>();
             for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
-                Ability ability = abilitySupplier.get();
+                abilities.add(abilitySupplier.get());
+            }
+            abilities.sort(Comparator.comparingInt(a -> plugin.getAbilityManager().getUnlock(a)));
+            for (Ability ability : abilities) {
                 if (plugin.getAbilityManager().isEnabled(ability)) {
                     if (playerSkill.getAbilityLevel(ability) > 0) {
                         int abilityLevel = playerSkill.getAbilityLevel(ability);
