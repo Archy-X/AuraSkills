@@ -1,3 +1,8 @@
+Version Alpha 1.6.1
+  Bug Fixes:
+    - The custom_model_data tag for the fill item now works
+    - Fixed action bar NullPointerException
+
 Version Alpha 1.6.0
   New Features:
     - New abilities_config:

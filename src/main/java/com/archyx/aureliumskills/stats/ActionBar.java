@@ -311,7 +311,12 @@ public class ActionBar implements Listener {
 
 	public void setPaused(Player player, int ticks) {
 		isPaused.add(player);
-		currentAction.put(player, currentAction.get(player) + 1);
+		Integer action = currentAction.get(player);
+		if (action != null) {
+			currentAction.put(player, action + 1);
+		} else {
+			currentAction.put(player, 0);
+		}
 		int thisAction = this.currentAction.get(player);
 		new BukkitRunnable() {
 			@Override
