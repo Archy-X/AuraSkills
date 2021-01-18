@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerManager;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
@@ -50,6 +51,7 @@ import java.util.Locale;
 
 public class AureliumSkills extends JavaPlugin {
 
+	private PlayerManager playerManager;
 	private SkillLoader skillLoader;
 	private MySqlSupport mySqlSupport;
 	private MenuLoader menuLoader;
@@ -187,6 +189,7 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		actionBar.startUpdateActionBar();
 		// Load Data
+		this.playerManager = new PlayerManager();
 		skillLoader = new SkillLoader(this);
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			//Mysql
@@ -409,6 +412,10 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		economy = rsp.getProvider();
 		return true;
+	}
+
+	public PlayerManager getPlayerManager() {
+		return playerManager;
 	}
 
 	public Economy getEconomy() {
