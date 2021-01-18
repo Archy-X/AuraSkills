@@ -48,7 +48,7 @@ public class MenuLoader {
         int itemsLoaded = 0;
         int templatesLoaded = 0;
         long start = System.currentTimeMillis();
-        //Load skills menu
+        // Load menus
         for (MenuType menuType : MenuType.values()) {
             ConfigurationSection menu = config.getConfigurationSection(menuType.getPath());
             if (menu != null) {
@@ -56,25 +56,12 @@ public class MenuLoader {
                 menuOption.setTitle(menu.getString("title"));
                 menuOption.setRows(menu.getInt("rows"));
                 menuOption.setFillEnabled(menu.getBoolean("fill.enabled", true));
-                //Load fill material
-                String materialString = menu.getString("fill.material", "BLACK_STAINED_GLASS_PANE");
-                ItemStack fillItem;
-                if (materialString != null) {
-                    try {
-                        fillItem = XMaterial.valueOf(materialString.toUpperCase()).parseItem();
-                    } catch (IllegalArgumentException e) {
-                        fillItem = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem();
-                    }
-                }
-                else {
-                    fillItem = XMaterial.BLACK_STAINED_GLASS_PANE.parseItem();
-                }
-                if (fillItem != null) {
-                    ItemMeta meta = fillItem.getItemMeta();
-                    if (meta != null) {
-                        meta.setDisplayName(" ");
-                        fillItem.setItemMeta(meta);
-                    }
+                // Load fill material
+                ItemStack fillItem = parseItem(menu.getString("fill.material"), XMaterial.BLACK_STAINED_GLASS_PANE.parseMaterial());
+                ItemMeta meta = fillItem.getItemMeta();
+                if (meta != null) {
+                    meta.setDisplayName(" ");
+                    fillItem.setItemMeta(meta);
                 }
                 menuOption.setFillItem(fillItem);
                 // Load items
@@ -116,6 +103,10 @@ public class MenuLoader {
     }
 
     public static ItemStack parseItem(String input) {
+        return parseItem(input, Material.STONE);
+    }
+
+    public static ItemStack parseItem(String input, Material fallback) {
         if (input != null) {
             String[] splitInput = input.split(" ", 2);
             String material = splitInput[0];
@@ -180,17 +171,17 @@ public class MenuLoader {
                 }
                 else {
                     Bukkit.getLogger().warning("[AureliumSkills] Error parsing material with input " + input + ", the input material " + material + " is invalid!");
-                    item = new ItemStack(Material.STONE);
+                    item = new ItemStack(fallback);
                 }
                 return item;
             } catch (Exception e) {
                 Bukkit.getLogger().warning("[AureliumSkills] Error parsing material with input " + input);
                 e.printStackTrace();
-                return new ItemStack(Material.STONE);
+                return new ItemStack(fallback);
             }
         }
         else {
-            return new ItemStack(Material.STONE);
+            return new ItemStack(fallback);
         }
     }
 
