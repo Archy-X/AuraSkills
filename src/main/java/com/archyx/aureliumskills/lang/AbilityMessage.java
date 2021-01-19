@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.lang;
 
 import com.archyx.aureliumskills.abilities.Ability;
 
+import java.util.Locale;
+
 public enum AbilityMessage implements MessageKey {
 
     // Farming
@@ -247,7 +249,7 @@ public enum AbilityMessage implements MessageKey {
         catch (IllegalArgumentException e) {
             ability = Ability.valueOf(this.name().substring(0, this.name().indexOf("_")));
         }
-        path = "abilities." + ability.getSkill().name().toLowerCase() + "." + ability.name().toLowerCase() + "." + this.name().substring(ability.name().length() + 1).toLowerCase();
+        path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ENGLISH) + "." + ability.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(ability.name().length() + 1).toLowerCase(Locale.ENGLISH);
     }
 
     public String getPath() {

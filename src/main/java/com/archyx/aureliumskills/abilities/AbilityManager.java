@@ -50,7 +50,7 @@ public class AbilityManager {
         ConfigurationSection abilities = config.getConfigurationSection("abilities");
         if (abilities != null) {
             for (Skill skill : Skill.values()) {
-                String skillName = skill.name().toLowerCase();
+                String skillName = skill.name().toLowerCase(Locale.ENGLISH);
                 ConfigurationSection skillAbilities = abilities.getConfigurationSection(skillName);
                 if (skillAbilities != null) {
                     for (String abilityName : skillAbilities.getKeys(false)) {
@@ -216,7 +216,7 @@ public class AbilityManager {
                 boolean enabled = abilities.getBoolean(abilityName + ".enabled", true);
                 double base = abilities.getDouble(abilityName + ".base", ability.getDefaultBaseValue());
                 double per_level = abilities.getDouble(abilityName + ".per-level", ability.getDefaultValuePerLevel());
-                String path = "abilities." + ability.getSkill().name().toLowerCase() + "." + newKey.toLowerCase() + ".";
+                String path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ENGLISH) + "." + newKey.toLowerCase(Locale.ENGLISH) + ".";
                 abilitiesConfig.set(path + "enabled", enabled);
                 abilitiesConfig.set(path + "base", base);
                 abilitiesConfig.set(path + "per_level", per_level);
@@ -240,7 +240,7 @@ public class AbilityManager {
                     double cooldown_per_level = manaAbilities.getDouble(manaAbilityName + ".cooldown-per-level", mAbility.getDefaultCooldownPerLevel());
                     double mana_cost = manaAbilities.getDouble(manaAbilityName + ".mana-cost", mAbility.getDefaultBaseManaCost());
                     double mana_cost_per_level = manaAbilities.getDouble(manaAbilityName + ".mana-cost-per-level", mAbility.getDefaultManaCostPerLevel());
-                    String path = "mana_abilities." + newKey.toLowerCase() + ".";
+                    String path = "mana_abilities." + newKey.toLowerCase(Locale.ENGLISH) + ".";
                     abilitiesConfig.set(path + "enabled", enabled);
                     abilitiesConfig.set(path + "base_value", base);
                     abilitiesConfig.set(path + "value_per_level", per_level);

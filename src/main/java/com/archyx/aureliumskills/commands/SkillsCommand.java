@@ -310,7 +310,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.lang")
 	@Description("Changes your player language")
 	public void onLanguage(Player player, String language) {
-		Locale locale = new Locale(language.toLowerCase());
+		Locale locale = new Locale(language.toLowerCase(Locale.ENGLISH));
 		if (Lang.hasLocale(locale)) {
 			Lang.setLanguage(player, locale);
 			plugin.getCommandManager().setPlayerLocale(player, locale);

@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -73,7 +74,7 @@ public class MenuLoader {
                     } catch (IllegalArgumentException e) {
                         configurableItem = (ConfigurableItem) loader.newInstance();
                     }
-                    configurableItem.load(Objects.requireNonNull(menu.getConfigurationSection("items." + itemType.name().toLowerCase())));
+                    configurableItem.load(Objects.requireNonNull(menu.getConfigurationSection("items." + itemType.name().toLowerCase(Locale.ENGLISH))));
                     menuOption.putItem(configurableItem);
                     itemsLoaded++;
                 }
@@ -86,7 +87,7 @@ public class MenuLoader {
                     } catch (IllegalArgumentException e) {
                         configurableTemplate = (ConfigurableTemplate) loader.newInstance();
                     }
-                    configurableTemplate.load(Objects.requireNonNull(menu.getConfigurationSection("templates." + templateType.name().toLowerCase())));
+                    configurableTemplate.load(Objects.requireNonNull(menu.getConfigurationSection("templates." + templateType.name().toLowerCase(Locale.ENGLISH))));
                     menuOption.putTemplate(configurableTemplate);
                     templatesLoaded++;
                 }

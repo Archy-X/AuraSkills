@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import java.util.Locale;
+
 public enum ActionBarMessage implements MessageKey {
 
     IDLE,
@@ -12,7 +14,7 @@ public enum ActionBarMessage implements MessageKey {
     BOSS_BAR_MAXED;
 
     public String getPath() {
-        return "action_bar." + this.name().toLowerCase();
+        return "action_bar." + this.toString().toLowerCase(Locale.ENGLISH);
     }
 
 }

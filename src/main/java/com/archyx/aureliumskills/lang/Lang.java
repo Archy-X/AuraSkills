@@ -53,7 +53,7 @@ public class Lang implements Listener {
 		// Loads default file from embedded resource
 		InputStream inputStream = plugin.getResource("messages/messages_en.yml");
 		if (inputStream != null) {
-			FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
+			FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 			Locale locale = new Locale("en");
 			// Load messages
 			loadMessages(config, locale, commandManager);
@@ -71,7 +71,7 @@ public class Lang implements Listener {
 			defaultLanguageString = "en";
 		}
 		else {
-			defaultLanguageString = defaultLanguageString.toLowerCase();
+			defaultLanguageString = defaultLanguageString.toLowerCase(Locale.ENGLISH);
 		}
 		if (!languages.contains(defaultLanguageString)) {
 			languages.add(defaultLanguageString);
@@ -291,7 +291,7 @@ public class Lang implements Listener {
 			// Try to detect client locale if option is enabled
 			if (OptionL.getBoolean(Option.TRY_DETECT_CLIENT_LANGUAGE)) {
 				try {
-					Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase());
+					Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase(Locale.ENGLISH));
 					if (messages.containsKey(locale)) {
 						playerLanguages.put(player.getUniqueId(), locale);
 					} else {

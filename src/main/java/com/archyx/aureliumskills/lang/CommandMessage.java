@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.lang;
 
 import com.archyx.aureliumskills.commands.Command;
 
+import java.util.Locale;
+
 public enum CommandMessage implements MessageKey {
 
     PREFIX,
@@ -96,11 +98,11 @@ public enum CommandMessage implements MessageKey {
     private final String path;
 
     CommandMessage() {
-        this.path = "commands." + this.name().toLowerCase().replace("_", ".");
+        this.path = "commands." + this.name().toLowerCase(Locale.ENGLISH).replace("_", ".");
     }
     
     CommandMessage(Command command, String path) {
-        this.path = "commands." + command.name().toLowerCase().replace("_", ".") + "." + path;
+        this.path = "commands." + command.name().toLowerCase(Locale.ENGLISH).replace("_", ".") + "." + path;
     }
 
     CommandMessage(String path) {

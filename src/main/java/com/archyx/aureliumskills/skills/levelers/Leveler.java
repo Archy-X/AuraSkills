@@ -58,7 +58,7 @@ public class Leveler {
 	public double getMultiplier(Player player) {
 		return 1 + player.getEffectivePermissions().stream()
 				.map(PermissionAttachmentInfo::getPermission)
-				.map(String::toLowerCase)
+				.map(s -> s.toLowerCase(Locale.ENGLISH))
 				.filter(value -> value.startsWith("aureliumskills.multiplier."))
 				.map(value -> value.replace("aureliumskills.multiplier.", ""))
 				.filter(value -> pattern.matcher(value).matches())

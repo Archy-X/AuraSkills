@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.lang;
 
 import com.archyx.aureliumskills.skills.Skill;
 
+import java.util.Locale;
+
 public enum SkillMessage implements MessageKey {
 
     FARMING_NAME,
@@ -36,7 +38,7 @@ public enum SkillMessage implements MessageKey {
     FORGING_DESC;
 
     private final Skill skill = Skill.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-    private final String path = "skills." + skill.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
+    private final String path = "skills." + skill.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
 
     public String getPath() {
         return path;

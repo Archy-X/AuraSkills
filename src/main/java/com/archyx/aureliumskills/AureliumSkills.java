@@ -301,7 +301,7 @@ public class AureliumSkills extends JavaPlugin {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : Skill.values()) {
 				if (OptionL.isEnabled(skill)) {
-					values.add(skill.toString().toLowerCase());
+					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
 				}
 			}
 			return values;
@@ -309,7 +309,7 @@ public class AureliumSkills extends JavaPlugin {
 		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
 			List<String> values = new ArrayList<>();
 			for (Stat stat : Stat.values()) {
-				values.add(stat.toString().toLowerCase());
+				values.add(stat.toString().toLowerCase(Locale.ENGLISH));
 			}
 			return values;
 		});

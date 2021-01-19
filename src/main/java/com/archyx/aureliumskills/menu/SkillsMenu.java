@@ -117,7 +117,7 @@ public class SkillsMenu implements InventoryProvider{
 	}
 
 	private void open(Player player, PlayerSkill playerSkill, Skill skill) {
-		if (player.hasPermission("aureliumskills." + skill.name().toLowerCase())) {
+		if (player.hasPermission("aureliumskills." + skill.name().toLowerCase(Locale.ENGLISH))) {
 			int page = getPage(skill, playerSkill);
 			LevelProgressionMenu.getInventory(player, skill, page, plugin).open(player, page);
 		}

@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import java.util.Locale;
+
 public enum ACFMinecraftMessage {
 
     INVALID_WORLD,
@@ -15,7 +17,7 @@ public enum ACFMinecraftMessage {
     LOCATION_PLEASE_SPECIFY_XYZ,
     LOCATION_CONSOLE_NOT_RELATIVE;
 
-    private final String path = "acf.minecraft." + this.name().toLowerCase();
+    private final String path = "acf.minecraft." + this.name().toLowerCase(Locale.ENGLISH);
 
     public String getPath() {
         return path;

@@ -120,7 +120,7 @@ public class Requirements {
             if (lore != null) {
                 for (int i = 0; i < lore.size(); i++) {
                     String line = lore.get(i);
-                    if (line.contains("Requires") && line.contains(StringUtils.capitalize(skill.name().toLowerCase()))) {
+                    if (line.contains("Requires") && line.contains(StringUtils.capitalize(skill.name().toLowerCase(Locale.ENGLISH)))) {
                         lore.remove(line);
                     }
                 }
@@ -178,7 +178,7 @@ public class Requirements {
     }
 
     private String getName(Skill skill) {
-        return StringUtils.capitalize(skill.name().toLowerCase());
+        return StringUtils.capitalize(skill.name().toLowerCase(Locale.ENGLISH));
     }
 
 }
