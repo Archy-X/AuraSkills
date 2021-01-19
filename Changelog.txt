@@ -1,3 +1,7 @@
+Version Alpha 1.6.2
+  Bug Fixes:
+    - Fixed file loading issues (console spam) and other potential problems on systems with Turkish as the default language
+
 Version Alpha 1.6.1
   Bug Fixes:
     - The custom_model_data tag for the fill item now works
