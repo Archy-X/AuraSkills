@@ -240,6 +240,70 @@ abilities:
       name: Efecto Sabio
       desc: "Gana un {value}% de sabiduría por cada efecto único\n&7  de pociones que tengas activas."
       info: '+{value} Sabiduría/Efecto'
+  enchanting:
+    xp_convert:
+      name: Convertir XP
+      desc: "Gana 1 experiencia de Minecraft por cada {value}\n&7 de experiencia de habilidad que ganes."
+      info: '1 EXP/{value} EXP de Habilidad'
+    enchanter:
+      name: Encantador
+      desc: 'Gana un {value}% más de XP de Encantador.'
+      info: '+{value}% XP'
+    xp_warrior:
+      name: XP de Guerrero
+      desc: "Los monstruos que elimines tienen un {value}% de probabilidades\n&7  de dar doble experiencia."
+      info: '{value}% 2x EXP de Monstruos'
+    enchanted_strength:
+      name: Fuerza Encantada
+      desc: "Gana {value} de Fuerza por cada\n&7  encantamiento único en el objeto que sostienes."
+      info: '{value} Fuerza/Encantamiento'
+    lucky_table:
+      name: Mesa de la suerte
+      desc: "Los objetos que encantes tienen en la mesa de\n&7  encantamientos tienen un {value}% de probabilidad de mejorar \n&7  el encantamiento en 1 si no es el nivel máximo"
+      info: '{value}% Posibilidad de Mejora de Encantador'
+  healing:
+    life_essence:
+      name: Esencia de vida
+      desc: Las pociones de Vida Instantánea curan un {value}% más.
+      info: '+{value}% Salud Instantánea'
+    healer:
+      name: Curandero
+      desc: Gana un {value}% más de XP de Curación.
+      info: '+{value}% XP'
+    life_steal:
+      name: Robo de vida
+      desc: Cura un {value}% del HP máximo de los monstruos hostiles\n&7  y jugadores que mates.
+      info: 'Robar {value}% de HP'
+    golden_heart:
+      name: Corazones Oro
+      desc: El daño causado a tus corazones de absorción es\n&7  reducido en un {value}%
+      info: '-{value}% Daño de Absorción'
+    revival:
+      name: Renacimiento
+      desc: Gana &c+{value} de Salud &7y &6+{value_2} de Regeneración\n&7  durante 30 segundos después de revivir.
+      info: '+{value} de Salud, +{value_2} de Regeneración'
+      message: '&fHas ganado una bonificación de renacimiento por 30 segundos! &f(&c+{value} de salud, &6+{value_2} de regeneración&f)'
+  forging:
+    disenchanter:
+      name: Desencantador
+      desc: Gana un {value}% más de experiencia al desencantar\n&7  objetos usando una piedra de afilar.
+      info: '+{value}% Piedra de Afilar EXP'
+    forger:
+      name: Forjador
+      desc: Gana {value}% más de XP de Forjador.
+      info: '+{value}% XP'
+    repairing:
+      name: Reparando
+      desc: Reparar objetos en un yunque usando el material crudo\n&7  del cual el objeto estaba hecho de reparaciones\n&7  {value}% más de durabilidad.
+      info: '+{value}% Reparación del Yunque'
+    anvil_master:
+      name: Maestro del yunque
+      desc: Aumenta el costo máximo de reparación de un yunque\n&7  antes de que sea demasiado caro para la experiencia {value}.
+      info: '{value} Coste Máximo'
+    skill_mender:
+      name: Reparador de habilidades
+      desc: "Obtener XP de habilidad tiene un {value}% de probabilidad de reparar\\n&7  un objeto sostenido o una pieza de armadura desgastada\\n&7 \n con el hechizo de Reparación con\\n&7  1 durabilidad por 2 habilidades XP."
+      info: '{value}% Probabilidad de Aturdimiento'
 acf:
   core:
     permission_denied: '&cLo siento, no tienes permiso para ejecutar este comando.'
@@ -286,6 +350,7 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
+  ability: '&c{hp}/{max_hp} {hp_unit}    {message}    &b{mana}/{max_mana} {mana_unit}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
 commands:
@@ -349,6 +414,14 @@ commands:
   lang:
     set: '&7Idioma establecido en &b{lang}'
     not_found: '&e¡Idioma no encontrado!'
+  mana:
+    display: '&fTu {mana_unit}: &b{current}/{max}'
+    display_other: '&f{mana_unit} de {player}: &b{current}/{max}'
+    add: '&7Añadidos &b{amount} {mana_unit} &7puntos de maná al jugador &6{player}'
+    remove: '&7Eliminado &b{amount} {mana_unit} &7del jugador &6{player}'
+    set: '&7Se ha establecido el maná del jugador &6{player} &7a &b{amount} {mana_unit}'
+    at_least_zero: '&e{mana_unit} debe ser al menos cero!'
+    console_specify_player: '&e¡La consola debe especificar un jugador!'
   modifier:
     add:
       added: '&7Modificador de {color}{stat} &7de nivel &b{value} &7con el nombre &F{name} &7fue añadido al jugador &6{player}'
@@ -412,13 +485,13 @@ commands:
 leveler:
   title: '&aNuevo nivel de {skill}'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3¡Nuevo Nivel! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRecompensas:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
-  stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&a¡Habilidad Desbloqueada! &6&l{ability} &7ha sido desbloqueada'
-  ability_level_up: '&a¡Nuevo nivel de Habilidad! &6&l{ability} &7es ahora nivel &6{level}'
-  mana_ability_unlock: '&a¡Habilidad Desbloqueada! &9&l{mana_ability} &7ha sido desbloqueada'
-  mana_ability_level_up: '&a¡Nuevo nivel de Habilidad! &9&l{mana_ability} &7es ahora nivel &6{level}'
-  money_reward: '&a${amount}'
+  level_up: "&3&m----------------------------------------\n&r &3¡Nuevo Nivel! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRecompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: "\n  {color}+1{symbol} {stat}"
+  ability_unlock: "\n  &a¡Habilidad Desbloqueada! &6&l{ability} &7ha sido desbloqueada"
+  ability_level_up: "\n  &a¡Nuevo Nivel de Habilidad! &6&l{ability} &7es ahora nivel &6{level}"
+  mana_ability_unlock: "\n  &d¡Habilidad de Maná Desbloqueada! &9&l{mana_ability} &7se ha desbloqueado"
+  mana_ability_level_up: "\n  &d¡Nuevo Nivel de Habilidad de Maná! &9&l{mana_ability} &7es ahora nivel &6{level}"
+  money_reward: "\n  &a${amount}"
 menus:
   common:
     close: '&cCerrar'
@@ -472,7 +545,7 @@ menus:
     secondary_skills_two: '&7Habilidades secundarias: &f{skill_1}, {skill_2}'
     secondary_skills_three: '&7Habilidades secundarias: &f{skill_1}, {skill_2}, {skill_3}'
     your_level: '&7Tu Nivel: {color}{level}'
-    attack_damage: '&4+{value} Daño de Ataque'
+    attack_damage: '&4+{value}% Daño de Ataque'
     hp: '&c+{value} {hp_unit}'
     saturated_regen: '&6+{value} Regeneración Saturada'
     full_hunger_regen: '&6+{value} Regeneración de Hambre Completa'
@@ -481,42 +554,57 @@ menus:
     luck: '&2+{value} Suerte'
     double_drop_chance: '&2Probabilidad de doble drop: {value}%'
     xp_gain: '&9+{value}% {xp_unit} Ganancia'
-    anvil_cost_reduction: '&9Reducción del coste del yunque {value}'
+    anvil_cost_reduction: '&9Reducción de costos del yunque: {value}%'
+    max_mana: '&9Maná Máximo: {value}'
     incoming_damage: '&5-{value}% Daño entrante'
 mana_abilities:
   replenish:
     name: Replantar
-    desc: "&7Replanta semillas automáticamente por \n&7  {value} segundos. &e[Click derecho para activar]"
+    desc: "&7Replanta semillas automáticamente\n&7  durante {value} segundos. &e[Click derecho\n&e  a una azada para activar]"
     raise: '&7Levantaste tu azada'
     lower: '&7Bajaste tu azada'
     start: '&6¡Replantación Activada! &7(-{mana} {mana_unit})'
-    end: '&6La habilidad Replantar se ha agotado'
+    end: '&7Replantar se ha agotado'
   treecapitator:
     name: Treecapitator
-    desc: "&7Rompe árboles enteros instantáneamente por \n&7  {value} segundos. &e[Click Derecho para Activar]"
+    desc: "&7Rompe árboles enteros instantáneamente por \n&7  {value} segundos. &e[Haz click derecho al hacha\n&e  y rompe un tronco para activar]"
     raise: '&7Levantaste tu hacha'
     lower: '&7Bajaste tu hacha'
     start: '&6¡Treecapitator Activado! &7(-{mana} {mana_unit})'
-    end: '&6La habilitad Treecapitator se ha agotado'
+    end: '&7Treecapitator se ha agotado'
   speed_mine:
     name: Mina Veloz
-    desc: "&7Otorga Velocidad Minera 10 por {value} \n&7  segundos. &e[Click Derecho para Activar]"
+    desc: "&7Da prisa minera 10 durante {value} segundos.\n&e  [Haz click derecho al pico y mina el bloque\n&e  para activar]"
     raise: '&7Levantaste tu pico'
     lower: '&7Bajaste tu pico'
     start: '&6¡Mina Veloz Activada! &7(-{mana} {mana_unit})'
     end: '&7La habilidad Mina Veloz se ha agotado'
   absorption:
     name: Absorción
-    desc: "Cura el 50% del daño que recibas \n&7  por {value} segundos."
+    desc: "El daño entrante disminuirá el maná en 2 veces\n&7  el daño de Minecraft en lugar de tu salud\n&7  durante {value} segundos. Tu maná no se regenerará\n&7  mientras la habilidad esté activada.\n  &e[Haz click derecho a un escudo y luego recibe daño para activar]"
     raise: '&7Levantaste tu escudo'
     lower: '&7Bajaste tu escudo'
     start: '&6¡Habilidad Absorción activada! &7(-{mana} {mana_unit})'
-    end: '&6La habilidad absorción se ha agotado'
+    end: '&7Absorción se ha agotado'
+  terraform:
+    name: Terraformar
+    desc: "Rompe bloques instantáneamente en un radio de 4 bloques\n&7  en la misma capa al cavar durante {value} segundos. Usted\n&7  debe usar una pala y los bloques adicionales rotos deben ser\n&7  del mismo tipo y en una sola vena conectada.\n&7  &e[Click derecho a una pala y luego cava para activar]"
+    raise: '&7Levantaste tu pala'
+    lower: '&7Bajaste tu pala'
+    start: '&6¡Terraformar activado! &7(-{mana} {mana_unit})'
+    end: '&7Terraformar se ha desgastado'
   sharp_hook:
     name: Gancho Afilado
     desc: "Inflige {value} de daño a una entidad enganchada \n&7  al hacer click izquierdo con una caña de pescar"
     use: '&6¡Usaste el Gancho Afilado! &7(-{mana} {mana_unit})'
     menu: "\n&d&lHabilidad de Mana &9{mana_ability} {level}\n &7Daño: &c{value} &7Costo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+  charged_shot:
+    name: Tiro cargado
+    desc: "Las flechas que dispares infligirán más daño\n&7  en función de lo lejos que se haya retirado el arco\n&7  consumiendo maná en el proceso. Hace {value}% más\n&7  de daño por maná consumido. &e[Click izquierdo a\n&e  un arco para cambiar el modo de disparo cargado]"
+    enable: '&7El modo de disparo cargado está activado'
+    disable: '&7El modo de disparo cargado está desactivado'
+    shoot: '&6¡Usaste Disparo Cargado! &d+{percent}% DAÑO &7(-{mana} {mana_unit})'
+    menu: "\n&d&lHabilidad de Maná &9{mana_ability} {level}\n &7Daño: &c+{value}% / &7Costo de Maná Máximo: &b{mana_cost}\n "
   not_ready: '&c¡La habilitad no está lista! &7({cooldown}s)'
   not_enough_mana: '&e¡No tienes suficiente mana! &7(Requerido: {mana} {mana_unit})'
 skills:
@@ -600,4 +688,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 7
+file_version: 13

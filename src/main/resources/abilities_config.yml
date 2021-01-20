@@ -570,6 +570,17 @@ mana_abilities:
     max_level: 0
     display_damage_with_scaling: true
     enable_sound: true
+  terraform:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 4.0
+    cooldown: 200
+    cooldown_per_level: -5
+    mana_cost: 20
+    mana_cost_per_level: 20
+    unlock: 7
+    level_up: 7
+    max_level: 0
   charged_shot:
     enabled: true
     base_value: 0.5
@@ -595,4 +606,4 @@ mana_abilities:
     level_up: 7
     max_level: 0
     enable_particles: true
-file_version: 1
+file_version: 2

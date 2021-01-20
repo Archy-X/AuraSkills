@@ -411,13 +411,13 @@ commands:
 leveler:
   title: '&aNowy Poziom {skill}'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Nowy Poziom Umiejętności! &b&l{skill} &8{old}➜&3&l{new}\n \n &bNagrody:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
-  stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&aOdblokowano Umiejętność! &7Umiejętność &6&l{ability} &7odblokowana'
-  ability_level_up: '&aNowy Poziom Umiejętności! &7Umiejętność &6&l{ability} &7ma teraz poziom &6{level}'
-  mana_ability_unlock: '&aOdblokowano Umiejętność Many! &7Umiejętność &6&l{mana_ability} &7odblokowana'
-  mana_ability_level_up: '&aNowy Poziom Umiejętności Many! &7Umiejętność &6&l{mana_ability} &7ma teraz poziom &6{level}'
-  money_reward: '&a{amount}$'
+  level_up: "&3&m----------------------------------------\n&r &3Nowy Poziom Umiejętności! &b&l{skill} &8{old}➜&3&l{new}\n \n &bNagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: '\n  {color}+1{symbol} {stat}'
+  ability_unlock: '\n  &aOdblokowano Umiejętność! &7Umiejętność &6&l{ability} &7odblokowana'
+  ability_level_up: '\n  &aNowy Poziom Umiejętności! &7Umiejętność &6&l{ability} &7ma teraz poziom &6{level}'
+  mana_ability_unlock: '\n  &aOdblokowano Umiejętność Many! &7Umiejętność &6&l{mana_ability} &7odblokowana'
+  mana_ability_level_up: '\n  &aNowy Poziom Umiejętności Many! &7Umiejętność &6&l{mana_ability} &7ma teraz poziom &6{level}'
+  money_reward: '\n  &a{amount}$'
 menus:
   common:
     close: '&cZamknij'
@@ -599,4 +599,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 6
+file_version: 9
