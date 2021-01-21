@@ -76,7 +76,7 @@ public class ManaAbilityActivator {
                             return;
                         }
                         // Check permission
-                        if (!player.hasPermission("aureliumskills." + skill.toString().toLowerCase())) {
+                        if (!player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ENGLISH))) {
                             return;
                         }
                         if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {

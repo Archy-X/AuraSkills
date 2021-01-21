@@ -1,3 +1,21 @@
+Version Alpha 1.6.3
+  Changes:
+    - Fully updated es, fr, and pt-BR messages (version 13)
+    - Partially updated de, id, pl, tr, zh-CN, and zh-TW messages to fix format bug (version 9)
+  Bug Fixes:
+    - Fixed level up message format issues on languages that did not have updated message files (every language except en)
+    - Fixed doubled level up message when money reward was enabled
+    - Fixed Terraform mana ability options not being on abilities_config.yml
+
+Version Alpha 1.6.2
+  Bug Fixes:
+    - Fixed file loading issues (console spam) and other potential problems on systems with Turkish as the default language
+
+Version Alpha 1.6.1
+  Bug Fixes:
+    - The custom_model_data tag for the fill item now works
+    - Fixed action bar NullPointerException
+
 Version Alpha 1.6.0
   New Features:
     - New abilities_config:

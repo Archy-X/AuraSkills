@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import java.util.Locale;
+
 public enum MenuMessage implements MessageKey {
 
     //Common
@@ -70,7 +72,7 @@ public enum MenuMessage implements MessageKey {
     private String path;
     
     MenuMessage(int section) {
-        String key = this.name().toLowerCase();
+        String key = this.name().toLowerCase(Locale.ENGLISH);
         if (section == 0) {
             this.path = "menus.common." + key;
         }

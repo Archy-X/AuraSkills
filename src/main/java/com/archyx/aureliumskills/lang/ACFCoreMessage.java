@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import java.util.Locale;
+
 public enum ACFCoreMessage {
 
     PERMISSION_DENIED,
@@ -28,7 +30,7 @@ public enum ACFCoreMessage {
     HELP_DETAILED_PARAMETER_FORMAT,
     HELP_SEARCH_HEADER;
 
-    private final String path = "acf.core." + this.name().toLowerCase();
+    private final String path = "acf.core." + this.name().toLowerCase(Locale.ENGLISH);
 
     public String getPath() {
         return path;

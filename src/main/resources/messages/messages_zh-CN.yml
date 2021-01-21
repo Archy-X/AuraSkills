@@ -420,13 +420,13 @@ commands:
 leveler:
   title: '&a{skill} 等级提升'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3技能成功升级! &b&l{skill} &8{old}➜&3&l{new}\n \n &b升级奖励:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
-  stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&a技能解锁! &6&l{ability} &7已被解锁'
-  ability_level_up: '&a技能升级! &6&l{ability} &7现在等级为 &6{level} &7级'
-  mana_ability_unlock: '&d魔法技能解锁! &9&l{mana_ability} &7已被解锁'
-  mana_ability_level_up: '&a魔法技能升级! &9&l{mana_ability} &7现在等级为 &6{level} &7级'
-  money_reward: '&a${amount}'
+  level_up: "&3&m----------------------------------------\n&r &3技能成功升级! &b&l{skill} &8{old}➜&3&l{new}\n \n &b升级奖励:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: "\n  {color}+1{symbol} {stat}"
+  ability_unlock: "\n  &a技能解锁! &6&l{ability} &7已被解锁"
+  ability_level_up: "\n  &a技能升级! &6&l{ability} &7现在等级为 &6{level} &7级"
+  mana_ability_unlock: "\n  &d魔法技能解锁! &9&l{mana_ability} &7已被解锁"
+  mana_ability_level_up: "\n  &d魔法技能升级! &9&l{mana_ability} &7现在等级为l &6{level} &7级"
+  money_reward: "\n  &a${amount}"
 menus:
   common:
     close: '&c关闭'
@@ -480,7 +480,7 @@ menus:
     secondary_skills_two: '&7副技能: &f{skill_1}, {skill_2}'
     secondary_skills_three: '&7副技能: &f{skill_1}, {skill_2}, {skill_3}'
     your_level: '&7你的等级: {color}{level}'
-    attack_damage: '&4+{value} 攻击'
+    attack_damage: '&4+{value}% 攻击'
     hp: '&c+{value} {hp_unit}'
     saturated_regen: '&6+{value} 饱和度'
     full_hunger_regen: '&6+{value} 完全饥饿恢复'
@@ -489,7 +489,7 @@ menus:
     luck: '&2+{value} 幸运'
     double_drop_chance: '&2双倍掉落: {value}%'
     xp_gain: '&9+{value}% {xp_unit} 经验翻倍'
-    anvil_cost_reduction: '&9铁砧耗费减少: {value}'
+    anvil_cost_reduction: '&9铁砧耗费减少: {value}%'
     incoming_damage: '&5-{value}% 将受到的伤害'
 mana_abilities:
   replenish:
@@ -515,7 +515,7 @@ mana_abilities:
     end: '&7超级碎石机已关闭'
   absorption:
     name: 超级吸收
-    desc: '在技能触发的 {value} 秒内以治疗的方式减少 50% 你受到的伤害'
+    desc: "在技能触发的 {value} 秒内以治疗的方式减少 50% 你受到的伤害"
     raise: '&7你握紧了你的盾牌'
     lower: '&7你放下了你的盾牌'
     start: '&6超级吸收已激活! &7(-{mana} {mana_unit})'
@@ -608,4 +608,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 8
+file_version: 9

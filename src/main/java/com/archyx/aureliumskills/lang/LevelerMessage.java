@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import java.util.Locale;
+
 public enum LevelerMessage implements MessageKey {
 
     TITLE,
@@ -13,6 +15,6 @@ public enum LevelerMessage implements MessageKey {
     MONEY_REWARD;
 
     public String getPath() {
-        return "leveler." + this.name().toLowerCase();
+        return "leveler." + this.toString().toLowerCase(Locale.ENGLISH);
     }
 }

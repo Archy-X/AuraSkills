@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class PlaceholderSupport extends PlaceholderExpansion {
 
@@ -119,7 +120,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets stat values
         for (Stat stat : Stat.values()) {
-            if (identifier.equals(stat.name().toLowerCase())) {
+            if (identifier.equals(stat.name().toLowerCase(Locale.ENGLISH))) {
                 if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
                     return String.valueOf(SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(stat));
                 }
@@ -128,12 +129,12 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets skill levels
         for (Skill skill : Skill.values()) {
-            if (identifier.equals(skill.name().toLowerCase())) {
+            if (identifier.equals(skill.name().toLowerCase(Locale.ENGLISH))) {
                 if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                     return String.valueOf(SkillLoader.playerSkills.get(player.getUniqueId()).getSkillLevel(skill));
                 }
             }
-            else if (identifier.equals(skill.name().toLowerCase() + "_roman")) {
+            else if (identifier.equals(skill.name().toLowerCase(Locale.ENGLISH) + "_roman")) {
                 if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
                     return RomanNumber.toRoman(SkillLoader.playerSkills.get(player.getUniqueId()).getSkillLevel(skill));
                 }
@@ -179,8 +180,8 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
             else {
                 for (Skill skill : Skill.values()) {
-                    if (leaderboardType.startsWith(skill.name().toLowerCase() + "_")) {
-                        int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", ""));
+                    if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
+                        int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
                         if (place > 0) {
                             List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, 1, 1);
                             if (list.size() > 0) {
@@ -191,7 +192,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                         }
                         else {
                             if (identifier.endsWith("name")) {
-                                int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", "", "_name", ""));
+                                int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
                                 if (namePlace > 0) {
                                     List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, namePlace, 1);
                                     if (list.size() > 0) {
@@ -202,7 +203,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                                 }
                             }
                             else if (identifier.endsWith("value")) {
-                                int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase() + "_", "", "_value", ""));
+                                int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
                                 if (valuePlace > 0) {
                                     List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, valuePlace, 1);
                                     if (list.size() > 0) {

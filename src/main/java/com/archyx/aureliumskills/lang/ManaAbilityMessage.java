@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.lang;
 
 import com.archyx.aureliumskills.mana.MAbility;
 
+import java.util.Locale;
+
 public enum ManaAbilityMessage implements MessageKey {
     
     REPLENISH_NAME,
@@ -51,7 +53,7 @@ public enum ManaAbilityMessage implements MessageKey {
 
     ManaAbilityMessage() {
         MAbility manaAbility = MAbility.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-        this.path = "mana_abilities." + manaAbility.name().toLowerCase() + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase();
+        this.path = "mana_abilities." + manaAbility.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
     }
 
     ManaAbilityMessage(String path) {

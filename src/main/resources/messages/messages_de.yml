@@ -412,13 +412,13 @@ commands:
 leveler:
   title: '&a{skill} Stufe erhöht'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Fertigkeitsstufe erhöht! &b&l{skill} &8{old}➜&3&l{new}\n \n &bVerdienste:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
-  stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&aFähigkeit freigeschaltet! &6&l{ability} &7wurde freigeschaltet'
-  ability_level_up: '&aDeine Fähigkeitist ein Level aufgestiegen! &6&l{ability} &7ist jetzt Level &6{level}'
-  mana_ability_unlock: '&aManafähigkeit freigeschaltet! &9&l{mana_ability} &7wurde freigeschaltet'
-  mana_ability_level_up: '&dManafähigkeit ist ein Level aufgestigen! &9&l{mana_ability} &7ist jetzt Level &6{level}'
-  money_reward: '&a${amount}'
+  level_up: "&3&m----------------------------------------\n&r &3Fertigkeitsstufe erhöht! &b&l{skill} &8{old}➜&3&l{new}\n \n &bVerdienste:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: '\n  {color}+1{symbol} {stat}'
+  ability_unlock: '\n  &aFähigkeit freigeschaltet! &6&l{ability} &7wurde freigeschaltet'
+  ability_level_up: '\n  &aDeine Fähigkeitist ein Level aufgestiegen! &6&l{ability} &7ist jetzt Level &6{level}'
+  mana_ability_unlock: '\n  &aManafähigkeit freigeschaltet! &9&l{mana_ability} &7wurde freigeschaltet'
+  mana_ability_level_up: '\n  &dManafähigkeit ist ein Level aufgestigen! &9&l{mana_ability} &7ist jetzt Level &6{level}'
+  money_reward: '\n  &a${amount}'
 menus:
   common:
     close: '&cSchließen'
@@ -600,4 +600,4 @@ units:
   mana: Mana
   hp: LP
   xp: EP
-file_version: 7
+file_version: 9

@@ -240,6 +240,70 @@ abilities:
       name: Sagesse
       desc: "Gagnez {value} de sagesse pour chaque effet de potion\n&7  unique active."
       info: '+{value} Sagesse/Effet'
+  enchanting:
+    xp_convert:
+      name: Conversion d'XP
+      desc: "Gagnez 1 expérience Minecraft chaque {value} d'XP de compétence\n&7  que vous gagnez."
+      info: '1 EXP/{value} XP de Compétence'
+    enchanter:
+      name: Enchanteur
+      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
+      info: '+{value}% d''XP'
+    xp_warrior:
+      name: XP de Guerrier
+      desc: "Les monstres que vous tuez ont {value}% de chances de \n&7  drop le double d'Xp."
+      info: '{value}% de 2x Exp de Mob'
+    enchanted_strength:
+      name: Enchantement Force
+      desc: "Gagnez {value} de force pour chaque enchantement unique\n&7  enchantement sur l'objet retenu."
+      info: '{value} Force/Enchantement'
+    lucky_table:
+      name: Table de Chance
+      desc: "Les objets que vous enchantez en utilisant la table\n&7  d'enchantement ont {value}% de chance d'améliorer le niveau l'enchantement\n&7  de l'enchantement de 1 s'il n'est pas au max"
+      info: 'Chance d''amélioration d''Enchantement de {value}%'
+  healing:
+    life_essence:
+      name: Essence de vie
+      desc: Les potions de santé instantanées soignent {value}% de plus.
+      info: '+{value}% de vie instantanée'
+    healer:
+      name: Guérisseur
+      desc: Gagnez {value}% d'XP en plus dans ce skill.
+      info: '+{value}% XP'
+    life_steal:
+      name: Vol de vie
+      desc: Soigne {value}% des PV max des créatures hostiles\n&7 et des joueurs que vous tuez.
+      info: 'Vol de {value}% PV'
+    golden_heart:
+      name: Coeurs en Or
+      desc: Les dégâts infligés à vos cœur d’absorption sont\n&7  réduits de {value}%
+      info: '-{value}% Dmg d''absorption'
+    revival:
+      name: Résurrection
+      desc: Gagnez &c+{value} points de vie &7et &6+{value_2} Régénération\n&7  pendant 30 secondes après réapparition.
+      info: '+{value} points de vie, +{value_2} régénération'
+      message: '&fVous avez gagné un bonus de renaissance pendant 30 secondes ! &f(&c+{value} points de vie, &6+{value_2} régénération&f)'
+  forging:
+    disenchanter:
+      name: Désenchanteur
+      desc: Gagnez {value}% d'expérience en plus lorsque vous désenchantez\n&7  un objets en utilisant une meule.
+      info: '+{value}% Meule EXP'
+    forger:
+      name: Forgeron
+      desc: Gagnez {value}% d'xp en plus dans ce skill.
+      info: '+{value}% d''XP'
+    repairing:
+      name: Réparation
+      desc: Réparation d'objets dans une enclume en utilisant la matière brute\n&7  que l'objet a été fabriqué à partir de réparations\n&7  {value}% plus de durabilité.
+      info: '+{value}% réparation d''enclume'
+    anvil_master:
+      name: Maître de l'enclume
+      desc: Diminue le coût de réparation maximal d'une enclume\n&7  avant qu'il ne soit trop cher pour {value} expérience.
+      info: 'Coût Max {value}'
+    skill_mender:
+      name: Réparateur de compétences
+      desc: Gagner de l'expérience de compétence avec  {value}% de chance de réparer\n&7  un objet tenu ou une pièce d'armure avec l'enchantement mending\n&7  de 1 de durabilitée pour 2 xp de skill.
+      info: '{value}% Chance de réparer'
 acf:
   core:
     permission_denied: '&cJe suis désolé, mais vous n''avez pas la permission d''effectuer cette commande.'
@@ -286,6 +350,7 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
+  ability: '&c{hp}/{max_hp} {hp_unit}    {message}    &b{mana}/{max_mana} {mana_unit}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAX)'
 commands:
@@ -349,6 +414,14 @@ commands:
   lang:
     set: '&7Langue définie sur &b{lang}'
     not_found: '&eLLangue introuvable!'
+  mana:
+    display: '&fVotre {mana_unit}: &b{current}/{max}'
+    display_other: '&f{mana_unit} de {player}: &b{current}/{max}'
+    add: '&7Ajouté &b{amount} {mana_unit} &7au joueur &6{player}'
+    remove: '&7Suppression &b{amount} {mana_unit} &7du joueur &6{player}'
+    set: '&7défini le joueur &6{player} &7a &b{amount} {mana_unit}'
+    at_least_zero: '&e{mana_unit} doit être au moins zéro !'
+    console_specify_player: '&eLa console doit spécifier un joueur !'
   modifier:
     add:
       added: '&7Le modificateur {color}{stat} niveau &b{value} &7avec comme nom &f{name} &7a été ajouté au joueur &6{player}'
@@ -412,13 +485,13 @@ commands:
 leveler:
   title: '&a{skill} Niveau supérieur'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Niveau supérieur! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRécompenses:\n  {stat_level_1}\n  {stat_level_2}\n  {ability_unlock}\n  {ability_level_up}\n  {mana_ability_unlock}\n  {mana_ability_level_up}\n  {money_reward}\n&3&m----------------------------------------"
-  stat_level: '{color}+1{symbol} {stat}'
-  ability_unlock: '&aCompétence débloquée! &6&l{ability} &7a été débloquée'
-  ability_level_up: '&aNiveau de compétence supérieur! &6&l{ability} &7est maintenant niveau &6{level}'
-  mana_ability_unlock: '&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloqueée'
-  mana_ability_level_up: '&dNiveau de compétence de mana supérieur! &9&l{mana_ability} &7est maintenant niveau &6{level}'
-  money_reward: '&a${amount}'
+  level_up: "&3&m----------------------------------------\n&r &3Niveau supérieur! &b&l{skill} &8{old}➜&3&l{new} \n \n &bRécompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: "\n  {color}+1{symbol} {stat}"
+  ability_unlock: "\n  &aCompétence débloquée! &6&l{ability} &7a été débloquée"
+  ability_level_up: "\n  &aNiveau de compétence supérieur! &6&l{ability} &7est maintenant niveau &6{level}"
+  mana_ability_unlock: "\n&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloqueée"
+  mana_ability_level_up: "\n  &dNiveau de compétence de mana supérieur! &9&l{mana_ability} &7est maintenant niveau &6{level}"
+  money_reward: "\n  &a${amount}"
 menus:
   common:
     close: '&cFermer'
@@ -472,7 +545,7 @@ menus:
     secondary_skills_two: '&7Compétences secondaires: &f{skill_1}, {skill_2}'
     secondary_skills_three: '&7Compétences secondaires: &f{skill_1}, {skill_2}, {skill_3}'
     your_level: '&7Votre niveau: {color}{level}'
-    attack_damage: '&4+{value} dégâts d''attaque'
+    attack_damage: '&4+{value}% dégâts d''attaque'
     hp: '&c+{value} {hp_unit}'
     saturated_regen: '&6+{value} Régénération saturé'
     full_hunger_regen: '&6+{value} Régénération complète de la faim'
@@ -481,42 +554,57 @@ menus:
     luck: '&2+{value} Chance'
     double_drop_chance: '&2Chance de double drop: {value}%'
     xp_gain: '&9+{value}% gain d''{xp_unit}'
-    anvil_cost_reduction: '&9Réduction des coûts d''enclume: {value}'
+    anvil_cost_reduction: '&9Réduction des coûts d''enclume: {value}%'
+    max_mana: '&9Mana max: {value}'
     incoming_damage: '&5-{value}% Dégâts reçu'
 mana_abilities:
   replenish:
     name: Replante
-    desc: "&7Replante automatiquement les cultures pendant\n&7  {value} secondes. &e[Clique droit pour activer]"
+    desc: "&7Replante automatiquement les cultures pendant\n&7  {value} secondes.\n&e  [Clique droit pour activer]"
     raise: '&7Vous levez votre houe'
     lower: '&7Vous baissez votre houe'
     start: '&6Replante activée! &7(-{mana} {mana_unit})'
     end: '&6La replante a été désactivée'
   treecapitator:
     name: Découpeur d'arbre
-    desc: "&7Casser les arbres instantanément pendant \n&7  {value} secondss. &e[Clique droit pour activer]"
+    desc: "&7Casser les arbres instantanément pendant\n&7  {value} secondes.\n&e  [Clique droit pour activer]"
     raise: '&7Vous levez votre hache'
     lower: '&7Vous baissez votre hache'
     start: '&6Découpeur d''arbre activée! &7(-{mana} {mana_unit})'
-    end: '&6Découpeur d''arbre a été désacivée'
+    end: '&7Découpeur d''arbre a été désactivé'
   speed_mine:
     name: Mineur de l'extrème
-    desc: "&7Vous donne haste 10 pendant {value} \n&7  secondes. &e[Clique droit pour activer]"
+    desc: "&7Donne Céléritée 10 pendant {value} secondes.\n&e  [clic droit avec une pioche et mine\n&e  un block pour activer]"
     raise: '&7Vous levez votre pioche'
     lower: '&7Vous baissez votre pioche'
     start: '&6Mineur de l''extrème activée! &7(-{mana} {mana_unit})'
     end: '&7Mineur de l''extrème a été désactivée'
   absorption:
     name: Absorption
-    desc: "Soigne 50% des dégâts que vous subissez\n&7  pendant {value} secondes."
+    desc: "Les dégâts reçus réduiront le mana\n&7  de 2x au lieu de vos points de vie Minecraft\n&7  pendant {value} secondes. Le mana ne se régénérera pas\n&7  lorsque l'Absorption est active.\n  &e[Clic gauche avec un bouclier et subit des dégâts pour l'activer]"
     raise: '&7Vous levez votre bouclier'
     lower: '&7Vous baissez votre bouclier'
     start: '&6Absorption activé! &7(-{mana} {mana_unit})'
-    end: '&6Absorption a été désactivée'
+    end: '&7L''Absorption s''est dissipée'
+  terraform:
+    name: Terraforme
+    desc: "Brisez instantanément des blocs dans un rayon de 4 blocs\n&7  dans la même couche lorsque vous creusez pendant {value} secondes. Vous\n&7  devez utiliser une pelle et les blocs supplémentaires cassés doivent être\n&7  du même type et dans une seule veine connectée.\n&7  &e[Clic droit sur la pelle et creuse le bloc pour activer]"
+    raise: '&7Vous levez votre pelle'
+    lower: '&7Vous baissez votre pelle'
+    start: '&6Terraforme Activé! &7(-{mana} {mana_unit})'
+    end: '&7Terraforme s''est épuisé'
   sharp_hook:
     name: Crochet pointu
     desc: "Inflige {value} dégats à une entité accrochée\n&7  clic gauche avec une canne à pêche"
     use: '&6Crochet pointu utilisé &7(-{mana} {mana_unit})'
     menu: "\n&d&lCapacité de mana &9{mana_ability} {level}\n &7Dégats: &c{value} &7Coût en mana: &b{mana_cost} &7Rechargement: &e{cooldown}s\n "
+  charged_shot:
+    name: Coup chargé
+    desc: "Les flèches que vous tirez infligeront plus de dégâts\n&7  en fonction de la distance à laquelle l'arc a été bandé,\n&7  le processus consomme du mana. fait  {value}% de dégâts en plus\n&7  par mana consommé. &e[Clic gauche\n&e  avec un arc pour activer/désactiver le mode de tir chargé]"
+    enable: '&7Le mode de tir chargé est maintenant activé'
+    disable: '&7Le mode de tir chargé est maintenant désactivé'
+    shoot: '&6Tir chargé utilisé ! &d+{percent}% DMG &7(-{mana} {mana_unit})'
+    menu: "\n&d&lMana Capacité &9{mana_ability} {level}\n &7Dommages : &c+{value}% / Mana &7Coût de Mana Max : &b{mana_cost}\n "
   not_ready: '&cCompétence non chargée! &7({cooldown}s)'
   not_enough_mana: '&ePas assez de mana! &7({mana} {mana_unit} requis)'
 skills:
@@ -600,4 +688,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 7
+file_version: 13

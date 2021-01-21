@@ -58,7 +58,7 @@ public class Leveler {
 	public double getMultiplier(Player player) {
 		return 1 + player.getEffectivePermissions().stream()
 				.map(PermissionAttachmentInfo::getPermission)
-				.map(String::toLowerCase)
+				.map(s -> s.toLowerCase(Locale.ENGLISH))
 				.filter(value -> value.startsWith("aureliumskills.multiplier."))
 				.map(value -> value.replace("aureliumskills.multiplier.", ""))
 				.filter(value -> pattern.matcher(value).matches())
@@ -274,8 +274,7 @@ public class Leveler {
 				double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 				double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
 				NumberFormat nf = new DecimalFormat("#.##");
-				moneyRewardMessage.append(LoreUtil.replace(message, "{money_reward}",
-						LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", nf.format(base + (multiplier * newLevel * newLevel)))));
+				moneyRewardMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", nf.format(base + (multiplier * newLevel * newLevel))));
 			}
 		}
 		message = LoreUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
