@@ -1,7 +1,10 @@
 package com.archyx.aureliumskills.data;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -46,7 +50,33 @@ public class YamlStorageProvider extends StorageProvider {
                         ConfigurationSection modifiersSection = config.getConfigurationSection("stat_modifiers");
                         if (modifiersSection != null) {
                             for (String entry : modifiersSection.getKeys(false)) {
-
+                                ConfigurationSection modifierEntry = modifiersSection.getConfigurationSection(entry);
+                                if (modifierEntry != null) {
+                                    String name = modifierEntry.getString("name");
+                                    String statName = modifierEntry.getString("stat");
+                                    double value = modifierEntry.getDouble("value");
+                                    if (name != null && statName != null) {
+                                        Stat stat = Stat.valueOf(statName.toUpperCase(Locale.ROOT));
+                                        StatModifier modifier = new StatModifier(name, stat, value);
+                                        playerData.addStatModifier(modifier);
+                                    }
+                                }
+                            }
+                        }
+                        playerData.setMana(config.getDouble("mana")); // Load mana
+                        // Load ability data
+                        ConfigurationSection abilitySection = config.getConfigurationSection("ability_data");
+                        if (abilitySection != null) {
+                            for (String abilityName : abilitySection.getKeys(false)) {
+                                ConfigurationSection abilityEntry = abilitySection.getConfigurationSection(abilityName);
+                                if (abilityEntry != null) {
+                                    Ability ability = Ability.valueOf(abilityName.toUpperCase(Locale.ROOT));
+                                    AbilityData abilityData = playerData.getAbilityData(ability);
+                                    for (String key : abilityEntry.getKeys(false)) {
+                                        Object value = abilityEntry.get(key);
+                                        abilityData.setData(key, value);
+                                    }
+                                }
                             }
                         }
                     } catch (Exception e) {
