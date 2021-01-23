@@ -5,7 +5,7 @@
 # |            Source Code: https://github.com/Archy-X/AureliumSkills          | #
 # | Config Guide: https://github.com/Archy-X/AureliumSkills/wiki/Configuration | #
 # +----------------------------------------------------------------------------+ #
-# This file was generated on version Alpha 1.6.3
+# This file was generated on version Alpha 1.6.4
 # Plugin made by Archy
 
 data-save-period: 6000
@@ -239,6 +239,7 @@ health:
     hp-indicator-scaling: 5
     update-delay: 0
     force-base-health: false
+
 strength:
     modifier: 0.63
     hand-damage: true

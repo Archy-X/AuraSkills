@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -70,7 +71,12 @@ public class SkillItem extends SkillInfoItem implements ConfigurableItem {
     }
 
     public ItemStack getItem(Skill skill, PlayerSkill playerSkill, Locale locale) {
-        return getItem(baseItems.get(skill), skill, playerSkill, locale, displayName, lore, lorePlaceholders);
+        ItemStack baseItem = baseItems.get(skill);
+        if (baseItem == null) {
+            baseItem = new ItemStack(Material.STONE);
+        }
+        baseItem = baseItem.clone();
+        return getItem(baseItem, skill, playerSkill, locale, displayName, lore, lorePlaceholders);
     }
 
     @Override

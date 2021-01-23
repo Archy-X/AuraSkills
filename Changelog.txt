@@ -1,3 +1,12 @@
+Version Alpha 1.6.4
+  New Features:
+    - Added CustomRegenEvent to the API for health regeneration when custom-regen-mechanics is enabled
+  Bug Fixes:
+    - Fixed Fleeting speed boost not being removed if custom-regen-mechanics was enabled
+    - Fixed grindstone Disenchanter ability error with Sweeping Edge
+    - Fixed Recovery ability not working if custom-regen-mechanics was enabled
+    - Fixed sugar cane Farming XP fast place duping (breaking any player placed sugar cane will not give XP for above blocks)
+
 Version Alpha 1.6.3
   Changes:
     - Fully updated es, fr, and pt-BR messages (version 13)

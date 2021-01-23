@@ -13,6 +13,7 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -81,15 +82,18 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			else if (XBlock.isSugarCane(mat)) {
 				int numBroken = 1;
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
-					if (!XBlock.isSugarCane(b.getRelative(BlockFace.UP).getType()) || b.getRelative(BlockFace.UP).hasMetadata("skillsPlaced")) {
-						return;
-					}
-					numBroken = 0;
+					return;
 				}
-				if (XBlock.isSugarCane(b.getRelative(BlockFace.UP).getState().getType())) {
-					numBroken++;
-					if (XBlock.isSugarCane(b.getRelative(BlockFace.UP).getRelative(BlockFace.UP).getState().getType())) {
+				BlockState above = b.getRelative(BlockFace.UP).getState();
+				if (XBlock.isSugarCane(above.getType())) {
+					if (!above.hasMetadata("skillsPlaced")) {
 						numBroken++;
+					}
+					BlockState aboveAbove = b.getRelative(BlockFace.UP).getRelative(BlockFace.UP).getState();
+					if (XBlock.isSugarCane(aboveAbove.getType())) {
+						if (!aboveAbove.hasMetadata("skillsPlaced")) {
+							numBroken++;
+						}
 					}
 				}
 				leveler.addXp(p, s, getXp(p, Source.SUGAR_CANE) * numBroken);
@@ -111,7 +115,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			checkCustomBlocks(p, b, s);
 		}
 	}
-	
+
 	private void applyAbilities(Player player, Block block) {
 		farmingAbilities.bountifulHarvest(player, block);
 		farmingAbilities.tripleHarvest(player, block);

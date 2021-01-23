@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
@@ -80,6 +81,29 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void recoveryCustom(CustomRegenEvent event) {
+        if (!event.isCancelled()) {
+            if (isEnabled(Ability.RECOVERY)) {
+                Player player = event.getPlayer();
+                PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
+                if (playerSkill == null) return;
+                // Gets health
+                AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                if (attribute != null) {
+                    double currentHealth = player.getHealth();
+                    double maxHealth = attribute.getValue();
+                    // Checks if health is less than half of max
+                    if (currentHealth < (maxHealth / 2)) {
+                        // Applies modifier
+                        double modifier = getValue(Ability.RECOVERY, playerSkill) / 100;
+                        event.setAmount(event.getAmount() * (1 + modifier));
                     }
                 }
             }

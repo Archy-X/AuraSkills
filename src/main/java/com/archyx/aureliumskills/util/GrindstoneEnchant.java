@@ -22,7 +22,7 @@ public enum GrindstoneEnchant {
     KNOCKBACK(5, 25),
     FIRE_ASPECT(10, 30),
     LOOTING(15, 24, 33),
-    SWEEPING_EDGE(5, 14, 23),
+    SWEEPING(5, 14, 23),
     POWER(1, 11, 21, 31, 41),
     PUNCH(12, 32),
     FLAME(20),
@@ -41,7 +41,6 @@ public enum GrindstoneEnchant {
     MULTISHOT(20),
     PIERCING(1, 11, 21, 31),
     QUICK_CHARGE(12, 32, 52);
-
 
     private final int level1;
     private int level2;
