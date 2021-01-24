@@ -79,6 +79,7 @@ public class AureliumSkills extends JavaPlugin {
 	private ModifierManager modifierManager;
 	private Lang lang;
 	private Leveler leveler;
+	private Health health;
 	private final long releaseTime = 1611436276320L;
 
 	public void onEnable() {
@@ -115,9 +116,12 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		// Check for protocol lib
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
+		// Load health
+		Health health = new Health(this);
+		this.health = health;
+		getServer().getPluginManager().registerEvents(health, this);
 		// Load config
 		loadConfig();
-		// Load config
 		this.requirementManager = new RequirementManager(this);
 		optionLoader = new OptionL(this);
 		optionLoader.loadOptions();
@@ -364,7 +368,6 @@ public class AureliumSkills extends JavaPlugin {
 		sorceryLeveler = new SorceryLeveler(this);
 		pm.registerEvents(new HealingLeveler(this), this);
 		pm.registerEvents(new ForgingLeveler(this), this);
-		pm.registerEvents(new Health(this), this);
 		pm.registerEvents(new Luck(this), this);
 		pm.registerEvents(new Wisdom(this), this);
 		pm.registerEvents(new FarmingAbilities(this), this);
@@ -533,6 +536,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public long getReleaseTime() {
 		return releaseTime;
+	}
+
+	public Health getHealth() {
+		return health;
 	}
 
 }

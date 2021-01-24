@@ -1,5 +1,14 @@
 Version Alpha 1.6.4
   New Features:
+    - Added hearts customization:
+      - Use the health.hearts in config.yml section to change the hearts shown for different health ranges
+      - The key is the number of hearts and the value is the minecraft health that amount of hearts is unlocked at
+      - For example, if two entries are '12': 29 and '13': 37, this means the player will have 12 hearts shown on their screen when their minecraft health is from 29 (inclusive) to 37 (exclusive)
+      - To find the HP from the action bar the value is, multiply it by the health.hp-indicator-scaling option (default is 5)
+      - This supports hearts below 10 and hearts above 20, just add entries with the key as the number of hearts
+      - The order of keys and values should be sequential, otherwise higher heart entries will override lower ones
+      - This is purely cosmetic, changing these options does not change the actual hp you have
+      - This only works if you have health.health-scaling set to true
     - Added CustomRegenEvent to the API for health regeneration when custom-regen-mechanics is enabled
   Bug Fixes:
     - Fixed Fleeting speed boost not being removed if custom-regen-mechanics was enabled

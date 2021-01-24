@@ -92,7 +92,7 @@ public class PlayerStat {
 		//Reloads stats
 		if (Bukkit.getPlayer(playerId) != null) {
 			if (modifier.getStat() == Stat.HEALTH) {
-				new Health(plugin).reload(Bukkit.getPlayer(playerId));
+				plugin.getHealth().reload(Bukkit.getPlayer(playerId));
 			}
 			else if (modifier.getStat() == Stat.LUCK) {
 				new Luck(plugin).reload(Bukkit.getPlayer(playerId));
@@ -117,7 +117,7 @@ public class PlayerStat {
 		if (reload) {
 			if (Bukkit.getPlayer(playerId) != null) {
 				if (modifier.getStat() == Stat.HEALTH) {
-					new Health(plugin).reload(Bukkit.getPlayer(playerId));
+					plugin.getHealth().reload(Bukkit.getPlayer(playerId));
 				} else if (modifier.getStat() == Stat.LUCK) {
 					new Luck(plugin).reload(Bukkit.getPlayer(playerId));
 				}
@@ -139,7 +139,7 @@ public class PlayerStat {
 			//Reloads stats
 			if (Bukkit.getPlayer(playerId) != null) {
 				if (modifier.getStat() == Stat.HEALTH) {
-					new Health(plugin).reload(Bukkit.getPlayer(playerId));
+					plugin.getHealth().reload(Bukkit.getPlayer(playerId));
 				}
 				else if (modifier.getStat() == Stat.LUCK) {
 					new Luck(plugin).reload(Bukkit.getPlayer(playerId));
@@ -162,7 +162,7 @@ public class PlayerStat {
 			if (Bukkit.getPlayer(playerId) != null) {
 				if (reload) {
 					if (modifier.getStat() == Stat.HEALTH) {
-						new Health(plugin).reload(Bukkit.getPlayer(playerId));
+						plugin.getHealth().reload(Bukkit.getPlayer(playerId));
 					} else if (modifier.getStat() == Stat.LUCK) {
 						new Luck(plugin).reload(Bukkit.getPlayer(playerId));
 					}

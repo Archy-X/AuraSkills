@@ -236,6 +236,18 @@ forging:
 health:
     modifier: 0.5
     health-scaling: true
+    hearts:
+        '10': 20
+        '11': 24
+        '12': 29
+        '13': 37
+        '14': 50
+        '15': 71
+        '16': 105
+        '17': 160
+        '18': 249
+        '19': 393
+        '20': 626
     hp-indicator-scaling: 5
     update-delay: 0
     force-base-health: false

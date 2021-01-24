@@ -5,10 +5,13 @@ import com.archyx.aureliumskills.abilities.AgilityAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,11 +24,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+
 public class Health implements Listener {
 
 	private final AureliumSkills plugin;
 	private final AgilityAbilities agilityAbilities;
 	private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
+	private final Map<Integer, Double> hearts = new HashMap<>();
 	private static final double threshold = 0.1;
 
 	public Health(AureliumSkills plugin) {
@@ -121,37 +126,59 @@ public class Health implements Listener {
 						player.setHealth(attribute.getValue());
 					}
 				}
-				//Applies health scaling
+				// Applies health scaling
 				if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
 					double health = attribute.getValue();
 					player.setHealthScaled(true);
-					if (health < 23) {
-						player.setHealthScale(20.0);
-					} else if (health < 28) {
-						player.setHealthScale(22.0);
-					} else if (health < 36) {
-						player.setHealthScale(24.0);
-					} else if (health < 49) {
-						player.setHealthScale(26.0);
-					} else if (health < 70) {
-						player.setHealthScale(28.0);
-					} else if (health < 104) {
-						player.setHealthScale(30.0);
-					} else if (health < 159) {
-						player.setHealthScale(32.0);
-					} else if (health < 248) {
-						player.setHealthScale(34.0);
-					} else if (health < 392) {
-						player.setHealthScale(36.0);
-					} else if (health < 625) {
-						player.setHealthScale(38.0);
-					} else {
-						player.setHealthScale(40.0);
+					int scaledHearts = 0;
+					for (Integer heartNum : hearts.keySet()) {
+						double healthNum = hearts.get(heartNum);
+						if (health >= healthNum) {
+							if (heartNum > scaledHearts) {
+								scaledHearts = heartNum;
+							}
+						}
 					}
+					if (scaledHearts == 0) {
+						scaledHearts = 10;
+					}
+					player.setHealthScale(scaledHearts * 2);
 				} else {
 					player.setHealthScaled(false);
 				}
 			}
 		}
 	}
+
+	public void loadHearts(FileConfiguration config) {
+		// Load default hearts
+		this.hearts.clear();
+		this.hearts.put(10, 0.0);
+		this.hearts.put(11, 24.0);
+		this.hearts.put(12, 29.0);
+		this.hearts.put(13, 37.0);
+		this.hearts.put(14, 50.0);
+		this.hearts.put(15, 71.0);
+		this.hearts.put(16, 105.0);
+		this.hearts.put(17, 160.0);
+		this.hearts.put(18, 249.0);
+		this.hearts.put(19, 393.0);
+		this.hearts.put(20, 626.0);
+		// Load hearts from config
+		ConfigurationSection heartsSection = config.getConfigurationSection("health.hearts");
+		if (heartsSection != null) {
+			try {
+				for (String key : heartsSection.getKeys(false)) {
+					int heartsNum = Integer.parseInt(key);
+					double healthNum = heartsSection.getDouble(key, -1.0);
+					if (healthNum != -1.0) {
+						this.hearts.put(heartsNum, healthNum);
+					}
+				}
+			} catch (Exception e) {
+				Bukkit.getLogger().warning("[AureliumSkills] There was an error loading health.hearts data! Check to make sure the keys are only integers and the values are only numbers.");
+			}
+		}
+	}
+
 }

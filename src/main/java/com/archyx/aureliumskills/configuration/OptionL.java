@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.configuration;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.DamageType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,10 +16,10 @@ import java.util.Map;
 
 public class OptionL {
 
-    private final Plugin plugin;
+    private final AureliumSkills plugin;
     private static final Map<Option, OptionValue> options = new HashMap<>();
 
-    public OptionL(Plugin plugin) {
+    public OptionL(AureliumSkills plugin) {
         this.plugin = plugin;
     }
 
@@ -75,7 +75,7 @@ public class OptionL {
                 ASLogger.logWarn(LogType.CONFIG_MISSING_VALUE, "Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
             }
         }
-
+        plugin.getHealth().loadHearts(config);
         long end = System.currentTimeMillis();
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + loaded + " config options in " + (end - start) + " ms");
     }
