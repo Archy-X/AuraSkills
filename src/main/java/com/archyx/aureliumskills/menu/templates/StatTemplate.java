@@ -14,6 +14,7 @@ import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -89,7 +90,11 @@ public class StatTemplate implements ConfigurableTemplate {
     }
 
     public ItemStack getItem(Stat stat, PlayerStat playerStat, Player player, Locale locale) {
-        ItemStack item = baseItems.get(stat).clone();
+        ItemStack item = baseItems.get(stat);
+        if (item == null) {
+            item = new ItemStack(Material.STONE);
+        }
+        item = item.clone();
         ItemMeta meta = item.getItemMeta();
         List<Supplier<Skill>> primarySkills = new ArrayList<>();
         for (Supplier<Skill> primarySkill : stat.getPrimarySkills()) {

@@ -14,7 +14,10 @@ import com.archyx.aureliumskills.modifier.Modifiers;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.*;
-import com.archyx.aureliumskills.stats.*;
+import com.archyx.aureliumskills.stats.ActionBar;
+import com.archyx.aureliumskills.stats.Luck;
+import com.archyx.aureliumskills.stats.PlayerStat;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.MySqlSupport;
 import com.archyx.aureliumskills.util.NumberUtil;
@@ -350,9 +353,8 @@ public class SkillsCommand extends BaseCommand {
 			plugin.getWorldGuardSupport().loadRegions();
 		}
 		Luck luck = new Luck(plugin);
-		Health health = new Health(plugin);
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			health.reload(player);
+			plugin.getHealth().reload(player);
 			luck.reload(player);
 		}
 		// Resets all action bars

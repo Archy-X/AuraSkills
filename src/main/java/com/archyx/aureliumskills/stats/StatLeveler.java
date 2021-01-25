@@ -16,7 +16,7 @@ public class StatLeveler {
 
 	public void reloadStat(Player player, Stat stat) {
 		if (stat.equals(Stat.HEALTH)) {
-			new Health(plugin).reload(player);
+			plugin.getHealth().reload(player);
 		}
 		else if (stat.equals(Stat.LUCK)) {
 			new Luck(plugin).reload(player);
