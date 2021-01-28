@@ -63,30 +63,32 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                     // Add enchants to disenchant
                     if (first != null) {
                         for (Map.Entry<Enchantment, Integer> entry : first.getEnchantments().entrySet()) {
-                            if (entry.getKey() != Enchantment.BINDING_CURSE && entry.getKey() != Enchantment.VANISHING_CURSE) {
+                            if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
                                 enchants.add(new EnchantmentValue(entry.getKey(), entry.getValue()));
                             }
                         }
                     }
                     if (second != null) {
                         for (Map.Entry<Enchantment, Integer> entry : second.getEnchantments().entrySet()) {
-                            if (entry.getKey() != Enchantment.BINDING_CURSE && entry.getKey() != Enchantment.VANISHING_CURSE) {
+                            if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
                                 enchants.add(new EnchantmentValue(entry.getKey(), entry.getValue()));
                             }
                         }
                     }
                     if (enchants.size() == 0) return;
                     // Calculate the sum
-                    int sum = 0;
-                    for (EnchantmentValue value : enchants) {
-                        sum += GrindstoneEnchant.valueOf(value.getEnchantment().getKey().getKey().toUpperCase(Locale.ENGLISH)).getLevel(value.getLevel());
-                    }
-                    int average = (sum + (int) Math.ceil(((double) sum) / 2)) / 2; // Get the average experience that would drop
-                    int added = (int) Math.round(average * (getValue(Ability.DISENCHANTER, playerSkill) / 100));
-                    World world = location.getWorld();
-                    if (world != null) {
-                        world.spawn(location, ExperienceOrb.class).setExperience(added);
-                    }
+                    try {
+                        int sum = 0;
+                        for (EnchantmentValue value : enchants) {
+                            sum += GrindstoneEnchant.valueOf(value.getEnchantment().getKey().getKey().toUpperCase(Locale.ENGLISH)).getLevel(value.getLevel());
+                        }
+                        int average = (sum + (int) Math.ceil(((double) sum) / 2)) / 2; // Get the average experience that would drop
+                        int added = (int) Math.round(average * (getValue(Ability.DISENCHANTER, playerSkill) / 100));
+                        World world = location.getWorld();
+                        if (world != null) {
+                            world.spawn(location, ExperienceOrb.class).setExperience(added);
+                        }
+                    } catch (IllegalArgumentException ignored) {}
                 }
             }
         }
