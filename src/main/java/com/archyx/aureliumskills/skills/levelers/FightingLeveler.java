@@ -5,10 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -29,7 +26,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
-					if (!(ee.getDamager() instanceof Arrow)) {
+					if (!(ee.getDamager() instanceof Arrow) && !(ee.getDamager() instanceof Firework)) {
 						EntityType type = e.getType();
 						Player p = e.getKiller();
 						Skill s = Skill.FIGHTING;
