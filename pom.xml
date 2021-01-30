@@ -131,9 +131,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>fr.minuskube.inv</groupId>
-            <artifactId>smart-invs</artifactId>
-            <version>1.2.7</version>
+            <groupId>com.github.Archy-X</groupId>
+            <artifactId>SmartInvs</artifactId>
+            <version>v1.2.8</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
