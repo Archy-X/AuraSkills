@@ -62,7 +62,7 @@ public class ActionBar implements Listener {
 					Locale locale = Lang.getLanguage(player);
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
-						if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+						if (!plugin.getWorldManager().isDisabledWorld(player.getWorld())) {
 							if (!currentAction.containsKey(player)) {
 								currentAction.put(player, 0);
 							}
@@ -81,9 +81,10 @@ public class ActionBar implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
-					if (timer.containsKey(player)) {
-						if (timer.get(player) != 0) {
-							timer.put(player, timer.get(player) - 1);
+					Integer time = timer.get(player);
+					if (time != null) {
+						if (time != 0) {
+							timer.put(player, time - 1);
 						}
 					} else {
 						timer.put(player, 0);
@@ -253,7 +254,7 @@ public class ActionBar implements Listener {
 	}
 
 	private String getHp(Player player) {
-		return NumberUtil.format0(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING));
+		return String.valueOf(Math.round(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
 	}
 
 	private String getMaxHp(Player player) {

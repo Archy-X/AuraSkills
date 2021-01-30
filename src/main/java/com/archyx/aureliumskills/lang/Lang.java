@@ -29,7 +29,7 @@ public class Lang implements Listener {
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static final Map<UUID, Locale> playerLanguages = new HashMap<>();
 	private static Map<Locale, String> definedLanguages;
-	public static Locale defaultLanguage;
+	private static Locale defaultLanguage;
 	private final Plugin plugin;
 
 	public Lang(Plugin plugin) {
@@ -77,7 +77,7 @@ public class Lang implements Listener {
 			languages.add(defaultLanguageString);
 		}
 		// Sets default language
-		defaultLanguage = new Locale(defaultLanguageString);
+		setDefaultLanguage(new Locale(defaultLanguageString));
 		definedLanguages = new HashMap<>();
 		// Load languages
 		int languagesLoaded = 0;
@@ -98,7 +98,7 @@ public class Lang implements Listener {
 					Bukkit.getLogger().warning("[AureliumSkills] Could not load file messages_" + language + ".yml! Does this file exist and does it contain a file_version?");
 					if (language.equals(defaultLanguageString)) {
 						Bukkit.getLogger().warning("[AureliumSkills] The default-language could not be loaded, setting the default language to en!");
-						defaultLanguage = Locale.ENGLISH;
+						setDefaultLanguage(Locale.ENGLISH);
 					}
 				}
 			} catch (Exception e) {
@@ -230,13 +230,13 @@ public class Lang implements Listener {
 	public static String getMessage(MessageKey key, Locale locale) {
 		// Set default locale if locale not present
 		if (!messages.containsKey(locale)) {
-			locale = defaultLanguage;
+			locale = getDefaultLanguage();
 		}
 		String message = messages.get(locale).get(key);
 		if (message != null) {
 			return message;
 		} else {
-			String defaultMessage = Lang.messages.get(defaultLanguage).get(key);
+			String defaultMessage = Lang.messages.get(getDefaultLanguage()).get(key);
 			if (defaultMessage != null) {
 				return defaultMessage;
 			} else {
@@ -247,16 +247,16 @@ public class Lang implements Listener {
 
 	public static Locale getLanguage(Player player) {
 		Locale locale = playerLanguages.get(player.getUniqueId());
-		return locale != null ? locale : defaultLanguage;
+		return locale != null ? locale : getDefaultLanguage();
 	}
 
 	public static Locale getLanguage(CommandSender sender) {
 		if (sender instanceof Player) {
 			Locale locale = playerLanguages.get(((Player) sender).getUniqueId());
-			return locale != null ? locale : defaultLanguage;
+			return locale != null ? locale : getDefaultLanguage();
 		}
 		else {
-			return defaultLanguage;
+			return getDefaultLanguage();
 		}
 	}
 
@@ -280,6 +280,10 @@ public class Lang implements Listener {
 		return languages;
 	}
 
+	private static void setDefaultLanguage(Locale language) {
+		defaultLanguage = language;
+	}
+
 	public static Locale getDefaultLanguage() {
 		return defaultLanguage;
 	}
@@ -295,15 +299,15 @@ public class Lang implements Listener {
 					if (messages.containsKey(locale)) {
 						playerLanguages.put(player.getUniqueId(), locale);
 					} else {
-						playerLanguages.put(player.getUniqueId(), defaultLanguage);
+						playerLanguages.put(player.getUniqueId(), getDefaultLanguage());
 					}
 				} catch (Exception e) {
-					playerLanguages.put(player.getUniqueId(), defaultLanguage);
+					playerLanguages.put(player.getUniqueId(), getDefaultLanguage());
 				}
 			}
 			// Otherwise set to default
 			else {
-				playerLanguages.put(player.getUniqueId(), defaultLanguage);
+				playerLanguages.put(player.getUniqueId(), getDefaultLanguage());
 			}
 		}
 	}
