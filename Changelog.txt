@@ -1,3 +1,11 @@
+Version Alpha 1.6.5
+  Changes:
+    - Changed menu inventory click event priority to highest (should prevent plugin compat issues where players are able to take items out)
+  Bug Fixes:
+    - Exploding fireworks will now give Archery XP instead of Fighting
+    - Fixed Disenchanter no enum constant curse error
+    - Fixed action bar hp and max hp discrepancy
+
 Version Alpha 1.6.4
   New Features:
     - Added hearts customization:

@@ -42,6 +42,9 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						if (ee.getDamager() instanceof AbstractArrow) {
 							valid = true;
 						}
+						if (ee.getDamager() instanceof Firework) {
+							valid = true;
+						}
 					}
 					if (valid) {
 						EntityType type = e.getType();

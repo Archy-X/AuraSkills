@@ -40,7 +40,9 @@ public enum GrindstoneEnchant {
     RIPTIDE(17, 24, 31),
     MULTISHOT(20),
     PIERCING(1, 11, 21, 31),
-    QUICK_CHARGE(12, 32, 52);
+    QUICK_CHARGE(12, 32, 52),
+    VANISHING_CURSE(0),
+    BINDING_CURSE(0);
 
     private final int level1;
     private int level2;
