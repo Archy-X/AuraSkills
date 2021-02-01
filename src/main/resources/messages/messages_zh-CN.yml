@@ -240,6 +240,70 @@ abilities:
       name: 智慧专精
       desc: '每一个药水效果能额外获得 {value} 智慧熟练度'
       info: '+{value} 每个药水效果获得的智慧熟练度'
+  enchanting:
+    xp_convert:
+      name: 经验转化
+      desc: "每获得 {value} 点技能经验可以额外获得 1 \n&7  点原版的经验值."
+      info: '1 经验值/{value} 技能经验'
+    enchanter:
+      name: 附魔专精
+      desc: '获得额外的 {value}% 附魔熟练度.'
+      info: '+{value}% 熟练度'
+    xp_warrior:
+      name: 经验战士
+      desc: "你杀死的生物有 {value}% 的几率\n&7  掉落双倍的经验."
+      info: '{value}% 2x 经验值'
+    enchanted_strength:
+      name: 附魔之力
+      desc: '手持物品上的附魔能额外让你获得 +{value}&7 点/种 的力量'
+      info: '{value} 力量/单个附魔'
+    lucky_table:
+      name: 幸运附魔台
+      desc: "正在使用的物品如果携带有从附魔台得到的附魔, \n&7  则会在它到达最高级之前有 {value}% &7的几\n&7  率再增加 1 级"
+      info: '{value}% 附魔升级几率'
+  healing:
+    life_essence:
+      name: 生命源质
+      desc: "瞬间恢复(喷溅或滞留等均可) 药水能额外回复 \n&7  {value}% 生命值"
+      info: '+{value}% 额外回复生命'
+    healer:
+      name: 治疗专精
+      desc: 获得额外的 {value}% 治疗熟练度
+      info: '+{value}% 熟练度'
+    life_steal:
+      name: 生命窃取
+      desc: 每个击杀的生物或玩家\n&7可以为你回复 {value}% 的血量.
+      info: '偷取 {value}% 的血量'
+    golden_heart:
+      name: 黄金体质
+      desc: 有伤害吸收效果的金心时\n&7金心受到的伤害减少 {value}%
+      info: '-{value}% 金心受到的伤害'
+    revival:
+      name: 重生光环
+      desc: 复活的 30 秒内获得 &c+{value} &7点的生命\n与 &6+{value_2} 级生命恢复效果
+      info: '+{value} 点生命值, +{value_2} 级生命回复效果'
+      message: '&f重生之后, 你获得了 30 秒的庇护! &f(&c+{value} &7生命值, &6+{value_2} &7生命回复效果)'
+  forging:
+    disenchanter:
+      name: 祛魔转化
+      desc: 使用磨石时每个去掉的附魔\n&7能额外获得 {value}% 的经验
+      info: '+{value}% 磨石额外经验值'
+    forger:
+      name: 锻造专精
+      desc: 获得额外的 {value}% 锻造熟练度
+      info: '+{value}% 熟练度'
+    repairing:
+      name: 高效修复
+      desc: 使用原材料而非\n&7工具合并修复的物品\n&7可以额外回复 {value}% &7的耐久度.
+      info: '+{value}% 铁砧修复度'
+    anvil_master:
+      name: 铁砧大师
+      desc: 在物品过于昂贵而无法修复之前\n&7降低修复物品时可能出现的最大消耗经验值至 {value} 级
+      info: '{value} 最大消耗'
+    skill_mender:
+      name: 技能结合者
+      desc: 手上物品拥有经验修补的物品时\n&7可以在每次获得 2 点技能经验时有 {value}% 的几率\n&7额外为此工具回复 1 点耐久
+      info: '{value}% 修复几率'
 acf:
   core:
     permission_denied: '&c你没有执行此命令的权限'
@@ -286,6 +350,7 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
+  ability: '&c{hp}/{max_hp} {hp_unit}    {message}    &b{mana}/{max_mana} {mana_unit}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(满级)'
 commands:
@@ -480,7 +545,7 @@ menus:
     secondary_skills_two: '&7副技能: &f{skill_1}, {skill_2}'
     secondary_skills_three: '&7副技能: &f{skill_1}, {skill_2}, {skill_3}'
     your_level: '&7你的等级: {color}{level}'
-    attack_damage: '&4+{value}% 攻击'
+    attack_damage: '&4+{value}% 攻击伤害'
     hp: '&c+{value} {hp_unit}'
     saturated_regen: '&6+{value} 饱和度'
     full_hunger_regen: '&6+{value} 完全饥饿恢复'
@@ -489,42 +554,57 @@ menus:
     luck: '&2+{value} 幸运'
     double_drop_chance: '&2双倍掉落: {value}%'
     xp_gain: '&9+{value}% {xp_unit} 经验翻倍'
-    anvil_cost_reduction: '&9铁砧耗费减少: {value}%'
+    anvil_cost_reduction: '&9铁砧修复减少: {value}%'
+    max_mana: '&9最大魔力值: {value}'
     incoming_damage: '&5-{value}% 将受到的伤害'
 mana_abilities:
   replenish:
     name: 自动补种
-    desc: "&7自动补种耕地上的作物, 持续 {value} 秒.\n  &e[右键以激活]"
+    desc: "&7自动补种耕地上的作物, 持续 {value} 秒.\n&e  [右键锄头并破坏农作物以激活]"
     raise: '&7你拿起了你的锄头'
     lower: '&7你放下了你的锄头'
     start: '&6自动补种已激活! &7(-{mana} {mana_unit})'
     end: '&6自动补种已结束'
   treecapitator:
     name: 伐树者
-    desc: "&7在技能激活的 {value} 秒内, 瞬间砍倒一棵树. \n  &e[右键以激活]"
+    desc: "&7在技能激活的 {value} 秒内, 瞬间砍倒一棵树. \n&e  [右键斧子并破坏原木方块以激活]"
     raise: '&7你拿起了你的斧头'
     lower: '&7你放下了你的斧头'
     start: '&6伐树者已激活! &7(-{mana} {mana_unit})'
     end: '&6伐树者技能已结束'
   speed_mine:
     name: 超级碎石机
-    desc: "&7在技能激活的 {value} 秒内给予急迫 X.\n  &e[右键以激活]"
+    desc: "&7在技能激活的 {value} 秒内获得急迫 10\n&e  [右键镐子挖掘石头以激活]"
     raise: '&7你拿起了你的镐子'
     lower: '&7你放下了你的镐子'
     start: '&6超级碎石机已激活! &7(-{mana} {mana_unit})'
     end: '&7超级碎石机已关闭'
   absorption:
     name: 超级吸收
-    desc: "在技能触发的 {value} 秒内以治疗的方式减少 50% 你受到的伤害"
+    desc: "在技能触发的 {value} 秒内\n&7  你受到的伤害将会会被吸收\n&7  同时减少 伤害 x2 的魔法值\n&7  此技能触发时魔法值无法回复.\n  &e[左键盾牌后受到伤害自动触发]"
     raise: '&7你握紧了你的盾牌'
     lower: '&7你放下了你的盾牌'
     start: '&6超级吸收已激活! &7(-{mana} {mana_unit})'
     end: '&6超级吸收已关闭'
+  terraform:
+    name: 平整挖掘
+    desc: "在技能触发的 {value} 内破坏以你为中心\n&7  半径为 4 个方块内的所有方块\n&7  手中必须持有铲子, 并且被破坏的方块\n&7  只能是同一个种类并且相邻\n&7  &e[右键铲子并挖掘方块以触发]"
+    raise: '&7你拿起了你的铲子'
+    lower: '&7你放下了你的铲子'
+    start: '&6平整挖掘已激活! &7(-{mana} {mana_unit})'
+    end: '&7平整挖掘已关闭'
   sharp_hook:
     name: 锋利鱼钩
     desc: '持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害'
     use: '&6使用了锋利鱼钩! &7(-{mana} {mana_unit})'
     menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击力: &c{value} &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
+  charged_shot:
+    name: 聚能穿射
+    desc: "你射出的箭将会额外造成伤害\n&7  此伤害取决于箭落地后与你的距离\n&7  并且此过程消耗魔法值. 每点魔法值的消耗\n&7  能为每支箭增加 {value}% 的伤害\n&e  [左键弓可触发聚能穿射]"
+    enable: '&7聚能穿射已启用'
+    disable: '&7聚能穿射已禁用'
+    shoot: '&6聚能穿射已启用! &d+{percent}% 伤害 &7(-{mana} {mana_unit})'
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7伤害: &c+{value}% / 魔法值 &7最大魔力值消耗: &b{mana_cost}\n "
   not_ready: '&c&o技能还没有准备好! &7({cooldown}s)'
   not_enough_mana: '&e&o没有足够的魔力! &7(需要 {mana} {mana_unit})'
 skills:
@@ -608,4 +688,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 9
+file_version: 13

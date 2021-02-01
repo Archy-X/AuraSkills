@@ -83,7 +83,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Lang lang;
 	private Leveler leveler;
 	private Health health;
-	private final long releaseTime = 1611449557013L;
+	private final long releaseTime = 1612220802350L;
 
 	public void onEnable() {
 		inventoryManager = new InventoryManager(this);
@@ -186,8 +186,6 @@ public class AureliumSkills extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(regeneration, this);
 		regeneration.startRegen();
 		regeneration.startSaturationRegen();
-		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
-		enduranceLeveler.startTracking();
 		// Load Action Bar
 		if (protocolLibEnabled) {
 			ProtocolUtil.init();
@@ -334,6 +332,9 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new FightingLeveler(this), this);
 		pm.registerEvents(new ArcheryLeveler(this), this);
 		pm.registerEvents(new DefenseLeveler(this), this);
+		EnduranceLeveler enduranceLeveler = new EnduranceLeveler(this);
+		enduranceLeveler.startTracking();
+		pm.registerEvents(enduranceLeveler, this);
 		pm.registerEvents(new AgilityLeveler(this), this);
 		pm.registerEvents(new AlchemyLeveler(this), this);
 		pm.registerEvents(new EnchantingLeveler(this), this);

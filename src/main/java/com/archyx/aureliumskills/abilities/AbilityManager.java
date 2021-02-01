@@ -212,19 +212,21 @@ public class AbilityManager {
         try {
             for (String abilityName : abilities.getKeys(false)) {
                 String newKey = LoreUtil.replace(abilityName, "-", "_").toUpperCase();
-                Ability ability = Ability.valueOf(newKey);
-                boolean enabled = abilities.getBoolean(abilityName + ".enabled", true);
-                double base = abilities.getDouble(abilityName + ".base", ability.getDefaultBaseValue());
-                double per_level = abilities.getDouble(abilityName + ".per-level", ability.getDefaultValuePerLevel());
-                String path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ENGLISH) + "." + newKey.toLowerCase(Locale.ENGLISH) + ".";
-                abilitiesConfig.set(path + "enabled", enabled);
-                abilitiesConfig.set(path + "base", base);
-                abilitiesConfig.set(path + "per_level", per_level);
-                if (ability.hasTwoValues()) {
-                    double base_2 = abilities.getDouble(abilityName + ".base-2", ability.getDefaultBaseValue2());
-                    double per_level_2 = abilities.getDouble(abilityName + ".per_level-2", ability.getDefaultValuePerLevel2());
-                    abilitiesConfig.set(path + "base_2", base_2);
-                    abilitiesConfig.set(path + "per_level_2", per_level_2);
+                if (isAbility(newKey)) {
+                    Ability ability = Ability.valueOf(newKey);
+                    boolean enabled = abilities.getBoolean(abilityName + ".enabled", true);
+                    double base = abilities.getDouble(abilityName + ".base", ability.getDefaultBaseValue());
+                    double per_level = abilities.getDouble(abilityName + ".per-level", ability.getDefaultValuePerLevel());
+                    String path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ENGLISH) + "." + newKey.toLowerCase(Locale.ENGLISH) + ".";
+                    abilitiesConfig.set(path + "enabled", enabled);
+                    abilitiesConfig.set(path + "base", base);
+                    abilitiesConfig.set(path + "per_level", per_level);
+                    if (ability.hasTwoValues()) {
+                        double base_2 = abilities.getDouble(abilityName + ".base-2", ability.getDefaultBaseValue2());
+                        double per_level_2 = abilities.getDouble(abilityName + ".per_level-2", ability.getDefaultValuePerLevel2());
+                        abilitiesConfig.set(path + "base_2", base_2);
+                        abilitiesConfig.set(path + "per_level_2", per_level_2);
+                    }
                 }
             }
             config.set("abilities", null);
@@ -232,22 +234,24 @@ public class AbilityManager {
             if (manaAbilities != null) {
                 for (String manaAbilityName : manaAbilities.getKeys(false)) {
                     String newKey = LoreUtil.replace(manaAbilityName, "-", "_").toUpperCase();
-                    MAbility mAbility = MAbility.valueOf(newKey);
-                    boolean enabled = manaAbilities.getBoolean(manaAbilityName + ".enabled", true);
-                    double base = manaAbilities.getDouble(manaAbilityName + ".base-value", mAbility.getDefaultBaseValue());
-                    double per_level = manaAbilities.getDouble(manaAbilityName + ".value-per-level", mAbility.getDefaultValuePerLevel());
-                    double cooldown = manaAbilities.getDouble(manaAbilityName + ".cooldown", mAbility.getDefaultBaseCooldown());
-                    double cooldown_per_level = manaAbilities.getDouble(manaAbilityName + ".cooldown-per-level", mAbility.getDefaultCooldownPerLevel());
-                    double mana_cost = manaAbilities.getDouble(manaAbilityName + ".mana-cost", mAbility.getDefaultBaseManaCost());
-                    double mana_cost_per_level = manaAbilities.getDouble(manaAbilityName + ".mana-cost-per-level", mAbility.getDefaultManaCostPerLevel());
-                    String path = "mana_abilities." + newKey.toLowerCase(Locale.ENGLISH) + ".";
-                    abilitiesConfig.set(path + "enabled", enabled);
-                    abilitiesConfig.set(path + "base_value", base);
-                    abilitiesConfig.set(path + "value_per_level", per_level);
-                    abilitiesConfig.set(path + "cooldown", cooldown);
-                    abilitiesConfig.set(path + "cooldown_per_level", cooldown_per_level);
-                    abilitiesConfig.set(path + "mana_cost", mana_cost);
-                    abilitiesConfig.set(path + "mana_cost_per_level", mana_cost_per_level);
+                    if (isManaAbility(newKey)) {
+                        MAbility mAbility = MAbility.valueOf(newKey);
+                        boolean enabled = manaAbilities.getBoolean(manaAbilityName + ".enabled", true);
+                        double base = manaAbilities.getDouble(manaAbilityName + ".base-value", mAbility.getDefaultBaseValue());
+                        double per_level = manaAbilities.getDouble(manaAbilityName + ".value-per-level", mAbility.getDefaultValuePerLevel());
+                        double cooldown = manaAbilities.getDouble(manaAbilityName + ".cooldown", mAbility.getDefaultBaseCooldown());
+                        double cooldown_per_level = manaAbilities.getDouble(manaAbilityName + ".cooldown-per-level", mAbility.getDefaultCooldownPerLevel());
+                        double mana_cost = manaAbilities.getDouble(manaAbilityName + ".mana-cost", mAbility.getDefaultBaseManaCost());
+                        double mana_cost_per_level = manaAbilities.getDouble(manaAbilityName + ".mana-cost-per-level", mAbility.getDefaultManaCostPerLevel());
+                        String path = "mana_abilities." + newKey.toLowerCase(Locale.ENGLISH) + ".";
+                        abilitiesConfig.set(path + "enabled", enabled);
+                        abilitiesConfig.set(path + "base_value", base);
+                        abilitiesConfig.set(path + "value_per_level", per_level);
+                        abilitiesConfig.set(path + "cooldown", cooldown);
+                        abilitiesConfig.set(path + "cooldown_per_level", cooldown_per_level);
+                        abilitiesConfig.set(path + "mana_cost", mana_cost);
+                        abilitiesConfig.set(path + "mana_cost_per_level", mana_cost_per_level);
+                    }
                 }
                 config.set("mana-abilities", null);
             }
@@ -410,6 +414,24 @@ public class AbilityManager {
             if (playerData == null) return;
             player.sendMessage(AureliumSkills.getPrefix(playerData.getLocale()) + message);
         }
+    }
+
+    private boolean isAbility(String abilityName) {
+        for (Ability ability : Ability.values()) {
+            if (ability.toString().equals(abilityName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isManaAbility(String manaAbilityName) {
+        for (MAbility mAbility : MAbility.values()) {
+            if (mAbility.toString().equals(manaAbilityName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

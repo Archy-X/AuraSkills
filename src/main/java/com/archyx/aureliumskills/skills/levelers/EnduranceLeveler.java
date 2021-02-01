@@ -8,10 +8,11 @@ import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class EnduranceLeveler extends SkillLeveler {
-	
+public class EnduranceLeveler extends SkillLeveler implements Listener {
+
 	public EnduranceLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.RUNNER);
 	}

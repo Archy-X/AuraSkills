@@ -79,7 +79,10 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                     try {
                         int sum = 0;
                         for (EnchantmentValue value : enchants) {
-                            sum += GrindstoneEnchant.valueOf(value.getEnchantment().getKey().getKey().toUpperCase(Locale.ENGLISH)).getLevel(value.getLevel());
+                            String enchantName = value.getEnchantment().getKey().getKey().toUpperCase(Locale.ENGLISH);
+                            if (containsEnchant(enchantName)) {
+                                sum += GrindstoneEnchant.valueOf(enchantName).getLevel(value.getLevel());
+                            }
                         }
                         int average = (sum + (int) Math.ceil(((double) sum) / 2)) / 2; // Get the average experience that would drop
                         int added = (int) Math.round(average * (getValue(Ability.DISENCHANTER, playerData) / 100));
@@ -271,5 +274,13 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         return false;
     }
 
+    private boolean containsEnchant(String enchantName) {
+        for (GrindstoneEnchant grindstoneEnchant : GrindstoneEnchant.values()) {
+            if (grindstoneEnchant.toString().equals(enchantName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

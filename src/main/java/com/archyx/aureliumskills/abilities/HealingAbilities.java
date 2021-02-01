@@ -72,6 +72,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (hostile) {
             if (entity.getKiller() == null) return;
             Player player = entity.getKiller();
+            if (player.equals(entity)) return;
             if (blockAbility(player)) return;
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
