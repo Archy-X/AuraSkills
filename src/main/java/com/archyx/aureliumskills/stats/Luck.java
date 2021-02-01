@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -21,7 +22,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
@@ -36,8 +36,8 @@ public class Luck implements Listener {
 	}
 
 	@EventHandler
-	public void onJoin(PlayerJoinEvent event) {
-		setLuck(event.getPlayer());
+	public void onJoin(PlayerDataLoadEvent event) {
+		setLuck(event.getPlayerData().getPlayer());
 	}
 	
 	public void reload(Player player) {

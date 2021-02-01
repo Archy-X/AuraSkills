@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
@@ -17,11 +18,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Random;
 
 public class FightingAbilities extends AbilityProvider implements Listener {
 
-    private final Map<UUID, Integer> firstStrikeCounter = new HashMap<>();
     private final Random r = new Random();
 
     public FightingAbilities(AureliumSkills plugin) {
@@ -48,7 +49,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
             if (plugin.getAbilityManager().isEnabled(Ability.FIRST_STRIKE)) {
                 if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
                     if (playerData.getAbilityLevel(Ability.FIRST_STRIKE) > 0) {
-                        Locale locale = Lang.getLanguage(player);
+                        Locale locale = playerData.getLocale();
                         //Modifies damage
                         double modifier = getValue(Ability.FIRST_STRIKE, playerData) / 100;
                         event.setDamage(event.getDamage() * (1 + modifier));
@@ -58,19 +59,19 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                         //Adds metadata
                         player.setMetadata("AureliumSkills-FirstStrike", new FixedMetadataValue(plugin, true));
                         //Increments counter
-                        if (firstStrikeCounter.containsKey(player.getUniqueId())) {
-                            firstStrikeCounter.put(player.getUniqueId(), firstStrikeCounter.get(player.getUniqueId()) + 1);
+                        AbilityData abilityData = playerData.getAbilityData(Ability.FIRST_STRIKE);
+                        if (abilityData.containsKey("counter")) {
+                            abilityData.setData("counter", abilityData.getData("counter" + 1));
                         } else {
-                            firstStrikeCounter.put(player.getUniqueId(), 0);
+                            abilityData.setData("counter", 0);
                         }
-                        int id = firstStrikeCounter.get(player.getUniqueId());
+                        int id = abilityData.getInt("counter");
                         //Schedules metadata removal
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                //Remove if this event was the last hit
-                                if (firstStrikeCounter.containsKey(player.getUniqueId())) {
-                                    if (firstStrikeCounter.get(player.getUniqueId()) == id) {
+                                if (playerData.getAbilityData(Ability.FIRST_STRIKE).containsKey("counter")) {
+                                    if (playerData.getAbilityData(Ability.FIRST_STRIKE).getInt("counter") == id) {
                                         player.removeMetadata("AureliumSkills-FirstStrike", plugin);
                                     }
                                 }
@@ -88,7 +89,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
                     entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, 3));
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_enemy_message")) {
-                        Locale locale = Lang.getLanguage(event.getDamager());
+                        Locale locale = playerData.getLocale();
                         if (event.getDamager() instanceof Player) {
                             Player player = (Player) event.getDamager();
                             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_ENEMY_BLEEDING, locale));
@@ -97,8 +98,8 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     if (entity instanceof Player) {
                         if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_self_message")) {
                             Player player = (Player) entity;
-                            Locale damagedLocale = Lang.getLanguage(player);
-                            plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_SELF_BLEEDING, damagedLocale));
+                            Locale locale = plugin.getLang().getLocale(player);
+                            plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_SELF_BLEEDING, locale));
                         }
                     }
                     //Schedules bleed ticks
@@ -123,8 +124,8 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                             if (entity instanceof Player) {
                                 if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_stop_message")) {
                                     Player player = (Player) entity;
-                                    Locale damagedLocale = Lang.getLanguage(player);
-                                    plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_STOP, damagedLocale));
+                                    Locale locale = plugin.getLang().getLocale(player);
+                                    plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_STOP, locale));
                                 }
                             }
                             cancel();

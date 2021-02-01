@@ -38,7 +38,7 @@ public class SpeedMine implements ManaAbility {
     public void activate(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
-            Locale locale = Lang.getLanguage(player);
+            Locale locale = playerData.getLocale();
             //Apply haste
             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (plugin.getManaAbilityManager().getValue(MAbility.SPEED_MINE, playerData) * 20), 9, false, false), true);
             //Play sound
@@ -54,6 +54,6 @@ public class SpeedMine implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, Lang.getLanguage(player)));
+        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.SPEED_MINE_END, plugin.getLang().getLocale(player)));
     }
 }

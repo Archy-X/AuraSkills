@@ -37,7 +37,7 @@ public class SharpHook implements ManaAbility {
     public void activate(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
-            Locale locale = Lang.getLanguage(player);
+            Locale locale = playerData.getLocale();
             //Consume mana
             double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerData);
             playerData.setMana(playerData.getMana() - manaConsumed);

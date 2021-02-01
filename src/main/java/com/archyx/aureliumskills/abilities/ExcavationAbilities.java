@@ -239,7 +239,6 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	}
 
 	private void applyTerraform(Player player, Block block) {
-		Locale locale = Lang.getLanguage(player);
 		ManaAbilityManager manager = plugin.getManaAbilityManager();
 		if (!isExcavationMaterial(block.getType())) return;
 		// Apply if activated
@@ -254,6 +253,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 			if (mat.name().contains("SHOVEL") || mat.name().contains("SPADE")) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
+				Locale locale = playerData.getLocale();
 				if (playerData.getMana() >= getManaCost(MAbility.TERRAFORM, playerData)) {
 					manager.activateAbility(player, MAbility.TERRAFORM, (int) (getValue(MAbility.TERRAFORM, playerData) * 20), new Terraform(plugin));
 					terraformBreak(player, block);

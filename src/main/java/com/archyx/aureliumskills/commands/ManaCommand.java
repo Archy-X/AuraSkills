@@ -30,16 +30,16 @@ public class ManaCommand extends BaseCommand {
     public void onMana(CommandSender sender, @Flags("other") @CommandPermission("aureliumskills.mana.other") @Optional Player player) {
         if (sender instanceof Player && player == null) {
             Player target = (Player) sender;
-            Locale locale = Lang.getLanguage(target);
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(target);
             if (playerData == null) return;
+            Locale locale = playerData.getLocale();
             sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_DISPLAY, locale)
                     , "{current}", NumberUtil.format1(playerData.getMana())
                     , "{max}", NumberUtil.format1(playerData.getMaxMana())));
         } else if (player != null) {
-            Locale locale = Lang.getLanguage(player);
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
+            Locale locale = playerData.getLocale();
             sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.MANA_DISPLAY_OTHER, locale)
                     , "{player}", player.getName()
                     , "{current}", NumberUtil.format1(playerData.getMana())
@@ -54,9 +54,9 @@ public class ManaCommand extends BaseCommand {
     @CommandCompletion("@players @nothing false|true")
     @Description("Adds mana to a player")
     public void onManaAdd(CommandSender sender, @Flags("other") Player player, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
-        Locale locale = Lang.getLanguage(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
+        Locale locale = playerData.getLocale();
         if (amount >= 0) {
             if (allowOverMax && OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
                 playerData.setMana(playerData.getMana() + amount);
@@ -103,9 +103,9 @@ public class ManaCommand extends BaseCommand {
     @CommandCompletion("@players")
     @Description("Removes mana from a player")
     public void onManaRemove(CommandSender sender, @Flags("other") Player player, double amount, @Default("false") boolean silent) {
-        Locale locale = Lang.getLanguage(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
+        Locale locale = playerData.getLocale();
         if (amount >= 0) {
             if (playerData.getMana() - amount >= 0) {
                 playerData.setMana(playerData.getMana() - amount);
@@ -135,9 +135,9 @@ public class ManaCommand extends BaseCommand {
     @CommandCompletion("@players @nothing false|true")
     @Description("Sets the mana of player")
     public void onManaSet(CommandSender sender, @Flags("other") Player player, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
-        Locale locale = Lang.getLanguage(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
+        Locale locale = playerData.getLocale();
         if (amount >= 0) {
             if (allowOverMax && OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
                 playerData.setMana(amount);

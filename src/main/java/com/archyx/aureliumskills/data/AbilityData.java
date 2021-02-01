@@ -45,4 +45,8 @@ public class AbilityData {
         return (double) data.get(key);
     }
 
+    public boolean containsKey(String key) {
+        return data.containsKey(key);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.util.ArmorEquipEvent;
 import org.bukkit.Material;
@@ -9,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ArmorModifierListener implements Listener {
@@ -25,10 +25,9 @@ public class ArmorModifierListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData == null) return;
+    public void onJoin(PlayerDataLoadEvent event) {
+        Player player = event.getPlayerData().getPlayer();
+        PlayerData playerData = event.getPlayerData();
         for (ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor != null) {
                 if (!armor.getType().equals(Material.AIR)) {

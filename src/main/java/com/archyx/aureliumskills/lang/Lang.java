@@ -3,8 +3,11 @@ package com.archyx.aureliumskills.lang;
 import co.aikar.commands.MessageKeys;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.util.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -14,8 +17,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.InputStream;
@@ -27,12 +28,11 @@ public class Lang implements Listener {
 
 	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de"};
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
-	private static final Map<UUID, Locale> playerLanguages = new HashMap<>();
 	private static Map<Locale, String> definedLanguages;
 	private static Locale defaultLanguage;
-	private final Plugin plugin;
+	private final AureliumSkills plugin;
 
-	public Lang(Plugin plugin) {
+	public Lang(AureliumSkills plugin) {
 		this.plugin = plugin;
 	}
 
@@ -245,25 +245,6 @@ public class Lang implements Listener {
 		}
 	}
 
-	public static Locale getLanguage(Player player) {
-		Locale locale = playerLanguages.get(player.getUniqueId());
-		return locale != null ? locale : getDefaultLanguage();
-	}
-
-	public static Locale getLanguage(CommandSender sender) {
-		if (sender instanceof Player) {
-			Locale locale = playerLanguages.get(((Player) sender).getUniqueId());
-			return locale != null ? locale : getDefaultLanguage();
-		}
-		else {
-			return getDefaultLanguage();
-		}
-	}
-
-	public static void setLanguage(Player player, Locale locale) {
-		Lang.playerLanguages.put(player.getUniqueId(), locale);
-	}
-
 	public static boolean hasLocale(Locale locale) {
 		return messages.containsKey(locale);
 	}
@@ -288,26 +269,49 @@ public class Lang implements Listener {
 		return defaultLanguage;
 	}
 
+	public Locale getLocale(Player player) {
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData != null) {
+			return playerData.getLocale();
+		} else {
+			return getDefaultLanguage();
+		}
+	}
+
+	public Locale getLocale(CommandSender sender) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+			if (playerData != null) {
+				return playerData.getLocale();
+			} else {
+				return getDefaultLanguage();
+			}
+		} else {
+			return getDefaultLanguage();
+		}
+	}
+
 	@EventHandler
-	public void onJoin(PlayerJoinEvent event) {
-		Player player = event.getPlayer();
-		if (!playerLanguages.containsKey(player.getUniqueId())) {
-			// Try to detect client locale if option is enabled
+	public void onJoin(PlayerDataLoadEvent event) {
+		Player player = event.getPlayerData().getPlayer();
+		PlayerData playerData = event.getPlayerData();
+		if (playerData.getLocale() == null) {
 			if (OptionL.getBoolean(Option.TRY_DETECT_CLIENT_LANGUAGE)) {
 				try {
 					Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase(Locale.ENGLISH));
 					if (messages.containsKey(locale)) {
-						playerLanguages.put(player.getUniqueId(), locale);
+						playerData.setLocale(locale);
 					} else {
-						playerLanguages.put(player.getUniqueId(), getDefaultLanguage());
+						playerData.setLocale(getDefaultLanguage());
 					}
 				} catch (Exception e) {
-					playerLanguages.put(player.getUniqueId(), getDefaultLanguage());
+					playerData.setLocale(getDefaultLanguage());
 				}
 			}
 			// Otherwise set to default
 			else {
-				playerLanguages.put(player.getUniqueId(), getDefaultLanguage());
+				playerData.setLocale(getDefaultLanguage());
 			}
 		}
 	}

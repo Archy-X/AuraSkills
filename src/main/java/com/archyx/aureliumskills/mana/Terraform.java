@@ -35,7 +35,7 @@ public class Terraform implements ManaAbility {
     public void activate(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
-            Locale locale = Lang.getLanguage(player);
+            Locale locale = playerData.getLocale();
             //Play sound
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             //Consume mana
@@ -49,6 +49,6 @@ public class Terraform implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TERRAFORM_END, Lang.getLanguage(player)));
+        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TERRAFORM_END, plugin.getLang().getLocale(player)));
     }
 }

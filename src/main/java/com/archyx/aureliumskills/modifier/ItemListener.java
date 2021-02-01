@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.abilities.MiningAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
@@ -16,7 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
@@ -50,40 +50,39 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+    public void onJoin(PlayerDataLoadEvent event) {
+        Player player = event.getPlayerData().getPlayer();
         ItemStack held = player.getInventory().getItemInMainHand();
         heldItems.put(player, held);
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData != null) {
-            if (!held.getType().equals(Material.AIR)) {
-                if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
-                    held = requirements.convertFromLegacy(modifiers.convertFromLegacy(held));
-                    if (!held.equals(player.getInventory().getItemInMainHand())) {
-                        player.getInventory().setItemInMainHand(held);
-                    }
-                }
-                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
-                    playerData.addStatModifier(modifier, false);
+        PlayerData playerData = event.getPlayerData();
+        if (!held.getType().equals(Material.AIR)) {
+            if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
+                held = requirements.convertFromLegacy(modifiers.convertFromLegacy(held));
+                if (!held.equals(player.getInventory().getItemInMainHand())) {
+                    player.getInventory().setItemInMainHand(held);
                 }
             }
-            if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) {
-                ItemStack offHandItem = player.getInventory().getItemInOffHand();
-                offHandItems.put(player, offHandItem);
-                if (!offHandItem.getType().equals(Material.AIR)) {
-                    if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
-                        offHandItem = requirements.convertFromLegacy(modifiers.convertFromLegacy(offHandItem));
-                        if (!offHandItem.equals(player.getInventory().getItemInOffHand())) {
-                            player.getInventory().setItemInOffHand(offHandItem);
-                        }
+            for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
+                playerData.addStatModifier(modifier, false);
+            }
+        }
+        if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) {
+            ItemStack offHandItem = player.getInventory().getItemInOffHand();
+            offHandItems.put(player, offHandItem);
+            if (!offHandItem.getType().equals(Material.AIR)) {
+                if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
+                    offHandItem = requirements.convertFromLegacy(modifiers.convertFromLegacy(offHandItem));
+                    if (!offHandItem.equals(player.getInventory().getItemInOffHand())) {
+                        player.getInventory().setItemInOffHand(offHandItem);
                     }
-                    for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, offHandItem)) {
-                        StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
-                        playerData.addStatModifier(offHandModifier);
-                    }
+                }
+                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, offHandItem)) {
+                    StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
+                    playerData.addStatModifier(offHandModifier);
                 }
             }
         }
+
     }
 
     @EventHandler

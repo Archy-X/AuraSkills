@@ -123,7 +123,7 @@ public class SkillsMenu implements InventoryProvider{
 	}
 
 	public static SmartInventory getInventory(Player player, AureliumSkills plugin) {
-		Locale locale = Lang.getLanguage(player);
+		Locale locale = plugin.getLang().getLocale(player);
 		MenuOption menuOption = plugin.getMenuLoader().getMenu(MenuType.SKILLS);
 		return SmartInventory.builder()
 				.provider(new SkillsMenu(locale, menuOption, plugin))

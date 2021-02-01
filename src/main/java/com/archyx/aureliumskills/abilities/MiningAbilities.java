@@ -132,7 +132,6 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 				|| blockMat.equals(XMaterial.DIORITE.parseMaterial()) || blockMat.equals(XMaterial.ANDESITE.parseMaterial())
 				|| blockMat.equals(Material.NETHERRACK) || blockMat.equals(XMaterial.BASALT.parseMaterial()) || blockMat.equals(XMaterial.BLACKSTONE.parseMaterial())) {
 			Player player = event.getPlayer();
-			Locale locale = Lang.getLanguage(player);
 			//Checks if speed mine is already activated
 			ManaAbilityManager manager = plugin.getManaAbilityManager();
 			if (manager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
@@ -145,6 +144,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 				if (mat.name().toUpperCase().contains("PICKAXE")) {
 					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 					if (playerData == null) return;
+					Locale locale = playerData.getLocale();
 					if (playerData.getMana() >= getManaCost(MAbility.SPEED_MINE, playerData)) {
 						manager.activateAbility(player, MAbility.SPEED_MINE, (int) (getValue(MAbility.SPEED_MINE, playerData) * 20), new SpeedMine(plugin));
 					}

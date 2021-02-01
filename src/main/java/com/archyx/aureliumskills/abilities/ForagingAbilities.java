@@ -138,7 +138,6 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 			if (blockMat.equals(XMaterial.OAK_LOG.parseMaterial()) || blockMat.equals(XMaterial.BIRCH_LOG.parseMaterial()) || blockMat.equals(XMaterial.SPRUCE_LOG.parseMaterial())
 					|| blockMat.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || blockMat.equals(XMaterial.ACACIA_LOG.parseMaterial()) || blockMat.equals(XMaterial.DARK_OAK_LOG.parseMaterial())) {
 				Player player = event.getPlayer();
-				Locale locale = Lang.getLanguage(player);
 				//Checks if treecapitator is already activated
 				if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 					return;
@@ -150,6 +149,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 					if (mat.name().toUpperCase().contains("_AXE")) {
 						PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 						if (playerData == null) return;
+						Locale locale = playerData.getLocale();
 						if (playerData.getMana() >= getManaCost(MAbility.TREECAPITATOR, playerData)) {
 							plugin.getManaAbilityManager().activateAbility(player, MAbility.TREECAPITATOR, (int) (getValue(MAbility.TREECAPITATOR, playerData) * 20), new Treecapitator(plugin));
 							treeCapitator(event);

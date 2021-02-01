@@ -38,9 +38,9 @@ public class ChargedShot implements ManaAbility {
 
     @Override
     public void activate(Player player) {
-        Locale locale = Lang.getLanguage(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
+        Locale locale = playerData.getLocale();
         double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.CHARGED_SHOT, playerData) * force;
         if (manaConsumed > playerData.getMana()) {
             manaConsumed = playerData.getMana();

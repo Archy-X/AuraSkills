@@ -102,7 +102,7 @@ public class SkillBossBar implements Listener {
     }
 
     public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
-        Locale locale = Lang.getLanguage(player);
+        Locale locale = plugin.getLang().getLocale(player);
         BarColor color = getColor(skill);
         BarStyle style = getStyle(skill);
         BossBar bossBar;

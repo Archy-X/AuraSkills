@@ -119,7 +119,6 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 		Material blockMat = event.getBlock().getType();
 		if (BlockUtil.isReplenishable(blockMat)) {
 			Player player = event.getPlayer();
-			Locale locale = Lang.getLanguage(player);
 			if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.REPLENISH)) {
 				return;
 			}
@@ -128,6 +127,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 				if (mat.name().toUpperCase().contains("HOE")) {
 					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 					if (playerData == null) return;
+					Locale locale = playerData.getLocale();
 					if (playerData.getMana() >= plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, playerData)) {
 						plugin.getManaAbilityManager().activateAbility(player, MAbility.REPLENISH, (int) (getValue(MAbility.REPLENISH, playerData) * 20), new Replenish(plugin));
 					}

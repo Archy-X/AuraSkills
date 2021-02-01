@@ -194,7 +194,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 														activateSharpHook(player, playerData, livingEntity);
 													} else {
 														if (plugin.getManaAbilityManager().getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-															Locale locale = Lang.getLanguage(player);
+															Locale locale = playerData.getLocale();
 															plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
 															plugin.getManaAbilityManager().setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 														}
@@ -215,7 +215,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 	}
 
 	private void activateSharpHook(Player player, PlayerData playerData, LivingEntity caught) {
-		Locale locale = Lang.getLanguage(player);
+		Locale locale = plugin.getLang().getLocale(player);
 		ManaAbilityManager manager = plugin.getManaAbilityManager();
 		if (playerData.getMana() >= plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerData)) {
 			double damage = plugin.getManaAbilityManager().getValue(MAbility.SHARP_HOOK, playerData);

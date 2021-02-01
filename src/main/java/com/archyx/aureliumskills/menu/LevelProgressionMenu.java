@@ -143,7 +143,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 	}
 
 	public static SmartInventory getInventory(Player player, Skill skill, int page, AureliumSkills plugin) {
-		Locale locale = Lang.getLanguage(player);
+		Locale locale = plugin.getLang().getLocale(player);
 		MenuOption menuOption = plugin.getMenuLoader().getMenu(MenuType.LEVEL_PROGRESSION);
 		return SmartInventory.builder()
 				.provider(new LevelProgressionMenu(locale, skill, menuOption, plugin))

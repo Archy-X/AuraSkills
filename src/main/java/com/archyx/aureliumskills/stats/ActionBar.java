@@ -58,7 +58,6 @@ public class ActionBar implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.ACTION_BAR_ENABLED) && OptionL.getBoolean(Option.ACTION_BAR_IDLE)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
-					Locale locale = Lang.getLanguage(player);
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
 						if (!plugin.getWorldManager().isDisabledWorld(player.getWorld())) {
@@ -68,6 +67,7 @@ public class ActionBar implements Listener {
 							if (!isGainingXp.contains(player) && !isPaused.contains(player)) {
 								PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 								if (playerData != null) {
+									Locale locale = playerData.getLocale();
 									sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
 											, "{hp}", getHp(player)
 											, "{max_hp}", getMaxHp(player)
@@ -101,8 +101,8 @@ public class ActionBar implements Listener {
 			if (!actionBarDisabled.contains(player.getUniqueId())) { // If the player's action bar is enabled
 				// Get player skill data
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-				Locale locale = Lang.getLanguage(player);
 				if (playerData != null) {
+					Locale locale = playerData.getLocale();
 					// Check enabled/disabled for max
 					boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 					if (notMaxed && !OptionL.getBoolean(Option.ACTION_BAR_XP)) {
@@ -247,7 +247,7 @@ public class ActionBar implements Listener {
 		if (!actionBarDisabled.contains(player.getUniqueId())) {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
-			sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, Lang.getLanguage(player)),
+			sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
 					"{hp}", getHp(player),
 					"{max_hp}", getMaxHp(player),
 					"{mana}", getMana(playerData),

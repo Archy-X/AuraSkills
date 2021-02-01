@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.abilities.AgilityAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -17,7 +18,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -39,8 +39,8 @@ public class Health implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(PlayerJoinEvent event) {
-		setHealth(event.getPlayer());
+	public void onJoin(PlayerDataLoadEvent event) {
+		setHealth(event.getPlayerData().getPlayer());
 	}
 
 	public void reload(Player player) {

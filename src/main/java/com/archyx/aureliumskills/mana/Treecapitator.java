@@ -34,9 +34,9 @@ public class Treecapitator implements ManaAbility {
 
     @Override
     public void activate(Player player) {
-        Locale locale = Lang.getLanguage(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
+            Locale locale = playerData.getLocale();
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             //Consume mana
             double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, playerData);
@@ -50,6 +50,6 @@ public class Treecapitator implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_END, Lang.getLanguage(player)));
+        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_END, plugin.getLang().getLocale(player)));
     }
 }

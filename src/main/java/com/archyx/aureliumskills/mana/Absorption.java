@@ -40,7 +40,7 @@ public class Absorption implements ManaAbility {
     public void activate(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
-            Locale locale = Lang.getLanguage(player);
+            Locale locale = playerData.getLocale();
             defenseAbilities.getAbsorptionActivated().add(player); // Register as absorption activated
             // Play sound
             if (XMaterial.isNewVersion()) {
@@ -61,6 +61,6 @@ public class Absorption implements ManaAbility {
     @Override
     public void stop(Player player) {
         defenseAbilities.getAbsorptionActivated().remove(player);
-        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.ABSORPTION_END, Lang.getLanguage(player)));
+        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.ABSORPTION_END, plugin.getLang().getLocale(player)));
     }
 }

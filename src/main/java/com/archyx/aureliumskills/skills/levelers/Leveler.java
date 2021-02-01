@@ -158,7 +158,7 @@ public class Leveler {
 		if (currentLevel < OptionL.getMaxLevel(skill)) { //Check max level options
 			if (levelRequirements.size() > currentLevel - 1) {
 				if (currentXp >= levelRequirements.get(currentLevel - 1)) {
-					Locale locale = Lang.getLanguage(player);
+					Locale locale = playerData.getLocale();
 					// When player levels up a skill
 					playerData.setSkillXp(skill, currentXp - levelRequirements.get(currentLevel - 1));
 					playerData.setSkillLevel(skill, playerData.getSkillLevel(skill) + 1);

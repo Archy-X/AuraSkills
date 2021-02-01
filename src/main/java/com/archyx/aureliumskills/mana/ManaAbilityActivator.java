@@ -70,7 +70,6 @@ public class ManaAbilityActivator {
                     Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
                     if (hasMatch(matchMaterial, mat.name())) {
                         Player player = event.getPlayer();
-                        Locale locale = Lang.getLanguage(player);
                         // Check disabled worlds
                         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
                             return;
@@ -81,6 +80,7 @@ public class ManaAbilityActivator {
                         }
                         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData == null) return;
+                        Locale locale = playerData.getLocale();
                         if (playerData.getManaAbilityLevel(mAbility) > 0) {
                             ManaAbilityManager manager = plugin.getManaAbilityManager();
                             // Checks if speed mine is already activated

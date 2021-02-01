@@ -150,7 +150,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData == null) return;
                     if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
-                    Locale locale = Lang.getLanguage(player);
+                    Locale locale = playerData.getLocale();
                     Integer cooldown = chargedShotToggleCooldown.get(player);
                     boolean ready = true;
                     if (cooldown != null) {
@@ -203,7 +203,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                             , new ChargedShot(plugin, event.getProjectile(), event.getForce()));
                 } else {
                     if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-                        Locale locale = Lang.getLanguage(player);
+                        Locale locale = playerData.getLocale();
                         plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
                         manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
                     }

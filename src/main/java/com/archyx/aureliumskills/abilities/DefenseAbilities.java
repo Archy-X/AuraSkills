@@ -162,7 +162,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                 handleAbsorbedHit(event, player);
             }
             else {
-                Locale locale = Lang.getLanguage(player);
+                Locale locale = playerData.getLocale();
                 plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
                         .replace("{mana}", NumberUtil.format0(manager.getManaCost(MAbility.ABSORPTION, playerData))));
             }

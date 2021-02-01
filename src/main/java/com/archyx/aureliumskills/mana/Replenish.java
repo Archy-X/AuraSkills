@@ -36,7 +36,7 @@ public class Replenish implements ManaAbility {
     public void activate(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
-            Locale locale = Lang.getLanguage(player);
+            Locale locale = playerData.getLocale();
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, playerData);
             playerData.setMana(playerData.getMana() - manaConsumed);
@@ -49,6 +49,6 @@ public class Replenish implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.REPLENISH_END, Lang.getLanguage(player)));
+        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.REPLENISH_END, plugin.getLang().getLocale(player)));
     }
 }

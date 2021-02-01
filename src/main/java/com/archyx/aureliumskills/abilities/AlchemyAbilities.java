@@ -65,7 +65,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData == null) return;
                         if (playerData.getAbilityLevel(Ability.ALCHEMIST) > 0) {
-                            updateBrewingStand(inventory, playerData, Lang.getLanguage(player));
+                            updateBrewingStand(inventory, playerData, playerData.getLocale());
                         }
                     }
                 }
