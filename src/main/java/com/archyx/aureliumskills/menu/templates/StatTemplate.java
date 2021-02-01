@@ -219,7 +219,7 @@ public class StatTemplate implements ConfigurableTemplate {
                                     double wisdomLevel = playerData.getStatLevel(Stat.WISDOM);
                                     double xpModifier = wisdomLevel * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
                                     double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
-                                    double maxMana = plugin.getManaManager().getMaxMana(playerData);
+                                    double maxMana = playerData.getMaxMana();
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", nf.format(xpModifier))
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction))
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana)));

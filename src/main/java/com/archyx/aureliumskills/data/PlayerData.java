@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.data;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
@@ -145,6 +147,10 @@ public class PlayerData {
 
     public double getMana() {
         return mana;
+    }
+
+    public double getMaxMana() {
+        return OptionL.getDouble(Option.BASE_MANA) + (OptionL.getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM) * getStatLevel(Stat.WISDOM));
     }
 
     public void setMana(double mana) {

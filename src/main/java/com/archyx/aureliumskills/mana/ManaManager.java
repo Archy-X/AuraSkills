@@ -33,7 +33,7 @@ public class ManaManager implements Listener {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData != null) {
                         double originalMana = playerData.getMana();
-                        double maxMana = getMaxMana(playerData);
+                        double maxMana = playerData.getMaxMana();
                         if (originalMana < maxMana) {
                             if (!defenseAbilities.getAbsorptionActivated().contains(player)) {
                                 double regen = OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
@@ -49,14 +49,6 @@ public class ManaManager implements Listener {
                 }
             }
         }.runTaskTimer(plugin, 0L, 20L);
-    }
-
-    public double getMaxMana(PlayerData playerData) {
-        if (playerData != null) {
-            return OptionL.getDouble(Option.BASE_MANA) + (OptionL.getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM) * playerData.getStatLevel(Stat.WISDOM));
-        } else {
-            return OptionL.getDouble(Option.BASE_MANA);
-        }
     }
 
 }

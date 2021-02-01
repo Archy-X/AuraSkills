@@ -274,7 +274,7 @@ public class ActionBar implements Listener {
 	}
 
 	private String getMaxMana(PlayerData playerData) {
-		return String.valueOf(Math.round(mana.getMaxMana(playerData)));
+		return String.valueOf(Math.round(playerData.getMaxMana()));
 	}
 
 	private void sendActionBar(Player player, String message) {

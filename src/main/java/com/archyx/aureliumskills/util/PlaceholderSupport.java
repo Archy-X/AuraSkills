@@ -120,7 +120,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         if (identifier.equals("mana_max")) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                return String.valueOf(plugin.getManaManager().getMaxMana(playerData));
+                return String.valueOf(playerData.getMaxMana());
             }
         }
 

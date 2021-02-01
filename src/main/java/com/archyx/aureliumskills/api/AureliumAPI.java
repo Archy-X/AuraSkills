@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.api;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
@@ -44,12 +46,22 @@ public class AureliumAPI {
      * @return the max mana of a player
      */
     public static double getMaxMana(Player player) {
-        return plugin.getManaManager().getMaxMana(plugin.getPlayerManager().getPlayerData(player));
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            return playerData.getMaxMana();
+        } else {
+            return OptionL.getDouble(Option.BASE_MANA);
+        }
     }
 
     @Deprecated
     public static double getMaxMana(UUID playerId) {
-        return plugin.getManaManager().getMaxMana(plugin.getPlayerManager().getPlayerData(playerId));
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        if (playerData != null) {
+            return playerData.getMaxMana();
+        } else {
+            return OptionL.getDouble(Option.BASE_MANA);
+        }
     }
 
     /**

@@ -27,8 +27,8 @@ public class StatLeveler {
 				ManaManager manaManager = plugin.getManaManager();
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
-				if (playerData.getMana() > manaManager.getMaxMana(playerData)) {
-					playerData.setMana(manaManager.getMaxMana(playerData));
+				if (playerData.getMana() > playerData.getMaxMana()) {
+					playerData.setMana(playerData.getMaxMana());
 				}
 			}
 		}
