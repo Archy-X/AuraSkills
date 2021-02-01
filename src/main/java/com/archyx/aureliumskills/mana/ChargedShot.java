@@ -1,10 +1,9 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
@@ -40,14 +39,14 @@ public class ChargedShot implements ManaAbility {
     @Override
     public void activate(Player player) {
         Locale locale = Lang.getLanguage(player);
-        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (playerSkill == null) return;
-        double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.CHARGED_SHOT, playerSkill) * force;
-        if (manaConsumed > plugin.getManaManager().getMana(player.getUniqueId())) {
-            manaConsumed = plugin.getManaManager().getMana(player.getUniqueId());
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null) return;
+        double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.CHARGED_SHOT, playerData) * force;
+        if (manaConsumed > playerData.getMana()) {
+            manaConsumed = playerData.getMana();
         }
-        plugin.getManaManager().setMana(player.getUniqueId(), plugin.getManaManager().getMana(player.getUniqueId()) - manaConsumed);
-        double damagePercent = manaConsumed * plugin.getManaAbilityManager().getValue(MAbility.CHARGED_SHOT, playerSkill);
+        playerData.setMana(playerData.getMana() - manaConsumed);
+        double damagePercent = manaConsumed * plugin.getManaAbilityManager().getValue(MAbility.CHARGED_SHOT, playerData);
         if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.CHARGED_SHOT, "enable_sound")) {
             if (XMaterial.isNewVersion()) {
                 player.playSound(player.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 1);

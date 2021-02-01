@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.skills;
 
+import com.archyx.aureliumskills.data.PlayerData;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -10,11 +12,11 @@ public class PlayerSkillInstance {
     private final Map<Skill, Integer> levels = new HashMap<>();
     private final Map<Skill, Double> xp = new HashMap<>();
 
-    public PlayerSkillInstance(PlayerSkill playerSkill) {
-        this.playerId = playerSkill.getPlayerId();
+    public PlayerSkillInstance(PlayerData playerData) {
+        this.playerId = playerData.getPlayer().getUniqueId();
         for (Skill skill : Skill.values()) {
-            levels.put(skill, playerSkill.getSkillLevel(skill));
-            xp.put(skill, playerSkill.getXp(skill));
+            levels.put(skill, playerData.getSkillLevel(skill));
+            xp.put(skill, playerData.getSkillXp(skill));
         }
     }
 

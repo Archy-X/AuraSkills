@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.data;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Health;
@@ -63,6 +65,10 @@ public class PlayerData {
         skillXp.put(skill, xp);
     }
 
+    public void addSkillXp(Skill skill, double amount) {
+        skillXp.merge(skill, amount, Double::sum);
+    }
+
     public double getStatLevel(Stat stat) {
         return statLevels.getOrDefault(stat, 0.0);
     }
@@ -71,8 +77,25 @@ public class PlayerData {
         statLevels.put(stat, level);
     }
 
+    public void addStatLevel(Stat stat, double level) {
+        statLevels.merge(stat, level, Double::sum);
+    }
+
+    public void addStatLevel(Stat stat, int level) {
+        Double currentLevel = statLevels.get(stat);
+        if (currentLevel != null) {
+            statLevels.put(stat, currentLevel + level);
+        } else {
+            statLevels.put(stat, (double) level);
+        }
+    }
+
     public StatModifier getStatModifier(String name) {
         return statModifiers.get(name);
+    }
+
+    public Map<String, StatModifier> getStatModifiers() {
+        return statModifiers;
     }
 
     public void addStatModifier(StatModifier modifier) {
@@ -100,13 +123,13 @@ public class PlayerData {
         }
     }
 
-    public void removeStatModifier(String name) {
-        removeStatModifier(name, true);
+    public boolean removeStatModifier(String name) {
+        return removeStatModifier(name, true);
     }
 
-    public void removeStatModifier(String name, boolean reload) {
+    public boolean removeStatModifier(String name, boolean reload) {
         StatModifier modifier = statModifiers.get(name);
-        if (modifier == null) return;
+        if (modifier == null) return false;
         setStatLevel(modifier.getStat(), statLevels.get(modifier.getStat()) - modifier.getValue());
         statModifiers.remove(name);
         // Reloads stats
@@ -117,6 +140,7 @@ public class PlayerData {
                 new Luck(plugin).reload(player);
             }
         }
+        return true;
     }
 
     public double getMana() {
@@ -128,7 +152,7 @@ public class PlayerData {
     }
 
     public Locale getLocale() {
-        return locale;
+        return locale != null ? locale : Lang.getDefaultLanguage();
     }
 
     public void setLocale(Locale locale) {
@@ -142,6 +166,45 @@ public class PlayerData {
             abilityData.put(ability, data);
         }
         return data;
+    }
+
+    public Map<Ability, AbilityData> getAbilityDataMap() {
+        return abilityData;
+    }
+
+    public int getAbilityLevel(Ability ability) {
+        if (getSkillLevel(ability.getSkill()) < plugin.getAbilityManager().getUnlock(ability)) {
+            return 0;
+        }
+        int level = (getSkillLevel(ability.getSkill()) - plugin.getAbilityManager().getUnlock(ability)) / plugin.getAbilityManager().getLevelUp(ability) + 1;
+        // Check max level
+        if (level <= plugin.getAbilityManager().getMaxLevel(ability) || plugin.getAbilityManager().getMaxLevel(ability) == 0) {
+            return level;
+        } else {
+            return plugin.getAbilityManager().getMaxLevel(ability);
+        }
+    }
+
+    public int getManaAbilityLevel(MAbility mAbility) {
+        // Check if unlocked
+        if (getSkillLevel(mAbility.getSkill()) < plugin.getManaAbilityManager().getUnlock(mAbility)) {
+            return 0;
+        }
+        int level = (getSkillLevel(mAbility.getSkill()) - plugin.getManaAbilityManager().getUnlock(mAbility)) / plugin.getManaAbilityManager().getLevelUp(mAbility) + 1;
+        // Check max level
+        if (level <= plugin.getManaAbilityManager().getMaxLevel(mAbility) || plugin.getManaAbilityManager().getMaxLevel(mAbility) == 0) {
+            return level;
+        } else {
+            return plugin.getManaAbilityManager().getMaxLevel(mAbility);
+        }
+    }
+
+    public int getPowerLevel() {
+        int power = 0;
+        for (int level : skillLevels.values()) {
+            power += level;
+        }
+        return power;
     }
 
 }

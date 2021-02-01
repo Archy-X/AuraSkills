@@ -3,10 +3,9 @@ package com.archyx.aureliumskills.util;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.PlayerSkill;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang.math.NumberUtils;
@@ -66,8 +65,9 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets total combined skill level
         if (identifier.equals("power")) {
-            if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                return String.valueOf(SkillLoader.playerSkills.get(player.getUniqueId()).getPowerLevel());
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(playerData.getPowerLevel());
             }
         }
 
@@ -110,19 +110,26 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets mana
         if (identifier.equals("mana")) {
-            return String.valueOf(plugin.getManaManager().getMana(player.getUniqueId()));
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(playerData.getMana());
+            }
         }
 
         //Gets max mana
         if (identifier.equals("mana_max")) {
-            return String.valueOf(plugin.getManaManager().getMaxMana(player.getUniqueId()));
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(plugin.getManaManager().getMaxMana(playerData));
+            }
         }
 
         //Gets stat values
         for (Stat stat : Stat.values()) {
             if (identifier.equals(stat.name().toLowerCase(Locale.ENGLISH))) {
-                if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-                    return String.valueOf(SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(stat));
+                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                if (playerData != null) {
+                    return String.valueOf(playerData.getStatLevel(stat));
                 }
             }
         }
@@ -130,13 +137,15 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         //Gets skill levels
         for (Skill skill : Skill.values()) {
             if (identifier.equals(skill.name().toLowerCase(Locale.ENGLISH))) {
-                if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                    return String.valueOf(SkillLoader.playerSkills.get(player.getUniqueId()).getSkillLevel(skill));
+                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                if (playerData != null) {
+                    return String.valueOf(playerData.getSkillLevel(skill));
                 }
             }
             else if (identifier.equals(skill.name().toLowerCase(Locale.ENGLISH) + "_roman")) {
-                if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                    return RomanNumber.toRoman(SkillLoader.playerSkills.get(player.getUniqueId()).getSkillLevel(skill));
+                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                if (playerData != null) {
+                    return RomanNumber.toRoman(playerData.getSkillLevel(skill));
                 }
             }
         }
@@ -239,25 +248,25 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 String skillName = LoreUtil.replace(identifier, id, "");
                 try {
                     Skill skill = Skill.valueOf(skillName.toUpperCase());
-                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                    if (playerSkill != null) {
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData != null) {
                         switch (id) {
                             case "xp_required_formatted_":
-                                return BigNumber.withSuffix(plugin.getLeveler().getXpRequired(playerSkill.getSkillLevel(skill) + 1));
+                                return BigNumber.withSuffix(plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1));
                             case "xp_required_":
-                                return String.valueOf(plugin.getLeveler().getXpRequired(playerSkill.getSkillLevel(skill) + 1));
+                                return String.valueOf(plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1));
                             case "xp_progress_int_":
-                                return String.valueOf(Math.round(playerSkill.getXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerSkill.getSkillLevel(skill) + 1)) * 100));
+                                return String.valueOf(Math.round(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1)) * 100));
                             case "xp_progress_1_":
-                                return NumberUtil.format1(playerSkill.getXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerSkill.getSkillLevel(skill) + 1)) * 100);
+                                return NumberUtil.format1(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1)) * 100);
                             case "xp_progress_":
-                                return String.valueOf(playerSkill.getXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerSkill.getSkillLevel(skill) + 1)) * 100);
+                                return String.valueOf(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1)) * 100);
                             case "xp_int_":
-                                return String.valueOf(Math.round(playerSkill.getXp(skill)));
+                                return String.valueOf(Math.round(playerData.getSkillXp(skill)));
                             case "xp_formatted_":
-                                return BigNumber.withSuffix(Math.round(playerSkill.getXp(skill)));
+                                return BigNumber.withSuffix(Math.round(playerData.getSkillXp(skill)));
                             case "xp_":
-                                return String.valueOf(playerSkill.getXp(skill));
+                                return String.valueOf(playerData.getSkillXp(skill));
                         }
                     }
                 } catch (Exception e) { return ""; }

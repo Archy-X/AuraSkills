@@ -5,9 +5,8 @@ import com.archyx.aureliumskills.abilities.ForagingAbilities;
 import com.archyx.aureliumskills.abilities.MiningAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.requirement.Requirements;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.util.ItemUtils;
@@ -47,7 +46,7 @@ public class ItemListener implements Listener {
         this.miningAbilities = new MiningAbilities(plugin);
         this.statLeveler = new StatLeveler(plugin);
         this.modifiers = new Modifiers();
-        this.requirements = new Requirements(plugin.getRequirementManager());
+        this.requirements = new Requirements(plugin);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -55,8 +54,8 @@ public class ItemListener implements Listener {
         Player player = event.getPlayer();
         ItemStack held = player.getInventory().getItemInMainHand();
         heldItems.put(player, held);
-        PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-        if (playerStat != null) {
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
             if (!held.getType().equals(Material.AIR)) {
                 if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
                     held = requirements.convertFromLegacy(modifiers.convertFromLegacy(held));
@@ -65,7 +64,7 @@ public class ItemListener implements Listener {
                     }
                 }
                 for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
-                    playerStat.addModifier(modifier, false);
+                    playerData.addStatModifier(modifier, false);
                 }
             }
             if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) {
@@ -80,7 +79,7 @@ public class ItemListener implements Listener {
                     }
                     for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, offHandItem)) {
                         StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
-                        playerStat.addModifier(offHandModifier);
+                        playerData.addStatModifier(offHandModifier);
                     }
                 }
             }
@@ -109,19 +108,19 @@ public class ItemListener implements Listener {
                             Set<Stat> statsToReload = new HashSet<>();
                             // Remove modifiers from stored item
                             if (!stored.getType().equals(Material.AIR)) {
-                                PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-                                if (playerStat != null) {
+                                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                                if (playerData != null) {
                                     for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, stored)) {
-                                        playerStat.removeModifier(modifier.getName(), false);
+                                        playerData.removeStatModifier(modifier.getName(), false);
                                         statsToReload.add(modifier.getStat());
                                     }
                                     // Remove valor
                                     if (ItemUtils.isAxe(stored.getType())) {
-                                        foragingAbilities.removeValor(playerStat);
+                                        foragingAbilities.removeValor(playerData);
                                     }
                                     // Remove stamina
                                     if (ItemUtils.isPickaxe(stored.getType())) {
-                                        miningAbilities.removeStamina(playerStat);
+                                        miningAbilities.removeStamina(playerData);
                                     }
                                 }
                             }
@@ -133,21 +132,21 @@ public class ItemListener implements Listener {
                                         player.getInventory().setItemInMainHand(held);
                                     }
                                 }
-                                PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-                                if (playerStat != null) {
+                                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                                if (playerData != null) {
                                     if (requirements.meetsRequirements(ModifierType.ITEM, held, player)) {
                                         for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
-                                            playerStat.addModifier(modifier, false);
+                                            playerData.addStatModifier(modifier, false);
                                             statsToReload.add(modifier.getStat());
                                         }
                                     }
                                     // Apply valor
                                     if (ItemUtils.isAxe(held.getType())) {
-                                        foragingAbilities.applyValor(player, playerStat);
+                                        foragingAbilities.applyValor(playerData);
                                     }
                                     // Apply stamina
                                     if (ItemUtils.isPickaxe(held.getType())) {
-                                        miningAbilities.applyStamina(player, playerStat);
+                                        miningAbilities.applyStamina(playerData);
                                     }
                                 }
                             }
@@ -173,8 +172,8 @@ public class ItemListener implements Listener {
         if (!event.isCancelled()) { // Make sure event is not cancelled
             if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) { // Check off hand support is enabled
                 Player player = event.getPlayer();
-                PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-                if (playerStat != null) {
+                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                if (playerData != null) {
                     // Get items switched
                     ItemStack itemOffHand = event.getOffHandItem();
                     ItemStack itemMainHand = event.getMainHandItem();
@@ -192,10 +191,10 @@ public class ItemListener implements Listener {
                             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemOffHand)) {
                                 // Removes the old modifier from main hand
                                 StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
-                                playerStat.removeModifier(modifier.getName(), false);
+                                playerData.removeStatModifier(modifier.getName(), false);
                                 // Add new one if meets requirements
                                 if (meetsRequirements) {
-                                    playerStat.addModifier(offHandModifier, false);
+                                    playerData.addStatModifier(offHandModifier, false);
                                 }
                                 // Reload check stuff
                                 offHandModifiers.add(offHandModifier.getName());
@@ -211,11 +210,11 @@ public class ItemListener implements Listener {
                             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemMainHand)) {
                                 // Removes the offhand modifier if wasn't already added
                                 if (!offHandModifiers.contains(modifier.getName() + "-offhand")) {
-                                    playerStat.removeModifier(modifier.getName() + "-offhand", false);
+                                    playerData.removeStatModifier(modifier.getName() + "-offhand", false);
                                 }
                                 // Add if meets requirements
                                 if (meetsRequirements) {
-                                    playerStat.addModifier(modifier, false);
+                                    playerData.addStatModifier(modifier, false);
                                 }
                                 // Reload check stuff
                                 statsToReload.add(modifier.getStat());
@@ -245,21 +244,21 @@ public class ItemListener implements Listener {
                             if (!stored.equals(held)) {
                                 //Remove modifiers from stored item
                                 if (!stored.getType().equals(Material.AIR)) {
-                                    PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-                                    if (playerStat != null) {
+                                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                                    if (playerData != null) {
                                         for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, stored)) {
-                                            playerStat.removeModifier(modifier.getName() + ".Offhand");
+                                            playerData.removeStatModifier(modifier.getName() + ".Offhand");
                                         }
                                     }
                                 }
                                 // Add modifiers from held item
                                 if (!held.getType().equals(Material.AIR)) {
-                                    PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-                                    if (playerStat != null) {
+                                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                                    if (playerData != null) {
                                         if (requirements.meetsRequirements(ModifierType.ITEM, held, player)) {
                                             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
                                                 StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
-                                                playerStat.addModifier(offHandModifier);
+                                                playerData.addStatModifier(offHandModifier);
                                             }
                                         }
                                     }

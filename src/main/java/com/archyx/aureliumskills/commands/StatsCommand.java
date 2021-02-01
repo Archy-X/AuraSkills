@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 @CommandAlias("stats")
 public class StatsCommand extends BaseCommand {
 
-	private AureliumSkills plugin;
+	private final AureliumSkills plugin;
 
 	public StatsCommand(AureliumSkills plugin) {
 		this.plugin = plugin;

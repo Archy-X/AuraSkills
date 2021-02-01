@@ -4,7 +4,6 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
@@ -22,7 +21,7 @@ public class EnduranceLeveler extends SkillLeveler {
 			if (OptionL.isEnabled(Skill.ENDURANCE)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if (!blockXpGain(player)) {
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
+						if (plugin.getPlayerManager().hasPlayerData(player)) {
 							int xpAmount = 0;
 							if (player.hasMetadata("skillsLastSprintDist")) {
 								int sprintDist = player.getStatistic(Statistic.SPRINT_ONE_CM) - player.getMetadata("skillsLastSprintDist").get(0).asInt();

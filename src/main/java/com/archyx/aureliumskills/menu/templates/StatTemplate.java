@@ -3,11 +3,11 @@ package com.archyx.aureliumskills.menu.templates;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
@@ -16,7 +16,6 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -89,7 +88,7 @@ public class StatTemplate implements ConfigurableTemplate {
         }
     }
 
-    public ItemStack getItem(Stat stat, PlayerStat playerStat, Player player, Locale locale) {
+    public ItemStack getItem(Stat stat, PlayerData playerData, Locale locale) {
         ItemStack item = baseItems.get(stat);
         if (item == null) {
             item = new ItemStack(Material.STONE);
@@ -176,12 +175,12 @@ public class StatTemplate implements ConfigurableTemplate {
                         case "your_level":
                             line = LoreUtil.replace(line,"{your_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.YOUR_LEVEL, locale)
                                     ,"{color}", stat.getColor(locale)
-                                    ,"{level}", NumberUtil.format1(playerStat.getStatLevel(stat))));
+                                    ,"{level}", NumberUtil.format1(playerData.getStatLevel(stat))));
                             break;
                         case "descriptors":
                             switch (stat) {
                                 case STRENGTH:
-                                    double strengthLevel = playerStat.getStatLevel(Stat.STRENGTH);
+                                    double strengthLevel = playerData.getStatLevel(Stat.STRENGTH);
                                     double attackDamage = strengthLevel * OptionL.getDouble(Option.STRENGTH_MODIFIER);
                                     if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING) && !OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
                                         attackDamage *= OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
@@ -190,13 +189,13 @@ public class StatTemplate implements ConfigurableTemplate {
                                             ,"{value}", nf.format(attackDamage)));
                                     break;
                                 case HEALTH:
-                                    double modifier = playerStat.getStatLevel(Stat.HEALTH) * OptionL.getDouble(Option.HEALTH_MODIFIER);
+                                    double modifier = playerData.getStatLevel(Stat.HEALTH) * OptionL.getDouble(Option.HEALTH_MODIFIER);
                                     double scaledHealth = modifier * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.HP, locale)
                                             ,"{value}", nf.format(scaledHealth)));
                                     break;
                                 case REGENERATION:
-                                    double regenLevel = playerStat.getStatLevel(Stat.REGENERATION);
+                                    double regenLevel = playerData.getStatLevel(Stat.REGENERATION);
                                     double saturatedRegen = regenLevel * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     double hungerFullRegen = regenLevel *  OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     double almostFullRegen = regenLevel *  OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
@@ -207,7 +206,7 @@ public class StatTemplate implements ConfigurableTemplate {
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_REGEN, locale),"{value}", String.valueOf((int) manaRegen)));
                                     break;
                                 case LUCK:
-                                    double luckLevel = playerStat.getStatLevel(Stat.LUCK);
+                                    double luckLevel = playerData.getStatLevel(Stat.LUCK);
                                     double luck = luckLevel * OptionL.getDouble(Option.LUCK_MODIFIER);
                                     double doubleDropChance = luckLevel * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) * 100;
                                     if (doubleDropChance > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
@@ -217,16 +216,16 @@ public class StatTemplate implements ConfigurableTemplate {
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.DOUBLE_DROP_CHANCE, locale),"{value}", nf.format(doubleDropChance)));
                                     break;
                                 case WISDOM:
-                                    double wisdomLevel = playerStat.getStatLevel(Stat.WISDOM);
+                                    double wisdomLevel = playerData.getStatLevel(Stat.WISDOM);
                                     double xpModifier = wisdomLevel * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
                                     double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
-                                    double maxMana = plugin.getManaManager().getMaxMana(player.getUniqueId());
+                                    double maxMana = plugin.getManaManager().getMaxMana(playerData);
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", nf.format(xpModifier))
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction))
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana)));
                                     break;
                                 case TOUGHNESS:
-                                    double toughness = playerStat.getStatLevel(Stat.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
+                                    double toughness = playerData.getStatLevel(Stat.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
                                     double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.INCOMING_DAMAGE, locale),"{value}", nf.format(damageReduction)));
                             }

@@ -3,10 +3,9 @@ package com.archyx.aureliumskills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.mana.MAbility;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -51,13 +50,13 @@ public abstract class AbilityProvider {
     }
 
     public double getXp(Player player, Source source, Ability ability) {
-        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (playerSkill != null) {
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
             double output = plugin.getSourceManager().getXp(source);
             if (ability != null) {
                 if (plugin.getAbilityManager().isEnabled(ability)) {
                     double modifier = 1;
-                    modifier += plugin.getAbilityManager().getValue(ability, playerSkill.getAbilityLevel(ability)) / 100;
+                    modifier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
                     output *= modifier;
                 }
             }
@@ -70,20 +69,20 @@ public abstract class AbilityProvider {
         return plugin.getAbilityManager().isEnabled(ability);
     }
 
-    public double getValue(Ability ability, PlayerSkill playerSkill) {
-        return plugin.getAbilityManager().getValue(ability, playerSkill.getAbilityLevel(ability));
+    public double getValue(Ability ability, PlayerData playerData) {
+        return plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability));
     }
 
-    public double getValue2(Ability ability, PlayerSkill playerSkill) {
-        return plugin.getAbilityManager().getValue2(ability, playerSkill.getAbilityLevel(ability));
+    public double getValue2(Ability ability, PlayerData playerData) {
+        return plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability));
     }
 
-    public double getValue(MAbility mability, PlayerSkill playerSkill) {
-        return plugin.getManaAbilityManager().getValue(mability, playerSkill.getManaAbilityLevel(mability));
+    public double getValue(MAbility mability, PlayerData playerData) {
+        return plugin.getManaAbilityManager().getValue(mability, playerData.getManaAbilityLevel(mability));
     }
 
-    public double getManaCost(MAbility mability, PlayerSkill playerSkill) {
-        return plugin.getManaAbilityManager().getManaCost(mability, playerSkill);
+    public double getManaCost(MAbility mability, PlayerData playerData) {
+        return plugin.getManaAbilityManager().getManaCost(mability, playerData);
     }
 
 }

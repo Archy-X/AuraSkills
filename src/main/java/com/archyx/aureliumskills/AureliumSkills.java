@@ -9,7 +9,7 @@ import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.data.PlayerManager;
+import com.archyx.aureliumskills.data.*;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
@@ -24,7 +24,10 @@ import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
-import com.archyx.aureliumskills.skills.*;
+import com.archyx.aureliumskills.skills.Leaderboard;
+import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillBossBar;
+import com.archyx.aureliumskills.skills.SourceManager;
 import com.archyx.aureliumskills.skills.levelers.*;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.*;
@@ -39,7 +42,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -52,8 +54,7 @@ import java.util.Locale;
 public class AureliumSkills extends JavaPlugin {
 
 	private PlayerManager playerManager;
-	private SkillLoader skillLoader;
-	private MySqlSupport mySqlSupport;
+	private StorageProvider storageProvider;
 	private MenuLoader menuLoader;
 	private LootTableManager lootTableManager;
 	private InventoryManager inventoryManager;
@@ -192,22 +193,12 @@ public class AureliumSkills extends JavaPlugin {
 			ProtocolUtil.init();
 		}
 		actionBar.startUpdateActionBar();
-		// Load Data
+		// Initialize storage
 		this.playerManager = new PlayerManager();
-		skillLoader = new SkillLoader(this);
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
-			//Mysql
-			mySqlSupport = new MySqlSupport(this);
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					mySqlSupport.init();
-				}
-			}.runTaskAsynchronously(this);
-		}
-		else {
-			skillLoader.loadSkillData();
-			skillLoader.startSaving();
+			setStorageProvider(new MySqlStorageProvider(this));
+		} else {
+			setStorageProvider(new YamlStorageProvider(this));
 		}
 		// Load leveler
 		leveler = new Leveler(this);
@@ -233,24 +224,6 @@ public class AureliumSkills extends JavaPlugin {
 			reloadConfig();
 			// Save config
 			saveConfig();
-		}
-		// Save Data
-		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
-			if (mySqlSupport != null) {
-				mySqlSupport.saveData(false);
-				mySqlSupport.closeConnection();
-			}
-			else {
-				Bukkit.getLogger().warning("MySql wasn't enabled on server startup, saving data to file instead! MySql will be enabled next time the server starts.");
-				if (skillLoader != null) {
-					skillLoader.saveSkillData(false);
-				}
-			}
-		}
-		else {
-			if (skillLoader != null) {
-				skillLoader.saveSkillData(false);
-			}
 		}
 	}
 
@@ -296,10 +269,6 @@ public class AureliumSkills extends JavaPlugin {
         }
 	}
 
-	public SkillLoader getSkillLoader() {
-		return skillLoader;
-	}
-
 	private void registerCommands() {
 		commandManager = new PaperCommandManager(this);
 		commandManager.enableUnstableAPI("help");
@@ -323,9 +292,9 @@ public class AureliumSkills extends JavaPlugin {
 		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> Lang.getDefinedLanguagesSet());
 		commandManager.getCommandCompletions().registerAsyncCompletion("modifiers", c -> {
 			Player player = c.getPlayer();
-			PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-			if (playerStat != null) {
-				return playerStat.getModifiers().keySet();
+			PlayerData playerData = getPlayerManager().getPlayerData(player);
+			if (playerData != null) {
+				return playerData.getStatModifiers().keySet();
 			}
 			return null;
 		});
@@ -399,8 +368,8 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(itemListener, this);
 		itemListener.scheduleTask();
 		pm.registerEvents(new ArmorListener(OptionL.getList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
-		pm.registerEvents(new ArmorModifierListener(requirementManager), this);
-		pm.registerEvents(new RequirementListener(requirementManager), this);
+		pm.registerEvents(new ArmorModifierListener(this), this);
+		pm.registerEvents(new RequirementListener(this), this);
 		this.actionBar = new ActionBar(this);
 		pm.registerEvents(actionBar, this);
 	}
@@ -423,10 +392,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Economy getEconomy() {
 		return economy;
-	}
-
-	public MySqlSupport getMySqlSupport() {
-		return mySqlSupport;
 	}
 
 	public MenuLoader getMenuLoader() {
@@ -547,6 +512,14 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Health getHealth() {
 		return health;
+	}
+
+	public StorageProvider getStorageProvider() {
+		return storageProvider;
+	}
+
+	public void setStorageProvider(StorageProvider storageProvider) {
+		this.storageProvider = storageProvider;
 	}
 
 }

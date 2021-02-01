@@ -4,11 +4,10 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.LevelProgressionMenu;
 import com.archyx.aureliumskills.menu.SkillsMenu;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.entity.Player;
 
 public class SkillCommands {
@@ -24,9 +23,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.FARMING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.FARMING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.FARMING, page, plugin).open(player, page);
             }
         }
@@ -42,9 +41,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.FORAGING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.FORAGING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.FORAGING, page, plugin).open(player, page);
             }
         }
@@ -60,9 +59,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.MINING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.MINING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.MINING, page, plugin).open(player, page);
             }
         }
@@ -78,9 +77,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.FISHING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.FISHING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.FISHING, page, plugin).open(player, page);
             }
         }
@@ -96,9 +95,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.EXCAVATION, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.EXCAVATION, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.EXCAVATION, page, plugin).open(player, page);
             }
         }
@@ -114,9 +113,9 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.ARCHERY, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.ARCHERY, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.ARCHERY, page, plugin).open(player, page);
             }
         }
@@ -132,9 +131,9 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.DEFENSE, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.DEFENSE, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.DEFENSE, page, plugin).open(player, page);
             }
         }
@@ -150,9 +149,9 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.FIGHTING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.FIGHTING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.FIGHTING, page, plugin).open(player, page);
             }
         }
@@ -168,9 +167,9 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.ENDURANCE, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.ENDURANCE, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.ENDURANCE, page, plugin).open(player, page);
             }
         }
@@ -186,9 +185,9 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.AGILITY, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.AGILITY, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.AGILITY, page, plugin).open(player, page);
             }
         }
@@ -204,9 +203,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.ALCHEMY, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.ALCHEMY, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.ALCHEMY, page, plugin).open(player, page);
             }
         }
@@ -222,9 +221,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.ENCHANTING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.ENCHANTING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.ENCHANTING, page, plugin).open(player, page);
             }
         }
@@ -240,9 +239,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.SORCERY, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.SORCERY, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.SORCERY, page, plugin).open(player, page);
             }
         }
@@ -258,9 +257,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.HEALING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.HEALING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.HEALING, page, plugin).open(player, page);
             }
         }
@@ -276,9 +275,9 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                int page = SkillsMenu.getPage(Skill.FORGING, playerSkill);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                int page = SkillsMenu.getPage(Skill.FORGING, playerData);
                 LevelProgressionMenu.getInventory(player, Skill.FORGING, page, plugin).open(player, page);
             }
         }

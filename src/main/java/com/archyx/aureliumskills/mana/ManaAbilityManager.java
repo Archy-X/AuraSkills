@@ -4,9 +4,8 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
-import com.archyx.aureliumskills.skills.PlayerSkill;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -54,9 +53,9 @@ public class ManaAbilityManager implements Listener {
     }
 
     public void setPlayerCooldown(Player player, MAbility mAbility) {
-        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (playerSkill != null) {
-            double cooldown = getCooldown(mAbility, playerSkill);
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            double cooldown = getCooldown(mAbility, playerData);
             if (cooldown != 0) {
                 setPlayerCooldown(player.getUniqueId(), mAbility, (int) (cooldown * 20));
             }
@@ -225,8 +224,8 @@ public class ManaAbilityManager implements Listener {
         return getBaseValue(mAbility) + (getValuePerLevel(mAbility) * (level - 1));
     }
 
-    public double getValue(MAbility mAbility, PlayerSkill playerSkill) {
-        return getBaseValue(mAbility) + (getValuePerLevel(mAbility) * (playerSkill.getManaAbilityLevel(mAbility) - 1));
+    public double getValue(MAbility mAbility, PlayerData playerData) {
+        return getBaseValue(mAbility) + (getValuePerLevel(mAbility) * (playerData.getManaAbilityLevel(mAbility) - 1));
     }
 
     public double getDisplayValue(MAbility mAbility, int level) {
@@ -263,8 +262,8 @@ public class ManaAbilityManager implements Listener {
         return cooldown > 0 ? cooldown : 0;
     }
 
-    public double getCooldown(MAbility mAbility, PlayerSkill playerSkill) {
-        double cooldown = getBaseCooldown(mAbility) + (getCooldownPerLevel(mAbility) * (playerSkill.getManaAbilityLevel(mAbility) - 1));
+    public double getCooldown(MAbility mAbility, PlayerData playerData) {
+        double cooldown = getBaseCooldown(mAbility) + (getCooldownPerLevel(mAbility) * (playerData.getManaAbilityLevel(mAbility) - 1));
         return cooldown > 0 ? cooldown : 0;
     }
 
@@ -284,8 +283,8 @@ public class ManaAbilityManager implements Listener {
         return mAbility.getDefaultCooldownPerLevel();
     }
 
-    public double getManaCost(MAbility mAbility, PlayerSkill playerSkill) {
-        return getBaseManaCost(mAbility) + (getManaCostPerLevel(mAbility) * (playerSkill.getManaAbilityLevel(mAbility) - 1));
+    public double getManaCost(MAbility mAbility, PlayerData playerData) {
+        return getBaseManaCost(mAbility) + (getManaCostPerLevel(mAbility) * (playerData.getManaAbilityLevel(mAbility) - 1));
     }
 
     public double getManaCost(MAbility mAbility, int level) {

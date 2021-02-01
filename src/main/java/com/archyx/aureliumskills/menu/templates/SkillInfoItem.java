@@ -3,13 +3,13 @@ package com.archyx.aureliumskills.menu.templates;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.lang.MessageKey;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
@@ -30,20 +30,20 @@ public abstract class SkillInfoItem {
         this.plugin = plugin;
     }
 
-    public ItemStack getItem(ItemStack item, Skill skill, PlayerSkill playerSkill, Locale locale, String displayName, List<String> lore, Map<Integer, Set<String>> lorePlaceholders) {
+    public ItemStack getItem(ItemStack item, Skill skill, PlayerData playerData, Locale locale, String displayName, List<String> lore, Map<Integer, Set<String>> lorePlaceholders) {
         ItemMeta meta = item.getItemMeta();
-        int skillLevel = playerSkill.getSkillLevel(skill);
+        int skillLevel = playerData.getSkillLevel(skill);
         if (meta != null) {
             meta.setDisplayName(LoreUtil.replace(displayName,"{skill}", skill.getDisplayName(locale),"{level}", RomanNumber.toRoman(skillLevel)));
-            meta.setLore(ItemUtils.formatLore(getLore(lore, lorePlaceholders, skill, playerSkill, locale)));
+            meta.setLore(ItemUtils.formatLore(getLore(lore, lorePlaceholders, skill, playerData, locale)));
             item.setItemMeta(meta);
         }
         return item;
     }
 
-    private List<String> getLore(List<String> lore, Map<Integer, Set<String>> lorePlaceholders, Skill skill, PlayerSkill playerSkill, Locale locale) {
+    private List<String> getLore(List<String> lore, Map<Integer, Set<String>> lorePlaceholders, Skill skill, PlayerData playerData, Locale locale) {
         List<String> builtLore = new ArrayList<>();
-        int skillLevel = playerSkill.getSkillLevel(skill);
+        int skillLevel = playerData.getSkillLevel(skill);
         for (int i = 0; i < lore.size(); i++) {
             String line = lore.get(i);
             Set<String> placeholders = lorePlaceholders.get(i);
@@ -65,17 +65,17 @@ public abstract class SkillInfoItem {
                                 ,"{stat}", secondaryStat.getDisplayName(locale)));
                         break;
                     case "ability_levels":
-                        line = LoreUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerSkill, locale));
+                        line = LoreUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerData, locale));
                         break;
                     case "mana_ability":
-                        line = LoreUtil.replace(line, "{mana_ability}", getManaAbilityLore(skill, playerSkill, locale));
+                        line = LoreUtil.replace(line, "{mana_ability}", getManaAbilityLore(skill, playerData, locale));
                         break;
                     case "level":
                         line = LoreUtil.replace(line,"{level}", LoreUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale),"{level}", RomanNumber.toRoman(skillLevel)));
                         break;
                     case "progress_to_level":
                         if (skillLevel < OptionL.getMaxLevel(skill)) {
-                            double currentXp = playerSkill.getXp(skill);
+                            double currentXp = playerData.getSkillXp(skill);
                             double xpToNext = plugin.getLeveler().getLevelRequirements().get(skillLevel - 1);
                             line = LoreUtil.replace(line,"{progress_to_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
                                     ,"{level}", RomanNumber.toRoman(skillLevel + 1)
@@ -102,7 +102,7 @@ public abstract class SkillInfoItem {
         return builtLore;
     }
 
-    private String getAbilityLevelsLore(Skill skill, PlayerSkill playerSkill, Locale locale) {
+    private String getAbilityLevelsLore(Skill skill, PlayerData playerData, Locale locale) {
         StringBuilder abilityLevelsLore = new StringBuilder();
         if (skill.getAbilities().size() == 5) {
             String levelsMessage = Lang.getMessage(MenuMessage.ABILITY_LEVELS, locale);
@@ -114,11 +114,11 @@ public abstract class SkillInfoItem {
             abilities.sort(Comparator.comparingInt(a -> plugin.getAbilityManager().getUnlock(a)));
             for (Ability ability : abilities) {
                 if (plugin.getAbilityManager().isEnabled(ability)) {
-                    if (playerSkill.getAbilityLevel(ability) > 0) {
-                        int abilityLevel = playerSkill.getAbilityLevel(ability);
+                    if (playerData.getAbilityLevel(ability) > 0) {
+                        int abilityLevel = playerData.getAbilityLevel(ability);
                         levelsMessage = LoreUtil.replace(levelsMessage, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
                                 , "{ability}", ability.getDisplayName(locale)
-                                , "{level}", RomanNumber.toRoman(playerSkill.getAbilityLevel(ability))
+                                , "{level}", RomanNumber.toRoman(playerData.getAbilityLevel(ability))
                                 , "{info}", LoreUtil.replace(ability.getInfo(locale)
                                         , "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, abilityLevel))
                                         , "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, abilityLevel)))));
@@ -137,11 +137,11 @@ public abstract class SkillInfoItem {
         return abilityLevelsLore.toString();
     }
 
-    private String getManaAbilityLore(Skill skill, PlayerSkill playerSkill, Locale locale) {
+    private String getManaAbilityLore(Skill skill, PlayerData playerData, Locale locale) {
         StringBuilder manaAbilityLore = new StringBuilder();
         MAbility mAbility = skill.getManaAbility();
         if (mAbility != null) {
-            int level = playerSkill.getManaAbilityLevel(mAbility);
+            int level = playerData.getManaAbilityLevel(mAbility);
             if (level > 0 && plugin.getAbilityManager().isEnabled(mAbility)) {
                 ManaAbilityManager manager = plugin.getManaAbilityManager();
                 manaAbilityLore.append(LoreUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)

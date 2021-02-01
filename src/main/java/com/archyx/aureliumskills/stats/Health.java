@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.AgilityAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.data.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -83,9 +83,9 @@ public class Health implements Listener {
 
 	private void setHealth(Player player) {
 		//Calculates the amount of health to add
-		PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-		if (playerStat != null) {
-			double modifier = (playerStat.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData != null) {
+			double modifier = (playerData.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
 			AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 			if (attribute != null) {
 				double originalMaxHealth = attribute.getValue();

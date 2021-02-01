@@ -2,14 +2,13 @@ package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.Absorption;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.particles.ParticleDisplay;
 import com.cryptomorin.xseries.particles.XParticle;
@@ -44,30 +43,30 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
         this.absorptionActivated = new HashSet<>();
     }
 
-    public void shielding(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player) {
+    public void shielding(EntityDamageByEntityEvent event, PlayerData playerData, Player player) {
         if (plugin.getAbilityManager().isEnabled(Ability.SHIELDING)) {
             if (player.isSneaking()) {
-                if (playerSkill.getAbilityLevel(Ability.SHIELDING) > 0) {
-                    double damageReduction = 1 - (getValue(Ability.SHIELDING, playerSkill) / 100);
+                if (playerData.getAbilityLevel(Ability.SHIELDING) > 0) {
+                    double damageReduction = 1 - (getValue(Ability.SHIELDING, playerData) / 100);
                     event.setDamage(event.getDamage() * damageReduction);
                 }
             }
         }
     }
 
-    public void mobMaster(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
+    public void mobMaster(EntityDamageByEntityEvent event, PlayerData playerData) {
         if (plugin.getAbilityManager().isEnabled(Ability.MOB_MASTER)) {
             if (event.getDamager() instanceof LivingEntity && !(event.getDamager() instanceof Player)) {
-                if (playerSkill.getAbilityLevel(Ability.MOB_MASTER) > 0) {
-                    double damageReduction = 1 - (getValue(Ability.MOB_MASTER, playerSkill) / 100);
+                if (playerData.getAbilityLevel(Ability.MOB_MASTER) > 0) {
+                    double damageReduction = 1 - (getValue(Ability.MOB_MASTER, playerData) / 100);
                     event.setDamage(event.getDamage() * damageReduction);
                 }
             }
         }
     }
 
-    public void immunity(EntityDamageByEntityEvent event, PlayerSkill playerSkill) {
-        double chance = getValue(Ability.IMMUNITY, playerSkill) / 100;
+    public void immunity(EntityDamageByEntityEvent event, PlayerData playerData) {
+        double chance = getValue(Ability.IMMUNITY, playerData) / 100;
         if (r.nextDouble() < chance) {
             event.setCancelled(true);
         }
@@ -86,13 +85,12 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                             type.equals(PotionEffectType.WEAKNESS) || type.equals(PotionEffectType.SLOW_DIGGING) || type.equals(PotionEffectType.SLOW) ||
                             type.equals(PotionEffectType.HUNGER) || type.equals(PotionEffectType.HARM) || type.equals(PotionEffectType.CONFUSION) ||
                             type.equals(PotionEffectType.BLINDNESS)) {
-                        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            double chance = getValue(Ability.NO_DEBUFF, playerSkill) / 100;
-                            if (r.nextDouble() < chance) {
-                                if (!player.hasPotionEffect(type)) {
-                                    event.setIntensity(entity, 0);
-                                }
+                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        if (playerData == null) return;
+                        double chance = getValue(Ability.NO_DEBUFF, playerData) / 100;
+                        if (r.nextDouble() < chance) {
+                            if (!player.hasPotionEffect(type)) {
+                                event.setIntensity(entity, 0);
                             }
                         }
                     }
@@ -101,10 +99,10 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void noDebuffFire(PlayerSkill playerSkill, Player player, LivingEntity entity) {
+    public void noDebuffFire(PlayerData playerData, Player player, LivingEntity entity) {
         if (entity.getEquipment() != null) {
             if (entity.getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.FIRE_ASPECT) > 0) {
-                double chance = getValue(Ability.NO_DEBUFF, playerSkill) / 100;
+                double chance = getValue(Ability.NO_DEBUFF, playerData) / 100;
                 if (r.nextDouble() < chance) {
                     new BukkitRunnable() {
                         @Override
@@ -124,17 +122,16 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
                     if (blockAbility(player)) return;
-                    if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                        if (plugin.getAbilityManager().isEnabled(Ability.NO_DEBUFF)) {
-                            if (event.getDamager() instanceof LivingEntity) {
-                                LivingEntity entity = (LivingEntity) event.getDamager();
-                                noDebuffFire(playerSkill, player, entity);
-                            }
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    if (plugin.getAbilityManager().isEnabled(Ability.NO_DEBUFF)) {
+                        if (event.getDamager() instanceof LivingEntity) {
+                            LivingEntity entity = (LivingEntity) event.getDamager();
+                            noDebuffFire(playerData, player, entity);
                         }
-                        if (plugin.getAbilityManager().isEnabled(Ability.IMMUNITY)) {
-                            immunity(event, playerSkill);
-                        }
+                    }
+                    if (plugin.getAbilityManager().isEnabled(Ability.IMMUNITY)) {
+                        immunity(event, playerData);
                     }
                 }
             }
@@ -151,7 +148,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
         plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.DEFENSE, new String[] {"SHIELD"}, Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK);
     }
 
-    public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+    public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
         ManaAbilityManager manager = plugin.getManaAbilityManager();
         if (absorptionActivated.contains(player)) {
             handleAbsorbedHit(event, player);
@@ -160,23 +157,25 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
             if (manager.isActivated(player.getUniqueId(), MAbility.ABSORPTION)) {
                 return;
             }
-            if (plugin.getManaManager().getMana(player.getUniqueId()) >= manager.getManaCost(MAbility.ABSORPTION, playerSkill)) {
-                manager.activateAbility(player, MAbility.ABSORPTION, (int) (getValue(MAbility.ABSORPTION, playerSkill) * 20), new Absorption(plugin, this));
+            if (playerData.getMana() >= manager.getManaCost(MAbility.ABSORPTION, playerData)) {
+                manager.activateAbility(player, MAbility.ABSORPTION, (int) (getValue(MAbility.ABSORPTION, playerData) * 20), new Absorption(plugin, this));
                 handleAbsorbedHit(event, player);
             }
             else {
                 Locale locale = Lang.getLanguage(player);
                 plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-                        .replace("{mana}", NumberUtil.format0(manager.getManaCost(MAbility.ABSORPTION, playerSkill))));
+                        .replace("{mana}", NumberUtil.format0(manager.getManaCost(MAbility.ABSORPTION, playerData))));
             }
         }
     }
 
     private void handleAbsorbedHit(EntityDamageByEntityEvent event, Player player) {
         // Decrease mana and cancel event
-        double mana = plugin.getManaManager().getMana(player.getUniqueId()) - event.getDamage() * 2;
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null) return;
+        double mana = playerData.getMana() - event.getDamage() * 2;
         if (mana > 0) {
-            plugin.getManaManager().setMana(player.getUniqueId(), mana);
+            playerData.setMana(mana);
             event.setCancelled(true);
             // Particle effects and sound
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GUARDIAN_HURT, 1f, 1f);

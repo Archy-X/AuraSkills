@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ public class YamlStorageProvider extends StorageProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId() + ".yml");
+                File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
                 if (file.exists()) {
                     FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                     PlayerData playerData = new PlayerData(player, plugin);
@@ -45,6 +46,10 @@ public class YamlStorageProvider extends StorageProvider {
                             double xp = config.getDouble(path + "xp", 0.0);
                             playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xp);
+                            // Add stat levels
+                            playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
+                            int secondaryStat = level / 2;
+                            playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
                         }
                         // Load stat modifiers
                         ConfigurationSection modifiersSection = config.getConfigurationSection("stat_modifiers");
@@ -64,6 +69,11 @@ public class YamlStorageProvider extends StorageProvider {
                             }
                         }
                         playerData.setMana(config.getDouble("mana")); // Load mana
+                        // Load locale
+                        String locale = config.getString("locale");
+                        if (locale != null) {
+                            playerData.setLocale(new Locale(locale));
+                        }
                         // Load ability data
                         ConfigurationSection abilitySection = config.getConfigurationSection("ability_data");
                         if (abilitySection != null) {
@@ -79,6 +89,7 @@ public class YamlStorageProvider extends StorageProvider {
                                 }
                             }
                         }
+                        playerManager.addPlayerData(playerData);
                     } catch (Exception e) {
                         Bukkit.getLogger().warning("There was an error loading player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
                         e.printStackTrace();
@@ -93,6 +104,50 @@ public class YamlStorageProvider extends StorageProvider {
 
     @Override
     public void save(Player player) {
-
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                PlayerData playerData = playerManager.getPlayerData(player);
+                if (playerData == null) return;
+                File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
+                FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+                try {
+                    config.set("uuid", player.getUniqueId());
+                    // Save skill data
+                    for (Skill skill : Skill.values()) {
+                        String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
+                        config.set(path + "level", playerData.getSkillLevel(skill));
+                        config.set(path + "xp", playerData.getSkillLevel(skill));
+                    }
+                    config.set("stat_modifiers", null); // Clear existing modifiers
+                    // Save stat modifiers
+                    int count = 0;
+                    for (StatModifier modifier : playerData.getStatModifiers().values()) {
+                        String path = "stat_modifiers." + count + ".";
+                        config.set(path + "name", modifier.getName());
+                        config.set(path + "stat", modifier.getStat().toString().toLowerCase(Locale.ROOT));
+                        config.set(config + "value", modifier.getValue());
+                        count++;
+                    }
+                    config.set("mana", playerData.getMana()); // Save mana
+                    // Save locale
+                    Locale locale = playerData.getLocale();
+                    if (locale != null) {
+                        config.set("locale", locale.toString());
+                    }
+                    // Save ability data
+                    for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
+                        String path = "ability_data." + abilityData.getAbility().toString().toLowerCase(Locale.ROOT) + ".";
+                        for (Map.Entry<String, Object> entry : abilityData.getDataMap().entrySet()) {
+                            config.set(path + entry.getKey(), entry.getValue());
+                        }
+                    }
+                    playerManager.removePlayerData(player.getUniqueId()); // Remove from memory
+                } catch (Exception e) {
+                    Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
+                    e.printStackTrace();
+                }
+            }
+        }.runTaskAsynchronously(plugin);
     }
 }

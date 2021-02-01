@@ -23,9 +23,9 @@ public class RequirementListener implements Listener {
     private final RequirementManager manager;
     private final Requirements requirements;
 
-    public RequirementListener(RequirementManager manager) {
-        this.manager = manager;
-        this.requirements = new Requirements(manager);
+    public RequirementListener(AureliumSkills plugin) {
+        this.manager = plugin.getRequirementManager();
+        this.requirements = new Requirements(plugin);
     }
 
     @EventHandler

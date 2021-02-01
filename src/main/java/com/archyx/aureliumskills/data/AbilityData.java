@@ -22,7 +22,11 @@ public class AbilityData {
 
     @Nullable
     public Object getData(String key) {
-        return this.data.get(key);
+        return data.get(key);
+    }
+
+    public Map<String, Object> getDataMap() {
+        return data;
     }
 
     public void setData(String key, Object value) {

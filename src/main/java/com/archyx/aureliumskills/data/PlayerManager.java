@@ -33,4 +33,8 @@ public class PlayerManager {
         this.playerData.remove(id);
     }
 
+    public boolean hasPlayerData(Player player) {
+        return playerData.containsKey(player.getUniqueId());
+    }
+
 }

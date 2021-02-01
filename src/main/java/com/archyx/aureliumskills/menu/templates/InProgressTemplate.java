@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.menu.templates;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
@@ -63,7 +63,7 @@ public class InProgressTemplate extends ProgressLevelItem implements Configurabl
         }
     }
 
-    public ItemStack getItem(Skill skill, PlayerSkill playerSkill, int level, Locale locale) {
+    public ItemStack getItem(Skill skill, PlayerData playerData, int level, Locale locale) {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
@@ -87,7 +87,7 @@ public class InProgressTemplate extends ProgressLevelItem implements Configurabl
                             line = LoreUtil.replace(line, "{mana_ability}", getManaAbilityLore(skill, level, locale));
                             break;
                         case "progress":
-                            double currentXp = playerSkill.getXp(skill);
+                            double currentXp = playerData.getSkillXp(skill);
                             double xpToNext = getPlugin().getLeveler().getLevelRequirements().get(level - 2);
                             line = LoreUtil.replace(line,"{progress}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
                                     ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)

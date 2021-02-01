@@ -101,26 +101,7 @@ public class Leaderboard {
     }
 
     private void addLeaderboards() {
-        //Add to list
-        for (UUID id : SkillLoader.playerSkills.keySet()) {
-            PlayerSkillInstance playerSkill = new PlayerSkillInstance(SkillLoader.playerSkills.get(id));
-            powerLeaderboard.add(playerSkill);
-            farmingLeaderboard.add(playerSkill);
-            foragingLeaderboard.add(playerSkill);
-            miningLeaderboard.add(playerSkill);
-            fishingLeaderboard.add(playerSkill);
-            excavationLeaderboard.add(playerSkill);
-            archeryLeaderboard.add(playerSkill);
-            defenseLeaderboard.add(playerSkill);
-            fightingLeaderboard.add(playerSkill);
-            enduranceLeaderboard.add(playerSkill);
-            agilityLeaderboard.add(playerSkill);
-            alchemyLeaderboard.add(playerSkill);
-            enchantingLeaderboard.add(playerSkill);
-            sorceryLeaderboard.add(playerSkill);
-            healingLeaderboard.add(playerSkill);
-            forgingLeaderboard.add(playerSkill);
-        }
+        // TODO Redo leaderboards
     }
 
     private void sortLeaderboards() {

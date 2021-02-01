@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import com.archyx.aureliumskills.api.event.RegenReason;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.data.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -32,15 +32,14 @@ public class Regeneration implements Listener {
 				//Check for disabled world
 				if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 					if (!OptionL.getBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
-						if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-							PlayerStat stat = SkillLoader.playerStats.get(player.getUniqueId());
-							if (player.getSaturation() > 0) {
-								event.setAmount(event.getAmount() + (stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER)));
-							} else if (player.getFoodLevel() == 20) {
-								event.setAmount(event.getAmount() + (stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER)));
-							} else if (player.getFoodLevel() >= 14) {
-								event.setAmount(event.getAmount() + (stat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER)));
-							}
+						PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+						if (playerData == null) return;
+						if (player.getSaturation() > 0) {
+							event.setAmount(event.getAmount() + (playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER)));
+						} else if (player.getFoodLevel() == 20) {
+							event.setAmount(event.getAmount() + (playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER)));
+						} else if (player.getFoodLevel() >= 14) {
+							event.setAmount(event.getAmount() + (playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER)));
 						}
 					} else {
 						event.setCancelled(true);
@@ -54,8 +53,8 @@ public class Regeneration implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
-					PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-					if (playerStat != null) {
+					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+					if (playerData != null) {
 						//Check for disabled world
 						if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 							if (!player.isDead()) {
@@ -63,7 +62,7 @@ public class Regeneration implements Listener {
 								if (attribute != null) {
 									if (player.getHealth() < attribute.getValue()) {
 										if (player.getFoodLevel() >= 14 && player.getFoodLevel() < 20) {
-											double amountGained = Math.min(OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + playerStat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER)
+											double amountGained = Math.min(OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER)
 													, attribute.getValue() - player.getHealth());
 											CustomRegenEvent event = new CustomRegenEvent(player, amountGained, RegenReason.HUNGER_FULL);
 											Bukkit.getPluginManager().callEvent(event);
@@ -74,7 +73,7 @@ public class Regeneration implements Listener {
 												}
 											}
 										} else if (player.getFoodLevel() == 20 && player.getSaturation() == 0) {
-											double amountGained = Math.min(OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + playerStat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER)
+											double amountGained = Math.min(OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER)
 													, attribute.getValue() - player.getHealth());
 											CustomRegenEvent event = new CustomRegenEvent(player, amountGained, RegenReason.HUNGER_ALMOST_FULL);
 											Bukkit.getPluginManager().callEvent(event);
@@ -99,15 +98,15 @@ public class Regeneration implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
-					PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-					if (playerStat != null) {
+					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+					if (playerData != null) {
 						//Check for disabled world
 						if (!plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 							if (!player.isDead()) {
 								if (player.getSaturation() > 0 && player.getFoodLevel() >= 20) {
 									AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 									if (attribute != null) {
-										double amountGained = Math.min(OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + playerStat.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER)
+										double amountGained = Math.min(OptionL.getDouble(Option.REGENERATION_BASE_REGEN) + playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER)
 												, attribute.getValue() - player.getHealth());
 										CustomRegenEvent event = new CustomRegenEvent(player, amountGained, RegenReason.SATURATED);
 										Bukkit.getPluginManager().callEvent(event);

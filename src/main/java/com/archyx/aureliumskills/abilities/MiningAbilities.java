@@ -4,16 +4,14 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SpeedMine;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.cryptomorin.xseries.XMaterial;
@@ -49,27 +47,26 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		if (OptionL.isEnabled(Skill.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUCKY_MINER)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
-					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-						if (skill.getAbilityLevel(Ability.LUCKY_MINER) > 0) {
-							if (r.nextDouble() < (getValue(Ability.LUCKY_MINER, skill) / 100)) {
-								ItemStack tool = player.getInventory().getItemInMainHand();
-								Material mat = block.getType();
-								if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
-									if (mat.equals(Material.DIAMOND_ORE) || mat.equals(Material.LAPIS_ORE) ||
-										mat.equals(Material.REDSTONE_ORE) || mat.name().equals("GLOWING_REDSTONE_ORE") ||
-										mat.equals(Material.EMERALD_ORE) || mat.equals(Material.COAL_ORE) ||
-										mat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) || mat.equals(XMaterial.NETHER_GOLD_ORE.parseMaterial())) {
-										return;
-									}
+					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+					if (playerData == null) return;
+					if (playerData.getAbilityLevel(Ability.LUCKY_MINER) > 0) {
+						if (r.nextDouble() < (getValue(Ability.LUCKY_MINER, playerData) / 100)) {
+							ItemStack tool = player.getInventory().getItemInMainHand();
+							Material mat = block.getType();
+							if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+								if (mat.equals(Material.DIAMOND_ORE) || mat.equals(Material.LAPIS_ORE) ||
+									mat.equals(Material.REDSTONE_ORE) || mat.name().equals("GLOWING_REDSTONE_ORE") ||
+									mat.equals(Material.EMERALD_ORE) || mat.equals(Material.COAL_ORE) ||
+									mat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) || mat.equals(XMaterial.NETHER_GOLD_ORE.parseMaterial())) {
+									return;
 								}
-								Collection<ItemStack> drops = block.getDrops(tool);
-								for (ItemStack item : drops) {
-									PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCKY_MINER);
-									Bukkit.getPluginManager().callEvent(event);
-									if (!event.isCancelled()) {
-										block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-									}
+							}
+							Collection<ItemStack> drops = block.getDrops(tool);
+							for (ItemStack item : drops) {
+								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCKY_MINER);
+								Bukkit.getPluginManager().callEvent(event);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
 								}
 							}
 						}
@@ -79,15 +76,15 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void pickMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+	public void pickMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
 		if (OptionL.isEnabled(Skill.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.PICK_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.mining")) {
 					return;
 				}
-				if (playerSkill.getAbilityLevel(Ability.PICK_MASTER) > 0) {
-					event.setDamage(event.getDamage() * (1 + (getValue(Ability.PICK_MASTER, playerSkill) / 100)));
+				if (playerData.getAbilityLevel(Ability.PICK_MASTER) > 0) {
+					event.setDamage(event.getDamage() * (1 + (getValue(Ability.PICK_MASTER, playerData) / 100)));
 				}
 			}
 		}
@@ -100,31 +97,27 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		if (blockAbility(player)) return;
 		//Checks if item damaged is armor
 		if (ItemUtils.isArmor(event.getItem().getType())) {
-			if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-				PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-				//Applies ability
-				if (r.nextDouble() < (getValue(Ability.HARDENED_ARMOR, skill) / 100)) {
-					event.setCancelled(true);
-				}
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+			if (playerData == null) return;
+			//Applies ability
+			if (r.nextDouble() < (getValue(Ability.HARDENED_ARMOR, playerData) / 100)) {
+				event.setCancelled(true);
 			}
 		}
 	}
 
-	public void applyStamina(Player player, PlayerStat playerStat) {
+	public void applyStamina(PlayerData playerData) {
 		if (OptionL.isEnabled(Skill.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.STAMINA)) {
-				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-				if (playerSkill != null) {
-					if (playerSkill.getAbilityLevel(Ability.STAMINA) > 0) {
-						playerStat.addModifier(new StatModifier("mining-stamina", Stat.TOUGHNESS, (int) getValue(Ability.STAMINA, playerSkill)));
-					}
+				if (playerData.getAbilityLevel(Ability.STAMINA) > 0) {
+					playerData.addStatModifier(new StatModifier("mining-stamina", Stat.TOUGHNESS, (int) getValue(Ability.STAMINA, playerData)));
 				}
 			}
 		}
 	}
 
-	public void removeStamina(PlayerStat playerStat) {
-		playerStat.removeModifier("mining-stamina");
+	public void removeStamina(PlayerData playerData) {
+		playerData.removeStatModifier("mining-stamina");
 	}
 
 
@@ -150,14 +143,13 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 				//Checks if holding pickaxe
 				Material mat = player.getInventory().getItemInMainHand().getType();
 				if (mat.name().toUpperCase().contains("PICKAXE")) {
-					if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-						PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-						if (plugin.getManaManager().getMana(player.getUniqueId()) >= getManaCost(MAbility.SPEED_MINE, skill)) {
-							manager.activateAbility(player, MAbility.SPEED_MINE, (int) (getValue(MAbility.SPEED_MINE, skill) * 20), new SpeedMine(plugin));
-						}
-						else {
-							plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.SPEED_MINE, skill))));
-						}
+					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+					if (playerData == null) return;
+					if (playerData.getMana() >= getManaCost(MAbility.SPEED_MINE, playerData)) {
+						manager.activateAbility(player, MAbility.SPEED_MINE, (int) (getValue(MAbility.SPEED_MINE, playerData) * 20), new SpeedMine(plugin));
+					}
+					else {
+						plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.SPEED_MINE, playerData))));
 					}
 				}
 				

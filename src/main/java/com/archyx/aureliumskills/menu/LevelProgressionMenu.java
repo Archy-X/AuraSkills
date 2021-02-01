@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.items.*;
@@ -9,9 +10,7 @@ import com.archyx.aureliumskills.menu.templates.InProgressTemplate;
 import com.archyx.aureliumskills.menu.templates.LockedTemplate;
 import com.archyx.aureliumskills.menu.templates.TemplateType;
 import com.archyx.aureliumskills.menu.templates.UnlockedTemplate;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -53,16 +52,19 @@ public class LevelProgressionMenu implements InventoryProvider {
 	
 	@Override
 	public void init(Player player, InventoryContents contents) {
-		PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-		int currentLevel = playerSkill.getSkillLevel(skill);
-
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData == null) {
+			player.closeInventory();
+			return;
+		}
+		int currentLevel = playerData.getSkillLevel(skill);
 		// Fill item
 		if (options.isFillEnabled()) {
 			contents.fill(ClickableItem.empty(options.getFillItem()));
 		}
 
 		SkillItem skillItem = (SkillItem) options.getItem(ItemType.SKILL);
-		contents.set(skillItem.getPos(), ClickableItem.empty(skillItem.getItem(skill, playerSkill, locale)));
+		contents.set(skillItem.getPos(), ClickableItem.empty(skillItem.getItem(skill, playerData, locale)));
 
 		BackItem backItem = (BackItem) options.getItem(ItemType.BACK);
 		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(locale), e -> SkillsMenu.getInventory(player, plugin).open(player)));
@@ -91,7 +93,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 				if (i + 2 <= currentLevel) {
 					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, locale));
 				} else if (i + 2 == currentLevel + 1) {
-					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, locale));
+					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerData, i + 2, locale));
 				} else {
 					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, locale));
 				}

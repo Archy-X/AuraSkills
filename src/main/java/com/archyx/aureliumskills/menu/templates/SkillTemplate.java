@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.menu.templates;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.MenuLoader;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
@@ -82,13 +82,13 @@ public class SkillTemplate extends SkillInfoItem implements ConfigurableTemplate
         }
     }
 
-    public ItemStack getItem(Skill skill, PlayerSkill playerSkill, Locale locale) {
+    public ItemStack getItem(Skill skill, PlayerData playerData, Locale locale) {
         ItemStack baseItem = baseItems.get(skill);
         if (baseItem == null) {
             baseItem = new ItemStack(Material.STONE);
         }
         baseItem = baseItem.clone();
-        return getItem(baseItem, skill, playerSkill, locale, displayName, lore, lorePlaceholders);
+        return getItem(baseItem, skill, playerData, locale, displayName, lore, lorePlaceholders);
     }
 
     public SlotPos getPosition(Skill skill) {

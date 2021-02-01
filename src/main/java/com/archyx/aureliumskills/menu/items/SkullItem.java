@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.menu.items;
 
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
-import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
@@ -62,7 +62,7 @@ public class SkullItem implements ConfigurableItem {
         }
     }
 
-    public ItemStack getItem(Player player, PlayerStat playerStat, Locale locale) {
+    public ItemStack getItem(Player player, PlayerData playerData, Locale locale) {
         ItemStack item = SkullCreator.itemFromUuid(player.getUniqueId());
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
@@ -77,7 +77,7 @@ public class SkullItem implements ConfigurableItem {
                             ,"{color}", stat.getColor(locale)
                             ,"{symbol}", stat.getSymbol(locale)
                             ,"{stat}", stat.getDisplayName(locale)
-                            ,"{level}", NumberUtil.format1(playerStat.getStatLevel(stat))));
+                            ,"{level}", NumberUtil.format1(playerData.getStatLevel(stat))));
                 }
                 builtLore.add(line);
             }

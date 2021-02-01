@@ -2,14 +2,13 @@ package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.ChargedShot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import org.bukkit.Material;
@@ -46,22 +45,22 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         tickChargedShotCooldown();
     }
 
-    public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
+    public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
         if (OptionL.isEnabled(Skill.ARCHERY)) {
             if (plugin.getAbilityManager().isEnabled(Ability.BOW_MASTER)) {
                 if (!player.hasPermission("aureliumskills.archery")) {
                     return;
                 }
-                if (playerSkill.getAbilityLevel(Ability.BOW_MASTER) > 0) {
-                    double multiplier = 1 + (getValue(Ability.BOW_MASTER, playerSkill) / 100);
+                if (playerData.getAbilityLevel(Ability.BOW_MASTER) > 0) {
+                    double multiplier = 1 + (getValue(Ability.BOW_MASTER, playerData) / 100);
                     event.setDamage(event.getDamage() * multiplier);
                 }
             }
         }
     }
 
-    public void stun(PlayerSkill playerSkill, LivingEntity entity) {
-        if (r.nextDouble() < (getValue(Ability.STUN, playerSkill) / 100)) {
+    public void stun(PlayerData playerData, LivingEntity entity) {
+        if (r.nextDouble() < (getValue(Ability.STUN, playerData) / 100)) {
             if (entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) != null) {
                 AttributeInstance speed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
                 if (speed != null) {
@@ -100,8 +99,8 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void piercing(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, Arrow arrow) {
-        if (r.nextDouble() < (getValue(Ability.PIERCING, playerSkill) / 100)) {
+    public void piercing(EntityDamageByEntityEvent event, PlayerData playerData, Player player, Arrow arrow) {
+        if (r.nextDouble() < (getValue(Ability.PIERCING, playerData) / 100)) {
             arrow.setBounce(false);
             Vector velocity = arrow.getVelocity();
             Arrow newArrow = event.getEntity().getWorld().spawnArrow(arrow.getLocation(), velocity, (float) velocity.length(), 0.0f);
@@ -120,19 +119,18 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                     if (arrow.getShooter() instanceof Player) {
                         Player player = (Player) arrow.getShooter();
                         if (blockAbility(player)) return;
-                        //Applies abilities
-                        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            AbilityManager options = plugin.getAbilityManager();
-                            if (options.isEnabled(Ability.STUN)) {
-                                if (event.getEntity() instanceof LivingEntity) {
-                                    LivingEntity entity = (LivingEntity) event.getEntity();
-                                    stun(playerSkill, entity);
-                                }
+                        // Applies abilities
+                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        if (playerData == null) return;
+                        AbilityManager options = plugin.getAbilityManager();
+                        if (options.isEnabled(Ability.STUN)) {
+                            if (event.getEntity() instanceof LivingEntity) {
+                                LivingEntity entity = (LivingEntity) event.getEntity();
+                                stun(playerData, entity);
                             }
-                            if (options.isEnabled(Ability.PIERCING)) {
-                                piercing(event, playerSkill, player, arrow);
-                            }
+                        }
+                        if (options.isEnabled(Ability.PIERCING)) {
+                            piercing(event, playerData, player, arrow);
                         }
                     }
                 }
@@ -149,9 +147,9 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         if (item != null) {
             if (item.getType() == Material.BOW) {
                 if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
-                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                    if (playerSkill == null) return;
-                    if (playerSkill.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
                     Locale locale = Lang.getLanguage(player);
                     Integer cooldown = chargedShotToggleCooldown.get(player);
                     boolean ready = true;
@@ -195,13 +193,13 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
             if (chargedShotEnabled.contains(player)) {
-                PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                if (playerSkill == null) return;
-                if (playerSkill.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
+                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                if (playerData == null) return;
+                if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
                 ManaAbilityManager manager = plugin.getManaAbilityManager();
                 int cooldown = manager.getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
                 if (cooldown == 0) {
-                    manager.activateAbility(player, MAbility.CHARGED_SHOT, (int) (manager.getCooldown(MAbility.CHARGED_SHOT, playerSkill) * 20)
+                    manager.activateAbility(player, MAbility.CHARGED_SHOT, (int) (manager.getCooldown(MAbility.CHARGED_SHOT, playerData) * 20)
                             , new ChargedShot(plugin, event.getProjectile(), event.getForce()));
                 } else {
                     if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
