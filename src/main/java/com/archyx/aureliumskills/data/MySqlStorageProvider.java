@@ -193,41 +193,49 @@ public class MySqlStorageProvider extends StorageProvider {
                 if (playerData == null) return;
                 try {
                     // Build stat modifiers json
-                    StringBuilder modifiersJson = new StringBuilder("[");
-                    for (StatModifier statModifier : playerData.getStatModifiers().values()) {
-                        modifiersJson.append("{\"name\":").append(statModifier.getName())
-                                .append(",\"stat\":").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
-                                .append(",\"value\":").append(statModifier.getValue()).append("},");
-                    }
-                    modifiersJson.deleteCharAt(modifiersJson.length() - 1);
-                    modifiersJson.append("]");
-                    // Build ability json
-                    StringBuilder abilityJson = new StringBuilder("{");
-                    for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
-                        String abilityName = abilityData.getAbility().toString().toLowerCase(Locale.ROOT);
-                        if (abilityData.getDataMap().size() > 0) {
-                            abilityJson.append(abilityName).append(":{");
-                            for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
-                                String value = String.valueOf(dataEntry.getValue());
-                                if (dataEntry.getValue() instanceof String) {
-                                    value = "\"" + dataEntry.getValue() + "\"";
-                                }
-                                abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
-                            }
-                            abilityJson.deleteCharAt(abilityJson.length() - 1);
-                            abilityJson.append("},");
+                    StringBuilder modifiersJson = new StringBuilder();
+                    if (playerData.getStatModifiers().size() > 0) {
+                        modifiersJson.append("[");
+                        for (StatModifier statModifier : playerData.getStatModifiers().values()) {
+                            modifiersJson.append("{\"name\":").append(statModifier.getName())
+                                    .append(",\"stat\":").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
+                                    .append(",\"value\":").append(statModifier.getValue()).append("},");
                         }
+                        modifiersJson.deleteCharAt(modifiersJson.length() - 1);
+                        modifiersJson.append("]");
                     }
-                    abilityJson.deleteCharAt(abilityJson.length() - 1);
-                    abilityJson.append("}");
+                    // Build ability json
+                    StringBuilder abilityJson = new StringBuilder();
+                    if (playerData.getAbilityDataMap().size() > 0) {
+                        abilityJson.append("{");
+                        for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
+                            String abilityName = abilityData.getAbility().toString().toLowerCase(Locale.ROOT);
+                            if (abilityData.getDataMap().size() > 0) {
+                                abilityJson.append(abilityName).append(":{");
+                                for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
+                                    String value = String.valueOf(dataEntry.getValue());
+                                    if (dataEntry.getValue() instanceof String) {
+                                        value = "\"" + dataEntry.getValue() + "\"";
+                                    }
+                                    abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
+                                }
+                                abilityJson.deleteCharAt(abilityJson.length() - 1);
+                                abilityJson.append("},");
+                            }
+                        }
+                        abilityJson.deleteCharAt(abilityJson.length() - 1);
+                        abilityJson.append("}");
+                    }
                     Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+                    String modifiersString = !modifiersJson.toString().equals("") ? modifiersJson.toString() : null;
+                    String abilitiesString = !abilityJson.toString().equals("") ? abilityJson.toString() : null;
                     statement.executeUpdate("INSERT INTO SkillData (ID, AGILITY_LEVEL, AGILITY_XP, ALCHEMY_LEVEL, ALCHEMY_XP, ARCHERY_LEVEL, ARCHERY_XP, " +
                             "DEFENSE_LEVEL, DEFENSE_XP, ENCHANTING_LEVEL, ENCHANTING_XP, ENDURANCE_LEVEL, ENDURANCE_XP, " +
                             "EXCAVATION_LEVEL, EXCAVATION_XP, FARMING_LEVEL, FARMING_XP, FIGHTING_LEVEL, FIGHTING_XP, " +
                             "FISHING_LEVEL, FISHING_XP, FORAGING_LEVEL, FORAGING_XP, FORGING_LEVEL, FORGING_XP, " +
                             "HEALING_LEVEL, HEALING_XP, MINING_LEVEL, MINING_XP, SORCERY_LEVEL, SORCERY_XP, " +
-                            "LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES(" +
-                            player.getUniqueId() + ", " +
+                            "LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('" +
+                            player.getUniqueId() + "', " +
                             playerData.getSkillLevel(Skill.AGILITY) + ", " + playerData.getSkillXp(Skill.AGILITY) + ", " +
                             playerData.getSkillLevel(Skill.ALCHEMY) + ", " + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
                             playerData.getSkillLevel(Skill.ARCHERY) + ", " + playerData.getSkillXp(Skill.ARCHERY) + ", " +
@@ -243,8 +251,8 @@ public class MySqlStorageProvider extends StorageProvider {
                             playerData.getSkillLevel(Skill.HEALING) + ", " + playerData.getSkillXp(Skill.HEALING) + ", " +
                             playerData.getSkillLevel(Skill.MINING) + ", " + playerData.getSkillXp(Skill.MINING) + ", " +
                             playerData.getSkillLevel(Skill.SORCERY) + ", " + playerData.getSkillXp(Skill.SORCERY) + ", '" +
-                            playerData.getLocale().toString() + "', '" + modifiersJson.toString() + "', " + playerData.getMana() + ", '" +
-                            abilityJson.toString() + "') ON DUPLICATE KEY UPDATE " +
+                            playerData.getLocale().toString() + "', '" + modifiersString + "', " + playerData.getMana() + ", '" +
+                            abilitiesString + "') ON DUPLICATE KEY UPDATE " +
                             "AGILITY_LEVEL=" + playerData.getSkillLevel(Skill.AGILITY) + ", AGILITY_XP=" + playerData.getSkillXp(Skill.AGILITY) + ", " +
                             "ALCHEMY_LEVEL=" + playerData.getSkillLevel(Skill.ALCHEMY) + ", ALCHEMY_XP=" + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
                             "ARCHERY_LEVEL=" + playerData.getSkillLevel(Skill.ARCHERY) + ", ARCHERY_XP=" + playerData.getSkillXp(Skill.ARCHERY) + ", " +
@@ -259,8 +267,8 @@ public class MySqlStorageProvider extends StorageProvider {
                             "HEALING_LEVEL=" + playerData.getSkillLevel(Skill.HEALING) + ", HEALING_XP=" + playerData.getSkillXp(Skill.HEALING) + ", " +
                             "MINING_LEVEL=" + playerData.getSkillLevel(Skill.MINING) + ", MINING_XP=" + playerData.getSkillXp(Skill.MINING) + ", " +
                             "SORCERY_LEVEL=" + playerData.getSkillLevel(Skill.SORCERY) + ", SORCERY_XP=" + playerData.getSkillXp(Skill.SORCERY) + ", " +
-                            "LOCALE='" + playerData.getLocale().toString() + "', STAT_MODIFIERS='" + modifiersJson.toString() + "', MANA=" + playerData.getMana() + ", " +
-                            "ABILITY_DATA='" + abilityJson.toString() + "'"
+                            "LOCALE='" + playerData.getLocale().toString() + "', STAT_MODIFIERS='" + modifiersString + "', MANA=" + playerData.getMana() + ", " +
+                            "ABILITY_DATA='" + abilitiesString + "'"
                     );
                 } catch (Exception e) {
                     Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");

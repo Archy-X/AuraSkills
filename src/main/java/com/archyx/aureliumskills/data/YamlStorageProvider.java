@@ -112,12 +112,12 @@ public class YamlStorageProvider extends StorageProvider {
                 File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                 try {
-                    config.set("uuid", player.getUniqueId());
+                    config.set("uuid", player.getUniqueId().toString());
                     // Save skill data
                     for (Skill skill : Skill.values()) {
                         String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
                         config.set(path + "level", playerData.getSkillLevel(skill));
-                        config.set(path + "xp", playerData.getSkillLevel(skill));
+                        config.set(path + "xp", playerData.getSkillXp(skill));
                     }
                     config.set("stat_modifiers", null); // Clear existing modifiers
                     // Save stat modifiers
@@ -126,7 +126,7 @@ public class YamlStorageProvider extends StorageProvider {
                         String path = "stat_modifiers." + count + ".";
                         config.set(path + "name", modifier.getName());
                         config.set(path + "stat", modifier.getStat().toString().toLowerCase(Locale.ROOT));
-                        config.set(config + "value", modifier.getValue());
+                        config.set(path + "value", modifier.getValue());
                         count++;
                     }
                     config.set("mana", playerData.getMana()); // Save mana
@@ -142,6 +142,7 @@ public class YamlStorageProvider extends StorageProvider {
                             config.set(path + entry.getKey(), entry.getValue());
                         }
                     }
+                    config.save(file);
                     playerManager.removePlayerData(player.getUniqueId()); // Remove from memory
                 } catch (Exception e) {
                     Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");

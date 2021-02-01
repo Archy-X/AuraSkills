@@ -195,9 +195,7 @@ public class SkillsCommand extends BaseCommand {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			plugin.getStorageProvider().save(player);
 		}
-		if (sender instanceof Player) {
-			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SAVE_SAVED, locale));
-		}
+		sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SAVE_SAVED, locale));
 	}
 
 	@Subcommand("updateleaderboards")
