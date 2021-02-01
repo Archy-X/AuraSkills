@@ -7,10 +7,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -89,7 +86,7 @@ public class MySqlStorageProvider extends StorageProvider {
                                 // Load stat modifiers
                                 String statModifiers = result.getString("STAT_MODIFIERS");
                                 if (statModifiers != null) {
-                                    JsonObject jsonModifiers = new Gson().fromJson(statModifiers, JsonObject.class);
+                                    JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
                                     for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
                                         JsonObject modifierObject = modifierElement.getAsJsonObject();
                                         String name = modifierObject.get("name").getAsString();
@@ -127,7 +124,12 @@ public class MySqlStorageProvider extends StorageProvider {
                                 }
                                 playerManager.addPlayerData(playerData);
                                 PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
-                                Bukkit.getPluginManager().callEvent(event);
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        Bukkit.getPluginManager().callEvent(event);
+                                    }
+                                }.runTask(plugin);
                             } else {
                                 createNewPlayer(player);
                             }
@@ -204,8 +206,8 @@ public class MySqlStorageProvider extends StorageProvider {
                         modifiersJson.append("[");
                         for (StatModifier statModifier : playerData.getStatModifiers().values()) {
                             modifiersJson.append("{\"name\":\"").append(statModifier.getName())
-                                    .append("\",\"stat\":").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
-                                    .append(",\"value\":").append(statModifier.getValue()).append("},");
+                                    .append("\",\"stat\":\"").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
+                                    .append("\",\"value\":").append(statModifier.getValue()).append("},");
                         }
                         modifiersJson.deleteCharAt(modifiersJson.length() - 1);
                         modifiersJson.append("]");
@@ -217,7 +219,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
                             String abilityName = abilityData.getAbility().toString().toLowerCase(Locale.ROOT);
                             if (abilityData.getDataMap().size() > 0) {
-                                abilityJson.append(abilityName).append(":{");
+                                abilityJson.append("\"").append(abilityName).append("\"").append(":{");
                                 for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
                                     String value = String.valueOf(dataEntry.getValue());
                                     if (dataEntry.getValue() instanceof String) {
@@ -279,6 +281,7 @@ public class MySqlStorageProvider extends StorageProvider {
                                 "ABILITY_DATA=" + abilitiesString + ""
                         );
                     }
+                    playerManager.removePlayerData(player.getUniqueId());
                 } catch (Exception e) {
                     Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
                     e.printStackTrace();

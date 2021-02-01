@@ -4,6 +4,7 @@ package com.archyx.aureliumskills.data;
 import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class StorageProvider {
 
@@ -19,7 +20,12 @@ public abstract class StorageProvider {
         PlayerData playerData = new PlayerData(player, plugin);
         playerManager.addPlayerData(playerData);
         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
-        Bukkit.getPluginManager().callEvent(event);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getPluginManager().callEvent(event);
+            }
+        }.runTask(plugin);
     }
 
     public abstract void load(Player player);

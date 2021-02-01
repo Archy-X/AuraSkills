@@ -91,7 +91,12 @@ public class YamlStorageProvider extends StorageProvider {
                         }
                         playerManager.addPlayerData(playerData);
                         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
-                        Bukkit.getPluginManager().callEvent(event);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                Bukkit.getPluginManager().callEvent(event);
+                            }
+                        }.runTask(plugin);
                     } catch (Exception e) {
                         Bukkit.getLogger().warning("There was an error loading player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
                         e.printStackTrace();
