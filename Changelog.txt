@@ -1,10 +1,14 @@
 Version Alpha 1.6.5
   Changes:
     - Changed menu inventory click event priority to highest (should prevent plugin compat issues where players are able to take items out)
+    - Updated zh-CN messages
   Bug Fixes:
     - Exploding fireworks will now give Archery XP instead of Fighting
-    - Fixed Disenchanter no enum constant curse error
+    - Fixed Disenchanter no enum constant error
     - Fixed action bar hp and max hp discrepancy
+    - Fixed experience duplication death exploit
+    - Players can longer earn Archery/Fighting/Defense XP by damaging/killing themselves
+    - Fixed ability config migration error
 
 Version Alpha 1.6.4
   New Features:

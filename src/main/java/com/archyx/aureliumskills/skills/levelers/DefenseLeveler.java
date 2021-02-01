@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -41,6 +42,7 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 					if (event.getFinalDamage() < p.getHealth()) {
 						//Player Damage
 						if (event.getDamager() instanceof Player) {
+							if (event.getDamager().equals(p)) return;
 							if (d * getXp(Source.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
 								if (d * getXp(Source.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
 									plugin.getLeveler().addXp(p, s, d * getXp(p, Source.PLAYER_DAMAGE));
@@ -51,6 +53,13 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 						}
 						//Mob damage
 						else {
+							// Make sure player didn't cause own damage
+							if (event.getDamager() instanceof Projectile) {
+								Projectile projectile = (Projectile) event.getDamager();
+								if (projectile.getShooter() instanceof Player) {
+									if (projectile.getShooter().equals(p)) return;
+								}
+							}
 							if (d * getXp(Source.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
 								if (d * getXp(Source.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
 									plugin.getLeveler().addXp(p, s, d * getXp(p, Source.MOB_DAMAGE));

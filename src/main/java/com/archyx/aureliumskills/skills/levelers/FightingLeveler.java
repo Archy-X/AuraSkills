@@ -31,6 +31,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 						Player p = e.getKiller();
 						Skill s = Skill.FIGHTING;
 						if (blockXpGainPlayer(p)) return;
+						if (e.equals(p)) return;
 						// Make sure not MythicMob
 						if (isMythicMob(e)) {
 							return;

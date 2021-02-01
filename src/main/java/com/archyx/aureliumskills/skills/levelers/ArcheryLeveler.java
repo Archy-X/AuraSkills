@@ -51,6 +51,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						Player p = e.getKiller();
 						Skill s = Skill.ARCHERY;
 						if (blockXpGainPlayer(p)) return;
+						if (e.equals(p)) return;
 						// Make sure not MythicMob
 						if (isMythicMob(e)) {
 							return;
