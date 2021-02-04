@@ -85,11 +85,13 @@ public abstract class ProgressLevelItem {
                 }
                 else {
                     int manaAbilityLevel = ((level - manager.getUnlock(mAbility)) / manager.getLevelUp(mAbility)) + 1;
-                    manaAbilityLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL, locale)
-                            , "{mana_ability}", mAbility.getDisplayName(locale)
-                            , "{level}", RomanNumber.toRoman(manaAbilityLevel)
-                            , "{desc}", LoreUtil.replace(mAbility.getDescription(locale)
-                                    , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, manaAbilityLevel)))));
+                    if (manaAbilityLevel <= manager.getMaxLevel(mAbility) || manager.getMaxLevel(mAbility) == 0) {
+                        manaAbilityLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL, locale)
+                                , "{mana_ability}", mAbility.getDisplayName(locale)
+                                , "{level}", RomanNumber.toRoman(manaAbilityLevel)
+                                , "{desc}", LoreUtil.replace(mAbility.getDescription(locale)
+                                        , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, manaAbilityLevel)))));
+                    }
                 }
             }
         }
