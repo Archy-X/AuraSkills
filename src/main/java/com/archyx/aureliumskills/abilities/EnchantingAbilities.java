@@ -15,22 +15,18 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 public class EnchantingAbilities extends AbilityProvider implements Listener {
 
     private final Random random = new Random();
-    private final Map<Player, Double> xpConvertData;
 
     public EnchantingAbilities(AureliumSkills plugin) {
         super(plugin, Skill.ENCHANTING);
-        this.xpConvertData = new HashMap<>();
         enchantedStrength();
     }
 
@@ -43,21 +39,16 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             if (playerData.getAbilityLevel(Ability.XP_CONVERT) > 0 && event.getAmount() > 0) {
-                double totalXp = xpConvertData.getOrDefault(player, 0.0) + event.getAmount();
+                double totalXp = playerData.getAbilityData(Ability.XP_CONVERT).getDouble("xp") + event.getAmount();
                 double value =  getValue(Ability.XP_CONVERT, playerData);
                 if (value > 0) {
                     int added = (int) (totalXp / value);
                     double remainder = totalXp - added * value;
                     player.giveExp(added);
-                    xpConvertData.put(player, remainder);
+                    playerData.getAbilityData(Ability.XP_CONVERT).setData("xp", remainder);
                 }
             }
         }
-    }
-
-    @EventHandler
-    public void onLeave(PlayerQuitEvent event) {
-        xpConvertData.remove(event.getPlayer());
     }
 
     @EventHandler

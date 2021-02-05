@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
@@ -11,6 +12,7 @@ import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -30,18 +32,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Random;
 
 public class ArcheryAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
-    private final Set<Player> chargedShotEnabled;
-    private final Map<Player, Integer> chargedShotToggleCooldown;
 
     public ArcheryAbilities(AureliumSkills plugin) {
         super(plugin, Skill.ARCHERY);
-        this.chargedShotEnabled = new HashSet<>();
-        this.chargedShotToggleCooldown = new HashMap<>();
         tickChargedShotCooldown();
     }
 
@@ -151,22 +150,16 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                     if (playerData == null) return;
                     if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
                     Locale locale = playerData.getLocale();
-                    Integer cooldown = chargedShotToggleCooldown.get(player);
-                    boolean ready = true;
-                    if (cooldown != null) {
-                        if (cooldown != 0) {
-                            ready = false;
-                        }
-                    }
-                    if (ready) {
-                        if (!chargedShotEnabled.contains(player)) { // Toggle on
-                            chargedShotEnabled.add(player);
+                    AbilityData abilityData = playerData.getAbilityData(MAbility.CHARGED_SHOT);
+                    if (abilityData.getInt("cooldown") == 0) {
+                        if (!abilityData.getBoolean("enabled")) { // Toggle on
+                            abilityData.setData("enabled", true);
                             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_ENABLE, locale));
                         } else { // Toggle off
-                            chargedShotEnabled.remove(player);
+                            abilityData.setData("enabled", false);
                             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_DISABLE, locale));
                         }
-                        chargedShotToggleCooldown.put(player, 8);
+                        abilityData.setData("cooldown", 8);
                     }
                 }
             }
@@ -177,9 +170,16 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                for (Map.Entry<Player, Integer> entry : chargedShotToggleCooldown.entrySet()) {
-                    if (entry.getValue() > 0) {
-                        entry.setValue(entry.getValue() - 1);
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData != null) {
+                        if (playerData.containsAbilityData(MAbility.CHARGED_SHOT)) {
+                            AbilityData abilityData = playerData.getAbilityData(MAbility.CHARGED_SHOT);
+                            int cooldown = abilityData.getInt("cooldown");
+                            if (cooldown != 0) {
+                                abilityData.setData("cooldown", cooldown - 1);
+                            }
+                        }
                     }
                 }
             }
@@ -192,9 +192,9 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
-            if (chargedShotEnabled.contains(player)) {
-                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-                if (playerData == null) return;
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData == null) return;
+            if (playerData.getAbilityData(MAbility.CHARGED_SHOT).getBoolean("enabled")) {
                 if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
                 ManaAbilityManager manager = plugin.getManaAbilityManager();
                 int cooldown = manager.getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);

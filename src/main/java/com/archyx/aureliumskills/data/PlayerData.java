@@ -175,6 +175,10 @@ public class PlayerData {
         return data;
     }
 
+    public boolean containsAbilityData(AbstractAbility ability) {
+        return abilityData.containsKey(ability);
+    }
+
     public Map<AbstractAbility, AbilityData> getAbilityDataMap() {
         return abilityData;
     }
