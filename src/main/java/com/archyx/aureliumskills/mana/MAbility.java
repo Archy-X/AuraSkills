@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.mana;
 
+import com.archyx.aureliumskills.abilities.AbstractAbility;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
@@ -10,7 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public enum MAbility {
+public enum MAbility implements AbstractAbility {
 
     REPLENISH(() -> Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20),
     TREECAPITATOR(() -> Skill.FORAGING, 5.0, 5.0, 200, -5, 20, 20),
@@ -40,13 +41,7 @@ public enum MAbility {
     }
 
     MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues) {
-        this.skill = skill;
-        this.baseValue = baseValue;
-        this.valuePerLevel = valuePerLevel;
-        this.baseCooldown = baseCooldown;
-        this.cooldownPerLevel = cooldownPerLevel;
-        this.baseManaCost = baseManaCost;
-        this.manaCostPerLevel = manaCostPerLevel;
+        this(skill, baseValue, valuePerLevel, baseCooldown, cooldownPerLevel, baseManaCost, manaCostPerLevel);
         this.options = new HashMap<>();
         for (int i = 0; i < optionKeys.length; i++) {
             if (i < optionValues.length) {
@@ -55,14 +50,17 @@ public enum MAbility {
         }
     }
 
+    @Override
     public Skill getSkill() {
         return skill.get();
     }
 
+    @Override
     public double getDefaultBaseValue() {
         return baseValue;
     }
 
+    @Override
     public double getDefaultValuePerLevel() {
         return valuePerLevel;
     }

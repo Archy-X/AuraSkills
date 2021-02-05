@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public enum Ability {
+public enum Ability implements AbstractAbility {
 	
 	BOUNTIFUL_HARVEST(() -> Skill.FARMING, 10.0, 5.0),
 	FARMER(() -> Skill.FARMING, 10.0, 10.0),
@@ -99,9 +99,7 @@ public enum Ability {
 	}
 
 	Ability(Supplier<Skill> skill, double baseValue, double valuePerLevel, String[] optionKeys, Object[] optionValues) {
-		this.baseValue = baseValue;
-		this.valuePerLevel = valuePerLevel;
-		this.skill = skill;
+		this(skill, baseValue, valuePerLevel);
 		this.options = new HashMap<>();
 		for (int i = 0; i < optionKeys.length; i++) {
 			if (i < optionValues.length) {
@@ -111,21 +109,14 @@ public enum Ability {
 	}
 
 	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2) {
-		this.skill = skill;
+		this(skill, baseValue1, valuePerLevel1);
 		this.hasTwoValues = true;
-		this.baseValue = baseValue1;
-		this.valuePerLevel = valuePerLevel1;
 		this.baseValue2 = baseValue2;
 		this.valuePerLevel2 = valuePerLevel2;
 	}
 
 	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, String[] optionKeys, Object[] optionValues) {
-		this.skill = skill;
-		this.hasTwoValues = true;
-		this.baseValue = baseValue1;
-		this.valuePerLevel = valuePerLevel1;
-		this.baseValue2 = baseValue2;
-		this.valuePerLevel2 = valuePerLevel2;
+		this(skill, baseValue1, valuePerLevel1, baseValue2, valuePerLevel2);
 		this.options = new HashMap<>();
 		for (int i = 0; i < optionKeys.length; i++) {
 			if (i < optionValues.length) {
@@ -137,7 +128,8 @@ public enum Ability {
 	public String getInfo(Locale locale) {
 		return Lang.getMessage(AbilityMessage.valueOf(this.name() + "_INFO"), locale);
 	}
-	
+
+	@Override
 	public Skill getSkill() {
 		return skill.get();
 	}
@@ -146,10 +138,12 @@ public enum Ability {
 		return hasTwoValues;
 	}
 
+	@Override
 	public double getDefaultBaseValue() {
 		return baseValue;
 	}
 
+	@Override
 	public double getDefaultValuePerLevel() {
 		return valuePerLevel;
 	}
