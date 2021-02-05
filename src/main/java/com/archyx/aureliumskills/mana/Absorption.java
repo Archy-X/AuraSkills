@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.DefenseAbilities;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
@@ -17,13 +16,11 @@ import java.util.Locale;
 public class Absorption implements ManaAbility {
 
     private final AureliumSkills plugin;
-    private final DefenseAbilities defenseAbilities;
     private final SorceryLeveler sorceryLeveler;
 
-    public Absorption(AureliumSkills plugin, DefenseAbilities defenseAbilities) {
+    public Absorption(AureliumSkills plugin) {
         this.plugin = plugin;
         this.sorceryLeveler = plugin.getSorceryLeveler();
-        this.defenseAbilities = defenseAbilities;
     }
 
     @Override
@@ -41,7 +38,7 @@ public class Absorption implements ManaAbility {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             Locale locale = playerData.getLocale();
-            defenseAbilities.getAbsorptionActivated().add(player); // Register as absorption activated
+            playerData.getAbilityData(MAbility.ABSORPTION).setData("activated", true); // Register as absorption activated
             // Play sound
             if (XMaterial.isNewVersion()) {
                 player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 1);
@@ -60,7 +57,10 @@ public class Absorption implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        defenseAbilities.getAbsorptionActivated().remove(player);
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            playerData.getAbilityData(MAbility.ABSORPTION).setData("activated", false);
+        }
         plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.ABSORPTION_END, plugin.getLang().getLocale(player)));
     }
 }

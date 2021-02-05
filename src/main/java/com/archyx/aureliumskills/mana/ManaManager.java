@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.DefenseAbilities;
 import com.archyx.aureliumskills.api.event.ManaRegenerateEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
@@ -15,11 +14,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class ManaManager implements Listener {
 
     private final AureliumSkills plugin;
-    private final DefenseAbilities defenseAbilities;
 
-    public ManaManager(AureliumSkills plugin, DefenseAbilities defenseAbilities) {
+    public ManaManager(AureliumSkills plugin) {
         this.plugin = plugin;
-        this.defenseAbilities = defenseAbilities;
     }
 
     /**
@@ -35,7 +32,7 @@ public class ManaManager implements Listener {
                         double originalMana = playerData.getMana();
                         double maxMana = playerData.getMaxMana();
                         if (originalMana < maxMana) {
-                            if (!defenseAbilities.getAbsorptionActivated().contains(player)) {
+                            if (!playerData.getAbilityData(MAbility.ABSORPTION).getBoolean("activated")) {
                                 double regen = OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
                                 double finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
                                 ManaRegenerateEvent event = new ManaRegenerateEvent(player, finalRegen);

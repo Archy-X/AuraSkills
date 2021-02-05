@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.data;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.abilities.AbstractAbility;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
@@ -31,7 +32,7 @@ public class PlayerData {
     private double mana;
     private Locale locale;
 
-    private final Map<Ability, AbilityData> abilityData;
+    private final Map<AbstractAbility, AbilityData> abilityData;
 
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
@@ -165,7 +166,7 @@ public class PlayerData {
         this.locale = locale;
     }
 
-    public AbilityData getAbilityData(Ability ability) {
+    public AbilityData getAbilityData(AbstractAbility ability) {
         AbilityData data = abilityData.get(ability);
         if (data == null) {
             data = new AbilityData(ability);
@@ -174,7 +175,7 @@ public class PlayerData {
         return data;
     }
 
-    public Map<Ability, AbilityData> getAbilityDataMap() {
+    public Map<AbstractAbility, AbilityData> getAbilityDataMap() {
         return abilityData;
     }
 

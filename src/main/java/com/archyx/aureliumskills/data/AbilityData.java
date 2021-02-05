@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.data;
 
-import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.abilities.AbstractAbility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -8,15 +8,15 @@ import java.util.Map;
 
 public class AbilityData {
 
-    private final Ability ability;
+    private final AbstractAbility ability;
     private final Map<String, Object> data;
 
-    public AbilityData(Ability ability) {
+    public AbilityData(AbstractAbility ability) {
         this.ability = ability;
         this.data = new HashMap<>();
     }
 
-    public Ability getAbility() {
+    public AbstractAbility getAbility() {
         return ability;
     }
 
@@ -33,16 +33,34 @@ public class AbilityData {
         this.data.put(key, value);
     }
 
+    /**
+     * Gets an ability data value as an int
+     * @param key The key of the data to look up
+     * @return The value as an int, or 0 if no mapping exists
+     */
     public int getInt(String key) {
-        return (int) data.get(key);
+        Object o = data.get(key);
+        return o != null ? (int) o : 0;
     }
 
+    /**
+     * Gets an ability data value as a boolean
+     * @param key The key of the data to look up
+     * @return The value as a boolean, or false if no mapping exists
+     */
     public boolean getBoolean(String key) {
-        return (boolean) data.get(key);
+        Object o = data.get(key);
+        return o != null && (boolean) o;
     }
 
+    /**
+     * Gets an ability data value as a double
+     * @param key The key of the data to look up
+     * @return The value as a double, or 0.0 if no mapping exists
+     */
     public double getDouble(String key) {
-        return (double) data.get(key);
+        Object o = data.get(key);
+        return o != null ? (double) o : 0.0;
     }
 
     public boolean containsKey(String key) {

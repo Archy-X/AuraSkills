@@ -22,25 +22,20 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
-import java.util.Set;
 
 public class DefenseAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
-    private final Set<Player> absorptionActivated;
 
     public DefenseAbilities(AureliumSkills plugin) {
         super(plugin, Skill.DEFENSE);
-        this.absorptionActivated = new HashSet<>();
     }
 
     public void shielding(EntityDamageByEntityEvent event, PlayerData playerData, Player player) {
@@ -139,18 +134,13 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        absorptionActivated.remove(event.getPlayer());
-    }
-
-    @EventHandler
     public void readyAbsorption(PlayerInteractEvent event) {
         plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.DEFENSE, new String[] {"SHIELD"}, Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK);
     }
 
     public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
         ManaAbilityManager manager = plugin.getManaAbilityManager();
-        if (absorptionActivated.contains(player)) {
+        if (playerData.getAbilityData(MAbility.ABSORPTION).getBoolean("activated")) {
             handleAbsorbedHit(event, player);
         } else if (manager.isReady(player.getUniqueId(), MAbility.ABSORPTION)) {
             // Activate ability if ready
@@ -158,7 +148,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                 return;
             }
             if (playerData.getMana() >= manager.getManaCost(MAbility.ABSORPTION, playerData)) {
-                manager.activateAbility(player, MAbility.ABSORPTION, (int) (getValue(MAbility.ABSORPTION, playerData) * 20), new Absorption(plugin, this));
+                manager.activateAbility(player, MAbility.ABSORPTION, (int) (getValue(MAbility.ABSORPTION, playerData) * 20), new Absorption(plugin));
                 handleAbsorbedHit(event, player);
             }
             else {
@@ -185,7 +175,4 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public Set<Player> getAbsorptionActivated() {
-        return absorptionActivated;
-    }
 }

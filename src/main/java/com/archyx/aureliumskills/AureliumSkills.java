@@ -362,7 +362,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ForgingAbilities(this), this);
 		pm.registerEvents(new DamageListener(this, defenseAbilities, fightingAbilities), this);
 		// Load mana manager
-		manaManager = new ManaManager(this, defenseAbilities);
+		manaManager = new ManaManager(this);
 		getServer().getPluginManager().registerEvents(manaManager, this);
 		manaManager.startRegen();
 		ItemListener itemListener = new ItemListener(this);
