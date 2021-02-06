@@ -1,3 +1,9 @@
+Version Alpha 1.6.6
+  Bug Fixes:
+    - Fixed server crash with the Terraform mana ability when using VeinMiner
+      - Added TerraformBlockBreakEvent called when blocks broken with Terraform
+    - Fixed mana ability max level not being displayed in menus
+
 Version Alpha 1.6.5
   Changes:
     - Changed menu inventory click event priority to highest (should prevent plugin compat issues where players are able to take items out)
