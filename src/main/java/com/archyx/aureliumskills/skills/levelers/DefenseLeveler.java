@@ -34,8 +34,10 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 				if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
 					Player p = (Player) event.getEntity();
 					if (blockXpGain(p)) return;
-					if (p.isBlocking()) {
-						return;
+					if (!OptionL.getBoolean(Option.DEFENSE_ALLOW_SHIELD_BLOCKING)) { // Check for shield blocking
+						if (p.isBlocking()) {
+							return;
+						}
 					}
 					Skill s = Skill.DEFENSE;
 					double d = event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE);

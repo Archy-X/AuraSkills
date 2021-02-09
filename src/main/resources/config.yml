@@ -195,15 +195,20 @@ excavation:
 archery:
     enabled: true
     max-level: 97
+    damage-based: false
+    spawner-multiplier: 1
 defense:
     enabled: true
     max-level: 97
     check-cancelled: true
     max: 100.0
     min: 0
+    allow-shield-blocking: false
 fighting:
     enabled: true
     max-level: 97
+    damage-based: false
+    spawner-multiplier: 1
 endurance:
     enabled: true
     max-level: 97
