@@ -27,7 +27,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class MenuLoader {
 
@@ -74,9 +73,12 @@ public class MenuLoader {
                     } catch (IllegalArgumentException e) {
                         configurableItem = (ConfigurableItem) loader.newInstance();
                     }
-                    configurableItem.load(Objects.requireNonNull(menu.getConfigurationSection("items." + itemType.name().toLowerCase(Locale.ENGLISH))));
-                    menuOption.putItem(configurableItem);
-                    itemsLoaded++;
+                    ConfigurationSection section = menu.getConfigurationSection("items." + itemType.name().toLowerCase(Locale.ROOT));
+                    if (section != null) {
+                        configurableItem.load(section);
+                        menuOption.putItem(configurableItem);
+                        itemsLoaded++;
+                    }
                 }
                 // Load templates
                 for (TemplateType templateType : menuType.getTemplates()) {
@@ -87,9 +89,12 @@ public class MenuLoader {
                     } catch (IllegalArgumentException e) {
                         configurableTemplate = (ConfigurableTemplate) loader.newInstance();
                     }
-                    configurableTemplate.load(Objects.requireNonNull(menu.getConfigurationSection("templates." + templateType.name().toLowerCase(Locale.ENGLISH))));
-                    menuOption.putTemplate(configurableTemplate);
-                    templatesLoaded++;
+                    ConfigurationSection section = menu.getConfigurationSection("templates." + templateType.name().toLowerCase(Locale.ROOT));
+                    if (section != null) {
+                        configurableTemplate.load(section);
+                        menuOption.putTemplate(configurableTemplate);
+                        templatesLoaded++;
+                    }
                 }
                 menus.put(menuType, menuOption);
                 menusLoaded++;

@@ -70,9 +70,6 @@ public class Lang implements Listener {
 		if (defaultLanguageString == null) {
 			defaultLanguageString = "en";
 		}
-		else {
-			defaultLanguageString = defaultLanguageString.toLowerCase(Locale.ENGLISH);
-		}
 		if (!languages.contains(defaultLanguageString)) {
 			languages.add(defaultLanguageString);
 		}
