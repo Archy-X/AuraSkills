@@ -12,6 +12,7 @@ public enum Source {
 	MELON("farming.melon"),
 	SUGAR_CANE("farming.sugar_cane"),
 	BAMBOO("farming.bamboo"),
+	COCOA("farming.cocoa"),
 	// Foraging
 	OAK_LOG("foraging.oak_log"),
 	SPRUCE_LOG("foraging.spruce_log"),
