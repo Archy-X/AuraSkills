@@ -8,6 +8,7 @@ Version Alpha 1.6.6
       - Set to 0 to disable XP from mob spawners; set to 1 to match regular mobs (1 by default)
       - The XP gained is the spawner-multiplier value multiplied by the XP a normal mob of that type would give
     - Added defense.allow-shield-blocking option to allow Defense XP gain when blocking a shield (false by default)
+    - Added cocoa as a Farming XP source
     - Added %aureliumskills_mana_int% placeholder for the mana of a player rounded to an integer
   Changes:
     - Updated id messages
