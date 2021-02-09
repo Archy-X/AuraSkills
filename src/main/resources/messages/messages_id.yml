@@ -1,5 +1,5 @@
 # Aurelium Skills Indonesian (id) messages
-# Translators: Moncimon
+# Translators: Moncimon, Moncay GT
 # Contribute here: https://crowdin.com/project/aureliumskills/id#
 abilities:
   farming:
@@ -240,6 +240,70 @@ abilities:
       name: Kepintaran
       desc: "Memberikan {value} Kepintaran untuk setiap efek aktif dari\n&7  ramuan."
       info: '+{value} Kepintaran/Efek'
+  enchanting:
+    xp_convert:
+      name: Transfer EXO
+      desc: "Mendapatkan 1 XP Minecraft untum setiapp {value}\n&7  EXP skill yang kamu dapatkan."
+      info: '1 XP/{value} Skill EXP'
+    enchanter:
+      name: Ahli Sihir
+      desc: 'Mendapatkan {value}% EXP tambahan untuk skill Ahli Sihir.'
+      info: '+{value}% EXP'
+    xp_warrior:
+      name: Prajurit EXP
+      desc: "Mobs yang kamu bunuh punya {value}% kesempatan untuk\n&7  memberikan XP ganda."
+      info: '{value}% 2x Mob XP'
+    enchanted_strength:
+      name: Kekuatan Ahli Sihir
+      desc: "Mendapatkan {value} Kekuatan untuk setiap\n&7  sihir unik yang berada di item."
+      info: '{value} Kekuatan/Sihir'
+    lucky_table:
+      name: Meja Keberuntungan
+      desc: "Items yang kamu enchant menggunakan meja sihir\n&7  memiliki {value}% kesempatan untuk meningkatkan\n&7  level sihir sebanyak 1. Tidak dapat melebihi level maksimal"
+      info: '{value}% Kesempatan Sihir ditingkatkan'
+  healing:
+    life_essence:
+      name: Esensi Kehidupan
+      desc: Ramuan HP instan {value}% lebih efektif.
+      info: '+{value}% HP Instan'
+    healer:
+      name: Penyembuh
+      desc: Mendapatkan {value}% lebih Healing EXP.
+      info: '+{value}% EXP'
+    life_steal:
+      name: Pencuri HP
+      desc: Menyembuhkan {value}% HP dari MAX HP mobs jahat\n&7  dan pemain yang kamu bunuh.
+      info: 'Mencuri {value}% HP'
+    golden_heart:
+      name: Hati Emas
+      desc: Kerusakan yang diterima HP Emas\n&7  dikurangi sebanyak {value}%
+      info: '-{value}% Kerusakan ke HP Emas'
+    revival:
+      name: Pembangkitan
+      desc: Mendapatkan &c+{value} HP &7dan &6+{value_2} Regenerasi\n&7  untuk 30 detik setelah respawn.
+      info: '+{value} HP, +{value_2} Regenerasi'
+      message: '&fKamu mendapatkan bonus pembangkitan selama 30 detik! &f(&c+{value} HP, &6+{value_2} Regenerasi&f)'
+  forging:
+    disenchanter:
+      name: Penghilangan Sihir
+      desc: Mendapatkan {value}% XP tambahan ketika menghilangkan sihir\n&7  di items saat mengunakan grindstone.
+      info: '+{value}% Grindstone XP'
+    forger:
+      name: Penempa
+      desc: Mendapatkan tambahan {value}% EXP skill Penempa.
+      info: '+{value}% EXP'
+    repairing:
+      name: Memperbaiki
+      desc: Memperbaiki items di anvil menggunakan material\n&7  dasar dari item\n&7  {value}% durabilitas tambahan.
+      info: '+{value}% Perbaikan di Anvil'
+    anvil_master:
+      name: Ahli Anvil
+      desc: Meningkatkan kapasitas XP di anvil\n&7  sebelum XP terlalu mahal menjadi {value} XP.
+      info: '{value} Kapasitas Maximal'
+    skill_mender:
+      name: Skill Perbaikan
+      desc: Mendapatkan EXP skill memiliki kesempatan {value}% untuk memperbaiki\n&7  durabilitas armor atau item yang dipegang dengan syarat\n&7  memiliki sihir mending. Memperbaiki sebanyak 1 durabiliats untuk setiap 2 EXP skill.
+      info: '{value}% Kesempatan'
 acf:
   core:
     permission_denied: '&cMaaf, tapi anda tidak punya hak untuk melakukan ini.'
@@ -286,6 +350,7 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
+  ability: '&c{hp}/{max_hp} {hp_unit}    {message}    &b{mana}/{max_mana} {mana_unit}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(TERTINGGI)'
 commands:
@@ -420,13 +485,13 @@ commands:
 leveler:
   title: '&aLevel {skill} Meningkat'
   subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Level Skill Meningkat! &b&l{skill} &8{old}➜&3&l{new}\n \n &bHadiah:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: '\n  {color}+1{symbol} {stat}'
-  ability_unlock: '\n  &aKemampuan Terbuka! &6&l{ability} &7Terbuka'
-  ability_level_up: '\n  &aKemampuan Meningkat! &6&l{ability} &7sekarang level &6{level}'
-  mana_ability_unlock: '\n  &aKemampuan Terbuka! &9&l{mana_ability} &7Terbuka'
-  mana_ability_level_up: '\n  &aKemampuan Meningkat! &9&l{mana_ability} &7sekarang level &6{level}'
-  money_reward: '\n  &a${amount}'
+  level_up: "&3&m----------------------------------------\n&r &3Level Skill Naik! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: "\n  {color}+1{symbol} {stat}"
+  ability_unlock: "\n  &aKeahlian terbuka! &6&l{ability} &7telah didapatkan"
+  ability_level_up: "\n  &aLevel keahlian naik! &6&l{ability} &7sekarang level &6{level}"
+  mana_ability_unlock: "\n  &dKeahlian sihir terbuka! &9&l{mana_ability} &7telah didapatkan"
+  mana_ability_level_up: "\n  &aLevel keahlian naik! &9&l{mana_ability} &7sekarang level &6{level}"
+  money_reward: "\n  &a${amount}"
 menus:
   common:
     close: '&cTutup'
@@ -480,7 +545,7 @@ menus:
     secondary_skills_two: '&7Skills Kedua: &f{skill_1}, {skill_2}'
     secondary_skills_three: '&7Skills Kedua: &f{skill_1}, {skill_2}, {skill_3}'
     your_level: '&7Levelmu: {color}{level}'
-    attack_damage: '&4+{value} Kerusakan'
+    attack_damage: '&4+{value}% Kerusakan'
     hp: '&c+{value} {hp_unit}'
     saturated_regen: '&6+{value} Regenerasi saat kelaparan '
     full_hunger_regen: '&6+{value} Regenerasi saat kekenyangan penuh'
@@ -489,12 +554,13 @@ menus:
     luck: '&2+{value} Keberuntungan'
     double_drop_chance: '&2Kesempatan Hasil Ganda: {value}%'
     xp_gain: '&9+{value}% {xp_unit} Tambahan'
-    anvil_cost_reduction: '&9mengurangi xp yang dibutuhkan anvil: {value}'
+    anvil_cost_reduction: '&9Pengurangan Biaya Anvil: {value}%'
+    max_mana: '&9Mana Maximal: {value}'
     incoming_damage: '&5-{value}% Kerusakan diterima'
 mana_abilities:
   replenish:
     name: Penanaman Kembali
-    desc: "&7Menanam kembali otomatis untuk selama \n&7  {value} detik. &e[Right Click to Activate]"
+    desc: "&7Otomatis menanam kembali tanaman untuk \n&7  {value} detik. &e[Click kanan hoe dan\n&e  hancurkan tanaman]"
     raise: '&7Kamu mengaktifkan sabitmu'
     lower: '&7Kamu menonaktifkan sabitmu'
     start: '&6Penanaman Kembali Active! &7(-{mana} {mana_unit})'
@@ -508,23 +574,37 @@ mana_abilities:
     end: '&6Durasi Treecapitator Sudah Selesai'
   speed_mine:
     name: Penggali Cepat
-    desc: "&7Menggali dengan cepat selama {value} \n&7  detik. &e[Right Click to Activate]"
+    desc: "&eMemberikan efek haste 10 untuk {value} detik.\n&e  [Click kana beliung dan\n&e  hancurkan block]"
     raise: '&7Kamu mengatifkan beliungmu'
     lower: '&7Kamu menonaktifkan beliungmu'
     start: '&6Menggali Cepat Active! &7(-{mana} {mana_unit})'
     end: '&7Durasi Menggali Cepat Sudah Selesai'
   absorption:
     name: Kekebalan
-    desc: "Menyembuhkan 50% kerusakan yang diterima \n&7  selama {value} detik."
+    desc: "Serangan berikutnya yang diterima akan\n&7  mengurangi sihir sebanyak 2x dari kerusakan Minecraft\n&7  daripada mengurangi HP selama{value} detik.\n&7  Sihir tidak akan meregenerasi saat Kekebalan active.\n  &e[Click kiri perisai dan terima kerusakan untuk active]"
     raise: '&7Kamu mengaktifkan perisaimu'
     lower: '&7Kamu menonaktifkan perisaimu'
     start: '&6Kekebalan Active! &7(-{mana} {mana_unit})'
-    end: '&6Durasi Kekebalan Sudah Selesai'
+    end: '&7Durasi Kekebalan Sudah Selesai'
+  terraform:
+    name: Terraform
+    desc: "Menghancurkan block secara instan dengan radius 4 block\n&7  ditempat yang sama selama {value} detik. Kamu\n&7  harus menggunakan sekop dan jenis block harus\n&7  sama jenisnya dan terhubung.\n&7  &e[Click kana sekop dan menggali block]"
+    raise: '&7Kamu mengatifkan sekopmu'
+    lower: '&7Kamu menonaktifkan sekopmu'
+    start: '&6Terraform Active! &7(-{mana} {mana_unit})'
+    end: '&7Terraform dinonaktifkan'
   sharp_hook:
     name: Kail Tajam
     desc: "Menghasilkan {value} kerusakan ke entitiy yang ditarik\n&7  ketika Left-Click kail pancing"
     use: '&6Menggunakan Kail Tajam! &7(-{mana} {mana_unit})'
     menu: "\n&d&lAbility Sihir &9{mana_ability} {level}\n &7Durasi: &a{value}s &7Sihir dibutuhkan: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+  charged_shot:
+    name: Tembakan bermuatan
+    desc: "Panah yang kamu tembakkan memberikan kerusakan\n&7  lebih banyak teergantung dari jaraknya,\n&7  menggunakan sihir saat panah ditembakkan. menghasilkan {value}%\n&7  lebih banyak kerusakan untuk setiap sihir. \n&e  [Clivk kiri busur untuk mengaktifkan]"
+    enable: '&7Tembakaan bermuatan aktif'
+    disable: '&7Tembakan bermuatan nonaktif'
+    shoot: '&6Tembakan bermuatan dipakai! &d+{percent}% Kerusakan &7(-{mana} {mana_unit})'
+    menu: "\n&d&lKemampuan Sihir &9{mana_ability} {level}\n &7Kerusakan: &c+{value}% / Sihir &7Sihir Maximal: &b{mana_cost}\n "
   not_ready: '&cKemampuan sedang cooldown! &7({cooldown}s)'
   not_enough_mana: '&eSihir tidak cukup! &7({mana} {mana_unit} required)'
 skills:
@@ -608,4 +688,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: EXP
-file_version: 9
+file_version: 13
