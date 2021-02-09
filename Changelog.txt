@@ -1,3 +1,24 @@
+Version Alpha 1.6.6
+  New Features:
+    - Added archery/fighting.damage-based options to grant XP every time a player attacks per damage dealt instead of killing the mob:
+      - WARNING: This still uses the values in sources_config.yml as the XP granted PER VANILLA DAMAGE for each type of mob
+      - You should significantly lower and equalize the archery and fighting values in sources_config.yml if you want to keep the progression similar to before
+      - These options are false by default
+    - Added archery/fighting.spawner-multiplier options to change the XP gained from mobs spawned from spawners:
+      - Set to 0 to disable XP from mob spawners; set to 1 to match regular mobs (1 by default)
+      - The XP gained is the spawner-multiplier value multiplied by the XP a normal mob of that type would give
+    - Added defense.allow-shield-blocking option to allow Defense XP gain when blocking a shield (false by default)
+    - Added cocoa as a Farming XP source
+    - Added %aureliumskills_mana_int% placeholder for the mana of a player rounded to an integer
+  Changes:
+    - Updated id messages
+  Bug Fixes:
+    - Fixed server crash with the Terraform mana ability when using VeinMiner
+      - Added TerraformBlockBreakEvent called when blocks broken with Terraform
+    - Fixed mana ability max level not being displayed in menus
+    - Fixed default language not setting on case sensitive operating systems with locales that specify a country code
+    - Fixed tridents giving both Fighting and Archery XP (now only gives Archery)
+
 Version Alpha 1.6.5
   Changes:
     - Changed menu inventory click event priority to highest (should prevent plugin compat issues where players are able to take items out)

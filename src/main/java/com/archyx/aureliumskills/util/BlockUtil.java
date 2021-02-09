@@ -6,11 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.NetherWartsState;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.material.CocoaPlant;
 import org.bukkit.material.Crops;
 import org.bukkit.material.NetherWarts;
 
 public class BlockUtil {
 
+    @SuppressWarnings("deprecation")
     public static boolean isFullyGrown(Block block) {
         if (XMaterial.isNewVersion()) {
             if (block.getBlockData() instanceof Ageable) {
@@ -25,6 +27,10 @@ public class BlockUtil {
         else if (block.getState().getData() instanceof NetherWarts) {
             NetherWarts wart = (NetherWarts) block.getState().getData();
             return wart.getState().equals(NetherWartsState.RIPE);
+        }
+        else if (block.getState().getData() instanceof CocoaPlant) {
+            CocoaPlant cocoaPlant = (CocoaPlant) block.getState().getData();
+            return cocoaPlant.getSize().equals(CocoaPlant.CocoaPlantSize.LARGE);
         }
         return false;
     }

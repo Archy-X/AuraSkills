@@ -5,7 +5,7 @@
 # |            Source Code: https://github.com/Archy-X/AureliumSkills          | #
 # | Config Guide: https://github.com/Archy-X/AureliumSkills/wiki/Configuration | #
 # +----------------------------------------------------------------------------+ #
-# This file was generated on version Alpha 1.6.5
+# This file was generated on version Alpha 1.6.6
 # Plugin made by Archy
 
 data-save-period: 6000
@@ -195,15 +195,20 @@ excavation:
 archery:
     enabled: true
     max-level: 97
+    damage-based: false
+    spawner-multiplier: 1
 defense:
     enabled: true
     max-level: 97
     check-cancelled: true
     max: 100.0
     min: 0
+    allow-shield-blocking: false
 fighting:
     enabled: true
     max-level: 97
+    damage-based: false
+    spawner-multiplier: 1
 endurance:
     enabled: true
     max-level: 97

@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
+import com.archyx.aureliumskills.api.event.TerraformBlockBreakEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
@@ -199,6 +200,9 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	public void excavationListener(BlockBreakEvent event) {
 		if (OptionL.isEnabled(Skill.EXCAVATION)) {
 			if (!event.isCancelled()) {
+				if (event.getClass() != BlockBreakEvent.class) { // Compatibility fix
+					return;
+				}
 				Player player = event.getPlayer();
 				Block block = event.getBlock();
 				if (blockAbility(player)) return;
@@ -289,7 +293,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	}
 
 	private void breakBlock(Player player, Block block) {
-		BlockBreakEvent event = new BlockBreakEvent(block, player);
+		TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
 		Bukkit.getPluginManager().callEvent(event);
 		if (!event.isCancelled()) {
 			block.breakNaturally(player.getInventory().getItemInMainHand());

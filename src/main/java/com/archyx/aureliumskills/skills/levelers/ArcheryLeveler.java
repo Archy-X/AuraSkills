@@ -2,12 +2,14 @@ package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.util.VersionUtils;
-import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,32 +23,15 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	@SuppressWarnings("deprecation")
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (OptionL.isEnabled(Skill.ARCHERY)) {
+			if (OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) return;
 			LivingEntity e = event.getEntity();
 			if (blockXpGainLocation(e.getLocation())) return;
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
-					boolean valid = false;
-					if (ee.getDamager() instanceof Arrow || ee.getDamager() instanceof TippedArrow || ee.getDamager() instanceof SpectralArrow) {
-						valid = true;
-					}
-					if (XMaterial.isNewVersion()) {
-						if (ee.getDamager() instanceof Trident) {
-							valid = true;
-						}
-					}
-					if (VersionUtils.isAboveVersion(14)) {
-						if (ee.getDamager() instanceof AbstractArrow) {
-							valid = true;
-						}
-						if (ee.getDamager() instanceof Firework) {
-							valid = true;
-						}
-					}
-					if (valid) {
+					if (ee.getDamager() instanceof Projectile) {
 						EntityType type = e.getType();
 						Player p = e.getKiller();
 						Skill s = Skill.ARCHERY;
@@ -56,11 +41,20 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						if (isMythicMob(e)) {
 							return;
 						}
+						double spawnerMultiplier = OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER);
 						try {
-							plugin.getLeveler().addXp(p, s, getXp(p, Source.valueOf("ARCHERY_" + type.toString())));
+							if (e.hasMetadata("aureliumskills_spawner_mob")) {
+								plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, Source.valueOf("ARCHERY_" + type.toString())));
+							} else {
+								plugin.getLeveler().addXp(p, s, getXp(p, Source.valueOf("ARCHERY_" + type.toString())));
+							}
 						} catch (IllegalArgumentException exception) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
-								plugin.getLeveler().addXp(p, s, getXp(p, Source.ARCHERY_ZOMBIFIED_PIGLIN));
+								if (e.hasMetadata("aureliumskills_spawner_mob")) {
+									plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, Source.ARCHERY_ZOMBIFIED_PIGLIN));
+								} else {
+									plugin.getLeveler().addXp(p, s, getXp(p, Source.ARCHERY_ZOMBIFIED_PIGLIN));
+								}
 							}
 						}
 					}
@@ -68,4 +62,42 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 			}
 		}
 	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onEntityDamage(EntityDamageByEntityEvent event) {
+		// Damage based listener
+		if (OptionL.isEnabled(Skill.ARCHERY)) {
+			if (event.isCancelled()) return;
+			if (!OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) return;
+			if (event.getDamager() instanceof  Projectile) {
+				Projectile projectile = (Projectile) event.getDamager();
+				if (projectile.getShooter() instanceof Player) {
+					Player player = (Player) projectile.getShooter();
+					if (event.getEntity() instanceof LivingEntity) {
+						LivingEntity entity = (LivingEntity) event.getEntity();
+						EntityType type = entity.getType();
+						if (blockXpGainPlayer(player)) return;
+						if (entity.equals(player)) return;
+						// Make sure not MythicMob
+						if (isMythicMob(entity)) return;
+						double health = entity.getHealth();
+						double damage = Math.min(health, event.getFinalDamage());
+						// Apply spawner multiplier
+						if (entity.hasMetadata("aureliumskills_spawner_mob")) {
+							double spawnerMultiplier = OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER);
+							damage *= spawnerMultiplier;
+						}
+						try {
+							plugin.getLeveler().addXp(player, Skill.ARCHERY, damage * getXp(player, Source.valueOf("FIGHTING_" + type.toString())));
+						} catch (IllegalArgumentException e) {
+							if (type.toString().equals("PIG_ZOMBIE")) {
+								plugin.getLeveler().addXp(player, Skill.ARCHERY, damage * getXp(player, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 }

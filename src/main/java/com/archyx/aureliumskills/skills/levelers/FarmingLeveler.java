@@ -65,6 +65,10 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 				leveler.addXp(p, s, getXp(p, Source.WHEAT));
 				applyAbilities(p, b);
 			}
+			else if (mat == Material.COCOA && BlockUtil.isFullyGrown(b)) {
+				leveler.addXp(p, s, getXp(p, Source.COCOA));
+				applyAbilities(p, b);
+			}
 			else if (mat.equals(Material.PUMPKIN)) {
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
 					return;
