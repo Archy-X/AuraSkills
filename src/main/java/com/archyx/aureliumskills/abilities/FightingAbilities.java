@@ -1,6 +1,5 @@
 package com.archyx.aureliumskills.abilities;
 
-
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.AbilityMessage;
@@ -14,7 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -140,8 +139,8 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent event) {
-        event.getEntity().removeMetadata("AureliumSkills-BleedTicks", plugin);
+    public void onDeath(PlayerRespawnEvent event) {
+        event.getPlayer().removeMetadata("AureliumSkills-BleedTicks", plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
