@@ -193,6 +193,10 @@ public class AureliumSkills extends JavaPlugin {
 		actionBar.startUpdateActionBar();
 		// Initialize storage
 		this.playerManager = new PlayerManager();
+		// Try to backup and convert legacy files
+		new LegacyFileBackup(this).saveBackup();
+		new LegacyFileToYamlConverter(this).convert();
+		// Set proper storage provider
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			setStorageProvider(new MySqlStorageProvider(this));
 		} else {

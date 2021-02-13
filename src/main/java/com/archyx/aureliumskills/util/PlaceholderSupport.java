@@ -118,7 +118,10 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         // Gets mana rounded to an integer
         if (identifier.equals("mana_int")) {
-            return String.valueOf(Math.round(plugin.getManaManager().getMana(player.getUniqueId())));
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(Math.round(playerData.getMana()));
+            }
         }
 
         //Gets max mana
