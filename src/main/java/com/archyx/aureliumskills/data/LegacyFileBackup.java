@@ -22,7 +22,12 @@ public class LegacyFileBackup extends BackupProvider {
         try {
             File file = new File(plugin.getDataFolder(), "data.yml");
             if (!file.exists()) return;
-
+            File backupFolder = new File(plugin.getDataFolder() + "/backups");
+            if (!backupFolder.exists()) {
+                if (!backupFolder.mkdir()) {
+                    Bukkit.getLogger().warning("[AureliumSkills] Error creating backups folder!");
+                }
+            }
             LocalTime time = LocalTime.now();
             Path copyPath = Paths.get(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now().toString()
                     + "_" + time.getHour() + "-" + time.getMinute() + "-" + time.getSecond() + ".yml");

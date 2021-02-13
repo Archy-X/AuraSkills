@@ -34,24 +34,27 @@ public class LegacyFileToYamlConverter extends DataConverter {
                             FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerDataFile);
                             playerConfig.set("uuid", uuid.toString());
                             // Convert skill data
-                            ConfigurationSection skills = skillData.getConfigurationSection("skills");
-                            if (skills != null) {
-                                for (String skillName : skills.getKeys(false)) {
-                                    String legacySkillData = skills.getString(skillName);
-                                    if (legacySkillData != null) {
-                                        String[] splitLegacySkillData = legacySkillData.split(":");
-                                        if (splitLegacySkillData.length == 2) {
-                                            int level = Integer.parseInt(splitLegacySkillData[0]);
-                                            double xp = Double.parseDouble(splitLegacySkillData[1]);
-                                            String path = "skills." + skillName.toLowerCase(Locale.ROOT) + ".";
-                                            playerConfig.set(path + "level", level);
-                                            playerConfig.set(path + "xp", xp);
+                            ConfigurationSection playerSection = skillData.getConfigurationSection(stringUUID);
+                            if (playerSection != null) {
+                                ConfigurationSection skills = playerSection.getConfigurationSection("skills");
+                                if (skills != null) {
+                                    for (String skillName : skills.getKeys(false)) {
+                                        String legacySkillData = skills.getString(skillName);
+                                        if (legacySkillData != null) {
+                                            String[] splitLegacySkillData = legacySkillData.split(":");
+                                            if (splitLegacySkillData.length == 2) {
+                                                int level = Integer.parseInt(splitLegacySkillData[0]);
+                                                double xp = Double.parseDouble(splitLegacySkillData[1]);
+                                                String path = "skills." + skillName.toLowerCase(Locale.ROOT) + ".";
+                                                playerConfig.set(path + "level", level);
+                                                playerConfig.set(path + "xp", xp);
+                                            }
                                         }
                                     }
                                 }
+                                playerConfig.save(playerDataFile);
+                                playersConverted++;
                             }
-                            playerConfig.save(file);
-                            playersConverted++;
                         }
                     } catch (Exception e) {
                         Bukkit.getLogger().warning("[AureliumSkills] There was an error converting skill data for player with uuid " + stringUUID + ", see below for details:");
