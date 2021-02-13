@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -38,8 +39,13 @@ public class Health implements Listener {
 		this.agilityAbilities = new AgilityAbilities(plugin);
 	}
 
+	@EventHandler
+	public void onJoin(PlayerJoinEvent event) {
+		applyScaling(event.getPlayer());
+	}
+
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onJoin(PlayerDataLoadEvent event) {
+	public void onLoad(PlayerDataLoadEvent event) {
 		setHealth(event.getPlayerData().getPlayer());
 	}
 
@@ -126,27 +132,32 @@ public class Health implements Listener {
 						player.setHealth(attribute.getValue());
 					}
 				}
-				// Applies health scaling
-				if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
-					double health = attribute.getValue();
-					player.setHealthScaled(true);
-					int scaledHearts = 0;
-					for (Integer heartNum : hearts.keySet()) {
-						double healthNum = hearts.get(heartNum);
-						if (health >= healthNum) {
-							if (heartNum > scaledHearts) {
-								scaledHearts = heartNum;
-							}
-						}
+				applyScaling(player);
+			}
+		}
+	}
+
+	private void applyScaling(Player player) {
+		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+		if (attribute == null) return;
+		if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
+			double health = attribute.getValue();
+			player.setHealthScaled(true);
+			int scaledHearts = 0;
+			for (Integer heartNum : hearts.keySet()) {
+				double healthNum = hearts.get(heartNum);
+				if (health >= healthNum) {
+					if (heartNum > scaledHearts) {
+						scaledHearts = heartNum;
 					}
-					if (scaledHearts == 0) {
-						scaledHearts = 10;
-					}
-					player.setHealthScale(scaledHearts * 2);
-				} else {
-					player.setHealthScaled(false);
 				}
 			}
+			if (scaledHearts == 0) {
+				scaledHearts = 10;
+			}
+			player.setHealthScale(scaledHearts * 2);
+		} else {
+			player.setHealthScaled(false);
 		}
 	}
 

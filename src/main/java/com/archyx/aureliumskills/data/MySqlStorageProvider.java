@@ -63,85 +63,80 @@ public class MySqlStorageProvider extends StorageProvider {
 
     @Override
     public void load(Player player) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    try (Statement statement = connection.createStatement()) {
-                        String query = "SELECT * FROM SkillData WHERE ID='" + player.getUniqueId().toString() + "';";
-                        try (ResultSet result = statement.executeQuery(query)) {
-                            if (result.next()) {
-                                PlayerData playerData = new PlayerData(player, plugin);
-                                // Load skill data
-                                for (Skill skill : Skill.values()) {
-                                    int level = result.getInt(skill.name().toUpperCase(Locale.ROOT) + "_LEVEL");
-                                    double xp = result.getDouble(skill.name().toUpperCase(Locale.ROOT) + "_XP");
-                                    playerData.setSkillLevel(skill, level);
-                                    playerData.setSkillXp(skill, xp);
-                                    // Add stat levels
-                                    playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
-                                    int secondaryStat = level / 2;
-                                    playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
+        try {
+            try (Statement statement = connection.createStatement()) {
+                String query = "SELECT * FROM SkillData WHERE ID='" + player.getUniqueId().toString() + "';";
+                try (ResultSet result = statement.executeQuery(query)) {
+                    if (result.next()) {
+                        PlayerData playerData = new PlayerData(player, plugin);
+                        // Load skill data
+                        for (Skill skill : Skill.values()) {
+                            int level = result.getInt(skill.name().toUpperCase(Locale.ROOT) + "_LEVEL");
+                            double xp = result.getDouble(skill.name().toUpperCase(Locale.ROOT) + "_XP");
+                            playerData.setSkillLevel(skill, level);
+                            playerData.setSkillXp(skill, xp);
+                            // Add stat levels
+                            playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
+                            int secondaryStat = level / 2;
+                            playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
+                        }
+                        // Load stat modifiers
+                        String statModifiers = result.getString("STAT_MODIFIERS");
+                        if (statModifiers != null) {
+                            JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
+                            for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
+                                JsonObject modifierObject = modifierElement.getAsJsonObject();
+                                String name = modifierObject.get("name").getAsString();
+                                String statName = modifierObject.get("stat").getAsString();
+                                double value = modifierObject.get("value").getAsDouble();
+                                if (name != null && statName != null) {
+                                    Stat stat = Stat.valueOf(statName.toUpperCase(Locale.ROOT));
+                                    StatModifier modifier = new StatModifier(name, stat, value);
+                                    playerData.addStatModifier(modifier);
                                 }
-                                // Load stat modifiers
-                                String statModifiers = result.getString("STAT_MODIFIERS");
-                                if (statModifiers != null) {
-                                    JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
-                                    for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
-                                        JsonObject modifierObject = modifierElement.getAsJsonObject();
-                                        String name = modifierObject.get("name").getAsString();
-                                        String statName = modifierObject.get("stat").getAsString();
-                                        double value = modifierObject.get("value").getAsDouble();
-                                        if (name != null && statName != null) {
-                                            Stat stat = Stat.valueOf(statName.toUpperCase(Locale.ROOT));
-                                            StatModifier modifier = new StatModifier(name, stat, value);
-                                            playerData.addStatModifier(modifier);
-                                        }
-                                    }
-                                }
-                                playerData.setMana(result.getDouble("mana"));
-                                // Load locale
-                                String locale = result.getString("locale");
-                                if (locale != null) {
-                                    playerData.setLocale(new Locale(locale));
-                                }
-                                // Load ability data
-                                String abilityData = result.getString("ABILITY_DATA");
-                                if (abilityData != null) {
-                                    JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
-                                    for (Map.Entry<String, JsonElement> abilityEntry : jsonAbilityData.entrySet()) {
-                                        String abilityName = abilityEntry.getKey();
-                                        AbilityData data = playerData.getAbilityData(Ability.valueOf(abilityName.toUpperCase(Locale.ROOT)));
-                                        JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
-                                        for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
-                                            String key = dataEntry.getKey();
-                                            Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
-                                            if (value != null) {
-                                                data.setData(key, value);
-                                            }
-                                        }
-                                    }
-                                }
-                                playerManager.addPlayerData(playerData);
-                                PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        Bukkit.getPluginManager().callEvent(event);
-                                    }
-                                }.runTask(plugin);
-                            } else {
-                                createNewPlayer(player);
                             }
                         }
+                        playerData.setMana(result.getDouble("mana"));
+                        // Load locale
+                        String locale = result.getString("locale");
+                        if (locale != null) {
+                            playerData.setLocale(new Locale(locale));
+                        }
+                        // Load ability data
+                        String abilityData = result.getString("ABILITY_DATA");
+                        if (abilityData != null) {
+                            JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
+                            for (Map.Entry<String, JsonElement> abilityEntry : jsonAbilityData.entrySet()) {
+                                String abilityName = abilityEntry.getKey();
+                                AbilityData data = playerData.getAbilityData(Ability.valueOf(abilityName.toUpperCase(Locale.ROOT)));
+                                JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
+                                for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
+                                    String key = dataEntry.getKey();
+                                    Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
+                                    if (value != null) {
+                                        data.setData(key, value);
+                                    }
+                                }
+                            }
+                        }
+                        playerManager.addPlayerData(playerData);
+                        PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                Bukkit.getPluginManager().callEvent(event);
+                            }
+                        }.runTask(plugin);
+                    } else {
+                        createNewPlayer(player);
                     }
-                } catch (Exception e) {
-                    Bukkit.getLogger().warning("There was an error loading player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
-                    e.printStackTrace();
-                    createNewPlayer(player);
                 }
             }
-        }.runTaskAsynchronously(plugin);
+        } catch (Exception e) {
+            Bukkit.getLogger().warning("There was an error loading player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
+            e.printStackTrace();
+            createNewPlayer(player);
+        }
     }
 
     private void migrateTable() throws SQLException {
@@ -194,100 +189,95 @@ public class MySqlStorageProvider extends StorageProvider {
 
     @Override
     public void save(Player player) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                PlayerData playerData = playerManager.getPlayerData(player);
-                if (playerData == null) return;
-                try {
-                    // Build stat modifiers json
-                    StringBuilder modifiersJson = new StringBuilder();
-                    if (playerData.getStatModifiers().size() > 0) {
-                        modifiersJson.append("[");
-                        for (StatModifier statModifier : playerData.getStatModifiers().values()) {
-                            modifiersJson.append("{\"name\":\"").append(statModifier.getName())
-                                    .append("\",\"stat\":\"").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
-                                    .append("\",\"value\":").append(statModifier.getValue()).append("},");
-                        }
-                        modifiersJson.deleteCharAt(modifiersJson.length() - 1);
-                        modifiersJson.append("]");
-                    }
-                    // Build ability json
-                    StringBuilder abilityJson = new StringBuilder();
-                    if (playerData.getAbilityDataMap().size() > 0) {
-                        abilityJson.append("{");
-                        for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
-                            String abilityName = abilityData.getAbility().toString().toLowerCase(Locale.ROOT);
-                            if (abilityData.getDataMap().size() > 0) {
-                                abilityJson.append("\"").append(abilityName).append("\"").append(":{");
-                                for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
-                                    String value = String.valueOf(dataEntry.getValue());
-                                    if (dataEntry.getValue() instanceof String) {
-                                        value = "\"" + dataEntry.getValue() + "\"";
-                                    }
-                                    abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
-                                }
-                                abilityJson.deleteCharAt(abilityJson.length() - 1);
-                                abilityJson.append("},");
+        PlayerData playerData = playerManager.getPlayerData(player);
+        if (playerData == null) return;
+        try {
+            // Build stat modifiers json
+            StringBuilder modifiersJson = new StringBuilder();
+            if (playerData.getStatModifiers().size() > 0) {
+                modifiersJson.append("[");
+                for (StatModifier statModifier : playerData.getStatModifiers().values()) {
+                    modifiersJson.append("{\"name\":\"").append(statModifier.getName())
+                            .append("\",\"stat\":\"").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
+                            .append("\",\"value\":").append(statModifier.getValue()).append("},");
+                }
+                modifiersJson.deleteCharAt(modifiersJson.length() - 1);
+                modifiersJson.append("]");
+            }
+            // Build ability json
+            StringBuilder abilityJson = new StringBuilder();
+            if (playerData.getAbilityDataMap().size() > 0) {
+                abilityJson.append("{");
+                for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
+                    String abilityName = abilityData.getAbility().toString().toLowerCase(Locale.ROOT);
+                    if (abilityData.getDataMap().size() > 0) {
+                        abilityJson.append("\"").append(abilityName).append("\"").append(":{");
+                        for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
+                            String value = String.valueOf(dataEntry.getValue());
+                            if (dataEntry.getValue() instanceof String) {
+                                value = "\"" + dataEntry.getValue() + "\"";
                             }
+                            abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
                         }
                         abilityJson.deleteCharAt(abilityJson.length() - 1);
-                        abilityJson.append("}");
+                        abilityJson.append("},");
                     }
-                    String modifiersString = !modifiersJson.toString().equals("") ? "'" + modifiersJson.toString() + "'": "NULL";
-                    String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson.toString() + "'": "NULL";
-                    Bukkit.getLogger().info("Modifiers string: " + modifiersString);
-                    Bukkit.getLogger().info("Abilities string: " + abilitiesString);
-                    try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-                        statement.executeUpdate("INSERT INTO SkillData (ID, AGILITY_LEVEL, AGILITY_XP, ALCHEMY_LEVEL, ALCHEMY_XP, ARCHERY_LEVEL, ARCHERY_XP, " +
-                                "DEFENSE_LEVEL, DEFENSE_XP, ENCHANTING_LEVEL, ENCHANTING_XP, ENDURANCE_LEVEL, ENDURANCE_XP, " +
-                                "EXCAVATION_LEVEL, EXCAVATION_XP, FARMING_LEVEL, FARMING_XP, FIGHTING_LEVEL, FIGHTING_XP, " +
-                                "FISHING_LEVEL, FISHING_XP, FORAGING_LEVEL, FORAGING_XP, FORGING_LEVEL, FORGING_XP, " +
-                                "HEALING_LEVEL, HEALING_XP, MINING_LEVEL, MINING_XP, SORCERY_LEVEL, SORCERY_XP, " +
-                                "LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('" +
-                                player.getUniqueId() + "', " +
-                                playerData.getSkillLevel(Skill.AGILITY) + ", " + playerData.getSkillXp(Skill.AGILITY) + ", " +
-                                playerData.getSkillLevel(Skill.ALCHEMY) + ", " + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
-                                playerData.getSkillLevel(Skill.ARCHERY) + ", " + playerData.getSkillXp(Skill.ARCHERY) + ", " +
-                                playerData.getSkillLevel(Skill.DEFENSE) + ", " + playerData.getSkillXp(Skill.DEFENSE) + ", " +
-                                playerData.getSkillLevel(Skill.ENCHANTING) + ", " + playerData.getSkillXp(Skill.ENCHANTING) + ", " +
-                                playerData.getSkillLevel(Skill.ENDURANCE) + ", " + playerData.getSkillXp(Skill.ENDURANCE) + ", " +
-                                playerData.getSkillLevel(Skill.EXCAVATION) + ", " + playerData.getSkillXp(Skill.EXCAVATION) + ", " +
-                                playerData.getSkillLevel(Skill.FARMING) + ", " + playerData.getSkillXp(Skill.FARMING) + ", " +
-                                playerData.getSkillLevel(Skill.FIGHTING) + ", " + playerData.getSkillXp(Skill.FIGHTING) + ", " +
-                                playerData.getSkillLevel(Skill.FISHING) + ", " + playerData.getSkillXp(Skill.FISHING) + ", " +
-                                playerData.getSkillLevel(Skill.FORAGING) + ", " + playerData.getSkillXp(Skill.FORAGING) + ", " +
-                                playerData.getSkillLevel(Skill.FORGING) + ", " + playerData.getSkillXp(Skill.FORGING) + ", " +
-                                playerData.getSkillLevel(Skill.HEALING) + ", " + playerData.getSkillXp(Skill.HEALING) + ", " +
-                                playerData.getSkillLevel(Skill.MINING) + ", " + playerData.getSkillXp(Skill.MINING) + ", " +
-                                playerData.getSkillLevel(Skill.SORCERY) + ", " + playerData.getSkillXp(Skill.SORCERY) + ", '" +
-                                playerData.getLocale().toString() + "', " + modifiersString + ", " + playerData.getMana() + ", " +
-                                abilitiesString + ") ON DUPLICATE KEY UPDATE " +
-                                "AGILITY_LEVEL=" + playerData.getSkillLevel(Skill.AGILITY) + ", AGILITY_XP=" + playerData.getSkillXp(Skill.AGILITY) + ", " +
-                                "ALCHEMY_LEVEL=" + playerData.getSkillLevel(Skill.ALCHEMY) + ", ALCHEMY_XP=" + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
-                                "ARCHERY_LEVEL=" + playerData.getSkillLevel(Skill.ARCHERY) + ", ARCHERY_XP=" + playerData.getSkillXp(Skill.ARCHERY) + ", " +
-                                "DEFENSE_LEVEL=" + playerData.getSkillLevel(Skill.DEFENSE) + ", DEFENSE_XP=" + playerData.getSkillXp(Skill.DEFENSE) + ", " +
-                                "ENCHANTING_LEVEL=" + playerData.getSkillLevel(Skill.ENCHANTING) + ", ENCHANTING_XP=" + playerData.getSkillXp(Skill.ENCHANTING) + ", " +
-                                "EXCAVATION_LEVEL=" + playerData.getSkillLevel(Skill.EXCAVATION) + ", EXCAVATION_XP=" + playerData.getSkillXp(Skill.EXCAVATION) + ", " +
-                                "FARMING_LEVEL=" + playerData.getSkillLevel(Skill.FARMING) + ", FARMING_XP=" + playerData.getSkillXp(Skill.FARMING) + ", " +
-                                "FIGHTING_LEVEL=" + playerData.getSkillLevel(Skill.FIGHTING) + ", FIGHTING_XP=" + playerData.getSkillXp(Skill.FIGHTING) + ", " +
-                                "FISHING_LEVEL=" + playerData.getSkillLevel(Skill.FISHING) + ", FISHING_XP=" + playerData.getSkillXp(Skill.FISHING) + ", " +
-                                "FORAGING_LEVEL=" + playerData.getSkillLevel(Skill.FORAGING) + ", FORAGING_XP=" + playerData.getSkillXp(Skill.FORAGING) + ", " +
-                                "FORGING_LEVEL=" + playerData.getSkillLevel(Skill.FORGING) + ", FORGING_XP=" + playerData.getSkillXp(Skill.FORGING) + ", " +
-                                "HEALING_LEVEL=" + playerData.getSkillLevel(Skill.HEALING) + ", HEALING_XP=" + playerData.getSkillXp(Skill.HEALING) + ", " +
-                                "MINING_LEVEL=" + playerData.getSkillLevel(Skill.MINING) + ", MINING_XP=" + playerData.getSkillXp(Skill.MINING) + ", " +
-                                "SORCERY_LEVEL=" + playerData.getSkillLevel(Skill.SORCERY) + ", SORCERY_XP=" + playerData.getSkillXp(Skill.SORCERY) + ", " +
-                                "LOCALE='" + playerData.getLocale().toString() + "', STAT_MODIFIERS=" + modifiersString + ", MANA=" + playerData.getMana() + ", " +
-                                "ABILITY_DATA=" + abilitiesString + ""
-                        );
-                    }
-                    playerManager.removePlayerData(player.getUniqueId());
-                } catch (Exception e) {
-                    Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
-                    e.printStackTrace();
                 }
+                abilityJson.deleteCharAt(abilityJson.length() - 1);
+                abilityJson.append("}");
             }
-        }.runTaskAsynchronously(plugin);
+            String modifiersString = !modifiersJson.toString().equals("") ? "'" + modifiersJson.toString() + "'": "NULL";
+            String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson.toString() + "'": "NULL";
+            Bukkit.getLogger().info("Modifiers string: " + modifiersString);
+            Bukkit.getLogger().info("Abilities string: " + abilitiesString);
+            try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+                statement.executeUpdate("INSERT INTO SkillData (ID, AGILITY_LEVEL, AGILITY_XP, ALCHEMY_LEVEL, ALCHEMY_XP, ARCHERY_LEVEL, ARCHERY_XP, " +
+                        "DEFENSE_LEVEL, DEFENSE_XP, ENCHANTING_LEVEL, ENCHANTING_XP, ENDURANCE_LEVEL, ENDURANCE_XP, " +
+                        "EXCAVATION_LEVEL, EXCAVATION_XP, FARMING_LEVEL, FARMING_XP, FIGHTING_LEVEL, FIGHTING_XP, " +
+                        "FISHING_LEVEL, FISHING_XP, FORAGING_LEVEL, FORAGING_XP, FORGING_LEVEL, FORGING_XP, " +
+                        "HEALING_LEVEL, HEALING_XP, MINING_LEVEL, MINING_XP, SORCERY_LEVEL, SORCERY_XP, " +
+                        "LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('" +
+                        player.getUniqueId() + "', " +
+                        playerData.getSkillLevel(Skill.AGILITY) + ", " + playerData.getSkillXp(Skill.AGILITY) + ", " +
+                        playerData.getSkillLevel(Skill.ALCHEMY) + ", " + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
+                        playerData.getSkillLevel(Skill.ARCHERY) + ", " + playerData.getSkillXp(Skill.ARCHERY) + ", " +
+                        playerData.getSkillLevel(Skill.DEFENSE) + ", " + playerData.getSkillXp(Skill.DEFENSE) + ", " +
+                        playerData.getSkillLevel(Skill.ENCHANTING) + ", " + playerData.getSkillXp(Skill.ENCHANTING) + ", " +
+                        playerData.getSkillLevel(Skill.ENDURANCE) + ", " + playerData.getSkillXp(Skill.ENDURANCE) + ", " +
+                        playerData.getSkillLevel(Skill.EXCAVATION) + ", " + playerData.getSkillXp(Skill.EXCAVATION) + ", " +
+                        playerData.getSkillLevel(Skill.FARMING) + ", " + playerData.getSkillXp(Skill.FARMING) + ", " +
+                        playerData.getSkillLevel(Skill.FIGHTING) + ", " + playerData.getSkillXp(Skill.FIGHTING) + ", " +
+                        playerData.getSkillLevel(Skill.FISHING) + ", " + playerData.getSkillXp(Skill.FISHING) + ", " +
+                        playerData.getSkillLevel(Skill.FORAGING) + ", " + playerData.getSkillXp(Skill.FORAGING) + ", " +
+                        playerData.getSkillLevel(Skill.FORGING) + ", " + playerData.getSkillXp(Skill.FORGING) + ", " +
+                        playerData.getSkillLevel(Skill.HEALING) + ", " + playerData.getSkillXp(Skill.HEALING) + ", " +
+                        playerData.getSkillLevel(Skill.MINING) + ", " + playerData.getSkillXp(Skill.MINING) + ", " +
+                        playerData.getSkillLevel(Skill.SORCERY) + ", " + playerData.getSkillXp(Skill.SORCERY) + ", '" +
+                        playerData.getLocale().toString() + "', " + modifiersString + ", " + playerData.getMana() + ", " +
+                        abilitiesString + ") ON DUPLICATE KEY UPDATE " +
+                        "AGILITY_LEVEL=" + playerData.getSkillLevel(Skill.AGILITY) + ", AGILITY_XP=" + playerData.getSkillXp(Skill.AGILITY) + ", " +
+                        "ALCHEMY_LEVEL=" + playerData.getSkillLevel(Skill.ALCHEMY) + ", ALCHEMY_XP=" + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
+                        "ARCHERY_LEVEL=" + playerData.getSkillLevel(Skill.ARCHERY) + ", ARCHERY_XP=" + playerData.getSkillXp(Skill.ARCHERY) + ", " +
+                        "DEFENSE_LEVEL=" + playerData.getSkillLevel(Skill.DEFENSE) + ", DEFENSE_XP=" + playerData.getSkillXp(Skill.DEFENSE) + ", " +
+                        "ENCHANTING_LEVEL=" + playerData.getSkillLevel(Skill.ENCHANTING) + ", ENCHANTING_XP=" + playerData.getSkillXp(Skill.ENCHANTING) + ", " +
+                        "EXCAVATION_LEVEL=" + playerData.getSkillLevel(Skill.EXCAVATION) + ", EXCAVATION_XP=" + playerData.getSkillXp(Skill.EXCAVATION) + ", " +
+                        "FARMING_LEVEL=" + playerData.getSkillLevel(Skill.FARMING) + ", FARMING_XP=" + playerData.getSkillXp(Skill.FARMING) + ", " +
+                        "FIGHTING_LEVEL=" + playerData.getSkillLevel(Skill.FIGHTING) + ", FIGHTING_XP=" + playerData.getSkillXp(Skill.FIGHTING) + ", " +
+                        "FISHING_LEVEL=" + playerData.getSkillLevel(Skill.FISHING) + ", FISHING_XP=" + playerData.getSkillXp(Skill.FISHING) + ", " +
+                        "FORAGING_LEVEL=" + playerData.getSkillLevel(Skill.FORAGING) + ", FORAGING_XP=" + playerData.getSkillXp(Skill.FORAGING) + ", " +
+                        "FORGING_LEVEL=" + playerData.getSkillLevel(Skill.FORGING) + ", FORGING_XP=" + playerData.getSkillXp(Skill.FORGING) + ", " +
+                        "HEALING_LEVEL=" + playerData.getSkillLevel(Skill.HEALING) + ", HEALING_XP=" + playerData.getSkillXp(Skill.HEALING) + ", " +
+                        "MINING_LEVEL=" + playerData.getSkillLevel(Skill.MINING) + ", MINING_XP=" + playerData.getSkillXp(Skill.MINING) + ", " +
+                        "SORCERY_LEVEL=" + playerData.getSkillLevel(Skill.SORCERY) + ", SORCERY_XP=" + playerData.getSkillXp(Skill.SORCERY) + ", " +
+                        "LOCALE='" + playerData.getLocale().toString() + "', STAT_MODIFIERS=" + modifiersString + ", MANA=" + playerData.getMana() + ", " +
+                        "ABILITY_DATA=" + abilitiesString + ""
+                );
+            }
+            playerManager.removePlayerData(player.getUniqueId());
+        } catch (Exception e) {
+            Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
+            e.printStackTrace();
+        }
     }
 
     private Object parsePrimitive(JsonPrimitive primitive) {

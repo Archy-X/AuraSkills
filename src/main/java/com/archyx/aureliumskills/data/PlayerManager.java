@@ -37,4 +37,8 @@ public class PlayerManager {
         return playerData.containsKey(player.getUniqueId());
     }
 
+    public ConcurrentHashMap<UUID, PlayerData> getPlayerDataMap() {
+        return playerData;
+    }
+
 }

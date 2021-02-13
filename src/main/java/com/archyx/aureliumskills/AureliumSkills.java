@@ -220,6 +220,9 @@ public class AureliumSkills extends JavaPlugin {
 	}
 	
 	public void onDisable() {
+		for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
+			storageProvider.save(playerData.getPlayer());
+		}
 		File file = new File(this.getDataFolder(), "config.yml");
 		if (file.exists()) {
 			// Reloads config

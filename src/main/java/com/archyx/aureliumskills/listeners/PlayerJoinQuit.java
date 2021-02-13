@@ -17,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoinQuit implements Listener {
 
@@ -31,7 +32,12 @@ public class PlayerJoinQuit implements Listener {
 		Player player = event.getPlayer();
 		PlayerManager playerManager = plugin.getPlayerManager();
 		if (playerManager.getPlayerData(player) == null) {
-			plugin.getStorageProvider().load(player);
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					plugin.getStorageProvider().load(player);
+				}
+			}.runTaskAsynchronously(plugin);
 			PlayerData playerData = playerManager.getPlayerData(player);
 			if (playerData != null) {
 				plugin.getLeaderboard().queueAdd(new PlayerSkillInstance(playerData));
@@ -63,7 +69,12 @@ public class PlayerJoinQuit implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		plugin.getStorageProvider().save(player);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				plugin.getStorageProvider().save(player);
+			}
+		}.runTaskAsynchronously(plugin);
 		plugin.getActionBar().resetActionBar(player);
 	}
 
