@@ -1,8 +1,13 @@
-package com.archyx.aureliumskills.data;
+package com.archyx.aureliumskills.data.storage;
 
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
+import com.archyx.aureliumskills.data.PlayerManager;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -31,5 +36,7 @@ public abstract class StorageProvider {
     public abstract void load(Player player);
 
     public abstract void save(Player player);
+
+    public abstract void loadBackup(FileConfiguration file, CommandSender sender);
 
 }

@@ -9,7 +9,15 @@ import com.archyx.aureliumskills.commands.SkillsCommand;
 import com.archyx.aureliumskills.commands.StatsCommand;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.data.*;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerManager;
+import com.archyx.aureliumskills.data.backup.LegacyFileBackup;
+import com.archyx.aureliumskills.data.backup.LegacyMysqlBackup;
+import com.archyx.aureliumskills.data.converter.LegacyFileToYamlConverter;
+import com.archyx.aureliumskills.data.converter.LegacyMysqlToMysqlConverter;
+import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
+import com.archyx.aureliumskills.data.storage.StorageProvider;
+import com.archyx.aureliumskills.data.storage.YamlStorageProvider;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.CheckBlockReplace;
@@ -193,13 +201,17 @@ public class AureliumSkills extends JavaPlugin {
 		actionBar.startUpdateActionBar();
 		// Initialize storage
 		this.playerManager = new PlayerManager();
-		// Try to backup and convert legacy files
-		new LegacyFileBackup(this).saveBackup();
-		new LegacyFileToYamlConverter(this).convert();
 		// Set proper storage provider
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
-			setStorageProvider(new MySqlStorageProvider(this));
+			MySqlStorageProvider mySqlStorageProvider = new MySqlStorageProvider(this);
+			mySqlStorageProvider.init();
+			new LegacyMysqlBackup(this, mySqlStorageProvider).saveBackup();
+			new LegacyMysqlToMysqlConverter(this, mySqlStorageProvider).convert();
+			setStorageProvider(mySqlStorageProvider);
 		} else {
+			// Try to backup and convert legacy files
+			new LegacyFileBackup(this).saveBackup();
+			new LegacyFileToYamlConverter(this).convert();
 			setStorageProvider(new YamlStorageProvider(this));
 		}
 		// Load leveler

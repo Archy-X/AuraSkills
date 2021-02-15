@@ -1,11 +1,16 @@
-package com.archyx.aureliumskills.data;
+package com.archyx.aureliumskills.data.storage;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.data.AbilityData;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,10 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class YamlStorageProvider extends StorageProvider {
 
@@ -153,5 +155,52 @@ public class YamlStorageProvider extends StorageProvider {
         }
         long end = System.nanoTime();
         Bukkit.getLogger().info("[AureliumSkills] Saved playerdata in " + ((double) (end - start))/1000000 + "ms");
+    }
+
+    @Override
+    public void loadBackup(FileConfiguration config, CommandSender sender) {
+        ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
+        if (playerDataSection != null) {
+            try {
+                for (String stringId : playerDataSection.getKeys(false)) {
+                    UUID id = UUID.fromString(stringId);
+                    // Load levels and xp from backup
+                    Map<Skill, Integer> levels = new HashMap<>();
+                    Map<Skill, Double> xpLevels = new HashMap<>();
+                    for (Skill skill : Skill.values()) {
+                        int level = playerDataSection.getInt(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".level", 1);
+                        levels.put(skill, level);
+                        double xp = playerDataSection.getDouble(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
+                        xpLevels.put(skill, xp);
+                    }
+                    PlayerData playerData = playerManager.getPlayerData(id);
+                    if (playerData != null) {
+                        // Apply to object if in memory
+                        for (Skill skill : Skill.values()) {
+                            playerData.setSkillLevel(skill, levels.get(skill));
+                            playerData.setSkillXp(skill, xpLevels.get(skill));
+                        }
+                        // Immediately save to file
+                        save(playerData.getPlayer());
+                    } else {
+                        // Load file for offline players
+                        File file = new File(plugin.getDataFolder() + "/playerdata/" + id.toString() + ".yml");
+                        FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(file);
+                        playerConfig.set("uuid", id.toString());
+                        // Save skill data
+                        for (Skill skill : Skill.values()) {
+                            String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
+                            playerConfig.set(path + "level", levels.get(skill));
+                            playerConfig.set(path + "xp", xpLevels.get(skill));
+                        }
+                        // Save file
+                        playerConfig.save(file);
+                    }
+                }
+                sender.sendMessage(ChatColor.GREEN + "Successfully loaded backup");
+            } catch (Exception e) {
+                sender.sendMessage(ChatColor.RED + "Error loading backup: " + e.getMessage());
+            }
+        }
     }
 }

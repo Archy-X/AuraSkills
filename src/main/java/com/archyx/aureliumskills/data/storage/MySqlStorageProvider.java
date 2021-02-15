@@ -1,20 +1,29 @@
-package com.archyx.aureliumskills.data;
+package com.archyx.aureliumskills.data.storage;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.AbilityData;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.gson.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class MySqlStorageProvider extends StorageProvider {
 
@@ -29,22 +38,15 @@ public class MySqlStorageProvider extends StorageProvider {
         this.username = OptionL.getString(Option.MYSQL_USERNAME);
         this.password = OptionL.getString(Option.MYSQL_PASSWORD);
         this.port = OptionL.getInt(Option.MYSQL_PORT);
-        init();
     }
 
-    private void init() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    openConnection();
-                    createTable();
-                    migrateTable();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.runTaskAsynchronously(plugin);
+    public void init() {
+        try {
+            openConnection();
+            createTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void openConnection() throws SQLException, ClassNotFoundException {
@@ -139,23 +141,6 @@ public class MySqlStorageProvider extends StorageProvider {
         }
     }
 
-    private void migrateTable() throws SQLException {
-        DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, "SkillData", null);
-        if (tables.next()) {
-            ResultSet nameColumn = dbm.getColumns(null, null, "SkillData", "LOCALE");
-            if (!nameColumn.next()) {
-                try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-                    statement.execute("ALTER TABLE SkillData ADD COLUMN LOCALE varchar(10), " +
-                            "ADD COLUMN STAT_MODIFIERS json, " +
-                            "ADD COLUMN MANA double, " +
-                            "ADD COLUMN ABILITY_DATA json, " +
-                            "DROP COLUMN NAME;");
-                }
-            }
-        }
-    }
-
     private void createTable() throws SQLException {
         DatabaseMetaData dbm = connection.getMetaData();
         ResultSet tables = dbm.getTables(null, null, "SkillData", null);
@@ -223,60 +208,109 @@ public class MySqlStorageProvider extends StorageProvider {
                         abilityJson.append("},");
                     }
                 }
-                abilityJson.deleteCharAt(abilityJson.length() - 1);
+                if (abilityJson.length() > 1) {
+                    abilityJson.deleteCharAt(abilityJson.length() - 1);
+                }
                 abilityJson.append("}");
             }
             String modifiersString = !modifiersJson.toString().equals("") ? "'" + modifiersJson.toString() + "'": "NULL";
             String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson.toString() + "'": "NULL";
-            Bukkit.getLogger().info("Modifiers string: " + modifiersString);
-            Bukkit.getLogger().info("Abilities string: " + abilitiesString);
+            // Build sql statement
+            StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
+            for (Skill skill : Skill.getOrderedValues()) {
+                sql.append(skill.toString()).append("_LEVEL, ");
+                sql.append(skill.toString()).append("_XP, ");
+            }
+            sql.append("LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('");
+            sql.append(player.getUniqueId().toString()).append("', ");
+            // Insert skill data
+            for (Skill skill : Skill.getOrderedValues()) {
+                sql.append(playerData.getSkillLevel(skill)).append(", ");
+                sql.append(playerData.getSkillXp(skill)).append(", ");
+            }
+            sql.append("'").append(playerData.getLocale().toString()).append("', ");
+            sql.append(modifiersString).append(", ");
+            sql.append(playerData.getMana()).append(", ");
+            sql.append(abilitiesString).append(") ");
+            // Build update part of statement
+            sql.append("ON DUPLICATE KEY UPDATE ");
+            for (Skill skill : Skill.getOrderedValues()) {
+                sql.append(skill.toString()).append("_LEVEL=").append(playerData.getSkillLevel(skill)).append(", ");
+                sql.append(skill.toString()).append("_XP=").append(playerData.getSkillXp(skill)).append(", ");
+            }
+            sql.append("LOCALE='").append(playerData.getLocale().toString()).append("', ");
+            sql.append("STAT_MODIFIERS=").append(modifiersString).append(", ");
+            sql.append("MANA=").append(playerData.getMana()).append(", ");
+            sql.append("ABILITY_DATA=").append(abilitiesString);
+            // Execute statement
             try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-                statement.executeUpdate("INSERT INTO SkillData (ID, AGILITY_LEVEL, AGILITY_XP, ALCHEMY_LEVEL, ALCHEMY_XP, ARCHERY_LEVEL, ARCHERY_XP, " +
-                        "DEFENSE_LEVEL, DEFENSE_XP, ENCHANTING_LEVEL, ENCHANTING_XP, ENDURANCE_LEVEL, ENDURANCE_XP, " +
-                        "EXCAVATION_LEVEL, EXCAVATION_XP, FARMING_LEVEL, FARMING_XP, FIGHTING_LEVEL, FIGHTING_XP, " +
-                        "FISHING_LEVEL, FISHING_XP, FORAGING_LEVEL, FORAGING_XP, FORGING_LEVEL, FORGING_XP, " +
-                        "HEALING_LEVEL, HEALING_XP, MINING_LEVEL, MINING_XP, SORCERY_LEVEL, SORCERY_XP, " +
-                        "LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('" +
-                        player.getUniqueId() + "', " +
-                        playerData.getSkillLevel(Skill.AGILITY) + ", " + playerData.getSkillXp(Skill.AGILITY) + ", " +
-                        playerData.getSkillLevel(Skill.ALCHEMY) + ", " + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
-                        playerData.getSkillLevel(Skill.ARCHERY) + ", " + playerData.getSkillXp(Skill.ARCHERY) + ", " +
-                        playerData.getSkillLevel(Skill.DEFENSE) + ", " + playerData.getSkillXp(Skill.DEFENSE) + ", " +
-                        playerData.getSkillLevel(Skill.ENCHANTING) + ", " + playerData.getSkillXp(Skill.ENCHANTING) + ", " +
-                        playerData.getSkillLevel(Skill.ENDURANCE) + ", " + playerData.getSkillXp(Skill.ENDURANCE) + ", " +
-                        playerData.getSkillLevel(Skill.EXCAVATION) + ", " + playerData.getSkillXp(Skill.EXCAVATION) + ", " +
-                        playerData.getSkillLevel(Skill.FARMING) + ", " + playerData.getSkillXp(Skill.FARMING) + ", " +
-                        playerData.getSkillLevel(Skill.FIGHTING) + ", " + playerData.getSkillXp(Skill.FIGHTING) + ", " +
-                        playerData.getSkillLevel(Skill.FISHING) + ", " + playerData.getSkillXp(Skill.FISHING) + ", " +
-                        playerData.getSkillLevel(Skill.FORAGING) + ", " + playerData.getSkillXp(Skill.FORAGING) + ", " +
-                        playerData.getSkillLevel(Skill.FORGING) + ", " + playerData.getSkillXp(Skill.FORGING) + ", " +
-                        playerData.getSkillLevel(Skill.HEALING) + ", " + playerData.getSkillXp(Skill.HEALING) + ", " +
-                        playerData.getSkillLevel(Skill.MINING) + ", " + playerData.getSkillXp(Skill.MINING) + ", " +
-                        playerData.getSkillLevel(Skill.SORCERY) + ", " + playerData.getSkillXp(Skill.SORCERY) + ", '" +
-                        playerData.getLocale().toString() + "', " + modifiersString + ", " + playerData.getMana() + ", " +
-                        abilitiesString + ") ON DUPLICATE KEY UPDATE " +
-                        "AGILITY_LEVEL=" + playerData.getSkillLevel(Skill.AGILITY) + ", AGILITY_XP=" + playerData.getSkillXp(Skill.AGILITY) + ", " +
-                        "ALCHEMY_LEVEL=" + playerData.getSkillLevel(Skill.ALCHEMY) + ", ALCHEMY_XP=" + playerData.getSkillXp(Skill.ALCHEMY) + ", " +
-                        "ARCHERY_LEVEL=" + playerData.getSkillLevel(Skill.ARCHERY) + ", ARCHERY_XP=" + playerData.getSkillXp(Skill.ARCHERY) + ", " +
-                        "DEFENSE_LEVEL=" + playerData.getSkillLevel(Skill.DEFENSE) + ", DEFENSE_XP=" + playerData.getSkillXp(Skill.DEFENSE) + ", " +
-                        "ENCHANTING_LEVEL=" + playerData.getSkillLevel(Skill.ENCHANTING) + ", ENCHANTING_XP=" + playerData.getSkillXp(Skill.ENCHANTING) + ", " +
-                        "EXCAVATION_LEVEL=" + playerData.getSkillLevel(Skill.EXCAVATION) + ", EXCAVATION_XP=" + playerData.getSkillXp(Skill.EXCAVATION) + ", " +
-                        "FARMING_LEVEL=" + playerData.getSkillLevel(Skill.FARMING) + ", FARMING_XP=" + playerData.getSkillXp(Skill.FARMING) + ", " +
-                        "FIGHTING_LEVEL=" + playerData.getSkillLevel(Skill.FIGHTING) + ", FIGHTING_XP=" + playerData.getSkillXp(Skill.FIGHTING) + ", " +
-                        "FISHING_LEVEL=" + playerData.getSkillLevel(Skill.FISHING) + ", FISHING_XP=" + playerData.getSkillXp(Skill.FISHING) + ", " +
-                        "FORAGING_LEVEL=" + playerData.getSkillLevel(Skill.FORAGING) + ", FORAGING_XP=" + playerData.getSkillXp(Skill.FORAGING) + ", " +
-                        "FORGING_LEVEL=" + playerData.getSkillLevel(Skill.FORGING) + ", FORGING_XP=" + playerData.getSkillXp(Skill.FORGING) + ", " +
-                        "HEALING_LEVEL=" + playerData.getSkillLevel(Skill.HEALING) + ", HEALING_XP=" + playerData.getSkillXp(Skill.HEALING) + ", " +
-                        "MINING_LEVEL=" + playerData.getSkillLevel(Skill.MINING) + ", MINING_XP=" + playerData.getSkillXp(Skill.MINING) + ", " +
-                        "SORCERY_LEVEL=" + playerData.getSkillLevel(Skill.SORCERY) + ", SORCERY_XP=" + playerData.getSkillXp(Skill.SORCERY) + ", " +
-                        "LOCALE='" + playerData.getLocale().toString() + "', STAT_MODIFIERS=" + modifiersString + ", MANA=" + playerData.getMana() + ", " +
-                        "ABILITY_DATA=" + abilitiesString + ""
-                );
+                statement.executeUpdate(sql.toString());
             }
             playerManager.removePlayerData(player.getUniqueId());
         } catch (Exception e) {
             Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void loadBackup(FileConfiguration config, CommandSender sender) {
+        ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
+        if (playerDataSection != null) {
+            try {
+                for (String stringId : playerDataSection.getKeys(false)) {
+                    UUID id = UUID.fromString(stringId);
+                    // Load levels and xp from backup
+                    Map<Skill, Integer> levels = new HashMap<>();
+                    Map<Skill, Double> xpLevels = new HashMap<>();
+                    for (Skill skill : Skill.values()) {
+                        int level = playerDataSection.getInt(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".level", 1);
+                        levels.put(skill, level);
+                        double xp = playerDataSection.getDouble(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
+                        xpLevels.put(skill, xp);
+                    }
+                    PlayerData playerData = playerManager.getPlayerData(id);
+                    if (playerData != null) {
+                        // Apply to object if in memory
+                        for (Skill skill : Skill.values()) {
+                            playerData.setSkillLevel(skill, levels.get(skill));
+                            playerData.setSkillXp(skill, xpLevels.get(skill));
+                        }
+                        // Immediately save to file
+                        save(playerData.getPlayer());
+                    } else {
+                        // Build sql statement
+                        StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
+                        for (Skill skill : Skill.getOrderedValues()) {
+                            sql.append(skill.toString()).append("_LEVEL, ");
+                            sql.append(skill.toString()).append("_XP, ");
+                        }
+                        sql.delete(sql.length() - 2, sql.length());
+                        sql.append(") VALUES('");
+                        sql.append(id.toString()).append("', ");
+                        // Insert skill data
+                        for (Skill skill : Skill.getOrderedValues()) {
+                            sql.append(levels.get(skill)).append(", ");
+                            sql.append(xpLevels.get(skill)).append(", ");
+                        }
+                        sql.delete(sql.length() - 2, sql.length());
+                        sql.append(") ");
+                        // Build update part of statement
+                        sql.append("ON DUPLICATE KEY UPDATE ");
+                        for (Skill skill : Skill.getOrderedValues()) {
+                            sql.append(skill.toString()).append("_LEVEL=").append(levels.get(skill)).append(", ");
+                            sql.append(skill.toString()).append("_XP=").append(xpLevels.get(skill)).append(", ");
+                        }
+                        sql.delete(sql.length() - 2, sql.length());
+                        // Execute statement
+                        try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+                            statement.executeUpdate(sql.toString());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                sender.sendMessage(ChatColor.RED + "Error loading backup: " + e.getMessage());
+            }
         }
     }
 
@@ -293,6 +327,10 @@ public class MySqlStorageProvider extends StorageProvider {
             }
         }
         return null;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.data;
+package com.archyx.aureliumskills.data.converter;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.Bukkit;
