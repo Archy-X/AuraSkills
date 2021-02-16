@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.StatLeveler;
 import com.google.gson.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -172,8 +173,7 @@ public class MySqlStorageProvider extends StorageProvider {
         }
     }
 
-    @Override
-    public void save(Player player) {
+    public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
         try {
@@ -246,11 +246,18 @@ public class MySqlStorageProvider extends StorageProvider {
             try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
                 statement.executeUpdate(sql.toString());
             }
-            playerManager.removePlayerData(player.getUniqueId());
+            if (removeFromMemory) {
+                playerManager.removePlayerData(player.getUniqueId());
+            }
         } catch (Exception e) {
             Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void save(Player player) {
+        save(player, true);
     }
 
     @Override
@@ -271,13 +278,25 @@ public class MySqlStorageProvider extends StorageProvider {
                     }
                     PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
+                        for (Stat stat : Stat.values()) {
+                            playerData.setStatLevel(stat, 0);
+                        }
                         // Apply to object if in memory
                         for (Skill skill : Skill.values()) {
-                            playerData.setSkillLevel(skill, levels.get(skill));
+                            int level = levels.get(skill);
+                            playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xpLevels.get(skill));
+                            // Add stat levels
+                            playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
+                            int secondaryStat = level / 2;
+                            playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
                         }
+                        // Reload stats
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.HEALTH);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.LUCK);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.WISDOM);
                         // Immediately save to file
-                        save(playerData.getPlayer());
+                        save(playerData.getPlayer(), false);
                     } else {
                         // Build sql statement
                         StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
@@ -305,6 +324,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         // Execute statement
                         try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
                             statement.executeUpdate(sql.toString());
+                            sender.sendMessage("Successfully loaded backup");
                         }
                     }
                 }
@@ -331,6 +351,20 @@ public class MySqlStorageProvider extends StorageProvider {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public boolean localeColumnExists() {
+        try {
+            DatabaseMetaData dbm = connection.getMetaData();
+            try (ResultSet columns = dbm.getColumns(null, null, "SkillData", "LOCALE")) {
+                if (columns.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

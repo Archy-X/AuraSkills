@@ -11,8 +11,10 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerManager;
+import com.archyx.aureliumskills.data.backup.BackupProvider;
 import com.archyx.aureliumskills.data.backup.LegacyFileBackup;
-import com.archyx.aureliumskills.data.backup.LegacyMysqlBackup;
+import com.archyx.aureliumskills.data.backup.MysqlBackup;
+import com.archyx.aureliumskills.data.backup.YamlBackup;
 import com.archyx.aureliumskills.data.converter.LegacyFileToYamlConverter;
 import com.archyx.aureliumskills.data.converter.LegacyMysqlToMysqlConverter;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
@@ -63,6 +65,7 @@ public class AureliumSkills extends JavaPlugin {
 
 	private PlayerManager playerManager;
 	private StorageProvider storageProvider;
+	private BackupProvider backupProvider;
 	private MenuLoader menuLoader;
 	private LootTableManager lootTableManager;
 	private InventoryManager inventoryManager;
@@ -205,14 +208,21 @@ public class AureliumSkills extends JavaPlugin {
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			MySqlStorageProvider mySqlStorageProvider = new MySqlStorageProvider(this);
 			mySqlStorageProvider.init();
-			new LegacyMysqlBackup(this, mySqlStorageProvider).saveBackup();
+
+			MysqlBackup mysqlBackup = new MysqlBackup(this, mySqlStorageProvider);
+			if (!mySqlStorageProvider.localeColumnExists()) {
+				mysqlBackup.saveBackup(Bukkit.getConsoleSender());
+			}
+
 			new LegacyMysqlToMysqlConverter(this, mySqlStorageProvider).convert();
 			setStorageProvider(mySqlStorageProvider);
+			this.backupProvider = mysqlBackup;
 		} else {
 			// Try to backup and convert legacy files
-			new LegacyFileBackup(this).saveBackup();
+			new LegacyFileBackup(this).saveBackup(Bukkit.getConsoleSender());
 			new LegacyFileToYamlConverter(this).convert();
 			setStorageProvider(new YamlStorageProvider(this));
+			this.backupProvider = new YamlBackup(this);
 		}
 		// Load leveler
 		leveler = new Leveler(this);
@@ -540,6 +550,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public void setStorageProvider(StorageProvider storageProvider) {
 		this.storageProvider = storageProvider;
+	}
+
+	public BackupProvider getBackupProvider() {
+		return backupProvider;
 	}
 
 }

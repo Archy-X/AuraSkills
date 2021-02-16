@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.data.backup;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerManager;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 
 import java.io.File;
 
@@ -16,7 +17,7 @@ public abstract class BackupProvider {
         this.playerManager = plugin.getPlayerManager();
     }
 
-    public abstract void saveBackup();
+    public abstract void saveBackup(CommandSender sender);
 
     public void createBackupFolder() {
         File backupFolder = new File(plugin.getDataFolder() + "/backups");

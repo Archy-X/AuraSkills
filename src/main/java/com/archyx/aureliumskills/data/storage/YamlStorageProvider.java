@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.StatLeveler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -109,8 +110,7 @@ public class YamlStorageProvider extends StorageProvider {
         Bukkit.getLogger().info("[AureliumSkills] Loaded playerdata in " + ((double) (end - start))/1000000 + "ms");
     }
 
-    @Override
-    public void save(Player player) {
+    public void save(Player player, boolean removeFromMemory) {
         long start = System.nanoTime();
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
@@ -148,13 +148,20 @@ public class YamlStorageProvider extends StorageProvider {
                 }
             }
             config.save(file);
-            playerManager.removePlayerData(player.getUniqueId()); // Remove from memory
+            if (removeFromMemory) {
+                playerManager.removePlayerData(player.getUniqueId()); // Remove from memory
+            }
         } catch (Exception e) {
             Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
         }
         long end = System.nanoTime();
         Bukkit.getLogger().info("[AureliumSkills] Saved playerdata in " + ((double) (end - start))/1000000 + "ms");
+    }
+
+    @Override
+    public void save(Player player) {
+        save(player, true);
     }
 
     @Override
@@ -175,13 +182,25 @@ public class YamlStorageProvider extends StorageProvider {
                     }
                     PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
+                        for (Stat stat : Stat.values()) {
+                            playerData.setStatLevel(stat, 0);
+                        }
                         // Apply to object if in memory
                         for (Skill skill : Skill.values()) {
-                            playerData.setSkillLevel(skill, levels.get(skill));
+                            int level = levels.get(skill);
+                            playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xpLevels.get(skill));
+                            // Add stat levels
+                            playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
+                            int secondaryStat = level / 2;
+                            playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
                         }
+                        // Reload stats
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.HEALTH);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.LUCK);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.WISDOM);
                         // Immediately save to file
-                        save(playerData.getPlayer());
+                        save(playerData.getPlayer(), false);
                     } else {
                         // Load file for offline players
                         File file = new File(plugin.getDataFolder() + "/playerdata/" + id.toString() + ".yml");

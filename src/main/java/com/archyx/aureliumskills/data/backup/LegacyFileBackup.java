@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.data.backup;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,7 +18,7 @@ public class LegacyFileBackup extends BackupProvider {
     }
 
     @Override
-    public void saveBackup() {
+    public void saveBackup(CommandSender sender) {
         try {
             File file = new File(plugin.getDataFolder(), "data.yml");
             if (!file.exists()) return;
@@ -55,9 +55,9 @@ public class LegacyFileBackup extends BackupProvider {
                 }
             }
             config.save(backupFile);
-            Bukkit.getLogger().info("[AureliumSkills] Backed up legacy data.yml file as " + backupFile.getName());
+            sender.sendMessage("[AureliumSkills] Backed up legacy data.yml file as " + backupFile.getName());
         } catch (Exception e) {
-            Bukkit.getLogger().severe("[AureliumSkills] Error backing up legacy data file! See error below for details:");
+            sender.sendMessage("[AureliumSkills] Error backing up legacy data file! See error below for details:");
             e.printStackTrace();
         }
     }

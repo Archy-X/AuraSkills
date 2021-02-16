@@ -4,29 +4,36 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.skills.Skill;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.UUID;
 
-public class LegacyMysqlBackup extends BackupProvider {
+public class MysqlBackup extends BackupProvider {
 
     private final MySqlStorageProvider storageProvider;
 
-    public LegacyMysqlBackup(AureliumSkills plugin, MySqlStorageProvider storageProvider) {
+    public MysqlBackup(AureliumSkills plugin, MySqlStorageProvider storageProvider) {
         super(plugin);
         this.storageProvider = storageProvider;
     }
 
     @Override
-    public void saveBackup() {
+    public void saveBackup(CommandSender sender) {
         try {
-            if (localeColumnExists()) return;
+            // Save online players
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                storageProvider.save(player, false);
+            }
             Connection connection = storageProvider.getConnection();
             try (Statement statement = connection.createStatement()) {
                 String query = "SELECT * FROM SkillData;";
@@ -49,28 +56,13 @@ public class LegacyMysqlBackup extends BackupProvider {
                         }
                     }
                     config.save(file);
-                    Bukkit.getLogger().info("[AureliumSkills] Backed up legacy MySQL data as " + file.getName());
+                    sender.sendMessage("[AureliumSkills] Backed up MySQL data as " + file.getName());
                 }
             }
         } catch (Exception e) {
-            Bukkit.getLogger().severe("[AureliumSkills] Error backing up legacy MySQL! See error below for details:");
+            sender.sendMessage("[AureliumSkills] Error backing up MySQL data! See error below for details:");
             e.printStackTrace();
         }
-    }
-
-    private boolean localeColumnExists() {
-        Connection connection = storageProvider.getConnection();
-        try {
-            DatabaseMetaData dbm = connection.getMetaData();
-            try (ResultSet columns = dbm.getColumns(null, null, "SkillData", "LOCALE")) {
-                if (columns.next()) {
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
 }

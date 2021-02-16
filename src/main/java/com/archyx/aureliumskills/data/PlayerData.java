@@ -33,6 +33,7 @@ public class PlayerData {
     private Locale locale;
 
     private final Map<AbstractAbility, AbilityData> abilityData;
+    private final Map<String, Object> metadata;
 
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
@@ -42,6 +43,7 @@ public class PlayerData {
         this.statLevels = new HashMap<>();
         this.statModifiers = new HashMap<>();
         this.abilityData = new HashMap<>();
+        this.metadata = new HashMap<>();
     }
 
     public Player getPlayer() {
@@ -216,6 +218,10 @@ public class PlayerData {
             power += level;
         }
         return power;
+    }
+
+    public Map<String, Object> getMetadata() {
+        return metadata;
     }
 
 }

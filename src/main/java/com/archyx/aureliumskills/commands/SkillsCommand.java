@@ -7,6 +7,8 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.backup.BackupProvider;
+import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.menu.SkillsMenu;
@@ -30,6 +32,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -982,6 +985,73 @@ public class SkillsCommand extends BaseCommand {
 		} else {
 			sender.sendMessage(ChatColor.RED + "Only console may execute this command!");
 		}
+	}
+
+	@Subcommand("backup save")
+	@CommandPermission("aureliumskills.backup.save")
+	public void onBackupSave(CommandSender sender) {
+		BackupProvider backupProvider = plugin.getBackupProvider();
+		if (backupProvider != null) {
+			sender.sendMessage("Saving backup...");
+			backupProvider.saveBackup(sender);
+		} else {
+			sender.sendMessage(ChatColor.RED + "No backup provider set!");
+		}
+	}
+
+	@Subcommand("backup load")
+	@CommandPermission("aureliumskills.backup.load")
+	public void onBackupLoad(CommandSender sender, String fileName) {
+		StorageProvider storageProvider = plugin.getStorageProvider();
+		if (storageProvider != null) {
+			File file = new File(plugin.getDataFolder() + "/backups/" + fileName);
+			if (file.exists()) {
+				if (file.getName().endsWith(".yml")) {
+					// Require player to double type command
+					if (sender instanceof Player) {
+						PlayerData playerData = plugin.getPlayerManager().getPlayerData((Player) sender);
+						if (playerData == null) return;
+						Object typed = playerData.getMetadata().get("backup_command");
+						if (typed != null) {
+							if (typed instanceof String) {
+								String typedFile = (String) typed;
+								if (typedFile.equals(file.getName())) {
+									sender.sendMessage("Loading backup...");
+									storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
+									playerData.getMetadata().remove("backup_command");
+								} else {
+									backupLoadConfirm(playerData, sender, file);
+								}
+							} else {
+								backupLoadConfirm(playerData, sender, file);
+							}
+						} else {
+							backupLoadConfirm(playerData, sender, file);
+						}
+					} else {
+						sender.sendMessage("Loading backup...");
+						storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
+					}
+				} else {
+					sender.sendMessage(ChatColor.YELLOW + "File must be a .yml file!");
+				}
+			} else { // If file does not exist
+				sender.sendMessage(ChatColor.YELLOW + "A backup with this file name does not exist in the backups folder!");
+			}
+		} else {
+			sender.sendMessage(ChatColor.RED + "No storage provider set!");
+		}
+	}
+
+	private void backupLoadConfirm(PlayerData playerData, CommandSender sender, File file) {
+		sender.sendMessage(ChatColor.RED + "Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action.");
+		playerData.getMetadata().put("backup_command", file.getName());
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				playerData.getMetadata().remove("backup_command");
+			}
+		}.runTaskLater(plugin, 20 * 60);
 	}
 
 	@Subcommand("help")
