@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
-import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
@@ -32,16 +31,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 @CommandAlias("skills|sk|skill")
 public class SkillsCommand extends BaseCommand {
@@ -206,47 +205,22 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Updates and sorts the leaderboards")
 	public void onUpdateLeaderboards(CommandSender sender) {
 		Locale locale = plugin.getLang().getLocale(sender);
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				plugin.getStorageProvider().updateLeaderboards();
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.UPDATELEADERBOARDS_UPDATED, locale));
-					}
-				}.runTask(plugin);
-			}
-		}.runTaskAsynchronously(plugin);
-	}
-
-	@Subcommand("generate")
-	public void onGenerate(CommandSender sender, int amount) {
-		Random random = new Random();
-		for (int i = 0; i < amount; i++) {
-			UUID id = UUID.randomUUID();
-			File file = new File(plugin.getDataFolder() + "/playerdata/" + id.toString() + ".yml");
-			FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-			config.set("uuid", id.toString());
-			for (Skill skill : Skill.values()) {
-				String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
-				int level = random.nextInt(97) + 1;
-				config.set(path + "level", level);
-				int xpRequired = plugin.getLeveler().getXpRequired(level + 1);
-				if (xpRequired == 0) {
-					xpRequired = 1;
+		if (plugin.getLeaderboardManager().isNotSorting()) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					plugin.getStorageProvider().updateLeaderboards();
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.UPDATELEADERBOARDS_UPDATED, locale));
+						}
+					}.runTask(plugin);
 				}
-				config.set(path + "xp", random.nextInt(xpRequired) + random.nextDouble());
-			}
-			config.set("locale", "en");
-			config.set("mana", 100);
-			try {
-				config.save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			}.runTaskAsynchronously(plugin);
+		} else {
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.UPDATELEADERBOARDS_ALREADY_UPDATING, locale));
 		}
-		sender.sendMessage("Finished generating");
 	}
 
 	@Subcommand("toggle")

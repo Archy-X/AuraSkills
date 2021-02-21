@@ -225,13 +225,14 @@ public class AureliumSkills extends JavaPlugin {
 			this.backupProvider = new YamlBackup(this);
 		}
 		// Initialize leaderboards
-		this.storageProvider.updateLeaderboards();
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				storageProvider.updateLeaderboards();
+				if (leaderboardManager.isNotSorting()) {
+					storageProvider.updateLeaderboards();
+				}
 			}
-		}.runTaskTimer(this, 12000, 12000);
+		}.runTaskTimerAsynchronously(this, 0, 12000);
 		// Load leveler
 		leveler = new Leveler(this);
 		leveler.loadLevelRequirements();

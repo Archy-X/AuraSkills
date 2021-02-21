@@ -9,6 +9,7 @@ public class LeaderboardManager {
     private final Map<Skill, List<SkillValue>> skillLeaderboards;
     private List<SkillValue> powerLeaderboard;
     private List<SkillValue> averageLeaderboard;
+    private volatile boolean sorting = false;
 
     public LeaderboardManager() {
         this.skillLeaderboards = new HashMap<>();
@@ -85,6 +86,14 @@ public class LeaderboardManager {
             }
         }
         return 0;
+    }
+
+    public boolean isNotSorting() {
+        return !sorting;
+    }
+
+    public void setSorting(boolean sorting) {
+        this.sorting = sorting;
     }
 
 }

@@ -231,7 +231,7 @@ public class YamlStorageProvider extends StorageProvider {
     @Override
     public void updateLeaderboards() {
         LeaderboardManager manager = plugin.getLeaderboardManager();
-
+        manager.setSorting(true);
         // Initialize lists
         Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
         for (Skill skill : Skill.values()) {
@@ -329,6 +329,7 @@ public class YamlStorageProvider extends StorageProvider {
         }
         manager.setPowerLeaderboard(powerLeaderboard);
         manager.setAverageLeaderboard(averageLeaderboard);
+        manager.setSorting(false);
     }
 
 }

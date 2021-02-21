@@ -371,7 +371,7 @@ public class MySqlStorageProvider extends StorageProvider {
     @Override
     public void updateLeaderboards() {
         LeaderboardManager manager = plugin.getLeaderboardManager();
-
+        manager.setSorting(true);
         // Initialize lists
         Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
         for (Skill skill : Skill.values()) {
@@ -457,7 +457,6 @@ public class MySqlStorageProvider extends StorageProvider {
             Bukkit.getLogger().warning("Error while updating leaderboards:");
             e.printStackTrace();
         }
-
         // Sort the leaderboards
         LeaderboardSorter sorter = new LeaderboardSorter();
         for (Skill skill : Skill.values()) {
@@ -473,6 +472,7 @@ public class MySqlStorageProvider extends StorageProvider {
         }
         manager.setPowerLeaderboard(powerLeaderboard);
         manager.setAverageLeaderboard(averageLeaderboard);
+        manager.setSorting(false);
     }
 
 
