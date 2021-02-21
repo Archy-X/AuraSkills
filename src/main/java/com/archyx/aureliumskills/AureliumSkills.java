@@ -34,10 +34,10 @@ import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
-import com.archyx.aureliumskills.skills.Leaderboard;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillBossBar;
 import com.archyx.aureliumskills.skills.SourceManager;
+import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.levelers.*;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.util.*;
@@ -52,6 +52,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -80,7 +81,6 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean vaultEnabled;
 	private boolean protocolLibEnabled;
 	private boolean mythicMobsEnabled;
-	private Leaderboard leaderboard;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -94,6 +94,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Lang lang;
 	private Leveler leveler;
 	private Health health;
+	private LeaderboardManager leaderboardManager;
 	private final long releaseTime = 1612831625310L;
 
 	public void onEnable() {
@@ -181,8 +182,6 @@ public class AureliumSkills extends JavaPlugin {
 			e.printStackTrace();
 			Bukkit.getLogger().warning("[AureliumSkills] Error loading menus!");
 		}
-		// Load leaderboard
-		leaderboard = new Leaderboard(this);
 		// Registers events
 		registerEvents();
 		// Load ability manager
@@ -204,6 +203,7 @@ public class AureliumSkills extends JavaPlugin {
 		actionBar.startUpdateActionBar();
 		// Initialize storage
 		this.playerManager = new PlayerManager();
+		this.leaderboardManager = new LeaderboardManager();
 		// Set proper storage provider
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			MySqlStorageProvider mySqlStorageProvider = new MySqlStorageProvider(this);
@@ -224,6 +224,14 @@ public class AureliumSkills extends JavaPlugin {
 			setStorageProvider(new YamlStorageProvider(this));
 			this.backupProvider = new YamlBackup(this);
 		}
+		// Initialize leaderboards
+		this.storageProvider.updateLeaderboards();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				storageProvider.updateLeaderboards();
+			}
+		}.runTaskTimer(this, 12000, 12000);
 		// Load leveler
 		leveler = new Leveler(this);
 		leveler.loadLevelRequirements();
@@ -504,10 +512,6 @@ public class AureliumSkills extends JavaPlugin {
 		return leveler;
 	}
 
-	public Leaderboard getLeaderboard() {
-		return leaderboard;
-	}
-
 	public boolean isHolographicDisplaysEnabled() {
 		return holographicDisplaysEnabled;
 	}
@@ -554,6 +558,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public BackupProvider getBackupProvider() {
 		return backupProvider;
+	}
+
+	public LeaderboardManager getLeaderboardManager() {
+		return leaderboardManager;
 	}
 
 }

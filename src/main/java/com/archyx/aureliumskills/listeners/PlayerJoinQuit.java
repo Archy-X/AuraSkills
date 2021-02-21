@@ -1,10 +1,8 @@
 package com.archyx.aureliumskills.listeners;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerManager;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.util.UpdateChecker;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.ChatColor;
@@ -38,10 +36,6 @@ public class PlayerJoinQuit implements Listener {
 					plugin.getStorageProvider().load(player);
 				}
 			}.runTaskAsynchronously(plugin);
-			PlayerData playerData = playerManager.getPlayerData(player);
-			if (playerData != null) {
-				plugin.getLeaderboard().queueAdd(new PlayerSkillInstance(playerData));
-			}
 		}
 		// Load player skull
 		Location playerLoc = player.getLocation();

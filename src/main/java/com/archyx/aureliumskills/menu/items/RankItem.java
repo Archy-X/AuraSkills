@@ -71,8 +71,8 @@ public class RankItem implements ConfigurableItem {
     public ItemStack getItem(Skill skill, Player player, Locale locale) {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
-        int rank = plugin.getLeaderboard().getSkillRank(skill, player.getUniqueId());
-        int size = plugin.getLeaderboard().getSize();
+        int rank = plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId());
+        int size = plugin.getLeaderboardManager().getLeaderboard(skill).size();
         if (meta != null) {
             meta.setDisplayName(LoreUtil.replace(displayName,"{your_ranking}", Lang.getMessage(MenuMessage.YOUR_RANKING, locale)));
             List<String> builtLore = new ArrayList<>();

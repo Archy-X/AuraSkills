@@ -9,6 +9,10 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
+import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
+import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
+import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.google.gson.*;
@@ -21,10 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class MySqlStorageProvider extends StorageProvider {
 
@@ -366,5 +367,113 @@ public class MySqlStorageProvider extends StorageProvider {
         }
         return false;
     }
+
+    @Override
+    public void updateLeaderboards() {
+        LeaderboardManager manager = plugin.getLeaderboardManager();
+
+        // Initialize lists
+        Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
+        for (Skill skill : Skill.values()) {
+            leaderboards.put(skill, new ArrayList<>());
+        }
+        List<SkillValue> powerLeaderboard = new ArrayList<>();
+        List<SkillValue> averageLeaderboard = new ArrayList<>();
+
+
+        Set<UUID> loadedFromMemory = new HashSet<>();
+        for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
+            UUID id = playerData.getPlayer().getUniqueId();
+            int powerLevel = 0;
+            double powerXp = 0;
+            int numEnabled = 0;
+            for (Skill skill : Skill.values()) {
+                int level = playerData.getSkillLevel(skill);
+                double xp = playerData.getSkillXp(skill);
+                // Add to lists
+                SkillValue skillLevel = new SkillValue(id, level, xp);
+                leaderboards.get(skill).add(skillLevel);
+
+                if (OptionL.isEnabled(skill)) {
+                    powerLevel += level;
+                    powerXp += xp;
+                    numEnabled++;
+                }
+            }
+            // Add power and average
+            SkillValue powerValue = new SkillValue(id, powerLevel, powerXp);
+            powerLeaderboard.add(powerValue);
+            double averageLevel = (double) powerLevel / numEnabled;
+            SkillValue averageValue = new SkillValue(id, 0, averageLevel);
+            averageLeaderboard.add(averageValue);
+
+            loadedFromMemory.add(playerData.getPlayer().getUniqueId());
+        }
+
+        try {
+            try (Statement statement = connection.createStatement()) {
+                String query = "SELECT * FROM SkillData;";
+                try (ResultSet result = statement.executeQuery(query)) {
+                    while (result.next()) {
+                        try {
+                            UUID id = UUID.fromString(result.getString("ID"));
+                            if (!loadedFromMemory.contains(id)) {
+                                int powerLevel = 0;
+                                double powerXp = 0;
+                                int numEnabled = 0;
+
+                                for (Skill skill : Skill.values()) {
+                                    // Load from database
+                                    int level = result.getInt(skill.toString().toUpperCase(Locale.ROOT) + "_LEVEL");
+                                    if (level == 0) {
+                                        level = 1;
+                                    }
+                                    double xp = result.getDouble(skill.toString().toUpperCase(Locale.ROOT) + "_XP");
+                                    // Add to lists
+                                    SkillValue skillLevel = new SkillValue(id, level, xp);
+                                    leaderboards.get(skill).add(skillLevel);
+
+                                    if (OptionL.isEnabled(skill)) {
+                                        powerLevel += level;
+                                        powerXp += xp;
+                                        numEnabled++;
+                                    }
+                                }
+                                // Add power and average
+                                SkillValue powerValue = new SkillValue(id, powerLevel, powerXp);
+                                powerLeaderboard.add(powerValue);
+                                double averageLevel = (double) powerLevel / numEnabled;
+                                SkillValue averageValue = new SkillValue(id, 0, averageLevel);
+                                averageLeaderboard.add(averageValue);
+                            }
+                        } catch (Exception e) {
+                            Bukkit.getLogger().warning("[AureliumSkills] Error reading player with uuid " + result.getString("ID") + " from the database!");
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Bukkit.getLogger().warning("Error while updating leaderboards:");
+            e.printStackTrace();
+        }
+
+        // Sort the leaderboards
+        LeaderboardSorter sorter = new LeaderboardSorter();
+        for (Skill skill : Skill.values()) {
+            leaderboards.get(skill).sort(sorter);
+        }
+        powerLeaderboard.sort(sorter);
+        AverageSorter averageSorter = new AverageSorter();
+        averageLeaderboard.sort(averageSorter);
+
+        // Add skill leaderboards to map
+        for (Skill skill : Skill.values()) {
+            manager.setLeaderboard(skill, leaderboards.get(skill));
+        }
+        manager.setPowerLeaderboard(powerLeaderboard);
+        manager.setAverageLeaderboard(averageLeaderboard);
+    }
+
 
 }

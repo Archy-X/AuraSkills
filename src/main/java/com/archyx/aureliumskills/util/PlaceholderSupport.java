@@ -4,8 +4,8 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang.math.NumberUtils;
@@ -163,10 +163,11 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             if (leaderboardType.startsWith("power_")) {
                 int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", ""));
                 if (place > 0) {
-                    List<PlayerSkillInstance> list = plugin.getLeaderboard().readPowerLeaderboard(place, 1);
+                    List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(place, 1);
                     if (list.size() > 0) {
-                        PlayerSkillInstance playerSkill = list.get(0);
-                        return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName() + " - " + playerSkill.getPowerLevel();
+                        SkillValue skillValue = list.get(0);
+                        String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                        return (name != null ? name : "?") + " - " + skillValue.getLevel();
                     }
                     else return "";
                 }
@@ -174,10 +175,11 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     if (identifier.endsWith("name")) {
                         int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_name", ""));
                         if (namePlace > 0) {
-                            List<PlayerSkillInstance> list = plugin.getLeaderboard().readPowerLeaderboard(namePlace, 1);
+                            List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(namePlace, 1);
                             if (list.size() > 0) {
-                                PlayerSkillInstance playerSkill = list.get(0);
-                                return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName();
+                                SkillValue skillValue = list.get(0);
+                                String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                                return name != null ? name : "?";
                             }
                             else return "";
                         }
@@ -185,10 +187,10 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     else if (identifier.endsWith("value")) {
                         int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_value", ""));
                         if (valuePlace > 0) {
-                            List<PlayerSkillInstance> list = plugin.getLeaderboard().readPowerLeaderboard(valuePlace, 1);
+                            List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(valuePlace, 1);
                             if (list.size() > 0) {
-                                PlayerSkillInstance playerSkill = list.get(0);
-                                return String.valueOf(playerSkill.getPowerLevel());
+                                SkillValue playerSkill = list.get(0);
+                                return String.valueOf(playerSkill.getLevel());
                             }
                             else return "";
                         }
@@ -200,10 +202,11 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
                         int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
                         if (place > 0) {
-                            List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, 1, 1);
+                            List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 1);
                             if (list.size() > 0) {
-                                PlayerSkillInstance playerSkill = list.get(0);
-                                return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName() + " - " + playerSkill.getSkillLevel(skill);
+                                SkillValue skillValue = list.get(0);
+                                String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                                return (name != null ? name : "?") + " - " + skillValue.getLevel();
                             }
                             else return "";
                         }
@@ -211,10 +214,11 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                             if (identifier.endsWith("name")) {
                                 int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
                                 if (namePlace > 0) {
-                                    List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, namePlace, 1);
+                                    List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, namePlace, 1);
                                     if (list.size() > 0) {
-                                        PlayerSkillInstance playerSkill = list.get(0);
-                                        return Bukkit.getOfflinePlayer(playerSkill.getPlayerId()).getName();
+                                        SkillValue skillValue = list.get(0);
+                                        String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                                        return name != null ? name : "?";
                                     }
                                     else return "";
                                 }
@@ -222,10 +226,10 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                             else if (identifier.endsWith("value")) {
                                 int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
                                 if (valuePlace > 0) {
-                                    List<PlayerSkillInstance> list = plugin.getLeaderboard().readSkillLeaderboard(skill, valuePlace, 1);
+                                    List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, valuePlace, 1);
                                     if (list.size() > 0) {
-                                        PlayerSkillInstance playerSkill = list.get(0);
-                                        return String.valueOf(playerSkill.getSkillLevel(skill));
+                                        SkillValue skillValue = list.get(0);
+                                        return String.valueOf(skillValue.getLevel());
                                     }
                                     else return "";
                                 }
@@ -237,14 +241,14 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.equals("rank")) {
-            return String.valueOf(plugin.getLeaderboard().getPowerRank(player.getUniqueId()));
+            return String.valueOf(plugin.getLeaderboardManager().getPowerRank(player.getUniqueId()));
         }
 
         if (identifier.startsWith("rank_")) {
             String skillName = LoreUtil.replace(identifier, "rank_", "");
             try {
                 Skill skill = Skill.valueOf(skillName.toUpperCase());
-                return String.valueOf(plugin.getLeaderboard().getSkillRank(skill, player.getUniqueId()));
+                return String.valueOf(plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId()));
             }
             catch (Exception e) {
                 return "";
