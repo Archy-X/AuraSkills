@@ -12,8 +12,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.io.File;
 import java.io.InputStream;
@@ -142,15 +148,18 @@ public class LootTableManager {
 							switch (key) {
 								case "name":
 									meta.setDisplayName(value);
+									item.setItemMeta(meta);
 									break;
 								case "lore":
 									List<String> lore = new LinkedList<>(Arrays.asList(value.split("\\|")));
 									meta.setLore(lore);
+									item.setItemMeta(meta);
 									break;
 								case "glow":
 									if (Boolean.parseBoolean(value)) {
 										meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
 										meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+										item.setItemMeta(meta);
 									}
 									break;
 								case "enchantments":
@@ -166,7 +175,15 @@ public class LootTableManager {
 										if (xEnchantment.isPresent()) {
 											Enchantment enchantment = xEnchantment.get().parseEnchantment();
 											if (enchantment != null) {
-												meta.addEnchant(enchantment, enchantLevel, true);
+												if (item.getType() == Material.ENCHANTED_BOOK && meta instanceof EnchantmentStorageMeta) {
+													EnchantmentStorageMeta esm = (EnchantmentStorageMeta) meta;
+													esm.addStoredEnchant(enchantment, enchantLevel, true);
+													item.setItemMeta(esm);
+												} else {
+													ItemMeta enchantMeta = item.getItemMeta();
+													enchantMeta.addEnchant(enchantment, enchantLevel, true);
+													item.setItemMeta(enchantMeta);
+												}
 											} else {
 												ASLogger.logWarn(LogType.UNKNOWN_ENCHANTMENT, "Enchantment " + enchantName + " invalid for item with input " + text);
 											}
@@ -176,11 +193,27 @@ public class LootTableManager {
 										}
 									}
 									break;
+								case "potion_type":
+									PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
+									potionMeta.setBasePotionData(new PotionData(PotionType.valueOf(originalValue.toUpperCase())));
+									item.setItemMeta(potionMeta);
+									break;
+								case "custom_effect":
+									PotionMeta potionMeta1 = (PotionMeta) item.getItemMeta();
+									String[] values = originalValue.split(",");
+									if (values.length == 3) {
+										PotionEffectType type = PotionEffectType.getByName(values[0]);
+										if (type != null) {
+											potionMeta1.addCustomEffect(new PotionEffect(type, Integer.parseInt(values[1]), Integer.parseInt(values[2])), true);
+											potionMeta1.setColor(type.getColor());
+										}
+									}
+									item.setItemMeta(potionMeta1);
+									break;
 							}
 						}
 					}
 				}
-				item.setItemMeta(meta);
 			}
 			return item;
 		}
