@@ -17,7 +17,9 @@ import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -197,7 +199,9 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												if (!livingEntity.isDead() && livingEntity.isValid()) {
 													int cooldown = plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
 													if (cooldown == 0) {
-														activateSharpHook(player, playerSkill, livingEntity);
+														if (areValidLocations(player, livingEntity)) { // Check that the locations of the entities are valid
+															activateSharpHook(player, playerSkill, livingEntity);
+														}
 													} else {
 														if (plugin.getManaAbilityManager().getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
 															Locale locale = Lang.getLanguage(player);
@@ -218,6 +222,21 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 				}
 			}
 		}
+	}
+
+	private boolean areValidLocations(Player damager, LivingEntity hooked) {
+		Location damagerLocation = damager.getLocation();
+		Location hookedLocation = hooked.getLocation();
+		// Disallow if in different worlds
+		World damagerWorld = damagerLocation.getWorld();
+		World hookedWorld = hookedLocation.getWorld();
+		if (damagerWorld != null & hookedWorld != null) {
+			if (!damagerWorld.equals(hookedWorld)) {
+				return false;
+			}
+		}
+		// Disallow if more than 33 blocks away
+		return !(damagerLocation.distanceSquared(hookedLocation) > 1089);
 	}
 
 	private void activateSharpHook(Player player, PlayerSkill playerSkill, LivingEntity caught) {

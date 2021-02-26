@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.ManaAbilityActivateEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
@@ -128,25 +129,30 @@ public class ManaAbilityManager implements Listener {
 
     //Activates an ability
     public void activateAbility(Player player, MAbility ability, int durationTicks, ManaAbility manaAbility) {
-        activated.get(player.getUniqueId()).put(ability, true);
-        activeAbilities.get(player.getUniqueId()).add(manaAbility);
-        manaAbility.activate(player);
-        if (durationTicks != 0) {
-            //Schedules stop
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    manaAbility.onStop(player);
-                    activeAbilities.get(player.getUniqueId()).remove(manaAbility);
-                    activated.get(player.getUniqueId()).put(ability, false);
-                    ready.get(player.getUniqueId()).put(ability, false);
-                }
-            }.runTaskLater(plugin, durationTicks);
-        } else {
-            manaAbility.onStop(player);
-            activeAbilities.get(player.getUniqueId()).remove(manaAbility);
-            activated.get(player.getUniqueId()).put(ability, false);
-            ready.get(player.getUniqueId()).put(ability, false);
+        ManaAbilityActivateEvent event = new ManaAbilityActivateEvent(player, ability, durationTicks);
+        Bukkit.getPluginManager().callEvent(event);
+        if (!event.isCancelled()) {
+            activated.get(player.getUniqueId()).put(ability, true);
+            activeAbilities.get(player.getUniqueId()).add(manaAbility);
+            manaAbility.activate(player);
+            int duration = event.getDuration();
+            if (duration != 0) {
+                //Schedules stop
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        manaAbility.onStop(player);
+                        activeAbilities.get(player.getUniqueId()).remove(manaAbility);
+                        activated.get(player.getUniqueId()).put(ability, false);
+                        ready.get(player.getUniqueId()).put(ability, false);
+                    }
+                }.runTaskLater(plugin, duration);
+            } else {
+                manaAbility.onStop(player);
+                activeAbilities.get(player.getUniqueId()).remove(manaAbility);
+                activated.get(player.getUniqueId()).put(ability, false);
+                ready.get(player.getUniqueId()).put(ability, false);
+            }
         }
     }
 
