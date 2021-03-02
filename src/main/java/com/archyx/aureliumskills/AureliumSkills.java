@@ -318,6 +318,16 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return values;
 		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("skillTop", c -> {
+			List<String> values = new ArrayList<>();
+			for (Skill skill : Skill.values()) {
+				if (OptionL.isEnabled(skill)) {
+					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
+				}
+			}
+			values.add("average");
+			return values;
+		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
 			List<String> values = new ArrayList<>();
 			for (Stat stat : Stat.values()) {
