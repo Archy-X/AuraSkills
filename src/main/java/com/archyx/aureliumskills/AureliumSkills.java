@@ -81,6 +81,7 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean vaultEnabled;
 	private boolean protocolLibEnabled;
 	private boolean mythicMobsEnabled;
+	private boolean luckPermsEnabled;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -131,6 +132,8 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		// Check for protocol lib
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
+		// Check for LuckPerms
+		luckPermsEnabled = Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
 		// Load health
 		Health health = new Health(this);
 		this.health = health;
@@ -549,6 +552,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isMythicMobsEnabled() {
 		return mythicMobsEnabled;
+	}
+
+	public boolean isLuckPermsEnabled() {
+		return luckPermsEnabled;
 	}
 
 	public long getReleaseTime() {
