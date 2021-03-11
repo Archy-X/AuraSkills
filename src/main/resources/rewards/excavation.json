@@ -1,0 +1,74 @@
+{
+  "patterns": [
+    {
+      "type": "stat",
+      "name": "regeneration",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 1
+      }
+    },
+    {
+      "type": "stat",
+      "name": "luck",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 2
+      }
+    },
+    {
+      "type": "ability",
+      "name": "metal_detector",
+      "pattern": {
+        "start": 2,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "excavator",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "spade_master",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "bigger_scoop",
+      "pattern": {
+        "start": 4,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "lucky_spades",
+      "pattern": {
+        "start": 6,
+        "interval": 5
+      }
+    },
+    {
+      "type": "mana_ability",
+      "name": "terraform",
+      "pattern": {
+        "start": 7,
+        "interval": 7
+      }
+    }
+  ],
+  "rewards": {
+
+  },
+  "file_version": 1
+}

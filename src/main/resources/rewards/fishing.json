@@ -1,0 +1,74 @@
+{
+  "patterns": [
+    {
+      "type": "stat",
+      "name": "luck",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 1
+      }
+    },
+    {
+      "type": "stat",
+      "name": "health",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 2
+      }
+    },
+    {
+      "type": "ability",
+      "name": "lucky_catch",
+      "pattern": {
+        "start": 2,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "fisher",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "treasure_hunter",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "grappler",
+      "pattern": {
+        "start": 4,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "epic_catch",
+      "pattern": {
+        "start": 6,
+        "interval": 5
+      }
+    },
+    {
+      "type": "mana_ability",
+      "name": "sharp_hook",
+      "pattern": {
+        "start": 7,
+        "interval": 7
+      }
+    }
+  ],
+  "rewards": {
+
+  },
+  "file_version": 1
+}
