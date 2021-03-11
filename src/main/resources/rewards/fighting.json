@@ -52,7 +52,7 @@
     },
     {
       "type": "ability",
-      "name": "triple_harvest",
+      "name": "bleed",
       "pattern": {
         "start": 6,
         "interval": 5
