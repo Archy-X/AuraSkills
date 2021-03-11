@@ -14,8 +14,8 @@ public class CommandReward extends Reward {
     private final CommandExecutor executor;
     private final String command;
 
-    public CommandReward(AureliumSkills plugin, String info, String message, CommandExecutor executor, String command) {
-        super(plugin, info, message);
+    public CommandReward(AureliumSkills plugin, CommandExecutor executor, String command) {
+        super(plugin);
         this.executor = executor;
         this.command = command;
     }

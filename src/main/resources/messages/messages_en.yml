@@ -487,7 +487,7 @@ leveler:
   title: '&a{skill} Level Up'
   subtitle: '&6{old} ➜ {new}'
   level_up: '&3&m----------------------------------------\n&r &3Skill Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------'
-  stat_level: '\n  {color}+1{symbol} {stat}'
+  stat_level: '\n  {color}+{num}{symbol} {stat}'
   ability_unlock: '\n  &aAbility Unlock! &6&l{ability} &7has been unlocked'
   ability_level_up: '\n  &aAbility Level Up! &6&l{ability} &7is now level &6{level}'
   mana_ability_unlock: '\n  &dMana Ability Unlock! &9&l{mana_ability} &7has been unlocked'

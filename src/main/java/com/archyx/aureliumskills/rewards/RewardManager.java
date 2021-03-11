@@ -18,7 +18,7 @@ public class RewardManager {
     }
 
     public void loadRewards() {
-
+        this.rewardTables.clear();
     }
 
 }

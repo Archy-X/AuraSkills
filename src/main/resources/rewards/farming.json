@@ -1,0 +1,74 @@
+{
+  "patterns": [
+    {
+      "type": "stat",
+      "name": "health",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 1
+      }
+    },
+    {
+      "type": "stat",
+      "name": "strength",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 2
+      }
+    },
+    {
+      "type": "ability",
+      "name": "bountiful_harvest",
+      "pattern": {
+        "start": 2,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "farmer",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "scythe_master",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "geneticist",
+      "pattern": {
+        "start": 4,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "triple_harvest",
+      "pattern": {
+        "start": 6,
+        "interval": 5
+      }
+    },
+    {
+      "type": "mana_ability",
+      "name": "replenish",
+      "pattern": {
+        "start": 7,
+        "interval": 7
+      }
+    }
+  ],
+  "rewards": {
+
+  },
+  "file_version": 1
+}

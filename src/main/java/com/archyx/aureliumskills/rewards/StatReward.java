@@ -11,8 +11,8 @@ public class StatReward extends Reward {
     private final Stat stat;
     private final double value;
 
-    public StatReward(AureliumSkills plugin, String info, String message, Stat stat, double value) {
-        super(plugin, info, message);
+    public StatReward(AureliumSkills plugin, Stat stat, double value) {
+        super(plugin);
         this.stat = stat;
         this.value = value;
     }

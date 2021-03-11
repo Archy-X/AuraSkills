@@ -10,15 +10,15 @@ import org.bukkit.entity.Player;
 public class PermissionReward extends Reward {
 
     private final String permission;
-    private boolean value;
+    private final boolean value;
 
-    public PermissionReward(AureliumSkills plugin, String info, String message, String permission) {
-        super(plugin, info, message);
-        this.permission = permission;
-        this.value = true;
+    public PermissionReward(AureliumSkills plugin, String permission) {
+        this(plugin, permission, true);
     }
 
-    public void setValue(boolean value) {
+    public PermissionReward(AureliumSkills plugin, String permission, boolean value) {
+        super(plugin);
+        this.permission = permission;
         this.value = value;
     }
 
