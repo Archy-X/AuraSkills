@@ -1,0 +1,66 @@
+{
+  "patterns": [
+    {
+      "type": "stat",
+      "name": "strength",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 1
+      }
+    },
+    {
+      "type": "stat",
+      "name": "regeneration",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 2
+      }
+    },
+    {
+      "type": "ability",
+      "name": "crit_damage",
+      "pattern": {
+        "start": 2,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "fighter",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "sword_master",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "first_strike",
+      "pattern": {
+        "start": 4,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "triple_harvest",
+      "pattern": {
+        "start": 6,
+        "interval": 5
+      }
+    }
+  ],
+  "rewards": {
+
+  },
+  "file_version": 1
+}

@@ -1,0 +1,74 @@
+{
+  "patterns": [
+    {
+      "type": "stat",
+      "name": "toughness",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 1
+      }
+    },
+    {
+      "type": "stat",
+      "name": "health",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 2
+      }
+    },
+    {
+      "type": "ability",
+      "name": "shielding",
+      "pattern": {
+        "start": 2,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "defender",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "mob_master",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "immunity",
+      "pattern": {
+        "start": 4,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "no_debuff",
+      "pattern": {
+        "start": 6,
+        "interval": 5
+      }
+    },
+    {
+      "type": "mana_ability",
+      "name": "absorption",
+      "pattern": {
+        "start": 7,
+        "interval": 7
+      }
+    }
+  ],
+  "rewards": {
+
+  },
+  "file_version": 1
+}

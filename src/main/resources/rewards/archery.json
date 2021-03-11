@@ -1,0 +1,74 @@
+{
+  "patterns": [
+    {
+      "type": "stat",
+      "name": "luck",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 1
+      }
+    },
+    {
+      "type": "stat",
+      "name": "strength",
+      "value": 1,
+      "pattern": {
+        "start": 2,
+        "interval": 2
+      }
+    },
+    {
+      "type": "ability",
+      "name": "crit_chance",
+      "pattern": {
+        "start": 2,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "archer",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "bow_master",
+      "pattern": {
+        "start": 3,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "piercing",
+      "pattern": {
+        "start": 4,
+        "interval": 5
+      }
+    },
+    {
+      "type": "ability",
+      "name": "stun",
+      "pattern": {
+        "start": 6,
+        "interval": 5
+      }
+    },
+    {
+      "type": "mana_ability",
+      "name": "charged_shot",
+      "pattern": {
+        "start": 7,
+        "interval": 7
+      }
+    }
+  ],
+  "rewards": {
+
+  },
+  "file_version": 1
+}
