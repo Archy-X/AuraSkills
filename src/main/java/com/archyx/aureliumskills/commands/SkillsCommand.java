@@ -19,7 +19,6 @@ import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.ActionBar;
-import com.archyx.aureliumskills.stats.Luck;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
@@ -37,7 +36,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,11 +44,11 @@ import java.util.Map;
 public class SkillsCommand extends BaseCommand {
  
 	private final AureliumSkills plugin;
-	private final Lang lang;
+	private final ReloadManager reloadManager;
 
 	public SkillsCommand(AureliumSkills plugin) {
 		this.plugin = plugin;
-		lang = new Lang(plugin);
+		this.reloadManager = new ReloadManager(plugin);
 	}
 	
 	@Default
@@ -313,40 +311,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.reload")
 	@Description("Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.")
 	public void reload(CommandSender sender) {
-		Locale locale = plugin.getLang().getLocale(sender);
-		plugin.reloadConfig();
-		plugin.saveDefaultConfig();
-		plugin.getOptionLoader().loadOptions();
-		plugin.getRequirementManager().load();
-		plugin.getSourceManager().loadSources();
-		plugin.getCheckBlockReplace().reloadCustomBlocks();
-		lang.loadLanguageFiles();
-		lang.loadEmbeddedMessages(plugin.getCommandManager());
-		lang.loadLanguages(plugin.getCommandManager());
-		try {
-			plugin.getMenuLoader().load();
-		}
-		catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-			e.printStackTrace();
-			Bukkit.getLogger().warning("[AureliumSkills] Error while loading menus!");
-		}
-		plugin.getAbilityManager().loadOptions();
-		plugin.getLeveler().loadLevelRequirements();
-		plugin.getLootTableManager().loadLootTables();
-		plugin.getWorldManager().loadWorlds();
-		if (plugin.isWorldGuardEnabled()) {
-			plugin.getWorldGuardSupport().loadRegions();
-		}
-		Luck luck = new Luck(plugin);
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			plugin.getHealth().reload(player);
-			luck.reload(player);
-		}
-		// Resets all action bars
-		plugin.getActionBar().resetActionBars();
-		// Load boss bars
-		plugin.getBossBar().loadOptions();
-		sender.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GREEN + Lang.getMessage(CommandMessage.RELOAD, locale));
+		reloadManager.reload(sender);
 	}
 	
 	@Subcommand("skill setlevel")

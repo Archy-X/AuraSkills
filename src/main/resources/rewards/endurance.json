@@ -2,7 +2,7 @@
   "patterns": [
     {
       "type": "stat",
-      "name": "regeneration",
+      "stat": "regeneration",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -11,7 +11,7 @@
     },
     {
       "type": "stat",
-      "name": "toughness",
+      "stat": "toughness",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -20,7 +20,7 @@
     },
     {
       "type": "ability",
-      "name": "anti_hunger",
+      "ability": "anti_hunger",
       "pattern": {
         "start": 2,
         "interval": 5
@@ -28,7 +28,7 @@
     },
     {
       "type": "ability",
-      "name": "runner",
+      "ability": "runner",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -36,7 +36,7 @@
     },
     {
       "type": "ability",
-      "name": "golden_heal",
+      "ability": "golden_heal",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -44,7 +44,7 @@
     },
     {
       "type": "ability",
-      "name": "recovery",
+      "ability": "recovery",
       "pattern": {
         "start": 4,
         "interval": 5
@@ -52,7 +52,7 @@
     },
     {
       "type": "ability",
-      "name": "meal_steal",
+      "ability": "meal_steal",
       "pattern": {
         "start": 6,
         "interval": 5

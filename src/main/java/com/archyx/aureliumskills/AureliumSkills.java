@@ -168,14 +168,15 @@ public class AureliumSkills extends JavaPlugin {
 		else {
 			holographicDisplaysEnabled = false;
 		}
-		// Registers Commands
-		registerCommands();
+		commandManager = new PaperCommandManager(this);
 		// Load languages
 		lang = new Lang(this);
 		getServer().getPluginManager().registerEvents(lang, this);
 		lang.init();
 		lang.loadEmbeddedMessages(commandManager);
 		lang.loadLanguages(commandManager);
+		// Registers Commands
+		registerCommands();
 		// Load menu
 		menuLoader = new MenuLoader(this);
 		try {
@@ -309,7 +310,6 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		commandManager = new PaperCommandManager(this);
 		commandManager.enableUnstableAPI("help");
 		commandManager.usePerIssuerLocale(true, false);
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {

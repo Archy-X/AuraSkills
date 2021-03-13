@@ -2,7 +2,7 @@
   "patterns": [
     {
       "type": "stat",
-      "name": "toughness",
+      "stat": "toughness",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -11,7 +11,7 @@
     },
     {
       "type": "stat",
-      "name": "health",
+      "stat": "health",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -20,7 +20,7 @@
     },
     {
       "type": "ability",
-      "name": "shielding",
+      "ability": "shielding",
       "pattern": {
         "start": 2,
         "interval": 5
@@ -28,7 +28,7 @@
     },
     {
       "type": "ability",
-      "name": "defender",
+      "ability": "defender",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -36,7 +36,7 @@
     },
     {
       "type": "ability",
-      "name": "mob_master",
+      "ability": "mob_master",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -44,7 +44,7 @@
     },
     {
       "type": "ability",
-      "name": "immunity",
+      "ability": "immunity",
       "pattern": {
         "start": 4,
         "interval": 5
@@ -52,7 +52,7 @@
     },
     {
       "type": "ability",
-      "name": "no_debuff",
+      "ability": "no_debuff",
       "pattern": {
         "start": 6,
         "interval": 5
@@ -60,7 +60,7 @@
     },
     {
       "type": "mana_ability",
-      "name": "absorption",
+      "mana_ability": "absorption",
       "pattern": {
         "start": 7,
         "interval": 7

@@ -2,7 +2,7 @@
   "patterns": [
     {
       "type": "stat",
-      "name": "toughness",
+      "stat": "toughness",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -11,7 +11,7 @@
     },
     {
       "type": "stat",
-      "name": "luck",
+      "stat": "luck",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -20,7 +20,7 @@
     },
     {
       "type": "ability",
-      "name": "lucky_miner",
+      "ability": "lucky_miner",
       "pattern": {
         "start": 2,
         "interval": 5
@@ -28,7 +28,7 @@
     },
     {
       "type": "ability",
-      "name": "miner",
+      "ability": "miner",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -36,7 +36,7 @@
     },
     {
       "type": "ability",
-      "name": "pick_master",
+      "ability": "pick_master",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -44,7 +44,7 @@
     },
     {
       "type": "ability",
-      "name": "stamina",
+      "ability": "stamina",
       "pattern": {
         "start": 4,
         "interval": 5
@@ -52,7 +52,7 @@
     },
     {
       "type": "ability",
-      "name": "hardened_armor",
+      "ability": "hardened_armor",
       "pattern": {
         "start": 6,
         "interval": 5
@@ -60,7 +60,7 @@
     },
     {
       "type": "mana_ability",
-      "name": "speed_mine",
+      "mana_ability": "speed_mine",
       "pattern": {
         "start": 7,
         "interval": 7

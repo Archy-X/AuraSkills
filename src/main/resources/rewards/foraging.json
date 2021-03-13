@@ -2,7 +2,7 @@
   "patterns": [
     {
       "type": "stat",
-      "name": "strength",
+      "stat": "strength",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -11,7 +11,7 @@
     },
     {
       "type": "stat",
-      "name": "toughness",
+      "stat": "toughness",
       "value": 1,
       "pattern": {
         "start": 2,
@@ -20,7 +20,7 @@
     },
     {
       "type": "ability",
-      "name": "lumberjack",
+      "ability": "lumberjack",
       "pattern": {
         "start": 2,
         "interval": 5
@@ -28,7 +28,7 @@
     },
     {
       "type": "ability",
-      "name": "forager",
+      "ability": "forager",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -36,7 +36,7 @@
     },
     {
       "type": "ability",
-      "name": "axe_master",
+      "ability": "axe_master",
       "pattern": {
         "start": 3,
         "interval": 5
@@ -44,7 +44,7 @@
     },
     {
       "type": "ability",
-      "name": "valor",
+      "ability": "valor",
       "pattern": {
         "start": 4,
         "interval": 5
@@ -52,7 +52,7 @@
     },
     {
       "type": "ability",
-      "name": "shredder",
+      "ability": "shredder",
       "pattern": {
         "start": 6,
         "interval": 5
@@ -60,7 +60,7 @@
     },
     {
       "type": "mana_ability",
-      "name": "treecapitator",
+      "mana_ability": "treecapitator",
       "pattern": {
         "start": 7,
         "interval": 7
