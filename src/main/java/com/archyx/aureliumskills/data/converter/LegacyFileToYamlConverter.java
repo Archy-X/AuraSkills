@@ -62,9 +62,9 @@ public class LegacyFileToYamlConverter extends DataConverter {
                     }
                 }
             }
-            boolean deleted = file.delete();
-            if (deleted) {
-                Bukkit.getLogger().info("[AureliumSkills] Successfully deleted data.yml file");
+            boolean renamed = file.renameTo(new File(plugin.getDataFolder(), "data-OLD.yml"));
+            if (renamed) {
+                Bukkit.getLogger().info("[AureliumSkills] Successfully renamed data.yml to data-OLD.yml");
             }
             Bukkit.getLogger().info("[AureliumSkills] Successfully converted " + playersConverted + " player skill data to the new yaml file format!");
         }
