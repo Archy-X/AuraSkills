@@ -25,6 +25,7 @@ import com.archyx.aureliumskills.util.NumberUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
+import fr.minuskube.inv.SmartInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -55,7 +56,12 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.skills")
 	@Description("Opens the Skills menu, where you can browse skills, progress, and abilities.")
 	public void onSkills(Player player) {
-		SkillsMenu.getInventory(player, plugin).open(player);
+		SmartInventory inventory = SkillsMenu.getInventory(player, plugin);
+		if (inventory != null) {
+			inventory.open(player);
+		} else {
+			player.sendMessage(Lang.getMessage(CommandMessage.NO_PROFILE, Lang.getDefaultLanguage()));
+		}
 	}
 	
 	@Subcommand("xp add")
