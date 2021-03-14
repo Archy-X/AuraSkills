@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.menu.templates;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
@@ -16,6 +17,8 @@ import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -30,12 +33,30 @@ public class SkillInfoItem {
         this.plugin = plugin;
     }
 
-    public ItemStack getItem(ItemStack item, Skill skill, PlayerSkill playerSkill, Locale locale, String displayName, List<String> lore, Map<Integer, Set<String>> lorePlaceholders) {
+    private List<String> applyPlaceholders(List<String> lore, Player player) {
+        if (plugin.isPlaceholderAPIEnabled() && OptionL.getBoolean(Option.MENUS_PLACEHOLDER_API)) {
+            List<String> appliedList = new ArrayList<>();
+            for (String entry : lore) {
+                appliedList.add(PlaceholderAPI.setPlaceholders(player, entry));
+            }
+            return appliedList;
+        }
+        return lore;
+    }
+
+    private String applyPlaceholders(String input, Player player) {
+        if (plugin.isPlaceholderAPIEnabled() && OptionL.getBoolean(Option.MENUS_PLACEHOLDER_API)) {
+            return PlaceholderAPI.setPlaceholders(player, input);
+        }
+        return input;
+    }
+
+    public ItemStack getItem(ItemStack item, Skill skill, PlayerSkill playerSkill, Locale locale, String displayName, List<String> lore, Map<Integer, Set<String>> lorePlaceholders, Player player) {
         ItemMeta meta = item.getItemMeta();
         int skillLevel = playerSkill.getSkillLevel(skill);
         if (meta != null) {
-            meta.setDisplayName(LoreUtil.replace(displayName,"{skill}", skill.getDisplayName(locale),"{level}", RomanNumber.toRoman(skillLevel)));
-            meta.setLore(ItemUtils.formatLore(getLore(lore, lorePlaceholders, skill, playerSkill, locale)));
+            meta.setDisplayName(applyPlaceholders(LoreUtil.replace(displayName,"{skill}", skill.getDisplayName(locale),"{level}", RomanNumber.toRoman(skillLevel)), player));
+            meta.setLore(ItemUtils.formatLore(applyPlaceholders(getLore(lore, lorePlaceholders, skill, playerSkill, locale), player)));
             item.setItemMeta(meta);
         }
         return item;

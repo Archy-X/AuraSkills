@@ -67,6 +67,6 @@ public class SkillItem extends ConfigurableItem {
             baseItem = new ItemStack(Material.STONE);
         }
         baseItem = baseItem.clone();
-        return skillInfoItem.getItem(baseItem, skill, playerSkill, locale, applyPlaceholders(displayName, player), applyPlaceholders(lore, player), lorePlaceholders);
+        return skillInfoItem.getItem(baseItem, skill, playerSkill, locale, displayName, lore, lorePlaceholders, player);
     }
 }

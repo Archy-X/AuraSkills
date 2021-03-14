@@ -80,7 +80,7 @@ public class SkillTemplate extends ConfigurableTemplate {
             baseItem = new ItemStack(Material.STONE);
         }
         baseItem = baseItem.clone();
-        return skillInfoItem.getItem(baseItem, skill, playerSkill, locale, applyPlaceholders(displayName, player), applyPlaceholders(lore, player), lorePlaceholders);
+        return skillInfoItem.getItem(baseItem, skill, playerSkill, locale, displayName, lore, lorePlaceholders, player);
     }
 
     public SlotPos getPosition(Skill skill) {
