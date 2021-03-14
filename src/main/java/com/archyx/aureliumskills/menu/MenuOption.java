@@ -66,7 +66,7 @@ public class MenuOption {
     }
 
     public void putItem(ConfigurableItem item) {
-        items.put(item.getType(), item);
+        items.put(item.getItemType(), item);
     }
 
     public ConfigurableTemplate getTemplate(TemplateType type) {
@@ -74,7 +74,7 @@ public class MenuOption {
     }
 
     public void putTemplate(ConfigurableTemplate template) {
-        templates.put(template.getType(), template);
+        templates.put(template.getTemplateType(), template);
     }
 
 }

@@ -28,12 +28,12 @@ Aurelium Skills provides a developer API to interact with the plugin.
 <dependency>
    	<groupId>com.github.Archy-x</groupId>
    	<artifactId>AureliumSkills</artifactId>
-   	<version>Alpha1.6.6</version>
+   	<version>Alpha1.6.7</version>
 </dependency>
 ```
 
 The main class to use for the API is AureliumAPI, which has many static methods for skills, xp, stats, and mana.
-There are also a few events, including ManaRegenerateEvent, SkillLevelUpEvent, XpGainEvent, amd PlayerLootDropEvent
+There are also a few events, including ManaRegenerateEvent, SkillLevelUpEvent, XpGainEvent, PlayerLootDropEvent, and ManaAbilityActivateEvent
 
 ## Contributing
 Contributions are welcome! Open a pull request, and I will review it.

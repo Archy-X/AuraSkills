@@ -10,28 +10,19 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class SkillItem extends SkillInfoItem implements ConfigurableItem {
+public class SkillItem extends ConfigurableItem {
 
-    private final ItemType TYPE = ItemType.SKILL;
-
-    private SlotPos pos;
+    private final SkillInfoItem skillInfoItem;
     private final Map<Skill, ItemStack> baseItems = new HashMap<>();
-    private String displayName;
-    private List<String> lore;
-    private Map<Integer, Set<String>> lorePlaceholders;
-    private final String[] definedPlaceholders = new String[] {"skill_desc", "primary_stat", "secondary_stat", "ability_levels", "mana_ability", "level", "progress_to_level", "max_level"};
 
     public SkillItem(AureliumSkills plugin) {
-        super(plugin);
-    }
-
-    @Override
-    public ItemType getType() {
-        return TYPE;
+        super(plugin, ItemType.SKILL, new String[] {"skill_desc", "primary_stat", "secondary_stat", "ability_levels", "mana_ability", "level", "progress_to_level", "max_level"});
+        this.skillInfoItem = new SkillInfoItem(plugin);
     }
 
     @Override
@@ -66,21 +57,16 @@ public class SkillItem extends SkillInfoItem implements ConfigurableItem {
         }
         catch (Exception e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning("[AureliumSkills] Error parsing item " + TYPE.toString() + ", check error above for details!");
+            Bukkit.getLogger().warning("[AureliumSkills] Error parsing item " + itemType.toString() + ", check error above for details!");
         }
     }
 
-    public ItemStack getItem(Skill skill, PlayerData playerData, Locale locale) {
+    public ItemStack getItem(Skill skill, PlayerData playerData, Player player, Locale locale) {
         ItemStack baseItem = baseItems.get(skill);
         if (baseItem == null) {
             baseItem = new ItemStack(Material.STONE);
         }
         baseItem = baseItem.clone();
-        return getItem(baseItem, skill, playerData, locale, displayName, lore, lorePlaceholders);
-    }
-
-    @Override
-    public SlotPos getPos() {
-        return pos;
+        return skillInfoItem.getItem(baseItem, skill, playerData, locale, displayName, lore, lorePlaceholders, player);
     }
 }
