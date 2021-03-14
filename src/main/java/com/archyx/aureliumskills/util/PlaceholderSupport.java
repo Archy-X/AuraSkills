@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang.math.NumberUtils;
@@ -128,6 +129,11 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             if (identifier.equals(stat.name().toLowerCase(Locale.ENGLISH))) {
                 if (SkillLoader.playerStats.containsKey(player.getUniqueId())) {
                     return String.valueOf(SkillLoader.playerStats.get(player.getUniqueId()).getStatLevel(stat));
+                }
+            } else if (identifier.equals(stat.name().toLowerCase(Locale.ROOT) + "_int")) {
+                PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
+                if (playerStat != null) {
+                    return String.valueOf(Math.round(playerStat.getStatLevel(stat)));
                 }
             }
         }
