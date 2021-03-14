@@ -55,18 +55,32 @@ public class Leveler {
 		}
 	}
 
-	public double getMultiplier(Player player) {
-		return 1 + player.getEffectivePermissions().stream()
-				.map(PermissionAttachmentInfo::getPermission)
-				.map(s -> s.toLowerCase(Locale.ENGLISH))
-				.filter(value -> value.startsWith("aureliumskills.multiplier."))
-				.map(value -> value.replace("aureliumskills.multiplier.", ""))
-				.filter(value -> pattern.matcher(value).matches())
-				.mapToDouble(Double::parseDouble)
-				.map(it -> it/100)
-				.sum();
+	public double getMultiplier(Player player, Skill skill) {
+		double multiplier = 1.0;
+		for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
+			String permission = info.getPermission().toLowerCase(Locale.ROOT);
+			if (permission.startsWith("aureliumskills.multiplier.")) {
+				permission = LoreUtil.replace(permission, "aureliumskills.multiplier.", "");
+				if (pattern.matcher(permission).matches()) { // Parse all skills multiplier
+					multiplier += Double.parseDouble(permission) / 100;
+				} else if (skill != null) { // Skill specific multiplier
+					String skillName = skill.toString().toLowerCase(Locale.ROOT);
+					if (permission.startsWith(skillName)) {
+						permission = LoreUtil.replace(permission, skillName + ".", "");
+						if (pattern.matcher(permission).matches()) {
+							multiplier += Double.parseDouble(permission) / 100;
+						}
+					}
+				}
+			}
+		}
+		return multiplier;
 	}
-	
+
+	public double getMultiplier(Player player) {
+		return getMultiplier(player, null);
+	}
+
 	//Method for adding xp with a defined amount
 	public void addXp(Player player, Skill skill, double amount) {
 		PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
@@ -75,7 +89,7 @@ public class Leveler {
 			//Checks if xp amount is not zero
 			if (amount != 0) {
 				//Gets xp amount
-				double xpAmount = amount * getMultiplier(player);
+				double xpAmount = amount * getMultiplier(player, skill);
 				//Calls event
 				XpGainEvent event = new XpGainEvent(player, skill, xpAmount);
 				Bukkit.getPluginManager().callEvent(event);

@@ -269,12 +269,26 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
         }
 
-        if (identifier.equals("multiplier")) {
-            return NumberUtil.format2(plugin.getLeveler().getMultiplier(player));
+        if (identifier.startsWith("multiplier")) {
+            if (identifier.equals("multiplier")) {
+                return NumberUtil.format2(plugin.getLeveler().getMultiplier(player));
+            }
+            String skillName = LoreUtil.replace(identifier, "multiplier_", "");
+            try {
+                Skill skill = Skill.valueOf(skillName.toUpperCase());
+                return NumberUtil.format2(plugin.getLeveler().getMultiplier(player, skill));
+            } catch (Exception ignored) {}
         }
 
-        if (identifier.equals("multiplier_percent")) {
-            return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player) - 1) * 100));
+        if (identifier.startsWith("multiplier_percent")) {
+            if (identifier.equals("multiplier_percent")) {
+                return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player) - 1) * 100));
+            }
+            String skillName = LoreUtil.replace(identifier, "multiplier_percent_", "");
+            try {
+                Skill skill = Skill.valueOf(skillName.toUpperCase());
+                return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player, skill) - 1) * 100));
+            } catch (Exception ignored) {}
         }
 
         return null;

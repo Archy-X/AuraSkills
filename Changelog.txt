@@ -1,3 +1,18 @@
+Version Alpha 1.6.7
+  New Features:
+    - Added per skill multiplier permissions:
+      - Format: aureliumskills.multiplier.[skill].[percent]
+      - Reminder that percent is the percent extra xp, so aureliumskills.multiplier.farming.100 would give 100% (2x) more Farming XP
+      - Added %aureliumskills_multiplier_[skill]% and %aureliumskills_multiplier_percent_[skill]% placeholders
+    - Added potion_type and custom_effect data tags for loot
+      - Format: potion_type:[PotionType]
+      - Format: custom_effect:[PotionEffectType],[duration],[amplifier]
+    - Added ManaAbilityActivateEvent
+  Bug Fixes:
+    - Fixed Bleed not being removed on some deaths
+    - Fixed enchanted book loot enchants not working in anvils
+    - Sharp hook will no longer work if the attacker is too far away or in a different world
+
 Version Alpha 1.6.6
   New Features:
     - Added archery/fighting.damage-based options to grant XP every time a player attacks per damage dealt instead of killing the mob:
