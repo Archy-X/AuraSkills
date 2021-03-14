@@ -16,6 +16,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.cryptomorin.xseries.XMaterial;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -164,7 +165,11 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					}
 					// If has command
 					else if (loot.hasCommand()) {
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(loot.getCommand(), "{player}", player.getName()));
+						String command = loot.getCommand();
+						if (plugin.isPlaceholderAPIEnabled()) {
+							command = PlaceholderAPI.setPlaceholders(player, command);
+						}
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
 					}
 				}
 			}
@@ -190,7 +195,11 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					}
 					// If has command
 					else if (loot.hasCommand()) {
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(loot.getCommand(), "{player}", player.getName()));
+						String command = loot.getCommand();
+						if (plugin.isPlaceholderAPIEnabled()) {
+							command = PlaceholderAPI.setPlaceholders(player, command);
+						}
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
 					}
 				}
 			}
