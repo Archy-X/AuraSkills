@@ -15,7 +15,7 @@ import com.archyx.aureliumskills.util.RomanNumber;
 
 import java.util.Locale;
 
-public abstract class ProgressLevelItem {
+public class ProgressLevelItem {
 
     private final AureliumSkills plugin;
 
@@ -97,9 +97,4 @@ public abstract class ProgressLevelItem {
         }
         return manaAbilityLore.toString();
     }
-
-    public AureliumSkills getPlugin() {
-        return plugin;
-    }
-
 }

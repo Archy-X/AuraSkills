@@ -22,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 import java.util.function.Supplier;
 
-public abstract class SkillInfoItem {
+public class SkillInfoItem {
 
     private final AureliumSkills plugin;
 

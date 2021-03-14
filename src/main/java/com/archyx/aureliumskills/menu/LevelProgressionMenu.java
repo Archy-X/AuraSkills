@@ -62,13 +62,13 @@ public class LevelProgressionMenu implements InventoryProvider {
 		}
 
 		SkillItem skillItem = (SkillItem) options.getItem(ItemType.SKILL);
-		contents.set(skillItem.getPos(), ClickableItem.empty(skillItem.getItem(skill, playerSkill, locale)));
+		contents.set(skillItem.getPos(), ClickableItem.empty(skillItem.getItem(skill, playerSkill, player, locale)));
 
 		BackItem backItem = (BackItem) options.getItem(ItemType.BACK);
-		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(locale), e -> SkillsMenu.getInventory(player, plugin).open(player)));
+		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(player), e -> SkillsMenu.getInventory(player, plugin).open(player)));
 
 		CloseItem closeItem = (CloseItem) options.getItem(ItemType.CLOSE);
-		contents.set(closeItem.getPos(), ClickableItem.of(closeItem.getItem(locale), e -> player.closeInventory()));
+		contents.set(closeItem.getPos(), ClickableItem.of(closeItem.getItem(player), e -> player.closeInventory()));
 
 		RankItem rankItem = (RankItem) options.getItem(ItemType.RANK);
 		contents.set(rankItem.getPos(), ClickableItem.empty(rankItem.getItem(skill, player, locale)));
@@ -89,11 +89,11 @@ public class LevelProgressionMenu implements InventoryProvider {
 		for (int i = pagination.getPage() * 24; i < pagination.getPage() * 24 + 24; i++) {
 			if (i + 2 <= OptionL.getMaxLevel(skill)) {
 				if (i + 2 <= currentLevel) {
-					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, locale));
+					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, player, locale));
 				} else if (i + 2 == currentLevel + 1) {
-					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, locale));
+					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, player, locale));
 				} else {
-					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, locale));
+					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, player, locale));
 				}
 			}
 			else {
@@ -119,7 +119,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 
 		NextPageItem nextPageItem = (NextPageItem) options.getItem(ItemType.NEXT_PAGE);
 		if (pagination.getPage() + 1 < pages) {
-			contents.set(nextPageItem.getPos(), ClickableItem.of(nextPageItem.getItem(locale), e -> {
+			contents.set(nextPageItem.getPos(), ClickableItem.of(nextPageItem.getItem(player), e -> {
 				int page = pagination.next().getPage();
 				getInventory(player, skill, page, plugin).open(player, page);
 			}));
@@ -127,7 +127,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 
 		PreviousPageItem previousPageItem = (PreviousPageItem) options.getItem(ItemType.PREVIOUS_PAGE);
 		if (pagination.getPage() - 1 >= 0) {
-			contents.set(previousPageItem.getPos(), ClickableItem.of(previousPageItem.getItem(locale), e -> {
+			contents.set(previousPageItem.getPos(), ClickableItem.of(previousPageItem.getItem(player), e -> {
 				int previous = pagination.previous().getPage();
 				getInventory(player, skill, previous, plugin).open(player, previous);
 			}));
