@@ -2,7 +2,7 @@ Version Alpha 1.6.7
   New Features:
     - Added PlaceholderAPI support to menus:
       - Added menus.placeholder-api config option (true by default)
-      - Works on all display names and lores
+      - Works on all display names, lores, and messages used in menus
     - Added per skill multiplier permissions:
       - Format: aureliumskills.multiplier.[skill].[percent]
       - Reminder that percent is the percent extra xp, so aureliumskills.multiplier.farming.100 would give 100% (2x) more Farming XP
