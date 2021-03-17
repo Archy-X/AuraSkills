@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
+import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
@@ -172,56 +173,70 @@ public class Leveler {
 		if (currentLevel < OptionL.getMaxLevel(skill)) { //Check max level options
 			if (levelRequirements.size() > currentLevel - 1) {
 				if (currentXp >= levelRequirements.get(currentLevel - 1)) {
-					Locale locale = playerData.getLocale();
-					// When player levels up a skill
-					playerData.setSkillXp(skill, currentXp - levelRequirements.get(currentLevel - 1));
-					playerData.setSkillLevel(skill, playerData.getSkillLevel(skill) + 1);
-					playerData.addStatLevel(skill.getPrimaryStat(), 1);
-					statLeveler.reloadStat(player, skill.getPrimaryStat());
-					if ((currentLevel + 1) % 2 == 0) {
-						playerData.addStatLevel(skill.getSecondaryStat(), 1);
-						statLeveler.reloadStat(player, skill.getSecondaryStat());
-					}
-					//Adds money rewards if enabled
-					if (plugin.isVaultEnabled()) {
-						if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-							Economy economy = plugin.getEconomy();
-							double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
-							double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-							economy.depositPlayer(player, base + (multiplier * (currentLevel + 1) * (currentLevel + 1)));
-						}
-					}
-					// Reload items and armor to check for newly met requirements
-					plugin.getModifierManager().reloadPlayer(player);
-					// Calls event
-					SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, currentLevel + 1);
-					Bukkit.getPluginManager().callEvent(event);
-					// Sends messages
-					if (OptionL.getBoolean(Option.LEVELER_TITLE_ENABLED)) {
-						player.sendTitle(LoreUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
-								LoreUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
-										,"{old}", RomanNumber.toRoman(currentLevel)
-										,"{new}", RomanNumber.toRoman(currentLevel + 1))
-								, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
-					}
-					if (OptionL.getBoolean(Option.LEVELER_SOUND_ENABLED)) {
-						try {
-							player.playSound(player.getLocation(), Sound.valueOf(OptionL.getString(Option.LEVELER_SOUND_TYPE))
-									, SoundCategory.valueOf(OptionL.getString(Option.LEVELER_SOUND_CATEGORY))
-									, (float) OptionL.getDouble(Option.LEVELER_SOUND_VOLUME), (float) OptionL.getDouble(Option.LEVELER_SOUND_PITCH));
-						}
-						catch (Exception e) {
-							Bukkit.getLogger().warning("[AureliumSkills] Error playing level up sound (Check config) Played the default sound instead");
-							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1f, 0.5f);
-						}
-					}
-					player.sendMessage(getLevelUpMessage(player, playerData, skill, currentLevel + 1, locale));
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
+					levelUpSkill(playerData, skill);
 				}
 			}
 		}
 	}
 
+	private void levelUpSkill(PlayerData playerData, Skill skill) {
+		Player player = playerData.getPlayer();
+		Locale locale = playerData.getLocale();
+
+		double currentXp = playerData.getSkillXp(skill);
+		int level = playerData.getSkillLevel(skill) + 1;
+
+		playerData.setSkillXp(skill, currentXp - levelRequirements.get(level - 2));
+		playerData.setSkillLevel(skill, level);
+
+		List<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
+		for (Reward reward : rewards) {
+			reward.giveReward(player, skill, level);
+		}
+		//Adds money rewards if enabled
+		if (plugin.isVaultEnabled()) {
+			if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
+				Economy economy = plugin.getEconomy();
+				double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
+				double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
+				economy.depositPlayer(player, base + (multiplier * level * level));
+			}
+		}
+		// Reload items and armor to check for newly met requirements
+		plugin.getModifierManager().reloadPlayer(player);
+		// Calls event
+		SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, level);
+		Bukkit.getPluginManager().callEvent(event);
+		// Sends messages
+		if (OptionL.getBoolean(Option.LEVELER_TITLE_ENABLED)) {
+			sendTitle(player, locale, skill, level);
+		}
+		if (OptionL.getBoolean(Option.LEVELER_SOUND_ENABLED)) {
+			playSound(player);
+		}
+		player.sendMessage(getLevelUpMessage(player, playerData, skill, level, locale));
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
+	}
+
+	private void sendTitle(Player player, Locale locale, Skill skill, int level) {
+		player.sendTitle(LoreUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
+				LoreUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
+						,"{old}", RomanNumber.toRoman(level - 1)
+						,"{new}", RomanNumber.toRoman(level))
+				, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
+	}
+
+	private void playSound(Player player) {
+		try {
+			player.playSound(player.getLocation(), Sound.valueOf(OptionL.getString(Option.LEVELER_SOUND_TYPE))
+					, SoundCategory.valueOf(OptionL.getString(Option.LEVELER_SOUND_CATEGORY))
+					, (float) OptionL.getDouble(Option.LEVELER_SOUND_VOLUME), (float) OptionL.getDouble(Option.LEVELER_SOUND_PITCH));
+		}
+		catch (Exception e) {
+			Bukkit.getLogger().warning("[AureliumSkills] Error playing level up sound (Check config) Played the default sound instead");
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1f, 0.5f);
+		}
+	}
 
 	private String getLevelUpMessage(Player player, PlayerData playerData, Skill skill, int newLevel, Locale locale) {
 		String message = LoreUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)

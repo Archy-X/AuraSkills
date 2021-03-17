@@ -40,41 +40,13 @@ public class RewardManager {
         for (Skill skill : Skill.values()) {
             File rewardsFile = new File(rewardsDirectory + "/" + skill.toString().toLowerCase(Locale.ROOT) + ".json");
             JsonObject rewards = new Gson().fromJson(new InputStreamReader(new FileInputStream(rewardsFile)), JsonObject.class);
-
             RewardTable rewardTable = new RewardTable();
             // Load patterns section
             if (rewards.has("patterns")) {
                 JsonElement patternElement = rewards.get("patterns");
                 if (patternElement.isJsonArray()) {
                     JsonArray patterns = patternElement.getAsJsonArray();
-                    for (int i = 0; i < patterns.size(); i++) {
-                        JsonElement element = patterns.get(i);
-                        JsonObject object = element.getAsJsonObject();
-                        try {
-                            Reward reward = parseReward(object);
-                            // Parse pattern
-                            JsonObject pattern = getElement(object, "pattern").getAsJsonObject();
-                            int start = 2;
-                            if (pattern.has("start")) {
-                                start = getElement(pattern, "start").getAsInt();
-                            }
-                            int interval = getElement(pattern, "interval").getAsInt();
-                            int maxLevel = OptionL.getMaxLevel(skill);
-                            int stop = maxLevel;
-                            if (pattern.has("stop")) {
-                                int potentialStop = getElement(pattern, "stop").getAsInt();
-                                if (potentialStop < maxLevel) {
-                                    stop = potentialStop;
-                                }
-                            }
-                            // Add to reward table
-                            for (int j = start; j <= stop; j += interval) {
-                                rewardTable.addReward(reward, j);
-                            }
-                        } catch (IllegalArgumentException e) {
-                            throw new RewardException(rewardsFile.getName(), "patterns.[" + i + "]", e.getMessage());
-                        }
-                    }
+                    loadPatterns(patterns, rewardsFile, rewardTable, skill);
                 } else {
                     throw new RewardException(rewardsFile.getName(), "patterns", "Element must be of type JsonArray");
                 }
@@ -84,28 +56,66 @@ public class RewardManager {
                 JsonElement levelsElement = rewards.get("levels");
                 if (levelsElement.isJsonObject()) {
                     JsonObject levels = levelsElement.getAsJsonObject();
-
-                    for (Map.Entry<String, JsonElement> entry : levels.entrySet()) { // For each defined level
-                        int level = Integer.parseInt(entry.getKey());
-                        if (entry.getValue().isJsonArray()) {
-                            JsonArray levelRewards = entry.getValue().getAsJsonArray();
-
-                            for (int i = 0; i < levelRewards.size(); i++) { // For each reward of that level
-                                JsonElement rewardElement = levelRewards.get(i);
-                                if (rewardElement.isJsonObject()) {
-                                    Reward reward = parseReward(rewardElement.getAsJsonObject());
-                                    rewardTable.addReward(reward, level);
-                                } else {
-                                    throw new RewardException(rewardsFile.getName(), "levels." + levels + ".[" + i + "]", "Element must be of type JsonObject");
-                                }
-                            }
-                        } else {
-                            throw new RewardException(rewardsFile.getName(), "levels." + levels, "Element must be of type JsonArray");
-                        }
-                    }
+                    loadLevels(levels, rewardsFile, rewardTable);
                 } else {
                    throw new RewardException(rewardsFile.getName(), "levels", "Element must be of type JsonObject");
                 }
+            }
+        }
+    }
+
+    private void loadPatterns(JsonArray patterns, File rewardsFile, RewardTable rewardTable, Skill skill) {
+        for (int i = 0; i < patterns.size(); i++) {
+            JsonElement element = patterns.get(i);
+            JsonObject object = element.getAsJsonObject();
+            try {
+                Reward reward = parseReward(object);
+                // Parse pattern
+                JsonObject pattern = getElement(object, "pattern").getAsJsonObject();
+                int start = 2;
+                if (pattern.has("start")) {
+                    start = getElement(pattern, "start").getAsInt();
+                }
+                int interval = getElement(pattern, "interval").getAsInt();
+                int maxLevel = OptionL.getMaxLevel(skill);
+                int stop = maxLevel;
+                if (pattern.has("stop")) {
+                    int potentialStop = getElement(pattern, "stop").getAsInt();
+                    if (potentialStop < maxLevel) {
+                        stop = potentialStop;
+                    }
+                }
+                // Add to reward table
+                for (int j = start; j <= stop; j += interval) {
+                    rewardTable.addReward(reward, j);
+                }
+            } catch (IllegalArgumentException e) {
+                throw new RewardException(rewardsFile.getName(), "patterns.[" + i + "]", e.getMessage());
+            }
+        }
+    }
+
+    private void loadLevels(JsonObject levels, File rewardsFile, RewardTable rewardTable) {
+        for (Map.Entry<String, JsonElement> entry : levels.entrySet()) { // For each defined level
+            try {
+                int level = Integer.parseInt(entry.getKey());
+                if (entry.getValue().isJsonArray()) {
+                    JsonArray levelRewards = entry.getValue().getAsJsonArray();
+
+                    for (int i = 0; i < levelRewards.size(); i++) { // For each reward of that level
+                        JsonElement rewardElement = levelRewards.get(i);
+                        if (rewardElement.isJsonObject()) {
+                            Reward reward = parseReward(rewardElement.getAsJsonObject());
+                            rewardTable.addReward(reward, level);
+                        } else {
+                            throw new RewardException(rewardsFile.getName(), "levels." + levels + ".[" + i + "]", "Element must be of type JsonObject");
+                        }
+                    }
+                } else {
+                    throw new RewardException(rewardsFile.getName(), "levels." + levels, "Element must be of type JsonArray");
+                }
+            } catch (NumberFormatException e) {
+                throw new RewardException(rewardsFile.getName(), "levels." + entry.getKey(), "Element key must be an integer in double quotes");
             }
         }
     }

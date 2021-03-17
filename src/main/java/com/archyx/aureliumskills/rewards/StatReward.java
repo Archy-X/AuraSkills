@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.StatLeveler;
 import org.bukkit.entity.Player;
 
 public class StatReward extends Reward {
@@ -23,6 +24,7 @@ public class StatReward extends Reward {
         if (playerData == null) return;
 
         playerData.addStatLevel(stat, value);
+        new StatLeveler(plugin).reloadStat(player, stat);
     }
 
     public Stat getStat() {
