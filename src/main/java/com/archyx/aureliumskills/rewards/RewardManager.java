@@ -5,16 +5,14 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.rewards.CommandReward.CommandExecutor;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,117 +30,87 @@ public class RewardManager {
         return rewardTables.get(skill);
     }
 
-    public void loadRewards() throws FileNotFoundException, IllegalArgumentException {
+    public void loadRewards() throws FileNotFoundException, RewardException {
         this.rewardTables.clear();
         File rewardsDirectory = new File(plugin.getDataFolder() + "/rewards");
         // Load each file
         for (Skill skill : Skill.values()) {
             File rewardsFile = new File(rewardsDirectory + "/" + skill.toString().toLowerCase(Locale.ROOT) + ".json");
-            JsonObject rewards = new Gson().fromJson(new InputStreamReader(new FileInputStream(rewardsFile)), JsonObject.class);
+            FileConfiguration rewardsConfig = YamlConfiguration.loadConfiguration(rewardsFile);
             RewardTable rewardTable = new RewardTable();
             // Load patterns section
-            if (rewards.has("patterns")) {
-                JsonElement patternElement = rewards.get("patterns");
-                if (patternElement.isJsonArray()) {
-                    JsonArray patterns = patternElement.getAsJsonArray();
-                    loadPatterns(patterns, rewardsFile, rewardTable, skill);
-                } else {
-                    throw new RewardException(rewardsFile.getName(), "patterns", "Element must be of type JsonArray");
+            List<Map<?, ?>> patterns = rewardsConfig.getMapList("patterns");
+            for (int index = 0; index < patterns.size(); index++) {
+                Map<?, ?> rewardMap = patterns.get(index);
+                try {
+                    Reward reward = parseReward(rewardMap);
+                    // Default pattern values
+                    int start = 2;
+                    int interval = 1;
+                    int stop = OptionL.getMaxLevel(skill);
+                    // Load pattern info
+                    Object patternObject = getElement(rewardMap, "pattern");
+                    if (patternObject instanceof ConfigurationSection) {
+                        ConfigurationSection pattern = (ConfigurationSection) patternObject;
+                        start = pattern.getInt("start", 2);
+                        interval = pattern.getInt("interval", 1);
+                        stop = pattern.getInt("stop", OptionL.getMaxLevel(skill));
+                    }
+                    // Add to reward table
+                    for (int level = start; level <= stop; level += interval) {
+                        rewardTable.addReward(reward, level);
+                    }
+                } catch (IllegalArgumentException e) {
+                    throw new RewardException(rewardsFile.getName(), "patterns.[" + index + "]", e.getMessage());
                 }
             }
             // Load levels section
-            if (rewards.has("levels")) {
-                JsonElement levelsElement = rewards.get("levels");
-                if (levelsElement.isJsonObject()) {
-                    JsonObject levels = levelsElement.getAsJsonObject();
-                    loadLevels(levels, rewardsFile, rewardTable);
-                } else {
-                   throw new RewardException(rewardsFile.getName(), "levels", "Element must be of type JsonObject");
-                }
-            }
-        }
-    }
-
-    private void loadPatterns(JsonArray patterns, File rewardsFile, RewardTable rewardTable, Skill skill) {
-        for (int i = 0; i < patterns.size(); i++) {
-            JsonElement element = patterns.get(i);
-            JsonObject object = element.getAsJsonObject();
-            try {
-                Reward reward = parseReward(object);
-                // Parse pattern
-                JsonObject pattern = getElement(object, "pattern").getAsJsonObject();
-                int start = 2;
-                if (pattern.has("start")) {
-                    start = getElement(pattern, "start").getAsInt();
-                }
-                int interval = getElement(pattern, "interval").getAsInt();
-                int maxLevel = OptionL.getMaxLevel(skill);
-                int stop = maxLevel;
-                if (pattern.has("stop")) {
-                    int potentialStop = getElement(pattern, "stop").getAsInt();
-                    if (potentialStop < maxLevel) {
-                        stop = potentialStop;
-                    }
-                }
-                // Add to reward table
-                for (int j = start; j <= stop; j += interval) {
-                    rewardTable.addReward(reward, j);
-                }
-            } catch (IllegalArgumentException e) {
-                throw new RewardException(rewardsFile.getName(), "patterns.[" + i + "]", e.getMessage());
-            }
-        }
-    }
-
-    private void loadLevels(JsonObject levels, File rewardsFile, RewardTable rewardTable) {
-        for (Map.Entry<String, JsonElement> entry : levels.entrySet()) { // For each defined level
-            try {
-                int level = Integer.parseInt(entry.getKey());
-                if (entry.getValue().isJsonArray()) {
-                    JsonArray levelRewards = entry.getValue().getAsJsonArray();
-
-                    for (int i = 0; i < levelRewards.size(); i++) { // For each reward of that level
-                        JsonElement rewardElement = levelRewards.get(i);
-                        if (rewardElement.isJsonObject()) {
-                            Reward reward = parseReward(rewardElement.getAsJsonObject());
-                            rewardTable.addReward(reward, level);
-                        } else {
-                            throw new RewardException(rewardsFile.getName(), "levels." + levels + ".[" + i + "]", "Element must be of type JsonObject");
+            ConfigurationSection levelsSection = rewardsConfig.getConfigurationSection("levels");
+            if (levelsSection != null) {
+                // For each level defined
+                for (String levelString : levelsSection.getKeys(false)) {
+                    try {
+                        int level = Integer.parseInt(levelString);
+                        // For each reward in that level
+                        List<Map<?, ?>> rewards = levelsSection.getMapList(levelString);
+                        for (int index = 0; index < rewards.size(); index++) {
+                            Map<?, ?> rewardMap = rewards.get(index);
+                            try {
+                                Reward reward = parseReward(rewardMap);
+                                rewardTable.addReward(reward, level);
+                            } catch (IllegalArgumentException e) {
+                                throw new RewardException(rewardsFile.getName(), "levels." + levelString + ".[" + index + "]", e.getMessage());
+                            }
                         }
+                    } catch (NumberFormatException e) {
+                        throw new RewardException(rewardsFile.getName(), "levels." + levelString, "Key " + levelString + " must be of type int");
                     }
-                } else {
-                    throw new RewardException(rewardsFile.getName(), "levels." + levels, "Element must be of type JsonArray");
                 }
-            } catch (NumberFormatException e) {
-                throw new RewardException(rewardsFile.getName(), "levels." + entry.getKey(), "Element key must be an integer in double quotes");
             }
+            // Register reward table
+            this.rewardTables.put(skill, rewardTable);
         }
     }
 
-    private Reward parseReward(JsonObject object) {
+    private Reward parseReward(Map<?, ?> reward) {
         // Get type of reward
-        JsonElement typeElement = object.get("type");
-        if (typeElement == null) {
-            throw new IllegalArgumentException("Reward is missing a type");
-        }
-        String type = typeElement.getAsString();
-
+        String type = getString(reward, "type");
         // Parse each type
         switch (type) {
             case "stat":
-                Stat stat = Stat.valueOf(getElement(object, "stat").getAsString().toUpperCase(Locale.ROOT));
-                double statValue = getElement(object, "value").getAsDouble();
+                Stat stat = Stat.valueOf(getString(reward, "stat").toUpperCase(Locale.ROOT));
+                double statValue = getDouble(reward, "value");
                 return new StatReward(plugin, stat, statValue);
 
             case "command":
-                CommandExecutor executor = CommandExecutor.valueOf(getElement(object, "executor").getAsString().toUpperCase(Locale.ROOT));
-                String command = getElement(object, "command").getAsString();
+                CommandExecutor executor = CommandExecutor.valueOf(getString(reward, "executor").toUpperCase(Locale.ROOT));
+                String command = getString(reward, "command");
                 return new CommandReward(plugin, executor, command);
 
             case "permission":
-                String permission = getElement(object, "permission").getAsString();
-                if (object.has("value")) {
-                    boolean permissionValue = getElement(object, "value").getAsBoolean();
+                String permission = getString(reward, "permission");
+                if (reward.containsKey("value")) {
+                    boolean permissionValue = getBoolean(reward, "value");
                     return new PermissionReward(plugin, permission, permissionValue);
                 } else {
                     return new PermissionReward(plugin, permission);
@@ -151,22 +119,50 @@ public class RewardManager {
         return null;
     }
 
-    private JsonElement getElement(JsonObject object, String key) {
+    private Object getElement(Map<?, ?> map, String key) {
         // Check if not null
-        JsonElement element = object.get(key);
-        if (element != null) {
-            return element;
+        Object object = map.get(key);
+        if (object != null) {
+            return object;
         } else {
             throw new IllegalArgumentException("Reward requires entry with key " + key);
         }
     }
 
-    private JsonArray getArrayOrNull(JsonObject object, String key) {
-        JsonElement element = object.get(key);
-        if (element != null) {
-            return element.getAsJsonArray();
+    private String getString(Map<?, ?> map, String key) {
+        Object object = getElement(map, key);
+        if (object instanceof String) {
+            return (String) object;
+        } else {
+            throw new IllegalArgumentException("Key " + key + " must have value of type String");
         }
-        return null;
+    }
+
+    private double getDouble(Map<?, ?> map, String key) {
+        Object object = getElement(map, key);
+        if (object instanceof Double) {
+            return (double) object;
+        } else {
+            throw new IllegalArgumentException("Key " + key + " must have value of type double");
+        }
+    }
+
+    private int getInt(Map<?, ?> map, String key) {
+        Object object = getElement(map, key);
+        if (object instanceof Integer) {
+            return (int) object;
+        } else {
+            throw new IllegalArgumentException("Key " + key + " must have value of type int");
+        }
+    }
+
+    private boolean getBoolean(Map<?, ?> map, String key) {
+        Object object = getElement(map, key);
+        if (object instanceof Boolean) {
+            return (boolean) object;
+        } else {
+            throw new IllegalArgumentException("Key " + key + " must have value of type boolean");
+        }
     }
 
 }

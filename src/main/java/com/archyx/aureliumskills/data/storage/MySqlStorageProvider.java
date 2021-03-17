@@ -80,7 +80,7 @@ public class MySqlStorageProvider extends StorageProvider {
                             playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xp);
                             // Add stat levels
-                            plugin.getRewardManager().getRewardTable(skill).addStatRewards(playerData, level);
+                            plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, level);
                         }
                         // Load stat modifiers
                         String statModifiers = result.getString("STAT_MODIFIERS");
@@ -286,7 +286,7 @@ public class MySqlStorageProvider extends StorageProvider {
                             playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xpLevels.get(skill));
                             // Add stat levels
-                            plugin.getRewardManager().getRewardTable(skill).addStatRewards(playerData, level);
+                            plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, level);
                         }
                         // Reload stats
                         new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.HEALTH);

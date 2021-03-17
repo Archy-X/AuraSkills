@@ -49,7 +49,7 @@ public class RewardTable {
         return rewardMap;
     }
 
-    public void addStatRewards(PlayerData playerData, int level) {
+    public void applyStats(PlayerData playerData, int level) {
         Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
         for (int i = 2; i <= level; i++) {
             ImmutableList<StatReward> statRewardList = statRewardMap.get(i);

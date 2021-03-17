@@ -153,7 +153,7 @@ public class Leveler {
 			playerData.setStatLevel(stat, 0);
 		}
 		for (Skill skill : Skill.values()) {
-			plugin.getRewardManager().getRewardTable(skill).addStatRewards(playerData, playerData.getSkillLevel(skill));
+			plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, playerData.getSkillLevel(skill));
 		}
 		// Reloads modifiers
 		for (String key : playerData.getStatModifiers().keySet()) {
