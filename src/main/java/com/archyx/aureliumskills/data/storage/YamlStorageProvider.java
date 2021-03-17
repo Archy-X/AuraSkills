@@ -53,9 +53,7 @@ public class YamlStorageProvider extends StorageProvider {
                     playerData.setSkillLevel(skill, level);
                     playerData.setSkillXp(skill, xp);
                     // Add stat levels
-                    playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
-                    int secondaryStat = level / 2;
-                    playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
+                    plugin.getRewardManager().getRewardTable(skill).addStatRewards(playerData, level);
                 }
                 // Load stat modifiers
                 ConfigurationSection modifiersSection = config.getConfigurationSection("stat_modifiers");
@@ -196,9 +194,7 @@ public class YamlStorageProvider extends StorageProvider {
                             playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xpLevels.get(skill));
                             // Add stat levels
-                            playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
-                            int secondaryStat = level / 2;
-                            playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
+                            plugin.getRewardManager().getRewardTable(skill).addStatRewards(playerData, level);
                         }
                         // Reload stats
                         new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.HEALTH);

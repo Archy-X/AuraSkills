@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import com.archyx.aureliumskills.util.RomanNumber;
@@ -24,22 +23,7 @@ public class ProgressLevelItem {
     }
 
     public String getRewardsLore(Skill skill, int level, Locale locale) {
-        Stat primaryStat = skill.getPrimaryStat();
-        StringBuilder rewardsLore = new StringBuilder();
-        rewardsLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
-                ,"{color}", primaryStat.getColor(locale)
-                ,"{num}", String.valueOf(1)
-                ,"{symbol}", primaryStat.getSymbol(locale)
-                ,"{stat}", primaryStat.getDisplayName(locale)));
-        if (level % 2 == 0) {
-            Stat secondaryStat = skill.getSecondaryStat();
-            rewardsLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
-                    ,"{color}", secondaryStat.getColor(locale)
-                    ,"{num}", String.valueOf(1)
-                    ,"{symbol}", secondaryStat.getSymbol(locale)
-                    ,"{stat}", secondaryStat.getDisplayName(locale)));
-        }
-        return LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", rewardsLore.toString());
+        return LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", "");
     }
 
     public String getAbilityLore(Skill skill, int level, Locale locale) {

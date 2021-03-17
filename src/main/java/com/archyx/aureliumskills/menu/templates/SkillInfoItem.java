@@ -12,7 +12,6 @@ import com.archyx.aureliumskills.lang.MessageKey;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
@@ -72,18 +71,6 @@ public class SkillInfoItem {
                 switch (placeholder) {
                     case "skill_desc":
                         line = LoreUtil.setPlaceholders("skill_desc", skill.getDescription(locale), line);
-                        break;
-                    case "primary_stat":
-                        Stat primaryStat = skill.getPrimaryStat();
-                        line = LoreUtil.replace(line,"{primary_stat}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_STAT, locale)
-                                ,"{color}", primaryStat.getColor(locale)
-                                ,"{stat}", primaryStat.getDisplayName(locale)));
-                        break;
-                    case "secondary_stat":
-                        Stat secondaryStat = skill.getSecondaryStat();
-                        line = LoreUtil.replace(line,"{secondary_stat}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_STAT, locale)
-                                ,"{color}", secondaryStat.getColor(locale)
-                                ,"{stat}", secondaryStat.getDisplayName(locale)));
                         break;
                     case "ability_levels":
                         line = LoreUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerData, locale));

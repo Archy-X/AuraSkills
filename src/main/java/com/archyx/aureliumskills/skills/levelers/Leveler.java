@@ -153,8 +153,7 @@ public class Leveler {
 			playerData.setStatLevel(stat, 0);
 		}
 		for (Skill skill : Skill.values()) {
-			playerData.addStatLevel(skill.getPrimaryStat(), playerData.getSkillLevel(skill) - 1);
-			playerData.addStatLevel(skill.getSecondaryStat(), playerData.getSkillLevel(skill) / 2);
+			plugin.getRewardManager().getRewardTable(skill).addStatRewards(playerData, playerData.getSkillLevel(skill));
 		}
 		// Reloads modifiers
 		for (String key : playerData.getStatModifiers().keySet()) {
@@ -247,18 +246,6 @@ public class Leveler {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
 		// Stat levels
-		StringBuilder statMessage = new StringBuilder();
-		statMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-				,"{color}", skill.getPrimaryStat().getColor(locale)
-				,"{symbol}", skill.getPrimaryStat().getSymbol(locale)
-				,"{stat}", skill.getPrimaryStat().getDisplayName(locale)));
-		if (newLevel % 2 == 0) {
-			statMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-					,"{color}", skill.getSecondaryStat().getColor(locale)
-					,"{symbol}", skill.getSecondaryStat().getSymbol(locale)
-					,"{stat}", skill.getSecondaryStat().getDisplayName(locale)));
-		}
-		message = LoreUtil.replace(message, "{stat_level}", statMessage.toString());
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
 		StringBuilder abilityLevelUpMessage = new StringBuilder();
