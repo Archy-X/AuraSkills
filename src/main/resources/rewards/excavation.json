@@ -17,54 +17,6 @@
         "start": 2,
         "interval": 2
       }
-    },
-    {
-      "type": "ability",
-      "ability": "metal_detector",
-      "pattern": {
-        "start": 2,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "excavator",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "spade_master",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "bigger_scoop",
-      "pattern": {
-        "start": 4,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "lucky_spades",
-      "pattern": {
-        "start": 6,
-        "interval": 5
-      }
-    },
-    {
-      "type": "mana_ability",
-      "mana_ability": "terraform",
-      "pattern": {
-        "start": 7,
-        "interval": 7
-      }
     }
   ],
   "levels": {

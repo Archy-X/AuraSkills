@@ -17,54 +17,6 @@
         "start": 2,
         "interval": 2
       }
-    },
-    {
-      "type": "ability",
-      "ability": "crit_chance",
-      "pattern": {
-        "start": 2,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "archer",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "bow_master",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "piercing",
-      "pattern": {
-        "start": 4,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "stun",
-      "pattern": {
-        "start": 6,
-        "interval": 5
-      }
-    },
-    {
-      "type": "mana_ability",
-      "mana_ability": "charged_shot",
-      "pattern": {
-        "start": 7,
-        "interval": 7
-      }
     }
   ],
   "levels": {

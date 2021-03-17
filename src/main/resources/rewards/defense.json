@@ -17,54 +17,6 @@
         "start": 2,
         "interval": 2
       }
-    },
-    {
-      "type": "ability",
-      "ability": "shielding",
-      "pattern": {
-        "start": 2,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "defender",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "mob_master",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "immunity",
-      "pattern": {
-        "start": 4,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "no_debuff",
-      "pattern": {
-        "start": 6,
-        "interval": 5
-      }
-    },
-    {
-      "type": "mana_ability",
-      "mana_ability": "absorption",
-      "pattern": {
-        "start": 7,
-        "interval": 7
-      }
     }
   ],
   "levels": {

@@ -17,46 +17,6 @@
         "start": 2,
         "interval": 2
       }
-    },
-    {
-      "type": "ability",
-      "ability": "light_fall",
-      "pattern": {
-        "start": 2,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "jumper",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "sugar_rush",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "fleeting",
-      "pattern": {
-        "start": 4,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "thunder_fall",
-      "pattern": {
-        "start": 6,
-        "interval": 5
-      }
     }
   ],
   "levels": {

@@ -193,7 +193,7 @@ public class Leveler {
 		for (Reward reward : rewards) {
 			reward.giveReward(player, skill, level);
 		}
-		//Adds money rewards if enabled
+		// Adds money rewards if enabled
 		if (plugin.isVaultEnabled()) {
 			if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
 				Economy economy = plugin.getEconomy();

@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.rewards;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.rewards.CommandReward.CommandExecutor;
 import com.archyx.aureliumskills.skills.Skill;
@@ -134,10 +133,6 @@ public class RewardManager {
                 Stat stat = Stat.valueOf(getElement(object, "stat").getAsString().toUpperCase(Locale.ROOT));
                 double statValue = getElement(object, "value").getAsDouble();
                 return new StatReward(plugin, stat, statValue);
-
-            case "ability":
-                Ability ability = Ability.valueOf(getElement(object, "ability").getAsString().toUpperCase(Locale.ROOT));
-                return new AbilityReward(plugin, ability);
 
             case "command":
                 CommandExecutor executor = CommandExecutor.valueOf(getElement(object, "executor").getAsString().toUpperCase(Locale.ROOT));

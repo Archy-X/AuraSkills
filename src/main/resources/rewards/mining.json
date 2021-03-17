@@ -17,54 +17,6 @@
         "start": 2,
         "interval": 2
       }
-    },
-    {
-      "type": "ability",
-      "ability": "lucky_miner",
-      "pattern": {
-        "start": 2,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "miner",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "pick_master",
-      "pattern": {
-        "start": 3,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "stamina",
-      "pattern": {
-        "start": 4,
-        "interval": 5
-      }
-    },
-    {
-      "type": "ability",
-      "ability": "hardened_armor",
-      "pattern": {
-        "start": 6,
-        "interval": 5
-      }
-    },
-    {
-      "type": "mana_ability",
-      "mana_ability": "speed_mine",
-      "pattern": {
-        "start": 7,
-        "interval": 7
-      }
     }
   ],
   "levels": {
