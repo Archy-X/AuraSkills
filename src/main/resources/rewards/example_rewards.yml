@@ -1,0 +1,22 @@
+patterns: # The patterns section is for rewards that repeat
+  - type: stat # A stat reward levels up a stat
+    stat: strength # The stat type
+    value: 1 # How much the stat should increase by, supports decimals
+    pattern: # The pattern section specifies how the reward should repeat. If it is not present the reward uses the default pattern values
+      start: 2 # The level to start giving the reward at, defaults to 2
+      interval: 1 # How often to give the reward, 1 means every level, 2 means every other level, etc. Defaults to 1
+  - type: stat # Another example of a stat type reward
+    stat: health
+    value: 1.5
+    pattern:
+      start: 2
+      interval: 2
+      stop: 50 # The max skill level the reward should be given at, defaults to the skill's max level
+levels: # The levels section is for rewards unlocked at specific levels
+  "2": # This is the level these rewards are given at
+    - type: permission # A permission reward gives a player a permission node. It requires LuckPerms to work
+      permission: some.permission.node # The permission node to give
+      value: true # The value of the permission, defaults to true
+    - type: command
+      executor: console
+      command: say leveled up!

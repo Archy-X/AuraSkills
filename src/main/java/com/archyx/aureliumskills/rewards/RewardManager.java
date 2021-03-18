@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.rewards.CommandReward.CommandExecutor;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -122,47 +123,32 @@ public class RewardManager {
     private Object getElement(Map<?, ?> map, String key) {
         // Check if not null
         Object object = map.get(key);
-        if (object != null) {
-            return object;
-        } else {
-            throw new IllegalArgumentException("Reward requires entry with key " + key);
-        }
+        Validate.notNull(object, "Reward requires entry with key " + key);
+        return object;
     }
 
     private String getString(Map<?, ?> map, String key) {
         Object object = getElement(map, key);
-        if (object instanceof String) {
-            return (String) object;
-        } else {
-            throw new IllegalArgumentException("Key " + key + " must have value of type String");
-        }
+        Validate.isInstanceOf(String.class, object, "Key " + key + " must have value of type String");
+        return (String) object;
     }
 
     private double getDouble(Map<?, ?> map, String key) {
         Object object = getElement(map, key);
-        if (object instanceof Double) {
-            return (double) object;
-        } else {
-            throw new IllegalArgumentException("Key " + key + " must have value of type double");
-        }
+        Validate.isInstanceOf(Double.class, object, "Key " + key + " must have value of type double");
+        return (double) object;
     }
 
     private int getInt(Map<?, ?> map, String key) {
         Object object = getElement(map, key);
-        if (object instanceof Integer) {
-            return (int) object;
-        } else {
-            throw new IllegalArgumentException("Key " + key + " must have value of type int");
-        }
+        Validate.isInstanceOf(Integer.class, object, "Key " + key + " must have value of type int");
+        return (int) object;
     }
 
     private boolean getBoolean(Map<?, ?> map, String key) {
         Object object = getElement(map, key);
-        if (object instanceof Boolean) {
-            return (boolean) object;
-        } else {
-            throw new IllegalArgumentException("Key " + key + " must have value of type boolean");
-        }
+        Validate.isInstanceOf(Boolean.class, object, "Key " + key + " must have value of type boolean");
+        return (boolean) object;
     }
 
 }
