@@ -18,6 +18,8 @@ mysql:
     database: aureliumskills
     username: root
     password: pass
+    load-delay: 0
+    always-load-on-join: false
 
 default-language: en
 

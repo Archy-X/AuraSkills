@@ -1,7 +1,10 @@
 package com.archyx.aureliumskills.listeners;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerManager;
+import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.util.UpdateChecker;
 import dev.dbassett.skullcreator.SkullCreator;
@@ -29,13 +32,26 @@ public class PlayerJoinQuit implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		PlayerManager playerManager = plugin.getPlayerManager();
-		if (playerManager.getPlayerData(player) == null) {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					plugin.getStorageProvider().load(player);
+		if (plugin.getStorageProvider() instanceof MySqlStorageProvider) { // Handles MySQL storage
+			if (OptionL.getBoolean(Option.MYSQL_ALWAYS_LOAD_ON_JOIN) || playerManager.getPlayerData(player) == null) {
+				int loadDelay = OptionL.getInt(Option.MYSQL_LOAD_DELAY);
+				if (loadDelay == 0) {
+					// Load immediately
+					loadPlayerDataAsync(player);
+				} else {
+					// Delay loading
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							loadPlayerDataAsync(player);
+						}
+					}.runTaskLater(plugin, loadDelay);
 				}
-			}.runTaskAsynchronously(plugin);
+			}
+		} else { // Yaml storage
+			if (playerManager.getPlayerData(player) == null) {
+				loadPlayerDataAsync(player);
+			}
 		}
 		// Load player skull
 		Location playerLoc = player.getLocation();
@@ -70,6 +86,15 @@ public class PlayerJoinQuit implements Listener {
 			}
 		}.runTaskAsynchronously(plugin);
 		plugin.getActionBar().resetActionBar(player);
+	}
+
+	private void loadPlayerDataAsync(Player player) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				plugin.getStorageProvider().load(player);
+			}
+		}.runTaskAsynchronously(plugin);
 	}
 
 }
