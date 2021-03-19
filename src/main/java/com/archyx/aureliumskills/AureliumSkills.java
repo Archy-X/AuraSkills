@@ -277,7 +277,7 @@ public class AureliumSkills extends JavaPlugin {
 	public void checkUpdates() {
 		// Check for updates
 		new UpdateChecker(this, 81069).getVersion(version -> {
-			if (!this.getDescription().getVersion().contains("Pre-Release")) {
+			if (!this.getDescription().getVersion().contains("Pre-Release") && !this.getDescription().getVersion().contains("Build")) {
 				if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
 					getLogger().info("No new updates found");
 				} else {

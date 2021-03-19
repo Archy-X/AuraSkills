@@ -34,7 +34,6 @@ public class YamlStorageProvider extends StorageProvider {
 
     @Override
     public void load(Player player) {
-        long start = System.nanoTime();
         File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
         if (file.exists()) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -109,12 +108,9 @@ public class YamlStorageProvider extends StorageProvider {
         } else {
             createNewPlayer(player);
         }
-        long end = System.nanoTime();
-        Bukkit.getLogger().info("[AureliumSkills] Loaded playerdata in " + ((double) (end - start))/1000000 + "ms");
     }
 
     public void save(Player player, boolean removeFromMemory) {
-        long start = System.nanoTime();
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
         File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
@@ -158,8 +154,6 @@ public class YamlStorageProvider extends StorageProvider {
             Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
         }
-        long end = System.nanoTime();
-        Bukkit.getLogger().info("[AureliumSkills] Saved playerdata in " + ((double) (end - start))/1000000 + "ms");
     }
 
     @Override
