@@ -65,7 +65,7 @@ public class PlayerJoinQuit implements Listener {
 			if (System.currentTimeMillis() > plugin.getReleaseTime() + 21600000L) {
 				// Check for updates
 				new UpdateChecker(plugin, 81069).getVersion(version -> {
-					if (!plugin.getDescription().getVersion().contains("Pre-Release")) {
+					if (!plugin.getDescription().getVersion().contains("Pre-Release") && !plugin.getDescription().getVersion().contains("Build")) {
 						if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
 							player.sendMessage(AureliumSkills.getPrefix(Lang.getDefaultLanguage()) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
 							player.sendMessage(AureliumSkills.getPrefix(Lang.getDefaultLanguage()) + ChatColor.WHITE + "Download it on Spigot: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "http://spigotmc.org/resources/81069");
