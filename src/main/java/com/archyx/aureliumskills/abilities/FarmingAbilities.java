@@ -18,6 +18,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,6 +50,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 					if (skill.getAbilityLevel(Ability.BOUNTIFUL_HARVEST) > 0) {
 						if (r.nextDouble() < (getValue(Ability.BOUNTIFUL_HARVEST, skill)) / 100) {
 							for (ItemStack item : block.getDrops()) {
+								checkMelonSilkTouch(player, block, item);
 								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BOUNTIFUL_HARVEST);
 								Bukkit.getPluginManager().callEvent(event);
 								if (!event.isCancelled()) {
@@ -71,6 +73,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 						if (playerSkill.getAbilityLevel(Ability.TRIPLE_HARVEST) > 0) {
 							if (r.nextDouble() < (getValue(Ability.TRIPLE_HARVEST, playerSkill)) / 100) {
 								for (ItemStack item : block.getDrops()) {
+									checkMelonSilkTouch(player, block, item);
 									ItemStack droppedItem = item.clone();
 									droppedItem.setAmount(2);
 									PlayerLootDropEvent event = new PlayerLootDropEvent(player, droppedItem, block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.TRIPLE_HARVEST);
@@ -86,7 +89,19 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 			}
 		}
 	}
-	
+
+	private void checkMelonSilkTouch(Player player, Block block, ItemStack item) {
+		if (block.getType() == XMaterial.MELON.parseMaterial()) {
+			if (player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+				Material melon = XMaterial.MELON.parseMaterial();
+				if (melon != null) {
+					item.setType(melon);
+					item.setAmount(1);
+				}
+			}
+		}
+	}
+
 	@EventHandler
 	public void geneticist(PlayerItemConsumeEvent event) {
 		if (blockDisabled(Ability.GENETICIST)) return;
