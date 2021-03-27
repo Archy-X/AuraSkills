@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.configuration;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.DamageType;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +12,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class OptionL {
 
@@ -24,7 +24,7 @@ public class OptionL {
     }
 
     public void loadOptions() {
-        Bukkit.getLogger().info("[AureliumSkills] Loading config...");
+        Logger logger = plugin.getLogger();
         //Load the default options
         loadDefaultOptions();
         //Load the FileConfiguration
@@ -68,16 +68,16 @@ public class OptionL {
                 }
                 //Error
                 else {
-                    ASLogger.logWarn(LogType.CONFIG_INCORRECT_TYPE, "Option " + option.name() + " with path " + option.getPath() + " should be of type " + option.getType().name() + ", using default value instead!");
+                    logger.warning("Incorrect type in config.yml: Option " + option.name() + " with path " + option.getPath() + " should be of type " + option.getType().name() + ", using default value instead!");
                 }
             }
             else {
-                ASLogger.logWarn(LogType.CONFIG_MISSING_VALUE, "Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
+                logger.warning("Missing value in config.yml: Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
             }
         }
         plugin.getHealth().loadHearts(config);
         long end = System.currentTimeMillis();
-        Bukkit.getLogger().info("[AureliumSkills] Loaded " + loaded + " config options in " + (end - start) + " ms");
+        logger.info("Loaded " + loaded + " config options in " + (end - start) + " ms");
     }
 
     private void loadDefaultOptions() {
