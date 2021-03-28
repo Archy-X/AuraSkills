@@ -303,6 +303,10 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	}
 
 	private void breakBlock(Player player, Block block) {
+		if (!plugin.getTownySupport().canBreak(player, block)) {
+			block.removeMetadata("AureliumSkills-Terraform", plugin);
+			return;
+		}
 		TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
 		Bukkit.getPluginManager().callEvent(event);
 		if (!event.isCancelled()) {

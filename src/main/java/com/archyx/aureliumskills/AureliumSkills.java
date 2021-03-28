@@ -66,6 +66,8 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean vaultEnabled;
 	private boolean protocolLibEnabled;
 	private boolean mythicMobsEnabled;
+	private boolean townyEnabled;
+	private TownySupport townySupport;
 	private Leaderboard leaderboard;
 	private Economy economy;
 	private OptionL optionLoader;
@@ -116,6 +118,9 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		// Check for protocol lib
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
+		// Check towny
+		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
+		townySupport = new TownySupport(this);
 		// Load health
 		Health health = new Health(this);
 		this.health = health;
@@ -543,4 +548,11 @@ public class AureliumSkills extends JavaPlugin {
 		return health;
 	}
 
+	public boolean isTownyEnabled() {
+		return townyEnabled;
+	}
+
+	public TownySupport getTownySupport() {
+		return townySupport;
+	}
 }
