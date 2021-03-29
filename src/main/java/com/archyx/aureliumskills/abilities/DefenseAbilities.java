@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.util.LoreUtil;
 import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.particles.ParticleDisplay;
 import com.cryptomorin.xseries.particles.XParticle;
@@ -166,8 +167,10 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
             }
             else {
                 Locale locale = Lang.getLanguage(player);
-                plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-                        .replace("{mana}", NumberUtil.format0(manager.getManaCost(MAbility.ABSORPTION, playerSkill))));
+                plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+                        ,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.ABSORPTION, playerSkill))
+                        , "{current_mana}", String.valueOf(Math.round(plugin.getManaManager().getMana(player.getUniqueId())))
+                        , "{max_mana}", String.valueOf(Math.round(plugin.getManaManager().getMaxMana(player.getUniqueId())))));
             }
         }
     }

@@ -15,6 +15,8 @@ import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
+import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -160,11 +162,13 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 								treeCapitator(event);
 							}
 							else {
-								plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TREECAPITATOR, skill))));
+								plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+										,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, skill))
+										, "{current_mana}", String.valueOf(Math.round(plugin.getManaManager().getMana(player.getUniqueId())))
+										, "{max_mana}", String.valueOf(Math.round(plugin.getManaManager().getMaxMana(player.getUniqueId())))));
 							}
 						}
 					}
-					
 				}
 			}
 		}

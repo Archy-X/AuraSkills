@@ -258,7 +258,10 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 		}
 		else {
 			if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-				plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(manager.getManaCost(MAbility.SHARP_HOOK, playerSkill))));
+				plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+						,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerSkill))
+						, "{current_mana}", String.valueOf(Math.round(plugin.getManaManager().getMana(player.getUniqueId())))
+						, "{max_mana}", String.valueOf(Math.round(plugin.getManaManager().getMaxMana(player.getUniqueId())))));
 				manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 			}
 		}

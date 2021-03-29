@@ -15,6 +15,7 @@ import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -273,7 +274,10 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					terraformBreak(player, block);
 				}
 				else {
-					plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TERRAFORM, skill))));
+					plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+							,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.TERRAFORM, skill))
+							, "{current_mana}", String.valueOf(Math.round(plugin.getManaManager().getMana(player.getUniqueId())))
+							, "{max_mana}", String.valueOf(Math.round(plugin.getManaManager().getMaxMana(player.getUniqueId())))));
 				}
 			}
 		}
