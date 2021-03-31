@@ -52,7 +52,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -81,6 +80,8 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean vaultEnabled;
 	private boolean protocolLibEnabled;
 	private boolean mythicMobsEnabled;
+	private boolean townyEnabled;
+	private TownySupport townySupport;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -131,6 +132,9 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		// Check for protocol lib
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
+		// Check towny
+		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
+		townySupport = new TownySupport(this);
 		// Load health
 		Health health = new Health(this);
 		this.health = health;
@@ -225,14 +229,6 @@ public class AureliumSkills extends JavaPlugin {
 			this.backupProvider = new YamlBackup(this);
 		}
 		// Initialize leaderboards
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				if (leaderboardManager.isNotSorting()) {
-					storageProvider.updateLeaderboards();
-				}
-			}
-		}.runTaskTimerAsynchronously(this, 0, 12000);
 		// Load leveler
 		leveler = new Leveler(this);
 		leveler.loadLevelRequirements();
@@ -573,6 +569,14 @@ public class AureliumSkills extends JavaPlugin {
 
 	public LeaderboardManager getLeaderboardManager() {
 		return leaderboardManager;
+	}
+
+	public boolean isTownyEnabled() {
+		return townyEnabled;
+	}
+
+	public TownySupport getTownySupport() {
+		return townySupport;
 	}
 
 }

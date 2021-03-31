@@ -1,7 +1,5 @@
 package com.archyx.aureliumskills.loot;
 
-import com.archyx.aureliumskills.configuration.ASLogger;
-import com.archyx.aureliumskills.configuration.LogType;
 import com.archyx.aureliumskills.util.LoreUtil;
 import com.cryptomorin.xseries.XEnchantment;
 import org.bukkit.Bukkit;
@@ -73,7 +71,7 @@ public class LootTableManager {
 							}
 						}
 					} catch (Exception e) {
-						Bukkit.getLogger().warning("[AureliumSkills] Error loading loot " + itemString + " from loot.yml. Try checking if minimum and maximum amount are specified!");
+						plugin.getLogger().warning("Error loading loot " + itemString + " from loot.yml. Try checking if minimum and maximum amount are specified!");
 					}
 				}
 				LootTable lootTable = new LootTable(lootTableName, loot);
@@ -81,7 +79,7 @@ public class LootTableManager {
 				lootTablesLoaded++;
 			}
 		}
-		Bukkit.getLogger().info("[AureliumSkills] Loaded " + itemsLoaded + " items and " + commandsLoaded + " commands in " + lootTablesLoaded + " loot tables.");
+		plugin.getLogger().info("Loaded " + itemsLoaded + " items and " + commandsLoaded + " commands in " + lootTablesLoaded + " loot tables.");
 	}
 	
 	public LootTable getLootTable(String name) {
@@ -185,11 +183,11 @@ public class LootTableManager {
 													item.setItemMeta(enchantMeta);
 												}
 											} else {
-												ASLogger.logWarn(LogType.UNKNOWN_ENCHANTMENT, "Enchantment " + enchantName + " invalid for item with input " + text);
+												plugin.getLogger().warning("Error parsing item in loot.yml: Enchantment " + enchantName + " invalid for item with input " + text);
 											}
 										}
 										else {
-											ASLogger.logWarn(LogType.UNKNOWN_ENCHANTMENT, "Enchantment " + enchantName + " invalid for item with input " + text);
+											plugin.getLogger().warning("Error parsing item in loot.yml: Enchantment " + enchantName + " invalid for item with input " + text);
 										}
 									}
 									break;
