@@ -11,12 +11,15 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.Replenish;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.BlockUtil;
+import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,6 +52,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 					if (playerData.getAbilityLevel(Ability.BOUNTIFUL_HARVEST) > 0) {
 						if (r.nextDouble() < (getValue(Ability.BOUNTIFUL_HARVEST, playerData)) / 100) {
 							for (ItemStack item : block.getDrops()) {
+								checkMelonSilkTouch(player, block, item);
 								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BOUNTIFUL_HARVEST);
 								Bukkit.getPluginManager().callEvent(event);
 								if (!event.isCancelled()) {
@@ -71,6 +75,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 					if (playerData.getAbilityLevel(Ability.TRIPLE_HARVEST) > 0) {
 						if (r.nextDouble() < (getValue(Ability.TRIPLE_HARVEST, playerData)) / 100) {
 							for (ItemStack item : block.getDrops()) {
+								checkMelonSilkTouch(player, block, item);
 								ItemStack droppedItem = item.clone();
 								droppedItem.setAmount(2);
 								PlayerLootDropEvent event = new PlayerLootDropEvent(player, droppedItem, block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.TRIPLE_HARVEST);
@@ -85,7 +90,19 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 			}
 		}
 	}
-	
+
+	private void checkMelonSilkTouch(Player player, Block block, ItemStack item) {
+		if (block.getType() == XMaterial.MELON.parseMaterial()) {
+			if (player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+				Material melon = XMaterial.MELON.parseMaterial();
+				if (melon != null) {
+					item.setType(melon);
+					item.setAmount(1);
+				}
+			}
+		}
+	}
+
 	@EventHandler
 	public void geneticist(PlayerItemConsumeEvent event) {
 		if (blockDisabled(Ability.GENETICIST)) return;
@@ -132,8 +149,10 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 						plugin.getManaAbilityManager().activateAbility(player, MAbility.REPLENISH, (int) (getValue(MAbility.REPLENISH, playerData) * 20), new Replenish(plugin));
 					}
 					else {
-						plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-								.replace("{mana}", String.valueOf(plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, playerData))));
+						plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+								,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, playerData))
+								, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
+								, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
 					}
 				}
 

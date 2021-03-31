@@ -14,6 +14,8 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.ItemUtils;
+import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -149,10 +151,12 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 						manager.activateAbility(player, MAbility.SPEED_MINE, (int) (getValue(MAbility.SPEED_MINE, playerData) * 20), new SpeedMine(plugin));
 					}
 					else {
-						plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.SPEED_MINE, playerData))));
+						plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+								,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.SPEED_MINE, playerData))
+								, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
+								, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
 					}
 				}
-				
 			}
 		}
 	}

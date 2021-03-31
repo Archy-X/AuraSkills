@@ -40,7 +40,7 @@ languages:
 # Action Bar Options
 action-bar:
     enabled: true
-    idle: true
+    idle: false
     ability: true
     xp: false
     maxed: false

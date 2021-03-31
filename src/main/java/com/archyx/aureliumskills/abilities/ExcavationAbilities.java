@@ -14,6 +14,7 @@ import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.Terraform;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -272,7 +273,10 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					terraformBreak(player, block);
 				}
 				else {
-					plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TERRAFORM, playerData))));
+					plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+							,"{mana}", NumberUtil.format0(manager.getManaCost(MAbility.TERRAFORM, playerData))
+							, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
+							, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
 				}
 			}
 		}
@@ -302,6 +306,10 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	}
 
 	private void breakBlock(Player player, Block block) {
+		if (!plugin.getTownySupport().canBreak(player, block)) {
+			block.removeMetadata("AureliumSkills-Terraform", plugin);
+			return;
+		}
 		TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
 		Bukkit.getPluginManager().callEvent(event);
 		if (!event.isCancelled()) {
