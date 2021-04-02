@@ -144,6 +144,7 @@ public class ManaAbilityActivator {
                     return false;
                 }
                 ItemStack item = player.getInventory().getItemInOffHand();
+                if (item.getType() == Material.AIR) return false;
                 return item.getType().isBlock();
             }
         }
