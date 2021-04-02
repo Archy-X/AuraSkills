@@ -163,11 +163,6 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void readySpeedMine(PlayerInteractEvent event) {
-		if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(MAbility.SPEED_MINE, "require_sneak")) {
-			if (!event.getPlayer().isSneaking()) {
-				return;
-			}
-		}
 		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.MINING, new String[] {"PICKAXE"}, Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR);
 	}
 }

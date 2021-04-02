@@ -1,3 +1,15 @@
+Version Alpha 1.6.8
+  Changes:
+    - Made default English not enough mana messages more specific to show current and max mana
+    - Disabled idle action bar by default, changed default ability action bar messages
+    - Added new mana ability options to mana abilities that raise/lower a tool:
+      - Added check_offhand option to stop readying if a block is being placed in the offhand (true by default)
+      - Added sneak_offhand option to allow the player to bypass the offhand block check by sneaking (true by default)
+      - Added require_sneak option to require sneaking in all cases to ready an ability (false by default)
+  Bug Fixes:
+    - Fixed loot dropping with Terraform in protected Towny regions (added Towny support)
+    - Fixed melons dropping melon slices with silk touch in bountiful harvest/triple harvest abilities
+
 Version Alpha 1.6.7
   New Features:
     - Added PlaceholderAPI support to menus:

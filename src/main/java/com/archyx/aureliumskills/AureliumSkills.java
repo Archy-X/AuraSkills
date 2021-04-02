@@ -32,6 +32,8 @@ import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
+import com.archyx.aureliumskills.region.RegionListener;
+import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.rewards.RewardException;
@@ -102,6 +104,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Leveler leveler;
 	private Health health;
 	private LeaderboardManager leaderboardManager;
+	private RegionManager regionManager;
 	private final long releaseTime = 1612831625310L;
 
 	public void onEnable() {
@@ -257,6 +260,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
+		// Region manager
+		this.regionManager = new RegionManager(this);
 		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
@@ -436,6 +441,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new RequirementListener(this), this);
 		this.actionBar = new ActionBar(this);
 		pm.registerEvents(actionBar, this);
+		pm.registerEvents(new RegionListener(this), this);
 	}
 
 	private boolean setupEconomy() {
@@ -617,6 +623,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public TownySupport getTownySupport() {
 		return townySupport;
+	}
+
+	public RegionManager getRegionManager() {
+		return regionManager;
 	}
 
 }

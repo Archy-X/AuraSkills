@@ -26,9 +26,9 @@ public class LegacyMysqlToMysqlConverter extends DataConverter {
                 if (!localeColumn.next()) {
                     try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
                         statement.execute("ALTER TABLE SkillData ADD COLUMN LOCALE varchar(10), " +
-                                "ADD COLUMN STAT_MODIFIERS json, " +
+                                "ADD COLUMN STAT_MODIFIERS varchar(4096), " +
                                 "ADD COLUMN MANA double, " +
-                                "ADD COLUMN ABILITY_DATA json, " +
+                                "ADD COLUMN ABILITY_DATA varchar(4096), " +
                                 "DROP COLUMN NAME;");
                         Bukkit.getLogger().info("[AureliumSkills] Successfully converted old MySQL format to new format");
                     }
