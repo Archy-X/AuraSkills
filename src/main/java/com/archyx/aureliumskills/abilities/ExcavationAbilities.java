@@ -221,6 +221,11 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
 				if (playerSkill == null) return;
 				if (plugin.getAbilityManager().isEnabled(MAbility.TERRAFORM)) {
+					if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(MAbility.TERRAFORM, "require_sneak")) {
+						if (!event.getPlayer().isSneaking()) {
+							return;
+						}
+					}
 					if (!block.hasMetadata("AureliumSkills-Terraform")) {
 						applyTerraform(player, block);
 					}
