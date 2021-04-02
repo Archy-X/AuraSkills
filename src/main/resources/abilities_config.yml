@@ -581,6 +581,7 @@ mana_abilities:
     unlock: 7
     level_up: 7
     max_level: 0
+    require_sneak: false
   charged_shot:
     enabled: true
     base_value: 0.5
