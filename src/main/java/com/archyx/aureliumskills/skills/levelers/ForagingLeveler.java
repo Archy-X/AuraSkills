@@ -18,7 +18,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class ForagingLeveler extends SkillLeveler implements Listener{
 
-	private ForagingAbilities foragingAbilities;
+	private final ForagingAbilities foragingAbilities;
 
 	public ForagingLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.FORAGER);
@@ -39,7 +39,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 			if (blockXpGainLocation(b.getLocation())) return;
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
-				if (event.getBlock().hasMetadata("skillsPlaced")) {
+				if (plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 			}
