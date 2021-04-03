@@ -9,7 +9,7 @@ Version Alpha 1.6.8
   Bug Fixes:
     - Fixed loot dropping with Terraform in protected Towny regions (added Towny support)
     - Fixed melons dropping melon slices with silk touch in bountiful harvest/triple harvest abilities
-    - Fixed gaining fighting and archery xp in disabled worlds if damage_based is enabled
+    - Fixed gaining fighting and archery xp in disabled worlds/regions if damage_based is enabled
 
 Version Alpha 1.6.7
   New Features:

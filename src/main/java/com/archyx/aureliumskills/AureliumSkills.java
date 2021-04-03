@@ -82,7 +82,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Lang lang;
 	private Leveler leveler;
 	private Health health;
-	private final long releaseTime = 1615751565519L;
+	private final long releaseTime = 1617414264973L;
 
 	public void onEnable() {
 		inventoryManager = new InventoryManager(this);
