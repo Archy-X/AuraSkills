@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.support;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.palmergames.bukkit.towny.object.TownyPermission;

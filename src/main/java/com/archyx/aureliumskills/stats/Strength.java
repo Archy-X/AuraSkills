@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.stats;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.util.DamageType;
+import com.archyx.aureliumskills.util.mechanics.DamageType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Strength {

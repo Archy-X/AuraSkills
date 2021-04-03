@@ -42,7 +42,10 @@ import com.archyx.aureliumskills.skills.SourceManager;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.levelers.*;
 import com.archyx.aureliumskills.stats.*;
-import com.archyx.aureliumskills.util.*;
+import com.archyx.aureliumskills.support.*;
+import com.archyx.aureliumskills.util.armor.ArmorListener;
+import com.archyx.aureliumskills.util.version.UpdateChecker;
+import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
@@ -208,7 +211,7 @@ public class AureliumSkills extends JavaPlugin {
 		regeneration.startSaturationRegen();
 		// Load Action Bar
 		if (protocolLibEnabled) {
-			ProtocolUtil.init();
+			ProtocolLibSupport.init();
 		}
 		actionBar.startUpdateActionBar();
 		// Initialize storage

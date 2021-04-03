@@ -8,10 +8,10 @@ import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.BigNumber;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
-import com.archyx.aureliumskills.util.ProtocolUtil;
+import com.archyx.aureliumskills.support.ProtocolLibSupport;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.BigNumber;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
@@ -280,10 +280,10 @@ public class ActionBar implements Listener {
 	private void sendActionBar(Player player, String message) {
 		if (plugin.isProtocolLibEnabled()) {
 			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
-				ProtocolUtil.sendActionBar(player, PlaceholderAPI.setPlaceholders(player, message));
+				ProtocolLibSupport.sendActionBar(player, PlaceholderAPI.setPlaceholders(player, message));
 			}
 			else {
-				ProtocolUtil.sendActionBar(player, message);
+				ProtocolLibSupport.sendActionBar(player, message);
 			}
 		}
 		else {

@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.menu.templates.SkillInfoItem;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

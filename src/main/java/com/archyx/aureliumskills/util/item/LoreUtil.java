@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.util.item;
 
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MessageKey;

@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
