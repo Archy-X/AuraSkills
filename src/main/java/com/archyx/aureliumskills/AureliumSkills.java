@@ -100,7 +100,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Health health;
 	private LeaderboardManager leaderboardManager;
 	private RegionManager regionManager;
-	private final long releaseTime = 1612831625310L;
+	private final long releaseTime = 1617414264973L;
 
 	public void onEnable() {
 		inventoryManager = new InventoryManager(this);
