@@ -42,8 +42,13 @@ public class RegionCoordinate {
     }
 
     @Override
+    public String toString() {
+        return world.getName() + ", " + x + ", " + z;
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hashCode(world, x, z);
+        return Objects.hashCode(world.getName(), x, z);
     }
 
 }

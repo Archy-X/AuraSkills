@@ -4,20 +4,29 @@ import com.archyx.aureliumskills.AureliumSkills;
 import de.tr7zw.changeme.nbtapi.*;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.Files;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class RegionManager {
 
     private final AureliumSkills plugin;
-    private final Map<RegionCoordinate, Region> regions;
+    private final ConcurrentMap<RegionCoordinate, Region> regions;
+    private boolean saving;
 
     public RegionManager(AureliumSkills plugin) {
         this.plugin = plugin;
-        this.regions = new HashMap<>();
+        this.regions = new ConcurrentHashMap<>();
+        this.saving = false;
+    }
+
+    @Nullable
+    public Region getRegion(RegionCoordinate regionCoordinate) {
+        return regions.get(regionCoordinate);
     }
 
     public boolean isPlacedBlock(Block block) {
@@ -31,7 +40,7 @@ public class RegionManager {
         if (region != null) {
             byte regionChunkX = (byte) (chunkX - regionX * 32);
             byte regionChunkZ = (byte) (chunkZ - regionZ * 32);
-            ChunkData chunkData = region.getChunks().get(new ChunkCoordinate(regionChunkX, regionChunkZ));
+            ChunkData chunkData = region.getChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
             if (chunkData != null) {
                 BlockPosition blockPosition = new BlockPosition(block.getX(), block.getY(), block.getZ());
                 return chunkData.isPlacedBlock(blockPosition);
@@ -40,94 +49,118 @@ public class RegionManager {
         return false;
     }
 
-    public void loadChunk(World world, int chunkX, int chunkZ) {
-        // Calculates region coordinates
+    public void addPlacedBlock(Block block) {
+        int chunkX = block.getChunk().getX();
+        int chunkZ = block.getChunk().getZ();
+
         int regionX = (int) Math.floor((double) chunkX / 32.0);
         int regionZ = (int) Math.floor((double) chunkZ / 32.0);
 
-        RegionCoordinate coordinate = new RegionCoordinate(world, regionX, regionZ);
-        Region region = regions.get(coordinate);
-
-        // Calculates coordinate of chunk inside region
+        RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld(), regionX, regionZ);
+        Region region = regions.get(regionCoordinate);
+        // Create region if does not exist
+        if (region == null) {
+            region = loadRegion(block.getWorld(), regionX, regionZ);
+        }
         byte regionChunkX = (byte) (chunkX - regionX * 32);
         byte regionChunkZ = (byte) (chunkZ - regionZ * 32);
+        ChunkData chunkData = region.getChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
+        // Create chunk data if does not exist
+        if (chunkData == null) {
+            chunkData = new ChunkData(region, regionChunkX, regionChunkZ);
+            region.setChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ), chunkData);
+        }
+        chunkData.addPlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()));
+    }
 
+    public void removePlacedBlock(Block block) {
+        int chunkX = block.getChunk().getX();
+        int chunkZ = block.getChunk().getZ();
+
+        int regionX = (int) Math.floor((double) chunkX / 32.0);
+        int regionZ = (int) Math.floor((double) chunkZ / 32.0);
+
+        RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld(), regionX, regionZ);
+        Region region = regions.get(regionCoordinate);
+        // Create region if does not exist
         if (region != null) {
-            if (!region.getChunks().containsKey(new ChunkCoordinate(regionChunkX, regionChunkZ))) {
-                File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
-                if (file.exists()) { // Load from file
-                    try {
-                        ChunkData chunkData = loadChunkFromFile(file, region, regionChunkX, regionChunkZ);
-                        region.getChunks().put(new ChunkCoordinate(regionChunkX, regionChunkZ), chunkData);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    createNewRegion(coordinate);
-                }
+            byte regionChunkX = (byte) (chunkX - regionX * 32);
+            byte regionChunkZ = (byte) (chunkZ - regionZ * 32);
+            ChunkData chunkData = region.getChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
+            // Create chunk data if does not exist
+            if (chunkData != null) {
+                chunkData.removePlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()));
             }
-        } else {
-            createNewRegion(coordinate);
         }
     }
 
-    private void createNewRegion(RegionCoordinate coordinate) {
-        Region newRegion = new Region(coordinate.getWorld(), coordinate.getX(), coordinate.getZ());
-        regions.put(coordinate, newRegion);
+    public Region loadRegion(World world, int regionX, int regionZ) {
+        RegionCoordinate regionCoordinate = new RegionCoordinate(world, regionX, regionZ);
+        Region region = new Region(world, regionX, regionZ);
+        regions.put(regionCoordinate, region);
+        File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
+        if (file.exists()) {
+            try {
+                NBTFile nbtFile = new NBTFile(file);
+                for (String key : nbtFile.getKeys()) {
+                    // Load each chunk
+                    if (key.startsWith("chunk")) {
+                        // Get chunk coordinates
+                        int commaIndex = key.indexOf(",");
+                        byte chunkX = Byte.parseByte(key.substring(key.indexOf("[") + 1, commaIndex));
+                        byte chunkZ = Byte.parseByte(key.substring(commaIndex + 1, key.lastIndexOf("]")));
+                        // Load chunk
+                        NBTCompound chunkCompound = nbtFile.getCompound(key);
+                        ChunkCoordinate chunkCoordinate = new ChunkCoordinate(chunkX, chunkZ);
+                        region.setChunkData(chunkCoordinate, loadChunk(region, chunkCoordinate, chunkCompound));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return region;
     }
 
-    private ChunkData loadChunkFromFile(File file, Region region, byte chunkX, byte chunkZ) throws IOException {
-        NBTFile nbt = new NBTFile(file);
-        ChunkData chunkData = new ChunkData(region, chunkX, chunkZ);
-        NBTCompound chunk = nbt.getCompound("Chunk [" + chunkX + ", " + chunkZ + "]"); // Gets the compound of that chunk
-        if (chunk != null) {
-            // Adds all placed block positions to chunk data
-            NBTCompoundList placedBlocks = chunk.getCompoundList("placedBlocks");
-            for (NBTListCompound block : placedBlocks) {
-                int x = block.getInteger("x");
-                int y = block.getInteger("y");
-                int z = block.getInteger("z");
-                chunkData.addPlacedBlock(new BlockPosition(x, y, z));
-            }
+    private ChunkData loadChunk(Region region, ChunkCoordinate chunkCoordinate, NBTCompound compound) {
+        ChunkData chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
+        NBTCompoundList placedBlocks = compound.getCompoundList("placed_blocks");
+        for (NBTListCompound block : placedBlocks) {
+            int x = block.getInteger("x");
+            int y = block.getInteger("y");
+            int z = block.getInteger("z");
+            chunkData.addPlacedBlock(new BlockPosition(x, y, z));
         }
         return chunkData;
     }
 
-    public void unloadChunk(World world, int chunkX, int chunkZ) {
-        // Calculates region coordinates
-        int regionX = (int) Math.floor((double) chunkX / 32.0);
-        int regionZ = (int) Math.floor((double) chunkZ / 32.0);
-
+    private void saveRegion(World world, int regionX, int regionZ) throws IOException {
         RegionCoordinate regionCoordinate = new RegionCoordinate(world, regionX, regionZ);
-        Region region = regions.get(regionCoordinate);
+        Region region = getRegion(regionCoordinate);
+        if (region == null) return;
+        if (region.getChunkMap().size() == 0) return;
 
-        // Calculates coordinate of chunk inside region
-        byte regionChunkX = (byte) (chunkX - regionX * 32);
-        byte regionChunkZ = (byte) (chunkZ - regionZ * 32);
+        File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
+        NBTFile nbtFile = new NBTFile(file);
 
-        if (region != null) {
-            ChunkCoordinate coordinate = new ChunkCoordinate(regionChunkX, regionChunkZ);
-            ChunkData chunkData = region.getChunks().get(coordinate);
-            // Save chunk to region file
-            File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
-            try {
-                saveChunkToFile(file, chunkData);
-            } catch (IOException e) {
-                e.printStackTrace();
+        for (ChunkData chunkData : region.getChunkMap().values()) {
+            // Save each chunk
+            saveChunk(nbtFile, chunkData);
+        }
+        if (nbtFile.getKeys().size() == 0) {
+            if (file.exists()) {
+                try {
+                    Files.delete(file.toPath());
+                } catch (Exception ignored) { }
             }
-            // Remove chunk from memory
-            region.getChunks().remove(coordinate);
-            // Remove region from memory if no chunks are inside
-            if (region.getChunks().size() == 0) {
-                this.regions.remove(regionCoordinate);
-            }
+        } else {
+            nbtFile.save();
         }
     }
 
-    private void saveChunkToFile(File file, ChunkData chunkData) throws IOException {
-        NBTFile nbt = new NBTFile(file);
-        NBTCompound chunk = nbt.getOrCreateCompound("Chunk [" + chunkData.getX() + ", " + chunkData.getZ() + "]");
-        NBTCompoundList placedBlocks = chunk.getCompoundList("placedBlocks");
+    private void saveChunk(NBTFile nbtFile, ChunkData chunkData) {
+        NBTCompound chunk = nbtFile.getOrCreateCompound("chunk[" + chunkData.getX() + "," + chunkData.getZ() + "]");
+        NBTCompoundList placedBlocks = chunk.getCompoundList("placed_blocks");
         placedBlocks.clear(); // Clears list of block positions to account for removed positions
         // Adds all positions to nbt compound list
         for (BlockPosition block : chunkData.getPlacedBlocks()) {
@@ -137,7 +170,46 @@ public class RegionManager {
             compound.setInteger("z", block.getZ());
             placedBlocks.addCompound(compound);
         }
-        nbt.save();
+        if (placedBlocks.size() == 0) {
+            chunk.removeKey("placed_blocks");
+        }
+        if (chunk.getKeys().size() == 0) {
+            nbtFile.removeKey(chunk.getName());
+        }
+    }
+
+    public void saveAllRegions(boolean clearUnused) {
+        if (saving) return;
+        saving = true;
+        for (Region region : regions.values()) {
+            try {
+                saveRegion(region.getWorld(), region.getX(), region.getZ());
+                // Clear region from memory if no chunks are loaded in it
+                if (clearUnused) {
+                    if (!isRegionLoaded(region)) {
+                        regions.remove(new RegionCoordinate(region.getWorld(), region.getX(), region.getZ()));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        saving = false;
+    }
+
+    private boolean isRegionLoaded(Region region) {
+        for (int chunkX = region.getX() * 32; chunkX < region.getX() * 32 + 32; chunkX++) {
+            for (int chunkZ = region.getZ() * 32; chunkZ < region.getZ() * 32 + 32; chunkZ++) {
+                if (region.getWorld().isChunkLoaded(chunkX, chunkZ)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void clearRegionMap() {
+        regions.clear();
     }
 
 }

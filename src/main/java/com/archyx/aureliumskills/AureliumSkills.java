@@ -22,7 +22,6 @@ import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.data.storage.YamlStorageProvider;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
@@ -32,6 +31,7 @@ import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
+import com.archyx.aureliumskills.region.RegionBlockListener;
 import com.archyx.aureliumskills.region.RegionListener;
 import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
@@ -97,7 +97,7 @@ public class AureliumSkills extends JavaPlugin {
 	private SkillBossBar bossBar;
 	private SourceManager sourceManager;
 	private SorceryLeveler sorceryLeveler;
-	private CheckBlockReplace checkBlockReplace;
+	private RegionBlockListener regionBlockListener;
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
 	private Lang lang;
@@ -105,7 +105,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Health health;
 	private LeaderboardManager leaderboardManager;
 	private RegionManager regionManager;
-	private final long releaseTime = 1612831625310L;
+	private final long releaseTime = 1617414264973L;
 
 	public void onEnable() {
 		inventoryManager = new InventoryManager(this);
@@ -201,6 +201,8 @@ public class AureliumSkills extends JavaPlugin {
 			e.printStackTrace();
 			Bukkit.getLogger().warning("[AureliumSkills] Error loading menus!");
 		}
+		// Region manager
+		this.regionManager = new RegionManager(this);
 		// Registers events
 		registerEvents();
 		// Load ability manager
@@ -260,8 +262,6 @@ public class AureliumSkills extends JavaPlugin {
 		// Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
-		// Region manager
-		this.regionManager = new RegionManager(this);
 		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
@@ -282,6 +282,8 @@ public class AureliumSkills extends JavaPlugin {
 			// Save config
 			saveConfig();
 		}
+		regionManager.saveAllRegions(false);
+		regionManager.clearRegionMap();
 	}
 
 	public void checkUpdates() {
@@ -390,8 +392,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers Events
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerJoinQuit(this), this);
-		checkBlockReplace = new CheckBlockReplace(this);
-		pm.registerEvents(checkBlockReplace, this);
+		regionBlockListener = new RegionBlockListener(this);
+		pm.registerEvents(regionBlockListener, this);
 		pm.registerEvents(new FarmingLeveler(this), this);
 		pm.registerEvents(new ForagingLeveler(this), this);
 		pm.registerEvents(new MiningLeveler(this), this);
@@ -537,8 +539,8 @@ public class AureliumSkills extends JavaPlugin {
 		return sorceryLeveler;
 	}
 
-	public CheckBlockReplace getCheckBlockReplace() {
-		return checkBlockReplace;
+	public RegionBlockListener getCheckBlockReplace() {
+		return regionBlockListener;
 	}
 
 	public RequirementManager getRequirementManager() {

@@ -70,14 +70,14 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 				applyAbilities(p, b);
 			}
 			else if (mat.equals(Material.PUMPKIN)) {
-				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 				leveler.addXp(p, s, getXp(p, Source.PUMPKIN));
 				applyAbilities(p, b);
 			}
 			else if (mat.equals(XMaterial.MELON.parseMaterial())) {
-				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 				leveler.addXp(p, s, getXp(p, Source.MELON));
@@ -85,17 +85,17 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			}
 			else if (XBlock.isSugarCane(mat)) {
 				int numBroken = 1;
-				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 				BlockState above = b.getRelative(BlockFace.UP).getState();
 				if (XBlock.isSugarCane(above.getType())) {
-					if (!above.hasMetadata("skillsPlaced")) {
+					if (!plugin.getRegionManager().isPlacedBlock(above.getBlock())) {
 						numBroken++;
 					}
 					BlockState aboveAbove = b.getRelative(BlockFace.UP).getRelative(BlockFace.UP).getState();
 					if (XBlock.isSugarCane(aboveAbove.getType())) {
-						if (!aboveAbove.hasMetadata("skillsPlaced")) {
+						if (!plugin.getRegionManager().isPlacedBlock(aboveAbove.getBlock())) {
 							numBroken++;
 						}
 					}
@@ -105,7 +105,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			}
 			else if (mat.equals(XMaterial.BAMBOO.parseMaterial())) {
 				int numBroken = 1;
-				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && b.hasMetadata("skillsPlaced")) {
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					if (!b.getRelative(BlockFace.UP).getType().equals(XMaterial.BAMBOO.parseMaterial()) || b.getRelative(BlockFace.UP).hasMetadata("skillsPlaced")) {
 						return;
 					}
@@ -127,7 +127,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 
 	private int getBamboo(Block block, int num) {
 		if (block.getState().getType().equals(XMaterial.BAMBOO.parseMaterial())) {
-			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && block.hasMetadata("skillsPlaced")) {
+			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
 				return num;
 			}
 			num++;

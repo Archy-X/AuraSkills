@@ -32,14 +32,14 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 				}
 			}
 			if (blockXpGainLocation(event.getBlock().getLocation())) return;
+			Skill s = Skill.EXCAVATION;
+			Block b = event.getBlock();
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
-				if (event.getBlock().hasMetadata("skillsPlaced")) {
+				if (plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 			}
-			Skill s = Skill.EXCAVATION;
-			Block b = event.getBlock();
 			Player p = event.getPlayer();
 			Material mat = event.getBlock().getType();
 			if (blockXpGainPlayer(p)) return;

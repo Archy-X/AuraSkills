@@ -75,6 +75,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 					Player player = (Player) projectile.getShooter();
 					if (event.getEntity() instanceof LivingEntity) {
 						LivingEntity entity = (LivingEntity) event.getEntity();
+						if (blockXpGainLocation(entity.getLocation())) return;
 						EntityType type = entity.getType();
 						if (blockXpGainPlayer(player)) return;
 						if (entity.equals(player)) return;
