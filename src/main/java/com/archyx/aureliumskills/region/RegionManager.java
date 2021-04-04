@@ -186,7 +186,7 @@ public class RegionManager {
                 saveRegion(region.getWorld(), region.getX(), region.getZ());
                 // Clear region from memory if no chunks are loaded in it
                 if (clearUnused) {
-                    if (!isRegionLoaded(region)) {
+                    if (isRegionUnused(region)) {
                         regions.remove(new RegionCoordinate(region.getWorld(), region.getX(), region.getZ()));
                     }
                 }
@@ -197,15 +197,36 @@ public class RegionManager {
         saving = false;
     }
 
-    private boolean isRegionLoaded(Region region) {
-        for (int chunkX = region.getX() * 32; chunkX < region.getX() * 32 + 32; chunkX++) {
-            for (int chunkZ = region.getZ() * 32; chunkZ < region.getZ() * 32 + 32; chunkZ++) {
-                if (region.getWorld().isChunkLoaded(chunkX, chunkZ)) {
-                    return true;
+    public void saveWorldRegions(World world, boolean clearUnused) {
+        if (saving) return;
+        saving = true;
+        for (Region region : regions.values()) {
+            if (region.getWorld().equals(world)) {
+                try {
+                    saveRegion(region.getWorld(), region.getX(), region.getZ());
+                    // Clear region from memory if no chunks are loaded in it
+                    if (clearUnused) {
+                        if (isRegionUnused(region)) {
+                            regions.remove(new RegionCoordinate(region.getWorld(), region.getX(), region.getZ()));
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
-        return false;
+        saving = false;
+    }
+
+    private boolean isRegionUnused(Region region) {
+        for (int chunkX = region.getX() * 32; chunkX < region.getX() * 32 + 32; chunkX++) {
+            for (int chunkZ = region.getZ() * 32; chunkZ < region.getZ() * 32 + 32; chunkZ++) {
+                if (region.getWorld().isChunkLoaded(chunkX, chunkZ)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void clearRegionMap() {
