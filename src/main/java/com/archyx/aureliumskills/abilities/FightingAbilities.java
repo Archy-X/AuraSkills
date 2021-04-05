@@ -60,7 +60,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                         //Increments counter
                         AbilityData abilityData = playerData.getAbilityData(Ability.FIRST_STRIKE);
                         if (abilityData.containsKey("counter")) {
-                            abilityData.setData("counter", abilityData.getData("counter" + 1));
+                            abilityData.setData("counter", abilityData.getInt("counter") + 1);
                         } else {
                             abilityData.setData("counter", 0);
                         }

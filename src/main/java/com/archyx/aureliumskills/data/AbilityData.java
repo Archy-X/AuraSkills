@@ -60,7 +60,14 @@ public class AbilityData {
      */
     public double getDouble(String key) {
         Object o = data.get(key);
-        return o != null ? (double) o : 0.0;
+        if (o != null) {
+            if (o instanceof Integer) {
+                return (int) o;
+            } else if (o instanceof Double) {
+                return (double) o;
+            }
+        }
+        return 0.0;
     }
 
     public boolean containsKey(String key) {
