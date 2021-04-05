@@ -116,9 +116,12 @@ public class MySqlStorageProvider extends StorageProvider {
                                 JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
                                 for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
                                     String key = dataEntry.getKey();
-                                    Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
-                                    if (value != null) {
-                                        data.setData(key, value);
+                                    JsonElement element = dataEntry.getValue();
+                                    if (element.isJsonPrimitive()) {
+                                        Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
+                                        if (value != null) {
+                                            data.setData(key, value);
+                                        }
                                     }
                                 }
                             }
