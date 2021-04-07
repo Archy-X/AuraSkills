@@ -187,7 +187,7 @@ public class Leveler {
 
 		playerData.setSkillXp(skill, currentXp - levelRequirements.get(level - 2));
 		playerData.setSkillLevel(skill, level);
-
+		// Give custom rewards
 		List<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
 		for (Reward reward : rewards) {
 			reward.giveReward(player, skill, level);
