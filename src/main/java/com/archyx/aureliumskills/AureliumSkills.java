@@ -22,7 +22,6 @@ import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.data.storage.YamlStorageProvider;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.listeners.CheckBlockReplace;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
@@ -32,6 +31,9 @@ import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
+import com.archyx.aureliumskills.region.RegionBlockListener;
+import com.archyx.aureliumskills.region.RegionListener;
+import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.rewards.RewardException;
@@ -85,6 +87,8 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean vaultEnabled;
 	private boolean protocolLibEnabled;
 	private boolean mythicMobsEnabled;
+	private boolean townyEnabled;
+	private TownySupport townySupport;
 	private boolean luckPermsEnabled;
 	private Economy economy;
 	private OptionL optionLoader;
@@ -93,14 +97,15 @@ public class AureliumSkills extends JavaPlugin {
 	private SkillBossBar bossBar;
 	private SourceManager sourceManager;
 	private SorceryLeveler sorceryLeveler;
-	private CheckBlockReplace checkBlockReplace;
+	private RegionBlockListener regionBlockListener;
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
 	private Lang lang;
 	private Leveler leveler;
 	private Health health;
 	private LeaderboardManager leaderboardManager;
-	private final long releaseTime = 1612831625310L;
+	private RegionManager regionManager;
+	private final long releaseTime = 1617414264973L;
 
 	public void onEnable() {
 		inventoryManager = new InventoryManager(this);
@@ -136,6 +141,9 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		// Check for protocol lib
 		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
+		// Check towny
+		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
+		townySupport = new TownySupport(this);
 		// Check for LuckPerms
 		luckPermsEnabled = Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
 		// Load health
@@ -193,6 +201,8 @@ public class AureliumSkills extends JavaPlugin {
 			e.printStackTrace();
 			Bukkit.getLogger().warning("[AureliumSkills] Error loading menus!");
 		}
+		// Region manager
+		this.regionManager = new RegionManager(this);
 		// Registers events
 		registerEvents();
 		// Load ability manager
@@ -272,6 +282,8 @@ public class AureliumSkills extends JavaPlugin {
 			// Save config
 			saveConfig();
 		}
+		regionManager.saveAllRegions(false);
+		regionManager.clearRegionMap();
 	}
 
 	public void checkUpdates() {
@@ -380,8 +392,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers Events
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerJoinQuit(this), this);
-		checkBlockReplace = new CheckBlockReplace(this);
-		pm.registerEvents(checkBlockReplace, this);
+		regionBlockListener = new RegionBlockListener(this);
+		pm.registerEvents(regionBlockListener, this);
 		pm.registerEvents(new FarmingLeveler(this), this);
 		pm.registerEvents(new ForagingLeveler(this), this);
 		pm.registerEvents(new MiningLeveler(this), this);
@@ -431,6 +443,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new RequirementListener(this), this);
 		this.actionBar = new ActionBar(this);
 		pm.registerEvents(actionBar, this);
+		pm.registerEvents(new RegionListener(this), this);
 	}
 
 	private boolean setupEconomy() {
@@ -526,8 +539,8 @@ public class AureliumSkills extends JavaPlugin {
 		return sorceryLeveler;
 	}
 
-	public CheckBlockReplace getCheckBlockReplace() {
-		return checkBlockReplace;
+	public RegionBlockListener getCheckBlockReplace() {
+		return regionBlockListener;
 	}
 
 	public RequirementManager getRequirementManager() {
@@ -604,6 +617,18 @@ public class AureliumSkills extends JavaPlugin {
 
 	public LeaderboardManager getLeaderboardManager() {
 		return leaderboardManager;
+	}
+
+	public boolean isTownyEnabled() {
+		return townyEnabled;
+	}
+
+	public TownySupport getTownySupport() {
+		return townySupport;
+	}
+
+	public RegionManager getRegionManager() {
+		return regionManager;
 	}
 
 }

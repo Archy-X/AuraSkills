@@ -75,6 +75,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 				if (event.getCause() != DamageCause.ENTITY_ATTACK && event.getCause() != DamageCause.ENTITY_SWEEP_ATTACK) return;
 				if (event.getEntity() instanceof LivingEntity) {
 					LivingEntity entity = (LivingEntity) event.getEntity();
+					if (blockXpGainLocation(entity.getLocation())) return;
 					EntityType type = entity.getType();
 					if (blockXpGainPlayer(player)) return;
 					if (entity.equals(player)) return;

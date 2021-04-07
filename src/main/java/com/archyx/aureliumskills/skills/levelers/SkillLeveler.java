@@ -106,7 +106,7 @@ public abstract class SkillLeveler {
             for (Map.Entry<XMaterial, Double> entry : customBlocks.entrySet()) {
                 if (XMaterial.isNewVersion()) {
                     if (entry.getKey().parseMaterial() == block.getType()) {
-                        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && block.hasMetadata("skillsPlaced")) {
+                        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
                             return;
                         }
                         plugin.getLeveler().addXp(player, skill, getXp(player, entry.getValue()));
@@ -115,7 +115,7 @@ public abstract class SkillLeveler {
                 }
                 else {
                     if (entry.getKey().parseMaterial() == block.getType() && block.getData() == entry.getKey().getData()) {
-                        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && block.hasMetadata("skillsPlaced")) {
+                        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
                             return;
                         }
                         plugin.getLeveler().addXp(player, skill, getXp(player, entry.getValue()));

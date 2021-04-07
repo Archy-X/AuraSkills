@@ -14,6 +14,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Locale;
@@ -70,6 +71,14 @@ public class ManaAbilityActivator {
                     Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
                     if (hasMatch(matchMaterial, mat.name())) {
                         Player player = event.getPlayer();
+                        // Check if requires sneak
+                        if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(mAbility, "require_sneak")) {
+                            if (!player.isSneaking()) return;
+                        }
+                        // Check if the offhand item is being placed
+                        if (isBlockPlace(event, player, mAbility)) {
+                            return;
+                        }
                         // Check disabled worlds
                         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
                             return;
@@ -123,6 +132,20 @@ public class ManaAbilityActivator {
         for (String matchMaterial : matchMaterials) {
             if (checked.contains(matchMaterial)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isBlockPlace(PlayerInteractEvent event, Player player, MAbility mAbility) {
+        if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(mAbility, "check_offhand")) {
+            if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (player.isSneaking() && plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(mAbility, "sneak_offhand_bypass")) {
+                    return false;
+                }
+                ItemStack item = player.getInventory().getItemInOffHand();
+                if (item.getType() == Material.AIR) return false;
+                return item.getType().isBlock();
             }
         }
         return false;

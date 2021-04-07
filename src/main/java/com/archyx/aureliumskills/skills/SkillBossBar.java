@@ -1,8 +1,6 @@
 package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.configuration.ASLogger;
-import com.archyx.aureliumskills.configuration.LogType;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.ActionBarMessage;
@@ -65,21 +63,21 @@ public class SkillBossBar implements Listener {
                 skill = Skill.valueOf(splitEntry[0].toUpperCase());
             }
             catch (IllegalArgumentException e) {
-                ASLogger.logWarn(LogType.INVALID_VALUE, splitEntry[0] + " is not a valid Skill!");
+                plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid Skill");
             }
             if (splitEntry.length > 1) {
                 try {
                     color = BarColor.valueOf(splitEntry[1].toUpperCase());
                 }
                 catch (IllegalArgumentException e) {
-                    ASLogger.logWarn(LogType.INVALID_VALUE, splitEntry[0] + " is not a valid BarColor!");
+                    plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid BarColor");
                 }
                 if (splitEntry.length > 2) {
                     try {
                         style = BarStyle.valueOf(splitEntry[2].toUpperCase());
                     }
                     catch (IllegalArgumentException e) {
-                        ASLogger.logWarn(LogType.INVALID_VALUE, splitEntry[0] + " is not a valid BarStyle!");
+                        plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid BarStyle");
                     }
                 }
             }

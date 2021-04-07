@@ -40,7 +40,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 			if (blockXpGainLocation(b.getLocation())) return;
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
-				if (event.getBlock().hasMetadata("skillsPlaced")) {
+				if (plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 			}
