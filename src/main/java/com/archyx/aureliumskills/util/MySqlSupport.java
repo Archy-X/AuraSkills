@@ -25,6 +25,7 @@ public class MySqlSupport {
     private final String updateString;
     private final String insertString;
     public static boolean isSaving;
+    private SkillLoader skillLoader
 
     public MySqlSupport(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -300,9 +301,6 @@ public class MySqlSupport {
         }
 
         synchronized (this) {
-            if (connection != null && !connection.isClosed()) {
-                return;
-            }
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/" + this.database + "?useSSL=false&autoReconnect=true", this.username, this.password);
         }
