@@ -238,7 +238,6 @@ public class AureliumSkills extends JavaPlugin {
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
 			if (mySqlSupport != null) {
 				mySqlSupport.saveData(false);
-				mySqlSupport.closeConnection();
 			}
 			else {
 				Bukkit.getLogger().warning("MySql wasn't enabled on server startup, saving data to file instead! MySql will be enabled next time the server starts.");
