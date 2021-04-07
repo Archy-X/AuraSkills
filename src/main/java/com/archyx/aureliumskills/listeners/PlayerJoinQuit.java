@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.PlayerSkillInstance;
 import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.util.UpdateChecker;
+import com.archyx.aureliumskills.util.MySqlSupport;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -41,6 +42,22 @@ public class PlayerJoinQuit implements Listener {
 		if (!SkillLoader.playerStats.containsKey(player.getUniqueId())) {
 			SkillLoader.playerStats.put(player.getUniqueId(), new PlayerStat(player.getUniqueId(), plugin));
 		}
+		skillLoader = new SkillLoader(this);
+		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
+			//Mysql
+			mySqlSupport = new MySqlSupport(this);
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					mySqlSupport.init();
+				}
+			}.runTaskAsynchronously(this);
+		}
+		else {
+			skillLoader.loadSkillData();
+			skillLoader.startSaving();
+		}
+
 		//Load player skull
 		Location playerLoc = player.getLocation();
 		Location loc = new Location(playerLoc.getWorld(), playerLoc.getX(), 0, playerLoc.getZ());
@@ -69,6 +86,23 @@ public class PlayerJoinQuit implements Listener {
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		plugin.getActionBar().resetActionBar(player);
+		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
+			if (mySqlSupport != null) {
+				mySqlSupport.saveData(false);
+				mySqlSupport.closeConnection();
+			}
+			else {
+				Bukkit.getLogger().warning("MySql wasn't enabled on server startup, saving data to file instead! MySql will be enabled next time the server starts.");
+				if (skillLoader != null) {
+					skillLoader.saveSkillData(false);
+				}
+			}
+		}
+		else {
+			if (skillLoader != null) {
+				skillLoader.saveSkillData(false);
+			}
+		}
 	}
 
 }
