@@ -95,7 +95,7 @@ abilities:
       info: '+{value}% XP'
     spade_master:
       name: Spade Master
-      desc: 'Deal {value} more damage with shovels.'
+      desc: 'Deal {value}% more damage with shovels.'
       info: '+{value}% Shovel Damage'
     bigger_scoop:
       name: Bigger Scoop
