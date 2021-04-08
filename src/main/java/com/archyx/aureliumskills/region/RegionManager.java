@@ -163,7 +163,7 @@ public class RegionManager {
         NBTCompoundList placedBlocks = chunk.getCompoundList("placed_blocks");
         placedBlocks.clear(); // Clears list of block positions to account for removed positions
         // Adds all positions to nbt compound list
-        for (BlockPosition block : chunkData.getPlacedBlocks()) {
+        for (BlockPosition block : chunkData.getPlacedBlocks().keySet()) {
             NBTContainer compound = new NBTContainer();
             compound.setInteger("x", block.getX());
             compound.setInteger("y", block.getY());
