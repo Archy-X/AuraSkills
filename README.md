@@ -2,7 +2,7 @@
 
 AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin, great for a variety of server gamemodes.
 This Fork wants to add bungeecord synchronisation between servers with MySQL Database, which save data when player quit
-the first server, and load data immediatly when playe rjoin the second server
+the first server, and load data immediatly when playe rejoin the second server
 
 Learn more and download here: https://www.spigotmc.org/resources/81069/
 
