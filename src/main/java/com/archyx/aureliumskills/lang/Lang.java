@@ -277,16 +277,12 @@ public class Lang implements Listener {
 
 	public Locale getLocale(CommandSender sender) {
 		if (sender instanceof Player) {
-			Player player = (Player) sender;
-			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData((Player) sender);
 			if (playerData != null) {
 				return playerData.getLocale();
-			} else {
-				return getDefaultLanguage();
 			}
-		} else {
-			return getDefaultLanguage();
 		}
+		return getDefaultLanguage();
 	}
 
 	@EventHandler

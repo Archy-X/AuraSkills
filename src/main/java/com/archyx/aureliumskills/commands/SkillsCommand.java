@@ -227,7 +227,7 @@ public class SkillsCommand extends BaseCommand {
 	public void onSave(CommandSender sender) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			plugin.getStorageProvider().save(player);
+			plugin.getStorageProvider().save(player, false);
 		}
 		sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SAVE_SAVED, locale));
 	}
@@ -1025,10 +1025,9 @@ public class SkillsCommand extends BaseCommand {
 	public void onBackupSave(CommandSender sender) {
 		BackupProvider backupProvider = plugin.getBackupProvider();
 		if (backupProvider != null) {
-			sender.sendMessage("Saving backup...");
+			Locale locale = plugin.getLang().getLocale(sender);
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVING, locale));
 			backupProvider.saveBackup(sender);
-		} else {
-			sender.sendMessage(ChatColor.RED + "No backup provider set!");
 		}
 	}
 
@@ -1036,6 +1035,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.backup.load")
 	public void onBackupLoad(CommandSender sender, String fileName) {
 		StorageProvider storageProvider = plugin.getStorageProvider();
+		Locale locale = plugin.getLang().getLocale(sender);
 		if (storageProvider != null) {
 			File file = new File(plugin.getDataFolder() + "/backups/" + fileName);
 			if (file.exists()) {
@@ -1049,7 +1049,7 @@ public class SkillsCommand extends BaseCommand {
 							if (typed instanceof String) {
 								String typedFile = (String) typed;
 								if (typedFile.equals(file.getName())) {
-									sender.sendMessage("Loading backup...");
+									sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
 									storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
 									playerData.getMetadata().remove("backup_command");
 								} else {
@@ -1062,22 +1062,21 @@ public class SkillsCommand extends BaseCommand {
 							backupLoadConfirm(playerData, sender, file);
 						}
 					} else {
-						sender.sendMessage("Loading backup...");
+						sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
 						storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
 					}
 				} else {
-					sender.sendMessage(ChatColor.YELLOW + "File must be a .yml file!");
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_MUST_BE_YAML, locale));
 				}
 			} else { // If file does not exist
-				sender.sendMessage(ChatColor.YELLOW + "A backup with this file name does not exist in the backups folder!");
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_FILE_NOT_FOUND, locale));
 			}
-		} else {
-			sender.sendMessage(ChatColor.RED + "No storage provider set!");
 		}
 	}
 
 	private void backupLoadConfirm(PlayerData playerData, CommandSender sender, File file) {
-		sender.sendMessage(ChatColor.RED + "Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action.");
+		Locale locale = playerData.getLocale();
+		sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_CONFIRM, locale));
 		playerData.getMetadata().put("backup_command", file.getName());
 		new BukkitRunnable() {
 			@Override

@@ -37,6 +37,8 @@ public abstract class StorageProvider {
 
     public abstract void save(Player player);
 
+    public abstract void save(Player player, boolean removeFromMemory);
+
     public abstract void loadBackup(FileConfiguration file, CommandSender sender);
 
     public abstract void updateLeaderboards();

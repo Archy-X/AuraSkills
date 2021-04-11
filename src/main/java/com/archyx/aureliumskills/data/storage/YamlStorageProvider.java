@@ -6,6 +6,8 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
+import com.archyx.aureliumskills.lang.CommandMessage;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
@@ -14,8 +16,8 @@ import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -112,6 +114,7 @@ public class YamlStorageProvider extends StorageProvider {
         }
     }
 
+    @Override
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
@@ -166,6 +169,7 @@ public class YamlStorageProvider extends StorageProvider {
     @Override
     public void loadBackup(FileConfiguration config, CommandSender sender) {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
+        Locale locale = plugin.getLang().getLocale(sender);
         if (playerDataSection != null) {
             try {
                 for (String stringId : playerDataSection.getKeys(false)) {
@@ -215,9 +219,9 @@ public class YamlStorageProvider extends StorageProvider {
                         playerConfig.save(file);
                     }
                 }
-                sender.sendMessage(ChatColor.GREEN + "Successfully loaded backup");
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADED, locale));
             } catch (Exception e) {
-                sender.sendMessage(ChatColor.RED + "Error loading backup: " + e.getMessage());
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
             }
         }
     }
