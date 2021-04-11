@@ -130,7 +130,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			new PlaceholderSupport(this).register();
 			placeholderAPIEnabled = true;
-			Bukkit.getLogger().info("[AureliumSkills] PlaceholderAPI Support Enabled!");
+			getLogger().info("PlaceholderAPI Support Enabled!");
 		}
 		else {
 			placeholderAPIEnabled = false;
@@ -138,7 +138,7 @@ public class AureliumSkills extends JavaPlugin {
 		// Checks for Vault
 		if (setupEconomy()) {
 			vaultEnabled = true;
-			Bukkit.getLogger().info("[AureliumSkills] Vault Support Enabled!");
+			getLogger().info("Vault Support Enabled!");
 		}
 		else {
 			vaultEnabled = false;
@@ -166,7 +166,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
 			mythicMobsEnabled = true;
 			Bukkit.getPluginManager().registerEvents(new MythicMobsSupport(this), this);
-			Bukkit.getLogger().info("[AureliumSkills] MythicMobs Support Enabled!");
+			getLogger().info("MythicMobs Support Enabled!");
 		} else {
 			mythicMobsEnabled = false;
 		}
@@ -177,7 +177,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
 			holographicDisplaysEnabled = true;
 			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
-			Bukkit.getLogger().info("[AureliumSkills] HolographicDisplays Support Enabled!");
+			getLogger().info("HolographicDisplays Support Enabled!");
 		}
 		else {
 			holographicDisplaysEnabled = false;
@@ -197,7 +197,7 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
 			e.printStackTrace();
-			Bukkit.getLogger().warning("[AureliumSkills] Error loading menus!");
+			getLogger().warning("Error loading menus!");
 		}
 		// Region manager
 		this.regionManager = new RegionManager(this);
@@ -263,7 +263,7 @@ public class AureliumSkills extends JavaPlugin {
 		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
-		Bukkit.getLogger().info("[AureliumSkills] Aurelium Skills has been enabled");
+		getLogger().info("Aurelium Skills has been enabled");
 		if (System.currentTimeMillis() > releaseTime + 21600000L) {
 			checkUpdates();
 		}
@@ -286,6 +286,7 @@ public class AureliumSkills extends JavaPlugin {
 
 	public void checkUpdates() {
 		// Check for updates
+		if (!OptionL.getBoolean(Option.CHECK_FOR_UPDATES)) return;
 		new UpdateChecker(this, 81069).getVersion(version -> {
 			if (!this.getDescription().getVersion().contains("Pre-Release") && !this.getDescription().getVersion().contains("Build")) {
 				if (this.getDescription().getVersion().equalsIgnoreCase(version)) {

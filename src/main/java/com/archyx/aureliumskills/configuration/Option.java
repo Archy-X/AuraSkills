@@ -89,6 +89,7 @@ public enum Option {
     CRITICAL_ENABLED_OTHER("critical.enabled.other", OptionType.BOOLEAN),
     // Menu options
     MENUS_PLACEHOLDER_API("menus.placeholder-api", OptionType.BOOLEAN),
+    CHECK_FOR_UPDATES("check-for-updates", OptionType.BOOLEAN),
     // Skill options (not including source types)
     FARMING_ENABLED("farming.enabled", OptionType.BOOLEAN),
     FARMING_MAX_LEVEL("farming.max-level", OptionType.INT),

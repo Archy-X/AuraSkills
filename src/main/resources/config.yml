@@ -177,6 +177,8 @@ critical:
 menus:
     placeholder-api: true
 
+check-for-updates: true
+
 # Skill specific options
 farming:
     enabled: true
