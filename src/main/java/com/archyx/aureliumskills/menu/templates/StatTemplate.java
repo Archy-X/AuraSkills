@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.item.LoreUtil;
@@ -25,8 +26,8 @@ import java.util.function.Supplier;
 
 public class StatTemplate extends ConfigurableTemplate {
 
-    private final Map<Stats, SlotPos> positions = new HashMap<>();
-    private final Map<Stats, ItemStack> baseItems = new HashMap<>();
+    private final Map<Stat, SlotPos> positions = new HashMap<>();
+    private final Map<Stat, ItemStack> baseItems = new HashMap<>();
 
     public StatTemplate(AureliumSkills plugin) {
         super(plugin, TemplateType.STAT, new String[] {"stat_desc", "primary_skills_two", "primary_skills_three", "secondary_skills_two", "secondary_skills_three", "your_level", "descriptors"});
@@ -37,16 +38,20 @@ public class StatTemplate extends ConfigurableTemplate {
         try {
             for (String posInput : config.getStringList("pos")) {
                 String[] splitInput = posInput.split(" ");
-                Stats stat = Stats.valueOf(splitInput[0]);
-                int row = Integer.parseInt(splitInput[1]);
-                int column = Integer.parseInt(splitInput[2]);
-                positions.put(stat, SlotPos.of(row, column));
+                Stat stat = plugin.getStatRegistry().getStat(splitInput[0]);
+                if (stat != null) {
+                    int row = Integer.parseInt(splitInput[1]);
+                    int column = Integer.parseInt(splitInput[2]);
+                    positions.put(stat, SlotPos.of(row, column));
+                }
             }
             // Load base items
             for (String materialInput : config.getStringList("material")) {
                 String[] splitInput = materialInput.split(" ", 2);
-                Stats stat = Stats.valueOf(splitInput[0]);
-                baseItems.put(stat, MenuLoader.parseItem(splitInput[1]));
+                Stat stat = plugin.getStatRegistry().getStat(splitInput[0]);
+                if (stat != null) {
+                    baseItems.put(stat, MenuLoader.parseItem(splitInput[1]));
+                }
             }
             displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             // Load lore
@@ -74,7 +79,7 @@ public class StatTemplate extends ConfigurableTemplate {
         }
     }
 
-    public ItemStack getItem(Stats stat, PlayerData playerData, Player player, Locale locale) {
+    public ItemStack getItem(Stat stat, PlayerData playerData, Player player, Locale locale) {
         ItemStack item = baseItems.get(stat);
         if (item == null) {
             item = new ItemStack(Material.STONE);
@@ -164,8 +169,8 @@ public class StatTemplate extends ConfigurableTemplate {
                                     ,"{level}", NumberUtil.format1(playerData.getStatLevel(stat))));
                             break;
                         case "descriptors":
-                            switch (stat) {
-                                case STRENGTH:
+                            switch (stat.name()) {
+                                case "STRENGTH":
                                     double strengthLevel = playerData.getStatLevel(Stats.STRENGTH);
                                     double attackDamage = strengthLevel * OptionL.getDouble(Option.STRENGTH_MODIFIER);
                                     if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING) && !OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
@@ -174,13 +179,13 @@ public class StatTemplate extends ConfigurableTemplate {
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.ATTACK_DAMAGE, locale)
                                             ,"{value}", NumberUtil.format2(attackDamage)));
                                     break;
-                                case HEALTH:
+                                case "HEALTH":
                                     double modifier = playerData.getStatLevel(Stats.HEALTH) * OptionL.getDouble(Option.HEALTH_MODIFIER);
                                     double scaledHealth = modifier * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.HP, locale)
                                             ,"{value}", NumberUtil.format2(scaledHealth)));
                                     break;
-                                case REGENERATION:
+                                case "REGENERATION":
                                     double regenLevel = playerData.getStatLevel(Stats.REGENERATION);
                                     double saturatedRegen = regenLevel * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     double hungerFullRegen = regenLevel *  OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
@@ -191,7 +196,7 @@ public class StatTemplate extends ConfigurableTemplate {
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_REGEN, locale),"{value}", String.valueOf((int) manaRegen)));
                                     break;
-                                case LUCK:
+                                case "LUCK":
                                     double luckLevel = playerData.getStatLevel(Stats.LUCK);
                                     double luck = luckLevel * OptionL.getDouble(Option.LUCK_MODIFIER);
                                     double doubleDropChance = luckLevel * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) * 100;
@@ -201,7 +206,7 @@ public class StatTemplate extends ConfigurableTemplate {
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.LUCK, locale),"{value}", NumberUtil.format2(luck))
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.DOUBLE_DROP_CHANCE, locale),"{value}", NumberUtil.format2(doubleDropChance)));
                                     break;
-                                case WISDOM:
+                                case "WISDOM":
                                     double wisdomLevel = playerData.getStatLevel(Stats.WISDOM);
                                     double xpModifier = wisdomLevel * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
                                     double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
@@ -210,7 +215,7 @@ public class StatTemplate extends ConfigurableTemplate {
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction))
                                             + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana)));
                                     break;
-                                case TOUGHNESS:
+                                case "TOUGHNESS":
                                     double toughness = playerData.getStatLevel(Stats.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
                                     double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
                                     line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.INCOMING_DAMAGE, locale),"{value}", NumberUtil.format2(damageReduction)));
@@ -226,7 +231,7 @@ public class StatTemplate extends ConfigurableTemplate {
         return item;
     }
 
-    public SlotPos getPos(Stats stat) {
+    public SlotPos getPos(Stat stat) {
         return positions.get(stat);
     }
 

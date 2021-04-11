@@ -45,7 +45,7 @@ public class ItemListener implements Listener {
         this.foragingAbilities = new ForagingAbilities(plugin);
         this.miningAbilities = new MiningAbilities(plugin);
         this.statLeveler = new StatLeveler(plugin);
-        this.modifiers = new Modifiers();
+        this.modifiers = new Modifiers(plugin);
         this.requirements = new Requirements(plugin);
     }
 

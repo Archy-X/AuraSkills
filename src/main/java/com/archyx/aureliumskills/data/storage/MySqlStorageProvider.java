@@ -15,6 +15,7 @@ import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
@@ -96,7 +97,7 @@ public class MySqlStorageProvider extends StorageProvider {
                                 String statName = modifierObject.get("stat").getAsString();
                                 double value = modifierObject.get("value").getAsDouble();
                                 if (name != null && statName != null) {
-                                    Stats stat = Stats.valueOf(statName.toUpperCase(Locale.ROOT));
+                                    Stat stat = plugin.getStatRegistry().getStat(statName);
                                     StatModifier modifier = new StatModifier(name, stat, value);
                                     playerData.addStatModifier(modifier);
                                 }
@@ -286,7 +287,7 @@ public class MySqlStorageProvider extends StorageProvider {
                     }
                     PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
-                        for (Stats stat : Stats.values()) {
+                        for (Stat stat : plugin.getStatRegistry().getStats()) {
                             playerData.setStatLevel(stat, 0);
                         }
                         // Apply to object if in memory

@@ -12,6 +12,7 @@ import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
@@ -148,7 +149,7 @@ public class Leveler {
 	public void updateStats(Player player) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
-		for (Stats stat : Stats.values()) {
+		for (Stat stat : plugin.getStatRegistry().getStats()) {
 			playerData.setStatLevel(stat, 0);
 		}
 		for (Skill skill : Skill.values()) {

@@ -20,7 +20,7 @@ public class ArmorModifierListener implements Listener {
 
     public ArmorModifierListener(AureliumSkills plugin) {
         this.plugin = plugin;
-        this.modifiers = new Modifiers();
+        this.modifiers = new Modifiers(plugin);
         this.requirements = new Requirements(plugin);
     }
 

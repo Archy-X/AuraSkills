@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.SkillMessage;
 import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 import com.google.common.collect.ImmutableList;
 import org.jetbrains.annotations.Nullable;
@@ -57,12 +58,12 @@ public enum Skill {
 	FORGING(Stats.TOUGHNESS, Stats.WISDOM, ImmutableList.of(() -> Ability.DISENCHANTER, () -> Ability.FORGER, () -> Ability.REPAIRING, () -> Ability.ANVIL_MASTER, () -> Ability.SKILL_MENDER),
 			null);
 	
-	private final Stats primaryStat;
-	private final Stats secondaryStat;
+	private final Stat primaryStat;
+	private final Stat secondaryStat;
 	private final ImmutableList<Supplier<Ability>> abilities;
 	private final MAbility manaAbility;
 	
-	Skill(Stats primaryStat, Stats secondaryStat, ImmutableList<Supplier<Ability>> abilities, MAbility manaAbility) {
+	Skill(Stat primaryStat, Stat secondaryStat, ImmutableList<Supplier<Ability>> abilities, MAbility manaAbility) {
 		this.primaryStat = primaryStat;
 		this.secondaryStat = secondaryStat;
 		this.abilities = abilities;
@@ -81,11 +82,11 @@ public enum Skill {
 		return Lang.getMessage(SkillMessage.valueOf(this.name().toUpperCase() + "_NAME"), locale);
 	}
 
-	public Stats getPrimaryStat() {
+	public Stat getPrimaryStat() {
 		return primaryStat;
 	}
 	
-	public Stats getSecondaryStat() {
+	public Stat getSecondaryStat() {
 		return secondaryStat;
 	}
 

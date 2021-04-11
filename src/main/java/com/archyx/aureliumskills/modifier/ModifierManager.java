@@ -26,7 +26,7 @@ public class ModifierManager {
     public void reloadPlayer(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Requirements requirements = new Requirements(plugin);
-        Modifiers modifiers = new Modifiers();
+        Modifiers modifiers = new Modifiers(plugin);
         if (playerData != null) {
             Set<Stat> statsToReload = new HashSet<>();
             ItemStack item = player.getInventory().getItemInMainHand();

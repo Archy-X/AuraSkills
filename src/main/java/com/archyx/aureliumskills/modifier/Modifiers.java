@@ -1,9 +1,9 @@
 package com.archyx.aureliumskills.modifier;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
@@ -20,7 +20,13 @@ import java.util.Locale;
 
 public class Modifiers {
 
-    public ItemStack addModifier(ModifierType type, ItemStack item, Stats stat, double value) {
+    private final AureliumSkills plugin;
+
+    public Modifiers(AureliumSkills plugin) {
+        this.plugin = plugin;
+    }
+
+    public ItemStack addModifier(ModifierType type, ItemStack item, Stat stat, double value) {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         compound.setDouble(getName(stat), value);
@@ -46,7 +52,7 @@ public class Modifiers {
         return nbtItem.getItem();
     }
 
-    public ItemStack removeModifier(ModifierType type, ItemStack item, Stats stat) {
+    public ItemStack removeModifier(ModifierType type, ItemStack item, Stat stat) {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         compound.removeKey(getName(stat));
@@ -70,13 +76,17 @@ public class Modifiers {
             if (key.contains("skillsmodifier-" + type.name().toLowerCase(Locale.ENGLISH) + "-")) {
                 String[] keySplit = key.split("-");
                 if (keySplit.length == 3) {
-                    Stats stat = Stats.valueOf(key.split("-")[2].toUpperCase());
-                    int value = nbtItem.getInteger(key);
-                    modifiers.add(new StatModifier(key, stat, value));
+                    Stat stat = plugin.getStatRegistry().getStat(key.split("-")[2]);
+                    if (stat != null) {
+                        int value = nbtItem.getInteger(key);
+                        modifiers.add(new StatModifier(key, stat, value));
+                    }
                 } else if (keySplit.length == 4) {
-                    Stats stat = Stats.valueOf(key.split("-")[3].toUpperCase());
-                    int value = nbtItem.getInteger(key);
-                    modifiers.add(new StatModifier(key, stat, value));
+                    Stat stat = plugin.getStatRegistry().getStat(key.split("-")[3]);
+                    if (stat != null) {
+                        int value = nbtItem.getInteger(key);
+                        modifiers.add(new StatModifier(key, stat, value));
+                    }
                 }
             }
         }
@@ -88,27 +98,29 @@ public class Modifiers {
         List<StatModifier> modifiers = new ArrayList<>();
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
-            Stats stat = Stats.valueOf(key.toUpperCase());
-            double value = compound.getDouble(key);
-            if (type == ModifierType.ITEM) {
-                modifiers.add(new StatModifier("AureliumSkills.Modifiers.Item." + getName(stat), stat, value));
-            } else if (type == ModifierType.ARMOR) {
-                String slot = "Helmet";
-                String mat = item.getType().toString();
-                if (mat.contains("CHESTPLATE")) {
-                    slot = "Chestplate";
-                } else if (mat.contains("LEGGINGS")) {
-                    slot = "Leggings";
-                } else if (mat.contains("BOOTS")) {
-                    slot = "Boots";
+            Stat stat = plugin.getStatRegistry().getStat(key);
+            if (stat != null) {
+                double value = compound.getDouble(key);
+                if (type == ModifierType.ITEM) {
+                    modifiers.add(new StatModifier("AureliumSkills.Modifiers.Item." + getName(stat), stat, value));
+                } else if (type == ModifierType.ARMOR) {
+                    String slot = "Helmet";
+                    String mat = item.getType().toString();
+                    if (mat.contains("CHESTPLATE")) {
+                        slot = "Chestplate";
+                    } else if (mat.contains("LEGGINGS")) {
+                        slot = "Leggings";
+                    } else if (mat.contains("BOOTS")) {
+                        slot = "Boots";
+                    }
+                    modifiers.add(new StatModifier("AureliumSkills.Modifiers.Armor." + slot + "." + getName(stat), stat, value));
                 }
-                modifiers.add(new StatModifier("AureliumSkills.Modifiers.Armor." + slot + "." + getName(stat), stat, value));
             }
         }
         return modifiers;
     }
 
-    public void addLore(ModifierType type, ItemStack item, Stats stat, double value, Locale locale) {
+    public void addLore(ModifierType type, ItemStack item, Stat stat, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore;
@@ -128,7 +140,7 @@ public class Modifiers {
         item.setItemMeta(meta);
     }
 
-    public void removeLore(ItemStack item, Stats stat, Locale locale) {
+    public void removeLore(ItemStack item, Stat stat, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore = meta.getLore();

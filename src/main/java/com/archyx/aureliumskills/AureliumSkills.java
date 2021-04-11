@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills;
 
+import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.abilities.*;
 import com.archyx.aureliumskills.api.AureliumAPI;
@@ -51,7 +52,6 @@ import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -330,6 +330,14 @@ public class AureliumSkills extends JavaPlugin {
 		commandManager = new PaperCommandManager(this);
 		commandManager.enableUnstableAPI("help");
 		commandManager.usePerIssuerLocale(true, false);
+		commandManager.getCommandContexts().registerContext(Stat.class, c -> {
+			Stat stat = statRegistry.getStat(c.popFirstArg());
+			if (stat != null) {
+				return stat;
+			} else {
+				throw new InvalidCommandArgument("Stat " + c.popFirstArg() + " not found!");
+			}
+		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : Skill.values()) {
@@ -351,7 +359,7 @@ public class AureliumSkills extends JavaPlugin {
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
 			List<String> values = new ArrayList<>();
-			for (Stats stat : Stats.values()) {
+			for (Stat stat : statRegistry.getStats()) {
 				values.add(stat.toString().toLowerCase(Locale.ENGLISH));
 			}
 			return values;
@@ -458,12 +466,12 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	private void registerStats() {
-		statRegistry.register(new NamespacedKey(this, "strength"), Stats.STRENGTH);
-		statRegistry.register(new NamespacedKey(this, "health"), Stats.HEALTH);
-		statRegistry.register(new NamespacedKey(this, "regeneration"), Stats.REGENERATION);
-		statRegistry.register(new NamespacedKey(this, "luck"), Stats.LUCK);
-		statRegistry.register(new NamespacedKey(this, "wisdom"), Stats.WISDOM);
-		statRegistry.register(new NamespacedKey(this, "toughness"), Stats.TOUGHNESS);
+		statRegistry.register("strength", Stats.STRENGTH);
+		statRegistry.register("health", Stats.HEALTH);
+		statRegistry.register("regeneration", Stats.REGENERATION);
+		statRegistry.register("luck", Stats.LUCK);
+		statRegistry.register("wisdom", Stats.WISDOM);
+		statRegistry.register("toughness", Stats.TOUGHNESS);
 	}
 
 	public PlayerManager getPlayerManager() {

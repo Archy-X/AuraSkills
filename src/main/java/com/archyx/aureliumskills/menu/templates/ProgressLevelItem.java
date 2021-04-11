@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
@@ -24,7 +24,7 @@ public class ProgressLevelItem {
     }
 
     public String getRewardsLore(Skill skill, int level, Locale locale) {
-        Stats primaryStat = skill.getPrimaryStat();
+        Stat primaryStat = skill.getPrimaryStat();
         StringBuilder rewardsLore = new StringBuilder();
         rewardsLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
                 ,"{color}", primaryStat.getColor(locale)
@@ -32,7 +32,7 @@ public class ProgressLevelItem {
                 ,"{symbol}", primaryStat.getSymbol(locale)
                 ,"{stat}", primaryStat.getDisplayName(locale)));
         if (level % 2 == 0) {
-            Stats secondaryStat = skill.getSecondaryStat();
+            Stat secondaryStat = skill.getSecondaryStat();
             rewardsLore.append(LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale)
                     ,"{color}", secondaryStat.getColor(locale)
                     ,"{num}", String.valueOf(1)

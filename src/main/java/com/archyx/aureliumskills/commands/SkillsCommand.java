@@ -20,7 +20,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.ActionBar;
 import com.archyx.aureliumskills.stats.Luck;
-import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
@@ -449,7 +449,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.modifier.add")
 	@CommandCompletion("@players @stats @nothing @nothing true")
 	@Description("Adds a stat modifier to a player.")
-	public void onAdd(CommandSender sender, @Flags("other") Player player, Stats stat, String name, double value, @Default("false") boolean silent) {
+	public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
@@ -501,7 +501,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@players @stats")
 	@CommandPermission("aureliumskills.modifier.list")
 	@Description("Lists all or a specific stat's modifiers for a player.")
-	public void onList(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stats stat) {
+	public void onList(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stat stat) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (player == null) {
 			if (sender instanceof Player) {
@@ -563,7 +563,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@players @stats")
 	@CommandPermission("aureliumskills.modifier.removeall")
 	@Description("Removes all stat modifiers from a player.")
-	public void onRemoveAll(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stats stat, @Default("false") boolean silent) {
+	public void onRemoveAll(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stat stat, @Default("false") boolean silent) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (player == null) {
 			if (sender instanceof Player) {
@@ -637,10 +637,10 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@stats @nothing false|true")
 	@CommandPermission("aureliumskills.item.modifier.add")
 	@Description("Adds an item stat modifier to the item held, along with lore by default.")
-	public void onItemModifierAdd(@Flags("itemheld") Player player, Stats stat, double value, @Default("true") boolean lore) {
+	public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
 		Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier statModifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
 			if (statModifier.getStat() == stat) {
 				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
@@ -659,11 +659,11 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@stats false|true")
 	@CommandPermission("aureliumskills.item.modifier.remove")
 	@Description("Removes an item stat modifier from the item held, and the lore associated with it by default.")
-	public void onItemModifierRemove(@Flags("itemheld") Player player, Stats stat, @Default("true") boolean lore) {
+	public void onItemModifierRemove(@Flags("itemheld") Player player, Stat stat, @Default("true") boolean lore) {
 		Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		boolean removed = false;
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
 			if (modifier.getStat() == stat) {
 				item = modifiers.removeModifier(ModifierType.ITEM, item, stat);
@@ -690,7 +690,7 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_HEADER, locale));
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
 			message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_ENTRY, locale), modifier, locale));
 		}
@@ -702,7 +702,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes all item stat modifiers from the item held.")
 	public void onItemModifierRemoveAll(@Flags("itemheld") Player player) {
 		Locale locale = plugin.getLang().getLocale(player);
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		ItemStack item = modifiers.removeAllModifiers(ModifierType.ITEM, player.getInventory().getItemInMainHand());
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVEALL_REMOVED, locale));
@@ -712,10 +712,10 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@stats @nothing false|true")
 	@CommandPermission("aureliumskills.armor.modifier.add")
 	@Description("Adds an armor stat modifier to the item held, along with lore by default.")
-	public void onArmorModifierAdd(@Flags("itemheld") Player player, Stats stat, int value, @Default("true") boolean lore) {
+	public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, int value, @Default("true") boolean lore) {
 		Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier statModifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
 			if (statModifier.getStat() == stat) {
 				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
@@ -735,11 +735,11 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@stats false|true")
 	@CommandPermission("aureliumskills.armor.modifier.remove")
 	@Description("Removes an armor stat modifier from the item held, and the lore associated with it by default.")
-	public void onArmorModifierRemove(@Flags("itemheld") Player player, Stats stat, @Default("true") boolean lore) {
+	public void onArmorModifierRemove(@Flags("itemheld") Player player, Stat stat, @Default("true") boolean lore) {
 		Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		boolean removed = false;
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
 			if (modifier.getStat() == stat) {
 				item = modifiers.removeModifier(ModifierType.ARMOR, item, stat);
@@ -766,7 +766,7 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
 		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_HEADER, locale));
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
 			message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_ENTRY, locale), modifier, locale));
 		}
@@ -778,7 +778,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes all armor stat modifiers from the item held.")
 	public void onArmorModifierRemoveAll(@Flags("itemheld") Player player) {
 		Locale locale = plugin.getLang().getLocale(player);
-		Modifiers modifiers = new Modifiers();
+		Modifiers modifiers = new Modifiers(plugin);
 		ItemStack item = modifiers.removeAllModifiers(ModifierType.ARMOR, player.getInventory().getItemInMainHand());
 		player.getInventory().setItemInMainHand(item);
 		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVEALL_REMOVED, locale));
