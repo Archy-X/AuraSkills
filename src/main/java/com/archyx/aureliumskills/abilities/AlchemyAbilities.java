@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
@@ -46,7 +46,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     private final AgilityAbilities agilityAbilities;
 
     public AlchemyAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.ALCHEMY);
+        super(plugin, Skills.ALCHEMY);
         this.agilityAbilities = new AgilityAbilities(plugin);
         wiseEffect();
     }

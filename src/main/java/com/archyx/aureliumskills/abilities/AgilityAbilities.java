@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.mechanics.PotionUtil;
 import org.bukkit.Material;
@@ -42,7 +42,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     private final Random r = new Random();
 
     public AgilityAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.AGILITY);
+        super(plugin, Skills.AGILITY);
     }
 
     private void lightFall(EntityDamageEvent event, PlayerData playerData) {
@@ -271,7 +271,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void agilityListener(EntityDamageEvent event) {
         if (!event.isCancelled()) {
-            if (OptionL.isEnabled(Skill.AGILITY)) {
+            if (OptionL.isEnabled(Skills.AGILITY)) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
                     if (blockAbility(player)) return;

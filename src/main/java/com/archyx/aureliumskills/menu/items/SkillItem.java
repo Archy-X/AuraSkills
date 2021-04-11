@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.menu.templates.SkillInfoItem;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
@@ -32,7 +33,7 @@ public class SkillItem extends ConfigurableItem {
             // Load base items
             for (String materialInput : config.getStringList("material")) {
                 String[] splitInput = materialInput.split(" ", 2);
-                Skill skill = Skill.valueOf(splitInput[0]);
+                Skill skill = Skills.valueOf(splitInput[0]);
                 baseItems.put(skill, MenuLoader.parseItem(splitInput[1]));
             }
             displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");

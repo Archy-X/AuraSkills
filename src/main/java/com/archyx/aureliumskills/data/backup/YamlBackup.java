@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -45,7 +46,7 @@ public class YamlBackup extends BackupProvider {
                             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                             String stringId = config.getString("uuid");
                             if (stringId != null) {
-                                for (Skill skill : Skill.values()) {
+                                for (Skill skill : Skills.values()) {
                                     int level = config.getInt("skills." + skill.toString().toLowerCase(Locale.ROOT) + ".level");
                                     double xp = config.getInt("skills." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
                                     String path = "player_data." + stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".";

@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
@@ -36,7 +36,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     private Class<?> craftPlayerClass;
 
     public HealingAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.HEALING);
+        super(plugin, Skills.HEALING);
     }
 
     @EventHandler
@@ -60,10 +60,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     public void lifeSteal(EntityDeathEvent event) {
         if (blockDisabled(Ability.LIFE_STEAL)) return;
         LivingEntity entity = event.getEntity();
-        boolean hostile = false;
-        if (entity instanceof Monster || entity instanceof Player) {
-            hostile = true;
-        }
+        boolean hostile = entity instanceof Monster || entity instanceof Player;
         if (XMaterial.isNewVersion()) {
             if (entity instanceof Phantom) {
                 hostile = true;

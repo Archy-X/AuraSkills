@@ -152,7 +152,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         //Gets skill levels
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             if (identifier.equals(skill.name().toLowerCase(Locale.ENGLISH))) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
@@ -207,7 +207,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 }
             }
             else {
-                for (Skill skill : Skill.values()) {
+                for (Skill skill : plugin.getSkillRegistry().getSkills()) {
                     if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
                         int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
                         if (place > 0) {
@@ -255,20 +255,18 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         if (identifier.startsWith("rank_")) {
             String skillName = LoreUtil.replace(identifier, "rank_", "");
-            try {
-                Skill skill = Skill.valueOf(skillName.toUpperCase());
+            Skill skill = plugin.getSkillRegistry().getSkill(skillName);
+            if (skill != null) {
                 return String.valueOf(plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId()));
-            }
-            catch (Exception e) {
-                return "";
             }
         }
 
         for (String id : xpIdentifiers) {
             if (identifier.startsWith(id)) {
                 String skillName = LoreUtil.replace(identifier, id, "");
-                try {
-                    Skill skill = Skill.valueOf(skillName.toUpperCase());
+
+                Skill skill = plugin.getSkillRegistry().getSkill(skillName);
+                if (skill != null) {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData != null) {
                         switch (id) {
@@ -290,7 +288,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                                 return String.valueOf(playerData.getSkillXp(skill));
                         }
                     }
-                } catch (Exception e) { return ""; }
+                }
             }
         }
 
@@ -299,10 +297,10 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 return NumberUtil.format2(plugin.getLeveler().getMultiplier(player));
             }
             String skillName = LoreUtil.replace(identifier, "multiplier_", "");
-            try {
-                Skill skill = Skill.valueOf(skillName.toUpperCase());
+            Skill skill = plugin.getSkillRegistry().getSkill(skillName);
+            if (skill != null) {
                 return NumberUtil.format2(plugin.getLeveler().getMultiplier(player, skill));
-            } catch (Exception ignored) {}
+            }
         }
 
         if (identifier.startsWith("multiplier_percent")) {
@@ -310,10 +308,10 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player) - 1) * 100));
             }
             String skillName = LoreUtil.replace(identifier, "multiplier_percent_", "");
-            try {
-                Skill skill = Skill.valueOf(skillName.toUpperCase());
+            Skill skill = plugin.getSkillRegistry().getSkill(skillName);
+            if (skill != null) {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player, skill) - 1) * 100));
-            } catch (Exception ignored) {}
+            }
         }
 
         return null;

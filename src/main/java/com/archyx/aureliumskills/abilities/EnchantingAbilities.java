@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.XpGainEvent;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
@@ -26,7 +26,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
     private final Random random = new Random();
 
     public EnchantingAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.ENCHANTING);
+        super(plugin, Skills.ENCHANTING);
         enchantedStrength();
     }
 

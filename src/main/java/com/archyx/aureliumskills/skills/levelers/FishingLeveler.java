@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -26,7 +27,7 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onFish(PlayerFishEvent event) {
-		if (OptionL.isEnabled(Skill.FISHING)) {
+		if (OptionL.isEnabled(Skills.FISHING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.FISHING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -36,7 +37,7 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 			if (event.getState().equals(State.CAUGHT_FISH)) {
 				Player p = event.getPlayer();
 				if (blockXpGain(p)) return;
-				Skill s = Skill.FISHING;
+				Skill s = Skills.FISHING;
 				if (event.getCaught() instanceof Item) {
 					ItemStack item = ((Item) event.getCaught()).getItemStack();
 					Material mat = item.getType();

@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.Material;
@@ -26,7 +27,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onForge(InventoryClickEvent event) {
-		if (OptionL.isEnabled(Skill.FORGING)) {
+		if (OptionL.isEnabled(Skills.FORGING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.FORGING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -47,7 +48,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 								ItemStack baseItem = event.getClickedInventory().getItem(0);
 								Player p = (Player) event.getWhoClicked();
 								if (blockXpGainPlayer(p)) return;
-								Skill s = Skill.FORGING;
+								Skill s = Skills.FORGING;
 								AnvilInventory inventory = (AnvilInventory) event.getClickedInventory();
 								if (addedItem != null && baseItem != null) {
 									if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {

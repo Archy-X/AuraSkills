@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -23,7 +24,7 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	@SuppressWarnings("deprecation")
 	public void onDamage(EntityDamageByEntityEvent event) {
-		if (OptionL.isEnabled(Skill.DEFENSE)) {
+		if (OptionL.isEnabled(Skills.DEFENSE)) {
 			//Checks cancelled
 			if (OptionL.getBoolean(Option.DEFENSE_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -39,7 +40,7 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 							return;
 						}
 					}
-					Skill s = Skill.DEFENSE;
+					Skill s = Skills.DEFENSE;
 					double d = event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE);
 					if (event.getFinalDamage() < p.getHealth()) {
 						//Player Damage

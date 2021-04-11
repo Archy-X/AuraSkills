@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
@@ -30,21 +31,23 @@ public class SkillTemplate extends ConfigurableTemplate {
         try {
             for (String posInput : config.getStringList("pos")) {
                 String[] splitInput = posInput.split(" ");
-                Skill skill = Skill.valueOf(splitInput[0]);
-                int row = Integer.parseInt(splitInput[1]);
-                int column = Integer.parseInt(splitInput[2]);
-                positions.put(skill, SlotPos.of(row, column));
+                Skill skill = plugin.getSkillRegistry().getSkill(splitInput[0]);
+                if (skill != null) {
+                    int row = Integer.parseInt(splitInput[1]);
+                    int column = Integer.parseInt(splitInput[2]);
+                    positions.put(skill, SlotPos.of(row, column));
+                }
             }
             // Load base items
             for (String materialInput : config.getStringList("material")) {
                 String[] splitInput = materialInput.split(" ", 2);
                 Skill skill;
                 try {
-                    skill = Skill.valueOf(splitInput[0].toUpperCase());
+                    skill = plugin.getSkillRegistry().getSkill(splitInput[0]);
                 }
                 catch (IllegalArgumentException e) {
                     Bukkit.getLogger().warning("[AureliumSkills] Error while loading SKILL template, " + splitInput[0].toUpperCase() + " is not a valid skill! Using FARMING as a default");
-                    skill = Skill.FARMING;
+                    skill = Skills.FARMING;
                 }
                 baseItems.put(skill, MenuLoader.parseItem(splitInput[1]));
             }

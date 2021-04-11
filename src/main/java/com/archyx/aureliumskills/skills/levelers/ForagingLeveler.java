@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.abilities.ForagingAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -28,7 +29,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.FORAGING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -44,7 +45,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 				}
 			}
 			Player p = event.getPlayer();
-			Skill s = Skill.FORAGING;
+			Skill s = Skills.FORAGING;
 			Material mat = event.getBlock().getType();
 			if (blockXpGainPlayer(p)) return;
 			//If 1.13+

@@ -35,9 +35,11 @@ public class Requirements {
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
             try {
-                Skill skill = Skill.valueOf(key.toUpperCase());
-                Integer value = compound.getInteger(key);
-                requirements.put(skill, value);
+                Skill skill = plugin.getSkillRegistry().getSkill(key);
+                if (skill != null) {
+                    Integer value = compound.getInteger(key);
+                    requirements.put(skill, value);
+                }
             }
             catch (Exception ignored) { }
         }

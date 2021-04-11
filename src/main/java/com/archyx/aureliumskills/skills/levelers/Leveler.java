@@ -47,7 +47,7 @@ public class Leveler {
 	
 	public void loadLevelRequirements() {
 		levelRequirements.clear();
-		int highestMaxLevel = OptionL.getHighestMaxLevel();
+		int highestMaxLevel = plugin.getOptionLoader().getHighestMaxLevel();
 		for (int i = 0; i < highestMaxLevel - 1; i++) {
 			levelRequirements.add((int) OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100);
 		}
@@ -152,7 +152,7 @@ public class Leveler {
 		for (Stat stat : plugin.getStatRegistry().getStats()) {
 			playerData.setStatLevel(stat, 0);
 		}
-		for (Skill skill : Skill.values()) {
+		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 			playerData.addStatLevel(skill.getPrimaryStat(), playerData.getSkillLevel(skill) - 1);
 			playerData.addStatLevel(skill.getSecondaryStat(), playerData.getSkillLevel(skill) / 2);
 		}

@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.levelers;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
@@ -19,7 +19,7 @@ public class EnduranceLeveler extends SkillLeveler implements Listener {
 	
 	public void startTracking() {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-			if (OptionL.isEnabled(Skill.ENDURANCE)) {
+			if (OptionL.isEnabled(Skills.ENDURANCE)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if (!blockXpGain(player)) {
 						if (plugin.getPlayerManager().hasPlayerData(player)) {
@@ -52,7 +52,7 @@ public class EnduranceLeveler extends SkillLeveler implements Listener {
 								player.setMetadata("skillsLastSwimDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.SWIM_ONE_CM)));
 							}
 							if (xpAmount > 0) {
-								plugin.getLeveler().addXp(player, Skill.ENDURANCE, xpAmount);
+								plugin.getLeveler().addXp(player, Skills.ENDURANCE, xpAmount);
 							}
 						}
 					}

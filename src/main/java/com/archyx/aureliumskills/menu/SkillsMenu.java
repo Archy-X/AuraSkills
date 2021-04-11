@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.menu.items.YourSkillsItem;
 import com.archyx.aureliumskills.menu.templates.SkillTemplate;
 import com.archyx.aureliumskills.menu.templates.TemplateType;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -47,52 +48,52 @@ public class SkillsMenu implements InventoryProvider{
 		contents.set(yourSkillsItem.getPos(), ClickableItem.empty(yourSkillsItem.getItem(player, locale)));
 		// Skill items
 		SkillTemplate skillTemplate = (SkillTemplate) options.getTemplate(TemplateType.SKILL);
-		if (OptionL.isEnabled(Skill.FARMING)) {
-			contents.set(skillTemplate.getPosition(Skill.FARMING), ClickableItem.of(skillTemplate.getItem(Skill.FARMING, playerData, player, locale), e -> open(player, playerData, Skill.FARMING)));
+		if (OptionL.isEnabled(Skills.FARMING)) {
+			contents.set(skillTemplate.getPosition(Skills.FARMING), ClickableItem.of(skillTemplate.getItem(Skills.FARMING, playerData, player, locale), e -> open(player, playerData, Skills.FARMING)));
 		}
-		if (OptionL.isEnabled(Skill.FORAGING)) {
-			contents.set(skillTemplate.getPosition(Skill.FORAGING), ClickableItem.of(skillTemplate.getItem(Skill.FORAGING, playerData, player, locale), e -> open(player, playerData, Skill.FORAGING)));
+		if (OptionL.isEnabled(Skills.FORAGING)) {
+			contents.set(skillTemplate.getPosition(Skills.FORAGING), ClickableItem.of(skillTemplate.getItem(Skills.FORAGING, playerData, player, locale), e -> open(player, playerData, Skills.FORAGING)));
 		}
-		if (OptionL.isEnabled(Skill.MINING)) {
-			contents.set(skillTemplate.getPosition(Skill.MINING), ClickableItem.of(skillTemplate.getItem(Skill.MINING, playerData, player, locale), e -> open(player, playerData, Skill.MINING)));
+		if (OptionL.isEnabled(Skills.MINING)) {
+			contents.set(skillTemplate.getPosition(Skills.MINING), ClickableItem.of(skillTemplate.getItem(Skills.MINING, playerData, player, locale), e -> open(player, playerData, Skills.MINING)));
 		}
-		if (OptionL.isEnabled(Skill.FISHING)) {
-			contents.set(skillTemplate.getPosition(Skill.FISHING), ClickableItem.of(skillTemplate.getItem(Skill.FISHING, playerData, player, locale), e -> open(player, playerData, Skill.FISHING)));
+		if (OptionL.isEnabled(Skills.FISHING)) {
+			contents.set(skillTemplate.getPosition(Skills.FISHING), ClickableItem.of(skillTemplate.getItem(Skills.FISHING, playerData, player, locale), e -> open(player, playerData, Skills.FISHING)));
 		}
-		if (OptionL.isEnabled(Skill.EXCAVATION)) {
-			contents.set(skillTemplate.getPosition(Skill.EXCAVATION), ClickableItem.of(skillTemplate.getItem(Skill.EXCAVATION, playerData, player, locale), e -> open(player, playerData, Skill.EXCAVATION)));
+		if (OptionL.isEnabled(Skills.EXCAVATION)) {
+			contents.set(skillTemplate.getPosition(Skills.EXCAVATION), ClickableItem.of(skillTemplate.getItem(Skills.EXCAVATION, playerData, player, locale), e -> open(player, playerData, Skills.EXCAVATION)));
 		}
 		//Combat Skills
-		if (OptionL.isEnabled(Skill.ARCHERY)) {
-			contents.set(skillTemplate.getPosition(Skill.ARCHERY), ClickableItem.of(skillTemplate.getItem(Skill.ARCHERY, playerData, player, locale), e -> open(player, playerData, Skill.ARCHERY)));
+		if (OptionL.isEnabled(Skills.ARCHERY)) {
+			contents.set(skillTemplate.getPosition(Skills.ARCHERY), ClickableItem.of(skillTemplate.getItem(Skills.ARCHERY, playerData, player, locale), e -> open(player, playerData, Skills.ARCHERY)));
 		}
-		if (OptionL.isEnabled(Skill.DEFENSE)) {
-			contents.set(skillTemplate.getPosition(Skill.DEFENSE), ClickableItem.of(skillTemplate.getItem(Skill.DEFENSE, playerData, player, locale), e -> open(player, playerData, Skill.DEFENSE)));
+		if (OptionL.isEnabled(Skills.DEFENSE)) {
+			contents.set(skillTemplate.getPosition(Skills.DEFENSE), ClickableItem.of(skillTemplate.getItem(Skills.DEFENSE, playerData, player, locale), e -> open(player, playerData, Skills.DEFENSE)));
 		}
-		if (OptionL.isEnabled(Skill.FIGHTING)) {
-			contents.set(skillTemplate.getPosition(Skill.FIGHTING), ClickableItem.of(skillTemplate.getItem(Skill.FIGHTING, playerData, player, locale), e -> open(player, playerData, Skill.FIGHTING)));
+		if (OptionL.isEnabled(Skills.FIGHTING)) {
+			contents.set(skillTemplate.getPosition(Skills.FIGHTING), ClickableItem.of(skillTemplate.getItem(Skills.FIGHTING, playerData, player, locale), e -> open(player, playerData, Skills.FIGHTING)));
 		}
-		if (OptionL.isEnabled(Skill.ENDURANCE)) {
-			contents.set(skillTemplate.getPosition(Skill.ENDURANCE), ClickableItem.of(skillTemplate.getItem(Skill.ENDURANCE, playerData, player, locale), e -> open(player, playerData, Skill.ENDURANCE)));
+		if (OptionL.isEnabled(Skills.ENDURANCE)) {
+			contents.set(skillTemplate.getPosition(Skills.ENDURANCE), ClickableItem.of(skillTemplate.getItem(Skills.ENDURANCE, playerData, player, locale), e -> open(player, playerData, Skills.ENDURANCE)));
 		}
-		if (OptionL.isEnabled(Skill.AGILITY)) {
-			contents.set(skillTemplate.getPosition(Skill.AGILITY), ClickableItem.of(skillTemplate.getItem(Skill.AGILITY, playerData, player, locale), e -> open(player, playerData, Skill.AGILITY)));
+		if (OptionL.isEnabled(Skills.AGILITY)) {
+			contents.set(skillTemplate.getPosition(Skills.AGILITY), ClickableItem.of(skillTemplate.getItem(Skills.AGILITY, playerData, player, locale), e -> open(player, playerData, Skills.AGILITY)));
 		}
 		//Magic Skills
-		if (OptionL.isEnabled(Skill.ALCHEMY)) {
-			contents.set(skillTemplate.getPosition(Skill.ALCHEMY), ClickableItem.of(skillTemplate.getItem(Skill.ALCHEMY, playerData, player, locale), e -> open(player, playerData, Skill.ALCHEMY)));
+		if (OptionL.isEnabled(Skills.ALCHEMY)) {
+			contents.set(skillTemplate.getPosition(Skills.ALCHEMY), ClickableItem.of(skillTemplate.getItem(Skills.ALCHEMY, playerData, player, locale), e -> open(player, playerData, Skills.ALCHEMY)));
 		}
-		if (OptionL.isEnabled(Skill.ENCHANTING)) {
-			contents.set(skillTemplate.getPosition(Skill.ENCHANTING), ClickableItem.of(skillTemplate.getItem(Skill.ENCHANTING, playerData, player, locale), e -> open(player, playerData, Skill.ENCHANTING)));
+		if (OptionL.isEnabled(Skills.ENCHANTING)) {
+			contents.set(skillTemplate.getPosition(Skills.ENCHANTING), ClickableItem.of(skillTemplate.getItem(Skills.ENCHANTING, playerData, player, locale), e -> open(player, playerData, Skills.ENCHANTING)));
 		}
-		if (OptionL.isEnabled(Skill.SORCERY)) {
-			contents.set(skillTemplate.getPosition(Skill.SORCERY), ClickableItem.of(skillTemplate.getItem(Skill.SORCERY, playerData, player, locale), e -> open(player, playerData, Skill.SORCERY)));
+		if (OptionL.isEnabled(Skills.SORCERY)) {
+			contents.set(skillTemplate.getPosition(Skills.SORCERY), ClickableItem.of(skillTemplate.getItem(Skills.SORCERY, playerData, player, locale), e -> open(player, playerData, Skills.SORCERY)));
 		}
-		if (OptionL.isEnabled(Skill.HEALING)) {
-			contents.set(skillTemplate.getPosition(Skill.HEALING), ClickableItem.of(skillTemplate.getItem(Skill.HEALING, playerData, player, locale), e -> open(player, playerData, Skill.HEALING)));
+		if (OptionL.isEnabled(Skills.HEALING)) {
+			contents.set(skillTemplate.getPosition(Skills.HEALING), ClickableItem.of(skillTemplate.getItem(Skills.HEALING, playerData, player, locale), e -> open(player, playerData, Skills.HEALING)));
 		}
-		if (OptionL.isEnabled(Skill.FORGING)) {
-			contents.set(skillTemplate.getPosition(Skill.FORGING), ClickableItem.of(skillTemplate.getItem(Skill.FORGING, playerData, player, locale), e -> open(player, playerData, Skill.FORGING)));
+		if (OptionL.isEnabled(Skills.FORGING)) {
+			contents.set(skillTemplate.getPosition(Skills.FORGING), ClickableItem.of(skillTemplate.getItem(Skills.FORGING, playerData, player, locale), e -> open(player, playerData, Skills.FORGING)));
 		}
 	}
 

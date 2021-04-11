@@ -1,15 +1,15 @@
 package com.archyx.aureliumskills.stats;
 
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 
 import java.util.Locale;
 import java.util.function.Supplier;
 
 public interface Stat {
 
-    Supplier<Skill>[] getPrimarySkills();
+    Supplier<Skills>[] getPrimarySkills();
 
-    Supplier<Skill>[] getSecondarySkills();
+    Supplier<Skills>[] getSecondarySkills();
 
     String getDisplayName(Locale locale);
 

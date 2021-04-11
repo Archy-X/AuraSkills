@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.Absorption;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.particles.ParticleDisplay;
@@ -36,7 +36,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
     private final Random r = new Random();
 
     public DefenseAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.DEFENSE);
+        super(plugin, Skills.DEFENSE);
     }
 
     public void shielding(EntityDamageByEntityEvent event, PlayerData playerData, Player player) {
@@ -113,7 +113,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
 
     @EventHandler
     public void defenseListener(EntityDamageByEntityEvent event) {
-        if (OptionL.isEnabled(Skill.DEFENSE)) {
+        if (OptionL.isEnabled(Skills.DEFENSE)) {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
@@ -136,7 +136,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
 
     @EventHandler
     public void readyAbsorption(PlayerInteractEvent event) {
-        plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.DEFENSE, new String[] {"SHIELD"}, Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK);
+        plugin.getManaAbilityManager().getActivator().readyAbility(event, Skills.DEFENSE, new String[] {"SHIELD"}, Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK);
     }
 
     public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {

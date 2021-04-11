@@ -49,7 +49,7 @@ public class AbilityManager {
         long startTime = System.currentTimeMillis();
         ConfigurationSection abilities = config.getConfigurationSection("abilities");
         if (abilities != null) {
-            for (Skill skill : Skill.values()) {
+            for (Skill skill : plugin.getSkillRegistry().getSkills()) {
                 String skillName = skill.name().toLowerCase(Locale.ENGLISH);
                 ConfigurationSection skillAbilities = abilities.getConfigurationSection(skillName);
                 if (skillAbilities != null) {

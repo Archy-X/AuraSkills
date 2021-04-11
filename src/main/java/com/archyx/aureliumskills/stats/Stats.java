@@ -2,41 +2,41 @@ package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.StatMessage;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 
 import java.util.Locale;
 import java.util.function.Supplier;
 
 public enum Stats implements Stat {
 
-	STRENGTH(new Supplier[] {() -> Skill.FORAGING, () -> Skill.FIGHTING, () -> Skill.SORCERY},
-			new Supplier[] {() -> Skill.FARMING, () -> Skill.ARCHERY}),
-	HEALTH(new Supplier[] {() -> Skill.FARMING, () -> Skill.ALCHEMY},
-			new Supplier[] {() -> Skill.FISHING, () -> Skill.DEFENSE, () -> Skill.HEALING}),
-	REGENERATION(new Supplier[] {() -> Skill.EXCAVATION, () -> Skill.ENDURANCE, () -> Skill.HEALING},
-			new Supplier[] {() -> Skill.FIGHTING, () -> Skill.AGILITY}),
-	LUCK(new Supplier[] {() -> Skill.FISHING, () -> Skill.ARCHERY},
-			new Supplier[] {() -> Skill.MINING, () -> Skill.EXCAVATION, () -> Skill.ENCHANTING}),
-	WISDOM(new Supplier[] {() -> Skill.AGILITY, () -> Skill.ENCHANTING},
-			new Supplier[] {() -> Skill.ALCHEMY, () -> Skill.SORCERY, () -> Skill.FORGING}),
-	TOUGHNESS(new Supplier[] {() -> Skill.MINING, () -> Skill.DEFENSE, () -> Skill.FORGING},
-			new Supplier[] {() -> Skill.FORAGING, () -> Skill.ENDURANCE});
+	STRENGTH(new Supplier[] {() -> Skills.FORAGING, () -> Skills.FIGHTING, () -> Skills.SORCERY},
+			new Supplier[] {() -> Skills.FARMING, () -> Skills.ARCHERY}),
+	HEALTH(new Supplier[] {() -> Skills.FARMING, () -> Skills.ALCHEMY},
+			new Supplier[] {() -> Skills.FISHING, () -> Skills.DEFENSE, () -> Skills.HEALING}),
+	REGENERATION(new Supplier[] {() -> Skills.EXCAVATION, () -> Skills.ENDURANCE, () -> Skills.HEALING},
+			new Supplier[] {() -> Skills.FIGHTING, () -> Skills.AGILITY}),
+	LUCK(new Supplier[] {() -> Skills.FISHING, () -> Skills.ARCHERY},
+			new Supplier[] {() -> Skills.MINING, () -> Skills.EXCAVATION, () -> Skills.ENCHANTING}),
+	WISDOM(new Supplier[] {() -> Skills.AGILITY, () -> Skills.ENCHANTING},
+			new Supplier[] {() -> Skills.ALCHEMY, () -> Skills.SORCERY, () -> Skills.FORGING}),
+	TOUGHNESS(new Supplier[] {() -> Skills.MINING, () -> Skills.DEFENSE, () -> Skills.FORGING},
+			new Supplier[] {() -> Skills.FORAGING, () -> Skills.ENDURANCE});
 
-	private final Supplier<Skill>[] primarySkills;
-	private final Supplier<Skill>[] secondarySkills;
+	private final Supplier<Skills>[] primarySkills;
+	private final Supplier<Skills>[] secondarySkills;
 
-	Stats(Supplier<Skill>[] primarySkills, Supplier<Skill>[] secondarySkills) {
+	Stats(Supplier<Skills>[] primarySkills, Supplier<Skills>[] secondarySkills) {
 		this.primarySkills = primarySkills;
 		this.secondarySkills = secondarySkills;
 	}
 
 	@Override
-	public Supplier<Skill>[] getPrimarySkills() {
+	public Supplier<Skills>[] getPrimarySkills() {
 		return primarySkills;
 	}
 
 	@Override
-	public Supplier<Skill>[] getSecondarySkills() {
+	public Supplier<Skills>[] getSecondarySkills() {
 		return secondarySkills;
 	}
 

@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
@@ -77,7 +78,7 @@ public class MySqlStorageProvider extends StorageProvider {
                     if (result.next()) {
                         PlayerData playerData = new PlayerData(player, plugin);
                         // Load skill data
-                        for (Skill skill : Skill.values()) {
+                        for (Skill skill : Skills.values()) {
                             int level = result.getInt(skill.name().toUpperCase(Locale.ROOT) + "_LEVEL");
                             double xp = result.getDouble(skill.name().toUpperCase(Locale.ROOT) + "_XP");
                             playerData.setSkillLevel(skill, level);
@@ -225,14 +226,14 @@ public class MySqlStorageProvider extends StorageProvider {
             String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson.toString() + "'": "NULL";
             // Build sql statement
             StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
-            for (Skill skill : Skill.getOrderedValues()) {
+            for (Skill skill : Skills.getOrderedValues()) {
                 sql.append(skill.toString()).append("_LEVEL, ");
                 sql.append(skill.toString()).append("_XP, ");
             }
             sql.append("LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('");
             sql.append(player.getUniqueId().toString()).append("', ");
             // Insert skill data
-            for (Skill skill : Skill.getOrderedValues()) {
+            for (Skill skill : Skills.getOrderedValues()) {
                 sql.append(playerData.getSkillLevel(skill)).append(", ");
                 sql.append(playerData.getSkillXp(skill)).append(", ");
             }
@@ -242,7 +243,7 @@ public class MySqlStorageProvider extends StorageProvider {
             sql.append(abilitiesString).append(") ");
             // Build update part of statement
             sql.append("ON DUPLICATE KEY UPDATE ");
-            for (Skill skill : Skill.getOrderedValues()) {
+            for (Skill skill : Skills.getOrderedValues()) {
                 sql.append(skill.toString()).append("_LEVEL=").append(playerData.getSkillLevel(skill)).append(", ");
                 sql.append(skill.toString()).append("_XP=").append(playerData.getSkillXp(skill)).append(", ");
             }
@@ -279,7 +280,7 @@ public class MySqlStorageProvider extends StorageProvider {
                     // Load levels and xp from backup
                     Map<Skill, Integer> levels = new HashMap<>();
                     Map<Skill, Double> xpLevels = new HashMap<>();
-                    for (Skill skill : Skill.values()) {
+                    for (Skill skill : Skills.values()) {
                         int level = playerDataSection.getInt(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".level", 1);
                         levels.put(skill, level);
                         double xp = playerDataSection.getDouble(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
@@ -291,7 +292,7 @@ public class MySqlStorageProvider extends StorageProvider {
                             playerData.setStatLevel(stat, 0);
                         }
                         // Apply to object if in memory
-                        for (Skill skill : Skill.values()) {
+                        for (Skill skill : Skills.values()) {
                             int level = levels.get(skill);
                             playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xpLevels.get(skill));
@@ -309,7 +310,7 @@ public class MySqlStorageProvider extends StorageProvider {
                     } else {
                         // Build sql statement
                         StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
-                        for (Skill skill : Skill.getOrderedValues()) {
+                        for (Skill skill : Skills.getOrderedValues()) {
                             sql.append(skill.toString()).append("_LEVEL, ");
                             sql.append(skill.toString()).append("_XP, ");
                         }
@@ -317,7 +318,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         sql.append(") VALUES('");
                         sql.append(id.toString()).append("', ");
                         // Insert skill data
-                        for (Skill skill : Skill.getOrderedValues()) {
+                        for (Skill skill : Skills.getOrderedValues()) {
                             sql.append(levels.get(skill)).append(", ");
                             sql.append(xpLevels.get(skill)).append(", ");
                         }
@@ -325,7 +326,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         sql.append(") ");
                         // Build update part of statement
                         sql.append("ON DUPLICATE KEY UPDATE ");
-                        for (Skill skill : Skill.getOrderedValues()) {
+                        for (Skill skill : Skills.getOrderedValues()) {
                             sql.append(skill.toString()).append("_LEVEL=").append(levels.get(skill)).append(", ");
                             sql.append(skill.toString()).append("_XP=").append(xpLevels.get(skill)).append(", ");
                         }
@@ -382,7 +383,7 @@ public class MySqlStorageProvider extends StorageProvider {
         manager.setSorting(true);
         // Initialize lists
         Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : Skills.values()) {
             leaderboards.put(skill, new ArrayList<>());
         }
         List<SkillValue> powerLeaderboard = new ArrayList<>();
@@ -395,7 +396,7 @@ public class MySqlStorageProvider extends StorageProvider {
             int powerLevel = 0;
             double powerXp = 0;
             int numEnabled = 0;
-            for (Skill skill : Skill.values()) {
+            for (Skill skill : Skills.values()) {
                 int level = playerData.getSkillLevel(skill);
                 double xp = playerData.getSkillXp(skill);
                 // Add to lists
@@ -430,7 +431,7 @@ public class MySqlStorageProvider extends StorageProvider {
                                 double powerXp = 0;
                                 int numEnabled = 0;
 
-                                for (Skill skill : Skill.values()) {
+                                for (Skill skill : Skills.values()) {
                                     // Load from database
                                     int level = result.getInt(skill.toString().toUpperCase(Locale.ROOT) + "_LEVEL");
                                     if (level == 0) {
@@ -467,7 +468,7 @@ public class MySqlStorageProvider extends StorageProvider {
         }
         // Sort the leaderboards
         LeaderboardSorter sorter = new LeaderboardSorter();
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : Skills.values()) {
             leaderboards.get(skill).sort(sorter);
         }
         powerLeaderboard.sort(sorter);
@@ -475,7 +476,7 @@ public class MySqlStorageProvider extends StorageProvider {
         averageLeaderboard.sort(averageSorter);
 
         // Add skill leaderboards to map
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : Skills.values()) {
             manager.setLeaderboard(skill, leaderboards.get(skill));
         }
         manager.setPowerLeaderboard(powerLeaderboard);

@@ -56,14 +56,13 @@ public class SkillBossBar implements Listener {
         styles = new HashMap<>();
         for (String entry : OptionL.getList(Option.BOSS_BAR_FORMAT)) {
             String[] splitEntry = entry.split(" ");
-            Skill skill = Skill.FARMING;
+            Skill skill;
             BarColor color = BarColor.GREEN;
             BarStyle style = BarStyle.SOLID;
-            try {
-                skill = Skill.valueOf(splitEntry[0].toUpperCase());
-            }
-            catch (IllegalArgumentException e) {
+            skill = plugin.getSkillRegistry().getSkill(splitEntry[0].toUpperCase());
+            if (skill == null) {
                 plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid Skill");
+                skill = Skills.FARMING;
             }
             if (splitEntry.length > 1) {
                 try {

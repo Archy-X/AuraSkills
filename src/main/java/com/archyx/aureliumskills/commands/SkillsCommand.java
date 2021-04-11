@@ -162,8 +162,8 @@ public class SkillsCommand extends BaseCommand {
 								.replace("{level}", String.valueOf(skillValue.getLevel())));
 					}
 				} catch (Exception e) {
-					try {
-						Skill skill = Skill.valueOf(args[0].toUpperCase());
+					Skill skill = plugin.getSkillRegistry().getSkill(args[0]);
+					if (skill != null) {
 						List<SkillValue> lb = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 10);
 						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER, locale).replace("{skill}", skill.getDisplayName(locale)));
 						for (SkillValue skillValue : lb) {
@@ -173,7 +173,7 @@ public class SkillsCommand extends BaseCommand {
 									.replace("{player}", name != null ? name : "?")
 									.replace("{level}", String.valueOf(skillValue.getLevel())));
 						}
-					} catch (IllegalArgumentException iae) {
+					} else {
 						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 					}
 				}
@@ -197,8 +197,8 @@ public class SkillsCommand extends BaseCommand {
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
 			} else {
-				try {
-					Skill skill = Skill.valueOf(args[0].toUpperCase());
+				Skill skill = plugin.getSkillRegistry().getSkill(args[0]);
+				if (skill != null) {
 					try {
 						int page = Integer.parseInt(args[1]);
 						List<SkillValue> lb = plugin.getLeaderboardManager().getLeaderboard(skill, page, 10);
@@ -213,7 +213,7 @@ public class SkillsCommand extends BaseCommand {
 					} catch (Exception e) {
 						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 					}
-				} catch (IllegalArgumentException iae) {
+				} else {
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
 			}
@@ -287,7 +287,7 @@ public class SkillsCommand extends BaseCommand {
 		player.sendMessage(Lang.getMessage(CommandMessage.RANK_POWER, locale)
 				.replace("{rank}", String.valueOf(plugin.getLeaderboardManager().getPowerRank(player.getUniqueId())))
 				.replace("{total}", String.valueOf(plugin.getLeaderboardManager().getPowerLeaderboard().size())));
-		for (Skill skill : Skill.values()) {
+		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 			if (OptionL.isEnabled(skill)) {
 				player.sendMessage(Lang.getMessage(CommandMessage.RANK_ENTRY, locale)
 						.replace("{skill}", String.valueOf(skill.getDisplayName(locale)))
@@ -390,7 +390,7 @@ public class SkillsCommand extends BaseCommand {
 	public void onSkillSetall(CommandSender sender, @Flags("other") Player player, int level) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (level > 0) {
-			for (Skill skill : Skill.values()) {
+			for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 				if (OptionL.isEnabled(skill)) {
 					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 					if (playerData == null) return;
@@ -435,7 +435,7 @@ public class SkillsCommand extends BaseCommand {
 		else {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
-			for (Skill s : Skill.values()) {
+			for (Skill s : plugin.getSkillRegistry().getSkills()) {
 				playerData.setSkillLevel(s, 1);
 				playerData.setSkillXp(s, 0);
 				plugin.getLeveler().updateStats(player);

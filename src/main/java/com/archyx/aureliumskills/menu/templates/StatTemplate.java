@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
@@ -86,14 +86,14 @@ public class StatTemplate extends ConfigurableTemplate {
         }
         item = item.clone();
         ItemMeta meta = item.getItemMeta();
-        List<Supplier<Skill>> primarySkills = new ArrayList<>();
-        for (Supplier<Skill> primarySkill : stat.getPrimarySkills()) {
+        List<Supplier<Skills>> primarySkills = new ArrayList<>();
+        for (Supplier<Skills> primarySkill : stat.getPrimarySkills()) {
             if (OptionL.isEnabled(primarySkill.get())) {
                 primarySkills.add(primarySkill);
             }
         }
-        List<Supplier<Skill>> secondarySkills = new ArrayList<>();
-        for (Supplier<Skill> secondarySkill : stat.getSecondarySkills()) {
+        List<Supplier<Skills>> secondarySkills = new ArrayList<>();
+        for (Supplier<Skills> secondarySkill : stat.getSecondarySkills()) {
             if (OptionL.isEnabled(secondarySkill.get())) {
                 secondarySkills.add(secondarySkill);
             }

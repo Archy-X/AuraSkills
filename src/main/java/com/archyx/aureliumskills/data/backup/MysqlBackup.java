@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.data.backup;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -46,7 +47,7 @@ public class MysqlBackup extends BackupProvider {
                     config.set("backup_version", 1);
                     while (result.next()) {
                         UUID id = UUID.fromString(result.getString("ID"));
-                        for (Skill skill : Skill.values()) {
+                        for (Skill skill : Skills.values()) {
                             int level = result.getInt(skill.toString().toUpperCase(Locale.ROOT) + "_LEVEL");
                             double xp = result.getDouble(skill.toString().toUpperCase(Locale.ROOT) + "_XP");
 

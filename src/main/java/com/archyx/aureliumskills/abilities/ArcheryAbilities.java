@@ -9,7 +9,7 @@ import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.ChargedShot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.Bukkit;
@@ -40,12 +40,12 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
     private final Random r = new Random();
 
     public ArcheryAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.ARCHERY);
+        super(plugin, Skills.ARCHERY);
         tickChargedShotCooldown();
     }
 
     public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
-        if (OptionL.isEnabled(Skill.ARCHERY)) {
+        if (OptionL.isEnabled(Skills.ARCHERY)) {
             if (plugin.getAbilityManager().isEnabled(Ability.BOW_MASTER)) {
                 if (!player.hasPermission("aureliumskills.archery")) {
                     return;
@@ -111,7 +111,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void archeryListener(EntityDamageByEntityEvent event) {
-        if (OptionL.isEnabled(Skill.ARCHERY)) {
+        if (OptionL.isEnabled(Skills.ARCHERY)) {
             if (!event.isCancelled()) {
                 if (event.getDamager() instanceof Arrow) {
                     Arrow arrow = (Arrow) event.getDamager();

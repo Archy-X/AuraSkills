@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -28,7 +29,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	@SuppressWarnings("deprecation")
 	public void onConsume(PlayerItemConsumeEvent event) {
-		if (OptionL.isEnabled(Skill.HEALING)) {
+		if (OptionL.isEnabled(Skills.HEALING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -37,7 +38,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 			}
 			if (blockXpGain(event.getPlayer())) return;
 			Player p = event.getPlayer();
-			Skill s = Skill.HEALING;
+			Skill s = Skills.HEALING;
 			Leveler leveler = plugin.getLeveler();
 			if (event.getItem().getType().equals(Material.POTION)) {
 				if (event.getItem().getItemMeta() instanceof PotionMeta) {
@@ -84,7 +85,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onThrow(PotionSplashEvent event) {
-		if (OptionL.isEnabled(Skill.HEALING)) {
+		if (OptionL.isEnabled(Skills.HEALING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -97,7 +98,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 						Player p = (Player) event.getEntity().getShooter();
 						PotionMeta meta = (PotionMeta) event.getPotion().getItem().getItemMeta();
 						PotionData data = meta.getBasePotionData();
-						Skill s = Skill.HEALING;
+						Skill s = Skills.HEALING;
 						if (blockXpGain(p)) return;
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
