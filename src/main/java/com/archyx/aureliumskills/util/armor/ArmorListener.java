@@ -1,6 +1,6 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.util.armor;
 
-import com.archyx.aureliumskills.util.ArmorEquipEvent.EquipMethod;
+import com.archyx.aureliumskills.util.armor.ArmorEquipEvent.EquipMethod;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.configuration;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.DamageType;
+import com.archyx.aureliumskills.util.mechanics.DamageType;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -130,9 +130,9 @@ public class OptionL {
         return getInt(Option.valueOf(skill.name() + "_MAX_LEVEL"));
     }
 
-    public static int getHighestMaxLevel() {
+    public int getHighestMaxLevel() {
         int highest = 96;
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             int maxLevel = getInt(Option.valueOf(skill.name() + "_MAX_LEVEL"));
             if (maxLevel > highest) {
                 highest = maxLevel;

@@ -8,8 +8,8 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

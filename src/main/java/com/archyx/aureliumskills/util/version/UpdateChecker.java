@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.util.version;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;

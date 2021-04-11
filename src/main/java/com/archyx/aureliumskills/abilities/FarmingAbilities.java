@@ -9,10 +9,10 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.Replenish;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.BlockUtil;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.block.BlockUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -40,11 +40,11 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 	private static final Random r = new Random();
 
 	public FarmingAbilities(AureliumSkills plugin) {
-		super(plugin, Skill.FARMING);
+		super(plugin, Skills.FARMING);
 	}
 
 	public void bountifulHarvest(Player player, Block block) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skills.FARMING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.BOUNTIFUL_HARVEST)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -67,7 +67,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 	}
 	
 	public void tripleHarvest(Player player, Block block) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skills.FARMING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.TRIPLE_HARVEST)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -162,7 +162,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void readyReplenish(PlayerInteractEvent event) {
-		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.FARMING, new String[] {"HOE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skills.FARMING, new String[] {"HOE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 
 	@EventHandler

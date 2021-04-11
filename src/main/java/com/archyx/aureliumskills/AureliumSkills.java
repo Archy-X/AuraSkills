@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills;
 
+import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.abilities.*;
 import com.archyx.aureliumskills.api.AureliumAPI;
@@ -44,7 +45,10 @@ import com.archyx.aureliumskills.skills.SourceManager;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.levelers.*;
 import com.archyx.aureliumskills.stats.*;
-import com.archyx.aureliumskills.util.*;
+import com.archyx.aureliumskills.support.*;
+import com.archyx.aureliumskills.util.armor.ArmorListener;
+import com.archyx.aureliumskills.util.version.UpdateChecker;
+import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
@@ -105,9 +109,16 @@ public class AureliumSkills extends JavaPlugin {
 	private Health health;
 	private LeaderboardManager leaderboardManager;
 	private RegionManager regionManager;
+	private StatRegistry statRegistry;
+	private SkillRegistry skillRegistry;
 	private final long releaseTime = 1617414264973L;
 
 	public void onEnable() {
+		// Registries
+		statRegistry = new StatRegistry();
+		registerStats();
+		skillRegistry = new SkillRegistry();
+		registerSkills();
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -219,7 +230,7 @@ public class AureliumSkills extends JavaPlugin {
 		regeneration.startSaturationRegen();
 		// Load Action Bar
 		if (protocolLibEnabled) {
-			ProtocolUtil.init();
+			ProtocolLibSupport.init();
 		}
 		actionBar.startUpdateActionBar();
 		// Initialize storage
@@ -331,9 +342,25 @@ public class AureliumSkills extends JavaPlugin {
 	private void registerCommands() {
 		commandManager.enableUnstableAPI("help");
 		commandManager.usePerIssuerLocale(true, false);
+		commandManager.getCommandContexts().registerContext(Stat.class, c -> {
+			Stat stat = statRegistry.getStat(c.popFirstArg());
+			if (stat != null) {
+				return stat;
+			} else {
+				throw new InvalidCommandArgument("Stat " + c.popFirstArg() + " not found!");
+			}
+		});
+		commandManager.getCommandContexts().registerContext(Skill.class, c -> {
+			Skill skill = skillRegistry.getSkill(c.popFirstArg());
+			if (skill != null) {
+				return skill;
+			} else {
+				throw new InvalidCommandArgument("Skill " + c.popFirstArg() + " not found!");
+			}
+		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
-			for (Skill skill : Skill.values()) {
+			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
 					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
 				}
@@ -342,7 +369,7 @@ public class AureliumSkills extends JavaPlugin {
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skillTop", c -> {
 			List<String> values = new ArrayList<>();
-			for (Skill skill : Skill.values()) {
+			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
 					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
 				}
@@ -352,7 +379,7 @@ public class AureliumSkills extends JavaPlugin {
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
 			List<String> values = new ArrayList<>();
-			for (Stat stat : Stat.values()) {
+			for (Stat stat : statRegistry.getStats()) {
 				values.add(stat.toString().toLowerCase(Locale.ENGLISH));
 			}
 			return values;
@@ -370,21 +397,21 @@ public class AureliumSkills extends JavaPlugin {
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
-			if (OptionL.isEnabled(Skill.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand(this)); }
-			if (OptionL.isEnabled(Skill.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand(this)); }
-			if (OptionL.isEnabled(Skill.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand(this)); }
-			if (OptionL.isEnabled(Skill.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand(this)); }
-			if (OptionL.isEnabled(Skill.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand(this)); }
-			if (OptionL.isEnabled(Skill.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand(this)); }
-			if (OptionL.isEnabled(Skill.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand(this)); }
-			if (OptionL.isEnabled(Skill.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand(this)); }
-			if (OptionL.isEnabled(Skill.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand(this)); }
-			if (OptionL.isEnabled(Skill.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand(this)); }
-			if (OptionL.isEnabled(Skill.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand(this)); }
-			if (OptionL.isEnabled(Skill.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand(this)); }
-			if (OptionL.isEnabled(Skill.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand(this)); }
-			if (OptionL.isEnabled(Skill.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand(this)); }
-			if (OptionL.isEnabled(Skill.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand(this)); }
+			if (OptionL.isEnabled(Skills.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand(this)); }
+			if (OptionL.isEnabled(Skills.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand(this)); }
+			if (OptionL.isEnabled(Skills.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand(this)); }
+			if (OptionL.isEnabled(Skills.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand(this)); }
+			if (OptionL.isEnabled(Skills.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand(this)); }
+			if (OptionL.isEnabled(Skills.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand(this)); }
+			if (OptionL.isEnabled(Skills.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand(this)); }
+			if (OptionL.isEnabled(Skills.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand(this)); }
+			if (OptionL.isEnabled(Skills.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand(this)); }
+			if (OptionL.isEnabled(Skills.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand(this)); }
+			if (OptionL.isEnabled(Skills.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand(this)); }
+			if (OptionL.isEnabled(Skills.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand(this)); }
+			if (OptionL.isEnabled(Skills.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand(this)); }
+			if (OptionL.isEnabled(Skills.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand(this)); }
+			if (OptionL.isEnabled(Skills.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand(this)); }
 		}
 	}
 
@@ -456,6 +483,33 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		economy = rsp.getProvider();
 		return true;
+	}
+
+	private void registerStats() {
+		statRegistry.register("strength", Stats.STRENGTH);
+		statRegistry.register("health", Stats.HEALTH);
+		statRegistry.register("regeneration", Stats.REGENERATION);
+		statRegistry.register("luck", Stats.LUCK);
+		statRegistry.register("wisdom", Stats.WISDOM);
+		statRegistry.register("toughness", Stats.TOUGHNESS);
+	}
+
+	private void registerSkills() {
+		skillRegistry.register("farming", Skills.FARMING);
+		skillRegistry.register("foraging", Skills.FORAGING);
+		skillRegistry.register("mining", Skills.MINING);
+		skillRegistry.register("fishing", Skills.FISHING);
+		skillRegistry.register("excavation", Skills.EXCAVATION);
+		skillRegistry.register("archery", Skills.ARCHERY);
+		skillRegistry.register("defense", Skills.DEFENSE);
+		skillRegistry.register("fighting", Skills.FIGHTING);
+		skillRegistry.register("endurance", Skills.ENDURANCE);
+		skillRegistry.register("agility", Skills.AGILITY);
+		skillRegistry.register("alchemy", Skills.ALCHEMY);
+		skillRegistry.register("enchanting", Skills.ENCHANTING);
+		skillRegistry.register("sorcery", Skills.SORCERY);
+		skillRegistry.register("healing", Skills.HEALING);
+		skillRegistry.register("forging", Skills.FORGING);
 	}
 
 	private void loadRewards() {
@@ -629,6 +683,14 @@ public class AureliumSkills extends JavaPlugin {
 
 	public RegionManager getRegionManager() {
 		return regionManager;
+	}
+
+	public StatRegistry getStatRegistry() {
+		return statRegistry;
+	}
+
+	public SkillRegistry getSkillRegistry() {
+		return skillRegistry;
 	}
 
 }

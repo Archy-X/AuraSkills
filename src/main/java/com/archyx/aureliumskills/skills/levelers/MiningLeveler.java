@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.abilities.MiningAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -29,7 +30,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	@SuppressWarnings("deprecation")
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skills.MINING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.MINING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -45,7 +46,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 				}
 			}
 			Player p = event.getPlayer();
-			Skill s = Skill.MINING;
+			Skill s = Skills.MINING;
 			Material mat = event.getBlock().getType();
 			Leveler leveler = plugin.getLeveler();
 			if (blockXpGainPlayer(p)) return;

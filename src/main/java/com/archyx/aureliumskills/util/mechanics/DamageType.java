@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.util.mechanics;
 
 public enum DamageType {
 

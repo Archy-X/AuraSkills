@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -26,7 +26,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event) {
-		if (OptionL.isEnabled(Skill.FIGHTING)) {
+		if (OptionL.isEnabled(Skills.FIGHTING)) {
 			if (OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) return;
 			LivingEntity e = event.getEntity();
 			if (blockXpGainLocation(e.getLocation())) return;
@@ -45,16 +45,16 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 						double spawnerMultiplier = OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER);
 						try {
 							if (e.hasMetadata("aureliumskills_spawner_mob")) {
-								plugin.getLeveler().addXp(p, Skill.FIGHTING, spawnerMultiplier * getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
+								plugin.getLeveler().addXp(p, Skills.FIGHTING, spawnerMultiplier * getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
 							} else {
-								plugin.getLeveler().addXp(p, Skill.FIGHTING, getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
+								plugin.getLeveler().addXp(p, Skills.FIGHTING, getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
 							}
 						} catch (IllegalArgumentException exception) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
 								if (e.hasMetadata("aureliumskills_spawner_mob")) {
-									plugin.getLeveler().addXp(p, Skill.FIGHTING, spawnerMultiplier * getXp(p, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+									plugin.getLeveler().addXp(p, Skills.FIGHTING, spawnerMultiplier * getXp(p, Source.FIGHTING_ZOMBIFIED_PIGLIN));
 								} else {
-									plugin.getLeveler().addXp(p, Skill.FIGHTING, getXp(p, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+									plugin.getLeveler().addXp(p, Skills.FIGHTING, getXp(p, Source.FIGHTING_ZOMBIFIED_PIGLIN));
 								}
 							}
 						}
@@ -67,7 +67,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		// Damage based listener
-		if (OptionL.isEnabled(Skill.FIGHTING)) {
+		if (OptionL.isEnabled(Skills.FIGHTING)) {
 			if (event.isCancelled()) return;
 			if (!OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) return;
 			if (event.getDamager() instanceof Player) {
@@ -89,10 +89,10 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 						damage *= spawnerMultiplier;
 					}
 					try {
-						plugin.getLeveler().addXp(player, Skill.FIGHTING, damage * getXp(player, Source.valueOf("FIGHTING_" + type.toString())));
+						plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getXp(player, Source.valueOf("FIGHTING_" + type.toString())));
 					} catch (IllegalArgumentException e) {
 						if (type.toString().equals("PIG_ZOMBIE")) {
-							plugin.getLeveler().addXp(player, Skill.FIGHTING, damage * getXp(player, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+							plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getXp(player, Source.FIGHTING_ZOMBIFIED_PIGLIN));
 						}
 					}
 				}
@@ -104,7 +104,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 	public void onMobSpawn(CreatureSpawnEvent event) {
 		if (event.isCancelled()) return;
 		if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
-			if (OptionL.isEnabled(Skill.FIGHTING) || OptionL.isEnabled(Skill.ARCHERY)) {
+			if (OptionL.isEnabled(Skills.FIGHTING) || OptionL.isEnabled(Skills.ARCHERY)) {
 				if (OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER) < 1.0 || OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER) < 1.0) {
 					LivingEntity entity = event.getEntity();
 					entity.setMetadata("aureliumskills_spawner_mob", new FixedMetadataValue(plugin, true));

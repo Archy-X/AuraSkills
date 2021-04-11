@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.util.math;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

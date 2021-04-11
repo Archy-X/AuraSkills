@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerManager;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.util.UpdateChecker;
+import com.archyx.aureliumskills.util.version.UpdateChecker;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

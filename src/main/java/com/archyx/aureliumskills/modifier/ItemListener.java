@@ -10,7 +10,7 @@ import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
-import com.archyx.aureliumskills.util.ItemUtils;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class ItemListener implements Listener {
         this.foragingAbilities = new ForagingAbilities(plugin);
         this.miningAbilities = new MiningAbilities(plugin);
         this.statLeveler = new StatLeveler(plugin);
-        this.modifiers = new Modifiers();
+        this.modifiers = new Modifiers(plugin);
         this.requirements = new Requirements(plugin);
     }
 

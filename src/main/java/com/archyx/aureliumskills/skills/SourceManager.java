@@ -53,7 +53,7 @@ public class SourceManager {
         // Load custom blocks
         customBlocks = new HashMap<>();
         customBlockSet = new HashSet<>();
-        Skill[] customBlockSkills = new Skill[] {Skill.FARMING, Skill.FORAGING, Skill.MINING, Skill.EXCAVATION};
+        Skill[] customBlockSkills = new Skill[] {Skills.FARMING, Skills.FORAGING, Skills.MINING, Skills.EXCAVATION};
         for (Skill skill : customBlockSkills) {
             ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase(Locale.ENGLISH) + ".custom");
             if (section != null) {
@@ -77,7 +77,7 @@ public class SourceManager {
         // Load custom mobs
         customMobs = new HashMap<>();
         customMobSet = new HashSet<>();
-        Skill[] customMobSkills = new Skill[] {Skill.FIGHTING, Skill.ARCHERY};
+        Skill[] customMobSkills = new Skill[] {Skills.FIGHTING, Skills.ARCHERY};
         for (Skill skill : customMobSkills) {
             ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase(Locale.ENGLISH) + ".custom");
             if (section != null) {

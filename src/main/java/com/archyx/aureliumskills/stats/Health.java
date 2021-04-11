@@ -91,7 +91,7 @@ public class Health implements Listener {
 		//Calculates the amount of health to add
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
-			double modifier = (playerData.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
+			double modifier = (playerData.getStatLevel(Stats.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
 			AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 			if (attribute != null) {
 				double originalMaxHealth = attribute.getValue();

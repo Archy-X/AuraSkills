@@ -11,11 +11,11 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SpeedMine;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -42,11 +42,11 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 	private final Random r = new Random();
 
 	public MiningAbilities(AureliumSkills plugin) {
-		super(plugin, Skill.MINING);
+		super(plugin, Skills.MINING);
 	}
 
 	public void luckyMiner(Player player, Block block) {
-		if (OptionL.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skills.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUCKY_MINER)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -79,7 +79,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 	}
 
 	public void pickMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
-		if (OptionL.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skills.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.PICK_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.mining")) {
@@ -109,10 +109,10 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 	}
 
 	public void applyStamina(PlayerData playerData) {
-		if (OptionL.isEnabled(Skill.MINING)) {
+		if (OptionL.isEnabled(Skills.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.STAMINA)) {
 				if (playerData.getAbilityLevel(Ability.STAMINA) > 0) {
-					playerData.addStatModifier(new StatModifier("mining-stamina", Stat.TOUGHNESS, (int) getValue(Ability.STAMINA, playerData)));
+					playerData.addStatModifier(new StatModifier("mining-stamina", Stats.TOUGHNESS, (int) getValue(Ability.STAMINA, playerData)));
 				}
 			}
 		}
@@ -163,6 +163,6 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void readySpeedMine(PlayerInteractEvent event) {
-		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.MINING, new String[] {"PICKAXE"}, Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR);
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skills.MINING, new String[] {"PICKAXE"}, Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR);
 	}
 }

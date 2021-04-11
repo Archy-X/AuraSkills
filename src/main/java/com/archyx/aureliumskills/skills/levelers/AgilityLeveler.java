@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
@@ -33,7 +33,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	@SuppressWarnings("deprecation")
 	public void onFall(EntityDamageEvent event) {
-		if (OptionL.isEnabled(Skill.AGILITY)) {
+		if (OptionL.isEnabled(Skills.AGILITY)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.AGILITY_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -45,7 +45,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 					Player player = (Player) event.getEntity();
 					if (blockXpGain(player)) return;
 					if (event.getFinalDamage() < player.getHealth()) {
-						plugin.getLeveler().addXp(player, Skill.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(Source.FALL_DAMAGE)));
+						plugin.getLeveler().addXp(player, Skills.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(Source.FALL_DAMAGE)));
 					}
 				}
 			}
@@ -55,7 +55,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
     @EventHandler
 	@SuppressWarnings("deprecation")
     public void onMove(PlayerMoveEvent e) {
-    	if (OptionL.isEnabled(Skill.AGILITY)) {
+    	if (OptionL.isEnabled(Skills.AGILITY)) {
     		//Check cancelled
     		if (OptionL.getBoolean(Option.AGILITY_CHECK_CANCELLED)) {
     			if (e.isCancelled()) {
@@ -77,7 +77,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 	                	if (player.hasMetadata("skillsJumps")) {
 	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
 	                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 100) {
-								plugin.getLeveler().addXp(player, Skill.AGILITY, getXp(player, Source.JUMP_PER_100));
+								plugin.getLeveler().addXp(player, Skills.AGILITY, getXp(player, Source.JUMP_PER_100));
 	                			player.removeMetadata("skillsJumps", plugin);
 	                		}
 	                	}

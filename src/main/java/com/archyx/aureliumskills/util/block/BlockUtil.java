@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.util.block;
 
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.CropState;

@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
     private final Random r = new Random();
 
     public EnduranceAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.ENDURANCE);
+        super(plugin, Skills.ENDURANCE);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -47,7 +47,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void goldenHealAndRecovery(EntityRegainHealthEvent event) {
-        if (OptionL.isEnabled(Skill.ENDURANCE)) {
+        if (OptionL.isEnabled(Skills.ENDURANCE)) {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();

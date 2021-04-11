@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.api.event.ManaRegenerateEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -33,7 +33,7 @@ public class ManaManager implements Listener {
                         double maxMana = playerData.getMaxMana();
                         if (originalMana < maxMana) {
                             if (!playerData.getAbilityData(MAbility.ABSORPTION).getBoolean("activated")) {
-                                double regen = OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + playerData.getStatLevel(Stat.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
+                                double regen = OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + playerData.getStatLevel(Stats.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
                                 double finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
                                 ManaRegenerateEvent event = new ManaRegenerateEvent(player, finalRegen);
                                 Bukkit.getPluginManager().callEvent(event);

@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -277,16 +277,12 @@ public class Lang implements Listener {
 
 	public Locale getLocale(CommandSender sender) {
 		if (sender instanceof Player) {
-			Player player = (Player) sender;
-			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData((Player) sender);
 			if (playerData != null) {
 				return playerData.getLocale();
-			} else {
-				return getDefaultLanguage();
 			}
-		} else {
-			return getDefaultLanguage();
 		}
+		return getDefaultLanguage();
 	}
 
 	@EventHandler

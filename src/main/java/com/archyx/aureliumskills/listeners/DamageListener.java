@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.stats.Strength;
 import com.archyx.aureliumskills.stats.Toughness;
-import com.archyx.aureliumskills.util.DamageType;
+import com.archyx.aureliumskills.util.mechanics.DamageType;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.*;

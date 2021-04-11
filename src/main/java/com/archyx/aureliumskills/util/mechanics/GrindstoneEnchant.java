@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.util.mechanics;
 
 /**
  * This enum is to provide the minimum modified enchantment levels used for grindstone calculations

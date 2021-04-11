@@ -1,7 +1,11 @@
 package com.archyx.aureliumskills.data.backup;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.lang.CommandMessage;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,7 +28,7 @@ public class YamlBackup extends BackupProvider {
         try {
             // Save online players
             for (Player player : Bukkit.getOnlinePlayers()) {
-                plugin.getStorageProvider().save(player);
+                plugin.getStorageProvider().save(player, false);
             }
             createBackupFolder();
             LocalTime time = LocalTime.now();
@@ -42,7 +46,7 @@ public class YamlBackup extends BackupProvider {
                             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                             String stringId = config.getString("uuid");
                             if (stringId != null) {
-                                for (Skill skill : Skill.values()) {
+                                for (Skill skill : Skills.values()) {
                                     int level = config.getInt("skills." + skill.toString().toLowerCase(Locale.ROOT) + ".level");
                                     double xp = config.getInt("skills." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
                                     String path = "player_data." + stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".";
@@ -55,9 +59,12 @@ public class YamlBackup extends BackupProvider {
                 }
             }
             backup.save(backupFile);
-            sender.sendMessage("[AureliumSkills] Backed up Yaml data as " + backupFile.getName());
+            Locale locale = plugin.getLang().getLocale(sender);
+            sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
+                    , "{type}", "Yaml", "{file}", backupFile.getName()));
         } catch (Exception e) {
-            sender.sendMessage("[AureliumSkills] Error backing up Yaml data! See error below for details:");
+            Locale locale = plugin.getLang().getLocale(sender);
+            sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_ERROR, locale), "{type}", "Yaml"));
             e.printStackTrace();
         }
     }

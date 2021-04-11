@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,11 +25,11 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     private final Random r = new Random();
 
     public FightingAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.FIGHTING);
+        super(plugin, Skills.FIGHTING);
     }
 
     public void swordMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
-        if (OptionL.isEnabled(Skill.FIGHTING)) {
+        if (OptionL.isEnabled(Skills.FIGHTING)) {
             if (plugin.getAbilityManager().isEnabled(Ability.SWORD_MASTER)) {
                 if (!player.hasPermission("aureliumskills.fighting")) {
                     return;
@@ -44,7 +44,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     }
 
     public void firstStrike(EntityDamageByEntityEvent event, PlayerData playerData, Player player) {
-        if (OptionL.isEnabled(Skill.FIGHTING)) {
+        if (OptionL.isEnabled(Skills.FIGHTING)) {
             if (plugin.getAbilityManager().isEnabled(Ability.FIRST_STRIKE)) {
                 if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
                     if (playerData.getAbilityLevel(Ability.FIRST_STRIKE) > 0) {
@@ -60,7 +60,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                         //Increments counter
                         AbilityData abilityData = playerData.getAbilityData(Ability.FIRST_STRIKE);
                         if (abilityData.containsKey("counter")) {
-                            abilityData.setData("counter", abilityData.getData("counter" + 1));
+                            abilityData.setData("counter", abilityData.getInt("counter") + 1);
                         } else {
                             abilityData.setData("counter", 0);
                         }
@@ -145,7 +145,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void fightingListener(EntityDamageByEntityEvent event) {
-        if (OptionL.isEnabled(Skill.FIGHTING)) {
+        if (OptionL.isEnabled(Skills.FIGHTING)) {
             if (!event.isCancelled()) {
                 if (event.getDamager() instanceof Player) {
                     Player player = (Player) event.getDamager();

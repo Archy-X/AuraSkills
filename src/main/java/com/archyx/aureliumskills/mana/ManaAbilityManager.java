@@ -344,7 +344,7 @@ public class ManaAbilityManager implements Listener {
      * @return The mana ability unlocked or leveled up, or null
      */
     @Nullable
-    public MAbility getManaAbility( Skill skill, int level) {
+    public MAbility getManaAbility(Skill skill, int level) {
         MAbility mAbility = skill.getManaAbility();
         if (mAbility != null) {
             if (level >= getUnlock(mAbility) && (level - getUnlock(mAbility)) % getLevelUp(mAbility) == 0) {

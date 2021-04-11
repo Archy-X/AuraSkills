@@ -6,16 +6,20 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
+import com.archyx.aureliumskills.lang.CommandMessage;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,7 +49,7 @@ public class YamlStorageProvider extends StorageProvider {
                     throw new IllegalArgumentException("File name and uuid field do not match!");
                 }
                 // Load skill data
-                for (Skill skill : Skill.values()) {
+                for (Skill skill : Skills.values()) {
                     String path = "skills." + skill.name().toLowerCase() + ".";
                     int level = config.getInt(path + "level", 1);
                     double xp = config.getDouble(path + "xp", 0.0);
@@ -64,7 +68,7 @@ public class YamlStorageProvider extends StorageProvider {
                             String statName = modifierEntry.getString("stat");
                             double value = modifierEntry.getDouble("value");
                             if (name != null && statName != null) {
-                                Stat stat = Stat.valueOf(statName.toUpperCase(Locale.ROOT));
+                                Stat stat = plugin.getStatRegistry().getStat(statName);
                                 StatModifier modifier = new StatModifier(name, stat, value);
                                 playerData.addStatModifier(modifier);
                             }
@@ -110,15 +114,20 @@ public class YamlStorageProvider extends StorageProvider {
         }
     }
 
+    @Override
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
+        // Save lock
+        if (playerData.isSaving()) return;
+        playerData.setSaving(true);
+        // Load file
         File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         try {
             config.set("uuid", player.getUniqueId().toString());
             // Save skill data
-            for (Skill skill : Skill.values()) {
+            for (Skill skill : Skills.values()) {
                 String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
                 config.set(path + "level", playerData.getSkillLevel(skill));
                 config.set(path + "xp", playerData.getSkillXp(skill));
@@ -154,6 +163,7 @@ public class YamlStorageProvider extends StorageProvider {
             Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
         }
+        playerData.setSaving(false); // Unlock
     }
 
     @Override
@@ -164,6 +174,7 @@ public class YamlStorageProvider extends StorageProvider {
     @Override
     public void loadBackup(FileConfiguration config, CommandSender sender) {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
+        Locale locale = plugin.getLang().getLocale(sender);
         if (playerDataSection != null) {
             try {
                 for (String stringId : playerDataSection.getKeys(false)) {
@@ -171,7 +182,7 @@ public class YamlStorageProvider extends StorageProvider {
                     // Load levels and xp from backup
                     Map<Skill, Integer> levels = new HashMap<>();
                     Map<Skill, Double> xpLevels = new HashMap<>();
-                    for (Skill skill : Skill.values()) {
+                    for (Skill skill : Skills.values()) {
                         int level = playerDataSection.getInt(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".level", 1);
                         levels.put(skill, level);
                         double xp = playerDataSection.getDouble(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
@@ -179,11 +190,11 @@ public class YamlStorageProvider extends StorageProvider {
                     }
                     PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
-                        for (Stat stat : Stat.values()) {
+                        for (Stat stat : plugin.getStatRegistry().getStats()) {
                             playerData.setStatLevel(stat, 0);
                         }
                         // Apply to object if in memory
-                        for (Skill skill : Skill.values()) {
+                        for (Skill skill : Skills.values()) {
                             int level = levels.get(skill);
                             playerData.setSkillLevel(skill, level);
                             playerData.setSkillXp(skill, xpLevels.get(skill));
@@ -191,9 +202,9 @@ public class YamlStorageProvider extends StorageProvider {
                             plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, level);
                         }
                         // Reload stats
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.HEALTH);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.LUCK);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.WISDOM);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.HEALTH);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.LUCK);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.WISDOM);
                         // Immediately save to file
                         save(playerData.getPlayer(), false);
                     } else {
@@ -202,7 +213,7 @@ public class YamlStorageProvider extends StorageProvider {
                         FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(file);
                         playerConfig.set("uuid", id.toString());
                         // Save skill data
-                        for (Skill skill : Skill.values()) {
+                        for (Skill skill : Skills.values()) {
                             String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
                             playerConfig.set(path + "level", levels.get(skill));
                             playerConfig.set(path + "xp", xpLevels.get(skill));
@@ -211,9 +222,9 @@ public class YamlStorageProvider extends StorageProvider {
                         playerConfig.save(file);
                     }
                 }
-                sender.sendMessage(ChatColor.GREEN + "Successfully loaded backup");
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADED, locale));
             } catch (Exception e) {
-                sender.sendMessage(ChatColor.RED + "Error loading backup: " + e.getMessage());
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
             }
         }
     }
@@ -224,7 +235,7 @@ public class YamlStorageProvider extends StorageProvider {
         manager.setSorting(true);
         // Initialize lists
         Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : Skills.values()) {
             leaderboards.put(skill, new ArrayList<>());
         }
         List<SkillValue> powerLeaderboard = new ArrayList<>();
@@ -236,7 +247,7 @@ public class YamlStorageProvider extends StorageProvider {
             int powerLevel = 0;
             double powerXp = 0;
             int numEnabled = 0;
-            for (Skill skill : Skill.values()) {
+            for (Skill skill : Skills.values()) {
                 int level = playerData.getSkillLevel(skill);
                 double xp = playerData.getSkillXp(skill);
                 // Add to lists
@@ -273,7 +284,7 @@ public class YamlStorageProvider extends StorageProvider {
                                 int powerLevel = 0;
                                 double powerXp = 0;
                                 int numEnabled = 0;
-                                for (Skill skill : Skill.values()) {
+                                for (Skill skill : Skills.values()) {
                                     // Load from config
                                     String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
                                     int level = config.getInt(path + "level", 1);
@@ -306,7 +317,7 @@ public class YamlStorageProvider extends StorageProvider {
 
         // Sort the leaderboards
         LeaderboardSorter sorter = new LeaderboardSorter();
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : Skills.values()) {
             leaderboards.get(skill).sort(sorter);
         }
         powerLeaderboard.sort(sorter);
@@ -314,7 +325,7 @@ public class YamlStorageProvider extends StorageProvider {
         averageLeaderboard.sort(averageSorter);
 
         // Add skill leaderboards to map
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : Skills.values()) {
             manager.setLeaderboard(skill, leaderboards.get(skill));
         }
         manager.setPowerLeaderboard(powerLeaderboard);

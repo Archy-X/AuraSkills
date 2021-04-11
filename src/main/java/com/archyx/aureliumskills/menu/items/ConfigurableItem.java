@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.menu.MenuLoader;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;

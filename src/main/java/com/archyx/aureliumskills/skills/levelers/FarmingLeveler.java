@@ -6,8 +6,9 @@ import com.archyx.aureliumskills.abilities.FarmingAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.util.BlockUtil;
+import com.archyx.aureliumskills.util.block.BlockUtil;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -31,7 +32,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.FARMING)) {
+		if (OptionL.isEnabled(Skills.FARMING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.FARMING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -41,7 +42,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			if (blockXpGainLocation(event.getBlock().getLocation())) return;
 			Player p = event.getPlayer();
 			Block b = event.getBlock();
-			Skill s = Skill.FARMING;
+			Skill s = Skills.FARMING;
 			Material mat = b.getType();
 			if (blockXpGainPlayer(p)) return;
 			Leveler leveler = plugin.getLeveler();

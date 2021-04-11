@@ -5,11 +5,11 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
-import com.archyx.aureliumskills.util.VersionUtils;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.ReflectionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.attribute.Attribute;
@@ -36,7 +36,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     private Class<?> craftPlayerClass;
 
     public HealingAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.HEALING);
+        super(plugin, Skills.HEALING);
     }
 
     @EventHandler
@@ -60,10 +60,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     public void lifeSteal(EntityDeathEvent event) {
         if (blockDisabled(Ability.LIFE_STEAL)) return;
         LivingEntity entity = event.getEntity();
-        boolean hostile = false;
-        if (entity instanceof Monster || entity instanceof Player) {
-            hostile = true;
-        }
+        boolean hostile = entity instanceof Monster || entity instanceof Player;
         if (XMaterial.isNewVersion()) {
             if (entity instanceof Phantom) {
                 hostile = true;
@@ -117,8 +114,8 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (playerData.getAbilityLevel(Ability.REVIVAL) > 0) {
             double healthBonus = getValue(Ability.REVIVAL, playerData);
             double regenerationBonus = getValue2(Ability.REVIVAL, playerData);
-            StatModifier healthModifier = new StatModifier("AureliumSkills.Ability.Revival.Health", Stat.HEALTH, healthBonus);
-            StatModifier regenerationModifier = new StatModifier("AureliumSkills.Ability.Revival.Regeneration", Stat.REGENERATION, regenerationBonus);
+            StatModifier healthModifier = new StatModifier("AureliumSkills.Ability.Revival.Health", Stats.HEALTH, healthBonus);
+            StatModifier regenerationModifier = new StatModifier("AureliumSkills.Ability.Revival.Regeneration", Stats.REGENERATION, regenerationBonus);
             playerData.addStatModifier(healthModifier);
             playerData.addStatModifier(regenerationModifier);
             if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.REVIVAL, "enable_message")) {

@@ -11,10 +11,10 @@ import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SharpHook;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -38,7 +38,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 	private final Random r = new Random();
 
 	public FishingAbilities(AureliumSkills plugin) {
-		super(plugin, Skill.FISHING);
+		super(plugin, Skills.FISHING);
 	}
 	
 	@EventHandler
@@ -69,7 +69,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 	
 	@EventHandler
 	public void treasureHunterAndEpicCatch(PlayerFishEvent event) {
-		if (OptionL.isEnabled(Skill.FISHING)) {
+		if (OptionL.isEnabled(Skills.FISHING)) {
 			Player player = event.getPlayer();
 			if (blockAbility(player)) return;
 			if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
@@ -99,7 +99,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												Bukkit.getPluginManager().callEvent(dropEvent);
 												if (!event.isCancelled()) {
 													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
+													plugin.getLeveler().addXp(event.getPlayer(), Skills.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
 												}
 											}
 										}
@@ -127,7 +127,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												Bukkit.getPluginManager().callEvent(dropEvent);
 												if (!event.isCancelled()) {
 													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(event.getPlayer(), Skill.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
+													plugin.getLeveler().addXp(event.getPlayer(), Skills.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
 												}
 											}
 										}
@@ -167,7 +167,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	public void sharpHook(PlayerInteractEvent event) {
-		if (OptionL.isEnabled(Skill.FISHING) && plugin.getAbilityManager().isEnabled(MAbility.SHARP_HOOK)) {
+		if (OptionL.isEnabled(Skills.FISHING) && plugin.getAbilityManager().isEnabled(MAbility.SHARP_HOOK)) {
 			Player player = event.getPlayer();
 			if (blockAbility(player)) return;
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);

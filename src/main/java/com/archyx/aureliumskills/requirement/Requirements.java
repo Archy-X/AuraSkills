@@ -6,8 +6,8 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -35,9 +35,11 @@ public class Requirements {
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
             try {
-                Skill skill = Skill.valueOf(key.toUpperCase());
-                Integer value = compound.getInteger(key);
-                requirements.put(skill, value);
+                Skill skill = plugin.getSkillRegistry().getSkill(key);
+                if (skill != null) {
+                    Integer value = compound.getInteger(key);
+                    requirements.put(skill, value);
+                }
             }
             catch (Exception ignored) { }
         }

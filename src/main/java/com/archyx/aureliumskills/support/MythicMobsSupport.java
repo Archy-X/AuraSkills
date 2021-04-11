@@ -1,12 +1,13 @@
-package com.archyx.aureliumskills.util;
+package com.archyx.aureliumskills.support;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.SourceManager;
 import com.archyx.aureliumskills.skills.levelers.SkillLeveler;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import org.bukkit.GameMode;
@@ -22,7 +23,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
     private final SourceManager sourceManager;
 
     public MythicMobsSupport(AureliumSkills plugin) {
-        super(plugin, Skill.FIGHTING);
+        super(plugin, Skills.FIGHTING);
         this.sourceManager = plugin.getSourceManager();
     }
 
@@ -44,10 +45,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
             }
             if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
                 EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) entity.getLastDamageCause();
-                boolean archery = false;
-                if (ee.getDamager() instanceof Arrow || ee.getDamager() instanceof TippedArrow || ee.getDamager() instanceof SpectralArrow) {
-                    archery = true;
-                }
+                boolean archery = ee.getDamager() instanceof Arrow || ee.getDamager() instanceof TippedArrow || ee.getDamager() instanceof SpectralArrow;
                 if (XMaterial.isNewVersion()) {
                     if (ee.getDamager() instanceof Trident) {
                         archery = true;
@@ -63,11 +61,11 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
                     if (!player.hasPermission("aureliumskills.archery")) {
                         return;
                     }
-                    Map<String, Double> customMobs = sourceManager.getCustomMobs(Skill.ARCHERY);
+                    Map<String, Double> customMobs = sourceManager.getCustomMobs(Skills.ARCHERY);
                     if (customMobs != null) {
                         for (Map.Entry<String, Double> entry : customMobs.entrySet()) {
                             if (event.getMobType().getInternalName().equals(entry.getKey())) {
-                                plugin.getLeveler().addXp(player, Skill.ARCHERY, getXp(player, entry.getValue(), Ability.ARCHER));
+                                plugin.getLeveler().addXp(player, Skills.ARCHERY, getXp(player, entry.getValue(), Ability.ARCHER));
                                 break;
                             }
                         }
@@ -78,11 +76,11 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
                     if (!player.hasPermission("aureliumskills.fighting")) {
                         return;
                     }
-                    Map<String, Double> customMobs = sourceManager.getCustomMobs(Skill.FIGHTING);
+                    Map<String, Double> customMobs = sourceManager.getCustomMobs(Skills.FIGHTING);
                     if (customMobs != null) {
                         for (Map.Entry<String, Double> entry : customMobs.entrySet()) {
                             if (event.getMobType().getInternalName().equals(entry.getKey())) {
-                                plugin.getLeveler().addXp(player, Skill.FIGHTING, getXp(player, entry.getValue(), Ability.FIGHTER));
+                                plugin.getLeveler().addXp(player, Skills.FIGHTING, getXp(player, entry.getValue(), Ability.FIGHTER));
                                 break;
                             }
                         }

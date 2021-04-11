@@ -12,9 +12,9 @@ import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.Terraform;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -44,7 +44,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	private final Material[] loadedMaterials;
 
 	public ExcavationAbilities(AureliumSkills plugin) {
-		super(plugin, Skill.EXCAVATION);
+		super(plugin, Skills.EXCAVATION);
 		//Load materials
 		XMaterial[] materials = new XMaterial[]{
 				XMaterial.DIRT, XMaterial.GRASS_BLOCK, XMaterial.COARSE_DIRT, XMaterial.PODZOL,
@@ -58,7 +58,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	}
 
 	public void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
-		if (OptionL.isEnabled(Skill.EXCAVATION)) {
+		if (OptionL.isEnabled(Skills.EXCAVATION)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.SPADE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.excavation")) {
@@ -208,7 +208,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void excavationListener(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.EXCAVATION)) {
+		if (OptionL.isEnabled(Skills.EXCAVATION)) {
 			if (!event.isCancelled()) {
 				if (event.getClass() != BlockBreakEvent.class) { // Compatibility fix
 					return;
@@ -284,7 +284,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	private void readyTerraform(PlayerInteractEvent event) {
-		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.EXCAVATION, new String[] {"SHOVEL", "SPADE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skills.EXCAVATION, new String[] {"SHOVEL", "SPADE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 
 	private void terraformBreak(Player player, Block block) {

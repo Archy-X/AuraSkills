@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.stats;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.util.DamageType;
+import com.archyx.aureliumskills.util.mechanics.DamageType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Strength {
@@ -25,7 +25,7 @@ public class Strength {
 	}
 
 	private void applyStrength(EntityDamageByEntityEvent event, PlayerData playerData) {
-		double strength = playerData.getStatLevel(Stat.STRENGTH);
+		double strength = playerData.getStatLevel(Stats.STRENGTH);
 		if (OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
 			event.setDamage(event.getDamage() * (1 + (strength * OptionL.getDouble(Option.STRENGTH_MODIFIER)) / 100));
 		} else {

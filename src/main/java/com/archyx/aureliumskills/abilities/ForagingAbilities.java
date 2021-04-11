@@ -10,11 +10,11 @@ import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.Treecapitator;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -43,11 +43,11 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	private final Random r = new Random();
 	
 	public ForagingAbilities(AureliumSkills plugin) {
-		super(plugin, Skill.FORAGING);
+		super(plugin, Skills.FORAGING);
 	}
 	
 	public void lumberjack(Player player, Block block) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUMBERJACK)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -69,7 +69,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	}
 
 	public void axeMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.AXE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.foraging")) {
@@ -118,10 +118,10 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	}
 
 	public void applyValor(PlayerData playerData) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.VALOR)) {
 				if (playerData.getAbilityLevel(Ability.VALOR) > 0) {
-					playerData.addStatModifier(new StatModifier("foraging-valor", Stat.STRENGTH, (int) getValue(Ability.VALOR, playerData)));
+					playerData.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(Ability.VALOR, playerData)));
 				}
 			}
 		}
@@ -247,6 +247,6 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 				return;
 			}
 		}
-		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.FORAGING, new String[]{"_AXE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skills.FORAGING, new String[]{"_AXE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 }

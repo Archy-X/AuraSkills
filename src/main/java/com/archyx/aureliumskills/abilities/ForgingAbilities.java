@@ -3,10 +3,10 @@ package com.archyx.aureliumskills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.XpGainEvent;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.EnchantmentValue;
-import com.archyx.aureliumskills.util.GrindstoneEnchant;
-import com.archyx.aureliumskills.util.VersionUtils;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.mechanics.EnchantmentValue;
+import com.archyx.aureliumskills.util.mechanics.GrindstoneEnchant;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,7 +36,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     private final Random random = new Random();
 
     public ForgingAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.FORGING);
+        super(plugin, Skills.FORGING);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -248,7 +248,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                 Player player = (Player) entity;
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
-                    int level = playerData.getSkillLevel(Skill.FORGING);
+                    int level = playerData.getSkillLevel(Skills.FORGING);
                     if (level > highestLevel) {
                         highestLevel = level;
                         highestPlayer = player;

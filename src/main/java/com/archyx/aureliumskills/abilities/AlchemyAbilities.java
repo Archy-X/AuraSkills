@@ -5,12 +5,12 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
-import com.archyx.aureliumskills.util.PotionUtil;
-import com.archyx.aureliumskills.util.VersionUtils;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.mechanics.PotionUtil;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
@@ -46,7 +46,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     private final AgilityAbilities agilityAbilities;
 
     public AlchemyAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.ALCHEMY);
+        super(plugin, Skills.ALCHEMY);
         this.agilityAbilities = new AgilityAbilities(plugin);
         wiseEffect();
     }
@@ -322,7 +322,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                                     int uniqueTypes = uniqueTypesSet.size();
                                     // Apply modifier
                                     double wisdomPerType = getValue(Ability.WISE_EFFECT, playerData);
-                                    StatModifier modifier = new StatModifier("AbilityModifier-WiseEffect", Stat.WISDOM, (int) (wisdomPerType * uniqueTypes));
+                                    StatModifier modifier = new StatModifier("AbilityModifier-WiseEffect", Stats.WISDOM, (int) (wisdomPerType * uniqueTypes));
                                     playerData.addStatModifier(modifier, false);
                                 }
                             } else {
