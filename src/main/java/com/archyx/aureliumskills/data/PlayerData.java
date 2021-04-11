@@ -35,6 +35,8 @@ public class PlayerData {
     private final Map<AbstractAbility, AbilityData> abilityData;
     private final Map<String, Object> metadata;
 
+    private boolean saving;
+
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
         this.plugin = plugin;
@@ -44,6 +46,7 @@ public class PlayerData {
         this.statModifiers = new HashMap<>();
         this.abilityData = new HashMap<>();
         this.metadata = new HashMap<>();
+        this.saving = false;
     }
 
     public Player getPlayer() {
@@ -222,6 +225,14 @@ public class PlayerData {
 
     public Map<String, Object> getMetadata() {
         return metadata;
+    }
+
+    public boolean isSaving() {
+        return saving;
+    }
+
+    public void setSaving(boolean saving) {
+        this.saving = saving;
     }
 
 }

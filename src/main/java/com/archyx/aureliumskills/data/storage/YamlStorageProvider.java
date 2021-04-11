@@ -118,6 +118,10 @@ public class YamlStorageProvider extends StorageProvider {
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
+        // Save lock
+        if (playerData.isSaving()) return;
+        playerData.setSaving(true);
+        // Load file
         File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         try {
@@ -159,6 +163,7 @@ public class YamlStorageProvider extends StorageProvider {
             Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
         }
+        playerData.setSaving(false); // Unlock
     }
 
     @Override
