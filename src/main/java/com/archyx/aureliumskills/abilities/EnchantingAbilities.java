@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.api.event.XpGainEvent;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -83,7 +83,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
                                 if (!blockAbility(player)) {
                                     // Apply modifier
                                     double strengthPerType = getValue(Ability.ENCHANTED_STRENGTH, playerData);
-                                    StatModifier modifier = new StatModifier("AbilityModifier-EnchantedStrength", Stat.STRENGTH, strengthPerType * item.getEnchantments().size());
+                                    StatModifier modifier = new StatModifier("AbilityModifier-EnchantedStrength", Stats.STRENGTH, strengthPerType * item.getEnchantments().size());
                                     playerData.addStatModifier(modifier, false);
                                 }
                             } else {

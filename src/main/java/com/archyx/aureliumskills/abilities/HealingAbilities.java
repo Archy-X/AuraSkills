@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.version.VersionUtils;
@@ -117,8 +117,8 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (playerData.getAbilityLevel(Ability.REVIVAL) > 0) {
             double healthBonus = getValue(Ability.REVIVAL, playerData);
             double regenerationBonus = getValue2(Ability.REVIVAL, playerData);
-            StatModifier healthModifier = new StatModifier("AureliumSkills.Ability.Revival.Health", Stat.HEALTH, healthBonus);
-            StatModifier regenerationModifier = new StatModifier("AureliumSkills.Ability.Revival.Regeneration", Stat.REGENERATION, regenerationBonus);
+            StatModifier healthModifier = new StatModifier("AureliumSkills.Ability.Revival.Health", Stats.HEALTH, healthBonus);
+            StatModifier regenerationModifier = new StatModifier("AureliumSkills.Ability.Revival.Regeneration", Stats.REGENERATION, regenerationBonus);
             playerData.addStatModifier(healthModifier);
             playerData.addStatModifier(regenerationModifier);
             if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.REVIVAL, "enable_message")) {

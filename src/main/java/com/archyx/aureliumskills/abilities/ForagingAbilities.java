@@ -11,7 +11,7 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.Treecapitator;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
@@ -121,7 +121,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		if (OptionL.isEnabled(Skill.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.VALOR)) {
 				if (playerData.getAbilityLevel(Ability.VALOR) > 0) {
-					playerData.addStatModifier(new StatModifier("foraging-valor", Stat.STRENGTH, (int) getValue(Ability.VALOR, playerData)));
+					playerData.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(Ability.VALOR, playerData)));
 				}
 			}
 		}

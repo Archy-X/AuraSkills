@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.BigNumber;
 import com.archyx.aureliumskills.util.math.NumberUtil;
@@ -137,7 +137,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         //Gets stat values
-        for (Stat stat : Stat.values()) {
+        for (Stats stat : Stats.values()) {
             if (identifier.equals(stat.name().toLowerCase(Locale.ENGLISH))) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {

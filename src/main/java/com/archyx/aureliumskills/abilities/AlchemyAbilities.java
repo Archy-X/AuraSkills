@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.mechanics.PotionUtil;
@@ -322,7 +322,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                                     int uniqueTypes = uniqueTypesSet.size();
                                     // Apply modifier
                                     double wisdomPerType = getValue(Ability.WISE_EFFECT, playerData);
-                                    StatModifier modifier = new StatModifier("AbilityModifier-WiseEffect", Stat.WISDOM, (int) (wisdomPerType * uniqueTypes));
+                                    StatModifier modifier = new StatModifier("AbilityModifier-WiseEffect", Stats.WISDOM, (int) (wisdomPerType * uniqueTypes));
                                     playerData.addStatModifier(modifier, false);
                                 }
                             } else {

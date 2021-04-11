@@ -51,6 +51,7 @@ import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -103,9 +104,14 @@ public class AureliumSkills extends JavaPlugin {
 	private Health health;
 	private LeaderboardManager leaderboardManager;
 	private RegionManager regionManager;
+	private StatRegistry statRegistry;
 	private final long releaseTime = 1617414264973L;
 
 	public void onEnable() {
+		// Registries
+		statRegistry = new StatRegistry();
+		registerStats();
+
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -345,7 +351,7 @@ public class AureliumSkills extends JavaPlugin {
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
 			List<String> values = new ArrayList<>();
-			for (Stat stat : Stat.values()) {
+			for (Stats stat : Stats.values()) {
 				values.add(stat.toString().toLowerCase(Locale.ENGLISH));
 			}
 			return values;
@@ -449,6 +455,15 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		economy = rsp.getProvider();
 		return true;
+	}
+
+	private void registerStats() {
+		statRegistry.register(new NamespacedKey(this, "strength"), Stats.STRENGTH);
+		statRegistry.register(new NamespacedKey(this, "health"), Stats.HEALTH);
+		statRegistry.register(new NamespacedKey(this, "regeneration"), Stats.REGENERATION);
+		statRegistry.register(new NamespacedKey(this, "luck"), Stats.LUCK);
+		statRegistry.register(new NamespacedKey(this, "wisdom"), Stats.WISDOM);
+		statRegistry.register(new NamespacedKey(this, "toughness"), Stats.TOUGHNESS);
 	}
 
 	public PlayerManager getPlayerManager() {
@@ -601,6 +616,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public RegionManager getRegionManager() {
 		return regionManager;
+	}
+
+	public StatRegistry getStatRegistry() {
+		return statRegistry;
 	}
 
 }

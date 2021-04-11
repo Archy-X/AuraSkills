@@ -15,8 +15,8 @@ import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
-import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
+import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.google.gson.*;
 import org.bukkit.Bukkit;
@@ -96,7 +96,7 @@ public class MySqlStorageProvider extends StorageProvider {
                                 String statName = modifierObject.get("stat").getAsString();
                                 double value = modifierObject.get("value").getAsDouble();
                                 if (name != null && statName != null) {
-                                    Stat stat = Stat.valueOf(statName.toUpperCase(Locale.ROOT));
+                                    Stats stat = Stats.valueOf(statName.toUpperCase(Locale.ROOT));
                                     StatModifier modifier = new StatModifier(name, stat, value);
                                     playerData.addStatModifier(modifier);
                                 }
@@ -286,7 +286,7 @@ public class MySqlStorageProvider extends StorageProvider {
                     }
                     PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
-                        for (Stat stat : Stat.values()) {
+                        for (Stats stat : Stats.values()) {
                             playerData.setStatLevel(stat, 0);
                         }
                         // Apply to object if in memory
@@ -300,9 +300,9 @@ public class MySqlStorageProvider extends StorageProvider {
                             playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
                         }
                         // Reload stats
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.HEALTH);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.LUCK);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stat.WISDOM);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.HEALTH);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.LUCK);
+                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.WISDOM);
                         // Immediately save to file
                         save(playerData.getPlayer(), false);
                     } else {

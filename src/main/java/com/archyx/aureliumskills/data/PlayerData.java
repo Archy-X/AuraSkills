@@ -12,6 +12,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Health;
 import com.archyx.aureliumskills.stats.Luck;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -123,9 +124,9 @@ public class PlayerData {
         setStatLevel(modifier.getStat(), getStatLevel(modifier.getStat()) + modifier.getValue());
         // Reloads stats
         if (reload) {
-            if (modifier.getStat() == Stat.HEALTH) {
+            if (modifier.getStat() == Stats.HEALTH) {
                 new Health(plugin).reload(player);
-            } else if (modifier.getStat() == Stat.LUCK) {
+            } else if (modifier.getStat() == Stats.LUCK) {
                 new Luck(plugin).reload(player);
             }
         }
@@ -142,9 +143,9 @@ public class PlayerData {
         statModifiers.remove(name);
         // Reloads stats
         if (reload) {
-            if (modifier.getStat() == Stat.HEALTH) {
+            if (modifier.getStat() == Stats.HEALTH) {
                 new Health(plugin).reload(player);
-            } else if (modifier.getStat() == Stat.LUCK) {
+            } else if (modifier.getStat() == Stats.LUCK) {
                 new Luck(plugin).reload(player);
             }
         }
@@ -156,7 +157,7 @@ public class PlayerData {
     }
 
     public double getMaxMana() {
-        return OptionL.getDouble(Option.BASE_MANA) + (OptionL.getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM) * getStatLevel(Stat.WISDOM));
+        return OptionL.getDouble(Option.BASE_MANA) + (OptionL.getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM) * getStatLevel(Stats.WISDOM));
     }
 
     public void setMana(double mana) {

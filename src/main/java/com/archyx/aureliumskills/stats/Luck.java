@@ -70,7 +70,7 @@ public class Luck implements Listener {
 			}
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData != null) {
-				double luck = playerData.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_MODIFIER);
+				double luck = playerData.getStatLevel(Stats.LUCK) * OptionL.getDouble(Option.LUCK_MODIFIER);
 				attribute.addModifier(new AttributeModifier("AureliumSkills-Luck", luck, AttributeModifier.Operation.ADD_NUMBER));
 			}
 		}
@@ -101,7 +101,7 @@ public class Luck implements Listener {
 							|| mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(XMaterial.ANDESITE.parseMaterial())
 							|| mat.equals(XMaterial.DIORITE.parseMaterial()) || mat.equals(XMaterial.GRANITE.parseMaterial())) {
 						//Calculate chance
-						double chance = playerData.getStatLevel(Stat.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER);
+						double chance = playerData.getStatLevel(Stats.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER);
 						if (chance * 100 > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
 							chance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
 						}

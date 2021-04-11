@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -186,7 +186,7 @@ public class AureliumAPI {
      * @param stat The stat to get
      * @return The stat level
      */
-    public static double getStatLevel(Player player, Stat stat) {
+    public static double getStatLevel(Player player, Stats stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -197,7 +197,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static double getStatLevel(UUID playerId, Stat stat) {
+    public static double getStatLevel(UUID playerId, Stats stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -214,7 +214,7 @@ public class AureliumAPI {
      * @return The stat level without modifiers
      */
     @Deprecated
-    public static double getBaseStatLevel(Player player, Stat stat) {
+    public static double getBaseStatLevel(Player player, Stats stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -225,7 +225,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static double getBaseStatLevel(UUID playerId, Stat stat) {
+    public static double getBaseStatLevel(UUID playerId, Stats stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -243,7 +243,7 @@ public class AureliumAPI {
      * @param value The value of the modifier
      * @return true if a modifier was added, false if the player does not have a skills profile
      */
-    public static boolean addStatModifier(Player player, String name, Stat stat, double value) {
+    public static boolean addStatModifier(Player player, String name, Stats stat, double value) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.addStatModifier(new StatModifier(name, stat, value));
@@ -253,7 +253,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static boolean addStatModifier(UUID playerId, String name, Stat stat, double value) {
+    public static boolean addStatModifier(UUID playerId, String name, Stats stat, double value) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.addStatModifier(new StatModifier(name, stat, value));

@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
-import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
@@ -34,7 +34,7 @@ public class SkullItem extends ConfigurableItem {
                 String line = lore.get(i);
                 Set<String> placeholders = lorePlaceholders.get(i);
                 for (String placeholder : placeholders) {
-                    Stat stat = Stat.valueOf(placeholder.toUpperCase());
+                    Stats stat = Stats.valueOf(placeholder.toUpperCase());
                     line = LoreUtil.replace(line,"{" + placeholder + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.PLAYER_STAT_ENTRY, locale)
                             ,"{color}", stat.getColor(locale)
                             ,"{symbol}", stat.getSymbol(locale)
