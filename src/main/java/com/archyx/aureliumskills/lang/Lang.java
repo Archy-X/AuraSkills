@@ -121,19 +121,34 @@ public class Lang implements Listener {
 		if (messages == null) {
 			messages = new HashMap<>();
 		}
+		for (String path : config.getKeys(true)) {
+			if (!config.isConfigurationSection(path)) {
+				MessageKey key = null;
+				// Try to find message key
+				for (MessageKey messageKey : MessageKey.values()) {
+					if (messageKey.getPath().equals(path)) {
+						key = messageKey;
+					}
+				}
+				// Create custom key if not found
+				if (key == null) {
+					key = new CustomMessageKey(path);
+				}
+				String message = config.getString(path);
+				if (message != null) {
+					messages.put(key, LoreUtil.replace(message
+							,"&", "§"
+							,"{mana_unit}", units.get(UnitMessage.MANA)
+							,"{hp_unit}", units.get(UnitMessage.HP)
+							,"{xp_unit}", units.get(UnitMessage.XP)));
+				}
+			}
+		}
+		// Check that each message key has a value
 		for (MessageKey key : MessageKey.values()) {
 			String message = config.getString(key.getPath());
-			if (message != null) {
-				messages.put(key, LoreUtil.replace(message
-						,"&", "§"
-						,"{mana_unit}", units.get(UnitMessage.MANA)
-						,"{hp_unit}", units.get(UnitMessage.HP)
-						,"{xp_unit}", units.get(UnitMessage.XP)));
-			}
-			else {
-				if (locale.equals(Locale.ENGLISH)) {
-					Bukkit.getLogger().warning("[AureliumSkills] [" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
-				}
+			if (message == null && locale.equals(Locale.ENGLISH)) {
+				plugin.getLogger().warning("[" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
 			}
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
