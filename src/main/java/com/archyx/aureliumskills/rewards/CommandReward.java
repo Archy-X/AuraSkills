@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.rewards;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

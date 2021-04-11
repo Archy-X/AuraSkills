@@ -35,7 +35,7 @@ public class RewardManager {
         this.rewardTables.clear();
         File rewardsDirectory = new File(plugin.getDataFolder() + "/rewards");
         // Load each file
-        for (Skill skill : Skill.values()) {
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             File rewardsFile = new File(rewardsDirectory + "/" + skill.toString().toLowerCase(Locale.ROOT) + ".json");
             FileConfiguration rewardsConfig = YamlConfiguration.loadConfiguration(rewardsFile);
             RewardTable rewardTable = new RewardTable();
@@ -99,7 +99,7 @@ public class RewardManager {
         // Parse each type
         switch (type) {
             case "stat":
-                Stat stat = Stat.valueOf(getString(reward, "stat").toUpperCase(Locale.ROOT));
+                Stat stat = plugin.getStatRegistry().getStat(getString(reward, "stat"));
                 double statValue = getDouble(reward, "value");
                 return new StatReward(plugin, stat, statValue);
 
