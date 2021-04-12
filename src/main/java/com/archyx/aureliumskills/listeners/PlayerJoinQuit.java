@@ -61,7 +61,7 @@ public class PlayerJoinQuit implements Listener {
 		SkullCreator.blockWithUuid(b, player.getUniqueId());
 		state.update(true);
 		// Update message
-		if (player.isOp()) {
+		if (OptionL.getBoolean(Option.CHECK_FOR_UPDATES) && player.hasPermission("aureliumskills.checkupdates")) {
 			if (System.currentTimeMillis() > plugin.getReleaseTime() + 21600000L) {
 				// Check for updates
 				new UpdateChecker(plugin, 81069).getVersion(version -> {
