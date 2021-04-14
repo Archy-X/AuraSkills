@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;

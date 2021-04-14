@@ -12,11 +12,13 @@ import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.rewards.Reward;
+import com.archyx.aureliumskills.rewards.StatReward;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.milkbowl.vault.economy.Economy;
@@ -214,7 +216,7 @@ public class Leveler {
 		if (OptionL.getBoolean(Option.LEVELER_SOUND_ENABLED)) {
 			playSound(player);
 		}
-		player.sendMessage(getLevelUpMessage(player, playerData, skill, level, locale));
+		player.sendMessage(getLevelUpMessage(player, playerData, skill, level, locale, rewards));
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
 	}
 
@@ -238,7 +240,7 @@ public class Leveler {
 		}
 	}
 
-	private String getLevelUpMessage(Player player, PlayerData playerData, Skill skill, int newLevel, Locale locale) {
+	private String getLevelUpMessage(Player player, PlayerData playerData, Skill skill, int newLevel, Locale locale, List<Reward> rewards) {
 		String message = LoreUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
@@ -246,7 +248,18 @@ public class Leveler {
 		if (plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
-		// Stat levels
+		StringBuilder statLevelMessage = new StringBuilder();
+		for (Reward reward : rewards) {
+			if (reward instanceof StatReward) {
+				StatReward statReward = (StatReward) reward;
+				Stat stat = statReward.getStat();
+				statLevelMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale),
+						"{color}", stat.getColor(locale),
+						"{num}", NumberUtil.format1(statReward.getValue()),
+						"{symbol}", stat.getSymbol(locale),
+						"{stat}", stat.getDisplayName(locale)));
+			}
+		}
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
 		StringBuilder abilityLevelUpMessage = new StringBuilder();
@@ -261,7 +274,9 @@ public class Leveler {
 				}
 			}
 		}
-		message = LoreUtil.replace(message, "{ability_unlock}", abilityUnlockMessage.toString(), "{ability_level_up}", abilityLevelUpMessage.toString());
+		message = LoreUtil.replace(message, "{stat_level}", statLevelMessage.toString(),
+				"{ability_unlock}", abilityUnlockMessage.toString(),
+				"{ability_level_up}", abilityLevelUpMessage.toString());
 		// Mana ability unlocks and level ups
 		StringBuilder manaAbilityUnlockMessage = new StringBuilder();
 		StringBuilder manaAbilityLevelUpMessage = new StringBuilder();
