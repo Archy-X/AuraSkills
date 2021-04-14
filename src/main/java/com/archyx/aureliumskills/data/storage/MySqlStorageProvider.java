@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.data.storage;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.abilities.AbstractAbility;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
@@ -73,7 +73,7 @@ public class MySqlStorageProvider extends StorageProvider {
     public void load(Player player) {
         try {
             try (Statement statement = connection.createStatement()) {
-                String query = "SELECT * FROM SkillData WHERE ID='" + player.getUniqueId().toString() + "';";
+                String query = "SELECT * FROM SkillData WHERE ID='" + player.getUniqueId() + "';";
                 try (ResultSet result = statement.executeQuery(query)) {
                     if (result.next()) {
                         PlayerData playerData = new PlayerData(player, plugin);
@@ -116,15 +116,18 @@ public class MySqlStorageProvider extends StorageProvider {
                             JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
                             for (Map.Entry<String, JsonElement> abilityEntry : jsonAbilityData.entrySet()) {
                                 String abilityName = abilityEntry.getKey();
-                                AbilityData data = playerData.getAbilityData(Ability.valueOf(abilityName.toUpperCase(Locale.ROOT)));
-                                JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
-                                for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
-                                    String key = dataEntry.getKey();
-                                    JsonElement element = dataEntry.getValue();
-                                    if (element.isJsonPrimitive()) {
-                                        Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
-                                        if (value != null) {
-                                            data.setData(key, value);
+                                AbstractAbility ability = AbstractAbility.valueOf(abilityName.toUpperCase(Locale.ROOT));
+                                if (ability != null) {
+                                    AbilityData data = playerData.getAbilityData(ability);
+                                    JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
+                                    for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
+                                        String key = dataEntry.getKey();
+                                        JsonElement element = dataEntry.getValue();
+                                        if (element.isJsonPrimitive()) {
+                                            Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
+                                            if (value != null) {
+                                                data.setData(key, value);
+                                            }
                                         }
                                     }
                                 }
@@ -222,16 +225,16 @@ public class MySqlStorageProvider extends StorageProvider {
                 }
                 abilityJson.append("}");
             }
-            String modifiersString = !modifiersJson.toString().equals("") ? "'" + modifiersJson.toString() + "'": "NULL";
-            String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson.toString() + "'": "NULL";
+            String modifiersString = !modifiersJson.toString().equals("") ? "'" + modifiersJson + "'": "NULL";
+            String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson + "'": "NULL";
             // Build sql statement
             StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
             for (Skill skill : Skills.getOrderedValues()) {
                 sql.append(skill.toString()).append("_LEVEL, ");
-                sql.append(skill.toString()).append("_XP, ");
+                sql.append(skill).append("_XP, ");
             }
             sql.append("LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('");
-            sql.append(player.getUniqueId().toString()).append("', ");
+            sql.append(player.getUniqueId()).append("', ");
             // Insert skill data
             for (Skill skill : Skills.getOrderedValues()) {
                 sql.append(playerData.getSkillLevel(skill)).append(", ");
@@ -245,7 +248,7 @@ public class MySqlStorageProvider extends StorageProvider {
             sql.append("ON DUPLICATE KEY UPDATE ");
             for (Skill skill : Skills.getOrderedValues()) {
                 sql.append(skill.toString()).append("_LEVEL=").append(playerData.getSkillLevel(skill)).append(", ");
-                sql.append(skill.toString()).append("_XP=").append(playerData.getSkillXp(skill)).append(", ");
+                sql.append(skill).append("_XP=").append(playerData.getSkillXp(skill)).append(", ");
             }
             sql.append("LOCALE='").append(playerData.getLocale().toString()).append("', ");
             sql.append("STAT_MODIFIERS=").append(modifiersString).append(", ");
@@ -312,11 +315,11 @@ public class MySqlStorageProvider extends StorageProvider {
                         StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
                         for (Skill skill : Skills.getOrderedValues()) {
                             sql.append(skill.toString()).append("_LEVEL, ");
-                            sql.append(skill.toString()).append("_XP, ");
+                            sql.append(skill).append("_XP, ");
                         }
                         sql.delete(sql.length() - 2, sql.length());
                         sql.append(") VALUES('");
-                        sql.append(id.toString()).append("', ");
+                        sql.append(id).append("', ");
                         // Insert skill data
                         for (Skill skill : Skills.getOrderedValues()) {
                             sql.append(levels.get(skill)).append(", ");
@@ -328,7 +331,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         sql.append("ON DUPLICATE KEY UPDATE ");
                         for (Skill skill : Skills.getOrderedValues()) {
                             sql.append(skill.toString()).append("_LEVEL=").append(levels.get(skill)).append(", ");
-                            sql.append(skill.toString()).append("_XP=").append(xpLevels.get(skill)).append(", ");
+                            sql.append(skill).append("_XP=").append(xpLevels.get(skill)).append(", ");
                         }
                         sql.delete(sql.length() - 2, sql.length());
                         // Execute statement

@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.data.storage;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.abilities.AbstractAbility;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -38,7 +38,7 @@ public class YamlStorageProvider extends StorageProvider {
 
     @Override
     public void load(Player player) {
-        File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
+        File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId() + ".yml");
         if (file.exists()) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             PlayerData playerData = new PlayerData(player, plugin);
@@ -89,11 +89,13 @@ public class YamlStorageProvider extends StorageProvider {
                     for (String abilityName : abilitySection.getKeys(false)) {
                         ConfigurationSection abilityEntry = abilitySection.getConfigurationSection(abilityName);
                         if (abilityEntry != null) {
-                            Ability ability = Ability.valueOf(abilityName.toUpperCase(Locale.ROOT));
-                            AbilityData abilityData = playerData.getAbilityData(ability);
-                            for (String key : abilityEntry.getKeys(false)) {
-                                Object value = abilityEntry.get(key);
-                                abilityData.setData(key, value);
+                            AbstractAbility ability = AbstractAbility.valueOf(abilityName.toUpperCase(Locale.ROOT));
+                            if (ability != null) {
+                                AbilityData abilityData = playerData.getAbilityData(ability);
+                                for (String key : abilityEntry.getKeys(false)) {
+                                    Object value = abilityEntry.get(key);
+                                    abilityData.setData(key, value);
+                                }
                             }
                         }
                     }
@@ -124,7 +126,7 @@ public class YamlStorageProvider extends StorageProvider {
         if (playerData.isSaving()) return;
         playerData.setSaving(true);
         // Load file
-        File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId().toString() + ".yml");
+        File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId() + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         try {
             config.set("uuid", player.getUniqueId().toString());
@@ -213,7 +215,7 @@ public class YamlStorageProvider extends StorageProvider {
                         save(playerData.getPlayer(), false);
                     } else {
                         // Load file for offline players
-                        File file = new File(plugin.getDataFolder() + "/playerdata/" + id.toString() + ".yml");
+                        File file = new File(plugin.getDataFolder() + "/playerdata/" + id + ".yml");
                         FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(file);
                         playerConfig.set("uuid", id.toString());
                         // Save skill data
