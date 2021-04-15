@@ -13,6 +13,12 @@ public enum Source {
 	SUGAR_CANE("farming.sugar_cane"),
 	BAMBOO("farming.bamboo"),
 	COCOA("farming.cocoa"),
+	CACTUS("farming.cactus"),
+	BROWN_MUSHROOM("farming.brown_mushroom"),
+	RED_MUSHROOM("farming.red_mushroom"),
+	KELP("farming.kelp"),
+	SEA_PICKLE("farming.sea_pickle"),
+	SWEET_BERRY_BUSH("farming.sweet_berry_bush"),
 	// Foraging
 	OAK_LOG("foraging.oak_log"),
 	SPRUCE_LOG("foraging.spruce_log"),
