@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ForgingLeveler extends SkillLeveler implements Listener {
@@ -34,38 +35,63 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			if (event.getClickedInventory() != null) {
-				if (event.getClickedInventory().getType().equals(InventoryType.ANVIL)) {
-					if (event.getClickedInventory().getLocation() != null) {
-						if (blockXpGainLocation(event.getClickedInventory().getLocation())) return;
+			Inventory inventory = event.getClickedInventory();
+			if (inventory != null) {
+				if (inventory.getType().equals(InventoryType.ANVIL)) {
+					if (inventory.getLocation() != null) {
+						if (blockXpGainLocation(inventory.getLocation())) return;
 					} else {
 						if (blockXpGainLocation(event.getWhoClicked().getLocation())) return;
 					}
 					if (event.getSlot() == 2) {
 						if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 							if (event.getWhoClicked() instanceof Player) {
-								ItemStack addedItem = event.getClickedInventory().getItem(1);
-								ItemStack baseItem = event.getClickedInventory().getItem(0);
+								ItemStack addedItem = inventory.getItem(1);
+								ItemStack baseItem = inventory.getItem(0);
 								Player p = (Player) event.getWhoClicked();
 								if (blockXpGainPlayer(p)) return;
 								Skill s = Skills.FORGING;
-								AnvilInventory inventory = (AnvilInventory) event.getClickedInventory();
+								AnvilInventory anvil = (AnvilInventory) inventory;
 								if (addedItem != null && baseItem != null) {
 									if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
 										if (ItemUtils.isArmor(baseItem.getType())) {
-											plugin.getLeveler().addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_ARMOR_PER_LEVEL));
+											plugin.getLeveler().addXp(p, s, anvil.getRepairCost() * getXp(Source.COMBINE_ARMOR_PER_LEVEL));
 										} else if (ItemUtils.isWeapon(baseItem.getType())) {
-											plugin.getLeveler().addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_WEAPON_PER_LEVEL));
+											plugin.getLeveler().addXp(p, s, anvil.getRepairCost() * getXp(Source.COMBINE_WEAPON_PER_LEVEL));
 										} else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
-											plugin.getLeveler().addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_BOOKS_PER_LEVEL));
+											plugin.getLeveler().addXp(p, s, anvil.getRepairCost() * getXp(Source.COMBINE_BOOKS_PER_LEVEL));
 										} else {
-											plugin.getLeveler().addXp(p, s, inventory.getRepairCost() * getXp(Source.COMBINE_TOOL_PER_LEVEL));
+											plugin.getLeveler().addXp(p, s, anvil.getRepairCost() * getXp(Source.COMBINE_TOOL_PER_LEVEL));
 										}
 									}
 								}
 							}
 						}
 					}
+				} else if (inventory.getType().toString().equals("GRINDSTONE")) {
+					if (inventory.getLocation() != null) {
+						if (blockXpGainLocation(inventory.getLocation())) return;
+					} else {
+						if (blockXpGainLocation(event.getWhoClicked().getLocation())) return;
+					}
+					if (event.getSlotType() != InventoryType.SlotType.RESULT) return;
+					if (!(event.getWhoClicked() instanceof Player)) return;
+					Player player = (Player) event.getWhoClicked();
+					// Calculate total level
+					int totalLevel = 0;
+					ItemStack topItem = inventory.getItem(0); // Get item in top slot
+					if (topItem != null) {
+						for (Integer level : topItem.getEnchantments().values()) {
+							totalLevel += level;
+						}
+					}
+					ItemStack bottomItem = inventory.getItem(1); // Get item in bottom slot
+					if (bottomItem != null) {
+						for (Integer level : bottomItem.getEnchantments().values()) {
+							totalLevel += level;
+						}
+					}
+					plugin.getLeveler().addXp(player, Skills.FORGING, totalLevel * getXp(Source.GRINDSTONE_PER_LEVEL));
 				}
 			}
 		}

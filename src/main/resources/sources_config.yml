@@ -255,4 +255,5 @@ sources:
     combine_weapon_per_level: 15
     combine_armor_per_level: 20
     combine_tool_per_level: 25
-file_version: 2
+    grindstone_per_level: 30
+file_version: 3

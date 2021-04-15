@@ -257,7 +257,8 @@ public enum Source {
 	COMBINE_BOOKS_PER_LEVEL("forging.combine_books_per_level"),
 	COMBINE_WEAPON_PER_LEVEL("forging.combine_weapon_per_level"),
 	COMBINE_ARMOR_PER_LEVEL("forging.combine_armor_per_level"),
-	COMBINE_TOOL_PER_LEVEL("forging.combine_tool_per_level");
+	COMBINE_TOOL_PER_LEVEL("forging.combine_tool_per_level"),
+	GRINDSTONE_PER_LEVEL("forging.grindstone_per_level");
 	
 	private final String path;
 	
