@@ -196,7 +196,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 					}
 				}
 			}
-		}.runTaskLater(plugin, 4L);
+		}.runTaskLater(plugin, plugin.getManaAbilityManager().getOptionAsInt(MAbility.REPLENISH, "replant_delay", 4));
 	}
 
 	private boolean isHoldingHoe(Player player) {

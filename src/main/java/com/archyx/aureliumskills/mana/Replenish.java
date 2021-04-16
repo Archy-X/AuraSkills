@@ -38,7 +38,7 @@ public class Replenish implements ManaAbility {
         if (playerData != null) {
             Locale locale = playerData.getLocale();
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-            double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, playerData);
+            double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, playerData);
             playerData.setMana(playerData.getMana() - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
