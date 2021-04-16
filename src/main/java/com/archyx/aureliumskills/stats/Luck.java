@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
+import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -89,6 +90,10 @@ public class Luck implements Listener {
 			//Checks if in blocked region
 			if (plugin.isWorldGuardEnabled()) {
 				if (plugin.getWorldGuardSupport().isInBlockedRegion(block.getLocation())) {
+					return;
+				}
+				// Check if blocked by flags
+				else if (plugin.getWorldGuardSupport().blockedByFlag(block.getLocation(), player, WorldGuardFlags.FlagKey.XP_GAIN)) {
 					return;
 				}
 			}

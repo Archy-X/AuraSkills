@@ -40,13 +40,13 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			if (blockXpGainLocation(event.getBlock().getLocation())) return;
 			if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
 				OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
 				if (offlinePlayer.isOnline()) {
 					if (event.getContents().getIngredient() != null) {
 						Player p = offlinePlayer.getPlayer();
 						if (p != null) {
+							if (blockXpGainLocation(event.getBlock().getLocation(), p)) return;
 							if (blockXpGainPlayer(p)) return;
 							Skill s = Skills.ALCHEMY;
 							Material mat = event.getContents().getIngredient().getType();

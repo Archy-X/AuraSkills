@@ -44,8 +44,8 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 					return;
 				}
 			}
-			if (blockXpGainLocation(event.getBlock().getLocation())) return;
 			Player p = event.getPlayer();
+			if (blockXpGainLocation(event.getBlock().getLocation(), p)) return;
 			Block b = event.getBlock();
 			Skill s = Skills.FARMING;
 			Material mat = b.getType();

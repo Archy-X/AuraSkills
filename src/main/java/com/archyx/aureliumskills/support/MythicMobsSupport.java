@@ -36,7 +36,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
             if (player == null) {
                 return;
             }
-            if (blockXpGainLocation(entity.getLocation())) return;
+            if (blockXpGainLocation(entity.getLocation(), player)) return;
             //Check creative mode disable
             if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
                 if (player.getGameMode().equals(GameMode.CREATIVE)) {

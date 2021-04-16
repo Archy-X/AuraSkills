@@ -38,7 +38,6 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 				}
 			}
 			Block b = event.getBlock();
-			if (blockXpGainLocation(b.getLocation())) return;
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
 				if (plugin.getRegionManager().isPlacedBlock(b)) {
@@ -46,6 +45,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 				}
 			}
 			Player p = event.getPlayer();
+			if (blockXpGainLocation(b.getLocation(), p)) return;
 			Skill s = Skills.MINING;
 			Material mat = event.getBlock().getType();
 			Leveler leveler = plugin.getLeveler();

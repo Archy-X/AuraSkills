@@ -57,6 +57,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -76,6 +77,7 @@ public class AureliumSkills extends JavaPlugin {
 	private InventoryManager inventoryManager;
 	private AbilityManager abilityManager;
 	private WorldGuardSupport worldGuardSupport;
+	private WorldGuardFlags worldGuardFlags;
 	private WorldManager worldManager;
 	private ManaManager manaManager;
 	private ManaAbilityManager manaAbilityManager;
@@ -282,6 +284,17 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		regionManager.saveAllRegions(false);
 		regionManager.clearRegionMap();
+	}
+
+	@Override
+	public void onLoad() {
+		// Register WorldGuard flags
+		if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+			worldGuardFlags = new WorldGuardFlags();
+			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
+				worldGuardFlags.register();
+			}
+		}
 	}
 
 	public void checkUpdates() {
@@ -659,6 +672,11 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SkillRegistry getSkillRegistry() {
 		return skillRegistry;
+	}
+
+	@Nullable
+	public WorldGuardFlags getWorldGuardFlags() {
+		return worldGuardFlags;
 	}
 
 }

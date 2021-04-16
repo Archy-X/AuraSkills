@@ -29,13 +29,13 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 		if (OptionL.isEnabled(Skills.FIGHTING)) {
 			if (OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) return;
 			LivingEntity e = event.getEntity();
-			if (blockXpGainLocation(e.getLocation())) return;
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
 					if (ee.getDamager() instanceof Player) {
 						EntityType type = e.getType();
 						Player p = (Player) ee.getDamager();
+						if (blockXpGainLocation(e.getLocation(), p)) return;
 						if (blockXpGainPlayer(p)) return;
 						if (e.equals(p)) return;
 						// Make sure not MythicMob
@@ -45,9 +45,9 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 						double spawnerMultiplier = OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER);
 						try {
 							if (e.hasMetadata("aureliumskills_spawner_mob")) {
-								plugin.getLeveler().addXp(p, Skills.FIGHTING, spawnerMultiplier * getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
+								plugin.getLeveler().addXp(p, Skills.FIGHTING, spawnerMultiplier * getXp(p, Source.valueOf("FIGHTING_" + type)));
 							} else {
-								plugin.getLeveler().addXp(p, Skills.FIGHTING, getXp(p, Source.valueOf("FIGHTING_" + type.toString())));
+								plugin.getLeveler().addXp(p, Skills.FIGHTING, getXp(p, Source.valueOf("FIGHTING_" + type)));
 							}
 						} catch (IllegalArgumentException exception) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
@@ -75,7 +75,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 				if (event.getCause() != DamageCause.ENTITY_ATTACK && event.getCause() != DamageCause.ENTITY_SWEEP_ATTACK) return;
 				if (event.getEntity() instanceof LivingEntity) {
 					LivingEntity entity = (LivingEntity) event.getEntity();
-					if (blockXpGainLocation(entity.getLocation())) return;
+					if (blockXpGainLocation(entity.getLocation(), player)) return;
 					EntityType type = entity.getType();
 					if (blockXpGainPlayer(player)) return;
 					if (entity.equals(player)) return;
@@ -89,7 +89,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 						damage *= spawnerMultiplier;
 					}
 					try {
-						plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getXp(player, Source.valueOf("FIGHTING_" + type.toString())));
+						plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getXp(player, Source.valueOf("FIGHTING_" + type)));
 					} catch (IllegalArgumentException e) {
 						if (type.toString().equals("PIG_ZOMBIE")) {
 							plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getXp(player, Source.FIGHTING_ZOMBIFIED_PIGLIN));

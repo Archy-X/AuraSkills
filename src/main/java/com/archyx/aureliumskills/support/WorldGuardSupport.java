@@ -2,14 +2,19 @@ package com.archyx.aureliumskills.support;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,6 +61,26 @@ public class WorldGuardSupport {
             }
         }
         return false;
+    }
+
+    public boolean blockedByFlag(Location location, Player player, WorldGuardFlags.FlagKey flagKey) {
+        WorldGuardFlags worldGuardFlags = plugin.getWorldGuardFlags();
+        if (worldGuardFlags == null) return false;
+
+        StateFlag flag = worldGuardFlags.getStateFlag(flagKey);
+        if (flag == null) return false;
+
+        World world = location.getWorld();
+        if (world == null) return false;
+
+        RegionManager regions = container.get(BukkitAdapter.adapt(location.getWorld()));
+        if (regions == null) {
+            return false;
+        }
+        ApplicableRegionSet set = regions.getApplicableRegions(BukkitAdapter.adapt(location).toVector().toBlockPoint());
+        LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
+        StateFlag.State state = set.queryState(localPlayer, flag);
+        return state == StateFlag.State.DENY;
     }
 
     public boolean isInBlockedCheckRegion(Location location) {

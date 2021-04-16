@@ -38,17 +38,17 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 			Inventory inventory = event.getClickedInventory();
 			if (inventory != null) {
 				if (inventory.getType().equals(InventoryType.ANVIL)) {
-					if (inventory.getLocation() != null) {
-						if (blockXpGainLocation(inventory.getLocation())) return;
-					} else {
-						if (blockXpGainLocation(event.getWhoClicked().getLocation())) return;
-					}
 					if (event.getSlot() == 2) {
 						if (event.getAction().equals(InventoryAction.PICKUP_ALL) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 							if (event.getWhoClicked() instanceof Player) {
 								ItemStack addedItem = inventory.getItem(1);
 								ItemStack baseItem = inventory.getItem(0);
 								Player p = (Player) event.getWhoClicked();
+								if (inventory.getLocation() != null) {
+									if (blockXpGainLocation(inventory.getLocation(), p)) return;
+								} else {
+									if (blockXpGainLocation(event.getWhoClicked().getLocation(), p)) return;
+								}
 								if (blockXpGainPlayer(p)) return;
 								Skill s = Skills.FORGING;
 								AnvilInventory anvil = (AnvilInventory) inventory;
@@ -69,14 +69,15 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 						}
 					}
 				} else if (inventory.getType().toString().equals("GRINDSTONE")) {
-					if (inventory.getLocation() != null) {
-						if (blockXpGainLocation(inventory.getLocation())) return;
-					} else {
-						if (blockXpGainLocation(event.getWhoClicked().getLocation())) return;
-					}
 					if (event.getSlotType() != InventoryType.SlotType.RESULT) return;
 					if (!(event.getWhoClicked() instanceof Player)) return;
 					Player player = (Player) event.getWhoClicked();
+					if (inventory.getLocation() != null) {
+						if (blockXpGainLocation(inventory.getLocation(), player)) return;
+					} else {
+						if (blockXpGainLocation(event.getWhoClicked().getLocation(), player)) return;
+					}
+					if (blockXpGainPlayer(player)) return;
 					// Calculate total level
 					int totalLevel = 0;
 					ItemStack topItem = inventory.getItem(0); // Get item in top slot

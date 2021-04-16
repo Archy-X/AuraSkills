@@ -37,7 +37,6 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 				}
 			}
 			Block b = event.getBlock();
-			if (blockXpGainLocation(b.getLocation())) return;
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
 				if (plugin.getRegionManager().isPlacedBlock(b)) {
@@ -45,6 +44,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 				}
 			}
 			Player p = event.getPlayer();
+			if (blockXpGainLocation(b.getLocation(), p)) return;
 			Skill s = Skills.FORAGING;
 			Material mat = event.getBlock().getType();
 			if (blockXpGainPlayer(p)) return;
