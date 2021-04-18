@@ -290,8 +290,8 @@ public class AureliumSkills extends JavaPlugin {
 	public void onLoad() {
 		// Register WorldGuard flags
 		if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-			worldGuardFlags = new WorldGuardFlags();
 			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
+				worldGuardFlags = new WorldGuardFlags();
 				worldGuardFlags.register();
 			}
 		}
