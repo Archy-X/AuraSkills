@@ -90,6 +90,8 @@ public enum Option {
     // Menu options
     MENUS_PLACEHOLDER_API("menus.placeholder-api", OptionType.BOOLEAN),
     CHECK_FOR_UPDATES("check-for-updates", OptionType.BOOLEAN),
+    AUTOMATIC_BACKUPS_ENABLED("automatic-backups.enabled", OptionType.BOOLEAN),
+    AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic-backups.minimum-interval-hours", OptionType.DOUBLE),
     // Skill options (not including source types)
     FARMING_ENABLED("farming.enabled", OptionType.BOOLEAN),
     FARMING_MAX_LEVEL("farming.max-level", OptionType.INT),

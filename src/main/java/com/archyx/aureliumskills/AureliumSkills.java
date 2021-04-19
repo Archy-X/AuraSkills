@@ -51,6 +51,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -60,6 +61,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
@@ -284,6 +286,29 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		regionManager.saveAllRegions(false);
 		regionManager.clearRegionMap();
+		backupAutomatically();
+	}
+
+	private void backupAutomatically() {
+		// Automatic backups
+		if (OptionL.getBoolean(Option.AUTOMATIC_BACKUPS_ENABLED)) {
+			File metaFile = new File(this.getDataFolder(), "/backups/meta.yml");
+			FileConfiguration metaConfig = YamlConfiguration.loadConfiguration(metaFile);
+			long lastBackup = metaConfig.getLong("last_automatic_backup", 0);
+			// Save backup if past minimum interval
+			if (lastBackup + (long) (OptionL.getDouble(Option.AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS) * 3600000) <= System.currentTimeMillis()) {
+				if (backupProvider != null) {
+					backupProvider.saveBackup(getServer().getConsoleSender());
+					// Update meta file
+					metaConfig.set("last_automatic_backup", System.currentTimeMillis());
+					try {
+						metaConfig.save(metaFile);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 
 	@Override

@@ -179,6 +179,10 @@ menus:
 
 check-for-updates: true
 
+automatic-backups:
+    enabled: true
+    minimum-interval-hours: 24
+
 # Skill specific options
 farming:
     enabled: true

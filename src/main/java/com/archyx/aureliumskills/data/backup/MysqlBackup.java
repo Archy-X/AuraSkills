@@ -2,10 +2,15 @@ package com.archyx.aureliumskills.data.backup;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
+import com.archyx.aureliumskills.lang.CommandMessage;
+import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -57,11 +62,24 @@ public class MysqlBackup extends BackupProvider {
                         }
                     }
                     config.save(file);
-                    sender.sendMessage("[AureliumSkills] Backed up MySQL data as " + file.getName());
+                    Locale locale = plugin.getLang().getLocale(sender);
+                    String message = LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
+                            , "{type}", "MySQL", "{file}", file.getName());
+                    if (sender instanceof ConsoleCommandSender) {
+                        plugin.getLogger().info(ChatColor.stripColor(message));
+                    } else {
+                        sender.sendMessage(AureliumSkills.getPrefix(locale) + message);
+                    }
                 }
             }
         } catch (Exception e) {
-            sender.sendMessage("[AureliumSkills] Error backing up MySQL data! See error below for details:");
+            Locale locale = plugin.getLang().getLocale(sender);
+            String message = LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_ERROR, locale), "{type}", "MySQL");
+            if (sender instanceof ConsoleCommandSender) {
+                plugin.getLogger().warning(ChatColor.stripColor(message));
+            } else {
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + message);
+            }
             e.printStackTrace();
         }
     }
