@@ -36,6 +36,7 @@ languages:
     - pt-BR
     - zh-CN
     - de
+    - lt
 
 # Action Bar Options
 action-bar:
