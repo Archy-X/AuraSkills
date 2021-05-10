@@ -166,6 +166,14 @@ public class Leveler {
 		statLeveler.reloadStat(player, Stats.HEALTH);
 		statLeveler.reloadStat(player, Stats.WISDOM);
 	}
+
+	public void updatePermissions(Player player) {
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData == null) return;
+		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+			plugin.getRewardManager().getRewardTable(skill).applyPermissions(player, playerData.getSkillLevel(skill));
+		}
+	}
 	
 	public void checkLevelUp(Player player, Skill skill) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);

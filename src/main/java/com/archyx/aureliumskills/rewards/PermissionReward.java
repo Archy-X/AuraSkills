@@ -37,4 +37,12 @@ public class PermissionReward extends Reward {
         return new RewardMessages("", "");
     }
 
+    public String getPermission() {
+        return permission;
+    }
+
+    public boolean getValue() {
+        return value;
+    }
+
 }

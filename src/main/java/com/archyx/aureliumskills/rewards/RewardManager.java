@@ -42,7 +42,7 @@ public class RewardManager {
                 plugin.saveResource("rewards/" + skill.toString().toLowerCase(Locale.ROOT) + ".yml", false);
             }
             FileConfiguration rewardsConfig = YamlConfiguration.loadConfiguration(rewardsFile);
-            RewardTable rewardTable = new RewardTable();
+            RewardTable rewardTable = new RewardTable(plugin);
             // Load patterns section
             List<Map<?, ?>> patterns = rewardsConfig.getMapList("patterns");
             for (int index = 0; index < patterns.size(); index++) {

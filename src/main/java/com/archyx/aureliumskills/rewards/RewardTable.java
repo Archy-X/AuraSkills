@@ -1,8 +1,13 @@
 package com.archyx.aureliumskills.rewards;
 
+import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.node.Node;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +16,12 @@ import java.util.Map;
 
 public class RewardTable {
 
+    private final AureliumSkills plugin;
     private final List<Stat> statsLeveled;
     private final Map<Integer, List<Reward>> rewards;
 
-    public RewardTable() {
+    public RewardTable(AureliumSkills plugin) {
+        this.plugin = plugin;
         this.rewards = new HashMap<>();
         this.statsLeveled = new ArrayList<>();
     }
@@ -62,8 +69,32 @@ public class RewardTable {
         Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
         for (int i = 2; i <= level; i++) {
             ImmutableList<StatReward> statRewardList = statRewardMap.get(i);
-            for (StatReward statReward : statRewardList) {
-                playerData.addStatLevel(statReward.getStat(), statReward.getValue());
+            if (statRewardList != null) {
+                for (StatReward statReward : statRewardList) {
+                    playerData.addStatLevel(statReward.getStat(), statReward.getValue());
+                }
+            }
+        }
+    }
+
+    public void applyPermissions(Player player, int level) {
+        Map<Integer, ImmutableList<PermissionReward>> permissionRewardMap = searchRewards(PermissionReward.class);
+        for (Map.Entry<Integer, ImmutableList<PermissionReward>> entry : permissionRewardMap.entrySet()) {
+            int entryLevel = entry.getKey();
+            for (PermissionReward reward : entry.getValue()) {
+                if (plugin.isLuckPermsEnabled()) {
+                    LuckPerms luckPerms = LuckPermsProvider.get();
+                    // Add permission if unlocked
+                    if (level >= entryLevel) {
+                        luckPerms.getUserManager().modifyUser(player.getUniqueId(), user ->
+                                user.data().add(Node.builder(reward.getPermission()).value(reward.getValue()).build()));
+                    }
+                    // Remove permission if not unlocked
+                    else {
+                        luckPerms.getUserManager().modifyUser(player.getUniqueId(), user ->
+                                user.data().remove(Node.builder(reward.getPermission()).value(reward.getValue()).build()));
+                    }
+                }
             }
         }
     }

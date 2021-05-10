@@ -333,6 +333,7 @@ public class SkillsCommand extends BaseCommand {
 				playerData.setSkillLevel(skill, level);
 				playerData.setSkillXp(skill, 0);
 				plugin.getLeveler().updateStats(player);
+				plugin.getLeveler().updatePermissions(player);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale)
@@ -361,11 +362,12 @@ public class SkillsCommand extends BaseCommand {
 					if (playerData == null) return;
 					playerData.setSkillLevel(skill, level);
 					playerData.setSkillXp(skill, 0);
-					plugin.getLeveler().updateStats(player);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 				}
 			}
+			plugin.getLeveler().updateStats(player);
+			plugin.getLeveler().updatePermissions(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETALL_SET, locale)
 					.replace("{level}", String.valueOf(level))
 					.replace("{player}", player.getName()));
@@ -388,6 +390,7 @@ public class SkillsCommand extends BaseCommand {
 				playerData.setSkillLevel(skill, 1);
 				playerData.setSkillXp(skill, 0);
 				plugin.getLeveler().updateStats(player);
+				plugin.getLeveler().updatePermissions(player);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
@@ -404,6 +407,7 @@ public class SkillsCommand extends BaseCommand {
 				playerData.setSkillLevel(s, 1);
 				playerData.setSkillXp(s, 0);
 				plugin.getLeveler().updateStats(player);
+				plugin.getLeveler().updatePermissions(player);
 			}
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 					.replace("{player}", player.getName()));
@@ -932,7 +936,7 @@ public class SkillsCommand extends BaseCommand {
 			for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
 				if (!player.isOnline()) {
 					total++;
-					File playerFile = new File(playerDataFolder, player.getUniqueId().toString() + ".dat");
+					File playerFile = new File(playerDataFolder, player.getUniqueId() + ".dat");
 					if (playerFile.exists() && playerFile.canWrite()) {
 						try {
 							NBTFile nbtFile = new NBTFile(playerFile);
