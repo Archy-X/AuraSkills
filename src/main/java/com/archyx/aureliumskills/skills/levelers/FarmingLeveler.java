@@ -15,11 +15,16 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class FarmingLeveler extends SkillLeveler implements Listener{
 
@@ -39,8 +44,8 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 					return;
 				}
 			}
-			if (blockXpGainLocation(event.getBlock().getLocation())) return;
 			Player p = event.getPlayer();
+			if (blockXpGainLocation(event.getBlock().getLocation(), p)) return;
 			Block b = event.getBlock();
 			Skill s = Skills.FARMING;
 			Material mat = b.getType();
@@ -107,17 +112,91 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			else if (mat.equals(XMaterial.BAMBOO.parseMaterial())) {
 				int numBroken = 1;
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
-					if (!b.getRelative(BlockFace.UP).getType().equals(XMaterial.BAMBOO.parseMaterial()) || b.getRelative(BlockFace.UP).hasMetadata("skillsPlaced")) {
+					if (!b.getRelative(BlockFace.UP).getType().equals(XMaterial.BAMBOO.parseMaterial()) || plugin.getRegionManager().isPlacedBlock(b.getRelative(BlockFace.UP))) {
 						return;
 					}
 					numBroken = 0;
 				}
-				numBroken += getBamboo(b.getRelative(BlockFace.UP), 0);
+				numBroken += getSameBlocksAbove(b.getRelative(BlockFace.UP), XMaterial.BAMBOO, 0);
 				leveler.addXp(p, s, getXp(p, Source.BAMBOO) * numBroken);
 				applyAbilities(p, b);
+			} else if (mat == Material.CACTUS) {
+				int numBroken = 1;
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
+					if (b.getRelative(BlockFace.UP).getType() != Material.CACTUS || plugin.getRegionManager().isPlacedBlock(b.getRelative(BlockFace.UP))) {
+						return;
+					}
+					numBroken = 0;
+				}
+				numBroken += getSameBlocksAbove(b.getRelative(BlockFace.UP), XMaterial.CACTUS, 0);
+				leveler.addXp(p, s, getXp(p, Source.CACTUS) * numBroken);
+				applyAbilities(p, b);
+			} else if (mat == Material.BROWN_MUSHROOM) {
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) return;
+				leveler.addXp(p, s, getXp(p, Source.BROWN_MUSHROOM));
+				applyAbilities(p, b);
+			} else if (mat == Material.RED_MUSHROOM) {
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) return;
+				leveler.addXp(p, s, getXp(p, Source.RED_MUSHROOM));
+				applyAbilities(p, b);
+			} else if (mat.equals(XMaterial.KELP_PLANT.parseMaterial())) {
+				int numBroken = 1;
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
+					if (!b.getRelative(BlockFace.UP).getType().equals(XMaterial.KELP_PLANT.parseMaterial()) || plugin.getRegionManager().isPlacedBlock(b.getRelative(BlockFace.UP))) {
+						return;
+					}
+					numBroken = 0;
+				}
+				numBroken += getSameBlocksAbove(b.getRelative(BlockFace.UP), XMaterial.KELP_PLANT, 0);
+				leveler.addXp(p, s, getXp(p, Source.KELP) * numBroken);
+				applyAbilities(p, b);
+			} else if (mat.equals(XMaterial.SEA_PICKLE.parseMaterial())) {
+				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) return;
+				if (b.getBlockData() instanceof SeaPickle) {
+					SeaPickle seaPickle = (SeaPickle) b.getBlockData();
+					leveler.addXp(p, s, getXp(p, Source.SEA_PICKLE) * seaPickle.getPickles()); // Multiply xp by number of pickles
+					applyAbilities(p, b);
+				}
+			} else if (mat.equals(XMaterial.SWEET_BERRY_BUSH.parseMaterial())) {
+				if (BlockUtil.getGrowthStage(b) >= 2) {
+					leveler.addXp(p, s, getXp(p, Source.SWEET_BERRY_BUSH) * (BlockUtil.getGrowthStage(b) - 1));
+					applyAbilities(p, b);
+				}
 			}
 			// Check custom blocks
 			checkCustomBlocks(p, b, s);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onRightClick(PlayerInteractEvent event) {
+		if (OptionL.getBoolean(Option.FARMING_CHECK_CANCELLED)) {
+			if (event.useInteractedBlock() == Event.Result.DENY) return;
+		}
+
+		Player player = event.getPlayer();
+		if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+		Block block = event.getClickedBlock();
+		if (block == null) return;
+
+		// Right clicking to harvest a sweet berry bush
+		if (block.getType().equals(XMaterial.SWEET_BERRY_BUSH.parseMaterial())) {
+			if (player.isSneaking()) return;
+			if (BlockUtil.getGrowthStage(block) >= 2) {
+				double xpAmount = getXp(player, Source.SWEET_BERRY_BUSH) * (BlockUtil.getGrowthStage(block) - 1);
+				// Check that the berry bush was actually harvested
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						if (block.getType().equals(XMaterial.SWEET_BERRY_BUSH.parseMaterial())) {
+							if (BlockUtil.getGrowthStage(block) <= 1) {
+								plugin.getLeveler().addXp(player, Skills.FARMING, xpAmount);
+								applyAbilities(player, block);
+							}
+						}
+					}
+				}.runTaskLater(plugin, 1L);
+			}
 		}
 	}
 
@@ -126,13 +205,13 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 		farmingAbilities.tripleHarvest(player, block);
 	}
 
-	private int getBamboo(Block block, int num) {
-		if (block.getState().getType().equals(XMaterial.BAMBOO.parseMaterial())) {
+	private int getSameBlocksAbove(Block block, XMaterial material, int num) {
+		if (block.getState().getType().equals(material.parseMaterial())) {
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
 				return num;
 			}
 			num++;
-			return getBamboo(block.getRelative(BlockFace.UP), num);
+			return getSameBlocksAbove(block.getRelative(BlockFace.UP), material, num);
 		}
 		return num;
 	}

@@ -58,6 +58,11 @@ public class RegionBlockListener implements Listener {
             XMaterial.JUNGLE_WOOD,
             XMaterial.ACACIA_WOOD,
             XMaterial.DARK_OAK_WOOD,
+            XMaterial.CACTUS,
+            XMaterial.BROWN_MUSHROOM,
+            XMaterial.RED_MUSHROOM,
+            XMaterial.KELP_PLANT,
+            XMaterial.SEA_PICKLE,
             //Rare
             XMaterial.PUMPKIN,
             XMaterial.MELON,

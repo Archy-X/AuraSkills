@@ -380,6 +380,14 @@ public class ManaAbilityManager implements Listener {
         return false;
     }
 
+    public int getOptionAsInt(MAbility mAbility, String key, int defaultValue) {
+        OptionValue value = getOption(mAbility, key);
+        if (value != null) {
+            return value.asInt();
+        }
+        return defaultValue;
+    }
+
     @Nullable
     public Set<String> getOptionKeys(MAbility mAbility) {
         if (mAbility.getDefaultOptions() != null) {

@@ -13,6 +13,12 @@ public enum Source {
 	SUGAR_CANE("farming.sugar_cane"),
 	BAMBOO("farming.bamboo"),
 	COCOA("farming.cocoa"),
+	CACTUS("farming.cactus"),
+	BROWN_MUSHROOM("farming.brown_mushroom"),
+	RED_MUSHROOM("farming.red_mushroom"),
+	KELP("farming.kelp"),
+	SEA_PICKLE("farming.sea_pickle"),
+	SWEET_BERRY_BUSH("farming.sweet_berry_bush"),
 	// Foraging
 	OAK_LOG("foraging.oak_log"),
 	SPRUCE_LOG("foraging.spruce_log"),
@@ -257,7 +263,8 @@ public enum Source {
 	COMBINE_BOOKS_PER_LEVEL("forging.combine_books_per_level"),
 	COMBINE_WEAPON_PER_LEVEL("forging.combine_weapon_per_level"),
 	COMBINE_ARMOR_PER_LEVEL("forging.combine_armor_per_level"),
-	COMBINE_TOOL_PER_LEVEL("forging.combine_tool_per_level");
+	COMBINE_TOOL_PER_LEVEL("forging.combine_tool_per_level"),
+	GRINDSTONE_PER_LEVEL("forging.grindstone_per_level");
 	
 	private final String path;
 	

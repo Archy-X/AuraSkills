@@ -35,6 +35,16 @@ public class BlockUtil {
         return false;
     }
 
+    public static int getGrowthStage(Block block) {
+        if (XMaterial.isNewVersion()) {
+            if (block.getBlockData() instanceof Ageable) {
+                Ageable crop = (Ageable) block.getBlockData();
+                return crop.getAge();
+            }
+        }
+        return 0;
+    }
+
     public static boolean isCarrot(Material material) {
         return material == Material.CARROT || material.name().equals("CARROTS");
     }

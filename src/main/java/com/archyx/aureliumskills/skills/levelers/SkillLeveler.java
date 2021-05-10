@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.SourceManager;
+import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.cryptomorin.xseries.XMaterial;
 import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
 import org.bukkit.GameMode;
@@ -139,14 +140,17 @@ public abstract class SkillLeveler {
 
     public boolean blockXpGain(Player player) {
         //Checks if in blocked world
-        if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
+        Location location = player.getLocation();
+        if (plugin.getWorldManager().isInBlockedWorld(location)) {
             return true;
         }
         //Checks if in blocked region
         if (plugin.isWorldGuardEnabled()) {
-            if (plugin.getWorldGuardSupport().isInBlockedRegion(player.getLocation())) {
+            if (plugin.getWorldGuardSupport().isInBlockedRegion(location)) {
                 return true;
             }
+            // Check if blocked by flags
+            else return plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN);
         }
         //Check for permission
         if (!player.hasPermission("aureliumskills." + skillName)) {
@@ -159,14 +163,18 @@ public abstract class SkillLeveler {
         return false;
     }
 
-    public boolean blockXpGainLocation(Location location) {
+    public boolean blockXpGainLocation(Location location, Player player) {
         //Checks if in blocked world
         if (plugin.getWorldManager().isInBlockedWorld(location)) {
             return true;
         }
         //Checks if in blocked region
         if (plugin.isWorldGuardEnabled()) {
-            return plugin.getWorldGuardSupport().isInBlockedRegion(location);
+            if (plugin.getWorldGuardSupport().isInBlockedRegion(location)) {
+                return true;
+            }
+            // Check if blocked by flags
+            else return plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN);
         }
         return false;
     }

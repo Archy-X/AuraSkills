@@ -36,6 +36,7 @@ languages:
     - pt-BR
     - zh-CN
     - de
+    - lt
 
 # Action Bar Options
 action-bar:
@@ -178,6 +179,10 @@ menus:
     placeholder-api: true
 
 check-for-updates: true
+
+automatic-backups:
+    enabled: true
+    minimum-interval-hours: 24
 
 # Skill specific options
 farming:

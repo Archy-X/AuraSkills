@@ -13,6 +13,7 @@ import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SharpHook;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -77,6 +78,10 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 			}
 			if (plugin.isWorldGuardEnabled()) {
 				if (plugin.getWorldGuardSupport().isInBlockedRegion(player.getLocation())) {
+					return;
+				}
+				// Check if blocked by flags
+				else if (plugin.getWorldGuardSupport().blockedByFlag(player.getLocation(), player, WorldGuardFlags.FlagKey.XP_GAIN)) {
 					return;
 				}
 			}
