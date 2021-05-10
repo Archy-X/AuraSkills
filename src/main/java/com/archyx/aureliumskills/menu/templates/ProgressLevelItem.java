@@ -7,10 +7,12 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
+import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.google.common.collect.ImmutableList;
 
 import java.util.Locale;
 
@@ -23,7 +25,12 @@ public class ProgressLevelItem {
     }
 
     public String getRewardsLore(Skill skill, int level, Locale locale) {
-        return LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", "");
+        ImmutableList<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
+        StringBuilder message = new StringBuilder();
+        for (Reward reward : rewards) {
+            message.append(reward.getRewardMessages(locale).getMenuMessage());
+        }
+        return LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", message.toString());
     }
 
     public String getAbilityLore(Skill skill, int level, Locale locale) {

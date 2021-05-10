@@ -3,12 +3,12 @@ package com.archyx.aureliumskills.rewards;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
 
 public abstract class Reward {
 
     protected final AureliumSkills plugin;
-    protected RewardMessages rewardMessages;
 
     public Reward(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -16,13 +16,6 @@ public abstract class Reward {
 
     public abstract void giveReward(Player player, Skill skill, int level);
 
-    @Nullable
-    public RewardMessages getRewardMessages() {
-        return rewardMessages;
-    }
-
-    public void setRewardMessages(RewardMessages rewardMessages) {
-        this.rewardMessages = rewardMessages;
-    }
+    public abstract RewardMessages getRewardMessages(Locale locale);
 
 }

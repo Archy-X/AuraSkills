@@ -12,8 +12,7 @@ public enum MenuMessage implements MessageKey {
     ABILITY_LEVELS(0),
     ABILITY_LEVEL_ENTRY(0),
     ABILITY_LEVEL_ENTRY_LOCKED(0),
-    PRIMARY_STAT(0),
-    SECONDARY_STAT(0),
+    STATS_LEVELED(0),
     MANA_ABILITY(0),
     //Skills Menu
     SKILLS_MENU_TITLE(1),

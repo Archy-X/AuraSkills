@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.rewards;
 
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
@@ -10,10 +11,12 @@ import java.util.Map;
 
 public class RewardTable {
 
+    private final List<Stat> statsLeveled;
     private final Map<Integer, List<Reward>> rewards;
 
     public RewardTable() {
         this.rewards = new HashMap<>();
+        this.statsLeveled = new ArrayList<>();
     }
 
     public ImmutableList<Reward> getRewards(int level) {
@@ -23,10 +26,16 @@ public class RewardTable {
     public void addReward(Reward reward, int level) {
         List<Reward> rewards = this.rewards.computeIfAbsent(level, k -> new ArrayList<>());
         rewards.add(reward);
+        if (reward instanceof StatReward) {
+            StatReward statReward = (StatReward) reward;
+            if (!statsLeveled.contains(statReward.getStat())) {
+                statsLeveled.add(statReward.getStat());
+            }
+        }
     }
 
-    public void setRewards(int level, List<Reward> rewards) {
-        this.rewards.put(level, rewards);
+    public ImmutableList<Stat> getStatsLeveled() {
+        return ImmutableList.copyOf(statsLeveled);
     }
 
     /**

@@ -39,6 +39,11 @@ public class CommandReward extends Reward {
         }
     }
 
+    @Override
+    public RewardMessages getRewardMessages(Locale locale) {
+        return new RewardMessages("", "");
+    }
+
     public enum CommandExecutor {
         CONSOLE,
         PLAYER

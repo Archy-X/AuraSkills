@@ -12,11 +12,14 @@ import com.archyx.aureliumskills.lang.MessageKey;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.google.common.collect.ImmutableList;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -72,6 +75,15 @@ public class SkillInfoItem {
                     case "skill_desc":
                         line = LoreUtil.setPlaceholders("skill_desc", skill.getDescription(locale), line);
                         break;
+                    case "stats_leveled":
+                        ImmutableList<Stat> statsLeveled = plugin.getRewardManager().getRewardTable(skill).getStatsLeveled();
+                        StringBuilder statList = new StringBuilder();
+                        for (Stat stat : statsLeveled) {
+                            statList.append(stat.getColor(locale)).append(stat.getDisplayName(locale)).append(ChatColor.GRAY).append(", ");
+                        }
+                        statList.delete(statList.length() - 2, statList.length());
+                        line = LoreUtil.replace(line, "{stats_leveled}", LoreUtil.replace(Lang.getMessage(MenuMessage.STATS_LEVELED, locale),
+                                "{stats}", statList.toString()));
                     case "ability_levels":
                         line = LoreUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerData, locale));
                         break;

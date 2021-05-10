@@ -7,6 +7,8 @@ import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
+
 public class PermissionReward extends Reward {
 
     private final String permission;
@@ -26,10 +28,13 @@ public class PermissionReward extends Reward {
     public void giveReward(Player player, Skill skill, int level) {
         if (plugin.isLuckPermsEnabled()) {
             LuckPerms luckPerms = LuckPermsProvider.get();
-            luckPerms.getUserManager().modifyUser(player.getUniqueId(), user -> {
-               user.data().add(Node.builder(permission).value(value).build());
-            });
+            luckPerms.getUserManager().modifyUser(player.getUniqueId(), user -> user.data().add(Node.builder(permission).value(value).build()));
         }
+    }
+
+    @Override
+    public RewardMessages getRewardMessages(Locale locale) {
+        return new RewardMessages("", "");
     }
 
 }

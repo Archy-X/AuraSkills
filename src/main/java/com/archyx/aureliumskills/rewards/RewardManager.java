@@ -102,7 +102,11 @@ public class RewardManager {
         // Parse each type
         switch (type) {
             case "stat":
-                Stat stat = plugin.getStatRegistry().getStat(getString(reward, "stat"));
+                String statName = getString(reward, "stat");
+                Stat stat = plugin.getStatRegistry().getStat(statName);
+                if (stat == null) {
+                    throw new IllegalArgumentException("Unknown stat with name: " + statName);
+                }
                 double statValue = getDouble(reward, "value");
                 return new StatReward(plugin, stat, statValue);
 

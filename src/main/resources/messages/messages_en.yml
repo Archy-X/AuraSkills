@@ -514,8 +514,7 @@ menus:
     ability_levels: '\n&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7Primary Stat: {color}{stat}'
-    secondary_stat: '&7Secondary Stat: {color}{stat}'
+    stats_leveled: '&7Stats Leveled: {stats}'
     mana_ability: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   skills_menu:
     skills_menu_title: Your Skills
@@ -701,4 +700,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 15
+file_version: 16

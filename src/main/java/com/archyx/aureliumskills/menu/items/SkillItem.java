@@ -22,7 +22,7 @@ public class SkillItem extends ConfigurableItem {
     private final Map<Skill, ItemStack> baseItems = new HashMap<>();
 
     public SkillItem(AureliumSkills plugin) {
-        super(plugin, ItemType.SKILL, new String[] {"skill_desc", "primary_stat", "secondary_stat", "ability_levels", "mana_ability", "level", "progress_to_level", "max_level"});
+        super(plugin, ItemType.SKILL, new String[] {"skill_desc", "stats_leveled", "ability_levels", "mana_ability", "level", "progress_to_level", "max_level"});
         this.skillInfoItem = new SkillInfoItem(plugin);
     }
 

@@ -42,8 +42,7 @@ skills_menu:
       lore:
         - '{skill_desc}'
         - ' '
-        - '{primary_stat}'
-        - '{secondary_stat}'
+        - '{stats_leveled}'
         - '{ability_levels}{mana_ability}'
         - '{level}'
         - ' '
@@ -175,8 +174,7 @@ level_progression_menu:
       lore:
         - '{skill_desc}'
         - ' '
-        - '{primary_stat}'
-        - '{secondary_stat}'
+        - '{stats_leveled}'
         - '{ability_levels}{mana_ability}'
         - '{level}'
         - ' '
