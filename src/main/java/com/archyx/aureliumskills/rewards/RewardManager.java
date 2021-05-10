@@ -35,6 +35,8 @@ public class RewardManager {
         this.rewardTables.clear();
         File rewardsDirectory = new File(plugin.getDataFolder() + "/rewards");
         // Load each file
+        int patternsLoaded = 0;
+        int levelsLoaded = 0;
         for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             File rewardsFile = new File(rewardsDirectory + "/" + skill.toString().toLowerCase(Locale.ROOT) + ".yml");
             if (!rewardsFile.exists()) {
@@ -64,6 +66,7 @@ public class RewardManager {
                     for (int level = start; level <= stop; level += interval) {
                         rewardTable.addReward(reward, level);
                     }
+                    patternsLoaded++;
                 } catch (IllegalArgumentException e) {
                     throw new RewardException(rewardsFile.getName(), "patterns.[" + index + "]", e.getMessage());
                 }
@@ -82,6 +85,7 @@ public class RewardManager {
                             try {
                                 Reward reward = parseReward(rewardMap);
                                 rewardTable.addReward(reward, level);
+                                levelsLoaded++;
                             } catch (IllegalArgumentException e) {
                                 throw new RewardException(rewardsFile.getName(), "levels." + levelString + ".[" + index + "]", e.getMessage());
                             }
@@ -94,6 +98,7 @@ public class RewardManager {
             // Register reward table
             this.rewardTables.put(skill, rewardTable);
         }
+        plugin.getLogger().info("Loaded " + patternsLoaded + " pattern rewards and " + levelsLoaded + " level rewards");
     }
 
     private Reward parseReward(Map<?, ?> reward) {

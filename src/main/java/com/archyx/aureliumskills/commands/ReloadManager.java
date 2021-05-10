@@ -3,12 +3,14 @@ package com.archyx.aureliumskills.commands;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.rewards.RewardException;
 import com.archyx.aureliumskills.stats.Luck;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 
@@ -32,6 +34,14 @@ public class ReloadManager {
         // Load sources_config
         plugin.getSourceManager().loadSources();
         plugin.getCheckBlockReplace().reloadCustomBlocks();
+        // Load rewards
+        try {
+            plugin.getRewardManager().loadRewards();
+        } catch (FileNotFoundException e) {
+            plugin.getLogger().warning(" Error while loading rewards: " + e.getMessage());
+        } catch (RewardException e) {
+            plugin.getLogger().warning("Error while loading rewards file " + e.getFileName() + " at path " + e.getPath() + ": " + e.getMessage());
+        }
         // Load language files
         lang.loadLanguageFiles();
         lang.loadEmbeddedMessages(plugin.getCommandManager());

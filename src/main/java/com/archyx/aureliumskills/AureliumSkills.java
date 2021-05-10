@@ -62,11 +62,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -553,12 +549,9 @@ public class AureliumSkills extends JavaPlugin {
 		try {
 			rewardManager.loadRewards();
 		} catch (FileNotFoundException e) {
-			Bukkit.getLogger().warning("[AureliumSkills] Error while loading rewards: " + e.getMessage());
+			getLogger().warning("Error while loading rewards: " + e.getMessage());
 		} catch (RewardException e) {
-			String fileName = e.getFileName();
-			String path = e.getPath();
-			String message = e.getMessage();
-			Bukkit.getLogger().warning("[AureliumSkills] Error while loading rewards file " + fileName + " at path " + path + ": " + message);
+			getLogger().warning("Error while loading rewards file " + e.getFileName() + " at path " + e.getPath() + ": " + e.getMessage());
 		}
 	}
 
