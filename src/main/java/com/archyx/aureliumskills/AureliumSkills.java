@@ -37,7 +37,6 @@ import com.archyx.aureliumskills.region.RegionListener;
 import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
-import com.archyx.aureliumskills.rewards.RewardException;
 import com.archyx.aureliumskills.rewards.RewardManager;
 import com.archyx.aureliumskills.skills.*;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
@@ -62,7 +61,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -198,7 +200,7 @@ public class AureliumSkills extends JavaPlugin {
 		lang.loadLanguages(commandManager);
 		// Load rewards
 		rewardManager = new RewardManager(this);
-		loadRewards();
+		rewardManager.loadRewards();
 		// Registers Commands
 		registerCommands();
 		// Load menu
@@ -543,16 +545,6 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry.register("sorcery", Skills.SORCERY);
 		skillRegistry.register("healing", Skills.HEALING);
 		skillRegistry.register("forging", Skills.FORGING);
-	}
-
-	private void loadRewards() {
-		try {
-			rewardManager.loadRewards();
-		} catch (FileNotFoundException e) {
-			getLogger().warning("Error while loading rewards: " + e.getMessage());
-		} catch (RewardException e) {
-			getLogger().warning("Error while loading rewards file " + e.getFileName() + " at path " + e.getPath() + ": " + e.getMessage());
-		}
 	}
 
 	public RewardManager getRewardManager() {

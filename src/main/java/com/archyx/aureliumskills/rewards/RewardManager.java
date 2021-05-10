@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -31,7 +30,7 @@ public class RewardManager {
         return rewardTables.get(skill);
     }
 
-    public void loadRewards() throws FileNotFoundException, RewardException {
+    public void loadRewards() {
         this.rewardTables.clear();
         File rewardsDirectory = new File(plugin.getDataFolder() + "/rewards");
         // Load each file
@@ -50,17 +49,21 @@ public class RewardManager {
                 Map<?, ?> rewardMap = patterns.get(index);
                 try {
                     Reward reward = parseReward(rewardMap);
-                    // Default pattern values
-                    int start = 2;
-                    int interval = 1;
-                    int stop = OptionL.getMaxLevel(skill);
                     // Load pattern info
-                    Object patternObject = getElement(rewardMap, "pattern");
-                    if (patternObject instanceof ConfigurationSection) {
-                        ConfigurationSection pattern = (ConfigurationSection) patternObject;
-                        start = pattern.getInt("start", 2);
-                        interval = pattern.getInt("interval", 1);
-                        stop = pattern.getInt("stop", OptionL.getMaxLevel(skill));
+                    Object patternObj = getElement(rewardMap, "pattern");
+                    if (!(patternObj instanceof Map<?, ?>)) {
+                        throw new IllegalArgumentException("Pattern must be a section");
+                    }
+                    Map<?, ?> patternMap = (Map<?, ?>) patternObj;
+                    int start = getInt(patternMap, "start");
+                    int interval = getInt(patternMap, "interval");
+                    // Get stop interval and check it is not above max skill level
+                    int stop = OptionL.getMaxLevel(skill);
+                    if (patternMap.containsKey("stop")) {
+                        stop = getInt(patternMap, "stop");
+                    }
+                    if (stop > OptionL.getMaxLevel(skill)) {
+                        stop = OptionL.getMaxLevel(skill);
                     }
                     // Add to reward table
                     for (int level = start; level <= stop; level += interval) {
@@ -68,7 +71,7 @@ public class RewardManager {
                     }
                     patternsLoaded++;
                 } catch (IllegalArgumentException e) {
-                    throw new RewardException(rewardsFile.getName(), "patterns.[" + index + "]", e.getMessage());
+                    plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path patterns.[" + index + "]: " + e.getMessage());
                 }
             }
             // Load levels section
@@ -87,11 +90,11 @@ public class RewardManager {
                                 rewardTable.addReward(reward, level);
                                 levelsLoaded++;
                             } catch (IllegalArgumentException e) {
-                                throw new RewardException(rewardsFile.getName(), "levels." + levelString + ".[" + index + "]", e.getMessage());
+                                plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path levels." + levelString + ".[" + index + "]: " + e.getMessage());
                             }
                         }
                     } catch (NumberFormatException e) {
-                        throw new RewardException(rewardsFile.getName(), "levels." + levelString, "Key " + levelString + " must be of type int");
+                        plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path levels." + levelString + ": Key " + levelString + " must be of type int");
                     }
                 }
             }
