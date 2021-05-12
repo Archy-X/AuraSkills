@@ -9,13 +9,13 @@ import org.bukkit.entity.Player;
 
 import java.util.Locale;
 
-public class CommandReward extends Reward {
+public class CommandReward extends MessageCustomizableReward {
 
     private final CommandExecutor executor;
     private final String command;
 
-    public CommandReward(AureliumSkills plugin, CommandExecutor executor, String command) {
-        super(plugin);
+    public CommandReward(AureliumSkills plugin, String menuMessage, String chatMessage, CommandExecutor executor, String command) {
+        super(plugin, menuMessage, chatMessage);
         this.executor = executor;
         this.command = command;
     }
@@ -37,11 +37,6 @@ public class CommandReward extends Reward {
         } else {
             player.performCommand(command);
         }
-    }
-
-    @Override
-    public RewardMessages getRewardMessages(Locale locale) {
-        return new RewardMessages("", "");
     }
 
     public enum CommandExecutor {

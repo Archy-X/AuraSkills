@@ -3,6 +3,9 @@ package com.archyx.aureliumskills.rewards;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.rewards.CommandReward.CommandExecutor;
+import com.archyx.aureliumskills.rewards.builder.CommandRewardBuilder;
+import com.archyx.aureliumskills.rewards.builder.PermissionRewardBuilder;
+import com.archyx.aureliumskills.rewards.builder.StatRewardBuilder;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import org.apache.commons.lang.Validate;
@@ -108,29 +111,55 @@ public class RewardManager {
         // Get type of reward
         String type = getString(reward, "type");
         // Parse each type
-        switch (type) {
-            case "stat":
-                String statName = getString(reward, "stat");
-                Stat stat = plugin.getStatRegistry().getStat(statName);
-                if (stat == null) {
-                    throw new IllegalArgumentException("Unknown stat with name: " + statName);
-                }
-                double statValue = getDouble(reward, "value");
-                return new StatReward(plugin, stat, statValue);
+        if (type.equalsIgnoreCase("stat")) { // Stat reward
+            StatRewardBuilder builder = new StatRewardBuilder(plugin);
 
-            case "command":
-                CommandExecutor executor = CommandExecutor.valueOf(getString(reward, "executor").toUpperCase(Locale.ROOT));
-                String command = getString(reward, "command");
-                return new CommandReward(plugin, executor, command);
+            String statName = getString(reward, "stat");
+            Stat stat = plugin.getStatRegistry().getStat(statName);
+            if (stat == null) {
+                throw new IllegalArgumentException("Unknown stat with name: " + statName);
+            }
+            builder.stat(stat);
 
-            case "permission":
-                String permission = getString(reward, "permission");
-                if (reward.containsKey("value")) {
-                    boolean permissionValue = getBoolean(reward, "value");
-                    return new PermissionReward(plugin, permission, permissionValue);
-                } else {
-                    return new PermissionReward(plugin, permission);
-                }
+            builder.value(getDouble(reward, "value"));
+
+            return builder.build();
+        } else if (type.equalsIgnoreCase("command")) { // Command reward
+            CommandRewardBuilder builder = new CommandRewardBuilder(plugin);
+
+            CommandExecutor executor = CommandExecutor.valueOf(getString(reward, "executor").toUpperCase(Locale.ROOT));
+            builder.executor(executor);
+
+            String command = getString(reward, "command");
+            builder.command(command);
+
+            if (reward.containsKey("menu_message")) {
+                builder.menuMessage(getString(reward, "menu_message"));
+            }
+
+            if (reward.containsKey("chat_message")) {
+                builder.chatMessage(getString(reward, "chat_message"));
+            }
+
+            return builder.build();
+        } else if (type.equalsIgnoreCase("permission")) { // Permission reward
+            PermissionRewardBuilder builder = new PermissionRewardBuilder(plugin);
+
+            builder.permission(getString(reward, "permission"));
+
+            if (reward.containsKey("value")) {
+                builder.value(getBoolean(reward, "value"));
+            }
+
+            if (reward.containsKey("menu_message")) {
+                builder.menuMessage(getString(reward, "menu_message"));
+            }
+
+            if (reward.containsKey("chat_message")) {
+                builder.chatMessage(getString(reward, "chat_message"));
+            }
+
+            return builder.build();
         }
         return null;
     }

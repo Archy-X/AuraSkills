@@ -16,6 +16,8 @@ public abstract class Reward {
 
     public abstract void giveReward(Player player, Skill skill, int level);
 
-    public abstract RewardMessages getRewardMessages(Locale locale);
+    public abstract String getMenuMessage(Locale locale);
+
+    public abstract String getChatMessage(Locale locale);
 
 }

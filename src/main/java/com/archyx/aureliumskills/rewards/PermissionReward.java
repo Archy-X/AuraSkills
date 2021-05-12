@@ -7,19 +7,13 @@ import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
 import org.bukkit.entity.Player;
 
-import java.util.Locale;
-
-public class PermissionReward extends Reward {
+public class PermissionReward extends MessageCustomizableReward {
 
     private final String permission;
     private final boolean value;
 
-    public PermissionReward(AureliumSkills plugin, String permission) {
-        this(plugin, permission, true);
-    }
-
-    public PermissionReward(AureliumSkills plugin, String permission, boolean value) {
-        super(plugin);
+    public PermissionReward(AureliumSkills plugin, String menuMessage, String chatMessage, String permission, boolean value) {
+        super(plugin, menuMessage, chatMessage);
         this.permission = permission;
         this.value = value;
     }
@@ -30,11 +24,6 @@ public class PermissionReward extends Reward {
             LuckPerms luckPerms = LuckPermsProvider.get();
             luckPerms.getUserManager().modifyUser(player.getUniqueId(), user -> user.data().add(Node.builder(permission).value(value).build()));
         }
-    }
-
-    @Override
-    public RewardMessages getRewardMessages(Locale locale) {
-        return new RewardMessages("", "");
     }
 
     public String getPermission() {
