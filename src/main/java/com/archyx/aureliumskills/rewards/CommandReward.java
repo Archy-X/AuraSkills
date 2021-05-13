@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Locale;
 
-public class CommandReward extends MessageCustomizableReward {
+public class CommandReward extends MessagedReward {
 
     private final CommandExecutor executor;
     private final String command;

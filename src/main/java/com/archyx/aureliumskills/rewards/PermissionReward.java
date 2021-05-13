@@ -7,7 +7,7 @@ import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
 import org.bukkit.entity.Player;
 
-public class PermissionReward extends MessageCustomizableReward {
+public class PermissionReward extends MessagedReward {
 
     private final String permission;
     private final boolean value;

@@ -7,12 +7,12 @@ import org.bukkit.ChatColor;
 
 import java.util.Locale;
 
-public abstract class MessageCustomizableReward extends Reward {
+public abstract class MessagedReward extends Reward {
 
     protected final String menuMessage;
     protected final String chatMessage;
 
-    public MessageCustomizableReward(AureliumSkills plugin, String menuMessage, String chatMessage) {
+    public MessagedReward(AureliumSkills plugin, String menuMessage, String chatMessage) {
         super(plugin);
         this.menuMessage = menuMessage;
         this.chatMessage = chatMessage;

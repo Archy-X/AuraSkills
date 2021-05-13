@@ -2,23 +2,23 @@ package com.archyx.aureliumskills.rewards.builder;
 
 import com.archyx.aureliumskills.AureliumSkills;
 
-public abstract class MessageCustomizableRewardBuilder extends RewardBuilder {
+public abstract class MessagedRewardBuilder extends RewardBuilder {
 
     protected String menuMessage;
     protected String chatMessage;
 
-    public MessageCustomizableRewardBuilder(AureliumSkills plugin) {
+    public MessagedRewardBuilder(AureliumSkills plugin) {
         super(plugin);
         this.menuMessage = "";
         this.chatMessage = "";
     }
 
-    public MessageCustomizableRewardBuilder menuMessage(String menuMessage) {
+    public MessagedRewardBuilder menuMessage(String menuMessage) {
         this.menuMessage = menuMessage;
         return this;
     }
 
-    public MessageCustomizableRewardBuilder chatMessage(String chatMessage) {
+    public MessagedRewardBuilder chatMessage(String chatMessage) {
         this.chatMessage = chatMessage;
         return this;
     }

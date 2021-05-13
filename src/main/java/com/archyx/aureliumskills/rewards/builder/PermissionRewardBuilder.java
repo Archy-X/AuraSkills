@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.rewards.PermissionReward;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.util.misc.Validate;
 
-public class PermissionRewardBuilder extends MessageCustomizableRewardBuilder {
+public class PermissionRewardBuilder extends MessagedRewardBuilder {
 
     private String permission;
     private boolean value;

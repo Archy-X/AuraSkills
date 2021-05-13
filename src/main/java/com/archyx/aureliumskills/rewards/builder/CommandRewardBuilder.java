@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.rewards.CommandReward.CommandExecutor;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.util.misc.Validate;
 
-public class CommandRewardBuilder extends MessageCustomizableRewardBuilder {
+public class CommandRewardBuilder extends MessagedRewardBuilder {
 
     private CommandExecutor executor;
     private String command;
