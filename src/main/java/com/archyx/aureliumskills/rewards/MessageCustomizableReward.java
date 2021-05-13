@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.rewards;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
+import org.bukkit.ChatColor;
 
 import java.util.Locale;
 
@@ -37,7 +38,7 @@ public abstract class MessageCustomizableReward extends Reward {
         if (message == null) {
             message = potentialKey;
         }
-        return message;
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
 }

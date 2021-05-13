@@ -336,6 +336,7 @@ public class SkillsCommand extends BaseCommand {
 				plugin.getLeveler().updateStats(player);
 				plugin.getLeveler().updatePermissions(player);
 				plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, level);
+				plugin.getLeveler().applyLevelUpCommands(player, skill, oldLevel, level);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale)
@@ -368,6 +369,7 @@ public class SkillsCommand extends BaseCommand {
 					// Reload items and armor to check for newly met requirements
 					plugin.getModifierManager().reloadPlayer(player);
 					plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, level);
+					plugin.getLeveler().applyLevelUpCommands(player, skill, oldLevel, level);
 				}
 			}
 			plugin.getLeveler().updateStats(player);

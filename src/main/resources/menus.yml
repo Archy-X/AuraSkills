@@ -41,7 +41,6 @@ skills_menu:
       display_name: '&b{skill} &3{level}'
       lore:
         - '{skill_desc}'
-        - ' '
         - '{stats_leveled}'
         - '{ability_levels}{mana_ability}'
         - '{level}'
@@ -173,7 +172,6 @@ level_progression_menu:
       display_name: '&b{skill} &3{level}'
       lore:
         - '{skill_desc}'
-        - ' '
         - '{stats_leveled}'
         - '{ability_levels}{mana_ability}'
         - '{level}'

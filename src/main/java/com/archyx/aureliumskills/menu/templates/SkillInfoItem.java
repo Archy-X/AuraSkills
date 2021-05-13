@@ -81,9 +81,15 @@ public class SkillInfoItem {
                         for (Stat stat : statsLeveled) {
                             statList.append(stat.getColor(locale)).append(stat.getDisplayName(locale)).append(ChatColor.GRAY).append(", ");
                         }
-                        statList.delete(statList.length() - 2, statList.length());
-                        line = LoreUtil.replace(line, "{stats_leveled}", LoreUtil.replace(Lang.getMessage(MenuMessage.STATS_LEVELED, locale),
-                                "{stats}", statList.toString()));
+                        if (statList.length() > 1) {
+                            statList.delete(statList.length() - 2, statList.length());
+                        }
+                        if (statsLeveled.size() > 0) {
+                            line = LoreUtil.replace(line, "{stats_leveled}", LoreUtil.replace(Lang.getMessage(MenuMessage.STATS_LEVELED, locale),
+                                    "{stats}", statList.toString()));
+                        } else {
+                            line = LoreUtil.replace(line, "{stats_leveled}", "");
+                        }
                     case "ability_levels":
                         line = LoreUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerData, locale));
                         break;

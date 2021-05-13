@@ -113,13 +113,13 @@ public class RewardManager {
             if (rewardType.getKey().equalsIgnoreCase(type)) {
                 try {
                     Constructor<? extends RewardParser> constructor = rewardType.getParser().getConstructor(AureliumSkills.class);
-                    constructor.newInstance(plugin).parse(map);
+                    return constructor.newInstance(plugin).parse(map);
                 } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unrecognized reward type: " + type);
     }
 
 }

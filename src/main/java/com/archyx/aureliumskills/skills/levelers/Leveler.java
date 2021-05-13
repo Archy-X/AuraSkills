@@ -13,13 +13,11 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.rewards.CommandReward;
 import com.archyx.aureliumskills.rewards.Reward;
-import com.archyx.aureliumskills.rewards.StatReward;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
-import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.milkbowl.vault.economy.Economy;
@@ -176,6 +174,16 @@ public class Leveler {
 		}
 	}
 
+	public void applyLevelUpCommands(Player player, Skill skill, int oldLevel, int newLevel) {
+		if (newLevel > oldLevel) {
+			for (int i = oldLevel + 1; i <= newLevel; i++) {
+				for (CommandReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(CommandReward.class, i)) {
+					reward.giveReward(player, skill, i);
+				}
+			}
+		}
+	}
+
 	public void applyRevertCommands(Player player, Skill skill, int oldLevel, int newLevel) {
 		if (newLevel < oldLevel) {
 			for (int i = oldLevel; i > newLevel; i--) {
@@ -267,17 +275,9 @@ public class Leveler {
 		if (plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
-		StringBuilder statLevelMessage = new StringBuilder();
+		StringBuilder rewardMessage = new StringBuilder();
 		for (Reward reward : rewards) {
-			if (reward instanceof StatReward) {
-				StatReward statReward = (StatReward) reward;
-				Stat stat = statReward.getStat();
-				statLevelMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale),
-						"{color}", stat.getColor(locale),
-						"{num}", NumberUtil.format1(statReward.getValue()),
-						"{symbol}", stat.getSymbol(locale),
-						"{stat}", stat.getDisplayName(locale)));
-			}
+			rewardMessage.append(reward.getChatMessage(locale));
 		}
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
@@ -293,7 +293,7 @@ public class Leveler {
 				}
 			}
 		}
-		message = LoreUtil.replace(message, "{stat_level}", statLevelMessage.toString(),
+		message = LoreUtil.replace(message, "{stat_level}", rewardMessage.toString(),
 				"{ability_unlock}", abilityUnlockMessage.toString(),
 				"{ability_level_up}", abilityLevelUpMessage.toString());
 		// Mana ability unlocks and level ups
