@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
+import com.archyx.aureliumskills.rewards.CommandReward;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.rewards.StatReward;
 import com.archyx.aureliumskills.skills.Skill;
@@ -172,6 +173,16 @@ public class Leveler {
 		if (playerData == null) return;
 		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 			plugin.getRewardManager().getRewardTable(skill).applyPermissions(player, playerData.getSkillLevel(skill));
+		}
+	}
+
+	public void applyRevertCommands(Player player, Skill skill, int oldLevel, int newLevel) {
+		if (newLevel < oldLevel) {
+			for (int i = oldLevel; i > newLevel; i--) {
+				for (CommandReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(CommandReward.class, i)) {
+					reward.executeRevert(player);
+				}
+			}
 		}
 	}
 	

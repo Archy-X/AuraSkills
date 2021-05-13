@@ -133,6 +133,14 @@ public class RewardManager {
             String command = getString(reward, "command");
             builder.command(command);
 
+            if (reward.containsKey("revert_command")) {
+                builder.revertCommand(getString(reward, "revert_command"));
+            }
+
+            if (reward.containsKey("revert_executor")) {
+                builder.revertExecutor(CommandExecutor.valueOf(getString(reward, "revert_executor").toUpperCase(Locale.ROOT)));
+            }
+
             if (reward.containsKey("menu_message")) {
                 builder.menuMessage(getString(reward, "menu_message"));
             }

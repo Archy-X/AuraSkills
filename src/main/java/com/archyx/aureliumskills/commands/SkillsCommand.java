@@ -330,10 +330,12 @@ public class SkillsCommand extends BaseCommand {
 			if (level > 0) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
+				int oldLevel = playerData.getSkillLevel(skill);
 				playerData.setSkillLevel(skill, level);
 				playerData.setSkillXp(skill, 0);
 				plugin.getLeveler().updateStats(player);
 				plugin.getLeveler().updatePermissions(player);
+				plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, level);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale)
@@ -356,14 +358,16 @@ public class SkillsCommand extends BaseCommand {
 	public void onSkillSetall(CommandSender sender, @Flags("other") Player player, int level) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (level > 0) {
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+			if (playerData == null) return;
 			for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 				if (OptionL.isEnabled(skill)) {
-					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-					if (playerData == null) return;
+					int oldLevel = playerData.getSkillLevel(skill);
 					playerData.setSkillLevel(skill, level);
 					playerData.setSkillXp(skill, 0);
 					// Reload items and armor to check for newly met requirements
-					this.plugin.getModifierManager().reloadPlayer(player);
+					plugin.getModifierManager().reloadPlayer(player);
+					plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, level);
 				}
 			}
 			plugin.getLeveler().updateStats(player);
@@ -387,10 +391,12 @@ public class SkillsCommand extends BaseCommand {
 			if (OptionL.isEnabled(skill)) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
+				int oldLevel = playerData.getSkillLevel(skill);
 				playerData.setSkillLevel(skill, 1);
 				playerData.setSkillXp(skill, 0);
 				plugin.getLeveler().updateStats(player);
 				plugin.getLeveler().updatePermissions(player);
+				plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, 1);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
@@ -404,10 +410,12 @@ public class SkillsCommand extends BaseCommand {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
 			for (Skill s : plugin.getSkillRegistry().getSkills()) {
+				int oldLevel = playerData.getSkillLevel(s);
 				playerData.setSkillLevel(s, 1);
 				playerData.setSkillXp(s, 0);
 				plugin.getLeveler().updateStats(player);
 				plugin.getLeveler().updatePermissions(player);
+				plugin.getLeveler().applyRevertCommands(player, s, oldLevel, 1);
 			}
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 					.replace("{player}", player.getName()));

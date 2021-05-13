@@ -10,6 +10,8 @@ public class CommandRewardBuilder extends MessageCustomizableRewardBuilder {
 
     private CommandExecutor executor;
     private String command;
+    private CommandExecutor revertExecutor;
+    private String revertCommand;
 
     public CommandRewardBuilder(AureliumSkills plugin) {
         super(plugin);
@@ -26,9 +28,19 @@ public class CommandRewardBuilder extends MessageCustomizableRewardBuilder {
         return this;
     }
 
+    public CommandRewardBuilder revertCommand(String revertCommand) {
+        this.revertCommand = revertCommand;
+        return this;
+    }
+
+    public CommandRewardBuilder revertExecutor(CommandExecutor revertExecutor) {
+        this.revertExecutor = revertExecutor;
+        return this;
+    }
+
     @Override
     public Reward build() {
         Validate.notNull(command, "You must specify a command");
-        return new CommandReward(plugin, menuMessage, chatMessage, executor, command);
+        return new CommandReward(plugin, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);
     }
 }
