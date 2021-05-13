@@ -67,7 +67,7 @@
     <repositories>
         <repository>
             <id>skullcreator-repo</id>
-            <url>https://dl.bintray.com/deanveloper/SkullCreator</url>
+            <url>https://github.com/deanveloper/SkullCreator/raw/mvn-repo</url>
         </repository>
         <repository>
             <id>aikar</id>
