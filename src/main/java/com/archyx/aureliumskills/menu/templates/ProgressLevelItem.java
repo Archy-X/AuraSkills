@@ -28,7 +28,7 @@ public class ProgressLevelItem {
         ImmutableList<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
         StringBuilder message = new StringBuilder();
         for (Reward reward : rewards) {
-            message.append(reward.getRewardMessages(locale).getMenuMessage());
+            message.append(reward.getMenuMessage(locale));
         }
         return LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", message.toString());
     }
