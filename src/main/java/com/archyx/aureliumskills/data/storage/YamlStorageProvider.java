@@ -111,7 +111,9 @@ public class YamlStorageProvider extends StorageProvider {
             } catch (Exception e) {
                 Bukkit.getLogger().warning("There was an error loading player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
                 e.printStackTrace();
-                createNewPlayer(player);
+                PlayerData data = createNewPlayer(player);
+                data.setShouldSave(false);
+                sendErrorMessageToPlayer(player, e);
             }
         } else {
             createNewPlayer(player);
@@ -122,6 +124,7 @@ public class YamlStorageProvider extends StorageProvider {
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
+        if (playerData.shouldNotSave()) return;
         // Save lock
         if (playerData.isSaving()) return;
         playerData.setSaving(true);
