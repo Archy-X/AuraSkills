@@ -12,6 +12,7 @@ import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.rewards.CommandReward;
+import com.archyx.aureliumskills.rewards.MoneyReward;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
@@ -312,16 +313,24 @@ public class Leveler {
 			}
 		}
 		message = LoreUtil.replace(message, "{mana_ability_unlock}", manaAbilityUnlockMessage.toString(), "{mana_ability_level_up}", manaAbilityLevelUpMessage.toString());
-		// If money rewards are enabled
+		// Build money rewards
 		StringBuilder moneyRewardMessage = new StringBuilder();
+		double totalMoney = 0;
+		// Legacy system
 		if (plugin.isVaultEnabled()) {
 			if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
 				double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 				double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-				NumberFormat nf = new DecimalFormat("#.##");
-				moneyRewardMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", nf.format(base + (multiplier * newLevel * newLevel))));
+				totalMoney += base + (multiplier * newLevel * newLevel);
 			}
 		}
+		// New rewards
+		for (MoneyReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(MoneyReward.class, newLevel)) {
+			totalMoney += reward.getAmount();
+		}
+		NumberFormat nf = new DecimalFormat("#.##");
+		moneyRewardMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
+				"{amount}", nf.format(totalMoney)));
 		message = LoreUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
