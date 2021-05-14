@@ -26,30 +26,27 @@ public class CommandReward extends MessagedReward {
 
     @Override
     public void giveReward(Player player, Skill skill, int level) {
-        String command = this.command;
-        // Apply placeholders
-        command = LoreUtil.replace(command, "{player}", player.getName(),
+        executeCommand(executor, command, player, skill, level);
+    }
+
+    public void executeRevert(Player player, Skill skill, int level) {
+        if (revertCommand != null) {
+            executeCommand(revertExecutor != null ? revertExecutor : CommandExecutor.CONSOLE, command, player, skill, level);
+        }
+    }
+
+    private void executeCommand(CommandExecutor executor, String command, Player player, Skill skill, int level) {
+        String executedCommand = LoreUtil.replace(command, "{player}", player.getName(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));
         if (plugin.isPlaceholderAPIEnabled()) {
-            command = PlaceholderAPI.setPlaceholders(player, command);
+            executedCommand = PlaceholderAPI.setPlaceholders(player, executedCommand);
         }
-
-        executeCommand(executor, command, player);
-    }
-
-    public void executeRevert(Player player) {
-        if (revertCommand != null) {
-            executeCommand(revertExecutor != null ? revertExecutor : CommandExecutor.CONSOLE, revertCommand, player);
-        }
-    }
-
-    private void executeCommand(CommandExecutor executor, String command, Player player) {
         // Executes the commands
         if (executor == CommandExecutor.CONSOLE) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), executedCommand);
         } else {
-            player.performCommand(command);
+            player.performCommand(executedCommand);
         }
     }
 

@@ -189,7 +189,7 @@ public class Leveler {
 		if (newLevel < oldLevel) {
 			for (int i = oldLevel; i > newLevel; i--) {
 				for (CommandReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(CommandReward.class, i)) {
-					reward.executeRevert(player);
+					reward.executeRevert(player, skill, i);
 				}
 			}
 		}
