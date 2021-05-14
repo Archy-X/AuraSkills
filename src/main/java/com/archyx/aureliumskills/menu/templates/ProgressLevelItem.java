@@ -3,10 +3,13 @@ package com.archyx.aureliumskills.menu.templates;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.abilities.AbilityManager;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
+import com.archyx.aureliumskills.rewards.MoneyReward;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.LoreUtil;
@@ -27,9 +30,22 @@ public class ProgressLevelItem {
     public String getRewardsLore(Skill skill, int level, Locale locale) {
         ImmutableList<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
         StringBuilder message = new StringBuilder();
+        double totalMoney = 0;
         for (Reward reward : rewards) {
             message.append(reward.getMenuMessage(locale));
+            if (reward instanceof MoneyReward) {
+                totalMoney += ((MoneyReward) reward).getAmount();
+            }
         }
+        // Legacy money rewards
+        if (plugin.isVaultEnabled()) {
+            if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
+                double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
+                double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
+                totalMoney += base + (multiplier * level * level);
+            }
+        }
+        message.append(LoreUtil.replace(Lang.getMessage(MenuMessage.MONEY_REWARD, locale), "{amount}", NumberUtil.format2(totalMoney)));
         return LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", message.toString());
     }
 

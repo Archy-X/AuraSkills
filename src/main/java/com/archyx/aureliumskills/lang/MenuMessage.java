@@ -42,6 +42,7 @@ public enum MenuMessage implements MessageKey {
     LOCKED(2),
     REWARDS(2),
     REWARDS_ENTRY(2),
+    MONEY_REWARD(2),
     ABILITY_UNLOCK(2),
     ABILITY_LEVEL(2),
     MANA_ABILITY_UNLOCK(2),
