@@ -36,12 +36,17 @@ Version Beta 1.0.0
     - Player language settings are now persistent
     - Certain ability data is now persistent
     - Complete recode and cleanup of the data and storage system
-    - Added message keys for backup commands
     - Abstracted skills and stats, created skill and stat registry system
     - Added Lithuanian (lt) messages
+  API Changes:
+    - Renamed Stat enum to Stats
+    - Renamed Skill enum to Skills
+    - Skill and Stat are now abstract classes that can represent more than just the default skills/stats
+    - Moved util classes into more specific subpackages
   Bug Fixes:
     - Fixed Replenish consuming wrong mana amount
     - Fixed players unable to do certain tasks (breaking/placing blocks) if their player data was not loaded
+    - Added chipped_anvil, damaged_anvil, flower_pot, and signs to blocked materials when equipping armor with modifiers
 
 Version Alpha 1.6.8
   Changes:
