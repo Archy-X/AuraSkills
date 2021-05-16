@@ -2,11 +2,12 @@ Version Beta 1.0.0
   New Features:
     - Backups:
       - Save a backup with /backup save
-      - Load a backup in the backups folder with /back load [file]. You must specify the exact file name with the file extension
-      - Automatic backups will by default be taken at least 24 hours apart
+      - Load a backup in the backups folder with /back load [file]
+        - You must specify the exact file name with the file extension, such as /backup load backup-date_time.yml
+      - Automatic backups will be taken by default at least 24 hours apart on server shutdowns
       - Added automatic-backups.enabled and automatic-backups.minimum-interval-hours options
     - Region storage:
-      - Placed blocks are now stored on file, which means gaining xp for the placed blocks after a restart is no longer possible
+      - Placed blocks are now stored on file, which means gaining xp for placed blocks after a restart is no longer possible
       - Stored in the regiondata folder organized by world and regions (32x32 chunk areas)
       - Regions are dynamically loaded and unloaded as they are used to conserve memory
     - Added new Farming XP sources:
