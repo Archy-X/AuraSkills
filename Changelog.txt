@@ -1,3 +1,47 @@
+Version Beta 1.0.0
+  New Features:
+    - Backups:
+      - Save a backup with /backup save
+      - Load a backup in the backups folder with /back load [file]. You must specify the exact file name with the file extension
+      - Automatic backups will by default be taken at least 24 hours apart
+      - Added automatic-backups.enabled and automatic-backups.minimum-interval-hours options
+    - Region storage:
+      - Placed blocks are now stored on file, which means gaining xp for the placed blocks after a restart is no longer possible
+      - Stored in the regiondata folder organized by world and regions (32x32 chunk areas)
+      - Regions are dynamically loaded and unloaded as they are used to conserve memory
+    - Added new Farming XP sources:
+      - Cactus
+      - Brown/Red mushroom
+      - Kelp
+      - Sea pickle
+      - Sweet berry bush
+    - MySQL improvements:
+      - Added mysql.load-delay option to delay loading player data from database until a certain number of ticks passes
+      - Added mysql.always-load-on-join to load player data on join no matter if it is already cached in memory
+    - Added custom WorldGuard flags:
+      - Added aureliumskills-xp-gain flag to allow/deny XP gain in regions (works the same as blocked-regions in config)
+      - Only works in WorldGuard 7.0+ (1.13+)
+    - Added skill average leaderboards (/skills top average)
+    - Added grindstone disenchanting as Forging XP source
+    - Added check-for-updates option to toggle update checking
+    - Added aureliumskills.checkupdates permission to toggle sending plugin update messages on join
+    - Added replenish.replant_delay option in abilities_config.yml
+  Changes:
+    - Moved Yaml player data into individual files for each player in the playerdata folder
+    - Changed MySQL database format, NOT backwards compatible
+    - Each player's data will now be loaded on join and saved on leave
+    - Stat modifiers are now persistent
+    - Mana is now persistent
+    - Player language settings are now persistent
+    - Certain ability data is now persistent
+    - Complete recode and cleanup of the data and storage system
+    - Added message keys for backup commands
+    - Abstracted skills and stats, created skill and stat registry system
+    - Added Lithuanian (lt) messages
+  Bug Fixes:
+    - Fixed Replenish consuming wrong mana amount
+    - Fixed players unable to do certain tasks (breaking/placing blocks) if their player data was not loaded
+
 Version Alpha 1.6.8
   Changes:
     - Made default English not enough mana messages more specific to show current and max mana
