@@ -41,7 +41,7 @@ Version Beta 1.0.0
   API Changes:
     - Renamed Stat enum to Stats
     - Renamed Skill enum to Skills
-    - Skill and Stat are now abstract classes that can represent more than just the default skills/stats
+    - Skill and Stat are now interfaces that can represent more than just the default skills/stats
     - Moved util classes into more specific subpackages
   Bug Fixes:
     - Fixed Replenish consuming wrong mana amount

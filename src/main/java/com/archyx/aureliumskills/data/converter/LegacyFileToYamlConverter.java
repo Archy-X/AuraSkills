@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.data.converter;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,7 +29,7 @@ public class LegacyFileToYamlConverter extends DataConverter {
                 for (String stringUUID : skillData.getKeys(false)) {
                     try {
                         UUID uuid = UUID.fromString(stringUUID);
-                        File playerDataFile = new File(plugin.getDataFolder() + "/playerdata/" + uuid.toString() + ".yml");
+                        File playerDataFile = new File(plugin.getDataFolder() + "/playerdata/" + uuid + ".yml");
                         if (!playerDataFile.exists()) { // Only convert if playerdata file does not exist
                             // Create config
                             FileConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerDataFile);
@@ -62,9 +63,37 @@ public class LegacyFileToYamlConverter extends DataConverter {
                     }
                 }
             }
-            boolean renamed = file.renameTo(new File(plugin.getDataFolder(), "data-OLD.yml"));
+            // Prevent renaming to existing file
+            int duplicates = 0;
+            File[] subFiles = plugin.getDataFolder().listFiles();
+            if (subFiles != null) {
+                for (File subFile : subFiles) {
+                    if (subFile.getName().equals("data-OLD.yml")) {
+                        if (1 > duplicates) {
+                            duplicates = 1;
+                        }
+                        break;
+                    } else if (subFile.getName().startsWith("data-OLD (")) {
+                        int fileNameNumber = NumberUtils.toInt(subFile.getName().substring(10, 11)) + 1;
+                        if (fileNameNumber > duplicates) {
+                            duplicates = fileNameNumber;
+                        }
+                    }
+                }
+            }
+            // Rename old file
+            boolean renamed;
+            String renamedName;
+            if (duplicates == 0) {
+                renamedName = "data-OLD.yml";
+            } else {
+                renamedName = "data-OLD (" + duplicates + ").yml";
+            }
+            renamed = file.renameTo(new File(plugin.getDataFolder(), renamedName));
             if (renamed) {
-                Bukkit.getLogger().info("[AureliumSkills] Successfully renamed data.yml to data-OLD.yml");
+                Bukkit.getLogger().info("[AureliumSkills] Successfully renamed data.yml to " + renamedName);
+            } else {
+                Bukkit.getLogger().warning("[AureliumSkills] Failed to rename old data.yml file");
             }
             Bukkit.getLogger().info("[AureliumSkills] Successfully converted " + playersConverted + " player skill data to the new yaml file format!");
         }

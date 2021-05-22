@@ -34,10 +34,10 @@ public class YamlBackup extends BackupProvider {
             }
             createBackupFolder();
             LocalTime time = LocalTime.now();
-            File backupFile = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now().toString()
+            File backupFile = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now()
                     + "_" + time.getHour() + "-" + time.getMinute() + "-" + time.getSecond() + ".yml");
             FileConfiguration backup = YamlConfiguration.loadConfiguration(backupFile);
-            backup.set("backup_version", "1");
+            backup.set("backup_version", 1);
 
             File playerDataFolder = new File(plugin.getDataFolder() + "/playerdata");
             if (playerDataFolder.exists() && playerDataFolder.isDirectory()) {
