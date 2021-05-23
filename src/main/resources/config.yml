@@ -8,8 +8,6 @@
 # This file was generated on version Beta 1.0.0
 # Plugin made by Archy
 
-data-save-period: 6000
-
 # MySql Options
 mysql:
     enabled: false
