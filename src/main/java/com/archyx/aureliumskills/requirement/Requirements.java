@@ -137,7 +137,7 @@ public class Requirements {
     @SuppressWarnings("deprecation")
     public boolean meetsRequirements(ModifierType type, ItemStack item, Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData == null) return false;
+        if (playerData == null) return true;
         // Check global requirements
         for (GlobalRequirement global : manager.getGlobalRequirementsType(type)) {
             if (XMaterial.isNewVersion()) {
@@ -178,7 +178,6 @@ public class Requirements {
             }
         }
         return true;
-
     }
 
     private String getName(Skill skill) {

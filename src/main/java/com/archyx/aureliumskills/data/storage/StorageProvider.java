@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.data.PlayerManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -21,7 +22,7 @@ public abstract class StorageProvider {
         this.plugin = plugin;
     }
 
-    public void createNewPlayer(Player player) {
+    public PlayerData createNewPlayer(Player player) {
         PlayerData playerData = new PlayerData(player, plugin);
         playerManager.addPlayerData(playerData);
         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
@@ -31,6 +32,13 @@ public abstract class StorageProvider {
                 Bukkit.getPluginManager().callEvent(event);
             }
         }.runTask(plugin);
+        return playerData;
+    }
+
+    protected void sendErrorMessageToPlayer(Player player, Exception e) {
+        player.sendMessage(ChatColor.RED + "There was an error loading your skill data: " + e.getMessage() +
+                ". Please report the error to your server administrator. To prevent your data from resetting permanently" +
+                ", your skill data will not be saved. Try relogging to attempt loading again.");
     }
 
     public abstract void load(Player player);

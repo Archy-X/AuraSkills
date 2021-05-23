@@ -38,6 +38,7 @@ public class PlayerData {
     private final Map<String, Object> metadata;
 
     private boolean saving;
+    private boolean shouldSave;
 
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
@@ -49,6 +50,7 @@ public class PlayerData {
         this.abilityData = new HashMap<>();
         this.metadata = new HashMap<>();
         this.saving = false;
+        this.shouldSave = true;
     }
 
     public Player getPlayer() {
@@ -237,6 +239,14 @@ public class PlayerData {
 
     public void setSaving(boolean saving) {
         this.saving = saving;
+    }
+
+    public boolean shouldNotSave() {
+        return !shouldSave;
+    }
+
+    public void setShouldSave(boolean shouldSave) {
+        this.shouldSave = shouldSave;
     }
 
 }

@@ -41,7 +41,9 @@ public class ArmorListener implements Listener{
             "?DAYLIGHT_DETECTOR", "BEACON", "?COMMAND",
             "CARTOGRAPHY_TABLE", "LECTERN", "GRINDSTONE",
             "SMITHING_TABLE", "STONECUTTER", "BLAST_FURNACE",
-            "BELL", "SMOKER", "BARREL", "LOOM"
+            "BELL", "SMOKER", "BARREL", "LOOM",
+            "CHIPPED_ANVIL", "DAMAGED_ANVIL", "FLOWER_POT",
+            "*SIGN"
     };
 
     public ArmorListener(List<String> blockedMaterials){

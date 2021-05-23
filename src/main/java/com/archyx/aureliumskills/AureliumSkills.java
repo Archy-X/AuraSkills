@@ -336,9 +336,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (!OptionL.getBoolean(Option.CHECK_FOR_UPDATES)) return;
 		new UpdateChecker(this, 81069).getVersion(version -> {
 			if (!this.getDescription().getVersion().contains("Pre-Release") && !this.getDescription().getVersion().contains("Build")) {
-				if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-					getLogger().info("No new updates found");
-				} else {
+				if (!this.getDescription().getVersion().equalsIgnoreCase(version)) {
 					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
 							version);
 					getLogger().info("Download it on Spigot:");
@@ -346,8 +344,8 @@ public class AureliumSkills extends JavaPlugin {
 				}
 			}
 			else {
-				getLogger().info("You are on a Pre-Release version, plugin may be buggy or unstable!");
-				getLogger().info("Report any bugs to Archy#2011 on discord or submit an issue here: https://github.com/Archy-X/AureliumSkills/issues");
+				getLogger().info("You are on an in development version of the plugin, plugin may be buggy or unstable!");
+				getLogger().info("Report any bugs to the support discord server or submit an issue here: https://github.com/Archy-X/AureliumSkills/issues");
 			}
 		});
 	}

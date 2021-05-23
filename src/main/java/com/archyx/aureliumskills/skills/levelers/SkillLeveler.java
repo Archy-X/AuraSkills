@@ -144,14 +144,6 @@ public abstract class SkillLeveler {
         if (plugin.getWorldManager().isInBlockedWorld(location)) {
             return true;
         }
-        //Checks if in blocked region
-        if (plugin.isWorldGuardEnabled()) {
-            if (plugin.getWorldGuardSupport().isInBlockedRegion(location)) {
-                return true;
-            }
-            // Check if blocked by flags
-            else return plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN);
-        }
         //Check for permission
         if (!player.hasPermission("aureliumskills." + skillName)) {
             return true;
@@ -159,6 +151,14 @@ public abstract class SkillLeveler {
         //Check creative mode disable
         if (OptionL.getBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
             return player.getGameMode().equals(GameMode.CREATIVE);
+        }
+        //Checks if in blocked region
+        if (plugin.isWorldGuardEnabled()) {
+            if (plugin.getWorldGuardSupport().isInBlockedRegion(location)) {
+                return true;
+            }
+            // Check if blocked by flags
+            else return plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN);
         }
         return false;
     }

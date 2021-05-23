@@ -147,7 +147,9 @@ public class MySqlStorageProvider extends StorageProvider {
         } catch (Exception e) {
             Bukkit.getLogger().warning("There was an error loading player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
-            createNewPlayer(player);
+            PlayerData playerData = createNewPlayer(player);
+            playerData.setShouldSave(false);
+            sendErrorMessageToPlayer(player, e);
         }
     }
 
@@ -186,6 +188,7 @@ public class MySqlStorageProvider extends StorageProvider {
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
+        if (playerData.shouldNotSave()) return;
         try {
             // Build stat modifiers json
             StringBuilder modifiersJson = new StringBuilder();
