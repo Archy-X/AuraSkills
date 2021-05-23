@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.loot;
 
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.cryptomorin.xseries.XEnchantment;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

@@ -4,19 +4,17 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.Treecapitator;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.stats.PlayerStat;
-import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -45,16 +43,17 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	private final Random r = new Random();
 	
 	public ForagingAbilities(AureliumSkills plugin) {
-		super(plugin, Skill.FORAGING);
+		super(plugin, Skills.FORAGING);
 	}
 	
 	public void lumberjack(Player player, Block block) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUMBERJACK)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
-					PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-					if (skill.getAbilityLevel(Ability.LUMBERJACK) > 0) {
-						if (r.nextDouble() < ((getValue(Ability.LUMBERJACK, skill)) / 100)) {
+					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+					if (playerData == null) return;
+					if (playerData.getAbilityLevel(Ability.LUMBERJACK) > 0) {
+						if (r.nextDouble() < ((getValue(Ability.LUMBERJACK, playerData)) / 100)) {
 							for (ItemStack item : block.getDrops()) {
 								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUMBERJACK);
 								Bukkit.getPluginManager().callEvent(event);
@@ -69,15 +68,15 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void axeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+	public void axeMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.AXE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.foraging")) {
 					return;
 				}
-				if (playerSkill.getAbilityLevel(Ability.AXE_MASTER) > 0) {
-					event.setDamage(event.getDamage() * (1 + (getValue(Ability.AXE_MASTER, playerSkill) / 100)));
+				if (playerData.getAbilityLevel(Ability.AXE_MASTER) > 0) {
+					event.setDamage(event.getDamage() * (1 + (getValue(Ability.AXE_MASTER, playerData) / 100)));
 				}
 			}
 		}
@@ -96,19 +95,18 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 					if (e.getDamager() instanceof Player) {
 						Player player = (Player) e.getDamager();
 						if (blockAbility(player)) return;
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							//If damage was an attack
-							if (e.getCause().equals(DamageCause.ENTITY_ATTACK)) {
-								//If item used was an axe
-								Material mat = player.getInventory().getItemInMainHand().getType();
-								if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
-										|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
-									PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-									//Checks if shredder is used
-									if (skill.getAbilityLevel(Ability.SHREDDER) > 0) {
-										if (r.nextDouble() < (getValue(Ability.SHREDDER, skill)) / 100) {
-											event.setDamage(event.getDamage() * 3);
-										}
+						//If damage was an attack
+						if (e.getCause().equals(DamageCause.ENTITY_ATTACK)) {
+							//If item used was an axe
+							Material mat = player.getInventory().getItemInMainHand().getType();
+							if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
+									|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
+								PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+								if (playerData == null) return;
+								//Checks if shredder is used
+								if (playerData.getAbilityLevel(Ability.SHREDDER) > 0) {
+									if (r.nextDouble() < (getValue(Ability.SHREDDER, playerData)) / 100) {
+										event.setDamage(event.getDamage() * 3);
 									}
 								}
 							}
@@ -119,21 +117,18 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void applyValor(Player player, PlayerStat playerStat) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+	public void applyValor(PlayerData playerData) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.VALOR)) {
-				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-				if (playerSkill != null) {
-					if (playerSkill.getAbilityLevel(Ability.VALOR) > 0) {
-						playerStat.addModifier(new StatModifier("foraging-valor", Stat.STRENGTH, (int) getValue(Ability.VALOR, playerSkill)));
-					}
+				if (playerData.getAbilityLevel(Ability.VALOR) > 0) {
+					playerData.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(Ability.VALOR, playerData)));
 				}
 			}
 		}
 	}
 
-	public void removeValor(PlayerStat playerStat) {
-		playerStat.removeModifier("foraging-valor");
+	public void removeValor(PlayerData playerData) {
+		playerData.removeStatModifier("foraging-valor");
 	}
 
 
@@ -145,7 +140,6 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 			if (blockMat.equals(XMaterial.OAK_LOG.parseMaterial()) || blockMat.equals(XMaterial.BIRCH_LOG.parseMaterial()) || blockMat.equals(XMaterial.SPRUCE_LOG.parseMaterial())
 					|| blockMat.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || blockMat.equals(XMaterial.ACACIA_LOG.parseMaterial()) || blockMat.equals(XMaterial.DARK_OAK_LOG.parseMaterial())) {
 				Player player = event.getPlayer();
-				Locale locale = Lang.getLanguage(player);
 				//Checks if treecapitator is already activated
 				if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
 					return;
@@ -155,18 +149,18 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 					//Checks if holding axe
 					Material mat = player.getInventory().getItemInMainHand().getType();
 					if (mat.name().toUpperCase().contains("_AXE")) {
-						if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-							PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-							if (plugin.getManaManager().getMana(player.getUniqueId()) >= getManaCost(MAbility.TREECAPITATOR, skill)) {
-								plugin.getManaAbilityManager().activateAbility(player, MAbility.TREECAPITATOR, (int) (getValue(MAbility.TREECAPITATOR, skill) * 20), new Treecapitator(plugin));
-								treeCapitator(event);
-							}
-							else {
-								plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-										,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, skill))
-										, "{current_mana}", String.valueOf(Math.round(plugin.getManaManager().getMana(player.getUniqueId())))
-										, "{max_mana}", String.valueOf(Math.round(plugin.getManaManager().getMaxMana(player.getUniqueId())))));
-							}
+						PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+						if (playerData == null) return;
+						Locale locale = playerData.getLocale();
+						if (playerData.getMana() >= getManaCost(MAbility.TREECAPITATOR, playerData)) {
+							plugin.getManaAbilityManager().activateAbility(player, MAbility.TREECAPITATOR, (int) (getValue(MAbility.TREECAPITATOR, playerData) * 20), new Treecapitator(plugin));
+							treeCapitator(event);
+						}
+						else {
+							plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale).replace("{mana}", String.valueOf(getManaCost(MAbility.TREECAPITATOR, playerData))));plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+									,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.TREECAPITATOR, playerData))
+									, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
+									, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
 						}
 					}
 				}
@@ -253,6 +247,6 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 				return;
 			}
 		}
-		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.FORAGING, new String[]{"_AXE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skills.FORAGING, new String[]{"_AXE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 }

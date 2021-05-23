@@ -4,9 +4,9 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,8 +25,8 @@ public class RankItem extends ConfigurableItem {
     public ItemStack getItem(Skill skill, Player player, Locale locale) {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
-        int rank = plugin.getLeaderboard().getSkillRank(skill, player.getUniqueId());
-        int size = plugin.getLeaderboard().getSize();
+        int rank = plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId());
+        int size = plugin.getLeaderboardManager().getLeaderboard(skill).size();
         if (meta != null) {
             meta.setDisplayName(applyPlaceholders(LoreUtil.replace(displayName,"{your_ranking}", Lang.getMessage(MenuMessage.YOUR_RANKING, locale)), player));
             List<String> builtLore = new ArrayList<>();

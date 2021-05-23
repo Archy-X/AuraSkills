@@ -2,11 +2,11 @@ package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -71,7 +71,6 @@ public class ManaAbilityActivator {
                     Material mat = event.getPlayer().getInventory().getItemInMainHand().getType();
                     if (hasMatch(matchMaterial, mat.name())) {
                         Player player = event.getPlayer();
-                        Locale locale = Lang.getLanguage(player);
                         // Check if requires sneak
                         if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(mAbility, "require_sneak")) {
                             if (!player.isSneaking()) return;
@@ -88,37 +87,38 @@ public class ManaAbilityActivator {
                         if (!player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ENGLISH))) {
                             return;
                         }
-                        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                            if (SkillLoader.playerSkills.get(player.getUniqueId()).getManaAbilityLevel(mAbility) > 0) {
-                                ManaAbilityManager manager = plugin.getManaAbilityManager();
-                                // Checks if speed mine is already activated
-                                if (manager.isActivated(player.getUniqueId(), mAbility)) {
-                                    return;
-                                }
-                                // Checks if speed mine is already ready
-                                if (manager.isReady(player.getUniqueId(), mAbility)) {
-                                    return;
-                                }
-                                // Checks if cooldown is reached
-                                if (manager.getPlayerCooldown(player.getUniqueId(), mAbility) == 0) {
-                                    manager.setReady(player.getUniqueId(), mAbility, true);
-                                    plugin.getAbilityManager().sendMessage(player, ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_RAISE"), locale));
-                                    new BukkitRunnable() {
-                                        @Override
-                                        public void run() {
-                                            if (!manager.isActivated(player.getUniqueId(), mAbility)) {
-                                                if (manager.isReady(player.getUniqueId(), mAbility)) {
-                                                    manager.setReady(player.getUniqueId(), mAbility, false);
-                                                    plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale));
-                                                }
+                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        if (playerData == null) return;
+                        Locale locale = playerData.getLocale();
+                        if (playerData.getManaAbilityLevel(mAbility) > 0) {
+                            ManaAbilityManager manager = plugin.getManaAbilityManager();
+                            // Checks if speed mine is already activated
+                            if (manager.isActivated(player.getUniqueId(), mAbility)) {
+                                return;
+                            }
+                            // Checks if speed mine is already ready
+                            if (manager.isReady(player.getUniqueId(), mAbility)) {
+                                return;
+                            }
+                            // Checks if cooldown is reached
+                            if (manager.getPlayerCooldown(player.getUniqueId(), mAbility) == 0) {
+                                manager.setReady(player.getUniqueId(), mAbility, true);
+                                plugin.getAbilityManager().sendMessage(player, ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_RAISE"), locale));
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        if (!manager.isActivated(player.getUniqueId(), mAbility)) {
+                                            if (manager.isReady(player.getUniqueId(), mAbility)) {
+                                                manager.setReady(player.getUniqueId(), mAbility, false);
+                                                plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale));
                                             }
                                         }
-                                    }.runTaskLater(plugin, 80L);
-                                } else {
-                                    if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
-                                        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
-                                        manager.setErrorTimer(player.getUniqueId(), mAbility, 2);
                                     }
+                                }.runTaskLater(plugin, 80L);
+                            } else {
+                                if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
+                                    plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}", NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
+                                    manager.setErrorTimer(player.getUniqueId(), mAbility, 2);
                                 }
                             }
                         }

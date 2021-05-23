@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.ModifierType;
-import com.archyx.aureliumskills.util.ArmorEquipEvent;
+import com.archyx.aureliumskills.util.armor.ArmorEquipEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,12 +20,14 @@ import java.util.Locale;
 
 public class RequirementListener implements Listener {
 
+    private final AureliumSkills plugin;
     private final RequirementManager manager;
     private final Requirements requirements;
 
-    public RequirementListener(RequirementManager manager) {
-        this.manager = manager;
-        this.requirements = new Requirements(manager);
+    public RequirementListener(AureliumSkills plugin) {
+        this.plugin = plugin;
+        this.manager = plugin.getRequirementManager();
+        this.requirements = new Requirements(plugin);
     }
 
     @EventHandler
@@ -36,7 +38,7 @@ public class RequirementListener implements Listener {
             if (item != null) {
                 if (item.getType() != Material.AIR) {
                     if (!requirements.meetsRequirements(ModifierType.ARMOR, item, player)) {
-                        Locale locale = Lang.getLanguage(player);
+                        Locale locale = plugin.getLang().getLocale(player);
                         event.setCancelled(true);
                         Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
                         if (timer != null) {
@@ -62,7 +64,7 @@ public class RequirementListener implements Listener {
             ItemStack item = player.getInventory().getItemInMainHand();
             if (item.getType() != Material.AIR) {
                 if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
-                    Locale locale = Lang.getLanguage(player);
+                    Locale locale = plugin.getLang().getLocale(player);
                     event.setCancelled(true);
                     Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
                     if (timer != null) {
@@ -86,7 +88,7 @@ public class RequirementListener implements Listener {
             ItemStack item = event.getItemInHand();
             if (item.getType() != Material.AIR) {
                 if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
-                    Locale locale = Lang.getLanguage(player);
+                    Locale locale = plugin.getLang().getLocale(player);
                     event.setCancelled(true);
                     Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
                     if (timer != null) {
@@ -111,7 +113,7 @@ public class RequirementListener implements Listener {
                 ItemStack item = player.getInventory().getItemInMainHand();
                 if (item.getType() != Material.AIR) {
                     if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
-                        Locale locale = Lang.getLanguage(player);
+                        Locale locale = plugin.getLang().getLocale(player);
                         event.setCancelled(true);
                         Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
                         if (timer != null) {

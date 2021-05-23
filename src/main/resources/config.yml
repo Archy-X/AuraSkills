@@ -5,7 +5,7 @@
 # |            Source Code: https://github.com/Archy-X/AureliumSkills          | #
 # | Config Guide: https://github.com/Archy-X/AureliumSkills/wiki/Configuration | #
 # +----------------------------------------------------------------------------+ #
-# This file was generated on version Alpha 1.6.8
+# This file was generated on version Beta 1.0.0
 # Plugin made by Archy
 
 data-save-period: 6000
@@ -18,6 +18,8 @@ mysql:
     database: aureliumskills
     username: root
     password: pass
+    load-delay: 0
+    always-load-on-join: false
 
 default-language: en
 
@@ -34,6 +36,7 @@ languages:
     - pt-BR
     - zh-CN
     - de
+    - lt
 
 # Action Bar Options
 action-bar:
@@ -174,6 +177,12 @@ critical:
 
 menus:
     placeholder-api: true
+
+check-for-updates: true
+
+automatic-backups:
+    enabled: true
+    minimum-interval-hours: 24
 
 # Skill specific options
 farming:

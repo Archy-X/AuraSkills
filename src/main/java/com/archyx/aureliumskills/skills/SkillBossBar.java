@@ -5,9 +5,9 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.util.BigNumber;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.RomanNumber;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.BigNumber;
+import com.archyx.aureliumskills.util.math.RomanNumber;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -56,14 +56,13 @@ public class SkillBossBar implements Listener {
         styles = new HashMap<>();
         for (String entry : OptionL.getList(Option.BOSS_BAR_FORMAT)) {
             String[] splitEntry = entry.split(" ");
-            Skill skill = Skill.FARMING;
+            Skill skill;
             BarColor color = BarColor.GREEN;
             BarStyle style = BarStyle.SOLID;
-            try {
-                skill = Skill.valueOf(splitEntry[0].toUpperCase());
-            }
-            catch (IllegalArgumentException e) {
+            skill = plugin.getSkillRegistry().getSkill(splitEntry[0].toUpperCase());
+            if (skill == null) {
                 plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid Skill");
+                skill = Skills.FARMING;
             }
             if (splitEntry.length > 1) {
                 try {
@@ -100,7 +99,7 @@ public class SkillBossBar implements Listener {
     }
 
     public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
-        Locale locale = Lang.getLanguage(player);
+        Locale locale = plugin.getLang().getLocale(player);
         BarColor color = getColor(skill);
         BarStyle style = getStyle(skill);
         BossBar bossBar;

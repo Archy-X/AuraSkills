@@ -95,7 +95,7 @@ abilities:
       info: '+{value}% XP'
     spade_master:
       name: Spade Master
-      desc: 'Deal {value} more damage with shovels.'
+      desc: 'Deal {value}% more damage with shovels.'
       info: '+{value}% Shovel Damage'
     bigger_scoop:
       name: Bigger Scoop
@@ -352,7 +352,7 @@ action_bar:
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
 commands:
-  prefix: '&8[&bSkills&8] '
+  prefix: '&8[&bSkills&8]&r '
   armor:
     modifier:
       add:
@@ -381,6 +381,18 @@ commands:
       removeall:
         removed: '&7All armor requirements have been removed from your item'
       equip: '&eYou do not meet the requirements to equip this item!'
+  backup:
+    load:
+      confirm: '&cLoading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action'
+      loading: '&fLoading backup...'
+      loaded: '&aSuccessfully loaded backup'
+      error: '&cError loading backup: {error}'
+      must_be_yaml: '&eFile must be a .yml file!'
+      file_not_found: '&eA backup of this file name does not exist in the backups folder!'
+    save:
+      saving: '&fSaving backup...'
+      saved: '&fBacked up {type} data as {file}'
+      error: '&cError backing up {type} data! See error in console/below for details'
   item:
     modifier:
       add:
@@ -470,6 +482,9 @@ commands:
     skill_header: '&f--==&b&l{skill} Leaderboard&f==--'
     skill_header_page: '&f--==&b&l{skill} Leaderboard &f(Page {page})==--'
     skill_entry: '&f{rank}. &b{player} &f- {level}'
+    average_header: '&f--==&b&lSkill Average Leaderboard&f==--'
+    average_header_page: '&f--==&b&lSkill Average Leaderboard &f(Page {page})==--'
+    average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUsage: &a/sk top &f<page> &7or &a/sk top &f[skill] <page>'
   updateleaderboards:
     already_updating: '&eLeaderboard is already updating!'
@@ -686,4 +701,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 13
+file_version: 15

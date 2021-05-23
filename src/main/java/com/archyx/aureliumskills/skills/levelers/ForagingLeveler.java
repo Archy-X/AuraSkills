@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.abilities.ForagingAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class ForagingLeveler extends SkillLeveler implements Listener{
 
-	private ForagingAbilities foragingAbilities;
+	private final ForagingAbilities foragingAbilities;
 
 	public ForagingLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.FORAGER);
@@ -28,7 +29,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.FORAGING)) {
+		if (OptionL.isEnabled(Skills.FORAGING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.FORAGING_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
@@ -36,15 +37,15 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 				}
 			}
 			Block b = event.getBlock();
-			if (blockXpGainLocation(b.getLocation())) return;
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
-				if (event.getBlock().hasMetadata("skillsPlaced")) {
+				if (plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 			}
 			Player p = event.getPlayer();
-			Skill s = Skill.FORAGING;
+			if (blockXpGainLocation(b.getLocation(), p)) return;
+			Skill s = Skills.FORAGING;
 			Material mat = event.getBlock().getType();
 			if (blockXpGainPlayer(p)) return;
 			//If 1.13+

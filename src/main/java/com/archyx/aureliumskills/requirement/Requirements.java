@@ -1,13 +1,13 @@
 package com.archyx.aureliumskills.requirement;
 
+import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.ModifierType;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -21,10 +21,12 @@ import java.util.*;
 
 public class Requirements {
 
+    private final AureliumSkills plugin;
     private final RequirementManager manager;
 
-    public Requirements(RequirementManager manager) {
-        this.manager = manager;
+    public Requirements(AureliumSkills plugin) {
+        this.plugin = plugin;
+        this.manager = plugin.getRequirementManager();
     }
 
     public Map<Skill, Integer> getRequirements(ModifierType type, ItemStack item) {
@@ -33,9 +35,11 @@ public class Requirements {
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
             try {
-                Skill skill = Skill.valueOf(key.toUpperCase());
-                Integer value = compound.getInteger(key);
-                requirements.put(skill, value);
+                Skill skill = plugin.getSkillRegistry().getSkill(key);
+                if (skill != null) {
+                    Integer value = compound.getInteger(key);
+                    requirements.put(skill, value);
+                }
             }
             catch (Exception ignored) { }
         }
@@ -132,14 +136,14 @@ public class Requirements {
 
     @SuppressWarnings("deprecation")
     public boolean meetsRequirements(ModifierType type, ItemStack item, Player player) {
-        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (playerSkill == null) return false;
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null) return true;
         // Check global requirements
         for (GlobalRequirement global : manager.getGlobalRequirementsType(type)) {
             if (XMaterial.isNewVersion()) {
                 if (global.getMaterial().parseMaterial() == item.getType()) {
                     for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
-                        if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                        if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
                             return false;
                         }
                     }
@@ -152,7 +156,7 @@ public class Requirements {
                         if (materialData != null) {
                             if (item.getDurability() == global.getMaterial().getData()) {
                                 for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
-                                    if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                                    if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
                                         return false;
                                     }
                                 }
@@ -160,7 +164,7 @@ public class Requirements {
                         }
                     } else {
                         for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
-                            if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                            if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
                                 return false;
                             }
                         }
@@ -169,12 +173,11 @@ public class Requirements {
             }
         }
         for (Map.Entry<Skill, Integer> entry : getRequirements(type, item).entrySet()) {
-            if (playerSkill.getSkillLevel(entry.getKey()) < entry.getValue()) {
+            if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
                 return false;
             }
         }
         return true;
-
     }
 
     private String getName(Skill skill) {

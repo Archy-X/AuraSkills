@@ -4,11 +4,11 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
-import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityOption;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -49,7 +49,7 @@ public class AbilityManager {
         long startTime = System.currentTimeMillis();
         ConfigurationSection abilities = config.getConfigurationSection("abilities");
         if (abilities != null) {
-            for (Skill skill : Skill.values()) {
+            for (Skill skill : plugin.getSkillRegistry().getSkills()) {
                 String skillName = skill.name().toLowerCase(Locale.ENGLISH);
                 ConfigurationSection skillAbilities = abilities.getConfigurationSection(skillName);
                 if (skillAbilities != null) {
@@ -410,7 +410,9 @@ public class AbilityManager {
         if (OptionL.getBoolean(Option.ACTION_BAR_ABILITY) && OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) {
             plugin.getActionBar().sendAbilityActionBar(player, message);
         } else {
-            player.sendMessage(AureliumSkills.getPrefix(Lang.getLanguage(player)) + message);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData == null) return;
+            player.sendMessage(AureliumSkills.getPrefix(playerData.getLocale()) + message);
         }
     }
 

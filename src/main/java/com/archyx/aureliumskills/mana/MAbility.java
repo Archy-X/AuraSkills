@@ -1,30 +1,32 @@
 package com.archyx.aureliumskills.mana;
 
+import com.archyx.aureliumskills.abilities.AbstractAbility;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public enum MAbility {
+public enum MAbility implements AbstractAbility {
 
-    REPLENISH(() -> Skill.FARMING, 5.0, 5.0, 200, -5, 20, 20,
+    REPLENISH(() -> Skills.FARMING, 5.0, 5.0, 200, -5, 20, 20,
+            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass", "replant_delay"}, new Object[] {false, true, true, 4}),
+    TREECAPITATOR(() -> Skills.FORAGING, 5.0, 5.0, 200, -5, 20, 20,
             new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true}),
-    TREECAPITATOR(() -> Skill.FORAGING, 5.0, 5.0, 200, -5, 20, 20,
+    SPEED_MINE(() -> Skills.MINING, 5.0, 5.0, 200, -5, 20 ,20,
             new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true}),
-    SPEED_MINE(() -> Skill.MINING, 5.0, 5.0, 200, -5, 20 ,20,
-            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true}),
-    SHARP_HOOK(() -> Skill.FISHING, 0.5, 0.5, 2, -0.1, 5, 2,
+    SHARP_HOOK(() -> Skills.FISHING, 0.5, 0.5, 2, -0.1, 5, 2,
             new String[] {"display_damage_with_scaling", "enable_sound"}, new Object[] {true, true}),
-    TERRAFORM(() -> Skill.EXCAVATION, 5.0, 4.0, 200, -5, 20, 20,
+    TERRAFORM(() -> Skills.EXCAVATION, 5.0, 4.0, 200, -5, 20, 20,
             new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true}),
-    CHARGED_SHOT(() -> Skill.ARCHERY, 0.5, 0.3, 0, 0, 5, 5,
+    CHARGED_SHOT(() -> Skills.ARCHERY, 0.5, 0.3, 0, 0, 5, 5,
             new String[] {"enable_message", "enable_sound"}, new Object[] {true, true}),
-    ABSORPTION(() -> Skill.DEFENSE, 2.0, 3.0, 200, -5, 10, 10,
+    ABSORPTION(() -> Skills.DEFENSE, 2.0, 3.0, 200, -5, 10, 10,
             new String[] {"enable_particles"}, new Object[] {true});
 
     private final Supplier<Skill> skill;
@@ -47,13 +49,7 @@ public enum MAbility {
     }
 
     MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues) {
-        this.skill = skill;
-        this.baseValue = baseValue;
-        this.valuePerLevel = valuePerLevel;
-        this.baseCooldown = baseCooldown;
-        this.cooldownPerLevel = cooldownPerLevel;
-        this.baseManaCost = baseManaCost;
-        this.manaCostPerLevel = manaCostPerLevel;
+        this(skill, baseValue, valuePerLevel, baseCooldown, cooldownPerLevel, baseManaCost, manaCostPerLevel);
         this.options = new HashMap<>();
         for (int i = 0; i < optionKeys.length; i++) {
             if (i < optionValues.length) {
@@ -62,14 +58,17 @@ public enum MAbility {
         }
     }
 
+    @Override
     public Skill getSkill() {
         return skill.get();
     }
 
+    @Override
     public double getDefaultBaseValue() {
         return baseValue;
     }
 
+    @Override
     public double getDefaultValuePerLevel() {
         return valuePerLevel;
     }

@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.menu.items.ConfigurableItem;
 import com.archyx.aureliumskills.menu.items.ItemType;
 import com.archyx.aureliumskills.menu.templates.ConfigurableTemplate;
 import com.archyx.aureliumskills.menu.templates.TemplateType;
-import com.archyx.aureliumskills.util.VersionUtils;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

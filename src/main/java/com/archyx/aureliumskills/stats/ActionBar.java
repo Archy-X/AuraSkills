@@ -3,16 +3,15 @@ package com.archyx.aureliumskills.stats;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.ManaManager;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.BigNumber;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
-import com.archyx.aureliumskills.util.ProtocolUtil;
+import com.archyx.aureliumskills.support.ProtocolLibSupport;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.BigNumber;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
@@ -59,7 +58,6 @@ public class ActionBar implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			if (OptionL.getBoolean(Option.ACTION_BAR_ENABLED) && OptionL.getBoolean(Option.ACTION_BAR_IDLE)) {
 				for (Player player : Bukkit.getOnlinePlayers()) {
-					Locale locale = Lang.getLanguage(player);
 					//Check disabled worlds
 					if (!actionBarDisabled.contains(player.getUniqueId())) {
 						if (!plugin.getWorldManager().isDisabledWorld(player.getWorld())) {
@@ -67,11 +65,15 @@ public class ActionBar implements Listener {
 								currentAction.put(player, 0);
 							}
 							if (!isGainingXp.contains(player) && !isPaused.contains(player)) {
-								sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
-										,"{hp}", getHp(player)
-										,"{max_hp}", getMaxHp(player)
-										,"{mana}", getMana(player)
-										,"{max_mana}", getMaxMana(player)));
+								PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+								if (playerData != null) {
+									Locale locale = playerData.getLocale();
+									sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
+											, "{hp}", getHp(player)
+											, "{max_hp}", getMaxHp(player)
+											, "{mana}", getMana(playerData)
+											, "{max_mana}", getMaxMana(playerData)));
+								}
 							}
 						}
 					}
@@ -98,11 +100,11 @@ public class ActionBar implements Listener {
 		if (OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) { // If action bar enabled
 			if (!actionBarDisabled.contains(player.getUniqueId())) { // If the player's action bar is enabled
 				// Get player skill data
-				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-				Locale locale = Lang.getLanguage(player);
-				if (playerSkill != null) {
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+				if (playerData != null) {
+					Locale locale = playerData.getLocale();
 					// Check enabled/disabled for max
-					boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+					boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 					if (notMaxed && !OptionL.getBoolean(Option.ACTION_BAR_XP)) {
 						return;
 					}
@@ -129,7 +131,7 @@ public class ActionBar implements Listener {
 								Integer actionBarCurrentAction = currentAction.get(player);
 								if (actionBarCurrentAction != null) {
 									if (thisAction == actionBarCurrentAction) {
-										boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerSkill.getSkillLevel(skill) - 1 && playerSkill.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+										boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 										// Not maxed
 										if (notMaxed) {
 											if (OptionL.getBoolean(Option.ACTION_BAR_XP)) {
@@ -141,10 +143,10 @@ public class ActionBar implements Listener {
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
-																, "{current_xp}", NumberUtil.format1(playerSkill.getXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
-																, "{mana}", getMana(player)
-																, "{max_mana}", getMaxMana(player)));
+																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{mana}", getMana(playerData)
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 													else {
 														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
@@ -152,10 +154,10 @@ public class ActionBar implements Listener {
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
-																, "{current_xp}", String.valueOf((int) playerSkill.getXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
-																, "{mana}", getMana(player)
-																, "{max_mana}", getMaxMana(player)));
+																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{mana}", getMana(playerData)
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 												}
 												// Xp removed
@@ -166,10 +168,10 @@ public class ActionBar implements Listener {
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_removed}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
-																, "{current_xp}", NumberUtil.format1(playerSkill.getXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
-																, "{mana}", getMana(player)
-																, "{max_mana}", getMaxMana(player)));
+																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{mana}", getMana(playerData)
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 													else {
 														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
@@ -177,10 +179,10 @@ public class ActionBar implements Listener {
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
-																, "{current_xp}", String.valueOf((int) playerSkill.getXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerSkill.getSkillLevel(skill) - 1))
-																, "{mana}", getMana(player)
-																, "{max_mana}", getMaxMana(player)));
+																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{mana}", getMana(playerData)
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 												}
 											}
@@ -195,8 +197,8 @@ public class ActionBar implements Listener {
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_gained}", NumberUtil.format1(xpAmount)
 															, "{skill}", skill.getDisplayName(locale)
-															, "{mana}", getMana(player)
-															, "{max_mana}", getMaxMana(player)));
+															, "{mana}", getMana(playerData)
+															, "{max_mana}", getMaxMana(playerData)));
 												}
 												// Xp removed
 												else {
@@ -205,8 +207,8 @@ public class ActionBar implements Listener {
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_removed}", NumberUtil.format1(xpAmount)
 															, "{skill}", skill.getDisplayName(locale)
-															, "{mana}", getMana(player)
-															, "{max_mana}", getMaxMana(player)));
+															, "{mana}", getMana(playerData)
+															, "{max_mana}", getMaxMana(playerData)));
 												}
 											}
 										}
@@ -243,11 +245,13 @@ public class ActionBar implements Listener {
 
 	public void sendAbilityActionBar(Player player, String message) {
 		if (!actionBarDisabled.contains(player.getUniqueId())) {
-			sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, Lang.getLanguage(player)),
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+			if (playerData == null) return;
+			sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
 					"{hp}", getHp(player),
 					"{max_hp}", getMaxHp(player),
-					"{mana}", getMana(player),
-					"{max_mana}", getMaxMana(player),
+					"{mana}", getMana(playerData),
+					"{max_mana}", getMaxMana(playerData),
 					"{message}", message));
 			setPaused(player, 40);
 		}
@@ -265,21 +269,21 @@ public class ActionBar implements Listener {
 		return "";
 	}
 
-	private String getMana(Player player) {
-		return String.valueOf(Math.round(mana.getMana(player.getUniqueId())));
+	private String getMana(PlayerData playerData) {
+		return String.valueOf(Math.round(playerData.getMana()));
 	}
 
-	private String getMaxMana(Player player) {
-		return String.valueOf(Math.round(mana.getMaxMana(player.getUniqueId())));
+	private String getMaxMana(PlayerData playerData) {
+		return String.valueOf(Math.round(playerData.getMaxMana()));
 	}
 
 	private void sendActionBar(Player player, String message) {
 		if (plugin.isProtocolLibEnabled()) {
 			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
-				ProtocolUtil.sendActionBar(player, PlaceholderAPI.setPlaceholders(player, message));
+				ProtocolLibSupport.sendActionBar(player, PlaceholderAPI.setPlaceholders(player, message));
 			}
 			else {
-				ProtocolUtil.sendActionBar(player, message);
+				ProtocolLibSupport.sendActionBar(player, message);
 			}
 		}
 		else {

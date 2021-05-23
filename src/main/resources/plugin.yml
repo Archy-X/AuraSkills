@@ -1,5 +1,5 @@
 name: AureliumSkills
-version: Alpha 1.6.8
+version: Beta 1.0.0
 main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
@@ -48,6 +48,8 @@ permissions:
             aureliumskills.mana.remove: true
             aureliumskills.mana.set: true
             aureliumskills.mana.other: true
+            aureliumskills.backup.save: true
+            aureliumskills.backup.load: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.reload:
@@ -162,3 +164,9 @@ permissions:
         default: true
     aureliumskills.forging:
         default: true
+    aureliumskills.backup.save:
+        default: op
+    aureliumskills.backup.load:
+        default: op
+    aureliumskills.checkupdates:
+        default: op

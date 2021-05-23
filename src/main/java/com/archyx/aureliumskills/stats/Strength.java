@@ -2,29 +2,30 @@ package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.util.DamageType;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.util.mechanics.DamageType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Strength {
 
-	public void strength(EntityDamageByEntityEvent event, PlayerStat playerStat, DamageType damageType) {
+	public void strength(EntityDamageByEntityEvent event, PlayerData playerData, DamageType damageType) {
 		if (damageType == DamageType.HAND) {
 			if (OptionL.getBoolean(Option.STRENGTH_HAND_DAMAGE)) {
-				applyStrength(event, playerStat);
+				applyStrength(event, playerData);
 			}
 		}
 		else if (damageType == DamageType.BOW) {
 			if (OptionL.getBoolean(Option.STRENGTH_BOW_DAMAGE)) {
-				applyStrength(event, playerStat);
+				applyStrength(event, playerData);
 			}
 		}
 		else {
-			applyStrength(event, playerStat);
+			applyStrength(event, playerData);
 		}
 	}
 
-	private void applyStrength(EntityDamageByEntityEvent event, PlayerStat playerStat) {
-		double strength = playerStat.getStatLevel(Stat.STRENGTH);
+	private void applyStrength(EntityDamageByEntityEvent event, PlayerData playerData) {
+		double strength = playerData.getStatLevel(Stats.STRENGTH);
 		if (OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
 			event.setDamage(event.getDamage() * (1 + (strength * OptionL.getDouble(Option.STRENGTH_MODIFIER)) / 100));
 		} else {

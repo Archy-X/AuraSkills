@@ -1,12 +1,11 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -34,14 +33,14 @@ public class Terraform implements ManaAbility {
 
     @Override
     public void activate(Player player) {
-        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-        if (playerSkill != null) {
-            Locale locale = Lang.getLanguage(player);
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            Locale locale = playerData.getLocale();
             //Play sound
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
             //Consume mana
-            double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.TERRAFORM, playerSkill);
-            plugin.getManaManager().setMana(player.getUniqueId(), plugin.getManaManager().getMana(player.getUniqueId()) - manaConsumed);
+            double manaConsumed = plugin.getManaAbilityManager().getManaCost(MAbility.TERRAFORM, playerData);
+            playerData.setMana(playerData.getMana() - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TERRAFORM_START, locale).replace("{mana}", NumberUtil.format0(manaConsumed)));
@@ -50,6 +49,6 @@ public class Terraform implements ManaAbility {
 
     @Override
     public void stop(Player player) {
-        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TERRAFORM_END, Lang.getLanguage(player)));
+        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.TERRAFORM_END, plugin.getLang().getLocale(player)));
     }
 }

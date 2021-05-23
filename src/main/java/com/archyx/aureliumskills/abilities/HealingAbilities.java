@@ -1,17 +1,15 @@
 package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.stats.PlayerStat;
-import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
-import com.archyx.aureliumskills.util.VersionUtils;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.ReflectionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.attribute.Attribute;
@@ -38,7 +36,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     private Class<?> craftPlayerClass;
 
     public HealingAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.HEALING);
+        super(plugin, Skills.HEALING);
     }
 
     @EventHandler
@@ -48,10 +46,10 @@ public class HealingAbilities extends AbilityProvider implements Listener {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
             if (event.getRegainReason() == EntityRegainHealthEvent.RegainReason.MAGIC) {
-                PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                if (playerSkill == null) return;
-                if (playerSkill.getAbilityLevel(Ability.LIFE_ESSENCE) > 0) {
-                    double multiplier = 1 + getValue(Ability.LIFE_ESSENCE, playerSkill) / 100;
+                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                if (playerData == null) return;
+                if (playerData.getAbilityLevel(Ability.LIFE_ESSENCE) > 0) {
+                    double multiplier = 1 + getValue(Ability.LIFE_ESSENCE, playerData) / 100;
                     event.setAmount(event.getAmount() * multiplier);
                 }
             }
@@ -62,10 +60,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     public void lifeSteal(EntityDeathEvent event) {
         if (blockDisabled(Ability.LIFE_STEAL)) return;
         LivingEntity entity = event.getEntity();
-        boolean hostile = false;
-        if (entity instanceof Monster || entity instanceof Player) {
-            hostile = true;
-        }
+        boolean hostile = entity instanceof Monster || entity instanceof Player;
         if (XMaterial.isNewVersion()) {
             if (entity instanceof Phantom) {
                 hostile = true;
@@ -76,13 +71,13 @@ public class HealingAbilities extends AbilityProvider implements Listener {
             Player player = entity.getKiller();
             if (player.equals(entity)) return;
             if (blockAbility(player)) return;
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill == null) return;
-            if (playerSkill.getAbilityLevel(Ability.LIFE_STEAL) > 0) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData == null) return;
+            if (playerData.getAbilityLevel(Ability.LIFE_STEAL) > 0) {
                 AttributeInstance entityAttribute = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                 if (entityAttribute == null) return;
                 double maxHealth = entityAttribute.getValue();
-                double percent = getValue(Ability.LIFE_STEAL, playerSkill) / 100;
+                double percent = getValue(Ability.LIFE_STEAL, playerData) / 100;
                 double healthRegen = maxHealth * percent;
                 AttributeInstance playerAttribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                 if (playerAttribute == null) return;
@@ -97,10 +92,10 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill == null) return;
-            if (getAbsorptionAmount(player) > 0 && playerSkill.getAbilityLevel(Ability.GOLDEN_HEART) > 0) {
-                double multiplier = 1 - getValue(Ability.GOLDEN_HEART, playerSkill) / 100;
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData == null) return;
+            if (getAbsorptionAmount(player) > 0 && playerData.getAbilityLevel(Ability.GOLDEN_HEART) > 0) {
+                double multiplier = 1 - getValue(Ability.GOLDEN_HEART, playerData) / 100;
                 if (multiplier < 0.01) { // Cap at 99% reduction
                     multiplier = 0.01;
                 }
@@ -114,18 +109,17 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (blockDisabled(Ability.REVIVAL)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
-        PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-        PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-        if (playerSkill == null || playerStat == null) return;
-        if (playerSkill.getAbilityLevel(Ability.REVIVAL) > 0) {
-            double healthBonus = getValue(Ability.REVIVAL, playerSkill);
-            double regenerationBonus = getValue2(Ability.REVIVAL, playerSkill);
-            StatModifier healthModifier = new StatModifier("AureliumSkills.Ability.Revival.Health", Stat.HEALTH, healthBonus);
-            StatModifier regenerationModifier = new StatModifier("AureliumSkills.Ability.Revival.Regeneration", Stat.REGENERATION, regenerationBonus);
-            playerStat.addModifier(healthModifier);
-            playerStat.addModifier(regenerationModifier);
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null) return;
+        if (playerData.getAbilityLevel(Ability.REVIVAL) > 0) {
+            double healthBonus = getValue(Ability.REVIVAL, playerData);
+            double regenerationBonus = getValue2(Ability.REVIVAL, playerData);
+            StatModifier healthModifier = new StatModifier("AureliumSkills.Ability.Revival.Health", Stats.HEALTH, healthBonus);
+            StatModifier regenerationModifier = new StatModifier("AureliumSkills.Ability.Revival.Regeneration", Stats.REGENERATION, regenerationBonus);
+            playerData.addStatModifier(healthModifier);
+            playerData.addStatModifier(regenerationModifier);
             if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.REVIVAL, "enable_message")) {
-                Locale locale = Lang.getLanguage(player);
+                Locale locale = playerData.getLocale();
                 plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(AbilityMessage.REVIVAL_MESSAGE, locale)
                         , "{value}", NumberUtil.format1(healthBonus)
                         , "{value_2}", NumberUtil.format1(regenerationBonus)));
@@ -133,8 +127,8 @@ public class HealingAbilities extends AbilityProvider implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    playerStat.removeModifier("AureliumSkills.Ability.Revival.Health");
-                    playerStat.removeModifier("AureliumSkills.Ability.Revival.Regeneration");
+                    playerData.removeStatModifier("AureliumSkills.Ability.Revival.Health");
+                    playerData.removeStatModifier("AureliumSkills.Ability.Revival.Regeneration");
                 }
             }.runTaskLater(plugin, 30 * 20);
         }

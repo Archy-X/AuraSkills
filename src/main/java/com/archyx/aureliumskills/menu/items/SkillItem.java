@@ -1,11 +1,12 @@
 package com.archyx.aureliumskills.menu.items;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.menu.templates.SkillInfoItem;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -32,7 +33,7 @@ public class SkillItem extends ConfigurableItem {
             // Load base items
             for (String materialInput : config.getStringList("material")) {
                 String[] splitInput = materialInput.split(" ", 2);
-                Skill skill = Skill.valueOf(splitInput[0]);
+                Skill skill = Skills.valueOf(splitInput[0]);
                 baseItems.put(skill, MenuLoader.parseItem(splitInput[1]));
             }
             displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
@@ -61,12 +62,12 @@ public class SkillItem extends ConfigurableItem {
         }
     }
 
-    public ItemStack getItem(Skill skill, PlayerSkill playerSkill, Player player, Locale locale) {
+    public ItemStack getItem(Skill skill, PlayerData playerData, Player player, Locale locale) {
         ItemStack baseItem = baseItems.get(skill);
         if (baseItem == null) {
             baseItem = new ItemStack(Material.STONE);
         }
         baseItem = baseItem.clone();
-        return skillInfoItem.getItem(baseItem, skill, playerSkill, locale, displayName, lore, lorePlaceholders, player);
+        return skillInfoItem.getItem(baseItem, skill, playerData, locale, displayName, lore, lorePlaceholders, player);
     }
 }

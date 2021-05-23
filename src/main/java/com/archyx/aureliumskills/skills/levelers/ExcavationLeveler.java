@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -24,23 +25,23 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
 	@SuppressWarnings("deprecation")
 	public void onBlockBreak(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.EXCAVATION)) {
+		if (OptionL.isEnabled(Skills.EXCAVATION)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.EXCAVATION_CHECK_CANCELLED)) {
 				if (event.isCancelled()) {
 					return;
 				}
 			}
-			if (blockXpGainLocation(event.getBlock().getLocation())) return;
+			Skill s = Skills.EXCAVATION;
+			Block b = event.getBlock();
 			//Check block replace
 			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
-				if (event.getBlock().hasMetadata("skillsPlaced")) {
+				if (plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 			}
-			Skill s = Skill.EXCAVATION;
-			Block b = event.getBlock();
 			Player p = event.getPlayer();
+			if (blockXpGainLocation(event.getBlock().getLocation(), p)) return;
 			Material mat = event.getBlock().getType();
 			if (blockXpGainPlayer(p)) return;
 			Leveler leveler = plugin.getLeveler();

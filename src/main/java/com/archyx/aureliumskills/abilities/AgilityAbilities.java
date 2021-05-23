@@ -3,13 +3,13 @@ package com.archyx.aureliumskills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.PotionUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.mechanics.PotionUtil;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -24,7 +24,6 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -43,12 +42,12 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     private final Random r = new Random();
 
     public AgilityAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.AGILITY);
+        super(plugin, Skills.AGILITY);
     }
 
-    private void lightFall(EntityDamageEvent event, PlayerSkill playerSkill) {
+    private void lightFall(EntityDamageEvent event, PlayerData playerData) {
         if (event.getFinalDamage() > 0.0) {
-            double percentReduction = getValue(Ability.LIGHT_FALL, playerSkill);
+            double percentReduction = getValue(Ability.LIGHT_FALL, playerData);
             event.setDamage(event.getDamage() * (1 - (percentReduction / 100)));
         }
     }
@@ -64,13 +63,12 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
                             if (blockAbility(player)) return;
-                            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            if (playerSkill != null) {
-                                if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
-                                    double intensity = event.getIntensity(player);
-                                    double multiplier = 1 + (getValue(Ability.SUGAR_RUSH, playerSkill) / 100);
-                                    PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
-                                }
+                            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                            if (playerData == null) return;
+                            if (playerData.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
+                                double intensity = event.getIntensity(player);
+                                double multiplier = 1 + (getValue(Ability.SUGAR_RUSH, playerData) / 100);
+                                PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
                             }
                         }
                     }
@@ -81,10 +79,10 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
 
     public double getSugarRushSplashMultiplier(Player player) {
         if (player.hasPermission("aureliumskills.agility") && plugin.getAbilityManager().isEnabled(Ability.SUGAR_RUSH)) {
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
-                    return 1 + (getValue(Ability.SUGAR_RUSH, playerSkill) / 100);
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                if (playerData.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
+                    return 1 + (getValue(Ability.SUGAR_RUSH, playerData) / 100);
                 }
             }
         }
@@ -98,43 +96,42 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
             if (blockDisabled(Ability.SUGAR_RUSH)) return;
             Player player = event.getPlayer();
             if (blockAbility(player)) return;
-            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-            if (playerSkill != null) {
-                if (playerSkill.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
-                    ItemStack item = event.getItem();
-                    if (item.getType() == Material.POTION) {
-                        if (item.getItemMeta() instanceof PotionMeta) {
-                            PotionMeta meta = (PotionMeta) item.getItemMeta();
-                            PotionData potion = meta.getBasePotionData();
-                            double multiplier = 1 + (getValue(Ability.SUGAR_RUSH, playerSkill) / 100);
-                            if (potion.getType() == PotionType.SPEED || potion.getType() == PotionType.JUMP) {
-                                int amplifier = 0;
-                                if (potion.isUpgraded()) {
-                                    amplifier = 1;
-                                }
-                                PotionEffectType potionEffectType;
-                                if (potion.getType() == PotionType.SPEED) {
-                                    potionEffectType = PotionEffectType.SPEED;
-                                } else {
-                                    potionEffectType = PotionEffectType.JUMP;
-                                }
-                                int duration;
-                                if (potion.isExtended()) {
-                                    duration = 480;
-                                } else if (potion.isUpgraded()) {
-                                    duration = 90;
-                                } else {
-                                    duration = 180;
-                                }
-                                duration = (int) (multiplier * duration);
-                                PotionUtil.applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData == null) return;
+            if (playerData.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
+                ItemStack item = event.getItem();
+                if (item.getType() == Material.POTION) {
+                    if (item.getItemMeta() instanceof PotionMeta) {
+                        PotionMeta meta = (PotionMeta) item.getItemMeta();
+                        PotionData potion = meta.getBasePotionData();
+                        double multiplier = 1 + (getValue(Ability.SUGAR_RUSH, playerData) / 100);
+                        if (potion.getType() == PotionType.SPEED || potion.getType() == PotionType.JUMP) {
+                            int amplifier = 0;
+                            if (potion.isUpgraded()) {
+                                amplifier = 1;
                             }
-                            // Apply custom effects
-                            if (meta.hasCustomEffects()) {
-                                for (PotionEffect effect : meta.getCustomEffects()) {
-                                    if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
-                                        PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
-                                    }
+                            PotionEffectType potionEffectType;
+                            if (potion.getType() == PotionType.SPEED) {
+                                potionEffectType = PotionEffectType.SPEED;
+                            } else {
+                                potionEffectType = PotionEffectType.JUMP;
+                            }
+                            int duration;
+                            if (potion.isExtended()) {
+                                duration = 480;
+                            } else if (potion.isUpgraded()) {
+                                duration = 90;
+                            } else {
+                                duration = 180;
+                            }
+                            duration = (int) (multiplier * duration);
+                            PotionUtil.applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
+                        }
+                        // Apply custom effects
+                        if (meta.hasCustomEffects()) {
+                            for (PotionEffect effect : meta.getCustomEffects()) {
+                                if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
+                                    PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
                                 }
                             }
                         }
@@ -144,13 +141,13 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void fleeting(EntityDamageEvent event, PlayerSkill playerSkill, Player player) {
+    public void fleeting(EntityDamageEvent event, PlayerData playerData, Player player) {
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
         // If less than 20% health
         if (player.getHealth() - event.getFinalDamage() < 0.2 * maxHealth) {
             if (!player.hasMetadata("AureliumSkills-Fleeting")) {
-                double percent = getValue(Ability.FLEETING, playerSkill);
+                double percent = getValue(Ability.FLEETING, playerData);
                 float boostFactor = 1 + ((float) percent / 100);
                 float newSpeed = player.getWalkSpeed() * boostFactor;
                 if (newSpeed > 1) {
@@ -160,7 +157,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 float walkSpeedChange = newSpeed - player.getWalkSpeed();
                 player.setWalkSpeed(newSpeed);
                 player.setMetadata("AureliumSkills-Fleeting", new FixedMetadataValue(plugin, walkSpeedChange));
-                Locale locale = Lang.getLanguage(player);
+                Locale locale = plugin.getLang().getLocale(player);
                 plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
             }
         }
@@ -174,7 +171,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
                 player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
                 player.removeMetadata("AureliumSkills-Fleeting", plugin);
-                Locale locale = Lang.getLanguage(player);
+                Locale locale = plugin.getLang().getLocale(player);
                 plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.FLEETING_END, locale));
             }
         }
@@ -206,7 +203,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
                 player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
                 player.removeMetadata("AureliumSkills-Fleeting", plugin);
-                Locale locale = Lang.getLanguage(player);
+                Locale locale = plugin.getLang().getLocale(player);
                 plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.FLEETING_END, locale));
             }
         }
@@ -223,15 +220,13 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void fleetingJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
+    public void fleetingJoin(PlayerDataLoadEvent event) {
+        Player player = event.getPlayerData().getPlayer();
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
         if (player.getHealth() < 0.2 * attribute.getValue()) {
             if (!player.hasMetadata("AureliumSkills-Fleeting")) {
-                PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                if (playerSkill == null) return;
-                double percent = getValue(Ability.FLEETING, playerSkill);
+                double percent = getValue(Ability.FLEETING, event.getPlayerData());
                 float boostFactor = 1 + ((float) percent / 100);
                 float newSpeed = player.getWalkSpeed() * boostFactor;
                 if (newSpeed > 1) {
@@ -254,12 +249,12 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void thunderFall(EntityDamageEvent event, PlayerSkill playerSkill, Player player) {
+    public void thunderFall(EntityDamageEvent event, PlayerData playerData, Player player) {
         if (player.isSneaking()) {
             // If chance
-            if (r.nextDouble() < getValue(Ability.THUNDER_FALL, playerSkill) / 100) {
+            if (r.nextDouble() < getValue(Ability.THUNDER_FALL, playerData) / 100) {
                 // Get damage values
-                double percent = getValue2(Ability.THUNDER_FALL, playerSkill);
+                double percent = getValue2(Ability.THUNDER_FALL, playerData);
                 double thunderFallDamage = (percent / 100) * event.getDamage();
                 // Get entities nearby
                 for (Entity entity : player.getWorld().getNearbyEntities(player.getLocation(), 3, 3, 1)) {
@@ -276,32 +271,31 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void agilityListener(EntityDamageEvent event) {
         if (!event.isCancelled()) {
-            if (OptionL.isEnabled(Skill.AGILITY)) {
+            if (OptionL.isEnabled(Skills.AGILITY)) {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
                     if (blockAbility(player)) return;
-                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                    if (playerSkill != null) {
-                        // If from fall damage
-                        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                            if (plugin.getAbilityManager().isEnabled(Ability.THUNDER_FALL)) {
-                                if (playerSkill.getAbilityLevel(Ability.THUNDER_FALL) > 0) {
-                                    // Activate thunder fall
-                                    thunderFall(event, playerSkill, player);
-                                }
-                            }
-                            if (plugin.getAbilityManager().isEnabled(Ability.LIGHT_FALL)) {
-                                if (playerSkill.getAbilityLevel(Ability.LIGHT_FALL) > 0) {
-                                    // Activate light fall
-                                    lightFall(event, playerSkill);
-                                }
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    // If from fall damage
+                    if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                        if (plugin.getAbilityManager().isEnabled(Ability.THUNDER_FALL)) {
+                            if (playerData.getAbilityLevel(Ability.THUNDER_FALL) > 0) {
+                                // Activate thunder fall
+                                thunderFall(event, playerData, player);
                             }
                         }
-                        if (plugin.getAbilityManager().isEnabled(Ability.FLEETING)) {
-                            if (playerSkill.getAbilityLevel(Ability.FLEETING) > 0) {
-                                // Activate fleeting
-                                fleeting(event, playerSkill, player);
+                        if (plugin.getAbilityManager().isEnabled(Ability.LIGHT_FALL)) {
+                            if (playerData.getAbilityLevel(Ability.LIGHT_FALL) > 0) {
+                                // Activate light fall
+                                lightFall(event, playerData);
                             }
+                        }
+                    }
+                    if (plugin.getAbilityManager().isEnabled(Ability.FLEETING)) {
+                        if (playerData.getAbilityLevel(Ability.FLEETING) > 0) {
+                            // Activate fleeting
+                            fleeting(event, playerData, player);
                         }
                     }
                 }

@@ -1,9 +1,8 @@
 package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.requirement.Requirements;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.stats.PlayerStat;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import org.bukkit.Material;
@@ -25,20 +24,20 @@ public class ModifierManager {
     }
 
     public void reloadPlayer(Player player) {
-        PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-        Requirements requirements = new Requirements(plugin.getRequirementManager());
-        Modifiers modifiers = new Modifiers();
-        if (playerStat != null) {
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Requirements requirements = new Requirements(plugin);
+        Modifiers modifiers = new Modifiers(plugin);
+        if (playerData != null) {
             Set<Stat> statsToReload = new HashSet<>();
             ItemStack item = player.getInventory().getItemInMainHand();
             if (!(item.getType() == Material.AIR)) {
                 for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
-                    playerStat.removeModifier(modifier.getName());
+                    playerData.removeStatModifier(modifier.getName());
                     statsToReload.add(modifier.getStat());
                 }
                 if (requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
                     for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
-                        playerStat.addModifier(modifier, false);
+                        playerData.addStatModifier(modifier, false);
                         statsToReload.add(modifier.getStat());
                     }
                 }
@@ -46,13 +45,13 @@ public class ModifierManager {
             ItemStack itemOffHand = player.getInventory().getItemInOffHand();
             if (!(itemOffHand.getType() == Material.AIR)) {
                 for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemOffHand)) {
-                    playerStat.removeModifier(modifier.getName() + ".Offhand");
+                    playerData.removeStatModifier(modifier.getName() + ".Offhand");
                     statsToReload.add(modifier.getStat());
                 }
                 if (requirements.meetsRequirements(ModifierType.ITEM, itemOffHand, player)) {
                     for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemOffHand)) {
                         StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
-                        playerStat.addModifier(offHandModifier, false);
+                        playerData.addStatModifier(offHandModifier, false);
                         statsToReload.add(modifier.getStat());
                     }
                 }
@@ -63,12 +62,12 @@ public class ModifierManager {
                     if (armor != null) {
                         if (!(armor.getType() == Material.AIR)) {
                             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, armor)) {
-                                playerStat.removeModifier(modifier.getName());
+                                playerData.removeStatModifier(modifier.getName());
                                 statsToReload.add(modifier.getStat());
                             }
                             if (requirements.meetsRequirements(ModifierType.ARMOR, armor, player)) {
                                 for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, armor)) {
-                                    playerStat.addModifier(modifier, false);
+                                    playerData.addStatModifier(modifier, false);
                                     statsToReload.add(modifier.getStat());
                                 }
                             }

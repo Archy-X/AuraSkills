@@ -2,16 +2,17 @@ package com.archyx.aureliumskills.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.AbilityData;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.mana.ChargedShot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -31,37 +32,34 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Random;
 
 public class ArcheryAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
-    private final Set<Player> chargedShotEnabled;
-    private final Map<Player, Integer> chargedShotToggleCooldown;
 
     public ArcheryAbilities(AureliumSkills plugin) {
-        super(plugin, Skill.ARCHERY);
-        this.chargedShotEnabled = new HashSet<>();
-        this.chargedShotToggleCooldown = new HashMap<>();
+        super(plugin, Skills.ARCHERY);
         tickChargedShotCooldown();
     }
 
-    public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-        if (OptionL.isEnabled(Skill.ARCHERY)) {
+    public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+        if (OptionL.isEnabled(Skills.ARCHERY)) {
             if (plugin.getAbilityManager().isEnabled(Ability.BOW_MASTER)) {
                 if (!player.hasPermission("aureliumskills.archery")) {
                     return;
                 }
-                if (playerSkill.getAbilityLevel(Ability.BOW_MASTER) > 0) {
-                    double multiplier = 1 + (getValue(Ability.BOW_MASTER, playerSkill) / 100);
+                if (playerData.getAbilityLevel(Ability.BOW_MASTER) > 0) {
+                    double multiplier = 1 + (getValue(Ability.BOW_MASTER, playerData) / 100);
                     event.setDamage(event.getDamage() * multiplier);
                 }
             }
         }
     }
 
-    public void stun(PlayerSkill playerSkill, LivingEntity entity) {
-        if (r.nextDouble() < (getValue(Ability.STUN, playerSkill) / 100)) {
+    public void stun(PlayerData playerData, LivingEntity entity) {
+        if (r.nextDouble() < (getValue(Ability.STUN, playerData) / 100)) {
             if (entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) != null) {
                 AttributeInstance speed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
                 if (speed != null) {
@@ -100,8 +98,8 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void piercing(EntityDamageByEntityEvent event, PlayerSkill playerSkill, Player player, Arrow arrow) {
-        if (r.nextDouble() < (getValue(Ability.PIERCING, playerSkill) / 100)) {
+    public void piercing(EntityDamageByEntityEvent event, PlayerData playerData, Player player, Arrow arrow) {
+        if (r.nextDouble() < (getValue(Ability.PIERCING, playerData) / 100)) {
             arrow.setBounce(false);
             Vector velocity = arrow.getVelocity();
             Arrow newArrow = event.getEntity().getWorld().spawnArrow(arrow.getLocation(), velocity, (float) velocity.length(), 0.0f);
@@ -113,26 +111,25 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void archeryListener(EntityDamageByEntityEvent event) {
-        if (OptionL.isEnabled(Skill.ARCHERY)) {
+        if (OptionL.isEnabled(Skills.ARCHERY)) {
             if (!event.isCancelled()) {
                 if (event.getDamager() instanceof Arrow) {
                     Arrow arrow = (Arrow) event.getDamager();
                     if (arrow.getShooter() instanceof Player) {
                         Player player = (Player) arrow.getShooter();
                         if (blockAbility(player)) return;
-                        //Applies abilities
-                        if (SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-                            PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                            AbilityManager options = plugin.getAbilityManager();
-                            if (options.isEnabled(Ability.STUN)) {
-                                if (event.getEntity() instanceof LivingEntity) {
-                                    LivingEntity entity = (LivingEntity) event.getEntity();
-                                    stun(playerSkill, entity);
-                                }
+                        // Applies abilities
+                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        if (playerData == null) return;
+                        AbilityManager options = plugin.getAbilityManager();
+                        if (options.isEnabled(Ability.STUN)) {
+                            if (event.getEntity() instanceof LivingEntity) {
+                                LivingEntity entity = (LivingEntity) event.getEntity();
+                                stun(playerData, entity);
                             }
-                            if (options.isEnabled(Ability.PIERCING)) {
-                                piercing(event, playerSkill, player, arrow);
-                            }
+                        }
+                        if (options.isEnabled(Ability.PIERCING)) {
+                            piercing(event, playerData, player, arrow);
                         }
                     }
                 }
@@ -149,26 +146,20 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         if (item != null) {
             if (item.getType() == Material.BOW) {
                 if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
-                    PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                    if (playerSkill == null) return;
-                    if (playerSkill.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
-                    Locale locale = Lang.getLanguage(player);
-                    Integer cooldown = chargedShotToggleCooldown.get(player);
-                    boolean ready = true;
-                    if (cooldown != null) {
-                        if (cooldown != 0) {
-                            ready = false;
-                        }
-                    }
-                    if (ready) {
-                        if (!chargedShotEnabled.contains(player)) { // Toggle on
-                            chargedShotEnabled.add(player);
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
+                    Locale locale = playerData.getLocale();
+                    AbilityData abilityData = playerData.getAbilityData(MAbility.CHARGED_SHOT);
+                    if (abilityData.getInt("cooldown") == 0) {
+                        if (!abilityData.getBoolean("enabled")) { // Toggle on
+                            abilityData.setData("enabled", true);
                             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_ENABLE, locale));
                         } else { // Toggle off
-                            chargedShotEnabled.remove(player);
+                            abilityData.setData("enabled", false);
                             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_DISABLE, locale));
                         }
-                        chargedShotToggleCooldown.put(player, 8);
+                        abilityData.setData("cooldown", 8);
                     }
                 }
             }
@@ -179,9 +170,16 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                for (Map.Entry<Player, Integer> entry : chargedShotToggleCooldown.entrySet()) {
-                    if (entry.getValue() > 0) {
-                        entry.setValue(entry.getValue() - 1);
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData != null) {
+                        if (playerData.containsAbilityData(MAbility.CHARGED_SHOT)) {
+                            AbilityData abilityData = playerData.getAbilityData(MAbility.CHARGED_SHOT);
+                            int cooldown = abilityData.getInt("cooldown");
+                            if (cooldown != 0) {
+                                abilityData.setData("cooldown", cooldown - 1);
+                            }
+                        }
                     }
                 }
             }
@@ -194,18 +192,18 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
-            if (chargedShotEnabled.contains(player)) {
-                PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-                if (playerSkill == null) return;
-                if (playerSkill.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData == null) return;
+            if (playerData.getAbilityData(MAbility.CHARGED_SHOT).getBoolean("enabled")) {
+                if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
                 ManaAbilityManager manager = plugin.getManaAbilityManager();
                 int cooldown = manager.getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
                 if (cooldown == 0) {
-                    manager.activateAbility(player, MAbility.CHARGED_SHOT, (int) (manager.getCooldown(MAbility.CHARGED_SHOT, playerSkill) * 20)
+                    manager.activateAbility(player, MAbility.CHARGED_SHOT, (int) (manager.getCooldown(MAbility.CHARGED_SHOT, playerData) * 20)
                             , new ChargedShot(plugin, event.getProjectile(), event.getForce()));
                 } else {
                     if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-                        Locale locale = Lang.getLanguage(player);
+                        Locale locale = playerData.getLocale();
                         plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
                         manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
                     }

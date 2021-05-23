@@ -3,8 +3,8 @@ package com.archyx.aureliumskills.menu.items;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,8 +20,7 @@ public class NextPageItem extends ConfigurableItem {
         super(plugin, ItemType.NEXT_PAGE, new String[] {"next_page_click"});
     }
 
-    public ItemStack getItem(Player player) {
-        Locale locale = Lang.getLanguage(player);
+    public ItemStack getItem(Player player, Locale locale) {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {

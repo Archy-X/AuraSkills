@@ -4,7 +4,8 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.AgilityAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.SkillLoader;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -38,9 +39,14 @@ public class Health implements Listener {
 		this.agilityAbilities = new AgilityAbilities(plugin);
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		setHealth(event.getPlayer());
+		applyScaling(event.getPlayer());
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onLoad(PlayerDataLoadEvent event) {
+		setHealth(event.getPlayerData().getPlayer());
 	}
 
 	public void reload(Player player) {
@@ -83,9 +89,9 @@ public class Health implements Listener {
 
 	private void setHealth(Player player) {
 		//Calculates the amount of health to add
-		PlayerStat playerStat = SkillLoader.playerStats.get(player.getUniqueId());
-		if (playerStat != null) {
-			double modifier = (playerStat.getStatLevel(Stat.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData != null) {
+			double modifier = (playerData.getStatLevel(Stats.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
 			AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 			if (attribute != null) {
 				double originalMaxHealth = attribute.getValue();
@@ -126,27 +132,32 @@ public class Health implements Listener {
 						player.setHealth(attribute.getValue());
 					}
 				}
-				// Applies health scaling
-				if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
-					double health = attribute.getValue();
-					player.setHealthScaled(true);
-					int scaledHearts = 0;
-					for (Integer heartNum : hearts.keySet()) {
-						double healthNum = hearts.get(heartNum);
-						if (health >= healthNum) {
-							if (heartNum > scaledHearts) {
-								scaledHearts = heartNum;
-							}
-						}
+				applyScaling(player);
+			}
+		}
+	}
+
+	private void applyScaling(Player player) {
+		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+		if (attribute == null) return;
+		if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
+			double health = attribute.getValue();
+			player.setHealthScaled(true);
+			int scaledHearts = 0;
+			for (Integer heartNum : hearts.keySet()) {
+				double healthNum = hearts.get(heartNum);
+				if (health >= healthNum) {
+					if (heartNum > scaledHearts) {
+						scaledHearts = heartNum;
 					}
-					if (scaledHearts == 0) {
-						scaledHearts = 10;
-					}
-					player.setHealthScale(scaledHearts * 2);
-				} else {
-					player.setHealthScaled(false);
 				}
 			}
+			if (scaledHearts == 0) {
+				scaledHearts = 10;
+			}
+			player.setHealthScale(scaledHearts * 2);
+		} else {
+			player.setHealthScaled(false);
 		}
 	}
 

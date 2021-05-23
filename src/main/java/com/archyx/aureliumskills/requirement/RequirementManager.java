@@ -39,9 +39,11 @@ public class RequirementManager implements Listener {
                     for (int i = 1; i < splitText.length; i++) {
                         String requirementText = splitText[i];
                         try {
-                            Skill skill = Skill.valueOf(requirementText.split(":")[0].toUpperCase());
-                            int level = Integer.parseInt(requirementText.split(":")[1]);
-                            requirements.put(skill, level);
+                            Skill skill = plugin.getSkillRegistry().getSkill(requirementText.split(":")[0]);
+                            if (skill != null) {
+                                int level = Integer.parseInt(requirementText.split(":")[1]);
+                                requirements.put(skill, level);
+                            }
                         } catch (Exception e) {
                             Bukkit.getLogger().warning("[AureliumSkills] Error parsing global skill " + type.name().toLowerCase(Locale.ENGLISH) + " requirement skill level pair with text " + requirementText);
                         }

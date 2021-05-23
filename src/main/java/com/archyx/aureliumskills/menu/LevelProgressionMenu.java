@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.items.*;
@@ -9,9 +10,7 @@ import com.archyx.aureliumskills.menu.templates.InProgressTemplate;
 import com.archyx.aureliumskills.menu.templates.LockedTemplate;
 import com.archyx.aureliumskills.menu.templates.TemplateType;
 import com.archyx.aureliumskills.menu.templates.UnlockedTemplate;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -20,6 +19,7 @@ import fr.minuskube.inv.content.Pagination;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,7 @@ import java.util.Locale;
 
 public class LevelProgressionMenu implements InventoryProvider {
 
+	private final PlayerData playerData;
 	private final Skill skill;
 	private final Locale locale;
 	private final List<Integer> track;
@@ -35,7 +36,8 @@ public class LevelProgressionMenu implements InventoryProvider {
 	private final int pages;
 
 
-	public LevelProgressionMenu(Locale locale, Skill skill, MenuOption menuOption, AureliumSkills plugin) {
+	public LevelProgressionMenu(PlayerData playerData, Locale locale, Skill skill, MenuOption menuOption, AureliumSkills plugin) {
+		this.playerData = playerData;
 		this.locale = locale;
 		this.skill = skill;
 		this.options = menuOption;
@@ -53,8 +55,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 	
 	@Override
 	public void init(Player player, InventoryContents contents) {
-		PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-		int currentLevel = playerSkill.getSkillLevel(skill);
+		int currentLevel = playerData.getSkillLevel(skill);
 
 		// Fill item
 		if (options.isFillEnabled()) {
@@ -62,13 +63,13 @@ public class LevelProgressionMenu implements InventoryProvider {
 		}
 
 		SkillItem skillItem = (SkillItem) options.getItem(ItemType.SKILL);
-		contents.set(skillItem.getPos(), ClickableItem.empty(skillItem.getItem(skill, playerSkill, player, locale)));
+		contents.set(skillItem.getPos(), ClickableItem.empty(skillItem.getItem(skill, playerData, player, locale)));
 
 		BackItem backItem = (BackItem) options.getItem(ItemType.BACK);
-		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(player), e -> SkillsMenu.getInventory(player, plugin).open(player)));
+		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(player, locale), e -> SkillsMenu.getInventory(player, plugin).open(player)));
 
 		CloseItem closeItem = (CloseItem) options.getItem(ItemType.CLOSE);
-		contents.set(closeItem.getPos(), ClickableItem.of(closeItem.getItem(player), e -> player.closeInventory()));
+		contents.set(closeItem.getPos(), ClickableItem.of(closeItem.getItem(player, locale), e -> player.closeInventory()));
 
 		RankItem rankItem = (RankItem) options.getItem(ItemType.RANK);
 		contents.set(rankItem.getPos(), ClickableItem.empty(rankItem.getItem(skill, player, locale)));
@@ -91,7 +92,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 				if (i + 2 <= currentLevel) {
 					items[track.get(i)] = ClickableItem.empty(unlocked.getItem(skill, i + 2, player, locale));
 				} else if (i + 2 == currentLevel + 1) {
-					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerSkill, i + 2, player, locale));
+					items[track.get(i)] = ClickableItem.empty(inProgress.getItem(skill, playerData, i + 2, player, locale));
 				} else {
 					items[track.get(i)] = ClickableItem.empty(locked.getItem(skill, i + 2, player, locale));
 				}
@@ -119,17 +120,23 @@ public class LevelProgressionMenu implements InventoryProvider {
 
 		NextPageItem nextPageItem = (NextPageItem) options.getItem(ItemType.NEXT_PAGE);
 		if (pagination.getPage() + 1 < pages) {
-			contents.set(nextPageItem.getPos(), ClickableItem.of(nextPageItem.getItem(player), e -> {
+			contents.set(nextPageItem.getPos(), ClickableItem.of(nextPageItem.getItem(player, locale), e -> {
 				int page = pagination.next().getPage();
-				getInventory(player, skill, page, plugin).open(player, page);
+				SmartInventory inventory = getInventory(player, skill, page, plugin);
+				if (inventory != null) {
+					inventory.open(player, page);
+				}
 			}));
 		}
 
 		PreviousPageItem previousPageItem = (PreviousPageItem) options.getItem(ItemType.PREVIOUS_PAGE);
 		if (pagination.getPage() - 1 >= 0) {
-			contents.set(previousPageItem.getPos(), ClickableItem.of(previousPageItem.getItem(player), e -> {
+			contents.set(previousPageItem.getPos(), ClickableItem.of(previousPageItem.getItem(player, locale), e -> {
 				int previous = pagination.previous().getPage();
-				getInventory(player, skill, previous, plugin).open(player, previous);
+				SmartInventory inventory = getInventory(player, skill, previous, plugin);
+				if (inventory != null) {
+					inventory.open(player, previous);
+				}
 			}));
 		}
 	}
@@ -140,11 +147,16 @@ public class LevelProgressionMenu implements InventoryProvider {
 		
 	}
 
+	@Nullable
 	public static SmartInventory getInventory(Player player, Skill skill, int page, AureliumSkills plugin) {
-		Locale locale = Lang.getLanguage(player);
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData == null) {
+			return null;
+		}
+		Locale locale = playerData.getLocale();
 		MenuOption menuOption = plugin.getMenuLoader().getMenu(MenuType.LEVEL_PROGRESSION);
 		return SmartInventory.builder()
-				.provider(new LevelProgressionMenu(locale, skill, menuOption, plugin))
+				.provider(new LevelProgressionMenu(playerData, locale, skill, menuOption, plugin))
 				.size(menuOption.getRows(), 9)
 				.title(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale).replace("{skill}", skill.getDisplayName(locale)).replace("{page}", String.valueOf(page + 1)))
 				.manager(plugin.getInventoryManager())

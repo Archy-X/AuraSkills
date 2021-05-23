@@ -11,6 +11,8 @@ public enum Option {
     MYSQL_DATABASE("mysql.database", OptionType.STRING),
     MYSQL_USERNAME("mysql.username", OptionType.STRING),
     MYSQL_PASSWORD("mysql.password", OptionType.STRING),
+    MYSQL_LOAD_DELAY("mysql.load-delay", OptionType.INT),
+    MYSQL_ALWAYS_LOAD_ON_JOIN("mysql.always-load-on-join", OptionType.BOOLEAN),
     TRY_DETECT_CLIENT_LANGUAGE("try-detect-client-language", OptionType.BOOLEAN),
     // Action bar options
     ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),
@@ -87,6 +89,9 @@ public enum Option {
     CRITICAL_ENABLED_OTHER("critical.enabled.other", OptionType.BOOLEAN),
     // Menu options
     MENUS_PLACEHOLDER_API("menus.placeholder-api", OptionType.BOOLEAN),
+    CHECK_FOR_UPDATES("check-for-updates", OptionType.BOOLEAN),
+    AUTOMATIC_BACKUPS_ENABLED("automatic-backups.enabled", OptionType.BOOLEAN),
+    AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic-backups.minimum-interval-hours", OptionType.DOUBLE),
     // Skill options (not including source types)
     FARMING_ENABLED("farming.enabled", OptionType.BOOLEAN),
     FARMING_MAX_LEVEL("farming.max-level", OptionType.INT),

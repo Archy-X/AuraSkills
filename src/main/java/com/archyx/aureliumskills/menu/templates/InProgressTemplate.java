@@ -1,14 +1,14 @@
 package com.archyx.aureliumskills.menu.templates;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
-import com.archyx.aureliumskills.skills.PlayerSkill;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.ItemUtils;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
-import com.archyx.aureliumskills.util.RomanNumber;
+import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.math.RomanNumber;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -27,7 +27,7 @@ public class InProgressTemplate extends ConfigurableTemplate {
         this.levelItem = new ProgressLevelItem(plugin);
     }
 
-    public ItemStack getItem(Skill skill, PlayerSkill playerSkill, int level, Player player, Locale locale) {
+    public ItemStack getItem(Skill skill, PlayerData playerData, int level, Player player, Locale locale) {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
@@ -51,7 +51,7 @@ public class InProgressTemplate extends ConfigurableTemplate {
                             line = LoreUtil.replace(line, "{mana_ability}", levelItem.getManaAbilityLore(skill, level, locale));
                             break;
                         case "progress":
-                            double currentXp = playerSkill.getXp(skill);
+                            double currentXp = playerData.getSkillXp(skill);
                             double xpToNext = plugin.getLeveler().getLevelRequirements().get(level - 2);
                             line = LoreUtil.replace(line,"{progress}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
                                     ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)

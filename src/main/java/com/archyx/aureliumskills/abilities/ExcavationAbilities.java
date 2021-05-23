@@ -5,17 +5,16 @@ import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.api.event.TerraformBlockBreakEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.Terraform;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.util.LoreUtil;
-import com.archyx.aureliumskills.util.NumberUtil;
+import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -45,7 +44,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	private final Material[] loadedMaterials;
 
 	public ExcavationAbilities(AureliumSkills plugin) {
-		super(plugin, Skill.EXCAVATION);
+		super(plugin, Skills.EXCAVATION);
 		//Load materials
 		XMaterial[] materials = new XMaterial[]{
 				XMaterial.DIRT, XMaterial.GRASS_BLOCK, XMaterial.COARSE_DIRT, XMaterial.PODZOL,
@@ -58,24 +57,24 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerSkill playerSkill) {
-		if (OptionL.isEnabled(Skill.EXCAVATION)) {
+	public void spadeMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+		if (OptionL.isEnabled(Skills.EXCAVATION)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.SPADE_MASTER)) {
 				//Check permission
 				if (!player.hasPermission("aureliumskills.excavation")) {
 					return;
 				}
-				if (playerSkill.getAbilityLevel(Ability.SPADE_MASTER) > 0) {
-					event.setDamage(event.getDamage() * (1 + (getValue(Ability.SPADE_MASTER, playerSkill) / 100)));
+				if (playerData.getAbilityLevel(Ability.SPADE_MASTER) > 0) {
+					event.setDamage(event.getDamage() * (1 + (getValue(Ability.SPADE_MASTER, playerData) / 100)));
 				}
 			}
 		}
 	}
 
 	@SuppressWarnings("deprecation")
-	public void biggerScoop(PlayerSkill playerSkill, Block block, Player player) {
+	public void biggerScoop(PlayerData playerData, Block block, Player player) {
 		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (getValue(Ability.BIGGER_SCOOP, playerSkill) / 100)) {
+			if (r.nextDouble() < (getValue(Ability.BIGGER_SCOOP, playerData) / 100)) {
 				ItemStack tool = player.getInventory().getItemInMainHand();
 				Material mat =  block.getType();
 				for (ItemStack item : block.getDrops(tool)) {
@@ -147,9 +146,9 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void metalDetector(Player player, PlayerSkill playerSkill, Block block) {
+	public void metalDetector(Player player, PlayerData playerData, Block block) {
 		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (getValue(Ability.METAL_DETECTOR, playerSkill) / 100)) {
+			if (r.nextDouble() < (getValue(Ability.METAL_DETECTOR, playerData) / 100)) {
 				int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().size();
 				if (lootTableSize > 0) {
 					Loot loot = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().get(r.nextInt(lootTableSize));
@@ -177,9 +176,9 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void luckySpades(Player player, PlayerSkill playerSkill, Block block) {
+	public void luckySpades(Player player, PlayerData playerData, Block block) {
 		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (getValue(Ability.LUCKY_SPADES, playerSkill) / 100)) {
+			if (r.nextDouble() < (getValue(Ability.LUCKY_SPADES, playerData) / 100)) {
 				int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().size();
 				if (lootTableSize > 0) {
 					Loot loot = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().get(r.nextInt(lootTableSize));
@@ -209,7 +208,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void excavationListener(BlockBreakEvent event) {
-		if (OptionL.isEnabled(Skill.EXCAVATION)) {
+		if (OptionL.isEnabled(Skills.EXCAVATION)) {
 			if (!event.isCancelled()) {
 				if (event.getClass() != BlockBreakEvent.class) { // Compatibility fix
 					return;
@@ -218,8 +217,8 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				Block block = event.getBlock();
 				if (blockAbility(player)) return;
 				//Applies abilities
-				PlayerSkill playerSkill = SkillLoader.playerSkills.get(player.getUniqueId());
-				if (playerSkill == null) return;
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+				if (playerData == null) return;
 				if (plugin.getAbilityManager().isEnabled(MAbility.TERRAFORM)) {
 					if (!block.hasMetadata("AureliumSkills-Terraform")) {
 						applyTerraform(player, block);
@@ -231,13 +230,13 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				}
 				if (!block.hasMetadata("skillsPlaced")) {
 					if (isEnabled(Ability.BIGGER_SCOOP)) {
-						biggerScoop(playerSkill, block, player);
+						biggerScoop(playerData, block, player);
 					}
 					if (isEnabled(Ability.METAL_DETECTOR)) {
-						metalDetector(player, playerSkill, block);
+						metalDetector(player, playerData, block);
 					}
 					if (isEnabled(Ability.LUCKY_SPADES)) {
-						luckySpades(player, playerSkill, block);
+						luckySpades(player, playerData, block);
 					}
 				}
 			}
@@ -254,7 +253,6 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	}
 
 	private void applyTerraform(Player player, Block block) {
-		Locale locale = Lang.getLanguage(player);
 		ManaAbilityManager manager = plugin.getManaAbilityManager();
 		if (!isExcavationMaterial(block.getType())) return;
 		// Apply if activated
@@ -267,17 +265,18 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 			//Checks if holding pickaxe
 			Material mat = player.getInventory().getItemInMainHand().getType();
 			if (mat.name().contains("SHOVEL") || mat.name().contains("SPADE")) {
-				PlayerSkill skill = SkillLoader.playerSkills.get(player.getUniqueId());
-				if (skill == null) return;
-				if (plugin.getManaManager().getMana(player.getUniqueId()) >= getManaCost(MAbility.TERRAFORM, skill)) {
-					manager.activateAbility(player, MAbility.TERRAFORM, (int) (getValue(MAbility.TERRAFORM, skill) * 20), new Terraform(plugin));
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+				if (playerData == null) return;
+				Locale locale = playerData.getLocale();
+				if (playerData.getMana() >= getManaCost(MAbility.TERRAFORM, playerData)) {
+					manager.activateAbility(player, MAbility.TERRAFORM, (int) (getValue(MAbility.TERRAFORM, playerData) * 20), new Terraform(plugin));
 					terraformBreak(player, block);
 				}
 				else {
 					plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-							,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.TERRAFORM, skill))
-							, "{current_mana}", String.valueOf(Math.round(plugin.getManaManager().getMana(player.getUniqueId())))
-							, "{max_mana}", String.valueOf(Math.round(plugin.getManaManager().getMaxMana(player.getUniqueId())))));
+							,"{mana}", NumberUtil.format0(manager.getManaCost(MAbility.TERRAFORM, playerData))
+							, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
+							, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
 				}
 			}
 		}
@@ -285,7 +284,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler
 	private void readyTerraform(PlayerInteractEvent event) {
-		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skill.EXCAVATION, new String[] {"SHOVEL", "SPADE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
+		plugin.getManaAbilityManager().getActivator().readyAbility(event, Skills.EXCAVATION, new String[] {"SHOVEL", "SPADE"}, Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK);
 	}
 
 	private void terraformBreak(Player player, Block block) {

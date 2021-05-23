@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.listeners;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerManager;
+import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.skills.PlayerSkill;
-import com.archyx.aureliumskills.skills.PlayerSkillInstance;
-import com.archyx.aureliumskills.skills.SkillLoader;
-import com.archyx.aureliumskills.stats.PlayerStat;
-import com.archyx.aureliumskills.util.UpdateChecker;
+import com.archyx.aureliumskills.util.version.UpdateChecker;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -18,8 +18,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.util.Locale;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoinQuit implements Listener {
 
@@ -32,32 +31,44 @@ public class PlayerJoinQuit implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		if (!SkillLoader.playerSkills.containsKey(player.getUniqueId())) {
-			SkillLoader.playerSkills.put(player.getUniqueId(), new PlayerSkill(player.getUniqueId(), player.getName(), plugin));
-			plugin.getLeaderboard().queueAdd(new PlayerSkillInstance(SkillLoader.playerSkills.get(player.getUniqueId())));
-		} else {
-			SkillLoader.playerSkills.get(player.getUniqueId()).setPlayerName(player.getName());
+		PlayerManager playerManager = plugin.getPlayerManager();
+		if (plugin.getStorageProvider() instanceof MySqlStorageProvider) { // Handles MySQL storage
+			if (OptionL.getBoolean(Option.MYSQL_ALWAYS_LOAD_ON_JOIN) || playerManager.getPlayerData(player) == null) {
+				int loadDelay = OptionL.getInt(Option.MYSQL_LOAD_DELAY);
+				if (loadDelay == 0) {
+					// Load immediately
+					loadPlayerDataAsync(player);
+				} else {
+					// Delay loading
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							loadPlayerDataAsync(player);
+						}
+					}.runTaskLater(plugin, loadDelay);
+				}
+			}
+		} else { // Yaml storage
+			if (playerManager.getPlayerData(player) == null) {
+				loadPlayerDataAsync(player);
+			}
 		}
-		if (!SkillLoader.playerStats.containsKey(player.getUniqueId())) {
-			SkillLoader.playerStats.put(player.getUniqueId(), new PlayerStat(player.getUniqueId(), plugin));
-		}
-		//Load player skull
+		// Load player skull
 		Location playerLoc = player.getLocation();
 		Location loc = new Location(playerLoc.getWorld(), playerLoc.getX(), 0, playerLoc.getZ());
 		Block b = loc.getBlock();
 		BlockState state = b.getState();
 		SkullCreator.blockWithUuid(b, player.getUniqueId());
 		state.update(true);
-		//Update message
-		if (player.isOp()) {
+		// Update message
+		if (OptionL.getBoolean(Option.CHECK_FOR_UPDATES) && player.hasPermission("aureliumskills.checkupdates")) {
 			if (System.currentTimeMillis() > plugin.getReleaseTime() + 21600000L) {
-				//Check for updates
+				// Check for updates
 				new UpdateChecker(plugin, 81069).getVersion(version -> {
-					if (!plugin.getDescription().getVersion().contains("Pre-Release")) {
+					if (!plugin.getDescription().getVersion().contains("Pre-Release") && !plugin.getDescription().getVersion().contains("Build")) {
 						if (!plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-							Locale locale = Lang.getLanguage(player);
-							player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
-							player.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.WHITE + "Download it on Spigot: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "http://spigotmc.org/resources/81069");
+							player.sendMessage(AureliumSkills.getPrefix(Lang.getDefaultLanguage()) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
+							player.sendMessage(AureliumSkills.getPrefix(Lang.getDefaultLanguage()) + ChatColor.WHITE + "Download it on Spigot: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "http://spigotmc.org/resources/81069");
 						}
 					}
 				});
@@ -68,7 +79,22 @@ public class PlayerJoinQuit implements Listener {
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				plugin.getStorageProvider().save(player);
+			}
+		}.runTaskAsynchronously(plugin);
 		plugin.getActionBar().resetActionBar(player);
+	}
+
+	private void loadPlayerDataAsync(Player player) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				plugin.getStorageProvider().load(player);
+			}
+		}.runTaskAsynchronously(plugin);
 	}
 
 }

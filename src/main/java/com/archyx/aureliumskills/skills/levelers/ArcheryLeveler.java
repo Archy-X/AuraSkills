@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -24,17 +25,17 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event) {
-		if (OptionL.isEnabled(Skill.ARCHERY)) {
+		if (OptionL.isEnabled(Skills.ARCHERY)) {
 			if (OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) return;
 			LivingEntity e = event.getEntity();
-			if (blockXpGainLocation(e.getLocation())) return;
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
 					if (ee.getDamager() instanceof Projectile) {
 						EntityType type = e.getType();
 						Player p = e.getKiller();
-						Skill s = Skill.ARCHERY;
+						Skill s = Skills.ARCHERY;
+						if (blockXpGainLocation(e.getLocation(), p)) return;
 						if (blockXpGainPlayer(p)) return;
 						if (e.equals(p)) return;
 						// Make sure not MythicMob
@@ -44,9 +45,9 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						double spawnerMultiplier = OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER);
 						try {
 							if (e.hasMetadata("aureliumskills_spawner_mob")) {
-								plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, Source.valueOf("ARCHERY_" + type.toString())));
+								plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, Source.valueOf("ARCHERY_" + type)));
 							} else {
-								plugin.getLeveler().addXp(p, s, getXp(p, Source.valueOf("ARCHERY_" + type.toString())));
+								plugin.getLeveler().addXp(p, s, getXp(p, Source.valueOf("ARCHERY_" + type)));
 							}
 						} catch (IllegalArgumentException exception) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
@@ -66,7 +67,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		// Damage based listener
-		if (OptionL.isEnabled(Skill.ARCHERY)) {
+		if (OptionL.isEnabled(Skills.ARCHERY)) {
 			if (event.isCancelled()) return;
 			if (!OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) return;
 			if (event.getDamager() instanceof  Projectile) {
@@ -75,7 +76,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 					Player player = (Player) projectile.getShooter();
 					if (event.getEntity() instanceof LivingEntity) {
 						LivingEntity entity = (LivingEntity) event.getEntity();
-						if (blockXpGainLocation(entity.getLocation())) return;
+						if (blockXpGainLocation(entity.getLocation(), player)) return;
 						EntityType type = entity.getType();
 						if (blockXpGainPlayer(player)) return;
 						if (entity.equals(player)) return;
@@ -89,10 +90,10 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 							damage *= spawnerMultiplier;
 						}
 						try {
-							plugin.getLeveler().addXp(player, Skill.ARCHERY, damage * getXp(player, Source.valueOf("FIGHTING_" + type.toString())));
+							plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, Source.valueOf("FIGHTING_" + type)));
 						} catch (IllegalArgumentException e) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
-								plugin.getLeveler().addXp(player, Skill.ARCHERY, damage * getXp(player, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+								plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, Source.FIGHTING_ZOMBIFIED_PIGLIN));
 							}
 						}
 					}
