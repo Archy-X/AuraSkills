@@ -47,6 +47,7 @@ Version Beta 1.0.0
     - Fixed Replenish consuming wrong mana amount
     - Fixed players unable to do certain tasks (breaking/placing blocks) if their player data was not loaded
     - Added chipped_anvil, damaged_anvil, flower_pot, and signs to blocked materials when equipping armor with modifiers
+    - Fixed wisdom.max-mana-per-wisdom changes not regenerating mana properly
 
 Version Alpha 1.6.8
   Changes:
