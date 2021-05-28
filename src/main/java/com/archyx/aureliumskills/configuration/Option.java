@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.configuration;
 
 public enum Option {
 
-    DATA_SAVE_PERIOD("data-save-period", OptionType.INT),
     // Mysql Options
     MYSQL_ENABLED("mysql.enabled", OptionType.BOOLEAN),
     MYSQL_HOST("mysql.host", OptionType.STRING),
