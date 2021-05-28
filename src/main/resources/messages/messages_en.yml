@@ -544,7 +544,7 @@ menus:
     locked: '&cLOCKED'
     rewards: '&7Rewards:{rewards}'
     rewards_entry: '\n  {color}+{num} {symbol} {stat}'
-    money_reward: '\n &a${amount}'
+    money_reward: '\n  &a${amount}'
     ability_unlock: '\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n '
     ability_level: '\n&6{ability} {level}\n&7  {desc}\n '
     mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
