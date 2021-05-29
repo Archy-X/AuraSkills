@@ -1,0 +1,65 @@
+pools:
+  rare:
+    base_chance: 0.03
+    selection_priority: 1
+    loot:
+      - type: item
+        item: iron_ingot
+        weight: 15
+        amount: 1
+      - type: item
+        item: gold_nugget
+        weight: 10
+        amount: 1-4
+      - type: item
+        item: coal
+        weight: 10
+        amount: 1-2
+      - type: item
+        item: bone
+        weight: 15
+        amount: 1-3
+      - type: item
+        item: prismarine_shard
+        weight: 10
+        amount: 1-4
+      - type: item
+        item: prismarine_crystals
+        weight: 10
+        amount: 1-4
+      - type: item
+        item: slime_ball
+        weight: 10
+        amount: 1-3
+  epic:
+    base_chance: 0.01
+    selection_priority: 2
+    loot:
+      - type: item
+        item: diamond
+        weight: 10
+        amount: 1
+      - type: item
+        item: gold_ingot
+        weight: 10
+        amount: 1-3
+      - type: item
+        item: coal_block
+        weight: 10
+        amount: 1
+      - type: item
+        item: bone_block
+        weight: 10
+        amount: 1-2
+      - type: item
+        item: prismarine_shard
+        weight: 7
+        amount: 3-7
+      - type: item
+        item: prismarine_crystals
+        weight: 7
+        amount: 3-7
+      - type: item
+        item: slime_block
+        weight: 7
+        amount: 1-2
