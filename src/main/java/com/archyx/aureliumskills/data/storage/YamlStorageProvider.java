@@ -99,6 +99,7 @@ public class YamlStorageProvider extends StorageProvider {
                     }
                 }
                 playerManager.addPlayerData(playerData);
+                plugin.getLeveler().updatePermissions(player);
                 PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
                 new BukkitRunnable() {
                     @Override

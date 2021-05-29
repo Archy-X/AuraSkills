@@ -25,6 +25,7 @@ public abstract class StorageProvider {
     public PlayerData createNewPlayer(Player player) {
         PlayerData playerData = new PlayerData(player, plugin);
         playerManager.addPlayerData(playerData);
+        plugin.getLeveler().updatePermissions(player);
         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
         new BukkitRunnable() {
             @Override
