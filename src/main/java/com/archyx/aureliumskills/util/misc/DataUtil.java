@@ -11,7 +11,7 @@ public class DataUtil {
     public static Object getElement(Map<?, ?> map, String key) {
         // Check if not null
         Object object = map.get(key);
-        Validate.notNull(object, "Reward requires entry with key " + key);
+        Validate.notNull(object, "Reward/loot requires entry with key " + key);
         return object;
     }
 

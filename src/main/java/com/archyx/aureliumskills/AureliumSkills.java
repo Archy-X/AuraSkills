@@ -26,6 +26,8 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
+import com.archyx.aureliumskills.loot.listener.ExcavationListener;
+import com.archyx.aureliumskills.loot.listener.FishingListener;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
@@ -111,6 +113,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
+	private ExcavationAbilities excavationAbilities;
 	private final long releaseTime = 1622143139789L;
 
 	public void onEnable() {
@@ -478,7 +481,8 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ForagingAbilities(this), this);
 		pm.registerEvents(new MiningAbilities(this), this);
 		pm.registerEvents(new FishingAbilities(this), this);
-		pm.registerEvents(new ExcavationAbilities(this), this);
+		excavationAbilities = new ExcavationAbilities(this);
+		pm.registerEvents(excavationAbilities, this);
 		pm.registerEvents(new ArcheryAbilities(this), this);
 		DefenseAbilities defenseAbilities = new DefenseAbilities(this);
 		pm.registerEvents(defenseAbilities, this);
@@ -505,6 +509,8 @@ public class AureliumSkills extends JavaPlugin {
 		this.actionBar = new ActionBar(this);
 		pm.registerEvents(actionBar, this);
 		pm.registerEvents(new RegionListener(this), this);
+		pm.registerEvents(new FishingListener(this), this);
+		pm.registerEvents(new ExcavationListener(this), this);
 	}
 
 	private boolean setupEconomy() {
@@ -712,6 +718,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SkillRegistry getSkillRegistry() {
 		return skillRegistry;
+	}
+
+	public ExcavationAbilities getExcavationAbilities() {
+		return excavationAbilities;
 	}
 
 	@Nullable

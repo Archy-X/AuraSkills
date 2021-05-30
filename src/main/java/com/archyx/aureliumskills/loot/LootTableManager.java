@@ -1,7 +1,10 @@
 package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.loot.parser.BlockItemLootParser;
+import com.archyx.aureliumskills.loot.parser.FishingItemLootParser;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.misc.DataUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,7 +13,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LootTableManager {
@@ -58,24 +63,49 @@ public class LootTableManager {
 			matchConfig(config, lootTableFile); // Try to update file
 			// Load corresponding loot table type
 			String type = config.getString("type", "block");
-			LootTable lootTable;
-			if (type.equals("fishing")) {
-				lootTable = loadFishingLootTable(config);
-			} else {
-				lootTable = loadBlockLootTable(config);
+			LootTable lootTable = loadLootTable(config, type);
+			if (lootTable != null) {
+				lootTables.put(skill, lootTable);
 			}
-			lootTables.put(skill, lootTable);
 		}
 	}
 
-	private LootTable loadFishingLootTable(FileConfiguration config) {
-		// TODO Fishing loot table loading
-		return null;
-	}
+	private LootTable loadLootTable(FileConfiguration config, String lootTableType) {
+		ConfigurationSection poolsSection = config.getConfigurationSection("pools");
+		if (poolsSection == null) return null;
+		List<LootPool> pools = new ArrayList<>();
+		for (String poolName : poolsSection.getKeys(false)) {
+			ConfigurationSection currentPool = poolsSection.getConfigurationSection(poolName);
+			if (currentPool == null) continue;
 
-	private LootTable loadBlockLootTable(FileConfiguration config) {
-		// TODO Block loot table loading
-		return null;
+			double baseChance = currentPool.getDouble("base_chance", 0.01);
+			int selectionPriority = currentPool.getInt("selection_priority", 1);
+
+			// Parse each loot entry
+			List<Map<?,?>> lootMapList = currentPool.getMapList("loot");
+			List<LootEntry> lootList = new ArrayList<>();
+			for (Map<?, ?> lootEntryMap : lootMapList) {
+				String type = DataUtil.getString(lootEntryMap, "type");
+				LootEntry loot = null;
+				if (type.equalsIgnoreCase("item")) {
+					if (lootTableType.equals("fishing")) {
+						loot = new FishingItemLootParser(plugin).parse(lootEntryMap);
+					} else if (lootTableType.equals("block")) {
+						loot = new BlockItemLootParser(plugin).parse(lootEntryMap);
+					}
+				}
+				if (loot != null) {
+					lootList.add(loot);
+				}
+			}
+			// Create pool
+			LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority);
+			pools.add(pool);
+		}
+		// Sort pools by selection priority
+		pools.sort((pool1, pool2) -> pool2.getSelectionPriority() - pool1.getSelectionPriority());
+		// Create table
+		return new LootTable(pools);
 	}
 
 	@Nullable

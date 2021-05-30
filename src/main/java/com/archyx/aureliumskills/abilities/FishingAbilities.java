@@ -7,16 +7,12 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
-import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SharpHook;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
-import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,92 +56,6 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 							Bukkit.getPluginManager().callEvent(dropEvent);
 							if (!event.isCancelled()) {
 								item.setItemStack(dropEvent.getItemStack());
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	@EventHandler
-	public void treasureHunterAndEpicCatch(PlayerFishEvent event) {
-		if (OptionL.isEnabled(Skills.FISHING)) {
-			Player player = event.getPlayer();
-			if (blockAbility(player)) return;
-			if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
-				return;
-			}
-			if (plugin.isWorldGuardEnabled()) {
-				if (plugin.getWorldGuardSupport().isInBlockedRegion(player.getLocation())) {
-					return;
-				}
-				// Check if blocked by flags
-				else if (plugin.getWorldGuardSupport().blockedByFlag(player.getLocation(), player, WorldGuardFlags.FlagKey.XP_GAIN)) {
-					return;
-				}
-			}
-			if (event.getCaught() instanceof Item) {
-				if (event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) {
-					if (event.getExpToDrop() > 0) {
-						PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-						if (playerData != null) {
-							if (r.nextDouble() < (getValue(Ability.EPIC_CATCH, playerData) / 100)) {
-								if (plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
-									Item item = (Item) event.getCaught();
-									int lootTableSize = plugin.getLootTableManager().getLootTable("fishing-epic").getLoot().size();
-									if (lootTableSize > 0) {
-										Loot loot = plugin.getLootTableManager().getLootTable("fishing-epic").getLoot().get(r.nextInt(lootTableSize));
-										// If has item
-										if (loot.hasItem()) {
-											ItemStack drop = loot.getDrop();
-											if (drop != null) {
-												PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, item.getLocation(), LootDropCause.EPIC_CATCH);
-												Bukkit.getPluginManager().callEvent(dropEvent);
-												if (!event.isCancelled()) {
-													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(event.getPlayer(), Skills.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
-												}
-											}
-										}
-										// If has command
-										else if (loot.hasCommand()) {
-											String command = loot.getCommand();
-											if (plugin.isPlaceholderAPIEnabled()) {
-												command = PlaceholderAPI.setPlaceholders(player, command);
-											}
-											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
-										}
-									}
-								}
-							} else if (r.nextDouble() < (getValue(Ability.TREASURE_HUNTER, playerData) / 100)) {
-								if (plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
-									Item item = (Item) event.getCaught();
-									int lootTableSize = plugin.getLootTableManager().getLootTable("fishing-rare").getLoot().size();
-									if (lootTableSize > 0) {
-										Loot loot = plugin.getLootTableManager().getLootTable("fishing-rare").getLoot().get(r.nextInt(lootTableSize));
-										// If has item
-										if (loot.hasItem()) {
-											ItemStack drop = loot.getDrop();
-											if (drop != null) {
-												PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, item.getLocation(), LootDropCause.TREASURE_HUNTER);
-												Bukkit.getPluginManager().callEvent(dropEvent);
-												if (!event.isCancelled()) {
-													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(event.getPlayer(), Skills.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
-												}
-											}
-										}
-										// If has commaand
-										else if (loot.hasCommand()) {
-											String command = loot.getCommand();
-											if (plugin.isPlaceholderAPIEnabled()) {
-												command = PlaceholderAPI.setPlaceholders(player, command);
-											}
-											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
-										}
-									}
-								}
 							}
 						}
 					}

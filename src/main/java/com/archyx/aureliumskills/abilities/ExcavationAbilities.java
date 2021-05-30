@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
-import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.Terraform;
@@ -16,7 +15,6 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -40,7 +38,7 @@ import java.util.Random;
 
 public class ExcavationAbilities extends AbilityProvider implements Listener {
 
-	private static final Random r = new Random();
+	private final Random r = new Random();
 	private final Material[] loadedMaterials;
 
 	public ExcavationAbilities(AureliumSkills plugin) {
@@ -146,66 +144,6 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void metalDetector(Player player, PlayerData playerData, Block block) {
-		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (getValue(Ability.METAL_DETECTOR, playerData) / 100)) {
-				int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().size();
-				if (lootTableSize > 0) {
-					Loot loot = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().get(r.nextInt(lootTableSize));
-					// If has item
-					if (loot.hasItem()) {
-						ItemStack drop = loot.getDrop();
-						if (drop != null) {
-							PlayerLootDropEvent event = new PlayerLootDropEvent(player, drop.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.METAL_DETECTOR);
-							Bukkit.getPluginManager().callEvent(event);
-							if (!event.isCancelled()) {
-								block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-							}
-						}
-					}
-					// If has command
-					else if (loot.hasCommand()) {
-						String command = loot.getCommand();
-						if (plugin.isPlaceholderAPIEnabled()) {
-							command = PlaceholderAPI.setPlaceholders(player, command);
-						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
-					}
-				}
-			}
-		}
-	}
-
-	public void luckySpades(Player player, PlayerData playerData, Block block) {
-		if (isExcavationMaterial(block.getType())) {
-			if (r.nextDouble() < (getValue(Ability.LUCKY_SPADES, playerData) / 100)) {
-				int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().size();
-				if (lootTableSize > 0) {
-					Loot loot = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().get(r.nextInt(lootTableSize));
-					// If has item
-					if (loot.hasItem()) {
-						ItemStack drop = loot.getDrop();
-						if (drop != null) {
-							PlayerLootDropEvent event = new PlayerLootDropEvent(player, drop.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCKY_SPADES);
-							Bukkit.getPluginManager().callEvent(event);
-							if (!event.isCancelled()) {
-								block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-							}
-						}
-					}
-					// If has command
-					else if (loot.hasCommand()) {
-						String command = loot.getCommand();
-						if (plugin.isPlaceholderAPIEnabled()) {
-							command = PlaceholderAPI.setPlaceholders(player, command);
-						}
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
-					}
-				}
-			}
-		}
-	}
-
 	@EventHandler(priority = EventPriority.HIGH)
 	public void excavationListener(BlockBreakEvent event) {
 		if (OptionL.isEnabled(Skills.EXCAVATION)) {
@@ -228,22 +166,16 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
 					return;
 				}
-				if (!block.hasMetadata("skillsPlaced")) {
+				if (!plugin.getRegionManager().isPlacedBlock(block)) {
 					if (isEnabled(Ability.BIGGER_SCOOP)) {
 						biggerScoop(playerData, block, player);
-					}
-					if (isEnabled(Ability.METAL_DETECTOR)) {
-						metalDetector(player, playerData, block);
-					}
-					if (isEnabled(Ability.LUCKY_SPADES)) {
-						luckySpades(player, playerData, block);
 					}
 				}
 			}
 		}
 	}
 
-	private boolean isExcavationMaterial(Material material) {
+	public boolean isExcavationMaterial(Material material) {
 		for (Material checkedMaterial : loadedMaterials) {
 			if (material == checkedMaterial) {
 				return true;
