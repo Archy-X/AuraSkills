@@ -1,3 +1,4 @@
+type: block
 block_groups:
   dirts:
     - block: grass_block
