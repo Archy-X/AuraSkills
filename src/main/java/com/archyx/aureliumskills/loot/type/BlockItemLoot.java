@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class BlockItemLoot extends ItemLoot {
 
-    public BlockItemLoot(AureliumSkills plugin, ItemStack item, int minAmount, int maxAmount) {
-        super(plugin, item, minAmount, maxAmount);
+    public BlockItemLoot(AureliumSkills plugin, int weight, ItemStack item, int minAmount, int maxAmount) {
+        super(plugin, weight, item, minAmount, maxAmount);
     }
 
     public void giveLoot(BlockBreakEvent event) {

@@ -16,4 +16,12 @@ public abstract class LootParser extends Parser {
 
     public abstract LootEntry parse(Map<?, ?> map);
 
+    protected int getWeight(Map<?, ?> map) {
+        if (map.containsKey("weight")) {
+            return getInt(map, "weight");
+        } else {
+            return 10;
+        }
+    }
+
 }

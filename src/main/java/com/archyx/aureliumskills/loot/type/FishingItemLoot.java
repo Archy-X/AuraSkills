@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class FishingItemLoot extends ItemLoot {
 
-    public FishingItemLoot(AureliumSkills plugin, ItemStack item, int minAmount, int maxAmount) {
-        super(plugin, item, minAmount, maxAmount);
+    public FishingItemLoot(AureliumSkills plugin, int weight, ItemStack item, int minAmount, int maxAmount) {
+        super(plugin, weight, item, minAmount, maxAmount);
     }
 
     public void giveLoot(PlayerFishEvent event) {

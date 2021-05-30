@@ -14,7 +14,7 @@ public class FishingItemLootBuilder extends ItemLootBuilder {
     @Override
     public LootEntry build() {
         Validate.notNull(item, "You must specify an item");
-        return new FishingItemLoot(plugin, item, minAmount, maxAmount);
+        return new FishingItemLoot(plugin, weight, item, minAmount, maxAmount);
     }
 
 }

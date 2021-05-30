@@ -12,8 +12,8 @@ public class ItemLoot extends LootEntry {
     protected int minAmount;
     protected int maxAmount;
 
-    public ItemLoot(AureliumSkills plugin, ItemStack item, int minAmount, int maxAmount) {
-        super(plugin);
+    public ItemLoot(AureliumSkills plugin, int weight, ItemStack item, int minAmount, int maxAmount) {
+        super(plugin, weight);
         this.item = item;
         this.minAmount = minAmount;
         this.maxAmount = maxAmount;
