@@ -234,7 +234,7 @@ public class AureliumSkills extends JavaPlugin {
 
 			MysqlBackup mysqlBackup = new MysqlBackup(this, mySqlStorageProvider);
 			if (!mySqlStorageProvider.localeColumnExists()) {
-				mysqlBackup.saveBackup(Bukkit.getConsoleSender());
+				mysqlBackup.saveBackup(Bukkit.getConsoleSender(), false);
 			}
 
 			new LegacyMysqlToMysqlConverter(this, mySqlStorageProvider).convert();
@@ -242,7 +242,7 @@ public class AureliumSkills extends JavaPlugin {
 			this.backupProvider = mysqlBackup;
 		} else {
 			// Try to backup and convert legacy files
-			new LegacyFileBackup(this).saveBackup(Bukkit.getConsoleSender());
+			new LegacyFileBackup(this).saveBackup(Bukkit.getConsoleSender(), false);
 			new LegacyFileToYamlConverter(this).convert();
 			setStorageProvider(new YamlStorageProvider(this));
 			this.backupProvider = new YamlBackup(this);
@@ -275,8 +275,9 @@ public class AureliumSkills extends JavaPlugin {
 	
 	public void onDisable() {
 		for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
-			storageProvider.save(playerData.getPlayer());
+			storageProvider.save(playerData.getPlayer(), false);
 		}
+		playerManager.getPlayerDataMap().clear();
 		File file = new File(this.getDataFolder(), "config.yml");
 		if (file.exists()) {
 			// Reloads config
@@ -298,7 +299,7 @@ public class AureliumSkills extends JavaPlugin {
 			// Save backup if past minimum interval
 			if (lastBackup + (long) (OptionL.getDouble(Option.AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS) * 3600000) <= System.currentTimeMillis()) {
 				if (backupProvider != null) {
-					backupProvider.saveBackup(getServer().getConsoleSender());
+					backupProvider.saveBackup(getServer().getConsoleSender(), false);
 					// Update meta file
 					metaConfig.set("last_automatic_backup", System.currentTimeMillis());
 					try {

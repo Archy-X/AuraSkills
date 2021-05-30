@@ -17,7 +17,7 @@ public abstract class BackupProvider {
         this.playerManager = plugin.getPlayerManager();
     }
 
-    public abstract void saveBackup(CommandSender sender);
+    public abstract void saveBackup(CommandSender sender, boolean savePlayerData);
 
     public void createBackupFolder() {
         File backupFolder = new File(plugin.getDataFolder() + "/backups");

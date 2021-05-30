@@ -967,7 +967,7 @@ public class SkillsCommand extends BaseCommand {
 			for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
 				if (!player.isOnline()) {
 					total++;
-					File playerFile = new File(playerDataFolder, player.getUniqueId().toString() + ".dat");
+					File playerFile = new File(playerDataFolder, player.getUniqueId() + ".dat");
 					if (playerFile.exists() && playerFile.canWrite()) {
 						try {
 							NBTFile nbtFile = new NBTFile(playerFile);
@@ -1027,7 +1027,7 @@ public class SkillsCommand extends BaseCommand {
 		if (backupProvider != null) {
 			Locale locale = plugin.getLang().getLocale(sender);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVING, locale));
-			backupProvider.saveBackup(sender);
+			backupProvider.saveBackup(sender, true);
 		}
 	}
 

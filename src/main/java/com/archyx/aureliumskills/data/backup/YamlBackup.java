@@ -26,11 +26,13 @@ public class YamlBackup extends BackupProvider {
     }
 
     @Override
-    public void saveBackup(CommandSender sender) {
+    public void saveBackup(CommandSender sender, boolean savePlayerData) {
         try {
-            // Save online players
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                plugin.getStorageProvider().save(player, false);
+            if (savePlayerData) {
+                // Save online players
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    plugin.getStorageProvider().save(player, false);
+                }
             }
             createBackupFolder();
             LocalTime time = LocalTime.now();
