@@ -18,13 +18,13 @@ public class LegacyFileBackup extends BackupProvider {
     }
 
     @Override
-    public void saveBackup(CommandSender sender) {
+    public void saveBackup(CommandSender sender, boolean savePlayerData) {
         try {
             File file = new File(plugin.getDataFolder(), "data.yml");
             if (!file.exists()) return;
             createBackupFolder();
             LocalTime time = LocalTime.now();
-            File backupFile = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now().toString()
+            File backupFile = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now()
                     + "_" + time.getHour() + "-" + time.getMinute() + "-" + time.getSecond() + ".yml");
             FileConfiguration data = YamlConfiguration.loadConfiguration(file);
             FileConfiguration config = YamlConfiguration.loadConfiguration(backupFile);
