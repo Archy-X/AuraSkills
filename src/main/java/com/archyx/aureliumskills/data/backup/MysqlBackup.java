@@ -34,11 +34,13 @@ public class MysqlBackup extends BackupProvider {
     }
 
     @Override
-    public void saveBackup(CommandSender sender) {
+    public void saveBackup(CommandSender sender, boolean savePlayerData) {
         try {
             // Save online players
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                storageProvider.save(player, false);
+            if (savePlayerData) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    storageProvider.save(player, false);
+                }
             }
             Connection connection = storageProvider.getConnection();
             try (Statement statement = connection.createStatement()) {
@@ -46,7 +48,7 @@ public class MysqlBackup extends BackupProvider {
                 try (ResultSet result = statement.executeQuery(query)) {
                     createBackupFolder();
                     LocalTime time = LocalTime.now();
-                    File file = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now().toString()
+                    File file = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now()
                             + "_" + time.getHour() + "-" + time.getMinute() + "-" + time.getSecond() + ".yml");
                     FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                     config.set("backup_version", 1);
@@ -56,7 +58,7 @@ public class MysqlBackup extends BackupProvider {
                             int level = result.getInt(skill.toString().toUpperCase(Locale.ROOT) + "_LEVEL");
                             double xp = result.getDouble(skill.toString().toUpperCase(Locale.ROOT) + "_XP");
 
-                            String path = "player_data." + id.toString() + "." + skill.toString().toLowerCase(Locale.ROOT) + ".";
+                            String path = "player_data." + id + "." + skill.toString().toLowerCase(Locale.ROOT) + ".";
                             config.set(path + "level", level);
                             config.set(path + "xp", xp);
                         }

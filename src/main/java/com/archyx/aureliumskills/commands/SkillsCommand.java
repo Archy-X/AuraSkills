@@ -1006,7 +1006,7 @@ public class SkillsCommand extends BaseCommand {
 		if (backupProvider != null) {
 			Locale locale = plugin.getLang().getLocale(sender);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVING, locale));
-			backupProvider.saveBackup(sender);
+			backupProvider.saveBackup(sender, true);
 		}
 	}
 
