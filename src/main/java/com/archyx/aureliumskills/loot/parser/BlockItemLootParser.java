@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.loot.parser;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.loot.LootEntry;
+import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.builder.BlockItemLootBuilder;
 import com.archyx.aureliumskills.util.misc.Validate;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +15,7 @@ public class BlockItemLootParser extends ItemLootParser {
     }
 
     @Override
-    public LootEntry parse(Map<?, ?> map) {
+    public Loot parse(Map<?, ?> map) {
         ItemStack item = parseItem(map);
         Validate.notNull(item, "Failed to parse item");
 

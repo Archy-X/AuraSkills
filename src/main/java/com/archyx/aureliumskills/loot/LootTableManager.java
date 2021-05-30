@@ -83,10 +83,10 @@ public class LootTableManager {
 
 			// Parse each loot entry
 			List<Map<?,?>> lootMapList = currentPool.getMapList("loot");
-			List<LootEntry> lootList = new ArrayList<>();
+			List<Loot> lootList = new ArrayList<>();
 			for (Map<?, ?> lootEntryMap : lootMapList) {
 				String type = DataUtil.getString(lootEntryMap, "type");
-				LootEntry loot = null;
+				Loot loot = null;
 				if (type.equalsIgnoreCase("item")) {
 					if (lootTableType.equals("fishing")) {
 						loot = new FishingItemLootParser(plugin).parse(lootEntryMap);

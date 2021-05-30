@@ -1,12 +1,12 @@
 package com.archyx.aureliumskills.loot.type;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.loot.LootEntry;
+import com.archyx.aureliumskills.loot.Loot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class ItemLoot extends LootEntry {
+public class ItemLoot extends Loot {
 
     protected ItemStack item;
     protected int minAmount;

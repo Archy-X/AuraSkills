@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.loot.builder;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.loot.LootEntry;
+import com.archyx.aureliumskills.loot.Loot;
 
 public abstract class LootBuilder {
 
@@ -18,6 +18,6 @@ public abstract class LootBuilder {
         return this;
     }
 
-    public abstract LootEntry build();
+    public abstract Loot build();
 
 }

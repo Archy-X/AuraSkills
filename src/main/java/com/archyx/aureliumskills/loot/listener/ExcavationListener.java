@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.abilities.AbilityProvider;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.loot.LootEntry;
+import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.BlockItemLoot;
@@ -54,16 +54,16 @@ public class ExcavationListener extends AbilityProvider implements Listener {
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
-                List<LootEntry> lootList = pool.getLoot();
+                List<Loot> lootList = pool.getLoot();
                 // Loot selected based on weight
                 int totalWeight = 0;
-                for (LootEntry loot : lootList) {
+                for (Loot loot : lootList) {
                     totalWeight += loot.getWeight();
                 }
                 int selected = random.nextInt(totalWeight);
                 int currentWeight = 0;
-                LootEntry selectedLoot = null;
-                for (LootEntry loot : lootList) {
+                Loot selectedLoot = null;
+                for (Loot loot : lootList) {
                     if (selected >= currentWeight && selected < currentWeight + loot.getWeight()) {
                         selectedLoot = loot;
                         break;
