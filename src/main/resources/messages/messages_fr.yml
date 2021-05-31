@@ -97,7 +97,7 @@ abilities:
       info: '+{value}% d''XP'
     spade_master:
       name: Maitre de la pelle
-      desc: 'Infligez {value} de dégâts supplémentaire avec les pelles.'
+      desc: 'Infligez {value}% de dégâts supplémentaire avec une pelle.'
       info: '+{value}% dégâts avec la pelle'
     bigger_scoop:
       name: Plus grande pelle
@@ -383,6 +383,18 @@ commands:
       removeall:
         removed: '&7Toutes les exigences d''armure ont été supprimé de votre item'
       equip: '&eVous ne remplissez pas les conditions pour équiper cette item!'
+  backup:
+    load:
+      confirm: '&cLe chargement d''une sauvegarde annulera toutes les données de compétence des joueurs. Cette action est permanente et ne peut pas être annulée. Vous pouvez enregistrer une sauvegarde avant d''en charger une. Tapez la commande à nouveau pour confirmer cette action'
+      loading: '&fChargement de la sauvegarde...'
+      loaded: '&aSauvegarde chargée avec succès'
+      error: '&cErreur lors du chargement de la sauvegarde : {error}'
+      must_be_yaml: '&eLe fichier doit être un fichier .yml !'
+      file_not_found: '&eUne sauvegarde de ce nom de fichier n''existe pas dans le dossier de sauvegarde!'
+    save:
+      saving: 'Préparation de la sauvegarde...'
+      saved: '&fSauvegarde des données {type} en tant que {file}'
+      error: '&cErreur de sauvegarde des données {type} ! Voir l''erreur dans la console/ci-dessous pour plus de détails'
   item:
     modifier:
       add:
@@ -472,6 +484,9 @@ commands:
     skill_header: '&f--==&b&lClassement {skill}&f==--'
     skill_header_page: '&f--==&b&lClassement {skill} &f(Page {page})==--'
     skill_entry: '&f{rank}. &b{player} &f- {level}'
+    average_header: '&f--==&b&lClassement de toutes les compétences&f==--'
+    average_header_page: '&f--==&b&lClassement de toutes les compétences &f(Page {page})==--'
+    average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUtilisation: &a/sk top &f<page> &7ou &a/sk top &f[skill] <page>'
   updateleaderboards:
     already_updating: '&eLe classement est déjà en train d''etre mis à jour!'
@@ -606,7 +621,7 @@ mana_abilities:
     shoot: '&6Tir chargé utilisé ! &d+{percent}% DMG &7(-{mana} {mana_unit})'
     menu: "\n&d&lMana Capacité &9{mana_ability} {level}\n &7Dommages : &c+{value}% / Mana &7Coût de Mana Max : &b{mana_cost}\n "
   not_ready: '&cCompétence non chargée! &7({cooldown}s)'
-  not_enough_mana: '&ePas assez de mana! &7({mana} {mana_unit} requis)'
+  not_enough_mana: '&eMana insuffisante! &7({mana} {mana_unit} requis, vous avez {current_mana}/{max_mana})'
 skills:
   farming:
     name: Fermier
@@ -688,4 +703,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 13
+file_version: 15

@@ -97,7 +97,7 @@ abilities:
       info: '+{value}% XP'
     spade_master:
       name: Mestre das Pás
-      desc: 'Causa {value} de dano a mais com pás.'
+      desc: 'Causa {value}% a mais de dano com pás.'
       info: '+{value}% de Dano de Pá'
     bigger_scoop:
       name: Grande Escavador
@@ -383,6 +383,18 @@ commands:
       removeall:
         removed: '&7Todos os requisitos de armadura foram removidos do seu item'
       equip: '&eVocê não tem os requisitos para equipar este item!'
+  backup:
+    load:
+      confirm: '&cCarregar um backup reverterá todos os dados de habilidade dos jogadores. Esta ação é permanente e não pode ser desfeita. Talvez você queira salvar um backup antes de carregar um. Digite o comando novamente para confirmar esta ação'
+      loading: '&fCarregando backup...'
+      loaded: '&aBackup carregado com sucesso'
+      error: '&cErro ao carregar backup: {error}'
+      must_be_yaml: '&eO arquivo deve ser um arquivo .yml'
+      file_not_found: '&eUm backup com este nome não existe na pasta de backups!'
+    save:
+      saving: '&fSalvando backup...'
+      saved: '&fSalvos os dados de {type} como {file}'
+      error: '&cErro ao fazer backup dos dados do {type}! Veja o erro no console/abaixo para mais detalhes'
   item:
     modifier:
       add:
@@ -472,6 +484,9 @@ commands:
     skill_header: '&f--==&b&l{skill} Classificação&f==--'
     skill_header_page: '&f--==&b&l{skill} Placar de Liderança &f(Página {page})==--'
     skill_entry: '&f{rank}. &b{player} &f- {level}'
+    average_header: '&f--==&b&lPlacar de Líderes&f==--'
+    average_header_page: '&f--==&b&lPlacar de Líderes &f(Página {page})==--'
+    average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUso: &a/sk top &f<page> &7ou &a/sk top &f[skill] <page>'
   updateleaderboards:
     already_updating: '&eO Placar de Liderança está atualizando!'
@@ -606,7 +621,7 @@ mana_abilities:
     shoot: '&6Tiro carregado Utilizado! &d+{percent}% Dano &7(-{mana} {mana_unit})'
     menu: "\n&d&Habilidade de Mana &9{mana_ability} {level}\n &7Dano: &c+{value}% / Mana &7Custo de Mana Máxima: &b{mana_cost}\n "
   not_ready: '&cHabilidade não está pronta! &7({cooldown})'
-  not_enough_mana: '&eMana insuficiente! &7({mana} {mana_unit} necessário)'
+  not_enough_mana: '&eMana Insuficiente! &7({mana} {mana_unit} necessária, você tem {current_mana}/{max_mana})'
 skills:
   farming:
     name: Agricultura
@@ -688,4 +703,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 13
+file_version: 15
