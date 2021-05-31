@@ -4,9 +4,6 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.node.Node;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -97,16 +94,13 @@ public class RewardTable {
             int entryLevel = entry.getKey();
             for (PermissionReward reward : entry.getValue()) {
                 if (plugin.isLuckPermsEnabled()) {
-                    LuckPerms luckPerms = LuckPermsProvider.get();
                     // Add permission if unlocked
                     if (level >= entryLevel) {
-                        luckPerms.getUserManager().modifyUser(player.getUniqueId(), user ->
-                                user.data().add(Node.builder(reward.getPermission()).value(reward.getValue()).build()));
+                        plugin.getLuckPermsSupport().addPermission(player, reward.getPermission(), reward.getValue());
                     }
                     // Remove permission if not unlocked
                     else {
-                        luckPerms.getUserManager().modifyUser(player.getUniqueId(), user ->
-                                user.data().remove(Node.builder(reward.getPermission()).value(reward.getValue()).build()));
+                        plugin.getLuckPermsSupport().removePermission(player, reward.getPermission(), reward.getValue());
                     }
                 }
             }

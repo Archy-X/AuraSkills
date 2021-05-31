@@ -111,6 +111,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
+	private LuckPermsSupport luckPermsSupport;
 	private final long releaseTime = 1622143139789L;
 
 	public void onEnable() {
@@ -157,6 +158,9 @@ public class AureliumSkills extends JavaPlugin {
 		townySupport = new TownySupport(this);
 		// Check for LuckPerms
 		luckPermsEnabled = Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
+		if (luckPermsEnabled) {
+			luckPermsSupport = new LuckPermsSupport();
+		}
 		// Load health
 		Health health = new Health(this);
 		this.health = health;
@@ -712,6 +716,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SkillRegistry getSkillRegistry() {
 		return skillRegistry;
+	}
+
+	public LuckPermsSupport getLuckPermsSupport() {
+		return luckPermsSupport;
 	}
 
 	@Nullable
