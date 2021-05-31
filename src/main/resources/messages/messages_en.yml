@@ -380,7 +380,8 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7All armor requirements have been removed from your item'
-      equip: '&eYou do not meet the requirements to equip this item!'
+      equip: '&eYou do not meet the requirements to equip this item: {requirements}'
+      entry: '&b{skill} {level}&7, '
   backup:
     load:
       confirm: '&cLoading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action'
@@ -420,7 +421,8 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7All item requirements have been removed from your item'
-      use: '&eYou do not meet the requirements to use this item!'
+      use: '&eYou do not meet the requirements to equip this item: {requirements}'
+      entry: '&b{skill} {level}&7, '
   lang:
     set: '&7Language set to &b{lang}'
     not_found: '&eLanguage not found!'
@@ -701,4 +703,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 15
+file_version: 16
