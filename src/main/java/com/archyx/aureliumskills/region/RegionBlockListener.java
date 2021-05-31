@@ -9,6 +9,7 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,6 +17,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class RegionBlockListener implements Listener {
 
@@ -135,17 +138,17 @@ public class RegionBlockListener implements Listener {
 
     @EventHandler
     public void checkPlace(BlockPlaceEvent event) {
-        //Checks if world is blocked
+        // Checks if world is blocked
         if (plugin.getWorldManager().isInBlockedCheckWorld(event.getBlock().getLocation())) {
             return;
         }
-        //Checks if region is blocked
+        // Checks if region is blocked
         if (plugin.isWorldGuardEnabled()) {
             if (plugin.getWorldGuardSupport().isInBlockedCheckRegion(event.getBlock().getLocation())) {
                 return;
             }
         }
-        //Check block replace
+        // Check block replace
         if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
             Material material = event.getBlock().getType();
             for (Material checkedMaterial : materials) {
@@ -159,6 +162,33 @@ public class RegionBlockListener implements Listener {
                     regionManager.addPlacedBlock(event.getBlock());
                     break;
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onSandFall(EntityChangeBlockEvent event) {
+        Block block = event.getBlock();
+        Material type = block.getType();
+        if (type == Material.SAND || type == Material.RED_SAND || type == Material.GRAVEL) {
+            Block below = block.getRelative(BlockFace.DOWN);
+            if (below.getType() == Material.AIR || below.getType().toString().equals("CAVE_AIR") || below.getType().toString().equals("VOID_AIR")) {
+                regionManager.removePlacedBlock(block);
+                Entity entity = event.getEntity();
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        Block currentBlock = entity.getLocation().getBlock();
+                        if (entity.isDead() || !entity.isValid()) {
+                            if (currentBlock.getType() == type) {
+                                regionManager.addPlacedBlock(entity.getLocation().getBlock());
+                            }
+                            cancel();
+                        } else if (currentBlock.getType().toString().contains("WEB")) {
+                            cancel();
+                        }
+                    }
+                }.runTaskTimer(plugin, 1L, 1L);
             }
         }
     }

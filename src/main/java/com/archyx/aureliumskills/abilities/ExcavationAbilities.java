@@ -228,16 +228,15 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
 					return;
 				}
-				if (!block.hasMetadata("skillsPlaced")) {
-					if (isEnabled(Ability.BIGGER_SCOOP)) {
-						biggerScoop(playerData, block, player);
-					}
-					if (isEnabled(Ability.METAL_DETECTOR)) {
-						metalDetector(player, playerData, block);
-					}
-					if (isEnabled(Ability.LUCKY_SPADES)) {
-						luckySpades(player, playerData, block);
-					}
+				if (plugin.getRegionManager().isPlacedBlock(block)) return;
+				if (isEnabled(Ability.BIGGER_SCOOP)) {
+					biggerScoop(playerData, block, player);
+				}
+				if (isEnabled(Ability.METAL_DETECTOR)) {
+					metalDetector(player, playerData, block);
+				}
+				if (isEnabled(Ability.LUCKY_SPADES)) {
+					luckySpades(player, playerData, block);
 				}
 			}
 		}

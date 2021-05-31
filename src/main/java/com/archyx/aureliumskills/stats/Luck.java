@@ -98,34 +98,26 @@ public class Luck implements Listener {
 				}
 			}
 			if (player.getGameMode().equals(GameMode.SURVIVAL)) {
-				if (!event.getBlock().hasMetadata("skillsPlaced")) {
-					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-					if (playerData == null) return;
-					Material mat = block.getType();
-					if (mat.equals(Material.STONE) || mat.equals(Material.COBBLESTONE) || mat.equals(Material.SAND) || mat.equals(Material.GRAVEL)
-							|| mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(XMaterial.ANDESITE.parseMaterial())
-							|| mat.equals(XMaterial.DIORITE.parseMaterial()) || mat.equals(XMaterial.GRANITE.parseMaterial())) {
-						//Calculate chance
-						double chance = playerData.getStatLevel(Stats.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER);
-						if (chance * 100 > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
-							chance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
-						}
-						if (r.nextDouble() < chance) {
-							ItemStack tool = player.getInventory().getItemInMainHand();
-							for (ItemStack item : block.getDrops(tool)) {
-								//If silk touch
-								if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
-									if (mat.equals(Material.STONE)) {
-										if (!XMaterial.isNewVersion()) {
-											if (block.getData() == 0) {
-												PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(Material.STONE), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
-												Bukkit.getPluginManager().callEvent(dropEvent);
-												if (!event.isCancelled()) {
-													block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
-												}
-											}
-										}
-										else {
+				if (plugin.getRegionManager().isPlacedBlock(block)) return;
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+				if (playerData == null) return;
+				Material mat = block.getType();
+				if (mat.equals(Material.STONE) || mat.equals(Material.COBBLESTONE) || mat.equals(Material.SAND) || mat.equals(Material.GRAVEL)
+						|| mat.equals(Material.DIRT) || mat.equals(XMaterial.GRASS_BLOCK.parseMaterial()) || mat.equals(XMaterial.ANDESITE.parseMaterial())
+						|| mat.equals(XMaterial.DIORITE.parseMaterial()) || mat.equals(XMaterial.GRANITE.parseMaterial())) {
+					//Calculate chance
+					double chance = playerData.getStatLevel(Stats.LUCK) * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER);
+					if (chance * 100 > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
+						chance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
+					}
+					if (r.nextDouble() < chance) {
+						ItemStack tool = player.getInventory().getItemInMainHand();
+						for (ItemStack item : block.getDrops(tool)) {
+							//If silk touch
+							if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+								if (mat.equals(Material.STONE)) {
+									if (!XMaterial.isNewVersion()) {
+										if (block.getData() == 0) {
 											PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(Material.STONE), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
 											Bukkit.getPluginManager().callEvent(dropEvent);
 											if (!event.isCancelled()) {
@@ -133,24 +125,31 @@ public class Luck implements Listener {
 											}
 										}
 									}
-									else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
-										Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
-										if (grassBlock != null) {
-											PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
-											Bukkit.getPluginManager().callEvent(dropEvent);
-											if (!event.isCancelled()) {
-												block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
-											}
+									else {
+										PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(Material.STONE), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+										Bukkit.getPluginManager().callEvent(dropEvent);
+										if (!event.isCancelled()) {
+											block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
 										}
 									}
 								}
-								//Drop regular item if not silk touch
-								else {
-									PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
-									Bukkit.getPluginManager().callEvent(dropEvent);
-									if (!event.isCancelled()) {
-										block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+								else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
+									Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
+									if (grassBlock != null) {
+										PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+										Bukkit.getPluginManager().callEvent(dropEvent);
+										if (!event.isCancelled()) {
+											block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+										}
 									}
+								}
+							}
+							//Drop regular item if not silk touch
+							else {
+								PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+								Bukkit.getPluginManager().callEvent(dropEvent);
+								if (!event.isCancelled()) {
+									block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
 								}
 							}
 						}

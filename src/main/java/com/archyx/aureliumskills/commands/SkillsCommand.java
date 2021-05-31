@@ -223,11 +223,21 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.save")
 	@Description("Saves skill data")
 	public void onSave(CommandSender sender) {
-		Locale locale = plugin.getLang().getLocale(sender);
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			plugin.getStorageProvider().save(player, false);
-		}
-		sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SAVE_SAVED, locale));
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Locale locale = plugin.getLang().getLocale(sender);
+				for (Player player : Bukkit.getOnlinePlayers()) {
+					plugin.getStorageProvider().save(player, false);
+				}
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SAVE_SAVED, locale));
+					}
+				}.runTask(plugin);
+			}
+		}.runTaskAsynchronously(plugin);
 	}
 
 	@Subcommand("updateleaderboards")
