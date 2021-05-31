@@ -200,6 +200,9 @@ public class MenuLoader {
             //If versions do not match
             if (currentVersion != imbVersion) {
                 try {
+                    if (currentVersion == 1) {
+                        convertToRewardsUpdate(config, imbConfig);
+                    }
                     ConfigurationSection configSection = imbConfig.getConfigurationSection("");
                     int keysAdded = 0;
                     if (configSection != null) {
@@ -210,6 +213,7 @@ public class MenuLoader {
                             }
                         }
                     }
+                    config.set("file_version", imbVersion);
                     config.save(file);
                     Bukkit.getLogger().info("[AureliumSkills] menus.yml was updated to a new file version, " + keysAdded + " new keys were added.");
                 }
@@ -219,6 +223,14 @@ public class MenuLoader {
             }
         }
         return YamlConfiguration.loadConfiguration(file);
+    }
+
+    private void convertToRewardsUpdate(FileConfiguration config, FileConfiguration imbConfig) {
+        String[] paths = new String[] {"skills_menu.templates.skill.lore", "level_progression_menu.skill.lore"};
+        for (String path : paths) {
+            config.set(path, imbConfig.get(path));
+            plugin.getLogger().warning("The value of " + path + " in menus.yml was reset to default for the rewards update, this is normal");
+        }
     }
 
 }
