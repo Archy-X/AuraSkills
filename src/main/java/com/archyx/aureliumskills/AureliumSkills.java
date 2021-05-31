@@ -108,7 +108,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
-	private final long releaseTime = 1622483534119L;
+	private final long releaseTime = 1622502003315L;
 
 	public void onEnable() {
 		// Registries
