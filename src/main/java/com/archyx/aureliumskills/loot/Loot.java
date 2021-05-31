@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -40,6 +41,10 @@ public abstract class Loot {
             // Use input as message if fail
             if (finalMessage == null) {
                 finalMessage = message;
+            }
+            // Replace placeholders
+            if (plugin.isPlaceholderAPIEnabled()) {
+                finalMessage = PlaceholderAPI.setPlaceholders(player, finalMessage);
             }
             player.sendMessage(finalMessage);
         }
