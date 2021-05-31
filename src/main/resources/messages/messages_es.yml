@@ -383,6 +383,18 @@ commands:
       removeall:
         removed: '&7Todos los requerimientos de armadura han sido removidos'
       equip: '&eNo cumples los requisitos para usar este objeto!'
+  backup:
+    load:
+      confirm: '&cCargando la copia de seguridad que revertirá todos los datos de los jugadores. Esta acción es permanente y no se puede deshacer. Puede que quieras guardar una copia de seguridad antes de cargar una. Escribe el comando nuevamente para confirmar esta acción'
+      loading: '&fCargando copia de seguridad...'
+      loaded: '&aCopia de seguridad cargada correctamente'
+      error: '&cError al cargar la copia de seguridad: {error}'
+      must_be_yaml: '&eEl archivo debe tener el formato .yml!'
+      file_not_found: '&aNo existe una copia de seguridad con este nombre en la carpeta de copias de seguridad!'
+    save:
+      saving: '&fGuardando copia de seguridad...'
+      saved: '&fDatos de {type} almacenados como {file}'
+      error: '&cError al respaldar los datos {type}! Ve el error en la consola/abajo para más detalles'
   item:
     modifier:
       add:
@@ -472,6 +484,9 @@ commands:
     skill_header: '&f--==&b&lTabla de Clasificación de {skill}&f==--'
     skill_header_page: '&f--==&b&lTabla de Clasificación de {skill}&f (Página {page})==--'
     skill_entry: '&f{rank}. &b{player} &f- {level}'
+    average_header: '&f--==&b&lClasificación de Promedio de Habilidades&f==--'
+    average_header_page: '&f--==&b&lClasificación de Promedio de Habilidades &f(Página {page})==--'
+    average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eIntenta con: &a/sk top &f<page> &7o &a/sk top &f[skill] <page>'
   updateleaderboards:
     already_updating: '&e¡La tabla de clasificaciones ya se está actualizando!'
@@ -606,7 +621,7 @@ mana_abilities:
     shoot: '&6¡Usaste Disparo Cargado! &d+{percent}% DAÑO &7(-{mana} {mana_unit})'
     menu: "\n&d&lHabilidad de Maná &9{mana_ability} {level}\n &7Daño: &c+{value}% / &7Costo de Maná Máximo: &b{mana_cost}\n "
   not_ready: '&c¡La habilitad no está lista! &7({cooldown}s)'
-  not_enough_mana: '&e¡No tienes suficiente mana! &7(Requerido: {mana} {mana_unit})'
+  not_enough_mana: '&e¡No hay maná suficiente! &7(Necesitas {mana} {mana_unit} y tienes {current_mana}/{max_mana})'
 skills:
   farming:
     name: Agricultura
@@ -688,4 +703,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 13
+file_version: 15

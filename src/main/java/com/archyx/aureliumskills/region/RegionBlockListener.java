@@ -20,6 +20,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class RegionBlockListener implements Listener {
 
     private final XMaterial[] checkedMaterials = new XMaterial[] {
@@ -169,12 +171,15 @@ public class RegionBlockListener implements Listener {
     @EventHandler
     public void onSandFall(EntityChangeBlockEvent event) {
         Block block = event.getBlock();
+        if (!regionManager.isPlacedBlock(block)) return;
         Material type = block.getType();
         if (type == Material.SAND || type == Material.RED_SAND || type == Material.GRAVEL) {
             Block below = block.getRelative(BlockFace.DOWN);
-            if (below.getType() == Material.AIR || below.getType().toString().equals("CAVE_AIR") || below.getType().toString().equals("VOID_AIR")) {
+            if (below.getType() == Material.AIR || below.getType().toString().equals("CAVE_AIR") || below.getType().toString().equals("VOID_AIR")
+                    || below.getType() == Material.WATER || below.getType().toString().equals("BUBBLE_COLUMN") || below.getType() == Material.LAVA) {
                 regionManager.removePlacedBlock(block);
                 Entity entity = event.getEntity();
+                AtomicInteger counter = new AtomicInteger();
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -185,6 +190,8 @@ public class RegionBlockListener implements Listener {
                             }
                             cancel();
                         } else if (currentBlock.getType().toString().contains("WEB")) {
+                            cancel();
+                        } else if (counter.incrementAndGet() >= 200) {
                             cancel();
                         }
                     }
