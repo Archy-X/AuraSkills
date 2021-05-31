@@ -1,3 +1,10 @@
+Version Beta 1.0.1
+  Changes:
+    - Automatic backups will no longer try to save player data again on shutdown
+    - The /skills save command now runs asynchronously
+  Bug Fixes:
+    - Fixed duplication when mining placed Excavation or Luck double drop blocks
+
 Version Beta 1.0.0
   New Features:
     - Backups:
