@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.BlockItemLoot;
+import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -76,6 +77,9 @@ public class ExcavationListener extends AbilityProvider implements Listener {
                     if (selectedLoot instanceof BlockItemLoot) {
                         BlockItemLoot blockItemLoot = (BlockItemLoot) selectedLoot;
                         blockItemLoot.giveLoot(event);
+                    } else if (selectedLoot instanceof CommandLoot) {
+                        CommandLoot commandLoot = (CommandLoot) selectedLoot;
+                        commandLoot.giveLoot(player);
                     }
                     break;
                 }

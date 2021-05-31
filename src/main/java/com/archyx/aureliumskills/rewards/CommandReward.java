@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.rewards;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -48,11 +49,6 @@ public class CommandReward extends MessagedReward {
         } else {
             player.performCommand(executedCommand);
         }
-    }
-
-    public enum CommandExecutor {
-        CONSOLE,
-        PLAYER
     }
 
 }

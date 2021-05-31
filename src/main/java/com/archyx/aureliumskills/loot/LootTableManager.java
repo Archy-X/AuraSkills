@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.parser.BlockItemLootParser;
+import com.archyx.aureliumskills.loot.parser.CommandLootParser;
 import com.archyx.aureliumskills.loot.parser.FishingItemLootParser;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.misc.DataUtil;
@@ -63,14 +64,14 @@ public class LootTableManager {
 			matchConfig(config, lootTableFile); // Try to update file
 			// Load corresponding loot table type
 			String type = config.getString("type", "block");
-			LootTable lootTable = loadLootTable(config, type);
+			LootTable lootTable = loadLootTable(lootTableFile, config, type);
 			if (lootTable != null) {
 				lootTables.put(skill, lootTable);
 			}
 		}
 	}
 
-	private LootTable loadLootTable(FileConfiguration config, String lootTableType) {
+	private LootTable loadLootTable(File file, FileConfiguration config, String lootTableType) {
 		ConfigurationSection poolsSection = config.getConfigurationSection("pools");
 		if (poolsSection == null) return null;
 		List<LootPool> pools = new ArrayList<>();
@@ -84,19 +85,31 @@ public class LootTableManager {
 			// Parse each loot entry
 			List<Map<?,?>> lootMapList = currentPool.getMapList("loot");
 			List<Loot> lootList = new ArrayList<>();
+			int index = 0;
 			for (Map<?, ?> lootEntryMap : lootMapList) {
 				String type = DataUtil.getString(lootEntryMap, "type");
 				Loot loot = null;
-				if (type.equalsIgnoreCase("item")) {
-					if (lootTableType.equals("fishing")) {
-						loot = new FishingItemLootParser(plugin).parse(lootEntryMap);
-					} else if (lootTableType.equals("block")) {
-						loot = new BlockItemLootParser(plugin).parse(lootEntryMap);
+				try {
+					// Item loot
+					if (type.equalsIgnoreCase("item")) {
+						if (lootTableType.equals("fishing")) {
+							loot = new FishingItemLootParser(plugin).parse(lootEntryMap);
+						} else if (lootTableType.equals("block")) {
+							loot = new BlockItemLootParser(plugin).parse(lootEntryMap);
+						}
 					}
+					// Command loot
+					else if (type.equalsIgnoreCase("command")) {
+						loot = new CommandLootParser(plugin).parse(lootEntryMap);
+					}
+				} catch (Exception e) {
+					plugin.getLogger().warning("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");
+					e.printStackTrace();
 				}
 				if (loot != null) {
 					lootList.add(loot);
 				}
+				index++;
 			}
 			// Create pool
 			LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority);

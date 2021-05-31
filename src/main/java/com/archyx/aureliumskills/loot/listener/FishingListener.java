@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
+import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.FishingItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
@@ -88,6 +89,9 @@ public class FishingListener extends AbilityProvider implements Listener {
                     if (selectedLoot instanceof FishingItemLoot) {
                         FishingItemLoot fishingItemLoot = (FishingItemLoot) selectedLoot;
                         fishingItemLoot.giveLoot(event);
+                    } else if (selectedLoot instanceof CommandLoot) {
+                        CommandLoot commandLoot = (CommandLoot) selectedLoot;
+                        commandLoot.giveLoot(player);
                     }
                     break;
                 }
