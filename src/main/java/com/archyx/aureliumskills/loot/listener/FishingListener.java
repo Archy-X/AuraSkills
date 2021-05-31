@@ -60,9 +60,9 @@ public class FishingListener extends AbilityProvider implements Listener {
             // Calculate chance for pool
             double chance = pool.getBaseChance();
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
-                chance *= 1 + (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
+                chance += (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
-                chance *= 1 + (getValue(Ability.EPIC_CATCH, playerData) / 100);
+                chance += (getValue(Ability.EPIC_CATCH, playerData) / 100);
             }
 
             if (random.nextDouble() < chance) { // Pool is selected

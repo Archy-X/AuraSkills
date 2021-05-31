@@ -66,7 +66,7 @@ abilities:
   fishing:
     lucky_catch:
       name: Lucky Catch
-      desc: '{value}% chance to get double drops\n&7  from fishing.'
+      desc: '{value}% added chance to get double drops\n&7  from fishing.'
       info: '{value}% 2x Drops'
     fisher:
       name: Fisher
@@ -82,13 +82,13 @@ abilities:
       info: '+{value}% Hook Speed'
     epic_catch:
       name: Epic Catch
-      desc: '{value}% higher chance to get epic loot\n&7  from fishing.'
+      desc: '{value}% added chance to get epic loot\n&7  from fishing.'
       info: '+{value}% Epic Loot'
   excavation:
     metal_detector:
       name: Metal Detector
-      desc: '{value}% chance to get rare loot from digging.'
-      info: '{value}% Rare Loot'
+      desc: '{value}% added chance to get rare loot from digging.'
+      info: '+{value}% Rare Loot'
     excavator:
       name: Excavator
       desc: 'Earn {value}% more Excavation XP'
@@ -103,8 +103,8 @@ abilities:
       info: '{value}% 3x Drops'
     lucky_spades:
       name: Lucky Spades
-      desc: '{value}% chance to get epic loot from digging.'
-      info: '{value}% Epic Loot'
+      desc: '{value}% added chance to get epic loot from digging.'
+      info: '+{value}% Epic Loot'
   archery:
     crit_chance:
       name: Crit Chance
@@ -701,4 +701,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 17
+file_version: 18

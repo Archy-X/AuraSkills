@@ -48,9 +48,9 @@ public class ExcavationListener extends AbilityProvider implements Listener {
             // Calculate chance for pool
             double chance = pool.getBaseChance();
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.METAL_DETECTOR)) {
-                chance *= 1 + (getValue(Ability.METAL_DETECTOR, playerData) / 100);
+                chance += (getValue(Ability.METAL_DETECTOR, playerData) / 100);
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.LUCKY_SPADES)) {
-                chance *= 1 + (getValue(Ability.LUCKY_SPADES, playerData) / 100);
+                chance += (getValue(Ability.LUCKY_SPADES, playerData) / 100);
             }
 
             if (random.nextDouble() < chance) { // Pool is selected

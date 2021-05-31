@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public abstract class ItemLootParser extends LootParser {
     protected ItemStack parseItem(Map<?, ?> map) {
         // Parse material
         String itemString = getString(map, "item");
-        Material material = Material.valueOf(itemString);
+        Material material = Material.valueOf(itemString.toUpperCase(Locale.ROOT));
         ItemStack item = new ItemStack(material);
 
         ItemMeta meta = item.getItemMeta();
