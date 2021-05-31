@@ -254,6 +254,9 @@ sources:
     splash_regular: 20
     splash_extended: 25
     splash_upgraded: 25
+    lingering_regular: 30
+    lingering_extended: 35
+    lingering_upgraded: 35
     golden_apple: 5
     enchanted_golden_apple: 50
   forging:
@@ -262,4 +265,4 @@ sources:
     combine_armor_per_level: 20
     combine_tool_per_level: 25
     grindstone_per_level: 30
-file_version: 4
+file_version: 5
