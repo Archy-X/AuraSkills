@@ -24,6 +24,7 @@ public class BlockItemLootParser extends ItemLootParser {
         return new BlockItemLootBuilder(plugin).item(item)
                 .minAmount(amount[0])
                 .maxAmount(amount[1])
+                .message(getMessage(map))
                 .weight(getWeight(map)).build();
     }
 }

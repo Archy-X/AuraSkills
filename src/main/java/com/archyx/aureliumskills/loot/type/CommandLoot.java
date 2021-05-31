@@ -13,8 +13,8 @@ public class CommandLoot extends Loot {
     private final CommandExecutor executor;
     private final String command;
 
-    public CommandLoot(AureliumSkills plugin, int weight, CommandExecutor executor, String command) {
-        super(plugin, weight);
+    public CommandLoot(AureliumSkills plugin, int weight, String message, CommandExecutor executor, String command) {
+        super(plugin, weight, message);
         this.executor = executor;
         this.command = command;
     }
@@ -31,6 +31,7 @@ public class CommandLoot extends Loot {
         } else if (executor == CommandExecutor.PLAYER) {
             Bukkit.dispatchCommand(player, finalCommand);
         }
+        attemptSendMessage(player);
     }
 
 }

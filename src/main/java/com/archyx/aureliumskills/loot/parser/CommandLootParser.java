@@ -22,8 +22,8 @@ public class CommandLootParser extends LootParser {
             builder.executor(CommandExecutor.valueOf(getString(map, "executor").toUpperCase(Locale.ROOT)));
         }
 
-        builder.command(getString(map, "command"));
-
-        return builder.build();
+        return builder.command(getString(map, "command"))
+                .message(getMessage(map))
+                .weight(getWeight(map)).build();
     }
 }

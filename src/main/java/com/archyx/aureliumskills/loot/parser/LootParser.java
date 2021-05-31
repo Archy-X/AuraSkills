@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.loot.parser;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.Loot;
+import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.misc.Parser;
 
 import java.util.Map;
@@ -21,6 +22,14 @@ public abstract class LootParser extends Parser {
             return getInt(map, "weight");
         } else {
             return 10;
+        }
+    }
+
+    protected String getMessage(Map<?, ?> map) {
+        if (map.containsKey("message")) {
+            return LoreUtil.replace(getString(map, "message"), "&", "§");
+        } else {
+            return "";
         }
     }
 

@@ -14,6 +14,6 @@ public class BlockItemLootBuilder extends ItemLootBuilder {
     @Override
     public Loot build() {
         Validate.notNull(item, "You must specify an item");
-        return new BlockItemLoot(plugin, weight, item, minAmount, maxAmount);
+        return new BlockItemLoot(plugin, weight, message, item, minAmount, maxAmount);
     }
 }

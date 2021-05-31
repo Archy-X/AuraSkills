@@ -17,7 +17,7 @@ public class CommandLootBuilder extends LootBuilder {
 
     @Override
     public Loot build() {
-        return new CommandLoot(plugin, weight, executor, command);
+        return new CommandLoot(plugin, weight, message, executor, command);
     }
 
     public CommandLootBuilder executor(CommandExecutor executor) {

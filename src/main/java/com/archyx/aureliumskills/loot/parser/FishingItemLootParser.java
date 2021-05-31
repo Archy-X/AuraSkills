@@ -24,6 +24,7 @@ public class FishingItemLootParser extends ItemLootParser {
         return new FishingItemLootBuilder(plugin).item(item)
                 .minAmount(amount[0])
                 .maxAmount(amount[1])
+                .message(getMessage(map))
                 .weight(getWeight(map)).build();
     }
 }
