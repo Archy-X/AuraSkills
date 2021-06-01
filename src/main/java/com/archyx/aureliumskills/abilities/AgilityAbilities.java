@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.lang.AbilityMessage;
@@ -144,8 +145,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     public void fleeting(EntityDamageEvent event, PlayerData playerData, Player player) {
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
-        // If less than 20% health
-        if (player.getHealth() - event.getFinalDamage() < 0.2 * maxHealth) {
+        if (player.getHealth() - event.getFinalDamage() < getFleetingHealthRequired() * maxHealth) {
             if (!player.hasMetadata("AureliumSkills-Fleeting")) {
                 double percent = getValue(Ability.FLEETING, playerData);
                 float boostFactor = 1 + ((float) percent / 100);
@@ -166,7 +166,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     public void removeFleeting(Player player) {
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
-        if (player.getHealth() >= 0.2 * maxHealth) {
+        if (player.getHealth() >= getFleetingHealthRequired() * maxHealth) {
             if (player.hasMetadata("AureliumSkills-Fleeting")) {
                 float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
                 player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
@@ -198,7 +198,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         if (blockAbility(player)) return;
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
-        if (player.getHealth() + amountRegenerated >= 0.2 * maxHealth) {
+        if (player.getHealth() + amountRegenerated >= getFleetingHealthRequired() * maxHealth) {
             if (player.hasMetadata("AureliumSkills-Fleeting")) {
                 float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
                 player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
@@ -224,7 +224,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         Player player = event.getPlayerData().getPlayer();
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
-        if (player.getHealth() < 0.2 * attribute.getValue()) {
+        if (player.getHealth() < getFleetingHealthRequired() * attribute.getValue()) {
             if (!player.hasMetadata("AureliumSkills-Fleeting")) {
                 double percent = getValue(Ability.FLEETING, event.getPlayerData());
                 float boostFactor = 1 + ((float) percent / 100);
@@ -247,6 +247,16 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
             player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
             player.removeMetadata("AureliumSkills-Fleeting", plugin);
         }
+    }
+
+    private double getFleetingHealthRequired() {
+        double healthPercentRequired = 20;
+        // Get configurable health percent value
+        OptionValue optionValue = plugin.getAbilityManager().getOption(Ability.FLEETING, "health_percent_required");
+        if (optionValue != null) {
+            healthPercentRequired = optionValue.asDouble();
+        }
+        return healthPercentRequired / 100;
     }
 
     public void thunderFall(EntityDamageEvent event, PlayerData playerData, Player player) {

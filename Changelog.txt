@@ -1,3 +1,16 @@
+Version Beta 1.0.2
+  New Features:
+    - Added lingering potions as Healing XP sources (includes regular, extended, and upgraded options in sources_config.yml)
+    - Added health_percent_required option for the fleeting ability to control the health the ability activates at
+  Changes:
+    - Updated French (fr), Portuguese-Brazilian (pt-BR), and Spanish (es) messages
+    - The skill levels required will now be listed in the message when players do not meet the requirements for an item
+      - Requires adding {requirements} placeholder to 'commands.armor.requirement.equip' and 'commands.item.requirement.use' messages or regen of messages file to work
+  API Changes:
+    - Added addItemModifier and addArmorModifier methods to API
+  Bug Fixes:
+    - Fixed falling block (sand/gravel) dupe
+
 Version Beta 1.0.1
   Changes:
     - Automatic backups will no longer try to save player data again on shutdown

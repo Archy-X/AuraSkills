@@ -4,11 +4,15 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.modifier.ModifierType;
+import com.archyx.aureliumskills.modifier.Modifiers;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -285,6 +289,44 @@ public class AureliumAPI {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Adds an item modifier to an item, with optional lore. This does NOT change the item passed in directly,
+     * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
+     * one is created.
+     * @param item The original item, will not be changed by the method
+     * @param stat The stat the add (Use Stats enum for default stats)
+     * @param value The value of the stat to add
+     * @param lore Whether to add lore. Added lore will use the default language.
+     * @return A new ItemStack with the item modifier
+     */
+    public static ItemStack addItemModifier(ItemStack item, Stat stat, double value, boolean lore) {
+        Modifiers modifiers = new Modifiers(plugin);
+        ItemStack modifiedItem = modifiers.addModifier(ModifierType.ITEM, item, stat, value);
+        if (lore) {
+            modifiers.addLore(ModifierType.ITEM, modifiedItem, stat, value, Lang.getDefaultLanguage());
+        }
+        return modifiedItem;
+    }
+
+    /**
+     * Adds an armor modifier to an item, with optional lore. This does NOT change the item passed in directly,
+     * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
+     * one is created.
+     * @param item The original item, will not be changed by the method
+     * @param stat The stat the add (Use Stats enum for default stats)
+     * @param value The value of the stat to add
+     * @param lore Whether to add lore. Added lore will use the default language.
+     * @return A new ItemStack with the armor modifier
+     */
+    public static ItemStack addArmorModifier(ItemStack item, Stat stat, double value, boolean lore) {
+        Modifiers modifiers = new Modifiers(plugin);
+        ItemStack modifiedItem = modifiers.addModifier(ModifierType.ARMOR, item, stat, value);
+        if (lore) {
+            modifiers.addLore(ModifierType.ARMOR, modifiedItem, stat, value, Lang.getDefaultLanguage());
+        }
+        return modifiedItem;
     }
 
 
