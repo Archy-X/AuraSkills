@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -114,6 +115,39 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void onLingeringPotionSplash(LingeringPotionSplashEvent event) {
+		if (!OptionL.isEnabled(Skills.HEALING)) return;
+		// Check cancelled
+		if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {
+			if (event.isCancelled()) {
+				return;
+			}
+		}
+		if (event.getEntity().getEffects().size() == 0) return;
+		if (!(event.getEntity().getShooter() instanceof Player)) return;
+		if (!(event.getEntity().getItem().getItemMeta() instanceof PotionMeta)) return;
+
+		Player player = (Player) event.getEntity().getShooter();
+		PotionMeta meta = (PotionMeta) event.getEntity().getItem().getItemMeta();
+		PotionData data = meta.getBasePotionData();
+
+		Skill skill = Skills.HEALING;
+		if (blockXpGain(player)) return;
+		if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
+				&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
+			if (data.isExtended()) {
+				plugin.getLeveler().addXp(player, skill, getXp(Source.LINGERING_EXTENDED));
+			}
+			else if (data.isUpgraded()) {
+				plugin.getLeveler().addXp(player, skill, getXp(Source.LINGERING_UPGRADED));
+			}
+			else {
+				plugin.getLeveler().addXp(player, skill, getXp(Source.LINGERING_REGULAR));
 			}
 		}
 	}

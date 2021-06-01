@@ -257,6 +257,9 @@ public enum Source {
 	SPLASH_REGULAR("healing.splash_regular"),
 	SPLASH_EXTENDED("healing.splash_extended"),
 	SPLASH_UPGRADED("healing.splash_upgraded"),
+	LINGERING_REGULAR("healing.lingering_regular"),
+	LINGERING_EXTENDED("healing.lingering_extended"),
+	LINGERING_UPGRADED("healing.lingering_upgraded"),
 	GOLDEN_APPLE("healing.golden_apple"),
 	ENCHANTED_GOLDEN_APPLE("healing.enchanted_golden_apple"),
 	// Forging

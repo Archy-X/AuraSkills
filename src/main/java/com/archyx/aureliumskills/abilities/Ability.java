@@ -61,7 +61,7 @@ public enum Ability implements AbstractAbility {
 	LIGHT_FALL(() -> Skills.AGILITY, 2.0, 1.5),
 	JUMPER(() -> Skills.AGILITY, 10.0, 10.0),
 	SUGAR_RUSH(() -> Skills.AGILITY, 5.0, 7.0),
-	FLEETING(() -> Skills.AGILITY, 5.0, 4.0),
+	FLEETING(() -> Skills.AGILITY, 5.0, 4.0, new String[] {"health_percent_required"}, new Object[] {20.0}),
 	THUNDER_FALL(() -> Skills.AGILITY, 3.0, 2.0, 10, 5),
 	ALCHEMIST(() -> Skills.ALCHEMY, 3.0, 4.0, new String[] {"add_item_lore"}, new Object[] {true}),
 	BREWER(() -> Skills.ALCHEMY, 10.0, 10.0),

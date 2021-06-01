@@ -363,6 +363,7 @@ abilities:
       unlock: 5
       level_up: 5
       max_level: 0
+      health_percent_required: 20.0
     thunder_fall:
       enabled: true
       base: 3.0
@@ -618,4 +619,4 @@ mana_abilities:
     level_up: 7
     max_level: 0
     enable_particles: true
-file_version: 4
+file_version: 5
