@@ -86,7 +86,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 					ItemStack topItem = inventory.getItem(0); // Get item in top slot
 					if (topItem != null) {
 						for (Map.Entry<Enchantment, Integer> entry : topItem.getEnchantments().entrySet()) {
-							if (!entry.getKey().equals(Enchantment.BINDING_CURSE)) {
+							if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
 								totalLevel += entry.getValue();
 							}
 						}
@@ -94,7 +94,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 					ItemStack bottomItem = inventory.getItem(1); // Get item in bottom slot
 					if (bottomItem != null) {
 						for (Map.Entry<Enchantment, Integer> entry : bottomItem.getEnchantments().entrySet()) {
-							if (!entry.getKey().equals(Enchantment.BINDING_CURSE)) {
+							if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
 								totalLevel += entry.getValue();
 							}
 						}
