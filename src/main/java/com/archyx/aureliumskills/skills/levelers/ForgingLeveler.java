@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,6 +20,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Map;
 
 public class ForgingLeveler extends SkillLeveler implements Listener {
 
@@ -82,14 +85,18 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 					int totalLevel = 0;
 					ItemStack topItem = inventory.getItem(0); // Get item in top slot
 					if (topItem != null) {
-						for (Integer level : topItem.getEnchantments().values()) {
-							totalLevel += level;
+						for (Map.Entry<Enchantment, Integer> entry : topItem.getEnchantments().entrySet()) {
+							if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
+								totalLevel += entry.getValue();
+							}
 						}
 					}
 					ItemStack bottomItem = inventory.getItem(1); // Get item in bottom slot
 					if (bottomItem != null) {
-						for (Integer level : bottomItem.getEnchantments().values()) {
-							totalLevel += level;
+						for (Map.Entry<Enchantment, Integer> entry : bottomItem.getEnchantments().entrySet()) {
+							if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
+								totalLevel += entry.getValue();
+							}
 						}
 					}
 					plugin.getLeveler().addXp(player, Skills.FORGING, totalLevel * getXp(Source.GRINDSTONE_PER_LEVEL));

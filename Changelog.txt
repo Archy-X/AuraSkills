@@ -1,3 +1,7 @@
+Version Beta 1.0.3
+  Bug Fixes:
+    - Fixed Forging XP dupe
+
 Version Beta 1.0.2
   New Features:
     - Added lingering potions as Healing XP sources (includes regular, extended, and upgraded options in sources_config.yml)
