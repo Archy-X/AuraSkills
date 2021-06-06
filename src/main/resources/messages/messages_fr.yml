@@ -382,7 +382,8 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Toutes les exigences d''armure ont été supprimé de votre item'
-      equip: '&eVous ne remplissez pas les conditions pour équiper cette item!'
+      equip: '&eVous ne remplissez pas les conditions pour équiper cette item: {requirements}'
+      entry: '&b{skill} {level}&7, '
   backup:
     load:
       confirm: '&cLe chargement d''une sauvegarde annulera toutes les données de compétence des joueurs. Cette action est permanente et ne peut pas être annulée. Vous pouvez enregistrer une sauvegarde avant d''en charger une. Tapez la commande à nouveau pour confirmer cette action'
@@ -422,7 +423,8 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Toutes les exigences d''item ont été supprimé de votre objet'
-      use: '&eVous ne remplissez pas les conditions pour équiper cette item!'
+      use: '&eVous ne remplissez pas les conditions pour utiliser cette item: {requirements}'
+      entry: '&b{skill} {level}&7, '
   lang:
     set: '&7Langue définie sur &b{lang}'
     not_found: '&eLLangue introuvable!'
@@ -703,4 +705,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 15
+file_version: 16
