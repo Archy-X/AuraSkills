@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.MenuOpenEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -60,6 +61,9 @@ public class SkillsCommand extends BaseCommand {
 	public void onSkills(Player player) {
 		SmartInventory inventory = SkillsMenu.getInventory(player, plugin);
 		if (inventory != null) {
+			MenuOpenEvent event = new MenuOpenEvent(player, MenuOpenEvent.MenuType.SKILLS);
+			Bukkit.getPluginManager().callEvent(event);
+			if (event.isCancelled()) return;
 			inventory.open(player);
 		} else {
 			player.sendMessage(Lang.getMessage(CommandMessage.NO_PROFILE, Lang.getDefaultLanguage()));

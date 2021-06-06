@@ -4,10 +4,12 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.MenuOpenEvent;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.LevelProgressionMenu;
 import com.archyx.aureliumskills.menu.SkillsMenu;
 import com.archyx.aureliumskills.skills.Skills;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class SkillCommands {
@@ -25,8 +27,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.FARMING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.FARMING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.FARMING, page, plugin).open(player, page);
             }
         }
     }
@@ -43,8 +46,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.FORAGING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.FORAGING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.FORAGING, page, plugin).open(player, page);
             }
         }
     }
@@ -61,8 +65,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.MINING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.MINING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.MINING, page, plugin).open(player, page);
             }
         }
     }
@@ -79,8 +84,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.FISHING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.FISHING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.FISHING, page, plugin).open(player, page);
             }
         }
     }
@@ -97,8 +103,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.EXCAVATION, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.EXCAVATION, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.EXCAVATION, page, plugin).open(player, page);
             }
         }
     }
@@ -115,8 +122,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.ARCHERY, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.ARCHERY, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.ARCHERY, page, plugin).open(player, page);
             }
         }
     }
@@ -133,8 +141,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.DEFENSE, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.DEFENSE, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.DEFENSE, page, plugin).open(player, page);
             }
         }
     }
@@ -151,8 +160,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.FIGHTING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.FIGHTING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.FIGHTING, page, plugin).open(player, page);
             }
         }
     }
@@ -169,8 +179,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.ENDURANCE, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.ENDURANCE, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.ENDURANCE, page, plugin).open(player, page);
             }
         }
     }
@@ -187,8 +198,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.AGILITY, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.AGILITY, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.AGILITY, page, plugin).open(player, page);
             }
         }
     }
@@ -205,8 +217,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.ALCHEMY, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.ALCHEMY, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.ALCHEMY, page, plugin).open(player, page);
             }
         }
     }
@@ -223,8 +236,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.ENCHANTING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.ENCHANTING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.ENCHANTING, page, plugin).open(player, page);
             }
         }
     }
@@ -241,8 +255,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.SORCERY, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.SORCERY, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.SORCERY, page, plugin).open(player, page);
             }
         }
     }
@@ -259,8 +274,9 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.HEALING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.HEALING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.HEALING, page, plugin).open(player, page);
             }
         }
     }
@@ -277,9 +293,17 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
+                if (handleEvent(player)) return;
                 int page = SkillsMenu.getPage(Skills.FORGING, playerData);
-                LevelProgressionMenu.getInventory(player, Skills.FORGING, page, plugin).open(player, page);
+                LevelProgressionMenu.getInventory(playerData, Skills.FORGING, page, plugin).open(player, page);
             }
         }
     }
+
+    private static boolean handleEvent(Player player) {
+        MenuOpenEvent event = new MenuOpenEvent(player, MenuOpenEvent.MenuType.LEVEL_PROGRESSION);
+        Bukkit.getPluginManager().callEvent(event);
+        return event.isCancelled();
+    }
+
 }
