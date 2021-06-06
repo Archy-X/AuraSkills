@@ -1,9 +1,10 @@
 Version Beta 1.0.4
   Bug Fixes:
-    - Fixed multiple Forging XP exploits
-    - Fixed Disenchanter experience exploit
-    - Fixed global requirements not showing up in requirement deny messages
-    - Fixed incorrect item requirement use message
+    - Fix multiple Forging XP exploits
+    - Fix Disenchanter experience exploit
+    - Fix global requirements not showing up in requirement deny messages
+    - Fix incorrect item requirement use message
+    - Fix MySQL deprecation warning on Java 16
 
 Version Beta 1.0.3
   Bug Fixes:

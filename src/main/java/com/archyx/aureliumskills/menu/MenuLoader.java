@@ -210,6 +210,7 @@ public class MenuLoader {
                             }
                         }
                     }
+                    config.set("file_version", imbVersion);
                     config.save(file);
                     Bukkit.getLogger().info("[AureliumSkills] menus.yml was updated to a new file version, " + keysAdded + " new keys were added.");
                 }
