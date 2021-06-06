@@ -170,8 +170,10 @@ public class AbilityManager {
         }
         long endTime = System.currentTimeMillis();
         long timeElapsed = endTime - startTime;
-        Bukkit.getLogger().info("[AureliumSkills] Disabled " + amountDisabled + " Abilities");
-        Bukkit.getLogger().info("[AureliumSkills] Loaded " + amountLoaded + " Ability Options in " + timeElapsed + "ms");
+        if (amountDisabled > 0) {
+            plugin.getLogger().info("Disabled " + amountDisabled + " Abilities");
+        }
+        plugin.getLogger().info("Loaded " + amountLoaded + " Ability Options in " + timeElapsed + "ms");
     }
 
     private FileConfiguration updateFile(File file, FileConfiguration config) {
