@@ -5,6 +5,8 @@ import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +96,15 @@ public class ItemUtils {
 				}
 			}
 		}
+	}
+
+	public static boolean isInventoryFull(Player player) {
+		for (ItemStack item : player.getInventory().getStorageContents()) {
+			if (item == null || item.getType() == Material.AIR) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 } 

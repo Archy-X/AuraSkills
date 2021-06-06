@@ -71,6 +71,11 @@ public class RequirementListener implements Listener {
             requirementsString.append(LoreUtil.replace(Lang.getMessage(entryMessage, locale),
                     "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
         }
+        Map<Skill, Integer> globalRequirementMap = requirements.getGlobalRequirements(modifierType, item);
+        for (Map.Entry<Skill, Integer> entry : globalRequirementMap.entrySet()) {
+            requirementsString.append(LoreUtil.replace(Lang.getMessage(entryMessage, locale),
+                    "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
+        }
         if (requirementsString.length() >= 2) {
             requirementsString.delete(requirementsString.length() - 2, requirementsString.length());
         }

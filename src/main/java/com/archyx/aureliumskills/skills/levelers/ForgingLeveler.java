@@ -46,7 +46,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 				Player player = (Player) event.getWhoClicked();
 				ClickType click = event.getClick();
 				// Only allow right and left clicks if inventory full
-				if (click != ClickType.LEFT && click != ClickType.RIGHT && isInventoryFull(player)) return;
+				if (click != ClickType.LEFT && click != ClickType.RIGHT && ItemUtils.isInventoryFull(player)) return;
 				if (event.getResult() != Event.Result.ALLOW) return; // Make sure the click was successful
 				if (inventory.getType().equals(InventoryType.ANVIL)) {
 					if (event.getSlot() == 2) {
@@ -109,15 +109,6 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 				}
 			}
 		}
-	}
-
-	private boolean isInventoryFull(Player player) {
-		for (ItemStack item : player.getInventory().getStorageContents()) {
-			if (item == null || item.getType() == Material.AIR) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 }
