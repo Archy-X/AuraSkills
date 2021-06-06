@@ -406,11 +406,11 @@ public class SkillsCommand extends BaseCommand {
 					if (playerData == null) return;
 					playerData.setSkillLevel(skill, level);
 					playerData.setSkillXp(skill, 0);
-					plugin.getLeveler().updateStats(player);
 					// Reload items and armor to check for newly met requirements
 					this.plugin.getModifierManager().reloadPlayer(player);
 				}
 			}
+			plugin.getLeveler().updateStats(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETALL_SET, locale)
 					.replace("{level}", String.valueOf(level))
 					.replace("{player}", player.getName()));
@@ -448,8 +448,8 @@ public class SkillsCommand extends BaseCommand {
 			for (Skill s : plugin.getSkillRegistry().getSkills()) {
 				playerData.setSkillLevel(s, 1);
 				playerData.setSkillXp(s, 0);
-				plugin.getLeveler().updateStats(player);
 			}
+			plugin.getLeveler().updateStats(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 					.replace("{player}", player.getName()));
 		}
