@@ -4,7 +4,11 @@ import com.archyx.aureliumskills.skills.Skill;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
+/**
+ * Called whenever a player gains Skill XP
+ */
 public class XpGainEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
@@ -45,6 +49,7 @@ public class XpGainEvent extends Event {
         this.isCancelled = cancelled;
     }
 
+    @NotNull
     @Override
     public HandlerList getHandlers() {
         return handlers;

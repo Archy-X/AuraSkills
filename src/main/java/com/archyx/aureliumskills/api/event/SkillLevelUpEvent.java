@@ -4,7 +4,11 @@ import com.archyx.aureliumskills.skills.Skill;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
+/**
+ * Called when a player levels up a skill
+ */
 public class SkillLevelUpEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
@@ -31,6 +35,7 @@ public class SkillLevelUpEvent extends Event {
         return level;
     }
 
+    @NotNull
     @Override
     public HandlerList getHandlers() {
         return handlers;
