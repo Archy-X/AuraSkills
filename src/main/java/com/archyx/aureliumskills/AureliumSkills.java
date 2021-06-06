@@ -4,6 +4,7 @@ import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.abilities.*;
 import com.archyx.aureliumskills.api.AureliumAPI;
+import com.archyx.aureliumskills.api.AureliumSkillsProvider;
 import com.archyx.aureliumskills.commands.ManaCommand;
 import com.archyx.aureliumskills.commands.SkillCommands;
 import com.archyx.aureliumskills.commands.SkillsCommand;
@@ -271,6 +272,8 @@ public class AureliumSkills extends JavaPlugin {
 		if (System.currentTimeMillis() > releaseTime + 21600000L) {
 			checkUpdates();
 		}
+		// Register instance to API provider
+		AureliumSkillsProvider.register(this);
 	}
 	
 	public void onDisable() {
