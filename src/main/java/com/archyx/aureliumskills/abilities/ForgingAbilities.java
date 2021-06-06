@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.XpGainEvent;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.mechanics.EnchantmentValue;
 import com.archyx.aureliumskills.util.mechanics.GrindstoneEnchant;
 import com.archyx.aureliumskills.util.version.VersionUtils;
@@ -15,13 +16,11 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -49,6 +48,10 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
             if (blockAbility(player)) return;
             Inventory inventory = event.getClickedInventory();
             if (inventory == null) return;
+            ClickType click = event.getClick();
+            // Only allow right and left clicks if inventory full
+            if (click != ClickType.LEFT && click != ClickType.RIGHT && ItemUtils.isInventoryFull(player)) return;
+            if (event.getResult() != Event.Result.ALLOW) return; // Make sure the click was successful
             if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE) {
                 if (event.getSlotType() == InventoryType.SlotType.RESULT) {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);

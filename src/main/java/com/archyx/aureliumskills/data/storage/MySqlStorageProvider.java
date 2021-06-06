@@ -50,7 +50,8 @@ public class MySqlStorageProvider extends StorageProvider {
         try {
             openConnection();
             createTable();
-        } catch (Exception e) {
+        } catch (SQLException | ClassNotFoundException e) {
+            plugin.getLogger().severe("Failed to connect to MySQL database, see error below:");
             e.printStackTrace();
         }
     }
@@ -64,8 +65,9 @@ public class MySqlStorageProvider extends StorageProvider {
             if (connection != null && !connection.isClosed()) {
                 return;
             }
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/" + this.database + "?useSSL=false&autoReconnect=true", this.username, this.password);
+            plugin.getLogger().info("Connected to MySQL database");
         }
     }
 

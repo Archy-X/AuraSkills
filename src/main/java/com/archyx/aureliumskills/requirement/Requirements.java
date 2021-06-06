@@ -46,6 +46,32 @@ public class Requirements {
         return requirements;
     }
 
+    @SuppressWarnings("deprecation")
+    public Map<Skill, Integer> getGlobalRequirements(ModifierType type, ItemStack item) {
+        Map<Skill, Integer> requirements = new HashMap<>();
+        for (GlobalRequirement global : manager.getGlobalRequirementsType(type)) {
+            if (XMaterial.isNewVersion()) {
+                if (global.getMaterial().parseMaterial() == item.getType()) {
+                    requirements.putAll(global.getRequirements());
+                }
+            } else {
+                if (global.getMaterial().parseMaterial() == item.getType()) {
+                    if (!ItemUtils.isDurable(item.getType())) {
+                        MaterialData materialData = item.getData();
+                        if (materialData != null) {
+                            if (item.getDurability() == global.getMaterial().getData())
+                                requirements.putAll(global.getRequirements());
+                        }
+                    }
+                } else {
+                    requirements.putAll(global.getRequirements());
+                }
+            }
+        }
+        return requirements;
+    }
+
+
     public ItemStack addRequirement(ModifierType type, ItemStack item, Skill skill, int level) {
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
@@ -134,42 +160,13 @@ public class Requirements {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public boolean meetsRequirements(ModifierType type, ItemStack item, Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return true;
         // Check global requirements
-        for (GlobalRequirement global : manager.getGlobalRequirementsType(type)) {
-            if (XMaterial.isNewVersion()) {
-                if (global.getMaterial().parseMaterial() == item.getType()) {
-                    for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
-                        if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
-                            return false;
-                        }
-                    }
-                }
-            }
-            else {
-                if (global.getMaterial().parseMaterial() == item.getType()) {
-                    if (!ItemUtils.isDurable(item.getType())) {
-                        MaterialData materialData = item.getData();
-                        if (materialData != null) {
-                            if (item.getDurability() == global.getMaterial().getData()) {
-                                for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
-                                    if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
-                                        return false;
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        for (Map.Entry<Skill, Integer> entry : global.getRequirements().entrySet()) {
-                            if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
-                                return false;
-                            }
-                        }
-                    }
-                }
+        for (Map.Entry<Skill, Integer> entry : getGlobalRequirements(type, item).entrySet()) {
+            if (playerData.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                return false;
             }
         }
         for (Map.Entry<Skill, Integer> entry : getRequirements(type, item).entrySet()) {
