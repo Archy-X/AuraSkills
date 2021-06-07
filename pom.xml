@@ -171,7 +171,7 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>7.5.5</version>
+            <version>7.9.1.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

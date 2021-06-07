@@ -16,6 +16,7 @@ import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -61,6 +62,11 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 									mat.equals(Material.EMERALD_ORE) || mat.equals(Material.COAL_ORE) ||
 									mat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) || mat.equals(XMaterial.NETHER_GOLD_ORE.parseMaterial())) {
 									return;
+								}
+								if (VersionUtils.isAtLeastVersion(17)) {
+									if (mat == Material.IRON_ORE || mat == Material.GOLD_ORE) { // TODO Add Copper Ore
+										return;
+									}
 								}
 							}
 							Collection<ItemStack> drops = block.getDrops(tool);
@@ -133,6 +139,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 				|| blockMat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) || blockMat.equals(XMaterial.GRANITE.parseMaterial())
 				|| blockMat.equals(XMaterial.DIORITE.parseMaterial()) || blockMat.equals(XMaterial.ANDESITE.parseMaterial())
 				|| blockMat.equals(Material.NETHERRACK) || blockMat.equals(XMaterial.BASALT.parseMaterial()) || blockMat.equals(XMaterial.BLACKSTONE.parseMaterial())) {
+			// TODO Add 1.17 blocks to speed mine activate
 			Player player = event.getPlayer();
 			//Checks if speed mine is already activated
 			ManaAbilityManager manager = plugin.getManaAbilityManager();

@@ -143,6 +143,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 			else if (mat.equals(XMaterial.MAGMA_BLOCK.parseMaterial())) {
 				leveler.addXp(p, s, getXp(p, Source.MAGMA_BLOCK));
 			}
+			// TODO Add 1.17 blocks
 			else if (XMaterial.isNewVersion()) {
 				if (mat.equals(XMaterial.TERRACOTTA.parseMaterial())) {
 					leveler.addXp(p, s, getXp(p, Source.TERRACOTTA));

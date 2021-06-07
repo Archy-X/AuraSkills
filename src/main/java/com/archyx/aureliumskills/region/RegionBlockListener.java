@@ -25,12 +25,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RegionBlockListener implements Listener {
 
     private final XMaterial[] checkedMaterials = new XMaterial[] {
-            //Ultra Common
+            // Ultra Common
             XMaterial.COBBLESTONE,
             XMaterial.DIRT,
             XMaterial.NETHERRACK,
             XMaterial.STONE,
-            //Common
+            // Common
             XMaterial.SAND,
             XMaterial.GRAVEL,
             XMaterial.GRASS_BLOCK,
@@ -40,7 +40,7 @@ public class RegionBlockListener implements Listener {
             XMaterial.GRANITE,
             XMaterial.DIORITE,
             XMaterial.ANDESITE,
-            //Uncommon
+            // Uncommon
             XMaterial.JUNGLE_LOG,
             XMaterial.DARK_OAK_LOG,
             XMaterial.ACACIA_LOG,
@@ -68,7 +68,7 @@ public class RegionBlockListener implements Listener {
             XMaterial.RED_MUSHROOM,
             XMaterial.KELP_PLANT,
             XMaterial.SEA_PICKLE,
-            //Rare
+            // Rare
             XMaterial.PUMPKIN,
             XMaterial.MELON,
             XMaterial.SUGAR_CANE,
@@ -94,12 +94,15 @@ public class RegionBlockListener implements Listener {
             XMaterial.RED_SAND,
             XMaterial.SOUL_SOIL,
             XMaterial.NETHER_GOLD_ORE,
-            //Very Rare
+            // Very Rare
             XMaterial.NETHER_WART_BLOCK,
             XMaterial.WARPED_WART_BLOCK,
             XMaterial.DIAMOND_ORE,
             XMaterial.EMERALD_ORE,
             XMaterial.ANCIENT_DEBRIS,
+            // TODO Add deepslate, copper ore, tuff, calcite, smooth basalt, amethyst block, amethyst cluster
+            // TODO Add deepslate ores, dripstone block, moss block, moss carpet, azalea, flowering azalea
+            // TODO Add azalea leaves, flowering azalea leaves, rooted dirt
     };
 
     private final Material[] materials = new Material[checkedMaterials.length];
@@ -205,6 +208,7 @@ public class RegionBlockListener implements Listener {
         if (!event.isCancelled()) {
             regionManager.removePlacedBlock(event.getBlock());
             checkSugarCane(event.getBlock(), 0);
+            // TODO Check for amethyst cluster, moss carpet, azalea, flowering azalea breaks when supporting block is broken
         }
     }
 

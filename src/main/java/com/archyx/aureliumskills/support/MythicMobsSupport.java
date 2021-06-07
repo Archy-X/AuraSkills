@@ -51,7 +51,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
                         archery = true;
                     }
                 }
-                if (VersionUtils.isAboveVersion(14)) {
+                if (VersionUtils.isAtLeastVersion(14)) {
                     if (ee.getDamager() instanceof AbstractArrow) {
                         archery = true;
                     }

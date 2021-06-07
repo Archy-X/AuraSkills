@@ -100,6 +100,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 					leveler.addXp(p, s, getXp(p, Source.WARPED_WART_BLOCK));
 					applyAbilities(p, b);
 				}
+				// TODO Add 1.17 blocks
 			}
 			//If legacy version (1.12)
 			else {

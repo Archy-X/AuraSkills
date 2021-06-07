@@ -163,6 +163,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 					applyAbilities(p, b);
 				}
 			}
+			// TODO Add glow berries
 			// Check custom blocks
 			checkCustomBlocks(p, b, s);
 		}

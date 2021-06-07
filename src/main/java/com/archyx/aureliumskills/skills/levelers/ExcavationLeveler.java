@@ -81,6 +81,7 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 			else if (mat.equals(XMaterial.SOUL_SOIL.parseMaterial())) {
 				leveler.addXp(p, s, getXp(p, Source.SOUL_SOIL));
 			}
+			// TODO Add rooted dirt
 			if (XMaterial.isNewVersion()) {
 				if (mat.equals(Material.DIRT)) {
 					leveler.addXp(p, s, getXp(p, Source.DIRT));
