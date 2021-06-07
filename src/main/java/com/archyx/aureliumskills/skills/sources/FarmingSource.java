@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.block.BlockUtil;
 import org.bukkit.block.Block;
 
-public enum FarmingSource implements SourceProvider {
+public enum FarmingSource implements Source {
 
     WHEAT(new String[] {"CROPS"}, false, true),
     POTATO(new String[] {"POTATOES"}, false, true),

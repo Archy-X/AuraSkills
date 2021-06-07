@@ -12,7 +12,7 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SharpHook;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.FishingSource;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
@@ -104,7 +104,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												Bukkit.getPluginManager().callEvent(dropEvent);
 												if (!event.isCancelled()) {
 													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(event.getPlayer(), Skills.FISHING, getXp(event.getPlayer(), Source.FISHING_EPIC, Ability.FISHER));
+													plugin.getLeveler().addXp(player, Skills.FISHING, getXp(player, FishingSource.FISHING_EPIC, Ability.FISHER));
 												}
 											}
 										}
@@ -132,7 +132,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												Bukkit.getPluginManager().callEvent(dropEvent);
 												if (!event.isCancelled()) {
 													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(event.getPlayer(), Skills.FISHING, getXp(event.getPlayer(), Source.FISHING_RARE, Ability.FISHER));
+													plugin.getLeveler().addXp(player, Skills.FISHING, getXp(player, FishingSource.FISHING_RARE, Ability.FISHER));
 												}
 											}
 										}

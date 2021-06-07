@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.sources;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 
-public enum FightingSource implements SourceProvider {
+public enum FightingSource implements Source {
 
     PLAYER,
     BAT,

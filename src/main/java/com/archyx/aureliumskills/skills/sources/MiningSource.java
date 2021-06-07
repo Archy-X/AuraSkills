@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import org.jetbrains.annotations.Nullable;
 
-public enum MiningSource implements SourceProvider {
+public enum MiningSource implements Source {
 
     STONE("stone", 0),
     COBBLESTONE,

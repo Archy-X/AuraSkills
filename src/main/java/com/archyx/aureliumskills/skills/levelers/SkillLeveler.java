@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SourceManager;
-import com.archyx.aureliumskills.skills.sources.SourceProvider;
+import com.archyx.aureliumskills.skills.sources.Source;
 import com.archyx.aureliumskills.skills.sources.SourceTag;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.cryptomorin.xseries.XMaterial;
@@ -48,11 +48,11 @@ public abstract class SkillLeveler {
         }
     }
 
-    public double getXp(SourceProvider source) {
+    public double getXp(Source source) {
         return sourceManager.getXp(source);
     }
 
-    public double getXp(Player player, SourceProvider source) {
+    public double getXp(Player player, Source source) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = getXp(source);
@@ -100,8 +100,8 @@ public abstract class SkillLeveler {
         return 0.0;
     }
 
-    protected boolean hasTag(SourceProvider source, SourceTag tag) {
-        for (SourceProvider sourceWithTag : sourceManager.getTag(tag)) {
+    protected boolean hasTag(Source source, SourceTag tag) {
+        for (Source sourceWithTag : sourceManager.getTag(tag)) {
             if (source == sourceWithTag) {
                 return true;
             }

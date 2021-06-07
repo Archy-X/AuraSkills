@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.Source;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 

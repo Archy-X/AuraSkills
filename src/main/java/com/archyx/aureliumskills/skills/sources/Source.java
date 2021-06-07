@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public interface SourceProvider {
+public interface Source {
 
     Skill getSkill();
 
@@ -16,8 +16,8 @@ public interface SourceProvider {
         return getSkill().toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
     }
 
-    static Set<SourceProvider> values() {
-        Set<SourceProvider> sources = new HashSet<>(Arrays.asList(FarmingSource.values()));
+    static Set<Source> values() {
+        Set<Source> sources = new HashSet<>(Arrays.asList(FarmingSource.values()));
         sources.addAll(Arrays.asList(ForagingSource.values()));
         sources.addAll(Arrays.asList(MiningSource.values()));
         sources.addAll(Arrays.asList(FishingSource.values()));
@@ -36,8 +36,8 @@ public interface SourceProvider {
     }
 
     @Nullable
-    static SourceProvider valueOf(String sourceString) {
-        for (SourceProvider source : values()) {
+    static Source valueOf(String sourceString) {
+        for (Source source : values()) {
             if (source.toString().equals(sourceString.toUpperCase(Locale.ROOT))) {
                 return source;
             }

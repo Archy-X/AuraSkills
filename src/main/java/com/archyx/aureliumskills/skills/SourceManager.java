@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.skills.sources.SourceProvider;
+import com.archyx.aureliumskills.skills.sources.Source;
 import com.archyx.aureliumskills.skills.sources.SourceTag;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
@@ -18,8 +18,8 @@ import java.util.*;
 public class SourceManager {
 
     private final AureliumSkills plugin;
-    private final Map<SourceProvider, Double> sources;
-    private final Map<SourceTag, List<SourceProvider>> tags;
+    private final Map<Source, Double> sources;
+    private final Map<SourceTag, List<Source>> tags;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
@@ -42,7 +42,7 @@ public class SourceManager {
         FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
         // Load sources
         int sourcesLoaded = 0;
-        for (SourceProvider source : SourceProvider.values()) {
+        for (Source source : Source.values()) {
             String path = source.getPath();
             // Add if exists
             if (config.contains("sources." + path)) {
@@ -60,9 +60,9 @@ public class SourceManager {
             String path = tag.getPath();
             if (config.contains("tags." + path)) {
                 List<String> sourceStringList = config.getStringList("tags." + path);
-                List<SourceProvider> sourcesList = new ArrayList<>();
+                List<Source> sourcesList = new ArrayList<>();
                 for (String sourceString : sourceStringList) {
-                    SourceProvider source = SourceProvider.valueOf(sourceString);
+                    Source source = Source.valueOf(sourceString);
                     if (source != null) {
                         sourcesList.add(source);
                     }
@@ -150,12 +150,12 @@ public class SourceManager {
         return YamlConfiguration.loadConfiguration(file);
     }
 
-    public double getXp(SourceProvider source) {
+    public double getXp(Source source) {
         return sources.get(source);
     }
 
     @NotNull
-    public List<SourceProvider> getTag(SourceTag tag) {
+    public List<Source> getTag(SourceTag tag) {
         return tags.getOrDefault(tag, new ArrayList<>());
     }
 

@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.sources;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 
-public enum HealingSource implements SourceProvider {
+public enum HealingSource implements Source {
 
     DRINK_REGULAR,
     DRINK_EXTENDED,

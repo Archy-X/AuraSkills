@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.DefenseSource;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -46,9 +46,9 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 						//Player Damage
 						if (event.getDamager() instanceof Player) {
 							if (event.getDamager().equals(p)) return;
-							if (d * getXp(Source.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
-								if (d * getXp(Source.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									plugin.getLeveler().addXp(p, s, d * getXp(p, Source.PLAYER_DAMAGE));
+							if (d * getXp(DefenseSource.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (d * getXp(DefenseSource.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
+									plugin.getLeveler().addXp(p, s, d * getXp(p, DefenseSource.PLAYER_DAMAGE));
 								}
 							} else {
 								plugin.getLeveler().addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
@@ -63,9 +63,9 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 									if (projectile.getShooter().equals(p)) return;
 								}
 							}
-							if (d * getXp(Source.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
-								if (d * getXp(Source.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									plugin.getLeveler().addXp(p, s, d * getXp(p, Source.MOB_DAMAGE));
+							if (d * getXp(DefenseSource.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (d * getXp(DefenseSource.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
+									plugin.getLeveler().addXp(p, s, d * getXp(p, DefenseSource.MOB_DAMAGE));
 								}
 							} else {
 								plugin.getLeveler().addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
