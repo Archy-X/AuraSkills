@@ -298,9 +298,9 @@ sources:
 tags:
   farming:
     bountiful_harvest_applicable:
-      - *
+      - '*'
     triple_harvest_applicable:
-      - *
+      - '*'
   mining:
     lucky_miner_applicable:
       - coal_ore

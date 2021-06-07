@@ -13,8 +13,8 @@ public enum FishingSource implements Source {
     PUFFERFISH,
     TREASURE,
     JUNK,
-    FISHING_RARE,
-    FISHING_EPIC;
+    RARE,
+    EPIC;
 
     @Override
     public Skill getSkill() {

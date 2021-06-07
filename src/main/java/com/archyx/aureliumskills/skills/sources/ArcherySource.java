@@ -3,6 +3,8 @@ package com.archyx.aureliumskills.skills.sources;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 
+import java.util.Locale;
+
 public enum ArcherySource implements Source {
 
     PLAYER,
@@ -15,7 +17,7 @@ public enum ArcherySource implements Source {
     FOX,
     GIANT,
     HORSE,
-    MUSHROOM_COW,
+    MUSHROOM_COW("mooshroom"),
     MULE,
     OCELOT,
     PARROT,
@@ -24,7 +26,7 @@ public enum ArcherySource implements Source {
     SALMON,
     SHEEP,
     SKELETON_HORSE,
-    SNOWMAN,
+    SNOWMAN("snow_golem"),
     SQUID,
     STRIDER,
     TROPICAL_FISH,
@@ -77,6 +79,25 @@ public enum ArcherySource implements Source {
     AXOLOTL,
     GLOW_SQUID,
     GOAT;
+
+    private String configName;
+
+    ArcherySource() {
+
+    }
+
+    ArcherySource(String configName) {
+        this.configName = configName;
+    }
+
+    @Override
+    public String getPath() {
+        if (configName == null) {
+            return getSkill().toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
+        } else {
+            return getSkill().toString().toLowerCase(Locale.ROOT) + "." + configName.toLowerCase(Locale.ROOT);
+        }
+    }
 
     @Override
     public Skill getSkill() {

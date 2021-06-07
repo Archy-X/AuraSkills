@@ -30,8 +30,8 @@ public class SourceRegistry {
         Class<?> sourceClass = registry.get(skill);
         if (sourceClass != null) {
             try {
-                Method method = sourceClass.getMethod("values", sourceClass);
-                Object object = method.invoke(null, (Object) null);
+                Method method = sourceClass.getMethod("values");
+                Object object = method.invoke(null);
                 if (object instanceof Source[]) {
                     return (Source[]) object;
                 }
@@ -46,8 +46,8 @@ public class SourceRegistry {
         Set<Source> sourceSet = new HashSet<>();
         for (Class<?> sourceClass : registry.values()) {
             try {
-                Method method = sourceClass.getMethod("values", sourceClass);
-                Object object = method.invoke(null, (Object) null);
+                Method method = sourceClass.getMethod("values");
+                Object object = method.invoke(null);
                 if (object instanceof Source[]) {
                     sourceSet.addAll(Arrays.asList((Source[]) object));
                 }

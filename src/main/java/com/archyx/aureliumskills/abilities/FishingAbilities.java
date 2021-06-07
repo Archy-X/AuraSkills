@@ -104,7 +104,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												Bukkit.getPluginManager().callEvent(dropEvent);
 												if (!event.isCancelled()) {
 													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(player, Skills.FISHING, getXp(player, FishingSource.FISHING_EPIC, Ability.FISHER));
+													plugin.getLeveler().addXp(player, Skills.FISHING, getXp(player, FishingSource.EPIC, Ability.FISHER));
 												}
 											}
 										}
@@ -132,7 +132,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												Bukkit.getPluginManager().callEvent(dropEvent);
 												if (!event.isCancelled()) {
 													item.setItemStack(dropEvent.getItemStack());
-													plugin.getLeveler().addXp(player, Skills.FISHING, getXp(player, FishingSource.FISHING_RARE, Ability.FISHER));
+													plugin.getLeveler().addXp(player, Skills.FISHING, getXp(player, FishingSource.RARE, Ability.FISHER));
 												}
 											}
 										}
