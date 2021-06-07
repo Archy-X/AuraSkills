@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.skills.sources.SourceProvider;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -15,7 +16,7 @@ import java.util.*;
 public class SourceManager {
 
     private final AureliumSkills plugin;
-    private final Map<Source, Double> sources;
+    private final Map<SourceProvider, Double> sources;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
@@ -37,7 +38,7 @@ public class SourceManager {
         FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
         // Load sources
         int sourcesLoaded = 0;
-        for (Source source : Source.values()) {
+        for (SourceProvider source : SourceProvider.values()) {
             String path = source.getPath();
             // Add if exists
             if (config.contains("sources." + path)) {
@@ -126,7 +127,7 @@ public class SourceManager {
         return YamlConfiguration.loadConfiguration(file);
     }
 
-    public double getXp(Source source) {
+    public double getXp(SourceProvider source) {
         return sources.get(source);
     }
 
