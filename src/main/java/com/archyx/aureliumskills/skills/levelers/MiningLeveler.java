@@ -45,6 +45,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 			if (blockXpGainPlayer(player)) return;
 
 			String materialName = block.getType().toString();
+			// Search through mining sources until a match is found for the block broken
 			for (MiningSource source : MiningSource.values()) {
 				boolean matched = false;
 				if (XMaterial.isNewVersion() || source.getLegacyMaterial() == null) { // Standard block handling
@@ -53,11 +54,20 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 					}
 				} else { // Legacy block handling
 					if (source.getLegacyData() == (byte) -1) { // No data value
-						if (source.getLegacyMaterial().equalsIgnoreCase(materialName)) {
+						if (source.allowBothIfLegacy()) { // Allow both new and legacy material names
+							if (source.getLegacyMaterial().equalsIgnoreCase(materialName) || source.toString().equalsIgnoreCase(materialName)) {
+								matched = true;
+							}
+						} else if (source.getLegacyMaterial().equalsIgnoreCase(materialName)) {
 							matched = true;
 						}
 					} else { // With data value
-						if (source.getLegacyMaterial().equalsIgnoreCase(materialName) && source.getLegacyData() == block.getData()) {
+						if (source.allowBothIfLegacy()) { // Allow both new and legacy material names
+							if ((source.getLegacyMaterial().equalsIgnoreCase(materialName) && source.getLegacyData() == block.getData()
+									|| (source.toString().equalsIgnoreCase(materialName) && source.getLegacyData() == block.getData()))) {
+								matched = true;
+							}
+						} else if (source.getLegacyMaterial().equalsIgnoreCase(materialName) && source.getLegacyData() == block.getData()) {
 							matched = true;
 						}
 					}
@@ -69,6 +79,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 					if (hasTag(source, SourceTag.LUCKY_MINER_APPLICABLE)) {
 						miningAbilities.luckyMiner(player, block);
 					}
+					break; // Stop searching if matched
 				}
 			}
 			// Check custom blocks
