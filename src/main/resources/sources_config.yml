@@ -301,6 +301,9 @@ tags:
       - '*'
     triple_harvest_applicable:
       - '*'
+  foraging:
+    lumberjack_applicable:
+      - '*'
   mining:
     lucky_miner_applicable:
       - coal_ore
