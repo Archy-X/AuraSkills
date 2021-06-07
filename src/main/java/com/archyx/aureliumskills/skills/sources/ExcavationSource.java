@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.skills.sources;
 
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 public enum ExcavationSource implements Source, BlockSource {
@@ -65,4 +66,15 @@ public enum ExcavationSource implements Source, BlockSource {
     public Skill getSkill() {
         return Skills.EXCAVATION;
     }
+
+    @Nullable
+    public static ExcavationSource getSource(Block block) {
+        for (ExcavationSource source : values()) {
+            if (source.isMatch(block)) {
+                return source;
+            }
+        }
+        return null;
+    }
+
 }

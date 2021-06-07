@@ -316,4 +316,13 @@ tags:
       - emerald_ore
       - nether_gold_ore
       - ancient_debris
+  excavation:
+    bigger_scoop_applicable:
+      - '*'
+    metal_detector_applicable:
+      - '*'
+    lucky_spades_applicable:
+      - '*'
+    terraform_applicable:
+      - '*'
 file_version: 6

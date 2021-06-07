@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.skills.sources;
 
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 public enum MiningSource implements Source, BlockSource {
@@ -96,5 +97,15 @@ public enum MiningSource implements Source, BlockSource {
     @Override
     public Skill getSkill() {
         return Skills.MINING;
+    }
+
+    @Nullable
+    public static MiningSource getSource(Block block) {
+        for (MiningSource source : values()) {
+            if (source.isMatch(block)) {
+                return source;
+            }
+        }
+        return null;
     }
 }

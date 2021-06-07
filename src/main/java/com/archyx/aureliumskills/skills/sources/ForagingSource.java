@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
+import org.jetbrains.annotations.Nullable;
 
 public enum ForagingSource implements Source {
 
@@ -95,5 +96,15 @@ public enum ForagingSource implements Source {
     @Override
     public Skill getSkill() {
         return Skills.FORAGING;
+    }
+
+    @Nullable
+    public static ForagingSource getSource(Block block) {
+        for (ForagingSource source : values()) {
+            if (source.isMatch(block)) {
+                return source;
+            }
+        }
+        return null;
     }
 }

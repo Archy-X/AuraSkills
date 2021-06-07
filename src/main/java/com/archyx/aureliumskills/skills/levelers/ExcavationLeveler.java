@@ -2,10 +2,12 @@ package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.abilities.ExcavationAbilities;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.sources.ExcavationSource;
+import com.archyx.aureliumskills.skills.sources.SourceTag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,8 +17,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class ExcavationLeveler extends SkillLeveler implements Listener{
 
+	private final ExcavationAbilities excavationAbilities;
+
 	public ExcavationLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.EXCAVATOR);
+		excavationAbilities = new ExcavationAbilities(plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -39,6 +44,10 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 			// Add XP to player if matched
 			if (source.isMatch(block)) {
 				plugin.getLeveler().addXp(player, Skills.EXCAVATION, getXp(player, source));
+				// Bigger scoop ability
+				if (hasTag(source, SourceTag.BIGGER_SCOOP_APPLICABLE)) {
+					excavationAbilities.biggerScoop(source, block, player);
+				}
 				break; // Stop searching if matched
 			}
 		}

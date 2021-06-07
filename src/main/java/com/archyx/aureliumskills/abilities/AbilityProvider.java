@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.sources.Source;
+import com.archyx.aureliumskills.skills.sources.SourceTag;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -83,6 +84,15 @@ public abstract class AbilityProvider {
 
     public double getManaCost(MAbility mability, PlayerData playerData) {
         return plugin.getManaAbilityManager().getManaCost(mability, playerData);
+    }
+
+    public boolean hasTag(Source source, SourceTag tag) {
+        for (Source sourceWithTag : plugin.getSourceManager().getTag(tag)) {
+            if (source == sourceWithTag) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
