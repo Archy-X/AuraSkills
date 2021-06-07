@@ -1,8 +1,8 @@
-package com.archyx.aureliumskills.skills;
+package com.archyx.aureliumskills.skills.sources;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.skills.sources.Source;
-import com.archyx.aureliumskills.skills.sources.SourceTag;
+import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -42,7 +42,7 @@ public class SourceManager {
         FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
         // Load sources
         int sourcesLoaded = 0;
-        for (Source source : Source.values()) {
+        for (Source source : plugin.getSourceRegistry().values()) {
             String path = source.getPath();
             // Add if exists
             if (config.contains("sources." + path)) {
@@ -55,6 +55,7 @@ public class SourceManager {
                 sources.put(source, 0.0);
             }
         }
+        // Load tags
         int tagsLoaded = 0;
         for (SourceTag tag : SourceTag.values()) {
             String path = tag.getPath();
@@ -62,9 +63,18 @@ public class SourceManager {
                 List<String> sourceStringList = config.getStringList("tags." + path);
                 List<Source> sourcesList = new ArrayList<>();
                 for (String sourceString : sourceStringList) {
-                    Source source = Source.valueOf(sourceString);
-                    if (source != null) {
-                        sourcesList.add(source);
+                    if (sourceString.equals("*")) { // Add all sources in that skill if use * syntax
+                        sourcesList.addAll(Arrays.asList(plugin.getSourceRegistry().values(tag.getSkill())));
+                    } else if (sourceString.startsWith("!")) { // Remove source if starts with !
+                        Source source = plugin.getSourceRegistry().valueOf(sourceString.substring(1));
+                        if (source != null) {
+                            sourcesList.remove(source);
+                        }
+                    } else { // Add source
+                        Source source = plugin.getSourceRegistry().valueOf(sourceString);
+                        if (source != null) {
+                            sourcesList.add(source);
+                        }
                     }
                 }
                 tags.put(tag, sourcesList);

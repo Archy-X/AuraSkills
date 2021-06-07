@@ -17,6 +17,10 @@ public enum SourceTag {
         this.skill = skill;
     }
 
+    public Skill getSkill() {
+        return skill;
+    }
+
     public String getPath() {
         return skill.toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
     }

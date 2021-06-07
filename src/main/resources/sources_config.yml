@@ -295,4 +295,22 @@ sources:
     combine_armor_per_level: 20
     combine_tool_per_level: 25
     grindstone_per_level: 30
+tags:
+  farming:
+    bountiful_harvest_applicable:
+      - *
+    triple_harvest_applicable:
+      - *
+  mining:
+    lucky_miner_applicable:
+      - coal_ore
+      - nether_quartz_ore
+      - iron_ore
+      - redstone_ore
+      - lapis_ore
+      - gold_ore
+      - diamond_ore
+      - emerald_ore
+      - nether_gold_ore
+      - ancient_debris
 file_version: 6

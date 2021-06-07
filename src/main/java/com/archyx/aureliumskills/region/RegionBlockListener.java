@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.region;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.SourceManager;
+import com.archyx.aureliumskills.skills.sources.SourceManager;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
