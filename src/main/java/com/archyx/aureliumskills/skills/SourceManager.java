@@ -2,11 +2,13 @@ package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.sources.SourceProvider;
+import com.archyx.aureliumskills.skills.sources.SourceTag;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -17,6 +19,7 @@ public class SourceManager {
 
     private final AureliumSkills plugin;
     private final Map<SourceProvider, Double> sources;
+    private final Map<SourceTag, List<SourceProvider>> tags;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
@@ -25,6 +28,7 @@ public class SourceManager {
     public SourceManager(AureliumSkills plugin) {
         this.plugin = plugin;
         this.sources = new HashMap<>();
+        this.tags = new HashMap<>();
     }
 
     public void loadSources() {
@@ -49,6 +53,25 @@ public class SourceManager {
             else {
                 Bukkit.getLogger().warning("[AureliumSkills] sources_config.yml is missing source of path sources." + path + ", value has been set to 0");
                 sources.put(source, 0.0);
+            }
+        }
+        int tagsLoaded = 0;
+        for (SourceTag tag : SourceTag.values()) {
+            String path = tag.getPath();
+            if (config.contains("tags." + path)) {
+                List<String> sourceStringList = config.getStringList("tags." + path);
+                List<SourceProvider> sourcesList = new ArrayList<>();
+                for (String sourceString : sourceStringList) {
+                    SourceProvider source = SourceProvider.valueOf(sourceString);
+                    if (source != null) {
+                        sourcesList.add(source);
+                    }
+                }
+                tags.put(tag, sourcesList);
+                tagsLoaded++;
+            } else {
+                plugin.getLogger().warning("sources_config.yml is missing tag of path tags." + path + ", tag will be empty");
+                tags.put(tag, new ArrayList<>());
             }
         }
         // Load custom blocks
@@ -92,7 +115,7 @@ public class SourceManager {
                 customMobs.put(skill, mobMap);
             }
         }
-        Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources in " + (System.currentTimeMillis() - start) + "ms");
+        Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources and " + tagsLoaded + " tags in " + (System.currentTimeMillis() - start) + "ms");
     }
 
     private FileConfiguration updateFile(File file, FileConfiguration config) {
@@ -129,6 +152,11 @@ public class SourceManager {
 
     public double getXp(SourceProvider source) {
         return sources.get(source);
+    }
+
+    @NotNull
+    public List<SourceProvider> getTag(SourceTag tag) {
+        return tags.getOrDefault(tag, new ArrayList<>());
     }
 
     public Map<XMaterial, Double> getCustomBlocks(Skill skill) {

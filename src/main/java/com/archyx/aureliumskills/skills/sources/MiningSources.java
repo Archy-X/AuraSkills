@@ -6,33 +6,33 @@ import org.jetbrains.annotations.Nullable;
 
 public enum MiningSources implements SourceProvider {
 
-    STONE,
+    STONE("stone", 0),
     COBBLESTONE,
-    GRANITE,
-    DIORITE,
-    ANDESITE,
+    GRANITE("stone", 1),
+    DIORITE("stone", 2),
+    ANDESITE("stone", 5),
     COAL_ORE,
     IRON_ORE,
-    QUARTZ_ORE,
-    REDSTONE_ORE,
+    NETHER_QUARTZ_ORE("quartz_ore"),
+    REDSTONE_ORE("glowing_redstone_ore", true),
     GOLD_ORE,
     LAPIS_ORE,
     DIAMOND_ORE,
     EMERALD_ORE,
-    TERRACOTTA,
-    WHITE_TERRACOTTA,
-    ORANGE_TERRACOTTA,
-    YELLOW_TERRACOTTA,
-    LIGHT_GRAY_TERRACOTTA,
-    BROWN_TERRACOTTA,
-    RED_TERRACOTTA,
+    TERRACOTTA("hard_clay"),
+    WHITE_TERRACOTTA("stained_clay", 0),
+    ORANGE_TERRACOTTA("stained_clay", 1),
+    YELLOW_TERRACOTTA("stained_clay", 4),
+    LIGHT_GRAY_TERRACOTTA("stained_clay", 8),
+    BROWN_TERRACOTTA("stained_clay", 12),
+    RED_TERRACOTTA("stained_clay", 14),
     NETHERRACK,
     BLACKSTONE,
     BASALT,
-    MAGMA_BLOCK,
+    MAGMA_BLOCK("magma"),
     NETHER_GOLD_ORE,
     ANCIENT_DEBRIS,
-    END_STONE,
+    END_STONE("ender_stone"),
     OBSIDIAN,
     DEEPSLATE,
     COPPER_ORE,
@@ -53,18 +53,28 @@ public enum MiningSources implements SourceProvider {
 
     private final String legacyMaterial;
     private final byte legacyData;
+    private final boolean allowBothIfLegacy;
 
     MiningSources() {
-        this(null, (byte) -1);
+        this(null, -1, false);
     }
 
     MiningSources(String legacyMaterial) {
-        this(legacyMaterial, (byte) -1);
+        this(legacyMaterial, -1, false);
     }
 
-    MiningSources(String legacyMaterial, byte legacyData) {
+    MiningSources(String legacyMaterial, int legacyData) {
+        this(legacyMaterial, legacyData, false);
+    }
+
+    MiningSources(String legacyMaterial, boolean allowBothIfLegacy) {
+        this(legacyMaterial, -1, allowBothIfLegacy);
+    }
+
+    MiningSources(String legacyMaterial, int legacyData, boolean allowBothIfLegacy) {
         this.legacyMaterial = legacyMaterial;
-        this.legacyData = legacyData;
+        this.legacyData = (byte) legacyData;
+        this.allowBothIfLegacy = allowBothIfLegacy;
     }
 
     @Nullable
@@ -74,6 +84,10 @@ public enum MiningSources implements SourceProvider {
 
     public byte getLegacyData() {
         return legacyData;
+    }
+
+    public boolean allowBothIfLegacy() {
+        return allowBothIfLegacy;
     }
 
     @Override

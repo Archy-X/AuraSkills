@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.skills.sources;
 
 import com.archyx.aureliumskills.skills.Skill;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -32,6 +33,16 @@ public interface SourceProvider {
         sources.addAll(Arrays.asList(HealingSources.values()));
         sources.addAll(Arrays.asList(ForgingSources.values()));
         return sources;
+    }
+
+    @Nullable
+    static SourceProvider valueOf(String sourceString) {
+        for (SourceProvider source : values()) {
+            if (source.toString().equals(sourceString.toUpperCase(Locale.ROOT))) {
+                return source;
+            }
+        }
+        return null;
     }
 
 }

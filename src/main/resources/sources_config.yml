@@ -47,7 +47,7 @@ sources:
     diorite: 0.2
     granite: 0.2
     coal_ore: 1.0
-    quartz_ore: 1.8
+    nether_quartz_ore: 1.8
     iron_ore: 1.8
     lapis_ore: 30.6
     redstone_ore: 5.9
