@@ -7,6 +7,8 @@ import java.util.Locale;
 
 public enum SourceTag {
 
+    BOUNTIFUL_HARVEST_APPLICABLE(Skills.FARMING),
+    TRIPLE_HARVEST_APPLICABLE(Skills.FARMING),
     LUCKY_MINER_APPLICABLE(Skills.MINING);
 
     private final Skill skill;
