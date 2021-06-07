@@ -6,8 +6,9 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.Source;
 import com.archyx.aureliumskills.skills.SourceManager;
+import com.archyx.aureliumskills.skills.sources.SourceProvider;
+import com.archyx.aureliumskills.skills.sources.SourceTag;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.cryptomorin.xseries.XMaterial;
 import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
@@ -47,11 +48,11 @@ public abstract class SkillLeveler {
         }
     }
 
-    public double getXp(Source source) {
+    public double getXp(SourceProvider source) {
         return sourceManager.getXp(source);
     }
 
-    public double getXp(Player player, Source source) {
+    public double getXp(Player player, SourceProvider source) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = getXp(source);
@@ -97,6 +98,15 @@ public abstract class SkillLeveler {
             return output;
         }
         return 0.0;
+    }
+
+    protected boolean hasTag(SourceProvider source, SourceTag tag) {
+        for (SourceProvider sourceWithTag : sourceManager.getTag(tag)) {
+            if (source == sourceWithTag) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("deprecation")
