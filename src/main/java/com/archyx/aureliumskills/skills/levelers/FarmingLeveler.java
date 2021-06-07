@@ -54,42 +54,34 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			if (BlockUtil.isCarrot(mat) && BlockUtil.isFullyGrown(b)) {
 				leveler.addXp(p, s, getXp(p, Source.CARROT));
 				applyAbilities(p, b);
-			}
-			else if (BlockUtil.isPotato(mat) && BlockUtil.isFullyGrown(b)) {
+			} else if (BlockUtil.isPotato(mat) && BlockUtil.isFullyGrown(b)) {
 				leveler.addXp(p, s, getXp(p, Source.POTATO));
 				applyAbilities(p, b);
-			}
-			else if (BlockUtil.isBeetroot(mat) && BlockUtil.isFullyGrown(b)) {
+			} else if (BlockUtil.isBeetroot(mat) && BlockUtil.isFullyGrown(b)) {
 				leveler.addXp(p, s, getXp(p, Source.BEETROOT));
 				applyAbilities(p, b);
-			}
-			else if (BlockUtil.isNetherWart(mat) && BlockUtil.isFullyGrown(b)) {
+			} else if (BlockUtil.isNetherWart(mat) && BlockUtil.isFullyGrown(b)) {
 				leveler.addXp(p, s, getXp(p, Source.NETHER_WART));
 				applyAbilities(p, b);
-			}
-			else if (BlockUtil.isWheat(mat) && BlockUtil.isFullyGrown(b)) {
+			} else if (BlockUtil.isWheat(mat) && BlockUtil.isFullyGrown(b)) {
 				leveler.addXp(p, s, getXp(p, Source.WHEAT));
 				applyAbilities(p, b);
-			}
-			else if (mat == Material.COCOA && BlockUtil.isFullyGrown(b)) {
+			} else if (mat == Material.COCOA && BlockUtil.isFullyGrown(b)) {
 				leveler.addXp(p, s, getXp(p, Source.COCOA));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(Material.PUMPKIN)) {
+			} else if (mat == Material.PUMPKIN) {
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 				leveler.addXp(p, s, getXp(p, Source.PUMPKIN));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.MELON.parseMaterial())) {
+			} else if (mat == XMaterial.MELON.parseMaterial()) {
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
 				}
 				leveler.addXp(p, s, getXp(p, Source.MELON));
 				applyAbilities(p, b);
-			}
-			else if (XBlock.isSugarCane(mat)) {
+			} else if (XBlock.isSugarCane(mat)) {
 				int numBroken = 1;
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					return;
@@ -108,8 +100,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 				}
 				leveler.addXp(p, s, getXp(p, Source.SUGAR_CANE) * numBroken);
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.BAMBOO.parseMaterial())) {
+			} else if (mat == XMaterial.BAMBOO.parseMaterial()) {
 				int numBroken = 1;
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					if (!b.getRelative(BlockFace.UP).getType().equals(XMaterial.BAMBOO.parseMaterial()) || plugin.getRegionManager().isPlacedBlock(b.getRelative(BlockFace.UP))) {
@@ -139,7 +130,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) return;
 				leveler.addXp(p, s, getXp(p, Source.RED_MUSHROOM));
 				applyAbilities(p, b);
-			} else if (mat.equals(XMaterial.KELP_PLANT.parseMaterial())) {
+			} else if (mat == XMaterial.KELP_PLANT.parseMaterial()) {
 				int numBroken = 1;
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) {
 					if (!b.getRelative(BlockFace.UP).getType().equals(XMaterial.KELP_PLANT.parseMaterial()) || plugin.getRegionManager().isPlacedBlock(b.getRelative(BlockFace.UP))) {
@@ -150,14 +141,14 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 				numBroken += getSameBlocksAbove(b.getRelative(BlockFace.UP), XMaterial.KELP_PLANT, 0);
 				leveler.addXp(p, s, getXp(p, Source.KELP) * numBroken);
 				applyAbilities(p, b);
-			} else if (mat.equals(XMaterial.SEA_PICKLE.parseMaterial())) {
+			} else if (mat == XMaterial.SEA_PICKLE.parseMaterial()) {
 				if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(b)) return;
 				if (b.getBlockData() instanceof SeaPickle) {
 					SeaPickle seaPickle = (SeaPickle) b.getBlockData();
 					leveler.addXp(p, s, getXp(p, Source.SEA_PICKLE) * seaPickle.getPickles()); // Multiply xp by number of pickles
 					applyAbilities(p, b);
 				}
-			} else if (mat.equals(XMaterial.SWEET_BERRY_BUSH.parseMaterial())) {
+			} else if (mat == XMaterial.SWEET_BERRY_BUSH.parseMaterial()) {
 				if (BlockUtil.getGrowthStage(b) >= 2) {
 					leveler.addXp(p, s, getXp(p, Source.SWEET_BERRY_BUSH) * (BlockUtil.getGrowthStage(b) - 1));
 					applyAbilities(p, b);
@@ -189,7 +180,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 				new BukkitRunnable() {
 					@Override
 					public void run() {
-						if (block.getType().equals(XMaterial.SWEET_BERRY_BUSH.parseMaterial())) {
+						if (block.getType() == XMaterial.SWEET_BERRY_BUSH.parseMaterial()) {
 							if (BlockUtil.getGrowthStage(block) <= 1) {
 								plugin.getLeveler().addXp(player, Skills.FARMING, xpAmount);
 								applyAbilities(player, block);

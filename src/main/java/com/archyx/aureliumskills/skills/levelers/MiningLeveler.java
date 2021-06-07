@@ -53,8 +53,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 			if (mat.equals(Material.STONE)) {
 				if (XMaterial.isNewVersion()) {
 					leveler.addXp(p, s, getXp(p, Source.STONE));
-				}
-				else {
+				} else {
 					switch (b.getData()) {
 						case 0:
 							leveler.addXp(p, s, getXp(p, Source.STONE));
@@ -70,108 +69,82 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 							break;
 					}
 				}
-			}
-			else if (mat.equals(XMaterial.GRANITE.parseMaterial())) {
+			} else if (mat == XMaterial.GRANITE.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.GRANITE));
-			}
-			else if (mat.equals(XMaterial.DIORITE.parseMaterial())) {
+			} else if (mat == XMaterial.DIORITE.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.DIORITE));
-			}
-			else if (mat.equals(XMaterial.ANDESITE.parseMaterial())) {
+			} else if (mat == XMaterial.ANDESITE.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.ANDESITE));
-			}
-			else if (mat.equals(Material.COBBLESTONE)) {
+			} else if (mat == Material.COBBLESTONE) {
 				leveler.addXp(p, s, getXp(p, Source.COBBLESTONE));
-			}
-			else if (mat.equals(Material.COAL_ORE)) {
+			} else if (mat == Material.COAL_ORE) {
 				leveler.addXp(p, s, getXp(p, Source.COAL_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial())) {
+			} else if (mat == XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.QUARTZ_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(Material.IRON_ORE)) {
+			} else if (mat == Material.IRON_ORE) {
 				leveler.addXp(p, s, getXp(p, Source.IRON_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.REDSTONE_ORE.parseMaterial()) || mat.name().equals("GLOWING_REDSTONE_ORE")) {
+			} else if (mat == XMaterial.REDSTONE_ORE.parseMaterial() || mat.name().equals("GLOWING_REDSTONE_ORE")) {
 				leveler.addXp(p, s, getXp(p, Source.REDSTONE_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(Material.LAPIS_ORE)) {
+			} else if (mat == Material.LAPIS_ORE) {
 				leveler.addXp(p, s, getXp(p, Source.LAPIS_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(Material.GOLD_ORE)) {
+			} else if (mat == Material.GOLD_ORE) {
 				leveler.addXp(p, s, getXp(p, Source.GOLD_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(Material.DIAMOND_ORE)) {
+			} else if (mat == Material.DIAMOND_ORE) {
 				leveler.addXp(p, s, getXp(p, Source.DIAMOND_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(Material.EMERALD_ORE)) {
+			} else if (mat == Material.EMERALD_ORE) {
 				leveler.addXp(p, s, getXp(p, Source.EMERALD_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(Material.NETHERRACK)) {
+			} else if (mat == Material.NETHERRACK) {
 				leveler.addXp(p, s, getXp(p, Source.NETHERRACK));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.BLACKSTONE.parseMaterial())) {
+			} else if (mat == XMaterial.BLACKSTONE.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.BLACKSTONE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.BASALT.parseMaterial())) {
+			} else if (mat == XMaterial.BASALT.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.BASALT));
-			}
-			else if (mat.equals(XMaterial.NETHER_GOLD_ORE.parseMaterial())) {
+			} else if (mat == XMaterial.NETHER_GOLD_ORE.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.NETHER_GOLD_ORE));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.ANCIENT_DEBRIS.parseMaterial())) {
+			} else if (mat == XMaterial.ANCIENT_DEBRIS.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.ANCIENT_DEBRIS));
 				applyAbilities(p, b);
-			}
-			else if (mat.equals(XMaterial.END_STONE.parseMaterial())) {
+			} else if (mat == XMaterial.END_STONE.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.END_STONE));
-			}
-			else if (mat.equals(XMaterial.OBSIDIAN.parseMaterial())) {
+			} else if (mat == XMaterial.OBSIDIAN.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.OBSIDIAN));
-			}
-			else if (mat.equals(XMaterial.MAGMA_BLOCK.parseMaterial())) {
+			} else if (mat == XMaterial.MAGMA_BLOCK.parseMaterial()) {
 				leveler.addXp(p, s, getXp(p, Source.MAGMA_BLOCK));
 			}
 			// TODO Add 1.17 blocks
 			else if (XMaterial.isNewVersion()) {
-				if (mat.equals(XMaterial.TERRACOTTA.parseMaterial())) {
+				if (mat == XMaterial.TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.TERRACOTTA));
-				}
-				else if (mat.equals(XMaterial.RED_TERRACOTTA.parseMaterial())) {
+				} else if (mat == XMaterial.RED_TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.RED_TERRACOTTA));
-				}
-				else if (mat.equals(XMaterial.ORANGE_TERRACOTTA.parseMaterial())) {
+				} else if (mat == XMaterial.ORANGE_TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.ORANGE_TERRACOTTA));
-				}
-				else if (mat.equals(XMaterial.YELLOW_TERRACOTTA.parseMaterial())) {
+				} else if (mat == XMaterial.YELLOW_TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.YELLOW_TERRACOTTA));
-				}
-				else if (mat.equals(XMaterial.WHITE_TERRACOTTA.parseMaterial())) {
+				} else if (mat == XMaterial.WHITE_TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.WHITE_TERRACOTTA));
-				}
-				else if (mat.equals(XMaterial.LIGHT_GRAY_TERRACOTTA.parseMaterial())) {
+				} else if (mat == XMaterial.LIGHT_GRAY_TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.LIGHT_GRAY_TERRACOTTA));
-				}
-				else if (mat.equals(XMaterial.BROWN_TERRACOTTA.parseMaterial())) {
+				} else if (mat == XMaterial.BROWN_TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.BROWN_TERRACOTTA));
 				}
 			}
 			else {
-				if (mat.equals(XMaterial.TERRACOTTA.parseMaterial())) {
+				if (mat == XMaterial.TERRACOTTA.parseMaterial()) {
 					leveler.addXp(p, s, getXp(p, Source.TERRACOTTA));
 				}
-				else if (mat.equals(XMaterial.WHITE_TERRACOTTA.parseMaterial())) {
+				else if (mat == XMaterial.WHITE_TERRACOTTA.parseMaterial()) {
 					switch (b.getData()) {
 						case 0:
 							leveler.addXp(p, s, getXp(p, Source.WHITE_TERRACOTTA));
