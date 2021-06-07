@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.sources;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 
-public enum ExcavationSources implements SourceProvider {
+public enum ExcavationSource implements SourceProvider {
 
     DIRT,
     GRASS_BLOCK,

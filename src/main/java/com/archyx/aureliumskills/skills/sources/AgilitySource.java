@@ -3,13 +3,13 @@ package com.archyx.aureliumskills.skills.sources;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 
-public enum DefenseSources implements SourceProvider {
+public enum AgilitySource implements SourceProvider {
 
-    MOB_DAMAGE,
-    PLAYER_DAMAGE;
+    JUMP_PER_100,
+    FALL_DAMAGE;
 
     @Override
     public Skill getSkill() {
-        return Skills.DEFENSE;
+        return Skills.AGILITY;
     }
 }

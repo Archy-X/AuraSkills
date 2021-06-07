@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.skills.Skills;
 
 import java.util.Locale;
 
-public enum FishingSources implements SourceProvider {
+public enum FishingSource implements SourceProvider {
 
     COD,
     SALMON,

@@ -17,21 +17,21 @@ public interface SourceProvider {
     }
 
     static Set<SourceProvider> values() {
-        Set<SourceProvider> sources = new HashSet<>(Arrays.asList(FarmingSources.values()));
-        sources.addAll(Arrays.asList(ForagingSources.values()));
-        sources.addAll(Arrays.asList(MiningSources.values()));
-        sources.addAll(Arrays.asList(FishingSources.values()));
-        sources.addAll(Arrays.asList(ExcavationSources.values()));
-        sources.addAll(Arrays.asList(ArcherySources.values()));
-        sources.addAll(Arrays.asList(DefenseSources.values()));
-        sources.addAll(Arrays.asList(FightingSources.values()));
-        sources.addAll(Arrays.asList(EnduranceSources.values()));
-        sources.addAll(Arrays.asList(AgilitySources.values()));
-        sources.addAll(Arrays.asList(AlchemySources.values()));
-        sources.addAll(Arrays.asList(EnchantingSources.values()));
-        sources.addAll(Arrays.asList(SorcerySources.values()));
-        sources.addAll(Arrays.asList(HealingSources.values()));
-        sources.addAll(Arrays.asList(ForgingSources.values()));
+        Set<SourceProvider> sources = new HashSet<>(Arrays.asList(FarmingSource.values()));
+        sources.addAll(Arrays.asList(ForagingSource.values()));
+        sources.addAll(Arrays.asList(MiningSource.values()));
+        sources.addAll(Arrays.asList(FishingSource.values()));
+        sources.addAll(Arrays.asList(ExcavationSource.values()));
+        sources.addAll(Arrays.asList(ArcherySource.values()));
+        sources.addAll(Arrays.asList(DefenseSource.values()));
+        sources.addAll(Arrays.asList(FightingSource.values()));
+        sources.addAll(Arrays.asList(EnduranceSource.values()));
+        sources.addAll(Arrays.asList(AgilitySource.values()));
+        sources.addAll(Arrays.asList(AlchemySource.values()));
+        sources.addAll(Arrays.asList(EnchantingSource.values()));
+        sources.addAll(Arrays.asList(SorcerySource.values()));
+        sources.addAll(Arrays.asList(HealingSource.values()));
+        sources.addAll(Arrays.asList(ForgingSource.values()));
         return sources;
     }
 

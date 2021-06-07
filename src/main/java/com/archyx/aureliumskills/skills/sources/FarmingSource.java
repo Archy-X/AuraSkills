@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.sources;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 
-public enum FarmingSources implements SourceProvider {
+public enum FarmingSource implements SourceProvider {
 
     WHEAT,
     POTATO,

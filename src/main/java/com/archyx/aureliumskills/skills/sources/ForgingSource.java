@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.skills.sources;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 
-public enum ForgingSources implements SourceProvider {
+public enum ForgingSource implements SourceProvider {
     
     COMBINE_BOOKS_PER_LEVEL,
     COMBINE_WEAPON_PER_LEVEL,

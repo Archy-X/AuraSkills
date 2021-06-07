@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import org.jetbrains.annotations.Nullable;
 
-public enum MiningSources implements SourceProvider {
+public enum MiningSource implements SourceProvider {
 
     STONE("stone", 0),
     COBBLESTONE,
@@ -55,23 +55,23 @@ public enum MiningSources implements SourceProvider {
     private final byte legacyData;
     private final boolean allowBothIfLegacy;
 
-    MiningSources() {
+    MiningSource() {
         this(null, -1, false);
     }
 
-    MiningSources(String legacyMaterial) {
+    MiningSource(String legacyMaterial) {
         this(legacyMaterial, -1, false);
     }
 
-    MiningSources(String legacyMaterial, int legacyData) {
+    MiningSource(String legacyMaterial, int legacyData) {
         this(legacyMaterial, legacyData, false);
     }
 
-    MiningSources(String legacyMaterial, boolean allowBothIfLegacy) {
+    MiningSource(String legacyMaterial, boolean allowBothIfLegacy) {
         this(legacyMaterial, -1, allowBothIfLegacy);
     }
 
-    MiningSources(String legacyMaterial, int legacyData, boolean allowBothIfLegacy) {
+    MiningSource(String legacyMaterial, int legacyData, boolean allowBothIfLegacy) {
         this.legacyMaterial = legacyMaterial;
         this.legacyData = (byte) legacyData;
         this.allowBothIfLegacy = allowBothIfLegacy;
