@@ -19,6 +19,7 @@ public enum Source {
 	KELP("farming.kelp"),
 	SEA_PICKLE("farming.sea_pickle"),
 	SWEET_BERRY_BUSH("farming.sweet_berry_bush"),
+	GLOW_BERRIES("farming.glow_berries"),
 	// Foraging
 	OAK_LOG("foraging.oak_log"),
 	SPRUCE_LOG("foraging.spruce_log"),
@@ -36,6 +37,12 @@ public enum Source {
 	WARPED_STEM("foraging.warped_stem"),
 	NETHER_WART_BLOCK("foraging.nether_wart_block"),
 	WARPED_WART_BLOCK("foraging.warped_wart_block"),
+	MOSS_BLOCK("foraging.moss_block"),
+	MOSS_CARPET("foraging.moss_carpet"),
+	AZALEA("foraging.azalea"),
+	FLOWERING_AZALEA("foraging.flowering_azalea"),
+	AZALEA_LEAVES("foraging.azalea_leaves"),
+	FLOWERING_AZALEA_LEAVES("foraging.flowering_azalea_leaves"),
 	// Mining
 	STONE("mining.stone"),
 	COBBLESTONE("mining.cobblestone"),
@@ -65,6 +72,22 @@ public enum Source {
 	ANCIENT_DEBRIS("mining.ancient_debris"),
 	END_STONE("mining.end_stone"),
 	OBSIDIAN("mining.obsidian"),
+	DEEPSLATE("mining.deepslate"),
+	COPPER_ORE("mining.copper_ore"),
+	TUFF("mining.tuff"),
+	CALCITE("mining.calcite"),
+	SMOOTH_BASALT("mining.smooth_basalt"),
+	AMETHYST_BLOCK("mining.amethyst_block"),
+	AMETHYST_CLUSTER("mining.amethyst_cluster"),
+	DEEPSLATE_COAL_ORE("mining.deepslate_coal_ore"),
+	DEEPSLATE_IRON_ORE("mining.deepslate_iron_ore"),
+	DEEPSLATE_COPPER_ORE("mining.deepslate_copper_ore"),
+	DEEPSLATE_GOLD_ORE("mining.deepslate_gold_ore"),
+	DEEPSLATE_REDSTONE_ORE("mining.deepslate_redstone_ore"),
+	DEEPSLATE_EMERALD_ORE("mining.deepslate_emerald_ore"),
+	DEEPSLATE_LAPIS_ORE("mining.deepslate_lapis_ore"),
+	DEEPSLATE_DIAMOND_ORE("mining.deepslate_diamond_ore"),
+	DRIPSTONE_BLOCK("mining.dripstone_block"),
 	// Fishing
     COD("fishing.cod"),
     SALMON("fishing.salmon"),
@@ -86,6 +109,7 @@ public enum Source {
 	PODZOL("excavation.podzol"),
 	SOUL_SOIL("excavation.soul_soil"),
 	RED_SAND("excavation.red_sand"),
+	ROOTED_DIRT("excavation.rooted_dirt"),
 	// Archery
 	ARCHERY_PLAYER("archery.player"),
 	ARCHERY_BAT("archery.bat"),
@@ -156,6 +180,9 @@ public enum Source {
 	ARCHERY_ZOMBIE_VILLAGER("archery.zombie_villager"),
 	ARCHERY_ENDER_DRAGON("archery.ender_dragon"),
 	ARCHERY_WITHER("archery.wither"),
+	ARCHERY_AXOLOTL("archery.axolotl"),
+	ARCHERY_GLOW_SQUID("archery.glow_squid"),
+	ARCHERY_GOAT("archery.goat"),
 	// Defense
     MOB_DAMAGE("defense.mob_damage"),
     PLAYER_DAMAGE("defense.player_damage"),
@@ -229,6 +256,9 @@ public enum Source {
 	FIGHTING_ZOMBIE_VILLAGER("fighting.zombie_villager"),
 	FIGHTING_ENDER_DRAGON("fighting.ender_dragon"),
 	FIGHTING_WITHER("fighting.wither"),
+	FIGHTING_AXOLOTL("fighting.axolotl"),
+	FIGHTING_GLOW_SQUID("fighting.glow_squid"),
+	FIGHTING_GOAT("fighting.goat"),
 	// Endurance
     WALK_PER_METER("endurance.walk_per_meter"),
     SPRINT_PER_METER("endurance.sprint_per_meter"),
@@ -268,15 +298,15 @@ public enum Source {
 	COMBINE_ARMOR_PER_LEVEL("forging.combine_armor_per_level"),
 	COMBINE_TOOL_PER_LEVEL("forging.combine_tool_per_level"),
 	GRINDSTONE_PER_LEVEL("forging.grindstone_per_level");
-	
+
 	private final String path;
-	
+
 	Source(String path) {
 		this.path = path;
 	}
-	
+
 	public String getPath() {
 		return path;
 	}
-	
+
 }
