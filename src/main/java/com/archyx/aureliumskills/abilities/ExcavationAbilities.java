@@ -82,32 +82,26 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
 						if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
 							Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
-							if (grassBlock != null) {
-								PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(grassBlock, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
-								Bukkit.getPluginManager().callEvent(event);
-								if (!event.isCancelled()) {
-									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-								}
+							PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(grassBlock, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+							Bukkit.getPluginManager().callEvent(event);
+							if (!event.isCancelled()) {
+								block.getWorld().dropItem(event.getLocation(), event.getItemStack());
 							}
 						}
 						else if (mat.equals(XMaterial.MYCELIUM.parseMaterial())) {
 							Material mycelium = XMaterial.MYCELIUM.parseMaterial();
-							if (mycelium != null) {
-								PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(mycelium, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
-								Bukkit.getPluginManager().callEvent(event);
-								if (!event.isCancelled()) {
-									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-								}
+							PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(mycelium, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+							Bukkit.getPluginManager().callEvent(event);
+							if (!event.isCancelled()) {
+								block.getWorld().dropItem(event.getLocation(), event.getItemStack());
 							}
 						}
 						else if (mat.equals(XMaterial.CLAY.parseMaterial())) {
 							Material clay = XMaterial.CLAY.parseMaterial();
-							if (clay != null) {
-								PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(clay, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
-								Bukkit.getPluginManager().callEvent(event);
-								if (!event.isCancelled()) {
-									block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-								}
+							PlayerLootDropEvent event = new PlayerLootDropEvent(player, new ItemStack(clay, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+							Bukkit.getPluginManager().callEvent(event);
+							if (!event.isCancelled()) {
+								block.getWorld().dropItem(event.getLocation(), event.getItemStack());
 							}
 						}
 						if (XMaterial.isNewVersion()) {

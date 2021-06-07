@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import org.jetbrains.annotations.Nullable;
 
-public enum MiningSource implements Source {
+public enum MiningSource implements Source, BlockSource {
 
     STONE("stone", 0),
     COBBLESTONE,
@@ -78,14 +78,17 @@ public enum MiningSource implements Source {
     }
 
     @Nullable
+    @Override
     public String getLegacyMaterial() {
         return legacyMaterial;
     }
 
+    @Override
     public byte getLegacyData() {
         return legacyData;
     }
 
+    @Override
     public boolean allowBothIfLegacy() {
         return allowBothIfLegacy;
     }

@@ -136,7 +136,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 												}
 											}
 										}
-										// If has commaand
+										// If has command
 										else if (loot.hasCommand()) {
 											String command = loot.getCommand();
 											if (plugin.isPlaceholderAPIEnabled()) {

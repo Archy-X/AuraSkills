@@ -97,6 +97,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			}
 			// Give XP
 			giveXp(player, getXp(player, source) * multiplier, source, block);
+			break;
 		}
 		// Check custom blocks
 		checkCustomBlocks(player, block, Skills.FARMING);
@@ -146,6 +147,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 					}
 				}.runTaskLater(plugin, 1L);
 			}
+			break;
 		}
 	}
 
