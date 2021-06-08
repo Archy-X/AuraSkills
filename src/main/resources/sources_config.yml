@@ -316,6 +316,8 @@ tags:
       - emerald_ore
       - nether_gold_ore
       - ancient_debris
+    speed_mine_applicable:
+      - '*'
   excavation:
     bigger_scoop_applicable:
       - '*'
