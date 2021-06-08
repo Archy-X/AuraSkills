@@ -66,6 +66,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 		if (!plugin.getAbilityManager().isEnabled(Ability.BIGGER_SCOOP)) return;
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
+		if (player.getGameMode() != GameMode.SURVIVAL) return;
 		if (r.nextDouble() < (getValue(Ability.BIGGER_SCOOP, playerData) / 100)) {
 			ItemStack tool = player.getInventory().getItemInMainHand();
 			Material mat =  block.getType();
