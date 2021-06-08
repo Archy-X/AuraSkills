@@ -47,7 +47,7 @@ sources:
     diorite: 0.2
     granite: 0.2
     coal_ore: 1.0
-    quartz_ore: 1.8
+    nether_quartz_ore: 1.8
     iron_ore: 1.8
     lapis_ore: 30.6
     redstone_ore: 5.9
@@ -295,4 +295,36 @@ sources:
     combine_armor_per_level: 20
     combine_tool_per_level: 25
     grindstone_per_level: 30
+tags:
+  farming:
+    bountiful_harvest_applicable:
+      - '*'
+    triple_harvest_applicable:
+      - '*'
+  foraging:
+    lumberjack_applicable:
+      - '*'
+  mining:
+    lucky_miner_applicable:
+      - coal_ore
+      - nether_quartz_ore
+      - iron_ore
+      - redstone_ore
+      - lapis_ore
+      - gold_ore
+      - diamond_ore
+      - emerald_ore
+      - nether_gold_ore
+      - ancient_debris
+    speed_mine_applicable:
+      - '*'
+  excavation:
+    bigger_scoop_applicable:
+      - '*'
+    metal_detector_applicable:
+      - '*'
+    lucky_spades_applicable:
+      - '*'
+    terraform_applicable:
+      - '*'
 file_version: 6

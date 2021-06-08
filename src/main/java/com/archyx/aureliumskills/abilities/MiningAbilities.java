@@ -28,7 +28,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -129,40 +128,28 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 	}
 
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void applySpeedMine(BlockBreakEvent event) {
-		//Checks if block broken is ore/stone
-		Material blockMat = event.getBlock().getType();
-		if (blockMat.equals(Material.STONE) || blockMat.equals(Material.COBBLESTONE) || blockMat.equals(Material.COAL_ORE) 
-				|| blockMat.equals(Material.IRON_ORE) || blockMat.equals(Material.GOLD_ORE) || blockMat.equals(Material.DIAMOND_ORE)
-				|| blockMat.equals(Material.EMERALD_ORE) || blockMat.equals(Material.REDSTONE_ORE) || blockMat.equals(Material.LAPIS_ORE)
-				|| blockMat.equals(XMaterial.NETHER_QUARTZ_ORE.parseMaterial()) || blockMat.equals(XMaterial.GRANITE.parseMaterial())
-				|| blockMat.equals(XMaterial.DIORITE.parseMaterial()) || blockMat.equals(XMaterial.ANDESITE.parseMaterial())
-				|| blockMat.equals(Material.NETHERRACK) || blockMat.equals(XMaterial.BASALT.parseMaterial()) || blockMat.equals(XMaterial.BLACKSTONE.parseMaterial())) {
-			// TODO Add 1.17 blocks to speed mine activate
-			Player player = event.getPlayer();
-			//Checks if speed mine is already activated
-			ManaAbilityManager manager = plugin.getManaAbilityManager();
-			if (manager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
-				return;
-			}
-			//Checks if speed mine is ready
-			if (manager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
-				//Checks if holding pickaxe
-				Material mat = player.getInventory().getItemInMainHand().getType();
-				if (mat.name().toUpperCase().contains("PICKAXE")) {
-					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-					if (playerData == null) return;
-					Locale locale = playerData.getLocale();
-					if (playerData.getMana() >= getManaCost(MAbility.SPEED_MINE, playerData)) {
-						manager.activateAbility(player, MAbility.SPEED_MINE, (int) (getValue(MAbility.SPEED_MINE, playerData) * 20), new SpeedMine(plugin));
-					}
-					else {
-						plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-								,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.SPEED_MINE, playerData))
-								, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
-								, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
-					}
+	public void applySpeedMine(Player player) {
+		// Checks if speed mine is already activated
+		ManaAbilityManager manager = plugin.getManaAbilityManager();
+		if (manager.isActivated(player.getUniqueId(), MAbility.SPEED_MINE)) {
+			return;
+		}
+		// Checks if speed mine is ready
+		if (manager.isReady(player.getUniqueId(), MAbility.SPEED_MINE)) {
+			//Checks if holding pickaxe
+			Material mat = player.getInventory().getItemInMainHand().getType();
+			if (mat.name().toUpperCase().contains("PICKAXE")) {
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+				if (playerData == null) return;
+				Locale locale = playerData.getLocale();
+				if (playerData.getMana() >= getManaCost(MAbility.SPEED_MINE, playerData)) {
+					manager.activateAbility(player, MAbility.SPEED_MINE, (int) (getValue(MAbility.SPEED_MINE, playerData) * 20), new SpeedMine(plugin));
+				}
+				else {
+					plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+							,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.SPEED_MINE, playerData))
+							, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
+							, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
 				}
 			}
 		}

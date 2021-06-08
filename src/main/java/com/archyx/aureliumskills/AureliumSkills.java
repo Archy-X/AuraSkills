@@ -37,9 +37,14 @@ import com.archyx.aureliumskills.region.RegionListener;
 import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
-import com.archyx.aureliumskills.skills.*;
+import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillBossBar;
+import com.archyx.aureliumskills.skills.SkillRegistry;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.levelers.*;
+import com.archyx.aureliumskills.skills.sources.SourceManager;
+import com.archyx.aureliumskills.skills.sources.SourceRegistry;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
@@ -108,6 +113,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
+	private SourceRegistry sourceRegistry;
 	private final long releaseTime = 1622953390381L;
 
 	public void onEnable() {
@@ -116,6 +122,7 @@ public class AureliumSkills extends JavaPlugin {
 		registerStats();
 		skillRegistry = new SkillRegistry();
 		registerSkills();
+		sourceRegistry = new SourceRegistry();
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -696,6 +703,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SkillRegistry getSkillRegistry() {
 		return skillRegistry;
+	}
+
+	public SourceRegistry getSourceRegistry() {
+		return sourceRegistry;
 	}
 
 	@Nullable

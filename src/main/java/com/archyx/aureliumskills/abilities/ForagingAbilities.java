@@ -54,7 +54,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 					if (playerData == null) return;
 					if (playerData.getAbilityLevel(Ability.LUMBERJACK) > 0) {
 						if (r.nextDouble() < ((getValue(Ability.LUMBERJACK, playerData)) / 100)) {
-							for (ItemStack item : block.getDrops()) {
+							for (ItemStack item : block.getDrops(player.getInventory().getItemInMainHand())) {
 								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUMBERJACK);
 								Bukkit.getPluginManager().callEvent(event);
 								if (!event.isCancelled()) {

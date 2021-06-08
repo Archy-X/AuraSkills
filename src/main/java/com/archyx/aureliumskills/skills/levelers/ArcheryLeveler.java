@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.ArcherySource;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -45,16 +45,16 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						double spawnerMultiplier = OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER);
 						try {
 							if (e.hasMetadata("aureliumskills_spawner_mob")) {
-								plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, Source.valueOf("ARCHERY_" + type)));
+								plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, ArcherySource.valueOf(type.toString())));
 							} else {
-								plugin.getLeveler().addXp(p, s, getXp(p, Source.valueOf("ARCHERY_" + type)));
+								plugin.getLeveler().addXp(p, s, getXp(p, ArcherySource.valueOf(type.toString())));
 							}
 						} catch (IllegalArgumentException exception) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
 								if (e.hasMetadata("aureliumskills_spawner_mob")) {
-									plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, Source.ARCHERY_ZOMBIFIED_PIGLIN));
+									plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, ArcherySource.ZOMBIFIED_PIGLIN));
 								} else {
-									plugin.getLeveler().addXp(p, s, getXp(p, Source.ARCHERY_ZOMBIFIED_PIGLIN));
+									plugin.getLeveler().addXp(p, s, getXp(p, ArcherySource.ZOMBIFIED_PIGLIN));
 								}
 							}
 						}
@@ -90,10 +90,10 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 							damage *= spawnerMultiplier;
 						}
 						try {
-							plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, Source.valueOf("FIGHTING_" + type)));
+							plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, ArcherySource.valueOf(type.toString())));
 						} catch (IllegalArgumentException e) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
-								plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, Source.FIGHTING_ZOMBIFIED_PIGLIN));
+								plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, ArcherySource.ZOMBIFIED_PIGLIN));
 							}
 						}
 					}
