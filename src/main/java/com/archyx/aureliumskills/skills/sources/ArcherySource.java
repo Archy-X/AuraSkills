@@ -91,6 +91,11 @@ public enum ArcherySource implements Source {
     }
 
     @Override
+    public String toString() {
+        return configName != null ? configName.toUpperCase(Locale.ROOT) : name();
+    }
+
+    @Override
     public String getPath() {
         if (configName == null) {
             return getSkill().toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);

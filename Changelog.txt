@@ -1,4 +1,20 @@
 Version Beta 1.0.5
+  New Features:
+    - Add Source Tags:
+      - Source tags are configurable lists of XP sources used for certain plugin mechanics, such as which blocks abilities work on
+      - Loaded from new tags section in sources_config.yml
+      - Three ways to define an entry in a source tag:
+        - Use an exact source name defined in the sources section above (eg. 'dirt')
+        - Use a '*' to add all the sources in the skill
+        - Use a source name with an '!' in front, which removes the entry from the list (eg. '!dirt')
+      - Tags added:
+        - Farming: bountiful_harvest_applicable, triple_harvest_applicable
+        - Foraging: lumberjack_applicable
+        - Mining: lucky_miner_applicable, speed_mine_applicable
+        - Excavation: bigger_scoop_applicable, metal_detector_applicable, lucky_spades_applicable, terraform_applicable
+      - Note: This does not work for custom block/mob sources yet
+  Changes:
+    - Update French (fr) messages
   Bug Fixes:
     - Fix Archery damage based getting wrong xp amount
     - Fix Enchanting Enchanter ability not working
