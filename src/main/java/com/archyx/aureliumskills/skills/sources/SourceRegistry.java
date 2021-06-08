@@ -26,6 +26,14 @@ public class SourceRegistry {
         }
     }
 
+    /**
+     * The registered class must be an enum or a class that has a values method that returns an array of Source objects.
+     * Any class must implement
+     */
+    public void register(Skill skill, Class<? extends Source> sourceClass) {
+        registry.put(skill, sourceClass);
+    }
+
     public Source[] values(Skill skill) {
         Class<?> sourceClass = registry.get(skill);
         if (sourceClass != null) {
