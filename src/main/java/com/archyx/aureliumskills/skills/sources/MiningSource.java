@@ -50,14 +50,23 @@ public enum MiningSource implements Source, BlockSource {
     DEEPSLATE_EMERALD_ORE,
     DEEPSLATE_LAPIS_ORE,
     DEEPSLATE_DIAMOND_ORE,
-    DRIPSTONE_BLOCK;
+    DRIPSTONE_BLOCK,
+    ICE(true),
+    PACKED_ICE(true),
+    BLUE_ICE(true);
 
     private final String legacyMaterial;
     private final byte legacyData;
     private final boolean allowBothIfLegacy;
+    private boolean requiresSilkTouch;
 
     MiningSource() {
         this(null, -1, false);
+    }
+
+    MiningSource(boolean requiresSilkTouch) {
+        this(null, -1, false);
+        this.requiresSilkTouch = requiresSilkTouch;
     }
 
     MiningSource(String legacyMaterial) {
@@ -92,6 +101,10 @@ public enum MiningSource implements Source, BlockSource {
     @Override
     public boolean allowBothIfLegacy() {
         return allowBothIfLegacy;
+    }
+
+    public boolean requiresSilkTouch() {
+        return requiresSilkTouch;
     }
 
     @Override

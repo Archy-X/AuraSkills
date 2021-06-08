@@ -15,6 +15,7 @@ import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -223,6 +224,10 @@ public abstract class SkillLeveler {
 
     public double getValue(Ability ability, PlayerData playerData) {
         return plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability));
+    }
+
+    protected boolean hasSilkTouch(Player player) {
+        return player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0;
     }
 
 }

@@ -46,6 +46,10 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 			for (MiningSource source : MiningSource.values()) {
 				// Add XP to player if matched
 				if (!source.isMatch(block)) continue;
+				// Check silk touch
+				if (source.requiresSilkTouch() && !hasSilkTouch(player)) {
+					return;
+				}
 				plugin.getLeveler().addXp(player, Skills.MINING, getXp(player, source));
 				// Apply abilities if has tag
 				if (hasTag(source, SourceTag.LUCKY_MINER_APPLICABLE)) {

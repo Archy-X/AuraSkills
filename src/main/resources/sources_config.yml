@@ -85,6 +85,9 @@ sources:
     deepslate_emerald_ore: 120.0
     deepslate_diamond_ore: 56.8
     dripstone_block: 3.2
+    ice: 0.3
+    packed_ice: 0.8
+    blue_ice: 1.3
   fishing:
     cod: 25.0
     salmon: 60.0

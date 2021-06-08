@@ -1,5 +1,32 @@
 Version Beta 1.0.5
   New Features:
+    - Add 1.17 support
+    - New Fighting and Archery XP sources:
+      - Axolotl
+      - Glow Squid
+      - Goat
+    - New Mining XP sources:
+      - Deepslate
+      - Copper Ore
+      - Tuff
+      - Calcite
+      - Smooth Basalt
+      - Block of Amethyst
+      - Amethyst Cluster
+      - Deepslate Ores (coal, iron, copper, gold, redstone, lapis, emerald, diamond)
+      - Dripstone Block
+      - Ice (requires silk touch)
+      - Packed Ice (requires silk touch)
+      - Blue Ice (requires silk touch)
+    - New Foraging XP sources:
+      - Moss Block
+      - Moss Carpet
+      - Azalea
+      - Flowering Azalea
+      - Azalea Leaves
+      - Flowering Azalea Leaves
+    - Add Glow Berries as Farming XP source
+    - Add Rooted Dirt as Excavation XP source
     - Add Source Tags:
       - Source tags are configurable lists of XP sources used for certain plugin mechanics, such as which blocks abilities work on
       - Loaded from new tags section in sources_config.yml
@@ -15,6 +42,8 @@ Version Beta 1.0.5
       - Note: This does not work for custom block/mob sources yet
   Changes:
     - Update French (fr) messages
+    - Rename quartz_ore to nether_quartz_ore in sources_config.yml
+    - Recode internal sources system, add sources registry
   Bug Fixes:
     - Fix Archery damage based getting wrong xp amount
     - Fix Enchanting Enchanter ability not working
