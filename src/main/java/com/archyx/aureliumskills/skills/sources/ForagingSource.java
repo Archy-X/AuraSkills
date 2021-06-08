@@ -33,14 +33,14 @@ public enum ForagingSource implements Source {
 
     private String legacyMaterial;
     private byte[] legacyData;
-    private boolean requiresSupportBlock;
+    private boolean requiresBlockBelow;
 
     ForagingSource() {
 
     }
 
-    ForagingSource(boolean requiresSupportBlock) {
-        this.requiresSupportBlock = requiresSupportBlock;
+    ForagingSource(boolean requiresBlockBelow) {
+        this.requiresBlockBelow = requiresBlockBelow;
     }
 
     ForagingSource(String legacyMaterial) {
@@ -60,8 +60,8 @@ public enum ForagingSource implements Source {
         return legacyData;
     }
 
-    public boolean requiresSupportBlock() {
-        return requiresSupportBlock;
+    public boolean requiresBlockBelow() {
+        return requiresBlockBelow;
     }
 
     @SuppressWarnings("deprecation")

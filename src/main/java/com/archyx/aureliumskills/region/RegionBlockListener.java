@@ -3,7 +3,8 @@ package com.archyx.aureliumskills.region;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.skills.sources.SourceManager;
+import com.archyx.aureliumskills.skills.sources.*;
+import com.archyx.aureliumskills.util.block.BlockFaceUtil;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
@@ -24,88 +25,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class RegionBlockListener implements Listener {
 
-    private final XMaterial[] checkedMaterials = new XMaterial[] {
-            // Ultra Common
-            XMaterial.COBBLESTONE,
-            XMaterial.DIRT,
-            XMaterial.NETHERRACK,
-            XMaterial.STONE,
-            // Common
-            XMaterial.SAND,
-            XMaterial.GRAVEL,
-            XMaterial.GRASS_BLOCK,
-            XMaterial.OAK_LOG,
-            XMaterial.BIRCH_LOG,
-            XMaterial.SPRUCE_LOG,
-            XMaterial.GRANITE,
-            XMaterial.DIORITE,
-            XMaterial.ANDESITE,
-            // Uncommon
-            XMaterial.JUNGLE_LOG,
-            XMaterial.DARK_OAK_LOG,
-            XMaterial.ACACIA_LOG,
-            XMaterial.CRIMSON_STEM,
-            XMaterial.WARPED_STEM,
-            XMaterial.TERRACOTTA,
-            XMaterial.CLAY,
-            XMaterial.SOUL_SAND,
-            XMaterial.COAL_ORE,
-            XMaterial.IRON_ORE,
-            XMaterial.BLACKSTONE,
-            XMaterial.NETHER_QUARTZ_ORE,
-            XMaterial.END_STONE,
-            XMaterial.BASALT,
-            XMaterial.OBSIDIAN,
-            XMaterial.MYCELIUM,
-            XMaterial.OAK_WOOD,
-            XMaterial.SPRUCE_WOOD,
-            XMaterial.BIRCH_WOOD,
-            XMaterial.JUNGLE_WOOD,
-            XMaterial.ACACIA_WOOD,
-            XMaterial.DARK_OAK_WOOD,
-            XMaterial.CACTUS,
-            XMaterial.BROWN_MUSHROOM,
-            XMaterial.RED_MUSHROOM,
-            XMaterial.KELP_PLANT,
-            XMaterial.SEA_PICKLE,
-            // Rare
-            XMaterial.PUMPKIN,
-            XMaterial.MELON,
-            XMaterial.SUGAR_CANE,
-            XMaterial.BAMBOO,
-            XMaterial.OAK_LEAVES,
-            XMaterial.BIRCH_LEAVES,
-            XMaterial.SPRUCE_LEAVES,
-            XMaterial.GOLD_ORE,
-            XMaterial.LAPIS_ORE,
-            XMaterial.REDSTONE_ORE,
-            XMaterial.DARK_OAK_LEAVES,
-            XMaterial.ACACIA_LEAVES,
-            XMaterial.SNOW_BLOCK,
-            XMaterial.SNOW,
-            XMaterial.WHITE_TERRACOTTA,
-            XMaterial.ORANGE_TERRACOTTA,
-            XMaterial.YELLOW_TERRACOTTA,
-            XMaterial.RED_TERRACOTTA,
-            XMaterial.LIGHT_GRAY_TERRACOTTA,
-            XMaterial.BROWN_TERRACOTTA,
-            XMaterial.COARSE_DIRT,
-            XMaterial.PODZOL,
-            XMaterial.RED_SAND,
-            XMaterial.SOUL_SOIL,
-            XMaterial.NETHER_GOLD_ORE,
-            // Very Rare
-            XMaterial.NETHER_WART_BLOCK,
-            XMaterial.WARPED_WART_BLOCK,
-            XMaterial.DIAMOND_ORE,
-            XMaterial.EMERALD_ORE,
-            XMaterial.ANCIENT_DEBRIS,
-            // TODO Add deepslate, copper ore, tuff, calcite, smooth basalt, amethyst block, amethyst cluster
-            // TODO Add deepslate ores, dripstone block, moss block, moss carpet, azalea, flowering azalea
-            // TODO Add azalea leaves, flowering azalea leaves, rooted dirt
-    };
-
-    private final Material[] materials = new Material[checkedMaterials.length];
     private Material[] customMaterials;
 
     private final AureliumSkills plugin;
@@ -115,14 +34,6 @@ public class RegionBlockListener implements Listener {
         this.plugin = plugin;
         this.regionManager = plugin.getRegionManager();
         SourceManager sourceManager = plugin.getSourceManager();
-        for (int i = 0; i < checkedMaterials.length; i++) {
-            if (checkedMaterials[i].equals(XMaterial.SUGAR_CANE) && !XMaterial.isNewVersion()) {
-                materials[i] = Material.getMaterial("SUGAR_CANE_BLOCK");
-            }
-            else {
-                materials[i] = checkedMaterials[i].parseMaterial();
-            }
-        }
         customMaterials = new Material[sourceManager.getCustomBlockSet().size()];
         int pos = 0;
         for (XMaterial material : sourceManager.getCustomBlockSet()) {
@@ -154,19 +65,22 @@ public class RegionBlockListener implements Listener {
             }
         }
         // Check block replace
-        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) {
-            Material material = event.getBlock().getType();
-            for (Material checkedMaterial : materials) {
-                if (material.equals(checkedMaterial)) {
-                    regionManager.addPlacedBlock(event.getBlock());
-                    break;
-                }
-            }
-            for (Material checkedMaterial : customMaterials) {
-                if (material.equals(checkedMaterial)) {
-                    regionManager.addPlacedBlock(event.getBlock());
-                    break;
-                }
+        if (!OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) return;
+        Material material = event.getBlock().getType();
+        Block block = event.getBlock();
+        // Add all foraging, mining, and excavation blocks
+        if (MiningSource.getSource(block) != null || ForagingSource.getSource(block) != null || ExcavationSource.getSource(block) != null) {
+            regionManager.addPlacedBlock(block);
+        }
+        // Add farming source if has check block replace
+        FarmingSource farmingSource = FarmingSource.getSource(block);
+        if (farmingSource != null && farmingSource.shouldCheckBlockReplace()) {
+            regionManager.addPlacedBlock(block);
+        }
+        for (Material checkedMaterial : customMaterials) {
+            if (material.equals(checkedMaterial)) {
+                regionManager.addPlacedBlock(event.getBlock());
+                break;
             }
         }
     }
@@ -205,11 +119,12 @@ public class RegionBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void checkBreak(BlockBreakEvent event) {
-        if (!event.isCancelled()) {
-            regionManager.removePlacedBlock(event.getBlock());
-            checkSugarCane(event.getBlock(), 0);
-            // TODO Check for amethyst cluster, moss carpet, azalea, flowering azalea breaks when supporting block is broken
-        }
+        if (event.isCancelled()) return;
+        Block block = event.getBlock();
+        regionManager.removePlacedBlock(block);
+        checkSugarCane(block, 0);
+        checkBlocksRequiringSupportBelow(block);
+        checkAmethystCluster(block);
     }
 
     @EventHandler
@@ -242,6 +157,41 @@ public class RegionBlockListener implements Listener {
                     regionManager.removePlacedBlock(above);
                     checkSugarCane(above, num + 1);
                 }
+            }
+        }
+    }
+
+    private void checkBlocksRequiringSupportBelow(Block block) {
+        // Check if the block above requires support
+        Block above = block.getRelative(BlockFace.UP);
+        ForagingSource source = ForagingSource.getSource(above);
+        if (source != null && source.requiresBlockBelow() && regionManager.isPlacedBlock(above)) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    // Remove if block was destroyed
+                    if (!source.isMatch(block)) {
+                        regionManager.removePlacedBlock(above);
+                    }
+                }
+            }.runTaskLater(plugin, 1);
+        }
+    }
+
+    private void checkAmethystCluster(Block block) {
+        // Check each side
+        for (BlockFace face : BlockFaceUtil.getBlockSides()) {
+            Block checkedBlock = block.getRelative(face);
+            if (MiningSource.AMETHYST_CLUSTER.isMatch(block) && regionManager.isPlacedBlock(checkedBlock)) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        // Remove if block was destroyed
+                        if (!MiningSource.AMETHYST_CLUSTER.isMatch(block)) {
+                            regionManager.removePlacedBlock(block);
+                        }
+                    }
+                }.runTaskLater(plugin, 1);
             }
         }
     }

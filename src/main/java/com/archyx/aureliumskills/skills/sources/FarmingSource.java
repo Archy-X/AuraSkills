@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.block.BlockUtil;
 import org.bukkit.block.Block;
+import org.jetbrains.annotations.Nullable;
 
 public enum FarmingSource implements Source {
 
@@ -98,5 +99,15 @@ public enum FarmingSource implements Source {
     @Override
     public Skill getSkill() {
         return Skills.FARMING;
+    }
+
+    @Nullable
+    public static FarmingSource getSource(Block block) {
+        for (FarmingSource source : values()) {
+            if (source.isMatch(block)) {
+                return source;
+            }
+        }
+        return null;
     }
 }
