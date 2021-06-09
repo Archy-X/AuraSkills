@@ -339,7 +339,7 @@ public class AureliumSkills extends JavaPlugin {
 					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
 							version);
 					getLogger().info("Download it on Spigot:");
-					getLogger().info("http://spigotmc.org/resources/81069");
+					getLogger().info("https://spigotmc.org/resources/81069");
 				}
 			}
 			else {
