@@ -259,7 +259,7 @@ abilities:
       info: 'Każda {value} siły = Każda {value} zaklęć'
     lucky_table:
       name: Szczęśliwy Stół
-      desc: "Przedmioty, które zaklęłeś za pomocą tabeli zaklęć\n&7  mają {value}% szans na ulepszenie poziomu zaklęcia\n&7  o 1, jeśli nie jest to ich maksymalny poziom"
+      desc: "Przedmioty, które zakląłeś za pomocą tabeli zaklęć\n&7  mają {value}% szans na ulepszenie poziomu zaklęcia\n&7  o 1, jeśli nie jest to ich maksymalny poziom"
       info: '{value}% Szans na Ulepszenie Zaklęcia'
   healing:
     life_essence:
@@ -663,7 +663,7 @@ skills:
     desc: "&7Zaklinaj przedmioty i książki, aby\n&7zdobyć {xp_unit} Zaklinania"
   sorcery:
     name: Czarodziejstwo
-    desc: '&7Use mana abilities to earn Sorcery {xp_unit}'
+    desc: '&7Użyj umiejętności many, by zdobyć {xp_unit} Czarodziejstwa'
   healing:
     name: Leczenie
     desc: "&7Pij i rozbijaj mikstury, aby zdobyć\n&7{xp_unit} Leczenia"
