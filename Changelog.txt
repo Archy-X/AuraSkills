@@ -1,3 +1,10 @@
+Version Beta 1.0.5
+  Changes:
+    - Updated French (fr) messages
+  Bug Fixes:
+    - Fix MySQL ClassNotFoundException when using older MySQL connector
+    - Fix health being applied multiple times in skill commands
+
 Version Beta 1.0.4
   Bug Fixes:
     - Fix multiple Forging XP exploits
