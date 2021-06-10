@@ -1,4 +1,4 @@
-Version Beta 1.0.5
+Version Beta 1.0.6
   New Features:
     - Add 1.17 support
     - New Fighting and Archery XP sources:
@@ -41,12 +41,18 @@ Version Beta 1.0.5
         - Excavation: bigger_scoop_applicable, metal_detector_applicable, lucky_spades_applicable, terraform_applicable
       - Note: This does not work for custom block/mob sources yet
   Changes:
-    - Update French (fr) messages
     - Rename quartz_ore to nether_quartz_ore in sources_config.yml
     - Recode internal sources system, add sources registry
   Bug Fixes:
     - Fix Archery damage based getting wrong xp amount
     - Fix Enchanting Enchanter ability not working
+
+Version Beta 1.0.5
+  Changes:
+    - Updated French (fr) messages
+  Bug Fixes:
+    - Fix MySQL ClassNotFoundException when using older MySQL connector
+    - Fix health being applied multiple times in skill commands
 
 Version Beta 1.0.4
   Bug Fixes:

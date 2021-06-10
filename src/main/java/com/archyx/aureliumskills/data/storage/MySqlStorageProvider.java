@@ -61,7 +61,11 @@ public class MySqlStorageProvider extends StorageProvider {
             if (connection != null && !connection.isClosed()) {
                 return;
             }
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                Class.forName("com.mysql.jdbc.Driver");
+            }
             connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/" + this.database + "?useSSL=false&autoReconnect=true", this.username, this.password);
             plugin.getLogger().info("Connected to MySQL database");
         }

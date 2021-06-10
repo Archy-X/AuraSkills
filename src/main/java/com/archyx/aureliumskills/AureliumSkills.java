@@ -114,7 +114,7 @@ public class AureliumSkills extends JavaPlugin {
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
 	private SourceRegistry sourceRegistry;
-	private final long releaseTime = 1622953390381L;
+	private final long releaseTime = 1623343466957L;
 
 	public void onEnable() {
 		// Registries
