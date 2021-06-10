@@ -382,7 +382,8 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Todos os requisitos de armadura foram removidos do seu item'
-      equip: '&eVocê não tem os requisitos para equipar este item!'
+      equip: '&eVocê não tem os cumpre para equipar este item: {requirements}'
+      entry: '&b{skill} {level}&7, '
   backup:
     load:
       confirm: '&cCarregar um backup reverterá todos os dados de habilidade dos jogadores. Esta ação é permanente e não pode ser desfeita. Talvez você queira salvar um backup antes de carregar um. Digite o comando novamente para confirmar esta ação'
@@ -422,7 +423,8 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Todos os itens necessários foram removidos do seu item'
-      use: '&eVocê não tem os requisitos para usar este item!'
+      use: '&eVocê não tem os requisitos para usar este item: {requirements}'
+      entry: '&b{skill} {level}&7, '
   lang:
     set: '&7Idioma definido para &b{lang}'
     not_found: '&eIdioma não encontrado!'
@@ -703,4 +705,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 15
+file_version: 16
