@@ -46,6 +46,7 @@ Version Beta 1.0.6
   Bug Fixes:
     - Fix Archery damage based getting wrong xp amount
     - Fix Enchanting Enchanter ability not working
+    - Fix Replenish changing blocks in protected regions
 
 Version Beta 1.0.5
   Changes:
