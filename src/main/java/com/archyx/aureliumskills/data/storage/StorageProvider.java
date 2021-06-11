@@ -65,9 +65,7 @@ public abstract class StorageProvider {
             playerData.setSkillLevel(skill, level);
             playerData.setSkillXp(skill, xpLevels.get(skill));
             // Add stat levels
-            playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
-            int secondaryStat = level / 2;
-            playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
+            plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, level);
         }
         // Reload stats
         new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.HEALTH);
