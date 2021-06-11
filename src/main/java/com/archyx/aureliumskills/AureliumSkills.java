@@ -112,7 +112,8 @@ public class AureliumSkills extends JavaPlugin {
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
 	private LuckPermsSupport luckPermsSupport;
-	private final long releaseTime = 1622953390381L;
+	private SourceRegistry sourceRegistry;
+	private final long releaseTime = 1623427622106L;
 
 	public void onEnable() {
 		// Registries
@@ -120,6 +121,7 @@ public class AureliumSkills extends JavaPlugin {
 		registerStats();
 		skillRegistry = new SkillRegistry();
 		registerSkills();
+		sourceRegistry = new SourceRegistry();
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -284,6 +286,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (System.currentTimeMillis() > releaseTime + 21600000L) {
 			checkUpdates();
 		}
+		MinecraftVersion.disableUpdateCheck();
 	}
 	
 	public void onDisable() {
@@ -345,7 +348,7 @@ public class AureliumSkills extends JavaPlugin {
 					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
 							version);
 					getLogger().info("Download it on Spigot:");
-					getLogger().info("http://spigotmc.org/resources/81069");
+					getLogger().info("https://spigotmc.org/resources/81069");
 				}
 			}
 			else {
@@ -720,6 +723,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public LuckPermsSupport getLuckPermsSupport() {
 		return luckPermsSupport;
+	}
+
+	public SourceRegistry getSourceRegistry() {
+		return sourceRegistry;
 	}
 
 	@Nullable

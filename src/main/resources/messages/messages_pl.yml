@@ -1,5 +1,5 @@
 # Aurelium Skills Polish (pl) messages
-# Translators: Kaspian, Xeymoi
+# Translators: Kaspian, Xeymoi, PLKaratusPL
 # Contribute here: https://crowdin.com/project/aureliumskills/pl#
 abilities:
   farming:
@@ -223,6 +223,7 @@ abilities:
       name: Alchemik
       desc: "Mikstury, które warzysz mają o {value}%\n&7  więcej czasu trwania."
       info: '+{value}% Czasu Trwania'
+      lore: '&a(+{duration})'
     brewer:
       name: Mistrz Warzenia
       desc: 'Zdobywaj {value}% więcej doświadczenia alchemicznego'
@@ -239,6 +240,70 @@ abilities:
       name: Mądry Efekt
       desc: "Zdobywa {value} Mądrości za każdy\n&7  unikalny efekt mikstury."
       info: '+{value} Mądrość/Efekt'
+  enchanting:
+    xp_convert:
+      name: Konwertuj XP
+      desc: 'Zdobądź jedno doświadczenie w Minecraft''cie za każde {value} &7za każde zdobyte umiejętności.'
+      info: 'Jedno doświadczenie za {value} doświadczenia umiejętności'
+    enchanter:
+      name: Zaklinacz
+      desc: 'Zdobądź {value} procent doświadczenia zaklęć.'
+      info: '+{value}% XP'
+    xp_warrior:
+      name: 'Doświadczenia: Wojownik'
+      desc: 'Potwory które zabiłeś mają {value} procent więcej szansy &7że wyrzucą dwa razy więcej doświadczenia.'
+      info: '{value} procent jako dwa razy więcej doświadczenia z potworów'
+    enchanted_strength:
+      name: Zaklęta Siła
+      desc: "Zdobądź {value} Siły za każdy unikalny\n&7 enchant rzeczy trzymanej w ręce."
+      info: 'Każda {value} siły = Każda {value} zaklęć'
+    lucky_table:
+      name: Szczęśliwy Stół
+      desc: "Przedmioty, które zakląłeś za pomocą tabeli zaklęć\n&7  mają {value}% szans na ulepszenie poziomu zaklęcia\n&7  o 1, jeśli nie jest to ich maksymalny poziom"
+      info: '{value}% Szans na Ulepszenie Zaklęcia'
+  healing:
+    life_essence:
+      name: Esencja Życia
+      desc: Natychmiastowe mikstury leczenia przywracają {value}% więcej.
+      info: '+{value}% Natychmiastowe Leczenie'
+    healer:
+      name: Uzdrowiciel
+      desc: Zdobywaj {value}% więcej XP leczenia.
+      info: '+{value}% XP'
+    life_steal:
+      name: Kradzież Życia
+      desc: Wylecz {value}% maksymalnego HP z wrogich mobów\n&7  i zabitych przez Ciebie graczy.
+      info: 'Kradzież {value}% HP'
+    golden_heart:
+      name: Złote Serce
+      desc: Obrażenia zadane sercom absorpcji są \n&7  zmniejszone o {value}%
+      info: '-{value}% Obrażeń Absorbcji'
+    revival:
+      name: Odrodzenie
+      desc: Zdobądź &c+{value} Zdrowia &7oraz &6+{value_2} Regeneracji\n&7  przez 30 sekund po odrodzeniu.
+      info: '+{value} Zdrowia, +{value_2} Regeneracji'
+      message: '&fOtrzymałeś bonus odrodzenia na 30 sekund! &f(&c+{value} Zdrowia, &6+{value_2} Regeneracji&f)'
+  forging:
+    disenchanter:
+      name: Odczarowanie
+      desc: Zdobądź {value}% więcej doświadczenia podczas odczarowania\n&7  przedmiotów za pomocą kamienia szlifierskiego.
+      info: '+{value}% EXPa z Kamienia szlifierskiego'
+    forger:
+      name: Wykuwacz
+      desc: Zdobywaj {value}% więcej XP Kowalstwa.
+      info: '+{value}% XP'
+    repairing:
+      name: Naprawianie
+      desc: Naprawianie przedmiotów w kowadle przy użyciu surowca\n&7  , z którego został wykonany przedmiot, naprawia\n&7  {value}% więcej trwałości.
+      info: '+{value}% Naprawy Kowadła'
+    anvil_master:
+      name: Mistrz Kowadła
+      desc: Zwiększa maksymalny koszt naprawy kowadła\n&7  zanim stanie się ono zbyt drogie dla {value} punktów doświadczenia.
+      info: '{value} Maksymalny Koszt'
+    skill_mender:
+      name: Naprawa Umiejętności
+      desc: Zdobywanie XP umiejętności ma {value}% szans na naprawę\n&7  trzymanego przedmiotu lub zużytego kawałka zbroi z zaklęciem Naprawa\n&7  o 1 wytrzymałość na 2 XP umiejętności.
+      info: '{value}% Szansy na Wyładowanie'
 acf:
   core:
     permission_denied: '&cPrzepraszam, ale nie masz uprawnień do wykonania tej komendy.'
@@ -285,6 +350,7 @@ action_bar:
   xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
   maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
+  ability: '{message}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAX)'
 commands:
@@ -316,7 +382,20 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Wszystkie wymagania zbroi zostały usunięte z twojego przedmiotu'
-      equip: '&eNie spełniasz wymagań do wyposażenia się w ten przedmiot!'
+      equip: '&eNie spełniasz wymagań do wyposażenia tego przedmiotu: {requirements}'
+      entry: '&b{skill} {level}&7, '
+  backup:
+    load:
+      confirm: '&cŁadowanie kopii zapasowej przywróci wszystkie dane o umiejętnościach graczy. Ta akcja jest permanentna i nie może zostać cofnięta. Możesz zapisać kopię zapasową przed załadowaniem. Wpisz polecenie ponownie, aby potwierdzić tę czynność'
+      loading: '&fŁadowanie kopii zapasowej...'
+      loaded: '&aPomyślnie załadowano kopię zapasową'
+      error: '&cBłąd podczas ładowania kopii zapasowej: {error}'
+      must_be_yaml: '&ePlik musi być plikiem .yml!'
+      file_not_found: '&eKopia zapasowa tej nazwy pliku nie istnieje w folderze kopii zapasowych!'
+    save:
+      saving: '&fZapisywanie kopii zapasowej...'
+      saved: '&fWykonano kopię zapasową danych {type} jako {file}'
+      error: '&cBłąd podczas tworzenia kopii zapasowej danych {type}! Zobacz błąd w konsoli/poniżej, aby uzyskać szczegóły'
   item:
     modifier:
       add:
@@ -344,10 +423,19 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Wszystkie wymagania przedmiotu zostały usunięte z twojego przedmiotu'
-      use: '&eNie spełniasz wymagań do użycia tego przedmiotu!'
+      use: '&eNie spełniasz wymagań do użycia tego przedmiotu: {requirements}'
+      entry: '&b{skill} {level}&7, '
   lang:
     set: '&7Język ustawiony na &b{lang}'
     not_found: '&eJęzyk nie został znaleziony!'
+  mana:
+    display: '&fTwoja {mana_unit}: &b{current}/{max}'
+    display_other: '&f{mana_unit} {player}: &b{current}/{max}'
+    add: '&7Dodano &b{amount} {mana_unit} &7do gracza &6{player}'
+    remove: '&7Usunięto &b{amount} {mana_unit} &7z gracza &6{player}'
+    set: '&7Ustaw gracza &6{player} &7na &b{amount} {mana_unit}'
+    at_least_zero: '&e{mana_unit} musi wynosić co najmniej zero!'
+    console_specify_player: '&eKonsola musi określić gracza!'
   modifier:
     add:
       added: '&7Modyfikator{color}{stat} &7poziomu &b{value} &7 o nazwie &f{name} &7dodany graczowi &6{player}'
@@ -398,6 +486,9 @@ commands:
     skill_header: '&f--==&b&lTabela {skill}&f==--'
     skill_header_page: '&f--==&b&lTabela {skill} &7(Strona {page})==--'
     skill_entry: '&f{rank}. &b{player} &f- {level}'
+    average_header: '&f--==&b&lŚredni Ranking Umiejętności&f==--'
+    average_header_page: '&f--==&b&lŚredni Ranking Umiejętności &f(Strona {page})=--'
+    average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUżycie: &a/sk top &f<page> &7lub &a/sk top &f[skill] <page>'
   updateleaderboards:
     already_updating: '&eTablica wyników jest już aktualizowana!'
@@ -412,12 +503,12 @@ leveler:
   title: '&aNowy Poziom {skill}'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Nowy Poziom Umiejętności! &b&l{skill} &8{old}➜&3&l{new}\n \n &bNagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: '\n  {color}+1{symbol} {stat}'
-  ability_unlock: '\n  &aOdblokowano Umiejętność! &7Umiejętność &6&l{ability} &7odblokowana'
-  ability_level_up: '\n  &aNowy Poziom Umiejętności! &7Umiejętność &6&l{ability} &7ma teraz poziom &6{level}'
-  mana_ability_unlock: '\n  &aOdblokowano Umiejętność Many! &7Umiejętność &6&l{mana_ability} &7odblokowana'
-  mana_ability_level_up: '\n  &aNowy Poziom Umiejętności Many! &7Umiejętność &6&l{mana_ability} &7ma teraz poziom &6{level}'
-  money_reward: '\n  &a{amount}$'
+  stat_level: "\n  {color}+1{symbol} {stat}"
+  ability_unlock: "\n  &aOdblokowano Umiejętność! &7Umiejętność &6&l{ability} &7została odblokowana"
+  ability_level_up: "\n  &aNowy Poziom Umiejętności! &7Umiejętność &6&l{ability} &7ma teraz poziom &6{level}"
+  mana_ability_unlock: "\n  &dOdblokowano Umiejętność Many! &7Umiejętność &9&l{mana_ability} &7 została odblokowana"
+  mana_ability_level_up: "\n  &dNowy Poziom Umiejętności Many! &7Umiejętność &9&l{mana_ability} &7ma teraz poziom &6{level}"
+  money_reward: "\n  &a${amount}"
 menus:
   common:
     close: '&cZamknij'
@@ -471,7 +562,7 @@ menus:
     secondary_skills_two: '&7Drugorzędne Umiejętności: &f{skill_1}, {skill_2}'
     secondary_skills_three: '&7Drugorzędne Umiejętności: &f{skill_1}, {skill_2}, {skill_3}'
     your_level: '&7Twój Poziom: {color}{level}'
-    attack_damage: '&4+{value} Obrażeń od Ataku'
+    attack_damage: '&4+{value}% Obrażeń od Ataku'
     hp: '&c+{value} {hp_unit}'
     saturated_regen: '&6+{value} Nasyconej Regeneracji'
     full_hunger_regen: '&6+{value} Regeneracji Pełnego Głodu'
@@ -480,44 +571,59 @@ menus:
     luck: '&2+{value} Szczęścia'
     double_drop_chance: '&2Szansa na Podwójny Drop: {value}%'
     xp_gain: '&9+{value}% {xp_unit} Zdobycia'
-    anvil_cost_reduction: '&9Zmniejszenie Kosztów Kowadła: {value}'
+    anvil_cost_reduction: '&9Redukcja kosztu kowadła: {value}%'
+    max_mana: '&9Maksymalna Mana: {value}'
     incoming_damage: '&5-{value}% Przychodzących Obrażeń'
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
-    desc: "&7Przesadza rośliny automatycznie na {value} sekund.\n&7  &e[Kliknij prawym przyciskiem myszy, aby aktywować]"
+    desc: "&7Przesadza rośliny automatycznie na \n&7  {value} sekund. &e[Kliknij prawym przyciskiem myszy i\n&7  zniszcz plon, aby aktywować]"
     raise: '&7Podnosisz swoją motykę'
     lower: '&7Obniżasz swoją motykę'
     start: '&6Autoprzesadzanie Aktywowane! &7(-{mana} {mana_unit})'
-    end: '&6Autoprzesadzanie się skończyło'
+    end: '&7Automatyczne przesadzanie skończyło robić swoją robote'
   treecapitator:
     name: Niszczyciel Drzew
-    desc: "&7Natychmiast niszczy całe drzewa przez {value} sekund.\n&7  &e[Kliknij prawym przyciskiem myszy, aby aktywować]"
+    desc: "&7Natychmiast niszczy całe drzewa przez \n&7  {value} sekund. &e[Kliknij prawym przyciskiem myszy i\n&e  zniszcz pień, aby aktywować]"
     raise: '&7Podnosisz swój topór'
     lower: '&7Obniżasz swój topór'
     start: '&6Niszczenie Drzew Aktywowane! &7(-{mana} {mana_unit})'
-    end: '&6Niszczyciel drzew się skończył'
+    end: '&7Niszczyciel drzew się skończył'
   speed_mine:
     name: Szybkie Kopanie
-    desc: "&7Daje pośpiech 10 na {value} sekund.\n&7  &e[Kliknij prawym przyciskiem myszy, aby aktywować]"
+    desc: "&7Daje Pośpiech 10 na {value} sekund.\n&e  [Kliknij prawym przyciskiem kilofem i kop\n&e  blok, aby aktywować]"
     raise: '&7Podnosisz swój kilof'
     lower: '&7Obniżasz swój kilof'
     start: '&6Szybkie Kopanie aktywowane! &7(-{mana} {mana_unit})'
     end: '&7Szybkie Kopanie się skończyło'
   absorption:
     name: Absorpcja
-    desc: "Leczy 50% obrażeń otrzymywanych \n&7  przez {value} sekund."
+    desc: "Nadchodzące obrażenia zmniejszą manę\n&7  o 2x minecraftowych obrażeń zamiast twojego\n&7  zdrowia na {value} sekund. Mana nie będzie\n&7  regenerowana, gdy Absorbcja jest aktywna.\n  &e[Kliknij lewym przyciskiem myszy tarczę i odnieś obrażenia, aby aktywować]"
     raise: '&7Podnosisz swoją tarczę'
     lower: '&7Obniżasz swoją tarczę'
     start: '&6Absorpcja Aktywowana! &7(-{mana} {mana_unit})'
-    end: '&6Absorption się skończyła'
+    end: '&67Absorbcja się skończyła'
+  terraform:
+    name: Terraforma
+    desc: "Zniszcz bloki natychmiast w promieniu 4 bloków\n&7  w tej samej warstwie podczas kopania przez {value} sekund. Musisz\n&7  użyć łopaty, a dodatkowe zniszczone bloki muszą być\n&7  tego samego typu i w jednej połączonej żyle.\n&7  &e[Kliknij prawym przyciskiem myszy łopatą i wykop blok, aby aktywować]"
+    raise: '&7Podnosisz swoją łopatę'
+    lower: '&7Obniżasz swoją łopatę'
+    start: '&6Terraforma Aktywowana! &7(-{mana} {mana_unit})'
+    end: '&7Terraforma się skończyła'
   sharp_hook:
     name: Ostry Hak
     desc: "Zadaj {value} obrażeń zaczebionemu mobowi\n&7  klikając lewym przyciskiem myszy"
-    use: '&6Użyto Ostrego Haka!'
+    use: '&6Użyto Ostrego Haka! &7(-{mana} {mana_unit})'
     menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Obrażenia: &c{value} &7Koszt Many: &b{mana_cost} &7Czas Odnowienia: &e{cooldown}s\n "
+  charged_shot:
+    name: Naładowany Strzał
+    desc: "Strzały które wystrzelisz zadają więcej obrażeń\n&7  w zależności od tego, w jakim stopniu łuk został naciągnięty,\n&7  zużywając manę w tym procesie. Zadaje {value}% więcej\n&7  obrażeń na zużytą manę. \n&e  [Kliknij lewym przyciskiem myszy łuk, aby przełączyć tryb naładowanego strzału]"
+    enable: '&7Tryb naładowanego strzału jest teraz włączony'
+    disable: '&7Tryb naładowanego strzału jest teraz wyłączony'
+    shoot: '&6Użyty Naładowanego Strzału! &d+{percent}% Obrażeń &7(-{mana} {mana_unit})'
+    menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Obrażenia: &c+{value}% / Mana &7Maksymalny Koszt Many: &b{mana_cost}\n "
   not_ready: '&cUmiejętność many nie jest gotowa! &7({cooldown}s)'
-  not_enough_mana: '&eZa mało many! &7({mana} {mana_unit} wymagane)'
+  not_enough_mana: '&eNiewystarczająca ilość many! &7(wymagane {mana} {mana_unit}, masz {current_mana}/{max_mana}'
 skills:
   farming:
     name: Rolnictwo
@@ -557,7 +663,7 @@ skills:
     desc: "&7Zaklinaj przedmioty i książki, aby\n&7zdobyć {xp_unit} Zaklinania"
   sorcery:
     name: Czarodziejstwo
-    desc: '&7Use mana abilities to earn Sorcery {xp_unit}'
+    desc: '&7Użyj umiejętności many, by zdobyć {xp_unit} Czarodziejstwa'
   healing:
     name: Leczenie
     desc: "&7Pij i rozbijaj mikstury, aby zdobyć\n&7{xp_unit} Leczenia"
@@ -599,4 +705,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 9
+file_version: 16

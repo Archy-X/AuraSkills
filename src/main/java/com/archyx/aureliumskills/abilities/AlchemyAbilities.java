@@ -270,7 +270,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         if (blockDisabled(Ability.LINGERING)) return;
         if (event.isCancelled()) return;
         Player player = null;
-        if (VersionUtils.isAboveVersion(14)) {
+        if (VersionUtils.isAtLeastVersion(14)) {
             if (event.getEntity().getShooter() instanceof Player) {
                 player = (Player) event.getEntity().getShooter();
             }
