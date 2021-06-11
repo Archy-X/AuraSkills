@@ -16,6 +16,7 @@ sources:
     kelp: 1.9
     sea_pickle: 4.0
     sweet_berry_bush: 2.5
+    glow_berries: 4.5
   foraging:
     oak_log: 4.0
     spruce_log: 4.0
@@ -33,14 +34,20 @@ sources:
     warped_stem: 5.0
     nether_wart_block: 0.5
     warped_wart_block: 0.5
+    moss_block: 3.2
+    moss_carpet: 0.2
+    azalea: 7.0
+    flowering_azalea: 9.1
+    azalea_leaves: 1.5
+    flowering_azalea_leaves: 2.0
   mining:
     stone: 0.2
     cobblestone: 0.2
     andesite: 0.2
     diorite: 0.2
     granite: 0.2
-    coal_ore: 1
-    quartz_ore: 1.8
+    coal_ore: 1.0
+    nether_quartz_ore: 1.8
     iron_ore: 1.8
     lapis_ore: 30.6
     redstone_ore: 5.9
@@ -62,6 +69,25 @@ sources:
     ancient_debris: 500.0
     end_stone: 0.5
     obsidian: 10.0
+    deepslate: 0.4
+    copper_ore: 3.5
+    tuff: 0.5
+    calcite: 0.8
+    smooth_basalt: 0.8
+    amethyst_block: 4.0
+    amethyst_cluster: 6.0
+    deepslate_coal_ore: 1.2
+    deepslate_iron_ore: 2.2
+    deepslate_copper_ore: 4.2
+    deepslate_gold_ore: 21.4
+    deepslate_redstone_ore: 7.1
+    deepslate_lapis_ore: 36.7
+    deepslate_emerald_ore: 120.0
+    deepslate_diamond_ore: 56.8
+    dripstone_block: 3.2
+    ice: 0.3
+    packed_ice: 0.8
+    blue_ice: 1.3
   fishing:
     cod: 25.0
     salmon: 60.0
@@ -83,6 +109,7 @@ sources:
     podzol: 2.5
     soul_soil: 3.0
     red_sand: 0.7
+    rooted_dirt: 5.6
   archery:
     player: 50.0
     bat: 1.0
@@ -153,6 +180,9 @@ sources:
     zombie_villager: 7.0
     ender_dragon: 7000.0
     wither: 7000.0
+    axolotl: 3.5
+    glow_squid: 2.5
+    goat: 3.0
   defense:
     mob_damage: 1
     player_damage: 2
@@ -226,6 +256,9 @@ sources:
     zombie_villager: 7.0
     ender_dragon: 7000.0
     wither: 7000.0
+    axolotl: 3.5
+    glow_squid: 2.5
+    goat: 3.0
   endurance:
     walk_per_meter: 0.333
     sprint_per_meter: 0.1
@@ -265,4 +298,36 @@ sources:
     combine_armor_per_level: 20
     combine_tool_per_level: 25
     grindstone_per_level: 30
-file_version: 5
+tags:
+  farming:
+    bountiful_harvest_applicable:
+      - '*'
+    triple_harvest_applicable:
+      - '*'
+  foraging:
+    lumberjack_applicable:
+      - '*'
+  mining:
+    lucky_miner_applicable:
+      - coal_ore
+      - nether_quartz_ore
+      - iron_ore
+      - redstone_ore
+      - lapis_ore
+      - gold_ore
+      - diamond_ore
+      - emerald_ore
+      - nether_gold_ore
+      - ancient_debris
+    speed_mine_applicable:
+      - '*'
+  excavation:
+    bigger_scoop_applicable:
+      - '*'
+    metal_detector_applicable:
+      - '*'
+    lucky_spades_applicable:
+      - '*'
+    terraform_applicable:
+      - '*'
+file_version: 6

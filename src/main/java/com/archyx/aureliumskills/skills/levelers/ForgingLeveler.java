@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.ForgingSource;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -66,13 +66,13 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 							if (addedItem != null && baseItem != null) {
 								if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
 									if (ItemUtils.isArmor(baseItem.getType())) {
-										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(Source.COMBINE_ARMOR_PER_LEVEL));
+										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(ForgingSource.COMBINE_ARMOR_PER_LEVEL));
 									} else if (ItemUtils.isWeapon(baseItem.getType())) {
-										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(Source.COMBINE_WEAPON_PER_LEVEL));
+										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(ForgingSource.COMBINE_WEAPON_PER_LEVEL));
 									} else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
-										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(Source.COMBINE_BOOKS_PER_LEVEL));
+										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(ForgingSource.COMBINE_BOOKS_PER_LEVEL));
 									} else {
-										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(Source.COMBINE_TOOL_PER_LEVEL));
+										plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(ForgingSource.COMBINE_TOOL_PER_LEVEL));
 									}
 								}
 							}
@@ -105,7 +105,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 							}
 						}
 					}
-					plugin.getLeveler().addXp(player, Skills.FORGING, totalLevel * getXp(Source.GRINDSTONE_PER_LEVEL));
+					plugin.getLeveler().addXp(player, Skills.FORGING, totalLevel * getXp(ForgingSource.GRINDSTONE_PER_LEVEL));
 				}
 			}
 		}

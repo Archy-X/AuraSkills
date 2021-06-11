@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.HealingSource;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -48,13 +48,13 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 					if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 							&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 						if (data.isExtended()) {
-							leveler.addXp(p, s, getXp(Source.DRINK_EXTENDED));
+							leveler.addXp(p, s, getXp(HealingSource.DRINK_EXTENDED));
 						}
 						else if (data.isUpgraded()) {
-							leveler.addXp(p, s, getXp(Source.DRINK_UPGRADED));
+							leveler.addXp(p, s, getXp(HealingSource.DRINK_UPGRADED));
 						}
 						else {
-							leveler.addXp(p, s, getXp(Source.DRINK_REGULAR));
+							leveler.addXp(p, s, getXp(HealingSource.DRINK_REGULAR));
 						}
 					}
 
@@ -62,10 +62,10 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 			}
 			else if (XMaterial.isNewVersion()) {
 				if (event.getItem().getType().equals(Material.GOLDEN_APPLE)) {
-					leveler.addXp(p, s, getXp(Source.GOLDEN_APPLE));
+					leveler.addXp(p, s, getXp(HealingSource.GOLDEN_APPLE));
 				}
 				else if (event.getItem().getType().equals(XMaterial.ENCHANTED_GOLDEN_APPLE.parseMaterial())) {
-					leveler.addXp(p, s, getXp(Source.ENCHANTED_GOLDEN_APPLE));
+					leveler.addXp(p, s, getXp(HealingSource.ENCHANTED_GOLDEN_APPLE));
 				}
 			}
 			else {
@@ -73,10 +73,10 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 					MaterialData materialData = event.getItem().getData();
 					if (materialData != null) {
 						if (materialData.getData() == 0) {
-							leveler.addXp(p, s, getXp(Source.GOLDEN_APPLE));
+							leveler.addXp(p, s, getXp(HealingSource.GOLDEN_APPLE));
 						}
 						else if (materialData.getData() == 1) {
-							leveler.addXp(p, s, getXp(Source.ENCHANTED_GOLDEN_APPLE));
+							leveler.addXp(p, s, getXp(HealingSource.ENCHANTED_GOLDEN_APPLE));
 						}
 					}
 				}
@@ -104,13 +104,13 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 							if (data.isExtended()) {
-								plugin.getLeveler().addXp(p, s, getXp(Source.SPLASH_EXTENDED));
+								plugin.getLeveler().addXp(p, s, getXp(HealingSource.SPLASH_EXTENDED));
 							}
 							else if (data.isUpgraded()) {
-								plugin.getLeveler().addXp(p, s, getXp(Source.SPLASH_UPGRADED));
+								plugin.getLeveler().addXp(p, s, getXp(HealingSource.SPLASH_UPGRADED));
 							}
 							else {
-								plugin.getLeveler().addXp(p, s, getXp(Source.SPLASH_REGULAR));
+								plugin.getLeveler().addXp(p, s, getXp(HealingSource.SPLASH_REGULAR));
 							}
 						}
 					}
@@ -141,13 +141,13 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 		if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 				&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 			if (data.isExtended()) {
-				plugin.getLeveler().addXp(player, skill, getXp(Source.LINGERING_EXTENDED));
+				plugin.getLeveler().addXp(player, skill, getXp(HealingSource.LINGERING_EXTENDED));
 			}
 			else if (data.isUpgraded()) {
-				plugin.getLeveler().addXp(player, skill, getXp(Source.LINGERING_UPGRADED));
+				plugin.getLeveler().addXp(player, skill, getXp(HealingSource.LINGERING_UPGRADED));
 			}
 			else {
-				plugin.getLeveler().addXp(player, skill, getXp(Source.LINGERING_REGULAR));
+				plugin.getLeveler().addXp(player, skill, getXp(HealingSource.LINGERING_REGULAR));
 			}
 		}
 	}

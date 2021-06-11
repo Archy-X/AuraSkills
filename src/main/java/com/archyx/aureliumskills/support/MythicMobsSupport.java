@@ -5,8 +5,8 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.SourceManager;
 import com.archyx.aureliumskills.skills.levelers.SkillLeveler;
+import com.archyx.aureliumskills.skills.sources.SourceManager;
 import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
@@ -51,7 +51,7 @@ public class MythicMobsSupport extends SkillLeveler implements Listener {
                         archery = true;
                     }
                 }
-                if (VersionUtils.isAboveVersion(14)) {
+                if (VersionUtils.isAtLeastVersion(14)) {
                     if (ee.getDamager() instanceof AbstractArrow) {
                         archery = true;
                     }

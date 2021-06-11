@@ -42,7 +42,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     public void disenchanter(InventoryClickEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.DISENCHANTER)) return;
-        if (!VersionUtils.isAboveVersion(14)) return; // This ability requires at least 1.14
+        if (!VersionUtils.isAtLeastVersion(14)) return; // This ability requires at least 1.14
         if (event.getWhoClicked() instanceof Player) {
             Player player = (Player) event.getWhoClicked();
             if (blockAbility(player)) return;

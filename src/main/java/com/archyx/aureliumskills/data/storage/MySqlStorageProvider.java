@@ -12,13 +12,9 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
-import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.stats.StatLeveler;
-import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.google.gson.*;
 import org.bukkit.Bukkit;
@@ -184,9 +180,9 @@ public class MySqlStorageProvider extends StorageProvider {
                         "MINING_LEVEL int, MINING_XP double, " +
                         "SORCERY_LEVEL int, SORCERY_XP double, " +
                         "LOCALE varchar(10), " +
-                        "STAT_MODIFIERS json, " +
+                        "STAT_MODIFIERS varchar(4096), " +
                         "MANA double, " +
-                        "ABILITY_DATA json, " +
+                        "ABILITY_DATA varchar(4096), " +
                         "CONSTRAINT PKEY PRIMARY KEY (ID))");
             }
         }
@@ -290,35 +286,11 @@ public class MySqlStorageProvider extends StorageProvider {
                 for (String stringId : playerDataSection.getKeys(false)) {
                     UUID id = UUID.fromString(stringId);
                     // Load levels and xp from backup
-                    Map<Skill, Integer> levels = new HashMap<>();
-                    Map<Skill, Double> xpLevels = new HashMap<>();
-                    for (Skill skill : Skills.values()) {
-                        int level = playerDataSection.getInt(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".level", 1);
-                        levels.put(skill, level);
-                        double xp = playerDataSection.getDouble(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
-                        xpLevels.put(skill, xp);
-                    }
+                    Map<Skill, Integer> levels = getLevelsFromBackup(playerDataSection, stringId);
+                    Map<Skill, Double> xpLevels = getXpLevelsFromBackup(playerDataSection, stringId);
                     PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
-                        for (Stat stat : plugin.getStatRegistry().getStats()) {
-                            playerData.setStatLevel(stat, 0);
-                        }
-                        // Apply to object if in memory
-                        for (Skill skill : Skills.values()) {
-                            int level = levels.get(skill);
-                            playerData.setSkillLevel(skill, level);
-                            playerData.setSkillXp(skill, xpLevels.get(skill));
-                            // Add stat levels
-                            playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
-                            int secondaryStat = level / 2;
-                            playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
-                        }
-                        // Reload stats
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.HEALTH);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.LUCK);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.WISDOM);
-                        // Immediately save to file
-                        save(playerData.getPlayer(), false);
+                        applyData(playerData, levels, xpLevels);
                     } else {
                         // Build sql statement
                         StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
@@ -400,36 +372,8 @@ public class MySqlStorageProvider extends StorageProvider {
         }
         List<SkillValue> powerLeaderboard = new ArrayList<>();
         List<SkillValue> averageLeaderboard = new ArrayList<>();
-
-
-        Set<UUID> loadedFromMemory = new HashSet<>();
-        for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
-            UUID id = playerData.getPlayer().getUniqueId();
-            int powerLevel = 0;
-            double powerXp = 0;
-            int numEnabled = 0;
-            for (Skill skill : Skills.values()) {
-                int level = playerData.getSkillLevel(skill);
-                double xp = playerData.getSkillXp(skill);
-                // Add to lists
-                SkillValue skillLevel = new SkillValue(id, level, xp);
-                leaderboards.get(skill).add(skillLevel);
-
-                if (OptionL.isEnabled(skill)) {
-                    powerLevel += level;
-                    powerXp += xp;
-                    numEnabled++;
-                }
-            }
-            // Add power and average
-            SkillValue powerValue = new SkillValue(id, powerLevel, powerXp);
-            powerLeaderboard.add(powerValue);
-            double averageLevel = (double) powerLevel / numEnabled;
-            SkillValue averageValue = new SkillValue(id, 0, averageLevel);
-            averageLeaderboard.add(averageValue);
-
-            loadedFromMemory.add(playerData.getPlayer().getUniqueId());
-        }
+        // Add players already in memory
+        Set<UUID> loadedFromMemory = addLoadedPlayersToLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
 
         try {
             try (Statement statement = connection.createStatement()) {
@@ -478,22 +422,7 @@ public class MySqlStorageProvider extends StorageProvider {
             Bukkit.getLogger().warning("Error while updating leaderboards:");
             e.printStackTrace();
         }
-        // Sort the leaderboards
-        LeaderboardSorter sorter = new LeaderboardSorter();
-        for (Skill skill : Skills.values()) {
-            leaderboards.get(skill).sort(sorter);
-        }
-        powerLeaderboard.sort(sorter);
-        AverageSorter averageSorter = new AverageSorter();
-        averageLeaderboard.sort(averageSorter);
-
-        // Add skill leaderboards to map
-        for (Skill skill : Skills.values()) {
-            manager.setLeaderboard(skill, leaderboards.get(skill));
-        }
-        manager.setPowerLeaderboard(powerLeaderboard);
-        manager.setAverageLeaderboard(averageLeaderboard);
-        manager.setSorting(false);
+        sortLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
     }
 
 
