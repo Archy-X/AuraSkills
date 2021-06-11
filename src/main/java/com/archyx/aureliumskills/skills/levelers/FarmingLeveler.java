@@ -11,9 +11,11 @@ import com.archyx.aureliumskills.skills.sources.SourceTag;
 import com.archyx.aureliumskills.util.block.BlockUtil;
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.type.CaveVinesPlant;
 import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -45,7 +47,6 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 		if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
 		Block block = event.getBlock();
 		if (blockXpGainPlayer(player)) return;
-		Leveler leveler = plugin.getLeveler();
 
 		for (FarmingSource source : FarmingSource.values()) {
 			if (!source.isMatch(block)) continue;
@@ -95,6 +96,12 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			if (source == FarmingSource.SWEET_BERRY_BUSH) {
 				multiplier = BlockUtil.getGrowthStage(block) - 1;
 			}
+			// Handle glow berries
+			if (source == FarmingSource.GLOW_BERRIES) {
+				if (!(block.getBlockData() instanceof CaveVinesPlant)) return;
+				CaveVinesPlant caveVinesPlant = (CaveVinesPlant) block.getBlockData();
+				if (!caveVinesPlant.isBerries()) return; // Only give xp if has berries
+			}
 			// Give XP
 			giveXp(player, getXp(player, source) * multiplier, source, block);
 			break;
@@ -131,7 +138,9 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			if (!source.isRightClickHarvestable()) continue;
 
 			if (!source.isMatch(block)) continue;
-			if (player.isSneaking()) return;
+			if (player.isSneaking() && player.getInventory().getItemInMainHand().getType() != Material.AIR) {
+				return;
+			}
 
 			// Handle sweet berry bush
 			if (source == FarmingSource.SWEET_BERRY_BUSH) {
@@ -146,6 +155,14 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 						}
 					}
 				}.runTaskLater(plugin, 1L);
+			}
+			// Handle glow berries
+			if (source == FarmingSource.GLOW_BERRIES) {
+				if (!(block.getBlockData() instanceof CaveVinesPlant)) return;
+				CaveVinesPlant caveVinesPlant = (CaveVinesPlant) block.getBlockData();
+				if (caveVinesPlant.isBerries()) {
+					giveXp(player, getXp(player, source), source, block);
+				}
 			}
 			break;
 		}
