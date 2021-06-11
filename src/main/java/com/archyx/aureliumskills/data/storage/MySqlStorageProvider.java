@@ -180,9 +180,9 @@ public class MySqlStorageProvider extends StorageProvider {
                         "MINING_LEVEL int, MINING_XP double, " +
                         "SORCERY_LEVEL int, SORCERY_XP double, " +
                         "LOCALE varchar(10), " +
-                        "STAT_MODIFIERS json, " +
+                        "STAT_MODIFIERS varchar(4096), " +
                         "MANA double, " +
-                        "ABILITY_DATA json, " +
+                        "ABILITY_DATA varchar(4096), " +
                         "CONSTRAINT PKEY PRIMARY KEY (ID))");
             }
         }
