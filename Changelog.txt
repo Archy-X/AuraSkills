@@ -43,10 +43,12 @@ Version Beta 1.0.6
   Changes:
     - Rename quartz_ore to nether_quartz_ore in sources_config.yml
     - Recode internal sources system, add sources registry
+    - Updated NBT API to 2.8.0
   Bug Fixes:
     - Fix Archery damage based getting wrong xp amount
     - Fix Enchanting Enchanter ability not working
     - Fix Replenish changing blocks in protected regions
+    - Fix MySQL table creation not working on older MySQL versions
 
 Version Beta 1.0.5
   Changes:

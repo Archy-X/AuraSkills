@@ -51,6 +51,7 @@ import com.archyx.aureliumskills.util.armor.ArmorListener;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -114,7 +115,7 @@ public class AureliumSkills extends JavaPlugin {
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
 	private SourceRegistry sourceRegistry;
-	private final long releaseTime = 1623343466957L;
+	private final long releaseTime = 1623427622106L;
 
 	public void onEnable() {
 		// Registries
@@ -278,6 +279,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (System.currentTimeMillis() > releaseTime + 21600000L) {
 			checkUpdates();
 		}
+		MinecraftVersion.disableUpdateCheck();
 	}
 	
 	public void onDisable() {
