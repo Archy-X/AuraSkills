@@ -14,7 +14,7 @@ public class ItemRewardParser extends RewardParser {
 
     @Override
     public Reward parse(Map<?, ?> map) {
-        ItemRewardBuilder builder = new ItemRewardBuilder(plugin).itemKey("key");
+        ItemRewardBuilder builder = new ItemRewardBuilder(plugin).itemKey(getString(map, "key"));
 
         if (map.containsKey("amount")) {
             builder.amount(getInt(map, "amount"));

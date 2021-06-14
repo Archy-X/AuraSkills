@@ -113,15 +113,17 @@ public class ItemUtils {
 	public static ItemStack addItemToInventory(Player player, ItemStack item) {
 		PlayerInventory inventory = player.getInventory();
 		int amountRemaining = item.getAmount();
-		for (int slot = 0; slot < inventory.getSize(); slot++) {
+		for (int slot = 0; slot < 36; slot++) {
 			ItemStack slotItem = inventory.getItem(slot);
-			if (slotItem == null || slotItem.getType() == Material.AIR) {
-				inventory.setItem(slot, item);
-				amountRemaining = 0;
-			} else if (slotItem.isSimilar(item) && amountRemaining > 0) {
-				int amountAdded = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
-				slotItem.setAmount(slotItem.getAmount() + amountAdded);
-				amountRemaining -= amountAdded;
+			if (amountRemaining > 0) {
+				if (slotItem == null || slotItem.getType() == Material.AIR) {
+					inventory.setItem(slot, item);
+					amountRemaining = 0;
+				} else if (slotItem.isSimilar(item)) {
+					int amountAdded = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
+					slotItem.setAmount(slotItem.getAmount() + amountAdded);
+					amountRemaining -= amountAdded;
+				}
 			}
 		}
 		if (amountRemaining > 0) {
@@ -135,13 +137,15 @@ public class ItemUtils {
 	public static boolean canAddItemToInventory(Player player, ItemStack item) {
 		PlayerInventory inventory = player.getInventory();
 		int amountRemaining = item.getAmount();
-		for (int slot = 0; slot < inventory.getSize(); slot++) {
+		for (int slot = 0; slot < 36; slot++) {
 			ItemStack slotItem = inventory.getItem(slot);
-			if (slotItem == null || slotItem.getType() == Material.AIR) {
-				return true;
-			} else if (slotItem.isSimilar(item) && amountRemaining > 0) {
-				int amountCanAdd = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
-				amountRemaining -= amountCanAdd;
+			if (amountRemaining > 0) {
+				if (slotItem == null || slotItem.getType() == Material.AIR) {
+					return true;
+				} else if (slotItem.isSimilar(item)) {
+					int amountCanAdd = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
+					amountRemaining -= amountCanAdd;
+				}
 			}
 		}
 		return amountRemaining <= 0;

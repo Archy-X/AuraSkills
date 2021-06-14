@@ -44,7 +44,8 @@ public class ItemReward extends MessagedReward {
             // Add unclaimed item key and amount to player data
             playerData.getUnclaimedItems().add(new KeyIntPair(itemKey, leftoverItem.getAmount()));
             // Notify player
-            player.sendMessage(Lang.getMessage(LevelerMessage.UNCLAIMED_ITEM, playerData.getLocale()));
+            plugin.getServer().getScheduler().runTaskLater(plugin, () ->
+                    player.sendMessage(Lang.getMessage(LevelerMessage.UNCLAIMED_ITEM, playerData.getLocale())), 1);
         }
     }
 
