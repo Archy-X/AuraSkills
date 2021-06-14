@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.backup.BackupProvider;
 import com.archyx.aureliumskills.data.storage.StorageProvider;
+import com.archyx.aureliumskills.item.UnclaimedItemsMenu;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.menu.SkillsMenu;
@@ -1073,6 +1074,42 @@ public class SkillsCommand extends BaseCommand {
 				playerData.getMetadata().remove("backup_command");
 			}
 		}.runTaskLater(plugin, 20 * 60);
+	}
+
+	@Subcommand("claimitems")
+	@CommandPermission("aureliumskills.claimitems")
+	public void onClaimItems(Player player) {
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData == null || playerData.getUnclaimedItems().size() == 0) {
+			player.sendMessage(Lang.getMessage(CommandMessage.CLAIMITEMS_NO_ITEMS, Lang.getDefaultLanguage()));
+			return;
+		}
+		UnclaimedItemsMenu.getInventory(plugin, playerData).open(player);
+	}
+
+	@Subcommand("item register")
+	@CommandPermission("aureliumskills.item.register")
+	public void onItemRegister(@Flags("itemheld") Player player, String key) {
+		ItemStack item = player.getInventory().getItemInMainHand();
+		Locale locale = plugin.getLang().getLocale(player);
+		if (plugin.getItemRegistry().getItem(key) == null) { // Check that no item has been registered on the key
+			plugin.getItemRegistry().register(key, item);
+			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_REGISTERED, locale), "{key}", key));
+		} else {
+			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_ALREADY_REGISTERED, locale), "{key}", key));
+		}
+	}
+
+	@Subcommand("item unregister")
+	@CommandPermission("aureliumskills.item.register")
+	public void onItemUnregister(Player player, String key) {
+		Locale locale = plugin.getLang().getLocale(player);
+		if (plugin.getItemRegistry().getItem(key) != null) { // Check that there is an item registered on the key
+			plugin.getItemRegistry().unregister(key);
+			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_UNREGISTERED, locale), "{key}", key));
+		} else {
+			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
+		}
 	}
 
 	@Subcommand("help")

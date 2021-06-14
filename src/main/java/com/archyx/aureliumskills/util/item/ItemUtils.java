@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,6 +107,44 @@ public class ItemUtils {
 			}
 		}
 		return true;
+	}
+
+	@Nullable
+	public static ItemStack addItemToInventory(Player player, ItemStack item) {
+		PlayerInventory inventory = player.getInventory();
+		int amountRemaining = item.getAmount();
+		for (int slot = 0; slot < inventory.getSize(); slot++) {
+			ItemStack slotItem = inventory.getItem(slot);
+			if (slotItem == null || slotItem.getType() == Material.AIR) {
+				inventory.setItem(slot, item);
+				amountRemaining = 0;
+			} else if (slotItem.isSimilar(item) && amountRemaining > 0) {
+				int amountAdded = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
+				slotItem.setAmount(slotItem.getAmount() + amountAdded);
+				amountRemaining -= amountAdded;
+			}
+		}
+		if (amountRemaining > 0) {
+			ItemStack leftoverItem = item.clone();
+			leftoverItem.setAmount(amountRemaining);
+			return leftoverItem;
+		}
+		return null;
+	}
+
+	public static boolean canAddItemToInventory(Player player, ItemStack item) {
+		PlayerInventory inventory = player.getInventory();
+		int amountRemaining = item.getAmount();
+		for (int slot = 0; slot < inventory.getSize(); slot++) {
+			ItemStack slotItem = inventory.getItem(slot);
+			if (slotItem == null || slotItem.getType() == Material.AIR) {
+				return true;
+			} else if (slotItem.isSimilar(item) && amountRemaining > 0) {
+				int amountCanAdd = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
+				amountRemaining -= amountCanAdd;
+			}
+		}
+		return amountRemaining <= 0;
 	}
 
 } 

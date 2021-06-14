@@ -21,6 +21,7 @@ import com.archyx.aureliumskills.data.converter.LegacyMysqlToMysqlConverter;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.data.storage.YamlStorageProvider;
+import com.archyx.aureliumskills.item.ItemRegistry;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.DamageListener;
@@ -119,6 +120,7 @@ public class AureliumSkills extends JavaPlugin {
 	private SkillRegistry skillRegistry;
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
+	private ItemRegistry itemRegistry;
 	private final long releaseTime = 1623427622106L;
 
 	public void onEnable() {
@@ -128,6 +130,7 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry = new SkillRegistry();
 		registerSkills();
 		sourceRegistry = new SourceRegistry();
+		itemRegistry = new ItemRegistry(this);
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -285,6 +288,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
+		// Load items
+		itemRegistry.loadFromFile();
 		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
@@ -310,6 +315,7 @@ public class AureliumSkills extends JavaPlugin {
 		regionManager.saveAllRegions(false);
 		regionManager.clearRegionMap();
 		backupAutomatically();
+		itemRegistry.saveToFile();
 	}
 
 	private void backupAutomatically() {
@@ -733,6 +739,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SourceRegistry getSourceRegistry() {
 		return sourceRegistry;
+	}
+
+	public ItemRegistry getItemRegistry() {
+		return itemRegistry;
 	}
 
 	@Nullable

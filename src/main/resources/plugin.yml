@@ -170,3 +170,7 @@ permissions:
         default: op
     aureliumskills.checkupdates:
         default: op
+    aureliumskills.claimitems:
+        default: true
+    aureliumskills.item.register:
+        default: op
