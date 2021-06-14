@@ -1080,8 +1080,12 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.claimitems")
 	public void onClaimItems(Player player) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		Locale locale = Lang.getDefaultLanguage();
+		if (playerData != null) {
+			locale = playerData.getLocale();
+		}
 		if (playerData == null || playerData.getUnclaimedItems().size() == 0) {
-			player.sendMessage(Lang.getMessage(CommandMessage.CLAIMITEMS_NO_ITEMS, Lang.getDefaultLanguage()));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.CLAIMITEMS_NO_ITEMS, locale));
 			return;
 		}
 		UnclaimedItemsMenu.getInventory(plugin, playerData).open(player);
@@ -1094,9 +1098,9 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = plugin.getLang().getLocale(player);
 		if (plugin.getItemRegistry().getItem(key) == null) { // Check that no item has been registered on the key
 			plugin.getItemRegistry().register(key, item);
-			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_REGISTERED, locale), "{key}", key));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_REGISTERED, locale), "{key}", key));
 		} else {
-			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_ALREADY_REGISTERED, locale), "{key}", key));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_ALREADY_REGISTERED, locale), "{key}", key));
 		}
 	}
 
@@ -1106,9 +1110,9 @@ public class SkillsCommand extends BaseCommand {
 		Locale locale = plugin.getLang().getLocale(player);
 		if (plugin.getItemRegistry().getItem(key) != null) { // Check that there is an item registered on the key
 			plugin.getItemRegistry().unregister(key);
-			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_UNREGISTERED, locale), "{key}", key));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_UNREGISTERED, locale), "{key}", key));
 		} else {
-			player.sendMessage(LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
 		}
 	}
 
