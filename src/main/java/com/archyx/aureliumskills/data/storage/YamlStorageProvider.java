@@ -11,14 +11,12 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.leaderboard.AverageSorter;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
-import com.archyx.aureliumskills.skills.leaderboard.LeaderboardSorter;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.stats.StatLeveler;
-import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.misc.KeyIntPair;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -98,6 +96,21 @@ public class YamlStorageProvider extends StorageProvider {
                         }
                     }
                 }
+                // Unclaimed item rewards
+                List<String> unclaimedItemsList = config.getStringList("unclaimed_items");
+                if (unclaimedItemsList.size() > 0) {
+                    List<KeyIntPair> unclaimedItems = new ArrayList<>();
+                    for (String entry : unclaimedItemsList) {
+                        String[] splitEntry = entry.split(" ");
+                        String itemKey = splitEntry[0];
+                        int amount = 1;
+                        if (splitEntry.length >= 2) {
+                            amount = NumberUtils.toInt(splitEntry[1], 1);
+                        }
+                        unclaimedItems.add(new KeyIntPair(itemKey, amount));
+                    }
+                    playerData.setUnclaimedItems(unclaimedItems);
+                }
                 playerManager.addPlayerData(playerData);
                 plugin.getLeveler().updatePermissions(player);
                 PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
@@ -161,6 +174,15 @@ public class YamlStorageProvider extends StorageProvider {
                     config.set(path + entry.getKey(), entry.getValue());
                 }
             }
+            // Save unclaimed items
+            List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
+            if (unclaimedItems != null && unclaimedItems.size() > 0) {
+                List<String> stringList = new ArrayList<>();
+                for (KeyIntPair unclaimedItem : unclaimedItems) {
+                    stringList.add(unclaimedItem.getKey() + " " + unclaimedItem.getValue());
+                }
+                config.set("unclaimed_items", stringList);
+            }
             config.save(file);
             if (removeFromMemory) {
                 playerManager.removePlayerData(player.getUniqueId()); // Remove from memory
@@ -186,33 +208,11 @@ public class YamlStorageProvider extends StorageProvider {
                 for (String stringId : playerDataSection.getKeys(false)) {
                     UUID id = UUID.fromString(stringId);
                     // Load levels and xp from backup
-                    Map<Skill, Integer> levels = new HashMap<>();
-                    Map<Skill, Double> xpLevels = new HashMap<>();
-                    for (Skill skill : Skills.values()) {
-                        int level = playerDataSection.getInt(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".level", 1);
-                        levels.put(skill, level);
-                        double xp = playerDataSection.getDouble(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
-                        xpLevels.put(skill, xp);
-                    }
+                    Map<Skill, Integer> levels = getLevelsFromBackup(playerDataSection, stringId);
+                    Map<Skill, Double> xpLevels = getXpLevelsFromBackup(playerDataSection, stringId);
                     PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
-                        for (Stat stat : plugin.getStatRegistry().getStats()) {
-                            playerData.setStatLevel(stat, 0);
-                        }
-                        // Apply to object if in memory
-                        for (Skill skill : Skills.values()) {
-                            int level = levels.get(skill);
-                            playerData.setSkillLevel(skill, level);
-                            playerData.setSkillXp(skill, xpLevels.get(skill));
-                            // Add stat levels
-                            plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, level);
-                        }
-                        // Reload stats
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.HEALTH);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.LUCK);
-                        new StatLeveler(plugin).reloadStat(playerData.getPlayer(), Stats.WISDOM);
-                        // Immediately save to file
-                        save(playerData.getPlayer(), false);
+                        applyData(playerData, levels, xpLevels);
                     } else {
                         // Load file for offline players
                         File file = new File(plugin.getDataFolder() + "/playerdata/" + id + ".yml");
@@ -246,35 +246,8 @@ public class YamlStorageProvider extends StorageProvider {
         }
         List<SkillValue> powerLeaderboard = new ArrayList<>();
         List<SkillValue> averageLeaderboard = new ArrayList<>();
-
-        Set<UUID> loadedFromMemory = new HashSet<>();
-        for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
-            UUID id = playerData.getPlayer().getUniqueId();
-            int powerLevel = 0;
-            double powerXp = 0;
-            int numEnabled = 0;
-            for (Skill skill : Skills.values()) {
-                int level = playerData.getSkillLevel(skill);
-                double xp = playerData.getSkillXp(skill);
-                // Add to lists
-                SkillValue skillLevel = new SkillValue(id, level, xp);
-                leaderboards.get(skill).add(skillLevel);
-
-                if (OptionL.isEnabled(skill)) {
-                    powerLevel += level;
-                    powerXp += xp;
-                    numEnabled++;
-                }
-            }
-            // Add power and average
-            SkillValue powerValue = new SkillValue(id, powerLevel, powerXp);
-            powerLeaderboard.add(powerValue);
-            double averageLevel = (double) powerLevel / numEnabled;
-            SkillValue averageValue = new SkillValue(id, 0, averageLevel);
-            averageLeaderboard.add(averageValue);
-
-            loadedFromMemory.add(playerData.getPlayer().getUniqueId());
-        }
+        // Add players already in memory
+        Set<UUID> loadedFromMemory = addLoadedPlayersToLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
 
         File playerDataFolder = new File(plugin.getDataFolder() + "/playerdata");
         // Load data from files
@@ -320,23 +293,7 @@ public class YamlStorageProvider extends StorageProvider {
                 }
             }
         }
-
-        // Sort the leaderboards
-        LeaderboardSorter sorter = new LeaderboardSorter();
-        for (Skill skill : Skills.values()) {
-            leaderboards.get(skill).sort(sorter);
-        }
-        powerLeaderboard.sort(sorter);
-        AverageSorter averageSorter = new AverageSorter();
-        averageLeaderboard.sort(averageSorter);
-
-        // Add skill leaderboards to map
-        for (Skill skill : Skills.values()) {
-            manager.setLeaderboard(skill, leaderboards.get(skill));
-        }
-        manager.setPowerLeaderboard(powerLeaderboard);
-        manager.setAverageLeaderboard(averageLeaderboard);
-        manager.setSorting(false);
+        sortLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
     }
 
 }

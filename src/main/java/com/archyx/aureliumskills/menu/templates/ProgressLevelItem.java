@@ -45,7 +45,9 @@ public class ProgressLevelItem {
                 totalMoney += base + (multiplier * level * level);
             }
         }
-        message.append(LoreUtil.replace(Lang.getMessage(MenuMessage.MONEY_REWARD, locale), "{amount}", NumberUtil.format2(totalMoney)));
+        if (totalMoney > 0) {
+            message.append(LoreUtil.replace(Lang.getMessage(MenuMessage.MONEY_REWARD, locale), "{amount}", NumberUtil.format2(totalMoney)));
+        }
         return LoreUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", message.toString());
     }
 

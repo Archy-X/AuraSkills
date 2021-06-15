@@ -1,11 +1,14 @@
-package com.archyx.aureliumskills.skills;
+package com.archyx.aureliumskills.skills.sources;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -16,6 +19,7 @@ public class SourceManager {
 
     private final AureliumSkills plugin;
     private final Map<Source, Double> sources;
+    private final Map<SourceTag, List<Source>> tags;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
@@ -24,6 +28,7 @@ public class SourceManager {
     public SourceManager(AureliumSkills plugin) {
         this.plugin = plugin;
         this.sources = new HashMap<>();
+        this.tags = new HashMap<>();
     }
 
     public void loadSources() {
@@ -37,7 +42,7 @@ public class SourceManager {
         FileConfiguration config = updateFile(file, YamlConfiguration.loadConfiguration(file));
         // Load sources
         int sourcesLoaded = 0;
-        for (Source source : Source.values()) {
+        for (Source source : plugin.getSourceRegistry().values()) {
             String path = source.getPath();
             // Add if exists
             if (config.contains("sources." + path)) {
@@ -48,6 +53,35 @@ public class SourceManager {
             else {
                 Bukkit.getLogger().warning("[AureliumSkills] sources_config.yml is missing source of path sources." + path + ", value has been set to 0");
                 sources.put(source, 0.0);
+            }
+        }
+        // Load tags
+        int tagsLoaded = 0;
+        for (SourceTag tag : SourceTag.values()) {
+            String path = tag.getPath();
+            if (config.contains("tags." + path)) {
+                List<String> sourceStringList = config.getStringList("tags." + path);
+                List<Source> sourcesList = new ArrayList<>();
+                for (String sourceString : sourceStringList) {
+                    if (sourceString.equals("*")) { // Add all sources in that skill if use * syntax
+                        sourcesList.addAll(Arrays.asList(plugin.getSourceRegistry().values(tag.getSkill())));
+                    } else if (sourceString.startsWith("!")) { // Remove source if starts with !
+                        Source source = plugin.getSourceRegistry().valueOf(sourceString.substring(1));
+                        if (source != null) {
+                            sourcesList.remove(source);
+                        }
+                    } else { // Add source
+                        Source source = plugin.getSourceRegistry().valueOf(sourceString);
+                        if (source != null) {
+                            sourcesList.add(source);
+                        }
+                    }
+                }
+                tags.put(tag, sourcesList);
+                tagsLoaded++;
+            } else {
+                plugin.getLogger().warning("sources_config.yml is missing tag of path tags." + path + ", tag will be empty");
+                tags.put(tag, new ArrayList<>());
             }
         }
         // Load custom blocks
@@ -91,7 +125,7 @@ public class SourceManager {
                 customMobs.put(skill, mobMap);
             }
         }
-        Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources in " + (System.currentTimeMillis() - start) + "ms");
+        Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources and " + tagsLoaded + " tags in " + (System.currentTimeMillis() - start) + "ms");
     }
 
     private FileConfiguration updateFile(File file, FileConfiguration config) {
@@ -128,6 +162,11 @@ public class SourceManager {
 
     public double getXp(Source source) {
         return sources.get(source);
+    }
+
+    @NotNull
+    public List<Source> getTag(SourceTag tag) {
+        return tags.getOrDefault(tag, new ArrayList<>());
     }
 
     public Map<XMaterial, Double> getCustomBlocks(Skill skill) {

@@ -1,5 +1,5 @@
 name: AureliumSkills
-version: Beta 1.1.0 Build 2
+version: Beta 1.1.0 Build 5
 main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
@@ -169,4 +169,8 @@ permissions:
     aureliumskills.backup.load:
         default: op
     aureliumskills.checkupdates:
+        default: op
+    aureliumskills.claimitems:
+        default: true
+    aureliumskills.item.register:
         default: op

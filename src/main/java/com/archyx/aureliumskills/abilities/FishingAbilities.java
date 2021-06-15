@@ -11,6 +11,8 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.SharpHook;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.skills.sources.FishingSource;
+import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.Bukkit;
@@ -63,7 +65,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void grappler(PlayerFishEvent event) {
 		if (blockDisabled(Ability.GRAPPLER)) return;

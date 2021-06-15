@@ -28,3 +28,5 @@ levels: # The levels section is for rewards unlocked at specific levels
       chat_message: \n Some message in chat
     - type: money # Gives money on level up through Vault Economy, the total money on level up will be added and displayed together in chat
       amount: 1000 # The amount of money to give
+    - type: item # Gives an item to the player
+      key: some_item_key # This key must refer to a registered item. Use /skills item register [key] while holding the item you want to register

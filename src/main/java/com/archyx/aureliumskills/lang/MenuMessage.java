@@ -67,7 +67,11 @@ public enum MenuMessage implements MessageKey {
     XP_GAIN(3),
     ANVIL_COST_REDUCTION(3),
     MAX_MANA(3),
-    INCOMING_DAMAGE(3);
+    INCOMING_DAMAGE(3),
+    // Unclaimed items menu
+    UNCLAIMED_ITEMS_TITLE(4),
+    INVENTORY_FULL(4),
+    CLICK_TO_CLAIM(4);
     
     private String path;
     
@@ -75,15 +79,14 @@ public enum MenuMessage implements MessageKey {
         String key = this.name().toLowerCase(Locale.ENGLISH);
         if (section == 0) {
             this.path = "menus.common." + key;
-        }
-        else if (section == 1) {
+        } else if (section == 1) {
             this.path = "menus.skills_menu." + key;
-        }
-        else if (section == 2) {
+        } else if (section == 2) {
             this.path = "menus.level_progression_menu." + key;
-        }
-        else if (section == 3) {
+        } else if (section == 3) {
             this.path = "menus.stats_menu." + key;
+        } else if (section == 4) {
+            this.path = "menus.unclaimed_items." + key;
         }
     }
 

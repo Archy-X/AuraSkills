@@ -328,9 +328,11 @@ public class Leveler {
 		for (MoneyReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(MoneyReward.class, newLevel)) {
 			totalMoney += reward.getAmount();
 		}
-		NumberFormat nf = new DecimalFormat("#.##");
-		moneyRewardMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
-				"{amount}", nf.format(totalMoney)));
+		if (totalMoney > 0) {
+			NumberFormat nf = new DecimalFormat("#.##");
+			moneyRewardMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
+					"{amount}", nf.format(totalMoney)));
+		}
 		message = LoreUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}

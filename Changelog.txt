@@ -1,3 +1,74 @@
+Version Beta 1.0.6
+  New Features:
+    - Add 1.17 support
+    - New Fighting and Archery XP sources:
+      - Axolotl
+      - Glow Squid
+      - Goat
+    - New Mining XP sources:
+      - Deepslate
+      - Copper Ore
+      - Tuff
+      - Calcite
+      - Smooth Basalt
+      - Block of Amethyst
+      - Amethyst Cluster
+      - Deepslate Ores (coal, iron, copper, gold, redstone, lapis, emerald, diamond)
+      - Dripstone Block
+      - Ice (requires silk touch)
+      - Packed Ice (requires silk touch)
+      - Blue Ice (requires silk touch)
+    - New Foraging XP sources:
+      - Moss Block
+      - Moss Carpet
+      - Azalea
+      - Flowering Azalea
+      - Azalea Leaves
+      - Flowering Azalea Leaves
+    - Add Glow Berries as Farming XP source
+    - Add Rooted Dirt as Excavation XP source
+    - Add Source Tags:
+      - Source tags are configurable lists of XP sources used for certain plugin mechanics, such as which blocks abilities work on
+      - Loaded from new tags section in sources_config.yml
+      - Three ways to define an entry in a source tag:
+        - Use an exact source name defined in the sources section above (eg. 'dirt')
+        - Use a '*' to add all the sources in the skill
+        - Use a source name with an '!' in front, which removes the entry from the list (eg. '!dirt')
+      - Tags added:
+        - Farming: bountiful_harvest_applicable, triple_harvest_applicable
+        - Foraging: lumberjack_applicable
+        - Mining: lucky_miner_applicable, speed_mine_applicable
+        - Excavation: bigger_scoop_applicable, metal_detector_applicable, lucky_spades_applicable, terraform_applicable
+      - Note: This does not work for custom block/mob sources yet
+  Changes:
+    - Rename quartz_ore to nether_quartz_ore in sources_config.yml
+    - Recode internal sources system, add sources registry
+    - Updated NBT API to 2.8.0
+  Bug Fixes:
+    - Fix Archery damage based getting wrong xp amount
+    - Fix Enchanting Enchanter ability not working
+    - Fix Replenish changing blocks in protected regions
+    - Fix MySQL table creation not working on older MySQL versions
+
+Version Beta 1.0.5
+  Changes:
+    - Updated French (fr) messages
+  Bug Fixes:
+    - Fix MySQL ClassNotFoundException when using older MySQL connector
+    - Fix health being applied multiple times in skill commands
+
+Version Beta 1.0.4
+  Bug Fixes:
+    - Fix multiple Forging XP exploits
+    - Fix Disenchanter experience exploit
+    - Fix global requirements not showing up in requirement deny messages
+    - Fix incorrect item requirement use message
+    - Fix MySQL deprecation warning on Java 16
+
+Version Beta 1.0.3
+  Bug Fixes:
+    - Fixed Forging XP dupe
+
 Version Beta 1.0.2
   New Features:
     - Added lingering potions as Healing XP sources (includes regular, extended, and upgraded options in sources_config.yml)

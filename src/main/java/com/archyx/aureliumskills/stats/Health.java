@@ -75,8 +75,7 @@ public class Health implements Listener {
 					}
 				}
 			}.runTaskLater(plugin, OptionL.getInt(Option.HEALTH_UPDATE_DELAY));
-		}
-		else {
+		} else {
 			setHealth(player);
 			if (plugin.getWorldManager().isDisabledWorld(event.getFrom()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 				if (worldChangeHealth.containsKey(player.getUniqueId())) {
@@ -88,53 +87,51 @@ public class Health implements Listener {
 	}
 
 	private void setHealth(Player player) {
-		//Calculates the amount of health to add
+		// Calculates the amount of health to add
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-		if (playerData != null) {
-			double modifier = (playerData.getStatLevel(Stats.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
-			AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-			if (attribute != null) {
-				double originalMaxHealth = attribute.getValue();
-				boolean hasChange = true;
-				//Removes existing modifiers of the same name and check for change
-				for (AttributeModifier am : attribute.getModifiers()) {
-					if (am.getName().equals("skillsHealth")) {
-						//Check for any changes, if not, return
-						if (Math.abs(originalMaxHealth - (originalMaxHealth - am.getAmount() + modifier)) <= threshold) {
-							hasChange = false;
-						}
-						//Removes if has change
-						if (hasChange) {
-							attribute.removeModifier(am);
-						}
-					}
+		if (playerData == null) return;
+		double modifier = (playerData.getStatLevel(Stats.HEALTH)) * OptionL.getDouble(Option.HEALTH_MODIFIER);
+		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+		if (attribute == null) return;
+		double originalMaxHealth = attribute.getValue();
+		boolean hasChange = true;
+		// Removes existing modifiers of the same name and check for change
+		for (AttributeModifier am : attribute.getModifiers()) {
+			if (am.getName().equals("skillsHealth")) {
+				// Check for any changes, if not, return
+				if (Math.abs(originalMaxHealth - (originalMaxHealth - am.getAmount() + modifier)) <= threshold) {
+					hasChange = false;
 				}
-				//Disable health if in disable world
-				if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-					player.setHealthScaled(false);
-					for (AttributeModifier am : attribute.getModifiers()) {
-						if (am.getName().equals("skillsHealth")) {
-							attribute.removeModifier(am);
-						}
-					}
-					return;
-				}
-				// Force base health if enabled
-				if (OptionL.getBoolean(Option.HEALTH_FORCE_BASE_HEALTH)) {
-					attribute.setBaseValue(20.0);
-				}
-				// Return if no change
+				// Removes if has change
 				if (hasChange) {
-					//Applies modifier
-					attribute.addModifier(new AttributeModifier("skillsHealth", modifier, Operation.ADD_NUMBER));
-					//Sets health to max if over max
-					if (player.getHealth() > attribute.getValue()) {
-						player.setHealth(attribute.getValue());
-					}
+					attribute.removeModifier(am);
 				}
-				applyScaling(player);
 			}
 		}
+		// Disable health if in disable world
+		if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+			player.setHealthScaled(false);
+			for (AttributeModifier am : attribute.getModifiers()) {
+				if (am.getName().equals("skillsHealth")) {
+					attribute.removeModifier(am);
+				}
+			}
+			return;
+		}
+		// Force base health if enabled
+		if (OptionL.getBoolean(Option.HEALTH_FORCE_BASE_HEALTH)) {
+			attribute.setBaseValue(20.0);
+		}
+		// Return if no change
+		if (hasChange) {
+			// Applies modifier
+			attribute.addModifier(new AttributeModifier("skillsHealth", modifier, Operation.ADD_NUMBER));
+			// Sets health to max if over max
+			if (player.getHealth() > attribute.getValue()) {
+				player.setHealth(attribute.getValue());
+			}
+		}
+		applyScaling(player);
 	}
 
 	private void applyScaling(Player player) {

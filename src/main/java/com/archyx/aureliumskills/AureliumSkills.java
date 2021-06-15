@@ -21,6 +21,7 @@ import com.archyx.aureliumskills.data.converter.LegacyMysqlToMysqlConverter;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.data.storage.YamlStorageProvider;
+import com.archyx.aureliumskills.item.ItemRegistry;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.listeners.DamageListener;
@@ -40,15 +41,21 @@ import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.rewards.RewardManager;
-import com.archyx.aureliumskills.skills.*;
+import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillBossBar;
+import com.archyx.aureliumskills.skills.SkillRegistry;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.levelers.*;
+import com.archyx.aureliumskills.skills.sources.SourceManager;
+import com.archyx.aureliumskills.skills.sources.SourceRegistry;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -115,7 +122,9 @@ public class AureliumSkills extends JavaPlugin {
 	private SkillRegistry skillRegistry;
 	private ExcavationAbilities excavationAbilities;
 	private LuckPermsSupport luckPermsSupport;
-	private final long releaseTime = 1622483534119L;
+	private SourceRegistry sourceRegistry;
+	private ItemRegistry itemRegistry;
+	private final long releaseTime = 1623427622106L;
 
 	public void onEnable() {
 		// Registries
@@ -123,6 +132,8 @@ public class AureliumSkills extends JavaPlugin {
 		registerStats();
 		skillRegistry = new SkillRegistry();
 		registerSkills();
+		sourceRegistry = new SourceRegistry();
+		itemRegistry = new ItemRegistry(this);
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -280,6 +291,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
+		// Load items
+		itemRegistry.loadFromFile();
 		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
@@ -287,6 +300,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (System.currentTimeMillis() > releaseTime + 21600000L) {
 			checkUpdates();
 		}
+		MinecraftVersion.disableUpdateCheck();
 	}
 	
 	public void onDisable() {
@@ -304,6 +318,7 @@ public class AureliumSkills extends JavaPlugin {
 		regionManager.saveAllRegions(false);
 		regionManager.clearRegionMap();
 		backupAutomatically();
+		itemRegistry.saveToFile();
 	}
 
 	private void backupAutomatically() {
@@ -348,7 +363,7 @@ public class AureliumSkills extends JavaPlugin {
 					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
 							version);
 					getLogger().info("Download it on Spigot:");
-					getLogger().info("http://spigotmc.org/resources/81069");
+					getLogger().info("https://spigotmc.org/resources/81069");
 				}
 			}
 			else {
@@ -434,6 +449,7 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return null;
 		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));
@@ -730,6 +746,14 @@ public class AureliumSkills extends JavaPlugin {
 
 	public LuckPermsSupport getLuckPermsSupport() {
 		return luckPermsSupport;
+	}
+
+	public SourceRegistry getSourceRegistry() {
+		return sourceRegistry;
+	}
+
+	public ItemRegistry getItemRegistry() {
+		return itemRegistry;
 	}
 
 	@Nullable

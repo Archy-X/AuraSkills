@@ -12,7 +12,8 @@ public enum LevelerMessage implements MessageKey {
     ABILITY_LEVEL_UP,
     MANA_ABILITY_UNLOCK,
     MANA_ABILITY_LEVEL_UP,
-    MONEY_REWARD;
+    MONEY_REWARD,
+    UNCLAIMED_ITEM;
 
     public String getPath() {
         return "leveler." + this.toString().toLowerCase(Locale.ENGLISH);

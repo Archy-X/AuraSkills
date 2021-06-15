@@ -161,7 +161,7 @@ public class MenuLoader {
                                     }
                                     // Custom model data
                                     else if (key.equalsIgnoreCase("custom_model_data")) {
-                                        if (VersionUtils.isAboveVersion(14)) {
+                                        if (VersionUtils.isAtLeastVersion(14)) {
                                             int data = Integer.parseInt(value);
                                             ItemMeta meta = item.getItemMeta();
                                             if (meta != null) {

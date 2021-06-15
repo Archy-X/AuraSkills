@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.EnchantingSource;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -34,16 +34,16 @@ public class EnchantingLeveler extends SkillLeveler implements Listener {
 			Material mat = event.getItem().getType();
 			if (blockXpGainPlayer(p)) return;
 			if (ItemUtils.isArmor(mat)) {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(Source.ARMOR_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.ARMOR_PER_LEVEL));
 			}
 			else if (ItemUtils.isWeapon(mat)) {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(Source.WEAPON_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.WEAPON_PER_LEVEL));
 			}
 			else if (mat.equals(Material.BOOK)) {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(Source.BOOK_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.BOOK_PER_LEVEL));
 			}
 			else {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(Source.TOOL_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.TOOL_PER_LEVEL));
 			}
 		}
 	}

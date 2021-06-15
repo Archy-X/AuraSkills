@@ -33,6 +33,13 @@ public class LegacyMysqlToMysqlConverter extends DataConverter {
                         Bukkit.getLogger().info("[AureliumSkills] Successfully converted old MySQL format to new format");
                     }
                 }
+                ResultSet unclaimedItemsColumn = dbm.getColumns(null, null, "SkillData", "UNCLAIMED_ITEMS");
+                if (!unclaimedItemsColumn.next()) {
+                    try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+                        statement.execute("ALTER TABLE SkillData ADD COLUMN UNCLAIMED_ITEMS varchar(4096);");
+                        plugin.getLogger().info("Successfully added UNCLAIMED_ITEMS column to database");
+                    }
+                }
             }
         } catch (SQLException e) {
             Bukkit.getLogger().warning("[AureliumSkills] Error converting legacy MySQL table to new format, see error below for details:");

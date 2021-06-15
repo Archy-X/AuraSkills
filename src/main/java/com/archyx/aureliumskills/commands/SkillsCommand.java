@@ -9,8 +9,10 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.backup.BackupProvider;
 import com.archyx.aureliumskills.data.storage.StorageProvider;
+import com.archyx.aureliumskills.item.UnclaimedItemsMenu;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.menu.SkillsMenu;
 import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.modifier.Modifiers;
@@ -20,8 +22,10 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.ActionBar;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
@@ -1073,6 +1077,81 @@ public class SkillsCommand extends BaseCommand {
 				playerData.getMetadata().remove("backup_command");
 			}
 		}.runTaskLater(plugin, 20 * 60);
+	}
+
+	@Subcommand("claimitems")
+	@CommandPermission("aureliumskills.claimitems")
+	public void onClaimItems(Player player) {
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		Locale locale = Lang.getDefaultLanguage();
+		if (playerData != null) {
+			locale = playerData.getLocale();
+		}
+		if (playerData == null || playerData.getUnclaimedItems().size() == 0) {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.CLAIMITEMS_NO_ITEMS, locale));
+			return;
+		}
+		UnclaimedItemsMenu.getInventory(plugin, playerData).open(player);
+	}
+
+	@Subcommand("item register")
+	@CommandPermission("aureliumskills.item.register")
+	public void onItemRegister(@Flags("itemheld") Player player, String key) {
+		Locale locale = plugin.getLang().getLocale(player);
+		if (key.contains(" ")) { // Disallow spaces in key name
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ITEM_REGISTER_NO_SPACES, locale));
+			return;
+		}
+		ItemStack item = player.getInventory().getItemInMainHand();
+		if (plugin.getItemRegistry().getItem(key) == null) { // Check that no item has been registered on the key
+			plugin.getItemRegistry().register(key, item);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_REGISTERED, locale), "{key}", key));
+		} else {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_ALREADY_REGISTERED, locale), "{key}", key));
+		}
+	}
+
+	@Subcommand("item unregister")
+	@CommandPermission("aureliumskills.item.register")
+	@CommandCompletion("@item_keys")
+	public void onItemUnregister(Player player, String key) {
+		Locale locale = plugin.getLang().getLocale(player);
+		if (plugin.getItemRegistry().getItem(key) != null) { // Check that there is an item registered on the key
+			plugin.getItemRegistry().unregister(key);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_UNREGISTERED, locale), "{key}", key));
+		} else {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
+		}
+	}
+
+	@Subcommand("item give")
+	@CommandPermission("aureliumskills.item.give")
+	@CommandCompletion("@players @item_keys")
+	public void onItemGive(Player sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
+		ItemStack item = plugin.getItemRegistry().getItem(key);
+		Locale locale = plugin.getLang().getLocale(sender);
+		if (item != null) {
+			if (amount != -1) {
+				item.setAmount(amount);
+			}
+			ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_GIVE_SENDER, locale),
+					"{amount}", String.valueOf(item.getAmount()), "{key}", key, "{player}", player.getName()));
+			if (!sender.equals(player)) {
+				player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_GIVE_RECEIVER, locale),
+						"{amount}", String.valueOf(item.getAmount()), "{key}", key));
+			}
+			// Add to unclaimed items if leftover
+			if (leftoverItem != null) {
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+				if (playerData != null) {
+					playerData.getUnclaimedItems().add(new KeyIntPair(key, leftoverItem.getAmount()));
+					player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(LevelerMessage.UNCLAIMED_ITEM, locale));
+				}
+			}
+		} else {
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
+		}
 	}
 
 	@Subcommand("help")
