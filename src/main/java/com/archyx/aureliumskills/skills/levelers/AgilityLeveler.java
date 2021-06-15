@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.abilities.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.AgilitySource;
 import com.google.common.collect.Sets;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 					Player player = (Player) event.getEntity();
 					if (blockXpGain(player)) return;
 					if (event.getFinalDamage() < player.getHealth()) {
-						plugin.getLeveler().addXp(player, Skills.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(Source.FALL_DAMAGE)));
+						plugin.getLeveler().addXp(player, Skills.AGILITY, getXp(player, event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE) * getXp(AgilitySource.FALL_DAMAGE)));
 					}
 				}
 			}
@@ -77,7 +77,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 	                	if (player.hasMetadata("skillsJumps")) {
 	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
 	                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 100) {
-								plugin.getLeveler().addXp(player, Skills.AGILITY, getXp(player, Source.JUMP_PER_100));
+								plugin.getLeveler().addXp(player, Skills.AGILITY, getXp(player, AgilitySource.JUMP_PER_100));
 	                			player.removeMetadata("skillsJumps", plugin);
 	                		}
 	                	}

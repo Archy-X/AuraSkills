@@ -133,6 +133,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void applyReplenish(BlockBreakEvent event) {
+		if (event.isCancelled()) return;
 		Material blockMat = event.getBlock().getType();
 		if (BlockUtil.isReplenishable(blockMat)) {
 			Player player = event.getPlayer();

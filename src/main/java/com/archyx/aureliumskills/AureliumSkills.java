@@ -38,15 +38,21 @@ import com.archyx.aureliumskills.region.RegionListener;
 import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
-import com.archyx.aureliumskills.skills.*;
+import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.SkillBossBar;
+import com.archyx.aureliumskills.skills.SkillRegistry;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.levelers.*;
+import com.archyx.aureliumskills.skills.sources.SourceManager;
+import com.archyx.aureliumskills.skills.sources.SourceRegistry;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -109,7 +115,8 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
-	private final long releaseTime = 1622953390381L;
+	private SourceRegistry sourceRegistry;
+	private final long releaseTime = 1623427622106L;
 
 	public void onEnable() {
 		// Registries
@@ -117,6 +124,7 @@ public class AureliumSkills extends JavaPlugin {
 		registerStats();
 		skillRegistry = new SkillRegistry();
 		registerSkills();
+		sourceRegistry = new SourceRegistry();
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -272,6 +280,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (System.currentTimeMillis() > releaseTime + 21600000L) {
 			checkUpdates();
 		}
+		MinecraftVersion.disableUpdateCheck();
 		// Register instance to API provider
 		AureliumSkillsProvider.register(this);
 	}
@@ -335,7 +344,7 @@ public class AureliumSkills extends JavaPlugin {
 					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
 							version);
 					getLogger().info("Download it on Spigot:");
-					getLogger().info("http://spigotmc.org/resources/81069");
+					getLogger().info("https://spigotmc.org/resources/81069");
 				}
 			}
 			else {
@@ -699,6 +708,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SkillRegistry getSkillRegistry() {
 		return skillRegistry;
+	}
+
+	public SourceRegistry getSourceRegistry() {
+		return sourceRegistry;
 	}
 
 	@Nullable

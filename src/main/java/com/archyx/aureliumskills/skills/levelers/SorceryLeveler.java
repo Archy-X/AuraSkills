@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.skills.levelers;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.Source;
+import com.archyx.aureliumskills.skills.sources.SorcerySource;
 import org.bukkit.entity.Player;
 
 public class SorceryLeveler extends SkillLeveler {
@@ -12,7 +12,7 @@ public class SorceryLeveler extends SkillLeveler {
     }
 
     public void level(Player player, double manaUsed) {
-        plugin.getLeveler().addXp(player, Skills.SORCERY, manaUsed * getXp(Source.MANA_ABILITY_USE));
+        plugin.getLeveler().addXp(player, Skills.SORCERY, manaUsed * getXp(SorcerySource.MANA_ABILITY_USE));
     }
 
 }
