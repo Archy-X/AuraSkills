@@ -1,3 +1,8 @@
+Version Beta 1.0.7
+  Bug Fixes:
+    - Fix ProtocolLib action bar errors on 1.17
+    - Fix Fleeting not being disable properly
+
 Version Beta 1.0.6
   New Features:
     - Add 1.17 support
