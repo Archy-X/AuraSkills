@@ -1113,6 +1113,7 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("item unregister")
 	@CommandPermission("aureliumskills.item.register")
+	@CommandCompletion("@item_keys")
 	public void onItemUnregister(Player player, String key) {
 		Locale locale = plugin.getLang().getLocale(player);
 		if (plugin.getItemRegistry().getItem(key) != null) { // Check that there is an item registered on the key
@@ -1125,6 +1126,7 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("item give")
 	@CommandPermission("aureliumskills.item.give")
+	@CommandCompletion("@players @item_keys")
 	public void onItemGive(Player sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
 		ItemStack item = plugin.getItemRegistry().getItem(key);
 		Locale locale = plugin.getLang().getLocale(sender);

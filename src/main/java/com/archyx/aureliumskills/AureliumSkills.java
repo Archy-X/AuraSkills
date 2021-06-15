@@ -446,6 +446,7 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return null;
 		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));

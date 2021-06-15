@@ -9,17 +9,19 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class ItemRegistry {
 
     private final AureliumSkills plugin;
-    private final Map<String, ItemStack> items;
+    private final ConcurrentMap<String, ItemStack> items;
 
     public ItemRegistry(AureliumSkills plugin) {
         this.plugin = plugin;
-        items = new HashMap<>();
+        items = new ConcurrentHashMap<>();
     }
 
     public void register(String key, ItemStack item) {
@@ -38,6 +40,10 @@ public class ItemRegistry {
         } else {
             return null;
         }
+    }
+
+    public Set<String> getKeys() {
+        return items.keySet();
     }
 
     public void loadFromFile() {
