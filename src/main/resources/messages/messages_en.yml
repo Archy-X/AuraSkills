@@ -397,6 +397,9 @@ commands:
   claimitems:
     no_items: '&eYou have no items to claim'
   item:
+    give:
+      sender: '&fGave &b{amount}x {key} &fto {player}'
+      receiver: '&fYou were given &b{amount}x {key}'
     modifier:
       add:
         added: '{color}{stat} &7modifier with level &b{value} &7was added to your item'
@@ -413,6 +416,7 @@ commands:
     register:
       registered: '&fRegistered held item to key {key}'
       already_registered: '&eThere is already an item registered to key &f{key}&e, use &f/skills item unregister &eto unregister it first'
+      no_spaces: '&eItem key cannot contain spaces!'
     requirement:
       add:
         added: '&3{skill}&7 item requirement with level &b{level}&7 was added to your item'
@@ -584,7 +588,7 @@ menus:
   unclaimed_items:
     unclaimed_items_title: 'Claim Items'
     inventory_full: '&eYou do not have enough space in your inventory to claim that item'
-    click_to_claim: '&eClick to claim'
+    click_to_claim: '&eClick to claim!'
 mana_abilities:
   replenish:
     name: Replenish

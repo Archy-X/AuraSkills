@@ -45,7 +45,7 @@ public class ItemReward extends MessagedReward {
             playerData.getUnclaimedItems().add(new KeyIntPair(itemKey, leftoverItem.getAmount()));
             // Notify player
             plugin.getServer().getScheduler().runTaskLater(plugin, () ->
-                    player.sendMessage(Lang.getMessage(LevelerMessage.UNCLAIMED_ITEM, playerData.getLocale())), 1);
+                    player.sendMessage(AureliumSkills.getPrefix(playerData.getLocale()) + Lang.getMessage(LevelerMessage.UNCLAIMED_ITEM, playerData.getLocale())), 1);
         }
     }
 
