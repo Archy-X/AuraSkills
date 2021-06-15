@@ -58,3 +58,6 @@ mana: 100.0 # The player's mana
 ability_data:
   first_strike:
     counter: 42
+# Unclaimed items from item rewards
+unclaimed_items:
+  - example_item 1 # item_key|amount

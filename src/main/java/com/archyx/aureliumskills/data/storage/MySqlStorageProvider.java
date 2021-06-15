@@ -16,7 +16,9 @@ import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import com.google.gson.*;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -133,6 +135,22 @@ public class MySqlStorageProvider extends StorageProvider {
                                 }
                             }
                         }
+                        // Load unclaimed items
+                        String unclaimedItemsString = result.getString("UNCLAIMED_ITEMS");
+                        if (unclaimedItemsString != null) {
+                            List<KeyIntPair> unclaimedItems = new ArrayList<>();
+                            String[] splitString = unclaimedItemsString.split(",");
+                            for (String entry : splitString) {
+                                String[] splitEntry = entry.split(" ");
+                                String itemKey = splitEntry[0];
+                                int amount = 1;
+                                if (splitEntry.length >= 2) {
+                                    amount = NumberUtils.toInt(splitEntry[1], 1);
+                                }
+                                unclaimedItems.add(new KeyIntPair(itemKey, amount));
+                            }
+                            playerData.setUnclaimedItems(unclaimedItems);
+                        }
                         playerManager.addPlayerData(playerData);
                         plugin.getLeveler().updatePermissions(player);
                         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
@@ -182,6 +200,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         "STAT_MODIFIERS varchar(4096), " +
                         "MANA double, " +
                         "ABILITY_DATA varchar(4096), " +
+                        "UNCLAIMED_ITEMS varchar(4096), " +
                         "CONSTRAINT PKEY PRIMARY KEY (ID))");
             }
         }
@@ -231,13 +250,25 @@ public class MySqlStorageProvider extends StorageProvider {
             }
             String modifiersString = !modifiersJson.toString().equals("") ? "'" + modifiersJson + "'": "NULL";
             String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson + "'": "NULL";
+            // Unclaimed items
+            StringBuilder unclaimedItemsStringBuilder = new StringBuilder();
+            List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
+            if (unclaimedItems != null) {
+                for (KeyIntPair unclaimedItem : unclaimedItems) {
+                    unclaimedItemsStringBuilder.append(unclaimedItem.getKey()).append(" ").append(unclaimedItem.getValue()).append(",");
+                }
+            }
+            if (unclaimedItemsStringBuilder.length() > 0) {
+                unclaimedItemsStringBuilder.deleteCharAt(unclaimedItemsStringBuilder.length() - 1);
+            }
+            String unclaimedItemsString = unclaimedItemsStringBuilder.length() > 0 ? "'" + unclaimedItemsStringBuilder + "'" : "NULL";
             // Build sql statement
             StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
             for (Skill skill : Skills.getOrderedValues()) {
                 sql.append(skill.toString()).append("_LEVEL, ");
                 sql.append(skill).append("_XP, ");
             }
-            sql.append("LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA) VALUES('");
+            sql.append("LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA, UNCLAIMED_ITEMS) VALUES('");
             sql.append(player.getUniqueId()).append("', ");
             // Insert skill data
             for (Skill skill : Skills.getOrderedValues()) {
@@ -247,7 +278,8 @@ public class MySqlStorageProvider extends StorageProvider {
             sql.append("'").append(playerData.getLocale().toString()).append("', ");
             sql.append(modifiersString).append(", ");
             sql.append(playerData.getMana()).append(", ");
-            sql.append(abilitiesString).append(") ");
+            sql.append(abilitiesString).append(", ");
+            sql.append(unclaimedItemsString).append(") ");
             // Build update part of statement
             sql.append("ON DUPLICATE KEY UPDATE ");
             for (Skill skill : Skills.getOrderedValues()) {
@@ -257,7 +289,8 @@ public class MySqlStorageProvider extends StorageProvider {
             sql.append("LOCALE='").append(playerData.getLocale().toString()).append("', ");
             sql.append("STAT_MODIFIERS=").append(modifiersString).append(", ");
             sql.append("MANA=").append(playerData.getMana()).append(", ");
-            sql.append("ABILITY_DATA=").append(abilitiesString);
+            sql.append("ABILITY_DATA=").append(abilitiesString).append(", ");
+            sql.append("UNCLAIMED_ITEMS=").append(unclaimedItemsString);
             // Execute statement
             try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
                 statement.executeUpdate(sql.toString());
