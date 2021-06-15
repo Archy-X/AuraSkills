@@ -1125,7 +1125,7 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("item give")
 	@CommandPermission("aureliumskills.item.give")
-	public void onItemGive(Player sender, Player player, String key, @Default("-1") int amount) {
+	public void onItemGive(Player sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
 		ItemStack item = plugin.getItemRegistry().getItem(key);
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (item != null) {
@@ -1135,8 +1135,10 @@ public class SkillsCommand extends BaseCommand {
 			ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_GIVE_SENDER, locale),
 					"{amount}", String.valueOf(item.getAmount()), "{key}", key, "{player}", player.getName()));
-			player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_GIVE_RECEIVER, locale),
-					"{amount}", String.valueOf(item.getAmount()), "{key}", key));
+			if (!sender.equals(player)) {
+				player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.ITEM_GIVE_RECEIVER, locale),
+						"{amount}", String.valueOf(item.getAmount()), "{key}", key));
+			}
 			// Add to unclaimed items if leftover
 			if (leftoverItem != null) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
