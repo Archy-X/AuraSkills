@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.BlockItemLoot;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.skills.sources.ExcavationSource;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,7 +36,7 @@ public class ExcavationListener extends AbilityProvider implements Listener {
         if (event.isCancelled()) return;
 
         Block block = event.getBlock();
-        if (!plugin.getExcavationAbilities().isExcavationMaterial(block.getType())) return;
+        if (ExcavationSource.getSource(block) == null) return;
 
         Player player = event.getPlayer();
         if (blockAbility(player)) return;

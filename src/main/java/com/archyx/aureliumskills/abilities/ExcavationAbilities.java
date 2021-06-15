@@ -16,8 +16,6 @@ import com.archyx.aureliumskills.skills.sources.ExcavationSource;
 import com.archyx.aureliumskills.skills.sources.SourceTag;
 import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
-import com.cryptomorin.xseries.XMaterial;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -96,74 +94,6 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				}
 			}
 		}
-
-	}
-
-	public void metalDetector(Player player, PlayerData playerData, Block block) {
-		// Check if block is applicable to ability
-		ExcavationSource source = ExcavationSource.getSource(block);
-		if (source == null) return;
-		if (!hasTag(source, SourceTag.METAL_DETECTOR_APPLICABLE)) return;
-
-		if (r.nextDouble() < (getValue(Ability.METAL_DETECTOR, playerData) / 100)) {
-			int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().size();
-			if (lootTableSize > 0) {
-				Loot loot = plugin.getLootTableManager().getLootTable("excavation-rare").getLoot().get(r.nextInt(lootTableSize));
-				// If has item
-				if (loot.hasItem()) {
-					ItemStack drop = loot.getDrop();
-					if (drop != null) {
-						PlayerLootDropEvent event = new PlayerLootDropEvent(player, drop.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.METAL_DETECTOR);
-						Bukkit.getPluginManager().callEvent(event);
-						if (!event.isCancelled()) {
-							block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-						}
-					}
-				}
-				// If has command
-				else if (loot.hasCommand()) {
-					String command = loot.getCommand();
-					if (plugin.isPlaceholderAPIEnabled()) {
-						command = PlaceholderAPI.setPlaceholders(player, command);
-					}
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
-				}
-			}
-		}
-	}
-
-	public void luckySpades(Player player, PlayerData playerData, Block block) {
-		// Check if block is applicable to ability
-		ExcavationSource source = ExcavationSource.getSource(block);
-		if (source == null) return;
-		if (!hasTag(source, SourceTag.LUCKY_SPADES_APPLICABLE)) return;
-
-		if (r.nextDouble() < (getValue(Ability.LUCKY_SPADES, playerData) / 100)) {
-			int lootTableSize = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().size();
-			if (lootTableSize > 0) {
-				Loot loot = plugin.getLootTableManager().getLootTable("excavation-epic").getLoot().get(r.nextInt(lootTableSize));
-				// If has item
-				if (loot.hasItem()) {
-					ItemStack drop = loot.getDrop();
-					if (drop != null) {
-						PlayerLootDropEvent event = new PlayerLootDropEvent(player, drop.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCKY_SPADES);
-						Bukkit.getPluginManager().callEvent(event);
-						if (!event.isCancelled()) {
-							block.getWorld().dropItem(event.getLocation(), event.getItemStack());
-						}
-					}
-				}
-				// If has command
-				else if (loot.hasCommand()) {
-					String command = loot.getCommand();
-					if (plugin.isPlaceholderAPIEnabled()) {
-						command = PlaceholderAPI.setPlaceholders(player, command);
-					}
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
-				}
-			}
-		}
-
 	}
 
 	@EventHandler(priority = EventPriority.HIGH)
@@ -183,14 +113,6 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					if (!block.hasMetadata("AureliumSkills-Terraform")) {
 						applyTerraform(player, block);
 					}
-				}
-				//Check game mode
-				if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
-					return;
-				}
-				if (plugin.getRegionManager().isPlacedBlock(block)) return;
-				if (isEnabled(Ability.METAL_DETECTOR)) {
-					metalDetector(player, playerData, block);
 				}
 			}
 		}
