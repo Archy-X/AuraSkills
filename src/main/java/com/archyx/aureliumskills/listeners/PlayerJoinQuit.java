@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerManager;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.ChatColor;
@@ -62,7 +63,7 @@ public class PlayerJoinQuit implements Listener {
 		state.update(true);
 		// Update message
 		if (OptionL.getBoolean(Option.CHECK_FOR_UPDATES) && player.hasPermission("aureliumskills.checkupdates")) {
-			if (System.currentTimeMillis() > plugin.getReleaseTime() + 21600000L) {
+			if (System.currentTimeMillis() > ReleaseData.RELEASE_TIME + 21600000L) {
 				// Check for updates
 				new UpdateChecker(plugin, 81069).getVersion(version -> {
 					if (!plugin.getDescription().getVersion().contains("Pre-Release") && !plugin.getDescription().getVersion().contains("Build")) {
