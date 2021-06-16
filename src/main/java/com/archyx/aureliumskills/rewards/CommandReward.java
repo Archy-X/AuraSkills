@@ -42,6 +42,7 @@ public class CommandReward extends MessagedReward {
         if (plugin.isPlaceholderAPIEnabled()) {
             executedCommand = PlaceholderAPI.setPlaceholders(player, executedCommand);
         }
+        executedCommand = TextUtil.replaceNonEscaped(executedCommand, "&", "§");
         // Executes the commands
         if (executor == CommandExecutor.CONSOLE) {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), executedCommand);
