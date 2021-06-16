@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.rewards;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -36,7 +36,7 @@ public class CommandReward extends MessagedReward {
     }
 
     private void executeCommand(CommandExecutor executor, String command, Player player, Skill skill, int level) {
-        String executedCommand = LoreUtil.replace(command, "{player}", player.getName(),
+        String executedCommand = TextUtil.replace(command, "{player}", player.getName(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));
         if (plugin.isPlaceholderAPIEnabled()) {
