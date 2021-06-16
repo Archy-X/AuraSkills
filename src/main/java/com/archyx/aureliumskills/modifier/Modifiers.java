@@ -5,8 +5,8 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.StringUtils;
@@ -131,7 +131,7 @@ public class Modifiers {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, LoreUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE"), locale),
+            lore.add(0, TextUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE"), locale),
                     "{stat}", stat.getDisplayName(locale),
                     "{value}", NumberUtil.format1(value),
                     "{color}", stat.getColor(locale)));

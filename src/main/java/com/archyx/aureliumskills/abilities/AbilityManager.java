@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityOption;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -213,7 +213,7 @@ public class AbilityManager {
         if (abilities == null) return;
         try {
             for (String abilityName : abilities.getKeys(false)) {
-                String newKey = LoreUtil.replace(abilityName, "-", "_").toUpperCase();
+                String newKey = TextUtil.replace(abilityName, "-", "_").toUpperCase();
                 if (isAbility(newKey)) {
                     Ability ability = Ability.valueOf(newKey);
                     boolean enabled = abilities.getBoolean(abilityName + ".enabled", true);
@@ -235,7 +235,7 @@ public class AbilityManager {
             ConfigurationSection manaAbilities = config.getConfigurationSection("mana-abilities");
             if (manaAbilities != null) {
                 for (String manaAbilityName : manaAbilities.getKeys(false)) {
-                    String newKey = LoreUtil.replace(manaAbilityName, "-", "_").toUpperCase();
+                    String newKey = TextUtil.replace(manaAbilityName, "-", "_").toUpperCase();
                     if (isManaAbility(newKey)) {
                         MAbility mAbility = MAbility.valueOf(newKey);
                         boolean enabled = manaAbilities.getBoolean(manaAbilityName + ".enabled", true);

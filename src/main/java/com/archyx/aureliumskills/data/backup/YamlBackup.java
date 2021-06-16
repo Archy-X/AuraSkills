@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -64,7 +64,7 @@ public class YamlBackup extends BackupProvider {
             }
             backup.save(backupFile);
             Locale locale = plugin.getLang().getLocale(sender);
-            String message = AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
+            String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
                     , "{type}", "Yaml", "{file}", backupFile.getName());
             if (sender instanceof ConsoleCommandSender) {
                 message = ChatColor.stripColor(message);
@@ -72,7 +72,7 @@ public class YamlBackup extends BackupProvider {
             sender.sendMessage(message);
         } catch (Exception e) {
             Locale locale = plugin.getLang().getLocale(sender);
-            String message = AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_ERROR, locale), "{type}", "Yaml");
+            String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_ERROR, locale), "{type}", "Yaml");
             if (sender instanceof ConsoleCommandSender) {
                 Bukkit.getLogger().warning(ChatColor.stripColor(message));
             } else {

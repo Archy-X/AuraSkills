@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.loot;
 
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XEnchantment;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -56,7 +56,7 @@ public class LootTableManager {
 				for (String itemString : config.getStringList("lootTables." + lootTableName)) {
 					try {
 						if (itemString.startsWith("cmd:")) {
-							String commandString = LoreUtil.replace(itemString, "cmd:", "");
+							String commandString = TextUtil.replace(itemString, "cmd:", "");
 							loot.add(new Loot(commandString));
 							commandsLoaded++;
 						}

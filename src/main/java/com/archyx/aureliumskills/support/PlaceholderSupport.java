@@ -7,10 +7,10 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.BigNumber;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -168,9 +168,9 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.startsWith("lb_")) {
-            String leaderboardType = LoreUtil.replace(identifier, "lb_", "");
+            String leaderboardType = TextUtil.replace(identifier, "lb_", "");
             if (leaderboardType.startsWith("power_")) {
-                int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", ""));
+                int place = NumberUtils.toInt(TextUtil.replace(leaderboardType, "power_", ""));
                 if (place > 0) {
                     List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(place, 1);
                     if (list.size() > 0) {
@@ -182,7 +182,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 }
                 else {
                     if (identifier.endsWith("name")) {
-                        int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_name", ""));
+                        int namePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, "power_", "", "_name", ""));
                         if (namePlace > 0) {
                             List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(namePlace, 1);
                             if (list.size() > 0) {
@@ -194,7 +194,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                         }
                     }
                     else if (identifier.endsWith("value")) {
-                        int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, "power_", "", "_value", ""));
+                        int valuePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, "power_", "", "_value", ""));
                         if (valuePlace > 0) {
                             List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(valuePlace, 1);
                             if (list.size() > 0) {
@@ -209,7 +209,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             else {
                 for (Skill skill : plugin.getSkillRegistry().getSkills()) {
                     if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
-                        int place = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
+                        int place = NumberUtils.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
                         if (place > 0) {
                             List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 1);
                             if (list.size() > 0) {
@@ -221,7 +221,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                         }
                         else {
                             if (identifier.endsWith("name")) {
-                                int namePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
+                                int namePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
                                 if (namePlace > 0) {
                                     List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, namePlace, 1);
                                     if (list.size() > 0) {
@@ -233,7 +233,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                                 }
                             }
                             else if (identifier.endsWith("value")) {
-                                int valuePlace = NumberUtils.toInt(LoreUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
+                                int valuePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
                                 if (valuePlace > 0) {
                                     List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, valuePlace, 1);
                                     if (list.size() > 0) {
@@ -254,7 +254,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.startsWith("rank_")) {
-            String skillName = LoreUtil.replace(identifier, "rank_", "");
+            String skillName = TextUtil.replace(identifier, "rank_", "");
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
                 return String.valueOf(plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId()));
@@ -263,7 +263,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         for (String id : xpIdentifiers) {
             if (identifier.startsWith(id)) {
-                String skillName = LoreUtil.replace(identifier, id, "");
+                String skillName = TextUtil.replace(identifier, id, "");
 
                 Skill skill = plugin.getSkillRegistry().getSkill(skillName);
                 if (skill != null) {
@@ -296,7 +296,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             if (identifier.equals("multiplier")) {
                 return NumberUtil.format2(plugin.getLeveler().getMultiplier(player));
             }
-            String skillName = LoreUtil.replace(identifier, "multiplier_", "");
+            String skillName = TextUtil.replace(identifier, "multiplier_", "");
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
                 return NumberUtil.format2(plugin.getLeveler().getMultiplier(player, skill));
@@ -307,7 +307,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             if (identifier.equals("multiplier_percent")) {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player) - 1) * 100));
             }
-            String skillName = LoreUtil.replace(identifier, "multiplier_percent_", "");
+            String skillName = TextUtil.replace(identifier, "multiplier_percent_", "");
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player, skill) - 1) * 100));

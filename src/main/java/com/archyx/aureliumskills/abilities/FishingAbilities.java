@@ -14,8 +14,8 @@ import com.archyx.aureliumskills.mana.SharpHook;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.sources.FishingSource;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -114,7 +114,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 											if (plugin.isPlaceholderAPIEnabled()) {
 												command = PlaceholderAPI.setPlaceholders(player, command);
 											}
-											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), TextUtil.replace(command, "{player}", player.getName()));
 										}
 									}
 								}
@@ -142,7 +142,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 											if (plugin.isPlaceholderAPIEnabled()) {
 												command = PlaceholderAPI.setPlaceholders(player, command);
 											}
-											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), TextUtil.replace(command, "{player}", player.getName()));
 										}
 									}
 								}
@@ -218,7 +218,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 													} else {
 														if (plugin.getManaAbilityManager().getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
 															Locale locale = playerData.getLocale();
-															plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
+															plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
 															plugin.getManaAbilityManager().setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
 														}
 													}
@@ -262,7 +262,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 		}
 		else {
 			if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-				plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+				plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
 						,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerData))
 						, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
 						, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));

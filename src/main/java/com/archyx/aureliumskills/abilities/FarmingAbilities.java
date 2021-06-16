@@ -11,8 +11,8 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.Replenish;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.block.BlockUtil;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -150,7 +150,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 						plugin.getManaAbilityManager().activateAbility(player, MAbility.REPLENISH, (int) (getValue(MAbility.REPLENISH, playerData) * 20), new Replenish(plugin));
 					}
 					else {
-						plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+						plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
 								,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, playerData))
 								, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
 								, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));

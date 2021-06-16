@@ -9,8 +9,8 @@ import com.archyx.aureliumskills.lang.MessageKey;
 import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.armor.ArmorEquipEvent;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
@@ -67,19 +67,19 @@ public class RequirementListener implements Listener {
         StringBuilder requirementsString = new StringBuilder();
         Map<Skill, Integer> requirementMap = requirements.getRequirements(modifierType, item);
         for (Map.Entry<Skill, Integer> entry : requirementMap.entrySet()) {
-            requirementsString.append(LoreUtil.replace(Lang.getMessage(entryMessage, locale),
+            requirementsString.append(TextUtil.replace(Lang.getMessage(entryMessage, locale),
                     "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
         }
         Map<Skill, Integer> globalRequirementMap = requirements.getGlobalRequirements(modifierType, item);
         for (Map.Entry<Skill, Integer> entry : globalRequirementMap.entrySet()) {
-            requirementsString.append(LoreUtil.replace(Lang.getMessage(entryMessage, locale),
+            requirementsString.append(TextUtil.replace(Lang.getMessage(entryMessage, locale),
                     "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
         }
         if (requirementsString.length() >= 2) {
             requirementsString.delete(requirementsString.length() - 2, requirementsString.length());
         }
 
-        player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(baseMessage, locale)
+        player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(baseMessage, locale)
                 , "{requirements}", requirementsString.toString()));
     }
 

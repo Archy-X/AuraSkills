@@ -5,8 +5,8 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -43,7 +43,7 @@ public class Treecapitator implements ManaAbility {
             playerData.setMana(playerData.getMana() - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
-            plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_START, locale)
+            plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.TREECAPITATOR_START, locale)
                     ,"{mana}", NumberUtil.format0(manaConsumed)));
         }
     }

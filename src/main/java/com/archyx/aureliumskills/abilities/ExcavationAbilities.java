@@ -15,8 +15,8 @@ import com.archyx.aureliumskills.mana.Terraform;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.sources.ExcavationSource;
 import com.archyx.aureliumskills.skills.sources.SourceTag;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -126,7 +126,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					if (plugin.isPlaceholderAPIEnabled()) {
 						command = PlaceholderAPI.setPlaceholders(player, command);
 					}
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), TextUtil.replace(command, "{player}", player.getName()));
 				}
 			}
 		}
@@ -159,7 +159,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					if (plugin.isPlaceholderAPIEnabled()) {
 						command = PlaceholderAPI.setPlaceholders(player, command);
 					}
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), LoreUtil.replace(command, "{player}", player.getName()));
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), TextUtil.replace(command, "{player}", player.getName()));
 				}
 			}
 		}
@@ -223,7 +223,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					terraformBreak(player, block);
 				}
 				else {
-					plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
+					plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
 							,"{mana}", NumberUtil.format0(manager.getManaCost(MAbility.TERRAFORM, playerData))
 							, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
 							, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));

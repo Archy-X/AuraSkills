@@ -11,8 +11,8 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -53,14 +53,14 @@ public class StatTemplate extends ConfigurableTemplate {
                     baseItems.put(stat, MenuLoader.parseItem(splitInput[1]));
                 }
             }
-            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
+            displayName = TextUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             // Load lore
             List<String> lore = new ArrayList<>();
             Map<Integer, Set<String>> lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(LoreUtil.replace(line,"&", "§"));
+                lore.add(TextUtil.replace(line,"&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {
@@ -99,7 +99,7 @@ public class StatTemplate extends ConfigurableTemplate {
             }
         }
         if (meta != null) {
-            meta.setDisplayName(applyPlaceholders(LoreUtil.replace(displayName,"{color}", stat.getColor(locale),"{stat}", stat.getDisplayName(locale)), player));
+            meta.setDisplayName(applyPlaceholders(TextUtil.replace(displayName,"{color}", stat.getColor(locale),"{stat}", stat.getDisplayName(locale)), player));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
@@ -107,64 +107,64 @@ public class StatTemplate extends ConfigurableTemplate {
                 for (String placeholder : placeholders) {
                     switch (placeholder) {
                         case "stat_desc":
-                            line = LoreUtil.replace(line,"{stat_desc}", stat.getDescription(locale));
+                            line = TextUtil.replace(line,"{stat_desc}", stat.getDescription(locale));
                             break;
                         case "primary_skills_two":
                             if (primarySkills.size() == 2) {
-                                line = LoreUtil.replace(line,"{primary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
+                                line = TextUtil.replace(line,"{primary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
                                         ,"{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
                                         ,"{skill_2}", primarySkills.get(1).get().getDisplayName(locale)));
                             }
                             else if (primarySkills.size() == 1) {
-                                line = LoreUtil.replace(line, "{primary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
+                                line = TextUtil.replace(line, "{primary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
                                         , "{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
                                         , ", {skill_2}", ""
                                         , "{skill_2}", ""));
                             }
                             else {
-                                line = LoreUtil.replace(line,"{primary_skills_two}", "");
+                                line = TextUtil.replace(line,"{primary_skills_two}", "");
                             }
                             break;
                         case "primary_skills_three":
                             if (primarySkills.size() == 3) {
-                                line = LoreUtil.replace(line,"{primary_skills_three}", LoreUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_THREE, locale)
+                                line = TextUtil.replace(line,"{primary_skills_three}", TextUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_THREE, locale)
                                         ,"{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
                                         ,"{skill_2}", primarySkills.get(1).get().getDisplayName(locale)
                                         ,"{skill_3}", primarySkills.get(2).get().getDisplayName(locale)));
                             }
                             else {
-                                line = LoreUtil.replace(line,"{primary_skills_three}", "");
+                                line = TextUtil.replace(line,"{primary_skills_three}", "");
                             }
                             break;
                         case "secondary_skills_two":
                             if (secondarySkills.size() == 2) {
-                                line = LoreUtil.replace(line,"{secondary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
+                                line = TextUtil.replace(line,"{secondary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
                                         ,"{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
                                         ,"{skill_2}", secondarySkills.get(1).get().getDisplayName(locale)));
                             }
                             else if (secondarySkills.size() == 1) {
-                                line = LoreUtil.replace(line, "{secondary_skills_two}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
+                                line = TextUtil.replace(line, "{secondary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
                                         , "{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
                                         , ", {skill_2}", ""
                                         , "{skill_2}", ""));
                             }
                             else {
-                                line = LoreUtil.replace(line,"{secondary_skills_two}", "");
+                                line = TextUtil.replace(line,"{secondary_skills_two}", "");
                             }
                             break;
                         case "secondary_skills_three":
                             if (secondarySkills.size() == 3) {
-                                line = LoreUtil.replace(line,"{secondary_skills_three}", LoreUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_THREE, locale)
+                                line = TextUtil.replace(line,"{secondary_skills_three}", TextUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_THREE, locale)
                                         ,"{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
                                         ,"{skill_2}", secondarySkills.get(1).get().getDisplayName(locale)
                                         ,"{skill_3}", secondarySkills.get(2).get().getDisplayName(locale)));
                             }
                             else {
-                                line = LoreUtil.replace(line,"{secondary_skills_three}", "");
+                                line = TextUtil.replace(line,"{secondary_skills_three}", "");
                             }
                             break;
                         case "your_level":
-                            line = LoreUtil.replace(line,"{your_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.YOUR_LEVEL, locale)
+                            line = TextUtil.replace(line,"{your_level}", TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_LEVEL, locale)
                                     ,"{color}", stat.getColor(locale)
                                     ,"{level}", NumberUtil.format1(playerData.getStatLevel(stat))));
                             break;
@@ -176,13 +176,13 @@ public class StatTemplate extends ConfigurableTemplate {
                                     if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING) && !OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
                                         attackDamage *= OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     }
-                                    line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.ATTACK_DAMAGE, locale)
+                                    line = TextUtil.replace(line,"{descriptors}", TextUtil.replace(Lang.getMessage(MenuMessage.ATTACK_DAMAGE, locale)
                                             ,"{value}", NumberUtil.format2(attackDamage)));
                                     break;
                                 case "HEALTH":
                                     double modifier = playerData.getStatLevel(Stats.HEALTH) * OptionL.getDouble(Option.HEALTH_MODIFIER);
                                     double scaledHealth = modifier * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-                                    line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.HP, locale)
+                                    line = TextUtil.replace(line,"{descriptors}", TextUtil.replace(Lang.getMessage(MenuMessage.HP, locale)
                                             ,"{value}", NumberUtil.format2(scaledHealth)));
                                     break;
                                 case "REGENERATION":
@@ -191,10 +191,10 @@ public class StatTemplate extends ConfigurableTemplate {
                                     double hungerFullRegen = regenLevel *  OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     double almostFullRegen = regenLevel *  OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
                                     double manaRegen = regenLevel * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
-                                    line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(hungerFullRegen))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MANA_REGEN, locale),"{value}", String.valueOf((int) manaRegen)));
+                                    line = TextUtil.replace(line,"{descriptors}", TextUtil.replace(Lang.getMessage(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
+                                            + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(hungerFullRegen))
+                                            + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))
+                                            + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.MANA_REGEN, locale),"{value}", String.valueOf((int) manaRegen)));
                                     break;
                                 case "LUCK":
                                     double luckLevel = playerData.getStatLevel(Stats.LUCK);
@@ -203,22 +203,22 @@ public class StatTemplate extends ConfigurableTemplate {
                                     if (doubleDropChance > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
                                         doubleDropChance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
                                     }
-                                    line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.LUCK, locale),"{value}", NumberUtil.format2(luck))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.DOUBLE_DROP_CHANCE, locale),"{value}", NumberUtil.format2(doubleDropChance)));
+                                    line = TextUtil.replace(line,"{descriptors}", TextUtil.replace(Lang.getMessage(MenuMessage.LUCK, locale),"{value}", NumberUtil.format2(luck))
+                                            + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.DOUBLE_DROP_CHANCE, locale),"{value}", NumberUtil.format2(doubleDropChance)));
                                     break;
                                 case "WISDOM":
                                     double wisdomLevel = playerData.getStatLevel(Stats.WISDOM);
                                     double xpModifier = wisdomLevel * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
                                     double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
                                     double maxMana = playerData.getMaxMana();
-                                    line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", NumberUtil.format2(xpModifier))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction))
-                                            + "\n" + LoreUtil.replace(Lang.getMessage(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana)));
+                                    line = TextUtil.replace(line,"{descriptors}", TextUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", NumberUtil.format2(xpModifier))
+                                            + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction))
+                                            + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana)));
                                     break;
                                 case "TOUGHNESS":
                                     double toughness = playerData.getStatLevel(Stats.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
                                     double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
-                                    line = LoreUtil.replace(line,"{descriptors}", LoreUtil.replace(Lang.getMessage(MenuMessage.INCOMING_DAMAGE, locale),"{value}", NumberUtil.format2(damageReduction)));
+                                    line = TextUtil.replace(line,"{descriptors}", TextUtil.replace(Lang.getMessage(MenuMessage.INCOMING_DAMAGE, locale),"{value}", NumberUtil.format2(damageReduction)));
                             }
                             break;
                     }
