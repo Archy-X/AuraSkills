@@ -17,16 +17,18 @@ levels: # The levels section is for rewards unlocked at specific levels
     - type: permission # A permission reward gives a player a permission node. It requires LuckPerms to work
       permission: some.permission.node # The permission node to give
       value: true # The value of the permission, defaults to true
-      menu_message: \n Some message in the menu # Optional message to display in the level progression menu
-      chat_message: \n Some message in chat # Optional message to display in the level up message in chat
+      menu_message: \n  Some message in the menu # Optional message to display in the level progression menu
+      chat_message: \n  Some message in chat # Optional message to display in the level up message in chat
     - type: command # Execute a command on level up
       executor: console # Who should execute the command, console or player
       command: say leveled up! # The command to execute, supports {player}, {skill}, {level}, and all PlaceholderAPI placeholders
       revert_executor: console # Optional revert command executor
       revert_command: say removed level up # Optional command to execute if the player loses skill levels via commands (can be used to undo the level up command)
-      menu_message: \n Some message in the menu
-      chat_message: \n Some message in chat
+      menu_message: \n  Some message in the menu
+      chat_message: \n  Some message in chat
     - type: money # Gives money on level up through Vault Economy, the total money on level up will be added and displayed together in chat
       amount: 1000 # The amount of money to give
     - type: item # Gives an item to the player
       key: some_item_key # This key must refer to a registered item. Use /skills item register [key] while holding the item you want to register
+      menu_message: \n  Name of the item you want displayed
+      chat_message: \n  Name of the item you want displayed
