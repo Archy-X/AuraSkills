@@ -295,7 +295,7 @@ public class AureliumSkills extends JavaPlugin {
 			// Save config
 			saveConfig();
 		}
-		regionManager.saveAllRegions(false);
+		regionManager.saveAllRegions(false, true);
 		regionManager.clearRegionMap();
 		backupAutomatically();
 	}

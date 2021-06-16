@@ -178,7 +178,7 @@ public class RegionManager {
         }
     }
 
-    public void saveAllRegions(boolean clearUnused) {
+    public void saveAllRegions(boolean clearUnused, boolean serverShutdown) {
         if (saving) return;
         saving = true;
         for (Region region : regions.values()) {
@@ -194,10 +194,14 @@ public class RegionManager {
                 e.printStackTrace();
             }
         }
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> saving = false, 20);
+        if (!serverShutdown) {
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> saving = false, 20);
+        } else {
+            saving = false;
+        }
     }
 
-    public void saveWorldRegions(World world, boolean clearUnused) {
+    public void saveWorldRegions(World world, boolean clearUnused, boolean serverShutdown) {
         if (saving) return;
         saving = true;
         for (Region region : regions.values()) {
@@ -215,7 +219,11 @@ public class RegionManager {
                 }
             }
         }
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> saving = false, 20);
+        if (!serverShutdown) {
+            plugin.getServer().getScheduler().runTaskLater(plugin, () -> saving = false, 20);
+        } else {
+            saving = false;
+        }
     }
 
     private boolean isRegionUnused(Region region) {
