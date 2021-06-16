@@ -239,6 +239,20 @@ public class PlayerData {
         return unclaimedItems;
     }
 
+    public void clearInvalidItems() {
+        // Find items that are not registered
+        List<KeyIntPair> toRemove = new ArrayList<>();
+        for (KeyIntPair unclaimedItem : unclaimedItems) {
+            if (plugin.getItemRegistry().getItem(unclaimedItem.getKey()) == null) {
+                toRemove.add(unclaimedItem);
+            }
+        }
+        // Remove from unclaimed items list
+        for (KeyIntPair unclaimedItemToRemove : toRemove) {
+            unclaimedItems.remove(unclaimedItemToRemove);
+        }
+    }
+
     public void setUnclaimedItems(@NotNull List<KeyIntPair> unclaimedItems) {
         this.unclaimedItems = unclaimedItems;
     }

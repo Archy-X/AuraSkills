@@ -110,6 +110,7 @@ public class YamlStorageProvider extends StorageProvider {
                         unclaimedItems.add(new KeyIntPair(itemKey, amount));
                     }
                     playerData.setUnclaimedItems(unclaimedItems);
+                    playerData.clearInvalidItems();
                 }
                 playerManager.addPlayerData(playerData);
                 plugin.getLeveler().updatePermissions(player);
