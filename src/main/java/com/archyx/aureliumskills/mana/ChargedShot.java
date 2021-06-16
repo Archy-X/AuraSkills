@@ -4,8 +4,8 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -58,7 +58,7 @@ public class ChargedShot implements ManaAbility {
         plugin.getSorceryLeveler().level(player, manaConsumed);
         projectile.setMetadata("ChargedShotMultiplier", new FixedMetadataValue(plugin, 1 + damagePercent / 100));
         if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.CHARGED_SHOT, "enable_message")) {
-            plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_SHOOT, locale)
+            plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.CHARGED_SHOT_SHOOT, locale)
                     , "{mana}", NumberUtil.format0(manaConsumed)
                     , "{percent}", NumberUtil.format0(damagePercent)));
         }

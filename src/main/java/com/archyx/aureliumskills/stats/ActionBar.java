@@ -9,9 +9,9 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.support.ProtocolLibSupport;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.BigNumber;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
@@ -68,7 +68,7 @@ public class ActionBar implements Listener {
 								PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 								if (playerData != null) {
 									Locale locale = playerData.getLocale();
-									sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
+									sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
 											, "{hp}", getHp(player)
 											, "{max_hp}", getMaxHp(player)
 											, "{mana}", getMana(playerData)
@@ -138,7 +138,7 @@ public class ActionBar implements Listener {
 												// Xp gained
 												if (xpAmount >= 0) {
 													if (!OptionL.getBoolean(Option.ACTION_BAR_ROUND_XP)) {
-														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -149,7 +149,7 @@ public class ActionBar implements Listener {
 																, "{max_mana}", getMaxMana(playerData)));
 													}
 													else {
-														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -163,7 +163,7 @@ public class ActionBar implements Listener {
 												// Xp removed
 												else {
 													if (!OptionL.getBoolean(Option.ACTION_BAR_ROUND_XP)) {
-														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_removed}", NumberUtil.format1(xpAmount)
@@ -174,7 +174,7 @@ public class ActionBar implements Listener {
 																, "{max_mana}", getMaxMana(playerData)));
 													}
 													else {
-														sendActionBar(player, LoreUtil.replace(LoreUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -192,7 +192,7 @@ public class ActionBar implements Listener {
 											if (OptionL.getBoolean(Option.ACTION_BAR_MAXED)) {
 												// Xp gained
 												if (xpAmount >= 0) {
-													sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
+													sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
 															, "{hp}", getHp(player)
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -202,7 +202,7 @@ public class ActionBar implements Listener {
 												}
 												// Xp removed
 												else {
-													sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
+													sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
 															, "{hp}", getHp(player)
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_removed}", NumberUtil.format1(xpAmount)
@@ -247,7 +247,7 @@ public class ActionBar implements Listener {
 		if (!actionBarDisabled.contains(player.getUniqueId())) {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
-			sendActionBar(player, LoreUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
+			sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
 					"{hp}", getHp(player),
 					"{max_hp}", getMaxHp(player),
 					"{mana}", getMana(playerData),

@@ -7,8 +7,8 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stats;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.ReflectionUtils;
 import com.cryptomorin.xseries.XMaterial;
@@ -120,7 +120,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
             playerData.addStatModifier(regenerationModifier);
             if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.REVIVAL, "enable_message")) {
                 Locale locale = playerData.getLocale();
-                plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(AbilityMessage.REVIVAL_MESSAGE, locale)
+                plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(AbilityMessage.REVIVAL_MESSAGE, locale)
                         , "{value}", NumberUtil.format1(healthBonus)
                         , "{value_2}", NumberUtil.format1(regenerationBonus)));
             }

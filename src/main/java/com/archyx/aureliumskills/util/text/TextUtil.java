@@ -1,19 +1,6 @@
-package com.archyx.aureliumskills.util.item;
+package com.archyx.aureliumskills.util.text;
 
-import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.MessageKey;
-
-import java.util.Locale;
-
-public class LoreUtil {
-
-    public static String setPlaceholders(String placeholder, MessageKey message, Locale locale, String input) {
-        return replace(input,"{" + placeholder + "}", Lang.getMessage(message, locale));
-    }
-
-    public static String setPlaceholders(String placeholder, String message, String input) {
-        return replace(input,"{" + placeholder + "}", message);
-    }
+public class TextUtil {
 
     public static String replace(String source, String os, String ns) {
         if (source == null) {

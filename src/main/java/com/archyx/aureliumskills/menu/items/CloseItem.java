@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +21,7 @@ public class CloseItem extends ConfigurableItem {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(applyPlaceholders(LoreUtil.replace(displayName,"{close}", Lang.getMessage(MenuMessage.CLOSE, locale)), player));
+            meta.setDisplayName(applyPlaceholders(TextUtil.replace(displayName,"{close}", Lang.getMessage(MenuMessage.CLOSE, locale)), player));
             meta.setLore(ItemUtils.formatLore(applyPlaceholders(lore, player)));
             item.setItemMeta(meta);
         }

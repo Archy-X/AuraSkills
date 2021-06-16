@@ -18,8 +18,8 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.stats.Stats;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -61,13 +61,13 @@ public class Leveler {
 		for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
 			String permission = info.getPermission().toLowerCase(Locale.ROOT);
 			if (permission.startsWith("aureliumskills.multiplier.")) {
-				permission = LoreUtil.replace(permission, "aureliumskills.multiplier.", "");
+				permission = TextUtil.replace(permission, "aureliumskills.multiplier.", "");
 				if (pattern.matcher(permission).matches()) { // Parse all skills multiplier
 					multiplier += Double.parseDouble(permission) / 100;
 				} else if (skill != null) { // Skill specific multiplier
 					String skillName = skill.toString().toLowerCase(Locale.ROOT);
 					if (permission.startsWith(skillName)) {
-						permission = LoreUtil.replace(permission, skillName + ".", "");
+						permission = TextUtil.replace(permission, skillName + ".", "");
 						if (pattern.matcher(permission).matches()) {
 							multiplier += Double.parseDouble(permission) / 100;
 						}
@@ -194,7 +194,7 @@ public class Leveler {
 			}
 		}
 	}
-	
+
 	public void checkLevelUp(Player player, Skill skill) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
@@ -249,8 +249,8 @@ public class Leveler {
 	}
 
 	private void sendTitle(Player player, Locale locale, Skill skill, int level) {
-		player.sendTitle(LoreUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
-				LoreUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
+		player.sendTitle(TextUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
+				TextUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
 						,"{old}", RomanNumber.toRoman(level - 1)
 						,"{new}", RomanNumber.toRoman(level))
 				, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
@@ -269,7 +269,7 @@ public class Leveler {
 	}
 
 	private String getLevelUpMessage(Player player, PlayerData playerData, Skill skill, int newLevel, Locale locale, List<Reward> rewards) {
-		String message = LoreUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
+		String message = TextUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
 				,"{new}", RomanNumber.toRoman(newLevel));
@@ -286,15 +286,15 @@ public class Leveler {
 		for (Ability ability : plugin.getAbilityManager().getAbilities(skill, newLevel)) {
 			if (plugin.getAbilityManager().isEnabled(ability)) {
 				if (plugin.getAbilityManager().getUnlock(ability) == newLevel) {
-					abilityUnlockMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale)));
+					abilityUnlockMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale)));
 				} else {
-					abilityLevelUpMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
+					abilityLevelUpMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
 							,"{ability}", ability.getDisplayName(locale)
 							,"{level}", RomanNumber.toRoman(playerData.getAbilityLevel(ability))));
 				}
 			}
 		}
-		message = LoreUtil.replace(message, "{stat_level}", rewardMessage.toString(),
+		message = TextUtil.replace(message, "{stat_level}", rewardMessage.toString(),
 				"{ability_unlock}", abilityUnlockMessage.toString(),
 				"{ability_level_up}", abilityLevelUpMessage.toString());
 		// Mana ability unlocks and level ups
@@ -304,15 +304,15 @@ public class Leveler {
 		if (mAbility != null) {
 			if (plugin.getAbilityManager().isEnabled(mAbility)) {
 				if (plugin.getManaAbilityManager().getUnlock(mAbility) == newLevel) {
-					manaAbilityUnlockMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale)));
+					manaAbilityUnlockMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale)));
 				} else {
-					manaAbilityLevelUpMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
+					manaAbilityLevelUpMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
 							, "{mana_ability}", mAbility.getDisplayName(locale)
 							, "{level}", RomanNumber.toRoman(playerData.getManaAbilityLevel(mAbility))));
 				}
 			}
 		}
-		message = LoreUtil.replace(message, "{mana_ability_unlock}", manaAbilityUnlockMessage.toString(), "{mana_ability_level_up}", manaAbilityLevelUpMessage.toString());
+		message = TextUtil.replace(message, "{mana_ability_unlock}", manaAbilityUnlockMessage.toString(), "{mana_ability_level_up}", manaAbilityLevelUpMessage.toString());
 		// Build money rewards
 		StringBuilder moneyRewardMessage = new StringBuilder();
 		double totalMoney = 0;
@@ -330,10 +330,10 @@ public class Leveler {
 		}
 		if (totalMoney > 0) {
 			NumberFormat nf = new DecimalFormat("#.##");
-			moneyRewardMessage.append(LoreUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
+			moneyRewardMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
 					"{amount}", nf.format(totalMoney)));
 		}
-		message = LoreUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
+		message = TextUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
 

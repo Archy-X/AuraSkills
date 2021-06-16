@@ -9,8 +9,8 @@ import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.mechanics.PotionUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -158,7 +158,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 player.setWalkSpeed(newSpeed);
                 player.setMetadata("AureliumSkills-Fleeting", new FixedMetadataValue(plugin, walkSpeedChange));
                 Locale locale = plugin.getLang().getLocale(player);
-                plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
+                plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
             }
         }
     }

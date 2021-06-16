@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -51,14 +51,14 @@ public class SkillTemplate extends ConfigurableTemplate {
                 }
                 baseItems.put(skill, MenuLoader.parseItem(splitInput[1]));
             }
-            displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
+            displayName = TextUtil.replace(Objects.requireNonNull(config.getString("display_name")),"&", "§");
             // Load lore
             List<String> lore = new ArrayList<>();
             Map<Integer, Set<String>> lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                lore.add(LoreUtil.replace(line,"&", "§"));
+                lore.add(TextUtil.replace(line,"&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {

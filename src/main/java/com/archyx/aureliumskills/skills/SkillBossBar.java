@@ -5,9 +5,9 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.BigNumber;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -115,14 +115,14 @@ public class SkillBossBar implements Listener {
         if (bossBar == null) {
             if (!maxed) {
                 if (!OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
-                    bossBar = Bukkit.createBossBar(LoreUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
+                    bossBar = Bukkit.createBossBar(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
                             "{skill}", skill.getDisplayName(locale),
                             "{level}", RomanNumber.toRoman(level),
                             "{current_xp}", nf.format(currentXp),
                             "{level_xp}", BigNumber.withSuffix((long) levelXp)), color, style);
                 }
                 else {
-                    bossBar = Bukkit.createBossBar(LoreUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
+                    bossBar = Bukkit.createBossBar(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
                             "{skill}", skill.getDisplayName(locale),
                             "{level}", RomanNumber.toRoman(level),
                             "{current_xp}", String.valueOf((int) currentXp),
@@ -130,7 +130,7 @@ public class SkillBossBar implements Listener {
                 }
             }
             else {
-                bossBar = Bukkit.createBossBar(LoreUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
+                bossBar = Bukkit.createBossBar(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
                         "{skill}", skill.getDisplayName(locale),
                         "{level}", RomanNumber.toRoman(level)), color, style);
             }
@@ -154,14 +154,14 @@ public class SkillBossBar implements Listener {
         else {
             if (!maxed) {
                 if (!OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
-                    bossBar.setTitle(LoreUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
+                    bossBar.setTitle(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
                             "{skill}", skill.getDisplayName(locale),
                             "{level}", RomanNumber.toRoman(level),
                             "{current_xp}", nf.format(currentXp),
                             "{level_xp}", BigNumber.withSuffix((long) levelXp)));
                 }
                 else {
-                    bossBar.setTitle(LoreUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
+                    bossBar.setTitle(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
                             "{skill}", skill.getDisplayName(locale),
                             "{level}", RomanNumber.toRoman(level),
                             "{current_xp}", String.valueOf((int) currentXp),
@@ -169,7 +169,7 @@ public class SkillBossBar implements Listener {
                 }
             }
             else {
-                bossBar.setTitle(LoreUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
+                bossBar.setTitle(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
                         "{level}", RomanNumber.toRoman(level),
                         "{skill}", skill.getDisplayName(locale)));
             }

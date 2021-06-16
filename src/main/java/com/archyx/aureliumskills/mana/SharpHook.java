@@ -5,8 +5,8 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.levelers.SorceryLeveler;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -43,7 +43,7 @@ public class SharpHook implements ManaAbility {
             playerData.setMana(playerData.getMana() - manaConsumed);
             // Level Sorcery
             sorceryLeveler.level(player, manaConsumed);
-            plugin.getAbilityManager().sendMessage(player, LoreUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale), "{mana}", NumberUtil.format0(manaConsumed)));
+            plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.SHARP_HOOK_USE, locale), "{mana}", NumberUtil.format0(manaConsumed)));
             if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.SHARP_HOOK, "enable_sound")) {
                 if (XMaterial.isNewVersion()) {
                     player.playSound(player.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1f, 1.5f);

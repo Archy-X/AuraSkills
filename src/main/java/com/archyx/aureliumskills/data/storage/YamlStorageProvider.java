@@ -14,7 +14,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -232,7 +232,7 @@ public class YamlStorageProvider extends StorageProvider {
                 }
                 sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADED, locale));
             } catch (Exception e) {
-                sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
             }
         }
     }
