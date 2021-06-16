@@ -18,15 +18,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.inventory.BrewEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.UUID;
 
 public class AlchemyLeveler extends SkillLeveler implements Listener {
-	
+
 	public AlchemyLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.BREWER);
 	}
@@ -105,5 +105,32 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 				}
 			}
 		}
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onTakePotionOut(InventoryClickEvent event) {
+		if (!OptionL.isEnabled(Skills.ALCHEMY)) return;
+		// Check cancelled
+		if (OptionL.getBoolean(Option.ALCHEMY_CHECK_CANCELLED)) {
+			if (event.isCancelled()) {
+				return;
+			}
+		}
+		Inventory inventory = event.getClickedInventory();
+		if (inventory == null) return;
+		if (inventory.getType() != InventoryType.BREWING) return;
+
+		if (!(event.getWhoClicked() instanceof Player)) return;
+		Player player = (Player) event.getWhoClicked();
+		if (event.getSlot() > 2) return; // Slots 0-2 are result slots
+		InventoryAction action = event.getAction();
+		// Filter out other actions
+		if (action != InventoryAction.PICKUP_ALL && action != InventoryAction.PICKUP_HALF && action != InventoryAction.PICKUP_SOME
+				&& action != InventoryAction.PICKUP_ONE && action != InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+			return;
+		}
+		ItemStack item = event.getCurrentItem();
+		if (item == null) return;
+		// player.sendMessage("You took out a potion");
 	}
 }
