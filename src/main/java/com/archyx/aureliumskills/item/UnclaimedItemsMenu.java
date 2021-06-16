@@ -10,6 +10,7 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -46,7 +47,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                     ItemUtils.addItemToInventory(player, item);
                     playerData.getUnclaimedItems().remove(keyIntPair);
                     if (playerData.getUnclaimedItems().size() > 0) {
-                        init(player, contents); // Refresh inventory
+                        contents.set(event.getSlot() / 9, event.getSlot() % 9, ClickableItem.empty(new ItemStack(Material.AIR)));
                     } else {
                         player.closeInventory();
                     }

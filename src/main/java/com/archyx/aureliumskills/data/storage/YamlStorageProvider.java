@@ -177,6 +177,7 @@ public class YamlStorageProvider extends StorageProvider {
             }
             // Save unclaimed items
             List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
+            config.set("unclaimed_items", null);
             if (unclaimedItems != null && unclaimedItems.size() > 0) {
                 List<String> stringList = new ArrayList<>();
                 for (KeyIntPair unclaimedItem : unclaimedItems) {
