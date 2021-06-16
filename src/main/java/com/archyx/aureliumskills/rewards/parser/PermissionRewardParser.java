@@ -30,6 +30,11 @@ public class PermissionRewardParser extends RewardParser {
             builder.chatMessage(getString(map, "chat_message"));
         }
 
+        if (map.containsKey("message")) {
+            String message = getString(map, "message");
+            builder.chatMessage(message).menuMessage(message);
+        }
+
         return builder.build();
     }
     
