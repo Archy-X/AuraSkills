@@ -194,7 +194,7 @@ public class RegionManager {
                 e.printStackTrace();
             }
         }
-        saving = false;
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> saving = false, 20);
     }
 
     public void saveWorldRegions(World world, boolean clearUnused) {
@@ -215,7 +215,7 @@ public class RegionManager {
                 }
             }
         }
-        saving = false;
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> saving = false, 20);
     }
 
     private boolean isRegionUnused(Region region) {
