@@ -51,6 +51,7 @@ import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
@@ -121,7 +122,7 @@ public class AureliumSkills extends JavaPlugin {
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
-	private final long releaseTime = 1623427622106L;
+	private final long releaseTime = 1623792576081L;
 
 	public void onEnable() {
 		// Registries
@@ -163,7 +164,7 @@ public class AureliumSkills extends JavaPlugin {
 			vaultEnabled = false;
 		}
 		// Check for protocol lib
-		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
+		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib") && !VersionUtils.isAtLeastVersion(17);
 		// Check towny
 		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
 		townySupport = new TownySupport(this);
