@@ -12,6 +12,7 @@ public enum Option {
     MYSQL_PASSWORD("mysql.password", OptionType.STRING),
     MYSQL_LOAD_DELAY("mysql.load-delay", OptionType.INT),
     MYSQL_ALWAYS_LOAD_ON_JOIN("mysql.always-load-on-join", OptionType.BOOLEAN),
+    MYSQL_SSL("mysql.ssl", OptionType.BOOLEAN),
     TRY_DETECT_CLIENT_LANGUAGE("try-detect-client-language", OptionType.BOOLEAN),
     // Action bar options
     ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),

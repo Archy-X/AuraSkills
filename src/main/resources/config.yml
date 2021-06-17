@@ -17,6 +17,7 @@ mysql:
     password: pass
     load-delay: 0
     always-load-on-join: false
+    ssl: false
 
 default-language: en
 
