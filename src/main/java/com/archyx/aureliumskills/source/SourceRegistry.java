@@ -18,7 +18,7 @@ public class SourceRegistry {
         try {
             for (Skill skill : Skills.values()) {
                 String className = StringUtils.capitalize(skill.toString().toLowerCase(Locale.ROOT)) + "Source";
-                Class<?> sourceClass = Class.forName("com.archyx.aureliumskills.skills.sources." + className);
+                Class<?> sourceClass = Class.forName("com.archyx.aureliumskills.skills." + skill.toString().toLowerCase(Locale.ROOT) + "." + className);
                 registry.put(skill, sourceClass);
             }
         } catch (ClassNotFoundException e) {
