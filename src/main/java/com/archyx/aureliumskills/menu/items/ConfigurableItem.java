@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.menu.MenuLoader;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -61,14 +61,14 @@ public abstract class ConfigurableItem {
         try {
             this.pos = SlotPos.of(config.getInt("row"), config.getInt("column"));
             this.baseItem = MenuLoader.parseItem(Objects.requireNonNull(config.getString("material")));
-            this.displayName = LoreUtil.replace(Objects.requireNonNull(config.getString("display_name")), "&", "§");
+            this.displayName = TextUtil.replace(Objects.requireNonNull(config.getString("display_name")), "&", "§");
             // Load lore
             this.lore = new ArrayList<>();
             this.lorePlaceholders = new HashMap<>();
             int lineNum = 0;
             for (String line : config.getStringList("lore")) {
                 Set<String> linePlaceholders = new HashSet<>();
-                this.lore.add(LoreUtil.replace(line, "&", "§"));
+                this.lore.add(TextUtil.replace(line, "&", "§"));
                 // Find lore placeholders
                 for (String placeholder : definedPlaceholders) {
                     if (line.contains("{" + placeholder + "}")) {

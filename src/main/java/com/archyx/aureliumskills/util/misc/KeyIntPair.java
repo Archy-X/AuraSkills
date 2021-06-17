@@ -1,7 +1,5 @@
 package com.archyx.aureliumskills.util.misc;
 
-import java.util.Objects;
-
 public class KeyIntPair {
 
     private final String key;
@@ -20,16 +18,4 @@ public class KeyIntPair {
         return value;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        KeyIntPair that = (KeyIntPair) o;
-        return value == that.value && Objects.equals(key, that.key);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(key, value);
-    }
 }

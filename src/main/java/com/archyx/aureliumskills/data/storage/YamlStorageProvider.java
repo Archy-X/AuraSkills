@@ -1,20 +1,20 @@
 package com.archyx.aureliumskills.data.storage;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.AbstractAbility;
+import com.archyx.aureliumskills.ability.AbstractAbility;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
+import com.archyx.aureliumskills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
-import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -110,6 +110,7 @@ public class YamlStorageProvider extends StorageProvider {
                         unclaimedItems.add(new KeyIntPair(itemKey, amount));
                     }
                     playerData.setUnclaimedItems(unclaimedItems);
+                    playerData.clearInvalidItems();
                 }
                 playerManager.addPlayerData(playerData);
                 plugin.getLeveler().updatePermissions(player);
@@ -176,6 +177,7 @@ public class YamlStorageProvider extends StorageProvider {
             }
             // Save unclaimed items
             List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
+            config.set("unclaimed_items", null);
             if (unclaimedItems != null && unclaimedItems.size() > 0) {
                 List<String> stringList = new ArrayList<>();
                 for (KeyIntPair unclaimedItem : unclaimedItems) {
@@ -230,7 +232,7 @@ public class YamlStorageProvider extends StorageProvider {
                 }
                 sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADED, locale));
             } catch (Exception e) {
-                sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.menu.templates;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -14,10 +14,10 @@ import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.google.common.collect.ImmutableList;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -57,7 +57,7 @@ public class SkillInfoItem {
         ItemMeta meta = item.getItemMeta();
         int skillLevel = playerData.getSkillLevel(skill);
         if (meta != null) {
-            meta.setDisplayName(applyPlaceholders(LoreUtil.replace(displayName,"{skill}", skill.getDisplayName(locale),"{level}", RomanNumber.toRoman(skillLevel)), player));
+            meta.setDisplayName(applyPlaceholders(TextUtil.replace(displayName,"{skill}", skill.getDisplayName(locale),"{level}", RomanNumber.toRoman(skillLevel)), player));
             meta.setLore(ItemUtils.formatLore(applyPlaceholders(getLore(lore, lorePlaceholders, skill, playerData, locale), player)));
             item.setItemMeta(meta);
         }
@@ -73,7 +73,7 @@ public class SkillInfoItem {
             for (String placeholder : placeholders) {
                 switch (placeholder) {
                     case "skill_desc":
-                        line = LoreUtil.setPlaceholders("skill_desc", skill.getDescription(locale), line);
+                        line = TextUtil.replace(line, "{skill_desc}", skill.getDescription(locale));
                         break;
                     case "stats_leveled":
                         ImmutableList<Stat> statsLeveled = plugin.getRewardManager().getRewardTable(skill).getStatsLeveled();
@@ -85,42 +85,42 @@ public class SkillInfoItem {
                             statList.delete(statList.length() - 2, statList.length());
                         }
                         if (statsLeveled.size() > 0) {
-                            line = LoreUtil.replace(line, "{stats_leveled}", LoreUtil.replace(Lang.getMessage(MenuMessage.STATS_LEVELED, locale),
+                            line = TextUtil.replace(line, "{stats_leveled}", TextUtil.replace(Lang.getMessage(MenuMessage.STATS_LEVELED, locale),
                                     "{stats}", statList.toString()));
                         } else {
-                            line = LoreUtil.replace(line, "{stats_leveled}", "");
+                            line = TextUtil.replace(line, "{stats_leveled}", "");
                         }
                     case "ability_levels":
-                        line = LoreUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerData, locale));
+                        line = TextUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerData, locale));
                         break;
                     case "mana_ability":
-                        line = LoreUtil.replace(line, "{mana_ability}", getManaAbilityLore(skill, playerData, locale));
+                        line = TextUtil.replace(line, "{mana_ability}", getManaAbilityLore(skill, playerData, locale));
                         break;
                     case "level":
-                        line = LoreUtil.replace(line,"{level}", LoreUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale),"{level}", RomanNumber.toRoman(skillLevel)));
+                        line = TextUtil.replace(line,"{level}", TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale),"{level}", RomanNumber.toRoman(skillLevel)));
                         break;
                     case "progress_to_level":
                         if (skillLevel < OptionL.getMaxLevel(skill)) {
                             double currentXp = playerData.getSkillXp(skill);
                             double xpToNext = plugin.getLeveler().getLevelRequirements().get(skillLevel - 1);
-                            line = LoreUtil.replace(line,"{progress_to_level}", LoreUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
+                            line = TextUtil.replace(line,"{progress_to_level}", TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
                                     ,"{level}", RomanNumber.toRoman(skillLevel + 1)
                                     ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
                                     ,"{current_xp}", NumberUtil.format2(currentXp)
                                     ,"{level_xp}", String.valueOf((int) xpToNext)));
                         } else {
-                            line = LoreUtil.replace(line,"{progress_to_level}", "");
+                            line = TextUtil.replace(line,"{progress_to_level}", "");
                         }
                         break;
                     case "max_level":
                         if (skillLevel >= OptionL.getMaxLevel(skill)) {
-                            line = LoreUtil.replace(line,"{max_level}", Lang.getMessage(MenuMessage.MAX_LEVEL, locale));
+                            line = TextUtil.replace(line,"{max_level}", Lang.getMessage(MenuMessage.MAX_LEVEL, locale));
                         } else {
-                            line = LoreUtil.replace(line,"{max_level}", "");
+                            line = TextUtil.replace(line,"{max_level}", "");
                         }
                         break;
                     case "skill_click":
-                        line = LoreUtil.replace(line,"{skill_click}", Lang.getMessage(MenuMessage.SKILL_CLICK, locale));
+                        line = TextUtil.replace(line,"{skill_click}", Lang.getMessage(MenuMessage.SKILL_CLICK, locale));
                 }
             }
             builtLore.add(line);
@@ -142,18 +142,18 @@ public class SkillInfoItem {
                 if (plugin.getAbilityManager().isEnabled(ability)) {
                     if (playerData.getAbilityLevel(ability) > 0) {
                         int abilityLevel = playerData.getAbilityLevel(ability);
-                        levelsMessage = LoreUtil.replace(levelsMessage, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
+                        levelsMessage = TextUtil.replace(levelsMessage, "{ability_" + num + "}", TextUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY, locale)
                                 , "{ability}", ability.getDisplayName(locale)
                                 , "{level}", RomanNumber.toRoman(playerData.getAbilityLevel(ability))
-                                , "{info}", LoreUtil.replace(ability.getInfo(locale)
+                                , "{info}", TextUtil.replace(ability.getInfo(locale)
                                         , "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, abilityLevel))
                                         , "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, abilityLevel)))));
                     } else {
-                        levelsMessage = LoreUtil.replace(levelsMessage, "{ability_" + num + "}", LoreUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)
+                        levelsMessage = TextUtil.replace(levelsMessage, "{ability_" + num + "}", TextUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL_ENTRY_LOCKED, locale)
                                 , "{ability}", ability.getDisplayName(locale)));
                     }
                 } else {
-                    levelsMessage = LoreUtil.replace(levelsMessage, "\\n  {ability_" + num + "}", ""
+                    levelsMessage = TextUtil.replace(levelsMessage, "\\n  {ability_" + num + "}", ""
                             , "{ability_" + num + "}", "");
                 }
                 num++;
@@ -170,7 +170,7 @@ public class SkillInfoItem {
             int level = playerData.getManaAbilityLevel(mAbility);
             if (level > 0 && plugin.getAbilityManager().isEnabled(mAbility)) {
                 ManaAbilityManager manager = plugin.getManaAbilityManager();
-                manaAbilityLore.append(LoreUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)
+                manaAbilityLore.append(TextUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)
                         , "{mana_ability}", mAbility.getDisplayName(locale)
                         , "{level}", RomanNumber.toRoman(level)
                         , "{duration}", NumberUtil.format1(manager.getValue(mAbility, level))

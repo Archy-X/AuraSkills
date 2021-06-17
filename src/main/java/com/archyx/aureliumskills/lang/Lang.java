@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -136,7 +136,7 @@ public class Lang implements Listener {
 				}
 				String message = config.getString(path);
 				if (message != null) {
-					messages.put(key, LoreUtil.replace(message
+					messages.put(key, TextUtil.replace(message
 							,"&", "§"
 							,"{mana_unit}", units.get(UnitMessage.MANA)
 							,"{hp_unit}", units.get(UnitMessage.HP)
@@ -153,11 +153,11 @@ public class Lang implements Listener {
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), LoreUtil.replace(config.getString(path), "&", "§"));
+			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
 		}
 		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), LoreUtil.replace(config.getString(path), "&", "§"));
+			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
 		}
 		Lang.messages.put(locale, messages);
 	}
@@ -217,12 +217,18 @@ public class Lang implements Listener {
 							// Messages to override
 							for (MessageUpdates update : MessageUpdates.values()) {
 								if (currentVersion < update.getVersion() && imbVersion >= update.getVersion()) {
-									ConfigurationSection section = imbConfig.getConfigurationSection(update.getSection());
+									ConfigurationSection section = imbConfig.getConfigurationSection(update.getPath());
 									if (section != null) {
 										for (String key : section.getKeys(false)) {
 											config.set(section.getCurrentPath() + "." + key, section.getString(key));
 										}
 										Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+									} else {
+										Object value = imbConfig.get(update.getPath());
+										if (value != null) {
+											config.set(update.getPath(), value);
+											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										}
 									}
 								}
 							}

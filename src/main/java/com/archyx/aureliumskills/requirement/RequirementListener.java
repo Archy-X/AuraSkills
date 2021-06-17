@@ -9,17 +9,16 @@ import com.archyx.aureliumskills.lang.MessageKey;
 import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.armor.ArmorEquipEvent;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
@@ -68,19 +67,19 @@ public class RequirementListener implements Listener {
         StringBuilder requirementsString = new StringBuilder();
         Map<Skill, Integer> requirementMap = requirements.getRequirements(modifierType, item);
         for (Map.Entry<Skill, Integer> entry : requirementMap.entrySet()) {
-            requirementsString.append(LoreUtil.replace(Lang.getMessage(entryMessage, locale),
+            requirementsString.append(TextUtil.replace(Lang.getMessage(entryMessage, locale),
                     "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
         }
         Map<Skill, Integer> globalRequirementMap = requirements.getGlobalRequirements(modifierType, item);
         for (Map.Entry<Skill, Integer> entry : globalRequirementMap.entrySet()) {
-            requirementsString.append(LoreUtil.replace(Lang.getMessage(entryMessage, locale),
+            requirementsString.append(TextUtil.replace(Lang.getMessage(entryMessage, locale),
                     "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
         }
         if (requirementsString.length() >= 2) {
             requirementsString.delete(requirementsString.length() - 2, requirementsString.length());
         }
 
-        player.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(baseMessage, locale)
+        player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(baseMessage, locale)
                 , "{requirements}", requirementsString.toString()));
     }
 
@@ -90,22 +89,8 @@ public class RequirementListener implements Listener {
         if (OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_TOOL_USE)) {
             Player player = event.getPlayer();
             ItemStack item = player.getInventory().getItemInMainHand();
-            if (item.getType() != Material.AIR) {
-                if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
-                    Locale locale = plugin.getLang().getLocale(player);
-                    event.setCancelled(true);
-                    Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
-                    if (timer != null) {
-                        if (timer.equals(0)) {
-                            sendMessage(CommandMessage.ITEM_REQUIREMENT_USE, CommandMessage.ITEM_REQUIREMENT_ENTRY, ModifierType.ITEM, player, locale, item);
-                            manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
-                        }
-                    } else {
-                        sendMessage(CommandMessage.ITEM_REQUIREMENT_USE, CommandMessage.ITEM_REQUIREMENT_ENTRY, ModifierType.ITEM, player, locale, item);
-                        manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
-                    }
-                }
-            }
+            if (item.getType() == Material.AIR) return;
+            checkItemRequirements(player, item, event);
         }
     }
 
@@ -115,22 +100,8 @@ public class RequirementListener implements Listener {
         if (OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE)) {
             Player player = event.getPlayer();
             ItemStack item = event.getItemInHand();
-            if (item.getType() != Material.AIR) {
-                if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
-                    Locale locale = plugin.getLang().getLocale(player);
-                    event.setCancelled(true);
-                    Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
-                    if (timer != null) {
-                        if (timer.equals(0)) {
-                            sendMessage(CommandMessage.ITEM_REQUIREMENT_USE, CommandMessage.ITEM_REQUIREMENT_ENTRY, ModifierType.ITEM, player, locale, item);
-                            manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
-                        }
-                    } else {
-                        sendMessage(CommandMessage.ITEM_REQUIREMENT_USE, CommandMessage.ITEM_REQUIREMENT_ENTRY, ModifierType.ITEM, player, locale, item);
-                        manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
-                    }
-                }
-            }
+            if (item.getType() == Material.AIR) return;
+            checkItemRequirements(player, item, event);
         }
     }
 
@@ -141,22 +112,8 @@ public class RequirementListener implements Listener {
             if (event.getDamager() instanceof Player) {
                 Player player = (Player) event.getDamager();
                 ItemStack item = player.getInventory().getItemInMainHand();
-                if (item.getType() != Material.AIR) {
-                    if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
-                        Locale locale = plugin.getLang().getLocale(player);
-                        event.setCancelled(true);
-                        Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
-                        if (timer != null) {
-                            if (timer.equals(0)) {
-                                sendMessage(CommandMessage.ITEM_REQUIREMENT_USE, CommandMessage.ITEM_REQUIREMENT_ENTRY, ModifierType.ITEM, player, locale, item);
-                                manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
-                            }
-                        } else {
-                            sendMessage(CommandMessage.ITEM_REQUIREMENT_USE, CommandMessage.ITEM_REQUIREMENT_ENTRY, ModifierType.ITEM, player, locale, item);
-                            manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
-                        }
-                    }
-                }
+                if (item.getType() == Material.AIR) return;
+                checkItemRequirements(player, item, event);
             }
         }
     }
@@ -172,6 +129,21 @@ public class RequirementListener implements Listener {
         if (item == null) return;
         if (item.getType() == Material.AIR) return;
 
+        checkItemRequirements(player, item, event);
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onInteract(PlayerInteractEvent event) {
+        if (event.useItemInHand() == Event.Result.DENY) return;
+        if (!OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_TOOL_USE)) return;
+
+        ItemStack item = event.getItem();
+        if (item == null) return;
+        if (item.getType() == Material.AIR) return;
+        checkItemRequirements(event.getPlayer(), event.getItem(), event);
+    }
+
+    private void checkItemRequirements(Player player, ItemStack item, Cancellable event) {
         if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
             Locale locale = plugin.getLang().getLocale(player);
             event.setCancelled(true);

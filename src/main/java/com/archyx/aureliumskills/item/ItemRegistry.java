@@ -66,8 +66,10 @@ public class ItemRegistry {
             items.put(key, item);
             itemsRegistered++;
         }
-        if (itemsRegistered > 0) {
+        if (itemsRegistered > 1) {
             plugin.getLogger().info("Registered " + itemsRegistered + " items");
+        } else if (itemsRegistered == 1) {
+            plugin.getLogger().info("Registered " + itemsRegistered + " item");
         }
     }
 

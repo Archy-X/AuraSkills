@@ -2,7 +2,7 @@ package com.archyx.aureliumskills;
 
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
-import com.archyx.aureliumskills.abilities.*;
+import com.archyx.aureliumskills.ability.AbilityManager;
 import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.aureliumskills.commands.ManaCommand;
 import com.archyx.aureliumskills.commands.SkillCommands;
@@ -24,6 +24,8 @@ import com.archyx.aureliumskills.data.storage.YamlStorageProvider;
 import com.archyx.aureliumskills.item.ItemRegistry;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
+import com.archyx.aureliumskills.leveler.Leveler;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
@@ -42,17 +44,47 @@ import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
 import com.archyx.aureliumskills.rewards.RewardManager;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.SkillBossBar;
 import com.archyx.aureliumskills.skills.SkillRegistry;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
-import com.archyx.aureliumskills.skills.levelers.*;
-import com.archyx.aureliumskills.skills.sources.SourceManager;
-import com.archyx.aureliumskills.skills.sources.SourceRegistry;
+import com.archyx.aureliumskills.skills.agility.AgilityAbilities;
+import com.archyx.aureliumskills.skills.agility.AgilityLeveler;
+import com.archyx.aureliumskills.skills.alchemy.AlchemyAbilities;
+import com.archyx.aureliumskills.skills.alchemy.AlchemyLeveler;
+import com.archyx.aureliumskills.skills.archery.ArcheryAbilities;
+import com.archyx.aureliumskills.skills.archery.ArcheryLeveler;
+import com.archyx.aureliumskills.skills.defense.DefenseAbilities;
+import com.archyx.aureliumskills.skills.defense.DefenseLeveler;
+import com.archyx.aureliumskills.skills.enchanting.EnchantingAbilities;
+import com.archyx.aureliumskills.skills.enchanting.EnchantingLeveler;
+import com.archyx.aureliumskills.skills.endurance.EnduranceAbilities;
+import com.archyx.aureliumskills.skills.endurance.EnduranceLeveler;
+import com.archyx.aureliumskills.skills.excavation.ExcavationAbilities;
+import com.archyx.aureliumskills.skills.excavation.ExcavationLeveler;
+import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
+import com.archyx.aureliumskills.skills.farming.FarmingLeveler;
+import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
+import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
+import com.archyx.aureliumskills.skills.fishing.FishingAbilities;
+import com.archyx.aureliumskills.skills.fishing.FishingLeveler;
+import com.archyx.aureliumskills.skills.foraging.ForagingAbilities;
+import com.archyx.aureliumskills.skills.foraging.ForagingLeveler;
+import com.archyx.aureliumskills.skills.forging.ForgingAbilities;
+import com.archyx.aureliumskills.skills.forging.ForgingLeveler;
+import com.archyx.aureliumskills.skills.healing.HealingAbilities;
+import com.archyx.aureliumskills.skills.healing.HealingLeveler;
+import com.archyx.aureliumskills.skills.mining.MiningAbilities;
+import com.archyx.aureliumskills.skills.mining.MiningLeveler;
+import com.archyx.aureliumskills.skills.sorcery.SorceryLeveler;
+import com.archyx.aureliumskills.source.SourceManager;
+import com.archyx.aureliumskills.source.SourceRegistry;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
+import com.archyx.aureliumskills.ui.ActionBar;
+import com.archyx.aureliumskills.ui.SkillBossBar;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
+import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
@@ -124,7 +156,6 @@ public class AureliumSkills extends JavaPlugin {
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
-	private final long releaseTime = 1623427622106L;
 
 	public void onEnable() {
 		// Registries
@@ -166,7 +197,7 @@ public class AureliumSkills extends JavaPlugin {
 			vaultEnabled = false;
 		}
 		// Check for protocol lib
-		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
+		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib") && !VersionUtils.isAtLeastVersion(17);
 		// Check towny
 		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
 		townySupport = new TownySupport(this);
@@ -297,7 +328,7 @@ public class AureliumSkills extends JavaPlugin {
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
 		getLogger().info("Aurelium Skills has been enabled");
-		if (System.currentTimeMillis() > releaseTime + 21600000L) {
+		if (System.currentTimeMillis() > ReleaseData.RELEASE_TIME + 21600000L) {
 			checkUpdates();
 		}
 		MinecraftVersion.disableUpdateCheck();
@@ -315,7 +346,7 @@ public class AureliumSkills extends JavaPlugin {
 			// Save config
 			saveConfig();
 		}
-		regionManager.saveAllRegions(false);
+		regionManager.saveAllRegions(false, true);
 		regionManager.clearRegionMap();
 		backupAutomatically();
 		itemRegistry.saveToFile();
@@ -694,10 +725,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isLuckPermsEnabled() {
 		return luckPermsEnabled;
-	}
-
-	public long getReleaseTime() {
-		return releaseTime;
 	}
 
 	public Health getHealth() {

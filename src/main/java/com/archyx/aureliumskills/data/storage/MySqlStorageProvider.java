@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.data.storage;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.AbstractAbility;
+import com.archyx.aureliumskills.ability.AbstractAbility;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
@@ -9,13 +9,13 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
+import com.archyx.aureliumskills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.leaderboard.LeaderboardManager;
-import com.archyx.aureliumskills.skills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import com.google.gson.*;
 import org.apache.commons.lang.math.NumberUtils;
@@ -150,6 +150,7 @@ public class MySqlStorageProvider extends StorageProvider {
                                 unclaimedItems.add(new KeyIntPair(itemKey, amount));
                             }
                             playerData.setUnclaimedItems(unclaimedItems);
+                            playerData.clearInvalidItems();
                         }
                         playerManager.addPlayerData(playerData);
                         plugin.getLeveler().updatePermissions(player);
@@ -355,7 +356,7 @@ public class MySqlStorageProvider extends StorageProvider {
                     }
                 }
             } catch (Exception e) {
-                sender.sendMessage(AureliumSkills.getPrefix(locale) + LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
             }
         }
     }
