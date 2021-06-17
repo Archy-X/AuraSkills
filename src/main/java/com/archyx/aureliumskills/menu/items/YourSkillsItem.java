@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -24,7 +24,7 @@ public class YourSkillsItem extends ConfigurableItem {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(applyPlaceholders(LoreUtil.replace(displayName,"{your_skills}", LoreUtil.replace(Lang.getMessage(MenuMessage.YOUR_SKILLS, locale)
+            meta.setDisplayName(applyPlaceholders(TextUtil.replace(displayName,"{your_skills}", TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_SKILLS, locale)
                     ,"{player}", player.getName())), player));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
@@ -33,13 +33,13 @@ public class YourSkillsItem extends ConfigurableItem {
                 for (String placeholder : placeholders) {
                     switch (placeholder) {
                         case "desc":
-                            line = LoreUtil.setPlaceholders("desc", MenuMessage.YOUR_SKILLS_DESC, locale, line);
+                            line = TextUtil.replace(line, "{desc}", Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC, locale));
                             break;
                         case "hover":
-                            line = LoreUtil.setPlaceholders("hover", MenuMessage.YOUR_SKILLS_HOVER, locale, line);
+                            line = TextUtil.replace(line, "{hover}", Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER, locale));
                             break;
                         case "click":
-                            line = LoreUtil.setPlaceholders("click", MenuMessage.YOUR_SKILLS_CLICK, locale, line);
+                            line = TextUtil.replace(line, "{click}", Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK, locale));
                             break;
                     }
                 }

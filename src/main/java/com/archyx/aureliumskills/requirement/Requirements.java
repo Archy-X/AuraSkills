@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -131,7 +131,7 @@ public class Requirements {
     public void addLore(ModifierType type, ItemStack item, Skill skill, int level, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            String text = LoreUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_REQUIREMENT_ADD_LORE"), locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
+            String text = TextUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_REQUIREMENT_ADD_LORE"), locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
             List<String> lore;
             if (meta.hasLore()) lore = meta.getLore();
             else lore = new ArrayList<>();

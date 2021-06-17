@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.region;
 
 import com.google.common.base.Objects;
+import org.bukkit.block.Block;
 
 public class BlockPosition {
 
@@ -24,6 +25,10 @@ public class BlockPosition {
 
     public int getZ() {
         return z;
+    }
+
+    public static BlockPosition fromBlock(Block block) {
+        return new BlockPosition(block.getX(), block.getY(), block.getZ());
     }
 
     @Override

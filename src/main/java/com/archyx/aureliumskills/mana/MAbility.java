@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.mana;
 
-import com.archyx.aureliumskills.abilities.AbstractAbility;
+import com.archyx.aureliumskills.ability.AbstractAbility;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;

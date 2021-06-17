@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.data;
 
-import com.archyx.aureliumskills.abilities.AbstractAbility;
+import com.archyx.aureliumskills.ability.AbstractAbility;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;

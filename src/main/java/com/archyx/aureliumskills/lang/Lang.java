@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -124,7 +124,7 @@ public class Lang implements Listener {
 		for (MessageKey key : MessageKey.values()) {
 			String message = config.getString(key.getPath());
 			if (message != null) {
-				messages.put(key, LoreUtil.replace(message
+				messages.put(key, TextUtil.replace(message
 						,"&", "§"
 						,"{mana_unit}", units.get(UnitMessage.MANA)
 						,"{hp_unit}", units.get(UnitMessage.HP)
@@ -138,11 +138,11 @@ public class Lang implements Listener {
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), LoreUtil.replace(config.getString(path), "&", "§"));
+			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
 		}
 		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), LoreUtil.replace(config.getString(path), "&", "§"));
+			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
 		}
 		Lang.messages.put(locale, messages);
 	}

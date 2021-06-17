@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -24,14 +24,14 @@ public class PreviousPageItem extends ConfigurableItem {
         ItemStack item = baseItem.clone();
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(applyPlaceholders(LoreUtil.replace(displayName,"{previous_page}", Lang.getMessage(MenuMessage.PREVIOUS_PAGE, locale)), player));
+            meta.setDisplayName(applyPlaceholders(TextUtil.replace(displayName,"{previous_page}", Lang.getMessage(MenuMessage.PREVIOUS_PAGE, locale)), player));
             List<String> builtLore = new ArrayList<>();
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
                 Set<String> placeholders = lorePlaceholders.get(i);
                 for (String placeholder : placeholders) {
                     if (placeholder.equals("previous_page_click")) {
-                        line = LoreUtil.replace(line,"{previous_page_click}", Lang.getMessage(MenuMessage.PREVIOUS_PAGE_CLICK, locale));
+                        line = TextUtil.replace(line,"{previous_page_click}", Lang.getMessage(MenuMessage.PREVIOUS_PAGE_CLICK, locale));
                     }
                 }
                 builtLore.add(line);

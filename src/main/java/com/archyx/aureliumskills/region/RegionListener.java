@@ -42,7 +42,7 @@ public class RegionListener implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                regionManager.saveWorldRegions(event.getWorld(), true);
+                regionManager.saveWorldRegions(event.getWorld(), true, false);
             }
         }.runTaskAsynchronously(plugin);
     }

@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.skills;
 
-import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;

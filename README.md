@@ -28,7 +28,7 @@ Aurelium Skills provides a developer API to interact with the plugin.
 </repository>
 
 <dependency>
-    <groupId>com.github.Archy-x</groupId>
+    <groupId>com.github.Archy-X</groupId>
     <artifactId>AureliumSkills</artifactId>
     <version>{version}</version>
 </dependency>

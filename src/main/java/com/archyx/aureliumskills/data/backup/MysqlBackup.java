@@ -6,7 +6,7 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -65,7 +65,7 @@ public class MysqlBackup extends BackupProvider {
                     }
                     config.save(file);
                     Locale locale = plugin.getLang().getLocale(sender);
-                    String message = LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
+                    String message = TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
                             , "{type}", "MySQL", "{file}", file.getName());
                     if (sender instanceof ConsoleCommandSender) {
                         plugin.getLogger().info(ChatColor.stripColor(message));
@@ -76,7 +76,7 @@ public class MysqlBackup extends BackupProvider {
             }
         } catch (Exception e) {
             Locale locale = plugin.getLang().getLocale(sender);
-            String message = LoreUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_ERROR, locale), "{type}", "MySQL");
+            String message = TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_ERROR, locale), "{type}", "MySQL");
             if (sender instanceof ConsoleCommandSender) {
                 plugin.getLogger().warning(ChatColor.stripColor(message));
             } else {

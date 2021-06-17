@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.support;
 
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
@@ -32,7 +32,7 @@ public class WorldGuardFlags {
             Object def = flagKey.getDefault();
             // State flags
             if (def instanceof Boolean) {
-                String flagName = "aureliumskills-" + LoreUtil.replace(flagKey.toString().toLowerCase(Locale.ROOT), "_", "-");
+                String flagName = "aureliumskills-" + TextUtil.replace(flagKey.toString().toLowerCase(Locale.ROOT), "_", "-");
                 try {
                     StateFlag stateFlag = new StateFlag(flagName, (boolean) def);
                     registry.register(stateFlag);
