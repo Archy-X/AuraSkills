@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.lang;
 
-import com.archyx.aureliumskills.abilities.Ability;
+import com.archyx.aureliumskills.ability.Ability;
 
 import java.util.Locale;
 

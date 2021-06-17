@@ -1,9 +1,15 @@
 package com.archyx.aureliumskills.listeners;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.*;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.skills.archery.ArcheryAbilities;
+import com.archyx.aureliumskills.skills.defense.DefenseAbilities;
+import com.archyx.aureliumskills.skills.excavation.ExcavationAbilities;
+import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
+import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
+import com.archyx.aureliumskills.skills.foraging.ForagingAbilities;
+import com.archyx.aureliumskills.skills.mining.MiningAbilities;
 import com.archyx.aureliumskills.stats.Strength;
 import com.archyx.aureliumskills.stats.Toughness;
 import com.archyx.aureliumskills.util.mechanics.DamageType;

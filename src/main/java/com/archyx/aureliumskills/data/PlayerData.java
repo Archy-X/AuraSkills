@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.data;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.Ability;
-import com.archyx.aureliumskills.abilities.AbstractAbility;
+import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.ability.AbstractAbility;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
