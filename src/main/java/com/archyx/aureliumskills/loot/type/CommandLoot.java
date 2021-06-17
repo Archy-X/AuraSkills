@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.loot.type;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.loot.Loot;
-import com.archyx.aureliumskills.util.item.LoreUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ public class CommandLoot extends Loot {
 
     public void giveLoot(Player player) {
         // Apply placeholders to command
-        String finalCommand = LoreUtil.replace(command, "{player}", player.getName());
+        String finalCommand = TextUtil.replace(command, "{player}", player.getName());
         if (plugin.isPlaceholderAPIEnabled()) {
             finalCommand = PlaceholderAPI.setPlaceholders(player, finalCommand);
         }

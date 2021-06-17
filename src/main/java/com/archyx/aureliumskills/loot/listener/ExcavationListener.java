@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.loot.listener;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.abilities.Ability;
-import com.archyx.aureliumskills.abilities.AbilityProvider;
+import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.ability.AbilityProvider;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.loot.Loot;
@@ -11,7 +11,7 @@ import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.BlockItemLoot;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.sources.ExcavationSource;
+import com.archyx.aureliumskills.skills.excavation.ExcavationSource;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

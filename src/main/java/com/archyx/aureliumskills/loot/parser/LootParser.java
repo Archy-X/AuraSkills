@@ -2,8 +2,8 @@ package com.archyx.aureliumskills.loot.parser;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.Loot;
-import com.archyx.aureliumskills.util.item.LoreUtil;
 import com.archyx.aureliumskills.util.misc.Parser;
+import com.archyx.aureliumskills.util.text.TextUtil;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public abstract class LootParser extends Parser {
 
     protected String getMessage(Map<?, ?> map) {
         if (map.containsKey("message")) {
-            return LoreUtil.replace(getString(map, "message"), "&", "§");
+            return TextUtil.replace(getString(map, "message"), "&", "§");
         } else {
             return "";
         }
