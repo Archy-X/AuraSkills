@@ -1,27 +1,24 @@
 package com.archyx.aureliumskills.api.event;
 
 import com.archyx.aureliumskills.menu.MenuType;
+import fr.minuskube.inv.content.InventoryContents;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Event when a player opens an Aurelium Skills menu, either through commands or switching from another.
- * Calls before the menu is actually opened. Will not call when changing pages in the same menu type.
- */
-public class MenuOpenEvent extends Event {
+public class MenuInitializeEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
     private final Player player;
     private final MenuType type;
-    private boolean cancelled;
+    private final InventoryContents contents;
 
-    public MenuOpenEvent(Player player, MenuType type) {
+    public MenuInitializeEvent(Player player, MenuType type, InventoryContents contents) {
         this.player = player;
         this.type = type;
-        this.cancelled = false;
+        this.contents = contents;
     }
 
     public Player getPlayer() {
@@ -32,12 +29,8 @@ public class MenuOpenEvent extends Event {
         return type;
     }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public InventoryContents getContents() {
+        return contents;
     }
 
     @NotNull
@@ -49,5 +42,4 @@ public class MenuOpenEvent extends Event {
     public static HandlerList getHandlerList() {
         return handlers;
     }
-
 }

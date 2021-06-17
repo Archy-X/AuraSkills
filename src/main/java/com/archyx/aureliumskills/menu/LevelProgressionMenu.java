@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.MenuInitializeEvent;
 import com.archyx.aureliumskills.api.event.MenuOpenEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -70,7 +71,7 @@ public class LevelProgressionMenu implements InventoryProvider {
 		contents.set(backItem.getPos(), ClickableItem.of(backItem.getItem(player, locale), e -> {
 			SmartInventory inventory = SkillsMenu.getInventory(player, plugin);
 			if (inventory == null) return;
-			MenuOpenEvent event = new MenuOpenEvent(player, MenuOpenEvent.MenuType.SKILLS);
+			MenuOpenEvent event = new MenuOpenEvent(player, MenuType.SKILLS);
 			Bukkit.getPluginManager().callEvent(event);
 			if (event.isCancelled()) return;
 			inventory.open(player);
@@ -143,6 +144,10 @@ public class LevelProgressionMenu implements InventoryProvider {
 				inventory.open(player, previous);
 			}));
 		}
+
+		// Call API event
+		MenuInitializeEvent event = new MenuInitializeEvent(player, MenuType.LEVEL_PROGRESSION, contents);
+		Bukkit.getPluginManager().callEvent(event);
 	}
 
 	@Override

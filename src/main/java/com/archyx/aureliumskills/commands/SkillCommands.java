@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.api.event.MenuOpenEvent;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menu.LevelProgressionMenu;
+import com.archyx.aureliumskills.menu.MenuType;
 import com.archyx.aureliumskills.menu.SkillsMenu;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.Bukkit;
@@ -301,7 +302,7 @@ public class SkillCommands {
     }
 
     private static boolean handleEvent(Player player) {
-        MenuOpenEvent event = new MenuOpenEvent(player, MenuOpenEvent.MenuType.LEVEL_PROGRESSION);
+        MenuOpenEvent event = new MenuOpenEvent(player, MenuType.LEVEL_PROGRESSION);
         Bukkit.getPluginManager().callEvent(event);
         return event.isCancelled();
     }

@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.menu;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.MenuInitializeEvent;
 import com.archyx.aureliumskills.api.event.MenuOpenEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -97,6 +98,9 @@ public class SkillsMenu implements InventoryProvider{
 		if (OptionL.isEnabled(Skills.FORGING)) {
 			contents.set(skillTemplate.getPosition(Skills.FORGING), ClickableItem.of(skillTemplate.getItem(Skills.FORGING, playerData, player, locale), e -> open(player, playerData, Skills.FORGING)));
 		}
+		// Call API event
+		MenuInitializeEvent event = new MenuInitializeEvent(player, MenuType.SKILLS, contents);
+		Bukkit.getPluginManager().callEvent(event);
 	}
 
 	public void update(Player player, InventoryContents contents) {
@@ -116,7 +120,7 @@ public class SkillsMenu implements InventoryProvider{
 		if (player.hasPermission("aureliumskills." + skill.name().toLowerCase(Locale.ENGLISH))) {
 			int page = getPage(skill, playerData);
 			SmartInventory inventory  = LevelProgressionMenu.getInventory(playerData, skill, page, plugin);
-			MenuOpenEvent event = new MenuOpenEvent(player, MenuOpenEvent.MenuType.LEVEL_PROGRESSION);
+			MenuOpenEvent event = new MenuOpenEvent(player, MenuType.LEVEL_PROGRESSION);
 			Bukkit.getPluginManager().callEvent(event);
 			if (event.isCancelled()) return;
 			inventory.open(player, page);

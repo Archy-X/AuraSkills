@@ -13,6 +13,7 @@ import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.leaderboard.SkillValue;
+import com.archyx.aureliumskills.menu.MenuType;
 import com.archyx.aureliumskills.menu.SkillsMenu;
 import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.modifier.Modifiers;
@@ -61,7 +62,7 @@ public class SkillsCommand extends BaseCommand {
 	public void onSkills(Player player) {
 		SmartInventory inventory = SkillsMenu.getInventory(player, plugin);
 		if (inventory != null) {
-			MenuOpenEvent event = new MenuOpenEvent(player, MenuOpenEvent.MenuType.SKILLS);
+			MenuOpenEvent event = new MenuOpenEvent(player, MenuType.SKILLS);
 			Bukkit.getPluginManager().callEvent(event);
 			if (event.isCancelled()) return;
 			inventory.open(player);
