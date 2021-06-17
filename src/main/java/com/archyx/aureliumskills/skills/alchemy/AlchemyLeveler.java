@@ -6,13 +6,16 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.leveler.Leveler;
 import com.archyx.aureliumskills.leveler.SkillLeveler;
-import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.region.BlockPosition;
 import com.archyx.aureliumskills.skills.Skills;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.BrewingStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,56 +23,97 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class AlchemyLeveler extends SkillLeveler implements Listener {
 
+	private final Map<BlockPosition, BrewingStandData> brewingStands;
+
 	public AlchemyLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.BREWER);
+		this.brewingStands = new HashMap<>();
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBrew(BrewEvent event) {
-		if (OptionL.isEnabled(Skills.ALCHEMY)) {
-			//Check cancelled
-			if (OptionL.getBoolean(Option.ALCHEMY_CHECK_CANCELLED)) {
-				if (event.isCancelled()) {
-					return;
-				}
+		if (!OptionL.isEnabled(Skills.ALCHEMY)) return;
+		// Check cancelled
+		if (OptionL.getBoolean(Option.ALCHEMY_CHECK_CANCELLED)) {
+			if (event.isCancelled()) {
+				return;
 			}
+		}
+		if (OptionL.getBoolean(Option.ALCHEMY_GIVE_XP_ON_TAKEOUT)) {
+			checkBrewedSlots(event);
+		} else {
 			if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
 				OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
 				if (offlinePlayer.isOnline()) {
 					if (event.getContents().getIngredient() != null) {
-						Player p = offlinePlayer.getPlayer();
-						if (p != null) {
-							if (blockXpGainLocation(event.getBlock().getLocation(), p)) return;
-							if (blockXpGainPlayer(p)) return;
-							Skill s = Skills.ALCHEMY;
-							Material mat = event.getContents().getIngredient().getType();
-							Leveler leveler = plugin.getLeveler();
-							if (mat.equals(Material.REDSTONE)) {
-								leveler.addXp(p, s, getXp(p, AlchemySource.EXTENDED));
-							} else if (mat.equals(Material.GLOWSTONE_DUST)) {
-								leveler.addXp(p, s, getXp(p, AlchemySource.UPGRADED));
-							} else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
-								leveler.addXp(p, s, getXp(p, AlchemySource.AWKWARD));
-							} else if (mat.equals(XMaterial.GUNPOWDER.parseMaterial())) {
-								leveler.addXp(p, s, getXp(p, AlchemySource.SPLASH));
-							} else if (mat.equals(XMaterial.DRAGON_BREATH.parseMaterial())) {
-								leveler.addXp(p, s, getXp(p, AlchemySource.LINGERING));
-							} else {
-								leveler.addXp(p, s, getXp(p, AlchemySource.REGULAR));
-							}
+						Player player = offlinePlayer.getPlayer();
+						if (player != null) {
+							if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
+							if (blockXpGainPlayer(player)) return;
+							addAlchemyXp(player, event.getContents().getIngredient().getType());
 						}
 					}
 				}
 			}
 		}
+	}
+
+	private void addAlchemyXp(Player player, Material mat) {
+		Leveler leveler = plugin.getLeveler();
+		if (mat.equals(Material.REDSTONE)) {
+			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.EXTENDED));
+		} else if (mat.equals(Material.GLOWSTONE_DUST)) {
+			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.UPGRADED));
+		} else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
+			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.AWKWARD));
+		} else if (mat.equals(XMaterial.GUNPOWDER.parseMaterial())) {
+			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.SPLASH));
+		} else if (mat.equals(XMaterial.DRAGON_BREATH.parseMaterial())) {
+			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.LINGERING));
+		} else {
+			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.REGULAR));
+		}
+	}
+
+	private void checkBrewedSlots(BrewEvent event) {
+		BrewerInventory before = event.getContents();
+		ItemStack[] beforeItems = Arrays.copyOf(before.getContents(), 3); // Items in result slots before
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				BlockState blockState = event.getBlock().getState();
+				if (blockState instanceof BrewingStand) {
+					BrewingStand brewingStand = (BrewingStand) blockState;
+					BrewerInventory after = brewingStand.getInventory();
+					ItemStack[] afterItems = Arrays.copyOf(after.getContents(), 3); // Items in result slots after
+					BrewingStandData standData = new BrewingStandData();
+					// Set the items that changed as brewed
+					for (int i = 0; i < 3; i++) {
+						ItemStack beforeItem = beforeItems[i];
+						ItemStack afterItem = afterItems[i];
+						if (beforeItem != null && beforeItem.getType() != Material.AIR && afterItem != null && afterItem.getType() != Material.AIR) {
+							if (!beforeItem.equals(afterItem)) {
+								standData.setSlotBrewed(i, true);
+							}
+						}
+					}
+					brewingStands.put(BlockPosition.fromBlock(event.getBlock()), standData); // Register the stand data
+				}
+			}
+		}.runTaskLater(plugin, 1);
 	}
 	
 	@EventHandler
@@ -89,6 +133,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 					event.getBlock().removeMetadata("skillsBrewingStandOwner", plugin);
 				}
 			}
+			brewingStands.remove(BlockPosition.fromBlock(event.getBlock()));
 		}
 	}
 	
@@ -111,6 +156,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onTakePotionOut(InventoryClickEvent event) {
 		if (!OptionL.isEnabled(Skills.ALCHEMY)) return;
+		if (!OptionL.getBoolean(Option.ALCHEMY_GIVE_XP_ON_TAKEOUT)) return;
 		// Check cancelled
 		if (OptionL.getBoolean(Option.ALCHEMY_CHECK_CANCELLED)) {
 			if (event.isCancelled()) {
@@ -119,19 +165,37 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 		}
 		Inventory inventory = event.getClickedInventory();
 		if (inventory == null) return;
-		if (inventory.getType() != InventoryType.BREWING) return;
+		if (inventory.getType() != InventoryType.BREWING && !(inventory instanceof BrewerInventory)) return;
+		BrewerInventory brewerInventory = (BrewerInventory) inventory;
 
-		if (!(event.getWhoClicked() instanceof Player)) return;
-		Player player = (Player) event.getWhoClicked();
-		if (event.getSlot() > 2) return; // Slots 0-2 are result slots
+		int slot = event.getSlot();
+		if (slot > 2) return; // Slots 0-2 are result slots
+
 		InventoryAction action = event.getAction();
 		// Filter out other actions
 		if (action != InventoryAction.PICKUP_ALL && action != InventoryAction.PICKUP_HALF && action != InventoryAction.PICKUP_SOME
-				&& action != InventoryAction.PICKUP_ONE && action != InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+				&& action != InventoryAction.PICKUP_ONE && action != InventoryAction.MOVE_TO_OTHER_INVENTORY && action != InventoryAction.HOTBAR_SWAP
+				&& action != InventoryAction.HOTBAR_MOVE_AND_READD) {
 			return;
 		}
 		ItemStack item = event.getCurrentItem();
 		if (item == null) return;
-		// player.sendMessage("You took out a potion");
+		// Get the brewing stand data
+		Location location = inventory.getLocation();
+		if (location == null) return;
+		BrewingStandData standData = brewingStands.get(BlockPosition.fromBlock(location.getBlock()));
+		if (standData == null) return;
+
+		if (!(event.getWhoClicked() instanceof Player)) return;
+		Player player = (Player) event.getWhoClicked();
+		if (blockXpGainLocation(location, player)) return;
+		if (blockXpGainPlayer(player)) return;
+
+		if (!standData.isSlotBrewed(slot)) return; // Check that the slot was brewed
+
+		ItemStack ingredient = brewerInventory.getIngredient();
+		if (ingredient == null) return;
+		addAlchemyXp(player, ingredient.getType()); // Add XP
+		standData.setSlotBrewed(slot, false); // Set data to false
 	}
 }
