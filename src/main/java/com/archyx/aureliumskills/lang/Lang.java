@@ -217,12 +217,18 @@ public class Lang implements Listener {
 							// Messages to override
 							for (MessageUpdates update : MessageUpdates.values()) {
 								if (currentVersion < update.getVersion() && imbVersion >= update.getVersion()) {
-									ConfigurationSection section = imbConfig.getConfigurationSection(update.getSection());
+									ConfigurationSection section = imbConfig.getConfigurationSection(update.getPath());
 									if (section != null) {
 										for (String key : section.getKeys(false)) {
 											config.set(section.getCurrentPath() + "." + key, section.getString(key));
 										}
 										Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+									} else {
+										Object value = imbConfig.get(update.getPath());
+										if (value != null) {
+											config.set(update.getPath(), value);
+											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										}
 									}
 								}
 							}
