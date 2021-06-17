@@ -237,12 +237,14 @@ public class Leveler {
 		statMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
 				,"{color}", skill.getPrimaryStat().getColor(locale)
 				,"{symbol}", skill.getPrimaryStat().getSymbol(locale)
-				,"{stat}", skill.getPrimaryStat().getDisplayName(locale)));
+				,"{stat}", skill.getPrimaryStat().getDisplayName(locale)
+				, "{num}", "1"));
 		if (newLevel % 2 == 0) {
 			statMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
 					,"{color}", skill.getSecondaryStat().getColor(locale)
 					,"{symbol}", skill.getSecondaryStat().getSymbol(locale)
-					,"{stat}", skill.getSecondaryStat().getDisplayName(locale)));
+					,"{stat}", skill.getSecondaryStat().getDisplayName(locale)
+					, "{num}", "1"));
 		}
 		message = TextUtil.replace(message, "{stat_level}", statMessage.toString());
 		// Ability unlocks and level ups
