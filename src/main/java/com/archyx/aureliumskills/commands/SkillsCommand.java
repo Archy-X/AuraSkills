@@ -985,31 +985,54 @@ public class SkillsCommand extends BaseCommand {
 							if (compoundList != null) {
 								boolean save = false;
 								for (NBTListCompound listCompound : compoundList.subList(0, compoundList.size())) {
-									if (listCompound.getString("Name").equals("generic.maxHealth") || listCompound.getString("Name").equals("minecraft:generic.max_health")) {
-										NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
-										if (modifierList != null) {
-											for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
-												if (modifier.getString("Name").equals("skillsHealth")) {
-													modifierList.remove(modifier);
-													if (modifierList.size() == 0) {
-														listCompound.removeKey("Modifiers");
+									switch (listCompound.getString("Name")) {
+										case "generic.maxHealth":
+										case "minecraft:generic.max_health": {
+											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											if (modifierList != null) {
+												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+													if (modifier.getString("Name").equals("skillsHealth")) {
+														modifierList.remove(modifier);
+														if (modifierList.size() == 0) {
+															listCompound.removeKey("Modifiers");
+														}
+														save = true;
 													}
-													save = true;
 												}
 											}
+											break;
 										}
-									} else if (listCompound.getString("Name").equals("generic.luck") || listCompound.getString("Name").equals("minecraft:generic.luck")) {
-										NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
-										if (modifierList != null) {
-											for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
-												if (modifier.getString("Name").equals("AureliumSkills-Luck")) {
-													modifierList.remove(modifier);
-													if (modifierList.size() == 0) {
-														listCompound.removeKey("Modifiers");
+										case "generic.luck":
+										case "minecraft:generic.luck": {
+											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											if (modifierList != null) {
+												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+													if (modifier.getString("Name").equals("AureliumSkills-Luck")) {
+														modifierList.remove(modifier);
+														if (modifierList.size() == 0) {
+															listCompound.removeKey("Modifiers");
+														}
+														save = true;
 													}
-													save = true;
 												}
 											}
+											break;
+										}
+										case "generic.attackSpeed":
+										case "minecraft:generic.attack_speed": {
+											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											if (modifierList != null) {
+												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+													if (modifier.getString("Name").equals("AureliumSkills-LightningBlade")) {
+														modifierList.remove(modifier);
+														if (modifierList.size() == 0) {
+															listCompound.removeKey("Modifiers");
+														}
+														save = true;
+													}
+												}
+											}
+											break;
 										}
 									}
 								}

@@ -388,6 +388,14 @@ public class ManaAbilityManager implements Listener {
         return defaultValue;
     }
 
+    public double getOptionAsDouble(MAbility mAbility, String key) {
+        OptionValue value = getOption(mAbility, key);
+        if (value != null) {
+            return value.asDouble();
+        }
+        return mAbility.getDefaultOptions().get(key).asDouble();
+    }
+
     @Nullable
     public Set<String> getOptionKeys(MAbility mAbility) {
         if (mAbility.getDefaultOptions() != null) {

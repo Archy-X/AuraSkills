@@ -168,7 +168,7 @@ public class SkillInfoItem {
                 manaAbilityLore.append(TextUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)
                         , "{mana_ability}", mAbility.getDisplayName(locale)
                         , "{level}", RomanNumber.toRoman(level)
-                        , "{duration}", NumberUtil.format1(manager.getValue(mAbility, level))
+                        , "{duration}", NumberUtil.format1(getDuration(mAbility, level))
                         , "{value}", NumberUtil.format1(manager.getValue(mAbility, level))
                         , "{mana_cost}", NumberUtil.format1(manager.getManaCost(mAbility, level))
                         , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
@@ -178,12 +178,24 @@ public class SkillInfoItem {
         return manaAbilityLore.toString();
     }
 
+    private double getDuration(MAbility mAbility, int level) {
+        if (mAbility == MAbility.LIGHTNING_BLADE) {
+            double baseDuration = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "base_duration");
+            double durationPerLevel = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "duration_per_level");
+            return baseDuration + (durationPerLevel * (level - 1));
+        } else {
+            return plugin.getManaAbilityManager().getValue(mAbility, level);
+        }
+    }
+
     private MessageKey getManaAbilityMessage(MAbility mAbility) {
         switch (mAbility) {
             case SHARP_HOOK:
                 return ManaAbilityMessage.SHARP_HOOK_MENU;
             case CHARGED_SHOT:
                 return ManaAbilityMessage.CHARGED_SHOT_MENU;
+            case LIGHTNING_BLADE:
+                return ManaAbilityMessage.LIGHTNING_BLADE_MENU;
             default:
                 return MenuMessage.MANA_ABILITY;
         }

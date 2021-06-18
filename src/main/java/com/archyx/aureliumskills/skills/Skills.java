@@ -39,7 +39,7 @@ public enum Skills implements Skill {
 			MAbility.ABSORPTION),
 	FIGHTING(Stats.STRENGTH, Stats.REGENERATION,
 			ImmutableList.of(() -> Ability.CRIT_DAMAGE, () -> Ability.FIGHTER, () -> Ability.SWORD_MASTER, () -> Ability.FIRST_STRIKE, () -> Ability.BLEED),
-			null),
+			MAbility.LIGHTNING_BLADE),
 	ENDURANCE(Stats.REGENERATION, Stats.TOUGHNESS,
 			ImmutableList.of(() -> Ability.ANTI_HUNGER, () -> Ability.RUNNER, () -> Ability.GOLDEN_HEAL, () -> Ability.RECOVERY, () -> Ability.MEAL_STEAL),
 			null),

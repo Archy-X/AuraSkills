@@ -81,7 +81,8 @@ public class ProgressLevelItem {
                     manaAbilityLore.append(TextUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)
                             , "{mana_ability}", mAbility.getDisplayName(locale)
                             , "{desc}", TextUtil.replace(mAbility.getDescription(locale)
-                                    , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, 1)))));
+                                    , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, 1))
+                                    , "{duration}", NumberUtil.format1(getDuration(mAbility, 1)))));
                 }
                 else {
                     int manaAbilityLevel = ((level - manager.getUnlock(mAbility)) / manager.getLevelUp(mAbility)) + 1;
@@ -90,11 +91,22 @@ public class ProgressLevelItem {
                                 , "{mana_ability}", mAbility.getDisplayName(locale)
                                 , "{level}", RomanNumber.toRoman(manaAbilityLevel)
                                 , "{desc}", TextUtil.replace(mAbility.getDescription(locale)
-                                        , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, manaAbilityLevel)))));
+                                        , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, manaAbilityLevel))
+                                        , "{duration}", NumberUtil.format1(getDuration(mAbility, manaAbilityLevel)))));
                     }
                 }
             }
         }
         return manaAbilityLore.toString();
+    }
+
+    private double getDuration(MAbility mAbility, int level) {
+        if (mAbility == MAbility.LIGHTNING_BLADE) {
+            double baseDuration = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "base_duration");
+            double durationPerLevel = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "duration_per_level");
+            return baseDuration + (durationPerLevel * (level - 1));
+        } else {
+            return plugin.getManaAbilityManager().getValue(mAbility, level);
+        }
     }
 }
