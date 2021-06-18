@@ -78,9 +78,10 @@ public class MySqlStorageProvider extends StorageProvider {
     @Override
     public void load(Player player) {
         try {
-            try (Statement statement = connection.createStatement()) {
-                String query = "SELECT * FROM SkillData WHERE ID='" + player.getUniqueId() + "';";
-                try (ResultSet result = statement.executeQuery(query)) {
+            String query = "SELECT * FROM SkillData WHERE ID=?;";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, player.getUniqueId().toString());
+                try (ResultSet result = statement.executeQuery()) {
                     if (result.next()) {
                         PlayerData playerData = new PlayerData(player, plugin);
                         // Load skill data

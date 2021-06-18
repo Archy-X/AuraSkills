@@ -27,7 +27,9 @@ public enum MAbility implements AbstractAbility {
     CHARGED_SHOT(() -> Skills.ARCHERY, 0.5, 0.3, 0, 0, 5, 5,
             new String[] {"enable_message", "enable_sound"}, new Object[] {true, true}),
     ABSORPTION(() -> Skills.DEFENSE, 2.0, 3.0, 200, -5, 10, 10,
-            new String[] {"enable_particles"}, new Object[] {true});
+            new String[] {"enable_particles"}, new Object[] {true}),
+    LIGHTNING_BLADE(() -> Skills.FIGHTING, 5.0, 5.0, 200, -5, 20, 20,
+            new String[] {"base_duration", "duration_per_level"}, new Object[] {5.0, 4.0});
 
     private final Supplier<Skill> skill;
     private final double baseValue;

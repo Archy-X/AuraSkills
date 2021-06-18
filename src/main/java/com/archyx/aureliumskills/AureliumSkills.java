@@ -347,6 +347,11 @@ public class AureliumSkills extends JavaPlugin {
 		regionManager.clearRegionMap();
 		backupAutomatically();
 		itemRegistry.saveToFile();
+		// Remove fleeting
+		AgilityAbilities agilityAbilities = new AgilityAbilities(this);
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			agilityAbilities.removeFleetingQuit(player);
+		}
 	}
 
 	private void backupAutomatically() {

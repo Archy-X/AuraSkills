@@ -1,3 +1,14 @@
+Version Beta 1.0.8
+  New Features:
+    - Add Alchemy option give-xp-on-takeout to reward XP when the potion is taken out of the brewing stand
+    - Requirements can now disable fishing rod use
+    - Add ssl option for MySQL
+  API Changes:
+    - Move many internal classes to new packages, everything should still work as long as you only use the official API
+  Bug Fixes:
+    - Fix Fleeting speed boost not being removed on server shutdown
+    - Delay region saving status update by 20 ticks (hopefully fix errors)
+
 Version Beta 1.0.7
   Bug Fixes:
     - Fix ProtocolLib action bar errors on 1.17
