@@ -214,6 +214,10 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     @EventHandler
     public void fleetingLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        removeFleetingQuit(player);
+    }
+
+    public void removeFleetingQuit(Player player) {
         if (player.hasMetadata("AureliumSkills-Fleeting")) {
             float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
             player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
