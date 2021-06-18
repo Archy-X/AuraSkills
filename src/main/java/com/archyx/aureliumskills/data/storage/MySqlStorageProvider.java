@@ -34,6 +34,7 @@ public class MySqlStorageProvider extends StorageProvider {
     private Connection connection;
     private final String host, database, username, password;
     private final int port;
+    private final boolean ssl;
 
     public MySqlStorageProvider(AureliumSkills plugin) {
         super(plugin);
@@ -42,6 +43,7 @@ public class MySqlStorageProvider extends StorageProvider {
         this.username = OptionL.getString(Option.MYSQL_USERNAME);
         this.password = OptionL.getString(Option.MYSQL_PASSWORD);
         this.port = OptionL.getInt(Option.MYSQL_PORT);
+        this.ssl = OptionL.getBoolean(Option.MYSQL_SSL);
     }
 
     public void init() {
@@ -68,7 +70,7 @@ public class MySqlStorageProvider extends StorageProvider {
             } catch (ClassNotFoundException e) {
                 Class.forName("com.mysql.jdbc.Driver");
             }
-            connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/" + this.database + "?useSSL=false&autoReconnect=true", this.username, this.password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/" + this.database + "?useSSL=" + ssl + "&autoReconnect=true", this.username, this.password);
             plugin.getLogger().info("Connected to MySQL database");
         }
     }
@@ -213,88 +215,103 @@ public class MySqlStorageProvider extends StorageProvider {
         if (playerData == null) return;
         if (playerData.shouldNotSave()) return;
         try {
-            // Build stat modifiers json
-            StringBuilder modifiersJson = new StringBuilder();
-            if (playerData.getStatModifiers().size() > 0) {
-                modifiersJson.append("[");
-                for (StatModifier statModifier : playerData.getStatModifiers().values()) {
-                    modifiersJson.append("{\"name\":\"").append(statModifier.getName())
-                            .append("\",\"stat\":\"").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
-                            .append("\",\"value\":").append(statModifier.getValue()).append("},");
-                }
-                modifiersJson.deleteCharAt(modifiersJson.length() - 1);
-                modifiersJson.append("]");
+            StringBuilder sqlBuilder = new StringBuilder("INSERT INTO SkillData (ID, ");
+            for (Skill skill : Skills.getOrderedValues()) {
+                sqlBuilder.append(skill.toString()).append("_LEVEL, ");
+                sqlBuilder.append(skill).append("_XP, ");
             }
-            // Build ability json
-            StringBuilder abilityJson = new StringBuilder();
-            if (playerData.getAbilityDataMap().size() > 0) {
-                abilityJson.append("{");
-                for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
-                    String abilityName = abilityData.getAbility().toString().toLowerCase(Locale.ROOT);
-                    if (abilityData.getDataMap().size() > 0) {
-                        abilityJson.append("\"").append(abilityName).append("\"").append(":{");
-                        for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
-                            String value = String.valueOf(dataEntry.getValue());
-                            if (dataEntry.getValue() instanceof String) {
-                                value = "\"" + dataEntry.getValue() + "\"";
-                            }
-                            abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
+            sqlBuilder.append("LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA, UNCLAIMED_ITEMS) VALUES(?, ");
+            for (int i = 0; i < Skills.getOrderedValues().size(); i++) {
+                sqlBuilder.append("?, ?, ");
+            }
+            sqlBuilder.append("?, ?, ?, ?, ?) ");
+            sqlBuilder.append("ON DUPLICATE KEY UPDATE ");
+            for (Skill skill : Skills.getOrderedValues()) {
+                sqlBuilder.append(skill.toString()).append("_LEVEL=?, ");
+                sqlBuilder.append(skill).append("_XP=?, ");
+            }
+            sqlBuilder.append("LOCALE=?, ");
+            sqlBuilder.append("STAT_MODIFIERS=?, ");
+            sqlBuilder.append("MANA=?, ");
+            sqlBuilder.append("ABILITY_DATA=?, ");
+            sqlBuilder.append("UNCLAIMED_ITEMS=?");
+            // Enter values into prepared statement
+            try (PreparedStatement statement = connection.prepareStatement(sqlBuilder.toString())) {
+                statement.setString(1, player.getUniqueId().toString());
+                int index = 2;
+                for (int i = 0; i < 2; i++) {
+                    for (Skill skill : Skills.getOrderedValues()) {
+                        statement.setInt(index++, playerData.getSkillLevel(skill));
+                        statement.setDouble(index++, playerData.getSkillXp(skill));
+                    }
+                    statement.setString(index++, playerData.getLocale().toString());
+                    // Build stat modifiers json
+                    StringBuilder modifiersJson = new StringBuilder();
+                    if (playerData.getStatModifiers().size() > 0) {
+                        modifiersJson.append("[");
+                        for (StatModifier statModifier : playerData.getStatModifiers().values()) {
+                            modifiersJson.append("{\"name\":\"").append(statModifier.getName())
+                                    .append("\",\"stat\":\"").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
+                                    .append("\",\"value\":").append(statModifier.getValue()).append("},");
                         }
-                        abilityJson.deleteCharAt(abilityJson.length() - 1);
-                        abilityJson.append("},");
+                        modifiersJson.deleteCharAt(modifiersJson.length() - 1);
+                        modifiersJson.append("]");
+                    }
+                    // Add stat modifiers to prepared statement
+                    if (!modifiersJson.toString().equals("")) {
+                        statement.setString(index++, modifiersJson.toString());
+                    } else {
+                        statement.setNull(index++, Types.VARCHAR);
+                    }
+                    statement.setDouble(index++, playerData.getMana()); // Set mana
+                    // Build ability json
+                    StringBuilder abilityJson = new StringBuilder();
+                    if (playerData.getAbilityDataMap().size() > 0) {
+                        abilityJson.append("{");
+                        for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
+                            String abilityName = abilityData.getAbility().toString().toLowerCase(Locale.ROOT);
+                            if (abilityData.getDataMap().size() > 0) {
+                                abilityJson.append("\"").append(abilityName).append("\"").append(":{");
+                                for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
+                                    String value = String.valueOf(dataEntry.getValue());
+                                    if (dataEntry.getValue() instanceof String) {
+                                        value = "\"" + dataEntry.getValue() + "\"";
+                                    }
+                                    abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
+                                }
+                                abilityJson.deleteCharAt(abilityJson.length() - 1);
+                                abilityJson.append("},");
+                            }
+                        }
+                        if (abilityJson.length() > 1) {
+                            abilityJson.deleteCharAt(abilityJson.length() - 1);
+                        }
+                        abilityJson.append("}");
+                    }
+                    // Add ability data to prepared statement
+                    if (!abilityJson.toString().equals("")) {
+                        statement.setString(index++, abilityJson.toString());
+                    } else {
+                        statement.setNull(index++, Types.VARCHAR);
+                    }
+                    // Unclaimed items
+                    StringBuilder unclaimedItemsStringBuilder = new StringBuilder();
+                    List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
+                    if (unclaimedItems != null) {
+                        for (KeyIntPair unclaimedItem : unclaimedItems) {
+                            unclaimedItemsStringBuilder.append(unclaimedItem.getKey()).append(" ").append(unclaimedItem.getValue()).append(",");
+                        }
+                    }
+                    if (unclaimedItemsStringBuilder.length() > 0) {
+                        unclaimedItemsStringBuilder.deleteCharAt(unclaimedItemsStringBuilder.length() - 1);
+                    }
+                    if (!unclaimedItemsStringBuilder.toString().equals("")) {
+                        statement.setString(index++, unclaimedItemsStringBuilder.toString());
+                    } else {
+                        statement.setNull(index++, Types.VARCHAR);
                     }
                 }
-                if (abilityJson.length() > 1) {
-                    abilityJson.deleteCharAt(abilityJson.length() - 1);
-                }
-                abilityJson.append("}");
-            }
-            String modifiersString = !modifiersJson.toString().equals("") ? "'" + modifiersJson + "'": "NULL";
-            String abilitiesString = !abilityJson.toString().equals("") ? "'" + abilityJson + "'": "NULL";
-            // Unclaimed items
-            StringBuilder unclaimedItemsStringBuilder = new StringBuilder();
-            List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
-            if (unclaimedItems != null) {
-                for (KeyIntPair unclaimedItem : unclaimedItems) {
-                    unclaimedItemsStringBuilder.append(unclaimedItem.getKey()).append(" ").append(unclaimedItem.getValue()).append(",");
-                }
-            }
-            if (unclaimedItemsStringBuilder.length() > 0) {
-                unclaimedItemsStringBuilder.deleteCharAt(unclaimedItemsStringBuilder.length() - 1);
-            }
-            String unclaimedItemsString = unclaimedItemsStringBuilder.length() > 0 ? "'" + unclaimedItemsStringBuilder + "'" : "NULL";
-            // Build sql statement
-            StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
-            for (Skill skill : Skills.getOrderedValues()) {
-                sql.append(skill.toString()).append("_LEVEL, ");
-                sql.append(skill).append("_XP, ");
-            }
-            sql.append("LOCALE, STAT_MODIFIERS, MANA, ABILITY_DATA, UNCLAIMED_ITEMS) VALUES('");
-            sql.append(player.getUniqueId()).append("', ");
-            // Insert skill data
-            for (Skill skill : Skills.getOrderedValues()) {
-                sql.append(playerData.getSkillLevel(skill)).append(", ");
-                sql.append(playerData.getSkillXp(skill)).append(", ");
-            }
-            sql.append("'").append(playerData.getLocale().toString()).append("', ");
-            sql.append(modifiersString).append(", ");
-            sql.append(playerData.getMana()).append(", ");
-            sql.append(abilitiesString).append(", ");
-            sql.append(unclaimedItemsString).append(") ");
-            // Build update part of statement
-            sql.append("ON DUPLICATE KEY UPDATE ");
-            for (Skill skill : Skills.getOrderedValues()) {
-                sql.append(skill.toString()).append("_LEVEL=").append(playerData.getSkillLevel(skill)).append(", ");
-                sql.append(skill).append("_XP=").append(playerData.getSkillXp(skill)).append(", ");
-            }
-            sql.append("LOCALE='").append(playerData.getLocale().toString()).append("', ");
-            sql.append("STAT_MODIFIERS=").append(modifiersString).append(", ");
-            sql.append("MANA=").append(playerData.getMana()).append(", ");
-            sql.append("ABILITY_DATA=").append(abilitiesString).append(", ");
-            sql.append("UNCLAIMED_ITEMS=").append(unclaimedItemsString);
-            // Execute statement
-            try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-                statement.executeUpdate(sql.toString());
+                statement.executeUpdate();
             }
             if (removeFromMemory) {
                 playerManager.removePlayerData(player.getUniqueId());
@@ -325,32 +342,35 @@ public class MySqlStorageProvider extends StorageProvider {
                     if (playerData != null) {
                         applyData(playerData, levels, xpLevels);
                     } else {
-                        // Build sql statement
-                        StringBuilder sql = new StringBuilder("INSERT INTO SkillData (ID, ");
+                        StringBuilder sqlBuilder = new StringBuilder("INSERT INTO SkillData (ID, ");
                         for (Skill skill : Skills.getOrderedValues()) {
-                            sql.append(skill.toString()).append("_LEVEL, ");
-                            sql.append(skill).append("_XP, ");
+                            sqlBuilder.append(skill.toString()).append("_LEVEL, ");
+                            sqlBuilder.append(skill).append("_XP, ");
                         }
-                        sql.delete(sql.length() - 2, sql.length());
-                        sql.append(") VALUES('");
-                        sql.append(id).append("', ");
-                        // Insert skill data
+                        sqlBuilder.delete(sqlBuilder.length() - 2, sqlBuilder.length());
+                        sqlBuilder.append(") VALUES(?, ");
+                        for (int i = 0; i < Skills.getOrderedValues().size(); i++) {
+                            sqlBuilder.append("?, ?, ");
+                        }
+                        sqlBuilder.delete(sqlBuilder.length() - 2, sqlBuilder.length());
+                        sqlBuilder.append(") ");
+                        sqlBuilder.append("ON DUPLICATE KEY UPDATE ");
                         for (Skill skill : Skills.getOrderedValues()) {
-                            sql.append(levels.get(skill)).append(", ");
-                            sql.append(xpLevels.get(skill)).append(", ");
+                            sqlBuilder.append(skill.toString()).append("_LEVEL=?, ");
+                            sqlBuilder.append(skill).append("_XP=?, ");
                         }
-                        sql.delete(sql.length() - 2, sql.length());
-                        sql.append(") ");
-                        // Build update part of statement
-                        sql.append("ON DUPLICATE KEY UPDATE ");
-                        for (Skill skill : Skills.getOrderedValues()) {
-                            sql.append(skill.toString()).append("_LEVEL=").append(levels.get(skill)).append(", ");
-                            sql.append(skill).append("_XP=").append(xpLevels.get(skill)).append(", ");
-                        }
-                        sql.delete(sql.length() - 2, sql.length());
-                        // Execute statement
-                        try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-                            statement.executeUpdate(sql.toString());
+                        sqlBuilder.delete(sqlBuilder.length() - 2, sqlBuilder.length());
+                        // Add values to prepared statement
+                        try (PreparedStatement statement = connection.prepareStatement(sqlBuilder.toString())) {
+                            statement.setString(1, id.toString());
+                            int index = 2;
+                            for (int i = 0; i < 2; i++) {
+                                for (Skill skill : Skills.getOrderedValues()) {
+                                    statement.setInt(index++, levels.get(skill));
+                                    statement.setDouble(index++, xpLevels.get(skill));
+                                }
+                            }
+                            statement.executeUpdate();
                             sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADED, locale));
                         }
                     }
