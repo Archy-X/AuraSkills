@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.skills;
 
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.mana.MAbility;
-import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nullable;
@@ -16,10 +15,6 @@ public interface Skill {
     String getDescription(Locale locale);
 
     String getDisplayName(Locale locale);
-
-    Stat getPrimaryStat();
-
-    Stat getSecondaryStat();
 
     @Nullable
     MAbility getManaAbility();

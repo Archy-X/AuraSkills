@@ -21,6 +21,7 @@ import com.archyx.aureliumskills.data.converter.LegacyMysqlToMysqlConverter;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.data.storage.YamlStorageProvider;
+import com.archyx.aureliumskills.item.ItemRegistry;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
@@ -39,6 +40,7 @@ import com.archyx.aureliumskills.region.RegionListener;
 import com.archyx.aureliumskills.region.RegionManager;
 import com.archyx.aureliumskills.requirement.RequirementListener;
 import com.archyx.aureliumskills.requirement.RequirementManager;
+import com.archyx.aureliumskills.rewards.RewardManager;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.SkillRegistry;
 import com.archyx.aureliumskills.skills.Skills;
@@ -121,6 +123,7 @@ public class AureliumSkills extends JavaPlugin {
 	private WorldManager worldManager;
 	private ManaManager manaManager;
 	private ManaAbilityManager manaAbilityManager;
+	private RewardManager rewardManager;
 	private boolean holographicDisplaysEnabled;
 	private boolean worldGuardEnabled;
 	private boolean placeholderAPIEnabled;
@@ -129,6 +132,7 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean mythicMobsEnabled;
 	private boolean townyEnabled;
 	private TownySupport townySupport;
+	private boolean luckPermsEnabled;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -146,7 +150,9 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
+	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
+	private ItemRegistry itemRegistry;
 
 	public void onEnable() {
 		// Registries
@@ -155,6 +161,7 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry = new SkillRegistry();
 		registerSkills();
 		sourceRegistry = new SourceRegistry();
+		itemRegistry = new ItemRegistry(this);
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
 		AureliumAPI.setPlugin(this);
@@ -191,6 +198,11 @@ public class AureliumSkills extends JavaPlugin {
 		// Check towny
 		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
 		townySupport = new TownySupport(this);
+		// Check for LuckPerms
+		luckPermsEnabled = Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
+		if (luckPermsEnabled) {
+			luckPermsSupport = new LuckPermsSupport();
+		}
 		// Load health
 		Health health = new Health(this);
 		this.health = health;
@@ -225,14 +237,18 @@ public class AureliumSkills extends JavaPlugin {
 		else {
 			holographicDisplaysEnabled = false;
 		}
-		// Registers Commands
-		registerCommands();
+		commandManager = new PaperCommandManager(this);
 		// Load languages
 		lang = new Lang(this);
 		getServer().getPluginManager().registerEvents(lang, this);
 		lang.init();
 		lang.loadEmbeddedMessages(commandManager);
 		lang.loadLanguages(commandManager);
+		// Load rewards
+		rewardManager = new RewardManager(this);
+		rewardManager.loadRewards();
+		// Registers Commands
+		registerCommands();
 		// Load menu
 		menuLoader = new MenuLoader(this);
 		try {
@@ -303,6 +319,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
+		// Load items
+		itemRegistry.loadFromFile();
 		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
@@ -328,6 +346,7 @@ public class AureliumSkills extends JavaPlugin {
 		regionManager.saveAllRegions(false, true);
 		regionManager.clearRegionMap();
 		backupAutomatically();
+		itemRegistry.saveToFile();
 		// Remove fleeting
 		AgilityAbilities agilityAbilities = new AgilityAbilities(this);
 		for (Player player : Bukkit.getOnlinePlayers()) {
@@ -410,7 +429,6 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		commandManager = new PaperCommandManager(this);
 		commandManager.enableUnstableAPI("help");
 		commandManager.usePerIssuerLocale(true, false);
 		commandManager.getCommandContexts().registerContext(Stat.class, c -> {
@@ -464,6 +482,7 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return null;
 		});
+		commandManager.getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));
@@ -583,6 +602,10 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry.register("forging", Skills.FORGING);
 	}
 
+	public RewardManager getRewardManager() {
+		return rewardManager;
+	}
+
 	public PlayerManager getPlayerManager() {
 		return playerManager;
 	}
@@ -699,6 +722,10 @@ public class AureliumSkills extends JavaPlugin {
 		return mythicMobsEnabled;
 	}
 
+	public boolean isLuckPermsEnabled() {
+		return luckPermsEnabled;
+	}
+
 	public Health getHealth() {
 		return health;
 	}
@@ -739,8 +766,16 @@ public class AureliumSkills extends JavaPlugin {
 		return skillRegistry;
 	}
 
+	public LuckPermsSupport getLuckPermsSupport() {
+		return luckPermsSupport;
+	}
+
 	public SourceRegistry getSourceRegistry() {
 		return sourceRegistry;
+	}
+
+	public ItemRegistry getItemRegistry() {
+		return itemRegistry;
 	}
 
 	@Nullable

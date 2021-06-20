@@ -9,8 +9,10 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.backup.BackupProvider;
 import com.archyx.aureliumskills.data.storage.StorageProvider;
+import com.archyx.aureliumskills.item.UnclaimedItemsMenu;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.menu.SkillsMenu;
 import com.archyx.aureliumskills.modifier.ModifierType;
@@ -21,8 +23,10 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Luck;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.ui.ActionBar;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
@@ -38,7 +42,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,11 +50,11 @@ import java.util.Map;
 public class SkillsCommand extends BaseCommand {
  
 	private final AureliumSkills plugin;
-	private final Lang lang;
+	private final ReloadManager reloadManager;
 
 	public SkillsCommand(AureliumSkills plugin) {
 		this.plugin = plugin;
-		lang = new Lang(plugin);
+		this.reloadManager = new ReloadManager(plugin);
 	}
 	
 	@Default
@@ -329,40 +332,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.reload")
 	@Description("Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.")
 	public void reload(CommandSender sender) {
-		Locale locale = plugin.getLang().getLocale(sender);
-		plugin.reloadConfig();
-		plugin.saveDefaultConfig();
-		plugin.getOptionLoader().loadOptions();
-		plugin.getRequirementManager().load();
-		plugin.getSourceManager().loadSources();
-		plugin.getCheckBlockReplace().reloadCustomBlocks();
-		lang.loadLanguageFiles();
-		lang.loadEmbeddedMessages(plugin.getCommandManager());
-		lang.loadLanguages(plugin.getCommandManager());
-		try {
-			plugin.getMenuLoader().load();
-		}
-		catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-			e.printStackTrace();
-			Bukkit.getLogger().warning("[AureliumSkills] Error while loading menus!");
-		}
-		plugin.getAbilityManager().loadOptions();
-		plugin.getLeveler().loadLevelRequirements();
-		plugin.getLootTableManager().loadLootTables();
-		plugin.getWorldManager().loadWorlds();
-		if (plugin.isWorldGuardEnabled()) {
-			plugin.getWorldGuardSupport().loadRegions();
-		}
-		Luck luck = new Luck(plugin);
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			plugin.getHealth().reload(player);
-			luck.reload(player);
-		}
-		// Resets all action bars
-		plugin.getActionBar().resetActionBars();
-		// Load boss bars
-		plugin.getBossBar().loadOptions();
-		sender.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.GREEN + Lang.getMessage(CommandMessage.RELOAD, locale));
+		reloadManager.reload(sender);
 	}
 	
 	@Subcommand("skill setlevel")
@@ -375,9 +345,13 @@ public class SkillsCommand extends BaseCommand {
 			if (level > 0) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
+				int oldLevel = playerData.getSkillLevel(skill);
 				playerData.setSkillLevel(skill, level);
 				playerData.setSkillXp(skill, 0);
 				plugin.getLeveler().updateStats(player);
+				plugin.getLeveler().updatePermissions(player);
+				plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, level);
+				plugin.getLeveler().applyLevelUpCommands(player, skill, oldLevel, level);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale)
@@ -400,17 +374,21 @@ public class SkillsCommand extends BaseCommand {
 	public void onSkillSetall(CommandSender sender, @Flags("other") Player player, int level) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (level > 0) {
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+			if (playerData == null) return;
 			for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 				if (OptionL.isEnabled(skill)) {
-					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-					if (playerData == null) return;
+					int oldLevel = playerData.getSkillLevel(skill);
 					playerData.setSkillLevel(skill, level);
 					playerData.setSkillXp(skill, 0);
 					// Reload items and armor to check for newly met requirements
-					this.plugin.getModifierManager().reloadPlayer(player);
+					plugin.getModifierManager().reloadPlayer(player);
+					plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, level);
+					plugin.getLeveler().applyLevelUpCommands(player, skill, oldLevel, level);
 				}
 			}
 			plugin.getLeveler().updateStats(player);
+			plugin.getLeveler().updatePermissions(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETALL_SET, locale)
 					.replace("{level}", String.valueOf(level))
 					.replace("{player}", player.getName()));
@@ -430,9 +408,12 @@ public class SkillsCommand extends BaseCommand {
 			if (OptionL.isEnabled(skill)) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
+				int oldLevel = playerData.getSkillLevel(skill);
 				playerData.setSkillLevel(skill, 1);
 				playerData.setSkillXp(skill, 0);
 				plugin.getLeveler().updateStats(player);
+				plugin.getLeveler().updatePermissions(player);
+				plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, 1);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
@@ -446,10 +427,13 @@ public class SkillsCommand extends BaseCommand {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
 			for (Skill s : plugin.getSkillRegistry().getSkills()) {
+				int oldLevel = playerData.getSkillLevel(s);
 				playerData.setSkillLevel(s, 1);
 				playerData.setSkillXp(s, 0);
+				plugin.getLeveler().updateStats(player);
+				plugin.getLeveler().updatePermissions(player);
+				plugin.getLeveler().applyRevertCommands(player, s, oldLevel, 1);
 			}
-			plugin.getLeveler().updateStats(player);
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 					.replace("{player}", player.getName()));
 		}
@@ -1117,6 +1101,81 @@ public class SkillsCommand extends BaseCommand {
 				playerData.getMetadata().remove("backup_command");
 			}
 		}.runTaskLater(plugin, 20 * 60);
+	}
+
+	@Subcommand("claimitems")
+	@CommandPermission("aureliumskills.claimitems")
+	public void onClaimItems(Player player) {
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		Locale locale = Lang.getDefaultLanguage();
+		if (playerData != null) {
+			locale = playerData.getLocale();
+		}
+		if (playerData == null || playerData.getUnclaimedItems().size() == 0) {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.CLAIMITEMS_NO_ITEMS, locale));
+			return;
+		}
+		UnclaimedItemsMenu.getInventory(plugin, playerData).open(player);
+	}
+
+	@Subcommand("item register")
+	@CommandPermission("aureliumskills.item.register")
+	public void onItemRegister(@Flags("itemheld") Player player, String key) {
+		Locale locale = plugin.getLang().getLocale(player);
+		if (key.contains(" ")) { // Disallow spaces in key name
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ITEM_REGISTER_NO_SPACES, locale));
+			return;
+		}
+		ItemStack item = player.getInventory().getItemInMainHand();
+		if (plugin.getItemRegistry().getItem(key) == null) { // Check that no item has been registered on the key
+			plugin.getItemRegistry().register(key, item);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_REGISTERED, locale), "{key}", key));
+		} else {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_REGISTER_ALREADY_REGISTERED, locale), "{key}", key));
+		}
+	}
+
+	@Subcommand("item unregister")
+	@CommandPermission("aureliumskills.item.register")
+	@CommandCompletion("@item_keys")
+	public void onItemUnregister(Player player, String key) {
+		Locale locale = plugin.getLang().getLocale(player);
+		if (plugin.getItemRegistry().getItem(key) != null) { // Check that there is an item registered on the key
+			plugin.getItemRegistry().unregister(key);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_UNREGISTERED, locale), "{key}", key));
+		} else {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
+		}
+	}
+
+	@Subcommand("item give")
+	@CommandPermission("aureliumskills.item.give")
+	@CommandCompletion("@players @item_keys")
+	public void onItemGive(Player sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
+		ItemStack item = plugin.getItemRegistry().getItem(key);
+		Locale locale = plugin.getLang().getLocale(sender);
+		if (item != null) {
+			if (amount != -1) {
+				item.setAmount(amount);
+			}
+			ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_GIVE_SENDER, locale),
+					"{amount}", String.valueOf(item.getAmount()), "{key}", key, "{player}", player.getName()));
+			if (!sender.equals(player)) {
+				player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_GIVE_RECEIVER, locale),
+						"{amount}", String.valueOf(item.getAmount()), "{key}", key));
+			}
+			// Add to unclaimed items if leftover
+			if (leftoverItem != null) {
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+				if (playerData != null) {
+					playerData.getUnclaimedItems().add(new KeyIntPair(key, leftoverItem.getAmount()));
+					player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(LevelerMessage.UNCLAIMED_ITEM, locale));
+				}
+			}
+		} else {
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
+		}
 	}
 
 	@Subcommand("help")

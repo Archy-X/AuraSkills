@@ -394,7 +394,12 @@ commands:
       saving: '&fSaving backup...'
       saved: '&fBacked up {type} data as {file}'
       error: '&cError backing up {type} data! See error in console/below for details'
+  claimitems:
+    no_items: '&eYou have no items to claim'
   item:
+    give:
+      sender: '&fGave &b{amount}x {key} &fto {player}'
+      receiver: '&fYou were given &b{amount}x {key}'
     modifier:
       add:
         added: '{color}{stat} &7modifier with level &b{value} &7was added to your item'
@@ -408,6 +413,10 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7All item modifiers have been removed from your item'
+    register:
+      registered: '&fRegistered held item to key {key}'
+      already_registered: '&eThere is already an item registered to key &f{key}&e, use &f/skills item unregister &eto unregister it first'
+      no_spaces: '&eItem key cannot contain spaces!'
     requirement:
       add:
         added: '&3{skill}&7 item requirement with level &b{level}&7 was added to your item'
@@ -423,6 +432,9 @@ commands:
         removed: '&7All item requirements have been removed from your item'
       use: '&eYou do not meet the requirements to use this item: {requirements}'
       entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fUnregistered item with key {key}'
+      not_registered: '&eThere is no item registered with key {key}'
   lang:
     set: '&7Language set to &b{lang}'
     not_found: '&eLanguage not found!'
@@ -501,12 +513,13 @@ leveler:
   title: '&a{skill} Level Up'
   subtitle: '&6{old} ➜ {new}'
   level_up: '&3&m----------------------------------------\n&r &3Skill Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------'
-  stat_level: '\n  {color}+1{symbol} {stat}'
+  stat_level: '\n  {color}+{num}{symbol} {stat}'
   ability_unlock: '\n  &aAbility Unlock! &6&l{ability} &7has been unlocked'
   ability_level_up: '\n  &aAbility Level Up! &6&l{ability} &7is now level &6{level}'
   mana_ability_unlock: '\n  &dMana Ability Unlock! &9&l{mana_ability} &7has been unlocked'
   mana_ability_level_up: '\n  &dMana Ability Level Up! &9&l{mana_ability} &7is now level &6{level}'
   money_reward: '\n  &a${amount}'
+  unclaimed_item: '&cYou have unclaimed items because your inventory was full, use &e/skills claimitems &cto claim them'
 menus:
   common:
     close: '&cClose'
@@ -516,8 +529,7 @@ menus:
     ability_levels: '\n&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7Primary Stat: {color}{stat}'
-    secondary_stat: '&7Secondary Stat: {color}{stat}'
+    stats_leveled: '\n&7Stats Leveled: {stats}'
     mana_ability: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   skills_menu:
     skills_menu_title: Your Skills
@@ -547,6 +559,7 @@ menus:
     locked: '&cLOCKED'
     rewards: '&7Rewards:{rewards}'
     rewards_entry: '\n  {color}+{num} {symbol} {stat}'
+    money_reward: '\n  &a${amount}'
     ability_unlock: '\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n '
     ability_level: '\n&6{ability} {level}\n&7  {desc}\n '
     mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
@@ -572,6 +585,10 @@ menus:
     anvil_cost_reduction: '&9Anvil Cost Reduction: {value}%'
     max_mana: '&9Max Mana: {value}'
     incoming_damage: '&5-{value}% Incoming Damage'
+  unclaimed_items:
+    unclaimed_items_title: 'Claim Items'
+    inventory_full: '&eYou do not have enough space in your inventory to claim that item'
+    click_to_claim: '&eClick to claim!'
 mana_abilities:
   replenish:
     name: Replenish
@@ -711,4 +728,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 17
+file_version: 19

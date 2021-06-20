@@ -48,4 +48,10 @@ public class TextUtil {
         return replace(replace(replace(replace(replace(replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4), os5, ns5), os6, ns6);
     }
 
+    public static String replaceNonEscaped(String source, String os, String ns) {
+        String replaced = replace(source, "\\" + os, "\uE000"); // Replace escaped characters with intermediate char
+        replaced = replace(replaced, os, ns); // Replace normal chars
+        return replace(replaced, "\uE000", os); // Replace intermediate with original
+    }
+
 }

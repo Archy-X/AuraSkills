@@ -8,16 +8,17 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
+import com.archyx.aureliumskills.rewards.RewardTable;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Health;
 import com.archyx.aureliumskills.stats.Luck;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerData {
 
@@ -35,6 +36,7 @@ public class PlayerData {
 
     private final Map<AbstractAbility, AbilityData> abilityData;
     private final Map<String, Object> metadata;
+    private List<KeyIntPair> unclaimedItems;
 
     private boolean saving;
     private boolean shouldSave;
@@ -48,6 +50,7 @@ public class PlayerData {
         this.statModifiers = new HashMap<>();
         this.abilityData = new HashMap<>();
         this.metadata = new HashMap<>();
+        this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
     }
@@ -192,6 +195,8 @@ public class PlayerData {
     }
 
     public int getAbilityLevel(Ability ability) {
+        Skill skill = ability.getSkill();
+        RewardTable rewardTable = plugin.getRewardManager().getRewardTable(skill);
         if (getSkillLevel(ability.getSkill()) < plugin.getAbilityManager().getUnlock(ability)) {
             return 0;
         }
@@ -228,6 +233,28 @@ public class PlayerData {
 
     public Map<String, Object> getMetadata() {
         return metadata;
+    }
+
+    public List<KeyIntPair> getUnclaimedItems() {
+        return unclaimedItems;
+    }
+
+    public void clearInvalidItems() {
+        // Find items that are not registered
+        List<KeyIntPair> toRemove = new ArrayList<>();
+        for (KeyIntPair unclaimedItem : unclaimedItems) {
+            if (plugin.getItemRegistry().getItem(unclaimedItem.getKey()) == null) {
+                toRemove.add(unclaimedItem);
+            }
+        }
+        // Remove from unclaimed items list
+        for (KeyIntPair unclaimedItemToRemove : toRemove) {
+            unclaimedItems.remove(unclaimedItemToRemove);
+        }
+    }
+
+    public void setUnclaimedItems(@NotNull List<KeyIntPair> unclaimedItems) {
+        this.unclaimedItems = unclaimedItems;
     }
 
     public boolean isSaving() {

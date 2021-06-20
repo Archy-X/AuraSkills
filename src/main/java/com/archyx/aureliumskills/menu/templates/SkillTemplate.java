@@ -22,7 +22,7 @@ public class SkillTemplate extends ConfigurableTemplate {
     private final Map<Skill, ItemStack> baseItems = new HashMap<>();
     
     public SkillTemplate(AureliumSkills plugin) {
-        super(plugin, TemplateType.SKILL,new String[] {"skill_desc", "primary_stat", "secondary_stat", "ability_levels", "mana_ability", "level", "progress_to_level", "max_level", "skill_click"} );
+        super(plugin, TemplateType.SKILL,new String[] {"skill_desc", "stats_leveled", "ability_levels", "mana_ability", "level", "progress_to_level", "max_level", "skill_click"} );
         this.skillInfoItem = new SkillInfoItem(plugin);
     }
 

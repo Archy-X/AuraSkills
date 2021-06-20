@@ -15,6 +15,8 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.aureliumskills.util.misc.KeyIntPair;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -52,9 +54,7 @@ public class YamlStorageProvider extends StorageProvider {
                     playerData.setSkillLevel(skill, level);
                     playerData.setSkillXp(skill, xp);
                     // Add stat levels
-                    playerData.addStatLevel(skill.getPrimaryStat(), level - 1);
-                    int secondaryStat = level / 2;
-                    playerData.addStatLevel(skill.getSecondaryStat(), secondaryStat);
+                    plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, level);
                 }
                 // Load stat modifiers
                 ConfigurationSection modifiersSection = config.getConfigurationSection("stat_modifiers");
@@ -96,7 +96,24 @@ public class YamlStorageProvider extends StorageProvider {
                         }
                     }
                 }
+                // Unclaimed item rewards
+                List<String> unclaimedItemsList = config.getStringList("unclaimed_items");
+                if (unclaimedItemsList.size() > 0) {
+                    List<KeyIntPair> unclaimedItems = new ArrayList<>();
+                    for (String entry : unclaimedItemsList) {
+                        String[] splitEntry = entry.split(" ");
+                        String itemKey = splitEntry[0];
+                        int amount = 1;
+                        if (splitEntry.length >= 2) {
+                            amount = NumberUtils.toInt(splitEntry[1], 1);
+                        }
+                        unclaimedItems.add(new KeyIntPair(itemKey, amount));
+                    }
+                    playerData.setUnclaimedItems(unclaimedItems);
+                    playerData.clearInvalidItems();
+                }
                 playerManager.addPlayerData(playerData);
+                plugin.getLeveler().updatePermissions(player);
                 PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
                 new BukkitRunnable() {
                     @Override
@@ -157,6 +174,16 @@ public class YamlStorageProvider extends StorageProvider {
                 for (Map.Entry<String, Object> entry : abilityData.getDataMap().entrySet()) {
                     config.set(path + entry.getKey(), entry.getValue());
                 }
+            }
+            // Save unclaimed items
+            List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
+            config.set("unclaimed_items", null);
+            if (unclaimedItems != null && unclaimedItems.size() > 0) {
+                List<String> stringList = new ArrayList<>();
+                for (KeyIntPair unclaimedItem : unclaimedItems) {
+                    stringList.add(unclaimedItem.getKey() + " " + unclaimedItem.getValue());
+                }
+                config.set("unclaimed_items", stringList);
             }
             config.save(file);
             if (removeFromMemory) {

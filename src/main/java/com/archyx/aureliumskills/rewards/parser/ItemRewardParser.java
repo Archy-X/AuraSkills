@@ -1,0 +1,38 @@
+package com.archyx.aureliumskills.rewards.parser;
+
+import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.rewards.Reward;
+import com.archyx.aureliumskills.rewards.builder.ItemRewardBuilder;
+
+import java.util.Map;
+
+public class ItemRewardParser extends RewardParser {
+
+    public ItemRewardParser(AureliumSkills plugin) {
+        super(plugin);
+    }
+
+    @Override
+    public Reward parse(Map<?, ?> map) {
+        ItemRewardBuilder builder = new ItemRewardBuilder(plugin).itemKey(getString(map, "key"));
+
+        if (map.containsKey("amount")) {
+            builder.amount(getInt(map, "amount"));
+        }
+
+        if (map.containsKey("menu_message")) {
+            builder.menuMessage(getString(map, "menu_message"));
+        }
+
+        if (map.containsKey("chat_message")) {
+            builder.chatMessage(getString(map, "chat_message"));
+        }
+
+        if (map.containsKey("message")) {
+            String message = getString(map, "message");
+            builder.chatMessage(message).menuMessage(message);
+        }
+
+        return builder.build();
+    }
+}

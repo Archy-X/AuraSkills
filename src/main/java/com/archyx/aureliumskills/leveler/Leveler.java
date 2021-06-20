@@ -11,6 +11,9 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
+import com.archyx.aureliumskills.rewards.CommandReward;
+import com.archyx.aureliumskills.rewards.MoneyReward;
+import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
@@ -153,8 +156,7 @@ public class Leveler {
 			playerData.setStatLevel(stat, 0);
 		}
 		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
-			playerData.addStatLevel(skill.getPrimaryStat(), playerData.getSkillLevel(skill) - 1);
-			playerData.addStatLevel(skill.getSecondaryStat(), playerData.getSkillLevel(skill) / 2);
+			plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, playerData.getSkillLevel(skill));
 		}
 		// Reloads modifiers
 		for (String key : playerData.getStatModifiers().keySet()) {
@@ -164,7 +166,35 @@ public class Leveler {
 		statLeveler.reloadStat(player, Stats.HEALTH);
 		statLeveler.reloadStat(player, Stats.WISDOM);
 	}
-	
+
+	public void updatePermissions(Player player) {
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData == null) return;
+		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+			plugin.getRewardManager().getRewardTable(skill).applyPermissions(player, playerData.getSkillLevel(skill));
+		}
+	}
+
+	public void applyLevelUpCommands(Player player, Skill skill, int oldLevel, int newLevel) {
+		if (newLevel > oldLevel) {
+			for (int i = oldLevel + 1; i <= newLevel; i++) {
+				for (CommandReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(CommandReward.class, i)) {
+					reward.giveReward(player, skill, i);
+				}
+			}
+		}
+	}
+
+	public void applyRevertCommands(Player player, Skill skill, int oldLevel, int newLevel) {
+		if (newLevel < oldLevel) {
+			for (int i = oldLevel; i > newLevel; i--) {
+				for (CommandReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(CommandReward.class, i)) {
+					reward.executeRevert(player, skill, i);
+				}
+			}
+		}
+	}
+
 	public void checkLevelUp(Player player, Skill skill) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
@@ -173,58 +203,72 @@ public class Leveler {
 		if (currentLevel < OptionL.getMaxLevel(skill)) { //Check max level options
 			if (levelRequirements.size() > currentLevel - 1) {
 				if (currentXp >= levelRequirements.get(currentLevel - 1)) {
-					Locale locale = playerData.getLocale();
-					// When player levels up a skill
-					playerData.setSkillXp(skill, currentXp - levelRequirements.get(currentLevel - 1));
-					playerData.setSkillLevel(skill, playerData.getSkillLevel(skill) + 1);
-					playerData.addStatLevel(skill.getPrimaryStat(), 1);
-					statLeveler.reloadStat(player, skill.getPrimaryStat());
-					if ((currentLevel + 1) % 2 == 0) {
-						playerData.addStatLevel(skill.getSecondaryStat(), 1);
-						statLeveler.reloadStat(player, skill.getSecondaryStat());
-					}
-					//Adds money rewards if enabled
-					if (plugin.isVaultEnabled()) {
-						if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-							Economy economy = plugin.getEconomy();
-							double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
-							double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-							economy.depositPlayer(player, base + (multiplier * (currentLevel + 1) * (currentLevel + 1)));
-						}
-					}
-					// Reload items and armor to check for newly met requirements
-					plugin.getModifierManager().reloadPlayer(player);
-					// Calls event
-					SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, currentLevel + 1);
-					Bukkit.getPluginManager().callEvent(event);
-					// Sends messages
-					if (OptionL.getBoolean(Option.LEVELER_TITLE_ENABLED)) {
-						player.sendTitle(TextUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
-								TextUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
-										,"{old}", RomanNumber.toRoman(currentLevel)
-										,"{new}", RomanNumber.toRoman(currentLevel + 1))
-								, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
-					}
-					if (OptionL.getBoolean(Option.LEVELER_SOUND_ENABLED)) {
-						try {
-							player.playSound(player.getLocation(), Sound.valueOf(OptionL.getString(Option.LEVELER_SOUND_TYPE))
-									, SoundCategory.valueOf(OptionL.getString(Option.LEVELER_SOUND_CATEGORY))
-									, (float) OptionL.getDouble(Option.LEVELER_SOUND_VOLUME), (float) OptionL.getDouble(Option.LEVELER_SOUND_PITCH));
-						}
-						catch (Exception e) {
-							Bukkit.getLogger().warning("[AureliumSkills] Error playing level up sound (Check config) Played the default sound instead");
-							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1f, 0.5f);
-						}
-					}
-					player.sendMessage(getLevelUpMessage(player, playerData, skill, currentLevel + 1, locale));
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
+					levelUpSkill(playerData, skill);
 				}
 			}
 		}
 	}
 
+	private void levelUpSkill(PlayerData playerData, Skill skill) {
+		Player player = playerData.getPlayer();
+		Locale locale = playerData.getLocale();
 
-	private String getLevelUpMessage(Player player, PlayerData playerData, Skill skill, int newLevel, Locale locale) {
+		double currentXp = playerData.getSkillXp(skill);
+		int level = playerData.getSkillLevel(skill) + 1;
+
+		playerData.setSkillXp(skill, currentXp - levelRequirements.get(level - 2));
+		playerData.setSkillLevel(skill, level);
+		// Give custom rewards
+		List<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
+		for (Reward reward : rewards) {
+			reward.giveReward(player, skill, level);
+		}
+		// Adds money rewards if enabled
+		if (plugin.isVaultEnabled()) {
+			if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
+				Economy economy = plugin.getEconomy();
+				double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
+				double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
+				economy.depositPlayer(player, base + (multiplier * level * level));
+			}
+		}
+		// Reload items and armor to check for newly met requirements
+		plugin.getModifierManager().reloadPlayer(player);
+		// Calls event
+		SkillLevelUpEvent event = new SkillLevelUpEvent(player, skill, level);
+		Bukkit.getPluginManager().callEvent(event);
+		// Sends messages
+		if (OptionL.getBoolean(Option.LEVELER_TITLE_ENABLED)) {
+			sendTitle(player, locale, skill, level);
+		}
+		if (OptionL.getBoolean(Option.LEVELER_SOUND_ENABLED)) {
+			playSound(player);
+		}
+		player.sendMessage(getLevelUpMessage(player, playerData, skill, level, locale, rewards));
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
+	}
+
+	private void sendTitle(Player player, Locale locale, Skill skill, int level) {
+		player.sendTitle(TextUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
+				TextUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
+						,"{old}", RomanNumber.toRoman(level - 1)
+						,"{new}", RomanNumber.toRoman(level))
+				, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
+	}
+
+	private void playSound(Player player) {
+		try {
+			player.playSound(player.getLocation(), Sound.valueOf(OptionL.getString(Option.LEVELER_SOUND_TYPE))
+					, SoundCategory.valueOf(OptionL.getString(Option.LEVELER_SOUND_CATEGORY))
+					, (float) OptionL.getDouble(Option.LEVELER_SOUND_VOLUME), (float) OptionL.getDouble(Option.LEVELER_SOUND_PITCH));
+		}
+		catch (Exception e) {
+			Bukkit.getLogger().warning("[AureliumSkills] Error playing level up sound (Check config) Played the default sound instead");
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1f, 0.5f);
+		}
+	}
+
+	private String getLevelUpMessage(Player player, PlayerData playerData, Skill skill, int newLevel, Locale locale, List<Reward> rewards) {
 		String message = TextUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
@@ -232,21 +276,10 @@ public class Leveler {
 		if (plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
-		// Stat levels
-		StringBuilder statMessage = new StringBuilder();
-		statMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-				,"{color}", skill.getPrimaryStat().getColor(locale)
-				,"{symbol}", skill.getPrimaryStat().getSymbol(locale)
-				,"{stat}", skill.getPrimaryStat().getDisplayName(locale)
-				, "{num}", "1"));
-		if (newLevel % 2 == 0) {
-			statMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale)
-					,"{color}", skill.getSecondaryStat().getColor(locale)
-					,"{symbol}", skill.getSecondaryStat().getSymbol(locale)
-					,"{stat}", skill.getSecondaryStat().getDisplayName(locale)
-					, "{num}", "1"));
+		StringBuilder rewardMessage = new StringBuilder();
+		for (Reward reward : rewards) {
+			rewardMessage.append(reward.getChatMessage(locale));
 		}
-		message = TextUtil.replace(message, "{stat_level}", statMessage.toString());
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
 		StringBuilder abilityLevelUpMessage = new StringBuilder();
@@ -261,7 +294,9 @@ public class Leveler {
 				}
 			}
 		}
-		message = TextUtil.replace(message, "{ability_unlock}", abilityUnlockMessage.toString(), "{ability_level_up}", abilityLevelUpMessage.toString());
+		message = TextUtil.replace(message, "{stat_level}", rewardMessage.toString(),
+				"{ability_unlock}", abilityUnlockMessage.toString(),
+				"{ability_level_up}", abilityLevelUpMessage.toString());
 		// Mana ability unlocks and level ups
 		StringBuilder manaAbilityUnlockMessage = new StringBuilder();
 		StringBuilder manaAbilityLevelUpMessage = new StringBuilder();
@@ -278,15 +313,25 @@ public class Leveler {
 			}
 		}
 		message = TextUtil.replace(message, "{mana_ability_unlock}", manaAbilityUnlockMessage.toString(), "{mana_ability_level_up}", manaAbilityLevelUpMessage.toString());
-		// If money rewards are enabled
+		// Build money rewards
 		StringBuilder moneyRewardMessage = new StringBuilder();
+		double totalMoney = 0;
+		// Legacy system
 		if (plugin.isVaultEnabled()) {
 			if (OptionL.getBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
 				double base = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_BASE);
 				double multiplier = OptionL.getDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-				NumberFormat nf = new DecimalFormat("#.##");
-				moneyRewardMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale), "{amount}", nf.format(base + (multiplier * newLevel * newLevel))));
+				totalMoney += base + (multiplier * newLevel * newLevel);
 			}
+		}
+		// New rewards
+		for (MoneyReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(MoneyReward.class, newLevel)) {
+			totalMoney += reward.getAmount();
+		}
+		if (totalMoney > 0) {
+			NumberFormat nf = new DecimalFormat("#.##");
+			moneyRewardMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
+					"{amount}", nf.format(totalMoney)));
 		}
 		message = TextUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");

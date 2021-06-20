@@ -16,8 +16,10 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.google.common.collect.ImmutableList;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -73,18 +75,21 @@ public class SkillInfoItem {
                     case "skill_desc":
                         line = TextUtil.replace(line, "{skill_desc}", skill.getDescription(locale));
                         break;
-                    case "primary_stat":
-                        Stat primaryStat = skill.getPrimaryStat();
-                        line = TextUtil.replace(line,"{primary_stat}", TextUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_STAT, locale)
-                                ,"{color}", primaryStat.getColor(locale)
-                                ,"{stat}", primaryStat.getDisplayName(locale)));
-                        break;
-                    case "secondary_stat":
-                        Stat secondaryStat = skill.getSecondaryStat();
-                        line = TextUtil.replace(line,"{secondary_stat}", TextUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_STAT, locale)
-                                ,"{color}", secondaryStat.getColor(locale)
-                                ,"{stat}", secondaryStat.getDisplayName(locale)));
-                        break;
+                    case "stats_leveled":
+                        ImmutableList<Stat> statsLeveled = plugin.getRewardManager().getRewardTable(skill).getStatsLeveled();
+                        StringBuilder statList = new StringBuilder();
+                        for (Stat stat : statsLeveled) {
+                            statList.append(stat.getColor(locale)).append(stat.getDisplayName(locale)).append(ChatColor.GRAY).append(", ");
+                        }
+                        if (statList.length() > 1) {
+                            statList.delete(statList.length() - 2, statList.length());
+                        }
+                        if (statsLeveled.size() > 0) {
+                            line = TextUtil.replace(line, "{stats_leveled}", TextUtil.replace(Lang.getMessage(MenuMessage.STATS_LEVELED, locale),
+                                    "{stats}", statList.toString()));
+                        } else {
+                            line = TextUtil.replace(line, "{stats_leveled}", "");
+                        }
                     case "ability_levels":
                         line = TextUtil.replace(line, "{ability_levels}", getAbilityLevelsLore(skill, playerData, locale));
                         break;

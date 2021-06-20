@@ -121,19 +121,34 @@ public class Lang implements Listener {
 		if (messages == null) {
 			messages = new HashMap<>();
 		}
+		for (String path : config.getKeys(true)) {
+			if (!config.isConfigurationSection(path)) {
+				MessageKey key = null;
+				// Try to find message key
+				for (MessageKey messageKey : MessageKey.values()) {
+					if (messageKey.getPath().equals(path)) {
+						key = messageKey;
+					}
+				}
+				// Create custom key if not found
+				if (key == null) {
+					key = new CustomMessageKey(path);
+				}
+				String message = config.getString(path);
+				if (message != null) {
+					messages.put(key, TextUtil.replace(message
+							,"&", "§"
+							,"{mana_unit}", units.get(UnitMessage.MANA)
+							,"{hp_unit}", units.get(UnitMessage.HP)
+							,"{xp_unit}", units.get(UnitMessage.XP)));
+				}
+			}
+		}
+		// Check that each message key has a value
 		for (MessageKey key : MessageKey.values()) {
 			String message = config.getString(key.getPath());
-			if (message != null) {
-				messages.put(key, TextUtil.replace(message
-						,"&", "§"
-						,"{mana_unit}", units.get(UnitMessage.MANA)
-						,"{hp_unit}", units.get(UnitMessage.HP)
-						,"{xp_unit}", units.get(UnitMessage.XP)));
-			}
-			else {
-				if (locale.equals(Locale.ENGLISH)) {
-					Bukkit.getLogger().warning("[AureliumSkills] [" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
-				}
+			if (message == null && locale.equals(Locale.ENGLISH)) {
+				plugin.getLogger().warning("[" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
 			}
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
@@ -202,12 +217,18 @@ public class Lang implements Listener {
 							// Messages to override
 							for (MessageUpdates update : MessageUpdates.values()) {
 								if (currentVersion < update.getVersion() && imbVersion >= update.getVersion()) {
-									ConfigurationSection section = imbConfig.getConfigurationSection(update.getSection());
+									ConfigurationSection section = imbConfig.getConfigurationSection(update.getPath());
 									if (section != null) {
 										for (String key : section.getKeys(false)) {
 											config.set(section.getCurrentPath() + "." + key, section.getString(key));
 										}
 										Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+									} else {
+										Object value = imbConfig.get(update.getPath());
+										if (value != null) {
+											config.set(update.getPath(), value);
+											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										}
 									}
 								}
 							}
