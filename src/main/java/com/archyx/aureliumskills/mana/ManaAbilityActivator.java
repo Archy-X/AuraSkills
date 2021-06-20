@@ -49,13 +49,13 @@ public class ManaAbilityActivator {
                                 if (clickedBlock.getType() == XMaterial.DIRT.parseMaterial()
                                         || clickedBlock.getType() == XMaterial.GRASS_BLOCK.parseMaterial()
                                         || clickedBlock.getType() == XMaterial.COARSE_DIRT.parseMaterial()
-                                        || clickedBlock.getType() == XMaterial.GRASS_PATH.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.DIRT_PATH.parseMaterial()
                                         || clickedBlock.getType() == XMaterial.FARMLAND.parseMaterial()) {
                                     return;
                                 }
                             } else {
                                 if (clickedBlock.getType() == XMaterial.GRASS_BLOCK.parseMaterial()
-                                        || clickedBlock.getType() == XMaterial.GRASS_PATH.parseMaterial()
+                                        || clickedBlock.getType() == XMaterial.DIRT_PATH.parseMaterial()
                                         || clickedBlock.getType() == XMaterial.FARMLAND.parseMaterial()) {
                                     return;
                                 } else if (clickedBlock.getType() == Material.DIRT) {
