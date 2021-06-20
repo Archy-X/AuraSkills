@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.util.misc;
 public class KeyIntPair {
 
     private final String key;
-    private final int value;
+    private int value;
 
     public KeyIntPair(String key, int value) {
         this.key = key;
@@ -16,6 +16,10 @@ public class KeyIntPair {
 
     public int getValue() {
         return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
 }
