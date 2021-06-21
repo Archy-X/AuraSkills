@@ -174,3 +174,5 @@ permissions:
         default: true
     aureliumskills.item.register:
         default: op
+    aureliumskills.item.give:
+        default: op
