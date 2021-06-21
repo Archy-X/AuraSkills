@@ -4,8 +4,8 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.source.Source;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class LootBuilder {
 
@@ -13,14 +13,14 @@ public abstract class LootBuilder {
     protected int weight;
     protected String message;
     protected double xp;
-    protected List<Source> sources;
+    protected Set<Source> sources;
 
     public LootBuilder(AureliumSkills plugin) {
         this.plugin = plugin;
         this.weight = 10;
         this.message = "";
         this.xp = -1.0;
-        this.sources = new ArrayList<>();
+        this.sources = new HashSet<>();
     }
 
     public LootBuilder weight(int weight) {
@@ -38,7 +38,7 @@ public abstract class LootBuilder {
         return this;
     }
 
-    public LootBuilder sources(List<Source> sources) {
+    public LootBuilder sources(Set<Source> sources) {
         this.sources = sources;
         return this;
     }

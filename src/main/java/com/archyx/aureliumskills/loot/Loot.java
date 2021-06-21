@@ -3,7 +3,7 @@ package com.archyx.aureliumskills.loot;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.source.Source;
 
-import java.util.List;
+import java.util.Set;
 
 public abstract class Loot {
 
@@ -11,9 +11,9 @@ public abstract class Loot {
     protected final int weight;
     protected final String message;
     protected final double xp;
-    protected final List<Source> sources;
+    protected final Set<Source> sources;
 
-    public Loot(AureliumSkills plugin, int weight, String message, double xp, List<Source> sources) {
+    public Loot(AureliumSkills plugin, int weight, String message, double xp, Set<Source> sources) {
         this.plugin = plugin;
         this.weight = weight;
         this.message = message;
@@ -37,7 +37,7 @@ public abstract class Loot {
         return xp;
     }
 
-    public List<Source> getSources() {
+    public Set<Source> getSources() {
         return sources;
     }
 

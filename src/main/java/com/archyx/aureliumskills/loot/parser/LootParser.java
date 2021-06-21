@@ -8,10 +8,10 @@ import com.archyx.aureliumskills.util.misc.Parser;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class LootParser extends Parser {
 
@@ -40,9 +40,9 @@ public abstract class LootParser extends Parser {
     }
 
     @NotNull
-    protected List<Source> parseSources(Map<?, ?> map) {
+    protected Set<Source> parseSources(Map<?, ?> map) {
         if (map.containsKey("sources")) {
-            List<Source> sources = new ArrayList<>();
+            Set<Source> sources = new HashSet<>();
             for (String entry : getStringList(map, "sources")) {
                 if (entry.startsWith("#")) { // Source tag
                     // Get the tag
@@ -59,7 +59,7 @@ public abstract class LootParser extends Parser {
             }
             return sources;
         } else {
-            return new ArrayList<>();
+            return new HashSet<>();
         }
     }
 
