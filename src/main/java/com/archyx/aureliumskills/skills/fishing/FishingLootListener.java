@@ -1,16 +1,16 @@
-package com.archyx.aureliumskills.loot.listener;
+package com.archyx.aureliumskills.skills.fishing;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.loot.Loot;
+import com.archyx.aureliumskills.loot.LootHandler;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.fishing.FishingSource;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
 import org.bukkit.entity.Item;
@@ -23,11 +23,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class FishingListener extends LootHandler implements Listener {
+public class FishingLootListener extends LootHandler implements Listener {
 
     private final Random random = new Random();
 
-    public FishingListener(AureliumSkills plugin) {
+    public FishingLootListener(AureliumSkills plugin) {
         super(plugin, Skills.FISHING, Ability.FISHER);
     }
 

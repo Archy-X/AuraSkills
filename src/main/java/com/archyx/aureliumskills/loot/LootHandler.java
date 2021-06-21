@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.loot.listener;
+package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
@@ -7,8 +7,6 @@ import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.loot.Loot;
-import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skill;

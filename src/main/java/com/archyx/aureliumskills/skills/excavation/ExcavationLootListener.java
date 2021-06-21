@@ -1,16 +1,16 @@
-package com.archyx.aureliumskills.loot.listener;
+package com.archyx.aureliumskills.skills.excavation;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.loot.Loot;
+import com.archyx.aureliumskills.loot.LootHandler;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.skills.excavation.ExcavationSource;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,11 +20,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.Random;
 
-public class ExcavationListener extends LootHandler implements Listener {
+public class ExcavationLootListener extends LootHandler implements Listener {
 
     private final Random random = new Random();
 
-    public ExcavationListener(AureliumSkills plugin) {
+    public ExcavationLootListener(AureliumSkills plugin) {
         super(plugin, Skills.EXCAVATION, Ability.EXCAVATOR);
     }
 

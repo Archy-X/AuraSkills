@@ -29,8 +29,6 @@ import com.archyx.aureliumskills.leveler.Leveler;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
-import com.archyx.aureliumskills.loot.listener.ExcavationListener;
-import com.archyx.aureliumskills.loot.listener.FishingListener;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
@@ -60,12 +58,14 @@ import com.archyx.aureliumskills.skills.endurance.EnduranceAbilities;
 import com.archyx.aureliumskills.skills.endurance.EnduranceLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationAbilities;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLeveler;
+import com.archyx.aureliumskills.skills.excavation.ExcavationLootListener;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
 import com.archyx.aureliumskills.skills.farming.FarmingLeveler;
 import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
 import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
 import com.archyx.aureliumskills.skills.fishing.FishingAbilities;
 import com.archyx.aureliumskills.skills.fishing.FishingLeveler;
+import com.archyx.aureliumskills.skills.fishing.FishingLootListener;
 import com.archyx.aureliumskills.skills.foraging.ForagingAbilities;
 import com.archyx.aureliumskills.skills.foraging.ForagingLeveler;
 import com.archyx.aureliumskills.skills.forging.ForgingAbilities;
@@ -565,8 +565,8 @@ public class AureliumSkills extends JavaPlugin {
 		this.actionBar = new ActionBar(this);
 		pm.registerEvents(actionBar, this);
 		pm.registerEvents(new RegionListener(this), this);
-		pm.registerEvents(new FishingListener(this), this);
-		pm.registerEvents(new ExcavationListener(this), this);
+		pm.registerEvents(new FishingLootListener(this), this);
+		pm.registerEvents(new ExcavationLootListener(this), this);
 	}
 
 	private boolean setupEconomy() {
