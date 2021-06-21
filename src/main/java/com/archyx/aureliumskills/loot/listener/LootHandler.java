@@ -24,6 +24,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -78,8 +79,21 @@ public class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    protected Loot selectLoot(LootPool pool) {
-        List<Loot> lootList = pool.getLoot();
+    protected Loot selectLoot(LootPool pool, @Nullable Source source) {
+        List<Loot> lootList = new ArrayList<>();
+        // Add applicable loot to list for selection
+        for (Loot loot : pool.getLoot()) {
+            if (loot.getSources().size() > 0 && source != null) {
+                for (Source lootSource : loot.getSources()) {
+                    if (lootSource.equals(source)) {
+                        lootList.add(loot);
+                        break;
+                    }
+                }
+            } else {
+                lootList.add(loot);
+            }
+        }
         // Loot selected based on weight
         int totalWeight = 0;
         for (Loot loot : lootList) {

@@ -23,7 +23,8 @@ public class CommandLootParser extends LootParser {
         }
 
         return builder.command(getString(map, "command"))
-                .message(getMessage(map))
-                .weight(getWeight(map)).build();
+                .message(parseMessage(map))
+                .weight(parseWeight(map))
+                .sources(parseSources(map)).build();
     }
 }

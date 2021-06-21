@@ -15,7 +15,7 @@ public class ItemLootBuilder extends LootBuilder {
     @Override
     public Loot build() {
         Validate.notNull(item, "You must specify an item");
-        return new ItemLoot(plugin, weight, message, xp, item, minAmount, maxAmount);
+        return new ItemLoot(plugin, weight, message, xp, sources, item, minAmount, maxAmount);
     }
 
     public ItemLootBuilder(AureliumSkills plugin) {

@@ -2,9 +2,15 @@ package com.archyx.aureliumskills.loot.parser;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.Loot;
+import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.source.SourceTag;
 import com.archyx.aureliumskills.util.misc.Parser;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class LootParser extends Parser {
@@ -17,7 +23,7 @@ public abstract class LootParser extends Parser {
 
     public abstract Loot parse(Map<?, ?> map);
 
-    protected int getWeight(Map<?, ?> map) {
+    protected int parseWeight(Map<?, ?> map) {
         if (map.containsKey("weight")) {
             return getInt(map, "weight");
         } else {
@@ -25,11 +31,35 @@ public abstract class LootParser extends Parser {
         }
     }
 
-    protected String getMessage(Map<?, ?> map) {
+    protected String parseMessage(Map<?, ?> map) {
         if (map.containsKey("message")) {
             return TextUtil.replace(getString(map, "message"), "&", "§");
         } else {
             return "";
+        }
+    }
+
+    @NotNull
+    protected List<Source> parseSources(Map<?, ?> map) {
+        if (map.containsKey("sources")) {
+            List<Source> sources = new ArrayList<>();
+            for (String entry : getStringList(map, "sources")) {
+                if (entry.startsWith("#")) { // Source tag
+                    // Get the tag
+                    String tagName = TextUtil.replace(entry, "#", "").toUpperCase(Locale.ROOT);
+                    SourceTag tag = SourceTag.valueOf(tagName);
+                    // All all sources in tag
+                    sources.addAll(plugin.getSourceManager().getTag(tag));
+                } else { // Regular source
+                    Source source = plugin.getSourceRegistry().valueOf(entry);
+                    if (source != null) {
+                        sources.add(source);
+                    }
+                }
+            }
+            return sources;
+        } else {
+            return new ArrayList<>();
         }
     }
 

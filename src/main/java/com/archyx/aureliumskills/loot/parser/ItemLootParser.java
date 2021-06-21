@@ -38,10 +38,11 @@ public class ItemLootParser extends LootParser {
         return new ItemLootBuilder(plugin).item(item)
                 .minAmount(amount[0])
                 .maxAmount(amount[1])
-                .message(getMessage(map))
-                .weight(getWeight(map)).build();
+                .message(parseMessage(map))
+                .weight(parseWeight(map))
+                .sources(parseSources(map)).build();
     }
-    
+
     private ItemStack parseItem(Map<?, ?> map) {
         // Parse material
         String itemString = getString(map, "item");

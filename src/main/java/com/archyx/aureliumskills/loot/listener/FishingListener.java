@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
@@ -55,30 +56,33 @@ public class FishingListener extends LootHandler implements Listener {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
 
+        ItemStack originalItem = ((Item) event.getCaught()).getItemStack();
+        FishingSource originalSource = FishingSource.valueOf(originalItem);
+
         LootTable table = plugin.getLootTableManager().getLootTable(Skills.FISHING);
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
             // Calculate chance for pool
-            Source originalSource = null;
+            Source source = null;
             double chance = pool.getBaseChance();
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
                 chance += (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
-                originalSource = FishingSource.RARE;
+                source = FishingSource.RARE;
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
                 chance += (getValue(Ability.EPIC_CATCH, playerData) / 100);
-                originalSource = FishingSource.EPIC;
+                source = FishingSource.EPIC;
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
-                Loot selectedLoot = selectLoot(pool);
+                Loot selectedLoot = selectLoot(pool, originalSource);
                 // Give loot
                 if (selectedLoot != null) {
                     if (selectedLoot instanceof ItemLoot) {
                         ItemLoot itemLoot = (ItemLoot) selectedLoot;
-                        giveFishingItemLoot(player, itemLoot, event, originalSource);
+                        giveFishingItemLoot(player, itemLoot, event, source);
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
-                        giveCommandLoot(player, commandLoot, originalSource);
+                        giveCommandLoot(player, commandLoot, source);
                     }
                     break;
                 }

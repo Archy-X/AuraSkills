@@ -42,6 +42,8 @@ public class ExcavationListener extends LootHandler implements Listener {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
 
+        ExcavationSource originalSource = ExcavationSource.getSource(block);
+
         LootTable table = plugin.getLootTableManager().getLootTable(Skills.EXCAVATION);
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
@@ -54,7 +56,7 @@ public class ExcavationListener extends LootHandler implements Listener {
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
-                Loot selectedLoot = selectLoot(pool);
+                Loot selectedLoot = selectLoot(pool, originalSource);
                 // Give loot
                 if (selectedLoot != null) {
                     if (selectedLoot instanceof ItemLoot) {
