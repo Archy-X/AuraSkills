@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.loot.listener;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.ability.AbilityProvider;
 import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -11,6 +12,7 @@ import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -20,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,12 +31,14 @@ import java.util.Random;
 public class LootHandler extends AbilityProvider {
 
     private final Random random = new Random();
+    private final Ability ability;
 
-    public LootHandler(AureliumSkills plugin, Skill skill) {
+    public LootHandler(AureliumSkills plugin, Skill skill, Ability ability) {
         super(plugin, skill);
+        this.ability = ability;
     }
 
-    protected void giveCommandLoot(Player player, CommandLoot loot) {
+    protected void giveCommandLoot(Player player, CommandLoot loot, Source source) {
         // Apply placeholders to command
         String finalCommand = TextUtil.replace(loot.getCommand(), "{player}", player.getName());
         if (plugin.isPlaceholderAPIEnabled()) {
@@ -47,17 +52,19 @@ public class LootHandler extends AbilityProvider {
             Bukkit.dispatchCommand(player, finalCommand);
         }
         attemptSendMessage(player, loot);
+        giveXp(player, loot, source);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event) {
+    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event, @Nullable Source source) {
         Block block = event.getBlock();
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
         attemptSendMessage(player, loot);
+        giveXp(player, loot, source);
     }
 
-    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event) {
+    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable Source source) {
         if (!(event.getCaught() instanceof Item)) return;
         Item itemEntity = (Item) event.getCaught();
 
@@ -68,6 +75,7 @@ public class LootHandler extends AbilityProvider {
         drop.setAmount(amount);
         itemEntity.setItemStack(drop);
         attemptSendMessage(player, loot);
+        giveXp(player, loot, source);
     }
 
     protected Loot selectLoot(LootPool pool) {
@@ -88,6 +96,32 @@ public class LootHandler extends AbilityProvider {
             currentWeight += loot.getWeight();
         }
         return selectedLoot;
+    }
+
+    private void giveXp(Player player, Loot loot, @Nullable Source source) {
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null) return;
+        if (loot.getXp() == -1.0 && source != null) {
+            plugin.getLeveler().addXp(player, skill, getXp(player, source, ability));
+        } else {
+            plugin.getLeveler().addXp(player, skill, getXp(player, loot.getXp()));
+        }
+    }
+
+    private double getXp(Player player, double input) {
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            double output = input;
+            if (ability != null) {
+                if (plugin.getAbilityManager().isEnabled(ability)) {
+                    double modifier = 1;
+                    modifier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
+                    output *= modifier;
+                }
+            }
+            return output;
+        }
+        return 0.0;
     }
 
     private int generateAmount(int minAmount, int maxAmount) {

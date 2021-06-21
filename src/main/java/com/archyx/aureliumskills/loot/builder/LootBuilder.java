@@ -14,7 +14,7 @@ public abstract class LootBuilder {
         this.plugin = plugin;
         this.weight = 10;
         this.message = "";
-        this.xp = -1;
+        this.xp = -1.0;
     }
 
     public LootBuilder weight(int weight) {

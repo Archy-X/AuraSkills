@@ -10,6 +10,8 @@ import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.skills.fishing.FishingSource;
+import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -25,7 +27,7 @@ public class FishingListener extends LootHandler implements Listener {
     private final Random random = new Random();
 
     public FishingListener(AureliumSkills plugin) {
-        super(plugin, Skills.FISHING);
+        super(plugin, Skills.FISHING, Ability.FISHER);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -57,11 +59,14 @@ public class FishingListener extends LootHandler implements Listener {
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
             // Calculate chance for pool
+            Source originalSource = null;
             double chance = pool.getBaseChance();
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
                 chance += (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
+                originalSource = FishingSource.RARE;
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
                 chance += (getValue(Ability.EPIC_CATCH, playerData) / 100);
+                originalSource = FishingSource.EPIC;
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
@@ -70,10 +75,10 @@ public class FishingListener extends LootHandler implements Listener {
                 if (selectedLoot != null) {
                     if (selectedLoot instanceof ItemLoot) {
                         ItemLoot itemLoot = (ItemLoot) selectedLoot;
-                        giveFishingItemLoot(player, itemLoot, event);
+                        giveFishingItemLoot(player, itemLoot, event, originalSource);
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
-                        giveCommandLoot(player, commandLoot);
+                        giveCommandLoot(player, commandLoot, originalSource);
                     }
                     break;
                 }

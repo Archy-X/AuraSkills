@@ -25,7 +25,7 @@ public class ExcavationListener extends LootHandler implements Listener {
     private final Random random = new Random();
 
     public ExcavationListener(AureliumSkills plugin) {
-        super(plugin, Skills.FISHING);
+        super(plugin, Skills.EXCAVATION, Ability.EXCAVATOR);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -59,10 +59,10 @@ public class ExcavationListener extends LootHandler implements Listener {
                 if (selectedLoot != null) {
                     if (selectedLoot instanceof ItemLoot) {
                         ItemLoot itemLoot = (ItemLoot) selectedLoot;
-                        giveBlockItemLoot(player, itemLoot, event);
+                        giveBlockItemLoot(player, itemLoot, event, null);
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
-                        giveCommandLoot(player, commandLoot);
+                        giveCommandLoot(player, commandLoot, null);
                     }
                     break;
                 }
