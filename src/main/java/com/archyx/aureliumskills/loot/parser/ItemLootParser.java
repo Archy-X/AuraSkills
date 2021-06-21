@@ -1,6 +1,9 @@
 package com.archyx.aureliumskills.loot.parser;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.loot.Loot;
+import com.archyx.aureliumskills.loot.builder.ItemLootBuilder;
+import com.archyx.aureliumskills.util.misc.Validate;
 import com.cryptomorin.xseries.XEnchantment;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Material;
@@ -13,21 +16,33 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class ItemLootParser extends LootParser {
+public class ItemLootParser extends LootParser {
 
     public ItemLootParser(AureliumSkills plugin) {
         super(plugin);
     }
 
-    @Nullable
-    protected ItemStack parseItem(Map<?, ?> map) {
+    @Override
+    public Loot parse(Map<?, ?> map) {
+        ItemStack item = parseItem(map);
+        Validate.notNull(item, "Failed to parse item");
+
+        int[] amount = parseAmount(map);
+
+        return new ItemLootBuilder(plugin).item(item)
+                .minAmount(amount[0])
+                .maxAmount(amount[1])
+                .message(getMessage(map))
+                .weight(getWeight(map)).build();
+    }
+    
+    private ItemStack parseItem(Map<?, ?> map) {
         // Parse material
         String itemString = getString(map, "item");
         Material material = Material.valueOf(itemString.toUpperCase(Locale.ROOT));

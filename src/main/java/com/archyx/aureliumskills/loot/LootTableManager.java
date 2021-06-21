@@ -1,9 +1,8 @@
 package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.loot.parser.BlockItemLootParser;
 import com.archyx.aureliumskills.loot.parser.CommandLootParser;
-import com.archyx.aureliumskills.loot.parser.FishingItemLootParser;
+import com.archyx.aureliumskills.loot.parser.ItemLootParser;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.misc.DataUtil;
 import org.bukkit.configuration.ConfigurationSection;
@@ -63,15 +62,14 @@ public class LootTableManager {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(lootTableFile);
 			matchConfig(config, lootTableFile); // Try to update file
 			// Load corresponding loot table type
-			String type = config.getString("type", "block");
-			LootTable lootTable = loadLootTable(lootTableFile, config, type);
+			LootTable lootTable = loadLootTable(lootTableFile, config);
 			if (lootTable != null) {
 				lootTables.put(skill, lootTable);
 			}
 		}
 	}
 
-	private LootTable loadLootTable(File file, FileConfiguration config, String lootTableType) {
+	private LootTable loadLootTable(File file, FileConfiguration config) {
 		ConfigurationSection poolsSection = config.getConfigurationSection("pools");
 		if (poolsSection == null) return null;
 		List<LootPool> pools = new ArrayList<>();
@@ -92,11 +90,7 @@ public class LootTableManager {
 				try {
 					// Item loot
 					if (type.equalsIgnoreCase("item")) {
-						if (lootTableType.equals("fishing")) {
-							loot = new FishingItemLootParser(plugin).parse(lootEntryMap);
-						} else if (lootTableType.equals("block")) {
-							loot = new BlockItemLootParser(plugin).parse(lootEntryMap);
-						}
+						loot = new ItemLootParser(plugin).parse(lootEntryMap);
 					}
 					// Command loot
 					else if (type.equalsIgnoreCase("command")) {

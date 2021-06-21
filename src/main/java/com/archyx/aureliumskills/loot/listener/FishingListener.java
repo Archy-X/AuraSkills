@@ -2,14 +2,13 @@ package com.archyx.aureliumskills.loot.listener;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
-import com.archyx.aureliumskills.ability.AbilityProvider;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
-import com.archyx.aureliumskills.loot.type.FishingItemLoot;
+import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
 import org.bukkit.entity.Item;
@@ -19,10 +18,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 
-import java.util.List;
 import java.util.Random;
 
-public class FishingListener extends AbilityProvider implements Listener {
+public class FishingListener extends LootHandler implements Listener {
 
     private final Random random = new Random();
 
@@ -67,31 +65,15 @@ public class FishingListener extends AbilityProvider implements Listener {
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
-                List<Loot> lootList = pool.getLoot();
-                // Loot selected based on weight
-                int totalWeight = 0;
-                for (Loot loot : lootList) {
-                    totalWeight += loot.getWeight();
-                }
-                int selected = random.nextInt(totalWeight);
-                int currentWeight = 0;
-                Loot selectedLoot = null;
-                for (Loot loot : lootList) {
-                    if (selected >= currentWeight && selected < currentWeight + loot.getWeight()) {
-                        selectedLoot = loot;
-                        break;
-                    }
-                    currentWeight += loot.getWeight();
-                }
-
+                Loot selectedLoot = selectLoot(pool);
                 // Give loot
                 if (selectedLoot != null) {
-                    if (selectedLoot instanceof FishingItemLoot) {
-                        FishingItemLoot fishingItemLoot = (FishingItemLoot) selectedLoot;
-                        fishingItemLoot.giveLoot(event);
+                    if (selectedLoot instanceof ItemLoot) {
+                        ItemLoot itemLoot = (ItemLoot) selectedLoot;
+                        giveFishingItemLoot(player, itemLoot, event);
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
-                        commandLoot.giveLoot(player);
+                        giveCommandLoot(player, commandLoot);
                     }
                     break;
                 }

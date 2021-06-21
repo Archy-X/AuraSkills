@@ -1,24 +1,19 @@
 package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.lang.CustomMessageKey;
-import com.archyx.aureliumskills.lang.Lang;
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.entity.Player;
-
-import java.util.Locale;
 
 public abstract class Loot {
 
     protected final AureliumSkills plugin;
     protected final int weight;
     protected final String message;
+    protected final double xp;
 
-    public Loot(AureliumSkills plugin, int weight, String message) {
+    public Loot(AureliumSkills plugin, int weight, String message, double xp) {
         this.plugin = plugin;
         this.weight = weight;
         this.message = message;
+        this.xp = xp;
     }
 
     public int getWeight() {
@@ -29,25 +24,12 @@ public abstract class Loot {
         return message;
     }
 
-    protected void attemptSendMessage(Player player) {
-        if (message != null && !message.equals("")) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-            if (playerData == null) return;
-
-            Locale locale = playerData.getLocale();
-            // Try to get message as message key
-            CustomMessageKey key = new CustomMessageKey(message);
-            String finalMessage = Lang.getMessage(key, locale);
-            // Use input as message if fail
-            if (finalMessage == null) {
-                finalMessage = message;
-            }
-            // Replace placeholders
-            if (plugin.isPlaceholderAPIEnabled()) {
-                finalMessage = PlaceholderAPI.setPlaceholders(player, finalMessage);
-            }
-            player.sendMessage(finalMessage);
-        }
+    /**
+     * Gets the amount of Skill XP to reward
+     * @return The amount of XP, -1 if not specified
+     */
+    public double getXp() {
+        return xp;
     }
 
 }

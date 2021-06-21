@@ -1,13 +1,22 @@
 package com.archyx.aureliumskills.loot.builder;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.loot.Loot;
+import com.archyx.aureliumskills.loot.type.ItemLoot;
+import com.archyx.aureliumskills.util.misc.Validate;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class ItemLootBuilder extends LootBuilder {
+public class ItemLootBuilder extends LootBuilder {
 
     protected ItemStack item;
     protected int minAmount;
     protected int maxAmount;
+
+    @Override
+    public Loot build() {
+        Validate.notNull(item, "You must specify an item");
+        return new ItemLoot(plugin, weight, message, xp, item, minAmount, maxAmount);
+    }
 
     public ItemLootBuilder(AureliumSkills plugin) {
         super(plugin);
