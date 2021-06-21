@@ -3,6 +3,8 @@ package com.archyx.aureliumskills.loot;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.ability.AbilityProvider;
+import com.archyx.aureliumskills.api.event.LootDropCause;
+import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
@@ -14,6 +16,7 @@ import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -54,11 +57,18 @@ public class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event, @Nullable Source source) {
+    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event, @Nullable Source source, LootDropCause cause) {
         Block block = event.getBlock();
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
-        block.getWorld().dropItem(block.getLocation().add(0.5, 0.5, 0.5), drop);
+        Location location = block.getLocation().add(0.5, 0.5, 0.5);
+        // Call event
+        PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, location, cause);
+        if (cause != null) {
+            Bukkit.getPluginManager().callEvent(dropEvent);
+            if (dropEvent.isCancelled()) return;
+        }
+        block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
         attemptSendMessage(player, loot);
         giveXp(player, loot, source);
     }

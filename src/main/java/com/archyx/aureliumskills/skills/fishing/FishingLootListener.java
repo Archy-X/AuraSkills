@@ -63,7 +63,7 @@ public class FishingLootListener extends LootHandler implements Listener {
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
             // Calculate chance for pool
-            Source source = null;
+            Source source;
             double chance = pool.getBaseChance();
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
                 chance += (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
@@ -71,6 +71,8 @@ public class FishingLootListener extends LootHandler implements Listener {
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
                 chance += (getValue(Ability.EPIC_CATCH, playerData) / 100);
                 source = FishingSource.EPIC;
+            } else {
+                source = originalSource;
             }
 
             if (random.nextDouble() < chance) { // Pool is selected

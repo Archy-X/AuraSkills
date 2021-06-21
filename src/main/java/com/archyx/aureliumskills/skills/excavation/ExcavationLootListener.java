@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.skills.excavation;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.loot.Loot;
@@ -49,10 +50,15 @@ public class ExcavationLootListener extends LootHandler implements Listener {
         for (LootPool pool : table.getPools()) {
             // Calculate chance for pool
             double chance = pool.getBaseChance();
+            LootDropCause cause;
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.METAL_DETECTOR)) {
                 chance += (getValue(Ability.METAL_DETECTOR, playerData) / 100);
+                cause = LootDropCause.METAL_DETECTOR;
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.LUCKY_SPADES)) {
                 chance += (getValue(Ability.LUCKY_SPADES, playerData) / 100);
+                cause = LootDropCause.LUCKY_SPADES;
+            } else {
+                cause = LootDropCause.EXCAVATION_OTHER_LOOT;
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
@@ -61,7 +67,7 @@ public class ExcavationLootListener extends LootHandler implements Listener {
                 if (selectedLoot != null) {
                     if (selectedLoot instanceof ItemLoot) {
                         ItemLoot itemLoot = (ItemLoot) selectedLoot;
-                        giveBlockItemLoot(player, itemLoot, event, null);
+                        giveBlockItemLoot(player, itemLoot, event, null, cause);
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
                         giveCommandLoot(player, commandLoot, null);

@@ -12,6 +12,7 @@ public enum LootDropCause {
     METAL_DETECTOR,
     BIGGER_SCOOP,
     LUCKY_SPADES,
-    LUCK_DOUBLE_DROP
+    LUCK_DOUBLE_DROP,
+    EXCAVATION_OTHER_LOOT
 
 }
