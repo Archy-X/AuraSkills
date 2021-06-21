@@ -20,13 +20,12 @@ import com.archyx.aureliumskills.modifier.Modifiers;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Luck;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.ui.ActionBar;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.math.NumberUtil;
-import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
@@ -42,6 +41,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -500,56 +500,39 @@ public class SkillsCommand extends BaseCommand {
 		if (player == null) {
 			if (sender instanceof Player) {
 				Player target = (Player) sender;
-				PlayerData playerData = plugin.getPlayerManager().getPlayerData(target);
-				if (playerData != null) {
-					StringBuilder message;
-					if (stat == null) {
-						message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER, locale), target));
-						for (String key : playerData.getStatModifiers().keySet()) {
-							StatModifier modifier = playerData.getStatModifiers().get(key);
-							message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY, locale), modifier, target, locale));
-						}
-					} else {
-						message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER, locale), stat, target, locale));
-						for (String key : playerData.getStatModifiers().keySet()) {
-							StatModifier modifier = playerData.getStatModifiers().get(key);
-							if (modifier.getStat() == stat) {
-								message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY, locale), modifier, target, locale));
-							}
-						}
-					}
-					sender.sendMessage(message.toString());
-				} else {
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
-				}
+				listModifiers(sender, target, stat, locale);
 			}
 			else {
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MODIFIER_LIST_PLAYERS_ONLY, locale));
 			}
 		}
 		else {
-			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-			if (playerData != null) {
-				StringBuilder message;
-				if (stat == null) {
-					message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER, locale), player));
-					for (String key : playerData.getStatModifiers().keySet()) {
-						StatModifier modifier = playerData.getStatModifiers().get(key);
-						message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY, locale), modifier, player, locale));
-					}
-				} else {
-					message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER, locale), stat, player, locale));
-					for (String key : playerData.getStatModifiers().keySet()) {
-						StatModifier modifier = playerData.getStatModifiers().get(key);
-						if (modifier.getStat() == stat) {
-							message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY, locale), modifier, player, locale));
-						}
+			listModifiers(sender, player, stat, locale);
+		}
+	}
+
+	private void listModifiers(CommandSender sender, @Optional @Flags("other") Player player, @Optional Stat stat, Locale locale) {
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData != null) {
+			StringBuilder message;
+			if (stat == null) {
+				message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER, locale), player));
+				for (String key : playerData.getStatModifiers().keySet()) {
+					StatModifier modifier = playerData.getStatModifiers().get(key);
+					message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY, locale), modifier, player, locale));
+				}
+			} else {
+				message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER, locale), stat, player, locale));
+				for (String key : playerData.getStatModifiers().keySet()) {
+					StatModifier modifier = playerData.getStatModifiers().get(key);
+					if (modifier.getStat() == stat) {
+						message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY, locale), modifier, player, locale));
 					}
 				}
-				sender.sendMessage(message.toString());
-			} else {
-				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
 			}
+			sender.sendMessage(message.toString());
+		} else {
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
 		}
 	}
 
@@ -563,32 +546,7 @@ public class SkillsCommand extends BaseCommand {
 			if (sender instanceof Player) {
 				Player target = (Player) sender;
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(target);
-				if (playerData != null) {
-					int removed = 0;
-					for (String key : playerData.getStatModifiers().keySet()) {
-						if (stat == null) {
-							playerData.removeStatModifier(key);
-							removed++;
-						}
-						else if (playerData.getStatModifiers().get(key).getStat() == stat) {
-							playerData.removeStatModifier(key);
-							removed++;
-						}
-					}
-					if (!silent) {
-						if (stat == null) {
-							sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS, locale), target).replace("{num}", String.valueOf(removed)));
-						}
-						else {
-							sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT, locale), stat, target, locale).replace("{num}", String.valueOf(removed)));
-						}
-					}
-				}
-				else {
-					if (!silent) {
-						sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
-					}
-				}
+				removeAllModifiers(sender, stat, silent, locale, target, playerData);
 			}
 			else {
 				if (!silent) {
@@ -598,31 +556,39 @@ public class SkillsCommand extends BaseCommand {
 		}
 		else {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-			if (playerData != null) {
-				int removed = 0;
-				for (String key : playerData.getStatModifiers().keySet()) {
-					if (stat == null) {
-						playerData.removeStatModifier(key);
-						removed++;
-					}
-					else if (playerData.getStatModifiers().get(key).getStat() == stat) {
-						playerData.removeStatModifier(key);
-						removed++;
-					}
+			removeAllModifiers(sender, stat, silent, locale, player, playerData);
+		}
+	}
+
+	private void removeAllModifiers(CommandSender sender, @Optional Stat stat, @Default("false") boolean silent, Locale locale, Player target, PlayerData playerData) {
+		if (playerData != null) {
+			int removed = 0;
+			List<String> toRemove = new ArrayList<>();
+			for (String key : playerData.getStatModifiers().keySet()) {
+				if (stat == null) {
+					toRemove.add(key);
+					removed++;
 				}
-				if (!silent) {
-					if (stat == null) {
-						sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS, locale), player).replace("{num}", String.valueOf(removed)));
-					}
-					else {
-						sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT, locale), stat, player, locale).replace("{num}", String.valueOf(removed)));
-					}
+				else if (playerData.getStatModifiers().get(key).getStat() == stat) {
+					toRemove.add(key);
+					removed++;
 				}
 			}
-			else {
-				if (!silent) {
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
+			for (String key : toRemove) {
+				playerData.removeStatModifier(key);
+			}
+			if (!silent) {
+				if (stat == null) {
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS, locale), target).replace("{num}", String.valueOf(removed)));
 				}
+				else {
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT, locale), stat, target, locale).replace("{num}", String.valueOf(removed)));
+				}
+			}
+		}
+		else {
+			if (!silent) {
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.NO_PROFILE, locale));
 			}
 		}
 	}
