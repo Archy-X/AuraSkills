@@ -647,6 +647,12 @@ mana_abilities:
     menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Attack Speed: &c+{value}% &7Duration: &a{duration}s\n &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   not_ready: '&cAbility not ready! &7({cooldown}s)'
   not_enough_mana: '&eNot enough mana! &7({mana} {mana_unit} required, you have {current_mana}/{max_mana})'
+rewards:
+  item:
+    default_menu_message: '\n  {display_name}'
+    default_menu_message_multiple: '\n  {display_name} {amount}x'
+    default_chat_message: '\n  {display_name}'
+    default_chat_message_multiple: '\n  {display_name} {amount}x'
 skills:
   farming:
     name: Farming
@@ -728,4 +734,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 19
+file_version: 20

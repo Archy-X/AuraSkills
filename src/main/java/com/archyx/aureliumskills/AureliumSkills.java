@@ -238,6 +238,8 @@ public class AureliumSkills extends JavaPlugin {
 			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
+		// Load items
+		itemRegistry.loadFromFile();
 		// Load languages
 		lang = new Lang(this);
 		getServer().getPluginManager().registerEvents(lang, this);
@@ -319,8 +321,6 @@ public class AureliumSkills extends JavaPlugin {
 		// Load world manager
 		worldManager = new WorldManager(this);
 		worldManager.loadWorlds();
-		// Load items
-		itemRegistry.loadFromFile();
 		// B-stats
 		int pluginId = 8629;
 		new Metrics(this, pluginId);

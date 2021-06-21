@@ -1,3 +1,63 @@
+Version Beta 1.1.0
+  New Features:
+    - Add customizable rewards for leveling up skills (commands, permissions, stats, items, and money):
+      - Rewards are configurable for each skill in the files in the rewards folder
+      - Each rewards file name corresponds to the skill it defines rewards for (eg. farming.yml defines only Farming rewards)
+      - See the example rewards file for syntax help: https://github.com/Archy-X/AureliumSkills/blob/master/src/main/resources/rewards/example_rewards.yml
+      - Rewards files have two sections:
+        - The 'patterns' section defines rewards that repeat multiple times
+          - Each reward must have a 'pattern' section that can have a 'start', 'interval', and 'stop'
+        - The 'levels' section defines rewards for individual levels
+      - Each reward must define a 'type' key/value
+      - Reward types:
+        - command:
+          - Executes a command on level up defined with 'command'
+          - The 'executor' can define whether the command should be run through 'console' or by the 'player' (defaults to console)
+          - Commands support {player}, {skill}, {level} placeholders and all PlaceholderAPI placeholders
+          - Can optionally define a 'revert_command' and 'revert_executor' to execute when a player loses that level because of admin commands
+          - Color codes will work using & unless escaped using \&
+        - stat:
+          - Levels up an Aurelium Skill stat (health, strength, luck, etc.) defined in the 'stat' value
+          - The 'value' defines how much the stat should increase by (defaults to 1)
+          - You can remove or change the default stats for each skill
+        - permission:
+          - Gives the player a permission (only works with LuckPerms right now) defined with 'permission'
+          - Optional 'value' to specify true/false (defaults to true)
+          - Permissions are automatically removed when skill levels are lost
+          - Permissions are automatically added to players on join when a new permission reward is added to a level players already have unlocked
+        - item:
+          - Gives an item to the player defined with 'key'
+          - The 'key' refers to a registered item registered using /skills item register [key]
+          - The optional 'amount' defines the amount of the item to give, defaults to the amount of the originally registered item
+          - If the player does not have enough inventory space to give the item, they can claim it using /skills claimitems
+          - Unclaimed items are saved between restarts
+        - money:
+          - Gives the player money through Vault Economy
+          - The 'amount' defines the amount of money to give
+          - Messages are handled automatically and are compatible with legacy money rewards
+      - Command, permission, and item rewards can define custom 'menu_message' and 'chat_message':
+        - 'menu_message' is displayed in the level progression menu on the level the reward is unlocked at
+        - 'chat_message' is displayed in chat with the other rewards when the player levels up
+        - These can be either a literal string or refer to a custom message key in the messages file
+        - Messages are optional and will just be an empty string if not defined
+        - 'message' can be used as a shorthand instead when you want both menu and chat messages to be the same
+        - Reward messages will not be displayed on new lines automatically, you must use \n if you want a new line
+    - Add Lightning Blade mana ability for Fighting:
+      - Increases attack speed by _% for _ seconds
+      - Right click sword and attack mob to activate
+    - Add item registry system:
+      - Register the item in your main hand using /skills item register [key]
+      - Unregister an item using /skills item unregister [key]
+      - This system makes it easy to use items with complex lore and meta in item rewards
+      - Registered items are stored in items.yml, this file should not be edited unless you know what you are doing
+      - Registered items can be given to players using /skills item give [player] [key] (amount)
+  Changes:
+    - Lore placeholders for skill items/templates in menus.yml have be changed for stat rewards compatibility
+    - Update XSeries version
+  Bug Fixes:
+    - Fix give-xp-on-takeout Alchemy option not working when using 1 ingredient
+    - Fix six-sided wood and hyphae not giving Foraging XP
+
 Version Beta 1.0.8
   New Features:
     - Add Alchemy option give-xp-on-takeout to reward XP when the potion is taken out of the brewing stand
