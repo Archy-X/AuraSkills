@@ -90,6 +90,9 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 
 	private void checkBrewedSlots(BrewEvent event) {
 		BrewerInventory before = event.getContents();
+		ItemStack ingredient = before.getIngredient();
+		if (ingredient == null) return;
+		ItemStack clonedIngredient = ingredient.clone();
 		ItemStack[] beforeItems = Arrays.copyOf(before.getContents(), 3); // Items in result slots before
 		new BukkitRunnable() {
 			@Override
@@ -99,7 +102,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 					BrewingStand brewingStand = (BrewingStand) blockState;
 					BrewerInventory after = brewingStand.getInventory();
 					ItemStack[] afterItems = Arrays.copyOf(after.getContents(), 3); // Items in result slots after
-					BrewingStandData standData = new BrewingStandData();
+					BrewingStandData standData = new BrewingStandData(clonedIngredient);
 					// Set the items that changed as brewed
 					for (int i = 0; i < 3; i++) {
 						ItemStack beforeItem = beforeItems[i];
@@ -166,7 +169,6 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 		Inventory inventory = event.getClickedInventory();
 		if (inventory == null) return;
 		if (inventory.getType() != InventoryType.BREWING && !(inventory instanceof BrewerInventory)) return;
-		BrewerInventory brewerInventory = (BrewerInventory) inventory;
 
 		int slot = event.getSlot();
 		if (slot > 2) return; // Slots 0-2 are result slots
@@ -193,8 +195,9 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 
 		if (!standData.isSlotBrewed(slot)) return; // Check that the slot was brewed
 
-		ItemStack ingredient = brewerInventory.getIngredient();
+		ItemStack ingredient = standData.getIngredient();
 		if (ingredient == null) return;
+		if (ingredient.getType() == Material.AIR) return;
 		addAlchemyXp(player, ingredient.getType()); // Add XP
 		standData.setSlotBrewed(slot, false); // Set data to false
 	}

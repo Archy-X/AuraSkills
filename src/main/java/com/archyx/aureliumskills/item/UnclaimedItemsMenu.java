@@ -30,38 +30,40 @@ public class UnclaimedItemsMenu implements InventoryProvider {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        int row = 0;
-        int column = 0;
-        for (KeyIntPair keyIntPair : playerData.getUnclaimedItems()) {
-            String itemKey = keyIntPair.getKey();
-            int amount = keyIntPair.getValue();
-            ItemStack item = plugin.getItemRegistry().getItem(itemKey);
-            if (item == null) {
-                plugin.getLogger().warning("Could not find a registered item with key " + itemKey + " when claiming unclaimed item rewards");
-                continue;
-            }
-            item.setAmount(amount);
-            contents.set(row, column, ClickableItem.of(getDisplayItem(item), event -> {
-                // Give item on click
-                if (ItemUtils.canAddItemToInventory(player, item)) {
-                    ItemUtils.addItemToInventory(player, item);
-                    playerData.getUnclaimedItems().remove(keyIntPair);
-                    if (playerData.getUnclaimedItems().size() > 0) {
-                        contents.set(event.getSlot() / 9, event.getSlot() % 9, ClickableItem.empty(new ItemStack(Material.AIR)));
-                    } else {
+        for (int slot = 0; slot < 54; slot++) {
+            int row = slot / 9;
+            int column = slot % 9;
+            if (playerData.getUnclaimedItems().size() <= slot) { // Empty slot
+                contents.set(row, column, ClickableItem.empty(new ItemStack(Material.AIR)));
+            } else { // Slot with item
+                KeyIntPair keyIntPair = playerData.getUnclaimedItems().get(slot);
+
+                String itemKey = keyIntPair.getKey();
+                int amount = keyIntPair.getValue();
+                ItemStack item = plugin.getItemRegistry().getItem(itemKey);
+                if (item == null) {
+                    plugin.getLogger().warning("Could not find a registered item with key " + itemKey + " when claiming unclaimed item rewards");
+                    continue;
+                }
+                item.setAmount(amount);
+                contents.set(row, column, ClickableItem.of(getDisplayItem(item), event -> {
+                    // Give item on click
+                    ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
+                    if (leftoverItem == null) { // All items were added
+                        playerData.getUnclaimedItems().remove(keyIntPair);
+                        if (playerData.getUnclaimedItems().size() > 0) {
+                            init(player, contents);
+                        } else {
+                            player.closeInventory();
+                        }
+                    } else if (leftoverItem.getAmount() != item.getAmount()) { // Some items could not fit
+                        keyIntPair.setValue(leftoverItem.getAmount());
+                        init(player, contents);
+                    } else { // All items could not fit
+                        player.sendMessage(Lang.getMessage(MenuMessage.INVENTORY_FULL, playerData.getLocale()));
                         player.closeInventory();
                     }
-                } else {
-                    player.sendMessage(Lang.getMessage(MenuMessage.INVENTORY_FULL, playerData.getLocale()));
-                    player.closeInventory();
-                }
-            }));
-            // Increment slot position
-            if (column < 8) {
-                column++;
-            } else {
-                row++;
-                column = 0;
+                }));
             }
         }
     }

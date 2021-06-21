@@ -18,6 +18,7 @@ public interface MessageKey {
         keys.addAll(Arrays.asList(UnitMessage.values()));
         keys.addAll(Arrays.asList(ActionBarMessage.values()));
         keys.addAll(Arrays.asList(LevelerMessage.values()));
+        keys.addAll(Arrays.asList(RewardMessage.values()));
         return keys;
     }
 }

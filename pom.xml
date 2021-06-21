@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.1.0-b6</version>
+    <version>Beta1.1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>7.9.1.1</version>
+            <version>8.1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

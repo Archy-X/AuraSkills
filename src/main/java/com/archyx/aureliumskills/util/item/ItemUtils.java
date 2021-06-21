@@ -117,8 +117,17 @@ public class ItemUtils {
 			ItemStack slotItem = inventory.getItem(slot);
 			if (amountRemaining > 0) {
 				if (slotItem == null || slotItem.getType() == Material.AIR) {
-					inventory.setItem(slot, item);
-					amountRemaining = 0;
+					if (amountRemaining > item.getMaxStackSize() && item.getMaxStackSize() != -1) {
+						ItemStack maxStackItem = item.clone();
+						maxStackItem.setAmount(item.getMaxStackSize());
+						inventory.setItem(slot, maxStackItem);
+						amountRemaining -= item.getMaxStackSize();
+					} else {
+						ItemStack addedItem = item.clone();
+						addedItem.setAmount(amountRemaining);
+						inventory.setItem(slot, addedItem);
+						amountRemaining = 0;
+					}
 				} else if (slotItem.isSimilar(item)) {
 					int amountAdded = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
 					slotItem.setAmount(slotItem.getAmount() + amountAdded);
@@ -141,7 +150,11 @@ public class ItemUtils {
 			ItemStack slotItem = inventory.getItem(slot);
 			if (amountRemaining > 0) {
 				if (slotItem == null || slotItem.getType() == Material.AIR) {
-					return true;
+					if (amountRemaining > item.getMaxStackSize() && item.getMaxStackSize() != -1) {
+						amountRemaining -= item.getMaxStackSize();
+					} else {
+						return true;
+					}
 				} else if (slotItem.isSimilar(item)) {
 					int amountCanAdd = Math.min(amountRemaining, slotItem.getMaxStackSize() - slotItem.getAmount());
 					amountRemaining -= amountCanAdd;
