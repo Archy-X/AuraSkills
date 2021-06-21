@@ -50,6 +50,9 @@ permissions:
             aureliumskills.mana.other: true
             aureliumskills.backup.save: true
             aureliumskills.backup.load: true
+            aureliumskills.checkupdates: true
+            aureliumskills.item.register: true
+            aureliumskills.item.give: true
     aureliumskills.skill.setlevel:
         default: op
     aureliumskills.reload:
