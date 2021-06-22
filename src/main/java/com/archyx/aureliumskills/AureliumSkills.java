@@ -129,7 +129,6 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean placeholderAPIEnabled;
 	private boolean vaultEnabled;
 	private boolean protocolLibEnabled;
-	private boolean mythicMobsEnabled;
 	private boolean townyEnabled;
 	private TownySupport townySupport;
 	private boolean luckPermsEnabled;
@@ -217,14 +216,6 @@ public class AureliumSkills extends JavaPlugin {
 		// Load sources
 		sourceManager = new SourceManager(this);
 		sourceManager.loadSources();
-		// Check for MythicMobs
-		if (Bukkit.getPluginManager().isPluginEnabled("MythicMobs")) {
-			mythicMobsEnabled = true;
-			Bukkit.getPluginManager().registerEvents(new MythicMobsSupport(this), this);
-			getLogger().info("MythicMobs Support Enabled!");
-		} else {
-			mythicMobsEnabled = false;
-		}
 		// Load boss bar
 		bossBar = new SkillBossBar(this);
 		bossBar.loadOptions();
@@ -716,10 +707,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isProtocolLibEnabled() {
 		return protocolLibEnabled;
-	}
-
-	public boolean isMythicMobsEnabled() {
-		return mythicMobsEnabled;
 	}
 
 	public boolean isLuckPermsEnabled() {

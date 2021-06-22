@@ -11,12 +11,10 @@ import com.archyx.aureliumskills.source.SourceManager;
 import com.archyx.aureliumskills.source.SourceTag;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.cryptomorin.xseries.XMaterial;
-import io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -26,7 +24,6 @@ public abstract class SkillLeveler {
 
     public final AureliumSkills plugin;
     private final SourceManager sourceManager;
-    private BukkitAPIHelper bukkitAPIHelper;
     private Ability ability;
     private final String skillName;
 
@@ -34,9 +31,6 @@ public abstract class SkillLeveler {
         this.plugin = plugin;
         this.skillName = skill.toString().toLowerCase(Locale.ENGLISH);
         this.sourceManager = plugin.getSourceManager();
-        if (plugin.isMythicMobsEnabled()) {
-            bukkitAPIHelper = new BukkitAPIHelper();
-        }
     }
 
     public SkillLeveler(AureliumSkills plugin, Ability ability) {
@@ -44,9 +38,6 @@ public abstract class SkillLeveler {
         this.ability = ability;
         this.skillName = ability.getSkill().toString().toLowerCase(Locale.ENGLISH);
         this.sourceManager = plugin.getSourceManager();
-        if (plugin.isMythicMobsEnabled()) {
-            bukkitAPIHelper = new BukkitAPIHelper();
-        }
     }
 
     public double getXp(Source source) {
@@ -136,17 +127,6 @@ public abstract class SkillLeveler {
                 }
             }
         }
-    }
-
-    public boolean isMythicMob(Entity entity) {
-        if (plugin.isMythicMobsEnabled()) {
-            if (bukkitAPIHelper != null) {
-                if (bukkitAPIHelper.isMythicMob(entity)) {
-                    return sourceManager.getCustomMobSet().contains(bukkitAPIHelper.getMythicMobInstance(entity).getType().getInternalName());
-                }
-            }
-        }
-        return false;
     }
 
     public boolean blockXpGain(Player player) {

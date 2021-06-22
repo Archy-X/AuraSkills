@@ -38,10 +38,6 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						if (blockXpGainLocation(e.getLocation(), p)) return;
 						if (blockXpGainPlayer(p)) return;
 						if (e.equals(p)) return;
-						// Make sure not MythicMob
-						if (isMythicMob(e)) {
-							return;
-						}
 						double spawnerMultiplier = OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER);
 						try {
 							if (e.hasMetadata("aureliumskills_spawner_mob")) {
@@ -80,8 +76,6 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 						EntityType type = entity.getType();
 						if (blockXpGainPlayer(player)) return;
 						if (entity.equals(player)) return;
-						// Make sure not MythicMob
-						if (isMythicMob(entity)) return;
 						double health = entity.getHealth();
 						double damage = Math.min(health, event.getFinalDamage());
 						// Apply spawner multiplier
