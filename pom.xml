@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.1.0</version>
+    <version>Beta1.1.1</version>
     <build>
         <plugins>
             <plugin>
@@ -93,11 +93,6 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-        <repository>
-            <id>nexus</id>
-            <name>Lumine Releases</name>
-            <url>https://mvn.lumine.io/repository/maven-public/</url>
-        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -173,12 +168,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.lumine.xikage</groupId>
-            <artifactId>MythicMobs</artifactId>
-            <version>4.11.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>net.luckperms</groupId>
             <artifactId>api</artifactId>
             <version>5.2</version>
@@ -189,6 +178,12 @@
             <artifactId>Towny</artifactId>
             <version>0.96.7.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <properties>

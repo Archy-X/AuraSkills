@@ -1,3 +1,15 @@
+Version Beta 1.1.1
+  Changes:
+    - Remove MythicMobs support:
+      - MythicMobs has removed public access to their maven repository due to abuse
+      - This makes it impossible for new users/machines and JitPack to build the plugin
+      - This is a necessary change to keep the plugin open source and the AureliumSkills API working
+    - Update aureliumskills.* permission with new permissions
+  Bug Fixes:
+    - Fix mana ability cooldown_per_level not working
+    - Fix modifier removeall ConcurrentModificationException
+    - Fix missing aureliumskills.item.give permission
+
 Version Beta 1.1.0
   New Features:
     - Add customizable rewards for leveling up skills (commands, permissions, stats, items, and money):
