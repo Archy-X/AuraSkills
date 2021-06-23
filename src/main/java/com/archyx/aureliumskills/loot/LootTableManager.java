@@ -48,6 +48,8 @@ public class LootTableManager {
 		}
 		if (!lootDirectory.isDirectory()) return;
 
+		new LegacyLootConverter(plugin).convertLegacyFile();
+
 		File[] files = lootDirectory.listFiles();
 		if (files == null) return;
 		for (File lootTableFile : files) {
