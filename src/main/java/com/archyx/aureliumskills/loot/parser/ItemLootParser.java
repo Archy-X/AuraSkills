@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.builder.ItemLootBuilder;
 import com.archyx.aureliumskills.util.misc.Validate;
 import com.cryptomorin.xseries.XEnchantment;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -128,6 +129,11 @@ public class ItemLootParser extends LootParser {
                 }
                 item.setItemMeta(potionMeta);
             }
+            // Custom NBT
+            if (map.containsKey("nbt")) {
+                Map<?, ?> nbtMap = getMap(map, "nbt");
+                item = parseNBT(item, nbtMap);
+            }
             return item;
         }
     }
@@ -139,6 +145,26 @@ public class ItemLootParser extends LootParser {
             return item;
         } else {
             throw new IllegalArgumentException("Item with key " + itemKey + " not found in item registry");
+        }
+    }
+
+    private ItemStack parseNBT(ItemStack item, Map<?, ?> map) {
+        NBTItem nbtItem = new NBTItem(item);
+        applyMapToNBT(nbtItem, map);
+        return nbtItem.getItem();
+    }
+
+    private void applyMapToNBT(NBTItem item, Map<?, ?> map) {
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            Object key = entry.getKey();
+            Object value = entry.getValue();
+            if (key instanceof String) {
+                if (value instanceof Map<?, ?>) { // Recursively apply sub maps
+                    applyMapToNBT(item, (Map<?, ?>) value);
+                } else {
+                    item.setObject((String) key, value);
+                }
+            }
         }
     }
 

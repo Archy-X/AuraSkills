@@ -66,7 +66,7 @@ public class DataUtil {
     }
 
     public static Map<?, ?> getMap(Map<?, ?> map, String key) {
-        Object object = getElement(map, "pattern");
+        Object object = getElement(map, key);
         if (!(object instanceof Map<?, ?>)) {
             throw new IllegalArgumentException("Key " + key + " must be a section map");
         }
