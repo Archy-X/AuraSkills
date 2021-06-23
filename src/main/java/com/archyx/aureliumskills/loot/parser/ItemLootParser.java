@@ -48,10 +48,21 @@ public class ItemLootParser extends LootParser {
         if (map.containsKey("key")) { // Item key
             return parseItemKey(map);
         } else { // Regular item
-            String itemString = getString(map, "material");
-            Material material = Material.valueOf(itemString.toUpperCase(Locale.ROOT));
-            ItemStack item = new ItemStack(material);
-            // TODO Parse legacy data
+            String materialString = getString(map, "material");
+            ItemStack item;
+            if (!materialString.contains(":")) { // No legacy data
+                Material material = Material.valueOf(materialString.toUpperCase(Locale.ROOT));
+                item = new ItemStack(material);
+            } else { // With legacy data
+                String[] splitMaterial = materialString.split(":");
+                if (splitMaterial.length == 2) {
+                    Material material = Material.valueOf(splitMaterial[0].toUpperCase(Locale.ROOT));
+                    short data = NumberUtils.toShort(splitMaterial[1]);
+                    item = new ItemStack(material, data);
+                } else {
+                    throw new IllegalArgumentException("Material with data value can only have one :");
+                }
+            }
 
             ItemMeta meta = item.getItemMeta();
             if (meta == null) return item;
