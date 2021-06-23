@@ -48,9 +48,10 @@ public class ItemLootParser extends LootParser {
         if (map.containsKey("key")) { // Item key
             return parseItemKey(map);
         } else { // Regular item
-            String itemString = getString(map, "item");
+            String itemString = getString(map, "material");
             Material material = Material.valueOf(itemString.toUpperCase(Locale.ROOT));
             ItemStack item = new ItemStack(material);
+            // TODO Parse legacy data
 
             ItemMeta meta = item.getItemMeta();
             if (meta == null) return item;

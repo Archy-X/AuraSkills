@@ -9,7 +9,6 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,17 +43,14 @@ public abstract class LootParser extends Parser {
         if (map.containsKey("sources")) {
             Set<Source> sources = new HashSet<>();
             for (String entry : getStringList(map, "sources")) {
-                if (entry.startsWith("#")) { // Source tag
-                    // Get the tag
-                    String tagName = TextUtil.replace(entry, "#", "").toUpperCase(Locale.ROOT);
-                    SourceTag tag = SourceTag.valueOf(tagName);
+                // Try get source name
+                Source source = plugin.getSourceRegistry().valueOf(entry);
+                if (source != null) {
+                    sources.add(source);
+                } else { // Try to get tag if not found
+                    SourceTag tag = SourceTag.valueOf(entry);
                     // All all sources in tag
                     sources.addAll(plugin.getSourceManager().getTag(tag));
-                } else { // Regular source
-                    Source source = plugin.getSourceRegistry().valueOf(entry);
-                    if (source != null) {
-                        sources.add(source);
-                    }
                 }
             }
             return sources;
