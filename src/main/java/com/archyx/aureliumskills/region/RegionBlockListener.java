@@ -94,7 +94,7 @@ public class RegionBlockListener implements Listener {
         Block block = event.getBlock();
         if (!regionManager.isPlacedBlock(block)) return;
         Material type = block.getType();
-        if (type == Material.SAND || type == Material.RED_SAND || type == Material.GRAVEL) {
+        if (type == Material.SAND || type.toString().equals("RED_SAND") || type == Material.GRAVEL) {
             Block below = block.getRelative(BlockFace.DOWN);
             if (below.getType() == Material.AIR || below.getType().toString().equals("CAVE_AIR") || below.getType().toString().equals("VOID_AIR")
                     || below.getType() == Material.WATER || below.getType().toString().equals("BUBBLE_COLUMN") || below.getType() == Material.LAVA) {

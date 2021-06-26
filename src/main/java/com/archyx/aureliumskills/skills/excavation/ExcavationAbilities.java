@@ -76,7 +76,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 					if (source.getLegacyData() == -1) {
 						event = new PlayerLootDropEvent(player, new ItemStack(mat, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
 					} else {
-						event = new PlayerLootDropEvent(player, new ItemStack(Material.PODZOL, 2, source.getLegacyData()), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+						event = new PlayerLootDropEvent(player, new ItemStack(mat, 2, source.getLegacyData()), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
 					}
 					Bukkit.getPluginManager().callEvent(event);
 					if (!event.isCancelled()) {
