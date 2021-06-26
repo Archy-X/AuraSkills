@@ -58,7 +58,7 @@ import com.archyx.aureliumskills.skills.endurance.EnduranceAbilities;
 import com.archyx.aureliumskills.skills.endurance.EnduranceLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationAbilities;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLeveler;
-import com.archyx.aureliumskills.skills.excavation.ExcavationLootListener;
+import com.archyx.aureliumskills.skills.excavation.ExcavationLootHandler;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
 import com.archyx.aureliumskills.skills.farming.FarmingLeveler;
 import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
@@ -68,12 +68,14 @@ import com.archyx.aureliumskills.skills.fishing.FishingLeveler;
 import com.archyx.aureliumskills.skills.fishing.FishingLootListener;
 import com.archyx.aureliumskills.skills.foraging.ForagingAbilities;
 import com.archyx.aureliumskills.skills.foraging.ForagingLeveler;
+import com.archyx.aureliumskills.skills.foraging.ForagingLootHandler;
 import com.archyx.aureliumskills.skills.forging.ForgingAbilities;
 import com.archyx.aureliumskills.skills.forging.ForgingLeveler;
 import com.archyx.aureliumskills.skills.healing.HealingAbilities;
 import com.archyx.aureliumskills.skills.healing.HealingLeveler;
 import com.archyx.aureliumskills.skills.mining.MiningAbilities;
 import com.archyx.aureliumskills.skills.mining.MiningLeveler;
+import com.archyx.aureliumskills.skills.mining.MiningLootHandler;
 import com.archyx.aureliumskills.skills.sorcery.SorceryLeveler;
 import com.archyx.aureliumskills.source.SourceManager;
 import com.archyx.aureliumskills.source.SourceRegistry;
@@ -557,7 +559,9 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(actionBar, this);
 		pm.registerEvents(new RegionListener(this), this);
 		pm.registerEvents(new FishingLootListener(this), this);
-		pm.registerEvents(new ExcavationLootListener(this), this);
+		pm.registerEvents(new ExcavationLootHandler(this), this);
+		pm.registerEvents(new MiningLootHandler(this), this);
+		pm.registerEvents(new ForagingLootHandler(this), this);
 	}
 
 	private boolean setupEconomy() {
