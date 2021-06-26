@@ -72,6 +72,10 @@ public class ExcavationLootListener extends LootHandler implements Listener {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
                         giveCommandLoot(player, commandLoot, null);
                     }
+                    // Override vanilla loot if enabled
+                    if (pool.overridesVanillaLoot()) {
+                        event.setDropItems(false);
+                    }
                     break;
                 }
             }

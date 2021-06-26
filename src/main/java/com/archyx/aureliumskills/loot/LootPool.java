@@ -8,12 +8,14 @@ public class LootPool {
     private final List<Loot> loot;
     private final double baseChance;
     private final int selectionPriority;
+    private final boolean overrideVanillaLoot;
 
-    public LootPool(String name, List<Loot> loot, double baseChance, int selectionPriority) {
+    public LootPool(String name, List<Loot> loot, double baseChance, int selectionPriority, boolean overrideVanillaLoot) {
         this.name = name;
         this.loot = loot;
         this.baseChance = baseChance;
         this.selectionPriority = selectionPriority;
+        this.overrideVanillaLoot = overrideVanillaLoot;
     }
 
     public String getName() {
@@ -30,6 +32,10 @@ public class LootPool {
 
     public int getSelectionPriority() {
         return selectionPriority;
+    }
+
+    public boolean overridesVanillaLoot() {
+        return overrideVanillaLoot;
     }
 
 }

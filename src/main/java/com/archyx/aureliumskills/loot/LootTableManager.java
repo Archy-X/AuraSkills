@@ -81,6 +81,7 @@ public class LootTableManager {
 
 			double baseChance = currentPool.getDouble("base_chance", 0.01);
 			int selectionPriority = currentPool.getInt("selection_priority", 1);
+			boolean overrideVanillaLoot = currentPool.getBoolean("override_vanilla_loot", false);
 
 			// Parse each loot entry
 			List<Map<?,?>> lootMapList = currentPool.getMapList("loot");
@@ -108,7 +109,7 @@ public class LootTableManager {
 				index++;
 			}
 			// Create pool
-			LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority);
+			LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority, overrideVanillaLoot);
 			pools.add(pool);
 		}
 		// Sort pools by selection priority

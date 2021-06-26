@@ -2,6 +2,7 @@ pools:
   rare:
     base_chance: 0.01
     selection_priority: 1
+    override_vanilla_loot: false
     loot:
       - type: item
         material: bone
@@ -39,6 +40,7 @@ pools:
   epic:
     base_chance: 0.002
     selection_priority: 2
+    override_vanilla_loot: false
     loot:
       - type: item
         material: diamond
