@@ -9,6 +9,7 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -87,7 +88,7 @@ public class ItemLootParser extends LootParser {
                     if (splitEntry.length > 1) {
                         level = NumberUtils.toInt(splitEntry[1], 1);
                     }
-                    Optional<XEnchantment> xEnchantment = XEnchantment.matchXEnchantment(enchantmentName);
+                    Optional<XEnchantment> xEnchantment = XEnchantment.matchXEnchantment(enchantmentName.toUpperCase(Locale.ROOT));
                     if (xEnchantment.isPresent()) {
                         Enchantment enchantment = xEnchantment.get().parseEnchantment();
                         if (enchantment != null) {
@@ -141,6 +142,13 @@ public class ItemLootParser extends LootParser {
                 }
                 item.setItemMeta(potionMeta);
             }
+            // Glowing w/o enchantments visible
+            if (getBooleanOrDefault(map, "glow", false)) {
+                meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                item.setItemMeta(meta);
+            }
+            // TODO Item flags
             // Custom NBT
             if (map.containsKey("nbt")) {
                 Map<?, ?> nbtMap = getMap(map, "nbt");

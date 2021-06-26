@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.util.*;
@@ -92,7 +93,63 @@ public class LegacyLootConverter {
                 } else {
                     map.put("amount", minAmount + "-" + maxAmount);
                 }
-                // TODO Implement complex meta conversion
+                // Convert meta arguments
+                for (int i = 3 ; i < split.length; i++) {
+                    String[] splitPair = split[i].split(":", 2);
+                    if (splitPair.length == 2) {
+                        String key = splitPair[0];
+                        String value = splitPair[1].replace("_", " ").replace("&", "§");
+                        String originalValue = splitPair[1];
+                        switch (key) {
+                            case "name":
+                                map.put("display_name", value);
+                                break;
+                            case "lore":
+                                List<String> lore = new LinkedList<>(Arrays.asList(value.split("\\|")));
+                                map.put("lore", lore);
+                                break;
+                            case "glow":
+                                if (Boolean.parseBoolean(value)) {
+                                    map.put("glow", true);
+                                }
+                                break;
+                            case "enchantments":
+                                List<String> enchantments = new ArrayList<>(Arrays.asList(originalValue.split("\\|")));
+                                List<String> enchantmentList = new ArrayList<>();
+                                for (String enchantString : enchantments) {
+                                    String[] splitEnchantString = enchantString.split(":", 2);
+                                    String enchantName = splitEnchantString[0];
+                                    int enchantLevel = 1;
+                                    if (splitEnchantString.length == 2) {
+                                        enchantLevel = Integer.parseInt(splitEnchantString[1]);
+                                    }
+                                    enchantmentList.add(enchantName.toLowerCase(Locale.ROOT) + " " + enchantLevel);
+                                }
+                                map.put("enchantments", enchantmentList);
+                                break;
+                            case "potion_type":
+                                Map<String, String> potionData = new HashMap<>();
+                                potionData.put("type", originalValue.toUpperCase(Locale.ROOT));
+                                map.put("potion_data", potionData);
+                                break;
+                            case "custom_effect":
+                                String[] values = originalValue.split(",");
+                                List<Map<String, Object>> customEffects = new ArrayList<>();
+                                if (values.length == 3) {
+                                    PotionEffectType type = PotionEffectType.getByName(values[0]);
+                                    if (type != null) {
+                                        Map<String, Object> effect = new HashMap<>();
+                                        effect.put("type", type.toString());
+                                        effect.put("duration", Integer.parseInt(values[1]));
+                                        effect.put("amplifier", Integer.parseInt(values[2]));
+                                        customEffects.add(effect);
+                                    }
+                                }
+                                map.put("custom_effects", customEffects);
+                                break;
+                        }
+                    }
+                }
             }
             mapList.add(map);
         }
