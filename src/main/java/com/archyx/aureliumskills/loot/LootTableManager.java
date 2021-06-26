@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.parser.CommandLootParser;
+import com.archyx.aureliumskills.loot.parser.EntityLootParser;
 import com.archyx.aureliumskills.loot.parser.ItemLootParser;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.misc.DataUtil;
@@ -98,6 +99,10 @@ public class LootTableManager {
 					// Command loot
 					else if (type.equalsIgnoreCase("command")) {
 						loot = new CommandLootParser(plugin).parse(lootEntryMap);
+					}
+					// Entity loot
+					else if (type.equalsIgnoreCase("entity")) {
+						loot = new EntityLootParser(plugin).parse(lootEntryMap);
 					}
 				} catch (Exception e) {
 					plugin.getLogger().warning("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");

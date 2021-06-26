@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.loot.handler.LootHandler;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
+import com.archyx.aureliumskills.loot.type.EntityLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
@@ -23,11 +24,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class FishingLootListener extends LootHandler implements Listener {
+public class FishingLootHandler extends LootHandler implements Listener {
 
     private final Random random = new Random();
 
-    public FishingLootListener(AureliumSkills plugin) {
+    public FishingLootHandler(AureliumSkills plugin) {
         super(plugin, Skills.FISHING, Ability.FISHER);
     }
 
@@ -85,11 +86,19 @@ public class FishingLootListener extends LootHandler implements Listener {
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
                         giveCommandLoot(player, commandLoot, source);
+                    } else if (selectedLoot instanceof EntityLoot) {
+                        EntityLoot entityLoot = (EntityLoot) selectedLoot;
+                        giveEntityLoot(player, entityLoot, event);
                     }
                     break;
                 }
             }
         }
+    }
+
+    private void giveEntityLoot(Player player, EntityLoot entityLoot, PlayerFishEvent event) {
+        event.setCancelled(true);
+        // TODO Implement entity fishing
     }
 
 }

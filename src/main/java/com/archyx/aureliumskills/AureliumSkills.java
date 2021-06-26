@@ -65,7 +65,7 @@ import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
 import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
 import com.archyx.aureliumskills.skills.fishing.FishingAbilities;
 import com.archyx.aureliumskills.skills.fishing.FishingLeveler;
-import com.archyx.aureliumskills.skills.fishing.FishingLootListener;
+import com.archyx.aureliumskills.skills.fishing.FishingLootHandler;
 import com.archyx.aureliumskills.skills.foraging.ForagingAbilities;
 import com.archyx.aureliumskills.skills.foraging.ForagingLeveler;
 import com.archyx.aureliumskills.skills.foraging.ForagingLootHandler;
@@ -558,7 +558,7 @@ public class AureliumSkills extends JavaPlugin {
 		this.actionBar = new ActionBar(this);
 		pm.registerEvents(actionBar, this);
 		pm.registerEvents(new RegionListener(this), this);
-		pm.registerEvents(new FishingLootListener(this), this);
+		pm.registerEvents(new FishingLootHandler(this), this);
 		pm.registerEvents(new ExcavationLootHandler(this), this);
 		pm.registerEvents(new MiningLootHandler(this), this);
 		pm.registerEvents(new ForagingLootHandler(this), this);
