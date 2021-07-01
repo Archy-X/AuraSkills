@@ -27,6 +27,10 @@ public class RewardTable {
         return ImmutableList.copyOf(rewards.getOrDefault(level, new ArrayList<>()));
     }
 
+    public Map<Integer, List<Reward>> getRewardsMap() {
+        return rewards;
+    }
+
     public void addReward(Reward reward, int level) {
         List<Reward> rewards = this.rewards.computeIfAbsent(level, k -> new ArrayList<>());
         rewards.add(reward);

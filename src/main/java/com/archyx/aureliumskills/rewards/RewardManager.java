@@ -44,65 +44,100 @@ public class RewardManager {
             }
             FileConfiguration rewardsConfig = YamlConfiguration.loadConfiguration(rewardsFile);
             RewardTable rewardTable = new RewardTable(plugin);
-            // Load patterns section
-            List<Map<?, ?>> patterns = rewardsConfig.getMapList("patterns");
-            for (int index = 0; index < patterns.size(); index++) {
-                Map<?, ?> rewardMap = patterns.get(index);
-                try {
-                    Reward reward = parseReward(rewardMap);
-                    // Load pattern info
-                    Object patternObj = DataUtil.getElement(rewardMap, "pattern");
-                    if (!(patternObj instanceof Map<?, ?>)) {
-                        throw new IllegalArgumentException("Pattern must be a section");
-                    }
-                    Map<?, ?> patternMap = (Map<?, ?>) patternObj;
-                    int start = DataUtil.getInt(patternMap, "start");
-                    int interval = DataUtil.getInt(patternMap, "interval");
-                    // Get stop interval and check it is not above max skill level
-                    int stop = OptionL.getMaxLevel(skill);
-                    if (patternMap.containsKey("stop")) {
-                        stop = DataUtil.getInt(patternMap, "stop");
-                    }
-                    if (stop > OptionL.getMaxLevel(skill)) {
-                        stop = OptionL.getMaxLevel(skill);
-                    }
-                    // Add to reward table
-                    for (int level = start; level <= stop; level += interval) {
-                        rewardTable.addReward(reward, level);
-                    }
-                    patternsLoaded++;
-                } catch (IllegalArgumentException e) {
-                    plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path patterns.[" + index + "]: " + e.getMessage());
-                }
-            }
+            // Load patterns
+            patternsLoaded += loadPatterns(rewardTable, rewardsConfig, rewardsFile, OptionL.getMaxLevel(skill));
             // Load levels section
-            ConfigurationSection levelsSection = rewardsConfig.getConfigurationSection("levels");
-            if (levelsSection != null) {
-                // For each level defined
-                for (String levelString : levelsSection.getKeys(false)) {
-                    try {
-                        int level = Integer.parseInt(levelString);
-                        // For each reward in that level
-                        List<Map<?, ?>> rewards = levelsSection.getMapList(levelString);
-                        for (int index = 0; index < rewards.size(); index++) {
-                            Map<?, ?> rewardMap = rewards.get(index);
-                            try {
-                                Reward reward = parseReward(rewardMap);
-                                rewardTable.addReward(reward, level);
-                                levelsLoaded++;
-                            } catch (IllegalArgumentException e) {
-                                plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path levels." + levelString + ".[" + index + "]: " + e.getMessage());
-                            }
-                        }
-                    } catch (NumberFormatException e) {
-                        plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path levels." + levelString + ": Key " + levelString + " must be of type int");
-                    }
-                }
-            }
+            levelsLoaded += loadLevels(rewardTable, rewardsConfig, rewardsFile);
             // Register reward table
             this.rewardTables.put(skill, rewardTable);
         }
+        // Load global rewards
+        File globalFile = new File(plugin.getDataFolder() + "/rewards/global.yml");
+        if (!globalFile.exists()) {
+            plugin.saveResource("rewards/global.yml", false);
+        }
+        FileConfiguration globalConfig = YamlConfiguration.loadConfiguration(globalFile);
+        RewardTable globalTable = new RewardTable(plugin);
+        patternsLoaded += loadPatterns(globalTable, globalConfig, globalFile, plugin.getOptionLoader().getHighestMaxLevel());
+        levelsLoaded += loadLevels(globalTable, globalConfig, globalFile);
+        // Apply global rewards table to each skill reward table
+        for (Map.Entry<Integer, List<Reward>> entry : globalTable.getRewardsMap().entrySet()) {
+            int level = entry.getKey();
+            List<Reward> rewards = entry.getValue();
+            for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+                RewardTable rewardTable = this.rewardTables.get(skill);
+                if (rewardTable != null) {
+                    for (Reward reward : rewards) {
+                        rewardTable.addReward(reward, level);
+                    }
+                }
+            }
+        }
         plugin.getLogger().info("Loaded " + patternsLoaded + " pattern rewards and " + levelsLoaded + " level rewards");
+    }
+
+    private int loadPatterns(RewardTable rewardTable, FileConfiguration rewardsConfig, File rewardsFile, int maxLevel) {
+        // Load patterns section
+        int patternsLoaded = 0;
+        List<Map<?, ?>> patterns = rewardsConfig.getMapList("patterns");
+        for (int index = 0; index < patterns.size(); index++) {
+            Map<?, ?> rewardMap = patterns.get(index);
+            try {
+                Reward reward = parseReward(rewardMap);
+                // Load pattern info
+                Object patternObj = DataUtil.getElement(rewardMap, "pattern");
+                if (!(patternObj instanceof Map<?, ?>)) {
+                    throw new IllegalArgumentException("Pattern must be a section");
+                }
+                Map<?, ?> patternMap = (Map<?, ?>) patternObj;
+                int start = DataUtil.getInt(patternMap, "start");
+                int interval = DataUtil.getInt(patternMap, "interval");
+                // Get stop interval and check it is not above max skill level
+                int stop = maxLevel;
+                if (patternMap.containsKey("stop")) {
+                    stop = DataUtil.getInt(patternMap, "stop");
+                }
+                if (stop > maxLevel) {
+                    stop = maxLevel;
+                }
+                // Add to reward table
+                for (int level = start; level <= stop; level += interval) {
+                    rewardTable.addReward(reward, level);
+                }
+                patternsLoaded++;
+            } catch (IllegalArgumentException e) {
+                plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path patterns.[" + index + "]: " + e.getMessage());
+            }
+        }
+        return patternsLoaded;
+    }
+
+    private int loadLevels(RewardTable rewardTable, FileConfiguration rewardsConfig, File rewardsFile) {
+        int levelsLoaded = 0;
+        ConfigurationSection levelsSection = rewardsConfig.getConfigurationSection("levels");
+        if (levelsSection != null) {
+            // For each level defined
+            for (String levelString : levelsSection.getKeys(false)) {
+                try {
+                    int level = Integer.parseInt(levelString);
+                    // For each reward in that level
+                    List<Map<?, ?>> rewards = levelsSection.getMapList(levelString);
+                    for (int index = 0; index < rewards.size(); index++) {
+                        Map<?, ?> rewardMap = rewards.get(index);
+                        try {
+                            Reward reward = parseReward(rewardMap);
+                            rewardTable.addReward(reward, level);
+                            levelsLoaded++;
+                        } catch (IllegalArgumentException e) {
+                            plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path levels." + levelString + ".[" + index + "]: " + e.getMessage());
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().warning("Error while loading rewards file " + rewardsFile.getName() + " at path levels." + levelString + ": Key " + levelString + " must be of type int");
+                }
+            }
+        }
+        return levelsLoaded;
     }
 
     private Reward parseReward(Map<?, ?> map) {
