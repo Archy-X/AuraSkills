@@ -42,7 +42,7 @@ public class YamlStorageProvider extends StorageProvider {
             PlayerData playerData = new PlayerData(player, plugin);
             try {
                 // Make sure file name and uuid match
-                UUID id = UUID.fromString(Objects.requireNonNull(config.getString("uuid")));
+                UUID id = UUID.fromString(config.getString("uuid", player.getUniqueId().toString()));
                 if (!player.getUniqueId().equals(id)) {
                     throw new IllegalArgumentException("File name and uuid field do not match!");
                 }
