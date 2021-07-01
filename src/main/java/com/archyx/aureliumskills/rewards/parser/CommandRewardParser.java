@@ -18,7 +18,12 @@ public class CommandRewardParser extends RewardParser {
     public Reward parse(Map<?, ?> map) {
         CommandRewardBuilder builder = new CommandRewardBuilder(plugin);
 
-        CommandExecutor executor = CommandExecutor.valueOf(getString(map, "executor").toUpperCase(Locale.ROOT));
+        CommandExecutor executor;
+        if (map.containsKey("executor")) {
+            executor = CommandExecutor.valueOf(getString(map, "executor").toUpperCase(Locale.ROOT));
+        } else {
+            executor = CommandExecutor.CONSOLE;
+        }
         builder.executor(executor);
 
         String command = getString(map, "command");
