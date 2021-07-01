@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ public abstract class LootParser extends Parser {
                 if (source != null) {
                     sources.add(source);
                 } else { // Try to get tag if not found
-                    SourceTag tag = SourceTag.valueOf(entry);
+                    SourceTag tag = SourceTag.valueOf(entry.toUpperCase(Locale.ROOT));
                     // All all sources in tag
                     sources.addAll(plugin.getSourceManager().getTag(tag));
                 }
