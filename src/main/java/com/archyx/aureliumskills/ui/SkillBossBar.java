@@ -101,6 +101,9 @@ public class SkillBossBar implements Listener {
     }
 
     public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+        if (maxed && !OptionL.getBoolean(Option.BOSS_BAR_DISPLAY_MAXED)) { // display-maxed option
+            return;
+        }
         Locale locale = plugin.getLang().getLocale(player);
         BarColor color = getColor(skill);
         BarStyle style = getStyle(skill);

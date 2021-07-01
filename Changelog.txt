@@ -1,3 +1,13 @@
+Version Beta 1.1.2
+  New Features:
+    - Add global.yml rewards file that applies rewards in it to all skills
+  Changes:
+    - Command rewards will now default to console if executor is not specified
+  Bug Fixes:
+    - Fix extra line on skills menu when all stat rewards are removed
+    - Fix error when playerdata file is missing uuid or empty
+    - Fix NoSuchFieldError on 1.12
+
 Version Beta 1.1.1
   Changes:
     - Remove MythicMobs support:
