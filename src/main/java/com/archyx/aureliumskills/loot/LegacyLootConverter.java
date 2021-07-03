@@ -4,7 +4,6 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.util.file.FileUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.apache.commons.lang.math.NumberUtils;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.potion.PotionEffectType;
@@ -78,21 +77,7 @@ public class LegacyLootConverter {
                 int minAmount = NumberUtils.toInt(split[0]);
                 int maxAmount = NumberUtils.toInt(split[1]);
                 String materialName = split[2];
-                String[] splitMaterial = materialName.split(":");
-                Material material = Material.getMaterial(splitMaterial[0].toUpperCase(Locale.ROOT));
-                short data = -1;
-                if (splitMaterial.length > 1) {
-                    data = NumberUtils.toShort(splitMaterial[1]);
-                }
-                if (material == null) {
-                    plugin.getLogger().warning("Failed to convert a legacy loot entry, unknown material " + splitMaterial[0]);
-                    continue;
-                }
-                if (data == -1) { // New version
-                    map.put("material", material.toString().toLowerCase(Locale.ROOT));
-                } else { // Legacy version
-                    map.put("material", material.toString().toLowerCase(Locale.ROOT) + ":" + data);
-                }
+                map.put("material", materialName.toLowerCase(Locale.ROOT));
                 if (minAmount == maxAmount) {
                     map.put("amount", minAmount);
                 } else {
