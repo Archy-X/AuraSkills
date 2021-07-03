@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.loot.parser;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.builder.ItemLootBuilder;
+import com.archyx.aureliumskills.util.item.MaterialUtil;
 import com.archyx.aureliumskills.util.misc.Validate;
 import com.cryptomorin.xseries.XEnchantment;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -52,12 +53,20 @@ public class ItemLootParser extends LootParser {
             String materialString = getString(map, "material");
             ItemStack item;
             if (!materialString.contains(":")) { // No legacy data
-                Material material = Material.valueOf(materialString.toUpperCase(Locale.ROOT));
+                String materialName = materialString.toUpperCase(Locale.ROOT);
+                Material material = MaterialUtil.parse(materialName);
+                if (material == null) {
+                    throw new IllegalArgumentException("Unknown material " + materialString);
+                }
                 item = new ItemStack(material);
             } else { // With legacy data
                 String[] splitMaterial = materialString.split(":");
                 if (splitMaterial.length == 2) {
-                    Material material = Material.valueOf(splitMaterial[0].toUpperCase(Locale.ROOT));
+                    String materialName = splitMaterial[0].toUpperCase(Locale.ROOT);
+                    Material material = MaterialUtil.parse(materialName);
+                    if (material == null) {
+                        throw new IllegalArgumentException("Unknown material " + materialName);
+                    }
                     short data = NumberUtils.toShort(splitMaterial[1]);
                     item = new ItemStack(material, data);
                 } else {
