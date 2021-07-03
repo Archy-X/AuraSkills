@@ -128,11 +128,19 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
         }
 
-        //Gets max mana
+        // Gets max mana
         if (identifier.equals("mana_max")) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 return String.valueOf(playerData.getMaxMana());
+            }
+        }
+
+        // Gets max mana rounded to an integer
+        if (identifier.equals("mana_max_int")) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(Math.round(playerData.getMaxMana()));
             }
         }
 

@@ -179,12 +179,12 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 			Player player = event.getPlayer();
 			//Checks if speed mine is already activated
 			if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
-				breakBlock(event.getBlock().getState(), 0);
+				breakBlock(player, event.getBlock().getState(), 0);
 			}
 		}
 	}
 	
-	private void breakBlock(BlockState state, int num) {
+	private void breakBlock(Player player, BlockState state, int num) {
 		if (num > 20) {
 			return;
 		}
@@ -192,53 +192,58 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		Material matAbove = above.getType();
 		if (matAbove.equals(XMaterial.OAK_LOG.parseMaterial()) || matAbove.equals(XMaterial.SPRUCE_LOG.parseMaterial()) || matAbove.equals(XMaterial.BIRCH_LOG.parseMaterial())
 				|| matAbove.equals(XMaterial.JUNGLE_LOG.parseMaterial()) || matAbove.equals(XMaterial.ACACIA_LOG.parseMaterial()) || matAbove.equals(XMaterial.DARK_OAK_LOG.parseMaterial())) {
+			// Break log and give XP
+			ForagingSource source = ForagingSource.getSource(above.getBlock());
 			above.getBlock().breakNaturally();
+			plugin.getLeveler().addXp(player, Skills.FORAGING, getXp(player, source, Ability.FORAGER));
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					breakBlock(above, num + 1);
+					breakBlock(player, above, num + 1);
 				}
 			}.runTaskLater(plugin, 1L);
 		}
 		else {
-			checkLeaf(above);
-			checkLeaf(above.getBlock().getRelative(BlockFace.NORTH).getState());
-			checkLeaf(above.getBlock().getRelative(BlockFace.SOUTH).getState());
-			checkLeaf(above.getBlock().getRelative(BlockFace.EAST).getState());
-			checkLeaf(above.getBlock().getRelative(BlockFace.WEST).getState());
+			checkLeaf(player, above);
+			checkLeaf(player, above.getBlock().getRelative(BlockFace.NORTH).getState());
+			checkLeaf(player, above.getBlock().getRelative(BlockFace.SOUTH).getState());
+			checkLeaf(player, above.getBlock().getRelative(BlockFace.EAST).getState());
+			checkLeaf(player, above.getBlock().getRelative(BlockFace.WEST).getState());
 
 		}
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH_EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH_WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH_EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH_WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH_NORTH_EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH_NORTH_WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.EAST_NORTH_EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.EAST_SOUTH_EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.WEST_NORTH_WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.WEST_SOUTH_WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH).getRelative(BlockFace.NORTH).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.EAST).getRelative(BlockFace.EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH).getRelative(BlockFace.SOUTH).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.WEST).getRelative(BlockFace.WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH_NORTH_EAST).getRelative(BlockFace.EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_EAST).getRelative(BlockFace.EAST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.NORTH_NORTH_WEST).getRelative(BlockFace.WEST).getState());
-		checkLeaf(state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_WEST).getRelative(BlockFace.WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH_EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH_WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH_EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH_WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH_NORTH_EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH_NORTH_WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.EAST_NORTH_EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.EAST_SOUTH_EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.WEST_NORTH_WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.WEST_SOUTH_WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH).getRelative(BlockFace.NORTH).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.EAST).getRelative(BlockFace.EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH).getRelative(BlockFace.SOUTH).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.WEST).getRelative(BlockFace.WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH_NORTH_EAST).getRelative(BlockFace.EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_EAST).getRelative(BlockFace.EAST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.NORTH_NORTH_WEST).getRelative(BlockFace.WEST).getState());
+		checkLeaf(player, state.getBlock().getRelative(BlockFace.SOUTH_SOUTH_WEST).getRelative(BlockFace.WEST).getState());
 	}
 
-	private void checkLeaf(BlockState state) {
+	private void checkLeaf(Player player, BlockState state) {
 		Material material = state.getType();
 		if (material.equals(XMaterial.OAK_LEAVES.parseMaterial()) || material.equals(XMaterial.SPRUCE_LEAVES.parseMaterial()) || material.equals(XMaterial.BIRCH_LEAVES.parseMaterial())
 			|| material.equals(XMaterial.JUNGLE_LEAVES.parseMaterial()) || material.equals(XMaterial.ACACIA_LEAVES.parseMaterial()) || material.equals(XMaterial.DARK_OAK_LEAVES.parseMaterial())) {
+			ForagingSource source = ForagingSource.getSource(state.getBlock());
 			state.getBlock().breakNaturally();
+			plugin.getLeveler().addXp(player, Skills.FORAGING, getXp(player, source, Ability.FORAGER));
 		}
 	}
 	

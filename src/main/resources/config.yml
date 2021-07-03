@@ -54,6 +54,7 @@ boss-bar:
     stay-time: 60
     update-every: 1
     round-xp: false
+    display-maxed: true
     format:
         - 'FARMING GREEN SOLID'
         - 'FORAGING RED SOLID'

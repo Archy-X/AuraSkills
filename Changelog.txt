@@ -1,3 +1,19 @@
+Version Beta 1.1.2
+  New Features:
+    - Add global.yml rewards file that applies rewards in it to all skills
+    - Add boss-bar.display-maxed option to hide boss bar when skill is maxed
+    - Add %aureliumskills_mana_max_int% placeholder
+  Changes:
+    - Command rewards will now default to console if executor is not specified
+    - Disenchanting enchanted books in a grindstone will now give Forging XP
+    - Treecaptitator broken blocks will now give Foraging XP
+  Bug Fixes:
+    - Fix extra line on skills menu when all stat rewards are removed
+    - Fix error when playerdata file is missing uuid or empty
+    - Fix NoSuchFieldError on 1.12
+    - Fix Forging XP dupe
+    - Fix Forging XP not being given in rare cases
+
 Version Beta 1.1.1
   Changes:
     - Remove MythicMobs support:
