@@ -5,12 +5,12 @@ import com.archyx.aureliumskills.util.file.FileUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class LegacyLootConverter {
@@ -21,43 +21,48 @@ public class LegacyLootConverter {
         this.plugin = plugin;
     }
 
-    public void convertLegacyFile() {
+    public void convertLegacyFile(boolean convertFishing, boolean convertExcavation) throws IOException {
         File legacyFile = new File(plugin.getDataFolder(), "loot.yml");
         if (!legacyFile.exists()) { // Don't convert if doesn't exist
             return;
         }
         // Convert fishing loot tables
         FileConfiguration legacyConfig = YamlConfiguration.loadConfiguration(legacyFile);
-        File fishingFile = new File(plugin.getDataFolder() + "/loot/fishing.yml");
-        FileConfiguration fishingConfig = YamlConfiguration.loadConfiguration(fishingFile);
-        // Fishing Rare
-        List<String> fishingRareLoot = legacyConfig.getStringList("lootTables.fishing-rare");
-        ConfigurationSection fishingRareSection = fishingConfig.getConfigurationSection("pools.rare");
-        convertSection(fishingRareSection, fishingRareLoot);
-        // Fishing Epic
-        List<String> fishingEpicLoot = legacyConfig.getStringList("lootTables.fishing-epic");
-        ConfigurationSection fishingEpicSection = fishingConfig.getConfigurationSection("pools.epic");
-        convertSection(fishingEpicSection, fishingEpicLoot);
+        if (convertFishing) {
+            File fishingFile = new File(plugin.getDataFolder() + "/loot/fishing.yml");
+            FileConfiguration fishingConfig = YamlConfiguration.loadConfiguration(fishingFile);
+            // Fishing Rare
+            List<String> fishingRareLoot = legacyConfig.getStringList("lootTables.fishing-rare");
+            convertSection(fishingConfig, fishingRareLoot, "pools.rare");
+            // Fishing Epic
+            List<String> fishingEpicLoot = legacyConfig.getStringList("lootTables.fishing-epic");
+            convertSection(fishingConfig, fishingEpicLoot, "pools.epic");
+            fishingConfig.save(fishingFile);
+        }
         // Convert excavation loot tables
-        File excavationFile = new File(plugin.getDataFolder() + "/loot/excavation.yml");
-        FileConfiguration excavationConfig = YamlConfiguration.loadConfiguration(excavationFile);
-        // Excavation rare
-        List<String> excavationRareLoot = legacyConfig.getStringList("lootTables.excavation-rare");
-        ConfigurationSection excavationRareSection = excavationConfig.getConfigurationSection("pools.rare");
-        convertSection(excavationRareSection, excavationRareLoot);
-        // Excavation epic
-        List<String> excavationEpicLoot = legacyConfig.getStringList("lootTables.excavation-epic");
-        ConfigurationSection excavationEpicSection = excavationConfig.getConfigurationSection("pools.epic");
-        convertSection(excavationEpicSection, excavationEpicLoot);
+        if (convertExcavation) {
+            File excavationFile = new File(plugin.getDataFolder() + "/loot/excavation.yml");
+            FileConfiguration excavationConfig = YamlConfiguration.loadConfiguration(excavationFile);
+            // Excavation rare
+            List<String> excavationRareLoot = legacyConfig.getStringList("lootTables.excavation-rare");
+            convertSection(excavationConfig, excavationRareLoot, "pools.rare");
+            // Excavation epic
+            List<String> excavationEpicLoot = legacyConfig.getStringList("lootTables.excavation-epic");
+            convertSection(excavationConfig, excavationEpicLoot, "pools.epic");
+            excavationConfig.save(excavationFile);
+        }
 
-        renameLegacyFile(legacyFile);
-        plugin.getLogger().info("Converted old loot.yml file to new files in the loot folder");
+        if (convertFishing || convertExcavation) {
+            renameLegacyFile(legacyFile);
+            plugin.getLogger().info("Converted old loot.yml file to new files in the loot folder");
+        }
     }
 
-    private void convertSection(ConfigurationSection section, List<String> legacyLoot) {
+    private void convertSection(FileConfiguration config, List<String> legacyLoot, String sectionPath) {
+        // Convert loot
         List<Map<String, Object>> mapList = new ArrayList<>();
         for (String entry : legacyLoot) {
-            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> map = new LinkedHashMap<>();
             if (entry.startsWith("cmd:")) { // Legacy command loot
                 map.put("type", "command");
                 String commandString = TextUtil.replace(entry, "cmd:", "");
@@ -84,9 +89,9 @@ public class LegacyLootConverter {
                     continue;
                 }
                 if (data == -1) { // New version
-                    map.put("item", material.toString().toLowerCase(Locale.ROOT));
+                    map.put("material", material.toString().toLowerCase(Locale.ROOT));
                 } else { // Legacy version
-                    map.put("item", material.toString().toLowerCase(Locale.ROOT) + ":" + data);
+                    map.put("material", material.toString().toLowerCase(Locale.ROOT) + ":" + data);
                 }
                 if (minAmount == maxAmount) {
                     map.put("amount", minAmount);
@@ -151,9 +156,10 @@ public class LegacyLootConverter {
                     }
                 }
             }
+            map.put("weight", 10); // Use default weight
             mapList.add(map);
         }
-        section.set("loot", mapList);
+        config.set(sectionPath + ".loot", mapList);
     }
 
     private void renameLegacyFile(File file) {

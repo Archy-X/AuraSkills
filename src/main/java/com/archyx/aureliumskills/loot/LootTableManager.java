@@ -12,6 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class LootTableManager {
 	public LootTableManager(AureliumSkills plugin) {
 		this.plugin = plugin;
 		lootTables = new HashMap<>();
-		generateDefaultLootTables();
 		loadLootTables();
 	}
 
@@ -43,13 +43,23 @@ public class LootTableManager {
 	}
 
 	public void loadLootTables() {
+		// Check that new loot files do not exist yet for conversion
+		boolean convertFishing = !new File(plugin.getDataFolder() + "/loot", "fishing.yml").exists();
+		boolean convertExcavation = !new File(plugin.getDataFolder() + "/loot", "excavation.yml").exists();
+		// Generate default loot files
 		File lootDirectory = new File(plugin.getDataFolder() + "/loot");
-		if (!lootDirectory.exists()) {
+		if (!lootDirectory.exists() || convertFishing || convertExcavation) {
 			generateDefaultLootTables();
 		}
 		if (!lootDirectory.isDirectory()) return;
 
-		new LegacyLootConverter(plugin).convertLegacyFile();
+		// Convert legacy file
+		try {
+			new LegacyLootConverter(plugin).convertLegacyFile(convertFishing, convertExcavation);
+		} catch (IOException e) {
+			plugin.getLogger().warning("Failed to convert legacy loot file, see below for error");
+			e.printStackTrace();
+		}
 
 		File[] files = lootDirectory.listFiles();
 		if (files == null) return;
