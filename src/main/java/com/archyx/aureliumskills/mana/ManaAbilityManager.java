@@ -26,6 +26,7 @@ public class ManaAbilityManager implements Listener {
 
     private final Map<UUID, List<ManaAbility>> activeAbilities;
     private final ManaAbilityActivator activator;
+    private final Map<MAbility, ManaAbilityProvider> providers;
 
     private final AureliumSkills plugin;
 
@@ -37,15 +38,33 @@ public class ManaAbilityManager implements Listener {
         errorTimer = new HashMap<>();
         activeAbilities = new HashMap<>();
         activator = new ManaAbilityActivator(plugin);
+        providers = new HashMap<>();
     }
 
     public void init() {
+        registerProviders();
         startTimer();
         startUpdating();
     }
 
+    private void registerProviders() {
+        Replenish replenish = new Replenish(plugin);
+        Bukkit.getPluginManager().registerEvents(replenish, plugin);
+        providers.put(MAbility.REPLENISH, replenish);
+    }
+
+    @Nullable
+    public ManaAbilityProvider getProvider(MAbility mAbility) {
+        return providers.get(mAbility);
+    }
+
     public ManaAbilityActivator getActivator() {
         return activator;
+    }
+
+    public void setActivated(Player player, MAbility mAbility, boolean isActivated) {
+        Map<MAbility, Boolean> map = activated.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>());
+        map.put(mAbility, isActivated);
     }
 
     //Sets cooldown
