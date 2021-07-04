@@ -21,7 +21,7 @@ public enum MAbility implements AbstractAbility {
     TREECAPITATOR(() -> Skills.FORAGING, 5.0, 5.0, 200, -5, 20, 20,
             new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true}),
     SPEED_MINE(() -> Skills.MINING, 5.0, 5.0, 200, -5, 20 ,20,
-            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true},
+            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass", "haste_level"}, new Object[] {false, true, true, 10},
             SpeedMine.class),
     SHARP_HOOK(() -> Skills.FISHING, 0.5, 0.5, 2, -0.1, 5, 2,
             new String[] {"display_damage_with_scaling", "enable_sound"}, new Object[] {true, true}),

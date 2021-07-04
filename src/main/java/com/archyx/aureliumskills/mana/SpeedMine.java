@@ -27,8 +27,9 @@ public class SpeedMine extends ReadiedManaAbility {
     @Override
     @SuppressWarnings("deprecation")
     public void onActivate(Player player, PlayerData playerData) {
+        int amplifier = manager.getOptionAsInt(mAbility, "haste_level", 10) - 1;
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (manager.getValue(MAbility.SPEED_MINE, playerData) * 20),
-                9, false, false), true);
+                amplifier, false, false), true);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }
 

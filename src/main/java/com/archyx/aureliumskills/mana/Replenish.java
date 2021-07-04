@@ -73,7 +73,7 @@ public class Replenish extends ReadiedManaAbility {
                     }
                 }
             }
-        }.runTaskLater(plugin, plugin.getManaAbilityManager().getOptionAsInt(MAbility.REPLENISH, "replant_delay", 4));
+        }.runTaskLater(plugin, manager.getOptionAsInt(MAbility.REPLENISH, "replant_delay", 4));
     }
 
     private void attemptSpawnParticle(Block block) {
