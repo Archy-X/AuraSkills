@@ -49,8 +49,15 @@ public class ManaAbilityManager implements Listener {
 
     private void registerProviders() {
         Replenish replenish = new Replenish(plugin);
-        Bukkit.getPluginManager().registerEvents(replenish, plugin);
+        register(replenish);
         providers.put(MAbility.REPLENISH, replenish);
+        SpeedMine speedMine = new SpeedMine(plugin);
+        register(speedMine);
+        providers.put(MAbility.SPEED_MINE, speedMine);
+    }
+
+    private void register(ManaAbilityProvider provider) {
+        Bukkit.getPluginManager().registerEvents(provider, plugin);
     }
 
     @Nullable

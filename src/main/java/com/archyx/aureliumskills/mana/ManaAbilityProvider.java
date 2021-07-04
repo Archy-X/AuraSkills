@@ -74,7 +74,8 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
     public void stop(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
-        onStop(player, playerData);
+        onStop(player, playerData); // Mana ability specific stop behavior is run
+        manager.setPlayerCooldown(player, mAbility); // Apply cooldown
         // Send stop message if applicable
         if (stopMessage != null) {
             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(stopMessage, plugin.getLang().getLocale(player)));

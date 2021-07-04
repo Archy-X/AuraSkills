@@ -38,17 +38,16 @@ public class Replenish extends ReadiedManaAbility {
         if (event.isCancelled()) return;
         if (!BlockUtil.isReplenishable(event.getBlock().getType())) return;
         Player player = event.getPlayer();
-        if (isActivated(player)) return;
-        if (isReady(player) && isHoldingMaterial(player) && hasEnoughMana(player)) {
+        if (isActivated(player)) {
+            onBreak(event);
+        } else if (isReady(player) && isHoldingMaterial(player) && hasEnoughMana(player)) {
             activate(player);
         }
     }
 
-    @EventHandler
     public void onBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
         Block block = event.getBlock();
-        if (isActivated(player) && BlockUtil.isFullyGrown(block) && BlockUtil.isReplenishable(block.getType())) {
+        if (BlockUtil.isFullyGrown(block)) {
             replantCrop(block);
         }
     }
