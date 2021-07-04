@@ -15,6 +15,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class ManaAbilityManager implements Listener {
@@ -48,12 +50,19 @@ public class ManaAbilityManager implements Listener {
     }
 
     private void registerProviders() {
-        Replenish replenish = new Replenish(plugin);
-        register(replenish);
-        providers.put(MAbility.REPLENISH, replenish);
-        SpeedMine speedMine = new SpeedMine(plugin);
-        register(speedMine);
-        providers.put(MAbility.SPEED_MINE, speedMine);
+        for (MAbility mAbility : MAbility.values()) {
+            Class<? extends ManaAbilityProvider> providerClass = mAbility.getProvider();
+            if (providerClass != null) {
+                try {
+                    Constructor<? extends ManaAbilityProvider> constructor = providerClass.getConstructor(AureliumSkills.class);
+                    ManaAbilityProvider provider = constructor.newInstance(plugin);
+                    register(provider);
+                    providers.put(mAbility, provider);
+                } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    plugin.getLogger().warning("Failed to register mana ability provider for " + mAbility.toString().toLowerCase(Locale.ROOT));
+                }
+            }
+        }
     }
 
     private void register(ManaAbilityProvider provider) {
