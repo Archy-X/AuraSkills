@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.util.block.BlockUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -33,7 +34,7 @@ public class Replenish extends ReadiedManaAbility {
 
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void activationListener(BlockBreakEvent event) {
         if (event.isCancelled()) return;
         if (!BlockUtil.isReplenishable(event.getBlock().getType())) return;
@@ -42,6 +43,7 @@ public class Replenish extends ReadiedManaAbility {
             onBreak(event);
         } else if (isReady(player) && isHoldingMaterial(player) && hasEnoughMana(player)) {
             activate(player);
+            onBreak(event);
         }
     }
 
@@ -49,6 +51,8 @@ public class Replenish extends ReadiedManaAbility {
         Block block = event.getBlock();
         if (BlockUtil.isFullyGrown(block)) {
             replantCrop(block);
+        } else if (manager.getOptionAsBooleanElseTrue(mAbility, "prevent_unripe_break")) {
+            event.setCancelled(true);
         }
     }
 
@@ -60,14 +64,22 @@ public class Replenish extends ReadiedManaAbility {
                 if (!BlockUtil.isNetherWart(material)) {
                     if (block.getRelative(BlockFace.DOWN).getType().equals(XMaterial.FARMLAND.parseMaterial())) {
                         block.setType(material);
+                        attemptSpawnParticle(block);
                     }
                 } else {
                     if (block.getRelative(BlockFace.DOWN).getType().equals(XMaterial.SOUL_SAND.parseMaterial())) {
                         block.setType(material);
+                        attemptSpawnParticle(block);
                     }
                 }
             }
         }.runTaskLater(plugin, plugin.getManaAbilityManager().getOptionAsInt(MAbility.REPLENISH, "replant_delay", 4));
+    }
+
+    private void attemptSpawnParticle(Block block) {
+        if (manager.getOptionAsBooleanElseTrue(mAbility, "show_particles")) {
+            block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.2, 0.5), 8, 0.25, 0, 0.25);
+        }
     }
 
 }

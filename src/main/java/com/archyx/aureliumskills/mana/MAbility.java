@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 public enum MAbility implements AbstractAbility {
 
     REPLENISH(() -> Skills.FARMING, 5.0, 5.0, 200, -5, 20, 20,
-            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass", "replant_delay"}, new Object[] {false, true, true, 4},
+            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass", "replant_delay", "show_particles", "prevent_unripe_break"}, new Object[] {false, true, true, 4, true, true},
             Replenish.class),
     TREECAPITATOR(() -> Skills.FORAGING, 5.0, 5.0, 200, -5, 20, 20,
             new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true}),
