@@ -3,6 +3,9 @@ package com.archyx.aureliumskills.listeners;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.mana.Absorption;
+import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.mana.ManaAbilityProvider;
 import com.archyx.aureliumskills.skills.archery.ArcheryAbilities;
 import com.archyx.aureliumskills.skills.defense.DefenseAbilities;
 import com.archyx.aureliumskills.skills.excavation.ExcavationAbilities;
@@ -124,7 +127,11 @@ public class DamageListener implements Listener {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         // Checks for absorption activation and applies
-        defenseAbilities.handleAbsorption(event, player, playerData);
+        ManaAbilityProvider provider = plugin.getManaAbilityManager().getProvider(MAbility.ABSORPTION);
+        if (provider instanceof Absorption) {
+            Absorption absorption = (Absorption) provider;
+            absorption.handleAbsorption(event, player, playerData);
+        }
         if (event.isCancelled()) return;
 
         // Handles toughness
