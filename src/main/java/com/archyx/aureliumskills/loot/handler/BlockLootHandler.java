@@ -9,7 +9,6 @@ import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
-import com.archyx.aureliumskills.loot.type.EntityLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
@@ -77,9 +76,6 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
                 } else if (selectedLoot instanceof CommandLoot) {
                     CommandLoot commandLoot = (CommandLoot) selectedLoot;
                     giveCommandLoot(player, commandLoot, null);
-                } else if (selectedLoot instanceof EntityLoot) {
-                    EntityLoot entityLoot = (EntityLoot) selectedLoot;
-                    giveEntityLoot(event.getBlock(), entityLoot);
                 }
                 // Override vanilla loot if enabled
                 if (pool.overridesVanillaLoot()) {
@@ -89,10 +85,6 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
             }
         }
         return false;
-    }
-
-    protected void giveEntityLoot(Block block, EntityLoot entityLoot) {
-        entityLoot.getEntityData().spawn(block.getLocation().add(0.5, 0, 0.5));
     }
 
 }

@@ -9,14 +9,10 @@ import com.archyx.aureliumskills.loot.LootPool;
 import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.handler.LootHandler;
 import com.archyx.aureliumskills.loot.type.CommandLoot;
-import com.archyx.aureliumskills.loot.type.EntityLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
-import com.archyx.aureliumskills.util.entity.EntityData;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +20,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -90,29 +85,10 @@ public class FishingLootHandler extends LootHandler implements Listener {
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
                         giveCommandLoot(player, commandLoot, source);
-                    } else if (selectedLoot instanceof EntityLoot) {
-                        EntityLoot entityLoot = (EntityLoot) selectedLoot;
-                        giveEntityLoot(player, entityLoot, event);
                     }
                     break;
                 }
             }
         }
     }
-
-    private void giveEntityLoot(Player player, EntityLoot entityLoot, PlayerFishEvent event) {
-        Entity caught = event.getCaught();
-        if (caught != null) {
-            caught.remove();
-        }
-        EntityData entityData = entityLoot.getEntityData();
-        Location hookLocation = event.getHook().getLocation();
-        Entity entity = entityData.spawn(hookLocation);
-        if (entity == null) return;
-        Location playerLocation = player.getLocation();
-        Vector velocity = playerLocation.toVector().subtract(hookLocation.toVector()).normalize();
-        entity.setVelocity(velocity);
-        // TODO Implement entity fishing
-    }
-
 }
