@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.mana.Absorption;
+import com.archyx.aureliumskills.mana.ChargedShot;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityProvider;
 import com.archyx.aureliumskills.skills.archery.ArcheryAbilities;
@@ -109,7 +110,11 @@ public class DamageListener implements Listener {
 
             // Charged shot
             if (damageType == DamageType.BOW) {
-                archeryAbilities.applyChargedShot(event);
+                ManaAbilityProvider provider = plugin.getManaAbilityManager().getProvider(MAbility.CHARGED_SHOT);
+                if (provider instanceof ChargedShot) {
+                    ChargedShot chargedShot = (ChargedShot) provider;
+                    chargedShot.applyChargedShot(event);
+                }
             }
         }
         //Handles being damaged

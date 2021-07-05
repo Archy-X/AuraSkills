@@ -25,8 +25,8 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
     protected final MAbility mAbility;
     protected final Skill skill;
     protected final SorceryLeveler sorceryLeveler;
-    private final ManaAbilityMessage activateMessage;
-    private final ManaAbilityMessage stopMessage;
+    protected final ManaAbilityMessage activateMessage;
+    protected final ManaAbilityMessage stopMessage;
 
     public ManaAbilityProvider(AureliumSkills plugin, MAbility mAbility, ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage) {
         super(plugin, mAbility.getSkill());
@@ -49,6 +49,10 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
         if (event.isCancelled()) return;
 
         manager.setActivated(player, mAbility, true);
+
+        onActivate(player, playerData); // Mana ability specific behavior is run
+        consumeMana(player, playerData);
+
         if (duration != 0) {
             //Schedules stop
             new BukkitRunnable() {
@@ -64,9 +68,6 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
             manager.setActivated(player, mAbility, false);
             manager.setReady(player.getUniqueId(), mAbility, false);
         }
-
-        onActivate(player, playerData); // Mana ability specific behavior is run
-        consumeMana(player, playerData);
     }
 
     public abstract void onActivate(Player player, PlayerData playerData);
@@ -88,7 +89,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
         return (int) Math.round(getValue(mAbility, playerData) * 20);
     }
 
-    private void consumeMana(Player player, PlayerData playerData) {
+    protected void consumeMana(Player player, PlayerData playerData) {
         double manaConsumed = manager.getManaCost(mAbility, playerData);
         playerData.setMana(playerData.getMana() - manaConsumed);
         sorceryLeveler.level(player, manaConsumed);
