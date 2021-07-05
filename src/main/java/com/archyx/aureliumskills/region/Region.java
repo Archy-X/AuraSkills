@@ -13,12 +13,14 @@ public class Region {
     private final int x;
     private final int z;
     private final ConcurrentMap<ChunkCoordinate, ChunkData> chunks;
+    private boolean reload;
 
     public Region(World world, int x, int z) {
         this.world = world;
         this.x = x;
         this.z = z;
         this.chunks = new ConcurrentHashMap<>();
+        this.reload = false;
     }
 
     public World getWorld() {
@@ -44,6 +46,14 @@ public class Region {
 
     public Map<ChunkCoordinate, ChunkData> getChunkMap() {
         return chunks;
+    }
+
+    public void setReload(boolean reload) {
+        this.reload = reload;
+    }
+
+    public boolean shouldReload() {
+        return reload;
     }
 
 }
