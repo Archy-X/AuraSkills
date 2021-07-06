@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -60,7 +61,9 @@ public class RegionManager {
         Region region = regions.get(regionCoordinate);
         // Create region if does not exist
         if (region == null) {
-            region = loadRegion(block.getWorld(), regionX, regionZ);
+            region = loadRegion(block.getWorld(), regionX, regionZ, false);
+        } else if (region.shouldReload()) {
+            region = loadRegion(block.getWorld(), regionX, regionZ, true);
         }
         byte regionChunkX = (byte) (chunkX - regionX * 32);
         byte regionChunkZ = (byte) (chunkZ - regionZ * 32);
@@ -94,12 +97,25 @@ public class RegionManager {
         }
     }
 
-    public Region loadRegion(World world, int regionX, int regionZ) {
+    public Region loadRegion(World world, int regionX, int regionZ, boolean reload) {
         RegionCoordinate regionCoordinate = new RegionCoordinate(world, regionX, regionZ);
-        Region region = new Region(world, regionX, regionZ);
-        regions.put(regionCoordinate, region);
+        Region region;
+        if (reload) {
+            region = regions.get(regionCoordinate);
+            if (region == null) {
+                region = new Region(world, regionX, regionZ);
+                regions.put(regionCoordinate, region);
+            }
+        } else {
+            region = new Region(world, regionX, regionZ);
+            regions.put(regionCoordinate, region);
+        }
         File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
         if (file.exists()) {
+            if (saving) {
+                region.setReload(true);
+                return region;
+            }
             try {
                 NBTFile nbtFile = new NBTFile(file);
                 for (String key : nbtFile.getKeys()) {
@@ -114,6 +130,11 @@ public class RegionManager {
                         ChunkCoordinate chunkCoordinate = new ChunkCoordinate(chunkX, chunkZ);
                         region.setChunkData(chunkCoordinate, loadChunk(region, chunkCoordinate, chunkCompound));
                     }
+                }
+            } catch (EOFException e) {
+                boolean deleted = file.delete();
+                if (deleted) {
+                    plugin.getLogger().warning("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -141,20 +162,28 @@ public class RegionManager {
         if (region.getChunkMap().size() == 0) return;
 
         File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
-        NBTFile nbtFile = new NBTFile(file);
+        try {
+            NBTFile nbtFile = new NBTFile(file);
 
-        for (ChunkData chunkData : region.getChunkMap().values()) {
-            // Save each chunk
-            saveChunk(nbtFile, chunkData);
-        }
-        if (nbtFile.getKeys().size() == 0) {
-            if (file.exists()) {
-                try {
-                    Files.delete(file.toPath());
-                } catch (Exception ignored) { }
+            for (ChunkData chunkData : region.getChunkMap().values()) {
+                // Save each chunk
+                saveChunk(nbtFile, chunkData);
             }
-        } else {
-            nbtFile.save();
+            if (nbtFile.getKeys().size() == 0) {
+                if (file.exists()) {
+                    try {
+                        Files.delete(file.toPath());
+                    } catch (Exception ignored) {
+                    }
+                }
+            } else {
+                nbtFile.save();
+            }
+        } catch (EOFException e) {
+            boolean deleted = file.delete();
+            if (deleted) {
+                plugin.getLogger().warning("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
+            }
         }
     }
 

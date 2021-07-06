@@ -101,9 +101,6 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 	public void excavationListener(BlockBreakEvent event) {
 		if (OptionL.isEnabled(Skills.EXCAVATION)) {
 			if (!event.isCancelled()) {
-				if (event.getClass() != BlockBreakEvent.class) { // Compatibility fix
-					return;
-				}
 				Player player = event.getPlayer();
 				Block block = event.getBlock();
 				if (blockAbility(player)) return;
@@ -111,7 +108,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
 				if (plugin.getAbilityManager().isEnabled(MAbility.TERRAFORM)) {
-					if (!block.hasMetadata("AureliumSkills-Terraform")) {
+					if (!block.hasMetadata("AureliumSkills-Terraform") && event.getClass() == BlockBreakEvent.class) {
 						applyTerraform(player, block);
 					}
 				}

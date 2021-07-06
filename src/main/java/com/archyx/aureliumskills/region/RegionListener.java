@@ -29,8 +29,11 @@ public class RegionListener implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (regionManager.getRegion(regionCoordinate) == null) {
-                        regionManager.loadRegion(event.getWorld(), regionX, regionZ);
+                    Region obtainedRegion = regionManager.getRegion(regionCoordinate);
+                    if (obtainedRegion == null) {
+                        regionManager.loadRegion(event.getWorld(), regionX, regionZ, false);
+                    } else if (obtainedRegion.shouldReload()) {
+                        regionManager.loadRegion(event.getWorld(), regionX, regionZ, true);
                     }
                 }
             }.runTaskAsynchronously(plugin);
