@@ -89,6 +89,9 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         Locale locale = playerData.getLocale();
+        if (playerData.getManaAbilityLevel(mAbility) <= 0) {
+            return;
+        }
         // Check if already activated
         if (manager.isActivated(player.getUniqueId(), mAbility)) {
             return;

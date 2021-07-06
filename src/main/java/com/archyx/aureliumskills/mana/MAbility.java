@@ -34,7 +34,8 @@ public enum MAbility implements AbstractAbility {
             new String[] {"enable_particles"}, new Object[] {true},
             Absorption.class),
     LIGHTNING_BLADE(() -> Skills.FIGHTING, 5.0, 5.0, 200, -5, 20, 20,
-            new String[] {"base_duration", "duration_per_level"}, new Object[] {5.0, 4.0});
+            new String[] {"base_duration", "duration_per_level"}, new Object[] {5.0, 4.0},
+            LightningBlade.class);
 
     private final Supplier<Skill> skill;
     private final double baseValue;
