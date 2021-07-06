@@ -47,6 +47,7 @@ public class ItemLootParser extends LootParser {
                 .xp(parseXp(map)).build();
     }
 
+    @SuppressWarnings("deprecation")
     private ItemStack parseItem(Map<?, ?> map) {
         if (map.containsKey("key")) { // Item key
             return parseItemKey(map);
@@ -69,7 +70,7 @@ public class ItemLootParser extends LootParser {
                         throw new IllegalArgumentException("Unknown material " + materialName);
                     }
                     short data = NumberUtils.toShort(splitMaterial[1]);
-                    item = new ItemStack(material, data);
+                    item = new ItemStack(material, 1, data);
                 } else {
                     throw new IllegalArgumentException("Material with data value can only have one :");
                 }
