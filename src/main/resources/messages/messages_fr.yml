@@ -396,7 +396,12 @@ commands:
       saving: 'Préparation de la sauvegarde...'
       saved: '&fSauvegarde des données {type} en tant que {file}'
       error: '&cErreur de sauvegarde des données {type} ! Voir l''erreur dans la console/ci-dessous pour plus de détails'
+  claimitems:
+    no_items: '&eVous n''avez aucun objet à réclamer'
   item:
+    give:
+      sender: '&f donné &b{amount}x {key} &fà {player}'
+      receiver: '&fVous avez reçu &b{amount}x {key}'
     modifier:
       add:
         added: '&7Le modificateur de {color}{stat} &7avec le niveau &b{value} &7a été ajouté à votre objet'
@@ -410,6 +415,10 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Tout les modificateurs ont été supprimés de votre objet'
+    register:
+      registered: '&fEnregistré l''élément à la clé {key}'
+      already_registered: '&eIl y a déjà un élément enregistré à la clé &f{key}&e, utilisez &f/skill item unregister &epour le désinscrire en premier'
+      no_spaces: '&eLa clé d''objet ne peut pas contenir d''espaces !'
     requirement:
       add:
         added: 'L''exigence d''item &3{skill}&7 niveau &b{level}&7 a été ajouté à votre objet'
@@ -425,6 +434,9 @@ commands:
         removed: '&7Toutes les exigences d''item ont été supprimé de votre objet'
       use: '&eVous ne remplissez pas les conditions pour utiliser cette item: {requirements}'
       entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fÉlément non enregistré avec la clé {key}'
+      not_registered: '&eIl n''y a aucun élément enregistré avec la clé {key}'
   lang:
     set: '&7Langue définie sur &b{lang}'
     not_found: '&eLLangue introuvable!'
@@ -503,23 +515,23 @@ leveler:
   title: '&a{skill} Niveau supérieur'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Niveau supérieur! &b&l{skill} &8{old}➜&3&l{new} \n \n &bRécompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+1{symbol} {stat}"
+  stat_level: "\n  {color}+1{num}{symbol} {stat}"
   ability_unlock: "\n  &aCompétence débloquée! &6&l{ability} &7a été débloquée"
   ability_level_up: "\n  &aNiveau de compétence supérieur! &6&l{ability} &7est maintenant niveau &6{level}"
   mana_ability_unlock: "\n&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloqueée"
   mana_ability_level_up: "\n  &dNiveau de compétence de mana supérieur! &9&l{mana_ability} &7est maintenant niveau &6{level}"
   money_reward: "\n  &a${amount}"
+  unclaimed_item: '&cVous avez des objets non réclamés parce que votre inventaire était plein, utilisez &e/skills claimitems &cpour les réclamer'
 menus:
   common:
     close: '&cFermer'
     level: '&7Niveau: &e{level}'
     progress_to_level: "&7Progression vers le niveau {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6NIVEAU MAXIMUM'
-    ability_levels: "\n&7Niveaux de compétence:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "&7Niveaux de compétence:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7Statistique primaire: {color}{stat}'
-    secondary_stat: '&7Statistique secondaire: {color}{stat}'
+    stats_leveled: "\n&7Stats Niveau: {stats}\n "
     mana_ability: "\n&d&lCompétence de mana &9{mana_ability} {level}\n &7Durée: &a{duration}s &7Cout en mana: &b{mana_cost} &7Rechargement: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Vos compétences
@@ -549,6 +561,7 @@ menus:
     locked: '&cBLOQUÉ'
     rewards: '&7Récompenses:{rewards}'
     rewards_entry: "\n  {color}+1{symbol} {stat}"
+    money_reward: "\n  &a${amount}"
     ability_unlock: "\n&6{ability} &a&lDébloquage de compétence\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
     mana_ability_unlock: "\n&9{mana_ability} &d&lDébloquage de compétence de mana\n&7  {desc}\n "
@@ -574,6 +587,10 @@ menus:
     anvil_cost_reduction: '&9Réduction des coûts d''enclume: {value}%'
     max_mana: '&9Mana max: {value}'
     incoming_damage: '&5-{value}% Dégâts reçu'
+  unclaimed_items:
+    unclaimed_items_title: 'Réclamer les articles'
+    inventory_full: '&eVous n''avez pas assez de place dans votre inventaire pour récupérer ceci'
+    click_to_claim: '&eCliquez pour réclamer!'
 mana_abilities:
   replenish:
     name: Replante
@@ -622,8 +639,22 @@ mana_abilities:
     disable: '&7Le mode de tir chargé est maintenant désactivé'
     shoot: '&6Tir chargé utilisé ! &d+{percent}% DMG &7(-{mana} {mana_unit})'
     menu: "\n&d&lMana Capacité &9{mana_ability} {level}\n &7Dommages : &c+{value}% / Mana &7Coût de Mana Max : &b{mana_cost}\n "
+  lightning_blade:
+    name: Lame de foudre
+    desc: Augmente la vitesse d'attaque de {value}% pendant {duration} secondes.\n&e [clic droit avec une épée et attaquez une créature pour l'activer]
+    raise: '&7Vous préparez votre épée'
+    lower: '&7Vous abaissez votre épée'
+    start: '&6Lame de foudre activée ! &7(-{mana} {mana_unit})'
+    end: '&7Lame de Foudre s''est épuisée'
+    menu: "\n&d&lCapacité de Mana &9{mana_ability} {level}\n &7Vitesse d'attaque : &c+{value}% &7Durée : &a{duration}s\n &7Coût de mana : &b{mana_cost} &7Cooldown : &e{cooldown}s\n "
   not_ready: '&cCompétence non chargée! &7({cooldown}s)'
   not_enough_mana: '&eMana insuffisante! &7({mana} {mana_unit} requis, vous avez {current_mana}/{max_mana})'
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Fermier
@@ -705,4 +736,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 16
+file_version: 20

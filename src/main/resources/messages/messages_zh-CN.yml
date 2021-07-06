@@ -382,8 +382,26 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7所有条件限制已从你的物品上移除'
-      equip: '&e你没有达到使用此物品的要求!'
+      equip: '&e你没有达到使用此物品的要求: {requirements}'
+      entry: '&b{skill} {level}&7, '
+  backup:
+    load:
+      confirm: '&c加载备份将还原当前所有玩家的所有技能数据. 此操作一经确认无法撤消. 你可以在加载新备份前保存当前数据为备份. 再次输入命令以确认此操作'
+      loading: '&f正在加载备份...'
+      loaded: '&a成功加载了备份.'
+      error: '&c加载备份出现错误: {error}'
+      must_be_yaml: '&e所选中文档需为 .yml 格式!'
+      file_not_found: '&e备份文件夹内不存在符合此名称的备份文件!'
+    save:
+      saving: '&f保存备份中...'
+      saved: '&f已将 {file} 数据备份为 {type}'
+      error: '&c备份 {type} 数据时出现异常! 请查看控制台/下方堆栈报错以了解详情'
+  claimitems:
+    no_items: '&e你没有需要领取的物品'
   item:
+    give:
+      sender: '&f已将 &b{amount}x {key} &f给予了 {player}'
+      receiver: '&f你被给予了 &b{amount}x {key}'
     modifier:
       add:
         added: '&b{value} &7级的 {color}{stat} &7属性已添加至你的物品'
@@ -397,6 +415,10 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7成功清除了物品上的所有属性'
+    register:
+      registered: '&f已将手上物品注册至id: {key}'
+      already_registered: '&e已有相同id &f{key} &e注册, 请输入 &f/skills item unregister &e以解除对该物品的注册'
+      no_spaces: '&eid 不可包含空格'
     requirement:
       add:
         added: '&7等级限制为 &b{level} &7的技能 &3{skill} &7已经添加到你的物品'
@@ -410,7 +432,11 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7所有条件限制已从你的物品上移除'
-      use: '&e你没有达到使用此物品的要求!'
+      use: '&e你没有达到使用此物品的要求: {requirements}'
+      entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fid 为 {key} 的物品未被注册'
+      not_registered: '&e 没有注册为 id {key} 的物品'
   lang:
     set: '&7语言已设置为 &b{lang}'
     not_found: '&e语言不存在!'
@@ -472,6 +498,9 @@ commands:
     skill_header: '&f--==&b&l技能 {skill} 排行榜&f==--'
     skill_header_page: '&f--==&b&l技能 {skill} 排行榜&f(第 {page} 页)==--'
     skill_entry: '&f{rank}. &b{player} &f- {level}'
+    average_header: '&f--==&b&l技能综合排行榜&f==--'
+    average_header_page: '&f--==&b&l技能综合排行榜&f(第 {page} 页)==--'
+    average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&e提示: &a/sk top &f<page> &7 或 &a/sk top &f[skill] <page>'
   updateleaderboards:
     already_updating: '&e排行榜正在更新!'
@@ -486,23 +515,23 @@ leveler:
   title: '&a{skill} 等级提升'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3技能成功升级! &b&l{skill} &8{old}➜&3&l{new}\n \n &b升级奖励:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+1{symbol} {stat}"
+  stat_level: "\n  {color}+{num} {symbol} {stat}"
   ability_unlock: "\n  &a技能解锁! &6&l{ability} &7已被解锁"
   ability_level_up: "\n  &a技能升级! &6&l{ability} &7现在等级为 &6{level} &7级"
   mana_ability_unlock: "\n  &d魔法技能解锁! &9&l{mana_ability} &7已被解锁"
   mana_ability_level_up: "\n  &d魔法技能升级! &9&l{mana_ability} &7现在等级为l &6{level} &7级"
   money_reward: "\n  &a${amount}"
+  unclaimed_item: '&c因为背包已满, 部分无法存储在物品栏的物品已被转移至临时存储区. 请输入 &e/skills claimitems &c及时领取这些物品.'
 menus:
   common:
     close: '&c关闭'
     level: '&7等级: &e{level}'
     progress_to_level: "&7到达等级 {level}: 进度为&e {percent}%\n &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6最大等级'
-    ability_levels: "\n&7技能等级:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "&7技能等级:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7主技能: {color}{stat}'
-    secondary_stat: '&7副技能: {color}{stat}'
+    stats_leveled: "\n&7属性已升级了 {stats} 级\n "
     mana_ability: "\n&d&l魔法技能 &9{mana_ability} {level}\n  &7持续时间: &a{duration}s &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: 你的技能
@@ -532,6 +561,7 @@ menus:
     locked: '&c已锁定'
     rewards: '&7奖励: {rewards}'
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
+    money_reward: "\n  &a${amount}"
     ability_unlock: "\n&6{ability} &a&l技能解锁\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
     mana_ability_unlock: "\n&9{mana_ability} &d&l魔法技能解锁\n&7  {desc}\n "
@@ -557,6 +587,10 @@ menus:
     anvil_cost_reduction: '&9铁砧修复减少: {value}%'
     max_mana: '&9最大魔力值: {value}'
     incoming_damage: '&5-{value}% 将受到的伤害'
+  unclaimed_items:
+    unclaimed_items_title: '领取物品'
+    inventory_full: '&e你的物品栏没有足够的空间'
+    click_to_claim: '&e点击领取!'
 mana_abilities:
   replenish:
     name: 自动补种
@@ -605,8 +639,22 @@ mana_abilities:
     disable: '&7聚能穿射已禁用'
     shoot: '&6聚能穿射已启用! &d+{percent}% 伤害 &7(-{mana} {mana_unit})'
     menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7伤害: &c+{value}% / 魔法值 &7最大魔力值消耗: &b{mana_cost}\n "
+  lightning_blade:
+    name: 狂战之刃
+    desc: 在 {duration} 秒内增加 {value}% 的攻击速度.\n&e [持剑右键后攻击敌人以激活]
+    raise: '&7你握紧了你的剑'
+    lower: '&7你放下了你的剑'
+    start: '&6狂战之刃已激活! &7(-{mana} {mana_unit})'
+    end: '&7狂战之刃已经已经结束'
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击速度: &c+{value}% &7持续时间: &a{duration}s\n &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
   not_ready: '&c&o技能还没有准备好! &7({cooldown}s)'
-  not_enough_mana: '&e&o没有足够的魔力! &7(需要 {mana} {mana_unit})'
+  not_enough_mana: '&法力不足! &7({mana} {mana_unit} 需要, 但是你只有 {current_mana}/{max_mana})'
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: 草药学
@@ -688,4 +736,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 13
+file_version: 20
