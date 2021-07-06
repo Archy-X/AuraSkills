@@ -396,7 +396,12 @@ commands:
       saving: '&fСохранение резервной копии...'
       saved: '&fРезервное копирование {type} данных как {file}'
       error: '&cОшибка резервного копирования данных {type}! Смотрите ошибки в консоли / ниже для подробностей'
+  claimitems:
+    no_items: '&eУ вас нет элементов для сбора'
   item:
+    give:
+      sender: '&fВыдано &b{amount}x {key} &fигроку {player}'
+      receiver: '&fВам дали &b{amount}x {key}'
     modifier:
       add:
         added: '{color}{stat} &7модификатор с уровнем &b{value} &7был добавлен в ваш товар'
@@ -410,6 +415,10 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Все модификаторы предметов удалены из вашего предмета'
+    register:
+      registered: '&fЗарегистрирован элемент на ключ {key}'
+      already_registered: '&eУже есть элемент, зарегистрированный для ключа &f{key}&e, используйте &f/skills item unregister &eсначала'
+      no_spaces: '&eКлюч элемента не может содержать пробелов!'
     requirement:
       add:
         added: '&3{skill}&7 требование к предмету с уровнем &b{level}&7 было добавлено к вашему предмету'
@@ -425,6 +434,9 @@ commands:
         removed: '&7Все требования к предмету были удалены из вашего предмета'
       use: '&eВы не соответствуете требованиям для использования этого предмета!'
       entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fНезарегистрированный элемент с ключом {key}'
+      not_registered: '&eНет элемента с ключом {key}'
   lang:
     set: '&7Язык установлен на &b{lang}'
     not_found: '&eЯзык не найден!'
@@ -503,23 +515,23 @@ leveler:
   title: '&a{skill} Уровень повышен'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Повышение уровня мастерства! &b&l{skill} &8{old}➜&3&l{new}\n \n &bНаграды:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+1{symbol} {stat}"
+  stat_level: "\n  {color}+{num}{symbol} {stat}"
   ability_unlock: "\n  &aРазблокировка способности! &6&l{ability} &7был разблокирован"
   ability_level_up: "\n  &aПовышение уровня способности! &6&l{ability} &7сейчас уровень &6{level}"
   mana_ability_unlock: "\n  &dРазблокируйте способность маны! &9&l{mana_ability} &7был разблокирован"
   mana_ability_level_up: "\n  &dПовышение уровня мановой способности! &9&l{mana_ability} &7сейчас уровень &6{level}"
   money_reward: "\n  &a${amount}"
+  unclaimed_item: '&cУ вас есть не собранные предметы, потому что ваш инвентарь заполнен, используйте &e/skills claimitems &cдля сбора'
 menus:
   common:
     close: '&cЗакрыть'
     level: '&7Уровень: &e{level}'
     progress_to_level: "&7Прогресс до уровня {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6МАКСИМАЛЬНЫЙ УРОВЕНЬ'
-    ability_levels: "\n&7Уровни способностей:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "&7Уровни способностей:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7Основная характеристика: {color}{stat}'
-    secondary_stat: '&7Вторичная характеристика: {color}{stat}'
+    stats_leveled: "\n&7Уровень статистики: {stats}\n "
     mana_ability: "\n&d&lСпособность к мане &9{mana_ability} {level}\n &7Продолжительность: &a{duration}с &7Стоимость маны: &b{mana_cost} &7Перезарядка: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Ваши навыки
@@ -549,6 +561,7 @@ menus:
     locked: '&cЗАБЛОКИРОВАНО'
     rewards: '&7Награды:{rewards}'
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
+    money_reward: "\n  &a${amount}"
     ability_unlock: "\n&6{ability} &a&lРазблокировка способности\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
     mana_ability_unlock: "\n&9{mana_ability} &d&lРазблокировка мановой способности\n&7  {desc}\n "
@@ -574,6 +587,10 @@ menus:
     anvil_cost_reduction: '&9Снижение стоимости наковальни: {value}%'
     max_mana: '&9МАХ мана: {value}'
     incoming_damage: '&5-{value}% Входящий урон'
+  unclaimed_items:
+    unclaimed_items_title: 'Получить предметы'
+    inventory_full: '&eУ вас недостаточно места в инвентаре, чтобы забрать этот предмет'
+    click_to_claim: '&eНажмите, чтобы забрать!'
 mana_abilities:
   replenish:
     name: Комбайнер
@@ -622,8 +639,22 @@ mana_abilities:
     disable: '&7Режим заряженного выстрела отключен.'
     shoot: '&6Используется заряженный выстрел! &d+{percent}% DMG &7(-{mana} {mana_unit})'
     menu: "\n&d&lСпособность к мане &9{mana_ability} {level}\n &7Урон: &c+{value}% / Мана &7Максимальная стоимость маны: &b{mana_cost}\n "
+  lightning_blade:
+    name: Световой меч
+    desc: Увеличивает скорость атаки на {value}% в течение {duration} секунд.\n&e [ПКМ и удар по мобу для активации]
+    raise: '&7Вы готовы к мечу'
+    lower: '&7Вы опускаете меч'
+    start: '&6Световое лезвие активно! &7(-{mana} {mana_unit})'
+    end: '&7Световое лезвие стерлось'
+    menu: "\n&d&lМана &9{mana_ability} {level}\n &7Скорость атаки: &c+{value}% &7Длительность: &a{duration}сек\n &7Цена маны: &b{mana_cost} &7Перезагрядка: &e{cooldown}сек\n "
   not_ready: '&cСпособность не готова! &7({cooldown}s)'
   not_enough_mana: '&eНедостаточно маны! &7({mana} {mana_unit} required)'
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Фермер
@@ -705,4 +736,4 @@ units:
   mana: МАНЫ
   hp: ЖИЗНЕЙ
   xp: ОПЫТ
-file_version: 16
+file_version: 20
