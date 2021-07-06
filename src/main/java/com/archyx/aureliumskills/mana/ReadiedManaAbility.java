@@ -21,7 +21,7 @@ import java.util.Locale;
 public abstract class ReadiedManaAbility extends ManaAbilityProvider {
 
     private final Action[] actions;
-    private final String[] materials;
+    protected final String[] materials;
 
     private final static int READY_DURATION = 80;
 
