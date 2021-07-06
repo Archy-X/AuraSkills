@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.builder.ItemLootBuilder;
 import com.archyx.aureliumskills.util.item.MaterialUtil;
 import com.archyx.aureliumskills.util.misc.Validate;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XEnchantment;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.math.NumberUtils;
@@ -20,10 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ItemLootParser extends LootParser {
 
@@ -80,13 +78,17 @@ public class ItemLootParser extends LootParser {
             if (meta == null) return item;
             // Display name and lore
             if (map.containsKey("display_name")) {
-                String displayName = getString(map, "display_name");
+                String displayName = TextUtil.replaceNonEscaped(getString(map, "display_name"), "&", "§");
                 meta.setDisplayName(displayName);
                 item.setItemMeta(meta);
             }
             if (map.containsKey("lore")) {
                 List<String> lore = getStringList(map, "lore");
-                meta.setLore(lore);
+                List<String> formattedLore = new ArrayList<>();
+                for (String line : lore) {
+                    formattedLore.add(TextUtil.replaceNonEscaped(line, "&", "§"));
+                }
+                meta.setLore(formattedLore);
                 item.setItemMeta(meta);
             }
             // Enchantments
