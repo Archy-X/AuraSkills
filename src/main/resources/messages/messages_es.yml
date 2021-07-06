@@ -382,7 +382,8 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Todos los requerimientos de armadura han sido removidos'
-      equip: '&eNo cumples los requisitos para usar este objeto!'
+      equip: '&eNo cumples los requisitos para usar este objeto: {requirements}'
+      entry: '&b{skill} {level}&7, '
   backup:
     load:
       confirm: '&cCargando la copia de seguridad que revertirá todos los datos de los jugadores. Esta acción es permanente y no se puede deshacer. Puede que quieras guardar una copia de seguridad antes de cargar una. Escribe el comando nuevamente para confirmar esta acción'
@@ -395,7 +396,12 @@ commands:
       saving: '&fGuardando copia de seguridad...'
       saved: '&fDatos de {type} almacenados como {file}'
       error: '&cError al respaldar los datos {type}! Ve el error en la consola/abajo para más detalles'
+  claimitems:
+    no_items: '&eNo hay objetos para reclamar'
   item:
+    give:
+      sender: '&fDiste &b{amount}x {key} &fa {player}'
+      receiver: '&fRecibiste &b{amount}x {key}'
     modifier:
       add:
         added: '&7Modificador de {color}{stat} &7con nivel &b{value} &7ha sido añadido a tu objeto'
@@ -409,6 +415,10 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Todos los modificadores fueron removidos de tu objeto'
+    register:
+      registered: '&fRegistraste el objeto con la clave {key}'
+      already_registered: '&eYa hay un objeto registrado con la clave &f{key}&e, usa &f/skills item unregister &epara desregistrarlo'
+      no_spaces: '&eLa clave del objeto no puede contener espacios!'
     requirement:
       add:
         added: '&3{skill}&7 requisito de artículo con nivel &b{level}&7 fue agregado a tu artículo'
@@ -422,7 +432,11 @@ commands:
         entry: '  &3{skill} &f- &b{level}'
       removeall:
         removed: '&7Todos los requerimientos han sido removidos de tu objeto'
-      use: '&eNo cumples los requisitos para usar este objeto!'
+      use: '&eNo cumples con los requisitos para usar este objeto: {requirements}'
+      entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fEl objeto con la clave {key} ha sido desregistrado'
+      not_registered: '&fNingún objeto con la clave {key} ha sido registrado'
   lang:
     set: '&7Idioma establecido en &b{lang}'
     not_found: '&e¡Idioma no encontrado!'
@@ -501,24 +515,24 @@ leveler:
   title: '&aNuevo nivel de {skill}'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3¡Nuevo Nivel! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRecompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+1{symbol} {stat}"
+  stat_level: "\n  {color}+{num}{symbol} {stat}"
   ability_unlock: "\n  &a¡Habilidad Desbloqueada! &6&l{ability} &7ha sido desbloqueada"
   ability_level_up: "\n  &a¡Nuevo Nivel de Habilidad! &6&l{ability} &7es ahora nivel &6{level}"
   mana_ability_unlock: "\n  &d¡Habilidad de Maná Desbloqueada! &9&l{mana_ability} &7se ha desbloqueado"
   mana_ability_level_up: "\n  &d¡Nuevo Nivel de Habilidad de Maná! &9&l{mana_ability} &7es ahora nivel &6{level}"
   money_reward: "\n  &a${amount}"
+  unclaimed_item: '&cTienes objetos sin reclamar porque tu invnetario estaba lleno, usa &e/skills claimitems &cpara reclamarlos'
 menus:
   common:
     close: '&cCerrar'
     level: '&7Nivel: &e{level}'
     progress_to_level: "&7Progreso al nivel {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6NIVEL MÁXIMO'
-    ability_levels: "\n&7Niveles de habilidad:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "&7Niveles de habilidad:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7Estadística Primaria: {color}{stat}'
-    secondary_stat: '&7Estadística Secundaria: {color}{stat}'
-    mana_ability: "\n&d&lHabilidad de Mana &9{mana_ability} {level}\n &7Duración: &a{duration}s &7Costo de Mana: &b{mana_cost} &7Enfriamiento: &e{cooldown}s\n "
+    stats_leveled: "\n&7Estadísticas mejoradas: {stats}\n "
+    mana_ability: "\n&d&lHabilidad de Mana &9{mana_ability} {level}\n &7Duración: &a{duration}s &7Costo de Mana: &b{mana_cost} &7Recarga: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Tus Habilidades
     your_skills: '&bTus Habilidades - &6{player}'
@@ -547,6 +561,7 @@ menus:
     locked: '&cBLOQUEADO'
     rewards: '&7Recompensas:{rewards}'
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
+    money_reward: "\n  &a${amount}"
     ability_unlock: "\n&6{ability} &a&lHabilidad Desbloqueada\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
     mana_ability_unlock: "\n&9{mana_ability} &d&lHabilidad de Mana Desbloqueada\n&7  {desc}\n "
@@ -572,6 +587,10 @@ menus:
     anvil_cost_reduction: '&9Reducción de costos del yunque: {value}%'
     max_mana: '&9Maná Máximo: {value}'
     incoming_damage: '&5-{value}% Daño entrante'
+  unclaimed_items:
+    unclaimed_items_title: 'Reclamar objetos'
+    inventory_full: '&eNo tienes suficiente espacio en el inventario para reclamarlos'
+    click_to_claim: '&e¡Clic para reclamar!'
 mana_abilities:
   replenish:
     name: Replantar
@@ -620,8 +639,22 @@ mana_abilities:
     disable: '&7El modo de disparo cargado está desactivado'
     shoot: '&6¡Usaste Disparo Cargado! &d+{percent}% DAÑO &7(-{mana} {mana_unit})'
     menu: "\n&d&lHabilidad de Maná &9{mana_ability} {level}\n &7Daño: &c+{value}% / &7Costo de Maná Máximo: &b{mana_cost}\n "
+  lightning_blade:
+    name: Espada de Relámpagos
+    desc: Aumenta la velocidad de ataque en un {value}% por {duration} segundos.\n&e [Haz clic derecho a la espada y ataca a una entidad para activar]
+    raise: '&7Preparas tu espada'
+    lower: '&7Bajas tu espada'
+    start: '&6Espada de relámpagos activada &7(-{mana} {mana_unit})'
+    end: '&7La espada de relámpagos se desgastó'
+    menu: "\n&d&lHabilidad de Maná &9{mana_ability} {level}\n &7Velocidad de Ataque: &c+{value}% &7Duración: &a{duration}s\n &7Costo de Maná: &b{mana_cost} &7Recarga: &e{cooldown}s "
   not_ready: '&c¡La habilitad no está lista! &7({cooldown}s)'
   not_enough_mana: '&e¡No hay maná suficiente! &7(Necesitas {mana} {mana_unit} y tienes {current_mana}/{max_mana})'
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Agricultura
@@ -703,4 +736,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 15
+file_version: 20

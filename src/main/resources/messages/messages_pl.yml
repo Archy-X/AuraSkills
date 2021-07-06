@@ -259,7 +259,7 @@ abilities:
       info: 'Każda {value} siły = Każda {value} zaklęć'
     lucky_table:
       name: Szczęśliwy Stół
-      desc: "Przedmioty, które zakląłeś za pomocą tabeli zaklęć\n&7  mają {value}% szans na ulepszenie poziomu zaklęcia\n&7  o 1, jeśli nie jest to ich maksymalny poziom"
+      desc: "Przedmioty, które zakląłeś za pomocą stołu do zaklinania\n&7  mają {value}% szans na ulepszenie poziomu zaklęcia\n&7  o 1, jeśli nie jest to ich maksymalny poziom"
       info: '{value}% Szans na Ulepszenie Zaklęcia'
   healing:
     life_essence:
@@ -396,7 +396,12 @@ commands:
       saving: '&fZapisywanie kopii zapasowej...'
       saved: '&fWykonano kopię zapasową danych {type} jako {file}'
       error: '&cBłąd podczas tworzenia kopii zapasowej danych {type}! Zobacz błąd w konsoli/poniżej, aby uzyskać szczegóły'
+  claimitems:
+    no_items: '&eNie masz żadnych przedmiotów do odebrania'
   item:
+    give:
+      sender: '&fDostarcz &b{amount}x {key} &fdo {player}'
+      receiver: '&fOtrzymałeś &b{amount}x {key}'
     modifier:
       add:
         added: '&7Modyfikator {color}{stat} &7z poziomem &b{value} &7został dodany do twojego przedmiotu'
@@ -410,6 +415,10 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Wszystkie modyfikatory przedmiotu zostały usunięte z twojego przedmiotu'
+    register:
+      registered: '&fZarejestrowano przedmiot do klucza {key}'
+      already_registered: '&eIstnieje już przedmiot zarejestrowany do klucza &f{key}&e, użyj &f/skills item unregister &eaby najpierw go wyrejestrować'
+      no_spaces: '&eKlucz przedmiotu nie może zawierać spacji!'
     requirement:
       add:
         added: '&7Wymóg przedmiotu &3{skill}&7 z poziomem &b{level}&7 został dodany do przedmiotu'
@@ -425,6 +434,9 @@ commands:
         removed: '&7Wszystkie wymagania przedmiotu zostały usunięte z twojego przedmiotu'
       use: '&eNie spełniasz wymagań do użycia tego przedmiotu: {requirements}'
       entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fOdrejestrowano przedmiot z kluczem {key}'
+      not_registered: '&eNie ma przedmiotu zarejestrowanego z kluczem {key}'
   lang:
     set: '&7Język ustawiony na &b{lang}'
     not_found: '&eJęzyk nie został znaleziony!'
@@ -503,23 +515,23 @@ leveler:
   title: '&aNowy Poziom {skill}'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Nowy Poziom Umiejętności! &b&l{skill} &8{old}➜&3&l{new}\n \n &bNagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+1{symbol} {stat}"
+  stat_level: "\n  {color}+{num}{symbol} {stat}"
   ability_unlock: "\n  &aOdblokowano Umiejętność! &7Umiejętność &6&l{ability} &7została odblokowana"
   ability_level_up: "\n  &aNowy Poziom Umiejętności! &7Umiejętność &6&l{ability} &7ma teraz poziom &6{level}"
   mana_ability_unlock: "\n  &dOdblokowano Umiejętność Many! &7Umiejętność &9&l{mana_ability} &7 została odblokowana"
   mana_ability_level_up: "\n  &dNowy Poziom Umiejętności Many! &7Umiejętność &9&l{mana_ability} &7ma teraz poziom &6{level}"
   money_reward: "\n  &a${amount}"
+  unclaimed_item: '&cMasz nieodebrane przedmioty, ponieważ twój ekwipunek był pełny, użyj &e/skills claimitems &caby je odebrać'
 menus:
   common:
     close: '&cZamknij'
     level: '&7Poziom &e{level}'
     progress_to_level: "&7Postęp do Poziomu {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6MAKSYMALNY POZIOM'
-    ability_levels: "\n&7Poziomy Umiejętności:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "&7Poziomy Umiejętności:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7Główna Statystyka: {color}{stat}'
-    secondary_stat: '&7Drugorzędna Statystyka: {color}{stat}'
+    stats_leveled: "\nPoziom Statystyk: {stats}\n "
     mana_ability: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Czas trwania: &a{duration}s &7Koszt: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Twoje Umiejętności
@@ -549,6 +561,7 @@ menus:
     locked: '&cZABLOKOWANE'
     rewards: '&7Nagrody:{rewards}'
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
+    money_reward: "\n  &a${amount}"
     ability_unlock: "\n&6{ability} &a&lDo Odblokowania\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
     mana_ability_unlock: "\n&9{mana_ability} &d&lDo Odblokowania (mana)\n&7  {desc}\n "
@@ -574,6 +587,10 @@ menus:
     anvil_cost_reduction: '&9Redukcja kosztu kowadła: {value}%'
     max_mana: '&9Maksymalna Mana: {value}'
     incoming_damage: '&5-{value}% Przychodzących Obrażeń'
+  unclaimed_items:
+    unclaimed_items_title: 'Odbierz Przedmioty'
+    inventory_full: '&eNie masz wystarczająco miejsca w swoim ekwipunku, aby odebrać ten przedmiot'
+    click_to_claim: '&eKliknij, aby odebrać!'
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
@@ -622,8 +639,22 @@ mana_abilities:
     disable: '&7Tryb naładowanego strzału jest teraz wyłączony'
     shoot: '&6Użyty Naładowanego Strzału! &d+{percent}% Obrażeń &7(-{mana} {mana_unit})'
     menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Obrażenia: &c+{value}% / Mana &7Maksymalny Koszt Many: &b{mana_cost}\n "
+  lightning_blade:
+    name: Ostrze Błyskawicy
+    desc: Zwiększa szybkość ataku o {value}% na {duration} sekund.\n&e [Kliknij prawym przyciskiem miecz i zaatakuj moba, aby aktywować]
+    raise: '&7Przygotowałeś swój miecz'
+    lower: '&7Obniżasz swój miecz'
+    start: '&6Ostrze Błyskawicy Aktywowane! &7(-{mana} {mana_unit})'
+    end: '&7Ostrze Błyskawicy zostało wyłączone'
+    menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Prędkość Ataku: &c+{value}% &7Czas trwania: &a{duration}s\n &7Koszt: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
   not_ready: '&cUmiejętność many nie jest gotowa! &7({cooldown}s)'
   not_enough_mana: '&eNiewystarczająca ilość many! &7(wymagane {mana} {mana_unit}, masz {current_mana}/{max_mana}'
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Rolnictwo
@@ -705,4 +736,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 16
+file_version: 20
