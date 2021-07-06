@@ -82,4 +82,28 @@ public class Replenish extends ReadiedManaAbility {
         }
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    protected boolean isExcludedBlock(Block block) {
+        if (XMaterial.isNewVersion()) {
+            return block.getType() == XMaterial.DIRT.parseMaterial()
+                    || block.getType() == XMaterial.GRASS_BLOCK.parseMaterial()
+                    || block.getType() == XMaterial.COARSE_DIRT.parseMaterial()
+                    || block.getType() == XMaterial.DIRT_PATH.parseMaterial()
+                    || block.getType() == XMaterial.FARMLAND.parseMaterial();
+        } else {
+            if (block.getType() == XMaterial.GRASS_BLOCK.parseMaterial()
+                    || block.getType() == XMaterial.DIRT_PATH.parseMaterial()
+                    || block.getType() == XMaterial.FARMLAND.parseMaterial()) {
+                return true;
+            } else if (block.getType() == Material.DIRT) {
+                switch (block.getData()) {
+                    case 0:
+                    case 1:
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
 }
