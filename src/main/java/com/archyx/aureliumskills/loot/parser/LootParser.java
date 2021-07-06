@@ -60,4 +60,12 @@ public abstract class LootParser extends Parser {
         }
     }
 
+    protected double parseXp(Map<?, ?> map) {
+        if (map.containsKey("xp")) {
+            return getDouble(map, "xp");
+        } else {
+            return -1.0;
+        }
+    }
+
 }

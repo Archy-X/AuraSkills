@@ -43,7 +43,8 @@ public class ItemLootParser extends LootParser {
                 .maxAmount(amount[1])
                 .message(parseMessage(map))
                 .weight(parseWeight(map))
-                .sources(parseSources(map)).build();
+                .sources(parseSources(map))
+                .xp(parseXp(map)).build();
     }
 
     private ItemStack parseItem(Map<?, ?> map) {
