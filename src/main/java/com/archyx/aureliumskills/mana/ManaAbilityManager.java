@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.api.event.ManaAbilityActivateEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
@@ -26,8 +25,6 @@ public class ManaAbilityManager implements Listener {
     private final Map<UUID, Map<MAbility, Boolean>> activated;
     private final Map<UUID, Map<MAbility, Integer>> errorTimer;
 
-    private final Map<UUID, List<ManaAbility>> activeAbilities;
-    private final ManaAbilityActivator activator;
     private final Map<MAbility, ManaAbilityProvider> providers;
 
     private final AureliumSkills plugin;
@@ -38,15 +35,12 @@ public class ManaAbilityManager implements Listener {
         ready = new HashMap<>();
         activated = new HashMap<>();
         errorTimer = new HashMap<>();
-        activeAbilities = new HashMap<>();
-        activator = new ManaAbilityActivator(plugin);
         providers = new HashMap<>();
     }
 
     public void init() {
         registerProviders();
         startTimer();
-        startUpdating();
     }
 
     private void registerProviders() {
@@ -72,10 +66,6 @@ public class ManaAbilityManager implements Listener {
     @Nullable
     public ManaAbilityProvider getProvider(MAbility mAbility) {
         return providers.get(mAbility);
-    }
-
-    public ManaAbilityActivator getActivator() {
-        return activator;
     }
 
     public void setActivated(Player player, MAbility mAbility, boolean isActivated) {
@@ -161,57 +151,12 @@ public class ManaAbilityManager implements Listener {
         }
     }
 
-    //Activates an ability
-    public void activateAbility(Player player, MAbility ability, int durationTicks, ManaAbility manaAbility) {
-        ManaAbilityActivateEvent event = new ManaAbilityActivateEvent(player, ability, durationTicks);
-        Bukkit.getPluginManager().callEvent(event);
-        if (!event.isCancelled()) {
-            activated.get(player.getUniqueId()).put(ability, true);
-            activeAbilities.get(player.getUniqueId()).add(manaAbility);
-            manaAbility.activate(player);
-            int duration = event.getDuration();
-            if (duration != 0) {
-                //Schedules stop
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        manaAbility.onStop(player);
-                        activeAbilities.get(player.getUniqueId()).remove(manaAbility);
-                        activated.get(player.getUniqueId()).put(ability, false);
-                        ready.get(player.getUniqueId()).put(ability, false);
-                    }
-                }.runTaskLater(plugin, duration);
-            } else {
-                manaAbility.onStop(player);
-                activeAbilities.get(player.getUniqueId()).remove(manaAbility);
-                activated.get(player.getUniqueId()).put(ability, false);
-                ready.get(player.getUniqueId()).put(ability, false);
-            }
-        }
-    }
-
     //Sets ability ready status
     public void setReady(UUID id, MAbility ability, boolean isReady) {
         if (!ready.containsKey(id)) {
             return;
         }
         ready.get(id).put(ability, isReady);
-    }
-
-    private void startUpdating() {
-        //Updates active abilities
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (UUID id : activeAbilities.keySet()) {
-                    for (ManaAbility ab : activeAbilities.get(id)) {
-                        if (Bukkit.getPlayer(id) != null) {
-                            ab.update(Bukkit.getPlayer(id));
-                        }
-                    }
-                }
-            }
-        }.runTaskTimer(plugin, 0L, 1L);
     }
 
     private void startTimer() {
@@ -255,9 +200,6 @@ public class ManaAbilityManager implements Listener {
         }
         if (!errorTimer.containsKey(id)) {
             errorTimer.put(id, new HashMap<>());
-        }
-        if (!activeAbilities.containsKey(id)) {
-            activeAbilities.put(id, new LinkedList<>());
         }
     }
 
