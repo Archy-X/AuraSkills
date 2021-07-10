@@ -1,3 +1,12 @@
+Version Beta 1.1.3
+  Changes:
+    - Update es, fr, pl, ru, and zh-CN messages
+    - Region saving will now use a 5 minute timer instead of on WorldSaveEvent
+  Bug Fixes:
+    - Fix Russian language missing from default config
+    - Fix error by deleting corrupt region files and prevent loading regions while saving
+    - Fix Terraform broken blocks not giving loot drops
+
 Version Beta 1.1.2
   New Features:
     - Add global.yml rewards file that applies rewards in it to all skills
