@@ -606,7 +606,7 @@ mana_abilities:
     end: '&7Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
-    desc: '&7Gives Haste 10 for {value} seconds.\n&e  [Right click pickaxe and mine\n&e  block to activate]'
+    desc: '&7Gives Haste {haste_level} for {value} seconds.\n&e  [Right click pickaxe and mine\n&e  block to activate]'
     raise: '&7You raise your pickaxe'
     lower: '&7You lower your pickaxe'
     start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
@@ -734,4 +734,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 20
+file_version: 21

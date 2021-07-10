@@ -5,32 +5,17 @@ import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.ability.AbilityProvider;
 import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
-import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.lang.ManaAbilityMessage;
-import com.archyx.aureliumskills.mana.MAbility;
-import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.mana.SharpHook;
 import com.archyx.aureliumskills.skills.Skills;
-import com.archyx.aureliumskills.support.WorldGuardFlags;
-import com.archyx.aureliumskills.util.math.NumberUtil;
-import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
-import java.util.Locale;
 import java.util.Random;
 
 public class FishingAbilities extends AbilityProvider implements Listener {
@@ -82,106 +67,4 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 			}
 		}
 	}
-
-	@EventHandler
-	public void sharpHook(PlayerInteractEvent event) {
-		if (OptionL.isEnabled(Skills.FISHING) && plugin.getAbilityManager().isEnabled(MAbility.SHARP_HOOK)) {
-			Player player = event.getPlayer();
-			if (blockAbility(player)) return;
-			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-			if (playerData == null) {
-				return;
-			}
-			if (playerData.getManaAbilityLevel(MAbility.SHARP_HOOK) <= 0) {
-				return;
-			}
-			// If left click
-			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-				ItemStack item = event.getItem();
-				if (item != null) {
-					if (item.getType() == Material.FISHING_ROD) {
-						// Check for player just casting rod
-						for (Entity entity : player.getNearbyEntities(0.1, 0.1, 0.1)) {
-							if (entity instanceof FishHook) {
-								FishHook fishHook = (FishHook) entity;
-								ProjectileSource source = fishHook.getShooter();
-								if (fishHook.isValid() && source instanceof Player) {
-									if (source.equals(player)) {
-										return;
-									}
-								}
-							}
-						}
-						// Check entities
-						for (Entity entity : player.getNearbyEntities(33, 33 ,33)) {
-							if (entity instanceof FishHook) {
-								FishHook fishHook = (FishHook) entity;
-								ProjectileSource source = fishHook.getShooter();
-								if (fishHook.isValid() && source instanceof Player) {
-									if (source.equals(player)) {
-										for (Entity hooked : fishHook.getNearbyEntities(0.1, 0.1, 0.1)) {
-											if (hooked instanceof LivingEntity) {
-												LivingEntity livingEntity = (LivingEntity) hooked;
-												if (!livingEntity.isDead() && livingEntity.isValid()) {
-													int cooldown = plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
-													if (cooldown == 0) {
-														if (areValidLocations(player, livingEntity)) { // Check that the locations of the entities are valid
-															activateSharpHook(player, playerData, livingEntity);
-														}
-													} else {
-														if (plugin.getManaAbilityManager().getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-															Locale locale = playerData.getLocale();
-															plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
-															plugin.getManaAbilityManager().setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
-														}
-													}
-													break;
-												}
-											}
-										}
-										break;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private boolean areValidLocations(Player damager, LivingEntity hooked) {
-		Location damagerLocation = damager.getLocation();
-		Location hookedLocation = hooked.getLocation();
-		// Disallow if in different worlds
-		World damagerWorld = damagerLocation.getWorld();
-		World hookedWorld = hookedLocation.getWorld();
-		if (damagerWorld != null & hookedWorld != null) {
-			if (!damagerWorld.equals(hookedWorld)) {
-				return false;
-			}
-		}
-		// Disallow if more than 33 blocks away
-		return !(damagerLocation.distanceSquared(hookedLocation) > 1089);
-	}
-
-	private void activateSharpHook(Player player, PlayerData playerData, LivingEntity caught) {
-		Locale locale = playerData.getLocale();
-		ManaAbilityManager manager = plugin.getManaAbilityManager();
-		if (playerData.getMana() >= plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerData)) {
-			double damage = plugin.getManaAbilityManager().getValue(MAbility.SHARP_HOOK, playerData);
-			caught.damage(damage, player);
-			manager.activateAbility(player, MAbility.SHARP_HOOK, 1, new SharpHook(plugin));
-		}
-		else {
-			if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
-				plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-						,"{mana}", NumberUtil.format0(plugin.getManaAbilityManager().getManaCost(MAbility.SHARP_HOOK, playerData))
-						, "{current_mana}", String.valueOf(Math.round(playerData.getMana()))
-						, "{max_mana}", String.valueOf(Math.round(playerData.getMaxMana()))));
-				manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
-			}
-		}
-	}
-
 }
