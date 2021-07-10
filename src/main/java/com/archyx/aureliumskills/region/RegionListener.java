@@ -5,7 +5,6 @@ import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class RegionListener implements Listener {
@@ -16,6 +15,7 @@ public class RegionListener implements Listener {
     public RegionListener(AureliumSkills plugin) {
         this.plugin = plugin;
         regionManager = plugin.getRegionManager();
+        startSaveTimer();
     }
 
     @EventHandler
@@ -25,29 +25,30 @@ public class RegionListener implements Listener {
         int regionZ = (int) Math.floor((double) chunk.getZ() / 32.0);
         RegionCoordinate regionCoordinate = new RegionCoordinate(event.getWorld(), regionX, regionZ);
         Region region = regionManager.getRegion(regionCoordinate);
-        if (region == null) {
+        if (region == null || region.shouldReload()) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     Region obtainedRegion = regionManager.getRegion(regionCoordinate);
                     if (obtainedRegion == null) {
-                        regionManager.loadRegion(event.getWorld(), regionX, regionZ, false);
+                        obtainedRegion = new Region(event.getWorld(), regionX, regionZ);
+                        regionManager.setRegion(regionCoordinate, obtainedRegion);
+                        regionManager.loadRegion(obtainedRegion);
                     } else if (obtainedRegion.shouldReload()) {
-                        regionManager.loadRegion(event.getWorld(), regionX, regionZ, true);
+                        regionManager.loadRegion(obtainedRegion);
                     }
                 }
             }.runTaskAsynchronously(plugin);
         }
     }
 
-    @EventHandler
-    public void onWorldSave(WorldSaveEvent event) {
+    public void startSaveTimer() {
         new BukkitRunnable() {
             @Override
             public void run() {
-                regionManager.saveWorldRegions(event.getWorld(), true, false);
+                regionManager.saveAllRegions(true, false);
             }
-        }.runTaskAsynchronously(plugin);
+        }.runTaskTimerAsynchronously(plugin, 6000L, 6000L);
     }
 
 }
