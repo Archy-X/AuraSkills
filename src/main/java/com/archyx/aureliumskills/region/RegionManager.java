@@ -6,7 +6,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -61,9 +60,11 @@ public class RegionManager {
         Region region = regions.get(regionCoordinate);
         // Create region if does not exist
         if (region == null) {
-            region = loadRegion(block.getWorld(), regionX, regionZ, false);
+            region = new Region(block.getWorld(), regionX, regionZ);
+            regions.put(regionCoordinate, region);
+            loadRegion(region);
         } else if (region.shouldReload()) {
-            region = loadRegion(block.getWorld(), regionX, regionZ, true);
+            loadRegion(region);
         }
         byte regionChunkX = (byte) (chunkX - regionX * 32);
         byte regionChunkZ = (byte) (chunkZ - regionZ * 32);
@@ -97,24 +98,17 @@ public class RegionManager {
         }
     }
 
-    public Region loadRegion(World world, int regionX, int regionZ, boolean reload) {
-        RegionCoordinate regionCoordinate = new RegionCoordinate(world, regionX, regionZ);
-        Region region;
-        if (reload) {
-            region = regions.get(regionCoordinate);
-            if (region == null) {
-                region = new Region(world, regionX, regionZ);
-                regions.put(regionCoordinate, region);
-            }
-        } else {
-            region = new Region(world, regionX, regionZ);
-            regions.put(regionCoordinate, region);
-        }
+    public void loadRegion(Region region) {
+        if (region.isLoading()) return;
+        region.setLoading(true);
+        RegionCoordinate regionCoordinate = new RegionCoordinate(region.getWorld(), region.getX(), region.getZ());
+        World world = regionCoordinate.getWorld();
+        int regionX = regionCoordinate.getX();
+        int regionZ = regionCoordinate.getZ();
         File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
         if (file.exists()) {
             if (saving) {
                 region.setReload(true);
-                return region;
             }
             try {
                 NBTFile nbtFile = new NBTFile(file);
@@ -128,10 +122,11 @@ public class RegionManager {
                         // Load chunk
                         NBTCompound chunkCompound = nbtFile.getCompound(key);
                         ChunkCoordinate chunkCoordinate = new ChunkCoordinate(chunkX, chunkZ);
-                        region.setChunkData(chunkCoordinate, loadChunk(region, chunkCoordinate, chunkCompound));
+                        loadChunk(region, chunkCoordinate, chunkCompound);
                     }
                 }
-            } catch (EOFException e) {
+                region.setReload(false);
+            } catch (NbtApiException e) {
                 boolean deleted = file.delete();
                 if (deleted) {
                     plugin.getLogger().warning("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
@@ -140,11 +135,14 @@ public class RegionManager {
                 e.printStackTrace();
             }
         }
-        return region;
+        region.setLoading(false);
     }
 
-    private ChunkData loadChunk(Region region, ChunkCoordinate chunkCoordinate, NBTCompound compound) {
-        ChunkData chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
+    private void loadChunk(Region region, ChunkCoordinate chunkCoordinate, NBTCompound compound) {
+        ChunkData chunkData = region.getChunkData(chunkCoordinate);
+        if (chunkData == null) {
+            chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
+        }
         NBTCompoundList placedBlocks = compound.getCompoundList("placed_blocks");
         for (NBTListCompound block : placedBlocks) {
             int x = block.getInteger("x");
@@ -152,7 +150,7 @@ public class RegionManager {
             int z = block.getInteger("z");
             chunkData.addPlacedBlock(new BlockPosition(x, y, z));
         }
-        return chunkData;
+        region.setChunkData(chunkCoordinate, chunkData);
     }
 
     private void saveRegion(World world, int regionX, int regionZ) throws IOException {
@@ -179,7 +177,7 @@ public class RegionManager {
             } else {
                 nbtFile.save();
             }
-        } catch (EOFException e) {
+        } catch (NbtApiException e) {
             boolean deleted = file.delete();
             if (deleted) {
                 plugin.getLogger().warning("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
@@ -230,31 +228,6 @@ public class RegionManager {
         }
     }
 
-    public void saveWorldRegions(World world, boolean clearUnused, boolean serverShutdown) {
-        if (saving) return;
-        saving = true;
-        for (Region region : regions.values()) {
-            if (region.getWorld().equals(world)) {
-                try {
-                    saveRegion(region.getWorld(), region.getX(), region.getZ());
-                    // Clear region from memory if no chunks are loaded in it
-                    if (clearUnused) {
-                        if (isRegionUnused(region)) {
-                            regions.remove(new RegionCoordinate(region.getWorld(), region.getX(), region.getZ()));
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        if (!serverShutdown) {
-            plugin.getServer().getScheduler().runTaskLater(plugin, () -> saving = false, 20);
-        } else {
-            saving = false;
-        }
-    }
-
     private boolean isRegionUnused(Region region) {
         for (int chunkX = region.getX() * 32; chunkX < region.getX() * 32 + 32; chunkX++) {
             for (int chunkZ = region.getZ() * 32; chunkZ < region.getZ() * 32 + 32; chunkZ++) {
@@ -268,6 +241,10 @@ public class RegionManager {
 
     public void clearRegionMap() {
         regions.clear();
+    }
+
+    public void setRegion(RegionCoordinate coordinate, Region region) {
+        regions.put(coordinate, region);
     }
 
 }
