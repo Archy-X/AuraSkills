@@ -208,8 +208,8 @@ public class ItemListener implements Listener {
                             // For each modifier on the item
                             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemMainHand)) {
                                 // Removes the offhand modifier if wasn't already added
-                                if (!offHandModifiers.contains(modifier.getName() + "-offhand")) {
-                                    playerData.removeStatModifier(modifier.getName() + "-offhand", false);
+                                if (!offHandModifiers.contains(modifier.getName() + ".Offhand")) {
+                                    playerData.removeStatModifier(modifier.getName() + ".Offhand", false);
                                 }
                                 // Add if meets requirements
                                 if (meetsRequirements) {

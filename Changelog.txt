@@ -3,6 +3,7 @@ Version Beta 1.1.4
     - Fix damage holograms not displaying for thrown tridents and other projectiles
     - Fix damage holograms displaying projectile damage on self
     - Fix strength not working on thrown tridents and special arrows
+    - Fix item modifiers in offhand not being removed sometimes
 
 Version Beta 1.1.3
   Changes:
