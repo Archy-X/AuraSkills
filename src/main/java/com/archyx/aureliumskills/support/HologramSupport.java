@@ -8,10 +8,10 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -52,10 +52,14 @@ public class HologramSupport implements Listener {
                                 createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), false));
 
                             }
-                        } else if (event.getDamager() instanceof Arrow) {
-                            Arrow arrow = (Arrow) event.getDamager();
-                            if (arrow.getShooter() instanceof Player) {
-                                Player player = (Player) arrow.getShooter();
+                        } else if (event.getDamager() instanceof Projectile) {
+                            Projectile projectile = (Projectile) event.getDamager();
+                            if (projectile.getShooter() instanceof Player) {
+                                Player player = (Player) projectile.getShooter();
+                                if (player.equals(event.getEntity())) { // Don't display self damage
+                                    return;
+                                }
+                                if (event.getFinalDamage() <= 0) return; // Don't display 0 damage
                                 if (player.hasMetadata("skillsCritical")) {
                                     createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), true));
                                 } else {
