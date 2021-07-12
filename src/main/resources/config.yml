@@ -246,6 +246,7 @@ healing:
     enabled: true
     check-cancelled: true
     max-level: 97
+    exclude-negative-potions: false
 forging:
     enabled: true
     max-level: 97

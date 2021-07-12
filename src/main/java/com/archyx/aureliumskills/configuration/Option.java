@@ -141,6 +141,7 @@ public enum Option {
     HEALING_ENABLED("healing.enabled", OptionType.BOOLEAN),
     HEALING_MAX_LEVEL("healing.max-level", OptionType.INT),
     HEALING_CHECK_CANCELLED("healing.check-cancelled", OptionType.BOOLEAN),
+    HEALING_EXCLUDE_NEGATIVE_POTIONS("healing.exclude-negative-potions", OptionType.BOOLEAN),
     FORGING_ENABLED("forging.enabled", OptionType.BOOLEAN),
     FORGING_MAX_LEVEL("forging.max-level", OptionType.INT),
     FORGING_CHECK_CANCELLED("forging.check-cancelled", OptionType.BOOLEAN),

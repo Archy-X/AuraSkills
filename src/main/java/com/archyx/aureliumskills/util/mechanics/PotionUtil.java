@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionType;
 
 public class PotionUtil {
 
@@ -60,6 +61,7 @@ public class PotionUtil {
         return minutes + ":" + String.format("%02d", seconds % 60);
     }
 
+    @SuppressWarnings("deprecation")
     public static void applyEffect(Player player, PotionEffect effect) {
         if (!effect.getType().isInstant()) {
             if (XMaterial.isNewVersion()) {
@@ -78,6 +80,17 @@ public class PotionUtil {
                 }
             }
         }
+    }
+
+    public static boolean isNegativePotion(PotionType potionType) {
+        switch (potionType) {
+            case POISON:
+            case SLOWNESS:
+            case INSTANT_DAMAGE:
+            case WEAKNESS:
+                return true;
+        }
+        return false;
     }
 
 }
