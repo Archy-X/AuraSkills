@@ -7,10 +7,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,6 +29,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
 					if (ee.getDamager() instanceof Projectile) {
+						if (ee.getDamager() instanceof ThrownPotion) return;
 						EntityType type = e.getType();
 						Player p = e.getKiller();
 						Skill s = Skills.ARCHERY;
@@ -66,8 +64,9 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 		if (OptionL.isEnabled(Skills.ARCHERY)) {
 			if (event.isCancelled()) return;
 			if (!OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) return;
-			if (event.getDamager() instanceof  Projectile) {
+			if (event.getDamager() instanceof Projectile) {
 				Projectile projectile = (Projectile) event.getDamager();
+				if (projectile instanceof ThrownPotion) return;
 				if (projectile.getShooter() instanceof Player) {
 					Player player = (Player) projectile.getShooter();
 					if (event.getEntity() instanceof LivingEntity) {
