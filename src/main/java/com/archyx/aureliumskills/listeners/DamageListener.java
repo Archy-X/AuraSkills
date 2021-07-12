@@ -174,10 +174,14 @@ public class DamageListener implements Listener {
         if (entity instanceof Player) {
             player = (Player) entity;
         }
-        else if (entity instanceof Arrow) {
-            Arrow arrow = (Arrow) entity;
-            if (arrow.getShooter() instanceof Player) {
-                player = (Player) arrow.getShooter();
+        else if (entity instanceof Projectile) {
+            Projectile projectile = (Projectile) entity;
+            EntityType type = projectile.getType();
+            if (type == EntityType.ARROW || type == EntityType.SPECTRAL_ARROW || type.toString().equals("TRIDENT") ||
+                    type.toString().equals("TIPPED_ARROW")) {
+                if (projectile.getShooter() instanceof Player) {
+                    player = (Player) projectile.getShooter();
+                }
             }
         }
         return player;
