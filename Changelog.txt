@@ -1,5 +1,8 @@
 Version Beta 1.1.4
+  New Features:
+    - Add silent argument to xp commands to disable message (add true to the end of command)
   Bug Fixes:
+    - Fix stat menu skills lore not updating based on rewards
     - Fix damage holograms not displaying for thrown tridents and other projectiles
     - Fix damage holograms displaying projectile damage on self
     - Fix strength not working on thrown tridents and special arrows
