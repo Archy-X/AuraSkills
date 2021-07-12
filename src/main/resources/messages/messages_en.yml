@@ -568,10 +568,7 @@ menus:
   stats_menu:
     stats_menu_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    primary_skills_two: '&7Primary Skills: &f{skill_1}, {skill_2}'
-    primary_skills_three: '&7Primary Skills: &f{skill_1}, {skill_2}, {skill_3}'
-    secondary_skills_two: '&7Secondary Skills: &f{skill_1}, {skill_2}'
-    secondary_skills_three: '&7Secondary Skills: &f{skill_1}, {skill_2}, {skill_3}'
+    skills: '\n&7Skills: &f{skills}'
     your_level: '&7Your Level: {color}{level}'
     attack_damage: '&4+{value}% Attack Damage'
     hp: '&c+{value} {hp_unit}'
@@ -734,4 +731,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 20
+file_version: 21

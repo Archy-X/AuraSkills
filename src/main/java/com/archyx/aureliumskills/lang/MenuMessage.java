@@ -51,10 +51,7 @@ public enum MenuMessage implements MessageKey {
     //Stats Menu
     STATS_MENU_TITLE(3),
     PLAYER_STAT_ENTRY(3),
-    PRIMARY_SKILLS_TWO(3),
-    PRIMARY_SKILLS_THREE(3),
-    SECONDARY_SKILLS_TWO(3),
-    SECONDARY_SKILLS_THREE(3),
+    SKILLS(3),
     YOUR_LEVEL(3),
     ATTACK_DAMAGE(3),
     HP(3),

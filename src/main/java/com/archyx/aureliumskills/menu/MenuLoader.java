@@ -203,6 +203,9 @@ public class MenuLoader {
                     if (currentVersion == 1) {
                         convertToRewardsUpdate(config, imbConfig);
                     }
+                    if (currentVersion <= 2) {
+                        fixStatTemplate(config, imbConfig);
+                    }
                     ConfigurationSection configSection = imbConfig.getConfigurationSection("");
                     int keysAdded = 0;
                     if (configSection != null) {
@@ -231,6 +234,12 @@ public class MenuLoader {
             config.set(path, imbConfig.get(path));
             plugin.getLogger().warning("The value of " + path + " in menus.yml was reset to default for the rewards update, this is normal");
         }
+    }
+
+    private void fixStatTemplate(FileConfiguration config, FileConfiguration imbConfig) {
+        String path = "stats_menu.templates.stat.lore";
+        config.set(path, imbConfig.get(path));
+        plugin.getLogger().warning("The value of " + path + " in menus.yml was reset to default to fix a bug, this is normal");
     }
 
 }
