@@ -150,6 +150,10 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 					Locale locale = playerData.getLocale();
 					if (playerData.getMana() >= plugin.getManaAbilityManager().getManaCost(MAbility.REPLENISH, playerData)) {
 						plugin.getManaAbilityManager().activateAbility(player, MAbility.REPLENISH, (int) (getValue(MAbility.REPLENISH, playerData) * 20), new Replenish(plugin));
+						Block block = event.getBlock();
+						if (BlockUtil.isFullyGrown(block) && isHoldingHoe(player) && BlockUtil.isReplenishable(blockMat)) {
+							replenishReplant(block, blockMat);
+						}
 					}
 					else {
 						plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
