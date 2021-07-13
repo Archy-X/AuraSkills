@@ -133,6 +133,7 @@ public enum Option {
     ALCHEMY_MAX_LEVEL("alchemy.max-level", OptionType.INT),
     ALCHEMY_CHECK_CANCELLED("alchemy.check-cancelled", OptionType.BOOLEAN),
     ALCHEMY_GIVE_XP_ON_TAKEOUT("alchemy.give-xp-on-takeout", OptionType.BOOLEAN),
+    ALCHEMY_GIVE_XP_ON_POTION_COMBAT("alchemy.give-xp-on-potion-combat", OptionType.BOOLEAN),
     ENCHANTING_ENABLED("enchanting.enabled", OptionType.BOOLEAN),
     ENCHANTING_MAX_LEVEL("enchanting.max-level", OptionType.INT),
     ENCHANTING_CHECK_CANCELLED("enchanting.check-cancelled", OptionType.BOOLEAN),

@@ -29,26 +29,32 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
 					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
 					if (ee.getDamager() instanceof Projectile) {
-						if (ee.getDamager() instanceof ThrownPotion) return;
 						EntityType type = e.getType();
 						Player p = e.getKiller();
-						Skill s = Skills.ARCHERY;
+						Skill skill = Skills.ARCHERY;
+						if (ee.getDamager() instanceof ThrownPotion) {
+							if (OptionL.getBoolean(Option.ALCHEMY_GIVE_XP_ON_POTION_COMBAT)) { // Reward alchemy if potion used
+								skill = Skills.ALCHEMY;
+							} else {
+								return;
+							}
+						}
 						if (blockXpGainLocation(e.getLocation(), p)) return;
 						if (blockXpGainPlayer(p)) return;
 						if (e.equals(p)) return;
 						double spawnerMultiplier = OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER);
 						try {
 							if (e.hasMetadata("aureliumskills_spawner_mob")) {
-								plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, ArcherySource.valueOf(type.toString())));
+								plugin.getLeveler().addXp(p, skill, spawnerMultiplier * getXp(p, ArcherySource.valueOf(type.toString())));
 							} else {
-								plugin.getLeveler().addXp(p, s, getXp(p, ArcherySource.valueOf(type.toString())));
+								plugin.getLeveler().addXp(p, skill, getXp(p, ArcherySource.valueOf(type.toString())));
 							}
 						} catch (IllegalArgumentException exception) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
 								if (e.hasMetadata("aureliumskills_spawner_mob")) {
-									plugin.getLeveler().addXp(p, s, spawnerMultiplier * getXp(p, ArcherySource.ZOMBIFIED_PIGLIN));
+									plugin.getLeveler().addXp(p, skill, spawnerMultiplier * getXp(p, ArcherySource.ZOMBIFIED_PIGLIN));
 								} else {
-									plugin.getLeveler().addXp(p, s, getXp(p, ArcherySource.ZOMBIFIED_PIGLIN));
+									plugin.getLeveler().addXp(p, skill, getXp(p, ArcherySource.ZOMBIFIED_PIGLIN));
 								}
 							}
 						}
@@ -66,7 +72,14 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 			if (!OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) return;
 			if (event.getDamager() instanceof Projectile) {
 				Projectile projectile = (Projectile) event.getDamager();
-				if (projectile instanceof ThrownPotion) return;
+				Skill skill = Skills.ARCHERY;
+				if (projectile instanceof ThrownPotion) {
+					if (OptionL.getBoolean(Option.ALCHEMY_GIVE_XP_ON_POTION_COMBAT)) { // Reward alchemy if potion used
+						skill = Skills.ALCHEMY;
+					} else {
+						return;
+					}
+				}
 				if (projectile.getShooter() instanceof Player) {
 					Player player = (Player) projectile.getShooter();
 					if (event.getEntity() instanceof LivingEntity) {
@@ -83,10 +96,10 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 							damage *= spawnerMultiplier;
 						}
 						try {
-							plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, ArcherySource.valueOf(type.toString())));
+							plugin.getLeveler().addXp(player, skill, damage * getXp(player, ArcherySource.valueOf(type.toString())));
 						} catch (IllegalArgumentException e) {
 							if (type.toString().equals("PIG_ZOMBIE")) {
-								plugin.getLeveler().addXp(player, Skills.ARCHERY, damage * getXp(player, ArcherySource.ZOMBIFIED_PIGLIN));
+								plugin.getLeveler().addXp(player, skill, damage * getXp(player, ArcherySource.ZOMBIFIED_PIGLIN));
 							}
 						}
 					}
