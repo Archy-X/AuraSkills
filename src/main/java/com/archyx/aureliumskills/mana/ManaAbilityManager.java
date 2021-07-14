@@ -50,7 +50,14 @@ public class ManaAbilityManager implements Listener {
 
     //Sets cooldown
     public void setPlayerCooldown(UUID id, MAbility ability, int cooldown) {
-        cooldowns.get(id).put(ability, cooldown);
+        Map<MAbility, Integer> abilityCooldowns = cooldowns.get(id);
+        if (abilityCooldowns != null) {
+            abilityCooldowns.put(ability, cooldown);
+        } else {
+            abilityCooldowns = new HashMap<>();
+            abilityCooldowns.put(ability, cooldown);
+            cooldowns.put(id, abilityCooldowns);
+        }
     }
 
     public void setPlayerCooldown(Player player, MAbility mAbility) {
@@ -65,63 +72,70 @@ public class ManaAbilityManager implements Listener {
 
     //Gets cooldown
     public int getPlayerCooldown(UUID id, MAbility ability) {
-        if (!cooldowns.containsKey(id)) {
+        Map<MAbility, Integer> abilityCooldowns = cooldowns.get(id);
+        if (abilityCooldowns == null) {
+            cooldowns.put(id, new HashMap<>());
             return 0;
         }
-        if (cooldowns.get(id).containsKey(ability)) {
-            return cooldowns.get(id).get(ability);
-        }
-        else {
-            cooldowns.get(id).put(ability, 0);
+        Integer cooldown = abilityCooldowns.get(ability);
+        if (cooldown != null) {
+            return cooldown;
+        } else {
+            abilityCooldowns.put(ability, 0);
             return 0;
         }
     }
 
     //Gets if ability is ready
     public boolean isReady(UUID id, MAbility ability) {
-        if (!ready.containsKey(id)) {
+        Map<MAbility, Boolean> readyMap = ready.get(id);
+        if (readyMap == null) {
+            ready.put(id, new HashMap<>());
             return false;
         }
-        if (ready.get(id).containsKey(ability)) {
-            return ready.get(id).get(ability);
-        }
-        else {
-            ready.get(id).put(ability, false);
+        Boolean readyValue = readyMap.get(ability);
+        if (readyValue != null) {
+            return readyValue;
+        } else {
+            readyMap.put(ability, false);
             return false;
         }
     }
 
     //Gets the error timer
     public int getErrorTimer(UUID id, MAbility ability) {
-        if (!errorTimer.containsKey(id)) {
+        Map<MAbility, Integer> errorTimers = errorTimer.get(id);
+        if (errorTimers == null) {
+            errorTimer.put(id, new HashMap<>());
             return 0;
         }
-        if (errorTimer.get(id).containsKey(ability)) {
-            return errorTimer.get(id).get(ability);
-        }
-        else {
-            errorTimer.get(id).put(ability, 2);
+        Integer timer = errorTimers.get(ability);
+        if (timer != null) {
+            return timer;
+        } else {
+            errorTimers.put(ability, 2);
             return 0;
         }
     }
 
     //Sets error timer
     public void setErrorTimer(UUID id, MAbility ability, int time) {
-        if (!errorTimer.containsKey(id)) {
-            return;
-        }
-        errorTimer.get(id).put(ability, time);
+        Map<MAbility, Integer> errorTimers = errorTimer.computeIfAbsent(id, k -> new HashMap<>());
+        errorTimers.put(ability, time);
     }
 
     //Gets if ability is ready
     public boolean isActivated(UUID id, MAbility ability) {
-        if (!activated.containsKey(id)) {
+        Map<MAbility, Boolean> activatedMap = activated.get(id);
+        if (activatedMap == null) {
+            activated.put(id, new HashMap<>());
             return false;
         }
-        if (activated.get(id).containsKey(ability)) {
-            return activated.get(id).get(ability);
+        Boolean activatedValue = activatedMap.get(ability);
+        if (activatedValue != null) {
+            return activatedValue;
         } else {
-            activated.get(id).put(ability, false);
+            activatedMap.put(ability, false);
             return false;
         }
     }
@@ -131,8 +145,8 @@ public class ManaAbilityManager implements Listener {
         ManaAbilityActivateEvent event = new ManaAbilityActivateEvent(player, ability, durationTicks);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            activated.get(player.getUniqueId()).put(ability, true);
-            activeAbilities.get(player.getUniqueId()).add(manaAbility);
+            activated.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>()).put(ability, true);
+            activeAbilities.computeIfAbsent(player.getUniqueId(), k -> new LinkedList<>()).add(manaAbility);
             manaAbility.activate(player);
             int duration = event.getDuration();
             if (duration != 0) {
@@ -141,26 +155,24 @@ public class ManaAbilityManager implements Listener {
                     @Override
                     public void run() {
                         manaAbility.onStop(player);
-                        activeAbilities.get(player.getUniqueId()).remove(manaAbility);
-                        activated.get(player.getUniqueId()).put(ability, false);
-                        ready.get(player.getUniqueId()).put(ability, false);
+                        activeAbilities.computeIfAbsent(player.getUniqueId(), k -> new LinkedList<>()).remove(manaAbility);
+                        activated.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>()).put(ability, false);
+                        ready.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>()).put(ability, false);
                     }
                 }.runTaskLater(plugin, duration);
             } else {
                 manaAbility.onStop(player);
-                activeAbilities.get(player.getUniqueId()).remove(manaAbility);
-                activated.get(player.getUniqueId()).put(ability, false);
-                ready.get(player.getUniqueId()).put(ability, false);
+                activeAbilities.computeIfAbsent(player.getUniqueId(), k -> new LinkedList<>()).remove(manaAbility);
+                activated.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>()).put(ability, false);
+                ready.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>()).put(ability, false);
             }
         }
     }
 
     //Sets ability ready status
     public void setReady(UUID id, MAbility ability, boolean isReady) {
-        if (!ready.containsKey(id)) {
-            return;
-        }
-        ready.get(id).put(ability, isReady);
+        Map<MAbility, Boolean> readyMap = ready.computeIfAbsent(id, k -> new HashMap<>());
+        readyMap.put(ability, isReady);
     }
 
     private void startUpdating() {
@@ -170,8 +182,9 @@ public class ManaAbilityManager implements Listener {
             public void run() {
                 for (UUID id : activeAbilities.keySet()) {
                     for (ManaAbility ab : activeAbilities.get(id)) {
-                        if (Bukkit.getPlayer(id) != null) {
-                            ab.update(Bukkit.getPlayer(id));
+                        Player player = Bukkit.getPlayer(id);
+                        if (player != null) {
+                            ab.update(player);
                         }
                     }
                 }
@@ -184,10 +197,16 @@ public class ManaAbilityManager implements Listener {
             @Override
             public void run() {
                 for (UUID id : cooldowns.keySet()) {
-                    for (MAbility ab : cooldowns.get(id).keySet()) {
-                        if (cooldowns.get(id).get(ab) > 0) {
-                            cooldowns.get(id).put(ab, cooldowns.get(id).get(ab) - 1);
+                    Map<MAbility, Integer>  abilityCooldowns = cooldowns.get(id);
+                    if (abilityCooldowns != null) {
+                        for (MAbility ab : abilityCooldowns.keySet()) {
+                            int cooldown = abilityCooldowns.get(ab);
+                            if (cooldown > 0) {
+                                abilityCooldowns.put(ab, cooldown - 1);
+                            }
                         }
+                    } else {
+                        cooldowns.put(id, new HashMap<>());
                     }
                 }
             }
@@ -196,10 +215,16 @@ public class ManaAbilityManager implements Listener {
             @Override
             public void run() {
                 for (UUID id : errorTimer.keySet()) {
-                    for (MAbility ab : errorTimer.get(id).keySet()) {
-                        if (errorTimer.get(id).get(ab) > 0) {
-                            errorTimer.get(id).put(ab, errorTimer.get(id).get(ab) - 1);
+                    Map<MAbility, Integer> errorTimers = errorTimer.get(id);
+                    if (errorTimers != null) {
+                        for (MAbility ab : errorTimers.keySet()) {
+                            int timer = errorTimers.get(ab);
+                            if (timer > 0) {
+                                errorTimers.put(ab, timer - 1);
+                            }
                         }
+                    } else {
+                        errorTimer.put(id, new HashMap<>());
                     }
                 }
             }
