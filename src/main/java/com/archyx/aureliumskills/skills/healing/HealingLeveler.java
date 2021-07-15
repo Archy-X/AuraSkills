@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.leveler.Leveler;
 import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.mechanics.PotionUtil;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -46,6 +47,9 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 				if (event.getItem().getItemMeta() instanceof PotionMeta) {
 					PotionMeta meta = (PotionMeta) event.getItem().getItemMeta();
 					PotionData data = meta.getBasePotionData();
+					if (OptionL.getBoolean(Option.HEALING_EXCLUDE_NEGATIVE_POTIONS) && PotionUtil.isNegativePotion(data.getType())) {
+						return;
+					}
 					if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 							&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 						if (data.isExtended()) {
@@ -100,6 +104,9 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 						Player p = (Player) event.getEntity().getShooter();
 						PotionMeta meta = (PotionMeta) event.getPotion().getItem().getItemMeta();
 						PotionData data = meta.getBasePotionData();
+						if (OptionL.getBoolean(Option.HEALING_EXCLUDE_NEGATIVE_POTIONS) && PotionUtil.isNegativePotion(data.getType())) {
+							return;
+						}
 						Skill s = Skills.HEALING;
 						if (blockXpGain(p)) return;
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
@@ -136,6 +143,10 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 		Player player = (Player) event.getEntity().getShooter();
 		PotionMeta meta = (PotionMeta) event.getEntity().getItem().getItemMeta();
 		PotionData data = meta.getBasePotionData();
+
+		if (OptionL.getBoolean(Option.HEALING_EXCLUDE_NEGATIVE_POTIONS) && PotionUtil.isNegativePotion(data.getType())) {
+			return;
+		}
 
 		Skill skill = Skills.HEALING;
 		if (blockXpGain(player)) return;

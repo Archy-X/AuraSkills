@@ -1,3 +1,21 @@
+Version Beta 1.1.4
+  New Features:
+    - Add silent argument to xp commands to disable message (add true to the end of command)
+    - Add healing.exclude-negative-potions option to disable potions that give negative effects from giving Healing XP
+    - Add alchemy.give-xp-on-potion-combat option to give Alchemy XP when using splash/lingering potions to kill/damage mobs (follows archery options and xp source values)
+  Changes:
+    - Splash/lingering potions will no longer give Archery XP
+  Bug Fixes:
+    - Fix stat menu skills lore not updating based on rewards
+    - Fix damage holograms not displaying for thrown tridents and other projectiles
+    - Fix damage holograms displaying projectile damage on self
+    - Fix strength not working on thrown tridents and special arrows
+    - Fix item modifiers in offhand not being removed sometimes
+    - Fix incorrect French stat_level message
+    - Fix negative item modifiers not displaying properly
+    - Fix skill-level-requirements-multiplier not rounding properly
+    - Fix Replenish not replanting the first crop broken
+
 Version Beta 1.1.3
   Changes:
     - Update es, fr, pl, ru, and zh-CN messages

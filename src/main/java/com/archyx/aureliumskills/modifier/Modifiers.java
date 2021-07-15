@@ -131,7 +131,13 @@ public class Modifiers {
             else {
                 lore = new LinkedList<>();
             }
-            lore.add(0, TextUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE"), locale),
+            CommandMessage message;
+            if (value >= 0) {
+                message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE");
+            } else {
+                message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
+            }
+            lore.add(0, TextUtil.replace(Lang.getMessage(message, locale),
                     "{stat}", stat.getDisplayName(locale),
                     "{value}", NumberUtil.format1(value),
                     "{color}", stat.getColor(locale)));

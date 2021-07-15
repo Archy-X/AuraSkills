@@ -235,6 +235,7 @@ alchemy:
     max-level: 97
     check-cancelled: true
     give-xp-on-takeout: false
+    give-xp-on-potion-combat: false
 enchanting:
     enabled: true
     max-level: 97
@@ -246,6 +247,7 @@ healing:
     enabled: true
     check-cancelled: true
     max-level: 97
+    exclude-negative-potions: false
 forging:
     enabled: true
     max-level: 97

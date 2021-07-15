@@ -52,7 +52,7 @@ public class Leveler {
 		levelRequirements.clear();
 		int highestMaxLevel = plugin.getOptionLoader().getHighestMaxLevel();
 		for (int i = 0; i < highestMaxLevel - 1; i++) {
-			levelRequirements.add((int) OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100);
+			levelRequirements.add((int) Math.round(OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100));
 		}
 	}
 

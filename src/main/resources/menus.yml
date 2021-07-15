@@ -95,9 +95,7 @@ stats_menu:
       display_name: '{color}{stat}'
       lore:
         - '{stat_desc}'
-        - ' '
-        - '{primary_skills_two}{primary_skills_three}'
-        - '{secondary_skills_two}{secondary_skills_three}'
+        - '{skills}'
         - ' '
         - '{your_level}'
         - ' '
@@ -206,4 +204,4 @@ level_progression_menu:
         - '{locked}'
 
 # DO NOT TOUCH
-file_version: 2
+file_version: 3

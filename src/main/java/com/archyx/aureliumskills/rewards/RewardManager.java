@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.rewards.parser.RewardParser;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.misc.DataUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,10 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class RewardManager {
 
@@ -155,6 +153,23 @@ public class RewardManager {
             }
         }
         throw new IllegalArgumentException("Unrecognized reward type: " + type);
+    }
+
+    // Gets all the skills a stat is leveled by
+    public List<Skill> getSkillsLeveledBy(Stat stat) {
+        List<Skill> skillsLeveledBy = new ArrayList<>();
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+            RewardTable table = rewardTables.get(skill);
+            if (table != null) {
+                for (Stat statLeveled : table.getStatsLeveled()) {
+                    if (statLeveled.equals(stat)) {
+                        skillsLeveledBy.add(skill);
+                        break;
+                    }
+                }
+            }
+        }
+        return skillsLeveledBy;
     }
 
 }

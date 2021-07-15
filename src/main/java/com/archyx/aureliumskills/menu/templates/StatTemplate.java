@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menu.MenuLoader;
-import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.item.ItemUtils;
@@ -22,7 +22,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 public class StatTemplate extends ConfigurableTemplate {
 
@@ -30,7 +29,7 @@ public class StatTemplate extends ConfigurableTemplate {
     private final Map<Stat, ItemStack> baseItems = new HashMap<>();
 
     public StatTemplate(AureliumSkills plugin) {
-        super(plugin, TemplateType.STAT, new String[] {"stat_desc", "primary_skills_two", "primary_skills_three", "secondary_skills_two", "secondary_skills_three", "your_level", "descriptors"});
+        super(plugin, TemplateType.STAT, new String[] {"stat_desc", "skills", "your_level", "descriptors"});
     }
 
     @Override
@@ -86,18 +85,6 @@ public class StatTemplate extends ConfigurableTemplate {
         }
         item = item.clone();
         ItemMeta meta = item.getItemMeta();
-        List<Supplier<Skills>> primarySkills = new ArrayList<>();
-        for (Supplier<Skills> primarySkill : stat.getPrimarySkills()) {
-            if (OptionL.isEnabled(primarySkill.get())) {
-                primarySkills.add(primarySkill);
-            }
-        }
-        List<Supplier<Skills>> secondarySkills = new ArrayList<>();
-        for (Supplier<Skills> secondarySkill : stat.getSecondarySkills()) {
-            if (OptionL.isEnabled(secondarySkill.get())) {
-                secondarySkills.add(secondarySkill);
-            }
-        }
         if (meta != null) {
             meta.setDisplayName(applyPlaceholders(TextUtil.replace(displayName,"{color}", stat.getColor(locale),"{stat}", stat.getDisplayName(locale)), player));
             List<String> builtLore = new ArrayList<>();
@@ -109,58 +96,20 @@ public class StatTemplate extends ConfigurableTemplate {
                         case "stat_desc":
                             line = TextUtil.replace(line,"{stat_desc}", stat.getDescription(locale));
                             break;
-                        case "primary_skills_two":
-                            if (primarySkills.size() == 2) {
-                                line = TextUtil.replace(line,"{primary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
-                                        ,"{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
-                                        ,"{skill_2}", primarySkills.get(1).get().getDisplayName(locale)));
+                        case "skills":
+                            List<Skill> skillsLeveledBy = plugin.getRewardManager().getSkillsLeveledBy(stat);
+                            StringBuilder skillList = new StringBuilder();
+                            for (Skill skill : skillsLeveledBy) {
+                                skillList.append(skill.getDisplayName(locale)).append(", ");
                             }
-                            else if (primarySkills.size() == 1) {
-                                line = TextUtil.replace(line, "{primary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_TWO, locale)
-                                        , "{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
-                                        , ", {skill_2}", ""
-                                        , "{skill_2}", ""));
+                            if (skillList.length() > 1) {
+                                skillList.delete(skillList.length() - 2, skillList.length());
                             }
-                            else {
-                                line = TextUtil.replace(line,"{primary_skills_two}", "");
-                            }
-                            break;
-                        case "primary_skills_three":
-                            if (primarySkills.size() == 3) {
-                                line = TextUtil.replace(line,"{primary_skills_three}", TextUtil.replace(Lang.getMessage(MenuMessage.PRIMARY_SKILLS_THREE, locale)
-                                        ,"{skill_1}", primarySkills.get(0).get().getDisplayName(locale)
-                                        ,"{skill_2}", primarySkills.get(1).get().getDisplayName(locale)
-                                        ,"{skill_3}", primarySkills.get(2).get().getDisplayName(locale)));
-                            }
-                            else {
-                                line = TextUtil.replace(line,"{primary_skills_three}", "");
-                            }
-                            break;
-                        case "secondary_skills_two":
-                            if (secondarySkills.size() == 2) {
-                                line = TextUtil.replace(line,"{secondary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
-                                        ,"{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
-                                        ,"{skill_2}", secondarySkills.get(1).get().getDisplayName(locale)));
-                            }
-                            else if (secondarySkills.size() == 1) {
-                                line = TextUtil.replace(line, "{secondary_skills_two}", TextUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_TWO, locale)
-                                        , "{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
-                                        , ", {skill_2}", ""
-                                        , "{skill_2}", ""));
-                            }
-                            else {
-                                line = TextUtil.replace(line,"{secondary_skills_two}", "");
-                            }
-                            break;
-                        case "secondary_skills_three":
-                            if (secondarySkills.size() == 3) {
-                                line = TextUtil.replace(line,"{secondary_skills_three}", TextUtil.replace(Lang.getMessage(MenuMessage.SECONDARY_SKILLS_THREE, locale)
-                                        ,"{skill_1}", secondarySkills.get(0).get().getDisplayName(locale)
-                                        ,"{skill_2}", secondarySkills.get(1).get().getDisplayName(locale)
-                                        ,"{skill_3}", secondarySkills.get(2).get().getDisplayName(locale)));
-                            }
-                            else {
-                                line = TextUtil.replace(line,"{secondary_skills_three}", "");
+                            if (skillsLeveledBy.size() > 0) {
+                                line = TextUtil.replace(line, "{skills}", TextUtil.replace(Lang.getMessage(MenuMessage.SKILLS, locale),
+                                        "{skills}", skillList.toString()));
+                            } else {
+                                line = TextUtil.replace(line, "{skills}", "");
                             }
                             break;
                         case "your_level":
