@@ -15,6 +15,7 @@ import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -172,6 +173,10 @@ public abstract class LootHandler extends AbilityProvider {
             }
             player.sendMessage(finalMessage);
         }
+    }
+
+    protected double getCommonChance(LootPool pool, PlayerData playerData) {
+        return pool.getBaseChance() + pool.getChancePerLuck() * playerData.getStatLevel(Stats.LUCK);
     }
 
 }

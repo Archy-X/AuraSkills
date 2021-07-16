@@ -64,7 +64,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
         for (LootPool pool : table.getPools()) {
             // Calculate chance for pool
             Source source;
-            double chance = pool.getBaseChance();
+            double chance = getCommonChance(pool, playerData);
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
                 chance += (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
                 source = FishingSource.RARE;

@@ -23,7 +23,7 @@ public class ForagingLootHandler extends BlockLootHandler {
 
     @Override
     public double getChance(LootPool pool, PlayerData playerData) {
-        return pool.getBaseChance();
+        return getCommonChance(pool, playerData);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ExcavationLootHandler extends BlockLootHandler {
 
     @Override
     public double getChance(LootPool pool, PlayerData playerData) {
-        double chance = pool.getBaseChance();
+        double chance = getCommonChance(pool, playerData);
         if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.METAL_DETECTOR)) {
             chance += (getValue(Ability.METAL_DETECTOR, playerData) / 100);
         } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.LUCKY_SPADES)) {

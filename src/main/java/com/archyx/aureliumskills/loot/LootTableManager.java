@@ -90,6 +90,7 @@ public class LootTableManager {
 			if (currentPool == null) continue;
 
 			double baseChance = currentPool.getDouble("base_chance", 0.01);
+			double chancePerLuck = currentPool.getDouble("chance_per_luck", 0.0);
 			int selectionPriority = currentPool.getInt("selection_priority", 1);
 			boolean overrideVanillaLoot = currentPool.getBoolean("override_vanilla_loot", false);
 
@@ -119,7 +120,7 @@ public class LootTableManager {
 				index++;
 			}
 			// Create pool
-			LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority, overrideVanillaLoot);
+			LootPool pool = new LootPool(poolName, lootList, baseChance, chancePerLuck, selectionPriority, overrideVanillaLoot);
 			pools.add(pool);
 		}
 		// Sort pools by selection priority
