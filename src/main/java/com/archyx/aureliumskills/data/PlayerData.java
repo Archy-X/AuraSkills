@@ -165,6 +165,10 @@ public class PlayerData {
         return OptionL.getDouble(Option.BASE_MANA) + (OptionL.getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM) * getStatLevel(Stats.WISDOM));
     }
 
+    public double getManaRegen() {
+        return OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN) + getStatLevel(Stats.REGENERATION) * OptionL.getDouble(Option.REGENERATION_MANA_MODIFIER);
+    }
+
     public void setMana(double mana) {
         this.mana = mana;
     }
