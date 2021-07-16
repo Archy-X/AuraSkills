@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.loot.parser.CommandLootParser;
 import com.archyx.aureliumskills.loot.parser.ItemLootParser;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.misc.DataUtil;
+import com.archyx.aureliumskills.util.misc.Parser;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LootTableManager {
+public class LootTableManager extends Parser {
 
 	private final Map<Skill, LootTable> lootTables;
 	private final AureliumSkills plugin;
@@ -104,6 +106,10 @@ public class LootTableManager {
 				try {
 					// Item loot
 					if (type.equalsIgnoreCase("item")) {
+						if (getBooleanOrDefault(lootEntryMap, "ignore_legacy", false) && XMaterial.getVersion() <= 12) {
+							index++;
+							continue;
+						}
 						loot = new ItemLootParser(plugin).parse(lootEntryMap);
 					}
 					// Command loot
