@@ -125,7 +125,7 @@ public class ItemLootParser extends LootParser {
             if (map.containsKey("potion_data")) {
                 Map<?, ?> potionDataMap = getMap(map, "potion_data");
                 PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
-                PotionType potionType = PotionType.valueOf(getString(potionDataMap, "type"));
+                PotionType potionType = PotionType.valueOf(getString(potionDataMap, "type").toUpperCase(Locale.ROOT));
                 boolean extended = false;
                 if (potionDataMap.containsKey("extended")) {
                     extended = getBoolean(potionDataMap, "extended");

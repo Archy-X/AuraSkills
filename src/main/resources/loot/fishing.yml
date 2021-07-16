@@ -63,3 +63,49 @@ pools:
         material: slime_block
         weight: 7
         amount: 1-2
+      - type: item
+        material: tipped_arrow
+        weight: 1
+        amount: 2-5
+        potion_data:
+          type: weakness
+      - type: item
+        material: tipped_arrow
+        weight: 1
+        amount: 2-5
+        potion_data:
+          type: slowness
+      - type: item
+        material: tipped_arrow
+        weight: 1
+        amount: 2-5
+        potion_data:
+          type: turtle_master
+      - type: item
+        material: tipped_arrow
+        weight: 1
+        amount: 2-5
+        potion_data:
+          type: water_breathing
+      - type: item
+        material: tipped_arrow
+        weight: 1
+        amount: 2-5
+        potion_data:
+          type: poison
+      - type: item
+        material: tipped_arrow
+        weight: 1
+        amount: 2-5
+        potion_data:
+          type: instant_damage
+      - type: item
+        material: tipped_arrow
+        weight: 1
+        amount: 2-5
+        potion_data:
+          type: regen
+      - type: item
+        material: spectral_arrow
+        weight: 2
+        amount: 2-5
