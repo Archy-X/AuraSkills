@@ -58,6 +58,19 @@ public class AureliumAPI {
         }
     }
 
+    /**
+     * Gets the amount of mana a player regenerates every second
+     * @return the mana regeneration per second of a player
+     */
+    public static double getManaRegen(Player player) {
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            return playerData.getManaRegen();
+        } else {
+            return OptionL.getDouble(Option.REGENERATION_BASE_MANA_REGEN);
+        }
+    }
+
     @Deprecated
     public static double getMaxMana(UUID playerId) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
