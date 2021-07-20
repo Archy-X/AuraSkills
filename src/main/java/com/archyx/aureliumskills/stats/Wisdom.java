@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
@@ -20,7 +21,7 @@ public class Wisdom implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerExpChange(PlayerExpChangeEvent event) {
 		Player player = event.getPlayer();
 		//Check for disabled world
