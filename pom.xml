@@ -51,6 +51,10 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>com.archyx.aureliumskills.bstats</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>com.archyx.slate</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.slate</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -183,6 +187,12 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>16.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Archy-X</groupId>
+            <artifactId>Slate</artifactId>
+            <version>69a430d9d7</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
