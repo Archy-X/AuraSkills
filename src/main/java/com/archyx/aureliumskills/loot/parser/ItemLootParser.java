@@ -161,7 +161,13 @@ public class ItemLootParser extends LootParser {
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 item.setItemMeta(meta);
             }
-            // TODO Item flags
+            if (map.containsKey("flags")) {
+                List<String> flags = getStringList(map, "flags");
+                for (String flagName : flags) {
+                    ItemFlag itemFlag = ItemFlag.valueOf(flagName.toUpperCase(Locale.ROOT));
+                    meta.addItemFlags(itemFlag);
+                }
+            }
             // Custom NBT
             if (map.containsKey("nbt")) {
                 Map<?, ?> nbtMap = getMap(map, "nbt");
