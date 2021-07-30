@@ -110,8 +110,12 @@ public class SharpHook extends ManaAbilityProvider {
     private void activateSharpHook(Player player, PlayerData playerData, LivingEntity caught) {
         if (hasEnoughMana(player)) {
             double damage = plugin.getManaAbilityManager().getValue(MAbility.SHARP_HOOK, playerData);
+            double healthBefore = caught.getHealth();
             caught.damage(damage, player);
-            activate(player);
+            double healthAfter = caught.getHealth();
+            if (healthBefore != healthAfter) { // Only activate if the entity got damaged
+                activate(player);
+            }
         }
     }
 
