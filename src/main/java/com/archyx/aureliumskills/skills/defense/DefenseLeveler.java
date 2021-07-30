@@ -33,25 +33,25 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 			}
 			if (event.getEntity() instanceof Player) {
 				if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
-					Player p = (Player) event.getEntity();
-					if (blockXpGain(p)) return;
+					Player player = (Player) event.getEntity();
+					if (blockXpGain(player)) return;
 					if (!OptionL.getBoolean(Option.DEFENSE_ALLOW_SHIELD_BLOCKING)) { // Check for shield blocking
-						if (p.isBlocking()) {
+						if (player.isBlocking()) {
 							return;
 						}
 					}
-					Skill s = Skills.DEFENSE;
-					double d = event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE);
-					if (event.getFinalDamage() < p.getHealth()) {
+					Skill skill = Skills.DEFENSE;
+					double originalDamage = event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE);
+					if (event.getFinalDamage() < player.getHealth()) {
 						//Player Damage
 						if (event.getDamager() instanceof Player) {
-							if (event.getDamager().equals(p)) return;
-							if (d * getXp(DefenseSource.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
-								if (d * getXp(DefenseSource.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									plugin.getLeveler().addXp(p, s, d * getXp(p, DefenseSource.PLAYER_DAMAGE));
+							if (event.getDamager().equals(player)) return;
+							if (originalDamage * getXp(DefenseSource.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (originalDamage * getXp(DefenseSource.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
+									plugin.getLeveler().addXp(player, skill, originalDamage * getXp(player, DefenseSource.PLAYER_DAMAGE));
 								}
 							} else {
-								plugin.getLeveler().addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
+								plugin.getLeveler().addXp(player, skill, getXp(player, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 						//Mob damage
@@ -60,15 +60,15 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 							if (event.getDamager() instanceof Projectile) {
 								Projectile projectile = (Projectile) event.getDamager();
 								if (projectile.getShooter() instanceof Player) {
-									if (projectile.getShooter().equals(p)) return;
+									if (projectile.getShooter().equals(player)) return;
 								}
 							}
-							if (d * getXp(DefenseSource.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
-								if (d * getXp(DefenseSource.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									plugin.getLeveler().addXp(p, s, d * getXp(p, DefenseSource.MOB_DAMAGE));
+							if (originalDamage * getXp(DefenseSource.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (originalDamage * getXp(DefenseSource.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
+									plugin.getLeveler().addXp(player, skill, originalDamage * getXp(player, DefenseSource.MOB_DAMAGE));
 								}
 							} else {
-								plugin.getLeveler().addXp(p, s, getXp(p, OptionL.getDouble(Option.DEFENSE_MAX)));
+								plugin.getLeveler().addXp(player, skill, getXp(player, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 					}
