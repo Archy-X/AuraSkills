@@ -130,7 +130,7 @@ public class PlayerData {
         // Reloads stats
         if (reload) {
             if (modifier.getStat() == Stats.HEALTH) {
-                new Health(plugin).reload(player);
+                plugin.getHealth().reload(player);
             } else if (modifier.getStat() == Stats.LUCK) {
                 new Luck(plugin).reload(player);
             }
