@@ -255,26 +255,26 @@ forging:
 
 # Stat Options
 health:
-    modifier: 0.5
+    modifier: 0.4
     health-scaling: true
     hearts:
         '10': 20
-        '11': 24
-        '12': 29
-        '13': 37
-        '14': 50
-        '15': 71
-        '16': 105
-        '17': 160
-        '18': 249
-        '19': 393
-        '20': 626
+        '11': 22
+        '12': 26
+        '13': 32
+        '14': 40
+        '15': 52
+        '16': 66
+        '17': 84
+        '18': 104
+        '19': 126
+        '20': 150
     hp-indicator-scaling: 5
     update-delay: 0
     force-base-health: false
 
 strength:
-    modifier: 0.63
+    modifier: 0.5
     hand-damage: true
     bow-damage: true
     display-damage-with-health-scaling: true

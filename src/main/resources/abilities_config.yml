@@ -260,7 +260,7 @@ abilities:
     crit_damage:
       enabled: true
       base: 5.0
-      per_level: 4.0
+      per_level: 3.0
       unlock: 2
       level_up: 5
       max_level: 0
@@ -281,7 +281,7 @@ abilities:
     first_strike:
       enabled: true
       base: 20.0
-      per_level: 10.0
+      per_level: 8.0
       unlock: 5
       level_up: 5
       max_level: 0
@@ -289,7 +289,7 @@ abilities:
     bleed:
       enabled: true
       base: 3.0
-      per_level: 4.0
+      per_level: 3.0
       base_2: 0.5
       per_level_2: 0.5
       unlock: 6
