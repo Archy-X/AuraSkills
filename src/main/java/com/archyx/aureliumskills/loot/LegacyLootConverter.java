@@ -88,7 +88,7 @@ public class LegacyLootConverter {
                     String[] splitPair = split[i].split(":", 2);
                     if (splitPair.length == 2) {
                         String key = splitPair[0];
-                        String value = splitPair[1].replace("_", " ").replace("&", "§");
+                        String value = splitPair[1].replace("_", " ");
                         String originalValue = splitPair[1];
                         switch (key) {
                             case "name":
