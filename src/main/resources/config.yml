@@ -290,7 +290,7 @@ regeneration:
     custom-regen-options:
         saturated-delay: 20
         hunger-delay: 60
-    mana-modifier: 0.25
+    mana-modifier: 0.1
     base-mana-regen: 1
 luck:
     modifier: 0.1
