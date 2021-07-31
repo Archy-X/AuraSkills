@@ -10,7 +10,6 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.rewards.RewardTable;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.stats.Health;
 import com.archyx.aureliumskills.stats.Luck;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
@@ -149,7 +148,7 @@ public class PlayerData {
         // Reloads stats
         if (reload) {
             if (modifier.getStat() == Stats.HEALTH) {
-                new Health(plugin).reload(player);
+                plugin.getHealth().reload(player);
             } else if (modifier.getStat() == Stats.LUCK) {
                 new Luck(plugin).reload(player);
             }
