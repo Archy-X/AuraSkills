@@ -139,8 +139,12 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     if (bleedTicks > 0) {
                         // Apply bleed
                         double damage = plugin.getAbilityManager().getValue2(Ability.BLEED, playerData.getAbilityLevel(Ability.BLEED));
+                        double healthBefore = entity.getHealth();
                         entity.damage(damage);
-                        displayBleedParticles(entity);
+                        double healthAfter = entity.getHealth();
+                        if (healthAfter != healthBefore) { // Only display particles if damage was actually done
+                            displayBleedParticles(entity);
+                        }
                         // Decrement bleed ticks
                         if (bleedTicks != 1) {
                             entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, bleedTicks - 1));
