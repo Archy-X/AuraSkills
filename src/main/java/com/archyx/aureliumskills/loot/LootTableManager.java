@@ -91,7 +91,7 @@ public class LootTableManager extends Parser {
 			ConfigurationSection currentPool = poolsSection.getConfigurationSection(poolName);
 			if (currentPool == null) continue;
 
-			double baseChance = currentPool.getDouble("base_chance", 0.01);
+			double baseChance = currentPool.getDouble("base_chance", 1.0) / 100; // Converts from percent chance to decimal
 			double chancePerLuck = currentPool.getDouble("chance_per_luck", 0.0);
 			int selectionPriority = currentPool.getInt("selection_priority", 1);
 			boolean overrideVanillaLoot = currentPool.getBoolean("override_vanilla_loot", false);
