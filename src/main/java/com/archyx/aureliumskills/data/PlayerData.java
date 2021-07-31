@@ -52,6 +52,7 @@ public class PlayerData {
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
+        this.mana = OptionL.getDouble(Option.BASE_MANA);
     }
 
     public Player getPlayer() {
