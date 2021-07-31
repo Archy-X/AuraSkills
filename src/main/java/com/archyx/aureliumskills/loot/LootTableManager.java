@@ -101,9 +101,9 @@ public class LootTableManager extends Parser {
 			List<Loot> lootList = new ArrayList<>();
 			int index = 0;
 			for (Map<?, ?> lootEntryMap : lootMapList) {
-				String type = DataUtil.getString(lootEntryMap, "type");
 				Loot loot = null;
 				try {
+					String type = DataUtil.getString(lootEntryMap, "type");
 					// Item loot
 					if (type.equalsIgnoreCase("item")) {
 						if (getBooleanOrDefault(lootEntryMap, "ignore_legacy", false) && XMaterial.getVersion() <= 12) {
@@ -115,6 +115,8 @@ public class LootTableManager extends Parser {
 					// Command loot
 					else if (type.equalsIgnoreCase("command")) {
 						loot = new CommandLootParser(plugin).parse(lootEntryMap);
+					} else {
+						throw new IllegalArgumentException("Unknown loot type: " + type);
 					}
 				} catch (Exception e) {
 					plugin.getLogger().warning("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");
