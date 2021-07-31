@@ -450,7 +450,7 @@ commands:
     console_specify_player: '&eConsole must specify a player!'
   modifier:
     add:
-      added: '{color}{stat} &7modifier level &b{value} &7 with name &f{name} &7added to player &6{player}'
+      added: '{color}{stat} &7modifier level &b{value} &7with name &f{name} &7added to player &6{player}'
       already_exists: '&eModifier with name {name} already exists on player &6{player}&e! Remove it with &6/sk modifier remove {player} {name}'
     remove:
       not_found: '&eModifier {name} not found for player &6{player}'
