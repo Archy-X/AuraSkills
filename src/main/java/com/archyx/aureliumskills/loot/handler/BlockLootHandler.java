@@ -12,6 +12,7 @@ import com.archyx.aureliumskills.loot.type.CommandLoot;
 import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
+import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,6 +46,10 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
 
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
+
+        if (player.getGameMode() != GameMode.SURVIVAL) { // Only drop loot in survival mode
+            return;
+        }
 
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
