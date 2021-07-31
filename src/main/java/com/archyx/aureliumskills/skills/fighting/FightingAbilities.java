@@ -9,6 +9,10 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skills;
+import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +20,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -88,7 +93,9 @@ public class FightingAbilities extends AbilityProvider implements Listener {
         if (r.nextDouble() < (getValue(Ability.BLEED, playerData) / 100)) {
             if (event.getFinalDamage() < entity.getHealth()) {
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
-                    entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, 3));
+                    int baseTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "base_ticks").asInt();
+                    entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, baseTicks));
+                    // Send messages
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_enemy_message")) {
                         Locale locale = playerData.getLocale();
                         if (event.getDamager() instanceof Player) {
@@ -103,41 +110,72 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_SELF_BLEEDING, locale));
                         }
                     }
-                    //Schedules bleed ticks
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            if (entity.hasMetadata("AureliumSkills-BleedTicks")) {
-                                int bleedTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
-                                if (bleedTicks > 0) {
-                                    //Apply bleed
-                                    double damage = plugin.getAbilityManager().getValue2(Ability.BLEED, playerData.getAbilityLevel(Ability.BLEED));
-                                    entity.damage(damage);
-                                    //Decrement bleed ticks
-                                    if (bleedTicks != 1) {
-                                        entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, bleedTicks - 1));
-                                    } else {
-                                        entity.removeMetadata("AureliumSkills-BleedTicks", plugin);
-                                    }
-                                    return;
-                                }
-                            }
-                            if (entity instanceof Player) {
-                                if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_stop_message")) {
-                                    Player player = (Player) entity;
-                                    Locale locale = plugin.getLang().getLocale(player);
-                                    plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_STOP, locale));
-                                }
-                            }
-                            cancel();
-                        }
-                    }.runTaskTimer(plugin, 40L, 40L);
+                    // Schedule applying bleed tick damage
+                    scheduleBleedTicks(entity, playerData);
                 } else {
-                    int bleedTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
-                    entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, bleedTicks + 2));
+                    int currentTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
+                    int addedTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "added_ticks").asInt();
+                    int maxTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "max_ticks").asInt();
+                    int resultingTicks = currentTicks + addedTicks;
+                    if (resultingTicks <= maxTicks) { // Check that resulting bleed ticks does not exceed maximum
+                        entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, resultingTicks));
+                    }
                 }
             }
         }
+    }
+
+    private void scheduleBleedTicks(LivingEntity entity, PlayerData playerData) {
+        // Schedules bleed ticks
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!entity.isValid()) { // Stop if entity died/transformed
+                    cancel();
+                    return;
+                }
+                if (entity.hasMetadata("AureliumSkills-BleedTicks")) {
+                    int bleedTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
+                    if (bleedTicks > 0) {
+                        // Apply bleed
+                        double damage = plugin.getAbilityManager().getValue2(Ability.BLEED, playerData.getAbilityLevel(Ability.BLEED));
+                        entity.damage(damage);
+                        displayBleedParticles(entity);
+                        // Decrement bleed ticks
+                        if (bleedTicks != 1) {
+                            entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, bleedTicks - 1));
+                        } else {
+                            entity.removeMetadata("AureliumSkills-BleedTicks", plugin);
+                        }
+                        return;
+                    }
+                }
+                if (entity instanceof Player) {
+                    if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_stop_message")) {
+                        Player player = (Player) entity;
+                        Locale locale = plugin.getLang().getLocale(player);
+                        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(AbilityMessage.BLEED_STOP, locale));
+                    }
+                }
+                cancel();
+            }
+        }.runTaskTimer(plugin, 40L, plugin.getAbilityManager().getOption(Ability.BLEED, "tick_period").asInt());
+    }
+
+    @SuppressWarnings("deprecation")
+    private void displayBleedParticles(LivingEntity entity) {
+        // Check if disabled
+        if (!plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "show_particles")) {
+            return;
+        }
+        Location location = entity.getLocation().add(0, entity.getHeight() * 0.6, 0);
+        Object particleData;
+        if (XMaterial.isNewVersion()) {
+            particleData = Material.REDSTONE_BLOCK.createBlockData();
+        } else {
+            particleData = new MaterialData(Material.REDSTONE_BLOCK);
+        }
+        entity.getWorld().spawnParticle(Particle.BLOCK_DUST, location, 30, particleData);
     }
 
     @EventHandler

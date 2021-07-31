@@ -380,11 +380,15 @@ public class AbilityManager {
         return abilities;
     }
 
-    @Nullable
     public OptionValue getOption(Ability ability, String key) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
-            return option.getOption(key);
+            OptionValue optionValue = option.getOption(key);
+            if (optionValue != null) {
+                return optionValue;
+            } else {
+                return ability.getDefaultOptions().get(key);
+            }
         } else {
             return ability.getDefaultOptions().get(key);
         }
