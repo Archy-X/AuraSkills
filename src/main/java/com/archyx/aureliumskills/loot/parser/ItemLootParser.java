@@ -78,11 +78,13 @@ public class ItemLootParser extends LootParser {
             if (meta == null) return item;
             // Display name and lore
             if (map.containsKey("display_name")) {
+                meta = item.getItemMeta();
                 String displayName = TextUtil.replaceNonEscaped(getString(map, "display_name"), "&", "§");
                 meta.setDisplayName(displayName);
                 item.setItemMeta(meta);
             }
             if (map.containsKey("lore")) {
+                meta = item.getItemMeta();
                 List<String> lore = getStringList(map, "lore");
                 List<String> formattedLore = new ArrayList<>();
                 for (String line : lore) {
@@ -93,6 +95,7 @@ public class ItemLootParser extends LootParser {
             }
             // Enchantments
             if (map.containsKey("enchantments")) {
+                meta = item.getItemMeta();
                 List<String> enchantmentStrings = getStringList(map, "enchantments");
                 for (String enchantmentEntry : enchantmentStrings) {
                     String[] splitEntry = enchantmentEntry.split(" ");
@@ -157,16 +160,19 @@ public class ItemLootParser extends LootParser {
             }
             // Glowing w/o enchantments visible
             if (getBooleanOrDefault(map, "glow", false)) {
+                meta = item.getItemMeta();
                 meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 item.setItemMeta(meta);
             }
             if (map.containsKey("flags")) {
+                meta = item.getItemMeta();
                 List<String> flags = getStringList(map, "flags");
                 for (String flagName : flags) {
                     ItemFlag itemFlag = ItemFlag.valueOf(flagName.toUpperCase(Locale.ROOT));
                     meta.addItemFlags(itemFlag);
                 }
+                item.setItemMeta(meta);
             }
             // Custom NBT
             if (map.containsKey("nbt")) {
