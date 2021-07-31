@@ -81,6 +81,18 @@ public class LootTableManager extends Parser {
 				lootTables.put(skill, lootTable);
 			}
 		}
+		// Send info message
+		int tablesLoaded = 0;
+		int poolsLoaded = 0;
+		int lootLoaded = 0;
+		for (LootTable table : lootTables.values()) {
+			for (LootPool pool : table.getPools()) {
+				poolsLoaded++;
+				lootLoaded += pool.getLoot().size();
+			}
+			tablesLoaded++;
+		}
+		plugin.getLogger().info("Loaded " + lootLoaded + " loot entries in " + poolsLoaded + " pools and " + tablesLoaded + " tables");
 	}
 
 	private LootTable loadLootTable(File file, FileConfiguration config) {
