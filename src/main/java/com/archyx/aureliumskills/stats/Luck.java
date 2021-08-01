@@ -97,6 +97,9 @@ public class Luck implements Listener {
 					return;
 				}
 			}
+			if (!event.isDropItems()) {
+				return;
+			}
 			if (player.getGameMode().equals(GameMode.SURVIVAL)) {
 				if (plugin.getRegionManager().isPlacedBlock(block)) return;
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -135,12 +138,10 @@ public class Luck implements Listener {
 								}
 								else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
 									Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
-									if (grassBlock != null) {
-										PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
-										Bukkit.getPluginManager().callEvent(dropEvent);
-										if (!event.isCancelled()) {
-											block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
-										}
+									PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+									Bukkit.getPluginManager().callEvent(dropEvent);
+									if (!event.isCancelled()) {
+										block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
 									}
 								}
 							}

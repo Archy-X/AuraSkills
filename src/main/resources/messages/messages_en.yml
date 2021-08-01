@@ -66,7 +66,7 @@ abilities:
   fishing:
     lucky_catch:
       name: Lucky Catch
-      desc: '{value}% chance to get double drops\n&7  from fishing.'
+      desc: '{value}% added chance to get double drops\n&7  from fishing.'
       info: '{value}% 2x Drops'
     fisher:
       name: Fisher
@@ -74,21 +74,21 @@ abilities:
       info: '+{value}% XP'
     treasure_hunter:
       name: Treasure Hunter
-      desc: '{value}% chance to get rare loot from fishing.'
-      info: '{value}% Rare Loot'
+      desc: '{value}% higher chance to get rare loot from fishing.'
+      info: '+{value}% Rare Loot'
     grappler:
       name: Grappler
       desc: 'Hook entities with {value}% more speed.'
       info: '+{value}% Hook Speed'
     epic_catch:
       name: Epic Catch
-      desc: '{value}% chance to get epic loot\n&7  from fishing.'
-      info: '{value}% Epic Loot'
+      desc: '{value}% added chance to get epic loot\n&7  from fishing.'
+      info: '+{value}% Epic Loot'
   excavation:
     metal_detector:
       name: Metal Detector
-      desc: '{value}% chance to get rare loot from digging.'
-      info: '{value}% Rare Loot'
+      desc: '{value}% added chance to get rare loot from digging.'
+      info: '+{value}% Rare Loot'
     excavator:
       name: Excavator
       desc: 'Earn {value}% more Excavation XP'
@@ -103,8 +103,8 @@ abilities:
       info: '{value}% 3x Drops'
     lucky_spades:
       name: Lucky Spades
-      desc: '{value}% chance to get epic loot from digging.'
-      info: '{value}% Epic Loot'
+      desc: '{value}% added chance to get epic loot from digging.'
+      info: '+{value}% Epic Loot'
   archery:
     crit_chance:
       name: Crit Chance
@@ -343,11 +343,11 @@ acf:
     location_please_specify_xyz: '&cError: Please specify the coordinates x, y, and z. Example: &eworld:x,y,z.'
     location_console_not_relative: '&cError: Console may not use relative coordinates for location.'
 action_bar:
-  idle: '&c{hp}/{max_hp} {hp_unit}                &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
+  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
+  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
   ability: '{message}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
@@ -450,7 +450,7 @@ commands:
     console_specify_player: '&eConsole must specify a player!'
   modifier:
     add:
-      added: '{color}{stat} &7modifier level &b{value} &7 with name &f{name} &7added to player &6{player}'
+      added: '{color}{stat} &7modifier level &b{value} &7with name &f{name} &7added to player &6{player}'
       already_exists: '&eModifier with name {name} already exists on player &6{player}&e! Remove it with &6/sk modifier remove {player} {name}'
     remove:
       not_found: '&eModifier {name} not found for player &6{player}'
@@ -573,11 +573,11 @@ menus:
     skills: '\n&7Skills: &f{skills}'
     your_level: '&7Your Level: {color}{level}'
     attack_damage: '&4+{value}% Attack Damage'
-    hp: '&c+{value} {hp_unit}'
+    hp: '&c+{value} ❤'
     saturated_regen: '&6+{value} Saturated Regen'
     full_hunger_regen: '&6+{value} Full Hunger Regen'
     almost_full_hunger_regen: '&6+{value} Almost Full Hunger Regen'
-    mana_regen: '&b+{value} Mana Regen'
+    mana_regen: '&b+{value} Mana/s Regen'
     luck: '&2+{value} Luck'
     double_drop_chance: '&2Double Drop Chance: {value}%'
     xp_gain: '&9+{value}% {xp_unit} Gain'
@@ -605,7 +605,7 @@ mana_abilities:
     end: '&7Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
-    desc: '&7Gives Haste 10 for {value} seconds.\n&e  [Right click pickaxe and mine\n&e  block to activate]'
+    desc: '&7Gives Haste {haste_level} for {value} seconds.\n&e  [Right click pickaxe and mine\n&e  block to activate]'
     raise: '&7You raise your pickaxe'
     lower: '&7You lower your pickaxe'
     start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'

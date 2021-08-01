@@ -43,7 +43,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 			// Add XP to player if matched
 			if (source.isMatch(block)) {
 				plugin.getLeveler().addXp(player, Skills.FORAGING, getXp(player, source));
-				if (hasTag(source, SourceTag.LUMBERJACK_APPLICABLE)) {
+				if (hasTag(source, SourceTag.LUMBERJACK_APPLICABLE) && event.isDropItems()) {
 					foragingAbilities.lumberjack(player, block);
 				}
 				break; // Stop searching if matched
