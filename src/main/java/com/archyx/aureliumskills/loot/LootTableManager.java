@@ -81,6 +81,18 @@ public class LootTableManager extends Parser {
 				lootTables.put(skill, lootTable);
 			}
 		}
+		// Send info message
+		int tablesLoaded = 0;
+		int poolsLoaded = 0;
+		int lootLoaded = 0;
+		for (LootTable table : lootTables.values()) {
+			for (LootPool pool : table.getPools()) {
+				poolsLoaded++;
+				lootLoaded += pool.getLoot().size();
+			}
+			tablesLoaded++;
+		}
+		plugin.getLogger().info("Loaded " + lootLoaded + " loot entries in " + poolsLoaded + " pools and " + tablesLoaded + " tables");
 	}
 
 	private LootTable loadLootTable(File file, FileConfiguration config) {
@@ -91,8 +103,8 @@ public class LootTableManager extends Parser {
 			ConfigurationSection currentPool = poolsSection.getConfigurationSection(poolName);
 			if (currentPool == null) continue;
 
-			double baseChance = currentPool.getDouble("base_chance", 0.01);
-			double chancePerLuck = currentPool.getDouble("chance_per_luck", 0.0);
+			double baseChance = currentPool.getDouble("base_chance", 1.0) / 100; // Converts from percent chance to decimal
+			double chancePerLuck = currentPool.getDouble("chance_per_luck", 0.0) / 100;
 			int selectionPriority = currentPool.getInt("selection_priority", 1);
 			boolean overrideVanillaLoot = currentPool.getBoolean("override_vanilla_loot", false);
 
@@ -101,9 +113,9 @@ public class LootTableManager extends Parser {
 			List<Loot> lootList = new ArrayList<>();
 			int index = 0;
 			for (Map<?, ?> lootEntryMap : lootMapList) {
-				String type = DataUtil.getString(lootEntryMap, "type");
 				Loot loot = null;
 				try {
+					String type = DataUtil.getString(lootEntryMap, "type");
 					// Item loot
 					if (type.equalsIgnoreCase("item")) {
 						if (getBooleanOrDefault(lootEntryMap, "ignore_legacy", false) && XMaterial.getVersion() <= 12) {
@@ -115,6 +127,8 @@ public class LootTableManager extends Parser {
 					// Command loot
 					else if (type.equalsIgnoreCase("command")) {
 						loot = new CommandLootParser(plugin).parse(lootEntryMap);
+					} else {
+						throw new IllegalArgumentException("Unknown loot type: " + type);
 					}
 				} catch (Exception e) {
 					plugin.getLogger().warning("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");

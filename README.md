@@ -12,7 +12,7 @@ Versions here may be unreleased/in development, some may be very unstable.
 https://discord.gg/Bh2EZfB (Join for support/suggestions/discussion)
 
 ### Wiki
-The AureliumSkills wiki can be viewed [here](https://github.com/Archy-X/AureliumSkills/wiki).
+The AureliumSkills wiki can be viewed [here](https://wiki.aurelium.dev/skills).
 The wiki contains documentation on how to use and configure the plugin. The wiki may not be always up to date.
 
 ## Developer API

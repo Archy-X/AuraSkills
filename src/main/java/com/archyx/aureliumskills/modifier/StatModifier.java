@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -36,7 +37,7 @@ public class StatModifier {
         return input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale))
-                .replace("{value}", String.valueOf(value))
+                .replace("{value}", NumberUtil.format1(value))
                 .replace("{name}", name);
     }
 
@@ -45,7 +46,7 @@ public class StatModifier {
         return input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale))
-                .replace("{value}", String.valueOf(modifier.getValue()))
+                .replace("{value}", NumberUtil.format1(modifier.getValue()))
                 .replace("{name}", modifier.getName())
                 .replace("{player}", player.getName());
     }
@@ -61,7 +62,7 @@ public class StatModifier {
         return input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale))
-                .replace("{value}", String.valueOf(value));
+                .replace("{value}", NumberUtil.format1(value));
     }
 
     public static String applyPlaceholders(String input, Stat stat, Locale locale) {

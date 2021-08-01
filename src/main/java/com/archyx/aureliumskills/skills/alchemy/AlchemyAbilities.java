@@ -325,8 +325,11 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                                     int uniqueTypes = uniqueTypesSet.size();
                                     // Apply modifier
                                     double wisdomPerType = getValue(Ability.WISE_EFFECT, playerData);
-                                    StatModifier modifier = new StatModifier("AbilityModifier-WiseEffect", Stats.WISDOM, (int) (wisdomPerType * uniqueTypes));
-                                    playerData.addStatModifier(modifier, false);
+                                    double modifierValue = wisdomPerType * uniqueTypes;
+                                    if (modifierValue > 0.0) {
+                                        StatModifier modifier = new StatModifier("AbilityModifier-WiseEffect", Stats.WISDOM, modifierValue);
+                                        playerData.addStatModifier(modifier, false);
+                                    }
                                 }
                             } else {
                                 playerData.removeStatModifier("AbilityModifier-WiseEffect", false);

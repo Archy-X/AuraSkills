@@ -1121,7 +1121,7 @@ public class SkillsCommand extends BaseCommand {
 	@Subcommand("item give")
 	@CommandPermission("aureliumskills.item.give")
 	@CommandCompletion("@players @item_keys")
-	public void onItemGive(Player sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
+	public void onItemGive(CommandSender sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
 		ItemStack item = plugin.getItemRegistry().getItem(key);
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (item != null) {

@@ -1,3 +1,82 @@
+Version Beta 1.2.0
+  New Features:
+    - Reworked loot tables:
+      - Loot tables are now separated into files for each skill in the loot folder
+      - Each loot table can have multiple pools, which are lists of loot entries
+      - Pool keys:
+        - base_chance - The chance to select this pool without any added ability bonuses (1 = 1% chance) (defaults to 1)
+        - selection_priority - The order the pools are potentially selected, a higher priority means that it will attempt to select before lower priority pools (defaults to 1)
+        - override_vanilla_loot - Whether the regular loot from the block should be replaced with the selected loot. Does not apply to fishing. (defaults to false)
+        - chance_per_luck - The amount the chance should increase per luck stat level the player has (0.1 = 0.1% added chance per luck) (defaults to 0)
+      - Each pool has a loot section containing a map list of the loot entries
+      - Currently, there are two types of loot: item loot and command loot
+      - Universal loot entry keys:
+        - type - The type of loot, either item or command
+        - weight - The weight of the entry compared to other loot in the same pool, higher weight means more likely to be selected (defaults to 10)
+        - message - Chat message to send to player when they get the loot, supports color codes and PlaceholderAPI (optional)
+        - sources - A list of sources or source tags that this loot should exclusively apply to (optional)
+        - xp - The amount of skill xp to give when this loot is dropped (defaults to the original source amount if not specified)
+      - Item loot keys:
+        - amount - Controls the amount of item to give. This can either be a single number like '5' or a range of number such as '1-5', which gives a random amount from 1 to 5 (defaults to 1)
+        - material - The material of the item, must be valid bukkit material name (not case sensitive). Use material:id to specify legacy data if on 1.12
+        - key - References an item key registered using /skills item register. If this is specified, material and all keys below do not apply
+        - display_name - The display name of the item, supports & for color codes unless escaped with \& (optional)
+        - lore - The lore of the item, must be a list of each line, supports & for color codes unless escaped with \& (optional)
+        - enchantments - A list of enchantments, one enchantment per line. Use a space between the enchantment name and the level, such as 'sharpness 5' (optional)
+        - potion_data - A section containing potion data, see below for keys (optional):
+          - type - The type of potion, must be a bukkit PotionType
+          - extended - Whether the potion has an extended duration
+          - upgraded - Whether the potion has an upgraded level
+        - custom_effects - A map list of effects, keys for each section below (optional):
+          - type - The name of the effect, must be a bukkit PotionEffectType
+          - duration - The duration of the effect, in ticks
+          - amplifier - The amplifier of the effect (0 means level 1)
+        - glow - Set to true to make the item glow without enchantments showing (optional)
+        - nbt - Section for any custom NBT data (optional)
+        - flags - List of item flags to add to the item (optional)
+        - ignore_legacy - If true, the plugin will skip loading the item if the server version is below 1.13 to prevent material parsing errors (optional)
+      - Command loot keys:
+        - executor - Who should execute the command, either console or player (defaults to console)
+        - command - The command without the beginning /, supports {player} placeholder and all PlaceholderAPI placeholders
+      - Add loot tables you can create for Mining and Foraging (create mining.yml or foraging.yml in the loot folder)
+      - The existing loot.yml will be converted to the new format and the old file will be renamed to loot-OLD.yml
+    - Add new Replenish options:
+      - show_particles - display green bone-meal particles when a crop is replanted (defaults to true)
+      - prevent_unripe_break - prevent breaking a crop that is not fully grown while Replenish is active (defaults to true)
+    - Add haste_level option to Speed Mine to change the level of haste given
+    - Add red particles when an entity is damaged by Bleed
+    - Add new Bleed options:
+      - base_ticks - The number of bleed ticks added when the entity is not bleeding
+      - added_ticks - The number of bleed ticks added when the entity is already bleeding
+      - max_ticks - The maximum number of bleed ticks (inclusive) that an entity can have stacked up
+      - tick_period - The number of minecraft ticks between the activation of bleed ticks
+      - show_particles - Whether or not to show bleeding particles
+  Changes:
+    - Improve Treecapitator algorithm to work better with all tree types
+    - Add new items to default loot tables (does not affect existing configs)
+    - Re-enable idle action bar by default
+    - Change HP in action bar messages to heart symbol
+    - Tweak modifier command message format
+    - Balance changes (does not affect existing configs):
+      - Health modifier: 0.5 -> 0.4 (this makes it 1 Health = 2 HP)
+      - Changed health.hearts to better match modifier (20 hearts at about max level in all skills)
+      - Strength modifier: 0.63 -> 0.5
+      - Crit Damage per level: 4 -> 3
+      - First Strike damage per level: 10 -> 8
+      - Bleed chance per level: 4 -> 3
+      - Regeneration mana modifier: 0.25 -> 0.1
+    - New players will not join with full mana
+    - Mana regen shown in stats menu will now include base mana regen
+  API Changes:
+    - Add AureliumAPI#getManaRegen
+  Bug Fixes:
+    - Fix inconsistent wisdom experience multiplier with some plugins
+    - Fix Healer and Forger abilities not working
+    - Fix Sharp Hook activating when PVP/PVE was disabled
+    - Fix health scaling reset when adding or removing health modifiers
+    - Fix inaccurate damage hologram rounding
+    - Fix level 0 Wise Effect stat modifiers being added
+
 Version Beta 1.1.4
   New Features:
     - Add silent argument to xp commands to disable message (add true to the end of command)

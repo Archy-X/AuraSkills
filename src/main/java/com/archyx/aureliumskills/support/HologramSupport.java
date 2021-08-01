@@ -106,7 +106,7 @@ public class HologramSupport implements Listener {
                 damageText = nf.format(damageScaling);
             }
             else {
-                damageText = "" + (int) (damageScaling);
+                damageText = "" + Math.round(damageScaling);
             }
         }
         else {
@@ -114,7 +114,7 @@ public class HologramSupport implements Listener {
                 damageText = nf.format(damage);
             }
             else {
-                damageText = "" + (int) damage;
+                damageText = "" + Math.round(damage);
             }
         }
         if (critical) {
