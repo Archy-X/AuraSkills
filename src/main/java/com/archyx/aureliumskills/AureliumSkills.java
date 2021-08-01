@@ -88,6 +88,7 @@ import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
+import com.archyx.slate.Slate;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import fr.minuskube.inv.InventoryManager;
@@ -157,6 +158,7 @@ public class AureliumSkills extends JavaPlugin {
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
+	private Slate slate;
 
 	public void onEnable() {
 		// Registries
@@ -256,6 +258,8 @@ public class AureliumSkills extends JavaPlugin {
 			e.printStackTrace();
 			getLogger().warning("Error loading menus!");
 		}
+		slate = new Slate(this);
+		registerMenus();
 		// Region manager
 		this.regionManager = new RegionManager(this);
 		// Registers events
@@ -603,6 +607,10 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry.register("forging", Skills.FORGING);
 	}
 
+	private void registerMenus() {
+
+	}
+
 	public RewardManager getRewardManager() {
 		return rewardManager;
 	}
@@ -782,6 +790,10 @@ public class AureliumSkills extends JavaPlugin {
 	@Nullable
 	public WorldGuardFlags getWorldGuardFlags() {
 		return worldGuardFlags;
+	}
+
+	public Slate getSlate() {
+		return slate;
 	}
 
 }
