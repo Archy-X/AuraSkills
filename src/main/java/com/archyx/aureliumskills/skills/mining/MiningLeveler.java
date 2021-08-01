@@ -51,11 +51,8 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 				}
 				plugin.getLeveler().addXp(player, Skills.MINING, getXp(player, source));
 				// Apply abilities if has tag
-				if (hasTag(source, SourceTag.LUCKY_MINER_APPLICABLE)) {
+				if (hasTag(source, SourceTag.LUCKY_MINER_APPLICABLE) && event.isDropItems()) {
 					miningAbilities.luckyMiner(player, block);
-				}
-				if (hasTag(source, SourceTag.SPEED_MINE_APPLICABLE)) {
-					miningAbilities.applySpeedMine(player);
 				}
 				break; // Stop searching if matched
 			}
