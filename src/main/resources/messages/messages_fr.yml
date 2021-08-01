@@ -76,21 +76,21 @@ abilities:
       info: '+{value}% d''XP'
     treasure_hunter:
       name: Chasseur de trésor
-      desc: '{value}% de chance d''obtenir un butin rare.'
-      info: '{value}% Butin rare'
+      desc: '{value}% de chance d''obtenir un butin rare en pêchant.'
+      info: '+{value}% Butin rare'
     grappler:
       name: Grappeur
       desc: 'Pêchez {value}% plus rapidement.'
       info: '+{value}% Vitesse de pêche'
     epic_catch:
       name: Capture épique
-      desc: "{value}% de chance d'obtenir un butin épique\n&7  en pêchant."
-      info: '{value}% Butin épique'
+      desc: "{value}% de chance d'obtenir un butin épique\n&7 en pêchant."
+      info: '+{value}% Butin épique'
   excavation:
     metal_detector:
       name: Détecteur de métaux
       desc: '{value}% de chance d''obtenir un butin rare en creusant.'
-      info: '{value}% Butin rare'
+      info: '+{value}% Butin rare'
     excavator:
       name: Excavateur
       desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
@@ -105,8 +105,8 @@ abilities:
       info: '{value}% de chance de triple drop'
     lucky_spades:
       name: Pelles chanceuse
-      desc: '{value}% de chance d''obtenir un butin épique en creusant.'
-      info: '{value}% Butin épique'
+      desc: '{value}% de chance d''obtenir un butin rare en creusant.'
+      info: '+{value}% Butin épique'
   archery:
     crit_chance:
       name: Coup critique
@@ -345,11 +345,11 @@ acf:
     location_please_specify_xyz: '&cErreur: Veuillez spécifier les coordonnées x, y et z. Exemple: &eworld:x,y,z.'
     location_console_not_relative: '&cErreur: La console ne peut pas utiliser de coordonnées relatives pour l''emplacement.'
 action_bar:
-  idle: '&c{hp}/{max_hp} {hp_unit}                &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
+  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
+  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
   ability: '{message}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAX)'
@@ -361,6 +361,7 @@ commands:
         added: '&7Le modificateur de {color}{stat} &7avec le niveau &b{value} &7a été ajouté à votre objet'
         already_exists: '&eUn modificateur d''armure avec la stat {color}{stat} &eexiste déjà sur votre armure ! Supprimez-le d''abord avec /sk armor modifier remove'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&eVotre objet n''a pas de modificateur de {color}{stat}!'
         removed: '&7Le modificateur de {color}{stat} &7a été retiré de votre objet'
@@ -407,6 +408,7 @@ commands:
         added: '&7Le modificateur de {color}{stat} &7avec le niveau &b{value} &7a été ajouté à votre objet'
         already_exists: '&eUn modificateur d''item avec la stat {color}{stat} &eexiste déjà sur votre item ! Supprimez-le d''abord avec /sk item modifier remove'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&eVotre objet n''a pas de modificateur de {color}{stat}!'
         removed: '&7Le modificateur de {color}{stat} &7a été retiré de votre objet'
@@ -515,7 +517,7 @@ leveler:
   title: '&a{skill} Niveau supérieur'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Niveau supérieur! &b&l{skill} &8{old}➜&3&l{new} \n \n &bRécompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+{num}{symbol} {stat}"
+  stat_level: "\n  {color}+1{num}{symbol} {stat}"
   ability_unlock: "\n  &aCompétence débloquée! &6&l{ability} &7a été débloquée"
   ability_level_up: "\n  &aNiveau de compétence supérieur! &6&l{ability} &7est maintenant niveau &6{level}"
   mana_ability_unlock: "\n&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloqueée"
@@ -570,13 +572,10 @@ menus:
   stats_menu:
     stats_menu_title: Vos statistiques
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    primary_skills_two: '&7Compétences primaires: &f{skill_1}, {skill_2}'
-    primary_skills_three: '&7Compétences primaires: &f{skill_1}, {skill_2}, {skill_3}'
-    secondary_skills_two: '&7Compétences secondaires: &f{skill_1}, {skill_2}'
-    secondary_skills_three: '&7Compétences secondaires: &f{skill_1}, {skill_2}, {skill_3}'
+    skills: "\n&7Compétences: &f{skills}"
     your_level: '&7Votre niveau: {color}{level}'
     attack_damage: '&4+{value}% dégâts d''attaque'
-    hp: '&c+{value} {hp_unit}'
+    hp: '&c+{value} ❤'
     saturated_regen: '&6+{value} Régénération saturé'
     full_hunger_regen: '&6+{value} Régénération complète de la faim'
     almost_full_hunger_regen: '&6+{value} Régénération de la faim presque complète'
@@ -608,7 +607,7 @@ mana_abilities:
     end: '&7Découpeur d''arbre a été désactivé'
   speed_mine:
     name: Mineur de l'extrème
-    desc: "&7Donne Céléritée 10 pendant {value} secondes.\n&e  [clic droit avec une pioche et mine\n&e  un block pour activer]"
+    desc: "&7Donne Céléritée {haste_level} pendant {value} secondes.\n&e  [clic droit avec une pioche et mine\n&e  un block pour activer]"
     raise: '&7Vous levez votre pioche'
     lower: '&7Vous baissez votre pioche'
     start: '&6Mineur de l''extrème activée! &7(-{mana} {mana_unit})'
@@ -736,4 +735,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 20
+file_version: 22
