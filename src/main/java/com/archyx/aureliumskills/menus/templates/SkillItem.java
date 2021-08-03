@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.menus.items;
+package com.archyx.aureliumskills.menus.templates;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
@@ -65,9 +65,8 @@ public class SkillItem implements TemplateItemProvider<Skill> {
                 }
             case "skill_click":
                 return Lang.getMessage(MenuMessage.SKILL_CLICK, locale);
-            default:
-                return "";
         }
+        return placeholder;
     }
 
     @Override
