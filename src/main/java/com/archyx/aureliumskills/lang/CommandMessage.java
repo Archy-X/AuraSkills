@@ -114,6 +114,7 @@ public enum CommandMessage implements MessageKey {
     TOP_AVERAGE_ENTRY(Command.TOP, "average_entry"),
     UPDATELEADERBOARDS_ALREADY_UPDATING(Command.UPDATELEADERBOARDS, "already_updating"),
     UPDATELEADERBOARDS_UPDATED,
+    VERSION,
     XP_ADD,
     XP_SET,
     XP_REMOVE,

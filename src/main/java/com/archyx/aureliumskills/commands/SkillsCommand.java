@@ -26,6 +26,7 @@ import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.aureliumskills.util.version.UpdateChecker;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
@@ -1146,6 +1147,16 @@ public class SkillsCommand extends BaseCommand {
 		} else {
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
 		}
+	}
+
+	@Subcommand("version")
+	@CommandPermission("aureliumskills.version")
+	public void onVersion(CommandSender sender) {
+		Locale locale = plugin.getLang().getLocale(sender);
+		new UpdateChecker(plugin, 81069).getVersion(latestVersion -> sender.sendMessage(AureliumSkills.getPrefix(locale) +
+				TextUtil.replace(Lang.getMessage(CommandMessage.VERSION, locale),
+				"{current_version}", plugin.getDescription().getVersion(),
+				"{latest_version}", latestVersion)));
 	}
 
 	@Subcommand("help")

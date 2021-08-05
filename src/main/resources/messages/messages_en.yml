@@ -505,6 +505,7 @@ commands:
   updateleaderboards:
     already_updating: '&eLeaderboard is already updating!'
     updated: '&aLeaderboard updated!'
+  version: '&fYou are on Aurelium Skills version &b{current_version}&f. The latest version is &b{latest_version}'
   xp:
     add: '&7Added &b{amount} {skill} &7XP to player &7{player}'
     set: '&7Set &b{skill} &7XP for player &7{player} &7to {amount}'
@@ -733,4 +734,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 22
+file_version: 23
