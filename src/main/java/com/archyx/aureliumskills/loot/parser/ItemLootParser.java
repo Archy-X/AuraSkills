@@ -7,12 +7,14 @@ import com.archyx.aureliumskills.util.item.MaterialUtil;
 import com.archyx.aureliumskills.util.misc.Validate;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XEnchantment;
+import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -173,6 +175,22 @@ public class ItemLootParser extends LootParser {
                     meta.addItemFlags(itemFlag);
                 }
                 item.setItemMeta(meta);
+            }
+            if (map.containsKey("durability")) {
+                meta = item.getItemMeta();
+                int durability = getInt(map, "durability");
+                if (XMaterial.isNewVersion()) {
+                    if (meta instanceof Damageable) {
+                        Damageable damageable = (Damageable) meta;
+                        short maxDurability = item.getType().getMaxDurability();
+                        damageable.setDamage(Math.max(maxDurability - durability, maxDurability));
+                        item.setItemMeta(meta);
+                    }
+                } else {
+                    // For old versions
+                    short maxDurability = item.getType().getMaxDurability();
+                    item.setDurability((short) Math.max(maxDurability - durability, maxDurability));
+                }
             }
             // Custom NBT
             if (map.containsKey("nbt")) {
