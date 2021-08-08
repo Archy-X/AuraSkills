@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.menus.templates;
+package com.archyx.aureliumskills.menus.common;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
@@ -34,7 +34,7 @@ public class SkillItem implements TemplateItemProvider<Skill> {
 
     @Override
     public Class<Skill> getContext() {
-        return null;
+        return Skill.class;
     }
 
     @Override

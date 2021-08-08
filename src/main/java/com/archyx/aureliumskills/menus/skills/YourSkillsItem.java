@@ -1,8 +1,9 @@
-package com.archyx.aureliumskills.menus.items;
+package com.archyx.aureliumskills.menus.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
+import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;

@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.menus.items;
+package com.archyx.aureliumskills.menus.common;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
