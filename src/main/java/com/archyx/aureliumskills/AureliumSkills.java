@@ -32,6 +32,8 @@ import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
+import com.archyx.aureliumskills.menus.MenuFileManager;
+import com.archyx.aureliumskills.menus.MenuRegistrar;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
@@ -159,6 +161,7 @@ public class AureliumSkills extends JavaPlugin {
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
 	private Slate slate;
+	private MenuFileManager menuFileManager;
 
 	public void onEnable() {
 		// Registries
@@ -608,7 +611,10 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	private void registerMenus() {
-
+		new MenuRegistrar(this).register();
+		menuFileManager = new MenuFileManager(this);
+		menuFileManager.generateDefaultFiles();
+		menuFileManager.loadMenus();
 	}
 
 	public RewardManager getRewardManager() {
@@ -794,6 +800,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Slate getSlate() {
 		return slate;
+	}
+
+	public MenuFileManager getMenuFileManager() {
+		return menuFileManager;
 	}
 
 }
