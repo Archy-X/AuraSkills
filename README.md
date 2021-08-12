@@ -4,7 +4,7 @@ AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin,
 
 Learn more and download here: https://www.spigotmc.org/resources/81069/
 
-### Github Disclaimer:
+### GitHub Disclaimer:
 Versions here may be unreleased/in development, some may be very unstable.
 
 ### Support Discord:
