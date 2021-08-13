@@ -42,7 +42,7 @@ public class InProgressTemplate extends ConfigurableTemplate {
                             line = TextUtil.replace(line,"{level_number}", TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale),"{level}", String.valueOf(level)));
                             break;
                         case "rewards":
-                            line = TextUtil.replace(line,"{rewards}", levelItem.getRewardsLore(skill, level, locale));
+                            line = TextUtil.replace(line,"{rewards}", levelItem.getRewardsLore(skill, level, player, locale));
                             break;
                         case "ability":
                             line = TextUtil.replace(line,"{ability}", levelItem.getAbilityLore(skill, level, locale));
