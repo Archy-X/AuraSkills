@@ -27,12 +27,12 @@ public class MoneyReward extends Reward {
     }
 
     @Override
-    public String getMenuMessage(Locale locale) {
+    public String getMenuMessage(Player player, Locale locale, Skill skill, int level) {
         return ""; // All money rewards have to be added into one line
     }
 
     @Override
-    public String getChatMessage(Locale locale) {
+    public String getChatMessage(Player player, Locale locale, Skill skill, int level) {
         return ""; // ALl money rewards have to be added into one line
     }
 }

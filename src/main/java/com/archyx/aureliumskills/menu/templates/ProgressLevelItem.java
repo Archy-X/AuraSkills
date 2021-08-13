@@ -16,6 +16,7 @@ import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.google.common.collect.ImmutableList;
+import org.bukkit.entity.Player;
 
 import java.util.Locale;
 
@@ -27,12 +28,12 @@ public class ProgressLevelItem {
         this.plugin = plugin;
     }
 
-    public String getRewardsLore(Skill skill, int level, Locale locale) {
+    public String getRewardsLore(Skill skill, int level, Player player, Locale locale) {
         ImmutableList<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
         StringBuilder message = new StringBuilder();
         double totalMoney = 0;
         for (Reward reward : rewards) {
-            message.append(reward.getMenuMessage(locale));
+            message.append(reward.getMenuMessage(player, locale, skill, level));
             if (reward instanceof MoneyReward) {
                 totalMoney += ((MoneyReward) reward).getAmount();
             }

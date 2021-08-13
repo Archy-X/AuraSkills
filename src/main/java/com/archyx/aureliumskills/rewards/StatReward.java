@@ -43,7 +43,7 @@ public class StatReward extends Reward {
     }
 
     @Override
-    public String getMenuMessage(Locale locale) {
+    public String getMenuMessage(Player player, Locale locale, Skill skill, int level) {
         return TextUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
@@ -52,7 +52,7 @@ public class StatReward extends Reward {
     }
 
     @Override
-    public String getChatMessage(Locale locale) {
+    public String getChatMessage(Player player, Locale locale, Skill skill, int level) {
         return TextUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),

@@ -278,7 +278,7 @@ public class Leveler {
 		}
 		StringBuilder rewardMessage = new StringBuilder();
 		for (Reward reward : rewards) {
-			rewardMessage.append(reward.getChatMessage(locale));
+			rewardMessage.append(reward.getChatMessage(player, locale, skill, newLevel));
 		}
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
