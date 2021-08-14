@@ -15,6 +15,7 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import com.google.common.collect.ImmutableList;
@@ -38,13 +39,15 @@ public class SkillItem implements TemplateItemProvider<Skill> {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, Skill skill) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type, Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return "";
         Locale locale = playerData.getLocale();
         int skillLevel = playerData.getSkillLevel(skill);
 
         switch (placeholder) {
+            case "skill":
+                return skill.getDisplayName(locale);
             case "skill_desc":
                 return skill.getDescription(locale);
             case "stats_leveled":
@@ -54,7 +57,11 @@ public class SkillItem implements TemplateItemProvider<Skill> {
             case "mana_ability":
                 return getManaAbility(skill, playerData);
             case "level":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale),"{level}", RomanNumber.toRoman(skillLevel));
+                if (type == PlaceholderType.DISPLAY_NAME) {
+                    return String.valueOf(skillLevel);
+                } else {
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale), "{level}", RomanNumber.toRoman(skillLevel));
+                }
             case "progress_to_level":
                 return getProgressToLevel(skill, playerData);
             case "max_level":
