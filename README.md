@@ -1,4 +1,5 @@
 # Aurelium Skills
+[![Release](https://jitpack.io/v/Archy-X/AureliumSkills.svg?style=flat-square)](https://jitpack.io/#Archy-x/AureliumSkills)
 
 AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin, great for a variety of server gamemodes.
 
@@ -16,8 +17,6 @@ The AureliumSkills wiki can be viewed [here](https://wiki.aurelium.dev/skills).
 The wiki contains documentation on how to use and configure the plugin. The wiki may not be always up to date.
 
 ## Developer API
-[![Release](https://jitpack.io/v/Archy-X/AureliumSkills.svg?style=flat-square)]
-(https://jitpack.io/#Archy-x/AureliumSkills)
 
 Aurelium Skills provides a developer API to interact with the plugin.
 
