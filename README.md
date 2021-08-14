@@ -16,6 +16,8 @@ The AureliumSkills wiki can be viewed [here](https://wiki.aurelium.dev/skills).
 The wiki contains documentation on how to use and configure the plugin. The wiki may not be always up to date.
 
 ## Developer API
+[![Release](https://jitpack.io/v/Archy-X/AureliumSkills.svg?style=flat-square)]
+(https://jitpack.io/#Archy-x/AureliumSkills)
 
 Aurelium Skills provides a developer API to interact with the plugin.
 
