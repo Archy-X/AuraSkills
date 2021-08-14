@@ -6,7 +6,10 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
+import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class CloseItem extends AbstractItem implements SingleItemProvider {
 
@@ -20,5 +23,10 @@ public class CloseItem extends AbstractItem implements SingleItemProvider {
             return Lang.getMessage(MenuMessage.CLOSE, plugin.getLang().getLocale(player));
         }
         return placeholder;
+    }
+
+    @Override
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos) {
+        player.closeInventory();
     }
 }

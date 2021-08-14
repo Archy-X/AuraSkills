@@ -25,12 +25,10 @@ import org.bukkit.entity.Player;
 import java.util.*;
 import java.util.function.Supplier;
 
-public class SkillItem implements TemplateItemProvider<Skill> {
+public abstract class AbstractSkillItem extends AbstractItem implements TemplateItemProvider<Skill> {
 
-    private final AureliumSkills plugin;
-
-    public SkillItem(AureliumSkills plugin) {
-        this.plugin = plugin;
+    public AbstractSkillItem(AureliumSkills plugin) {
+        super(plugin);
     }
 
     @Override

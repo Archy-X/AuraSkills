@@ -19,6 +19,6 @@ public class StatsMenu extends AbstractMenu implements MenuProvider {
 
     @Override
     public String onPlaceholderReplace(String s, Player player, ActiveMenu activeMenu) {
-        return null;
+        return s;
     }
 }

@@ -1,8 +1,9 @@
 package com.archyx.aureliumskills.menus;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.menus.common.SkillItem;
+import com.archyx.aureliumskills.menus.common.CloseItem;
 import com.archyx.aureliumskills.menus.contexts.SkillContext;
+import com.archyx.aureliumskills.menus.skills.ClickableSkillItem;
 import com.archyx.aureliumskills.menus.skills.SkillsMenu;
 import com.archyx.aureliumskills.menus.skills.YourSkillsItem;
 import com.archyx.aureliumskills.skills.Skill;
@@ -30,6 +31,7 @@ public class MenuRegistrar {
         menuManager.registerMenuProvider("skills", new SkillsMenu(plugin));
         // Register items
         menuManager.registerItemProvider("your_skills", new YourSkillsItem(plugin));
-        menuManager.registerItemProvider("skill", new SkillItem(plugin));
+        menuManager.registerItemProvider("skill", new ClickableSkillItem(plugin));
+        menuManager.registerItemProvider("close", new CloseItem(plugin));
     }
 }
