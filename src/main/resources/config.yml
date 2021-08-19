@@ -189,27 +189,33 @@ farming:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 foraging:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 mining:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 fishing:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 excavation:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 archery:
     enabled: true
     max-level: 97
     damage-based: false
     spawner-multiplier: 1
+    check-multiplier-permissions: true
 defense:
     enabled: true
     max-level: 97
@@ -217,41 +223,50 @@ defense:
     max: 100.0
     min: 0
     allow-shield-blocking: false
+    check-multiplier-permissions: true
 fighting:
     enabled: true
     max-level: 97
     damage-based: false
     spawner-multiplier: 1
+    check-multiplier-permissions: true
 endurance:
     enabled: true
     max-level: 97
     xp-gain-period: 12000
+    check-multiplier-permissions: true
 agility:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 alchemy:
     enabled: true
     max-level: 97
     check-cancelled: true
     give-xp-on-takeout: false
     give-xp-on-potion-combat: false
+    check-multiplier-permissions: true
 enchanting:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 sorcery:
     enabled: true
     max-level: 97
+    check-multiplier-permissions: true
 healing:
     enabled: true
     check-cancelled: true
     max-level: 97
     exclude-negative-potions: false
+    check-multiplier-permissions: true
 forging:
     enabled: true
     max-level: 97
     check-cancelled: true
+    check-multiplier-permissions: true
 
 # Stat Options
 health:
