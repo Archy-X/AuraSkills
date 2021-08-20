@@ -9,15 +9,14 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.dbassett.skullcreator.SkullCreator;
 import org.apache.commons.lang.math.NumberUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -192,12 +191,33 @@ public class ItemLootParser extends LootParser {
                     item.setDurability((short) Math.max(maxDurability - durability, maxDurability));
                 }
             }
+            if (map.containsKey("skull_meta")) {
+                parseSkullMeta(item, item.getItemMeta(), getMap(map, "skull_meta"));
+            }
             // Custom NBT
             if (map.containsKey("nbt")) {
                 Map<?, ?> nbtMap = getMap(map, "nbt");
                 item = parseNBT(item, nbtMap);
             }
             return item;
+        }
+    }
+
+    private void parseSkullMeta(ItemStack item, ItemMeta meta, Map<?, ?> map) {
+        if (!(meta instanceof SkullMeta)) {
+            return;
+        }
+        SkullMeta skullMeta = (SkullMeta) meta;
+        if (map.containsKey("uuid")) { // From UUID of player
+            UUID id = UUID.fromString(getString(map, "uuid"));
+            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
+            item.setItemMeta(meta);
+        }
+        if (map.containsKey("base64")) { // From base64 string
+            SkullCreator.itemWithBase64(item, getString(map, "base64"));
+        }
+        if (map.containsKey("url")) { // From Mojang URL
+            SkullCreator.itemWithUrl(item, getString(map, "url"));
         }
     }
 
