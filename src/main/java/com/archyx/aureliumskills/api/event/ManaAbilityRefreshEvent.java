@@ -6,14 +6,14 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class ManaAbilityReadyEvent extends Event {
+public class ManaAbilityRefreshEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
     private final Player player;
     private final MAbility manaAbility;
 
-    public ManaAbilityReadyEvent(Player player, MAbility manaAbility) {
+    public ManaAbilityRefreshEvent(Player player, MAbility manaAbility) {
         this.player = player;
         this.manaAbility = manaAbility;
     }
