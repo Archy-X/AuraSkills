@@ -23,7 +23,7 @@ public class ManaAbilityReadyEvent extends Event {
         return player;
     }
 
-    public MAbility getAbility() {
+    public MAbility getManaAbility() {
         return manaAbility;
     }
 
