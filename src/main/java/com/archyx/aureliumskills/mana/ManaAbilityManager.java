@@ -187,7 +187,7 @@ public class ManaAbilityManager implements Listener {
                             } else if (cooldown == 1) {
                                 abilityCooldowns.put(ab, 0);
                             }
-                            if(cooldown == 2 || cooldown == 1) {
+                            if (cooldown == 2 || cooldown == 1) {
                                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(id);
                                 if (playerData != null) {
                                     ManaAbilityReadyEvent event = new ManaAbilityReadyEvent(playerData.getPlayer(), ab);
