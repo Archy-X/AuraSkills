@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.ManaAbilityRefreshEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
@@ -185,6 +186,13 @@ public class ManaAbilityManager implements Listener {
                                 abilityCooldowns.put(ab, cooldown - 2);
                             } else if (cooldown == 1) {
                                 abilityCooldowns.put(ab, 0);
+                            }
+                            if (cooldown == 2 || cooldown == 1) {
+                                PlayerData playerData = plugin.getPlayerManager().getPlayerData(id);
+                                if (playerData != null) {
+                                    ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(playerData.getPlayer(), ab);
+                                    Bukkit.getPluginManager().callEvent(event);
+                                }
                             }
                         }
                     } else {
