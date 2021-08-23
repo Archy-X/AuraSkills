@@ -1,3 +1,18 @@
+Version Beta 1.2.1
+  New Features:
+    - Add /skills version command
+    - Add durability item loot meta
+    - Add placeholder support to reward messages
+    - Add check-multiplier-permissions options to disable potentially laggy frequent permission checks
+    - Add skull meta item loot parsing
+    - Add ManaAbilityRefreshEvent for when a mana ability cooldown finishes
+  Changes:
+    - Update French messages
+    - Reduce default kelp XP
+    - Optimize mana abilities and agility
+  Bug Fixes:
+    - Fix Terraform crash with EcoEnchants
+
 Version Beta 1.2.0
   New Features:
     - Reworked loot tables:
