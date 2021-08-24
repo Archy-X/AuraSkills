@@ -10,6 +10,8 @@ Version Beta 1.2.1
     - Update French messages
     - Reduce default kelp XP
     - Optimize mana abilities and agility
+    - Allow console to use item give command
+    - Change default health.hp-indicator-scaling to 1 to be more consistent with Minecraft damage numbers
   Bug Fixes:
     - Fix Terraform crash with EcoEnchants
 

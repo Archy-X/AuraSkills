@@ -284,7 +284,7 @@ health:
         '18': 104
         '19': 126
         '20': 150
-    hp-indicator-scaling: 5
+    hp-indicator-scaling: 1
     update-delay: 0
     force-base-health: false
 
