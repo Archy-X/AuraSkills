@@ -182,7 +182,7 @@ public class ItemLootParser extends LootParser {
                     if (meta instanceof Damageable) {
                         Damageable damageable = (Damageable) meta;
                         short maxDurability = item.getType().getMaxDurability();
-                        damageable.setDamage(Math.max(maxDurability - durability, maxDurability));
+                        damageable.setDamage(Math.min(maxDurability - durability, maxDurability));
                         item.setItemMeta(meta);
                     }
                 } else {
