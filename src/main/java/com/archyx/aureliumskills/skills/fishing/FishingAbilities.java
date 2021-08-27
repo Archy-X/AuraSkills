@@ -62,9 +62,23 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 					Player player = event.getPlayer();
 					if (blockAbility(player)) return;
 					Vector vector = player.getLocation().toVector().subtract(event.getCaught().getLocation().toVector());
-					event.getCaught().setVelocity(vector.multiply(0.004 + (getValue(Ability.GRAPPLER, playerData) / 25000)));
+					Vector result = vector.multiply(0.004 + (getValue(Ability.GRAPPLER, playerData) / 25000));
+
+					if (isUnsafeVelocity(result)) { // Prevent excessive velocity warnings
+						return;
+					}
+					event.getCaught().setVelocity(result);
 				}
 			}
 		}
 	}
+
+	private boolean isUnsafeVelocity(Vector vector) {
+		double x = vector.getX();
+		double y = vector.getY();
+		double z = vector.getZ();
+
+		return x > 4 || x < -4 || y > 4 || y < -4 || z > 4 || z < -4;
+	}
+
 }
