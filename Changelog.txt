@@ -1,3 +1,24 @@
+Version Beta 1.2.1
+  New Features:
+    - Add /skills version command
+    - Add durability item loot meta
+    - Add placeholder support to reward messages
+    - Add check-multiplier-permissions options to disable potentially laggy frequent permission checks
+    - Add skull meta item loot parsing:
+      - Create a skull_meta section and add one of the following keys
+      - uuid - The UUID of the player's skin you want
+      - base64 - The base64 texture string
+      - url - The full Mojang texture link
+    - Add ManaAbilityRefreshEvent for when a mana ability cooldown finishes
+  Changes:
+    - Update French messages
+    - Reduce default kelp XP
+    - Optimize mana abilities and agility
+    - Allow console to use item give command
+    - Change default health.hp-indicator-scaling to 1 to be more consistent with Minecraft damage numbers
+  Bug Fixes:
+    - Fix Terraform crash with EcoEnchants
+
 Version Beta 1.2.0
   New Features:
     - Reworked loot tables:

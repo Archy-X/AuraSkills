@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.event.ManaAbilityRefreshEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 
@@ -176,12 +178,21 @@ public class ManaAbilityManager implements Listener {
             @Override
             public void run() {
                 for (UUID id : cooldowns.keySet()) {
-                    Map<MAbility, Integer>  abilityCooldowns = cooldowns.get(id);
+                    Map<MAbility, Integer> abilityCooldowns = cooldowns.get(id);
                     if (abilityCooldowns != null) {
                         for (MAbility ab : abilityCooldowns.keySet()) {
                             int cooldown = abilityCooldowns.get(ab);
-                            if (cooldown > 0) {
-                                abilityCooldowns.put(ab, cooldown - 1);
+                            if (cooldown >= 2) {
+                                abilityCooldowns.put(ab, cooldown - 2);
+                            } else if (cooldown == 1) {
+                                abilityCooldowns.put(ab, 0);
+                            }
+                            if (cooldown == 2 || cooldown == 1) {
+                                PlayerData playerData = plugin.getPlayerManager().getPlayerData(id);
+                                if (playerData != null) {
+                                    ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(playerData.getPlayer(), ab);
+                                    Bukkit.getPluginManager().callEvent(event);
+                                }
                             }
                         }
                     } else {
@@ -189,7 +200,7 @@ public class ManaAbilityManager implements Listener {
                     }
                 }
             }
-        }.runTaskTimer(plugin, 0L, 1L);
+        }.runTaskTimer(plugin, 0L, 2L);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -225,6 +236,41 @@ public class ManaAbilityManager implements Listener {
         if (!errorTimer.containsKey(id)) {
             errorTimer.put(id, new HashMap<>());
         }
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event) {
+        UUID id = event.getPlayer().getUniqueId();
+        // Remove cooldown map from memory if player has no cooldowns
+        Map<MAbility, Integer> abilityCooldowns = cooldowns.get(id);
+        if (abilityCooldowns != null) {
+            boolean noCooldowns = true;
+            for (Integer cooldown : abilityCooldowns.values()) {
+                if (cooldown != 0) {
+                    noCooldowns = false;
+                    break;
+                }
+            }
+            if (noCooldowns) {
+                cooldowns.remove(id);
+            }
+        }
+        // Remove activated map if player has no active mana abilities
+        Map<MAbility, Boolean> activatedMap = activated.get(id);
+        if (activatedMap != null) {
+            boolean noneActivated = true;
+            for (Boolean activated : activatedMap.values()) {
+                if (activated) {
+                    noneActivated = false;
+                    break;
+                }
+            }
+            if (noneActivated) {
+                activated.remove(id);
+            }
+        }
+        ready.remove(id);
+        errorTimer.remove(id);
     }
 
     public double getValue(MAbility mAbility, int level) {

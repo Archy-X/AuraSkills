@@ -90,6 +90,7 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
+    @Nullable
     protected Loot selectLoot(LootPool pool, @Nullable Source source) {
         List<Loot> lootList = new ArrayList<>();
         // Add applicable loot to list for selection
@@ -109,6 +110,9 @@ public abstract class LootHandler extends AbilityProvider {
         int totalWeight = 0;
         for (Loot loot : lootList) {
             totalWeight += loot.getWeight();
+        }
+        if (totalWeight == 0) { // Don't attempt selection if no loot entries are applicable
+            return null;
         }
         int selected = random.nextInt(totalWeight);
         int currentWeight = 0;

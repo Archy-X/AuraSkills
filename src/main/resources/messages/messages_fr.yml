@@ -6,7 +6,7 @@ abilities:
     bountiful_harvest:
       name: Récolte abondante
       desc: "{value}% de chance d'obtenir deux fois plus\n&7  de récoltes."
-      info: '{value}% 2 fois de réduction'
+      info: '{value}% de double drops'
     farmer:
       name: Fermier
       desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
@@ -517,7 +517,7 @@ leveler:
   title: '&a{skill} Niveau supérieur'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Niveau supérieur! &b&l{skill} &8{old}➜&3&l{new} \n \n &bRécompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+1{num}{symbol} {stat}"
+  stat_level: "\n  {color}+{num}{symbol} {stat}"
   ability_unlock: "\n  &aCompétence débloquée! &6&l{ability} &7a été débloquée"
   ability_level_up: "\n  &aNiveau de compétence supérieur! &6&l{ability} &7est maintenant niveau &6{level}"
   mana_ability_unlock: "\n&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloqueée"

@@ -58,6 +58,9 @@ public class Leveler {
 
 	public double getMultiplier(Player player, Skill skill) {
 		double multiplier = 1.0;
+		if (skill != null && !OptionL.getBoolean(Option.valueOf(skill + "_CHECK_MULTIPLIER_PERMISSIONS"))) { // Disable check option
+			return multiplier;
+		}
 		for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
 			String permission = info.getPermission().toLowerCase(Locale.ROOT);
 			if (permission.startsWith("aureliumskills.multiplier.")) {
@@ -102,19 +105,23 @@ public class Leveler {
 					//Sends action bar message
 					plugin.getActionBar().sendXpActionBar(player, skill, event.getAmount());
 					// Sends boss bar if enabled
-					if (OptionL.getBoolean(Option.BOSS_BAR_ENABLED)) {
-						// Check whether should update
-						plugin.getBossBar().incrementAction(player, skill);
-						int currentAction = plugin.getBossBar().getCurrentAction(player, skill);
-						if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
-							boolean notMaxed = levelRequirements.size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
-							if (notMaxed) {
-								plugin.getBossBar().sendBossBar(player, skill, playerData.getSkillXp(skill), levelRequirements.get(playerData.getSkillLevel(skill) - 1), playerData.getSkillLevel(skill), false);
-							} else {
-								plugin.getBossBar().sendBossBar(player, skill, 1, 1, playerData.getSkillLevel(skill), true);
-							}
-						}
-					}
+					sendBossBar(player, skill, playerData);
+				}
+			}
+		}
+	}
+
+	private void sendBossBar(Player player, Skill skill, PlayerData playerData) {
+		if (OptionL.getBoolean(Option.BOSS_BAR_ENABLED)) {
+			// Check whether boss bar should update
+			plugin.getBossBar().incrementAction(player, skill);
+			int currentAction = plugin.getBossBar().getCurrentAction(player, skill);
+			if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
+				boolean notMaxed = levelRequirements.size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+				if (notMaxed) {
+					plugin.getBossBar().sendBossBar(player, skill, playerData.getSkillXp(skill), levelRequirements.get(playerData.getSkillLevel(skill) - 1), playerData.getSkillLevel(skill), false);
+				} else {
+					plugin.getBossBar().sendBossBar(player, skill, 1, 1, playerData.getSkillLevel(skill), true);
 				}
 			}
 		}
@@ -133,19 +140,7 @@ public class Leveler {
 			//Sends action bar message
 			plugin.getActionBar().sendXpActionBar(player, skill, amount - originalAmount);
 			// Sends boss bar if enabled
-			if (OptionL.getBoolean(Option.BOSS_BAR_ENABLED)) {
-				// Check whether should update
-				plugin.getBossBar().incrementAction(player, skill);
-				int currentAction = plugin.getBossBar().getCurrentAction(player, skill);
-				if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
-					boolean notMaxed = levelRequirements.size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
-					if (notMaxed) {
-						plugin.getBossBar().sendBossBar(player, skill, playerData.getSkillXp(skill), levelRequirements.get(playerData.getSkillLevel(skill) - 1), playerData.getSkillLevel(skill), false);
-					} else {
-						plugin.getBossBar().sendBossBar(player, skill, 1, 1, playerData.getSkillLevel(skill), true);
-					}
-				}
-			}
+			sendBossBar(player, skill, playerData);
 		}
 	}
 	

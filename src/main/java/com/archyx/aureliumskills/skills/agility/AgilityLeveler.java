@@ -63,7 +63,6 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 				}
 			}
 			Player player = e.getPlayer();
-			if (blockXpGain(player)) return;
 	        if (player.getVelocity().getY() > 0) {
 	            double jumpVelocity = 0.42F;
 	            if (player.hasPotionEffect(PotionEffectType.JUMP)) {
@@ -77,6 +76,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 	                	if (player.hasMetadata("skillsJumps")) {
 	                		player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));
 	                		if (player.getMetadata("skillsJumps").get(0).asInt() >= 100) {
+								if (blockXpGain(player)) return;
 								plugin.getLeveler().addXp(player, Skills.AGILITY, getXp(player, AgilitySource.JUMP_PER_100));
 	                			player.removeMetadata("skillsJumps", plugin);
 	                		}
