@@ -316,6 +316,9 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData != null) {
                             if (player.getActivePotionEffects().size() > 0) {
+                                if (playerData.getAbilityLevel(Ability.WISE_EFFECT) <= 0) {
+                                    continue;
+                                }
                                 // Get unique active potion effects
                                 if (!blockAbility(player)) {
                                     Set<PotionEffectType> uniqueTypesSet = new HashSet<>();
