@@ -74,6 +74,7 @@ public enum Option {
     MODIFIER_ITEM_ENABLE_OFF_HAND("modifier.item.enable-off-hand", OptionType.BOOLEAN),
     MODIFIER_AUTO_CONVERT_FROM_LEGACY("modifier.auto-convert-from-legacy", OptionType.BOOLEAN),
     // Requirement options
+    REQUIREMENT_ENABLED("requirement.enabled", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_TOOL_USE("requirement.item.prevent-tool-use", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_WEAPON_USE("requirement.item.prevent-weapon-use", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE("requirement.item.prevent-block-place", OptionType.BOOLEAN),

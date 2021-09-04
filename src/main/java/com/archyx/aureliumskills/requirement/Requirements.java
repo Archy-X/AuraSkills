@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.requirement;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
@@ -161,6 +163,7 @@ public class Requirements {
     }
 
     public boolean meetsRequirements(ModifierType type, ItemStack item, Player player) {
+        if (!OptionL.getBoolean(Option.REQUIREMENT_ENABLED)) return true;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return true;
         // Check global requirements

@@ -154,6 +154,7 @@ modifier:
     auto-convert-from-legacy: true
 
 requirement:
+    enabled: true
     item:
         prevent-tool-use: true
         prevent-weapon-use: true
