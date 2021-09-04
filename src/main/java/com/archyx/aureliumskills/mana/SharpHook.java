@@ -50,6 +50,11 @@ public class SharpHook extends ManaAbilityProvider {
     @EventHandler
     public void sharpHook(PlayerInteractEvent event) {
         if (!OptionL.isEnabled(Skills.FISHING) || !plugin.getAbilityManager().isEnabled(MAbility.SHARP_HOOK)) return;
+        // If left click with fishing rod
+        if (event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        ItemStack item = event.getItem();
+        if (item == null || item.getType() != Material.FISHING_ROD) return;
+
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -59,10 +64,6 @@ public class SharpHook extends ManaAbilityProvider {
         if (playerData.getManaAbilityLevel(MAbility.SHARP_HOOK) <= 0) {
             return;
         }
-        // If left click
-        if (event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
-        ItemStack item = event.getItem();
-        if (item == null || item.getType() != Material.FISHING_ROD) return;
         // Check for player just casting rod
         for (Entity entity : player.getNearbyEntities(0.1, 0.1, 0.1)) {
             if (entity instanceof FishHook) {
