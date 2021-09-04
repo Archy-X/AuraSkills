@@ -1,5 +1,5 @@
 # Aurelium Skills Chinese, Simplified (zh-CN) messages
-# Translators: SnowCutieOwO
+# Translators: SnowCutieOwO, Qian_ai
 # Contribute here: https://crowdin.com/project/aureliumskills/zh-CN#
 abilities:
   farming:
@@ -77,7 +77,7 @@ abilities:
     treasure_hunter:
       name: 宝藏猎人
       desc: '{value}% 的几率钓上稀有掉落物'
-      info: '{value}% 稀有 掉落物获得率'
+      info: '+{value}% 稀有 掉落物获得率'
     grappler:
       name: 钩爪钓竿
       desc: '用钓竿勾住并拉过来实体的速度增加 {value}%'
@@ -85,12 +85,12 @@ abilities:
     epic_catch:
       name: 史诗一竿
       desc: '{value}% 的几率钓上史诗掉落物'
-      info: '{value}% 史诗 掉落物获得率'
+      info: '+{value}% 史诗 掉落物获得率'
   excavation:
     metal_detector:
       name: 金属探测者
-      desc: '{value}% 的几率在挖掘泥土时掉落稀有掉落物'
-      info: '{value}% 稀有 掉落物获得率'
+      desc: '{value}% 的几率在挖掘时掉落稀有掉落物'
+      info: '+{value}% 稀有 掉落物获得率'
     excavator:
       name: 掘土专精
       desc: '获得额外的 {value}% 挖掘熟练度'
@@ -106,7 +106,7 @@ abilities:
     lucky_spades:
       name: 捡漏之王
       desc: '{value}% 的几率在挖掘时掉落史诗掉落物'
-      info: '{value}% 史诗 掉落物获得率'
+      info: '+{value}% 史诗 掉落物获得率'
   archery:
     crit_chance:
       name: 猛力一击
@@ -345,11 +345,11 @@ acf:
     location_please_specify_xyz: '&c错误: 请指定一个坐标。示例: &eworld:x,y,z'
     location_console_not_relative: '&c错误: 控制台不能使用相对坐标来确定位置。'
 action_bar:
-  idle: '&c{hp}/{max_hp} {hp_unit}                &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
+  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
+  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
   ability: '{message}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(满级)'
@@ -361,6 +361,7 @@ commands:
         added: '&7属性 {color}{stat} &7的 &b{value} &7增强属性已添加至你的物品'
         already_exists: '&e属性 {color}{stat} &e已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&e你的物品没有属性 {color}{stat}!'
         removed: '&7属性 {color}{stat} &7已从你的物品中移除'
@@ -407,6 +408,7 @@ commands:
         added: '&b{value} &7级的 {color}{stat} &7属性已添加至你的物品'
         already_exists: '&e属性 {color}{stat} &e已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&e你的物品没有属性 {color}{stat} &e!'
         removed: '&7属性 {color}{stat} &7已从你的物品中移除'
@@ -450,7 +452,7 @@ commands:
     console_specify_player: '&e后台执行此命令需指定一名玩家!'
   modifier:
     add:
-      added: '&7技能 {color}{stat} &7值为 &b{value} &7的属性 &f{name} &7已成功应用于玩家 &6{player}'
+      added: '&7技能 {color}{stat} &7已将属性 &f{name} &7的获取倍数改为 &b{value} &7并成功应用于玩家 &6{player}'
       already_exists: '&e属性 &f{name} &e已存在于玩家 &6{player}&e 身上! 请使用/sk modifier remove {player} {name} 以移除'
     remove:
       not_found: '&e属性 &7{name} &e在玩家 &6{player} &e身上不存在'
@@ -505,6 +507,7 @@ commands:
   updateleaderboards:
     already_updating: '&e排行榜正在更新!'
     updated: '&a排行榜更新成功!'
+  version: '您正在使用 Aurelium Skills版本 &b{current_version}&f. 最新版本是 &b{latest_version}'
   xp:
     add: '&7成功为玩家 &6{player} &7添加了技能 &b{skill} &7的 &b{amount} &7点熟练度'
     set: '&7将玩家 &6{player} &7的技能 &b{skill} &7熟练度设置为了 &b{amount}'
@@ -570,17 +573,14 @@ menus:
   stats_menu:
     stats_menu_title: 你的属性
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    primary_skills_two: '&7主技能: &f{skill_1}, {skill_2}'
-    primary_skills_three: '&7主技能: &f{skill_1}, {skill_2}, {skill_3}'
-    secondary_skills_two: '&7副技能: &f{skill_1}, {skill_2}'
-    secondary_skills_three: '&7副技能: &f{skill_1}, {skill_2}, {skill_3}'
+    skills: "\n&7技能: &f{skills}"
     your_level: '&7你的等级: {color}{level}'
     attack_damage: '&4+{value}% 攻击伤害'
-    hp: '&c+{value} {hp_unit}'
+    hp: '&c+{value} ❤'
     saturated_regen: '&6+{value} 饱和度'
     full_hunger_regen: '&6+{value} 完全饥饿恢复'
     almost_full_hunger_regen: '&6+{value} 近完全饥饿恢复'
-    mana_regen: '&b+{value} 魔法恢复'
+    mana_regen: '&b+{value} 每秒魔法值恢复'
     luck: '&2+{value} 幸运'
     double_drop_chance: '&2双倍掉落: {value}%'
     xp_gain: '&9+{value}% {xp_unit} 经验翻倍'
@@ -608,7 +608,7 @@ mana_abilities:
     end: '&6伐树者技能已结束'
   speed_mine:
     name: 超级碎石机
-    desc: "&7在技能激活的 {value} 秒内获得急迫 10\n&e  [右键镐子挖掘石头以激活]"
+    desc: "&7在技能激活的 {value} 秒内获得急迫 {haste_level}\n&e  [右键镐子挖掘以激活]"
     raise: '&7你拿起了你的镐子'
     lower: '&7你放下了你的镐子'
     start: '&6超级碎石机已激活! &7(-{mana} {mana_unit})'
@@ -736,4 +736,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 20
+file_version: 23
