@@ -9,14 +9,19 @@ import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.mechanics.PotionUtil;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
+import org.bukkit.entity.LingeringPotion;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.material.MaterialData;
@@ -128,6 +133,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 	}
 
 	@EventHandler
+	@SuppressWarnings("deprecation")
 	public void onLingeringPotionSplash(LingeringPotionSplashEvent event) {
 		if (!OptionL.isEnabled(Skills.HEALING)) return;
 		// Check cancelled
@@ -136,12 +142,34 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 				return;
 			}
 		}
-		if (event.getEntity().getEffects().size() == 0) return;
-		if (!(event.getEntity().getShooter() instanceof Player)) return;
-		if (!(event.getEntity().getItem().getItemMeta() instanceof PotionMeta)) return;
+		ProjectileHitEvent projEvent = event;
+		if (!(projEvent.getEntity().getShooter() instanceof Player)) return;
+		Player player = (Player) projEvent.getEntity().getShooter();
+		if (player == null) {
+			return;
+		}
 
-		Player player = (Player) event.getEntity().getShooter();
-		PotionMeta meta = (PotionMeta) event.getEntity().getItem().getItemMeta();
+		PotionMeta meta;
+		Projectile projectile = projEvent.getEntity();
+		if (VersionUtils.isAtLeastVersion(14)) {
+			if (!(projectile instanceof ThrownPotion)) {
+				return;
+			}
+			ThrownPotion thrownPotion = (ThrownPotion) projectile;
+			if (thrownPotion.getEffects().size() == 0) return;
+
+			if (!(thrownPotion.getItem().getItemMeta() instanceof PotionMeta)) return;
+			meta = (PotionMeta) thrownPotion.getItem().getItemMeta();
+		} else { // 1.12-1.13 compatibility
+			if (!(projectile instanceof LingeringPotion)) {
+				return;
+			}
+			LingeringPotion lingeringPotion = (LingeringPotion) projectile;
+			if (lingeringPotion.getEffects().size() == 0) return;
+
+			if (!(lingeringPotion.getItem().getItemMeta() instanceof PotionMeta)) return;
+			meta = (PotionMeta) lingeringPotion.getItem().getItemMeta();
+		}
 		PotionData data = meta.getBasePotionData();
 
 		if (OptionL.getBoolean(Option.HEALING_EXCLUDE_NEGATIVE_POTIONS) && PotionUtil.isNegativePotion(data.getType())) {

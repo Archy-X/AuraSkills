@@ -26,6 +26,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -134,6 +135,16 @@ public class HealingAbilities extends AbilityProvider implements Listener {
                 }
             }.runTaskLater(plugin, 30 * 20);
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void revivalLeave(PlayerQuitEvent event) {
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(event.getPlayer());
+        if (playerData == null) {
+            return;
+        }
+        playerData.removeStatModifier("AureliumSkills.Ability.Revival.Health");
+        playerData.removeStatModifier("AureliumSkills.Ability.Revival.Regeneration");
     }
 
     private double getAbsorptionAmount(Player player) {

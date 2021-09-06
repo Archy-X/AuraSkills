@@ -1,3 +1,16 @@
+Version Beta 1.2.2
+  New Features:
+    - Add requirement.enabled to set whether requirements should checked
+  Changes:
+    - Update French messages
+    - Various performance optimizations
+    - Update Chinese Simplified messages
+  Bug Fixes:
+    - Fix loot selection "bound must be positive" error
+    - Fix excessive velocity crash with Grappler
+    - Fix lingering potion NoSuchMethod error on 1.12 and 1.13
+    - Fix Revival stat bonuses not being removed on disconnect
+
 Version Beta 1.2.1
   New Features:
     - Add /skills version command

@@ -507,6 +507,7 @@ commands:
   updateleaderboards:
     already_updating: '&eLe classement est déjà en train d''etre mis à jour!'
     updated: '&aClassement mis à jour!'
+  version: '&fVous êtes sur la version &b{current_version}&f d''Aurelium Skills. La dernière version est &b{latest_version}'
   xp:
     add: '&b{amount} &7XP de &b{skill} ont été ajoutée au joueur {player}'
     set: '&7XP de &b{skill} &7pour le joueur {player} &7défini sur {amount}'
@@ -735,4 +736,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 22
+file_version: 23
