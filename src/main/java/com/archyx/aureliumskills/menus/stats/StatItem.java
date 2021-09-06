@@ -44,6 +44,10 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return placeholder;
         switch (placeholder) {
+            case "color":
+                return stat.getColor(locale);
+            case "stat":
+                return stat.getDisplayName(locale);
             case "stat_desc":
                 return stat.getDescription(locale);
             case "skills":

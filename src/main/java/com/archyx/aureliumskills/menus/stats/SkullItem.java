@@ -11,7 +11,10 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Locale;
 
@@ -40,5 +43,15 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
             }
         }
         return placeholder;
+    }
+
+    @Override
+    public ItemStack onItemModify(ItemStack baseItem, Player player) {
+        if (baseItem.getItemMeta() instanceof SkullMeta) {
+            SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
+            meta.setOwningPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()));
+            baseItem.setItemMeta(meta);
+        }
+        return baseItem;
     }
 }
