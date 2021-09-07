@@ -186,7 +186,7 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>Slate</artifactId>
-            <version>2aec3d461f</version>
+            <version>53ad9da550</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

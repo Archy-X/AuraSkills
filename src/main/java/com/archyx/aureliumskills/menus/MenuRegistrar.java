@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.menus.common.CloseItem;
 import com.archyx.aureliumskills.menus.contexts.SkillContext;
 import com.archyx.aureliumskills.menus.contexts.StatContext;
+import com.archyx.aureliumskills.menus.levelprogression.*;
 import com.archyx.aureliumskills.menus.skills.ClickableSkillItem;
 import com.archyx.aureliumskills.menus.skills.SkillsMenu;
 import com.archyx.aureliumskills.menus.skills.YourSkillsItem;
@@ -36,11 +37,19 @@ public class MenuRegistrar {
         // Register menus
         menuManager.registerMenuProvider("skills", new SkillsMenu(plugin));
         menuManager.registerMenuProvider("stats", new StatsMenu(plugin));
+        menuManager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
         // Register items
         menuManager.registerItemProvider("your_skills", new YourSkillsItem(plugin));
         menuManager.registerItemProvider("skill", new ClickableSkillItem(plugin));
         menuManager.registerItemProvider("close", new CloseItem(plugin));
         menuManager.registerItemProvider("skull", new SkullItem(plugin));
         menuManager.registerItemProvider("stat", new StatItem(plugin));
+        menuManager.registerItemProvider("back", new BackItem(plugin));
+        menuManager.registerItemProvider("next_page", new NextPageItem(plugin));
+        menuManager.registerItemProvider("previous_page", new PreviousPageItem(plugin));
+        menuManager.registerItemProvider("rank", new RankItem(plugin));
+        menuManager.registerItemProvider("unlocked", new UnlockedItem(plugin));
+        menuManager.registerItemProvider("in_progress", new InProgressItem(plugin));
+        menuManager.registerItemProvider("locked", new LockedItem(plugin));
     }
 }

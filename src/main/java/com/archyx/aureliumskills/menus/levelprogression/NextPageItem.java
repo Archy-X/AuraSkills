@@ -7,7 +7,10 @@ import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
+import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
 
@@ -27,5 +30,10 @@ public class NextPageItem extends AbstractItem implements SingleItemProvider {
                 return Lang.getMessage(MenuMessage.NEXT_PAGE_CLICK, locale);
         }
         return placeholder;
+    }
+
+    @Override
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+        plugin.getSlate().getMenuManager().openMenu(player, "level_progression", activeMenu.getProperties(), activeMenu.getCurrentPage() + 1);
     }
 }

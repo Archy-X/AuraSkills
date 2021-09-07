@@ -8,33 +8,22 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
-import com.archyx.slate.item.provider.TemplateItemProvider;
+import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
-public class RankItem extends AbstractItem implements TemplateItemProvider<Skill> {
+public class RankItem extends AbstractItem implements SingleItemProvider {
 
     public RankItem(AureliumSkills plugin) {
         super(plugin);
     }
 
     @Override
-    public Class<Skill> getContext() {
-        return Skill.class;
-    }
-
-    @Override
-    public Set<Skill> getDefinedContexts() {
-        return new HashSet<>();
-    }
-
-    @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type, Skill skill) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
         Locale locale = plugin.getLang().getLocale(player);
+        Skill skill = (Skill) activeMenu.getProperty("skill");
         switch (placeholder) {
             case "your_ranking":
                 return Lang.getMessage(MenuMessage.YOUR_RANKING, locale);

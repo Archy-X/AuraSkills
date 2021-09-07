@@ -75,7 +75,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
     }
 
     @Override
-    public Set<Skill> getDefinedContexts() {
+    public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         return new HashSet<>(plugin.getSkillRegistry().getSkills());
     }
 

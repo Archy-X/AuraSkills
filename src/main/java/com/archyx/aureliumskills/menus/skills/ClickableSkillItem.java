@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menus.common.AbstractSkillItem;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -21,7 +22,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, Skill skill) {
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu, Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) {
             return;
@@ -31,6 +32,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
             int page = getPage(skill, playerData);
             Map<String, Object> properties = new HashMap<>();
             properties.put("skill", skill);
+            properties.put("items_per_page", 24);
             plugin.getSlate().getMenuManager().openMenu(player, "level_progression", properties, page);
         }
     }

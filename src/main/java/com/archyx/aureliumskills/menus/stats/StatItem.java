@@ -34,7 +34,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
     }
 
     @Override
-    public Set<Stat> getDefinedContexts() {
+    public Set<Stat> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         return new HashSet<>(plugin.getStatRegistry().getStats());
     }
 
