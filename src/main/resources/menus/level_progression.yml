@@ -38,20 +38,26 @@ templates:
     pos: 0,0
     farming:
       material: diamond_hoe
+      flags: [hide_attributes]
     foraging:
       material: stone_axe
+      flags: [hide_attributes]
     mining:
       material: iron_pickaxe
+      flags: [hide_attributes]
     fishing:
       material: fishing_rod
     excavation:
       material: golden_shovel
+      flags: [hide_attributes]
     archery:
       material: bow
     defense:
       material: chainmail_chestplate
+      flags: [hide_attributes]
     fighting:
       material: diamond_sword
+      flags: [hide_attributes]
     endurance:
       material: golden_apple
     agility:
@@ -60,6 +66,7 @@ templates:
       material: potion
       potion_data:
         type: instant_heal
+      flags: [hide_potion_effects]
     enchanting:
       material: enchanting_table
     sorcery:
@@ -68,6 +75,7 @@ templates:
       material: splash_potion
       potion_data:
         type: instant_heal
+      flags: [hide_potion_effects]
     forging:
       material: anvil
     display_name: '&b{skill} &3{level}'
