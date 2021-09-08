@@ -16,18 +16,40 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import com.google.common.collect.ImmutableList;
+import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
-public class SkillLevelItem extends AbstractItem {
+public abstract class SkillLevelItem extends AbstractItem implements TemplateItemProvider<Integer> {
 
+    private final List<Integer> track;
+    
     public SkillLevelItem(AureliumSkills plugin) {
         super(plugin);
+        this.track = new ArrayList<>();
+        track.add(9); track.add(18); track.add(27); track.add(36); track.add(37);
+        track.add(38); track.add(29); track.add(20); track.add(11); track.add(12);
+        track.add(13); track.add(22); track.add(31); track.add(40); track.add(41);
+        track.add(42); track.add(33); track.add(24); track.add(15); track.add(16);
+        track.add(17); track.add(26); track.add(35); track.add(44);
+    }
+
+    @Override
+    public Class<Integer> getContext() {
+        return Integer.class;
+    }
+
+    @Override
+    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer context) {
+        int index = context - 2;
+        int pos = track.get(index);
+        return SlotPos.of(pos / 9, pos % 9);
     }
 
     protected String getRewardsLore(Skill skill, int level, Player player, Locale locale) {
@@ -139,16 +161,6 @@ public class SkillLevelItem extends AbstractItem {
         int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
         return currentPage * itemsPerPage + position;
-    }
-
-    protected Set<Integer> getCurrentPageLevels(ActiveMenu activeMenu) {
-        int itemsPerPage = getItemsPerPage(activeMenu);
-        int currentPage = activeMenu.getCurrentPage();
-        Set<Integer> levels = new HashSet<>();
-        for (int i = 0; i < itemsPerPage; i++) {
-            levels.add(2 + currentPage * itemsPerPage + i);
-        }
-        return levels;
     }
 
 }

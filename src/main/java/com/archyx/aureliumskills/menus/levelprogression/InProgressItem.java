@@ -6,24 +6,20 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
-import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class InProgressItem extends SkillLevelItem implements TemplateItemProvider<Integer> {
+public class InProgressItem extends SkillLevelItem {
 
     public InProgressItem(AureliumSkills plugin) {
         super(plugin);
-    }
-
-    @Override
-    public Class<Integer> getContext() {
-        return null;
     }
 
     @Override
@@ -34,6 +30,8 @@ public class InProgressItem extends SkillLevelItem implements TemplateItemProvid
         if (playerData == null) return placeholder;
         int level = getLevel(activeMenu, position);
         switch (placeholder) {
+            case "level_in_progress":
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS, locale),"{level}", RomanNumber.toRoman(level));
             case "level_number":
                 return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
             case "rewards":
@@ -57,6 +55,19 @@ public class InProgressItem extends SkillLevelItem implements TemplateItemProvid
 
     @Override
     public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        return getCurrentPageLevels(activeMenu);
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        int itemsPerPage = getItemsPerPage(activeMenu);
+        int currentPage = activeMenu.getCurrentPage();
+        if (playerData != null) {
+            int level = playerData.getSkillLevel(skill);
+            if (level >= 2 + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + 2) {
+                Set<Integer> levels = new HashSet<>();
+                levels.add((level + 1) % itemsPerPage);
+                return levels;
+            }
+        }
+        return new HashSet<>();
     }
+
 }

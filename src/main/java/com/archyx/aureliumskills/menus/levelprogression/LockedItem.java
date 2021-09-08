@@ -1,27 +1,24 @@
 package com.archyx.aureliumskills.menus.levelprogression;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
-import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class LockedItem extends SkillLevelItem implements TemplateItemProvider<Integer> {
+public class LockedItem extends SkillLevelItem {
 
     public LockedItem(AureliumSkills plugin) {
         super(plugin);
-    }
-
-    @Override
-    public Class<Integer> getContext() {
-        return Integer.class;
     }
 
     @Override
@@ -30,6 +27,8 @@ public class LockedItem extends SkillLevelItem implements TemplateItemProvider<I
         Skill skill = (Skill) activeMenu.getProperty("skill");
         int level = getLevel(activeMenu, position);
         switch (placeholder) {
+            case "level_locked":
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_LOCKED, locale),"{level}", RomanNumber.toRoman(level));
             case "level_number":
                 return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
             case "rewards":
@@ -46,6 +45,23 @@ public class LockedItem extends SkillLevelItem implements TemplateItemProvider<I
 
     @Override
     public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        return getCurrentPageLevels(activeMenu);
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            Skill skill = (Skill) activeMenu.getProperty("skill");
+            int level = playerData.getSkillLevel(skill);
+            int itemsPerPage = getItemsPerPage(activeMenu);
+            int currentPage = activeMenu.getCurrentPage();
+            Set<Integer> levels = new HashSet<>();
+            for (int i = itemsPerPage - 1; i >= 0; i--) {
+                if (1 + currentPage * itemsPerPage + i > level) {
+                    levels.add(2 + i);
+                } else {
+                    break;
+                }
+            }
+            return levels;
+        }
+        return new HashSet<>();
     }
+
 }
