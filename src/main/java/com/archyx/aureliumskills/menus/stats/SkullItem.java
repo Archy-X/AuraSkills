@@ -46,7 +46,7 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player) {
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
         if (baseItem.getItemMeta() instanceof SkullMeta) {
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
             meta.setOwningPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()));
