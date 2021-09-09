@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.menus.common.CloseItem;
 import com.archyx.aureliumskills.menus.common.SkillItem;
 import com.archyx.aureliumskills.menus.contexts.SkillContext;
 import com.archyx.aureliumskills.menus.contexts.StatContext;
+import com.archyx.aureliumskills.menus.leaderboard.LeaderboardMenu;
+import com.archyx.aureliumskills.menus.leaderboard.LeaderboardPlayerItem;
 import com.archyx.aureliumskills.menus.levelprogression.*;
 import com.archyx.aureliumskills.menus.skills.SkillsMenu;
 import com.archyx.aureliumskills.menus.skills.YourSkillsItem;
@@ -38,6 +40,7 @@ public class MenuRegistrar {
         menuManager.registerMenuProvider("skills", new SkillsMenu(plugin));
         menuManager.registerMenuProvider("stats", new StatsMenu(plugin));
         menuManager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
+        menuManager.registerMenuProvider("leaderboard", new LeaderboardMenu(plugin));
         // Register items
         menuManager.registerItemProvider("your_skills", new YourSkillsItem(plugin));
         menuManager.registerItemProvider("skill", new SkillItem(plugin));
@@ -51,5 +54,6 @@ public class MenuRegistrar {
         menuManager.registerItemProvider("unlocked", new UnlockedItem(plugin));
         menuManager.registerItemProvider("in_progress", new InProgressItem(plugin));
         menuManager.registerItemProvider("locked", new LockedItem(plugin));
+        menuManager.registerItemProvider("leaderboard_player", new LeaderboardPlayerItem(plugin));
     }
 }

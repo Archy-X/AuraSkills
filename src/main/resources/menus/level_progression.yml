@@ -33,6 +33,12 @@ items:
     display_name: '{previous_page}'
     lore:
       - '{previous_page_click}'
+  leaderboard:
+    pos: 0,3
+    material: gold_ingot
+    display_name: '{leaderboard_name}'
+    lore:
+      - '{leaderboard_click}'
 templates:
   skill:
     pos: 0,0

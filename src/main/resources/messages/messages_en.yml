@@ -568,6 +568,8 @@ menus:
     mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
     mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
     progress: '&7Progress: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
+    leaderboard_name: '&f{skill} Leaderboard'
+    leaderboard_click: '&eClick to view the {skill} leaderboard'
   stats_menu:
     stats_menu_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -589,6 +591,9 @@ menus:
     unclaimed_items_title: 'Claim Items'
     inventory_full: '&eYou do not have enough space in your inventory to claim that item'
     click_to_claim: '&eClick to claim!'
+  leaderboard:
+    leaderboard_title: '{skill} Leaderboard'
+    skill_level: '&7Level: {level}'
 mana_abilities:
   replenish:
     name: Replenish

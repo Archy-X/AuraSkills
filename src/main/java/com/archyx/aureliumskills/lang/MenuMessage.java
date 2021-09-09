@@ -48,6 +48,8 @@ public enum MenuMessage implements MessageKey {
     MANA_ABILITY_UNLOCK(2),
     MANA_ABILITY_LEVEL(2),
     PROGRESS(2),
+    LEADERBOARD_NAME(2),
+    LEADERBOARD_CLICK(2),
     //Stats Menu
     STATS_MENU_TITLE(3),
     PLAYER_STAT_ENTRY(3),
@@ -68,7 +70,10 @@ public enum MenuMessage implements MessageKey {
     // Unclaimed items menu
     UNCLAIMED_ITEMS_TITLE(4),
     INVENTORY_FULL(4),
-    CLICK_TO_CLAIM(4);
+    CLICK_TO_CLAIM(4),
+    // Leaderboard menu
+    LEADERBOARD_TITLE(5),
+    SKILL_LEVEL(5);
     
     private String path;
     
@@ -84,6 +89,8 @@ public enum MenuMessage implements MessageKey {
             this.path = "menus.stats_menu." + key;
         } else if (section == 4) {
             this.path = "menus.unclaimed_items." + key;
+        } else if (section == 5) {
+            this.path = "menus.leaderboard." + key;
         }
     }
 
