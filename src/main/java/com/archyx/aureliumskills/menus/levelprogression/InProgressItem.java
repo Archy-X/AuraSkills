@@ -61,9 +61,15 @@ public class InProgressItem extends SkillLevelItem {
         int currentPage = activeMenu.getCurrentPage();
         if (playerData != null) {
             int level = playerData.getSkillLevel(skill);
-            if (level >= 2 + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + 2) {
+            if (level >= 1 + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + 2) {
                 Set<Integer> levels = new HashSet<>();
-                levels.add((level + 1) % itemsPerPage);
+                int position = (level + 1) % itemsPerPage; // Calculate the first-page equivalent next level
+                if (position == 0) { // Account for next skill level 24
+                    position = 24;
+                } else if (position == 1) { // Account for next skill level 25
+                    position = 25;
+                }
+                levels.add(position);
                 return levels;
             }
         }
