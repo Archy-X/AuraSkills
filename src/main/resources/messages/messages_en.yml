@@ -542,6 +542,8 @@ menus:
     your_skills_click: '&eClick on a Skill to view level progression!'
     skill_click: '&eClick to view Level Progression!'
     skill_locked: '&cYou do no have permission to view this skill!'
+    stats: '&fStats'
+    stats_click: '&7Click to view your stats'
   level_progression_menu:
     level_progression_menu_title: '{skill} Levels - Page {page}'
     your_ranking: '&eYour Skill Ranking'

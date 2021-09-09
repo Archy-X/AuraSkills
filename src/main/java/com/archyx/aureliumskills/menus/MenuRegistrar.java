@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.menus.leaderboard.LeaderboardMenu;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardPlayerItem;
 import com.archyx.aureliumskills.menus.levelprogression.*;
 import com.archyx.aureliumskills.menus.skills.SkillsMenu;
+import com.archyx.aureliumskills.menus.skills.StatsItem;
 import com.archyx.aureliumskills.menus.skills.YourSkillsItem;
 import com.archyx.aureliumskills.menus.stats.SkullItem;
 import com.archyx.aureliumskills.menus.stats.StatItem;
@@ -45,6 +46,7 @@ public class MenuRegistrar {
         menuManager.registerItemProvider("your_skills", new YourSkillsItem(plugin));
         menuManager.registerItemProvider("skill", new SkillItem(plugin));
         menuManager.registerItemProvider("close", new CloseItem(plugin));
+        menuManager.registerItemProvider("stats", new StatsItem(plugin));
         menuManager.registerItemProvider("skull", new SkullItem(plugin));
         menuManager.registerItemProvider("stat", new StatItem(plugin));
         menuManager.registerItemProvider("back", new BackItem(plugin));

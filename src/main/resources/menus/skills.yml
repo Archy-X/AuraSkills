@@ -18,6 +18,12 @@ items:
     pos: 4,8
     material: barrier
     display_name: '{close}'
+  stats:
+    pos: 0,8
+    material: player_head
+    display_name: '{stats}'
+    lore:
+      - '{stats_click}'
 templates:
   skill:
     farming:
