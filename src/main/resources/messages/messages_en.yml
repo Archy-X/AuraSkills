@@ -547,7 +547,7 @@ menus:
     stats_click: '&eClick to learn more or view your stats'
   level_progression_menu:
     level_progression_menu_title: '{skill} Levels - Page {page}'
-    your_ranking: '&eYour Skill Ranking'
+    your_ranking: '&6Your Skill Ranking'
     rank_out_of: '&fYou are ranked &6{rank}&f out of {total} players'
     rank_percent: '&fYou are in the top &6{percent}%&f of players'
     back: '&aGo Back'
@@ -571,7 +571,6 @@ menus:
     mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
     mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
     progress: '&7Progress: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
-    leaderboard_name: '&f{skill} Leaderboard'
     leaderboard_click: '&eClick to view the {skill} leaderboard'
   stats_menu:
     stats_menu_title: Your Stats
@@ -596,6 +595,7 @@ menus:
     click_to_claim: '&eClick to claim!'
   leaderboard:
     leaderboard_title: '{skill} Leaderboard'
+    player_entry: '&e{place}. &6{player}'
     skill_level: '&7Level: &f{level}'
 mana_abilities:
   replenish:

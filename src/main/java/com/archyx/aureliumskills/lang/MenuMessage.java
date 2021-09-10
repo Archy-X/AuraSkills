@@ -51,7 +51,6 @@ public enum MenuMessage implements MessageKey {
     MANA_ABILITY_UNLOCK(2),
     MANA_ABILITY_LEVEL(2),
     PROGRESS(2),
-    LEADERBOARD_NAME(2),
     LEADERBOARD_CLICK(2),
     //Stats Menu
     STATS_MENU_TITLE(3),
@@ -76,6 +75,7 @@ public enum MenuMessage implements MessageKey {
     CLICK_TO_CLAIM(4),
     // Leaderboard menu
     LEADERBOARD_TITLE(5),
+    PLAYER_ENTRY(5),
     SKILL_LEVEL(5);
     
     private String path;

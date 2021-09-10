@@ -11,6 +11,8 @@ items:
     lore:
       - '{out_of}'
       - '{percent}'
+      - ' '
+      - '{leaderboard_click}'
   back:
     pos: 5,0
     material: arrow
@@ -33,12 +35,6 @@ items:
     display_name: '{previous_page}'
     lore:
       - '{previous_page_click}'
-  leaderboard:
-    pos: 0,2
-    material: sunflower
-    display_name: '{leaderboard_name}'
-    lore:
-      - '{leaderboard_click}'
 templates:
   skill:
     pos: 0,0

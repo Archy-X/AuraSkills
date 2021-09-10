@@ -33,6 +33,6 @@ templates:
       pos: 3,6
     10:
       pos: 3,7
-    display_name: '&b{place}. &3{player}'
+    display_name: '{player_entry}'
     lore:
       - '{skill_level}'

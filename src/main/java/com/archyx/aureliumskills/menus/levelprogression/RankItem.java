@@ -10,9 +10,13 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
+import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
+import java.util.Map;
 
 public class RankItem extends AbstractItem implements SingleItemProvider {
 
@@ -42,8 +46,18 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),
                             "{percent}", NumberUtil.format2(percent));
                 }
+            case "leaderboard_click":
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEADERBOARD_CLICK, locale),
+                        "{skill}", skill.getDisplayName(locale));
         }
         return placeholder;
+    }
+
+    @Override
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+        Map<String, Object> properties = activeMenu.getProperties();
+        properties.put("previous_menu", "level_progression");
+        plugin.getSlate().getMenuManager().openMenu(player, "leaderboard", properties, 1);
     }
 
     private double getPercent(Skill skill, Player player) {

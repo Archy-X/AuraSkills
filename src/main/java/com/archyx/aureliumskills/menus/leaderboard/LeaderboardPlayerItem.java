@@ -32,15 +32,14 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer place) {
         Locale locale = plugin.getLang().getLocale(player);
         Skill skill = (Skill) activeMenu.getProperty("skill");
+        SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
         switch (placeholder) {
-            case "place":
-                return String.valueOf(place);
-            case "player":
-                SkillValue skillValue = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
-                UUID id = skillValue.getId();
-                return Bukkit.getOfflinePlayer(id).getName();
+            case "player_entry":
+                UUID id = value.getId();
+                return TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_ENTRY, locale),
+                        "{place}", String.valueOf(place),
+                        "{player}", Bukkit.getOfflinePlayer(id).getName());
             case "skill_level":
-                SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
                 return TextUtil.replace(Lang.getMessage(MenuMessage.SKILL_LEVEL, locale),
                         "{level}", String.valueOf(value.getLevel()));
         }
