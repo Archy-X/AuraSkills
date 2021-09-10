@@ -542,8 +542,9 @@ menus:
     your_skills_click: '&eClick on a Skill to view level progression!'
     skill_click: '&eClick to view Level Progression!'
     skill_locked: '&cYou do no have permission to view this skill!'
-    stats: '&fStats'
-    stats_click: '&7Click to view your stats'
+    stats: '&bStats'
+    stats_desc: '&7Earn stat buffs by leveling up skills'
+    stats_click: '&eClick to learn more or view your stats'
   level_progression_menu:
     level_progression_menu_title: '{skill} Levels - Page {page}'
     your_ranking: '&eYour Skill Ranking'
@@ -595,7 +596,7 @@ menus:
     click_to_claim: '&eClick to claim!'
   leaderboard:
     leaderboard_title: '{skill} Leaderboard'
-    skill_level: '&7Level: {level}'
+    skill_level: '&7Level: &f{level}'
 mana_abilities:
   replenish:
     name: Replenish
@@ -741,4 +742,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 23
+file_version: 24

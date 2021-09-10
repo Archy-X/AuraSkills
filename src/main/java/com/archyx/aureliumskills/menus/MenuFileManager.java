@@ -29,8 +29,13 @@ public class MenuFileManager {
         for (String menuName : manager.getMenuProviderNames()) {
             File file = new File(plugin.getDataFolder() + "/menus", menuName + ".yml");
             if (file.exists()) {
-                manager.loadMenu(file);
-                menusLoaded++;
+                try {
+                    manager.loadMenu(file);
+                    menusLoaded++;
+                } catch (Exception e) {
+                    plugin.getLogger().warning("Error loading menu " + menuName);
+                    e.printStackTrace();
+                }
             }
         }
         plugin.getLogger().info("Loaded " + menusLoaded + " menus");

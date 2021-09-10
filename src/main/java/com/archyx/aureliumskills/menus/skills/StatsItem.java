@@ -28,6 +28,8 @@ public class StatsItem extends AbstractItem implements SingleItemProvider {
         switch (placeholder) {
             case "stats":
                 return Lang.getMessage(MenuMessage.STATS, locale);
+            case "stats_desc":
+                return Lang.getMessage(MenuMessage.STATS_DESC, locale);
             case "stats_click":
                 return Lang.getMessage(MenuMessage.STATS_CLICK, locale);
         }

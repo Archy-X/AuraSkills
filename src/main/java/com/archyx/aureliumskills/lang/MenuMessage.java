@@ -23,6 +23,7 @@ public enum MenuMessage implements MessageKey {
     SKILL_CLICK(1),
     SKILL_LOCKED(1),
     STATS(1),
+    STATS_DESC(1),
     STATS_CLICK(1),
     //Level Progression Menu
     LEVEL_PROGRESSION_MENU_TITLE(2),

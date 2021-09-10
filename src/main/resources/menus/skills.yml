@@ -23,6 +23,8 @@ items:
     material: player_head
     display_name: '{stats}'
     lore:
+      - '{stats_desc}'
+      - ' '
       - '{stats_click}'
 templates:
   skill:

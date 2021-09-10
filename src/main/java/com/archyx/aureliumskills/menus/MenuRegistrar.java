@@ -56,6 +56,7 @@ public class MenuRegistrar {
         menuManager.registerItemProvider("unlocked", new UnlockedItem(plugin));
         menuManager.registerItemProvider("in_progress", new InProgressItem(plugin));
         menuManager.registerItemProvider("locked", new LockedItem(plugin));
+        menuManager.registerItemProvider("leaderboard", new LeaderboardItem(plugin));
         menuManager.registerItemProvider("leaderboard_player", new LeaderboardPlayerItem(plugin));
     }
 }

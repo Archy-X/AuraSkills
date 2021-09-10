@@ -34,8 +34,8 @@ items:
     lore:
       - '{previous_page_click}'
   leaderboard:
-    pos: 0,3
-    material: gold_ingot
+    pos: 0,2
+    material: sunflower
     display_name: '{leaderboard_name}'
     lore:
       - '{leaderboard_click}'

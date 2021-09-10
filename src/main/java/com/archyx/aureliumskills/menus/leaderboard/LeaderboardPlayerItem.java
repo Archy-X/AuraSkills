@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.menus.leaderboard;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.leaderboard.SkillValue;
@@ -16,10 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemProvider<Integer> {
 
@@ -45,12 +41,8 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
                 return Bukkit.getOfflinePlayer(id).getName();
             case "skill_level":
                 SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
-                UUID uuid = value.getId();
-                PlayerData playerData = plugin.getPlayerManager().getPlayerData(uuid);
-                if (playerData != null) {
-                    return TextUtil.replace(Lang.getMessage(MenuMessage.SKILL_LEVEL, locale),
-                            "{level}", String.valueOf(playerData.getSkillLevel(skill)));
-                }
+                return TextUtil.replace(Lang.getMessage(MenuMessage.SKILL_LEVEL, locale),
+                        "{level}", String.valueOf(value.getLevel()));
         }
         return placeholder;
     }
@@ -67,7 +59,11 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     @Override
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer place) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
-        SkillValue skillValue = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
+        List<SkillValue> values = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1);
+        if (values.size() == 0) {
+            return null;
+        }
+        SkillValue skillValue = values.get(0);
         UUID id = skillValue.getId();
         if (baseItem.getItemMeta() instanceof SkullMeta) {
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
