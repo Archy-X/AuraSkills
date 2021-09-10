@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 
 public class ReloadManager {
@@ -39,17 +38,8 @@ public class ReloadManager {
         lang.loadEmbeddedMessages(plugin.getCommandManager());
         lang.loadLanguages(plugin.getCommandManager());
         // Load menus
-        try {
-            plugin.getMenuLoader().load();
-        }
-        catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
-            if (sender instanceof Player) {
-                sender.sendMessage(ChatColor.YELLOW + "[AureliumSkills] Error while loading menus, see console for details");
-            } else {
-                Bukkit.getLogger().warning("[AureliumSkills] Error while loading menus!");
-            }
-        }
+        plugin.getMenuFileManager().generateDefaultFiles();
+        plugin.getMenuFileManager().loadMenus();
         // Load ability_config
         plugin.getAbilityManager().loadOptions();
 
