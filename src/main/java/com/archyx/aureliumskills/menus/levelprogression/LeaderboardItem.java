@@ -15,6 +15,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
+import java.util.Map;
 
 public class LeaderboardItem extends AbstractItem implements SingleItemProvider {
 
@@ -39,6 +40,8 @@ public class LeaderboardItem extends AbstractItem implements SingleItemProvider 
 
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
-        plugin.getSlate().getMenuManager().openMenu(player, "leaderboard", activeMenu.getProperties(), 1);
+        Map<String, Object> properties = activeMenu.getProperties();
+        properties.put("previous_menu", "level_progression");
+        plugin.getSlate().getMenuManager().openMenu(player, "leaderboard", properties, 1);
     }
 }

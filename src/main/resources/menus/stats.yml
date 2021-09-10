@@ -15,6 +15,12 @@ items:
       - '{luck}'
       - '{wisdom}'
       - '{toughness}'
+  back:
+    material: arrow
+    pos: 2,4
+    display_name: '{back}'
+    lore:
+      - '{back_click}'
 templates:
   stat:
     strength:

@@ -551,7 +551,7 @@ menus:
     rank_out_of: '&fYou are ranked &6{rank}&f out of {total} players'
     rank_percent: '&fYou are in the top &6{percent}%&f of players'
     back: '&aGo Back'
-    back_click: '&7Back to Skills Menu'
+    back_click: '&7Back to {menu_name} Menu'
     next_page: '&6Next Page'
     next_page_click: '&eClick to go to next page'
     previous_page: '&6Previous Page'

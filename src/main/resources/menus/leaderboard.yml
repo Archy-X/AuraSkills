@@ -3,6 +3,13 @@ size: 5
 fill:
   enabled: true
   material: black_stained_glass_pane
+items:
+  back:
+    material: arrow
+    pos: 4,4
+    display_name: '{back}'
+    lore:
+      - '{back_click}'
 templates:
   leaderboard_player:
     material: player_head

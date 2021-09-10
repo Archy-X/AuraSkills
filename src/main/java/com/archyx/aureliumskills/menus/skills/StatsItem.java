@@ -14,7 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class StatsItem extends AbstractItem implements SingleItemProvider {
 
@@ -38,7 +40,9 @@ public class StatsItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
-        plugin.getSlate().getMenuManager().openMenu(player, "stats");
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("previous_menu", "skills");
+        plugin.getSlate().getMenuManager().openMenu(player, "stats", properties, 1);
     }
 
     @Override
