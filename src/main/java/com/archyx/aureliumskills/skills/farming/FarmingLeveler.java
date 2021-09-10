@@ -133,6 +133,9 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 		Block block = event.getClickedBlock();
 		if (block == null) return;
 
+		if (blockXpGainLocation(block.getLocation(), player)) return;
+		if (blockXpGainPlayer(player)) return;
+
 		for (FarmingSource source : FarmingSource.values()) {
 			if (!source.isRightClickHarvestable()) continue;
 
