@@ -19,18 +19,18 @@ import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import com.google.common.collect.ImmutableList;
-import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
 import java.util.function.Supplier;
 
-public class SkillItem extends AbstractItem implements TemplateItemProvider<Skill> {
+public abstract class AbstractSkillItem extends AbstractItem implements TemplateItemProvider<Skill> {
 
-    public SkillItem(AureliumSkills plugin) {
+    public AbstractSkillItem(AureliumSkills plugin) {
         super(plugin);
     }
 
@@ -77,40 +77,7 @@ public class SkillItem extends AbstractItem implements TemplateItemProvider<Skil
         return placeholder;
     }
 
-    @Override
-    public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("skill");
-        if (property != null) {
-            Skill skill = (Skill) property;
-            Set<Skill> skills = new HashSet<>();
-            skills.add(skill);
-            return skills;
-        }
-        return new HashSet<>(plugin.getSkillRegistry().getSkills());
-    }
-
-    @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu, Skill skill) {
-        if (activeMenu.getProperty("skill") != null) { // Item in level progression menu is not clickable
-            return;
-        }
-
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData == null) {
-            return;
-        }
-
-        if (player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ENGLISH))) {
-            int page = getPage(skill, playerData);
-            Map<String, Object> properties = new HashMap<>();
-            properties.put("skill", skill);
-            properties.put("items_per_page", 24);
-            properties.put("previous_menu", "skills");
-            plugin.getSlate().getMenuManager().openMenu(player, "level_progression", properties, page);
-        }
-    }
-
-    private int getPage(Skill skill, PlayerData playerData) {
+    protected int getPage(Skill skill, PlayerData playerData) {
         int page = (playerData.getSkillLevel(skill) - 2) / 24;
         int maxLevelPage = (OptionL.getMaxLevel(skill) - 2) / 24;
         if (page > maxLevelPage) {

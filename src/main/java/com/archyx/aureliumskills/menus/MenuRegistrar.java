@@ -3,12 +3,13 @@ package com.archyx.aureliumskills.menus;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.menus.common.BackItem;
 import com.archyx.aureliumskills.menus.common.CloseItem;
-import com.archyx.aureliumskills.menus.common.SkillItem;
 import com.archyx.aureliumskills.menus.contexts.SkillContext;
 import com.archyx.aureliumskills.menus.contexts.StatContext;
+import com.archyx.aureliumskills.menus.leaderboard.BackToLevelProgressionItem;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardMenu;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardPlayerItem;
 import com.archyx.aureliumskills.menus.levelprogression.*;
+import com.archyx.aureliumskills.menus.skills.ClickableSkillItem;
 import com.archyx.aureliumskills.menus.skills.SkillsMenu;
 import com.archyx.aureliumskills.menus.skills.StatsItem;
 import com.archyx.aureliumskills.menus.skills.YourSkillsItem;
@@ -19,6 +20,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.slate.Slate;
 import com.archyx.slate.context.ContextManager;
+import com.archyx.slate.item.provider.ProviderManager;
 import com.archyx.slate.menu.MenuManager;
 
 public class MenuRegistrar {
@@ -37,26 +39,36 @@ public class MenuRegistrar {
         contextManager.registerContext(Skill.class, new SkillContext(plugin));
         contextManager.registerContext(Stat.class, new StatContext(plugin));
 
-        MenuManager menuManager = slate.getMenuManager();
+        MenuManager manager = slate.getMenuManager();
         // Register menus
-        menuManager.registerMenuProvider("skills", new SkillsMenu(plugin));
-        menuManager.registerMenuProvider("stats", new StatsMenu(plugin));
-        menuManager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
-        menuManager.registerMenuProvider("leaderboard", new LeaderboardMenu(plugin));
+        manager.registerMenuProvider("skills", new SkillsMenu(plugin));
+        manager.registerMenuProvider("stats", new StatsMenu(plugin));
+        manager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
+        manager.registerMenuProvider("leaderboard", new LeaderboardMenu(plugin));
+        // Global items
+        manager.registerSingleItem("back", new BackItem(plugin));
+        manager.registerSingleItem("close", new CloseItem(plugin));
         // Register items
-        menuManager.registerItemProvider("your_skills", new YourSkillsItem(plugin));
-        menuManager.registerItemProvider("skill", new SkillItem(plugin));
-        menuManager.registerItemProvider("close", new CloseItem(plugin));
-        menuManager.registerItemProvider("stats", new StatsItem(plugin));
-        menuManager.registerItemProvider("skull", new SkullItem(plugin));
-        menuManager.registerItemProvider("stat", new StatItem(plugin));
-        menuManager.registerItemProvider("back", new BackItem(plugin));
-        menuManager.registerItemProvider("next_page", new NextPageItem(plugin));
-        menuManager.registerItemProvider("previous_page", new PreviousPageItem(plugin));
-        menuManager.registerItemProvider("rank", new RankItem(plugin));
-        menuManager.registerItemProvider("unlocked", new UnlockedItem(plugin));
-        menuManager.registerItemProvider("in_progress", new InProgressItem(plugin));
-        menuManager.registerItemProvider("locked", new LockedItem(plugin));
-        menuManager.registerItemProvider("leaderboard_player", new LeaderboardPlayerItem(plugin));
+        ProviderManager skills = manager.getProviderManager("skills");
+        skills.registerSingleItem("your_skills", new YourSkillsItem(plugin));
+        skills.registerSingleItem("stats", new StatsItem(plugin));
+        skills.registerTemplateItem("skill", new ClickableSkillItem(plugin));
+
+        ProviderManager stats = manager.getProviderManager("stats");
+        stats.registerSingleItem("skull", new SkullItem(plugin));
+        stats.registerTemplateItem("stat", new StatItem(plugin));
+
+        ProviderManager levelProgression = manager.getProviderManager("level_progression");
+        levelProgression.registerSingleItem("next_page", new NextPageItem(plugin));
+        levelProgression.registerSingleItem("previous_page", new PreviousPageItem(plugin));
+        levelProgression.registerSingleItem("rank", new RankItem(plugin));
+        levelProgression.registerTemplateItem("skill", new StaticSkillItem(plugin));
+        levelProgression.registerTemplateItem("unlocked", new UnlockedItem(plugin));
+        levelProgression.registerTemplateItem("in_progress", new InProgressItem(plugin));
+        levelProgression.registerTemplateItem("locked", new LockedItem(plugin));
+
+        ProviderManager leaderboard = manager.getProviderManager("leaderboard");
+        leaderboard.registerSingleItem("back", new BackToLevelProgressionItem(plugin));
+        leaderboard.registerTemplateItem("leaderboard_player", new LeaderboardPlayerItem(plugin));
     }
 }

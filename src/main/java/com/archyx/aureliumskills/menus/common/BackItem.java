@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.menus.common;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
-import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.SingleItemProvider;
@@ -14,9 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class BackItem extends AbstractItem implements SingleItemProvider {
 
@@ -44,16 +41,7 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
         Object object = activeMenu.getProperty("previous_menu");
         if (object != null) {
             String previousMenu = (String) object;
-            if (previousMenu.equals("level_progression")) {
-                Skill skill = (Skill) activeMenu.getProperty("skill");
-                Map<String, Object> properties = new HashMap<>();
-                properties.put("skill", skill);
-                properties.put("items_per_page", 24);
-                properties.put("previous_menu", "skills");
-                plugin.getSlate().getMenuManager().openMenu(player, previousMenu, properties, 1);
-            } else {
-                plugin.getSlate().getMenuManager().openMenu(player, previousMenu);
-            }
+            plugin.getSlate().getMenuManager().openMenu(player, previousMenu);
         }
     }
 
