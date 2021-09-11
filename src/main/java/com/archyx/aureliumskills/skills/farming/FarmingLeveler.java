@@ -140,7 +140,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			if (!source.isRightClickHarvestable()) continue;
 
 			if (!source.isMatch(block)) continue;
-			if (player.isSneaking() && player.getInventory().getItemInMainHand().getType() != Material.AIR) {
+			if (player.isSneaking() && isHoldingItem(player)) {
 				return;
 			}
 
@@ -168,6 +168,10 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 			}
 			break;
 		}
+	}
+
+	private boolean isHoldingItem(Player player) {
+		return player.getInventory().getItemInMainHand().getType() != Material.AIR || player.getInventory().getItemInOffHand().getType() != Material.AIR;
 	}
 
 	private int getSameBlocksAbove(Block block, FarmingSource source, int num) {
