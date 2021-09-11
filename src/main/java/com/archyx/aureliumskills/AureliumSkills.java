@@ -58,7 +58,6 @@ import com.archyx.aureliumskills.skills.enchanting.EnchantingAbilities;
 import com.archyx.aureliumskills.skills.enchanting.EnchantingLeveler;
 import com.archyx.aureliumskills.skills.endurance.EnduranceAbilities;
 import com.archyx.aureliumskills.skills.endurance.EnduranceLeveler;
-import com.archyx.aureliumskills.skills.excavation.ExcavationAbilities;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLootHandler;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
@@ -111,7 +110,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -156,7 +154,6 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
-	private ExcavationAbilities excavationAbilities;
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
@@ -253,14 +250,6 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers Commands
 		registerCommands();
 		// Load menu
-		menuLoader = new MenuLoader(this);
-		try {
-			menuLoader.load();
-		}
-		catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-			e.printStackTrace();
-			getLogger().warning("Error loading menus!");
-		}
 		slate = new Slate(this);
 		registerMenus();
 		// Region manager
@@ -537,8 +526,6 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ForagingAbilities(this), this);
 		pm.registerEvents(new MiningAbilities(this), this);
 		pm.registerEvents(new FishingAbilities(this), this);
-		excavationAbilities = new ExcavationAbilities(this);
-		pm.registerEvents(excavationAbilities, this);
 		pm.registerEvents(new ArcheryAbilities(this), this);
 		DefenseAbilities defenseAbilities = new DefenseAbilities(this);
 		pm.registerEvents(defenseAbilities, this);
@@ -775,10 +762,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public SkillRegistry getSkillRegistry() {
 		return skillRegistry;
-	}
-
-	public ExcavationAbilities getExcavationAbilities() {
-		return excavationAbilities;
 	}
 
 	public LuckPermsSupport getLuckPermsSupport() {
