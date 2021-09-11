@@ -39,7 +39,7 @@ public class MenuRegistrar {
         contextManager.registerContext(Skill.class, new SkillContext(plugin));
         contextManager.registerContext(Stat.class, new StatContext(plugin));
 
-        MenuManager manager = slate.getMenuManager();
+        MenuManager manager = plugin.getMenuManager();
         // Register menus
         manager.registerMenuProvider("skills", new SkillsMenu(plugin));
         manager.registerMenuProvider("stats", new StatsMenu(plugin));

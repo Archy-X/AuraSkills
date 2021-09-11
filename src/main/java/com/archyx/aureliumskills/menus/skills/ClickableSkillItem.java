@@ -31,7 +31,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
             properties.put("skill", skill);
             properties.put("items_per_page", 24);
             properties.put("previous_menu", "skills");
-            plugin.getSlate().getMenuManager().openMenu(player, "level_progression", properties, page);
+            plugin.getMenuManager().openMenu(player, "level_progression", properties, page);
         }
     }
 

@@ -12,7 +12,7 @@ public class MenuFileManager {
 
     public MenuFileManager(AureliumSkills plugin) {
         this.plugin = plugin;
-        this.manager = plugin.getSlate().getMenuManager();
+        this.manager = plugin.getMenuManager();
     }
 
     public void generateDefaultFiles() {

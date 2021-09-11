@@ -57,7 +57,7 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
         Map<String, Object> properties = activeMenu.getProperties();
         properties.put("previous_menu", "level_progression");
-        plugin.getSlate().getMenuManager().openMenu(player, "leaderboard", properties, 1);
+        plugin.getMenuManager().openMenu(player, "leaderboard", properties, 1);
     }
 
     private double getPercent(Skill skill, Player player) {

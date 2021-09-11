@@ -60,7 +60,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.skills")
 	@Description("Opens the Skills menu, where you can browse skills, progress, and abilities.")
 	public void onSkills(Player player) {
-		plugin.getSlate().getMenuManager().openMenu(player, "skills");
+		plugin.getMenuManager().openMenu(player, "skills");
 	}
 	
 	@Subcommand("xp add")

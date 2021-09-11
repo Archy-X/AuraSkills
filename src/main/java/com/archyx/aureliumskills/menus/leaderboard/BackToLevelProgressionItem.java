@@ -25,7 +25,7 @@ public class BackToLevelProgressionItem extends BackItem {
         properties.put("skill", skill);
         properties.put("items_per_page", 24);
         properties.put("previous_menu", "skills");
-        plugin.getSlate().getMenuManager().openMenu(player, "level_progression", properties, 1);
+        plugin.getMenuManager().openMenu(player, "level_progression", properties, 1);
     }
 
 }

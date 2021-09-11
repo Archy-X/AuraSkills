@@ -41,7 +41,7 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
         Object object = activeMenu.getProperty("previous_menu");
         if (object != null) {
             String previousMenu = (String) object;
-            plugin.getSlate().getMenuManager().openMenu(player, previousMenu);
+            plugin.getMenuManager().openMenu(player, previousMenu);
         }
     }
 

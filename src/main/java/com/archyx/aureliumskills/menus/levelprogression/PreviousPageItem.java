@@ -34,7 +34,7 @@ public class PreviousPageItem extends AbstractItem implements SingleItemProvider
 
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
-        plugin.getSlate().getMenuManager().openMenu(player, "level_progression", activeMenu.getProperties(), activeMenu.getCurrentPage() - 1);
+        plugin.getMenuManager().openMenu(player, "level_progression", activeMenu.getProperties(), activeMenu.getCurrentPage() - 1);
     }
 
     @Override

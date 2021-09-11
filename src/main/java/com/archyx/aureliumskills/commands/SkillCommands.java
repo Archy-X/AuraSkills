@@ -55,7 +55,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -70,7 +70,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -85,7 +85,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -100,7 +100,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -115,7 +115,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -130,7 +130,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -145,7 +145,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -160,7 +160,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -175,7 +175,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -190,7 +190,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -205,7 +205,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -220,7 +220,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -235,7 +235,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -250,7 +250,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }
@@ -265,7 +265,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getSlate().getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
             }
         }
     }

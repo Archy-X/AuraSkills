@@ -42,7 +42,7 @@ public class StatsItem extends AbstractItem implements SingleItemProvider {
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("previous_menu", "skills");
-        plugin.getSlate().getMenuManager().openMenu(player, "stats", properties, 1);
+        plugin.getMenuManager().openMenu(player, "stats", properties, 1);
     }
 
     @Override

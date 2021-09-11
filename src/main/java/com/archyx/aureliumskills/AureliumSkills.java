@@ -90,6 +90,7 @@ import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.archyx.slate.Slate;
+import com.archyx.slate.menu.MenuManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import fr.minuskube.inv.InventoryManager;
@@ -783,6 +784,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Slate getSlate() {
 		return slate;
+	}
+
+	public MenuManager getMenuManager() {
+		return slate.getMenuManager();
 	}
 
 	public MenuFileManager getMenuFileManager() {
