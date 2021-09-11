@@ -597,6 +597,23 @@ menus:
     leaderboard_title: '{skill} Leaderboard'
     player_entry: '&e{place}. &6{player}'
     skill_level: '&7Level: &f{level}'
+  sources:
+    sources_title: '{skill} XP Sources'
+    sorter: '&bSort XP Sources'
+    sort_type: '&7{selected}{type_name}'
+    selected: '&f> '
+    sort_order: '{descending}\n{ascending}\n{alphabetical}\n{reverse_alphabetical}'
+    descending: 'Highest to Lowest'
+    ascending: 'Lowest to Highest'
+    alphabetical: 'Name (A-Z)'
+    reverse_alphabetical: 'Name (Z-A)'
+    sort_click: '&eClick to cycle sort type'
+    source_name: '&f{name}'
+    source_xp: '&7XP: &a{xp}'
+    source_xp_rate: '&7XP: &a{xp} / {unit}'
+    multiplied_xp: '\n&fMultiplied XP: &a{xp}'
+    multiplied_xp_rate: '\n&fMultiplied XP: &a{xp} / {unit}'
+    multiplied_desc: '\n&7&oThis is the XP you will actually earn based on\nyour current XP multipliers from abilities or other factors'
 mana_abilities:
   replenish:
     name: Replenish

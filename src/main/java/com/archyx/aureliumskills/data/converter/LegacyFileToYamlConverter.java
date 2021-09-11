@@ -63,7 +63,6 @@ public class LegacyFileToYamlConverter extends DataConverter {
                     }
                 }
             }
-            // TODO Test FileUtil renaming works
             String renamedName = FileUtil.renameNoDuplicates(file, "data-OLD.yml", plugin.getDataFolder());
             if (renamedName != null) {
                 Bukkit.getLogger().info("[AureliumSkills] Successfully renamed data.yml to " + renamedName);
