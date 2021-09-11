@@ -26,7 +26,7 @@ import java.util.*;
 
 public class Lang implements Listener {
 
-	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de", "lt", "ru"};
+	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de", "lt", "ru", "it"};
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static Map<Locale, String> definedLanguages;
 	private static Locale defaultLanguage;
