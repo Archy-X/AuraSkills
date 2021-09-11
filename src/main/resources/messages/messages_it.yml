@@ -1,5 +1,6 @@
----
-#Aurelium Skills message file
+# Aurelium Skills Italian (it) messages
+# Translators: Interity
+# Contribute here: https://crowdin.com/project/aureliumskills/it#
 abilities:
   farming:
     bountiful_harvest:
