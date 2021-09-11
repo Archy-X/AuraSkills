@@ -14,8 +14,8 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -48,7 +48,7 @@ public class YamlStorageProvider extends StorageProvider {
                 }
                 // Load skill data
                 for (Skill skill : Skills.values()) {
-                    String path = "skills." + skill.name().toLowerCase() + ".";
+                    String path = "skills." + skill.name().toLowerCase(Locale.ROOT) + ".";
                     int level = config.getInt(path + "level", 1);
                     double xp = config.getDouble(path + "xp", 0.0);
                     playerData.setSkillLevel(skill, level);
