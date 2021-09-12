@@ -1,3 +1,15 @@
+Version Beta 1.2.3
+  Changes:
+    - Add Italian messages
+    - Update Polish messages
+    - Update Russian messages
+  API Changes:
+    - Add getPlugin method to more easily get AureliumSkills instance (not official API, use at own risk)
+  Bug Fixes:
+    - Fix sweet berry bush right click not checking for blocked situations
+    - Fix glow berries XP dupe
+    - Fix some skills resetting on Turkish systems
+
 Version Beta 1.2.2
   New Features:
     - Add requirement.enabled to set whether requirements should checked
