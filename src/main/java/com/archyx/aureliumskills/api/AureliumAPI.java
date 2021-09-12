@@ -20,8 +20,21 @@ public class AureliumAPI {
 
     private static AureliumSkills plugin;
 
+    /**
+     * Internal usage only.
+     * Sets the {@link AureliumSkills} instance that will be used by all methods.
+     * @param plugin AureliumSkills instance
+     */
     public static void setPlugin(AureliumSkills plugin) {
         AureliumAPI.plugin = plugin;
+    }
+
+    /**
+     * Provides the {@link AureliumSkills} plugin instance.
+     * @return AureliumSkills instance.
+     */
+    public static AureliumSkills getPlugin() {
+        return plugin;
     }
 
     /**
