@@ -29,6 +29,4 @@ templates:
     material: gray_dye
     display_name: '{source_name}'
     lore:
-      - '{source_xp}'
-      - '{multiplied_xp}'
-      - '{multiplied_desc}'
+      - '{source_xp}{multiplied_xp}{multiplied_desc}'

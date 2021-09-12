@@ -131,16 +131,18 @@ public class Lang implements Listener {
 					}
 				}
 				// Create custom key if not found
-				if (key == null) {
+				if (key == null && !path.startsWith("acf")) {
 					key = new CustomMessageKey(path);
 				}
-				String message = config.getString(path);
-				if (message != null) {
-					messages.put(key, TextUtil.replace(message
-							,"&", "§"
-							,"{mana_unit}", units.get(UnitMessage.MANA)
-							,"{hp_unit}", units.get(UnitMessage.HP)
-							,"{xp_unit}", units.get(UnitMessage.XP)));
+				if (key != null) {
+					String message = config.getString(path);
+					if (message != null) {
+						messages.put(key, TextUtil.replace(message
+								, "&", "§"
+								, "{mana_unit}", units.get(UnitMessage.MANA)
+								, "{hp_unit}", units.get(UnitMessage.HP)
+								, "{xp_unit}", units.get(UnitMessage.XP)));
+					}
 				}
 			}
 		}

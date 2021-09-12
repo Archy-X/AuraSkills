@@ -64,7 +64,12 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                     return "";
                 }
             case "multiplied_desc":
-                return Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
+                Skill skill1 = (Skill) activeMenu.getProperty("skill");
+                if (plugin.getLeveler().getMultiplier(player, skill1) > 1.0) {
+                    return Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
+                } else {
+                    return "";
+                }
         }
         return placeholder;
     }
@@ -81,7 +86,11 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
         List<Source> allSources = Arrays.asList(plugin.getSourceRegistry().values(skill));
         allSources.sort(sortType.getComparator(plugin, locale));
         // Gets a sublist of the sources displayed based on the current page
-        List<Source> shownSources = allSources.subList(page * itemsPerPage, (page + 1) * itemsPerPage);
+        int toIndex = (page + 1) * itemsPerPage;
+        if (toIndex > allSources.size()) {
+            toIndex = allSources.size();
+        }
+        List<Source> shownSources = allSources.subList(page * itemsPerPage, toIndex);
         activeMenu.setProperty("sources", shownSources); // Set sorted sources property for easy access in other methods
         return new HashSet<>(shownSources);
     }
@@ -92,8 +101,8 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
         int index = sources.indexOf(source);
         if (index != -1) {
             // Convert index of source into position on menu
-            int row = 1 + index / 9;
-            int column = 1 + index % 9;
+            int row = 1 + index / 7;
+            int column = 1 + index % 7;
             return SlotPos.of(row, column);
         } else {
             return null;
@@ -102,7 +111,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
 
     @Override
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Source source) {
-        if (baseItem.getType() != XMaterial.LIGHT_GRAY_DYE.parseMaterial()) {
+        if (baseItem.getType() != XMaterial.GRAY_DYE.parseMaterial()) {
             return baseItem;
         }
         return source.getMenuItem();

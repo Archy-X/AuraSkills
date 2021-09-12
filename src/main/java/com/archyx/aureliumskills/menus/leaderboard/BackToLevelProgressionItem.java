@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.menus.leaderboard;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menus.common.BackItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.slate.menu.ActiveMenu;
@@ -25,7 +27,19 @@ public class BackToLevelProgressionItem extends BackItem {
         properties.put("skill", skill);
         properties.put("items_per_page", 24);
         properties.put("previous_menu", "skills");
-        plugin.getMenuManager().openMenu(player, "level_progression", properties, 1);
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData != null) {
+            plugin.getMenuManager().openMenu(player, "level_progression", properties, getPage(skill, playerData));
+        }
+    }
+
+    private int getPage(Skill skill, PlayerData playerData) {
+        int page = (playerData.getSkillLevel(skill) - 2) / 24;
+        int maxLevelPage = (OptionL.getMaxLevel(skill) - 2) / 24;
+        if (page > maxLevelPage) {
+            page = maxLevelPage;
+        }
+        return page;
     }
 
 }

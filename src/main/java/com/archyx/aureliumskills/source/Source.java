@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.source;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
@@ -17,7 +18,12 @@ public interface Source {
 
     default String getDisplayName(Locale locale) {
         String messagePath = "sources." + getSkill().toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
-        return Lang.getMessage(new CustomMessageKey(messagePath), locale);
+        String message = Lang.getMessage(new CustomMessageKey(messagePath), locale);
+        if (message == null) {
+            Bukkit.getLogger().warning("Unknown message with path " + messagePath);
+            return messagePath;
+        }
+        return message;
     }
 
     /**

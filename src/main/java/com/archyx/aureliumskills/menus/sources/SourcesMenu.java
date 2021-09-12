@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menus.AbstractMenu;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.menu.ActiveMenu;
 import com.archyx.slate.menu.MenuProvider;
 import org.bukkit.entity.Player;
@@ -22,7 +23,11 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
         Locale locale = plugin.getLang().getLocale(player);
         if (placeholder.equals("sources_title")) {
-            return Lang.getMessage(MenuMessage.SOURCES_TITLE, locale);
+            Skill skill = (Skill) activeMenu.getProperty("skill");
+            return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_TITLE, locale),
+                    "{skill}", skill.getDisplayName(locale),
+                    "{current_page}", String.valueOf(activeMenu.getCurrentPage() + 1),
+                    "{total_pages}", String.valueOf(activeMenu.getTotalPages()));
         }
         return placeholder;
     }

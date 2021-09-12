@@ -572,6 +572,9 @@ menus:
     mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
     progress: '&7Progress: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
     leaderboard_click: '&eClick to view the {skill} leaderboard'
+    sources: '&aXP Sources'
+    sources_desc: '&7The sources menu shows all the ways you\n&7can earn XP in a skill, as well as how much XP\n&7each source gives.'
+    sources_click: '&eClick to view {skill} sources'
   stats_menu:
     stats_menu_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -598,7 +601,7 @@ menus:
     player_entry: '&e{place}. &6{player}'
     skill_level: '&7Level: &f{level}'
   sources:
-    sources_title: '{skill} XP Sources'
+    sources_title: '{skill} XP Sources ({current_page}/{total_pages})'
     sorter: '&bSort XP Sources'
     sort_type: '&7{selected}{type_name}\n'
     selected: '&f> '
@@ -611,8 +614,8 @@ menus:
     source_xp: '&7XP: &a{xp}'
     source_xp_rate: '&7XP: &a{xp} / {unit}'
     multiplied_xp: '\n&fMultiplied XP: &a{xp}'
-    multiplied_xp_rate: '\n&fMultiplied XP: &a{xp} / {unit}'
-    multiplied_desc: '&7&oThis is the XP you will actually earn based on\nyour current XP multipliers from abilities or other factors'
+    multiplied_xp_rate: '\n\n&fMultiplied XP: &a{xp} / {unit}'
+    multiplied_desc: '\n&7&oThis is the XP you will actually earn\n&7based on your current XP multipliers\n&7from abilities or other factors'
 mana_abilities:
   replenish:
     name: Replenish
@@ -734,7 +737,7 @@ sources:
     melon: Melon
     sugar_cane: Sugar Cane
     bamboo: Bamboo
-    cocao: Cocao
+    cocoa: Cocao
     cactus: Cactus
     brown_mushroom: Brown Mushroom
     red_mushroom: Red Mushroom

@@ -35,6 +35,14 @@ items:
     display_name: '{previous_page}'
     lore:
       - '{previous_page_click}'
+  sources:
+    pos: 0,2
+    material: experience_bottle
+    display_name: '{sources}'
+    lore:
+      - '{sources_desc}'
+      - ' '
+      - '{sources_click}'
 templates:
   skill:
     pos: 0,0

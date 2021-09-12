@@ -52,6 +52,9 @@ public enum MenuMessage implements MessageKey {
     MANA_ABILITY_LEVEL(2),
     PROGRESS(2),
     LEADERBOARD_CLICK(2),
+    SOURCES(2),
+    SOURCES_DESC(2),
+    SOURCES_CLICK(2),
     //Stats Menu
     STATS_MENU_TITLE(3),
     PLAYER_STAT_ENTRY(3),
@@ -78,21 +81,21 @@ public enum MenuMessage implements MessageKey {
     PLAYER_ENTRY(5),
     SKILL_LEVEL(5),
     // Sources menu
-    SOURCES_TITLE(5),
-    SORTER(5),
-    SORT_TYPE(5),
-    SELECTED(5),
-    DESCENDING(5),
-    ASCENDING(5),
-    ALPHABETICAL(5),
-    REVERSE_ALPHABETICAL(5),
-    SORT_CLICK(5),
-    SOURCE_NAME(5),
-    SOURCE_XP(5),
-    SOURCE_XP_RATE(5),
-    MULTIPLIED_XP(5),
-    MULTIPLIED_XP_RATE(5),
-    MULTIPLIED_DESC(5);
+    SOURCES_TITLE(6),
+    SORTER(6),
+    SORT_TYPE(6),
+    SELECTED(6),
+    DESCENDING(6),
+    ASCENDING(6),
+    ALPHABETICAL(6),
+    REVERSE_ALPHABETICAL(6),
+    SORT_CLICK(6),
+    SOURCE_NAME(6),
+    SOURCE_XP(6),
+    SOURCE_XP_RATE(6),
+    MULTIPLIED_XP(6),
+    MULTIPLIED_XP_RATE(6),
+    MULTIPLIED_DESC(6);
 
     private String path;
     
