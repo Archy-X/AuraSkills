@@ -26,14 +26,23 @@ public class AureliumAPI {
      * @param plugin AureliumSkills instance
      */
     public static void setPlugin(AureliumSkills plugin) {
-        AureliumAPI.plugin = plugin;
+        if (AureliumAPI.plugin == null) {
+            AureliumAPI.plugin = plugin;
+        } else {
+            throw new IllegalStateException("The AureliumSkills API is already registered");
+        }
     }
 
     /**
      * Provides the {@link AureliumSkills} plugin instance.
+     * Anything in the AureliumSkills instance is not an official API and could break
+     * between versions without warning. Use at your own risk.
      * @return AureliumSkills instance.
      */
     public static AureliumSkills getPlugin() {
+        if (plugin == null) {
+            throw new IllegalStateException("The AureliumSkills API is not loaded yet");
+        }
         return plugin;
     }
 
