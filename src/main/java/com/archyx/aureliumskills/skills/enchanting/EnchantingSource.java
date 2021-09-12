@@ -15,4 +15,9 @@ public enum EnchantingSource implements Source {
     public Skill getSkill() {
         return Skills.ENCHANTING;
     }
+
+    @Override
+    public String getUnitName() {
+        return "enchant_level";
+    }
 }

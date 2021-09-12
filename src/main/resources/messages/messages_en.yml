@@ -723,6 +723,241 @@ skills:
   forging:
     name: Forging
     desc: '&7Combine and apply books in an anvil to\n&7earn Forging {xp_unit}'
+sources:
+  farming:
+    wheat: Wheat
+    potato: Potato
+    carrot: Carrot
+    beetroot: Beetroot
+    nether_wart: Nether Wart
+    pumpkin: Pumpkin
+    melon: Melon
+    sugar_cane: Sugar Cane
+    bamboo: Bamboo
+    cocao: Cocao
+    cactus: Cactus
+    brown_mushroom: Brown Mushroom
+    red_mushroom: Red Mushroom
+    kelp: Kelp
+    sea_pickle: Sea Pickles
+    sweet_berry_bush: Sweet Berries
+    glow_berries: Glow Berries
+  foraging:
+    oak_log: Oak Log
+    spruce_log: Spruce Log
+    birch_log: Birch Log
+    jungle_log: Jungle Log
+    acacia_log: Acacia Log
+    dark_oak_log: Dark Oak Log
+    oak_leaves: Oak Leaves
+    spruce_leaves: Spruce Leaves
+    birch_leaves: Birch Leaves
+    jungle_leaves: Jungle Leaves
+    acacia_leaves: Acacia Leaves
+    dark_oak_leaves: Dark Oak Leaves
+    crimson_stem: Crimson Stem
+    warped_stem: Warped Stem
+    nether_wart_block: Nether Wart Block
+    warped_wart_block: Warped Wart Block
+    moss_block: Moss Block
+    moss_carpet: Moss Carpet
+    azalea: Azalea
+    flowering_azalea: Flowering Azalea
+    azalea_leaves: Azalea Leaves
+    flowering_azalea_leaves: Flowering Azalea Leaves
+  mining:
+    stone: Stone
+    cobblestone: Cobblestone
+    andesite: Andesite
+    diorite: Diorite
+    granite: Granite
+    coal_ore: Coal Ore
+    nether_quartz_ore: Nether Quartz Ore
+    iron_ore: Iron Ore
+    lapis_ore: Lapis Ore
+    redstone_ore: Redstone Ore
+    gold_ore: Gold Ore
+    diamond_ore: Diamond Ore
+    emerald_ore: Emerald Ore
+    terracotta: Terracotta
+    white_terracotta: White Terracotta
+    orange_terracotta: Orange Terracotta
+    yellow_terracotta: Yellow Terracotta
+    light_gray_terracotta: Light Gray Terrcotta
+    brown_terracotta: Brown Terrcotta
+    red_terracotta: Red Terracotta
+    netherrack: Netherrack
+    blackstone: Blackstone
+    basalt: Basalt
+    magma_block: Magma Block
+    nether_gold_ore: Nether Gold Ore
+    ancient_debris: Ancient Debris
+    end_stone: End Stone
+    obsidian: Obsidian
+    deepslate: Deepslate
+    copper_ore: Copper Ore
+    tuff: Tuff
+    calcite: Calcite
+    smooth_basalt: Smooth Basalt
+    amethyst_block: Amthesyst Block
+    amethyst_cluster: Amethyst Cluster
+    deepslate_coal_ore: Deepslate Coal Ore
+    deepslate_iron_ore: Deepslate Iron Ore
+    deepslate_copper_ore: Deepslate Copper Ore
+    deepslate_gold_ore: Deepslate Gold Ore
+    deepslate_redstone_ore: Deepslate Redstone Ore
+    deepslate_lapis_ore: Deepslate Lapis Ore
+    deepslate_emerald_ore: Deepslate Emerald Ore
+    deepslate_diamond_ore: Deepslate Diamond Ore
+    dripstone_block: Dripstone Block
+    ice: Ice
+    packed_ice: Packed Ice
+    blue_ice: Blue Ice
+  fishing:
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
+  excavation:
+    dirt: Dirt
+    grass_block: Grass Block
+    sand: Sand
+    gravel: Gravel
+    mycelium: Mycelium
+    clay: Clay
+    soul_sand: Soul Sand
+    coarse_dirt: Coarse Dirt
+    podzol: Podzol
+    soul_soil: Soul Soil
+    red_sand: Red Sand
+    rooted_dirt: Rooted Dirt
+  mobs:
+    player: Player
+    bat: Bat
+    cat: Cat
+    chicken: Chicken
+    cod: Cod
+    cow: Cow
+    donkey: Donkey
+    fox: Fox
+    giant: Giant
+    horse: Horse
+    mooshroom: Mooshroom
+    mule: Mule
+    ocelot: Ocelot
+    parrot: Parrot
+    pig: Pig
+    rabbit: Rabbit
+    salmon: Salmon
+    sheep: Sheep
+    skeleton_horse: Skeleton Horse
+    snow_golem: Snow Golem
+    squid: Squid
+    strider: Strider
+    tropical_fish: Tropical Fish
+    turtle: Turtle
+    villager: Villager
+    wandering_trader: Wandering Trader
+    bee: Bee
+    cave_spider: Cave Spider
+    dolphin: Dolphin
+    enderman: Enderman
+    iron_golem: Iron Golem
+    llama: Llama
+    piglin: Piglin
+    panda: Panda
+    polar_bear: Polar Bear
+    pufferfish: Pufferfish
+    spider: Spider
+    wolf: Wolf
+    zombified_piglin: Zombified Piglin
+    blaze: Blaze
+    creeper: Creeper
+    drowned: Drowned
+    elder_guardian: Elder Guardian
+    endermite: Endermite
+    evoker: Evoker
+    ghast: Ghast
+    guardian: Guardian
+    hoglin: Hoglin
+    husk: Husk
+    illusioner: Illusioner
+    magma_cube: Magma Cube
+    phantom: Phantom
+    piglin_brute: Piglin Brute
+    pillager: Pillager
+    ravager: Ravager
+    shulker: Shulker
+    silverfish: Silverfish
+    skeleton: Skeleton
+    slime: Slime
+    stray: Stray
+    vex: Vex
+    vindicator: Vindicator
+    witch: Witch
+    wither_skeleton: Wither Skeleton
+    zoglin: Zoglin
+    zombie: Zombie
+    zombie_villager: Zombie Villager
+    ender_dragon: Ender Dragon
+    wither: Wither
+    axolotl: Axolotl
+    glow_squid: Glow Squid
+    goat: Goat
+  defense:
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+  endurance:
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
+  agility:
+    jump_per_100: Jumping
+    fall_damage: Taking Fall Damage
+  alchemy:
+    awkward: Awkward Potion
+    regular: Regular Potion
+    extended: Extended Duration Potion
+    upgraded: Upgraded Potion
+    splash: Splash Potion
+    lingering: Lingering Potion
+  enchanting:
+    weapon_per_level: Weapon
+    armor_per_level: Armor
+    tool_per_level: Tool
+    book_per_level: Book
+  sorcery:
+    mana_ability_use: Using Mana Abilities
+  healing:
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
+    golden_apple: Golden Apple
+    enchanted_golden_apple: Enchanted Golden Apple
+  forging:
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
+    grindstone_per_level: Disenchant Item with Grindstone
+  units:
+    damage: Damage
+    meter: Meter
+    100_jumps: Per 100 Jumps
+    mana: Mana
+    combine_level: Anvil Cost XP
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
     name: Strength

@@ -14,4 +14,9 @@ public enum EnduranceSource implements Source {
     public Skill getSkill() {
         return Skills.ENDURANCE;
     }
+
+    @Override
+    public String getUnitName() {
+        return "meter";
+    }
 }

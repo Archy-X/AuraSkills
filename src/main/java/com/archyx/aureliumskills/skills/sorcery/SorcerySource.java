@@ -12,4 +12,9 @@ public enum SorcerySource implements Source {
     public Skill getSkill() {
         return Skills.SORCERY;
     }
+
+    @Override
+    public String getUnitName() {
+        return "mana";
+    }
 }

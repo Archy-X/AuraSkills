@@ -13,4 +13,9 @@ public enum DefenseSource implements Source {
     public Skill getSkill() {
         return Skills.DEFENSE;
     }
+
+    @Override
+    public String getUnitName() {
+        return "damage";
+    }
 }

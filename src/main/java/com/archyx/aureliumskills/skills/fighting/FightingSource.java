@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.skills.fighting;
 
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
@@ -108,5 +110,13 @@ public enum FightingSource implements Source {
     @Override
     public Skill getSkill() {
         return Skills.FIGHTING;
+    }
+
+    @Override
+    public String getUnitName() {
+        if (OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) {
+            return "damage";
+        }
+        return null;
     }
 }
