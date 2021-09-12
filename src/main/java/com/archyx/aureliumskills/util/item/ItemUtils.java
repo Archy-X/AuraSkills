@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.util.item;
 
 import com.archyx.aureliumskills.modifier.ModifierType;
+import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.apache.commons.lang.StringUtils;
@@ -10,10 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class ItemUtils {
 
@@ -162,6 +160,17 @@ public class ItemUtils {
 			}
 		}
 		return amountRemaining <= 0;
+	}
+
+
+	@Nullable
+	public static ItemStack parseItem(String name) {
+		Material material = Material.getMaterial(name);
+		if (material != null) {
+			return new ItemStack(material);
+		}
+		Optional<XMaterial> materialOptional = XMaterial.matchXMaterial(name);
+		return materialOptional.map(XMaterial::parseItem).orElse(null);
 	}
 
 } 

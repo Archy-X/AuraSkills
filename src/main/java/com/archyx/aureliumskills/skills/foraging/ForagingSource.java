@@ -3,8 +3,10 @@ package com.archyx.aureliumskills.skills.foraging;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public enum ForagingSource implements Source {
@@ -162,5 +164,10 @@ public enum ForagingSource implements Source {
             }
         }
         return null;
+    }
+
+    @Override
+    public ItemStack getMenuItem() {
+        return ItemUtils.parseItem(this.toString());
     }
 }

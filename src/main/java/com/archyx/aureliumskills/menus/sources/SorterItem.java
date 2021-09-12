@@ -38,7 +38,7 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
         SortType[] sortTypes = SortType.values();
-        SortType currentType = (SortType) activeMenu.getProperty("selected_sort");
+        SortType currentType = (SortType) activeMenu.getProperty("sort_type");
         // Get the index of the current sort type in the array
         int currentTypeIndex = 0;
         for (int i = 0; i < sortTypes.length; i++) {
@@ -55,13 +55,13 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
             nextType = sortTypes[0];
         }
         // Set new sort type and reload menu
-        activeMenu.setProperty("selected_sort", nextType);
+        activeMenu.setProperty("sort_type", nextType);
         activeMenu.reload();
     }
 
     private String getSortedTypesLore(Locale locale, ActiveMenu activeMenu) {
         StringBuilder builder = new StringBuilder();
-        SortType selectedSort = (SortType) activeMenu.getProperty("selected_sort");
+        SortType selectedSort = (SortType) activeMenu.getProperty("sort_type");
         for (SortType sortType : SortType.values()) {
             String typeString = TextUtil.replace(Lang.getMessage(MenuMessage.SORT_TYPE, locale)
                     , "{type_name}", Lang.getMessage(MenuMessage.valueOf(sortType.toString()), locale));
@@ -77,10 +77,23 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
 
     public enum SortType {
 
-        DESCENDING,
         ASCENDING,
+        DESCENDING,
         ALPHABETICAL,
-        REVERSE_ALPHABETICAL
+        REVERSE_ALPHABETICAL;
+
+        public SourceComparator getComparator(AureliumSkills plugin, Locale locale) {
+            switch (this) {
+                case DESCENDING:
+                    return new SourceComparator.Descending(plugin);
+                case ALPHABETICAL:
+                    return new SourceComparator.Alphabetical(plugin, locale);
+                case REVERSE_ALPHABETICAL:
+                    return new SourceComparator.ReverseAlphabetical(plugin, locale);
+                default:
+                    return new SourceComparator.Ascending(plugin);
+            }
+        }
 
     }
 

@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.skills.fishing;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,14 +13,20 @@ import java.util.Locale;
 
 public enum FishingSource implements Source {
 
-    COD,
-    SALMON,
-    TROPICAL_FISH,
-    PUFFERFISH,
-    TREASURE,
-    JUNK,
-    RARE,
-    EPIC;
+    COD("COD"),
+    SALMON("SALMON"),
+    TROPICAL_FISH("TROPICAL_FISH"),
+    PUFFERFISH("PUFFERFISH"),
+    TREASURE("NAME_TAG"),
+    JUNK("STICK"),
+    RARE("ORANGE_DYE"),
+    EPIC("PURPLE_DYE");
+
+    private final String material;
+
+    FishingSource(String material) {
+        this.material = material;
+    }
 
     @Override
     public Skill getSkill() {
@@ -74,4 +81,8 @@ public enum FishingSource implements Source {
         return null;
     }
 
+    @Override
+    public ItemStack getMenuItem() {
+        return ItemUtils.parseItem(material);
+    }
 }

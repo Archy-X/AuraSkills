@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.source;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
 
@@ -26,5 +27,11 @@ public interface Source {
     default String getUnitName() {
         return null;
     }
+
+    /**
+     * Gets the item to be displayed in the sources menu
+     * @return The item or null if the source does not exist in this version
+     */
+    ItemStack getMenuItem();
 
 }
