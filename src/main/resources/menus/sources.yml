@@ -4,6 +4,12 @@ fill:
   enabled: true
   material: black_stained_glass_pane
 items:
+  back:
+    pos: 5,0
+    material: arrow
+    display_name: '{back}'
+    lore:
+      - '{back_click}'
   next_page:
     pos: 5,5
     material: arrow

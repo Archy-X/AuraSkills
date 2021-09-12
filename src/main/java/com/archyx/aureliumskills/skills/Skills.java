@@ -74,6 +74,15 @@ public enum Skills implements Skill {
 		return manaAbility;
 	}
 
+	@Override
+	public Ability getXpMultiplierAbility() {
+		if (abilities.size() == 5) {
+			return abilities.get(1).get();
+		} else {
+			return abilities.get(0).get();
+		}
+	}
+
 	public static List<Skills> getOrderedValues() {
 		List<Skills> list = new ArrayList<>();
 		list.add(Skills.AGILITY);

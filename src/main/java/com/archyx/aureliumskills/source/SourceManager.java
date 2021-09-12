@@ -3,11 +3,18 @@ package com.archyx.aureliumskills.source;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -183,6 +190,44 @@ public class SourceManager {
 
     public Set<String> getCustomMobSet() {
         return customMobSet;
+    }
+
+    public static ItemStack getMenuItem(Source source) {
+        String material = source + "_SPAWN_EGG";
+        ItemStack item = null;
+        switch (source.name()) {
+            case "SNOWMAN":
+                material = "JACK_O_LANTERN";
+                break;
+            case "IRON_GOLEM":
+                material = "IRON_BLOCK";
+                break;
+            case "WITHER":
+                material = "NETHER_STAR";
+                break;
+            case "ENDER_DRAGON":
+                material = "DRAGON_EGG";
+                break;
+            case "GIANT":
+                material = "ZOMBIE_HEAD";
+                break;
+            case "ILLUSIONER":
+                item = new ItemStack(Material.POTION);
+                PotionMeta meta = (PotionMeta) item.getItemMeta();
+                if (meta != null) {
+                    meta.setBasePotionData(new PotionData(PotionType.INVISIBILITY));
+                    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                }
+                item.setItemMeta(meta);
+                break;
+            case "PLAYER":
+                material = "PLAYER_HEAD";
+        }
+        if (item != null) {
+            return item;
+        } else {
+            return ItemUtils.parseItem(material);
+        }
     }
 
 }

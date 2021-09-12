@@ -47,6 +47,7 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
         properties.put("skill", activeMenu.getProperty("skill"));
         properties.put("items_per_page", 28);
         properties.put("sort_type", SorterItem.SortType.ASCENDING);
+        properties.put("previous_menu", "level_progression");
         plugin.getMenuManager().openMenu(player, "sources", properties, 0);
     }
 }

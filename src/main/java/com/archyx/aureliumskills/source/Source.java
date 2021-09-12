@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.source;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
@@ -12,15 +13,21 @@ public interface Source {
 
     Skill getSkill();
 
+    String name();
+
     default String getPath() {
         return getSkill().toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
     }
 
     default String getDisplayName(Locale locale) {
-        String messagePath = "sources." + getSkill().toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
+        Skill skill = getSkill();
+        String messagePath = "sources." + skill.toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
+        if (skill == Skills.ARCHERY || skill == Skills.FIGHTING) {
+            messagePath = "sources.mobs." + toString().toLowerCase(Locale.ROOT);
+        }
         String message = Lang.getMessage(new CustomMessageKey(messagePath), locale);
         if (message == null) {
-            Bukkit.getLogger().warning("Unknown message with path " + messagePath);
+            Bukkit.getLogger().warning("[AureliumSkills] Unknown message with path " + messagePath);
             return messagePath;
         }
         return message;

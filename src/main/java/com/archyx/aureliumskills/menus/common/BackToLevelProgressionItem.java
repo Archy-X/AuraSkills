@@ -1,9 +1,8 @@
-package com.archyx.aureliumskills.menus.leaderboard;
+package com.archyx.aureliumskills.menus.common;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.menus.common.BackItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;

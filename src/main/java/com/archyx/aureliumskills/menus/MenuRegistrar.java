@@ -1,14 +1,10 @@
 package com.archyx.aureliumskills.menus;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.menus.common.BackItem;
-import com.archyx.aureliumskills.menus.common.CloseItem;
-import com.archyx.aureliumskills.menus.common.NextPageItem;
-import com.archyx.aureliumskills.menus.common.PreviousPageItem;
+import com.archyx.aureliumskills.menus.common.*;
 import com.archyx.aureliumskills.menus.contexts.SkillContext;
 import com.archyx.aureliumskills.menus.contexts.SourceContext;
 import com.archyx.aureliumskills.menus.contexts.StatContext;
-import com.archyx.aureliumskills.menus.leaderboard.BackToLevelProgressionItem;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardMenu;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardPlayerItem;
 import com.archyx.aureliumskills.menus.levelprogression.*;
@@ -85,6 +81,7 @@ public class MenuRegistrar {
 
         ProviderManager sources = manager.getProviderManager("sources");
         sources.registerSingleItem("sorter", new SorterItem(plugin));
+        sources.registerSingleItem("back", new BackToLevelProgressionItem(plugin));
         sources.registerTemplateItem("source", new SourceItem(plugin));
     }
 }

@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.menus.sources;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
@@ -8,6 +10,7 @@ import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.menus.sources.SorterItem.SortType;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
@@ -41,31 +44,31 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                 String unitName = source.getUnitName();
                 if (unitName == null) {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP, locale),
-                            "{xp}", String.valueOf(plugin.getSourceManager().getXp(source)));
+                            "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source)));
                 } else {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP_RATE, locale),
-                            "{xp}", String.valueOf(plugin.getSourceManager().getXp(source)),
-                            "{unit}", Lang.getMessage(new CustomMessageKey("sources.unit." + unitName), locale));
+                            "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source)),
+                            "{unit}", getCustomMessage("sources.units." + unitName, locale));
                 }
             case "multiplied_xp":
                 Skill skill = (Skill) activeMenu.getProperty("skill");
-                double multiplier = plugin.getLeveler().getMultiplier(player, skill);
+                double multiplier = getMultiplier(player, skill);
                 if (multiplier > 1.0) {
                     String unit = source.getUnitName();
                     if (unit == null) {
                         return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP, locale),
-                                "{xp}", String.valueOf(plugin.getSourceManager().getXp(source) * multiplier));
+                                "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier));
                     } else {
                         return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP_RATE, locale),
-                                "{xp}", String.valueOf(plugin.getSourceManager().getXp(source) * multiplier),
-                                "{unit}", Lang.getMessage(new CustomMessageKey("sources.unit." + unit), locale));
+                                "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier),
+                                "{unit}", getCustomMessage("sources.units." + unit, locale));
                     }
                 } else {
                     return "";
                 }
             case "multiplied_desc":
                 Skill skill1 = (Skill) activeMenu.getProperty("skill");
-                if (plugin.getLeveler().getMultiplier(player, skill1) > 1.0) {
+                if (getMultiplier(player, skill1) > 1.0) {
                     return Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
                 } else {
                     return "";
@@ -114,7 +117,11 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
         if (baseItem.getType() != XMaterial.GRAY_DYE.parseMaterial()) {
             return baseItem;
         }
-        return source.getMenuItem();
+        ItemStack item = source.getMenuItem();
+        if (item == null) {
+            plugin.getLogger().warning("Item of source " + source.getPath() + " not found");
+        }
+        return item;
     }
 
     // Safely get list of sources from property
@@ -130,6 +137,28 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
             }
         }
         return sources;
+    }
+
+    private double getMultiplier(Player player, Skill skill) {
+        Ability ability = skill.getXpMultiplierAbility();
+        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null) {
+            return 1.0;
+        }
+        double multiplier = 1.0;
+        multiplier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
+        multiplier *= plugin.getLeveler().getMultiplier(player, skill);
+        return multiplier;
+    }
+
+    private String getCustomMessage(String path, Locale locale) {
+        String message = Lang.getMessage(new CustomMessageKey(path), locale);
+        if (message != null) {
+            return message;
+        } else {
+            plugin.getLogger().warning("Unknown message with path " + path);
+            return path;
+        }
     }
 
 }

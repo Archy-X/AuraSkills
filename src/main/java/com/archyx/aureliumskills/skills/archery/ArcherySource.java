@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
-import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.source.SourceManager;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
@@ -124,22 +124,7 @@ public enum ArcherySource implements Source {
 
     @Override
     public ItemStack getMenuItem() {
-        String material = this + "_SPAWN_EGG";
-        switch (this) {
-            case SNOWMAN:
-                material = "JACK_O_LANTERN";
-                break;
-            case IRON_GOLEM:
-                material = "IRON_BLOCK";
-                break;
-            case WITHER:
-                material = "NETHER_STAR";
-                break;
-            case ENDER_DRAGON:
-                material = "DRAGON_EGG";
-                break;
-        }
-        return ItemUtils.parseItem(material);
+        return SourceManager.getMenuItem(this);
     }
 
 }
