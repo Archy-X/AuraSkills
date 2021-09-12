@@ -1,5 +1,5 @@
 # Aurelium Skills Russian (ru) messages
-# Translators: OstriySous-dev
+# Translators: OstriySous-dev, _Mani__TV_
 # Contribute here: https://crowdin.com/project/aureliumskills/ru#
 abilities:
   farming:
@@ -68,7 +68,7 @@ abilities:
   fishing:
     lucky_catch:
       name: Удачный улов
-      desc: "{value}% шанс получить двойную добычу\n&7  с рыбалки."
+      desc: "{value}% добавил шанс получить двойной дроп\n&7 от рыбалки."
       info: '{value}% 2x Добыча'
     fisher:
       name: Рыбачок
@@ -76,21 +76,21 @@ abilities:
       info: '+{value}% XP'
     treasure_hunter:
       name: Охотник за сокровищами
-      desc: '{value}% шанс получить редкую добычу с рыбалки.'
-      info: '{value}% Редкая добыча'
+      desc: '{value}% выше шанс получить редкую добычу на рыбалке.'
+      info: '+{value}% Редкая добыча'
     grappler:
       name: Ловец
       desc: 'Подцепить улов на {value}% быстрее.'
       info: '+{value}% Скорость крючка'
     epic_catch:
       name: Эпический улов
-      desc: "{value}% шанс получить эпическую добычу\n&7  на рыбалке."
-      info: '{value}% Эпическая добыча'
+      desc: "{value}% добавлен дополнительный шанс получить грандиозную добычу\n&7 от рыбалки."
+      info: '+{value}% Эпическая добыча'
   excavation:
     metal_detector:
       name: Металлоискатель
-      desc: '{value}% шанс получить редкую добычу при раскопках.'
-      info: '{value}% Редкая добыча'
+      desc: '{value}% добавлен шанс получить редкую добычу при копании.'
+      info: '+{value}% Редкая добыча'
     excavator:
       name: Экскаватор
       desc: 'Получишь на {value}% XP больше'
@@ -105,8 +105,8 @@ abilities:
       info: '{value}% 3x Добыча'
     lucky_spades:
       name: Счастливая лопата
-      desc: '{value}% шанс получить эпическую добычу при раскопках.'
-      info: '{value}% Эпическая добыча'
+      desc: '{value}% добавил шанс получить грандиозную добычу при копании.'
+      info: '+{value}% Эпическая добыча'
   archery:
     crit_chance:
       name: Шанс крита
@@ -345,11 +345,11 @@ acf:
     location_please_specify_xyz: '&cОшибка: Укажите координаты x, y, и z. Пример: &eworld:x,y,z.'
     location_console_not_relative: '&cОшибка: Консоль не может использовать относительные координаты для определения местоположения.'
 action_bar:
-  idle: '&c{hp}/{max_hp} {hp_unit}                &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(МАКС) &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(МАКС) &b{mana}/{max_mana} {mana_unit}'
+  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
+  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(МАКС.)  &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(МАКС.)  &b{mana}/{max_mana} {mana_unit}'
   ability: '&c{hp}/{max_hp} {hp_unit}    {message}    &b{mana}/{max_mana} {mana_unit}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(МАКС)'
@@ -361,6 +361,7 @@ commands:
         added: '{color}{stat} &7модификатор с уровнем &b{value} &7был добавлен к вашему элементу'
         already_exists: '&eМодификатор брони со статистикой {color}{stat} &eуже существует на вашей броне! Сначала удалите его с помощью модификатора брони /sk armor modifier remove'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eВаш товар не имеет {color}{stat} &eи модификатора!'
         removed: '{color}{stat} &7модификатор был удален из вашего предмета'
@@ -407,6 +408,7 @@ commands:
         added: '{color}{stat} &7модификатор с уровнем &b{value} &7был добавлен в ваш товар'
         already_exists: '&eМодификатор предмета со статистикой {color}{stat} &eуже есть на вашей броне! Сначала удалите его с помощью /sk item modifier remove'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}+{value}'
       remove:
         does_not_exist: '&eУ вашего товара нет {color}{stat} &eмодификатора!'
         removed: '{color}{stat} &7модификатор был удален из вашего предмета'
@@ -450,7 +452,7 @@ commands:
     console_specify_player: '&eВ консоли должен быть указан игрок!'
   modifier:
     add:
-      added: '{color}{stat} &7уровень модификатора &b{value} &7 с именем &f{name} &7добавлено к &6{player}'
+      added: '{color}{stat} &7уровень скилла &b{value} &7с именем &f{name} &7добавлено игроку &6{player}'
       already_exists: '&eМодификатор с именем {name} уже существует на &6{player}&e! Удалите его с помощью &6/sk modifier remove {player} {name}'
     remove:
       not_found: '&eМодификатор {name} не найден для игрока &6{player}'
@@ -505,6 +507,7 @@ commands:
   updateleaderboards:
     already_updating: '&eТаблица лидеров уже обновляется!'
     updated: '&aТаблица лидеров обновлена!'
+  version: '&fYou are on Aurelium Skills version &b{current_version}&f. The latest version is &b{latest_version}'
   xp:
     add: '&7Добавлены &b{amount} {skill} &7XP игроку &7{player}'
     set: '&7Установить &b{skill} &7XP для игрока &7{player} &7на {amount}'
@@ -528,10 +531,10 @@ menus:
     level: '&7Уровень: &e{level}'
     progress_to_level: "&7Прогресс до уровня {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6МАКСИМАЛЬНЫЙ УРОВЕНЬ'
-    ability_levels: "&7Уровни способностей:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: '&7Уровни способностей:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7Уровень статистики: {stats}\n "
+    stats_leveled: '\n&7Уровень статистики: {stats}\n '
     mana_ability: "\n&d&lСпособность к мане &9{mana_ability} {level}\n &7Продолжительность: &a{duration}с &7Стоимость маны: &b{mana_cost} &7Перезарядка: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Ваши навыки
@@ -570,17 +573,14 @@ menus:
   stats_menu:
     stats_menu_title: Ваша статистика
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    primary_skills_two: '&7Основные навыки: &f{skill_1}, {skill_2}'
-    primary_skills_three: '&7Основные навыки: &f{skill_1}, {skill_2}, {skill_3}'
-    secondary_skills_two: '&7Вторичные навыки: &f{skill_1}, {skill_2}'
-    secondary_skills_three: '&7Вторичные навыки: &f{skill_1}, {skill_2}, {skill_3}'
+    skills: "\n&7Навыки: &f{skills}"
     your_level: '&7Ваш уровень: {color}{level}'
     attack_damage: '&4+{value}% Урон от атаки'
-    hp: '&c+{value} {hp_unit}'
+    hp: '&c+{value} ❤'
     saturated_regen: '&6+{value} Насыщенная регенерация'
     full_hunger_regen: '&6+{value} Полное восстановление голода'
     almost_full_hunger_regen: '&6+{value} Почти полное восстановление голода'
-    mana_regen: '&b+{value} Регенерация маныы'
+    mana_regen: '&b+{value} Регенерация маны'
     luck: '&2+{value} Удача'
     double_drop_chance: '&2Двойной шанс выпадения: {value}%'
     xp_gain: '&9+{value}% {xp_unit} Прирост'
@@ -608,7 +608,7 @@ mana_abilities:
     end: '&7Древовидный отключен'
   speed_mine:
     name: Быстрый Рудокоп
-    desc: "&7Дает скорость 10 на {value} секунд.\n&e  [Щелкните ПКМ по кирке и сломайте\n&e  руду, чтобы активировать]"
+    desc: "&7Дает Спешку {haste_level} с {value} секундами.\n&e  [Щелкните правой кнопкой мыши с киркой\n&e  и копайте блоки]"
     raise: '&7Вы поднимаете кирку'
     lower: '&7Вы опускаете кирку'
     start: '&6Быстрый Рудокоп активирован! &7(-{mana} {mana_unit})'
@@ -736,4 +736,4 @@ units:
   mana: МАНЫ
   hp: ЖИЗНЕЙ
   xp: ОПЫТ
-file_version: 20
+file_version: 22

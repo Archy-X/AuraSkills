@@ -76,21 +76,21 @@ abilities:
       info: '+{value}% XP'
     treasure_hunter:
       name: Łowca Skarbów
-      desc: '{value}% szans na zdobycie rzadkich łupów z ryb.'
-      info: '{value}% Rzadkich Łópów'
+      desc: '{value}% szans na zdobycie rzadkich łupów z łowienia.'
+      info: '+{value}% Rzadkich Łupów'
     grappler:
       name: Hak
       desc: 'Łapie moby z {value}% większą prędkością.'
       info: '+{value}% Prędkości Haka'
     epic_catch:
       name: Epicki Połów
-      desc: "{value}% szans na epickie łupy\n&7  z łowienia."
-      info: '{value}% Epickich Łópów'
+      desc: "{value}% szans na zdobycie epickich łupów\n&7  z łowienia."
+      info: '+{value}% Epickich Łupów'
   excavation:
     metal_detector:
       name: Wykrywacz Metalu
       desc: '{value}% szans na zdobycie rzadkich łupów z kopania.'
-      info: '{value}% Rzadkich Łópów'
+      info: '+{value}% Rzadkich Łupów'
     excavator:
       name: Wydobywca
       desc: 'Zdobywaj {value}% więcej doświadczenia wydobycia'
@@ -106,7 +106,7 @@ abilities:
     lucky_spades:
       name: Szczęśliwe Szpady
       desc: '{value}% szans na zdobycie epickich łupów z kopania.'
-      info: '{value}% Epickich Łópów'
+      info: '+{value}% Epickich Łupów'
   archery:
     crit_chance:
       name: Szansa Obrażeń Krytycznych
@@ -345,11 +345,11 @@ acf:
     location_please_specify_xyz: '&cBłąd: Proszę określić współrzędne x, y i z. Przykład: &eworld:x,y,z.'
     location_console_not_relative: '&cBłąd: Konsola nie może używać współrzędnych względnych dla lokalizacji.'
 action_bar:
-  idle: '&c{hp}/{max_hp} {hp_unit}                &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
+  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
+  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
   ability: '{message}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAX)'
@@ -361,6 +361,7 @@ commands:
         added: '&7Modyfikator {color}{stat} &7z poziomem &b{value} &7został dodany do twojego przedmiotu'
         already_exists: '&eModyfikator zbroi ze satystyką {color}{stat} &ejuż istnieje na twojej zbroi! Usuń go najpierw za pomocą modyfikatora zbroi /sk'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&eTwój przedmiot nie posiada modyfikatora {color}{stat}&e!'
         removed: '&7Modyfikator {color}{stat} &7został usunięty z Twojego przedmiotu'
@@ -407,6 +408,7 @@ commands:
         added: '&7Modyfikator {color}{stat} &7z poziomem &b{value} &7został dodany do twojego przedmiotu'
         already_exists: '&eModyfikator przedmiotu ze satystyką {color}{stat} &ejuż istnieje! Usuń go najpierw za pomocą komendy /sk item modifier remove'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&eTwój przedmiot nie posiada modyfikatora {color}{stat}&e!'
         removed: '&7Modyfikator {color}{stat} &7został usunięty z twojego przedmiotu'
@@ -450,7 +452,7 @@ commands:
     console_specify_player: '&eKonsola musi określić gracza!'
   modifier:
     add:
-      added: '&7Modyfikator{color}{stat} &7poziomu &b{value} &7 o nazwie &f{name} &7dodany graczowi &6{player}'
+      added: '&7Modyfikator poziomu {color}{stat} &b{value} &7o nazwie &f{name} &7dodany graczowi &6{player}'
       already_exists: '&eModyfikator o nazwie {name} już istnieje dla gracza &6{player}&e! Usuń go za pomocą modyfikatora &6/sk remove {player} {name}'
     remove:
       not_found: '&eModyfikator {name} nie został znaleziony dla gracza &6{player}'
@@ -505,6 +507,7 @@ commands:
   updateleaderboards:
     already_updating: '&eTablica wyników jest już aktualizowana!'
     updated: '&aTablica wyników zaktualizowana!'
+  version: '&fJesteś na wersji &b{current_version}&fAurelium Skills. Najnowsza wersja to &b{latest_version}'
   xp:
     add: '&7Dodano &b{amount} {skill} &7XP graczowi &7{player}'
     set: '&7Ustawiono XP &b{skill} &7graczowi &7{player} &7na {amount}'
@@ -528,10 +531,10 @@ menus:
     level: '&7Poziom &e{level}'
     progress_to_level: "&7Postęp do Poziomu {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6MAKSYMALNY POZIOM'
-    ability_levels: "&7Poziomy Umiejętności:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: '&7Poziomy Umiejętności:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\nPoziom Statystyk: {stats}\n "
+    stats_leveled: '\nPoziom Statystyk: {stats}\n '
     mana_ability: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Czas trwania: &a{duration}s &7Koszt: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Twoje Umiejętności
@@ -570,13 +573,10 @@ menus:
   stats_menu:
     stats_menu_title: Twoje Statystyki
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    primary_skills_two: '&7Główne Umiejętności: &f{skill_1}, {skill_2}'
-    primary_skills_three: '&7Główne Umiejętności: &f{skill_1}, {skill_2}, {skill_3}'
-    secondary_skills_two: '&7Drugorzędne Umiejętności: &f{skill_1}, {skill_2}'
-    secondary_skills_three: '&7Drugorzędne Umiejętności: &f{skill_1}, {skill_2}, {skill_3}'
+    skills: "\n&7Umiejętności: &f{skills}"
     your_level: '&7Twój Poziom: {color}{level}'
     attack_damage: '&4+{value}% Obrażeń od Ataku'
-    hp: '&c+{value} {hp_unit}'
+    hp: '&c+{value} ❤'
     saturated_regen: '&6+{value} Nasyconej Regeneracji'
     full_hunger_regen: '&6+{value} Regeneracji Pełnego Głodu'
     almost_full_hunger_regen: '&6+{value} Regeneracji Prawie Pełnego Głodu'
@@ -608,7 +608,7 @@ mana_abilities:
     end: '&7Niszczyciel drzew się skończył'
   speed_mine:
     name: Szybkie Kopanie
-    desc: "&7Daje Pośpiech 10 na {value} sekund.\n&e  [Kliknij prawym przyciskiem kilofem i kop\n&e  blok, aby aktywować]"
+    desc: "&7Daje Pośpiech {haste_level} na {value} sekund.\n&e  [Kliknij prawym przyciskiem kilofem i kop\n&e  blok, aby aktywować]"
     raise: '&7Podnosisz swój kilof'
     lower: '&7Obniżasz swój kilof'
     start: '&6Szybkie Kopanie aktywowane! &7(-{mana} {mana_unit})'
@@ -736,4 +736,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 20
+file_version: 23
