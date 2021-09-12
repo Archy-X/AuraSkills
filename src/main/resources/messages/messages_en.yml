@@ -600,9 +600,8 @@ menus:
   sources:
     sources_title: '{skill} XP Sources'
     sorter: '&bSort XP Sources'
-    sort_type: '&7{selected}{type_name}'
+    sort_type: '&7{selected}{type_name}\n'
     selected: '&f> '
-    sort_order: '{descending}\n{ascending}\n{alphabetical}\n{reverse_alphabetical}'
     descending: 'Highest to Lowest'
     ascending: 'Lowest to Highest'
     alphabetical: 'Name (A-Z)'
@@ -613,7 +612,7 @@ menus:
     source_xp_rate: '&7XP: &a{xp} / {unit}'
     multiplied_xp: '\n&fMultiplied XP: &a{xp}'
     multiplied_xp_rate: '\n&fMultiplied XP: &a{xp} / {unit}'
-    multiplied_desc: '\n&7&oThis is the XP you will actually earn based on\nyour current XP multipliers from abilities or other factors'
+    multiplied_desc: '&7&oThis is the XP you will actually earn based on\nyour current XP multipliers from abilities or other factors'
 mana_abilities:
   replenish:
     name: Replenish

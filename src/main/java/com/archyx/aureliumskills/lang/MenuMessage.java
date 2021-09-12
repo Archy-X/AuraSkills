@@ -76,8 +76,24 @@ public enum MenuMessage implements MessageKey {
     // Leaderboard menu
     LEADERBOARD_TITLE(5),
     PLAYER_ENTRY(5),
-    SKILL_LEVEL(5);
-    
+    SKILL_LEVEL(5),
+    // Sources menu
+    SOURCES_TITLE(5),
+    SORTER(5),
+    SORT_TYPE(5),
+    SELECTED(5),
+    DESCENDING(5),
+    ASCENDING(5),
+    ALPHABETICAL(5),
+    REVERSE_ALPHABETICAL(5),
+    SORT_CLICK(5),
+    SOURCE_NAME(5),
+    SOURCE_XP(5),
+    SOURCE_XP_RATE(5),
+    MULTIPLIED_XP(5),
+    MULTIPLIED_XP_RATE(5),
+    MULTIPLIED_DESC(5);
+
     private String path;
     
     MenuMessage(int section) {
@@ -94,6 +110,8 @@ public enum MenuMessage implements MessageKey {
             this.path = "menus.unclaimed_items." + key;
         } else if (section == 5) {
             this.path = "menus.leaderboard." + key;
+        } else if (section == 6) {
+            this.path = "menus.sources." + key;
         }
     }
 
