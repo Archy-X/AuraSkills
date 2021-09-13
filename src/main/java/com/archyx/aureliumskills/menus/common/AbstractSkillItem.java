@@ -59,7 +59,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
                 return getManaAbility(skill, playerData);
             case "level":
                 if (type == PlaceholderType.DISPLAY_NAME) {
-                    return String.valueOf(skillLevel);
+                    return RomanNumber.toRoman(skillLevel);
                 } else {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale), "{level}", RomanNumber.toRoman(skillLevel));
                 }
