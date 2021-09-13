@@ -86,14 +86,25 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
         int page = activeMenu.getCurrentPage();
         Locale locale = plugin.getLang().getLocale(player);
         // Sort the sources in the skill by the selected sort type
-        List<Source> allSources = Arrays.asList(plugin.getSourceRegistry().values(skill));
-        allSources.sort(sortType.getComparator(plugin, locale));
+        Source[] allSources = plugin.getSourceRegistry().values(skill);
+        // Filter valid sources
+        List<Source> filteredSources = new ArrayList<>();
+        for (Source source : allSources) {
+            if (plugin.getSourceManager().getXp(source) == 0.0) {
+                continue;
+            }
+            if (source.getMenuItem() == null) {
+                continue;
+            }
+            filteredSources.add(source);
+        }
+        filteredSources.sort(sortType.getComparator(plugin, locale));
         // Gets a sublist of the sources displayed based on the current page
         int toIndex = (page + 1) * itemsPerPage;
-        if (toIndex > allSources.size()) {
-            toIndex = allSources.size();
+        if (toIndex > filteredSources.size()) {
+            toIndex = filteredSources.size();
         }
-        List<Source> shownSources = allSources.subList(page * itemsPerPage, toIndex);
+        List<Source> shownSources = filteredSources.subList(page * itemsPerPage, toIndex);
         activeMenu.setProperty("sources", shownSources); // Set sorted sources property for easy access in other methods
         return new HashSet<>(shownSources);
     }
