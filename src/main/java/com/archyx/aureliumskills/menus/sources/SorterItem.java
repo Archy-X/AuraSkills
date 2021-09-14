@@ -57,6 +57,7 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
         // Set new sort type and reload menu
         activeMenu.setProperty("sort_type", nextType);
         activeMenu.reload();
+        activeMenu.setCooldown("sorter", 5);
     }
 
     private String getSortedTypesLore(Locale locale, ActiveMenu activeMenu) {
