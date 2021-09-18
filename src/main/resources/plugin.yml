@@ -179,3 +179,7 @@ permissions:
         default: op
     aureliumskills.item.give:
         default: op
+    aureliumskills.version:
+        default: op
+    aureliumskills.sources:
+        default: true

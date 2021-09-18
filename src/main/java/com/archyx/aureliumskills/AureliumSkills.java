@@ -34,6 +34,7 @@ import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.menus.MenuFileManager;
 import com.archyx.aureliumskills.menus.MenuRegistrar;
+import com.archyx.aureliumskills.menus.sources.SorterItem;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
@@ -476,6 +477,14 @@ public class AureliumSkills extends JavaPlugin {
 			return null;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
+		commandManager.getCommandCompletions().registerAsyncCompletion("sort_types", c -> {
+			SorterItem.SortType[] sortTypes = SorterItem.SortType.values();
+			List<String> typeNames = new ArrayList<>();
+			for (SorterItem.SortType sortType : sortTypes) {
+				typeNames.add(sortType.toString().toLowerCase(Locale.ROOT));
+			}
+			return typeNames;
+		});
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));
