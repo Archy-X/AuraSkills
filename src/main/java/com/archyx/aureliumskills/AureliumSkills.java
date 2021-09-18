@@ -428,19 +428,21 @@ public class AureliumSkills extends JavaPlugin {
 		commandManager.enableUnstableAPI("help");
 		commandManager.usePerIssuerLocale(true, false);
 		commandManager.getCommandContexts().registerContext(Stat.class, c -> {
-			Stat stat = statRegistry.getStat(c.popFirstArg());
+			String input = c.popFirstArg();
+			Stat stat = statRegistry.getStat(input);
 			if (stat != null) {
 				return stat;
 			} else {
-				throw new InvalidCommandArgument("Stat " + c.popFirstArg() + " not found!");
+				throw new InvalidCommandArgument("Stat " + input + " not found!");
 			}
 		});
 		commandManager.getCommandContexts().registerContext(Skill.class, c -> {
-			Skill skill = skillRegistry.getSkill(c.popFirstArg());
+			String input = c.popFirstArg();
+			Skill skill = skillRegistry.getSkill(input);
 			if (skill != null) {
 				return skill;
 			} else {
-				throw new InvalidCommandArgument("Skill " + c.popFirstArg() + " not found!");
+				throw new InvalidCommandArgument("Skill " + input + " not found!");
 			}
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
