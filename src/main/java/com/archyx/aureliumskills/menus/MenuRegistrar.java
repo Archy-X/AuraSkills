@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.menus;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.menus.common.*;
 import com.archyx.aureliumskills.menus.contexts.SkillContext;
+import com.archyx.aureliumskills.menus.contexts.SortTypeContext;
 import com.archyx.aureliumskills.menus.contexts.SourceContext;
 import com.archyx.aureliumskills.menus.contexts.StatContext;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardMenu;
@@ -39,9 +40,10 @@ public class MenuRegistrar {
     public void register() {
         ContextManager contextManager = slate.getContextManager();
         // Register contexts
-        contextManager.registerContext(Skill.class, new SkillContext(plugin));
-        contextManager.registerContext(Stat.class, new StatContext(plugin));
-        contextManager.registerContext(Source.class, new SourceContext(plugin));
+        contextManager.registerContext("Skill", Skill.class, new SkillContext(plugin));
+        contextManager.registerContext("Stat", Stat.class, new StatContext(plugin));
+        contextManager.registerContext("Source", Source.class, new SourceContext(plugin));
+        contextManager.registerContext("SortType", SorterItem.SortType.class, new SortTypeContext());
 
         MenuManager manager = plugin.getMenuManager();
         // Register menus
