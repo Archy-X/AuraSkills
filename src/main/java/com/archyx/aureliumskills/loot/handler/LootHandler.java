@@ -132,7 +132,7 @@ public abstract class LootHandler extends AbilityProvider {
         if (playerData == null) return;
         if (loot.getXp() == -1.0 && source != null) {
             plugin.getLeveler().addXp(player, skill, getXp(player, source, ability));
-        } else {
+        } else if (loot.getXp() > 0) {
             plugin.getLeveler().addXp(player, skill, getXp(player, loot.getXp()));
         }
     }
