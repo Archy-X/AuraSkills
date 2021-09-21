@@ -62,6 +62,7 @@ public class LootTableManager extends Parser {
 			e.printStackTrace();
 		}
 
+		lootTables.clear();
 		File[] files = lootDirectory.listFiles();
 		if (files == null) return;
 		for (File lootTableFile : files) {
