@@ -50,7 +50,6 @@ public enum Option {
     DAMAGE_HOLOGRAMS_OFFSET_RANDOM_Z_MAX("damage-holograms-offset.random.z-max", OptionType.DOUBLE),
     LEADERBOARDS_UPDATE_PERIOD("leaderboards.update-period", OptionType.INT),
     LEADERBOARDS_UPDATE_DELAY("leaderboards.update-delay", OptionType.INT),
-    SKILL_LEVEL_REQUIREMENTS_MULTIPLIER("skill-level-requirements-multiplier", OptionType.DOUBLE),
     ENABLE_SKILL_COMMANDS("enable-skill-commands", OptionType.BOOLEAN),
     CHECK_BLOCK_REPLACE("check-block-replace", OptionType.BOOLEAN),
     DISABLE_IN_CREATIVE_MODE("disable-in-creative-mode", OptionType.BOOLEAN),

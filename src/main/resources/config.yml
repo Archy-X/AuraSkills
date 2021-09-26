@@ -103,10 +103,6 @@ leaderboards:
     update-delay: 6000
 
 # Skill Options
-# Change the equation that calculates xp level requirements (XpRequired = Multiplier * (level - 2) ^ 2 + 100)
-# Default: 100
-skill-level-requirements-multiplier: 100
-
 enable-skill-commands: true
 
 check-block-replace: true

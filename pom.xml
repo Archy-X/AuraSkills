@@ -51,6 +51,10 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>com.archyx.aureliumskills.bstats</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>com.udojava.evalex</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.evalex</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -183,6 +187,12 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>16.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.udojava</groupId>
+            <artifactId>EvalEx</artifactId>
+            <version>2.6</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
