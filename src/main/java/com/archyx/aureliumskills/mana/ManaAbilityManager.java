@@ -278,19 +278,14 @@ public class ManaAbilityManager implements Listener {
     }
 
     public double getValue(MAbility mAbility, PlayerData playerData) {
-        return getBaseValue(mAbility) + (getValuePerLevel(mAbility) * (playerData.getManaAbilityLevel(mAbility) - 1));
+        return getValue(mAbility, playerData.getManaAbilityLevel(mAbility));
     }
 
     public double getDisplayValue(MAbility mAbility, int level) {
-        if (mAbility != MAbility.SHARP_HOOK) {
-            return getBaseValue(mAbility) + (getValuePerLevel(mAbility) * (level - 1));
-        }
-        else {
-            if (getOptionAsBooleanElseTrue(mAbility, "display_damage_with_scaling")) {
-                return (getBaseValue(mAbility) + (getValuePerLevel(mAbility) * (level - 1))) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-            } else {
-                return getBaseValue(mAbility) + (getValuePerLevel(mAbility) * (level - 1));
-            }
+        if (mAbility == MAbility.SHARP_HOOK && getOptionAsBooleanElseTrue(mAbility, "display_damage_with_scaling")) {
+            return getValue(mAbility, level) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
+        } else {
+            return getValue(mAbility, level);
         }
     }
 

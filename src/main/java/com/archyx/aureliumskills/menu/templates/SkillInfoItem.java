@@ -174,7 +174,7 @@ public class SkillInfoItem {
                         , "{mana_ability}", mAbility.getDisplayName(locale)
                         , "{level}", RomanNumber.toRoman(level)
                         , "{duration}", NumberUtil.format1(getDuration(mAbility, level))
-                        , "{value}", NumberUtil.format1(manager.getValue(mAbility, level))
+                        , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, level))
                         , "{mana_cost}", NumberUtil.format1(manager.getManaCost(mAbility, level))
                         , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
 
