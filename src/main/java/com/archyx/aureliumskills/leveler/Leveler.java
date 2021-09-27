@@ -56,6 +56,7 @@ public class Leveler {
 		if (skill != null && !OptionL.getBoolean(Option.valueOf(skill + "_CHECK_MULTIPLIER_PERMISSIONS"))) { // Disable check option
 			return multiplier;
 		}
+		// Add permission multipliers
 		for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
 			String permission = info.getPermission().toLowerCase(Locale.ROOT);
 			if (permission.startsWith("aureliumskills.multiplier.")) {
@@ -72,6 +73,11 @@ public class Leveler {
 					}
 				}
 			}
+		}
+		// Add multiplier modifiers
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData != null) {
+			multiplier += playerData.getTotalMultiplierModifier(skill) / 100;
 		}
 		return multiplier;
 	}
