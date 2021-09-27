@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.leveler;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.udojava.evalex.Expression;
 import org.bukkit.configuration.ConfigurationSection;
@@ -10,10 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class XpRequirements {
 
@@ -62,10 +60,19 @@ public class XpRequirements {
             oldMultiplier = plugin.getConfig().getDouble("skill-level-requirements-multiplier", 0.0);
         }
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        ConfigurationSection defaultSection = config.getConfigurationSection("default");
-        if (defaultSection != null) {
+        loadDefaultSection(file, config, oldMultiplier);
+        // Load optional section for each skill
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+            skillXpRequirements.remove(skill); // Remove to account for deleted section
+            loadSkillSection(file, config, skill);
+        }
+    }
+
+    private void loadDefaultSection(File file, FileConfiguration config, double oldMultiplier) {
+        ConfigurationSection section = config.getConfigurationSection("default");
+        if (section != null) {
             if (oldMultiplier != 0.0) { // Migrate old multiplier
-                defaultSection.set("multiplier", oldMultiplier);
+                section.set("multiplier", oldMultiplier);
                 plugin.getConfig().set("skill-level-requirements-multiplier", null);
                 try {
                     config.save(file);
@@ -76,14 +83,7 @@ public class XpRequirements {
                     e.printStackTrace();
                 }
             }
-            String expressionString = defaultSection.getString("expression");
-            Expression expression = new Expression(expressionString);
-            // Set variables
-            for (String variable : defaultSection.getKeys(false)) {
-                if (variable.equals("expression")) continue;
-                double variableValue = defaultSection.getDouble(variable);
-                expression.setVariable(variable, BigDecimal.valueOf(variableValue));
-            }
+            Expression expression = getXpExpression(section);
             // Add xp requirement for each level
             defaultXpRequirements.clear();
             int highestMaxLevel = plugin.getOptionLoader().getHighestMaxLevel();
@@ -94,6 +94,33 @@ public class XpRequirements {
         } else {
             addDefaultXpRequirements();
         }
+    }
+
+    private void loadSkillSection(File file, FileConfiguration config, Skill skill) {
+        ConfigurationSection section = config.getConfigurationSection("skills." + skill.toString().toLowerCase(Locale.ROOT));
+        if (section == null) return;
+
+        Expression expression = getXpExpression(section);
+        int maxLevel = OptionL.getMaxLevel(skill);
+        // Add evaluated expression for each level to list
+        List<Integer> xpRequirements = new ArrayList<>();
+        for (int i = 0; i < maxLevel; i++) {
+            expression.setVariable("level", BigDecimal.valueOf(i + 2));
+            xpRequirements.add((int) Math.round(expression.eval().doubleValue()));
+        }
+        skillXpRequirements.put(skill, xpRequirements);
+    }
+
+    private Expression getXpExpression(ConfigurationSection section) {
+        String expressionString = section.getString("expression");
+        Expression expression = new Expression(expressionString);
+        // Set variables
+        for (String variable : section.getKeys(false)) {
+            if (variable.equals("expression")) continue;
+            double variableValue = section.getDouble(variable);
+            expression.setVariable(variable, BigDecimal.valueOf(variableValue));
+        }
+        return expression;
     }
 
     private void addDefaultXpRequirements() {
