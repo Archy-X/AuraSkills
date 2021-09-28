@@ -148,6 +148,8 @@ modifier:
     item:
         check-period: 3
         enable-off-hand: true
+    multiplier:
+        enabled: true
     auto-convert-from-legacy: true
 
 requirement:

@@ -109,6 +109,7 @@ public enum CommandMessage implements MessageKey {
     MULTIPLIER_LIST,
     MULTIPLIER_PLAYERS_ONLY(Command.MULTIPLIER, "players_only"),
     MULTIPLIER_GLOBAL,
+    MULTIPLIER_SKILL_ENTRY(Command.MULTIPLIER, "skill_entry"),
     RANK_HEADER,
     RANK_POWER,
     RANK_ENTRY,

@@ -43,7 +43,7 @@ public class PlayerData {
     private boolean shouldSave;
 
     // Not persistent data
-    private final List<Multiplier> multipliers;
+    private final Map<String, Multiplier> multipliers;
 
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
@@ -58,7 +58,7 @@ public class PlayerData {
         this.saving = false;
         this.shouldSave = true;
         this.mana = OptionL.getDouble(Option.BASE_MANA);
-        this.multipliers = new LinkedList<>();
+        this.multipliers = new HashMap<>();
     }
 
     public Player getPlayer() {
@@ -285,7 +285,7 @@ public class PlayerData {
 
     public double getTotalMultiplier(@Nullable Skill skill) {
         double totalMultiplier = 0.0;
-        for (Multiplier multiplier : getMultipliers()) {
+        for (Multiplier multiplier : getMultipliers().values()) {
             if (multiplier.isGlobal()) {
                 totalMultiplier += multiplier.getValue();
             } else if (multiplier.getSkill() != null && multiplier.getSkill().equals(skill)) {
@@ -295,7 +295,15 @@ public class PlayerData {
         return totalMultiplier;
     }
 
-    public List<Multiplier> getMultipliers() {
+    public Map<String, Multiplier> getMultipliers() {
         return multipliers;
+    }
+
+    public void addMultiplier(Multiplier multiplier) {
+        multipliers.put(multiplier.getName(), multiplier);
+    }
+
+    public void removeMultiplier(String name) {
+        multipliers.remove(name);
     }
 }

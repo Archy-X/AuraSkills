@@ -39,11 +39,11 @@ public class Multiplier {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Multiplier that = (Multiplier) o;
-        return Objects.equals(name, that.name);
+        return Double.compare(that.value, value) == 0 && Objects.equals(name, that.name) && Objects.equals(skill, that.skill);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, skill, value);
     }
 }

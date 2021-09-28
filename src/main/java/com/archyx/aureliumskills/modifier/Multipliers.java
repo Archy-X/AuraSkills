@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
@@ -28,6 +30,9 @@ public class Multipliers {
     }
 
     public List<Multiplier> getMultipliers(ModifierType type, ItemStack item) {
+        if (!OptionL.getBoolean(Option.MODIFIER_MULTIPLIER_ENABLED)) { // Return empty list if disabled
+            return new ArrayList<>();
+        }
         NBTItem nbtItem = new NBTItem(item);
         List<Multiplier> multipliers = new ArrayList<>();
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
@@ -99,10 +104,12 @@ public class Multipliers {
                 } else {
                     message = CommandMessage.valueOf(type.name() + "_MULTIPLIER_ADD_SKILL_LORE_SUBTRACT");
                 }
-                lore.add(" ");
+                if (lore.size() > 0) {
+                    lore.add(" ");
+                }
                 lore.add(TextUtil.replace(Lang.getMessage(message, locale),
                         "{skill}", skill.getDisplayName(locale),
-                        "{value}", NumberUtil.format1(value)));
+                        "{value}", NumberUtil.format1(Math.abs(value))));
             } else { // Global multiplier
                 CommandMessage message;
                 if (value >= 0) {
@@ -110,9 +117,11 @@ public class Multipliers {
                 } else {
                     message = CommandMessage.valueOf(type.name() + "_MULTIPLIER_ADD_GLOBAL_LORE_SUBTRACT");
                 }
-                lore.add(" ");
+                if (lore.size() > 0) {
+                    lore.add(" ");
+                }
                 lore.add(TextUtil.replace(Lang.getMessage(message, locale),
-                        "{value}", NumberUtil.format1(value)));
+                        "{value}", NumberUtil.format1(Math.abs(value))));
             }
             meta.setLore(lore);
         }

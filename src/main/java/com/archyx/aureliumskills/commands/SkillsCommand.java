@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
+import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
@@ -15,9 +16,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.menu.SkillsMenu;
-import com.archyx.aureliumskills.modifier.ModifierType;
-import com.archyx.aureliumskills.modifier.Modifiers;
-import com.archyx.aureliumskills.modifier.StatModifier;
+import com.archyx.aureliumskills.modifier.*;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
@@ -895,28 +894,32 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.multipliercommand")
 	@Description("Shows a player's current XP multiplier based on their permissions.")
 	public void onMultiplier(CommandSender sender, @Optional @Flags("other") Player player) {
+		Player target;
 		if (player == null) {
 			if (sender instanceof Player) {
-				Player target = (Player) sender;
-				Locale locale = plugin.getLang().getLocale(sender);
-				double multiplier = plugin.getLeveler().getMultiplier(target);
-				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
-						.replace("{player}", target.getName())
-						.replace("{multiplier}", NumberUtil.format2(multiplier))
-						.replace("{percent}", NumberUtil.format2((multiplier - 1) * 100)));
+				target = (Player) sender;
+			} else {
+				sender.sendMessage(AureliumSkills.getPrefix(Lang.getDefaultLanguage()) + Lang.getMessage(CommandMessage.MULTIPLIER_PLAYERS_ONLY, Lang.getDefaultLanguage()));
+				return;
 			}
-			else {
-				Locale locale = Locale.ENGLISH;
-				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_PLAYERS_ONLY, locale));
-			}
+		} else {
+			target = player;
 		}
-		else {
-			Locale locale = plugin.getLang().getLocale(player);
-			double multiplier = plugin.getLeveler().getMultiplier(player);
-			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale)
-					.replace("{player}", player.getName())
-					.replace("{multiplier}", NumberUtil.format2(multiplier))
-					.replace("{percent}", NumberUtil.format2((multiplier - 1) * 100)));
+		Locale locale = plugin.getLang().getLocale(target);
+		double multiplier = plugin.getLeveler().getMultiplier(target);
+		sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.MULTIPLIER_LIST, locale),
+				"{player}", target.getName(),
+				"{multiplier}", NumberUtil.format2(multiplier),
+				"{percent}", NumberUtil.format2((multiplier - 1) * 100)));
+		// Send skill specific multipliers if different from global
+		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+			double skillMultiplier = plugin.getLeveler().getMultiplier(target, skill);
+			if (skillMultiplier != multiplier) {
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.MULTIPLIER_SKILL_ENTRY, locale),
+						"{skill}", skill.getDisplayName(locale),
+						"{multiplier}", NumberUtil.format2(skillMultiplier),
+						"{percent}", NumberUtil.format2((skillMultiplier - 1) * 100)));
+			}
 		}
 	}
 
@@ -1147,6 +1150,236 @@ public class SkillsCommand extends BaseCommand {
 		} else {
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
 		}
+	}
+
+	@Subcommand("item multiplier add")
+	@CommandCompletion("@skills_global @nothing true|false")
+	@CommandPermission("aureliumskills.item.multiplier.add")
+	@Description("Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.")
+	public void onItemMultiplierAdd(@Flags("itemheld") Player player, String target, double value, @Default("true") boolean lore) {
+		ItemStack item = player.getInventory().getItemInMainHand();
+		Skill skill = plugin.getSkillRegistry().getSkill(target);
+		Locale locale = plugin.getLang().getLocale(player);
+
+		Multipliers multipliers = new Multipliers(plugin);
+		if (skill != null) { // Add multiplier for specific skill
+			for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, item)) {
+				if (multiplier.getSkill() == skill) {
+					player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_ADD_ALREADY_EXISTS, locale),
+							"{target}", skill.getDisplayName(locale)));
+					return;
+				}
+			}
+			if (lore) {
+				multipliers.addLore(ModifierType.ITEM, item, skill, value, locale);
+			}
+			ItemStack newItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
+			player.getInventory().setItemInMainHand(newItem);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_ADD_ADDED, locale),
+					"{target}", skill.getDisplayName(locale), "{value}", String.valueOf(value)));
+		} else if (target.equalsIgnoreCase("global")) { // Add multiplier for all skills
+			String global = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
+			for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, item)) {
+				if (multiplier.getSkill() == null) {
+					player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_ADD_ALREADY_EXISTS, locale),
+							"{target}", global));
+					return;
+				}
+			}
+			if (lore) {
+				multipliers.addLore(ModifierType.ITEM, item, null, value, locale);
+			}
+			ItemStack newItem = multipliers.addMultiplier(ModifierType.ITEM, item, null, value);
+			player.getInventory().setItemInMainHand(newItem);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_ADD_ADDED, locale),
+					"{target}", global, "{value}", String.valueOf(value)));
+		} else {
+			throw new InvalidCommandArgument("Target must be valid skill name or global");
+		}
+	}
+
+	@Subcommand("item multiplier remove")
+	@CommandCompletion("@skills_global")
+	@CommandPermission("aureliumskills.item.multiplier.remove")
+	@Description("Removes an item multiplier of a the specified skill or global from the held item.")
+	public void onItemMultiplierRemove(@Flags("itemheld") Player player, String target) {
+		Locale locale = plugin.getLang().getLocale(player);
+		ItemStack item = player.getInventory().getItemInMainHand();
+		Skill skill = plugin.getSkillRegistry().getSkill(target);
+		boolean removed = false;
+
+		Multipliers multipliers = new Multipliers(plugin);
+		for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, item)) {
+			if (multiplier.getSkill() == skill) {
+				item = multipliers.removeMultiplier(ModifierType.ITEM, item, skill);
+				removed = true;
+				break;
+			}
+		}
+		player.getInventory().setItemInMainHand(item);
+		// Use skill display name if skill is not null, otherwise use global name
+		String targetName;
+		if (skill != null) {
+			targetName = skill.getDisplayName(locale);
+		} else if (target.equalsIgnoreCase("global")) {
+			targetName = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
+		} else {
+			throw new InvalidCommandArgument("Target must be valid skill name or global");
+		}
+		if (removed) {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_REMOVE_REMOVED, locale),
+					"{target}", targetName));
+		} else {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_REMOVE_DOES_NOT_EXIST, locale),
+					"{target}", targetName));
+		}
+	}
+
+	@Subcommand("item multiplier list")
+	@CommandPermission("aureliumskills.item.multiplier.list")
+	@Description("Lists all item multipliers on the held item.")
+	public void onItemMultiplierList(@Flags("itemheld") Player player) {
+		Locale locale = plugin.getLang().getLocale(player);
+		ItemStack item = player.getInventory().getItemInMainHand();
+		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_LIST_HEADER, locale));
+		Multipliers multipliers = new Multipliers(plugin);
+		for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, item)) {
+			String targetName;
+			if (multiplier.getSkill() != null) {
+				targetName = multiplier.getSkill().getDisplayName(locale);
+			} else {
+				targetName = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
+			}
+			message.append("\n").append(TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_LIST_ENTRY, locale),
+					"{target}", targetName, "{value}", String.valueOf(multiplier.getValue())));
+		}
+		player.sendMessage(message.toString());
+	}
+
+	@Subcommand("item multiplier removeall")
+	@CommandPermission("aureliumskills.item.multiplier.removeall")
+	@Description("Removes all item multipliers from the item held.")
+	public void onItemMultiplierRemoveAll(@Flags("itemheld") Player player) {
+		Locale locale = plugin.getLang().getLocale(player);
+		Multipliers multipliers = new Multipliers(plugin);
+		ItemStack item = multipliers.removeAllMultipliers(ModifierType.ITEM, player.getInventory().getItemInMainHand());
+		player.getInventory().setItemInMainHand(item);
+		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_REMOVEALL_REMOVED, locale));
+	}
+
+	@Subcommand("armor multiplier add")
+	@CommandCompletion("@skills_global @nothing true|false")
+	@CommandPermission("aureliumskills.armor.multiplier.add")
+	@Description("Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.")
+	public void onArmorMultiplierAdd(@Flags("itemheld") Player player, String target, double value, @Default("true") boolean lore) {
+		ItemStack item = player.getInventory().getItemInMainHand();
+		Skill skill = plugin.getSkillRegistry().getSkill(target);
+		Locale locale = plugin.getLang().getLocale(player);
+
+		Multipliers multipliers = new Multipliers(plugin);
+		if (skill != null) { // Add multiplier for specific skill
+			for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+				if (multiplier.getSkill() == skill) {
+					player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_ADD_ALREADY_EXISTS, locale),
+							"{target}", skill.getDisplayName(locale)));
+					return;
+				}
+			}
+			if (lore) {
+				multipliers.addLore(ModifierType.ARMOR, item, skill, value, locale);
+			}
+			ItemStack newItem = multipliers.addMultiplier(ModifierType.ARMOR, item, skill, value);
+			player.getInventory().setItemInMainHand(newItem);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_ADD_ADDED, locale),
+					"{target}", skill.getDisplayName(locale), "{value}", String.valueOf(value)));
+		} else if (target.equalsIgnoreCase("global")) { // Add multiplier for all skills
+			String global = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
+			for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+				if (multiplier.getSkill() == null) {
+					player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_ADD_ALREADY_EXISTS, locale),
+							"{target}", global));
+					return;
+				}
+			}
+			if (lore) {
+				multipliers.addLore(ModifierType.ARMOR, item, null, value, locale);
+			}
+			ItemStack newItem = multipliers.addMultiplier(ModifierType.ARMOR, item, null, value);
+			player.getInventory().setItemInMainHand(newItem);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_ADD_ADDED, locale),
+					"{target}", global, "{value}", String.valueOf(value)));
+		} else {
+			throw new InvalidCommandArgument("Target must be valid skill name or global");
+		}
+	}
+
+	@Subcommand("armor multiplier remove")
+	@CommandCompletion("@skills_global")
+	@CommandPermission("aureliumskills.armor.multiplier.remove")
+	@Description("Removes an armor multiplier of a the specified skill or global from the held item.")
+	public void onArmorMultiplierRemove(@Flags("itemheld") Player player, String target) {
+		Locale locale = plugin.getLang().getLocale(player);
+		ItemStack item = player.getInventory().getItemInMainHand();
+		Skill skill = plugin.getSkillRegistry().getSkill(target);
+		boolean removed = false;
+
+		Multipliers multipliers = new Multipliers(plugin);
+		for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+			if (multiplier.getSkill() == skill) {
+				item = multipliers.removeMultiplier(ModifierType.ARMOR, item, skill);
+				removed = true;
+				break;
+			}
+		}
+		player.getInventory().setItemInMainHand(item);
+		// Use skill display name if skill is not null, otherwise use global name
+		String targetName;
+		if (skill != null) {
+			targetName = skill.getDisplayName(locale);
+		} else if (target.equalsIgnoreCase("global")) {
+			targetName = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
+		} else {
+			throw new InvalidCommandArgument("Target must be valid skill name or global");
+		}
+		if (removed) {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_REMOVE_REMOVED, locale),
+					"{target}", targetName));
+		} else {
+			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_REMOVE_DOES_NOT_EXIST, locale),
+					"{target}", targetName));
+		}
+	}
+
+	@Subcommand("armor multiplier list")
+	@CommandPermission("aureliumskills.armor.multiplier.list")
+	@Description("Lists all armor multipliers on the held item.")
+	public void onArmorMultiplierList(@Flags("itemheld") Player player) {
+		Locale locale = plugin.getLang().getLocale(player);
+		ItemStack item = player.getInventory().getItemInMainHand();
+		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_LIST_HEADER, locale));
+		Multipliers multipliers = new Multipliers(plugin);
+		for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+			String targetName;
+			if (multiplier.getSkill() != null) {
+				targetName = multiplier.getSkill().getDisplayName(locale);
+			} else {
+				targetName = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
+			}
+			message.append("\n").append(TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_LIST_ENTRY, locale),
+					"{target}", targetName, "{value}", String.valueOf(multiplier.getValue())));
+		}
+		player.sendMessage(message.toString());
+	}
+
+	@Subcommand("armor multiplier removeall")
+	@CommandPermission("aureliumskills.armor.multiplier.removeall")
+	@Description("Removes all armor multipliers from the item held.")
+	public void onArmorMultiplierRemoveAll(@Flags("itemheld") Player player) {
+		Locale locale = plugin.getLang().getLocale(player);
+		Multipliers multipliers = new Multipliers(plugin);
+		ItemStack item = multipliers.removeAllMultipliers(ModifierType.ARMOR, player.getInventory().getItemInMainHand());
+		player.getInventory().setItemInMainHand(item);
+		player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_REMOVEALL_REMOVED, locale));
 	}
 
 	@Subcommand("version")

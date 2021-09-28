@@ -139,7 +139,7 @@ public class Modifiers {
             }
             lore.add(0, TextUtil.replace(Lang.getMessage(message, locale),
                     "{stat}", stat.getDisplayName(locale),
-                    "{value}", NumberUtil.format1(value),
+                    "{value}", NumberUtil.format1(Math.abs(value)),
                     "{color}", stat.getColor(locale)));
             meta.setLore(lore);
         }

@@ -37,6 +37,7 @@ public class ItemListener implements Listener {
     private final StatLeveler statLeveler;
     private final Modifiers modifiers;
     private final Requirements requirements;
+    private final Multipliers multipliers;
 
     public ItemListener(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -47,6 +48,7 @@ public class ItemListener implements Listener {
         this.statLeveler = new StatLeveler(plugin);
         this.modifiers = new Modifiers(plugin);
         this.requirements = new Requirements(plugin);
+        this.multipliers = new Multipliers(plugin);
     }
 
     @EventHandler(priority = EventPriority.LOW)
@@ -65,6 +67,9 @@ public class ItemListener implements Listener {
             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
                 playerData.addStatModifier(modifier, false);
             }
+            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
+                playerData.addMultiplier(multiplier);
+            }
         }
         if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) {
             ItemStack offHandItem = player.getInventory().getItemInOffHand();
@@ -79,6 +84,10 @@ public class ItemListener implements Listener {
                 for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, offHandItem)) {
                     StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
                     playerData.addStatModifier(offHandModifier);
+                }
+                for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, offHandItem)) {
+                    Multiplier offHandMultiplier = new Multiplier(multiplier.getName() + ".Offhand", multiplier.getSkill(), multiplier.getValue());
+                    playerData.addMultiplier(offHandMultiplier);
                 }
             }
         }
@@ -113,6 +122,9 @@ public class ItemListener implements Listener {
                                         playerData.removeStatModifier(modifier.getName(), false);
                                         statsToReload.add(modifier.getStat());
                                     }
+                                    for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, stored)) {
+                                        playerData.removeMultiplier(multiplier.getName());
+                                    }
                                     // Remove valor
                                     if (ItemUtils.isAxe(stored.getType())) {
                                         foragingAbilities.removeValor(playerData);
@@ -137,6 +149,9 @@ public class ItemListener implements Listener {
                                         for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
                                             playerData.addStatModifier(modifier, false);
                                             statsToReload.add(modifier.getStat());
+                                        }
+                                        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
+                                            playerData.addMultiplier(multiplier);
                                         }
                                     }
                                     // Apply valor
@@ -182,6 +197,7 @@ public class ItemListener implements Listener {
                     // Things to prevent double reloads
                     Set<String> offHandModifiers = new HashSet<>();
                     Set<Stat> statsToReload = new HashSet<>();
+                    Set<String> offHandMultipliers = new HashSet<>();
                     // Check off hand item
                     if (itemOffHand != null) {
                         if (itemOffHand.getType() != Material.AIR) {
@@ -198,6 +214,14 @@ public class ItemListener implements Listener {
                                 // Reload check stuff
                                 offHandModifiers.add(offHandModifier.getName());
                                 statsToReload.add(modifier.getStat());
+                            }
+                            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, itemOffHand)) {
+                                Multiplier offHandMultiplier = new Multiplier(multiplier.getName() + ".Offhand", multiplier.getSkill(), multiplier.getValue());
+                                playerData.removeMultiplier(multiplier.getName());
+                                if (meetsRequirements) {
+                                    playerData.addMultiplier(offHandMultiplier);
+                                }
+                                offHandMultipliers.add(offHandMultiplier.getName());
                             }
                         }
                     }
@@ -217,6 +241,14 @@ public class ItemListener implements Listener {
                                 }
                                 // Reload check stuff
                                 statsToReload.add(modifier.getStat());
+                            }
+                            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, itemMainHand)) {
+                                if (!offHandMultipliers.contains(multiplier.getName() + ".Offhand")) {
+                                    playerData.removeMultiplier(multiplier.getName() + ".Offhand");
+                                }
+                                if (meetsRequirements) {
+                                    playerData.addMultiplier(multiplier);
+                                }
                             }
                         }
                     }
@@ -248,6 +280,9 @@ public class ItemListener implements Listener {
                                         for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, stored)) {
                                             playerData.removeStatModifier(modifier.getName() + ".Offhand");
                                         }
+                                        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, stored)) {
+                                            playerData.removeMultiplier(multiplier.getName() + ".Offhand");
+                                        }
                                     }
                                 }
                                 // Add modifiers from held item
@@ -258,6 +293,10 @@ public class ItemListener implements Listener {
                                             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
                                                 StatModifier offHandModifier = new StatModifier(modifier.getName() + ".Offhand", modifier.getStat(), modifier.getValue());
                                                 playerData.addStatModifier(offHandModifier);
+                                            }
+                                            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
+                                                Multiplier offHandMultiplier = new Multiplier(multiplier.getName() + ".Offhand", multiplier.getSkill(), multiplier.getValue());
+                                                playerData.addMultiplier(offHandMultiplier);
                                             }
                                         }
                                     }
