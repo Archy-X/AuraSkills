@@ -368,6 +368,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7All armor modifiers have been removed from your item'
+    multiplier:
+      add:
+        added: '&b{skill} &7multiplier with value &b{value} &7was added to your item'
+        already_exists: '&eAn armor multiplier with target &b{skill} &ealready exists on your armor! Remove it first with /sk armor multiplier remove'
+        skill_lore: '&7When worn: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7When worn: &b-{value}% {skill} XP'
+        global_lore: '&7When worn: &9+{value}% Skill XP'
+        global_lore_subtract: '&7When worn: &9-{value}% Skill XP'
+      remove:
+        does_not_exist: '&eYour item does not have a &b{skill} &earmor multiplier!'
+        removed: '&b{skill} &7armor multiplier was removed from your item'
+      list:
+        header: '&fArmor multipliers found:'
+        entry: '  &b{skill}&f - {value}'
+      removeall:
+        removed: '&7All armor multipliers have been removed from your item'
     requirement:
       add:
         added: '&3{skill}&7 armor requirement with level &b{level}&7 was added to your item'
@@ -415,6 +431,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7All item modifiers have been removed from your item'
+    multiplier:
+      add:
+        added: '&b{skill} &7multiplier with value &b{value} &7was added to your item'
+        already_exists: '&eAn item multiplier with target &b{skill} &ealready exists on your item! Remove it first with /sk item multiplier remove'
+        skill_lore: '&7When held: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7When held: &b-{value}% {skill} XP'
+        global_lore: '&7When held: &9+{value}% Skill XP'
+        global_lore_subtract: '&7When held: &9-{value}% Skill XP'
+      remove:
+        does_not_exist: '&eYour item does not have a &b{skill} &eitem multiplier!'
+        removed: '&b{skill} &7item multiplier was removed from your item'
+      list:
+        header: '&fitem multipliers found:'
+        entry: '  &b{skill}&f - {value}'
+      removeall:
+        removed: '&7All item multipliers have been removed from your item'
     register:
       registered: '&fRegistered held item to key {key}'
       already_registered: '&eThere is already an item registered to key &f{key}&e, use &f/skills item unregister &eto unregister it first'
@@ -466,6 +498,7 @@ commands:
       removed_one_stat: '&7Removed &b{num} {color}{stat} &7modifiers from player &6{player}'
       players_only: '&eOnly players can remove their own modifiers! Try specifying a player'
   multiplier:
+    global: Global
     list: '&fXP multiplier for &6{player}&f: &b{multiplier}x / +{percent}%'
     players_only: '&eOnly players can list their own multiplier! Specify a player!'
   rank:

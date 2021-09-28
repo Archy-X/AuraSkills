@@ -77,7 +77,7 @@ public class Leveler {
 		// Add multiplier modifiers
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
-			multiplier += playerData.getTotalMultiplierModifier(skill) / 100;
+			multiplier += playerData.getTotalMultiplier(skill) / 100;
 		}
 		return multiplier;
 	}

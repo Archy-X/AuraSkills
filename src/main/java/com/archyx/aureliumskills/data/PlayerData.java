@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.MAbility;
-import com.archyx.aureliumskills.modifier.MultiplierModifier;
+import com.archyx.aureliumskills.modifier.Multiplier;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.rewards.RewardTable;
 import com.archyx.aureliumskills.skills.Skill;
@@ -43,8 +43,7 @@ public class PlayerData {
     private boolean shouldSave;
 
     // Not persistent data
-    private final Set<MultiplierModifier> multiplierModifiers;
-    private final Map<Skill, Set<MultiplierModifier>> skillMultiplierModifiers;
+    private final List<Multiplier> multipliers;
 
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
@@ -59,8 +58,7 @@ public class PlayerData {
         this.saving = false;
         this.shouldSave = true;
         this.mana = OptionL.getDouble(Option.BASE_MANA);
-        this.multiplierModifiers = new HashSet<>();
-        this.skillMultiplierModifiers = new HashMap<>();
+        this.multipliers = new LinkedList<>();
     }
 
     public Player getPlayer() {
@@ -285,39 +283,19 @@ public class PlayerData {
         this.shouldSave = shouldSave;
     }
 
-    public double getTotalMultiplierModifier(@Nullable Skill skill) {
-        double multiplier = 0.0;
-        for (MultiplierModifier globalModifier : getGlobalMultiplierModifiers()) {
-            multiplier += globalModifier.getValue();
-        }
-        Set<MultiplierModifier> skillMultipliers = getSkillMultiplierModifiers(skill);
-        if (skillMultipliers != null) {
-            for (MultiplierModifier skillMultiplier : skillMultipliers) {
-                multiplier += skillMultiplier.getValue();
+    public double getTotalMultiplier(@Nullable Skill skill) {
+        double totalMultiplier = 0.0;
+        for (Multiplier multiplier : getMultipliers()) {
+            if (multiplier.isGlobal()) {
+                totalMultiplier += multiplier.getValue();
+            } else if (multiplier.getSkill() != null && multiplier.getSkill().equals(skill)) {
+                totalMultiplier += multiplier.getValue();
             }
         }
-        return multiplier;
+        return totalMultiplier;
     }
 
-    public Set<MultiplierModifier> getGlobalMultiplierModifiers() {
-        return multiplierModifiers;
+    public List<Multiplier> getMultipliers() {
+        return multipliers;
     }
-
-    @Nullable
-    public Set<MultiplierModifier> getSkillMultiplierModifiers(Skill skill) {
-        return skillMultiplierModifiers.get(skill);
-    }
-
-    public void addSkillMultiplierModifier(Skill skill, MultiplierModifier multiplierModifier) {
-        Set<MultiplierModifier> modifiers = skillMultiplierModifiers.computeIfAbsent(skill, k -> new HashSet<>());
-        modifiers.add(multiplierModifier);
-    }
-
-    public void removeSkillMultiplierModifier(Skill skill, String modifierName) {
-        Set<MultiplierModifier> modifiers = skillMultiplierModifiers.get(skill);
-        if (modifiers != null) {
-            modifiers.removeIf(modifier -> modifier.getName().equals(modifierName));
-        }
-    }
-
 }
