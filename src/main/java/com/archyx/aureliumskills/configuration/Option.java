@@ -80,7 +80,6 @@ public enum Option {
     REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE("requirement.item.prevent-block-place", OptionType.BOOLEAN),
     REQUIREMENT_ARMOR_PREVENT_ARMOR_EQUIP("requirement.armor.prevent-armor-equip", OptionType.BOOLEAN),
     // Critical options
-    CRITICAL_BASE_MULTIPLIER("critical.base-multiplier", OptionType.DOUBLE),
     CRITICAL_ENABLED_SWORD("critical.enabled.sword", OptionType.BOOLEAN),
     CRITICAL_ENABLED_BOW("critical.enabled.bow", OptionType.BOOLEAN),
     CRITICAL_ENABLED_AXE("critical.enabled.axe", OptionType.BOOLEAN),

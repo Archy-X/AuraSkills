@@ -164,7 +164,6 @@ requirement:
         global:
 
 critical:
-    base-multiplier: 1.5
     enabled:
         sword: true
         bow: true

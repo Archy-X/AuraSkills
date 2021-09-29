@@ -55,7 +55,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
             case "your_level":
                 return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_LEVEL, locale),
                         "{color}", stat.getColor(locale),
-                        "{level}", NumberUtil.format1(playerData.getStatLevel(stat)));
+                        "{level}", Lang.formatStatLevel(stat, playerData.getStatLevel(stat)));
             case "descriptors":
                 switch (stat.name().toLowerCase(Locale.ROOT)) {
                     case "strength":
@@ -70,6 +70,10 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
                         return getWisdomDescriptors(playerData, locale);
                     case "toughness":
                         return getToughnessDescriptors(playerData, locale);
+                    case "crit_chance":
+                        return getCritChanceDescriptors(playerData, locale);
+                    case "crit_damage":
+                        return getCritDamageDescriptors(playerData, locale);
                     default:
                         return "";
                 }
@@ -146,6 +150,19 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         double toughness = playerData.getStatLevel(Stats.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
         double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
         return TextUtil.replace(Lang.getMessage(MenuMessage.INCOMING_DAMAGE, locale),"{value}", NumberUtil.format2(damageReduction));
+    }
+
+    private String getCritChanceDescriptors(PlayerData playerData, Locale locale) {
+        double critChance = playerData.getStatLevel(Stats.CRIT_CHANCE);
+        if (critChance > 100) {
+            critChance = 100;
+        }
+        return TextUtil.replace(Lang.getMessage(MenuMessage.CRIT_CHANCE, locale), "{value}", NumberUtil.format2(critChance));
+    }
+
+    private String getCritDamageDescriptors(PlayerData playerData, Locale locale) {
+        double critDamage = playerData.getStatLevel(Stats.CRIT_DAMAGE);
+        return TextUtil.replace(Lang.getMessage(MenuMessage.CRIT_DAMAGE, locale), "{value}", NumberUtil.format2(critDamage));
     }
 
 }

@@ -185,13 +185,6 @@ abilities:
       level_up: 5
       max_level: 0
   archery:
-    crit_chance:
-      enabled: true
-      base: 5.0
-      per_level: 5.0
-      unlock: 2
-      level_up: 5
-      max_level: 0
     archer:
       enabled: true
       base: 10.0
@@ -257,13 +250,6 @@ abilities:
       level_up: 5
       max_level: 0
   fighting:
-    crit_damage:
-      enabled: true
-      base: 5.0
-      per_level: 3.0
-      unlock: 2
-      level_up: 5
-      max_level: 0
     fighter:
       enabled: true
       base: 10.0
@@ -451,6 +437,14 @@ abilities:
       base: 5.0
       per_level: 1.0
       unlock: 6
+      level_up: 5
+      max_level: 0
+  sorcery:
+    sorcerer:
+      enabled: true
+      base: 10.0
+      per_level: 10.0
+      unlock: 3
       level_up: 5
       max_level: 0
   healing:
@@ -643,4 +637,4 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
-file_version: 8
+file_version: 9

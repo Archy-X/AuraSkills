@@ -8,6 +8,9 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
+import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -329,6 +332,14 @@ public class Lang implements Listener {
 			else {
 				playerData.setLocale(getDefaultLanguage());
 			}
+		}
+	}
+
+	public static String formatStatLevel(Stat stat, double level) {
+		if (stat == Stats.CRIT_DAMAGE || stat == Stats.CRIT_CHANCE) {
+			return NumberUtil.format1(level) + "%";
+		} else {
+			return NumberUtil.format1(level);
 		}
 	}
 
