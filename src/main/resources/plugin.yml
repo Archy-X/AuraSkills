@@ -179,3 +179,19 @@ permissions:
         default: op
     aureliumskills.item.give:
         default: op
+    aureliumskills.armor.multiplier.add:
+        default: op
+    aureliumskills.armor.multiplier.remove:
+        default: op
+    aureliumskills.armor.multiplier.list:
+        default: op
+    aureliumskills.armor.multiplier.removeall:
+        default: op
+    aureliumskills.item.multiplier.add:
+        default: op
+    aureliumskills.item.multiplier.remove:
+        default: op
+    aureliumskills.item.multiplier.list:
+        default: op
+    aureliumskills.item.multiplier.removeall:
+        default: op
