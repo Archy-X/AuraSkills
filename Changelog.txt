@@ -19,6 +19,7 @@ Version Beta 1.2.4
         - /skills item multiplier remove <target>
         - /skills item multiplier list
         - /skills item multiplier removeall
+    - Add health.keep-full-on-increase option to keep full health when the health stat increases
   Changes:
     - The /skills multiplier command will now show skill-specific multipliers if they are different from the global multiplier
     - Update Russian messages
