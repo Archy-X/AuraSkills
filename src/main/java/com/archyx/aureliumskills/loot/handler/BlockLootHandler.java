@@ -77,10 +77,10 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
             if (selectedLoot != null) {
                 if (selectedLoot instanceof ItemLoot) {
                     ItemLoot itemLoot = (ItemLoot) selectedLoot;
-                    giveBlockItemLoot(player, itemLoot, event, null, cause);
+                    giveBlockItemLoot(player, itemLoot, event, originalSource, cause);
                 } else if (selectedLoot instanceof CommandLoot) {
                     CommandLoot commandLoot = (CommandLoot) selectedLoot;
-                    giveCommandLoot(player, commandLoot, null);
+                    giveCommandLoot(player, commandLoot, originalSource);
                 }
                 // Override vanilla loot if enabled
                 if (pool.overridesVanillaLoot()) {

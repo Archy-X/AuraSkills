@@ -279,15 +279,15 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                     if (playerData != null) {
                         switch (id) {
                             case "xp_required_formatted_":
-                                return BigNumber.withSuffix(plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1));
+                                return BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1));
                             case "xp_required_":
-                                return String.valueOf(plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1));
+                                return String.valueOf(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1));
                             case "xp_progress_int_":
-                                return String.valueOf(Math.round(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1)) * 100));
+                                return String.valueOf(Math.round(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1)) * 100));
                             case "xp_progress_1_":
-                                return NumberUtil.format1(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1)) * 100);
+                                return NumberUtil.format1(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1)) * 100);
                             case "xp_progress_":
-                                return String.valueOf(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequired(playerData.getSkillLevel(skill) + 1)) * 100);
+                                return String.valueOf(playerData.getSkillXp(skill) / (double) (plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1)) * 100);
                             case "xp_int_":
                                 return String.valueOf(Math.round(playerData.getSkillXp(skill)));
                             case "xp_formatted_":

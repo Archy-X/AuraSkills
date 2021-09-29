@@ -17,11 +17,13 @@ public class ArmorModifierListener implements Listener {
     private final AureliumSkills plugin;
     private final Modifiers modifiers;
     private final Requirements requirements;
+    private final Multipliers multipliers;
 
     public ArmorModifierListener(AureliumSkills plugin) {
         this.plugin = plugin;
         this.modifiers = new Modifiers(plugin);
         this.requirements = new Requirements(plugin);
+        this.multipliers = new Multipliers(plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -34,6 +36,9 @@ public class ArmorModifierListener implements Listener {
                     if (requirements.meetsRequirements(ModifierType.ARMOR, armor, player)) {
                         for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, armor)) {
                             playerData.addStatModifier(modifier, false);
+                        }
+                        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, armor)) {
+                            playerData.addMultiplier(multiplier);
                         }
                     }
                 }
@@ -53,6 +58,9 @@ public class ArmorModifierListener implements Listener {
                     for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
                         playerData.addStatModifier(modifier);
                     }
+                    for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+                        playerData.addMultiplier(multiplier);
+                    }
                 }
             }
             // Un-equip
@@ -60,6 +68,9 @@ public class ArmorModifierListener implements Listener {
                 ItemStack item = event.getOldArmorPiece();
                 for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
                     playerData.removeStatModifier(modifier.getName());
+                }
+                for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+                    playerData.removeMultiplier(multiplier.getName());
                 }
             }
         }

@@ -1,0 +1,61 @@
+name: Bug Report
+description: Report bugs and issues
+labels: ["type: bug"]
+assignees:
+  - Archy-X
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before reporting a bug, please make sure you are on the latest version of Aurelium Skills.
+  - type: input
+    id: server-version
+    attributes:
+      label: Server software and version
+      description: |
+        The type of server software and Minecraft version you are running.
+        Make sure you are not running unsupported server software (https://wiki.aurelium.dev/skills/other/incompatibilities)
+        Example: Paper 1.17.1
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      description: What actually happened (aka the bug). Include errors/stacktraces here if applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: how-to-reproduce
+    attributes:
+      label: How to reproduce
+      description: A detailed list of steps to reproduce the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional information
+      description: |
+        Any additional information that explains the problem or might be helpful to fixing the issue (optional).
+        This could include links to screenshots, videos, etc.
+    validations:
+      required: false
+  - type: checkboxes
+    attributes:
+      label: Agreements
+      description: Before submitting, please agree to the following.
+      options:
+        - label: I am running the latest version of Aurelium Skills
+          required: true
+        - label: I am not using an unsupported server software (https://wiki.aurelium.dev/skills/other/incompatibilities)
+          required: true
+        - label: My version of Minecraft is supported by Aurelium Skills
+          required: true

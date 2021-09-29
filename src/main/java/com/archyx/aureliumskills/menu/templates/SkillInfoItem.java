@@ -16,8 +16,8 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
-import com.google.common.collect.ImmutableList;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.google.common.collect.ImmutableList;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -102,7 +102,7 @@ public class SkillInfoItem {
                     case "progress_to_level":
                         if (skillLevel < OptionL.getMaxLevel(skill)) {
                             double currentXp = playerData.getSkillXp(skill);
-                            double xpToNext = plugin.getLeveler().getLevelRequirements().get(skillLevel - 1);
+                            double xpToNext = plugin.getLeveler().getXpRequirements().getXpRequired(skill, skillLevel + 1);
                             line = TextUtil.replace(line,"{progress_to_level}", TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
                                     ,"{level}", RomanNumber.toRoman(skillLevel + 1)
                                     ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
@@ -174,7 +174,7 @@ public class SkillInfoItem {
                         , "{mana_ability}", mAbility.getDisplayName(locale)
                         , "{level}", RomanNumber.toRoman(level)
                         , "{duration}", NumberUtil.format1(getDuration(mAbility, level))
-                        , "{value}", NumberUtil.format1(manager.getValue(mAbility, level))
+                        , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, level))
                         , "{mana_cost}", NumberUtil.format1(manager.getManaCost(mAbility, level))
                         , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
 

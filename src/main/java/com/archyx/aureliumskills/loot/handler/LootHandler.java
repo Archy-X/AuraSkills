@@ -20,6 +20,7 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -71,6 +72,7 @@ public abstract class LootHandler extends AbilityProvider {
             Bukkit.getPluginManager().callEvent(dropEvent);
             if (dropEvent.isCancelled()) return;
         }
+        if (dropEvent.getItemStack().getType() == Material.AIR) return;
         block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
         attemptSendMessage(player, loot);
         giveXp(player, loot, source);
@@ -132,7 +134,7 @@ public abstract class LootHandler extends AbilityProvider {
         if (playerData == null) return;
         if (loot.getXp() == -1.0 && source != null) {
             plugin.getLeveler().addXp(player, skill, getXp(player, source, ability));
-        } else {
+        } else if (loot.getXp() > 0) {
             plugin.getLeveler().addXp(player, skill, getXp(player, loot.getXp()));
         }
     }

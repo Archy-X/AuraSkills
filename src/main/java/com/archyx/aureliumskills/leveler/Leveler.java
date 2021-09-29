@@ -30,7 +30,6 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -38,22 +37,18 @@ import java.util.regex.Pattern;
 public class Leveler {
 	
 	private final AureliumSkills plugin;
-	private final List<Integer> levelRequirements;
+	private final XpRequirements xpRequirements;
 	private final StatLeveler statLeveler;
 	private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public Leveler(AureliumSkills plugin) {
 		this.plugin = plugin;
-		this.levelRequirements = new LinkedList<>();
+		this.xpRequirements = new XpRequirements(plugin);
 		this.statLeveler = new StatLeveler(plugin);
 	}
 	
 	public void loadLevelRequirements() {
-		levelRequirements.clear();
-		int highestMaxLevel = plugin.getOptionLoader().getHighestMaxLevel();
-		for (int i = 0; i < highestMaxLevel - 1; i++) {
-			levelRequirements.add((int) Math.round(OptionL.getDouble(Option.SKILL_LEVEL_REQUIREMENTS_MULTIPLIER)*i*i + 100));
-		}
+		xpRequirements.loadXpRequirements();
 	}
 
 	public double getMultiplier(Player player, Skill skill) {
@@ -61,6 +56,7 @@ public class Leveler {
 		if (skill != null && !OptionL.getBoolean(Option.valueOf(skill + "_CHECK_MULTIPLIER_PERMISSIONS"))) { // Disable check option
 			return multiplier;
 		}
+		// Add permission multipliers
 		for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
 			String permission = info.getPermission().toLowerCase(Locale.ROOT);
 			if (permission.startsWith("aureliumskills.multiplier.")) {
@@ -77,6 +73,11 @@ public class Leveler {
 					}
 				}
 			}
+		}
+		// Add multiplier modifiers
+		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData != null) {
+			multiplier += playerData.getTotalMultiplier(skill) / 100;
 		}
 		return multiplier;
 	}
@@ -117,11 +118,12 @@ public class Leveler {
 			plugin.getBossBar().incrementAction(player, skill);
 			int currentAction = plugin.getBossBar().getCurrentAction(player, skill);
 			if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
-				boolean notMaxed = levelRequirements.size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+				int level = playerData.getSkillLevel(skill);
+				boolean notMaxed = xpRequirements.getListSize(skill) > playerData.getSkillLevel(skill) - 1 && level < OptionL.getMaxLevel(skill);
 				if (notMaxed) {
-					plugin.getBossBar().sendBossBar(player, skill, playerData.getSkillXp(skill), levelRequirements.get(playerData.getSkillLevel(skill) - 1), playerData.getSkillLevel(skill), false);
+					plugin.getBossBar().sendBossBar(player, skill, playerData.getSkillXp(skill), xpRequirements.getXpRequired(skill, level + 1), level, false);
 				} else {
-					plugin.getBossBar().sendBossBar(player, skill, 1, 1, playerData.getSkillLevel(skill), true);
+					plugin.getBossBar().sendBossBar(player, skill, 1, 1, level, true);
 				}
 			}
 		}
@@ -196,8 +198,8 @@ public class Leveler {
 		int currentLevel = playerData.getSkillLevel(skill);
 		double currentXp = playerData.getSkillXp(skill);
 		if (currentLevel < OptionL.getMaxLevel(skill)) { //Check max level options
-			if (levelRequirements.size() > currentLevel - 1) {
-				if (currentXp >= levelRequirements.get(currentLevel - 1)) {
+			if (xpRequirements.getListSize(skill) > currentLevel - 1) {
+				if (currentXp >= xpRequirements.getXpRequired(skill, currentLevel + 1)) {
 					levelUpSkill(playerData, skill);
 				}
 			}
@@ -211,7 +213,7 @@ public class Leveler {
 		double currentXp = playerData.getSkillXp(skill);
 		int level = playerData.getSkillLevel(skill) + 1;
 
-		playerData.setSkillXp(skill, currentXp - levelRequirements.get(level - 2));
+		playerData.setSkillXp(skill, currentXp - xpRequirements.getXpRequired(skill, level));
 		playerData.setSkillLevel(skill, level);
 		// Give custom rewards
 		List<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
@@ -332,16 +334,8 @@ public class Leveler {
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
 
-	public List<Integer> getLevelRequirements() {
-		return levelRequirements;
-	}
-
-	public int getXpRequired(int level) {
-		if (levelRequirements.size() > level - 2) {
-			return levelRequirements.get(level - 2);
-		} else {
-			return 0;
-		}
+	public XpRequirements getXpRequirements() {
+		return xpRequirements;
 	}
 
 }

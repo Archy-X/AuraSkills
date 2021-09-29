@@ -13,7 +13,7 @@ import org.bukkit.block.Block;
 public class ForagingLootHandler extends BlockLootHandler {
 
     public ForagingLootHandler(AureliumSkills plugin) {
-        super(plugin, Skills.MINING, Ability.MINER);
+        super(plugin, Skills.FORAGING, Ability.FORAGER);
     }
 
     @Override

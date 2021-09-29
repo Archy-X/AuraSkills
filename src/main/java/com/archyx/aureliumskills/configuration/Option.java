@@ -50,7 +50,6 @@ public enum Option {
     DAMAGE_HOLOGRAMS_OFFSET_RANDOM_Z_MAX("damage-holograms-offset.random.z-max", OptionType.DOUBLE),
     LEADERBOARDS_UPDATE_PERIOD("leaderboards.update-period", OptionType.INT),
     LEADERBOARDS_UPDATE_DELAY("leaderboards.update-delay", OptionType.INT),
-    SKILL_LEVEL_REQUIREMENTS_MULTIPLIER("skill-level-requirements-multiplier", OptionType.DOUBLE),
     ENABLE_SKILL_COMMANDS("enable-skill-commands", OptionType.BOOLEAN),
     CHECK_BLOCK_REPLACE("check-block-replace", OptionType.BOOLEAN),
     DISABLE_IN_CREATIVE_MODE("disable-in-creative-mode", OptionType.BOOLEAN),
@@ -72,6 +71,7 @@ public enum Option {
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip-blocked-materials", OptionType.LIST),
     MODIFIER_ITEM_CHECK_PERIOD("modifier.item.check-period", OptionType.INT),
     MODIFIER_ITEM_ENABLE_OFF_HAND("modifier.item.enable-off-hand", OptionType.BOOLEAN),
+    MODIFIER_MULTIPLIER_ENABLED("modifier.multiplier.enabled", OptionType.BOOLEAN),
     MODIFIER_AUTO_CONVERT_FROM_LEGACY("modifier.auto-convert-from-legacy", OptionType.BOOLEAN),
     // Requirement options
     REQUIREMENT_ENABLED("requirement.enabled", OptionType.BOOLEAN),
@@ -168,6 +168,7 @@ public enum Option {
     HEALTH_HP_INDICATOR_SCALING("health.hp-indicator-scaling", OptionType.DOUBLE),
     HEALTH_UPDATE_DELAY("health.update-delay", OptionType.INT),
     HEALTH_FORCE_BASE_HEALTH("health.force-base-health", OptionType.BOOLEAN),
+    HEALTH_KEEP_FULL_ON_INCREASE("health.keep-full-on-increase", OptionType.BOOLEAN),
     STRENGTH_MODIFIER("strength.modifier", OptionType.DOUBLE),
     STRENGTH_HAND_DAMAGE("strength.hand-damage", OptionType.BOOLEAN),
     STRENGTH_BOW_DAMAGE("strength.bow-damage", OptionType.BOOLEAN),

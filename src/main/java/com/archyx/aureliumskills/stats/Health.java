@@ -130,6 +130,12 @@ public class Health implements Listener {
 			if (player.getHealth() > attribute.getValue()) {
 				player.setHealth(attribute.getValue());
 			}
+			if (OptionL.getBoolean(Option.HEALTH_KEEP_FULL_ON_INCREASE) && attribute.getValue() > originalMaxHealth) {
+				// Heals player to full health if had full health before modifier
+				if (player.getHealth() >= originalMaxHealth) {
+					player.setHealth(attribute.getValue());
+				}
+			}
 		}
 		applyScaling(player);
 	}

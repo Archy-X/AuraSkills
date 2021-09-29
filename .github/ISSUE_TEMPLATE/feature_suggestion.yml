@@ -1,0 +1,22 @@
+name: Feature Suggestion
+description: Suggest a feature or idea
+labels: ["type: feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for sharing your ideas! Please note that there is no guarantee your feature will be added.
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature description
+      description: A clear and detailed description of what the feature is.
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+    validations:
+      required: false

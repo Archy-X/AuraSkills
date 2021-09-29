@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.2.3</version>
+    <version>Beta1.2.4</version>
     <build>
         <plugins>
             <plugin>
@@ -50,6 +50,10 @@
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>com.archyx.aureliumskills.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.udojava.evalex</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.evalex</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>com.archyx.slate</pattern>
@@ -181,6 +185,12 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>16.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.udojava</groupId>
+            <artifactId>EvalEx</artifactId>
+            <version>2.6</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

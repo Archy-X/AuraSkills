@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.modifier.Multiplier;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.rewards.RewardTable;
 import com.archyx.aureliumskills.skills.Skill;
@@ -16,6 +17,7 @@ import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -40,6 +42,9 @@ public class PlayerData {
     private boolean saving;
     private boolean shouldSave;
 
+    // Not persistent data
+    private final Map<String, Multiplier> multipliers;
+
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
         this.plugin = plugin;
@@ -53,6 +58,7 @@ public class PlayerData {
         this.saving = false;
         this.shouldSave = true;
         this.mana = OptionL.getDouble(Option.BASE_MANA);
+        this.multipliers = new HashMap<>();
     }
 
     public Player getPlayer() {
@@ -277,4 +283,27 @@ public class PlayerData {
         this.shouldSave = shouldSave;
     }
 
+    public double getTotalMultiplier(@Nullable Skill skill) {
+        double totalMultiplier = 0.0;
+        for (Multiplier multiplier : getMultipliers().values()) {
+            if (multiplier.isGlobal()) {
+                totalMultiplier += multiplier.getValue();
+            } else if (multiplier.getSkill() != null && multiplier.getSkill().equals(skill)) {
+                totalMultiplier += multiplier.getValue();
+            }
+        }
+        return totalMultiplier;
+    }
+
+    public Map<String, Multiplier> getMultipliers() {
+        return multipliers;
+    }
+
+    public void addMultiplier(Multiplier multiplier) {
+        multipliers.put(multiplier.getName(), multiplier);
+    }
+
+    public void removeMultiplier(String name) {
+        multipliers.remove(name);
+    }
 }

@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.mana.ManaManager;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.support.ProtocolLibSupport;
 import com.archyx.aureliumskills.util.math.BigNumber;
@@ -41,11 +40,9 @@ import java.util.UUID;
 public class ActionBar implements Listener {
 
 	private final AureliumSkills plugin;
-	private final ManaManager mana;
 
 	public ActionBar(AureliumSkills plugin) {
 		this.plugin = plugin;
-		this.mana = plugin.getManaManager();
 	}
 
 	private final HashSet<Player> isPaused = new HashSet<>();
@@ -104,7 +101,7 @@ public class ActionBar implements Listener {
 				if (playerData != null) {
 					Locale locale = playerData.getLocale();
 					// Check enabled/disabled for max
-					boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+					boolean notMaxed = plugin.getLeveler().getXpRequirements().getListSize(skill) > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 					if (notMaxed && !OptionL.getBoolean(Option.ACTION_BAR_XP)) {
 						return;
 					}
@@ -131,7 +128,7 @@ public class ActionBar implements Listener {
 								Integer actionBarCurrentAction = currentAction.get(player);
 								if (actionBarCurrentAction != null) {
 									if (thisAction == actionBarCurrentAction) {
-										boolean notMaxed = plugin.getLeveler().getLevelRequirements().size() > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
+										boolean notMaxed = plugin.getLeveler().getXpRequirements().getListSize(skill) > playerData.getSkillLevel(skill) - 1 && playerData.getSkillLevel(skill) < OptionL.getMaxLevel(skill);
 										// Not maxed
 										if (notMaxed) {
 											if (OptionL.getBoolean(Option.ACTION_BAR_XP)) {
@@ -144,7 +141,7 @@ public class ActionBar implements Listener {
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
@@ -155,7 +152,7 @@ public class ActionBar implements Listener {
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
@@ -169,7 +166,7 @@ public class ActionBar implements Listener {
 																, "{xp_removed}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
@@ -180,7 +177,7 @@ public class ActionBar implements Listener {
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getLevelRequirements().get(playerData.getSkillLevel(skill) - 1))
+																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
