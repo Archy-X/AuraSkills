@@ -5,7 +5,7 @@ Version Beta 1.2.4
       - The "default" section configures the expression for all skills
       - The "expression" is used to calculate the XP required for each level. Supports any valid EvalEx expression. The level variable is the level that is unlocked upon reaching the required XP (starts at 2)
       - Custom variables are supported as long as their values (must be a number) are specified under the section (multiplier and base are examples of custom variables added by default)
-      - Create different requirements for each skill by adding a "skills.[skillName]"" section that will override the "default" section
+      - Create different requirements for each skill by adding a "skills.[skillName]" section that will override the "default" section
     - Add item and armor XP multipliers:
       - Item multipliers increase XP when holding the item
       - Armor multipliers increase XP when wearing the item
