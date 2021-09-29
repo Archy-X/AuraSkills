@@ -188,7 +188,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         Locale locale = playerData.getLocale();
         if (skillLevel < OptionL.getMaxLevel(skill)) {
             double currentXp = playerData.getSkillXp(skill);
-            double xpToNext = plugin.getLeveler().getLevelRequirements().get(skillLevel - 1);
+            double xpToNext = plugin.getLeveler().getXpRequirements().getXpRequired(skill, skillLevel + 1);
             return TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
                     ,"{level}", RomanNumber.toRoman(skillLevel + 1)
                     ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)

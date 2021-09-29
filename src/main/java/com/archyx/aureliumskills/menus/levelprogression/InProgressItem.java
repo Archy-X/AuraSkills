@@ -42,7 +42,7 @@ public class InProgressItem extends SkillLevelItem {
                 return getManaAbilityLore(skill, level, locale);
             case "progress":
                 double currentXp = playerData.getSkillXp(skill);
-                double xpToNext = plugin.getLeveler().getLevelRequirements().get(level - 2);
+                double xpToNext = plugin.getLeveler().getXpRequirements().getXpRequired(skill, level);
                 return TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
                         ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
                         ,"{current_xp}", NumberUtil.format2(currentXp)
