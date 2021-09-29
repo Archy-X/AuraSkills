@@ -507,7 +507,7 @@ commands:
   updateleaderboards:
     already_updating: '&eТаблица лидеров уже обновляется!'
     updated: '&aТаблица лидеров обновлена!'
-  version: '&fYou are on Aurelium Skills version &b{current_version}&f. The latest version is &b{latest_version}'
+  version: '&fВы используете версию Aurelium Skills &b{current_version}&f. Последняя версия &b{latest_version}'
   xp:
     add: '&7Добавлены &b{amount} {skill} &7XP игроку &7{player}'
     set: '&7Установить &b{skill} &7XP для игрока &7{player} &7на {amount}'
@@ -736,4 +736,4 @@ units:
   mana: МАНЫ
   hp: ЖИЗНЕЙ
   xp: ОПЫТ
-file_version: 22
+file_version: 23
