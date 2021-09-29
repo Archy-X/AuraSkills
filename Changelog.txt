@@ -1,3 +1,34 @@
+Version Beta 1.2.4
+  New Features:
+    - Add XP requirement equation customization:
+      - Configure the expression used for XP requirements in the new xp_requirements.yml file
+      - The "default" section configures the expression for all skills
+      - The "expression" is used to calculate the XP required for each level. Supports any valid EvalEx expression. The level variable is the level that is unlocked upon reaching the required XP (starts at 2)
+      - Custom variables are supported as long as their values (must be a number) are specified under the section (multiplier and base are examples of custom variables added by default)
+      - Create different requirements for each skill by adding a "skills.[skillName]"" section that will override the "default" section
+    - Add item and armor XP multipliers:
+      - Item multipliers increase XP when holding the item
+      - Armor multipliers increase XP when wearing the item
+      - Multipliers can be either global or only for a specific skill
+      - New commands (target can be either global or a skill name):
+        - /skills armor multiplier add <target> <value> [lore]
+        - /skills armor multiplier remove <target>
+        - /skills armor multiplier list
+        - /skills armor multiplier removeall
+        - /skills item multiplier add <target> <value> [lore]
+        - /skills item multiplier remove <target>
+        - /skills item multiplier list
+        - /skills item multiplier removeall
+  Changes:
+    - The /skills multiplier command will now show skill-specific multipliers if they are different from the global multiplier
+    - Update Russian messages
+  Bug Fixes:
+    - Fix stat and skill not found error messages being null
+    - Fix custom loot giving negative XP
+    - Fix deleted loot tables not being removed on reload
+    - Fix Sharp Hook damage shown on skill item not using hp-indicator-scaling
+    - Fix custom Foraging loot tables not working
+
 Version Beta 1.2.3
   Changes:
     - Add Italian messages
