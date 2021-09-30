@@ -633,6 +633,7 @@ menus:
     incoming_damage: '&5-{value}% Incoming Damage'
     crit_chance: '&b{value}% Critical Hit Chance'
     crit_damage: '&3+{value}% Critical Attack Damage'
+    movement_speed: '&f+{value}% Movement Speed'
   unclaimed_items:
     unclaimed_items_title: 'Claim Items'
     inventory_full: '&eYou do not have enough space in your inventory to claim that item'
@@ -1043,6 +1044,11 @@ stats:
     desc: '&7Crit Damage increases the amount of\n&7damage done on a critical hit'
     color: '&3'
     symbol: '⚔'
+  speed:
+    name: Speed
+    desc: '&7Speed increases your movement speed'
+    color: '&f'
+    symbol: '☄'
 units:
   mana: Mana
   hp: HP

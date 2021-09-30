@@ -74,6 +74,8 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
                         return getCritChanceDescriptors(playerData, locale);
                     case "crit_damage":
                         return getCritDamageDescriptors(playerData, locale);
+                    case "speed":
+                        return getSpeedDescriptors(playerData, locale);
                     default:
                         return "";
                 }
@@ -163,6 +165,11 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
     private String getCritDamageDescriptors(PlayerData playerData, Locale locale) {
         double critDamage = playerData.getStatLevel(Stats.CRIT_DAMAGE);
         return TextUtil.replace(Lang.getMessage(MenuMessage.CRIT_DAMAGE, locale), "{value}", NumberUtil.format2(critDamage));
+    }
+
+    private String getSpeedDescriptors(PlayerData playerData, Locale locale) {
+        double movementSpeed = playerData.getStatLevel(Stats.SPEED);
+        return TextUtil.replace(Lang.getMessage(MenuMessage.MOVEMENT_SPEED, locale), "{value}", NumberUtil.format2(movementSpeed));
     }
 
 }

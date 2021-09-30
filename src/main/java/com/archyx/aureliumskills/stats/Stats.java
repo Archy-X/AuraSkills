@@ -14,7 +14,8 @@ public enum Stats implements Stat {
 	WISDOM,
 	TOUGHNESS,
 	CRIT_CHANCE,
-	CRIT_DAMAGE;
+	CRIT_DAMAGE,
+	SPEED;
 
 	@Override
 	public String getDisplayName(Locale locale) {

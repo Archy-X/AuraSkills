@@ -17,6 +17,7 @@ items:
       - '{toughness}'
       - '{crit_chance}'
       - '{crit_damage}'
+      - '{speed}'
   back:
     material: arrow
     pos: 2,4
@@ -49,6 +50,9 @@ templates:
     crit_damage:
       pos: 2,2
       material: cyan_stained_glass_pane
+    speed:
+      pos: 2,3
+      material: white_stained_glass_pane
     display_name: '{color}{stat}'
     lore:
       - '{stat_desc}{skills}'
