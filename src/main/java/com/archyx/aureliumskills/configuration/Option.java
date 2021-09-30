@@ -168,6 +168,7 @@ public enum Option {
     HEALTH_UPDATE_DELAY("health.update-delay", OptionType.INT),
     HEALTH_FORCE_BASE_HEALTH("health.force-base-health", OptionType.BOOLEAN),
     HEALTH_KEEP_FULL_ON_INCREASE("health.keep-full-on-increase", OptionType.BOOLEAN),
+    HEALTH_SHOW_TOTAL_HEALTH("health.show-total-health", OptionType.BOOLEAN),
     STRENGTH_MODIFIER("strength.modifier", OptionType.DOUBLE),
     STRENGTH_HAND_DAMAGE("strength.hand-damage", OptionType.BOOLEAN),
     STRENGTH_BOW_DAMAGE("strength.bow-damage", OptionType.BOOLEAN),

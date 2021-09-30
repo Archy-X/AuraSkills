@@ -38,7 +38,7 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
                         "{color}", stat.getColor(locale),
                         "{symbol}", stat.getSymbol(locale),
                         "{stat}", stat.getDisplayName(locale),
-                        "{level}", Lang.formatStatLevel(stat, playerData.getStatLevel(stat)));
+                        "{level}", StatItem.adjustAndFormatStatLevel(stat, playerData, player));
             }
         }
         return placeholder;
