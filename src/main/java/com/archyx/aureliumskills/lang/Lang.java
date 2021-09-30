@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -23,6 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Lang implements Listener {
 
@@ -31,6 +34,7 @@ public class Lang implements Listener {
 	private static Map<Locale, String> definedLanguages;
 	private static Locale defaultLanguage;
 	private final AureliumSkills plugin;
+	private final Pattern hexPattern = Pattern.compile("&#([A-Fa-f0-9]{6})");
 
 	public Lang(AureliumSkills plugin) {
 		this.plugin = plugin;
@@ -113,7 +117,7 @@ public class Lang implements Listener {
 		for (UnitMessage key : UnitMessage.values()) {
 			String message = config.getString(key.getPath());
 			if (message != null) {
-				units.put(key, message.replace('&', '§'));
+				units.put(key, applyColor(message));
 			}
 		}
 		// Load message keys
@@ -136,11 +140,10 @@ public class Lang implements Listener {
 				}
 				String message = config.getString(path);
 				if (message != null) {
-					messages.put(key, TextUtil.replace(message
-							,"&", "§"
+					messages.put(key, applyColor(TextUtil.replace(message
 							,"{mana_unit}", units.get(UnitMessage.MANA)
 							,"{hp_unit}", units.get(UnitMessage.HP)
-							,"{xp_unit}", units.get(UnitMessage.XP)));
+							,"{xp_unit}", units.get(UnitMessage.XP))));
 				}
 			}
 		}
@@ -328,6 +331,22 @@ public class Lang implements Listener {
 				playerData.setLocale(getDefaultLanguage());
 			}
 		}
+	}
+
+	private String applyColor(String message) {
+		Matcher matcher = hexPattern.matcher(message);
+		StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
+		while (matcher.find()) {
+			String group = matcher.group(1);
+			char COLOR_CHAR = ChatColor.COLOR_CHAR;
+			matcher.appendReplacement(buffer, COLOR_CHAR + "x"
+					+ COLOR_CHAR + group.charAt(0) + COLOR_CHAR + group.charAt(1)
+					+ COLOR_CHAR + group.charAt(2) + COLOR_CHAR + group.charAt(3)
+					+ COLOR_CHAR + group.charAt(4) + COLOR_CHAR + group.charAt(5)
+			);
+		}
+		message = matcher.appendTail(buffer).toString();
+		return TextUtil.replace(message, "&", "§");
 	}
 
 }
