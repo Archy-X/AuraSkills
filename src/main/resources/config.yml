@@ -287,7 +287,7 @@ health:
     update-delay: 0
     force-base-health: false
     keep-full-on-increase: false
-    show-total-health: true
+    show-total-health: false
 
 strength:
     modifier: 0.5
