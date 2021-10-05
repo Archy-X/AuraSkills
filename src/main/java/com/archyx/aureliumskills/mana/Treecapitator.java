@@ -77,7 +77,7 @@ public class Treecapitator extends ReadiedManaAbility {
         if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.TREECAPITATOR)) {
             ForagingSource source = ForagingSource.getSource(block);
             if (source != null) {
-                breakBlock(player, block, new TreecapitatorTree(block));
+                breakBlock(player, block, new TreecapitatorTree(plugin, block));
             }
         }
     }
@@ -132,11 +132,13 @@ public class Treecapitator extends ReadiedManaAbility {
 
     private static class TreecapitatorTree {
 
+        private final AureliumSkills plugin;
         private final Block originalBlock;
         private int blocksBroken;
         private int maxBlocks;
 
-        public TreecapitatorTree(Block originalBlock) {
+        public TreecapitatorTree(AureliumSkills plugin, Block originalBlock) {
+            this.plugin = plugin;
             this.originalBlock = originalBlock;
             setMaxBlocks();
         }
@@ -195,6 +197,8 @@ public class Treecapitator extends ReadiedManaAbility {
             } else {
                 maxBlocks = 100;
             }
+            double multiplier = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.TREECAPITATOR, "max_blocks_multiplier");
+            maxBlocks *= multiplier;
         }
 
     }
