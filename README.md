@@ -5,9 +5,6 @@ AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin,
 
 Learn more and download here: https://www.spigotmc.org/resources/81069/
 
-### GitHub Disclaimer:
-Versions here may be unreleased/in development, some may be very unstable.
-
 ### Support Discord:
 
 https://discord.gg/Bh2EZfB (Join for support/suggestions/discussion)
@@ -21,7 +18,6 @@ The wiki contains documentation on how to use and configure the plugin. The wiki
 Aurelium Skills provides a developer API to interact with the plugin.
 
 ### Maven
-**Repository:**
 ```
 <repository>
     <id>jitpack.io</id>
@@ -52,3 +48,11 @@ There are also a few events, including ManaRegenerateEvent, SkillLevelUpEvent, X
 
 ## Contributing
 Contributions are welcome! Open a pull request, and I will review it.
+
+<h1 align="center">
+  <br>
+    <a href="https://dedimc.promo/Archy" target="_blank">
+      <img src="https://i.imgur.com/x3IWw7h.png" alt="dedicatedmc banner">
+    </a>
+  <br>
+</h1>

@@ -63,22 +63,15 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                     if (location == null) return;
                     ItemStack first = inventory.getItem(0);
                     ItemStack second = inventory.getItem(1);
+                    if (first != null && second != null) { // If two items, make sure items are the same type
+                        if (first.getType() != second.getType()) {
+                            return;
+                        }
+                    }
                     Set<EnchantmentValue> enchants = new HashSet<>();
                     // Add enchants to disenchant
-                    if (first != null) {
-                        for (Map.Entry<Enchantment, Integer> entry : first.getEnchantments().entrySet()) {
-                            if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
-                                enchants.add(new EnchantmentValue(entry.getKey(), entry.getValue()));
-                            }
-                        }
-                    }
-                    if (second != null) {
-                        for (Map.Entry<Enchantment, Integer> entry : second.getEnchantments().entrySet()) {
-                            if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
-                                enchants.add(new EnchantmentValue(entry.getKey(), entry.getValue()));
-                            }
-                        }
-                    }
+                    checkEnchants(first, enchants);
+                    checkEnchants(second, enchants);
                     if (enchants.size() == 0) return;
                     // Calculate the sum
                     try {
@@ -96,6 +89,16 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                             world.spawn(location, ExperienceOrb.class).setExperience(added);
                         }
                     } catch (IllegalArgumentException ignored) {}
+                }
+            }
+        }
+    }
+
+    private void checkEnchants(ItemStack item, Set<EnchantmentValue> enchants) {
+        if (item != null) {
+            for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
+                if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
+                    enchants.add(new EnchantmentValue(entry.getKey(), entry.getValue()));
                 }
             }
         }
@@ -129,7 +132,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                     // Calculate durability to add, vanilla by default adds 20% of the max durability
                     short added = (short) (second.getAmount() * (Math.round(0.25 * max) + Math.round(max * 0.25 * (getValue(Ability.REPAIRING, playerData) / 100))));
                     damageable.setDamage(Math.max(damageable.getDamage() - added, 0));
-                    result.setItemMeta((ItemMeta) damageable);
+                    result.setItemMeta(damageable);
                 }
             } else {
                 // For old versions
@@ -199,7 +202,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                 if (meta instanceof Damageable) {
                     Damageable damageable = (Damageable) meta;
                     damageable.setDamage(Math.max(damageable.getDamage() - durabilityToRepair, 0));
-                    mendedItem.setItemMeta((ItemMeta) damageable);
+                    mendedItem.setItemMeta(damageable);
                 }
             } else {
                 mendedItem.setDurability((short) Math.max(mendedItem.getDurability() - durabilityToRepair, 0));
