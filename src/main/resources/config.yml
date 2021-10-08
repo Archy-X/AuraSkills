@@ -145,6 +145,9 @@ modifier:
     armor:
         equip-blocked-materials:
             - EXAMPLE
+        timer:
+            enabled: false
+            check-period: 3
     item:
         check-period: 3
         enable-off-hand: true
