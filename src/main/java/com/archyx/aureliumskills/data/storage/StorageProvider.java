@@ -146,7 +146,9 @@ public abstract class StorageProvider {
 
     public abstract void load(Player player);
 
-    public abstract void save(Player player);
+    public void save(Player player) {
+        save(player, true);
+    }
 
     public abstract void save(Player player, boolean removeFromMemory);
 
