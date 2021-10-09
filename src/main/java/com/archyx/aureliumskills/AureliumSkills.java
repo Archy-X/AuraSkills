@@ -276,7 +276,7 @@ public class AureliumSkills extends JavaPlugin {
 		}
 		actionBar.startUpdateActionBar();
 		// Initialize storage
-		this.playerManager = new PlayerManager();
+		this.playerManager = new PlayerManager(this);
 		this.leaderboardManager = new LeaderboardManager();
 		// Set proper storage provider
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {

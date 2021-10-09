@@ -15,8 +15,8 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.google.gson.*;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -321,11 +321,6 @@ public class MySqlStorageProvider extends StorageProvider {
             Bukkit.getLogger().warning("There was an error saving player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void save(Player player) {
-        save(player, true);
     }
 
     @Override

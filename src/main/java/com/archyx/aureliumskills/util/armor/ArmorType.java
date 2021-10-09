@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.util.armor;
 
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -35,4 +36,19 @@ public enum ArmorType{
     public int getSlot(){
         return slot;
     }
+
+    public EquipmentSlot getEquipmentSlot() {
+        switch (this) {
+            case HELMET:
+                return EquipmentSlot.HEAD;
+            case CHESTPLATE:
+                return EquipmentSlot.CHEST;
+            case LEGGINGS:
+                return EquipmentSlot.LEGS;
+            case BOOTS:
+            default:
+                return EquipmentSlot.FEET;
+        }
+    }
+
 }

@@ -53,6 +53,8 @@ public enum Option {
     ENABLE_SKILL_COMMANDS("enable-skill-commands", OptionType.BOOLEAN),
     CHECK_BLOCK_REPLACE("check-block-replace", OptionType.BOOLEAN),
     DISABLE_IN_CREATIVE_MODE("disable-in-creative-mode", OptionType.BOOLEAN),
+    AUTO_SAVE_ENABLED("auto-save.enabled", OptionType.BOOLEAN),
+    AUTO_SAVE_INTERVAL_TICKS("auto-save.interval-ticks", OptionType.INT),
     SKILL_MONEY_REWARDS_ENABLED("skill-money-rewards.enabled", OptionType.BOOLEAN),
     SKILL_MONEY_REWARDS_BASE("skill-money-rewards.base", OptionType.DOUBLE),
     SKILL_MONEY_REWARDS_MULTIPLIER("skill-money-rewards.multiplier", OptionType.DOUBLE),
@@ -69,6 +71,8 @@ public enum Option {
     LEVELER_DOUBLE_CHECK_DELAY("leveler.double-check-delay", OptionType.INT),
     // Modifier options
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip-blocked-materials", OptionType.LIST),
+    MODIFIER_ARMOR_TIMER_ENABLED("modifier.armor.timer.enabled", OptionType.BOOLEAN),
+    MODIFIER_ARMOR_TIMER_CHECK_PERIOD("modifier.armor.timer.check-period", OptionType.INT),
     MODIFIER_ITEM_CHECK_PERIOD("modifier.item.check-period", OptionType.INT),
     MODIFIER_ITEM_ENABLE_OFF_HAND("modifier.item.enable-off-hand", OptionType.BOOLEAN),
     MODIFIER_MULTIPLIER_ENABLED("modifier.multiplier.enabled", OptionType.BOOLEAN),

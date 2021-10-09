@@ -1,3 +1,17 @@
+Version Beta 1.2.5
+  New Features:
+    - Add hex color message support in &# format
+    - Add Treecapitator max_blocks_multiplier option to scale the number of blocks broken
+    - Add auto save for online players
+      - Useful if your server experiences skill data losses due to server crashes
+      - You must set auto-save.enabled to true and restart the server to enable it
+      - The auto-save.interval-ticks option controls how often (in ticks) to auto-save
+  Changes:
+    - Endurance XP gain is now disabled in spectator mode
+  Bug Fixes:
+    - Add armor modifier timer options to fix rare bug where un-equipping armor did not remove modifiers
+    - Fix some numbers and placeholders truncating instead of rounding half up
+
 Version Beta 1.2.4
   New Features:
     - Add XP requirement equation customization:

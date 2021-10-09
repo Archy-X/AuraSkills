@@ -122,6 +122,10 @@ disabled-worlds:
 
 disable-in-creative-mode: false
 
+auto-save:
+    enabled: false
+    interval-ticks: 12000
+
 skill-money-rewards:
     enabled: false
     base: 100
@@ -145,6 +149,9 @@ modifier:
     armor:
         equip-blocked-materials:
             - EXAMPLE
+        timer:
+            enabled: false
+            check-period: 3
     item:
         check-period: 3
         enable-off-hand: true

@@ -197,11 +197,6 @@ public class YamlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(Player player) {
-        save(player, true);
-    }
-
-    @Override
     public void loadBackup(FileConfiguration config, CommandSender sender) {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
         Locale locale = plugin.getLang().getLocale(sender);
