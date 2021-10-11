@@ -43,6 +43,14 @@ items:
       - '{sources_desc}'
       - ' '
       - '{sources_click}'
+  abilities:
+    pos: 0,3
+    material: light_blue_dye
+    display_name: '{abilities}'
+    lore:
+      - '{abilities_desc}'
+      - ' '
+      - '{abilities_click}'
 templates:
   skill:
     pos: 0,0

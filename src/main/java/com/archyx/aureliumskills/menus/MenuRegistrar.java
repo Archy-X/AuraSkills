@@ -1,11 +1,11 @@
 package com.archyx.aureliumskills.menus;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.menus.abilities.*;
 import com.archyx.aureliumskills.menus.common.*;
-import com.archyx.aureliumskills.menus.contexts.SkillContext;
-import com.archyx.aureliumskills.menus.contexts.SortTypeContext;
-import com.archyx.aureliumskills.menus.contexts.SourceContext;
-import com.archyx.aureliumskills.menus.contexts.StatContext;
+import com.archyx.aureliumskills.menus.contexts.*;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardMenu;
 import com.archyx.aureliumskills.menus.leaderboard.LeaderboardPlayerItem;
 import com.archyx.aureliumskills.menus.levelprogression.*;
@@ -44,6 +44,8 @@ public class MenuRegistrar {
         contextManager.registerContext("Stat", Stat.class, new StatContext(plugin));
         contextManager.registerContext("Source", Source.class, new SourceContext(plugin));
         contextManager.registerContext("SortType", SorterItem.SortType.class, new SortTypeContext());
+        contextManager.registerContext("Ability", Ability.class, new AbilityContext());
+        contextManager.registerContext("MAbility", MAbility.class, new ManaAbilityContext());
 
         MenuManager manager = plugin.getMenuManager();
         // Register menus
@@ -52,6 +54,7 @@ public class MenuRegistrar {
         manager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
         manager.registerMenuProvider("leaderboard", new LeaderboardMenu(plugin));
         manager.registerMenuProvider("sources", new SourcesMenu(plugin));
+        manager.registerMenuProvider("abilities", new AbilitiesMenu(plugin));
         // Global items
         manager.registerSingleItem("back", new BackItem(plugin));
         manager.registerSingleItem("close", new CloseItem(plugin));
@@ -72,6 +75,7 @@ public class MenuRegistrar {
         levelProgression.registerSingleItem("previous_page", new PreviousPageItem(plugin));
         levelProgression.registerSingleItem("rank", new RankItem(plugin));
         levelProgression.registerSingleItem("sources", new SourcesItem(plugin));
+        levelProgression.registerSingleItem("abilities", new AbilitiesItem(plugin));
         levelProgression.registerTemplateItem("skill", new StaticSkillItem(plugin));
         levelProgression.registerTemplateItem("unlocked", new UnlockedItem(plugin));
         levelProgression.registerTemplateItem("in_progress", new InProgressItem(plugin));
@@ -85,5 +89,12 @@ public class MenuRegistrar {
         sources.registerSingleItem("sorter", new SorterItem(plugin));
         sources.registerSingleItem("back", new BackToLevelProgressionItem(plugin));
         sources.registerTemplateItem("source", new SourceItem(plugin));
+
+        ProviderManager abilities = manager.getProviderManager("abilities");
+        abilities.registerSingleItem("back", new BackToLevelProgressionItem(plugin));
+        abilities.registerTemplateItem("locked_ability", new LockedAbilityItem(plugin));
+        abilities.registerTemplateItem("locked_mana_ability", new LockedManaAbilityItem(plugin));
+        abilities.registerTemplateItem("unlocked_ability", new UnlockedAbilityItem(plugin));
+        abilities.registerTemplateItem("unlocked_mana_ability", new UnlockedManaAbilityItem(plugin));
     }
 }

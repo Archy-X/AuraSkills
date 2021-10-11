@@ -1,53 +1,49 @@
-title: 'abilities_menu_title'
+title: '{abilities_menu_title}'
 size: 4
 fill:
   enabled: true
-  material: back_stained_glass_pane
+  material: black_stained_glass_pane
 items:
   back:
     material: arrow
-    pos: 3,4
+    pos: 3,0
     display_name: '{back}'
     lore:
       - '{back_click}'
 templates:
   locked_ability:
     material: gray_dye
-    display_name: '{locked_ability_name}'
+    display_name: '&f{name}'
     lore:
-      - '{desc}'
+      - '  &7{desc}'
       - ' '
       - '{unlocked_at}'
       - ' '
       - '{locked}'
   locked_mana_ability:
     material: gray_dye
-    display_name: '{locked_mana_ability_name}'
+    display_name: '&d{name}'
     lore:
-      - '{desc}'
+      - '  &7{desc}'
       - ' '
       - '{unlocked_at}'
       - ' '
       - '{locked}'
   unlocked_ability:
-    material: green_dye
-    display_name: '{unlocked_ability_name}'
+    material: light_blue_dye
+    display_name: '&f{name}'
     lore:
-      - '{desc}'
+      - '  &7{desc}'
       - ' '
-      - '{level}'
-      - ' '
-      - '{next_level_desc}'
+      - '{level}{next_level_desc}'
       - ' '
       - '{unlocked}'
   unlocked_mana_ability:
     material: magenta_dye
-    display_name: '{unlocked_mana_ability_name}'
+    display_name: '&d{name}'
     lore:
-      - '{desc}'
+      - '  &7{desc}'
       - ' '
-      - '{level}'
+      - '{level}{next_level_desc}'
       - ' '
-      - '{next_level_desc}'
-      - ' '
-      - '{locked}'
+      - '{unlocked}'
