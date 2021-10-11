@@ -6,6 +6,8 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
@@ -35,19 +37,19 @@ public class UnlockedAbilityItem extends AbstractItem implements TemplateItemPro
         switch (placeholder) {
             case "name":
                 return ability.getDisplayName(locale);
-            case "desc":
-                return TextUtil.replace(ability.getDescription(locale), "{value}",
-                        String.valueOf(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability))));
             case "level":
                 if (isNotMaxed(playerData, ability)) {
-                    return "&7Level: &f" + playerData.getAbilityLevel(ability);
+                    return "&fYour Level: &b" + playerData.getAbilityLevel(ability);
                 } else {
-                    return "&7Level: &f" + playerData.getAbilityLevel(ability) + " &6(MAXED)";
+                    return "&fYour Level: &b" + playerData.getAbilityLevel(ability) + " &6(MAXED)";
                 }
             case "next_level_desc":
                 if (isNotMaxed(playerData, ability)) {
-                    return "\n \n&fNext level: &7" + TextUtil.replace(ability.getDescription(locale), "{value}",
-                            String.valueOf(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability) + 1)));
+                    return "\n \n&fNext upgrade at &3" + ability.getSkill().getDisplayName(locale) + " " +
+                            RomanNumber.toRoman(getNextUpgradeLevel(ability, playerData)) +
+                            "&f:\n  &7" + TextUtil.replace(ability.getDescription(locale),
+                            "{value}", getUpgradeValue(ability, playerData),
+                            "{value_2}", getUpgradeValue2(ability, playerData));
                 } else {
                     return "";
                 }
@@ -55,6 +57,24 @@ public class UnlockedAbilityItem extends AbstractItem implements TemplateItemPro
                 return "&a&lUNLOCKED";
         }
         return placeholder;
+    }
+
+    private int getNextUpgradeLevel(Ability ability, PlayerData playerData) {
+        int unlock = plugin.getAbilityManager().getUnlock(ability);
+        int levelUp = plugin.getAbilityManager().getLevelUp(ability);
+        return unlock + levelUp * playerData.getAbilityLevel(ability);
+    }
+
+    private String getUpgradeValue(Ability ability, PlayerData playerData) {
+        String currentValue = NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)));
+        String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability) + 1));
+        return "&8" + currentValue + "→&7" + nextValue;
+    }
+
+    private String getUpgradeValue2(Ability ability, PlayerData playerData) {
+        String currentValue = NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability)));
+        String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability) + 1));
+        return "&8" + currentValue + "→&7" + nextValue;
     }
 
     private boolean isNotMaxed(PlayerData playerData, Ability ability) {

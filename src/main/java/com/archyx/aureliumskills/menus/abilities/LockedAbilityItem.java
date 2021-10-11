@@ -5,7 +5,9 @@ import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
@@ -33,7 +35,9 @@ public class LockedAbilityItem extends AbstractItem implements TemplateItemProvi
             case "name":
                 return ability.getDisplayName(locale);
             case "desc":
-                return ability.getDescription(locale);
+                return "&fDescription:\n  &7" + TextUtil.replace(ability.getDescription(locale),
+                        "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
+                        "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1)));
             case "unlocked_at":
                 Skill skill = (Skill) menu.getProperty("skill");
                 return "&7Unlocked at &3" + skill.getDisplayName(locale) + " " + RomanNumber.toRoman(plugin.getAbilityManager().getUnlock(ability));

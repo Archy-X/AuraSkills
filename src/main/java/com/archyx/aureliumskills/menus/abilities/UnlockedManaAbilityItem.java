@@ -4,8 +4,11 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.mana.MAbility;
+import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.math.NumberUtil;
+import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
@@ -19,8 +22,11 @@ import java.util.Set;
 
 public class UnlockedManaAbilityItem extends AbstractItem implements TemplateItemProvider<MAbility> {
 
+    private final ManaAbilityManager manager;
+    
     public UnlockedManaAbilityItem(AureliumSkills plugin) {
         super(plugin);
+        manager = plugin.getManaAbilityManager();
     }
 
     @Override
@@ -36,33 +42,20 @@ public class UnlockedManaAbilityItem extends AbstractItem implements TemplateIte
         switch (placeholder) {
             case "name":
                 return mAbility.getDisplayName(locale);
-            case "desc":
-                if (mAbility != MAbility.SPEED_MINE) {
-                    return TextUtil.replace(mAbility.getDescription(locale), "{value}",
-                            String.valueOf(plugin.getManaAbilityManager().getValue(mAbility, playerData.getManaAbilityLevel(mAbility))));
-                } else {
-                    return TextUtil.replace(mAbility.getDescription(locale), "{value}",
-                            String.valueOf(plugin.getManaAbilityManager().getValue(mAbility, playerData.getManaAbilityLevel(mAbility))),
-                            "{haste_level}",
-                            String.valueOf(plugin.getManaAbilityManager().getOptionAsInt(mAbility, "haste_level", 10)));
-                }
             case "level":
                 if (isNotMaxed(playerData, mAbility)) {
-                    return "&7Level: &f" + playerData.getManaAbilityLevel(mAbility);
+                    return "&fYour Level: &d" + playerData.getManaAbilityLevel(mAbility);
                 } else {
-                    return "&7Level: &f" + playerData.getManaAbilityLevel(mAbility) + " &6(MAXED)";
+                    return "&fYour Level: &d" + playerData.getManaAbilityLevel(mAbility) + " &6(MAXED)";
                 }
             case "next_level_desc":
                 if (isNotMaxed(playerData, mAbility)) {
-                    if (mAbility != MAbility.SPEED_MINE) {
-                        return "\n \n&fNext level: &7" + TextUtil.replace(mAbility.getDescription(locale), "{value}",
-                                String.valueOf(plugin.getManaAbilityManager().getValue(mAbility, playerData.getManaAbilityLevel(mAbility) + 1)));
-                    } else {
-                        return "\n \n&fNext level: &7" + TextUtil.replace(mAbility.getDescription(locale), "{value}",
-                                String.valueOf(plugin.getManaAbilityManager().getValue(mAbility, playerData.getManaAbilityLevel(mAbility) + 1)),
-                                "{haste_level}",
-                                String.valueOf(plugin.getManaAbilityManager().getOptionAsInt(mAbility, "haste_level", 10)));
-                    }
+                    return "\n \n&fNext upgrade at &3" + mAbility.getSkill().getDisplayName(locale) + " " +
+                            RomanNumber.toRoman(getNextUpgradeLevel(mAbility, playerData)) + "&f:\n  &7"
+                            + TextUtil.replace(mAbility.getDescription(locale),
+                            "{value}", getUpgradeValue(mAbility, playerData),
+                            "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
+                            "{duration}", getUpgradeDuration(mAbility, playerData));
                 } else {
                     return "";
                 }
@@ -72,10 +65,28 @@ public class UnlockedManaAbilityItem extends AbstractItem implements TemplateIte
         return placeholder;
     }
 
+    private int getNextUpgradeLevel(MAbility mAbility, PlayerData playerData) {
+        int unlock = manager.getUnlock(mAbility);
+        int levelUp = manager.getLevelUp(mAbility);
+        return unlock + levelUp * playerData.getManaAbilityLevel(mAbility);
+    }
+
+    private String getUpgradeValue(MAbility mAbility, PlayerData playerData) {
+        String currentValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility)));
+        String nextValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
+        return "&8" + currentValue + "→&7" + nextValue;
+    }
+
+    private String getUpgradeDuration(MAbility mAbility, PlayerData playerData) {
+        String currentDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility)));
+        String nextDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
+        return "&8" + currentDuration + "→&7" + nextDuration;
+    }
+
     private boolean isNotMaxed(PlayerData playerData, MAbility mAbility) {
-        int maxLevel = plugin.getManaAbilityManager().getMaxLevel(mAbility);
-        int unlock = plugin.getManaAbilityManager().getUnlock(mAbility);
-        int levelUp = plugin.getManaAbilityManager().getLevelUp(mAbility);
+        int maxLevel = manager.getMaxLevel(mAbility);
+        int unlock = manager.getUnlock(mAbility);
+        int levelUp = manager.getLevelUp(mAbility);
         if (maxLevel == 0) {
             maxLevel = OptionL.getMaxLevel(mAbility.getSkill());
         }
@@ -95,6 +106,16 @@ public class UnlockedManaAbilityItem extends AbstractItem implements TemplateIte
             }
         }
         return unlockedManaAbilities;
+    }
+
+    private double getDuration(MAbility mAbility, int level) {
+        if (mAbility == MAbility.LIGHTNING_BLADE) {
+            double baseDuration = manager.getOptionAsDouble(MAbility.LIGHTNING_BLADE, "base_duration");
+            double durationPerLevel = manager.getOptionAsDouble(MAbility.LIGHTNING_BLADE, "duration_per_level");
+            return baseDuration + (durationPerLevel * (level - 1));
+        } else {
+            return manager.getValue(mAbility, level);
+        }
     }
 
     @Override

@@ -251,9 +251,6 @@ public class AureliumSkills extends JavaPlugin {
 		rewardManager.loadRewards();
 		// Registers Commands
 		registerCommands();
-		// Load menu
-		slate = new Slate(this);
-		registerMenus();
 		// Region manager
 		this.regionManager = new RegionManager(this);
 		// Registers events
@@ -265,6 +262,9 @@ public class AureliumSkills extends JavaPlugin {
 		// Load ability options
 		abilityManager = new AbilityManager(this);
 		abilityManager.loadOptions();
+		// Load menu
+		slate = new Slate(this);
+		registerMenus();
 		// Load stats
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);

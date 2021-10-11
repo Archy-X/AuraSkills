@@ -13,9 +13,9 @@ items:
 templates:
   locked_ability:
     material: gray_dye
-    display_name: '&f{name}'
+    display_name: '&b{name}'
     lore:
-      - '  &7{desc}'
+      - '{desc}'
       - ' '
       - '{unlocked_at}'
       - ' '
@@ -24,17 +24,15 @@ templates:
     material: gray_dye
     display_name: '&d{name}'
     lore:
-      - '  &7{desc}'
+      - '{desc}'
       - ' '
       - '{unlocked_at}'
       - ' '
       - '{locked}'
   unlocked_ability:
     material: light_blue_dye
-    display_name: '&f{name}'
+    display_name: '&b{name}'
     lore:
-      - '  &7{desc}'
-      - ' '
       - '{level}{next_level_desc}'
       - ' '
       - '{unlocked}'
@@ -42,8 +40,6 @@ templates:
     material: magenta_dye
     display_name: '&d{name}'
     lore:
-      - '  &7{desc}'
-      - ' '
       - '{level}{next_level_desc}'
       - ' '
       - '{unlocked}'
