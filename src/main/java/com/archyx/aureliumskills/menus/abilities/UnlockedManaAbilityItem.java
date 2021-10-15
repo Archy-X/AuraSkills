@@ -3,6 +3,8 @@ package com.archyx.aureliumskills.menus.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.menus.common.AbstractItem;
@@ -42,25 +44,32 @@ public class UnlockedManaAbilityItem extends AbstractItem implements TemplateIte
         switch (placeholder) {
             case "name":
                 return mAbility.getDisplayName(locale);
-            case "level":
+            case "your_ability_level":
                 if (isNotMaxed(playerData, mAbility)) {
-                    return "&fYour Level: &d" + playerData.getManaAbilityLevel(mAbility);
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
+                            "{level}", String.valueOf(playerData.getManaAbilityLevel(mAbility)));
                 } else {
-                    return "&fYour Level: &d" + playerData.getManaAbilityLevel(mAbility) + " &6(MAXED)";
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
+                            "{level}", String.valueOf(playerData.getManaAbilityLevel(mAbility)));
                 }
-            case "next_level_desc":
+            case "unlocked_desc":
                 if (isNotMaxed(playerData, mAbility)) {
-                    return "\n \n&fNext upgrade at &3" + mAbility.getSkill().getDisplayName(locale) + " " +
-                            RomanNumber.toRoman(getNextUpgradeLevel(mAbility, playerData)) + "&f:\n  &7"
-                            + TextUtil.replace(mAbility.getDescription(locale),
-                            "{value}", getUpgradeValue(mAbility, playerData),
-                            "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
-                            "{duration}", getUpgradeDuration(mAbility, playerData));
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
+                            "{skill}", mAbility.getSkill().getDisplayName(locale),
+                            "{level}", RomanNumber.toRoman(getNextUpgradeLevel(mAbility, playerData)),
+                            "{desc}", TextUtil.replace(mAbility.getDescription(locale),
+                                    "{value}", getUpgradeValue(mAbility, playerData),
+                                    "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
+                                    "{duration}", getUpgradeDuration(mAbility, playerData)));
                 } else {
-                    return "";
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
+                            "{desc}", TextUtil.replace(mAbility.getDescription(locale),
+                                    "{value}", getUpgradeValue(mAbility, playerData),
+                                    "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
+                                    "{duration}", getUpgradeDuration(mAbility, playerData)));
                 }
             case "unlocked":
-                return "&a&lUNLOCKED";
+                return Lang.getMessage(MenuMessage.UNLOCKED, locale);
         }
         return placeholder;
     }

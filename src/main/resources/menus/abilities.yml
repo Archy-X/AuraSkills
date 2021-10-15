@@ -1,4 +1,4 @@
-title: '{abilities_menu_title}'
+title: '{abilities_title}'
 size: 4
 fill:
   enabled: true
@@ -15,7 +15,7 @@ templates:
     material: gray_dye
     display_name: '&b{name}'
     lore:
-      - '{desc}'
+      - '{locked_desc}'
       - ' '
       - '{unlocked_at}'
       - ' '
@@ -24,7 +24,7 @@ templates:
     material: gray_dye
     display_name: '&d{name}'
     lore:
-      - '{desc}'
+      - '{locked_desc}'
       - ' '
       - '{unlocked_at}'
       - ' '
@@ -33,13 +33,17 @@ templates:
     material: light_blue_dye
     display_name: '&b{name}'
     lore:
-      - '{level}{next_level_desc}'
+      - '{your_ability_level}'
+      - ' '
+      - '{unlocked_desc}'
       - ' '
       - '{unlocked}'
   unlocked_mana_ability:
     material: magenta_dye
     display_name: '&d{name}'
     lore:
-      - '{level}{next_level_desc}'
+      - '{your_ability_level}'
+      - ' '
+      - '{unlocked_desc}'
       - ' '
       - '{unlocked}'

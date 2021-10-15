@@ -3,21 +3,22 @@ package com.archyx.aureliumskills.menus.abilities;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.menus.common.AbstractItem;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
-import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
-import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.function.Supplier;
 
-public class LockedAbilityItem extends AbstractItem implements TemplateItemProvider<Ability> {
+public class LockedAbilityItem extends AbstractAbilityItem {
 
     public LockedAbilityItem(AureliumSkills plugin) {
         super(plugin);
@@ -34,15 +35,18 @@ public class LockedAbilityItem extends AbstractItem implements TemplateItemProvi
         switch (placeholder) {
             case "name":
                 return ability.getDisplayName(locale);
-            case "desc":
-                return "&fDescription:\n  &7" + TextUtil.replace(ability.getDescription(locale),
-                        "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
-                        "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1)));
+            case "locked_desc":
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
+                        "{desc}", TextUtil.replace(ability.getDescription(locale),
+                                "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
+                                "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1))));
             case "unlocked_at":
                 Skill skill = (Skill) menu.getProperty("skill");
-                return "&7Unlocked at &3" + skill.getDisplayName(locale) + " " + RomanNumber.toRoman(plugin.getAbilityManager().getUnlock(ability));
+                return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
+                        "{skill}", skill.getDisplayName(locale),
+                        "{level}", RomanNumber.toRoman(plugin.getAbilityManager().getUnlock(ability)));
             case "locked":
-                return "&c&lLOCKED";
+                return Lang.getMessage(MenuMessage.LOCKED, locale);
         }
         return placeholder;
     }
@@ -62,16 +66,5 @@ public class LockedAbilityItem extends AbstractItem implements TemplateItemProvi
             }
         }
         return lockedAbilities;
-    }
-
-    @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Ability ability) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
-        List<Ability> abilityList = new ArrayList<>();
-        for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
-            abilityList.add(abilitySupplier.get());
-        }
-        int index = abilityList.indexOf(ability);
-        return SlotPos.of(1, 2 + index);
     }
 }

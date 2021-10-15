@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.menus.abilities;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.menus.common.AbstractItem;
@@ -40,15 +42,18 @@ public class LockedManaAbilityItem extends AbstractItem implements TemplateItemP
         switch (placeholder) {
             case "name":
                 return mAbility.getDisplayName(locale);
-            case "desc":
-                return "&fDescription:\n  &7" + TextUtil.replace(mAbility.getDescription(locale),
-                        "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, 1)),
-                        "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
-                        "{duration}", NumberUtil.format1(getDuration(mAbility)));
+            case "locked_desc":
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
+                        "{desc}", TextUtil.replace(mAbility.getDescription(locale),
+                            "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, 1)),
+                            "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
+                            "{duration}", NumberUtil.format1(getDuration(mAbility))));
             case "unlocked_at":
-                return "&7Unlocked at &3" + skill.getDisplayName(locale) + " " + RomanNumber.toRoman(plugin.getManaAbilityManager().getUnlock(mAbility));
+                return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
+                        "{skill}", skill.getDisplayName(locale),
+                        "{level}", RomanNumber.toRoman(plugin.getManaAbilityManager().getUnlock(mAbility)));
             case "locked":
-                return "&c&lLOCKED";
+                return Lang.getMessage(MenuMessage.LOCKED, locale);
         }
         return placeholder;
     }

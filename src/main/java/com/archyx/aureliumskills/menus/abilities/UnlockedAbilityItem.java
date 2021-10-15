@@ -4,21 +4,22 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.menus.common.AbstractItem;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
-import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
-import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.function.Supplier;
 
-public class UnlockedAbilityItem extends AbstractItem implements TemplateItemProvider<Ability> {
+public class UnlockedAbilityItem extends AbstractAbilityItem {
 
     public UnlockedAbilityItem(AureliumSkills plugin) {
         super(plugin);
@@ -37,24 +38,30 @@ public class UnlockedAbilityItem extends AbstractItem implements TemplateItemPro
         switch (placeholder) {
             case "name":
                 return ability.getDisplayName(locale);
-            case "level":
+            case "your_ability_level":
                 if (isNotMaxed(playerData, ability)) {
-                    return "&fYour Level: &b" + playerData.getAbilityLevel(ability);
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
+                            "{level}", String.valueOf(playerData.getAbilityLevel(ability)));
                 } else {
-                    return "&fYour Level: &b" + playerData.getAbilityLevel(ability) + " &6(MAXED)";
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
+                            "{level}", String.valueOf(playerData.getAbilityLevel(ability)));
                 }
-            case "next_level_desc":
+            case "unlocked_desc":
                 if (isNotMaxed(playerData, ability)) {
-                    return "\n \n&fNext upgrade at &3" + ability.getSkill().getDisplayName(locale) + " " +
-                            RomanNumber.toRoman(getNextUpgradeLevel(ability, playerData)) +
-                            "&f:\n  &7" + TextUtil.replace(ability.getDescription(locale),
-                            "{value}", getUpgradeValue(ability, playerData),
-                            "{value_2}", getUpgradeValue2(ability, playerData));
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
+                            "{skill}", ability.getSkill().getDisplayName(locale),
+                            "{level}", RomanNumber.toRoman(getNextUpgradeLevel(ability, playerData)),
+                            "{desc}", TextUtil.replace(ability.getDescription(locale),
+                                    "{value}", getUpgradeValue(ability, playerData),
+                                    "{value_2}", getUpgradeValue2(ability, playerData)));
                 } else {
-                    return "";
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
+                            "{desc}", TextUtil.replace(ability.getDescription(locale),
+                                    "{value}", getUpgradeValue(ability, playerData),
+                                    "{value_2}", getUpgradeValue2(ability, playerData)));
                 }
             case "unlocked":
-                return "&a&lUNLOCKED";
+                return Lang.getMessage(MenuMessage.UNLOCKED, locale);
         }
         return placeholder;
     }
@@ -103,16 +110,4 @@ public class UnlockedAbilityItem extends AbstractItem implements TemplateItemPro
         }
         return unlockedAbilities;
     }
-
-    @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Ability ability) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
-        List<Ability> abilityList = new ArrayList<>();
-        for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
-            abilityList.add(abilitySupplier.get());
-        }
-        int index = abilityList.indexOf(ability);
-        return SlotPos.of(1, 2 + index);
-    }
-
 }
