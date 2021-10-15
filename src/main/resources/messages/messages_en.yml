@@ -653,8 +653,8 @@ menus:
   abilities:
     abilities_title: '{skill} Abilities'
     locked_desc: '&fDescription:\n  &7{desc}'
-    unlocked_at: '&7Unlocked at &7{skill} {level}'
-    your_ability_level: '&fYour Level &b{level}'
+    unlocked_at: '&7Unlocked at &3{skill} {level}'
+    your_ability_level: '&fYour Level: &b{level}'
     your_ability_level_maxed: '&fYour Level &b{level} &6(MAXED)'
     unlocked_desc: '&fNext upgrade at &3{skill} {level}&f\n  &7{desc}'
     unlocked_desc_maxed: '&fDescription:\n  &7{desc}'
