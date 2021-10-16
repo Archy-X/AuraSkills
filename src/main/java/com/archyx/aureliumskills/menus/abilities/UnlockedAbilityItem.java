@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class UnlockedAbilityItem extends AbstractAbilityItem {
 
     public UnlockedAbilityItem(AureliumSkills plugin) {
-        super(plugin);
+        super(plugin, "unlocked_ability");
     }
 
     @Override

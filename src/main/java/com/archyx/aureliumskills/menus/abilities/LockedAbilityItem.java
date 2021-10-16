@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class LockedAbilityItem extends AbstractAbilityItem {
 
     public LockedAbilityItem(AureliumSkills plugin) {
-        super(plugin);
+        super(plugin, "locked_ability");
     }
 
     @Override
