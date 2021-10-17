@@ -21,6 +21,7 @@ templates:
       - ' '
       - '{locked}'
   locked_mana_ability:
+    pos: 2,4
     material: gray_dye
     display_name: '&d{name}'
     lore:
@@ -39,6 +40,7 @@ templates:
       - ' '
       - '{unlocked}'
   unlocked_mana_ability:
+    pos: 2,4
     material: magenta_dye
     display_name: '&d{name}'
     lore:

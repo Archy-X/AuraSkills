@@ -14,7 +14,6 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
-import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -70,11 +69,6 @@ public class LockedManaAbilityItem extends AbstractItem implements TemplateItemP
             }
         }
         return lockedManaAbilities;
-    }
-
-    @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, MAbility context) {
-        return SlotPos.of(2,4);
     }
 
     private double getDuration(MAbility mAbility) {
