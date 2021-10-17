@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.menus;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.util.file.FileUtil;
 import com.archyx.aureliumskills.util.misc.DataUtil;
 import com.archyx.slate.menu.MenuManager;
 import org.apache.commons.lang.StringUtils;
@@ -82,6 +83,8 @@ public class MenuFileManager {
                 migrateTemplates(templatesSection, newTemplatesSection);
             }
         }
+
+        FileUtil.renameNoDuplicates(legacyFile, "menus-OLD.yml", plugin.getDataFolder()); // Rename old file
     }
 
     private void migrateItems(ConfigurationSection oldSection, ConfigurationSection newSection) {
