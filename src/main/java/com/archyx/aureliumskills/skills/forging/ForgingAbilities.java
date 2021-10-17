@@ -130,14 +130,30 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                     Damageable damageable = (Damageable) meta;
                     short max = first.getType().getMaxDurability();
                     // Calculate durability to add, vanilla by default adds 20% of the max durability
-                    short added = (short) (second.getAmount() * (Math.round(0.25 * max) + Math.round(max * 0.25 * (getValue(Ability.REPAIRING, playerData) / 100))));
+                    long addedLong = second.getAmount() * (Math.round(0.25 * max) + Math.round(max * 0.25 * (getValue(Ability.REPAIRING, playerData) / 100)));
+                    short added;
+                    if (addedLong > Short.MAX_VALUE) {
+                        added = (short) damageable.getDamage();
+                    } else if (addedLong < Short.MIN_VALUE) {
+                        added = 0;
+                    } else {
+                        added = (short) addedLong;
+                    }
                     damageable.setDamage(Math.max(damageable.getDamage() - added, 0));
                     result.setItemMeta(damageable);
                 }
             } else {
                 // For old versions
                 short max = result.getType().getMaxDurability();
-                short added = (short) (second.getAmount() * (Math.round(0.25 * max) + Math.round(max * 0.25 * (getValue(Ability.REPAIRING, playerData) / 100))));
+                long addedLong = second.getAmount() * (Math.round(0.25 * max) + Math.round(max * 0.25 * (getValue(Ability.REPAIRING, playerData) / 100)));
+                short added;
+                if (addedLong > Short.MAX_VALUE) {
+                    added = first.getDurability();
+                } else if (addedLong < Short.MIN_VALUE) {
+                    added = 0;
+                } else {
+                    added = (short) addedLong;
+                }
                 result.setDurability((short) Math.max(first.getDurability() - added, 0));
             }
         }
