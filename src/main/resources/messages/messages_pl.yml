@@ -9,7 +9,7 @@ abilities:
       info: '{value}% 2x Dropów'
     farmer:
       name: Rolnik
-      desc: 'Zdobywaj {value}% więcej doświadczenia rolniczego.'
+      desc: 'Zdobywaj {value}% więcej XP Rolnictwa.'
       info: '+{value}% XP'
     scythe_master:
       name: Mistrz Motyki
@@ -30,7 +30,7 @@ abilities:
       info: '{value}% 2x Dropów'
     forager:
       name: Stolarz
-      desc: 'Zdobywaj {value}% więcej doświadczenia drwal niczego.'
+      desc: 'Zdobywaj {value}% więcej XP Drwalnictwa.'
       info: '+{value}% XP'
     axe_master:
       name: Mistrz Topora
@@ -38,11 +38,11 @@ abilities:
       info: '+{value}% Obrażeń Siekiery'
     valor:
       name: Głowica
-      desc: "Dodaje +{value} Siły trzymając\n&7  siekierę"
+      desc: "Dodaje +{value} Siły podczas trzymania\n&7  siekiery"
       info: '+{value} Siły'
     shredder:
       name: Trzaskacz
-      desc: "{value}% szans na zadanie potrójnych obrażeń\n&7  wytrzymałości z toporami."
+      desc: "{value}% szans na zadanie potrójnych obrażeń\n&7  wytrzymałości za pomocą toporów."
       info: '{value}% 3x Obrażeń Wytrzymałości'
   mining:
     lucky_miner:
@@ -51,7 +51,7 @@ abilities:
       info: '{value}% 2x Dropów'
     miner:
       name: Górnik
-      desc: 'Zdobywaj {value}% więcej doświadczenia górniczego.'
+      desc: 'Zdobywaj {value}% więcej XP Górnictwa.'
       info: '+{value}% XP'
     pick_master:
       name: Mistrz Kilofa
@@ -59,7 +59,7 @@ abilities:
       info: '+{value}% Obrażeń Kilofa'
     stamina:
       name: Energia
-      desc: "Dodaje +{value} wytrzymałości podczas\n&7  trzymania kilofu"
+      desc: "Dodaje +{value} Twardości podczas\n&7  trzymania kilofu"
       info: '+{value} Wytrzymałości'
     hardened_armor:
       name: Utwardzona Zbroja
@@ -72,7 +72,7 @@ abilities:
       info: '{value}% 2x Dropów'
     fisher:
       name: Rybak
-      desc: 'Zdobywaj {value}% więcej doświadczenia łowniczego'
+      desc: 'Zdobywaj {value}% więcej XP Wędkarstwa.'
       info: '+{value}% XP'
     treasure_hunter:
       name: Łowca Skarbów
@@ -93,7 +93,7 @@ abilities:
       info: '+{value}% Rzadkich Łupów'
     excavator:
       name: Wydobywca
-      desc: 'Zdobywaj {value}% więcej doświadczenia wydobycia'
+      desc: 'Zdobywaj {value}% więcej XP Wydobywania.'
       info: '+{value}% XP'
     spade_master:
       name: Mistrz Szpady
@@ -114,7 +114,7 @@ abilities:
       info: '+{value}% Szansy na Krytykę'
     archer:
       name: Łucznik
-      desc: 'Zdobywaj {value}% więcej doświadczenia strzelniczego.'
+      desc: 'Zdobywaj {value}% więcej XP Łucznictwa.'
       info: '+{value}% XP'
     bow_master:
       name: Mistrz Łuku
@@ -122,7 +122,7 @@ abilities:
       info: '+{value}% Obrażeń Łuku'
     piercing:
       name: Przebicie
-      desc: "{value}% szans strzały na\n&7  przebicie mobów."
+      desc: "{value}% szans na strzałę na\n&7  przebicie się przez moby."
       info: '{value}% Szansy Przebicia'
     stun:
       name: Ogłuszenie
@@ -135,7 +135,7 @@ abilities:
       info: '-{value}% Przychodzących Obrażen'
     defender:
       name: Obrońca
-      desc: 'Zdobywaj {value}% więcej doświadczenia Obrony'
+      desc: 'Zdobywaj {value}% więcej XP Obrony.'
       info: '+{value}% XP'
     mob_master:
       name: Mistrz Potworów
@@ -169,11 +169,11 @@ abilities:
       dealt: '&cPierwsze Uderzenie Zadane!'
     bleed:
       name: Krew
-      desc: "{value}% szans na to, że wróg krwawi\n&7  3 razy, zadając {value_2} obrażeń za na krwawienie."
+      desc: "{value}% szans na to, że wróg zacznie krwawić przez\n&7 3 ticki, zadając {value_2} obrażeń na każdy tick."
       info: '{value}% Szans, {value_2} Obrażeń'
       enemy_bleeding: '&cPrzeciwnik Krwawi!'
       self_bleeding: '&cKrwawisz!'
-      stop: '&fKrwawienie zatrzymało się'
+      stop: '&fKrwawienie ustąpiło'
   endurance:
     anti_hunger:
       name: Anty-Głód
@@ -185,7 +185,7 @@ abilities:
       info: '+{value}% XP'
     golden_heal:
       name: Złote Leczenie
-      desc: "Zwiększa wzrost zdrowia\n&7  efektu regeneracji o {value}%"
+      desc: "Zwiększa efekt regeneracji\n&7 przyrostu zdrowia o {value}%"
       info: '+{value}% Regeneracji'
     recovery:
       name: Odzyskiwanie
@@ -202,21 +202,21 @@ abilities:
       info: '-{value}% Obrażeń od Upadku'
     jumper:
       name: Skoczek
-      desc: 'Zdobywaj {value}% więcej doświadczenia akrobatycznego'
+      desc: 'Zdobywaj {value}% więcej XP Zręczności.'
       info: '+{value}% XP'
     sugar_rush:
       name: Moc Cukru
-      desc: "Wypite i rzucone mikstury szybkości i\n&7  wysokiego skoku mikstury trwają {value}% dłużej."
+      desc: "Wypite i rzucone mikstury szybkości i\n&7  zwiększonego skoku trwają {value}% dłużej."
       info: '{value}% Dłuższa Prędkość'
     fleeting:
       name: Trucht
-      desc: 'Zyskaj +{value}% szybkości ruchu gdy poniżej 20% zdrowia'
+      desc: 'Zyskaj +{value}% szybkości ruchu, gdy twoje zdrowie spadnie poniżej 20%'
       info: '+{value}% Prędkości'
       start: '&fOtrzymałeś zwiększenie szybkości truchtu! &7(+{value}% Prędkości)'
       end: '&7Przyśpieszenie szybkości truchtu zostało wyłączone'
     thunder_fall:
       name: Spadek Piorunu
-      desc: "Podczas skradania się podczas upadku, masz {value}% szans\n&7  na zadanie {value_2}% oczekiwanych obrażeń od upadku potworów\n&7  w promieniu 3 bloków"
+      desc: "Podczas skradania się w czasie upadku, masz {value}% szans\n&7  na zadanie {value_2}% obrażeń od upadku oczekiwanym potworom\n&7  w promieniu 3 bloków"
       info: '{value}% Szans, {value_2}% Obrażeń'
   alchemy:
     alchemist:
@@ -226,31 +226,31 @@ abilities:
       lore: '&a(+{duration})'
     brewer:
       name: Mistrz Warzenia
-      desc: 'Zdobywaj {value}% więcej doświadczenia alchemicznego'
+      desc: 'Zdobywaj {value}% więcej XP Alchemii.'
       info: '+{value}% XP'
     splasher:
       name: Miotacz
-      desc: "Mikstury, które rzucisz zyskują o {value}%\n&7  więcej czasu trwania przez każdego gracza."
+      desc: "Mikstury, które rzucisz zyskują {value}%\n&7  więcej czasu trwania dla każdego dotkniętego nimi gracza."
       info: '+{value}% Czas trwania/Gracz'
     lingering:
       name: Utrwalenie
-      desc: "Utrwalone rzucane mikstury zanikają {value}%\n&7  wolniej i zanikają o {value_2}% mniej przez każdą jednostkę."
+      desc: "Trwałe rzucane mikstury zanikają o {value}%\n&7  wolniej i zanikają o {value_2}% słabiej na każdą dotkniętą jej skutkami jednostkę."
       info: '-{value}% Naturalnie, -{value_2}% Jednostki'
     wise_effect:
       name: Mądry Efekt
-      desc: "Zdobywa {value} Mądrości za każdy\n&7  unikalny efekt mikstury."
+      desc: "Zdobądź {value} Mądrości za każdy\n&7  unikalny efekt mikstury."
       info: '+{value} Mądrość/Efekt'
   enchanting:
     xp_convert:
-      name: Konwertuj XP
-      desc: 'Zdobądź jedno doświadczenie w Minecraft''cie za każde {value} &7za każde zdobyte umiejętności.'
+      name: Konwersja XP
+      desc: "Zdobądź 1 XP (MC) za każde zdobyte przez ciebie {value}\n&7  XP konkretnej umiejętności."
       info: 'Jedno doświadczenie za {value} doświadczenia umiejętności'
     enchanter:
       name: Zaklinacz
       desc: 'Zdobądź {value} procent doświadczenia zaklęć.'
       info: '+{value}% XP'
     xp_warrior:
-      name: 'Doświadczenia: Wojownik'
+      name: Doświadczenie Wojownika
       desc: 'Potwory które zabiłeś mają {value} procent więcej szansy &7że wyrzucą dwa razy więcej doświadczenia.'
       info: '{value} procent jako dwa razy więcej doświadczenia z potworów'
     enchanted_strength:
@@ -264,15 +264,15 @@ abilities:
   healing:
     life_essence:
       name: Esencja Życia
-      desc: Natychmiastowe mikstury leczenia przywracają {value}% więcej.
+      desc: Natychmiastowe mikstury leczenia przywracają {value}% więcej życia.
       info: '+{value}% Natychmiastowe Leczenie'
     healer:
       name: Uzdrowiciel
-      desc: Zdobywaj {value}% więcej XP leczenia.
+      desc: Zdobywaj {value}% więcej XP Leczenia.
       info: '+{value}% XP'
     life_steal:
       name: Kradzież Życia
-      desc: Wylecz {value}% maksymalnego HP z wrogich mobów\n&7  i zabitych przez Ciebie graczy.
+      desc: Wylecz {value}% maksymalnego HP z wrogich mobów\n&7  i graczy, których zabijasz.
       info: 'Kradzież {value}% HP'
     golden_heart:
       name: Złote Serce
@@ -298,10 +298,10 @@ abilities:
       info: '+{value}% Naprawy Kowadła'
     anvil_master:
       name: Mistrz Kowadła
-      desc: Zwiększa maksymalny koszt naprawy kowadła\n&7  zanim stanie się ono zbyt drogie dla {value} punktów doświadczenia.
+      desc: Zwiększa maksymalny koszt naprawy kowadła\n&7  zanim stanie się on zbyt drogi dla {value} punktów doświadczenia.
       info: '{value} Maksymalny Koszt'
     skill_mender:
-      name: Naprawa Umiejętności
+      name: Naprawiacz Umiejętności
       desc: Zdobywanie XP umiejętności ma {value}% szans na naprawę\n&7  trzymanego przedmiotu lub zużytego kawałka zbroi z zaklęciem Naprawa\n&7  o 1 wytrzymałość na 2 XP umiejętności.
       info: '{value}% Szansy na Wyładowanie'
 acf:
@@ -534,7 +534,7 @@ menus:
     ability_levels: '&7Poziomy Umiejętności:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: '\nPoziom Statystyk: {stats}\n '
+    stats_leveled: "\n&7Podstawowe Statystyki: {stats}\n "
     mana_ability: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Czas trwania: &a{duration}s &7Koszt: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Twoje Umiejętności
@@ -594,7 +594,7 @@ menus:
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
-    desc: "&7Przesadza rośliny automatycznie na \n&7  {value} sekund. &e[Kliknij prawym przyciskiem myszy i\n&7  zniszcz plon, aby aktywować]"
+    desc: "&7Przesadza rośliny automatycznie na \n&7  {value} sekund. &e[Kliknij prawym przyciskiem myszy i\n&e  zniszcz plon, aby aktywować]"
     raise: '&7Podnosisz swoją motykę'
     lower: '&7Obniżasz swoją motykę'
     start: '&6Autoprzesadzanie Aktywowane! &7(-{mana} {mana_unit})'
@@ -629,7 +629,7 @@ mana_abilities:
     end: '&7Terraforma się skończyła'
   sharp_hook:
     name: Ostry Hak
-    desc: "Zadaj {value} obrażeń zaczebionemu mobowi\n&7  klikając lewym przyciskiem myszy"
+    desc: "Zadaj {value} obrażeń zaczepionemu mobowi\n&7  klikając wędką lewym przyciskiem myszy"
     use: '&6Użyto Ostrego Haka! &7(-{mana} {mana_unit})'
     menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Obrażenia: &c{value} &7Koszt Many: &b{mana_cost} &7Czas Odnowienia: &e{cooldown}s\n "
   charged_shot:
