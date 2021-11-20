@@ -136,6 +136,7 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean townyEnabled;
 	private TownySupport townySupport;
 	private boolean luckPermsEnabled;
+	private boolean slimefunEnabled;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -207,6 +208,12 @@ public class AureliumSkills extends JavaPlugin {
 		if (luckPermsEnabled) {
 			luckPermsSupport = new LuckPermsSupport();
 		}
+		// Check for Slimefun
+		slimefunEnabled = Bukkit.getPluginManager().isPluginEnabled("Slimefun");
+		if (slimefunEnabled) {
+			getServer().getPluginManager().registerEvents(new SlimefunSupport(this), this);
+			getLogger().info("Slimefun Support Enabled!");
+		}
 		// Load health
 		Health health = new Health(this);
 		this.health = health;
@@ -234,7 +241,7 @@ public class AureliumSkills extends JavaPlugin {
 			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
-		// Load items
+		// Load	 items
 		itemRegistry.loadFromFile();
 		// Load languages
 		lang = new Lang(this);
@@ -733,6 +740,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isLuckPermsEnabled() {
 		return luckPermsEnabled;
+	}
+
+	public boolean isSlimefunEnabled() {
+		return slimefunEnabled;
 	}
 
 	public Health getHealth() {
