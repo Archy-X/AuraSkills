@@ -160,9 +160,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.cryptomorin</groupId>
+            <groupId>com.github.Archy-X</groupId>
             <artifactId>XSeries</artifactId>
-            <version>8.1.0</version>
+            <version>887fe61174</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
