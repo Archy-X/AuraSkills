@@ -1,6 +1,9 @@
 # Aurelium Skills
 [![Release](https://jitpack.io/v/Archy-X/AureliumSkills.svg?style=flat-square)](https://jitpack.io/#Archy-X/AureliumSkills)
 
+[![Downloads](https://badges.spiget.org/resources/downloads/Downloads-blue-81069.svg)](https://www.spigotmc.org/resources/81069/)
+[![Rating](https://badges.spiget.org/resources/rating/Rating-blue-81069.svg)](https://www.spigotmc.org/resources/81069/)
+
 AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin, great for a variety of server gamemodes.
 
 Learn more and download here: https://www.spigotmc.org/resources/81069/
