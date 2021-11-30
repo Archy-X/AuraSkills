@@ -1,5 +1,6 @@
 Version Beta 1.2.6
   Changes:
+    - Add support for Minecraft 1.18
     - Update German messages
     - Update Spanish messages
     - Correct some Polish messages (requires message file regen)
