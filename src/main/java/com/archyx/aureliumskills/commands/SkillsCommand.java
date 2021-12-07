@@ -149,13 +149,7 @@ public class SkillsCommand extends BaseCommand {
 			if (args[0].equalsIgnoreCase("average")) {
 				List<SkillValue> lb = plugin.getLeaderboardManager().getAverageLeaderboard(1, 10);
 				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER, locale));
-				for (SkillValue skillValue : lb) {
-					String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-					sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
-							"{rank}", String.valueOf(lb.indexOf(skillValue) + 1),
-							"{player}", name != null ? name : "?",
-							"{level}", NumberUtil.format2(skillValue.getXp())));
-				}
+				sendLeaderboardEntries(sender, locale, lb);
 			} else {
 				try {
 					int page = Integer.parseInt(args[0]);
@@ -193,13 +187,7 @@ public class SkillsCommand extends BaseCommand {
 					List<SkillValue> lb = plugin.getLeaderboardManager().getAverageLeaderboard(page, 10);
 					sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER_PAGE, locale),
 							"{page}", String.valueOf(page)));
-					for (SkillValue skillValue : lb) {
-						String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-						sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
-								"{rank}", String.valueOf(lb.indexOf(skillValue) + 1),
-								"{player}", name != null ? name : "?",
-								"{level}", NumberUtil.format2(skillValue.getXp())));
-					}
+					sendLeaderboardEntries(sender, locale, lb);
 				} catch (Exception e) {
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
@@ -224,6 +212,16 @@ public class SkillsCommand extends BaseCommand {
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
 			}
+		}
+	}
+
+	private void sendLeaderboardEntries(CommandSender sender, Locale locale, List<SkillValue> lb) {
+		for (SkillValue skillValue : lb) {
+			String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+			sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
+					"{rank}", String.valueOf(lb.indexOf(skillValue) + 1),
+					"{player}", name != null ? name : "?",
+					"{level}", NumberUtil.format2(skillValue.getXp())));
 		}
 	}
 
