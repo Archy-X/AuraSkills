@@ -26,6 +26,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -472,6 +473,19 @@ public class MySqlStorageProvider extends StorageProvider {
             e.printStackTrace();
         }
         sortLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
+    }
+
+    @Override
+    public void delete(UUID uuid) throws IOException {
+        String query = "DELETE FROM SkillData WHERE ID=?;";
+        try {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, uuid.toString());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new IOException("Failed to delete player data from database");
+        }
     }
 
 
