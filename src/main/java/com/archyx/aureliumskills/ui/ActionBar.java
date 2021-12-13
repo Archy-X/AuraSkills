@@ -7,10 +7,10 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.support.ProtocolLibSupport;
 import com.archyx.aureliumskills.util.math.BigNumber;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.cryptomorin.xseries.XMaterial;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
@@ -275,21 +275,17 @@ public class ActionBar implements Listener {
 	}
 
 	private void sendActionBar(Player player, String message) {
-		if (plugin.isProtocolLibEnabled()) {
-			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
-				ProtocolLibSupport.sendActionBar(player, PlaceholderAPI.setPlaceholders(player, message));
-			}
-			else {
-				ProtocolLibSupport.sendActionBar(player, message);
-			}
+		if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
+			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
-		else {
-			if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
-				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(PlaceholderAPI.setPlaceholders(player, message)));
+		if (plugin.isProtocolLibEnabled()) {
+			if (VersionUtils.isAtLeastVersion(17)) {
+				plugin.getProtocolLibSupport().sendNewActionBar(player, message);
+			} else {
+				plugin.getProtocolLibSupport().sendLegacyActionBar(player, message);
 			}
-			else {
-				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
-			}
+		} else {
+			player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
 		}
 	}
 

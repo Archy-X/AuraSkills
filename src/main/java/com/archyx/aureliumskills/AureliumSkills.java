@@ -82,11 +82,11 @@ import com.archyx.aureliumskills.source.SourceRegistry;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
 import com.archyx.aureliumskills.ui.ActionBar;
+import com.archyx.aureliumskills.ui.ActionBarCompatHandler;
 import com.archyx.aureliumskills.ui.SkillBossBar;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
 import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
-import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
@@ -158,6 +158,7 @@ public class AureliumSkills extends JavaPlugin {
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
+	private ProtocolLibSupport protocolLibSupport;
 
 	public void onEnable() {
 		// Registries
@@ -199,7 +200,7 @@ public class AureliumSkills extends JavaPlugin {
 			vaultEnabled = false;
 		}
 		// Check for protocol lib
-		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib") && !VersionUtils.isAtLeastVersion(17);
+		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
 		// Check towny
 		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
 		townySupport = new TownySupport(this);
@@ -281,7 +282,8 @@ public class AureliumSkills extends JavaPlugin {
 		regeneration.startSaturationRegen();
 		// Load Action Bar
 		if (protocolLibEnabled) {
-			ProtocolLibSupport.init();
+			protocolLibSupport = new ProtocolLibSupport();
+			new ActionBarCompatHandler(this).registerListeners();
 		}
 		actionBar.startUpdateActionBar();
 		// Initialize storage
@@ -805,6 +807,10 @@ public class AureliumSkills extends JavaPlugin {
 	@Nullable
 	public WorldGuardFlags getWorldGuardFlags() {
 		return worldGuardFlags;
+	}
+
+	public ProtocolLibSupport getProtocolLibSupport() {
+		return protocolLibSupport;
 	}
 
 }
