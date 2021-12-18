@@ -1,3 +1,9 @@
+Version Beta 1.2.7
+  Bug Fixes:
+    - Fix Aurelium Skills action bar overriding other action bars (requires ProtocolLib)
+    - Fix ItemListener memory leak
+    - Fix Towny incompatibility
+
 Version Beta 1.2.6
   Changes:
     - Add support for Minecraft 1.18
