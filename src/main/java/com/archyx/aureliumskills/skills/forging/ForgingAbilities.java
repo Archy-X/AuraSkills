@@ -54,6 +54,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
             // Only allow right and left clicks if inventory full
             if (click != ClickType.LEFT && click != ClickType.RIGHT && ItemUtils.isInventoryFull(player)) return;
             if (event.getResult() != Event.Result.ALLOW) return; // Make sure the click was successful
+            if (player.getItemOnCursor().getType() != Material.AIR) return; // Make sure cursor is empty
             if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE) {
                 if (event.getSlotType() == InventoryType.SlotType.RESULT) {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
