@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,6 +34,13 @@ public class MenuFileManager {
     }
 
     public void loadMenus() {
+        try {
+            migrateLegacyFiles();
+        } catch (Exception e) {
+            plugin.getLogger().warning("Error migrating legacy menus.yml file to new menu files. " +
+                    "Any previous changes made in menus.yml may have to be transferred manually to the new files in the menus folder.");
+            e.printStackTrace();
+        }
         int menusLoaded = 0;
         for (String menuName : manager.getMenuProviderNames()) {
             File file = new File(plugin.getDataFolder() + "/menus", menuName + ".yml");
@@ -49,7 +57,7 @@ public class MenuFileManager {
         plugin.getLogger().info("Loaded " + menusLoaded + " menus");
     }
 
-    public void migrateLegacyFiles() {
+    public void migrateLegacyFiles() throws IOException {
         File legacyFile = new File(plugin.getDataFolder(), "menus.yml");
         if (!legacyFile.exists()) return;
 
@@ -82,9 +90,18 @@ public class MenuFileManager {
             if (templatesSection != null && newTemplatesSection != null) {
                 migrateTemplates(templatesSection, newTemplatesSection);
             }
+
+            // Save file
+            newConfig.save(newFile);
         }
 
-        FileUtil.renameNoDuplicates(legacyFile, "menus-OLD.yml", plugin.getDataFolder()); // Rename old file
+        String renamedName = FileUtil.renameNoDuplicates(legacyFile, "menus-OLD.yml", plugin.getDataFolder()); // Rename old file
+        if (renamedName != null) {
+            plugin.getLogger().info("Successfully migrated menus.yml to new files in the menus folder. " +
+                    "menus.yml has been renamed to " + renamedName + " and should not be used anymore.");
+        } else {
+            plugin.getLogger().warning("Error renaming menus.yml to menus-OLD.yml");
+        }
     }
 
     private void migrateItems(ConfigurationSection oldSection, ConfigurationSection newSection) {
