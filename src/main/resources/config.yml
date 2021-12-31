@@ -254,6 +254,7 @@ alchemy:
     give-xp-on-takeout: false
     give-xp-on-potion-combat: false
     check-multiplier-permissions: true
+    ignore-custom-potions: false
 enchanting:
     enabled: true
     max-level: 97
