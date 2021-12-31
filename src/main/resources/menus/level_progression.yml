@@ -130,3 +130,6 @@ templates:
       - '{rewards}'
       - '{ability}{mana_ability}'
       - '{locked}'
+options:
+  use_level_as_amount: true
+  over_max_stack_amount: 1
