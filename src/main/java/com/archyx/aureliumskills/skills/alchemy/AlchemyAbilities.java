@@ -3,6 +3,8 @@ package com.archyx.aureliumskills.skills.alchemy;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.ability.AbilityProvider;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
@@ -207,6 +209,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         if (item.getItemMeta() instanceof PotionMeta && item.getItemMeta() != null) {
             PotionMeta meta = (PotionMeta) item.getItemMeta();
             PotionData potionData = meta.getBasePotionData();
+            if (meta.hasCustomEffects() && OptionL.getBoolean(Option.ALCHEMY_IGNORE_CUSTOM_POTIONS)) return;
             // Get potion duration bonus from Alchemist ability
             NBTItem nbtItem = new NBTItem(item);
             int durationBonus = 0;
@@ -294,6 +297,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
             if (playerData == null) return;
             if (playerData.getAbilityLevel(Ability.LINGERING) > 0) {
                 AreaEffectCloud cloud = event.getAreaEffectCloud();
+                if (cloud.hasCustomEffects() && OptionL.getBoolean(Option.ALCHEMY_IGNORE_CUSTOM_POTIONS)) return;
                 // Get values
                 double naturalDecay = 1 - (getValue(Ability.LINGERING, playerData) / 100);
                 double entityDecay = 1 - (getValue2(Ability.LINGERING, playerData) / 100);

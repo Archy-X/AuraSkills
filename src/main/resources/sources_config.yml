@@ -319,6 +319,15 @@ tags:
       - emerald_ore
       - nether_gold_ore
       - ancient_debris
+      - copper_ore
+      - deepslate_coal_ore
+      - deepslate_iron_ore
+      - deepslate_copper_ore
+      - deepslate_gold_ore
+      - deepslate_redstone_ore
+      - deepslate_lapis_ore
+      - deepslate_emerald_ore
+      - deepslate_diamond_ore
     speed_mine_applicable:
       - '*'
   excavation:

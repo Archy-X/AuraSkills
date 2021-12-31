@@ -84,11 +84,11 @@ import com.archyx.aureliumskills.source.SourceRegistry;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
 import com.archyx.aureliumskills.ui.ActionBar;
+import com.archyx.aureliumskills.ui.ActionBarCompatHandler;
 import com.archyx.aureliumskills.ui.SkillBossBar;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
 import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
-import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
@@ -139,6 +139,7 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean townyEnabled;
 	private TownySupport townySupport;
 	private boolean luckPermsEnabled;
+	private boolean slimefunEnabled;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -159,6 +160,7 @@ public class AureliumSkills extends JavaPlugin {
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
+	private ProtocolLibSupport protocolLibSupport;
 	private Slate slate;
 	private MenuFileManager menuFileManager;
 
@@ -202,7 +204,7 @@ public class AureliumSkills extends JavaPlugin {
 			vaultEnabled = false;
 		}
 		// Check for protocol lib
-		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib") && !VersionUtils.isAtLeastVersion(17);
+		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
 		// Check towny
 		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
 		townySupport = new TownySupport(this);
@@ -210,6 +212,12 @@ public class AureliumSkills extends JavaPlugin {
 		luckPermsEnabled = Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
 		if (luckPermsEnabled) {
 			luckPermsSupport = new LuckPermsSupport();
+		}
+		// Check for Slimefun
+		slimefunEnabled = Bukkit.getPluginManager().isPluginEnabled("Slimefun");
+		if (slimefunEnabled) {
+			getServer().getPluginManager().registerEvents(new SlimefunSupport(this), this);
+			getLogger().info("Slimefun Support Enabled!");
 		}
 		// Load health
 		Health health = new Health(this);
@@ -238,7 +246,7 @@ public class AureliumSkills extends JavaPlugin {
 			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
-		// Load items
+		// Load	 items
 		itemRegistry.loadFromFile();
 		// Load languages
 		lang = new Lang(this);
@@ -272,7 +280,8 @@ public class AureliumSkills extends JavaPlugin {
 		regeneration.startSaturationRegen();
 		// Load Action Bar
 		if (protocolLibEnabled) {
-			ProtocolLibSupport.init();
+			protocolLibSupport = new ProtocolLibSupport();
+			new ActionBarCompatHandler(this).registerListeners();
 		}
 		actionBar.startUpdateActionBar();
 		// Initialize storage
@@ -746,6 +755,10 @@ public class AureliumSkills extends JavaPlugin {
 		return luckPermsEnabled;
 	}
 
+	public boolean isSlimefunEnabled() {
+		return slimefunEnabled;
+	}
+
 	public Health getHealth() {
 		return health;
 	}
@@ -801,6 +814,10 @@ public class AureliumSkills extends JavaPlugin {
 	@Nullable
 	public WorldGuardFlags getWorldGuardFlags() {
 		return worldGuardFlags;
+	}
+
+	public ProtocolLibSupport getProtocolLibSupport() {
+		return protocolLibSupport;
 	}
 
 	public Slate getSlate() {

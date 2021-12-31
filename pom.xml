@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.2.5</version>
+    <version>Beta1.2.7</version>
     <build>
         <plugins>
             <plugin>
@@ -118,7 +118,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <version>1.18-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -148,19 +148,19 @@
         <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
-            <version>2.8.0</version>
+            <version>2.9.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.dmulloy2</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>4.5.1</version>
+            <version>4.7.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.cryptomorin</groupId>
+            <groupId>com.github.Archy-X</groupId>
             <artifactId>XSeries</artifactId>
-            <version>8.1.0</version>
+            <version>887fe61174</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -179,6 +179,12 @@
             <groupId>com.github.TownyAdvanced</groupId>
             <artifactId>Towny</artifactId>
             <version>0.96.7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Slimefun</groupId>
+            <artifactId>Slimefun4</artifactId>
+            <version>RC-28</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

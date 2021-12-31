@@ -150,6 +150,7 @@ public enum Option {
     ALCHEMY_GIVE_XP_ON_TAKEOUT("alchemy.give-xp-on-takeout", OptionType.BOOLEAN),
     ALCHEMY_GIVE_XP_ON_POTION_COMBAT("alchemy.give-xp-on-potion-combat", OptionType.BOOLEAN),
     ALCHEMY_CHECK_MULTIPLIER_PERMISSIONS("alchemy.check-multiplier-permissions", OptionType.BOOLEAN),
+    ALCHEMY_IGNORE_CUSTOM_POTIONS("alchemy.ignore-custom-potions", OptionType.BOOLEAN),
     ENCHANTING_ENABLED("enchanting.enabled", OptionType.BOOLEAN),
     ENCHANTING_MAX_LEVEL("enchanting.max-level", OptionType.INT),
     ENCHANTING_CHECK_CANCELLED("enchanting.check-cancelled", OptionType.BOOLEAN),

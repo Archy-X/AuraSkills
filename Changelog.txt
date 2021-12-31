@@ -1,3 +1,22 @@
+Version Beta 1.2.7
+  Bug Fixes:
+    - Fix Aurelium Skills action bar overriding other action bars (requires ProtocolLib)
+    - Fix ItemListener memory leak
+    - Fix Towny incompatibility
+
+Version Beta 1.2.6
+  Changes:
+    - Add support for Minecraft 1.18
+    - Update German messages
+    - Update Spanish messages
+    - Correct some Polish messages (requires message file regen)
+  Bug Fixes:
+    - Fix Repairing resulting in negative durability
+    - Fix disabled skills still showing in stats menu
+    - Fix deepslate ores not in lucky_miner_applicable tag
+    - Fix SlimeFun block placer bug
+    - Fix MyPet error
+
 Version Beta 1.2.5
   New Features:
     - Add hex color message support in &# format
