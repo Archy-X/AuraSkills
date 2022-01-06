@@ -8,8 +8,10 @@ import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -55,10 +57,15 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 				// If silk touch
 				if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
 					PlayerLootDropEvent event;
+					Location loc = block.getLocation().add(0.5, 0.5, 0.5);
 					if (source.getLegacyData() == -1) {
-						event = new PlayerLootDropEvent(player, new ItemStack(mat, 2), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+						event = new PlayerLootDropEvent(player, new ItemStack(mat, 2), loc, LootDropCause.BIGGER_SCOOP);
 					} else {
-						event = new PlayerLootDropEvent(player, new ItemStack(mat, 2, source.getLegacyData()), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.BIGGER_SCOOP);
+						if (VersionUtils.isAtLeastVersion(13)) {
+							event = new PlayerLootDropEvent(player, new ItemStack(mat, 2), loc, LootDropCause.BIGGER_SCOOP);
+						} else {
+							event = new PlayerLootDropEvent(player, new ItemStack(mat, 2, source.getLegacyData()), loc, LootDropCause.BIGGER_SCOOP);
+						}
 					}
 					Bukkit.getPluginManager().callEvent(event);
 					if (!event.isCancelled()) {
