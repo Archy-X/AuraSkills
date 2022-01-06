@@ -1,3 +1,10 @@
+Version Beta 1.2.8
+  New Features:
+    - Add alchemy.ignore-custom-potions option to disable duration boosts for custom effects
+  Bug Fixes:
+    - Fix Forging XP dupe exploit
+    - Fix red sand, podzol, and coarse dirt blocks dropping with NBT tags when dug with silk touch and Bigger Scoop
+
 Version Beta 1.2.7
   Bug Fixes:
     - Fix Aurelium Skills action bar overriding other action bars (requires ProtocolLib)
