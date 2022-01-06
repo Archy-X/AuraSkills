@@ -122,9 +122,10 @@ public class MenuFileManager {
                 migrateBaseItem(newItem, oldMaterial); // Migrate base item including material and other item meta
             }
 
-            if (!itemName.equals("rank")) {
-                String displayName = oldItem.getString("display_name");
-                newItem.set("display_name", displayName);
+            String displayName = oldItem.getString("display_name");
+            newItem.set("display_name", displayName);
+
+            if (!itemName.equals("rank")) { // Migrate lore except the rank item
                 List<String> lore = oldItem.getStringList("lore");
                 newItem.set("lore", lore);
             }
