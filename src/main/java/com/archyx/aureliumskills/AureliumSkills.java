@@ -246,7 +246,7 @@ public class AureliumSkills extends JavaPlugin {
 			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
-		// Load	 items
+		// Load	items
 		itemRegistry.loadFromFile();
 		// Load languages
 		lang = new Lang(this);
@@ -270,9 +270,9 @@ public class AureliumSkills extends JavaPlugin {
 		// Load ability options
 		abilityManager = new AbilityManager(this);
 		abilityManager.loadOptions();
-		// Load menu
+		// Load menus
 		slate = new Slate(this);
-		registerMenus();
+		registerAndLoadMenus();
 		// Load stats
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);
@@ -628,7 +628,7 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry.register("forging", Skills.FORGING);
 	}
 
-	private void registerMenus() {
+	private void registerAndLoadMenus() {
 		new MenuRegistrar(this).register();
 		menuFileManager = new MenuFileManager(this);
 		menuFileManager.generateDefaultFiles();

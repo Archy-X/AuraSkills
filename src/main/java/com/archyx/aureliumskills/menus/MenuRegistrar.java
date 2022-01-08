@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.menus;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.item.ItemRegistryMenuProvider;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.menus.abilities.*;
 import com.archyx.aureliumskills.menus.common.*;
@@ -60,7 +61,10 @@ public class MenuRegistrar {
         manager.registerSingleItem("close", new CloseItem(plugin));
         manager.registerSingleItem("next_page", new NextPageItem(plugin));
         manager.registerSingleItem("previous_page", new PreviousPageItem(plugin));
-        // Register items
+        // Keyed item provider
+        manager.getGlobalProviderManager().registerKeyedItemProvider(new ItemRegistryMenuProvider(plugin.getItemRegistry()));
+
+        // Register menu specific items and templates
         ProviderManager skills = manager.getProviderManager("skills");
         skills.registerSingleItem("your_skills", new YourSkillsItem(plugin));
         skills.registerSingleItem("stats", new StatsItem(plugin));

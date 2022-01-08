@@ -2,7 +2,7 @@ Version Beta 1.3.0
   New Features:
     - Sources menu:
       - The sources menu shows every way players can gain XP in a skill and how much XP they will earn for each source
-      - Accessible by clicking the sources item (experience bottle) in the level progression menu
+      - Accessible by clicking the sources item (experience bottle) in the level progression menu or using /skills sources <skill> [sortType]
       - Each source item will show the base XP earned and the multiplied XP, which accounts for abilities and multipliers, if applicable
       - Sort the items in the menu by clicking on the hopper to cycle sorting modes
         - Available sort types: ascending by XP, descending by XP, alphabetical, and reverse alphabetical
@@ -20,7 +20,7 @@ Version Beta 1.3.0
       - Accessible by clicking the abilities item (light blue dye) in the level progression menu
       - Shows different materials and information depending on whether the ability is unlocked or not
       - Fully configurable in menus/abilities.yml
-    - New item meta options:
+    - New item options:
       - Add 'enchantments' field as a list of strings, formatted as 'name level', such as 'sharpness 5'
       - The field 'potion_type' has been renamed to 'potion_data', added the 'extended' and 'upgraded' optional boolean subfields
       - Add the 'custom_effects' field as a map list of effects with subfields 'type', 'duration', and 'amplifier'
@@ -28,6 +28,7 @@ Version Beta 1.3.0
       - Add the 'flags' field to add item flags, such as 'hide_enchants' and 'hide_potion_effects'
       - Add the 'durability' field to set the durability of the item (0 means almost broken, goes up to the max durability to the item)
       - Add the 'skull_meta' field with either 'uuid', 'base64', or 'url' subfields to define the skin used
+      - Add the 'key' field to use a registered item (/skills item register); 'material' and other item fields are not required if used
     - Click actions:
       - Define custom functionality when a player clicks an item in the menu
       - Supported actions:
