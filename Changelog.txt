@@ -21,7 +21,13 @@ Version Beta 1.3.0
       - Shows different materials and information depending on whether the ability is unlocked or not
       - Fully configurable in menus/abilities.yml
     - New item meta options:
-      -
+      - Add 'enchantments' field as a list of strings, formatted as 'name level', such as 'sharpness 5'
+      - The field 'potion_type' has been renamed to 'potion_data', added the 'extended' and 'upgraded' optional boolean subfields
+      - Add the 'custom_effects' field as a map list of effects with subfields 'type', 'duration', and 'amplifier'
+      - Add the 'nbt' field to add custom NBT data to the item (automatically infers types and supports nested data)
+      - Add the 'flags' field to add item flags, such as 'hide_enchants' and 'hide_potion_effects'
+      - Add the 'durability' field to set the durability of the item (0 means almost broken, goes up to the max durability to the item)
+      - Add the 'skull_meta' field with either 'uuid', 'base64', or 'url' subfields to define the skin used
     - Click actions:
       - Define custom functionality when a player clicks an item in the menu
       - Supported actions:
@@ -67,7 +73,8 @@ Version Beta 1.3.0
       - Each context (skill, stat) in a template has been moved to its own subsection under the template name
         - Values such as the material, pos, and item meta of each context are separate fields under the subsection with the context name
         - For example, the path 'templates.skill.farming.material' in menus/skills.yml is the material used for Farming in the skils menu
-      - Item meta options, such as potion_type, are now separate fields under the item section (alongside material, lore) for items and in the context subsection for templates
+      - Item meta options, such as potion_data, are now separate fields under the item section (alongside material, lore) for items and in the context subsection for templates
+      - Legacy material data for 1.12 is still defined in the material field, using the material:data format
 
 Version Beta 1.2.8
   New Features:
