@@ -78,7 +78,7 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable Source source) {
+    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable Source source, LootDropCause cause) {
         if (!(event.getCaught() instanceof Item)) return;
         Item itemEntity = (Item) event.getCaught();
 
@@ -87,6 +87,13 @@ public abstract class LootHandler extends AbilityProvider {
 
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(amount);
+        Location location = event.getCaught().getLocation();
+        // Call event
+        PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, location, cause);
+        if (cause != null) {
+            Bukkit.getPluginManager().callEvent(dropEvent);
+            if (dropEvent.isCancelled()) return;
+        }
         itemEntity.setItemStack(drop);
         attemptSendMessage(player, loot);
         giveXp(player, loot, source);
