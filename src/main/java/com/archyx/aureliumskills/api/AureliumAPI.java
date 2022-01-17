@@ -370,8 +370,8 @@ public class AureliumAPI {
      * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
      * one is created.
      * @param item The original item, will not be changed by the method
-     * @param skill The skill to add (Use Skills enum for default stats)
-     * @param value The value of the multiplier to add
+     * @param skill The skill to add (Use Skills enum for default skills)
+     * @param value The value of the multiplier (in percentage points) to add
      * @param lore Whether to add lore. Added lore will use the default language.
      * @return A new ItemStack with the item modifier
      */
@@ -389,8 +389,8 @@ public class AureliumAPI {
      * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
      * one is created.
      * @param item The original item, will not be changed by the method
-     * @param skill The skill to add (Use Skills enum for default stats)
-     * @param value The value of the stat to add
+     * @param skill The skill to add (Use Skills enum for default skills)
+     * @param value The value of the multiplier (in percentage points) to add
      * @param lore Whether to add lore. Added lore will use the default language.
      * @return A new ItemStack with the armor modifier
      */
