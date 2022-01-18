@@ -19,7 +19,7 @@ public enum FarmingSource implements Source {
     PUMPKIN(true),
     MELON(new String[] {"MELON_BLOCK"}, true),
     SUGAR_CANE(new String[] {"SUGAR_CANE_BLOCK"}, true),
-    BAMBOO,
+    BAMBOO(true),
     COCOA(null, false, true),
     CACTUS(true),
     BROWN_MUSHROOM(true),
