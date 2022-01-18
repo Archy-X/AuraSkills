@@ -1,9 +1,15 @@
 Version Beta 1.2.8
   New Features:
     - Add alchemy.ignore-custom-potions option to disable duration boosts for custom effects
+  Changes:
+    - Add Korean messages
   Bug Fixes:
     - Fix Forging XP dupe exploit
     - Fix red sand, podzol, and coarse dirt blocks dropping with NBT tags when dug with silk touch and Bigger Scoop
+    - Fix bamboo XP dupe and placed block inconsistency
+  API Changes:
+    - Add missing LootDropEvent calls for fishing
+    - Add methods to add item and armor multipliers
 
 Version Beta 1.2.7
   Bug Fixes:
