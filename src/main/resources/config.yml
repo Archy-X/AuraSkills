@@ -37,6 +37,7 @@ languages:
     - lt
     - ru
     - it
+    - ko
 
 # Action Bar Options
 action-bar:
