@@ -228,12 +228,16 @@ public class Lang implements Listener {
 										for (String key : section.getKeys(false)) {
 											config.set(section.getCurrentPath() + "." + key, section.getString(key));
 										}
-										Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										if (update.getMessage() != null) {
+											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										}
 									} else {
 										Object value = imbConfig.get(update.getPath());
 										if (value != null) {
 											config.set(update.getPath(), value);
-											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+											if (update.getMessage() != null) {
+												Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+											}
 										}
 									}
 								}
