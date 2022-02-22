@@ -1,3 +1,7 @@
+Version Beta 1.2.9
+  Bug Fixes:
+    - Fix critical item duplication exploit on 1.12
+
 Version Beta 1.2.8
   New Features:
     - Add alchemy.ignore-custom-potions option to disable duration boosts for custom effects
