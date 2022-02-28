@@ -19,6 +19,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoinQuit implements Listener {
@@ -58,9 +59,11 @@ public class PlayerJoinQuit implements Listener {
 		Location playerLoc = player.getLocation();
 		Location loc = new Location(playerLoc.getWorld(), playerLoc.getX(), 0, playerLoc.getZ());
 		Block b = loc.getBlock();
-		BlockState state = b.getState();
-		SkullCreator.blockWithUuid(b, player.getUniqueId());
-		state.update(true);
+		if (!(b.getState() instanceof InventoryHolder)) {
+			BlockState state = b.getState();
+			SkullCreator.blockWithUuid(b, player.getUniqueId());
+			state.update(true);
+		}
 		// Update message
 		if (OptionL.getBoolean(Option.CHECK_FOR_UPDATES) && player.hasPermission("aureliumskills.checkupdates")) {
 			if (System.currentTimeMillis() > ReleaseData.RELEASE_TIME + 21600000L) {
