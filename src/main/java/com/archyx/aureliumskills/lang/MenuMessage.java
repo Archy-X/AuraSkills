@@ -55,6 +55,9 @@ public enum MenuMessage implements MessageKey {
     SOURCES(2),
     SOURCES_DESC(2),
     SOURCES_CLICK(2),
+    ABILITIES(2),
+    ABILITIES_DESC(2),
+    ABILITIES_CLICK(2),
     //Stats Menu
     STATS_MENU_TITLE(3),
     PLAYER_STAT_ENTRY(3),

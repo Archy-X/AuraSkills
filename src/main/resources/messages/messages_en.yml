@@ -609,6 +609,9 @@ menus:
     sources: '&aXP Sources'
     sources_desc: '&7The sources menu shows all the ways you\n&7can earn XP in a skill, as well as how much\n&7XP each source gives.'
     sources_click: '&eClick to view {skill} sources'
+    abilities: '&cAbilities'
+    abilities_desc: '&bAbilities &7are passive perks you unlock and\n&7upgrade as you level up skills.\n&dMana Abilities &7are a special type of ability\n&7that requires activation and consumes mana.'
+    abilities_click: '&eClick to view {skill} abilities'
   stats_menu:
     stats_menu_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'

@@ -1,8 +1,11 @@
 package com.archyx.aureliumskills.menus.levelprogression;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.lang.Lang;
+import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
@@ -26,15 +29,12 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "abilities":
-                return "&bAbilities";
+                return Lang.getMessage(MenuMessage.ABILITIES, locale);
             case "abilities_desc":
-                return "&bAbilities &7are passive perks you unlock and" +
-                        "\n&7upgrade as you level up skills." +
-                        "\n&dMana Abilities &7are a special type of ability" +
-                        "\n&7that require activation and consume mana.";
+                return Lang.getMessage(MenuMessage.ABILITIES_DESC, locale);
             case "abilities_click":
                 Skill skill = (Skill) menu.getProperty("skill");
-                return "&eClick to view " + skill.getDisplayName(locale) + " abilities";
+                return TextUtil.replace(Lang.getMessage(MenuMessage.ABILITIES_CLICK, locale), "{skill}", skill.getDisplayName(locale));
         }
         return placeholder;
     }
