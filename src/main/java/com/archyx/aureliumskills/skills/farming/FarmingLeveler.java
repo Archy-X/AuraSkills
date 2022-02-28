@@ -17,13 +17,11 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.data.type.CaveVinesPlant;
 import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class FarmingLeveler extends SkillLeveler implements Listener{
@@ -122,16 +120,14 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onRightClick(PlayerInteractEvent event) {
+	public void onRightClick(PlayerHarvestBlockEvent event) {
 		if (!OptionL.isEnabled(Skills.FARMING)) return;
-		if (OptionL.getBoolean(Option.FARMING_CHECK_CANCELLED) && event.useInteractedBlock() == Event.Result.DENY) {
+		if (OptionL.getBoolean(Option.FARMING_CHECK_CANCELLED) && event.isCancelled()) {
 			return;
 		}
 
 		Player player = event.getPlayer();
-		if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-		Block block = event.getClickedBlock();
-		if (block == null) return;
+		Block block = event.getHarvestedBlock();
 
 		if (blockXpGainLocation(block.getLocation(), player)) return;
 		if (blockXpGainPlayer(player)) return;
