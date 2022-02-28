@@ -31,7 +31,6 @@ import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
-import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.menus.MenuFileManager;
 import com.archyx.aureliumskills.menus.MenuRegistrar;
 import com.archyx.aureliumskills.menus.sources.SorterItem;
@@ -121,7 +120,6 @@ public class AureliumSkills extends JavaPlugin {
 	private PlayerManager playerManager;
 	private StorageProvider storageProvider;
 	private BackupProvider backupProvider;
-	private MenuLoader menuLoader;
 	private LootTableManager lootTableManager;
 	private InventoryManager inventoryManager;
 	private AbilityManager abilityManager;
@@ -645,10 +643,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Economy getEconomy() {
 		return economy;
-	}
-
-	public MenuLoader getMenuLoader() {
-		return menuLoader;
 	}
 
 	public LootTableManager getLootTableManager() {
