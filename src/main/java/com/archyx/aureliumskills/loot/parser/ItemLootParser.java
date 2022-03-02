@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.loot.Loot;
 import com.archyx.aureliumskills.loot.builder.ItemLootBuilder;
 import com.archyx.aureliumskills.util.item.MaterialUtil;
+import com.archyx.aureliumskills.util.item.NBTAPIUser;
 import com.archyx.aureliumskills.util.misc.Validate;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XEnchantment;
@@ -232,6 +233,7 @@ public class ItemLootParser extends LootParser {
     }
 
     private ItemStack parseNBT(ItemStack item, Map<?, ?> map) {
+        if (NBTAPIUser.isNBTDisabled(plugin)) return item;
         NBTItem nbtItem = new NBTItem(item);
         applyMapToNBT(nbtItem, map);
         return nbtItem.getItem();

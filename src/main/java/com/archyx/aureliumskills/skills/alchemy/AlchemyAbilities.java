@@ -12,6 +12,7 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.agility.AgilityAbilities;
 import com.archyx.aureliumskills.stats.Stats;
+import com.archyx.aureliumskills.util.item.NBTAPIUser;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.mechanics.PotionUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
@@ -112,6 +113,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     }
 
     private ItemStack applyDurationData(ItemStack originalItem, double multiplier, Locale locale) {
+        if (NBTAPIUser.isNBTDisabled(plugin)) return originalItem;
         PotionMeta potionMeta = (PotionMeta) originalItem.getItemMeta();
         if (potionMeta != null) {
             PotionData potionData = potionMeta.getBasePotionData();
@@ -155,44 +157,45 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         if (event.isCancelled()) return;
         ItemStack item = event.getItem();
         if (item.getType() == Material.POTION && item.getItemMeta() instanceof PotionMeta) {
-            NBTItem nbtItem = new NBTItem(item);
-            NBTCompound compound = nbtItem.getCompound("skillsPotion");
-            if (compound != null) {
-                Integer durationBonus = compound.getInteger("durationBonus");
-                if (durationBonus != null) {
-                    PotionMeta meta = (PotionMeta) item.getItemMeta();
-                    if (meta != null) {
-                        PotionData potionData = meta.getBasePotionData();
-                        PotionType potionType = potionData.getType();
-                        PotionEffectType effectType = potionType.getEffectType();
-                        if (effectType != null) {
-                            if (!potionType.toString().equals("TURTLE_MASTER")) {
-                                // Get amplifier
-                                int amplifier = 0;
-                                if (potionData.isUpgraded()) {
-                                    if (potionType.equals(PotionType.SLOWNESS)) {
-                                        amplifier = 3;
-                                    } else {
-                                        amplifier = 1;
-                                    }
-                                }
-                                // Apply effect
-                                if (effectType.equals(PotionEffectType.SPEED) || effectType.equals(PotionEffectType.JUMP)) {
-                                    PotionUtil.applyEffect(player, new PotionEffect(effectType, (int) ((PotionUtil.getDuration(potionData) + durationBonus) * agilityAbilities.getSugarRushSplashMultiplier(player)), amplifier));
-                                } else {
-                                    PotionUtil.applyEffect(player, new PotionEffect(effectType, PotionUtil.getDuration(potionData) + durationBonus, amplifier));
-                                }
+            int durationBonus = 0;
+            if (!NBTAPIUser.isNBTDisabled(plugin)) {
+                NBTItem nbtItem = new NBTItem(item);
+                NBTCompound compound = nbtItem.getCompound("skillsPotion");
+                if (compound != null) {
+                    durationBonus = compound.getInteger("durationBonus");
+                }
+            }
+            PotionMeta meta = (PotionMeta) item.getItemMeta();
+            if (meta != null) {
+                PotionData potionData = meta.getBasePotionData();
+                PotionType potionType = potionData.getType();
+                PotionEffectType effectType = potionType.getEffectType();
+                if (effectType != null) {
+                    if (!potionType.toString().equals("TURTLE_MASTER")) {
+                        // Get amplifier
+                        int amplifier = 0;
+                        if (potionData.isUpgraded()) {
+                            if (potionType.equals(PotionType.SLOWNESS)) {
+                                amplifier = 3;
+                            } else {
+                                amplifier = 1;
                             }
-                            // Special case for Turtle Master
-                            else {
-                                if (!potionData.isUpgraded()) {
-                                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, PotionUtil.getDuration(potionData) + durationBonus, 3));
-                                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionUtil.getDuration(potionData) + durationBonus, 2));
-                                } else {
-                                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, PotionUtil.getDuration(potionData) + durationBonus, 5));
-                                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionUtil.getDuration(potionData) + durationBonus, 3));
-                                }
-                            }
+                        }
+                        // Apply effect
+                        if (effectType.equals(PotionEffectType.SPEED) || effectType.equals(PotionEffectType.JUMP)) {
+                            PotionUtil.applyEffect(player, new PotionEffect(effectType, (int) ((PotionUtil.getDuration(potionData) + durationBonus) * agilityAbilities.getSugarRushSplashMultiplier(player)), amplifier));
+                        } else {
+                            PotionUtil.applyEffect(player, new PotionEffect(effectType, PotionUtil.getDuration(potionData) + durationBonus, amplifier));
+                        }
+                    }
+                    // Special case for Turtle Master
+                    else {
+                        if (!potionData.isUpgraded()) {
+                            PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, PotionUtil.getDuration(potionData) + durationBonus, 3));
+                            PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionUtil.getDuration(potionData) + durationBonus, 2));
+                        } else {
+                            PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, PotionUtil.getDuration(potionData) + durationBonus, 5));
+                            PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionUtil.getDuration(potionData) + durationBonus, 3));
                         }
                     }
                 }
@@ -211,11 +214,13 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
             PotionData potionData = meta.getBasePotionData();
             if (meta.hasCustomEffects() && OptionL.getBoolean(Option.ALCHEMY_IGNORE_CUSTOM_POTIONS)) return;
             // Get potion duration bonus from Alchemist ability
-            NBTItem nbtItem = new NBTItem(item);
             int durationBonus = 0;
-            NBTCompound compound = nbtItem.getCompound("skillsPotion");
-            if (compound != null) {
-                durationBonus = compound.getInteger("durationBonus");
+            if (!NBTAPIUser.isNBTDisabled(plugin)) {
+                NBTItem nbtItem = new NBTItem(item);
+                NBTCompound compound = nbtItem.getCompound("skillsPotion");
+                if (compound != null) {
+                    durationBonus = compound.getInteger("durationBonus");
+                }
             }
             // Add effects for each player
             for (PotionEffect effect : event.getPotion().getEffects()) {

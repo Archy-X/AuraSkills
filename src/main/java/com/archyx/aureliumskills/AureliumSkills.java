@@ -137,6 +137,7 @@ public class AureliumSkills extends JavaPlugin {
 	private TownySupport townySupport;
 	private boolean luckPermsEnabled;
 	private boolean slimefunEnabled;
+	private boolean nbtAPIEnabled;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -334,6 +335,13 @@ public class AureliumSkills extends JavaPlugin {
 			checkUpdates();
 		}
 		MinecraftVersion.disableUpdateCheck();
+		// Check if NBT API is supported for the version
+		if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
+			getLogger().warning("NBT API is not yet supported for your Minecraft version, item modifier, requirement, and some other functionality is disabled!");
+			nbtAPIEnabled = false;
+		} else {
+			nbtAPIEnabled = true;
+		}
 	}
 	
 	public void onDisable() {
@@ -811,6 +819,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public ProtocolLibSupport getProtocolLibSupport() {
 		return protocolLibSupport;
+	}
+
+	public boolean isNBTAPIDisabled() {
+		return !nbtAPIEnabled;
 	}
 
 }

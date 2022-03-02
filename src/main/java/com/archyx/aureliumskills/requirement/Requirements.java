@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.NBTAPIUser;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
@@ -21,17 +22,17 @@ import org.bukkit.material.MaterialData;
 
 import java.util.*;
 
-public class Requirements {
+public class Requirements extends NBTAPIUser {
 
-    private final AureliumSkills plugin;
     private final RequirementManager manager;
 
     public Requirements(AureliumSkills plugin) {
-        this.plugin = plugin;
+        super(plugin);
         this.manager = plugin.getRequirementManager();
     }
 
     public Map<Skill, Integer> getRequirements(ModifierType type, ItemStack item) {
+        if (isNBTDisabled()) return new HashMap<>();
         NBTItem nbtItem = new NBTItem(item);
         Map<Skill, Integer> requirements = new HashMap<>();
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
@@ -75,6 +76,7 @@ public class Requirements {
 
 
     public ItemStack addRequirement(ModifierType type, ItemStack item, Skill skill, int level) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         compound.setInteger(getName(skill), level);
@@ -82,6 +84,7 @@ public class Requirements {
     }
 
     public ItemStack removeRequirement(ModifierType type, ItemStack item, Skill skill) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
@@ -94,6 +97,7 @@ public class Requirements {
     }
 
     public ItemStack removeAllRequirements(ModifierType type, ItemStack item) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         compound.getKeys().forEach(compound::removeKey);
@@ -102,6 +106,7 @@ public class Requirements {
     }
 
     public boolean hasRequirement(ModifierType type, ItemStack item, Skill skill) {
+        if (isNBTDisabled()) return false;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
@@ -113,6 +118,7 @@ public class Requirements {
     }
 
     public ItemStack convertFromLegacy(ItemStack item) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound oldRequirementsCompound = nbtItem.getCompound("skillRequirements");
         if (oldRequirementsCompound != null) {
