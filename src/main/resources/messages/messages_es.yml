@@ -370,6 +370,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Todos los modificadores de armadura fueron removidos de tu objeto'
+    multiplier:
+      add:
+        added: '&7El multiplicador &b{target} &7con valor &b{value} &7fue añadido a tu objeto'
+        already_exists: '&e¡Ya existe un multiplicador de armadura con el objetivo &b{target} &een tu armadura! Eliminalo primero con /sk armor multiplier remove'
+        skill_lore: '&7Cuando se use: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Cuando se use: &b-{value}% {skill} XP'
+        global_lore: '&7Cuando se use: &b+{value}% XP de Habilidad'
+        global_lore_subtract: '&7Cuando se use: &b-{value}% XP de Habilidad'
+      remove:
+        does_not_exist: '&eTu objeto no tiene un multiplicador de armadura &b{target}&e!'
+        removed: '&7El multiplicador de armadura &b{target} &7fue removido de tu objeto'
+      list:
+        header: '&fMultiplicadores de armadura encontrados:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Todos los multiplicadores de armadura fueron removidos de tu objeto'
     requirement:
       add:
         added: '&3{skill}&7 requisito de armadura con nivel &b{level}&7 fue agregado a tu artículo'
@@ -417,6 +433,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Todos los modificadores fueron removidos de tu objeto'
+    multiplier:
+      add:
+        added: '&7El multiplicador &b{target} &7con valor &b{value} &7fue añadido a tu objeto'
+        already_exists: '&e¡Ya existe un multiplicador de objeto con el objetivo &b{target} &een tu objeto! Eliminalo primero con /sk item multiplier remove'
+        skill_lore: '&7Al sostener: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Al sostener: &b-{value}% {skill} XP'
+        global_lore: '&7Al sostener: &b+{value}% XP de Habilidad'
+        global_lore_subtract: '&7Al sostener: &b-{value}% XP de Habilidad'
+      remove:
+        does_not_exist: '&e¡Tu objeto no tiene el multiplicador de objeto &b{target}&e!'
+        removed: '&7El multiplicador de objeto &b{target} &7fue removido de tu objeto'
+      list:
+        header: '&fModificadores de objeto encontrados:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Todos los multiplicadores fueron removidos de tu objeto'
     register:
       registered: '&fRegistraste el objeto con la clave {key}'
       already_registered: '&eYa hay un objeto registrado con la clave &f{key}&e, usa &f/skills item unregister &epara desregistrarlo'
@@ -468,7 +500,9 @@ commands:
       removed_one_stat: '&7Modificador &b{num} {color}{stat} &7elminadas del jugador &6{player}'
       players_only: '&e¡Solo los jugadores pueden eliminar sus propios modificadores! Intenta especificando un jugador'
   multiplier:
-    list: '&fMultplicador de XP para &e{player}&f: &b{multiplier}x / +{percent}%'
+    global: Global
+    list: '&fMultiplicador de XP global para &6{player}&f: &b{multiplier}x / +{percent}%'
+    skill_entry: '&fMultiplicador de &b{skill} &fXP: &b{multiplier}x / +{percent}%'
     players_only: '&e¡Solo los jugadores pueden ver sus propios modificadores! Intenta especificando un jugador!'
   rank:
     header: '&b&lTu Clasificación de Habilidades'
@@ -736,4 +770,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 23
+file_version: 24
