@@ -246,10 +246,14 @@ public class Leveler {
 	}
 
 	private void sendTitle(Player player, Locale locale, Skill skill, int level) {
-		player.sendTitle(TextUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),"{skill}", skill.getDisplayName(locale)),
-				TextUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale)
-						,"{old}", RomanNumber.toRoman(level - 1)
-						,"{new}", RomanNumber.toRoman(level))
+		player.sendTitle(TextUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),
+						"{skill}", skill.getDisplayName(locale),
+						"{old}", RomanNumber.toRoman(level - 1),
+						"{new}", RomanNumber.toRoman(level)),
+				TextUtil.replace(Lang.getMessage(LevelerMessage.SUBTITLE, locale),
+						"{old}", RomanNumber.toRoman(level - 1),
+						"{new}", RomanNumber.toRoman(level),
+						"{skill}", skill.getDisplayName(locale))
 				, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
 	}
 
