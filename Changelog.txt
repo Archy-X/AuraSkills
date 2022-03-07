@@ -77,6 +77,16 @@ Version Beta 1.3.0
       - Item meta options, such as potion_data, are now separate fields under the item section (alongside material, lore) for items and in the context subsection for templates
       - Legacy material data for 1.12 is still defined in the material field, using the material:data format
 
+Version Beta 1.2.10
+  Changes:
+    - Disable item NBT functionality if version unsupported
+    - Update NBT API for 1.18.2
+    - Allow leveler message title and subtitle placeholders to be interchangeable
+    - Update Spanish messages
+    - Update Chinese (Simplified) messages
+  Bug Fixes:
+    - Fix berries right click exploit in some protected regions
+
 Version Beta 1.2.9
   Bug Fixes:
     - Fix critical item duplication exploit on 1.12
