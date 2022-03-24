@@ -233,8 +233,10 @@ public class PlayerData {
 
     public int getPowerLevel() {
         int power = 0;
-        for (int level : skillLevels.values()) {
-            power += level;
+        for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
+            if (OptionL.isEnabled(entry.getKey())) {
+                power += entry.getValue();
+            }
         }
         return power;
     }

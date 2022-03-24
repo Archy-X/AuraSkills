@@ -77,6 +77,14 @@ Version Beta 1.3.0
       - Item meta options, such as potion_data, are now separate fields under the item section (alongside material, lore) for items and in the context subsection for templates
       - Legacy material data for 1.12 is still defined in the material field, using the material:data format
 
+Version Beta 1.2.11
+  Changes:
+    - Use new prevent-interact option for blocking item interactions for requirements instead of prevent-tool-use
+  Bug Fixes:
+    - Fix PlayerHarvestBlockEvent does not exist error on versions below 1.16
+    - Fix power placeholder not ignoring disabled skills
+    - Fix stripped logs not working as a custom XP source if stripped with an axe
+
 Version Beta 1.2.10
   Changes:
     - Disable item NBT functionality if version unsupported

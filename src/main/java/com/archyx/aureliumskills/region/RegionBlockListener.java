@@ -14,6 +14,7 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -73,6 +74,12 @@ public class RegionBlockListener implements Listener {
         if (!OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) return;
         Material material = event.getBlock().getType();
         Block block = event.getBlock();
+        // Ignore stripping logs
+        BlockState replaced = event.getBlockReplacedState();
+        ForagingSource foragingSource = ForagingSource.getSource(replaced);
+        if (foragingSource != null && foragingSource.isTrunk()) {
+            return;
+        }
         // Add all foraging, mining, and excavation blocks
         if (MiningSource.getSource(block) != null || ForagingSource.getSource(block) != null || ExcavationSource.getSource(block) != null) {
             regionManager.addPlacedBlock(block);
