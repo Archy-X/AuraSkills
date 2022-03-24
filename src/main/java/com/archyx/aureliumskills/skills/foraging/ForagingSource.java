@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public enum ForagingSource implements Source {
@@ -112,9 +113,9 @@ public enum ForagingSource implements Source {
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isMatch(Block block) {
+    public boolean isMatch(BlockState blockState) {
         boolean matched = false;
-        String materialName = block.getType().toString();
+        String materialName = blockState.getType().toString();
         if (XMaterial.isNewVersion() || getLegacyMaterial() == null) { // Standard block handling
             if (toString().equalsIgnoreCase(materialName)) {
                 matched = true;
@@ -134,12 +135,16 @@ public enum ForagingSource implements Source {
                     matched = true;
                 }
             } else { // With data value
-                if (getLegacyMaterial().equalsIgnoreCase(materialName) && byteArrayContains(legacyData, block.getData())) {
+                if (getLegacyMaterial().equalsIgnoreCase(materialName) && byteArrayContains(legacyData, blockState.getRawData())) {
                     matched = true;
                 }
             }
         }
         return matched;
+    }
+
+    public boolean isMatch(Block block) {
+        return isMatch(block.getState());
     }
 
     private boolean byteArrayContains(byte[] array, byte input) {
@@ -155,12 +160,17 @@ public enum ForagingSource implements Source {
     }
 
     @Nullable
-    public static ForagingSource getSource(Block block) {
+    public static ForagingSource getSource(BlockState blockState) {
         for (ForagingSource source : values()) {
-            if (source.isMatch(block)) {
+            if (source.isMatch(blockState)) {
                 return source;
             }
         }
         return null;
+    }
+
+    @Nullable
+    public static ForagingSource getSource(Block block) {
+        return getSource(block.getState());
     }
 }
