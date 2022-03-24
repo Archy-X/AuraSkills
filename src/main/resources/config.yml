@@ -166,6 +166,7 @@ requirement:
         prevent-tool-use: true
         prevent-weapon-use: true
         prevent-block-place: true
+        prevent-interact: true
         global:
     armor:
         prevent-armor-equip: true

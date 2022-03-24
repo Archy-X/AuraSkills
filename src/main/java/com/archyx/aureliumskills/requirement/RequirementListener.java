@@ -135,7 +135,7 @@ public class RequirementListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(PlayerInteractEvent event) {
         if (event.useItemInHand() == Event.Result.DENY) return;
-        if (!OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_TOOL_USE)) return;
+        if (!OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_INTERACT)) return;
 
         ItemStack item = event.getItem();
         if (item == null) return;
