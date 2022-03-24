@@ -21,7 +21,7 @@ The wiki contains documentation on how to use and configure the plugin. The wiki
 Aurelium Skills provides a developer API to interact with the plugin.
 
 ### Maven
-```
+```xml
 <repository>
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
@@ -35,7 +35,7 @@ Aurelium Skills provides a developer API to interact with the plugin.
 ```
 
 ### Gradle
-```
+```gradle
 repositories {
     maven { url 'https://jitpack.io' }
 }
