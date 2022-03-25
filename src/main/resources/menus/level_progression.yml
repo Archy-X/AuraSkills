@@ -131,5 +131,5 @@ templates:
       - '{ability}{mana_ability}'
       - '{locked}'
 options:
-  use_level_as_amount: true
+  use_level_as_amount: false
   over_max_stack_amount: 1
