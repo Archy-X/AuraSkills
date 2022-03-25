@@ -82,13 +82,13 @@ public class UnlockedManaAbilityItem extends AbstractItem implements TemplateIte
     private String getUpgradeValue(MAbility mAbility, PlayerData playerData) {
         String currentValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility)));
         String nextValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
-        return "&8" + currentValue + "→&7" + nextValue;
+        return "&7" + currentValue + "&8→" + nextValue + "&7";
     }
 
     private String getUpgradeDuration(MAbility mAbility, PlayerData playerData) {
         String currentDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility)));
         String nextDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
-        return "&8" + currentDuration + "→&7" + nextDuration;
+        return "&7" + currentDuration + "&8→" + nextDuration + "&7";
     }
 
     private boolean isNotMaxed(PlayerData playerData, MAbility mAbility) {

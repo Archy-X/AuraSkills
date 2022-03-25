@@ -57,8 +57,8 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
                 } else {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
                             "{desc}", TextUtil.replace(ability.getDescription(locale),
-                                    "{value}", getUpgradeValue(ability, playerData),
-                                    "{value_2}", getUpgradeValue2(ability, playerData)));
+                                    "{value}", getCurrentValue(ability, playerData),
+                                    "{value_2}", getCurrentValue2(ability, playerData)));
                 }
             case "unlocked":
                 return Lang.getMessage(MenuMessage.UNLOCKED, locale);
@@ -72,16 +72,24 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
         return unlock + levelUp * playerData.getAbilityLevel(ability);
     }
 
+    private String getCurrentValue(Ability ability, PlayerData playerData) {
+        return NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)));
+    }
+
+    private String getCurrentValue2(Ability ability, PlayerData playerData) {
+        return NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability)));
+    }
+
     private String getUpgradeValue(Ability ability, PlayerData playerData) {
-        String currentValue = NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)));
+        String currentValue = getCurrentValue(ability, playerData);
         String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability) + 1));
-        return "&8" + currentValue + "→&7" + nextValue;
+        return "&7" + currentValue + "&8→" + nextValue + "&7";
     }
 
     private String getUpgradeValue2(Ability ability, PlayerData playerData) {
-        String currentValue = NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability)));
+        String currentValue = getCurrentValue2(ability, playerData);
         String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability) + 1));
-        return "&8" + currentValue + "→&7" + nextValue;
+        return "&7" + currentValue + "&8→" + nextValue + "&7";
     }
 
     private boolean isNotMaxed(PlayerData playerData, Ability ability) {
