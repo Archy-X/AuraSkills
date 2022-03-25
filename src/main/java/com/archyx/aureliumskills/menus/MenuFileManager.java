@@ -127,7 +127,9 @@ public class MenuFileManager {
 
             if (!itemName.equals("rank")) { // Migrate lore except the rank item
                 List<String> lore = oldItem.getStringList("lore");
-                newItem.set("lore", lore);
+                if (lore.size() > 0) {
+                    newItem.set("lore", lore);
+                }
             }
         }
     }
@@ -161,7 +163,9 @@ public class MenuFileManager {
             String displayName = oldTemplate.getString("display_name");
             newTemplate.set("display_name", displayName);
             List<String> lore = oldTemplate.getStringList("lore");
-            newTemplate.set("lore", lore);
+            if (lore.size() > 0) {
+                newTemplate.set("lore", lore);
+            }
         }
     }
 
