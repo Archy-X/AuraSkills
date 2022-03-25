@@ -44,10 +44,10 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                 String unitName = source.getUnitName();
                 if (unitName == null) {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP, locale),
-                            "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source)));
+                            "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source)));
                 } else {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP_RATE, locale),
-                            "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source)),
+                            "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source)),
                             "{unit}", getCustomMessage("sources.units." + unitName, locale));
                 }
             case "multiplied_xp":
