@@ -36,9 +36,10 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
         switch (placeholder) {
             case "player_entry":
                 UUID id = value.getId();
+                String name = Bukkit.getOfflinePlayer(id).getName();
                 return TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_ENTRY, locale),
                         "{place}", String.valueOf(place),
-                        "{player}", Bukkit.getOfflinePlayer(id).getName());
+                        "{player}", name != null ? name : "?");
             case "skill_level":
                 return TextUtil.replace(Lang.getMessage(MenuMessage.SKILL_LEVEL, locale),
                         "{level}", String.valueOf(value.getLevel()));
