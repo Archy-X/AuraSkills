@@ -26,11 +26,6 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public Class<Ability> getContext() {
-        return Ability.class;
-    }
-
-    @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, Ability ability) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return placeholder;

@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
-import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
@@ -20,18 +19,13 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class LockedManaAbilityItem extends AbstractItem implements TemplateItemProvider<MAbility> {
+public class LockedManaAbilityItem extends AbstractManaAbilityItem implements TemplateItemProvider<MAbility> {
 
     private final ManaAbilityManager manager;
 
     public LockedManaAbilityItem(AureliumSkills plugin) {
         super(plugin);
         this.manager = plugin.getManaAbilityManager();
-    }
-
-    @Override
-    public Class<MAbility> getContext() {
-        return MAbility.class;
     }
 
     @Override

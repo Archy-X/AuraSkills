@@ -25,11 +25,6 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public Class<Ability> getContext() {
-        return Ability.class;
-    }
-
-    @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, Ability ability) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {

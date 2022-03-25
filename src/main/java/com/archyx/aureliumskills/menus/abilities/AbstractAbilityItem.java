@@ -11,6 +11,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,11 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
     public AbstractAbilityItem(AureliumSkills plugin, String itemName) {
         super(plugin);
         this.itemName = itemName;
+    }
+
+    @Override
+    public Class<Ability> getContext() {
+        return Ability.class;
     }
 
     @Override
@@ -50,7 +56,10 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
         // Default slots
         List<Ability> abilityList = new ArrayList<>();
         for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
-            abilityList.add(abilitySupplier.get());
+            Ability skillAbility = abilitySupplier.get();
+            if (plugin.getAbilityManager().isEnabled(skillAbility) && OptionL.isEnabled(skill)) {
+                abilityList.add(abilitySupplier.get());
+            }
         }
         int index = abilityList.indexOf(ability);
         return SlotPos.of(1, 2 + index);
@@ -68,4 +77,12 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
         }
     }
 
+    @Override
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Ability ability) {
+        // Hide abilities that are disabled
+        if (!plugin.getAbilityManager().isEnabled(ability)) {
+            return null;
+        }
+        return baseItem;
+    }
 }
