@@ -58,6 +58,12 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         // Functionality for showing the level as the amount on the item
         int page = activeMenu.getCurrentPage();
         int level = num + page * (int) activeMenu.getProperty("items_per_page");
+        // Don't show if level is more than max skill level
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        if (level > OptionL.getMaxLevel(skill)) {
+            return null;
+        }
+        // Amount matching level functionality
         if (activeMenu.getOption(Boolean.class, "use_level_as_amount", true)) {
             if (level <= 64) {
                 baseItem.setAmount(level);
