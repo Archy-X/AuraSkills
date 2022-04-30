@@ -202,7 +202,7 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>Slate</artifactId>
-            <version>98d38a258b</version>
+            <version>add5b851e3</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>

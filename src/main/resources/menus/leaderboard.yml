@@ -36,3 +36,5 @@ templates:
     display_name: '{player_entry}'
     lore:
       - '{skill_level}'
+options:
+  auto_replace_heads_on_legacy: true
