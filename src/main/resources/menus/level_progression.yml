@@ -133,3 +133,4 @@ templates:
 options:
   use_level_as_amount: false
   over_max_stack_amount: 1
+  items_per_page: 24
