@@ -28,6 +28,9 @@ import com.archyx.slate.context.ContextManager;
 import com.archyx.slate.item.provider.ProviderManager;
 import com.archyx.slate.menu.MenuManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MenuRegistrar {
 
     private final AureliumSkills plugin;
@@ -56,6 +59,12 @@ public class MenuRegistrar {
         manager.registerMenuProvider("leaderboard", new LeaderboardMenu(plugin));
         manager.registerMenuProvider("sources", new SourcesMenu(plugin));
         manager.registerMenuProvider("abilities", new AbilitiesMenu(plugin));
+        // Register default options
+        Map<String, Object> levelProgressionOptions = new HashMap<>();
+        levelProgressionOptions.put("use_level_as_amount", false);
+        levelProgressionOptions.put("over_max_stack_amount", 1);
+        levelProgressionOptions.put("items_per_page", 24);
+        manager.registerDefaultOptions("level_progression", levelProgressionOptions);
         // Global items
         manager.registerSingleItem("back", new BackItem(plugin));
         manager.registerSingleItem("close", new CloseItem(plugin));
