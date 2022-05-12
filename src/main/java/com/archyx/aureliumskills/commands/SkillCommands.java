@@ -1,9 +1,12 @@
 package com.archyx.aureliumskills.commands;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.MessageKeys;
+import co.aikar.commands.MessageType;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menus.levelprogression.LevelProgressionOpener;
 import com.archyx.aureliumskills.skills.Skill;
@@ -23,7 +26,11 @@ public class SkillCommands {
         }
         
         protected void openMenu(Player player, PlayerData playerData) {
-            new LevelProgressionOpener(plugin).open(player, playerData, skill);
+            if (OptionL.isEnabled(skill)) {
+                new LevelProgressionOpener(plugin).open(player, playerData, skill);
+            } else {
+                plugin.getCommandManager().formatMessage(plugin.getCommandManager().getCommandIssuer(player), MessageType.ERROR, MessageKeys.UNKNOWN_COMMAND);
+            }
         }
     }
 

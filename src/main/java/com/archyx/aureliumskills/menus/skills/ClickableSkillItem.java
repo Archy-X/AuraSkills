@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.menus.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menus.common.AbstractSkillItem;
 import com.archyx.aureliumskills.menus.levelprogression.LevelProgressionOpener;
@@ -38,4 +39,12 @@ public class ClickableSkillItem extends AbstractSkillItem {
         return new HashSet<>(plugin.getSkillRegistry().getSkills());
     }
 
+    @Override
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Skill skill) {
+        if (OptionL.isEnabled(skill)) {
+            return baseItem;
+        } else {
+            return null; // Hide item if skill is disabled
+        }
+    }
 }
