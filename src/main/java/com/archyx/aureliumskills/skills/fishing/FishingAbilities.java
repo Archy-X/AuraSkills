@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
@@ -26,11 +27,12 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 		super(plugin, Skills.FISHING);
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void luckyCatch(PlayerFishEvent event) {
 		if (blockDisabled(Ability.LUCKY_CATCH)) return;
 		Player player = event.getPlayer();
 		if (blockAbility(player)) return;
+		if (event.isCancelled()) return;
 		if (event.getCaught() instanceof Item) {
 			if (event.getExpToDrop() > 0) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
