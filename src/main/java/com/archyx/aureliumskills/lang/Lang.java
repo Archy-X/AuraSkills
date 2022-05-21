@@ -142,7 +142,6 @@ public class Lang implements Listener {
 					String message = config.getString(path);
 					if (message != null) {
 						messages.put(key, applyColor(TextUtil.replace(message
-								, "&", "§"
 								, "{mana_unit}", units.get(UnitMessage.MANA)
 								, "{hp_unit}", units.get(UnitMessage.HP)
 								, "{xp_unit}", units.get(UnitMessage.XP))));
@@ -159,11 +158,17 @@ public class Lang implements Listener {
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
+			String configMessage = config.getString(path);
+			if (configMessage != null) {
+				commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), applyColor(configMessage));
+			}
 		}
 		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
+			String configMessage = config.getString(path);
+			if (configMessage != null) {
+				commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), applyColor(configMessage));
+			}
 		}
 		Lang.messages.put(locale, messages);
 	}
