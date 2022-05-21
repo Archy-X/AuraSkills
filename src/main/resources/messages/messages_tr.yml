@@ -270,7 +270,7 @@ acf:
   minecraft:
     invalid_world: '&cHata: O dünya yok.'
     you_must_be_holding_item: '&cHata: Ana elinizde bir eşya tutuyor olmalısınız.'
-    player_is_vanish_confirm: "&eUyarı: &a{vanished} &kayboldu.Siperlerini İndirme!\n& eEyleminizi onaylamak &eiçin isimlerinin sonuna &a:confirm Ekleyin\n&eÖrnek: {vanished}:confirm"
+    player_is_vanished_confirm: "&eUyarı: &a{vanished} &kayboldu.Siperlerini İndirme!\n& eEyleminizi onaylamak &eiçin isimlerinin sonuna &a:confirm Ekleyin\n&eÖrnek: {vanished}:confirm"
     username_too_short: '&cHata: Kullanıcı adı çok kısa, en az üç karakter olmalıdır.'
     is_not_a_valid_name: '&cHata: &e{name} &cgeçerli bir kullanıcı adı değil.'
     multiple_players_match: '&cHata: Birden çok oyuncu eşleşti &b{search} &e({all})&c, Lütfen daha spesifik ol.'

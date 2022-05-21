@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&c오류: 해당 세계는 존재하지 않습니다.'
     you_must_be_holding_item: '&c오류: 메인 손에 물건을 들고 시도해주십시오.'
-    player_is_vanish_confirm: "&e주의: &a{vanished} &e은(는) 사라졌습니다. 덮개를 벗기지 마십시오!\n&e작업을 확인하려면 이름 끝에 &a:confirm &e을 추가하세요.\n&e예시: {vanished}:confirm"
+    player_is_vanished_confirm: "&e주의: &a{vanished} &e은(는) 사라졌습니다. 덮개를 벗기지 마십시오!\n&e작업을 확인하려면 이름 끝에 &a:confirm &e을 추가하세요.\n&e예시: {vanished}:confirm"
     username_too_short: '&c오류: 사용자 이름이 너무 짧습니다. 최소 3자 이상이어야 합니다.'
     is_not_a_valid_name: '&c오류: &e{name} &c유효한 사용자 이름이 아닙니다.'
     multiple_players_match: '&c오류: 여러 사용자가 일치합니다.  &b{search} &e({all})&c, 더 구체적으로 입력해주십시오.'

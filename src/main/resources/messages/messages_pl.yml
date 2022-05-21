@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cBłąd: Ten świat nie istnieje.'
     you_must_be_holding_item: '&cBłąd: Musisz trzymać przedmiot w swojej głównej ręce.'
-    player_is_vanish_confirm: "&eOstrzeżenie: &{vanished} &ema vanisha.\n&eAby potwierdzić twoją akcję dodaj &a:potwierdź &ena końcu nazwy.\n&eNp: {vanished}:potwierdź"
+    player_is_vanished_confirm: "&eOstrzeżenie: &{vanished} &ema vanisha.\n&eAby potwierdzić twoją akcję dodaj &a:potwierdź &ena końcu nazwy.\n&eNp: {vanished}:potwierdź"
     username_too_short: '&cBłąd: Nazwa użytkownika jest zbyt krótka, musi mieć co najmniej trzy znaki.'
     is_not_a_valid_name: '&cBłąd: &e{name} &cis nie jest poprawną nazwą użytkownika.'
     multiple_players_match: '&cBłąd: Wiele graczy pasuje &b{search} &e({all})&c, proszę podać więcej szczegółów.'

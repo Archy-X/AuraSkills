@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cKesalahan: Dunia ini tidak ada.'
     you_must_be_holding_item: '&cKesalahan: Kamu harus memegang benda ditanganmu.'
-    player_is_vanish_confirm: "&ePeringatan: &a{vanished} &esedang menyamar. Jangan buka kedok dia!\n&eUntuk mengkorfimasi tindakan anda tambahkan &a:confirm &ediakhir nama dia.\n&eContoh: {vanished}:confirm"
+    player_is_vanished_confirm: "&ePeringatan: &a{vanished} &esedang menyamar. Jangan buka kedok dia!\n&eUntuk mengkorfimasi tindakan anda tambahkan &a:confirm &ediakhir nama dia.\n&eContoh: {vanished}:confirm"
     username_too_short: '&cKesalahan: Nama terlalu pendek, setidaknya harus 3 huruf.'
     is_not_a_valid_name: '&cKesalahan: &e{name} &cbukanlah nama yang valid.'
     multiple_players_match: '&cKesalahan: Pemain dengan nama yang sama dideteksi &b{search} &e({all})&c, mohon untuk lebih spesifik.'

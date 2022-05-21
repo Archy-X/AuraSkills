@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cErro: Esse mundo não existe.'
     you_must_be_holding_item: '&cErro: Você deve estar segurando um item em sua mão principal.'
-    player_is_vanish_confirm: "&eAviso: &um{vanished} &eis desapareceu. Não sopre a capa deles!\n&ePara confirmar a sua ação adicione &a:confirm &eao final do nome.\n&eEx: {vanished}:confirm"
+    player_is_vanished_confirm: "&eAviso: &um{vanished} &eis desapareceu. Não sopre a capa deles!\n&ePara confirmar a sua ação adicione &a:confirm &eao final do nome.\n&eEx: {vanished}:confirm"
     username_too_short: '&cErro: Nome de usuário muito pequeno, deve ter pelo menos três caracteres.'
     is_not_a_valid_name: '&cErro: &e{name} &cé um nome de usuário inválido.'
     multiple_players_match: '&cErro: Múltiplos jogadores encontrados &b{search} &e({all})&c, por favor, seja mais específico.'

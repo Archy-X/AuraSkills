@@ -332,7 +332,7 @@ acf:
   minecraft:
     invalid_world: '&cError: That world does not exist.'
     you_must_be_holding_item: '&cError: You must be holding an item in your main hand.'
-    player_is_vanish_confirm: '&eWarning: &a{vanished} &eis vanished. Do not blow their cover!\n&eTo confirm your action add &a:confirm &eto the end of their name.\n&eEx: {vanished}:confirm'
+    player_is_vanished_confirm: '&eWarning: &a{vanished} &eis vanished. Do not blow their cover!\n&eTo confirm your action add &a:confirm &eto the end of their name.\n&eEx: {vanished}:confirm'
     username_too_short: '&cError: Username too short, must be at least three characters.'
     is_not_a_valid_name: '&cError: &e{name} &cis not a valid username.'
     multiple_players_match: '&cError: Multiple players matched &b{search} &e({all})&c, please be more specific.'
