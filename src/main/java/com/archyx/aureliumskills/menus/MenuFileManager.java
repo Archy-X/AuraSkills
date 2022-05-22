@@ -76,8 +76,11 @@ public class MenuFileManager {
             newConfig.set("title", oldSection.getString("title"));
             newConfig.set("size", oldSection.getInt("rows"));
             // Migrate fill settings
-            newConfig.set("fill.enabled", oldSection.getBoolean("fill.enabled"));
-            newConfig.set("fill.material", oldSection.getString("fill.material", "black_stained_glass_pane").toLowerCase(Locale.ROOT));
+            ConfigurationSection fillSection = newConfig.getConfigurationSection("fill");
+            if (fillSection != null) {
+                fillSection.set("enabled", oldSection.getBoolean("fill.enabled"));
+                migrateBaseItem(fillSection, oldSection.getString("fill.material", "black_stained_glass_pane"));
+            }
             // Migrate items
             ConfigurationSection itemsSection = oldSection.getConfigurationSection("items");
             ConfigurationSection newItemsSection = newConfig.getConfigurationSection("items");
