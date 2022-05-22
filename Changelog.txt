@@ -60,6 +60,7 @@ Version Beta 1.3.0
       - The format of custom items is exactly the same as default items (material, pos, display_name, lore, etc)
       - Add functionality to custom items using click actions mentioned above
       - Lore and display name supports PlaceholderAPI placeholders like all other items
+    - Add hex color support to menus
   Changes:
     - Menu file format changes:
       - menus.yml has been replaced by an individual file for each menu in the menus folder
@@ -76,6 +77,10 @@ Version Beta 1.3.0
         - For example, the path 'templates.skill.farming.material' in menus/skills.yml is the material used for Farming in the skils menu
       - Item meta options, such as potion_data, are now separate fields under the item section (alongside material, lore) for items and in the context subsection for templates
       - Legacy material data for 1.12 is still defined in the material field, using the material:data format
+    - Reduce kelp XP from 0.5 to 0.3
+  Bug Fixes:
+    - Fix Lucky Catch not working with custom loot tables
+    - Fix incorrectly named ACF message key
 
 Version Beta 1.2.11
   Changes:
