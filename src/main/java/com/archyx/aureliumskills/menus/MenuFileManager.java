@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -84,12 +85,12 @@ public class MenuFileManager {
             // Migrate items
             ConfigurationSection itemsSection = oldSection.getConfigurationSection("items");
             ConfigurationSection newItemsSection = newConfig.getConfigurationSection("items");
+            ConfigurationSection newTemplatesSection = newConfig.getConfigurationSection("templates");
             if (itemsSection != null && newItemsSection != null) {
-                migrateItems(itemsSection, newItemsSection);
+                migrateItems(itemsSection, newItemsSection, newTemplatesSection);
             }
             // Migrate templates
             ConfigurationSection templatesSection = oldSection.getConfigurationSection("templates");
-            ConfigurationSection newTemplatesSection = newConfig.getConfigurationSection("templates");
             if (templatesSection != null && newTemplatesSection != null) {
                 migrateTemplates(templatesSection, newTemplatesSection);
             }
@@ -107,12 +108,17 @@ public class MenuFileManager {
         }
     }
 
-    private void migrateItems(ConfigurationSection oldSection, ConfigurationSection newSection) {
+    private void migrateItems(ConfigurationSection oldSection, ConfigurationSection newSection, ConfigurationSection templatesSection) {
         for (String itemName : oldSection.getKeys(false)) {
             // Get the configuration sections of new and old items
             ConfigurationSection oldItem = oldSection.getConfigurationSection(itemName);
             if (oldItem == null) continue;
-            ConfigurationSection newItem = newSection.getConfigurationSection(itemName);
+            ConfigurationSection newItem;
+            if (itemName.equals("skill")) { // Skill moved to templates
+                newItem = templatesSection.getConfigurationSection(itemName);
+            } else {
+                newItem = newSection.getConfigurationSection(itemName);
+            }
             if (newItem == null) continue;
             // Migrate row and column to position
             int row = oldItem.getInt("row");
@@ -120,9 +126,30 @@ public class MenuFileManager {
             String pos = row + "," + column;
             newItem.set("pos", pos);
 
-            String oldMaterial = oldItem.getString("material");
-            if (oldMaterial != null) {
-                migrateBaseItem(newItem, oldMaterial); // Migrate base item including material and other item meta
+            Object oldMaterialObj = oldItem.get("material");
+            if (oldMaterialObj instanceof String) {
+                migrateBaseItem(newItem, (String) oldMaterialObj);
+            } else if (oldMaterialObj instanceof List<?>) { // Skill item with context dependent material
+                // Convert object to string list
+                List<?> objMaterialList = (List<?>) oldMaterialObj;
+                List<String> materialList = new ArrayList<>();
+                for (Object o : objMaterialList) {
+                    if (o instanceof String) {
+                        materialList.add((String) o);
+                    }
+                }
+                // Migrate material item contexts
+                for (String material : materialList) {
+                    String[] splitMaterial = material.split(" ", 2);
+                    if (splitMaterial.length < 2) continue;
+                    String contextString = splitMaterial[0].toLowerCase(Locale.ROOT);
+
+                    ConfigurationSection contextSection = newItem.getConfigurationSection(contextString);
+                    if (contextSection == null) continue;
+
+                    String oldMaterial = splitMaterial[1];
+                    migrateBaseItem(contextSection, oldMaterial);
+                }
             }
 
             String displayName = oldItem.getString("display_name");
@@ -156,7 +183,7 @@ public class MenuFileManager {
                     String contextString = splitMaterial[0].toLowerCase(Locale.ROOT);
                     // Get context section in new template
                     ConfigurationSection contextSection = newTemplate.getConfigurationSection(contextString);
-                    if (contextSection == null) return;
+                    if (contextSection == null) continue;
 
                     String oldMaterial = splitMaterial[1];
                     migrateBaseItem(contextSection, oldMaterial);
@@ -168,6 +195,24 @@ public class MenuFileManager {
             List<String> lore = oldTemplate.getStringList("lore");
             if (lore.size() > 0) {
                 newTemplate.set("lore", lore);
+            }
+
+            // Migrate template position
+            if (oldTemplate.contains("pos")) {
+                List<String> posList = oldTemplate.getStringList("pos");
+                for (String posEntry : posList) {
+                    String[] splitEntry = posEntry.split(" ", 3);
+                    if (splitEntry.length < 3) continue;
+
+                    String contextString = splitEntry[0].toLowerCase(Locale.ROOT);
+                    int row = Integer.parseInt(splitEntry[1]);
+                    int column = Integer.parseInt(splitEntry[2]);
+                    // Get context section in new template
+                    ConfigurationSection contextSection = newTemplate.getConfigurationSection(contextString);
+                    if (contextSection == null) continue;
+
+                    contextSection.set("pos", row + "," + column);
+                }
             }
         }
     }
