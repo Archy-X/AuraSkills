@@ -94,6 +94,7 @@ Version Beta 1.3.0
   Bug Fixes:
     - Fix Lucky Catch not working with custom loot tables
     - Fix incorrectly named ACF message key
+    - Fix missing percent in Runner description
 
 Version Beta 1.2.11
   Changes:
