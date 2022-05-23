@@ -1,0 +1,51 @@
+title: '{abilities_title}'
+size: 4
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  back:
+    material: arrow
+    pos: 3,0
+    display_name: '{back}'
+    lore:
+      - '{back_click}'
+templates:
+  locked_ability:
+    material: gray_dye
+    display_name: '&b{name}'
+    lore:
+      - '{locked_desc}'
+      - ' '
+      - '{unlocked_at}'
+      - ' '
+      - '{locked}'
+  locked_mana_ability:
+    pos: 2,4
+    material: gray_dye
+    display_name: '&d{name}'
+    lore:
+      - '{locked_desc}'
+      - ' '
+      - '{unlocked_at}'
+      - ' '
+      - '{locked}'
+  unlocked_ability:
+    material: light_blue_dye
+    display_name: '&b{name}'
+    lore:
+      - '{your_ability_level}'
+      - ' '
+      - '{unlocked_desc}'
+      - ' '
+      - '{unlocked}'
+  unlocked_mana_ability:
+    pos: 2,4
+    material: magenta_dye
+    display_name: '&d{name}'
+    lore:
+      - '{your_ability_level}'
+      - ' '
+      - '{unlocked_desc}'
+      - ' '
+      - '{unlocked}'

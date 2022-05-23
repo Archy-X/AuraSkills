@@ -23,4 +23,6 @@ public interface Skill {
 
     String toString();
 
+    Ability getXpMultiplierAbility();
+
 }

@@ -1,0 +1,136 @@
+title: '{level_progression_menu_title}'
+size: 6
+fill:
+  enabled: false
+  material: black_stained_glass_pane
+items:
+  rank:
+    pos: 0,1
+    material: paper
+    display_name: '{your_ranking}'
+    lore:
+      - '{out_of}'
+      - '{percent}'
+      - ' '
+      - '{leaderboard_click}'
+  back:
+    pos: 5,0
+    material: arrow
+    display_name: '{back}'
+    lore:
+      - '{back_click}'
+  close:
+    pos: 5,1
+    material: barrier
+    display_name: '{close}'
+  next_page:
+    pos: 5,8
+    material: arrow
+    display_name: '{next_page}'
+    lore:
+      - '{next_page_click}'
+  previous_page:
+    pos: 5,7
+    material: arrow
+    display_name: '{previous_page}'
+    lore:
+      - '{previous_page_click}'
+  sources:
+    pos: 0,2
+    material: experience_bottle
+    display_name: '{sources}'
+    lore:
+      - '{sources_desc}'
+      - ' '
+      - '{sources_click}'
+  abilities:
+    pos: 0,3
+    material: light_blue_dye
+    display_name: '{abilities}'
+    lore:
+      - '{abilities_desc}'
+      - ' '
+      - '{abilities_click}'
+templates:
+  skill:
+    pos: 0,0
+    farming:
+      material: diamond_hoe
+      flags: [hide_attributes]
+    foraging:
+      material: stone_axe
+      flags: [hide_attributes]
+    mining:
+      material: iron_pickaxe
+      flags: [hide_attributes]
+    fishing:
+      material: fishing_rod
+    excavation:
+      material: golden_shovel
+      flags: [hide_attributes]
+    archery:
+      material: bow
+    defense:
+      material: chainmail_chestplate
+      flags: [hide_attributes]
+    fighting:
+      material: diamond_sword
+      flags: [hide_attributes]
+    endurance:
+      material: golden_apple
+    agility:
+      material: feather
+    alchemy:
+      material: potion
+      potion_data:
+        type: instant_heal
+      flags: [hide_potion_effects]
+    enchanting:
+      material: enchanting_table
+    sorcery:
+      material: blaze_rod
+    healing:
+      material: splash_potion
+      potion_data:
+        type: instant_heal
+      flags: [hide_potion_effects]
+    forging:
+      material: anvil
+    display_name: '&b{skill} &3{level}'
+    lore:
+      - '{skill_desc}'
+      - '{stats_leveled}'
+      - '{ability_levels}{mana_ability}'
+      - '{level}'
+      - ' '
+      - '{progress_to_level}{max_level}'
+  unlocked:
+    material: lime_stained_glass_pane
+    display_name: '{level_unlocked}'
+    lore:
+      - '{level_number}'
+      - '{rewards}'
+      - '{ability}{mana_ability}'
+      - '{unlocked}'
+  in_progress:
+    material: yellow_stained_glass_pane
+    display_name: '{level_in_progress}'
+    lore:
+      - '{level_number}'
+      - '{rewards}'
+      - '{ability}{mana_ability}'
+      - '{progress}'
+      - ' '
+      - '{in_progress}'
+  locked:
+    material: red_stained_glass_pane
+    display_name: '{level_locked}'
+    lore:
+      - '{level_number}'
+      - '{rewards}'
+      - '{ability}{mana_ability}'
+      - '{locked}'
+options:
+  use_level_as_amount: false
+  over_max_stack_amount: 1
+  items_per_page: 24

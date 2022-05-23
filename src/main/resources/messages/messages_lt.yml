@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cKlaida: Šis pasaulis neegzistuoja.'
     you_must_be_holding_item: '&cKlaida: Jūs privalote laikytį daiktą pagrindinėje rankoje.'
-    player_is_vanish_confirm: "&ePranešimas: &a{vanished} &epranyko. Neišduokite jų!\n&eJog patvirtinti veiksmą &a:patvirtinti &eGalui jų vardo.\n&eEx: {vanished}:patvirtinti"
+    player_is_vanished_confirm: "&ePranešimas: &a{vanished} &epranyko. Neišduokite jų!\n&eJog patvirtinti veiksmą &a:patvirtinti &eGalui jų vardo.\n&eEx: {vanished}:patvirtinti"
     username_too_short: '&cKlaida: Vartotojo vardas per trumpas, turi būti mažiausia 3 simboliai.'
     is_not_a_valid_name: '&cKlaida: &e{name} &cVardas nėra galiojantis.'
     multiple_players_match: '&cKlaida: Keli žaidėjai sutapo &b{search} &e({all})&c, prašau būkite labiau specifiški.'

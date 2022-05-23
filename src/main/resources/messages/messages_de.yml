@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cFehler: Diese Welt gibt es nicht.'
     you_must_be_holding_item: '&cFehler: Du musst einen Gegenstand in deiner Haupthand halten.'
-    player_is_vanish_confirm: "&eWarnung: &a{vanished} &eist getarnt. Lasse die Tarnung nicht auffliegen!\n&eUm die Aktion zu bestätigen, hänge &a:confirm &ehinten an den Namen an.\n&eBsp: {vanished}:confirm"
+    player_is_vanished_confirm: "&eWarnung: &a{vanished} &eist getarnt. Lasse die Tarnung nicht auffliegen!\n&eUm die Aktion zu bestätigen, hänge &a:confirm &ehinten an den Namen an.\n&eBsp: {vanished}:confirm"
     username_too_short: '&cFehler: Spielername zu kurz, er muss mindestens drei Buchstaben lang sein.'
     is_not_a_valid_name: '&cFehler: &e{name} &cist kein gültiger Spielername.'
     multiple_players_match: '&cFehler: Es gibt mehrere Spieler deren Namen mit &b{search} &e({all})&c übereinstimmen, du musst genauer sein.'
@@ -370,6 +370,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Alle Rüstungsmodifikatoren wurden von deinem Gegenstand entfernt'
+    multiplier:
+      add:
+        added: '&b{target} &7Multiplikator mit dem Wert &b{value} &7wurde zum Item hinzugefügt'
+        already_exists: '&eEin Modifikator mit dem Wert {target} &eexistiert bereits auf deiner Rüstung! Entferne ihn zuerst mit /sk item modifier remove'
+        skill_lore: '&7Wenn getragen: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Wenn getragen: &b-{value}% {skill} XP'
+        global_lore: '&7Wenn getragen: &b+{value}% Skill XP'
+        global_lore_subtract: '&7Wenn getragen: &b-{value}% Skill XP'
+      remove:
+        does_not_exist: '&eDein Gegenstand hat keinen &b{target} &Rüstungs Multiplikator!'
+        removed: '&{target} &7Rüstungs Modifikator wurde von deinem Gegenstand entfernt'
+      list:
+        header: '&fGefundene Rüstungs Multiplikatoren:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Alle Rüstungsmultiplikatoren wurden von deinem Gegenstand entfernt'
     requirement:
       add:
         added: '&3{skill}&7 Rüstungsanforderung mit Level &b{level}&7 wurde zu deinem Gegenstand hinzugefügt'
@@ -417,6 +433,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Alle Modifikatoren wurden von deinem Gegenstand entfernt'
+    multiplier:
+      add:
+        added: '&b{target} &7Multiplikator mit dem Wert &b{value} &7wurde zum Item hinzugefügt'
+        already_exists: '&eEin Modifikator mit dem Wert {target} &eexistiert bereits auf deiner Rüstung! Entferne ihn zuerst mit /sk item modifier remove'
+        skill_lore: '&7Wenn getragen: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Wenn getragen: &b-{value}% {skill} XP'
+        global_lore: '&7Wenn getragen: &b+{value}% Skill XP'
+        global_lore_subtract: '&7Wenn getragen: &b-{value}% Skill XP'
+      remove:
+        does_not_exist: '&eDein Gegenstand hat keinen &b{target} &Rüstungs Multiplikator!'
+        removed: '&{target} &7Rüstungs Modifikator wurde von deinem Gegenstand entfernt'
+      list:
+        header: '&fGefundene Rüstungs Multiplikatoren:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Alle Rüstungsmultiplikatoren wurden von deinem Gegenstand entfernt'
     register:
       registered: '&fRegistrierter gehaltener Gegenstand zum Schlüssel {key}'
       already_registered: '&eEs ist bereits ein Gegenstand registriert für Schlüssel &f{key}&e, benutze &f/skills item unregister &eto unregistrier es zuerst'
@@ -468,7 +500,9 @@ commands:
       removed_one_stat: '&7Entfernt &b{num} {color}{stat} &7Modifikatoren von Spieler &6{player}'
       players_only: '&eNur Spieler können ihre eigenen Modifikatoren entfernen! Versuche einen Spieler anzugeben'
   multiplier:
-    list: '&fXP Multiplikator für &6{player}&f: &b{multiplier}x / +{percent}%'
+    global: Global
+    list: '&fGlobaler XP Multiplikator für &6{player}&f: &b{multiplier}x / +{percent}%'
+    skill_entry: '&b{skill} &fXP Multiplikator: &b{multiplier}x / +{percent}%'
     players_only: 'Nur Spieler können ihre eigenen Modifikatoren auflisten! Versuche einen Spieler anzugeben!'
   rank:
     header: '&b&lDeine Fertigkeiten-Platzierungen'
@@ -736,4 +770,4 @@ units:
   mana: Mana
   hp: LP
   xp: EP
-file_version: 23
+file_version: 24

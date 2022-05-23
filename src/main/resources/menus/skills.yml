@@ -1,0 +1,97 @@
+title: '{skills_menu_title}'
+size: 5
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  your_skills:
+    pos: 0,0
+    material: diamond_axe
+    flags: [hide_attributes]
+    display_name: '{your_skills}'
+    lore:
+      - '{desc}'
+      - ' '
+      - '{hover}'
+      - '{click}'
+  close:
+    pos: 4,8
+    material: barrier
+    display_name: '{close}'
+  stats:
+    pos: 0,8
+    material: player_head
+    display_name: '{stats}'
+    lore:
+      - '{stats_desc}'
+      - ' '
+      - '{stats_click}'
+templates:
+  skill:
+    farming:
+      pos: 1,2
+      material: diamond_hoe
+      flags: [hide_attributes]
+    foraging:
+      pos: 1,3
+      material: stone_axe
+      flags: [hide_attributes]
+    mining:
+      pos: 1,4
+      material: iron_pickaxe
+      flags: [hide_attributes]
+    fishing:
+      pos: 1,5
+      material: fishing_rod
+    excavation:
+      pos: 1,6
+      material: golden_shovel
+      flags: [hide_attributes]
+    archery:
+      pos: 2,2
+      material: bow
+    defense:
+      pos: 2,3
+      material: chainmail_chestplate
+      flags: [hide_attributes]
+    fighting:
+      pos: 2,4
+      material: diamond_sword
+      flags: [hide_attributes]
+    endurance:
+      pos: 2,5
+      material: golden_apple
+    agility:
+      pos: 2,6
+      material: feather
+    alchemy:
+      pos: 3,2
+      material: potion
+      potion_data:
+        type: instant_heal
+      flags: [hide_potion_effects]
+    enchanting:
+      pos: 3,3
+      material: enchanting_table
+    sorcery:
+      pos: 3,4
+      material: blaze_rod
+    healing:
+      pos: 3,5
+      material: splash_potion
+      potion_data:
+        type: instant_heal
+      flags: [hide_potion_effects]
+    forging:
+      pos: 3,6
+      material: anvil
+    display_name: '&b{skill} &3{level}'
+    lore:
+      - '{skill_desc}'
+      - '{stats_leveled}'
+      - '{ability_levels}{mana_ability}'
+      - '{level}'
+      - ' '
+      - '{progress_to_level}{max_level}'
+      - ' '
+      - '{skill_click}'

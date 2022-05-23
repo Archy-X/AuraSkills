@@ -270,7 +270,7 @@ acf:
   minecraft:
     invalid_world: '&c錯誤: 這個世界不存在.'
     you_must_be_holding_item: '&c錯誤: 你得必須要拿著一個物品.'
-    player_is_vanish_confirm: "&e警告: &a{vanished} &e已消失. 不要覆蓋!\n&e要確認這個操作,請在名稱尾部增加 &a:confirm.\n&e例如: {vanished}:confirm"
+    player_is_vanished_confirm: "&e警告: &a{vanished} &e已消失. 不要覆蓋!\n&e要確認這個操作,請在名稱尾部增加 &a:confirm.\n&e例如: {vanished}:confirm"
     username_too_short: '&c錯誤: 名稱太短, 至少需要3個字.'
     is_not_a_valid_name: '&c錯誤: &e{name} &c不是有效的名稱.'
     multiple_players_match: '&c錯誤: 多個玩家與 &b{search} &e({all})&c 符合, 請再具體一點.'

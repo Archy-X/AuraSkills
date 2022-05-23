@@ -1,0 +1,51 @@
+title: '{stats_menu_title}'
+size: 3
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  skull:
+    pos: 1,4
+    material: player_head
+    display_name: '&e{player}'
+    lore:
+      - '{strength}'
+      - '{health}'
+      - '{regeneration}'
+      - '{luck}'
+      - '{wisdom}'
+      - '{toughness}'
+  back:
+    material: arrow
+    pos: 2,4
+    display_name: '{back}'
+    lore:
+      - '{back_click}'
+templates:
+  stat:
+    strength:
+      pos: 1,1
+      material: red_stained_glass_pane
+    health:
+      pos: 1,2
+      material: orange_stained_glass_pane
+    regeneration:
+      pos: 1,3
+      material: yellow_stained_glass_pane
+    luck:
+      pos: 1,5
+      material: green_stained_glass_pane
+    wisdom:
+      pos: 1,6
+      material: blue_stained_glass_pane
+    toughness:
+      pos: 1,7
+      material: purple_stained_glass_pane
+    display_name: '{color}{stat}'
+    lore:
+      - '{stat_desc}'
+      - '{skills}'
+      - ' '
+      - '{your_level}'
+      - ' '
+      - '{descriptors}'

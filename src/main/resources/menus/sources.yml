@@ -1,0 +1,38 @@
+title: '{sources_title}'
+size: 6
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  back:
+    pos: 5,0
+    material: arrow
+    display_name: '{back}'
+    lore:
+      - '{back_click}'
+  next_page:
+    pos: 5,5
+    material: arrow
+    display_name: '{next_page}'
+    lore:
+      - '{next_page_click}'
+  previous_page:
+    pos: 5,3
+    material: arrow
+    display_name: '{previous_page}'
+    lore:
+      - '{previous_page_click}'
+  sorter:
+    pos: 5,4
+    material: hopper
+    display_name: '{sorter}'
+    lore:
+      - '{sorted_types}'
+      - ' '
+      - '{sort_click}'
+templates:
+  source:
+    material: gray_dye
+    display_name: '{source_name}'
+    lore:
+      - '{source_xp}{multiplied_xp}{multiplied_desc}'

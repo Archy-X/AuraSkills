@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cBłąd: Ten świat nie istnieje.'
     you_must_be_holding_item: '&cBłąd: Musisz trzymać przedmiot w swojej głównej ręce.'
-    player_is_vanish_confirm: "&eOstrzeżenie: &{vanished} &ema vanisha.\n&eAby potwierdzić twoją akcję dodaj &a:potwierdź &ena końcu nazwy.\n&eNp: {vanished}:potwierdź"
+    player_is_vanished_confirm: "&eOstrzeżenie: &{vanished} &ema vanisha.\n&eAby potwierdzić twoją akcję dodaj &a:potwierdź &ena końcu nazwy.\n&eNp: {vanished}:potwierdź"
     username_too_short: '&cBłąd: Nazwa użytkownika jest zbyt krótka, musi mieć co najmniej trzy znaki.'
     is_not_a_valid_name: '&cBłąd: &e{name} &cis nie jest poprawną nazwą użytkownika.'
     multiple_players_match: '&cBłąd: Wiele graczy pasuje &b{search} &e({all})&c, proszę podać więcej szczegółów.'
@@ -354,7 +354,7 @@ action_bar:
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAX)'
 commands:
-  prefix: '&8[&bSkille&8] '
+  prefix: '&8[&bUmiejętności&8]&r '
   armor:
     modifier:
       add:
@@ -370,6 +370,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Wszystkie modyfikatory zbroi zostały usunięte z twojego przedmiotu'
+    multiplier:
+      add:
+        added: '&7Mnożnik &b{target} &7o wartości &b{value} &7został dodany do twojego przedmiotu'
+        already_exists: '&eMnożnik zbroi o docelowej statystyce &b{target} &ejuż istnieje na twojej zbroi! Usuń go najpierw za pomocą /sk armor multiplier remove'
+        skill_lore: '&7Gdy jest używany: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Gdy jest używany: &b-{value}% {skill} XP'
+        global_lore: '&7Gdy jest używany: &9+{value}% Doświadczenia Umiejętności'
+        global_lore_subtract: '&7Gdy jest używany: &9-{value}% Doświadczenia Umiejętności'
+      remove:
+        does_not_exist: '&eTwój przedmiot nie ma mnożnika &b{target} &ezbroi!'
+        removed: '&7Mnożnik zbroi &b{target} &7został usunięty z twojego przedmiotu'
+      list:
+        header: '&fZnalezione mnożniki zbroi:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Wszystkie mnożniki zbroi zostały usunięte z twojego przedmiotu'
     requirement:
       add:
         added: '&7Wymóg zbroi &3{skill}&7 z poziomem &b{level}&7 został dodany do przedmiotu'
@@ -417,6 +433,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Wszystkie modyfikatory przedmiotu zostały usunięte z twojego przedmiotu'
+    multiplier:
+      add:
+        added: '&7Mnożnik &b{target} &7o wartości &b{value} &7został dodany do twojego przedmiotu'
+        already_exists: '&eMnożnik przedmiotu o docelowej statystyce &b{target} &ejuż istnieje na twoim przedmiocie! Usuń go najpierw za pomocą /sk item multiplier remove'
+        skill_lore: '&7Podczas trzymania: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Podczas trzymania: &b-{value}% {skill} XP'
+        global_lore: '&7Podczas trzymania: &9+{value}% Doświadczenia Umiejętności'
+        global_lore_subtract: '&7Podczas trzymania: &9-{value}% Doświadczenia Umiejętności'
+      remove:
+        does_not_exist: '&eTwój przedmiot nie ma mnożnika &b{target} &eprzedmiotu!'
+        removed: '&7Mnożnik przedmiotu &b{target} &7został usunięty z twojego przedmiotu'
+      list:
+        header: '&fZnalezione mnożniki przedmiotów:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Wszystkie mnożniki przedmiotów zostały usunięte z Twojego przedmiotu'
     register:
       registered: '&fZarejestrowano przedmiot do klucza {key}'
       already_registered: '&eIstnieje już przedmiot zarejestrowany do klucza &f{key}&e, użyj &f/skills item unregister &eaby najpierw go wyrejestrować'
@@ -468,7 +500,9 @@ commands:
       removed_one_stat: '&7Usunięto modyfikatory &b{num} {color}{stat} &7gracza &6{player}'
       players_only: '&eTylko gracze mogą usunąć własne modyfikatory! Spróbuj określić gracza'
   multiplier:
-    list: '&fMnożnik XP dla gracza &6{player}&f: &b{multiplier}x / +{percent}%'
+    global: Globalne
+    list: '&fGlobalny mnożnik XP dla &6{player}&f: &b{multiplier}x / +{percent}%'
+    skill_entry: '&fMnożnik XP &b{skill} &f: &b{multiplier}x / +{percent}%'
     players_only: '&eTylko gracze mogą wyświetlić własny mnożnik! Określ gracza!'
   rank:
     header: '&b&lTwój Ranking Umiejętności'
@@ -637,7 +671,7 @@ mana_abilities:
     desc: "Strzały które wystrzelisz zadają więcej obrażeń\n&7  w zależności od tego, w jakim stopniu łuk został naciągnięty,\n&7  zużywając manę w tym procesie. Zadaje {value}% więcej\n&7  obrażeń na zużytą manę. \n&e  [Kliknij lewym przyciskiem myszy łuk, aby przełączyć tryb naładowanego strzału]"
     enable: '&7Tryb naładowanego strzału jest teraz włączony'
     disable: '&7Tryb naładowanego strzału jest teraz wyłączony'
-    shoot: '&6Użyty Naładowanego Strzału! &d+{percent}% Obrażeń &7(-{mana} {mana_unit})'
+    shoot: '&6Użyto Naładowanego Strzału! &d+{percent}% Obrażeń &7(-{mana} {mana_unit})'
     menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Obrażenia: &c+{value}% / Mana &7Maksymalny Koszt Many: &b{mana_cost}\n "
   lightning_blade:
     name: Ostrze Błyskawicy
@@ -736,4 +770,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 23
+file_version: 24

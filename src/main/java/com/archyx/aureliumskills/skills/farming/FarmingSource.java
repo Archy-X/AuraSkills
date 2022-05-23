@@ -4,7 +4,9 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.util.block.BlockUtil;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public enum FarmingSource implements Source {
@@ -110,5 +112,19 @@ public enum FarmingSource implements Source {
             }
         }
         return null;
+    }
+
+    @Override
+    public ItemStack getMenuItem() {
+        String material = this.toString();
+        switch (material) {
+            case "SWEET_BERRY_BUSH":
+                material = "SWEET_BERRIES";
+                break;
+            case "COCOA":
+                material = "COCOA_BEANS";
+                break;
+        }
+        return ItemUtils.parseItem(material);
     }
 }

@@ -9,7 +9,6 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.aureliumskills.modifier.Multiplier;
 import com.archyx.aureliumskills.modifier.StatModifier;
-import com.archyx.aureliumskills.rewards.RewardTable;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Luck;
 import com.archyx.aureliumskills.stats.Stat;
@@ -206,11 +205,10 @@ public class PlayerData {
 
     public int getAbilityLevel(Ability ability) {
         Skill skill = ability.getSkill();
-        RewardTable rewardTable = plugin.getRewardManager().getRewardTable(skill);
-        if (getSkillLevel(ability.getSkill()) < plugin.getAbilityManager().getUnlock(ability)) {
+        if (getSkillLevel(skill) < plugin.getAbilityManager().getUnlock(ability)) {
             return 0;
         }
-        int level = (getSkillLevel(ability.getSkill()) - plugin.getAbilityManager().getUnlock(ability)) / plugin.getAbilityManager().getLevelUp(ability) + 1;
+        int level = (getSkillLevel(skill) - plugin.getAbilityManager().getUnlock(ability)) / plugin.getAbilityManager().getLevelUp(ability) + 1;
         // Check max level
         if (level <= plugin.getAbilityManager().getMaxLevel(ability) || plugin.getAbilityManager().getMaxLevel(ability) == 0) {
             return level;

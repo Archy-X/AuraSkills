@@ -1,8 +1,12 @@
 package com.archyx.aureliumskills.skills.archery;
 
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.source.SourceManager;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
 
@@ -109,4 +113,18 @@ public enum ArcherySource implements Source {
     public Skill getSkill() {
         return Skills.ARCHERY;
     }
+
+    @Override
+    public String getUnitName() {
+        if (OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) {
+            return "damage";
+        }
+        return null;
+    }
+
+    @Override
+    public ItemStack getMenuItem() {
+        return SourceManager.getMenuItem(this);
+    }
+
 }

@@ -281,6 +281,10 @@ public class AbilityManager {
         return true;
     }
 
+    public boolean isPlayerEnabled(AbstractAbility ability, PlayerData playerData) {
+        return !playerData.getAbilityData(ability).getBoolean("disabled");
+    }
+
     public boolean isEnabled(MAbility mAbility) {
         if (manaAbilityOptions.containsKey(mAbility)) {
             return manaAbilityOptions.get(mAbility).isEnabled();

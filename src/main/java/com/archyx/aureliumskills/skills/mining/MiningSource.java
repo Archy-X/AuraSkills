@@ -4,7 +4,9 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.BlockSource;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public enum MiningSource implements Source, BlockSource {
@@ -122,5 +124,10 @@ public enum MiningSource implements Source, BlockSource {
             }
         }
         return null;
+    }
+
+    @Override
+    public ItemStack getMenuItem() {
+        return ItemUtils.parseItem(this.toString());
     }
 }

@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
+import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
@@ -15,7 +16,7 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.leaderboard.SkillValue;
-import com.archyx.aureliumskills.menu.SkillsMenu;
+import com.archyx.aureliumskills.menus.sources.SorterItem;
 import com.archyx.aureliumskills.modifier.*;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.Skill;
@@ -29,7 +30,6 @@ import com.archyx.aureliumskills.util.version.UpdateChecker;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
-import fr.minuskube.inv.SmartInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -41,10 +41,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @CommandAlias("skills|sk|skill")
 public class SkillsCommand extends BaseCommand {
@@ -61,12 +58,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.skills")
 	@Description("Opens the Skills menu, where you can browse skills, progress, and abilities.")
 	public void onSkills(Player player) {
-		SmartInventory inventory = SkillsMenu.getInventory(player, plugin);
-		if (inventory != null) {
-			inventory.open(player);
-		} else {
-			player.sendMessage(Lang.getMessage(CommandMessage.NO_PROFILE, Lang.getDefaultLanguage()));
-		}
+		plugin.getMenuManager().openMenu(player, "skills");
 	}
 	
 	@Subcommand("xp add")
@@ -1387,6 +1379,20 @@ public class SkillsCommand extends BaseCommand {
 				TextUtil.replace(Lang.getMessage(CommandMessage.VERSION, locale),
 				"{current_version}", plugin.getDescription().getVersion(),
 				"{latest_version}", latestVersion)));
+	}
+
+	@Subcommand("sources")
+	@CommandPermission("aureliumskills.sources")
+	@CommandCompletion("@skills @sort_types")
+	public void onSources(Player player, Skill skill, @Optional SorterItem.SortType sortType) {
+		Map<String, Object> properties = new HashMap<>();
+		properties.put("skill", skill);
+		properties.put("items_per_page", 28);
+		if (sortType == null) { // Use ASCENDING as default
+			sortType = SorterItem.SortType.ASCENDING;
+		}
+		properties.put("sort_type", sortType);
+		plugin.getMenuManager().openMenu(player, "sources", properties);
 	}
 
 	@Subcommand("help")

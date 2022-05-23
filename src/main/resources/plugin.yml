@@ -195,3 +195,7 @@ permissions:
         default: op
     aureliumskills.item.multiplier.removeall:
         default: op
+    aureliumskills.version:
+        default: op
+    aureliumskills.sources:
+        default: true

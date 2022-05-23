@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&c错误: 不存在所指定的世界。'
     you_must_be_holding_item: '&c错误: 必须在主手中持有一个物品。'
-    player_is_vanish_confirm: "&e警告:&a{vanished} &e正处于隐身状态. 是否确认操作?\n&e若要继续执行此操作,请在玩家名称后输入 &a:confirm\n&e示例: {vanished}:confirm"
+    player_is_vanished_confirm: "&e警告:&a{vanished} &e正处于隐身状态. 是否确认操作?\n&e若要继续执行此操作,请在玩家名称后输入 &a:confirm\n&e示例: {vanished}:confirm"
     username_too_short: '&c错误: 玩家名称太短了, 必须至少是三个字符'
     is_not_a_valid_name: '&c错误: &e{name} &c无效'
     multiple_players_match: '&c错误: 多个玩家符合条件 &b{search} &e(共 {all} 个)&c, 请输入更具体的搜索条件'

@@ -31,7 +31,9 @@ import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
-import com.archyx.aureliumskills.menu.MenuLoader;
+import com.archyx.aureliumskills.menus.MenuFileManager;
+import com.archyx.aureliumskills.menus.MenuRegistrar;
+import com.archyx.aureliumskills.menus.sources.SorterItem;
 import com.archyx.aureliumskills.modifier.ArmorModifierListener;
 import com.archyx.aureliumskills.modifier.ItemListener;
 import com.archyx.aureliumskills.modifier.ModifierManager;
@@ -56,7 +58,6 @@ import com.archyx.aureliumskills.skills.enchanting.EnchantingAbilities;
 import com.archyx.aureliumskills.skills.enchanting.EnchantingLeveler;
 import com.archyx.aureliumskills.skills.endurance.EnduranceAbilities;
 import com.archyx.aureliumskills.skills.endurance.EnduranceLeveler;
-import com.archyx.aureliumskills.skills.excavation.ExcavationAbilities;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLootHandler;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
@@ -91,6 +92,8 @@ import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
+import com.archyx.slate.Slate;
+import com.archyx.slate.menu.MenuManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import fr.minuskube.inv.InventoryManager;
@@ -111,7 +114,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -121,7 +123,6 @@ public class AureliumSkills extends JavaPlugin {
 	private PlayerManager playerManager;
 	private StorageProvider storageProvider;
 	private BackupProvider backupProvider;
-	private MenuLoader menuLoader;
 	private LootTableManager lootTableManager;
 	private InventoryManager inventoryManager;
 	private AbilityManager abilityManager;
@@ -158,11 +159,12 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionManager regionManager;
 	private StatRegistry statRegistry;
 	private SkillRegistry skillRegistry;
-	private ExcavationAbilities excavationAbilities;
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
 	private ProtocolLibSupport protocolLibSupport;
+	private Slate slate;
+	private MenuFileManager menuFileManager;
 
 	public void onEnable() {
 		// Registries
@@ -246,7 +248,7 @@ public class AureliumSkills extends JavaPlugin {
 			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
-		// Load	 items
+		// Load	items
 		itemRegistry.loadFromFile();
 		// Load languages
 		lang = new Lang(this);
@@ -259,15 +261,6 @@ public class AureliumSkills extends JavaPlugin {
 		rewardManager.loadRewards();
 		// Registers Commands
 		registerCommands();
-		// Load menu
-		menuLoader = new MenuLoader(this);
-		try {
-			menuLoader.load();
-		}
-		catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-			e.printStackTrace();
-			getLogger().warning("Error loading menus!");
-		}
 		// Region manager
 		this.regionManager = new RegionManager(this);
 		// Registers events
@@ -279,6 +272,9 @@ public class AureliumSkills extends JavaPlugin {
 		// Load ability options
 		abilityManager = new AbilityManager(this);
 		abilityManager.loadOptions();
+		// Load menus
+		slate = new Slate(this);
+		registerAndLoadMenus();
 		// Load stats
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);
@@ -511,6 +507,14 @@ public class AureliumSkills extends JavaPlugin {
 			return null;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
+		commandManager.getCommandCompletions().registerAsyncCompletion("sort_types", c -> {
+			SorterItem.SortType[] sortTypes = SorterItem.SortType.values();
+			List<String> typeNames = new ArrayList<>();
+			for (SorterItem.SortType sortType : sortTypes) {
+				typeNames.add(sortType.toString().toLowerCase(Locale.ROOT));
+			}
+			return typeNames;
+		});
 		commandManager.registerCommand(new SkillsCommand(this));
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));
@@ -567,8 +571,6 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ForagingAbilities(this), this);
 		pm.registerEvents(new MiningAbilities(this), this);
 		pm.registerEvents(new FishingAbilities(this), this);
-		excavationAbilities = new ExcavationAbilities(this);
-		pm.registerEvents(excavationAbilities, this);
 		pm.registerEvents(new ArcheryAbilities(this), this);
 		DefenseAbilities defenseAbilities = new DefenseAbilities(this);
 		pm.registerEvents(defenseAbilities, this);
@@ -640,6 +642,13 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry.register("forging", Skills.FORGING);
 	}
 
+	private void registerAndLoadMenus() {
+		new MenuRegistrar(this).register();
+		menuFileManager = new MenuFileManager(this);
+		menuFileManager.generateDefaultFiles();
+		menuFileManager.loadMenus();
+	}
+
 	public RewardManager getRewardManager() {
 		return rewardManager;
 	}
@@ -650,10 +659,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Economy getEconomy() {
 		return economy;
-	}
-
-	public MenuLoader getMenuLoader() {
-		return menuLoader;
 	}
 
 	public LootTableManager getLootTableManager() {
@@ -804,10 +809,6 @@ public class AureliumSkills extends JavaPlugin {
 		return skillRegistry;
 	}
 
-	public ExcavationAbilities getExcavationAbilities() {
-		return excavationAbilities;
-	}
-
 	public LuckPermsSupport getLuckPermsSupport() {
 		return luckPermsSupport;
 	}
@@ -831,6 +832,18 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isNBTAPIDisabled() {
 		return !nbtAPIEnabled;
+	}
+
+	public Slate getSlate() {
+		return slate;
+	}
+
+	public MenuManager getMenuManager() {
+		return slate.getMenuManager();
+	}
+
+	public MenuFileManager getMenuFileManager() {
+		return menuFileManager;
 	}
 
 }

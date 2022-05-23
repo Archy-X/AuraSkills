@@ -18,5 +18,4 @@ public class MaterialUtil {
         return materialOptional.map(XMaterial::parseMaterial).orElse(null);
     }
 
-
 }

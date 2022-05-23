@@ -55,6 +55,10 @@
                             <pattern>com.udojava.evalex</pattern>
                             <shadedPattern>com.archyx.aureliumskills.evalex</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>com.archyx.slate</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.slate</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -118,12 +122,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Archy-X</groupId>
-            <artifactId>SmartInvs</artifactId>
-            <version>v1.2.8</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.10.6</version>
@@ -150,7 +148,7 @@
         <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api</artifactId>
-            <version>2.9.2-SNAPSHOT</version>
+            <version>2.9.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -200,6 +198,18 @@
             <artifactId>EvalEx</artifactId>
             <version>2.6</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Archy-X</groupId>
+            <artifactId>Slate</artifactId>
+            <version>d9426d39af</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.cryptomorin</groupId>
+                    <artifactId>XSeries</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <properties>

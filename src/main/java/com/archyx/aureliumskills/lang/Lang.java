@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class Lang implements Listener {
 
-	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de", "lt", "ru", "it", "ko"};
+	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de", "lt", "ru", "it", "ko", "cs"};
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static Map<Locale, String> definedLanguages;
 	private static Locale defaultLanguage;
@@ -135,15 +135,17 @@ public class Lang implements Listener {
 					}
 				}
 				// Create custom key if not found
-				if (key == null) {
+				if (key == null && !path.startsWith("acf")) {
 					key = new CustomMessageKey(path);
 				}
-				String message = config.getString(path);
-				if (message != null) {
-					messages.put(key, applyColor(TextUtil.replace(message
-							,"{mana_unit}", units.get(UnitMessage.MANA)
-							,"{hp_unit}", units.get(UnitMessage.HP)
-							,"{xp_unit}", units.get(UnitMessage.XP))));
+				if (key != null) {
+					String message = config.getString(path);
+					if (message != null) {
+						messages.put(key, applyColor(TextUtil.replace(message
+								, "{mana_unit}", units.get(UnitMessage.MANA)
+								, "{hp_unit}", units.get(UnitMessage.HP)
+								, "{xp_unit}", units.get(UnitMessage.XP))));
+					}
 				}
 			}
 		}
@@ -156,11 +158,17 @@ public class Lang implements Listener {
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
+			String configMessage = config.getString(path);
+			if (configMessage != null) {
+				commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), applyColor(configMessage));
+			}
 		}
 		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
+			String configMessage = config.getString(path);
+			if (configMessage != null) {
+				commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), applyColor(configMessage));
+			}
 		}
 		Lang.messages.put(locale, messages);
 	}
@@ -225,12 +233,16 @@ public class Lang implements Listener {
 										for (String key : section.getKeys(false)) {
 											config.set(section.getCurrentPath() + "." + key, section.getString(key));
 										}
-										Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										if (update.getMessage() != null) {
+											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										}
 									} else {
 										Object value = imbConfig.get(update.getPath());
 										if (value != null) {
 											config.set(update.getPath(), value);
-											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+											if (update.getMessage() != null) {
+												Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+											}
 										}
 									}
 								}

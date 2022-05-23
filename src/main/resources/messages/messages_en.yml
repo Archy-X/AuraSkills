@@ -332,7 +332,7 @@ acf:
   minecraft:
     invalid_world: '&cError: That world does not exist.'
     you_must_be_holding_item: '&cError: You must be holding an item in your main hand.'
-    player_is_vanish_confirm: '&eWarning: &a{vanished} &eis vanished. Do not blow their cover!\n&eTo confirm your action add &a:confirm &eto the end of their name.\n&eEx: {vanished}:confirm'
+    player_is_vanished_confirm: '&eWarning: &a{vanished} &eis vanished. Do not blow their cover!\n&eTo confirm your action add &a:confirm &eto the end of their name.\n&eEx: {vanished}:confirm'
     username_too_short: '&cError: Username too short, must be at least three characters.'
     is_not_a_valid_name: '&cError: &e{name} &cis not a valid username.'
     multiple_players_match: '&cError: Multiple players matched &b{search} &e({all})&c, please be more specific.'
@@ -563,11 +563,11 @@ menus:
     level: '&7Level: &e{level}'
     progress_to_level: '&7Progress to Level {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
     max_level: '&6MAX LEVEL'
-    ability_levels: '&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
+    ability_levels: '\n&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: '\n&7Stats Leveled: {stats}\n '
-    mana_ability: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
+    stats_leveled: '\n&7Stats Leveled: {stats}'
+    mana_ability: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   skills_menu:
     skills_menu_title: Your Skills
     your_skills: '&bYour Skills - &6{player}'
@@ -576,13 +576,16 @@ menus:
     your_skills_click: '&eClick on a Skill to view level progression!'
     skill_click: '&eClick to view Level Progression!'
     skill_locked: '&cYou do no have permission to view this skill!'
+    stats: '&bStats'
+    stats_desc: '&7Earn stat buffs by leveling up skills'
+    stats_click: '&eClick to learn more or view your stats'
   level_progression_menu:
     level_progression_menu_title: '{skill} Levels - Page {page}'
-    your_ranking: '&eYour Skill Ranking'
+    your_ranking: '&6Your Skill Ranking'
     rank_out_of: '&fYou are ranked &6{rank}&f out of {total} players'
     rank_percent: '&fYou are in the top &6{percent}%&f of players'
     back: '&aGo Back'
-    back_click: '&7Back to Skills Menu'
+    back_click: '&7Back to {menu_name} Menu'
     next_page: '&6Next Page'
     next_page_click: '&eClick to go to next page'
     previous_page: '&6Previous Page'
@@ -602,6 +605,13 @@ menus:
     mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
     mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
     progress: '&7Progress: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
+    leaderboard_click: '&eClick to view the {skill} leaderboard'
+    sources: '&aXP Sources'
+    sources_desc: '&7The sources menu shows all the ways you\n&7can earn XP in a skill, as well as how much\n&7XP each source gives.'
+    sources_click: '&eClick to view {skill} sources'
+    abilities: '&cAbilities'
+    abilities_desc: '&bAbilities &7are passive perks you unlock and\n&7upgrade as you level up skills.\n&dMana Abilities &7are a special type of ability\n&7that requires activation and consumes mana.'
+    abilities_click: '&eClick to view {skill} abilities'
   stats_menu:
     stats_menu_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -623,6 +633,34 @@ menus:
     unclaimed_items_title: 'Claim Items'
     inventory_full: '&eYou do not have enough space in your inventory to claim that item'
     click_to_claim: '&eClick to claim!'
+  leaderboard:
+    leaderboard_title: '{skill} Leaderboard'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7Level: &f{level}'
+  sources:
+    sources_title: '{skill} XP Sources ({current_page}/{total_pages})'
+    sorter: '&bSort XP Sources'
+    sort_type: '&7{selected}{type_name}\n'
+    selected: '&f> '
+    descending: 'Highest to Lowest'
+    ascending: 'Lowest to Highest'
+    alphabetical: 'Name (A-Z)'
+    reverse_alphabetical: 'Name (Z-A)'
+    sort_click: '&eClick to cycle sort type'
+    source_name: '&f{name}'
+    source_xp: '&7XP: &a{xp}'
+    source_xp_rate: '&7XP: &a{xp}/{unit}'
+    multiplied_xp: '\n\n&fMultiplied XP: &a{xp}'
+    multiplied_xp_rate: '\n\n&fMultiplied XP: &a{xp}/{unit}'
+    multiplied_desc: '\n&7&oThis is the XP you will actually earn\n&7&obased on your current XP multipliers'
+  abilities:
+    abilities_title: '{skill} Abilities'
+    locked_desc: '&fDescription:\n  &7{desc}'
+    unlocked_at: '&7Unlocked at &3{skill} {level}'
+    your_ability_level: '&fYour Level: &b{level}'
+    your_ability_level_maxed: '&fYour Level: &b{level} &6(MAXED)'
+    unlocked_desc: '&fNext upgrade at &3{skill} {level}&f\n  &7{desc}'
+    unlocked_desc_maxed: '&fDescription:\n  &7{desc}'
 mana_abilities:
   replenish:
     name: Replenish
@@ -663,14 +701,14 @@ mana_abilities:
     name: Sharp Hook
     desc: 'Deal {value} damage to a hooked entity\n&7  when left clicking with a fishing rod'
     use: '&6Used Sharp Hook! &7(-{mana} {mana_unit})'
-    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Damage: &c{value} &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
+    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Damage: &c{value} &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   charged_shot:
     name: Charged Shot
     desc: 'Arrows you shoot will deal more damage\n&7  based on how far the bow was pulled back,\n&7  consuming mana in the process. Does {value}% more\n&7  damage per mana consumed. &e[Left click\n&e  a bow to toggle charged shot mode]'
     enable: '&7Charged shot mode is now enabled'
     disable: '&7Charged shot mode is now disabled'
     shoot: '&6Used Charged Shot! &d+{percent}% DMG &7(-{mana} {mana_unit})'
-    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Damage: &c+{value}% / Mana &7Max Mana Cost: &b{mana_cost}\n '
+    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Damage: &c+{value}% / Mana &7Max Mana Cost: &b{mana_cost}\n '
   lightning_blade:
     name: Lightning Blade
     desc: Increases attack speed by {value}% for {duration} seconds.\n&e  [Right click sword and attack mob to activate]
@@ -678,7 +716,7 @@ mana_abilities:
     lower: '&7You lower your sword'
     start: '&6Lightning Blade Activated! &7(-{mana} {mana_unit})'
     end: '&7Lightning Blade has worn off'
-    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n &7Attack Speed: &c+{value}% &7Duration: &a{duration}s\n &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
+    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Attack Speed: &c+{value}% &7Duration: &a{duration}s\n  &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   not_ready: '&cAbility not ready! &7({cooldown}s)'
   not_enough_mana: '&eNot enough mana! &7({mana} {mana_unit} required, you have {current_mana}/{max_mana})'
 rewards:
@@ -733,6 +771,241 @@ skills:
   forging:
     name: Forging
     desc: '&7Combine and apply books in an anvil to\n&7earn Forging {xp_unit}'
+sources:
+  farming:
+    wheat: Wheat
+    potato: Potato
+    carrot: Carrot
+    beetroot: Beetroot
+    nether_wart: Nether Wart
+    pumpkin: Pumpkin
+    melon: Melon
+    sugar_cane: Sugar Cane
+    bamboo: Bamboo
+    cocoa: Cocao
+    cactus: Cactus
+    brown_mushroom: Brown Mushroom
+    red_mushroom: Red Mushroom
+    kelp: Kelp
+    sea_pickle: Sea Pickles
+    sweet_berry_bush: Sweet Berries
+    glow_berries: Glow Berries
+  foraging:
+    oak_log: Oak Log
+    spruce_log: Spruce Log
+    birch_log: Birch Log
+    jungle_log: Jungle Log
+    acacia_log: Acacia Log
+    dark_oak_log: Dark Oak Log
+    oak_leaves: Oak Leaves
+    spruce_leaves: Spruce Leaves
+    birch_leaves: Birch Leaves
+    jungle_leaves: Jungle Leaves
+    acacia_leaves: Acacia Leaves
+    dark_oak_leaves: Dark Oak Leaves
+    crimson_stem: Crimson Stem
+    warped_stem: Warped Stem
+    nether_wart_block: Nether Wart Block
+    warped_wart_block: Warped Wart Block
+    moss_block: Moss Block
+    moss_carpet: Moss Carpet
+    azalea: Azalea
+    flowering_azalea: Flowering Azalea
+    azalea_leaves: Azalea Leaves
+    flowering_azalea_leaves: Flowering Azalea Leaves
+  mining:
+    stone: Stone
+    cobblestone: Cobblestone
+    andesite: Andesite
+    diorite: Diorite
+    granite: Granite
+    coal_ore: Coal Ore
+    nether_quartz_ore: Nether Quartz Ore
+    iron_ore: Iron Ore
+    lapis_ore: Lapis Ore
+    redstone_ore: Redstone Ore
+    gold_ore: Gold Ore
+    diamond_ore: Diamond Ore
+    emerald_ore: Emerald Ore
+    terracotta: Terracotta
+    white_terracotta: White Terracotta
+    orange_terracotta: Orange Terracotta
+    yellow_terracotta: Yellow Terracotta
+    light_gray_terracotta: Light Gray Terrcotta
+    brown_terracotta: Brown Terrcotta
+    red_terracotta: Red Terracotta
+    netherrack: Netherrack
+    blackstone: Blackstone
+    basalt: Basalt
+    magma_block: Magma Block
+    nether_gold_ore: Nether Gold Ore
+    ancient_debris: Ancient Debris
+    end_stone: End Stone
+    obsidian: Obsidian
+    deepslate: Deepslate
+    copper_ore: Copper Ore
+    tuff: Tuff
+    calcite: Calcite
+    smooth_basalt: Smooth Basalt
+    amethyst_block: Amthesyst Block
+    amethyst_cluster: Amethyst Cluster
+    deepslate_coal_ore: Deepslate Coal Ore
+    deepslate_iron_ore: Deepslate Iron Ore
+    deepslate_copper_ore: Deepslate Copper Ore
+    deepslate_gold_ore: Deepslate Gold Ore
+    deepslate_redstone_ore: Deepslate Redstone Ore
+    deepslate_lapis_ore: Deepslate Lapis Ore
+    deepslate_emerald_ore: Deepslate Emerald Ore
+    deepslate_diamond_ore: Deepslate Diamond Ore
+    dripstone_block: Dripstone Block
+    ice: Ice
+    packed_ice: Packed Ice
+    blue_ice: Blue Ice
+  fishing:
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
+  excavation:
+    dirt: Dirt
+    grass_block: Grass Block
+    sand: Sand
+    gravel: Gravel
+    mycelium: Mycelium
+    clay: Clay
+    soul_sand: Soul Sand
+    coarse_dirt: Coarse Dirt
+    podzol: Podzol
+    soul_soil: Soul Soil
+    red_sand: Red Sand
+    rooted_dirt: Rooted Dirt
+  mobs:
+    player: Player
+    bat: Bat
+    cat: Cat
+    chicken: Chicken
+    cod: Cod
+    cow: Cow
+    donkey: Donkey
+    fox: Fox
+    giant: Giant
+    horse: Horse
+    mooshroom: Mooshroom
+    mule: Mule
+    ocelot: Ocelot
+    parrot: Parrot
+    pig: Pig
+    rabbit: Rabbit
+    salmon: Salmon
+    sheep: Sheep
+    skeleton_horse: Skeleton Horse
+    snow_golem: Snow Golem
+    squid: Squid
+    strider: Strider
+    tropical_fish: Tropical Fish
+    turtle: Turtle
+    villager: Villager
+    wandering_trader: Wandering Trader
+    bee: Bee
+    cave_spider: Cave Spider
+    dolphin: Dolphin
+    enderman: Enderman
+    iron_golem: Iron Golem
+    llama: Llama
+    piglin: Piglin
+    panda: Panda
+    polar_bear: Polar Bear
+    pufferfish: Pufferfish
+    spider: Spider
+    wolf: Wolf
+    zombified_piglin: Zombified Piglin
+    blaze: Blaze
+    creeper: Creeper
+    drowned: Drowned
+    elder_guardian: Elder Guardian
+    endermite: Endermite
+    evoker: Evoker
+    ghast: Ghast
+    guardian: Guardian
+    hoglin: Hoglin
+    husk: Husk
+    illusioner: Illusioner
+    magma_cube: Magma Cube
+    phantom: Phantom
+    piglin_brute: Piglin Brute
+    pillager: Pillager
+    ravager: Ravager
+    shulker: Shulker
+    silverfish: Silverfish
+    skeleton: Skeleton
+    slime: Slime
+    stray: Stray
+    vex: Vex
+    vindicator: Vindicator
+    witch: Witch
+    wither_skeleton: Wither Skeleton
+    zoglin: Zoglin
+    zombie: Zombie
+    zombie_villager: Zombie Villager
+    ender_dragon: Ender Dragon
+    wither: Wither
+    axolotl: Axolotl
+    glow_squid: Glow Squid
+    goat: Goat
+  defense:
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+  endurance:
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
+  agility:
+    jump_per_100: Jumping
+    fall_damage: Taking Fall Damage
+  alchemy:
+    awkward: Awkward Potion
+    regular: Regular Potion
+    extended: Extended Duration Potion
+    upgraded: Upgraded Potion
+    splash: Splash Potion
+    lingering: Lingering Potion
+  enchanting:
+    weapon_per_level: Weapon
+    armor_per_level: Armor
+    tool_per_level: Tool
+    book_per_level: Book
+  sorcery:
+    mana_ability_use: Using Mana Abilities
+  healing:
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
+    golden_apple: Golden Apple
+    enchanted_golden_apple: Enchanted Golden Apple
+  forging:
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
+    grindstone_per_level: Disenchant Item with Grindstone
+  units:
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost XP
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
     name: Strength
@@ -768,4 +1041,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 24
+file_version: 25
