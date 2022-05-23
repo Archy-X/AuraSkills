@@ -141,13 +141,7 @@ public class SkillsCommand extends BaseCommand {
 			if (args[0].equalsIgnoreCase("average")) {
 				List<SkillValue> lb = plugin.getLeaderboardManager().getAverageLeaderboard(1, 10);
 				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER, locale));
-				for (SkillValue skillValue : lb) {
-					String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-					sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
-							"{rank}", String.valueOf(lb.indexOf(skillValue) + 1),
-							"{player}", name != null ? name : "?",
-							"{level}", NumberUtil.format2(skillValue.getXp())));
-				}
+				sendLeaderboardEntries(sender, locale, lb);
 			} else {
 				try {
 					int page = Integer.parseInt(args[0]);
@@ -185,13 +179,7 @@ public class SkillsCommand extends BaseCommand {
 					List<SkillValue> lb = plugin.getLeaderboardManager().getAverageLeaderboard(page, 10);
 					sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER_PAGE, locale),
 							"{page}", String.valueOf(page)));
-					for (SkillValue skillValue : lb) {
-						String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-						sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
-								"{rank}", String.valueOf(lb.indexOf(skillValue) + 1),
-								"{player}", name != null ? name : "?",
-								"{level}", NumberUtil.format2(skillValue.getXp())));
-					}
+					sendLeaderboardEntries(sender, locale, lb);
 				} catch (Exception e) {
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
@@ -216,6 +204,16 @@ public class SkillsCommand extends BaseCommand {
 					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
 			}
+		}
+	}
+
+	private void sendLeaderboardEntries(CommandSender sender, Locale locale, List<SkillValue> lb) {
+		for (SkillValue skillValue : lb) {
+			String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+			sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
+					"{rank}", String.valueOf(lb.indexOf(skillValue) + 1),
+					"{player}", name != null ? name : "?",
+					"{level}", NumberUtil.format2(skillValue.getXp())));
 		}
 	}
 
@@ -404,12 +402,7 @@ public class SkillsCommand extends BaseCommand {
 			if (OptionL.isEnabled(skill)) {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData == null) return;
-				int oldLevel = playerData.getSkillLevel(skill);
-				playerData.setSkillLevel(skill, 1);
-				playerData.setSkillXp(skill, 0);
-				plugin.getLeveler().updateStats(player);
-				plugin.getLeveler().updatePermissions(player);
-				plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, 1);
+				resetPlayerSkills(player, playerData, skill);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
 				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
@@ -423,16 +416,20 @@ public class SkillsCommand extends BaseCommand {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
 			for (Skill s : plugin.getSkillRegistry().getSkills()) {
-				int oldLevel = playerData.getSkillLevel(s);
-				playerData.setSkillLevel(s, 1);
-				playerData.setSkillXp(s, 0);
-				plugin.getLeveler().updateStats(player);
-				plugin.getLeveler().updatePermissions(player);
-				plugin.getLeveler().applyRevertCommands(player, s, oldLevel, 1);
+				resetPlayerSkills(player, playerData, s);
 			}
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 					.replace("{player}", player.getName()));
 		}
+	}
+
+	private void resetPlayerSkills(@Flags("other") Player player, PlayerData playerData, Skill skill) {
+		int oldLevel = playerData.getSkillLevel(skill);
+		playerData.setSkillLevel(skill, 1);
+		playerData.setSkillXp(skill, 0);
+		plugin.getLeveler().updateStats(player);
+		plugin.getLeveler().updatePermissions(player);
+		plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, 1);
 	}
 
 	@Subcommand("modifier add")

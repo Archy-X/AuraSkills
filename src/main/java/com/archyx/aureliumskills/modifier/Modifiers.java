@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.NBTAPIUser;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
@@ -18,15 +19,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class Modifiers {
-
-    private final AureliumSkills plugin;
+public class Modifiers extends NBTAPIUser {
 
     public Modifiers(AureliumSkills plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     public ItemStack addModifier(ModifierType type, ItemStack item, Stat stat, double value) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         compound.setDouble(getName(stat), value);
@@ -34,6 +34,7 @@ public class Modifiers {
     }
 
     public ItemStack convertFromLegacy(ItemStack item) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         for (ModifierType type : ModifierType.values()) {
             List<StatModifier> legacyModifiers = getLegacyModifiers(type, nbtItem);
@@ -53,6 +54,7 @@ public class Modifiers {
     }
 
     public ItemStack removeModifier(ModifierType type, ItemStack item, Stat stat) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         compound.removeKey(getName(stat));
@@ -61,6 +63,7 @@ public class Modifiers {
     }
 
     public ItemStack removeAllModifiers(ModifierType type, ItemStack item) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
@@ -71,6 +74,7 @@ public class Modifiers {
     }
 
     public List<StatModifier> getLegacyModifiers(ModifierType type, NBTItem nbtItem) {
+        if (isNBTDisabled()) return new ArrayList<>();
         List<StatModifier> modifiers = new ArrayList<>();
         for (String key : nbtItem.getKeys()) {
             if (key.contains("skillsmodifier-" + type.name().toLowerCase(Locale.ENGLISH) + "-")) {
@@ -94,6 +98,7 @@ public class Modifiers {
     }
 
     public List<StatModifier> getModifiers(ModifierType type, ItemStack item) {
+        if (isNBTDisabled()) return new ArrayList<>();
         NBTItem nbtItem = new NBTItem(item);
         List<StatModifier> modifiers = new ArrayList<>();
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);

@@ -15,8 +15,8 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
-import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.google.gson.*;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -26,6 +26,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -324,11 +325,6 @@ public class MySqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(Player player) {
-        save(player, true);
-    }
-
-    @Override
     public void loadBackup(FileConfiguration config, CommandSender sender) {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
         Locale locale = plugin.getLang().getLocale(sender);
@@ -477,6 +473,19 @@ public class MySqlStorageProvider extends StorageProvider {
             e.printStackTrace();
         }
         sortLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
+    }
+
+    @Override
+    public void delete(UUID uuid) throws IOException {
+        String query = "DELETE FROM SkillData WHERE ID=?;";
+        try {
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, uuid.toString());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new IOException("Failed to delete player data from database");
+        }
     }
 
 

@@ -1,17 +1,17 @@
 package com.archyx.aureliumskills.commands;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.MessageKeys;
+import co.aikar.commands.MessageType;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.menus.levelprogression.LevelProgressionOpener;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SkillCommands {
 
@@ -25,23 +25,13 @@ public class SkillCommands {
             this.skill = skill;
         }
         
-        protected Map<String, Object> getProperties() {
-            Map<String, Object> properties = new HashMap<>();
-            properties.put("skill", skill);
-            properties.put("items_per_page", 24);
-            properties.put("previous_menu", "skills");
-            return properties;
-        }
-
-        protected int getPage(PlayerData playerData) {
-            int page = (playerData.getSkillLevel(skill) - 2) / 24;
-            int maxLevelPage = (OptionL.getMaxLevel(skill) - 2) / 24;
-            if (page > maxLevelPage) {
-                page = maxLevelPage;
+        protected void openMenu(Player player, PlayerData playerData) {
+            if (OptionL.isEnabled(skill)) {
+                new LevelProgressionOpener(plugin).open(player, playerData, skill);
+            } else {
+                plugin.getCommandManager().formatMessage(plugin.getCommandManager().getCommandIssuer(player), MessageType.ERROR, MessageKeys.UNKNOWN_COMMAND);
             }
-            return page;
         }
-        
     }
 
     @CommandAlias("farming")
@@ -55,7 +45,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -70,7 +60,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -85,7 +75,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -100,7 +90,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -115,7 +105,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -130,7 +120,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -145,7 +135,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -160,7 +150,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -175,7 +165,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -190,7 +180,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -205,7 +195,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -220,7 +210,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -235,7 +225,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -250,7 +240,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }
@@ -265,7 +255,7 @@ public class SkillCommands {
         public void onCommand(Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
-                plugin.getMenuManager().openMenu(player, "level_progression", getProperties(), getPage(playerData));
+                openMenu(player, playerData);
             }
         }
     }

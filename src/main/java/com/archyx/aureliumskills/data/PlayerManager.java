@@ -1,6 +1,11 @@
 package com.archyx.aureliumskills.data;
 
+import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
+import com.archyx.aureliumskills.configuration.OptionL;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,10 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerManager {
 
+    private final AureliumSkills plugin;
     private final ConcurrentHashMap<UUID, PlayerData> playerData;
 
-    public PlayerManager() {
+    public PlayerManager(AureliumSkills plugin) {
+        this.plugin = plugin;
         this.playerData = new ConcurrentHashMap<>();
+        if (OptionL.getBoolean(Option.AUTO_SAVE_ENABLED)) {
+            startAutoSave();
+        }
     }
 
     @Nullable
@@ -39,6 +49,21 @@ public class PlayerManager {
 
     public ConcurrentHashMap<UUID, PlayerData> getPlayerDataMap() {
         return playerData;
+    }
+
+    public void startAutoSave() {
+        long interval = OptionL.getInt(Option.AUTO_SAVE_INTERVAL_TICKS);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData != null && !playerData.isSaving()) {
+                        plugin.getStorageProvider().save(player, false);
+                    }
+                }
+            }
+        }.runTaskTimerAsynchronously(plugin, interval, interval);
     }
 
 }

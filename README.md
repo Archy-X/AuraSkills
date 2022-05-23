@@ -1,12 +1,12 @@
 # Aurelium Skills
 [![Release](https://jitpack.io/v/Archy-X/AureliumSkills.svg?style=flat-square)](https://jitpack.io/#Archy-X/AureliumSkills)
 
+[![Downloads](https://badges.spiget.org/resources/downloads/Downloads-blue-81069.svg)](https://www.spigotmc.org/resources/81069/)
+[![Rating](https://badges.spiget.org/resources/rating/Rating-blue-81069.svg)](https://www.spigotmc.org/resources/81069/)
+
 AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin, great for a variety of server gamemodes.
 
 Learn more and download here: https://www.spigotmc.org/resources/81069/
-
-### GitHub Disclaimer:
-Versions here may be unreleased/in development, some may be very unstable.
 
 ### Support Discord:
 
@@ -21,8 +21,7 @@ The wiki contains documentation on how to use and configure the plugin. The wiki
 Aurelium Skills provides a developer API to interact with the plugin.
 
 ### Maven
-**Repository:**
-```
+```xml
 <repository>
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
@@ -32,11 +31,12 @@ Aurelium Skills provides a developer API to interact with the plugin.
     <groupId>com.github.Archy-X</groupId>
     <artifactId>AureliumSkills</artifactId>
     <version>{version}</version>
+    <scope>provided</scope>
 </dependency>
 ```
 
 ### Gradle
-```
+```gradle
 repositories {
     maven { url 'https://jitpack.io' }
 }
@@ -52,3 +52,11 @@ There are also a few events, including ManaRegenerateEvent, SkillLevelUpEvent, X
 
 ## Contributing
 Contributions are welcome! Open a pull request, and I will review it.
+
+<h1 align="center">
+  <br>
+    <a href="https://dedimc.promo/Archy" target="_blank">
+      <img src="https://i.imgur.com/x3IWw7h.png" alt="dedicatedmc banner">
+    </a>
+  <br>
+</h1>

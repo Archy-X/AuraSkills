@@ -17,16 +17,13 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.data.type.CaveVinesPlant;
 import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class FarmingLeveler extends SkillLeveler implements Listener{
+public class FarmingLeveler extends SkillLeveler implements Listener {
 
 	private final FarmingAbilities farmingAbilities;
 
@@ -109,7 +106,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 		checkCustomBlocks(player, block, Skills.FARMING);
 	}
 
-	private void giveXp(Player player, double amount, FarmingSource source, Block block) {
+	protected void giveXp(Player player, double amount, FarmingSource source, Block block) {
 		// Give XP
 		plugin.getLeveler().addXp(player, Skills.FARMING, amount);
 		// Handle abilities
@@ -121,18 +118,18 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 		}
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onRightClick(PlayerInteractEvent event) {
-		if (!OptionL.isEnabled(Skills.FARMING)) return;
-		if (OptionL.getBoolean(Option.FARMING_CHECK_CANCELLED) && event.useInteractedBlock() == Event.Result.DENY) {
-			return;
+	private int getSameBlocksAbove(Block block, FarmingSource source, int num) {
+		if (source.isMatch(block)) {
+			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
+				return num;
+			}
+			num++;
+			return getSameBlocksAbove(block.getRelative(BlockFace.UP), source, num);
 		}
+		return num;
+	}
 
-		Player player = event.getPlayer();
-		if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-		Block block = event.getClickedBlock();
-		if (block == null) return;
-
+	protected void handleRightClick(Player player, Block block) {
 		if (blockXpGainLocation(block.getLocation(), player)) return;
 		if (blockXpGainPlayer(player)) return;
 
@@ -170,19 +167,8 @@ public class FarmingLeveler extends SkillLeveler implements Listener{
 		}
 	}
 
-	private boolean isHoldingItem(Player player) {
+	protected boolean isHoldingItem(Player player) {
 		return player.getInventory().getItemInMainHand().getType() != Material.AIR || player.getInventory().getItemInOffHand().getType() != Material.AIR;
-	}
-
-	private int getSameBlocksAbove(Block block, FarmingSource source, int num) {
-		if (source.isMatch(block)) {
-			if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
-				return num;
-			}
-			num++;
-			return getSameBlocksAbove(block.getRelative(BlockFace.UP), source, num);
-		}
-		return num;
 	}
 
 }

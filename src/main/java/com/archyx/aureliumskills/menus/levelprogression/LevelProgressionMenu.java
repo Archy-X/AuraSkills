@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.menus.AbstractMenu;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.menu.ActiveMenu;
+import com.archyx.slate.menu.ConfigurableMenu;
 import com.archyx.slate.menu.MenuProvider;
 import org.bukkit.entity.Player;
 
@@ -34,7 +35,15 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
     @Override
     public int getPages(Player player, ActiveMenu activeMenu) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
-        return (OptionL.getMaxLevel(skill) - 2) / 24 + 1;
+        int itemsPerPage = 24;
+        ConfigurableMenu levelProgressionMenu = plugin.getSlate().getMenuManager().getMenu("level_progression");
+        if (levelProgressionMenu != null) {
+            Object itemsPerPageObj = levelProgressionMenu.getOptions().get("items_per_page");
+            if (itemsPerPageObj != null) {
+                itemsPerPage = (int) itemsPerPageObj;
+            }
+        }
+        return (OptionL.getMaxLevel(skill) - 2) / itemsPerPage + 1;
     }
 
     private Skill getSkill(ActiveMenu activeMenu) {

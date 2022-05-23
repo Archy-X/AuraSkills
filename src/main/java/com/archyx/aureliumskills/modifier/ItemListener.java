@@ -22,16 +22,13 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ItemListener implements Listener {
 
     private final AureliumSkills plugin;
-    private final Map<Player, ItemStack> heldItems;
-    private final Map<Player, ItemStack> offHandItems;
+    private final Map<UUID, ItemStack> heldItems;
+    private final Map<UUID, ItemStack> offHandItems;
     private final ForagingAbilities foragingAbilities;
     private final MiningAbilities miningAbilities;
     private final StatLeveler statLeveler;
@@ -55,7 +52,7 @@ public class ItemListener implements Listener {
     public void onJoin(PlayerDataLoadEvent event) {
         Player player = event.getPlayerData().getPlayer();
         ItemStack held = player.getInventory().getItemInMainHand();
-        heldItems.put(player, held);
+        heldItems.put(player.getUniqueId(), held);
         PlayerData playerData = event.getPlayerData();
         if (!held.getType().equals(Material.AIR)) {
             if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
@@ -73,7 +70,7 @@ public class ItemListener implements Listener {
         }
         if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) {
             ItemStack offHandItem = player.getInventory().getItemInOffHand();
-            offHandItems.put(player, offHandItem);
+            offHandItems.put(player.getUniqueId(), offHandItem);
             if (!offHandItem.getType().equals(Material.AIR)) {
                 if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
                     offHandItem = requirements.convertFromLegacy(modifiers.convertFromLegacy(offHandItem));
@@ -97,7 +94,8 @@ public class ItemListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        heldItems.remove(player);
+        heldItems.remove(player.getUniqueId());
+        offHandItems.remove(player.getUniqueId());
     }
 
     public void scheduleTask() {
@@ -107,7 +105,7 @@ public class ItemListener implements Listener {
                 // For every player
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     // Gets stored and held items
-                    ItemStack stored = heldItems.get(player);
+                    ItemStack stored = heldItems.get(player.getUniqueId());
                     ItemStack held = player.getInventory().getItemInMainHand();
                     // If stored item is not null
                     if (stored != null) {
@@ -168,12 +166,12 @@ public class ItemListener implements Listener {
                                 statLeveler.reloadStat(player, stat);
                             }
                             // Set stored item to held item
-                            heldItems.put(player, held.clone());
+                            heldItems.put(player.getUniqueId(), held.clone());
                         }
                     }
                     // If no mapping exists, add held item
                     else {
-                        heldItems.put(player, held.clone());
+                        heldItems.put(player.getUniqueId(), held.clone());
                     }
                 }
             }
@@ -192,8 +190,8 @@ public class ItemListener implements Listener {
                     ItemStack itemOffHand = event.getOffHandItem();
                     ItemStack itemMainHand = event.getMainHandItem();
                     // Update items
-                    offHandItems.put(player, itemOffHand);
-                    heldItems.put(player, itemMainHand);
+                    offHandItems.put(player.getUniqueId(), itemOffHand);
+                    heldItems.put(player.getUniqueId(), itemMainHand);
                     // Things to prevent double reloads
                     Set<String> offHandModifiers = new HashSet<>();
                     Set<Stat> statsToReload = new HashSet<>();
@@ -268,7 +266,7 @@ public class ItemListener implements Listener {
                 if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         // Gets stored and held items
-                        ItemStack stored = offHandItems.get(player);
+                        ItemStack stored = offHandItems.get(player.getUniqueId());
                         ItemStack held = player.getInventory().getItemInOffHand();
                         if (stored != null) {
                             // If stored item is different than held
@@ -302,12 +300,12 @@ public class ItemListener implements Listener {
                                     }
                                 }
                                 // Set stored item to held item
-                                offHandItems.put(player, held.clone());
+                                offHandItems.put(player.getUniqueId(), held.clone());
                             }
                         }
                         // If no mapping exists, add held item
                         else {
-                            offHandItems.put(player, held.clone());
+                            offHandItems.put(player.getUniqueId(), held.clone());
                         }
                     }
                 }

@@ -18,22 +18,16 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class PlaceholderSupport extends PlaceholderExpansion {
 
     private final AureliumSkills plugin;
-    private final NumberFormat format1;
-    private final NumberFormat format2;
     private final String[] xpIdentifiers = new String[] {"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
 
     public PlaceholderSupport(AureliumSkills plugin) {
         this.plugin = plugin;
-        format1 = new DecimalFormat("#,###.#");
-        format2 = new DecimalFormat("#,###.##");
     }
 
     @Override
@@ -77,19 +71,19 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets HP with scaling as an integer
         if (identifier.equals("hp")) {
-            return String.valueOf((int) (player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+            return String.valueOf(Math.round(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
         }
 
         //Gets HP with scaling with 1 decimal
         if (identifier.equals("hp_1")) {
-            return String.valueOf(format1.format(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+            return NumberUtil.format1(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING));
         }
 
         //Gets max hp
         if (identifier.equals("hp_max")) {
             AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             if (attribute != null) {
-                return String.valueOf((int) (attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+                return String.valueOf(Math.round(attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
             }
             else {
                 return "";
@@ -98,14 +92,14 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets HP with scaling with 2 decimal
         if (identifier.equals("hp_2")) {
-            return String.valueOf(format2.format(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+            return NumberUtil.format2(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING));
         }
 
         //Gets HP Percent as an integer
         if (identifier.equals("hp_percent")) {
             AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             if (attribute != null) {
-                return String.valueOf((int) (player.getHealth() / attribute.getValue()));
+                return String.valueOf(Math.round(player.getHealth() / attribute.getValue()));
             }
             else {
                 return "";

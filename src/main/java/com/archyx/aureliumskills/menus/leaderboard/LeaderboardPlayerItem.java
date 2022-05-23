@@ -7,10 +7,12 @@ import com.archyx.aureliumskills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -36,9 +38,10 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
         switch (placeholder) {
             case "player_entry":
                 UUID id = value.getId();
+                String name = Bukkit.getOfflinePlayer(id).getName();
                 return TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_ENTRY, locale),
                         "{place}", String.valueOf(place),
-                        "{player}", Bukkit.getOfflinePlayer(id).getName());
+                        "{player}", name != null ? name : "?");
             case "skill_level":
                 return TextUtil.replace(Lang.getMessage(MenuMessage.SKILL_LEVEL, locale),
                         "{level}", String.valueOf(value.getLevel()));
@@ -65,6 +68,14 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
         SkillValue skillValue = values.get(0);
         UUID id = skillValue.getId();
         if (baseItem.getItemMeta() instanceof SkullMeta) {
+            // Replace player heads with other material in legacy versions to prevent lag
+            if (!VersionUtils.isAtLeastVersion(17)) {
+                Boolean autoReplaceHeadsOnLegacy = activeMenu.getOption(Boolean.class, "auto_replace_heads_on_legacy");
+                if (autoReplaceHeadsOnLegacy != null && autoReplaceHeadsOnLegacy) {
+                    return new ItemStack(Material.GOLD_BLOCK); // Default material replacement
+                }
+            }
+            // Set the player skin on the head
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
             meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
             baseItem.setItemMeta(meta);

@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -85,7 +86,8 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
 
     public void noDebuffFire(PlayerData playerData, Player player, LivingEntity entity) {
         if (entity.getEquipment() != null) {
-            if (entity.getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.FIRE_ASPECT) > 0) {
+            ItemStack item = entity.getEquipment().getItemInMainHand();
+            if (item != null && item.getEnchantmentLevel(Enchantment.FIRE_ASPECT) > 0) {
                 double chance = getValue(Ability.NO_DEBUFF, playerData) / 100;
                 if (r.nextDouble() < chance) {
                     new BukkitRunnable() {

@@ -14,6 +14,7 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,6 +27,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 
 public class RegionBlockListener implements Listener {
 
@@ -72,6 +74,12 @@ public class RegionBlockListener implements Listener {
         if (!OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE)) return;
         Material material = event.getBlock().getType();
         Block block = event.getBlock();
+        // Ignore stripping logs
+        BlockState replaced = event.getBlockReplacedState();
+        ForagingSource foragingSource = ForagingSource.getSource(replaced);
+        if (foragingSource != null && foragingSource.isTrunk()) {
+            return;
+        }
         // Add all foraging, mining, and excavation blocks
         if (MiningSource.getSource(block) != null || ForagingSource.getSource(block) != null || ExcavationSource.getSource(block) != null) {
             regionManager.addPlacedBlock(block);
@@ -79,6 +87,13 @@ public class RegionBlockListener implements Listener {
         // Add farming source if has check block replace
         FarmingSource farmingSource = FarmingSource.getSource(block);
         if (farmingSource != null && farmingSource.shouldCheckBlockReplace()) {
+            regionManager.addPlacedBlock(block);
+            if (block.getRelative(BlockFace.DOWN).getType() == XMaterial.BAMBOO_SAPLING.parseMaterial()) {
+                regionManager.addPlacedBlock(block.getRelative(BlockFace.DOWN));
+            }
+        }
+        // Check bamboo sapling
+        if (block.getType() == XMaterial.BAMBOO_SAPLING.parseMaterial()) {
             regionManager.addPlacedBlock(block);
         }
         for (Material checkedMaterial : customMaterials) {
@@ -126,7 +141,9 @@ public class RegionBlockListener implements Listener {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
         regionManager.removePlacedBlock(block);
-        checkSugarCane(block, 0);
+        checkTallPlant(block, 0, XBlock::isSugarCane);
+        checkTallPlant(block, 0, mat -> mat == XMaterial.BAMBOO.parseMaterial());
+        checkTallPlant(block, 0, mat -> mat == Material.CACTUS);
         checkBlocksRequiringSupportBelow(block);
         checkAmethystCluster(block);
     }
@@ -153,13 +170,13 @@ public class RegionBlockListener implements Listener {
         regionManager.removePlacedBlock(lastBlock);
     }
 
-    private void checkSugarCane(Block block, int num) {
+    private void checkTallPlant(Block block, int num, Predicate<Material> isMaterial) {
         if (num < 20) {
             Block above = block.getRelative(BlockFace.UP);
-            if (XBlock.isSugarCane(above.getType())) {
+            if (isMaterial.test(above.getType())) {
                 if (regionManager.isPlacedBlock(above)) {
                     regionManager.removePlacedBlock(above);
-                    checkSugarCane(above, num + 1);
+                    checkTallPlant(above, num + 1, isMaterial);
                 }
             }
         }

@@ -31,7 +31,6 @@ import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
-import com.archyx.aureliumskills.menu.MenuLoader;
 import com.archyx.aureliumskills.menus.MenuFileManager;
 import com.archyx.aureliumskills.menus.MenuRegistrar;
 import com.archyx.aureliumskills.menus.sources.SorterItem;
@@ -62,7 +61,9 @@ import com.archyx.aureliumskills.skills.endurance.EnduranceLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLootHandler;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
+import com.archyx.aureliumskills.skills.farming.FarmingInteractLeveler;
 import com.archyx.aureliumskills.skills.farming.FarmingLeveler;
+import com.archyx.aureliumskills.skills.farming.FarmingHarvestLeveler;
 import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
 import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
 import com.archyx.aureliumskills.skills.fishing.FishingAbilities;
@@ -84,6 +85,7 @@ import com.archyx.aureliumskills.source.SourceRegistry;
 import com.archyx.aureliumskills.stats.*;
 import com.archyx.aureliumskills.support.*;
 import com.archyx.aureliumskills.ui.ActionBar;
+import com.archyx.aureliumskills.ui.ActionBarCompatHandler;
 import com.archyx.aureliumskills.ui.SkillBossBar;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
 import com.archyx.aureliumskills.util.version.ReleaseData;
@@ -121,7 +123,6 @@ public class AureliumSkills extends JavaPlugin {
 	private PlayerManager playerManager;
 	private StorageProvider storageProvider;
 	private BackupProvider backupProvider;
-	private MenuLoader menuLoader;
 	private LootTableManager lootTableManager;
 	private InventoryManager inventoryManager;
 	private AbilityManager abilityManager;
@@ -139,6 +140,8 @@ public class AureliumSkills extends JavaPlugin {
 	private boolean townyEnabled;
 	private TownySupport townySupport;
 	private boolean luckPermsEnabled;
+	private boolean slimefunEnabled;
+	private boolean nbtAPIEnabled;
 	private Economy economy;
 	private OptionL optionLoader;
 	private PaperCommandManager commandManager;
@@ -159,6 +162,7 @@ public class AureliumSkills extends JavaPlugin {
 	private LuckPermsSupport luckPermsSupport;
 	private SourceRegistry sourceRegistry;
 	private ItemRegistry itemRegistry;
+	private ProtocolLibSupport protocolLibSupport;
 	private Slate slate;
 	private MenuFileManager menuFileManager;
 
@@ -202,7 +206,7 @@ public class AureliumSkills extends JavaPlugin {
 			vaultEnabled = false;
 		}
 		// Check for protocol lib
-		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib") && !VersionUtils.isAtLeastVersion(17);
+		protocolLibEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib");
 		// Check towny
 		townyEnabled = Bukkit.getPluginManager().isPluginEnabled("Towny");
 		townySupport = new TownySupport(this);
@@ -210,6 +214,12 @@ public class AureliumSkills extends JavaPlugin {
 		luckPermsEnabled = Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
 		if (luckPermsEnabled) {
 			luckPermsSupport = new LuckPermsSupport();
+		}
+		// Check for Slimefun
+		slimefunEnabled = Bukkit.getPluginManager().isPluginEnabled("Slimefun");
+		if (slimefunEnabled) {
+			getServer().getPluginManager().registerEvents(new SlimefunSupport(this), this);
+			getLogger().info("Slimefun Support Enabled!");
 		}
 		// Load health
 		Health health = new Health(this);
@@ -238,7 +248,7 @@ public class AureliumSkills extends JavaPlugin {
 			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
-		// Load items
+		// Load	items
 		itemRegistry.loadFromFile();
 		// Load languages
 		lang = new Lang(this);
@@ -251,9 +261,6 @@ public class AureliumSkills extends JavaPlugin {
 		rewardManager.loadRewards();
 		// Registers Commands
 		registerCommands();
-		// Load menu
-		slate = new Slate(this);
-		registerMenus();
 		// Region manager
 		this.regionManager = new RegionManager(this);
 		// Registers events
@@ -265,6 +272,9 @@ public class AureliumSkills extends JavaPlugin {
 		// Load ability options
 		abilityManager = new AbilityManager(this);
 		abilityManager.loadOptions();
+		// Load menus
+		slate = new Slate(this);
+		registerAndLoadMenus();
 		// Load stats
 		Regeneration regeneration = new Regeneration(this);
 		getServer().getPluginManager().registerEvents(regeneration, this);
@@ -272,11 +282,12 @@ public class AureliumSkills extends JavaPlugin {
 		regeneration.startSaturationRegen();
 		// Load Action Bar
 		if (protocolLibEnabled) {
-			ProtocolLibSupport.init();
+			protocolLibSupport = new ProtocolLibSupport();
+			new ActionBarCompatHandler(this).registerListeners();
 		}
 		actionBar.startUpdateActionBar();
 		// Initialize storage
-		this.playerManager = new PlayerManager();
+		this.playerManager = new PlayerManager(this);
 		this.leaderboardManager = new LeaderboardManager();
 		// Set proper storage provider
 		if (OptionL.getBoolean(Option.MYSQL_ENABLED)) {
@@ -323,6 +334,13 @@ public class AureliumSkills extends JavaPlugin {
 			checkUpdates();
 		}
 		MinecraftVersion.disableUpdateCheck();
+		// Check if NBT API is supported for the version
+		if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
+			getLogger().warning("NBT API is not yet supported for your Minecraft version, item modifier, requirement, and some other functionality is disabled!");
+			nbtAPIEnabled = false;
+		} else {
+			nbtAPIEnabled = true;
+		}
 	}
 	
 	public void onDisable() {
@@ -526,6 +544,11 @@ public class AureliumSkills extends JavaPlugin {
 		regionBlockListener = new RegionBlockListener(this);
 		pm.registerEvents(regionBlockListener, this);
 		pm.registerEvents(new FarmingLeveler(this), this);
+		if (VersionUtils.isAtLeastVersion(16)) {
+			pm.registerEvents(new FarmingHarvestLeveler(this), this);
+		} else {
+			pm.registerEvents(new FarmingInteractLeveler(this), this);
+		}
 		pm.registerEvents(new ForagingLeveler(this), this);
 		pm.registerEvents(new MiningLeveler(this), this);
 		pm.registerEvents(new ExcavationLeveler(this), this);
@@ -622,7 +645,7 @@ public class AureliumSkills extends JavaPlugin {
 		skillRegistry.register("forging", Skills.FORGING);
 	}
 
-	private void registerMenus() {
+	private void registerAndLoadMenus() {
 		new MenuRegistrar(this).register();
 		menuFileManager = new MenuFileManager(this);
 		menuFileManager.generateDefaultFiles();
@@ -639,10 +662,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public Economy getEconomy() {
 		return economy;
-	}
-
-	public MenuLoader getMenuLoader() {
-		return menuLoader;
 	}
 
 	public LootTableManager getLootTableManager() {
@@ -749,6 +768,10 @@ public class AureliumSkills extends JavaPlugin {
 		return luckPermsEnabled;
 	}
 
+	public boolean isSlimefunEnabled() {
+		return slimefunEnabled;
+	}
+
 	public Health getHealth() {
 		return health;
 	}
@@ -804,6 +827,14 @@ public class AureliumSkills extends JavaPlugin {
 	@Nullable
 	public WorldGuardFlags getWorldGuardFlags() {
 		return worldGuardFlags;
+	}
+
+	public ProtocolLibSupport getProtocolLibSupport() {
+		return protocolLibSupport;
+	}
+
+	public boolean isNBTAPIDisabled() {
+		return !nbtAPIEnabled;
 	}
 
 	public Slate getSlate() {

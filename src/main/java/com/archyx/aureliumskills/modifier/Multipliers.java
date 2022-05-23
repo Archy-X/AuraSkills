@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.ItemUtils;
+import com.archyx.aureliumskills.util.item.NBTAPIUser;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
@@ -21,16 +22,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class Multipliers {
-
-    private final AureliumSkills plugin;
+public class Multipliers extends NBTAPIUser {
 
     public Multipliers(AureliumSkills plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     public List<Multiplier> getMultipliers(ModifierType type, ItemStack item) {
-        if (!OptionL.getBoolean(Option.MODIFIER_MULTIPLIER_ENABLED)) { // Return empty list if disabled
+        if (!OptionL.getBoolean(Option.MODIFIER_MULTIPLIER_ENABLED) || isNBTDisabled()) { // Return empty list if disabled
             return new ArrayList<>();
         }
         NBTItem nbtItem = new NBTItem(item);
@@ -60,6 +59,7 @@ public class Multipliers {
     }
 
     public ItemStack addMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill, double value) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         compound.setDouble(getNBTName(skill), value);
@@ -67,6 +67,7 @@ public class Multipliers {
     }
 
     public ItemStack removeMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         compound.removeKey(getNBTName(skill));
@@ -75,6 +76,7 @@ public class Multipliers {
     }
 
     public ItemStack removeAllMultipliers(ModifierType type, ItemStack item) {
+        if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {

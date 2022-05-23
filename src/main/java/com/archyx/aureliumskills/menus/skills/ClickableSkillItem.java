@@ -1,8 +1,10 @@
 package com.archyx.aureliumskills.menus.skills;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.menus.common.AbstractSkillItem;
+import com.archyx.aureliumskills.menus.levelprogression.LevelProgressionOpener;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
@@ -10,7 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 public class ClickableSkillItem extends AbstractSkillItem {
 
@@ -26,12 +30,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
         }
 
         if (player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ENGLISH))) {
-            int page = getPage(skill, playerData);
-            Map<String, Object> properties = new HashMap<>();
-            properties.put("skill", skill);
-            properties.put("items_per_page", 24);
-            properties.put("previous_menu", "skills");
-            plugin.getMenuManager().openMenu(player, "level_progression", properties, page);
+            new LevelProgressionOpener(plugin).open(player, playerData, skill);
         }
     }
 
@@ -40,4 +39,12 @@ public class ClickableSkillItem extends AbstractSkillItem {
         return new HashSet<>(plugin.getSkillRegistry().getSkills());
     }
 
+    @Override
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Skill skill) {
+        if (OptionL.isEnabled(skill)) {
+            return baseItem;
+        } else {
+            return null; // Hide item if skill is disabled
+        }
+    }
 }

@@ -23,6 +23,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.IOException;
 import java.util.*;
 
 public abstract class StorageProvider {
@@ -146,12 +147,16 @@ public abstract class StorageProvider {
 
     public abstract void load(Player player);
 
-    public abstract void save(Player player);
+    public void save(Player player) {
+        save(player, true);
+    }
 
     public abstract void save(Player player, boolean removeFromMemory);
 
     public abstract void loadBackup(FileConfiguration file, CommandSender sender);
 
     public abstract void updateLeaderboards();
+
+    public abstract void delete(UUID uuid) throws IOException;
 
 }

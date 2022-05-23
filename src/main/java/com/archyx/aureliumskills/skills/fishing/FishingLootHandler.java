@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.skills.fishing;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.loot.Loot;
@@ -65,12 +66,15 @@ public class FishingLootHandler extends LootHandler implements Listener {
             // Calculate chance for pool
             Source source;
             double chance = getCommonChance(pool, playerData);
+            LootDropCause cause = LootDropCause.FISHING_OTHER_LOOT;
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
                 chance += (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
                 source = FishingSource.RARE;
+                cause = LootDropCause.TREASURE_HUNTER;
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
                 chance += (getValue(Ability.EPIC_CATCH, playerData) / 100);
                 source = FishingSource.EPIC;
+                cause = LootDropCause.EPIC_CATCH;
             } else {
                 source = originalSource;
             }
@@ -81,7 +85,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 if (selectedLoot != null) {
                     if (selectedLoot instanceof ItemLoot) {
                         ItemLoot itemLoot = (ItemLoot) selectedLoot;
-                        giveFishingItemLoot(player, itemLoot, event, source);
+                        giveFishingItemLoot(player, itemLoot, event, source, cause);
                     } else if (selectedLoot instanceof CommandLoot) {
                         CommandLoot commandLoot = (CommandLoot) selectedLoot;
                         giveCommandLoot(player, commandLoot, source);

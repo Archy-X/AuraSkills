@@ -337,7 +337,7 @@ acf:
   minecraft:
     invalid_world: '&cError: That world does not exist.'
     you_must_be_holding_item: '&cError: You must be holding an item in your main hand.'
-    player_is_vanish_confirm: '&eWarning: &a{vanished} &eis vanished. Do not blow their cover!\n&eTo confirm your action add &a:confirm &eto the end of their name.\n&eEx: {vanished}:confirm'
+    player_is_vanished_confirm: '&eWarning: &a{vanished} &eis vanished. Do not blow their cover!\n&eTo confirm your action add &a:confirm &eto the end of their name.\n&eEx: {vanished}:confirm'
     username_too_short: '&cError: Username too short, must be at least three characters.'
     is_not_a_valid_name: '&cError: &e{name} &cis not a valid username.'
     multiple_players_match: '&cError: Multiple players matched &b{search} &e({all})&c, please be more specific.'
@@ -614,6 +614,9 @@ menus:
     sources: '&aXP Sources'
     sources_desc: '&7The sources menu shows all the ways you\n&7can earn XP in a skill, as well as how much\n&7XP each source gives.'
     sources_click: '&eClick to view {skill} sources'
+    abilities: '&cAbilities'
+    abilities_desc: '&bAbilities &7are passive perks you unlock and\n&7upgrade as you level up skills.\n&dMana Abilities &7are a special type of ability\n&7that requires activation and consumes mana.'
+    abilities_click: '&eClick to view {skill} abilities'
   stats_menu:
     stats_menu_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -658,6 +661,14 @@ menus:
     multiplied_xp: '\n\n&fMultiplied XP: &a{xp}'
     multiplied_xp_rate: '\n\n&fMultiplied XP: &a{xp}/{unit}'
     multiplied_desc: '\n&7&oThis is the XP you will actually earn\n&7&obased on your current XP multipliers'
+  abilities:
+    abilities_title: '{skill} Abilities'
+    locked_desc: '&fDescription:\n  &7{desc}'
+    unlocked_at: '&7Unlocked at &3{skill} {level}'
+    your_ability_level: '&fYour Level: &b{level}'
+    your_ability_level_maxed: '&fYour Level: &b{level} &6(MAXED)'
+    unlocked_desc: '&fNext upgrade at &3{skill} {level}&f\n  &7{desc}'
+    unlocked_desc_maxed: '&fDescription:\n  &7{desc}'
 mana_abilities:
   replenish:
     name: Replenish
@@ -1053,4 +1064,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 24
+file_version: 25

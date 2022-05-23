@@ -21,6 +21,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import com.google.common.collect.ImmutableList;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,28 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         int index = context - 2;
         int pos = track.get(index);
         return SlotPos.of(pos / 9, pos % 9);
+    }
+
+    @Override
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer num) {
+        // Functionality for showing the level as the amount on the item
+        int page = activeMenu.getCurrentPage();
+        int level = num + page * (int) activeMenu.getProperty("items_per_page");
+        // Don't show if level is more than max skill level
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        if (level > OptionL.getMaxLevel(skill)) {
+            return null;
+        }
+        // Amount matching level functionality
+        if (activeMenu.getOption(Boolean.class, "use_level_as_amount", true)) {
+            if (level <= 64) {
+                baseItem.setAmount(level);
+            } else {
+                int overMaxStackAmount = activeMenu.getOption(Integer.class, "overMaxStackAmount", 1);
+                baseItem.setAmount(overMaxStackAmount);
+            }
+        }
+        return baseItem;
     }
 
     protected String getRewardsLore(Skill skill, int level, Player player, Locale locale) {

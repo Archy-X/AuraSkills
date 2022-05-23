@@ -55,7 +55,11 @@ public class DataUtil {
         if (!(object instanceof List)) {
             throw new IllegalArgumentException("Key " + key + " must have value of type string list");
         }
-        List<?> unknownList = (List<?>) object;
+        return castStringList(object);
+    }
+
+    public static List<String> castStringList(Object listObj) {
+        List<?> unknownList = (List<?>) listObj;
         List<String> stringList = new ArrayList<>();
         for (Object element : unknownList) {
             if (element instanceof String) {

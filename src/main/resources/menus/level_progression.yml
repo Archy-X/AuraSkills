@@ -43,6 +43,14 @@ items:
       - '{sources_desc}'
       - ' '
       - '{sources_click}'
+  abilities:
+    pos: 0,3
+    material: light_blue_dye
+    display_name: '{abilities}'
+    lore:
+      - '{abilities_desc}'
+      - ' '
+      - '{abilities_click}'
 templates:
   skill:
     pos: 0,0
@@ -122,3 +130,7 @@ templates:
       - '{rewards}'
       - '{ability}{mana_ability}'
       - '{locked}'
+options:
+  use_level_as_amount: false
+  over_max_stack_amount: 1
+  items_per_page: 24

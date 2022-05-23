@@ -12,6 +12,7 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,14 +27,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Lang implements Listener {
 
-	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de", "lt", "ru", "it"};
+	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de", "lt", "ru", "it", "ko", "cs"};
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static Map<Locale, String> definedLanguages;
 	private static Locale defaultLanguage;
 	private final AureliumSkills plugin;
+	private final Pattern hexPattern = Pattern.compile("&#([A-Fa-f0-9]{6})");
 
 	public Lang(AureliumSkills plugin) {
 		this.plugin = plugin;
@@ -116,7 +120,7 @@ public class Lang implements Listener {
 		for (UnitMessage key : UnitMessage.values()) {
 			String message = config.getString(key.getPath());
 			if (message != null) {
-				units.put(key, message.replace('&', '§'));
+				units.put(key, applyColor(message));
 			}
 		}
 		// Load message keys
@@ -140,11 +144,10 @@ public class Lang implements Listener {
 				if (key != null) {
 					String message = config.getString(path);
 					if (message != null) {
-						messages.put(key, TextUtil.replace(message
-								, "&", "§"
+						messages.put(key, applyColor(TextUtil.replace(message
 								, "{mana_unit}", units.get(UnitMessage.MANA)
 								, "{hp_unit}", units.get(UnitMessage.HP)
-								, "{xp_unit}", units.get(UnitMessage.XP)));
+								, "{xp_unit}", units.get(UnitMessage.XP))));
 					}
 				}
 			}
@@ -158,11 +161,17 @@ public class Lang implements Listener {
 		}
 		for (ACFCoreMessage message : ACFCoreMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
+			String configMessage = config.getString(path);
+			if (configMessage != null) {
+				commandManager.getLocales().addMessage(locale, MessageKeys.valueOf(message.name()), applyColor(configMessage));
+			}
 		}
 		for (ACFMinecraftMessage message : ACFMinecraftMessage.values()) {
 			String path = message.getPath();
-			commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), TextUtil.replace(config.getString(path), "&", "§"));
+			String configMessage = config.getString(path);
+			if (configMessage != null) {
+				commandManager.getLocales().addMessage(locale, MinecraftMessageKeys.valueOf(message.name()), applyColor(configMessage));
+			}
 		}
 		Lang.messages.put(locale, messages);
 	}
@@ -227,12 +236,16 @@ public class Lang implements Listener {
 										for (String key : section.getKeys(false)) {
 											config.set(section.getCurrentPath() + "." + key, section.getString(key));
 										}
-										Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										if (update.getMessage() != null) {
+											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+										}
 									} else {
 										Object value = imbConfig.get(update.getPath());
 										if (value != null) {
 											config.set(update.getPath(), value);
-											Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+											if (update.getMessage() != null) {
+												Bukkit.getLogger().warning("[AureliumSkills] messages_" + language + ".yml was changed: " + update.getMessage());
+											}
 										}
 									}
 								}
@@ -341,6 +354,22 @@ public class Lang implements Listener {
 		} else {
 			return NumberUtil.format1(level);
 		}
+	}
+
+	private String applyColor(String message) {
+		Matcher matcher = hexPattern.matcher(message);
+		StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
+		while (matcher.find()) {
+			String group = matcher.group(1);
+			char COLOR_CHAR = ChatColor.COLOR_CHAR;
+			matcher.appendReplacement(buffer, COLOR_CHAR + "x"
+					+ COLOR_CHAR + group.charAt(0) + COLOR_CHAR + group.charAt(1)
+					+ COLOR_CHAR + group.charAt(2) + COLOR_CHAR + group.charAt(3)
+					+ COLOR_CHAR + group.charAt(4) + COLOR_CHAR + group.charAt(5)
+			);
+		}
+		message = matcher.appendTail(buffer).toString();
+		return TextUtil.replace(message, "&", "§");
 	}
 
 }

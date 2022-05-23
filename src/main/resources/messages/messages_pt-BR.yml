@@ -1,5 +1,5 @@
 # Aurelium Skills Portuguese, Brazilian (pt-BR) messages
-# Translators: LordLucas_, Khovovo
+# Translators: LordLucas_, Khovovo, N1kyZ
 # Contribute here: https://crowdin.com/project/aureliumskills/pt-BR#
 abilities:
   farming:
@@ -68,7 +68,7 @@ abilities:
   fishing:
     lucky_catch:
       name: Pegada de Sorte
-      desc: "{value}% de chance de coletar o dobro de itens\n&7  ao pescar."
+      desc: "{value}% a mais de chance de coletar o dobro de itens\n&7  ao pescar."
       info: '{value}% 2x Drops'
     fisher:
       name: Pescador
@@ -76,21 +76,21 @@ abilities:
       info: '+{value}% XP'
     treasure_hunter:
       name: Caçador de Tesouros
-      desc: '{value}% de chance de obter itens raros da pesca.'
-      info: '{value}% Saque Raro'
+      desc: '{value}% grande chance de obter itens raros da pesca.'
+      info: '+{value}% Loot Raro'
     grappler:
       name: Gráfico
       desc: 'Entidades de gancho com {value}% mais velocidade.'
       info: '+{value}% Velocidade no Gancho'
     epic_catch:
       name: Captura Épica
-      desc: "{value}% de chance de receber itens épicos\n&7  da pesca."
-      info: '{value}% Saque Épico'
+      desc: "{value}% de chance adicionado de obter loot épico \n&7  da pesca."
+      info: '+{value}% Loot Épico'
   excavation:
     metal_detector:
       name: Detector de Metais
       desc: '{value}% de chance de obter itens raros na escavação.'
-      info: '{value}% Saque Raro'
+      info: '+{value}% Loot Raro'
     excavator:
       name: Escavador
       desc: 'Ganhe {value}% a mais EXP de Escavação'
@@ -105,8 +105,8 @@ abilities:
       info: '{value}% 3x Drops'
     lucky_spades:
       name: Pá da Sorte
-      desc: '{value}% de chance de obter itens épicos na escavação.'
-      info: '{value}% Saque Épico'
+      desc: '{value}% de chance de obter itens raros na escavação.'
+      info: '+{value}% Loot Épico'
   archery:
     crit_chance:
       name: Chance Crítica
@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cErro: Esse mundo não existe.'
     you_must_be_holding_item: '&cErro: Você deve estar segurando um item em sua mão principal.'
-    player_is_vanish_confirm: "&eAviso: &um{vanished} &eis desapareceu. Não sopre a capa deles!\n&ePara confirmar a sua ação adicione &a:confirm &eao final do nome.\n&eEx: {vanished}:confirm"
+    player_is_vanished_confirm: "&eAviso: &um{vanished} &eis desapareceu. Não sopre a capa deles!\n&ePara confirmar a sua ação adicione &a:confirm &eao final do nome.\n&eEx: {vanished}:confirm"
     username_too_short: '&cErro: Nome de usuário muito pequeno, deve ter pelo menos três caracteres.'
     is_not_a_valid_name: '&cErro: &e{name} &cé um nome de usuário inválido.'
     multiple_players_match: '&cErro: Múltiplos jogadores encontrados &b{search} &e({all})&c, por favor, seja mais específico.'
@@ -345,11 +345,11 @@ acf:
     location_please_specify_xyz: '&cErro: Por favor, especifique as coordenadas x, y e z. Exemplo: &eworld:x,y,z.'
     location_console_not_relative: '&cErro: Console não pode usar coordenadas relativas para a localização.'
 action_bar:
-  idle: '&c{hp}/{max_hp} {hp_unit}                &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit}) &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp} {hp_unit}  &6+{xp_gained} {skill} {xp_unit} &7(MAXED) &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp} {hp_unit}  &6-{xp_removed} {skill} {xp_unit} &7(MAXED) &b{mana}/{max_mana} {mana_unit}'
+  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
+  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  maxed: '&c{hp}/{max_hp}❤ &6+{xp_gained} {skill} {xp_unit} &7(MAXED) &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp}❤ &6-{xp_removed} {skill} {xp_unit} &7(MAXED) &b{mana}/{max_mana} {mana_unit}'
   ability: '{message}'
   boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
   boss_bar_maxed: '&6{skill} {level} &7(MAXIMIZADO)'
@@ -361,12 +361,29 @@ commands:
         added: '{color}{stat} &7modificador com nível &b{value} &7foi adicionado ao seu item'
         already_exists: '&eUm modificador de armadura com o atributo {color}{stat} &ejá existe em sua armadura! Remova-o primeiro com a remoção do modificador de armadura /sk'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&eSeu item não tem um {color}{stat} &emodificador!'
         removed: '{color}{stat} &7modificador foi removido do seu item'
       list:
         header: '&fModificadores de armadura encontrados:'
         entry: '  {color}{stat}&f - {value}'
+      removeall:
+        removed: '&7Todos os modificadores de armadura foram removidos do seu item'
+    multiplier:
+      add:
+        added: '&bMultiplicador de {target} &7com valor &b{value} &7foi adicionado ao seu item'
+        already_exists: '&eUm modificador de armadura com o atributo &b{target} &ejá existe em sua armadura! Remova-o primeiro com a remoção do modificador de armadura /sk'
+        skill_lore: '&7Quando usado: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Quando usado: &b-{value}% {skill} XP'
+        global_lore: '&7Quando usado: &9+{value}% de XP de Habilidade'
+        global_lore_subtract: '&7Quando usado: &9-{value}% de XP de Habilidade'
+      remove:
+        does_not_exist: '&eSeu item não tem um &b{target} &emodificador!'
+        removed: '&b{target} &7modificador foi removido do seu item'
+      list:
+        header: '&fModificadores de armadura encontrados:'
+        entry: '  &b{target}&f - {value}'
       removeall:
         removed: '&7Todos os modificadores de armadura foram removidos do seu item'
     requirement:
@@ -396,12 +413,18 @@ commands:
       saving: '&fSalvando backup...'
       saved: '&fSalvos os dados de {type} como {file}'
       error: '&cErro ao fazer backup dos dados do {type}! Veja o erro no console/abaixo para mais detalhes'
+  claimitems:
+    no_items: '&eVocê não tem itens para reivindicar'
   item:
+    give:
+      sender: '&fDê &b{amount}x {key} &fpara {player}'
+      receiver: '&fVocê recebeu &b{amount}x {key}'
     modifier:
       add:
         added: '{color}{stat} &7modificador com nível &b{value} &7foi adicionado ao seu item'
         already_exists: '&eUm modificador de item com o atributo {color}{stat} &ejá existe em sua armadura! Remova-o primeiro com /sk item modificador'
         lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
       remove:
         does_not_exist: '&eSeu item não tem um {color}{stat} &emodificador!'
         removed: '{color}{stat} &7modificador foi removido do seu item'
@@ -410,6 +433,26 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Todos os modificadores de itens foram removidos do seu item'
+    multiplier:
+      add:
+        added: '&7Multiplicador de &b{target} &7com valor &b{value} &7foi adicionado ao seu item'
+        already_exists: '&eUm modificador de armadura com o atributo &b{target} &ejá existe em sua armadura! Remova-o primeiro com a remoção do modificador de armadura /sk'
+        skill_lore: '&7Quando usado: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Quando usado: &b-{value}% {skill} XP'
+        global_lore: '&7Quando usado: &b+{value}% XP de Habilidade'
+        global_lore_subtract: '&7Quando usado: &9-{value}% XP de Habilidade'
+      remove:
+        does_not_exist: '&eSeu item não tem um &b{target} &emodificador!'
+        removed: '&b{target} &7modificador foi removido do seu item'
+      list:
+        header: '&fModificadores de armadura encontrados:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Todos os modificadores de armadura foram removidos do seu item'
+    register:
+      registered: '&fItem registrado e mantido para a chave {key}'
+      already_registered: '&eJá existe um item registrado para a chave &f{key}&e, use &f/skills item unregister &epara cancelar o registro primeiro'
+      no_spaces: '&eChave do Item não pode conter espaços!'
     requirement:
       add:
         added: '&7Requisito do item &3{skill}&7 com nível &b{level}&7 foi adicionado ao seu item'
@@ -425,6 +468,9 @@ commands:
         removed: '&7Todos os itens necessários foram removidos do seu item'
       use: '&eVocê não tem os requisitos para usar este item: {requirements}'
       entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fItem não registrado com chave {key}'
+      not_registered: '&eNão há nenhum item registrado com a chave {key}'
   lang:
     set: '&7Idioma definido para &b{lang}'
     not_found: '&eIdioma não encontrado!'
@@ -454,7 +500,9 @@ commands:
       removed_one_stat: '&7Removido &b{num} {color}{stat} &7modificadores do jogador &6{player}'
       players_only: '&eSomente jogadores podem remover seus próprios modificadores! Tente especificar um jogador'
   multiplier:
-    list: '&fMultiplicador de &fXP para &6{player}&f: &b{multiplier}x / +{percent}%'
+    global: Global
+    list: '&fMultiplicador de XP global para &6{player}&f: &b{multiplier}x / +{percent}%'
+    skill_entry: '&b Multiplicador de &fXP [{skill}]: &b{multiplier}x / +{percent}%'
     players_only: '&eSomente jogadores podem listar seu próprio multiplicador! Especifique um jogador!'
   rank:
     header: '&b&lSua Classificação de Habilidade'
@@ -493,6 +541,7 @@ commands:
   updateleaderboards:
     already_updating: '&eO Placar de Liderança está atualizando!'
     updated: '&aClassificação atualizada!'
+  version: '&fVocê está usando Aurelium Skills na versão &b{current_version}&f. A última versão é &b{latest_version}'
   xp:
     add: '&7Adicionado &b{amount} {skill} &7XP ao jogador &7{player}'
     set: '&7Definido &b{skill} &7XP do jogador &7{player} &7para {amount}'
@@ -503,23 +552,23 @@ leveler:
   title: '&a{skill} Melhorada'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Habilidade Melhorada! &b&l{skill} &8{old}➜&3&l{new}\n \n &bRecompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
-  stat_level: "\n  {color}+1{symbol} {stat}"
+  stat_level: "\n{color}+{num}{symbol} {stat}"
   ability_unlock: "\n  &aDesbloqueio de Especialização! &6&l{ability} &7foi desbloqueada"
   ability_level_up: "\n  &aNível de Habilidade aumentado! &6&l{ability} &7é agora nível &6{level}"
   mana_ability_unlock: "\n  &dHabilidade de mana desbloqueada! &9&l{mana_ability} &7 foi Desbloqueado"
   mana_ability_level_up: "\n  &dHabilidade de mana melhorada! &9&l{mana_ability} &7é agora nível &6{level}"
   money_reward: "\n  &a${amount}"
+  unclaimed_item: '&cVocê tem itens não reivindicados porque seu inventário estava cheio, use &e/skills claimitems &cpara reivindicá-los'
 menus:
   common:
     close: '&cFechar'
     level: '&7Nível: &e{level}'
     progress_to_level: "&7Progresso para o nível {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6NÍVEL MÁXIMO'
-    ability_levels: "\n&7Níveis de Habilidade:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "&7Níveis de Habilidade:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    primary_stat: '&7Status Primário: {color}{stat}'
-    secondary_stat: '&7Status Secundário: {color}{stat}'
+    stats_leveled: "\n&7Estatísticas de Nível: {stats}\n "
     mana_ability: "\n&d&lHabilidade de Mana &9{mana_ability} {level}\n &7Duração: &a{duration}s &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Suas Habilidades
@@ -549,6 +598,7 @@ menus:
     locked: '&cBloqueado'
     rewards: '&7Recompensas: {rewards}'
     rewards_entry: "\n{color}+{num} {symbol} {stat}"
+    money_reward: "\n  &a${amount}"
     ability_unlock: "\n&6{ability} &a&DDesbloqueio de Habilidade\n&7  {desc}\n "
     ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
     mana_ability_unlock: "\n&9{mana_ability} &d&DDesbloqueio de Habilidade de Mana\n&7  {desc}\n "
@@ -557,13 +607,10 @@ menus:
   stats_menu:
     stats_menu_title: Suas Estatísticas
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    primary_skills_two: '&7Habilidades Primárias: &f{skill_1}, {skill_2}'
-    primary_skills_three: '&7Habilidades Primárias: &f{skill_1}, {skill_2}, {skill_3}'
-    secondary_skills_two: '&7Habilidades secundárias: &f{skill_1}, {skill_2}'
-    secondary_skills_three: '&7Habilidades secundárias: &f{skill_1}, {skill_2}, {skill_3}'
+    skills: "\n&7Habilidades: &f{skills}"
     your_level: '&7Seu Nível: {color}{level}'
     attack_damage: '&4+{value}% Dano de Ataque'
-    hp: '&c+{value} {hp_unit}'
+    hp: '&c+{value} ❤'
     saturated_regen: '&6+{value} Regeneração Saturada'
     full_hunger_regen: '&6+{value} Regeneração com Fome completa'
     almost_full_hunger_regen: '&6+{value} Regeneração Com Fome Quase Completa'
@@ -574,6 +621,10 @@ menus:
     anvil_cost_reduction: '&9Redução de custo da Bigorna: {value}%'
     max_mana: '&9Mana Máxima:{value}'
     incoming_damage: '&5-{value}% Dano Recebido'
+  unclaimed_items:
+    unclaimed_items_title: 'Reivindicar item'
+    inventory_full: '&eVocê não tem espaço suficiente no seu inventário para reivindicar esse item'
+    click_to_claim: '&eClique para coletar!'
 mana_abilities:
   replenish:
     name: Reabastecer
@@ -591,7 +642,7 @@ mana_abilities:
     end: '&7O Treecapitator Acabou'
   speed_mine:
     name: Mineração Rápida
-    desc: "&7Dá Pressa 10 durante {value} segundos.\n&e  [Botão direito com uma picareta e minere um\n&e  bloco para ativar]"
+    desc: "&7Dá {haste_level} de Pressa durante {value} segundos.\n&e [Clique direito na picareta e minere o bloco\n&e para ativar]"
     raise: '&7Você levanta sua picareta'
     lower: '&7Você abaixa sua picareta'
     start: '&6Velocidade de mineração ativada! &7(-{mana} {mana_unit})'
@@ -622,8 +673,22 @@ mana_abilities:
     disable: '&7Modo de disparo carregado desativado'
     shoot: '&6Tiro carregado Utilizado! &d+{percent}% Dano &7(-{mana} {mana_unit})'
     menu: "\n&d&Habilidade de Mana &9{mana_ability} {level}\n &7Dano: &c+{value}% / Mana &7Custo de Mana Máxima: &b{mana_cost}\n "
+  lightning_blade:
+    name: Lâmina Relâmpago
+    desc: Aumenta a velocidade de ataque em {value}% durante {duration} segundos.\n&e [Clique direito da espada e ataque monstros para ativar]
+    raise: '&7Você está preparando sua espada'
+    lower: '&7Você abaixa seu escudo'
+    start: '&6Lâmina Relâmpago ativada! &7(-{mana} {mana_unit})'
+    end: '&7A Lâmina de Relâmpago acabou'
+    menu: "\n&d&lHabilidade de Mana &9{mana_ability} {level}\n &7Velocidade de ataque: &c+{value}% &7Duração: &a{duration}s\n &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n\n "
   not_ready: '&cHabilidade não está pronta! &7({cooldown}s)'
   not_enough_mana: '&eMana Insuficiente! &7({mana} {mana_unit} necessária, você tem {current_mana}/{max_mana})'
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Agricultura
@@ -705,4 +770,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 16
+file_version: 24

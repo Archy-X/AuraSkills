@@ -37,6 +37,8 @@ languages:
     - lt
     - ru
     - it
+    - ko
+    - cs
 
 # Action Bar Options
 action-bar:
@@ -122,6 +124,10 @@ disabled-worlds:
 
 disable-in-creative-mode: false
 
+auto-save:
+    enabled: false
+    interval-ticks: 12000
+
 skill-money-rewards:
     enabled: false
     base: 100
@@ -145,6 +151,9 @@ modifier:
     armor:
         equip-blocked-materials:
             - EXAMPLE
+        timer:
+            enabled: false
+            check-period: 3
     item:
         check-period: 3
         enable-off-hand: true
@@ -158,6 +167,7 @@ requirement:
         prevent-tool-use: true
         prevent-weapon-use: true
         prevent-block-place: true
+        prevent-interact: true
         global:
     armor:
         prevent-armor-equip: true
@@ -246,6 +256,7 @@ alchemy:
     give-xp-on-takeout: false
     give-xp-on-potion-combat: false
     check-multiplier-permissions: true
+    ignore-custom-potions: false
 enchanting:
     enabled: true
     max-level: 97

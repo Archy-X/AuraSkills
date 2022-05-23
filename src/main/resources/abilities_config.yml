@@ -554,6 +554,7 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
+    max_blocks_multiplier: 1
   speed_mine:
     enabled: true
     base_value: 5.0

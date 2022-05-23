@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class YamlStorageProvider extends StorageProvider {
@@ -197,11 +198,6 @@ public class YamlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(Player player) {
-        save(player, true);
-    }
-
-    @Override
     public void loadBackup(FileConfiguration config, CommandSender sender) {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
         Locale locale = plugin.getLang().getLocale(sender);
@@ -296,6 +292,19 @@ public class YamlStorageProvider extends StorageProvider {
             }
         }
         sortLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
+    }
+
+    @Override
+    public void delete(UUID uuid) throws IOException {
+        File file = new File(plugin.getDataFolder() + "/playerdata/" + uuid.toString() + ".yml");
+        if (file.exists()) {
+            boolean success = file.delete();
+            if (!success) {
+                throw new IOException("Unable to delete file");
+            }
+        } else {
+            throw new IOException("File not found in playerdata folder");
+        }
     }
 
 }

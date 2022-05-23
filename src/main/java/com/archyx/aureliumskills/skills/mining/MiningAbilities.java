@@ -37,7 +37,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		super(plugin, Skills.MINING);
 	}
 
-	public void luckyMiner(Player player, Block block) {
+	public void luckyMiner(Player player, Block block, MiningSource source) {
 		if (OptionL.isEnabled(Skills.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUCKY_MINER)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
@@ -55,7 +55,8 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 									return;
 								}
 								if (VersionUtils.isAtLeastVersion(17)) {
-									if (mat == Material.IRON_ORE || mat == Material.GOLD_ORE || mat == Material.COPPER_ORE) {
+									if (mat == Material.IRON_ORE || mat == Material.GOLD_ORE || mat == Material.COPPER_ORE ||
+											source.toString().contains("DEEPSLATE_")) {
 										return;
 									}
 								}

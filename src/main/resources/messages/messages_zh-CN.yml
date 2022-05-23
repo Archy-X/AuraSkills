@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&c错误: 不存在所指定的世界。'
     you_must_be_holding_item: '&c错误: 必须在主手中持有一个物品。'
-    player_is_vanish_confirm: "&e警告:&a{vanished} &e正处于隐身状态. 是否确认操作?\n&e若要继续执行此操作,请在玩家名称后输入 &a:confirm\n&e示例: {vanished}:confirm"
+    player_is_vanished_confirm: "&e警告:&a{vanished} &e正处于隐身状态. 是否确认操作?\n&e若要继续执行此操作,请在玩家名称后输入 &a:confirm\n&e示例: {vanished}:confirm"
     username_too_short: '&c错误: 玩家名称太短了, 必须至少是三个字符'
     is_not_a_valid_name: '&c错误: &e{name} &c无效'
     multiple_players_match: '&c错误: 多个玩家符合条件 &b{search} &e(共 {all} 个)&c, 请输入更具体的搜索条件'
@@ -370,6 +370,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7成功清除了物品上的所有属性'
+    multiplier:
+      add:
+        added: '&7装备时属性增强&b {target} &7, 值为 &b{value} &7已添加至你的物品'
+        already_exists: '&e装备时属性增强 {target} &e已存在于你的盔甲上! 请先使用指令 /sk armor modifier remove 删除它!'
+        skill_lore: '&7当装备时: &b+{value}% {skill} 经验值'
+        skill_lore_subtract: '&7当装备时: &b-{value}% {skill} 经验值'
+        global_lore: '&7当装备时: &b+{value}% 所有技能 经验值获取'
+        global_lore_subtract: '&7当装备时: &b-{value}% 所有技能 经验值获取'
+      remove:
+        does_not_exist: '&e你的盔甲没有属性增强 &b{target}!'
+        removed: '&7装备时属性增强 {target} &7已从你的物品中移除'
+      list:
+        header: '&f已有的装备时生效属性列表:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7成功清除了物品上的所有装备时生效属性'
     requirement:
       add:
         added: '&7等级限制为 &b{level} &7的技能 &3{skill} &7已经添加到你的物品'
@@ -417,6 +433,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7成功清除了物品上的所有属性'
+    multiplier:
+      add:
+        added: '&b装备时属性增强 &b{target} &7, 值为 &b{value} &7已添加至你的物品'
+        already_exists: '&e手持时属性翻倍 {target} &e已存在于你的物品上! 请先使用指令 /sk item multiplier remove 删除它!'
+        skill_lore: '&7当持有时: &b+{value}% {skill} 经验值'
+        skill_lore_subtract: '&7当持有时: &b-{value}% {skill} 经验值'
+        global_lore: '&7当持有时: &9+{value}% 所有技能 经验值获取'
+        global_lore_subtract: '&7当持有时: &9-{value}% 所有技能 经验值获取'
+      remove:
+        does_not_exist: '&e你的物品没有名为 &b{target} &e的属性翻倍!'
+        removed: '&b{target} &7物品翻倍已从你的物品上移除'
+      list:
+        header: '&f已添加的物品翻倍属性:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7成功清除了物品上的所有持有时生效属性'
     register:
       registered: '&f已将手上物品注册至id: {key}'
       already_registered: '&e已有相同id &f{key} &e注册, 请输入 &f/skills item unregister &e以解除对该物品的注册'
@@ -468,7 +500,9 @@ commands:
       removed_one_stat: '&7删除了玩家 &6{player} &7的 &b{num} {color}{stat} &7属性修改'
       players_only: '&e仅玩家可以列出属于他们的属性修改! 尝试指定一名玩家!'
   multiplier:
-    list: '&f玩家 &6{player} &f的经验值倍数为: &b{multiplier}x / +{percent}%'
+    global: 全局
+    list: '&f玩家 &6{player} &f的全局经验翻倍倍数为: &b{multiplier}x / +{percent}%'
+    skill_entry: '&b{skill} &f经验值 翻倍倍数: &b{multiplier}x / +{percent}%'
     players_only: '&e仅玩家可以列出属于他们的经验翻倍器! 尝试指定一名玩家!'
   rank:
     header: '&b&l技能排名'
@@ -736,4 +770,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 23
+file_version: 24
