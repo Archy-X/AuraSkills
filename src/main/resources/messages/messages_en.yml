@@ -179,7 +179,7 @@ abilities:
       info: '{value}% No Hunger Loss'
     runner:
       name: Runner
-      desc: 'Earn {value} more Endurance XP.'
+      desc: 'Earn {value}% more Endurance XP.'
       info: '+{value}% XP'
     golden_heal:
       name: Golden Heal
