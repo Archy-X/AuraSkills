@@ -502,6 +502,9 @@ commands:
     list: '&fGlobal XP multiplier for &6{player}&f: &b{multiplier}x / +{percent}%'
     skill_entry: '&b{skill} &fXP multiplier: &b{multiplier}x / +{percent}%'
     players_only: '&eOnly players can list their own multiplier! Specify a player!'
+  profile:
+    player_profile: 'Aurelium Skills profile for &6{name}:\n&7UUID: &f{uuid}\n&7Skills:{skill_entries}'
+    skill_entry: '\n  &3{skill} &7- Level: &f{level}&7, XP: &f{xp}'
   rank:
     header: '&b&lYour Skill Rankings'
     power: '&ePower &7(All Skills): &f#{rank} of {total}'
@@ -1041,4 +1044,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 25
+file_version: 26

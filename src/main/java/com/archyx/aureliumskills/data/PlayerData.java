@@ -72,12 +72,20 @@ public class PlayerData {
         return skillLevels.getOrDefault(skill, 1);
     }
 
+    public Map<Skill, Integer> getSkillLevelMap() {
+        return skillLevels;
+    }
+
     public void setSkillLevel(Skill skill, int level) {
         skillLevels.put(skill, level);
     }
 
     public double getSkillXp(Skill skill) {
         return skillXp.getOrDefault(skill, 0.0);
+    }
+
+    public Map<Skill, Double> getSkillXpMap() {
+        return skillXp;
     }
 
     public void setSkillXp(Skill skill, double xp) {

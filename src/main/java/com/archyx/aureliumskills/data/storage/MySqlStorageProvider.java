@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
+import com.archyx.aureliumskills.data.PlayerDataState;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
@@ -25,6 +26,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.sql.*;
@@ -177,6 +179,53 @@ public class MySqlStorageProvider extends StorageProvider {
             playerData.setShouldSave(false);
             sendErrorMessageToPlayer(player, e);
         }
+    }
+
+    @Override
+    @Nullable
+    public PlayerDataState loadState(UUID uuid) {
+        try {
+            String query = "SELECT * FROM SkillData WHERE ID=?;";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, uuid.toString());
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Map<Skill, Integer> skillLevels = new HashMap<>();
+                        Map<Skill, Double> skillXp = new HashMap<>();
+                        // Load skill data
+                        for (Skill skill : Skills.values()) {
+                            int level = result.getInt(skill.name().toUpperCase(Locale.ROOT) + "_LEVEL");
+                            double xp = result.getDouble(skill.name().toUpperCase(Locale.ROOT) + "_XP");
+                            skillLevels.put(skill, level);
+                            skillXp.put(skill, xp);
+                        }
+                        // Load stat modifiers
+                        Map<String, StatModifier> statModifiers = new HashMap<>();
+                        String statModifiersString = result.getString("STAT_MODIFIERS");
+                        if (statModifiersString != null) {
+                            JsonArray jsonModifiers = new Gson().fromJson(statModifiersString, JsonArray.class);
+                            for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
+                                JsonObject modifierObject = modifierElement.getAsJsonObject();
+                                String name = modifierObject.get("name").getAsString();
+                                String statName = modifierObject.get("stat").getAsString();
+                                double value = modifierObject.get("value").getAsDouble();
+                                if (name != null && statName != null) {
+                                    Stat stat = plugin.getStatRegistry().getStat(statName);
+                                    StatModifier modifier = new StatModifier(name, stat, value);
+                                    statModifiers.put(name, modifier);
+                                }
+                            }
+                        }
+                        double mana = result.getDouble("mana");
+                        return new PlayerDataState(uuid, skillLevels, skillXp, statModifiers, mana);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Bukkit.getLogger().warning("There was an error loading player data state for player with UUID " + uuid + ", see below for details.");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void createTable() throws SQLException {

@@ -1,14 +1,13 @@
 package com.archyx.aureliumskills.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.CommandHelp;
+import co.aikar.commands.*;
 import co.aikar.commands.annotation.Optional;
-import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataState;
 import com.archyx.aureliumskills.data.backup.BackupProvider;
 import com.archyx.aureliumskills.data.storage.StorageProvider;
 import com.archyx.aureliumskills.item.UnclaimedItemsMenu;
@@ -20,6 +19,7 @@ import com.archyx.aureliumskills.menus.sources.SorterItem;
 import com.archyx.aureliumskills.modifier.*;
 import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.ui.ActionBar;
 import com.archyx.aureliumskills.util.item.ItemUtils;
@@ -30,6 +30,7 @@ import com.archyx.aureliumskills.util.version.UpdateChecker;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -1393,6 +1394,59 @@ public class SkillsCommand extends BaseCommand {
 		}
 		properties.put("sort_type", sortType);
 		plugin.getMenuManager().openMenu(player, "sources", properties);
+	}
+
+	@Subcommand("profile skills")
+	@CommandPermission("aureliumskills.profile")
+	@SuppressWarnings("deprecation")
+	public void onProfileSkills(CommandSender sender, String player) {
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player);
+		PaperCommandManager manager = plugin.getCommandManager();
+		if (!offlinePlayer.hasPlayedBefore()) {
+			sender.sendMessage(manager.formatMessage(manager.getCommandIssuer(sender), MessageType.ERROR, MinecraftMessageKeys.NO_PLAYER_FOUND, "{search}", player));
+			return;
+		}
+		UUID uuid = offlinePlayer.getUniqueId();
+		if (offlinePlayer.isOnline()) { // Online players
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData(uuid);
+			if (playerData == null) {
+				sender.sendMessage(manager.formatMessage(manager.getCommandIssuer(sender), MessageType.ERROR, MinecraftMessageKeys.NO_PLAYER_FOUND, "{search}", player));
+				return;
+			}
+			sendSkillsProfileMessage(sender, player, uuid, playerData.getSkillLevelMap(), playerData.getSkillXpMap());
+		} else { // Offline players
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					PlayerDataState playerDataState = plugin.getStorageProvider().loadState(uuid);
+					if (playerDataState == null) {
+						sender.sendMessage(manager.formatMessage(manager.getCommandIssuer(sender), MessageType.ERROR, MinecraftMessageKeys.NO_PLAYER_FOUND, "{search}", player));
+						return;
+					}
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							sendSkillsProfileMessage(sender, player, uuid, playerDataState.getSkillLevels(), playerDataState.getSkillXp());
+						}
+					}.runTask(plugin);
+				}
+			}.runTaskAsynchronously(plugin);
+		}
+	}
+
+	private void sendSkillsProfileMessage(CommandSender sender, String username, UUID uuid, Map<Skill, Integer> skillLevels, Map<Skill, Double> skillXp) {
+		Locale locale = plugin.getLang().getLocale(sender);
+		String message = Lang.getMessage(CommandMessage.PROFILE_PLAYER_PROFILE, locale);
+		message = TextUtil.replace(message, "{name}", username, "{uuid}", uuid.toString());
+		StringBuilder skillEntries = new StringBuilder();
+		for (Skill skill : Skills.getOrderedValues()) {
+			skillEntries.append(TextUtil.replace(Lang.getMessage(CommandMessage.PROFILE_SKILL_ENTRY, locale),
+					"{skill}", StringUtils.capitalize(skill.toString().toLowerCase(Locale.ROOT)),
+					"{level}", String.valueOf(skillLevels.get(skill)),
+					"{xp}", NumberUtil.format1(skillXp.get(skill))));
+		}
+		message = TextUtil.replace(message, "{skill_entries}", skillEntries.toString());
+		sender.sendMessage(message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n"));
 	}
 
 	@Subcommand("help")
