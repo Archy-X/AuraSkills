@@ -782,7 +782,7 @@ sources:
     melon: Melon
     sugar_cane: Sugar Cane
     bamboo: Bamboo
-    cocoa: Cocao
+    cocoa: Cocoa
     cactus: Cactus
     brown_mushroom: Brown Mushroom
     red_mushroom: Red Mushroom
@@ -847,7 +847,7 @@ sources:
     tuff: Tuff
     calcite: Calcite
     smooth_basalt: Smooth Basalt
-    amethyst_block: Amthesyst Block
+    amethyst_block: Amethyst Block
     amethyst_cluster: Amethyst Cluster
     deepslate_coal_ore: Deepslate Coal Ore
     deepslate_iron_ore: Deepslate Iron Ore
