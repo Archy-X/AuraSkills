@@ -1,5 +1,5 @@
 # Aurelium Skills Chinese, Simplified (zh-CN) messages
-# Translators: SnowCutieOwO, Qian_ai
+# Translators: SnowCutieOwO, Qian_ai, huiqiang233
 # Contribute here: https://crowdin.com/project/aureliumskills/zh-CN#
 abilities:
   farming:
@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&c错误: 不存在所指定的世界。'
     you_must_be_holding_item: '&c错误: 必须在主手中持有一个物品。'
-    player_is_vanished_confirm: "&e警告:&a{vanished} &e正处于隐身状态. 是否确认操作?\n&e若要继续执行此操作,请在玩家名称后输入 &a:confirm\n&e示例: {vanished}:confirm"
+    player_is_vanished_confirm: "&e警告：&a{vanished} &eis 已经消失。 不要炸毁他们的封面！\n&eTo 确认您的动作，添加 &a:确认 &eto 他们名字的结尾。\n&eEx: {vanished}:确认"
     username_too_short: '&c错误: 玩家名称太短了, 必须至少是三个字符'
     is_not_a_valid_name: '&c错误: &e{name} &c无效'
     multiple_players_match: '&c错误: 多个玩家符合条件 &b{search} &e(共 {all} 个)&c, 请输入更具体的搜索条件'
@@ -565,11 +565,11 @@ menus:
     level: '&7等级: &e{level}'
     progress_to_level: "&7到达等级 {level}: 进度为&e {percent}%\n &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6最大等级'
-    ability_levels: "&7技能等级:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "\n&7技能等级:\n {ability_1}\n {ability_2}\n {ability_3}\n {ability_4}\n {ability_5} "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7属性已升级了 {stats} 级\n "
-    mana_ability: "\n&d&l魔法技能 &9{mana_ability} {level}\n  &7持续时间: &a{duration}s &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
+    stats_leveled: "\n&7属性已升级了 {stats} 级"
+    mana_ability: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7持续时间: &a{duration}s &7魔法值耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s "
   skills_menu:
     skills_menu_title: 你的技能
     your_skills: '&b你的技能 - &6{player}'
@@ -578,13 +578,16 @@ menus:
     your_skills_click: '&e点击技能图标以了解技能掌握进度!'
     skill_click: '&e点击查看技能掌握进度!'
     skill_locked: '&c你没有权限浏览此技能!'
+    stats: '状态'
+    stats_desc: '&7通过升级技能获得状态增益'
+    stats_click: '&e点击了解更多或查看您的统计数据'
   level_progression_menu:
     level_progression_menu_title: '{skill} 等级 - 第 {page} 页'
-    your_ranking: '&e你的技能排名'
+    your_ranking: '&6你的技能排名'
     rank_out_of: '&f你现在在全部的 {total} 名玩家中处于第 &6{rank}&f 名'
     rank_percent: '&f你超过了 &6{percent}% &f的玩家'
     back: '&a返回'
-    back_click: '&7返回至技能菜单'
+    back_click: '&7返回 {menu_name} 菜单'
     next_page: '&6下一页'
     next_page_click: '&e点击进入下一页'
     previous_page: '&6上一页'
@@ -604,6 +607,13 @@ menus:
     mana_ability_unlock: "\n&9{mana_ability} &d&l魔法技能解锁\n&7  {desc}\n "
     mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
     progress: "&7进度: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: '&e点击查看 {skill} 排行榜'
+    sources: '&a经验来源'
+    sources_desc: "&7来源菜单显示了你可以在技能中\n&7获得经验值的所有方式，以及\n&7每个来源提供的经验值。"
+    sources_click: '&e点击查看 {skill} 来源'
+    abilities: '&c技能'
+    abilities_desc: "&b技能&7是被动技能，随着技能的升级，\n&7你可以解锁和升级。\n&d魔法技能&7是一种特殊类型的能力，\n&7需要激活并消耗魔法值。"
+    abilities_click: '&e点击查看 {skill} 技能'
   stats_menu:
     stats_menu_title: 你的属性
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -625,6 +635,34 @@ menus:
     unclaimed_items_title: '领取物品'
     inventory_full: '&e你的物品栏没有足够的空间'
     click_to_claim: '&e点击领取!'
+  leaderboard:
+    leaderboard_title: '{skill} 排行榜'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7等级 &f{level}'
+  sources:
+    sources_title: '{skill} 经验来源 ({current_page}/{total_pages})'
+    sorter: '&b对经验来源进行排序'
+    sort_type: '&7{selected}{type_name}'
+    selected: '&f> '
+    descending: '从最高到最低'
+    ascending: '从最低到最高'
+    alphabetical: '名称 （A-Z）'
+    reverse_alphabetical: '名称 (Z - A)'
+    sort_click: '&e点击以循环排序类型'
+    source_name: '&f{name}'
+    source_xp: '&7经验值: &a{xp}'
+    source_xp_rate: '&7经验值: &a{xp}/{unit}'
+    multiplied_xp: "\n\n&f经验倍率: &a{xp}"
+    multiplied_xp_rate: "\n\n&f经验倍率: &a{xp}/{unit}"
+    multiplied_desc: "\n&7&o这是乘以当前的经验值\n&7&o得出所获得的经验值"
+  abilities:
+    abilities_title: '{skill} 技能'
+    locked_desc: "&f描述：\n  &7{desc}"
+    unlocked_at: '&7在 &3{skill} {level} 解锁。'
+    your_ability_level: '&f你的等级: &b{level}'
+    your_ability_level_maxed: '&f你的等级: &b{level} &6(MAXED)'
+    unlocked_desc: "&f下次升级时 &3{skill} {level}&f\n  &7{desc}"
+    unlocked_desc_maxed: "&f描述：\n  &7{desc}"
 mana_abilities:
   replenish:
     name: 自动补种
@@ -665,14 +703,14 @@ mana_abilities:
     name: 锋利鱼钩
     desc: '持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害'
     use: '&6使用了锋利鱼钩! &7(-{mana} {mana_unit})'
-    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击力: &c{value} &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n  &7伤害: &c{value} &7魔法消耗: &b{mana_cost} &7冷却时间: &e{cooldown}s\n "
   charged_shot:
     name: 聚能穿射
     desc: "你射出的箭将会额外造成伤害\n&7  此伤害取决于箭落地后与你的距离\n&7  并且此过程消耗魔法值. 每点魔法值的消耗\n&7  能为每支箭增加 {value}% 的伤害\n&e  [左键弓可触发聚能穿射]"
     enable: '&7聚能穿射已启用'
     disable: '&7聚能穿射已禁用'
     shoot: '&6聚能穿射已启用! &d+{percent}% 伤害 &7(-{mana} {mana_unit})'
-    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7伤害: &c+{value}% / 魔法值 &7最大魔力值消耗: &b{mana_cost}\n "
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7伤害: &c+{value}% / 魔法值 &7最大魔法值消耗: &b{mana_cost}\n "
   lightning_blade:
     name: 狂战之刃
     desc: 在 {duration} 秒内增加 {value}% 的攻击速度.\n&e [持剑右键后攻击敌人以激活]
@@ -680,7 +718,7 @@ mana_abilities:
     lower: '&7你放下了你的剑'
     start: '&6狂战之刃已激活! &7(-{mana} {mana_unit})'
     end: '&7狂战之刃已经已经结束'
-    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击速度: &c+{value}% &7持续时间: &a{duration}s\n &7魔力耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s\n "
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击速度: &c+{value}% &7持续时间: &a{duration}s\n &7魔力耗费: &b{mana_cost} &7冷却时间: &e{cooldown}s\n "
   not_ready: '&c&o技能还没有准备好! &7({cooldown}s)'
   not_enough_mana: '&法力不足! &7({mana} {mana_unit} 需要, 但是你只有 {current_mana}/{max_mana})'
 rewards:
@@ -735,6 +773,241 @@ skills:
   forging:
     name: 锻造
     desc: '&7使用铁砧合并附魔书或修理装备以获得锻造 {xp_unit}'
+sources:
+  farming:
+    wheat: 小麦
+    potato: 马铃薯
+    carrot: 胡萝卜
+    beetroot: 甜菜根
+    nether_wart: 下界疣
+    pumpkin: 南瓜
+    melon: 瓜
+    sugar_cane: 甘蔗
+    bamboo: 竹子
+    cocoa: 可可豆
+    cactus: 仙人掌
+    brown_mushroom: 棕色蘑菇
+    red_mushroom: 红色蘑菇
+    kelp: 海带
+    sea_pickle: 海泡菜
+    sweet_berry_bush: 甜浆果
+    glow_berries: 发光浆果
+  foraging:
+    oak_log: 橡木原木
+    spruce_log: 云杉木原木
+    birch_log: 白桦原木
+    jungle_log: 丛林原木
+    acacia_log: 金合欢原木
+    dark_oak_log: 深色橡木原木
+    oak_leaves: 橡树树叶
+    spruce_leaves: 云杉树叶
+    birch_leaves: 白桦树叶
+    jungle_leaves: 丛林树叶
+    acacia_leaves: 金合欢树叶
+    dark_oak_leaves: 深色橡树树叶
+    crimson_stem: 绯红菌柄
+    warped_stem: 诡异菌柄
+    nether_wart_block: 下界疣块
+    warped_wart_block: 诡异疣块
+    moss_block: 苔藓块
+    moss_carpet: 苔藓地毯
+    azalea: 杜鹃花丛
+    flowering_azalea: 盛开的杜鹃花丛
+    azalea_leaves: 杜鹃树叶
+    flowering_azalea_leaves: 盛开的杜鹃树叶
+  mining:
+    stone: 石头
+    cobblestone: 圆石
+    andesite: 安山岩
+    diorite: 闪长岩
+    granite: 花岗岩
+    coal_ore: 煤矿石
+    nether_quartz_ore: 下界石英矿石
+    iron_ore: 铁矿石
+    lapis_ore: 青金石矿石
+    redstone_ore: 红石矿石
+    gold_ore: 金矿石
+    diamond_ore: 钻石矿石
+    emerald_ore: 绿宝石矿石
+    terracotta: 陶瓦
+    white_terracotta: 白色陶瓦
+    orange_terracotta: 橙色陶瓦
+    yellow_terracotta: 黄色陶瓦
+    light_gray_terracotta: 淡灰色陶瓦
+    brown_terracotta: 棕色陶瓦
+    red_terracotta: 红色陶瓦
+    netherrack: 下界岩
+    blackstone: 黑石
+    basalt: 玄武岩
+    magma_block: 岩浆块
+    nether_gold_ore: 下界金矿石
+    ancient_debris: 远古残骸
+    end_stone: 末地石
+    obsidian: 黑曜石
+    deepslate: 深板岩
+    copper_ore: 铜矿石
+    tuff: 凝灰岩
+    calcite: 方解石
+    smooth_basalt: 平滑玄武岩
+    amethyst_block: 紫晶方块
+    amethyst_cluster: 紫水晶簇
+    deepslate_coal_ore: 深板岩煤矿
+    deepslate_iron_ore: 深板岩铁矿
+    deepslate_copper_ore: 深板岩铜矿石
+    deepslate_gold_ore: 深板岩金矿石
+    deepslate_redstone_ore: 深板岩红矿石
+    deepslate_lapis_ore: 深板岩青金石矿石
+    deepslate_emerald_ore: 深板岩绿宝石矿石
+    deepslate_diamond_ore: 深板岩钻石矿石
+    dripstone_block: 深板岩
+    ice: 冰
+    packed_ice: 浮冰
+    blue_ice: 蓝冰
+  fishing:
+    cod: 鳕鱼
+    salmon: 鲑鱼
+    tropical_fish: 热带鱼
+    pufferfish: 河豚
+    treasure: 宝藏物品
+    junk: 垃圾
+    rare: 稀有战利品
+    epic: 史诗级战利品
+  excavation:
+    dirt: 泥土
+    grass_block: 草方块
+    sand: 沙子
+    gravel: 砂砾
+    mycelium: 菌丝
+    clay: 黏土块
+    soul_sand: 灵魂沙
+    coarse_dirt: 砂土
+    podzol: 灰化土
+    soul_soil: 灵魂土
+    red_sand: 红沙
+    rooted_dirt: 缠根泥土
+  mobs:
+    player: 玩家
+    bat: 蝙蝠
+    cat: 猫
+    chicken: 鸡
+    cod: 鳕鱼
+    cow: 牛
+    donkey: 驴
+    fox: 狐狸
+    giant: 巨人
+    horse: 马
+    mooshroom: 眸菇
+    mule: 骡子
+    ocelot: 豹猫
+    parrot: 鹦鹉
+    pig: 猪
+    rabbit: 兔子
+    salmon: 鲑鱼
+    sheep: 羊
+    skeleton_horse: 骷髅马
+    snow_golem: 雪傀儡
+    squid: 鱿鱼
+    strider: 炽足兽
+    tropical_fish: 热带鱼
+    turtle: 海龟
+    villager: 村民
+    wandering_trader: 流浪商人
+    bee: 蜜蜂
+    cave_spider: 洞穴蜘蛛
+    dolphin: 海豚
+    enderman: 末影人
+    iron_golem: 铁傀儡
+    llama: 羊驼
+    piglin: 猪灵
+    panda: 熊猫
+    polar_bear: 北极熊
+    pufferfish: 河豚
+    spider: 蜘蛛
+    wolf: 狼
+    zombified_piglin: 僵尸猪灵
+    blaze: 烈焰人
+    creeper: 苦力怕
+    drowned: 溺尸
+    elder_guardian: 远古守卫者
+    endermite: 末影螨
+    evoker: 唤魔者
+    ghast: 恶魂
+    guardian: 守卫者
+    hoglin: 疣猪兽
+    husk: 尸壳
+    illusioner: 幻术师
+    magma_cube: 岩浆怪
+    phantom: 幻翼
+    piglin_brute: 猪灵蛮兵
+    pillager: 掠夺者
+    ravager: 劫掠兽
+    shulker: 潜影贝
+    silverfish: 蠹虫
+    skeleton: 骷髅
+    slime: 史莱姆
+    stray: 流浪者
+    vex: 恼鬼
+    vindicator: 卫道士
+    witch: 女巫
+    wither_skeleton: 凋灵骷髅
+    zoglin: 僵尸疣猪兽
+    zombie: 僵尸
+    zombie_villager: 僵尸村民
+    ender_dragon: 末影龙
+    wither: 凋灵骷髅
+    axolotl: 美西螈
+    glow_squid: 发光鱿鱼
+    goat: 山羊
+  defense:
+    mob_damage: 来自生物的伤害
+    player_damage: 来自玩家的伤害
+  endurance:
+    walk_per_meter: 行走
+    sprint_per_meter: 疾跑
+    swim_per_meter: 游泳
+  agility:
+    jump_per_100: 跳跃
+    fall_damage: 承受跌落伤害
+  alchemy:
+    awkward: 粗制的药水
+    regular: 普通药水
+    extended: 延长药水时效
+    upgraded: 升级药水等级
+    splash: 喷溅型药水
+    lingering: 滞留药水
+  enchanting:
+    weapon_per_level: 武器
+    armor_per_level: 护甲
+    tool_per_level: 工具
+    book_per_level: 附魔书
+  sorcery:
+    mana_ability_use: 使用魔法技能
+  healing:
+    drink_regular: 饮用普通药水
+    drink_extended: 饮用延长时长的药水
+    drink_upgraded: 饮用已升级的药剂
+    splash_regular: 喷洒喷溅型药水
+    splash_extended: 喷洒喷溅型延长时长的药水
+    splash_upgraded: 喷洒喷溅型已升级的药水
+    lingering_regular: 使用普通滞留型药水
+    lingering_extended: 使用滞留型延长时长的药水
+    lingering_upgraded: 使用已升级的滞留型药水
+    golden_apple: 金苹果
+    enchanted_golden_apple: 附魔金苹果
+  forging:
+    combine_books_per_level: 合并附魔书
+    combine_weapon_per_level: 合并武器和附魔书
+    combine_armor_per_level: 合并护甲和附魔书
+    combine_tool_per_level: 合并工具和附魔书
+    grindstone_per_level: 用砂轮祛魔
+  units:
+    damage: 伤害
+    meter: 米
+    100_jumps: 跳一百次
+    mana: 已消耗的魔法值
+    combine_level: 铁砧消耗的经验值
+    grindstone_level: 物品的附魔等级
+    enchant_level: 获得的附魔等级
 stats:
   strength:
     name: 力量
@@ -770,4 +1043,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 24
+file_version: 25
