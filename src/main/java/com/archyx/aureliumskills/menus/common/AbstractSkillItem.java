@@ -42,7 +42,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type, Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData == null) return "";
+        if (playerData == null) return placeholder;
         Locale locale = playerData.getLocale();
         int skillLevel = playerData.getSkillLevel(skill);
 

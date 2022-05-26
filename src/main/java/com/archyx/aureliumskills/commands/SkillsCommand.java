@@ -2,8 +2,8 @@ package com.archyx.aureliumskills.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
-import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.InvalidCommandArgument;
+import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.*;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
@@ -58,7 +58,11 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.skills")
 	@Description("Opens the Skills menu, where you can browse skills, progress, and abilities.")
 	public void onSkills(Player player) {
-		plugin.getMenuManager().openMenu(player, "skills");
+		if (plugin.getPlayerManager().hasPlayerData(player)) {
+			plugin.getMenuManager().openMenu(player, "skills");
+		} else {
+			player.sendMessage(Lang.getMessage(CommandMessage.NO_PROFILE, Lang.getDefaultLanguage()));
+		}
 	}
 	
 	@Subcommand("xp add")

@@ -545,7 +545,7 @@ commands:
     set: '&7Set &b{skill} &7XP for player &7{player} &7to {amount}'
     remove: '&7Removed &b{amount} {skill} &7XP from player &6{player}'
   unknown_skill: '&eUnknown skill!'
-  no_profile: '&ePlayer does not have a skills profile!'
+  no_profile: '&ePlayer does not have a skills profile. Please try rejoining the game or restarting the server.'
 leveler:
   title: '&a{skill} Level Up'
   subtitle: '&6{old} ➜ {new}'
