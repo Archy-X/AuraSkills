@@ -4,12 +4,13 @@ import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.lootmanager.loot.context.LootContext;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
 
-public interface Source {
+public interface Source extends LootContext {
 
     Skill getSkill();
 
@@ -47,4 +48,8 @@ public interface Source {
      */
     ItemStack getMenuItem();
 
+    @Override
+    default String getName() {
+        return this.name().toLowerCase(Locale.ROOT);
+    }
 }
