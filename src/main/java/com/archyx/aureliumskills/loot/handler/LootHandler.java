@@ -192,7 +192,8 @@ public abstract class LootHandler extends AbilityProvider {
     }
 
     protected double getCommonChance(LootPool pool, PlayerData playerData) {
-        return pool.getBaseChance() + pool.getChancePerLuck() * playerData.getStatLevel(Stats.LUCK);
+        double chancePerLuck = pool.getOption("chance_per_luck", Double.class, 0.0) / 100;
+        return pool.getBaseChance() + chancePerLuck * playerData.getStatLevel(Stats.LUCK);
     }
 
 }
