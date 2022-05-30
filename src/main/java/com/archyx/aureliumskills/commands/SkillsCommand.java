@@ -30,6 +30,7 @@ import com.archyx.aureliumskills.util.version.UpdateChecker;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -438,9 +439,9 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("modifier add")
 	@CommandPermission("aureliumskills.modifier.add")
-	@CommandCompletion("@players @stats @nothing @nothing true")
+	@CommandCompletion("@players @stats @nothing @nothing true true")
 	@Description("Adds a stat modifier to a player.")
-	public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent) {
+	public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
@@ -449,6 +450,29 @@ public class SkillsCommand extends BaseCommand {
 				playerData.addStatModifier(modifier);
 				if (!silent) {
 					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_ADD_ADDED, locale), modifier, player, locale));
+				}
+			} else if (stack) { // Stack modifier by using a numbered name
+				Set<String> modifierNames = playerData.getStatModifiers().keySet();
+				int lastStackNumber = 1;
+				for (String modifierName : modifierNames) { // Find the previous highest stack number
+					if (modifierName.startsWith(name)) {
+						String endName = modifierName.substring(name.length()); // Get the part of the string after name
+						if (endName.startsWith("(") && endName.endsWith(")")) {
+							String numberString = endName.substring(1, endName.length() - 1); // String without first and last chars
+							int stackNumber = NumberUtils.toInt(numberString);
+							if (stackNumber > lastStackNumber) {
+								lastStackNumber = stackNumber;
+							}
+						}
+					}
+				}
+				int newStackNumber = lastStackNumber + 1;
+
+				String newModifierName = name + "(" + newStackNumber + ")";
+				StatModifier newModifier = new StatModifier(newModifierName, stat, value);
+				playerData.addStatModifier(newModifier);
+				if (!silent) {
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_ADD_ADDED, locale), newModifier, player, locale));
 				}
 			} else {
 				if (!silent) {
