@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.loot.handler.LootHandler;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.lootmanager.loot.Loot;
 import com.archyx.lootmanager.loot.LootPool;
 import com.archyx.lootmanager.loot.LootTable;
@@ -63,6 +64,10 @@ public class FishingLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootTableManager().getLootTable(Skills.FISHING);
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
+            // Check if in open water
+            if (pool.getOption("require_open_water", Boolean.class, false) && VersionUtils.isAtLeastVersion(16, 5)) {
+                if (!event.getHook().isInOpenWater()) continue;
+            }
             // Calculate chance for pool
             Source source;
             double chance = getCommonChance(pool, playerData);
