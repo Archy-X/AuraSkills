@@ -5,18 +5,19 @@ import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.ability.AbilityProvider;
 import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.api.event.PlayerLootDropEvent;
-import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.CustomMessageKey;
 import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.loot.Loot;
-import com.archyx.aureliumskills.loot.LootPool;
-import com.archyx.aureliumskills.loot.type.CommandLoot;
-import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.lootmanager.loot.Loot;
+import com.archyx.lootmanager.loot.LootPool;
+import com.archyx.lootmanager.loot.context.LootContext;
+import com.archyx.lootmanager.loot.type.CommandLoot;
+import com.archyx.lootmanager.loot.type.ItemLoot;
+import com.archyx.lootmanager.util.CommandExecutor;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -29,10 +30,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 public abstract class LootHandler extends AbilityProvider {
 
@@ -104,11 +102,15 @@ public abstract class LootHandler extends AbilityProvider {
         List<Loot> lootList = new ArrayList<>();
         // Add applicable loot to list for selection
         for (Loot loot : pool.getLoot()) {
-            if (loot.getSources().size() > 0 && source != null) {
-                for (Source lootSource : loot.getSources()) {
-                    if (lootSource.equals(source)) {
-                        lootList.add(loot);
-                        break;
+            Set<LootContext> sourcesContext = loot.getContexts().get("sources");
+            if (sourcesContext != null && source != null) {
+                for (LootContext context : sourcesContext) { // Go through LootContext and cast to Source
+                    if (context instanceof Source) {
+                        Source lootSource = (Source) context;
+                        if (lootSource.equals(source)) { // Check if source matches one of the contexts
+                            lootList.add(loot);
+                            break;
+                        }
                     }
                 }
             } else {
@@ -139,10 +141,11 @@ public abstract class LootHandler extends AbilityProvider {
     private void giveXp(Player player, Loot loot, @Nullable Source source) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
-        if (loot.getXp() == -1.0 && source != null) {
+        double xp = loot.getOption("xp", Double.class, -1.0);
+        if (xp == -1.0 && source != null) {
             plugin.getLeveler().addXp(player, skill, getXp(player, source, ability));
-        } else if (loot.getXp() > 0) {
-            plugin.getLeveler().addXp(player, skill, getXp(player, loot.getXp()));
+        } else if (xp > 0) {
+            plugin.getLeveler().addXp(player, skill, getXp(player, xp));
         }
     }
 
@@ -189,7 +192,8 @@ public abstract class LootHandler extends AbilityProvider {
     }
 
     protected double getCommonChance(LootPool pool, PlayerData playerData) {
-        return pool.getBaseChance() + pool.getChancePerLuck() * playerData.getStatLevel(Stats.LUCK);
+        double chancePerLuck = pool.getOption("chance_per_luck", Double.class, 0.0) / 100;
+        return pool.getBaseChance() + chancePerLuck * playerData.getStatLevel(Stats.LUCK);
     }
 
 }
