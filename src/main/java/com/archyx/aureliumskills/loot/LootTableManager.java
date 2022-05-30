@@ -33,7 +33,7 @@ public class LootTableManager extends Parser {
 	}
 
 	public void initLootManager() {
-		lootManager.registerContextManager(new SourceContextManager());
+		lootManager.registerContextManager(new SourceContextManager(plugin));
 		lootManager.addOptionKeys("xp");
 	}
 
