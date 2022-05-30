@@ -202,7 +202,7 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>Slate</artifactId>
-            <version>c5428ee525</version>
+            <version>a454412b42</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -214,7 +214,7 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>LootManager</artifactId>
-            <version>12d4d332b1</version>
+            <version>250245951a</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
