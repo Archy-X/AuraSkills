@@ -89,10 +89,11 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
         int maxLevel = manager.getMaxLevel(mAbility);
         int unlock = manager.getUnlock(mAbility);
         int levelUp = manager.getLevelUp(mAbility);
-        if (maxLevel == 0) {
-            maxLevel = OptionL.getMaxLevel(mAbility.getSkill());
+        int maxAllowedBySkill = (OptionL.getMaxLevel(mAbility.getSkill()) - unlock) / levelUp + 1;
+        if (maxLevel == 0 || maxLevel > maxAllowedBySkill) {
+            maxLevel = maxAllowedBySkill;
         }
-        return (unlock + levelUp * (playerData.getManaAbilityLevel(mAbility) + 1)) <= maxLevel;
+        return playerData.getManaAbilityLevel(mAbility) < maxLevel;
     }
 
     @Override

@@ -91,10 +91,11 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
         int maxLevel = plugin.getAbilityManager().getMaxLevel(ability);
         int unlock = plugin.getAbilityManager().getUnlock(ability);
         int levelUp = plugin.getAbilityManager().getLevelUp(ability);
-        if (maxLevel == 0) {
-            maxLevel = OptionL.getMaxLevel(ability.getSkill());
+        int maxAllowedBySkill = (OptionL.getMaxLevel(ability.getSkill()) - unlock) / levelUp + 1;
+        if (maxLevel == 0 || maxLevel > maxAllowedBySkill) {
+            maxLevel = maxAllowedBySkill;
         }
-        return (unlock + levelUp * (playerData.getAbilityLevel(ability) + 1)) <= maxLevel;
+        return playerData.getAbilityLevel(ability) < maxLevel;
     }
 
     @Override

@@ -548,7 +548,7 @@ commands:
     set: '&7Set &b{skill} &7XP for player &7{player} &7to {amount}'
     remove: '&7Removed &b{amount} {skill} &7XP from player &6{player}'
   unknown_skill: '&eUnknown skill!'
-  no_profile: '&ePlayer does not have a skills profile!'
+  no_profile: '&ePlayer does not have a skills profile. Please try rejoining the game or restarting the server.'
 leveler:
   title: '&a{skill} Level Up'
   subtitle: '&6{old} ➜ {new}'
@@ -785,7 +785,7 @@ sources:
     melon: Melon
     sugar_cane: Sugar Cane
     bamboo: Bamboo
-    cocoa: Cocao
+    cocoa: Cocoa
     cactus: Cactus
     brown_mushroom: Brown Mushroom
     red_mushroom: Red Mushroom
@@ -850,7 +850,7 @@ sources:
     tuff: Tuff
     calcite: Calcite
     smooth_basalt: Smooth Basalt
-    amethyst_block: Amthesyst Block
+    amethyst_block: Amethyst Block
     amethyst_cluster: Amethyst Cluster
     deepslate_coal_ore: Deepslate Coal Ore
     deepslate_iron_ore: Deepslate Iron Ore

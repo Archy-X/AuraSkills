@@ -4,7 +4,7 @@
 abilities:
   farming:
     bountiful_harvest:
-      name: Piękne zbiory
+      name: Obfite Zbiory
       desc: "{value}% szans na zdobycie podwójnych dropów\n&7  z upraw."
       info: '{value}% 2x Dropów'
     farmer:
@@ -146,7 +146,7 @@ abilities:
       desc: "{value}% szans na całkowite \n&7  negowanie ataku wroga."
       info: '{value}% Immunitetu'
     no_debuff:
-      name: Brak Debuffa
+      name: Antidotum
       desc: '{value}% szans na negowanie szkodliwego efektu mikstury.'
       info: '{value}% Braku Debufu'
   fighting:
@@ -168,7 +168,7 @@ abilities:
       info: '+{value}% Obrażeń Pierwszego Ataku'
       dealt: '&cPierwsze Uderzenie Zadane!'
     bleed:
-      name: Krew
+      name: Krwotok
       desc: "{value}% szans na to, że wróg zacznie krwawić przez\n&7 3 ticki, zadając {value_2} obrażeń na każdy tick."
       info: '{value}% Szans, {value_2} Obrażeń'
       enemy_bleeding: '&cPrzeciwnik Krwawi!'
@@ -188,7 +188,7 @@ abilities:
       desc: "Zwiększa efekt regeneracji\n&7 przyrostu zdrowia o {value}%"
       info: '+{value}% Regeneracji'
     recovery:
-      name: Odzyskiwanie
+      name: Powrót Do Zdrowia
       desc: "Zwiększa naturalną regenerację gdy\n&7  masz mniej niż połowę życia o {value}%"
       info: '+{value}% Niskiej Regeneracji Zdrowia'
     meal_steal:
@@ -233,11 +233,11 @@ abilities:
       desc: "Mikstury, które rzucisz zyskują {value}%\n&7  więcej czasu trwania dla każdego dotkniętego nimi gracza."
       info: '+{value}% Czas trwania/Gracz'
     lingering:
-      name: Utrwalenie
+      name: Długotrwały Efekt
       desc: "Trwałe rzucane mikstury zanikają o {value}%\n&7  wolniej i zanikają o {value_2}% słabiej na każdą dotkniętą jej skutkami jednostkę."
       info: '-{value}% Naturalnie, -{value_2}% Jednostki'
     wise_effect:
-      name: Mądry Efekt
+      name: Wiedza Z Efektu
       desc: "Zdobądź {value} Mądrości za każdy\n&7  unikalny efekt mikstury."
       info: '+{value} Mądrość/Efekt'
   enchanting:
@@ -294,7 +294,7 @@ abilities:
       info: '+{value}% XP'
     repairing:
       name: Naprawianie
-      desc: Naprawianie przedmiotów w kowadle przy użyciu surowca\n&7  , z którego został wykonany przedmiot, naprawia\n&7  {value}% więcej trwałości.
+      desc: Naprawianie przedmiotów w kowadle przy użyciu surowca,\n&7  z którego został wykonany przedmiot, naprawia\n&7  {value}% więcej trwałości.
       info: '+{value}% Naprawy Kowadła'
     anvil_master:
       name: Mistrz Kowadła
@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cBłąd: Ten świat nie istnieje.'
     you_must_be_holding_item: '&cBłąd: Musisz trzymać przedmiot w swojej głównej ręce.'
-    player_is_vanished_confirm: "&eOstrzeżenie: &{vanished} &ema vanisha.\n&eAby potwierdzić twoją akcję dodaj &a:potwierdź &ena końcu nazwy.\n&eNp: {vanished}:potwierdź"
+    player_is_vanished_confirm: "&eOstrzeżenie: &{vanished} &ema vanisha. Nie zdemaskuj go!\n&eAby potwierdzić twoją akcję dodaj &a:potwierdź &ena końcu nazwy.\n&eNp: {vanished}:potwierdź"
     username_too_short: '&cBłąd: Nazwa użytkownika jest zbyt krótka, musi mieć co najmniej trzy znaki.'
     is_not_a_valid_name: '&cBłąd: &e{name} &cis nie jest poprawną nazwą użytkownika.'
     multiple_players_match: '&cBłąd: Wiele graczy pasuje &b{search} &e({all})&c, proszę podać więcej szczegółów.'
@@ -553,10 +553,10 @@ leveler:
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Nowy Poziom Umiejętności! &b&l{skill} &8{old}➜&3&l{new}\n \n &bNagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  &aOdblokowano Umiejętność! &7Umiejętność &6&l{ability} &7została odblokowana"
-  ability_level_up: "\n  &aNowy Poziom Umiejętności! &7Umiejętność &6&l{ability} &7ma teraz poziom &6{level}"
-  mana_ability_unlock: "\n  &dOdblokowano Umiejętność Many! &7Umiejętność &9&l{mana_ability} &7 została odblokowana"
-  mana_ability_level_up: "\n  &dNowy Poziom Umiejętności Many! &7Umiejętność &9&l{mana_ability} &7ma teraz poziom &6{level}"
+  ability_unlock: "\n  &aOdblokowano Zdolność! &7Umiejętność &6&l{ability} &7została odblokowana"
+  ability_level_up: "\n  &aNowy Poziom Zdolności! &7Zdolność &6&l{ability} &7ma teraz poziom &6{level}"
+  mana_ability_unlock: "\n  &dOdblokowano Zdolność Many! &7Zdolność &9&l{mana_ability} &7została odblokowana"
+  mana_ability_level_up: "\n  &dNowy Poziom Zdolności Many! &7Zdolność &9&l{mana_ability} &7ma teraz poziom &6{level}"
   money_reward: "\n  &a${amount}"
   unclaimed_item: '&cMasz nieodebrane przedmioty, ponieważ twój ekwipunek był pełny, użyj &e/skills claimitems &caby je odebrać'
 menus:
@@ -565,26 +565,29 @@ menus:
     level: '&7Poziom &e{level}'
     progress_to_level: "&7Postęp do Poziomu {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6MAKSYMALNY POZIOM'
-    ability_levels: '&7Poziomy Umiejętności:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
+    ability_levels: "\n&7Poziomy Zdolności:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7Podstawowe Statystyki: {stats}\n "
-    mana_ability: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Czas trwania: &a{duration}s &7Koszt: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
+    stats_leveled: "\n&7Podstawowe Statystyki: {stats}"
+    mana_ability: "\n&d&lZdolność Many &9{mana_ability} {level}\n &7Czas trwania: &a{duration}s &7Koszt many: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Twoje Umiejętności
     your_skills: '&bTwoje Umiejętności - &6{player}'
-    your_skills_desc: "&7Ulepszaj Umiejętności wykonując różne zadania\n&7aby odblokować cenne zwiększenia statystyk,\n&7poziomy umiejętności, i wiele więcej!"
+    your_skills_desc: "&7Ulepszaj Umiejętności wykonując różne zadania,\n&7aby odblokować cenne bonusy do statystyk,\n&7zdolności i wiele więcej!"
     your_skills_hover: '&ePrzesuń na Umiejętność aby uzyskać więcej informacji!'
     your_skills_click: '&eKliknij Umiejętność, aby wyświetlić postęp poziomu!'
     skill_click: '&eKliknij, aby wyświetlić Postęp Poziomu!'
     skill_locked: '&cNie masz uprawnień do wyświetlania tej umiejętności!'
+    stats: '&bStatystyki'
+    stats_desc: '&7Zdobywaj bonusy do statystyk poprzez podnoszenie poziomu umiejętności'
+    stats_click: '&eKliknij, aby dowiedzieć się więcej lub zobaczyć swoje statystyki'
   level_progression_menu:
-    level_progression_menu_title: '{skill} Poziomy - Strona {page}'
-    your_ranking: '&eTwoje Rankingi Umiejętności'
+    level_progression_menu_title: 'Poziomy {skill} - Strona {page}'
+    your_ranking: '&6Twój Ranking Umiejętności'
     rank_out_of: '&fJesteś &6{rank}&f z {total} graczy'
     rank_percent: '&fJesteś &6{percent}% &flepszy od innych'
     back: '&aWróć'
-    back_click: '&7Wróć do menu Umiejętności'
+    back_click: '&7Wróć do menu {menu_name}'
     next_page: '&6Następna Strona'
     next_page_click: '&eKliknij aby przejść do następnej strony'
     previous_page: '&6Poprzednia Strona'
@@ -604,6 +607,13 @@ menus:
     mana_ability_unlock: "\n&9{mana_ability} &d&lDo Odblokowania (mana)\n&7  {desc}\n "
     mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
     progress: "&7Postęp: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: '&eKliknij, aby wyświetlić tablicę wyników {skill}'
+    sources: '&aŹródła XP'
+    sources_desc: "&7Menu źródeł pokazuje wszystkie sposoby\n&7zdobywania XP w ramach umiejętności, a także\n&7ile konkretnie XP daje każde źródło."
+    sources_click: '&eKliknij, aby zobaczyć źródła {skill}'
+    abilities: '&cZdolności'
+    abilities_desc: "&bZdolności &7są biernymi umiejętnościami, które odblokowujesz i\n&7ulepszasz w miarę podnoszenia umiejętności.\n&dUmiejętności Many &7są specjalnym rodzajem zdolności\n&7wymagających aktywacji i zużywających manę."
+    abilities_click: '&eKliknij, aby zobaczyć zdolności {skill}'
   stats_menu:
     stats_menu_title: Twoje Statystyki
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -617,7 +627,7 @@ menus:
     mana_regen: '&b+{value} Regeneracji Many'
     luck: '&2+{value} Szczęścia'
     double_drop_chance: '&2Szansa na Podwójny Drop: {value}%'
-    xp_gain: '&9+{value}% {xp_unit} Zdobycia'
+    xp_gain: '&9Zdobyte doświadczenie: +{value}% {xp_unit}'
     anvil_cost_reduction: '&9Redukcja kosztu kowadła: {value}%'
     max_mana: '&9Maksymalna Mana: {value}'
     incoming_damage: '&5-{value}% Przychodzących Obrażeń'
@@ -625,6 +635,34 @@ menus:
     unclaimed_items_title: 'Odbierz Przedmioty'
     inventory_full: '&eNie masz wystarczająco miejsca w swoim ekwipunku, aby odebrać ten przedmiot'
     click_to_claim: '&eKliknij, aby odebrać!'
+  leaderboard:
+    leaderboard_title: 'Tablica wyników: {skill}'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7Poziom: &f{level}'
+  sources:
+    sources_title: 'Źródła XP {skill} ({current_page}/{total_pages})'
+    sorter: '&bSortuj źródła XP'
+    sort_type: "&7{selected}{type_name}\n"
+    selected: '&f> '
+    descending: 'Od najwyższego do najniższego'
+    ascending: 'Od najniższego do najwyższego'
+    alphabetical: 'Nazwa (A-Z)'
+    reverse_alphabetical: 'Nazwa (Z-A)'
+    sort_click: '&eKliknij, aby wybrać typ sortowania'
+    source_name: '&f{name}'
+    source_xp: '&7XP: &a{xp}'
+    source_xp_rate: '&7XP: &a{xp}/{unit}'
+    multiplied_xp: "\n\n&fMnożone XP: &a{xp}"
+    multiplied_xp_rate: "\n\n&fMnożone XP: &a{xp}/{unit}"
+    multiplied_desc: "\n&7&oTo jest XP, które faktycznie zdobędziesz\n&7&ow oparciu o aktualne mnożniki XP"
+  abilities:
+    abilities_title: 'Zdolności {skill}'
+    locked_desc: "&fOpis:\n  &7{desc}"
+    unlocked_at: '&7Odblokowano w &3{skill} {level}'
+    your_ability_level: '&fTwój poziom: &b{level}'
+    your_ability_level_maxed: '&fTwój poziom: &b{level} &6(MAXED)'
+    unlocked_desc: "&fNastępne ulepszenie w &3{skill} {level}&f\n  &7{desc}"
+    unlocked_desc_maxed: "&fOpis:\n  &7{desc}"
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
@@ -665,14 +703,14 @@ mana_abilities:
     name: Ostry Hak
     desc: "Zadaj {value} obrażeń zaczepionemu mobowi\n&7  klikając wędką lewym przyciskiem myszy"
     use: '&6Użyto Ostrego Haka! &7(-{mana} {mana_unit})'
-    menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Obrażenia: &c{value} &7Koszt Many: &b{mana_cost} &7Czas Odnowienia: &e{cooldown}s\n "
+    menu: "\n&d&lZdolność Many &9{mana_ability} {level}\n &7Obrażenia: &c{value} &7Koszt many: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
   charged_shot:
     name: Naładowany Strzał
     desc: "Strzały które wystrzelisz zadają więcej obrażeń\n&7  w zależności od tego, w jakim stopniu łuk został naciągnięty,\n&7  zużywając manę w tym procesie. Zadaje {value}% więcej\n&7  obrażeń na zużytą manę. \n&e  [Kliknij lewym przyciskiem myszy łuk, aby przełączyć tryb naładowanego strzału]"
     enable: '&7Tryb naładowanego strzału jest teraz włączony'
     disable: '&7Tryb naładowanego strzału jest teraz wyłączony'
     shoot: '&6Użyto Naładowanego Strzału! &d+{percent}% Obrażeń &7(-{mana} {mana_unit})'
-    menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Obrażenia: &c+{value}% / Mana &7Maksymalny Koszt Many: &b{mana_cost}\n "
+    menu: "\n&d&lZdolność Many &9{mana_ability} {level}\n &7Obrażenia: &c+{value}% / Mana &7Maksymalny koszt many: &b{mana_cost}\n "
   lightning_blade:
     name: Ostrze Błyskawicy
     desc: Zwiększa szybkość ataku o {value}% na {duration} sekund.\n&e [Kliknij prawym przyciskiem miecz i zaatakuj moba, aby aktywować]
@@ -680,8 +718,8 @@ mana_abilities:
     lower: '&7Obniżasz swój miecz'
     start: '&6Ostrze Błyskawicy Aktywowane! &7(-{mana} {mana_unit})'
     end: '&7Ostrze Błyskawicy zostało wyłączone'
-    menu: "\n&d&lUmiejętność Many &9{mana_ability} {level}\n &7Prędkość Ataku: &c+{value}% &7Czas trwania: &a{duration}s\n &7Koszt: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
-  not_ready: '&cUmiejętność many nie jest gotowa! &7({cooldown}s)'
+    menu: "\n&d&lZdolność Many &9{mana_ability} {level}\n &7Prędkość ataku: &c+{value}% &7Czas trwania: &a{duration}s\n &7Koszt many: &b{mana_cost} &7Czas odnowienia: &e{cooldown}s\n "
+  not_ready: '&cZdolność many nie jest gotowa! &7({cooldown}s)'
   not_enough_mana: '&eNiewystarczająca ilość many! &7(wymagane {mana} {mana_unit}, masz {current_mana}/{max_mana}'
 rewards:
   item:
@@ -728,13 +766,248 @@ skills:
     desc: "&7Zaklinaj przedmioty i książki, aby\n&7zdobyć {xp_unit} Zaklinania"
   sorcery:
     name: Czarodziejstwo
-    desc: '&7Użyj umiejętności many, by zdobyć {xp_unit} Czarodziejstwa'
+    desc: '&7Użyj zdolności many, by zdobyć {xp_unit} Czarodziejstwa'
   healing:
     name: Leczenie
     desc: "&7Pij i rozbijaj mikstury, aby zdobyć\n&7{xp_unit} Leczenia"
   forging:
     name: Kowalstwo
-    desc: "&7Łącz i sstosuj książki w kowadle, aby\n&7zdobyć {xp_unit} Kowalstwa"
+    desc: "&7Łącz i stosuj książki w kowadle, aby\n&7zdobyć {xp_unit} Kowalstwa"
+sources:
+  farming:
+    wheat: Pszenica
+    potato: Ziemniak
+    carrot: Marchewka
+    beetroot: Burak
+    nether_wart: Netherowa brodawka
+    pumpkin: Dynia
+    melon: Arbuz
+    sugar_cane: Trzcina cukrowa
+    bamboo: Bambus
+    cocoa: Kakao
+    cactus: Kaktus
+    brown_mushroom: Borowik
+    red_mushroom: Muchomor
+    kelp: Wodorost
+    sea_pickle: Iskrzyłuda
+    sweet_berry_bush: Słodkie jagody
+    glow_berries: Świecące jagody
+  foraging:
+    oak_log: Dębowy pień
+    spruce_log: Świerkowy pień
+    birch_log: Brzozowy pień
+    jungle_log: Tropikalny pień
+    acacia_log: Akacjowy pień
+    dark_oak_log: Ciemnodębowy pień
+    oak_leaves: Dębowe liście
+    spruce_leaves: Świerkowe liście
+    birch_leaves: Brzozowe liście
+    jungle_leaves: Tropikalne liście
+    acacia_leaves: Akacjowe liście
+    dark_oak_leaves: Ciemnodębowe liście
+    crimson_stem: Szkarłatny trzon
+    warped_stem: Spaczony trzon
+    nether_wart_block: Blok netherowych brodawek
+    warped_wart_block: Blok spaczonych brodawek
+    moss_block: Blok mchu
+    moss_carpet: Warstwa mchu
+    azalea: Azalia
+    flowering_azalea: Kwitnąca azalia
+    azalea_leaves: Liście azalii
+    flowering_azalea_leaves: Kwitnące liście azalii
+  mining:
+    stone: Kamień
+    cobblestone: Bruk
+    andesite: Andezyt
+    diorite: Dioryt
+    granite: Granit
+    coal_ore: Złoże węgla
+    nether_quartz_ore: Złoże kwarcu
+    iron_ore: Złoże żelaza
+    lapis_ore: Złoże lazurytu
+    redstone_ore: Złoże redstone
+    gold_ore: Złoże złota
+    diamond_ore: Złoże diamentu
+    emerald_ore: Złoże szmaragdu
+    terracotta: Terakota
+    white_terracotta: Biała terakota
+    orange_terracotta: Pomarańczowa terakota
+    yellow_terracotta: Żółta terakota
+    light_gray_terracotta: Jasnoszara terakota
+    brown_terracotta: Brązowa terakota
+    red_terracotta: Czerwona terakota
+    netherrack: Netherrack
+    blackstone: Czernit
+    basalt: Bazalt
+    magma_block: Blok magmy
+    nether_gold_ore: Netherowe złoże złota
+    ancient_debris: Pradawne zgliszcza
+    end_stone: Kamień Endu
+    obsidian: Obsydian
+    deepslate: Łupek
+    copper_ore: Złoże miedzi
+    tuff: Tuf
+    calcite: Kalcyt
+    smooth_basalt: Gładki bazalt
+    amethyst_block: Blok ametystu
+    amethyst_cluster: Skupisko ametystu
+    deepslate_coal_ore: Łupkowe złoże węgla
+    deepslate_iron_ore: Łupkowe złoże żelaza
+    deepslate_copper_ore: Łupkowe złoże miedzi
+    deepslate_gold_ore: Łupkowe złoże złota
+    deepslate_redstone_ore: Łupkowe złoże redstone
+    deepslate_lapis_ore: Łupkowe złoże lazurytu
+    deepslate_emerald_ore: Łupkowe złoże szmaragdu
+    deepslate_diamond_ore: Łupkowe złoże diamentu
+    dripstone_block: Blok nacieku
+    ice: Lód
+    packed_ice: Zbity lód
+    blue_ice: Niebieski lód lodowcowy
+  fishing:
+    cod: Dorsz
+    salmon: Łosoś
+    tropical_fish: Ryba tropikalna
+    pufferfish: Rozdymka
+    treasure: Wartościowe przedmioty
+    junk: Śmieciowe przedmioty
+    rare: Rzadkie łupy
+    epic: Epickie łupy
+  excavation:
+    dirt: Ziemia
+    grass_block: Blok trawy
+    sand: Piasek
+    gravel: Żwir
+    mycelium: Grzybnia
+    clay: Glina
+    soul_sand: Piasek dusz
+    coarse_dirt: Twarda ziemia
+    podzol: Bielica
+    soul_soil: Gleba dusz
+    red_sand: Czerwony piasek
+    rooted_dirt: Zakorzeniona ziemia
+  mobs:
+    player: Gracz
+    bat: Nietoperz
+    cat: Kot
+    chicken: Kurczak
+    cod: Dorsz
+    cow: Krowa
+    donkey: Osioł
+    fox: Lis
+    giant: Gigant
+    horse: Koń
+    mooshroom: Mooshroom
+    mule: Muł
+    ocelot: Ocelot
+    parrot: Papuga
+    pig: Świnia
+    rabbit: Królik
+    salmon: Łosoś
+    sheep: Owca
+    skeleton_horse: Koń-szkielet
+    snow_golem: Śnieżny golem
+    squid: Kałamarnica
+    strider: Magmołaz
+    tropical_fish: Ryba tropikalna
+    turtle: Żółw
+    villager: Osadnik
+    wandering_trader: Wędrowny handlarz
+    bee: Pszczoła
+    cave_spider: Pająk jaskiniowy
+    dolphin: Delfin
+    enderman: Enderman
+    iron_golem: Żelazny golem
+    llama: Lama
+    piglin: Piglin
+    panda: Panda
+    polar_bear: Niedźwiedź polarny
+    pufferfish: Rozdymka
+    spider: Pająk
+    wolf: Wilk
+    zombified_piglin: Zzombifikowany piglin
+    blaze: Płomyk
+    creeper: Creeper
+    drowned: Utopiec
+    elder_guardian: Prastrażnik
+    endermite: Endermit
+    evoker: Przywoływacz
+    ghast: Ghast
+    guardian: Strażnik
+    hoglin: Hoglin
+    husk: Posuch
+    illusioner: Iluzjoner
+    magma_cube: Kostka magmy
+    phantom: Fantom
+    piglin_brute: Piglin okrutnik
+    pillager: Rozbójnik
+    ravager: Dewastator
+    shulker: Shulker
+    silverfish: Rybik cukrowy
+    skeleton: Szkielet
+    slime: Szlam
+    stray: Tułacz
+    vex: Dręczyciel
+    vindicator: Obrońca
+    witch: Wiedźma
+    wither_skeleton: Witherowy szkielet
+    zoglin: Zoglin
+    zombie: Zombie
+    zombie_villager: Osadnik-zombie
+    ender_dragon: Smok kresu
+    wither: Wither
+    axolotl: Aksolotl
+    glow_squid: Świecąca kałamarnica
+    goat: Koza
+  defense:
+    mob_damage: Obrażenia od mobów
+    player_damage: Obrażenia od graczy
+  endurance:
+    walk_per_meter: Chodzenie
+    sprint_per_meter: Bieganie
+    swim_per_meter: Pływanie
+  agility:
+    jump_per_100: Skakanie
+    fall_damage: Obrażenia od upadku
+  alchemy:
+    awkward: Klarowna mikstura
+    regular: Zwykła mikstura
+    extended: Wydłużony czas trwania mikstury
+    upgraded: Ulepszona mikstura
+    splash: Miotana mikstura
+    lingering: Trwała mikstura
+  enchanting:
+    weapon_per_level: Broń
+    armor_per_level: Zbroja
+    tool_per_level: Narzędzie
+    book_per_level: Książka
+  sorcery:
+    mana_ability_use: Używanie Zdolności Many
+  healing:
+    drink_regular: Picie zwykłej mikstury
+    drink_extended: Picie mikstury z wydłużonym czasem trwania
+    drink_upgraded: Picie ulepszonej mikstury
+    splash_regular: Miotanie zwykłej mikstury
+    splash_extended: Miotanie mikstury z wydłużonym czasem trwania
+    splash_upgraded: Miotanie ulepszonej mikstury
+    lingering_regular: Używanie zwykłej trwałej mikstury
+    lingering_extended: Używanie trwałej mikstury z wydłużonym czasem trwania
+    lingering_upgraded: Używanie ulepszonej trwałej mikstury
+    golden_apple: Złote jabłko
+    enchanted_golden_apple: Zaklęte złote jabłko
+  forging:
+    combine_books_per_level: Łączenie zaklętych książek
+    combine_weapon_per_level: Łączenie broni z zaklętą książką
+    combine_armor_per_level: Łączenie zbroi z zaklętą książką
+    combine_tool_per_level: Łączenie narzędzia z zaklętą książką
+    grindstone_per_level: Usuwanie zaklęć z przedmiotu za pomocą Kamienia szlifierskiego
+  units:
+    damage: Obrażenia
+    meter: Metr
+    100_jumps: 100 skoków
+    mana: Zużyta mana
+    combine_level: Koszt zaklęcia
+    grindstone_level: Poziom zaklęcia w przedmiocie
+    enchant_level: Poziom otrzymanego zaklęcia
 stats:
   strength:
     name: Siła
@@ -743,7 +1016,7 @@ stats:
     symbol: '➽'
   health:
     name: Zdrowie
-    desc: "&7Życie zwiększa ilość {hp_unit} które\n&7posiadasz, umożliwiając Ci dłuższe trwanie w\n&7walkach"
+    desc: "&7Zdrowie zwiększa ilość {hp_unit} które\n&7posiadasz, umożliwiając Ci dłuższe trwanie w\n&7walkach"
     color: '&c'
     symbol: '❤'
   regeneration:
@@ -763,11 +1036,11 @@ stats:
     symbol: '✿'
   toughness:
     name: Twardość
-    desc: "&7Wytrzymałość zwiększa ilość\n&7obrażeń zmniejszonych po atakach wroga"
+    desc: "&7Twardość zwiększa ilość\n&7obrażeń zmniejszonych po atakach wroga"
     color: '&5'
     symbol: '✦'
 units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 24
+file_version: 25
