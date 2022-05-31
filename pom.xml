@@ -214,7 +214,7 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>LootManager</artifactId>
-            <version>d089054d3d</version>
+            <version>60d109fdde</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
