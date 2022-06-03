@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.3.2</version>
+    <version>Beta1.3.4</version>
     <build>
         <plugins>
             <plugin>
@@ -202,7 +202,7 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>Slate</artifactId>
-            <version>c5428ee525</version>
+            <version>f4ca494a55</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -214,7 +214,7 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>LootManager</artifactId>
-            <version>9bec6177c7</version>
+            <version>60d109fdde</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

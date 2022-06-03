@@ -34,6 +34,7 @@ public class LootTableManager extends Parser {
 
 	public void initLootManager() {
 		lootManager.registerContextManager(new SourceContextManager(plugin));
+		lootManager.registerCustomItemParser(new ItemKeyParser(plugin));
 		lootManager.addLootOptionKeys("xp");
 		lootManager.addPoolOptionKeys("chance_per_luck", "require_open_water");
 	}
