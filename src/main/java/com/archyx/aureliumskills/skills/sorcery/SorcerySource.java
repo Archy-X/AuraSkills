@@ -35,7 +35,11 @@ public enum SorcerySource implements Source, BlockSource {
 
     @Override
     public String getUnitName() {
-        return "mana";
+        if (this == MANA_ABILITY_USE) {
+            return "mana";
+        } else {
+            return null;
+        }
     }
 
     @Override
