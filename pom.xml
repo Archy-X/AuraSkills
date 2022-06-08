@@ -59,6 +59,14 @@
                             <pattern>com.archyx.slate</pattern>
                             <shadedPattern>com.archyx.aureliumskills.slate</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>org.apache.commons.lang3</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.commons.lang3</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.apache.commons.text</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.commons.text</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -118,7 +126,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -132,6 +140,12 @@
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.3</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.gmail.filoghost.holographicdisplays</groupId>
@@ -144,6 +158,12 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>de.tr7zw</groupId>
@@ -215,6 +235,18 @@
             <groupId>com.github.Archy-X</groupId>
             <artifactId>LootManager</artifactId>
             <version>60d109fdde</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.9</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

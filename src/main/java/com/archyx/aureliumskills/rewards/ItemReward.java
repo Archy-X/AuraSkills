@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
