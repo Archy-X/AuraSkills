@@ -30,7 +30,6 @@ import com.archyx.aureliumskills.util.version.UpdateChecker;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -459,7 +458,7 @@ public class SkillsCommand extends BaseCommand {
 						String endName = modifierName.substring(name.length()); // Get the part of the string after name
 						if (endName.startsWith("(") && endName.endsWith(")")) {
 							String numberString = endName.substring(1, endName.length() - 1); // String without first and last chars
-							int stackNumber = NumberUtils.toInt(numberString);
+							int stackNumber = NumberUtil.toInt(numberString);
 							if (stackNumber > lastStackNumber) {
 								lastStackNumber = stackNumber;
 							}

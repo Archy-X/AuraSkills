@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.util.version;
 
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.cryptomorin.xseries.XMaterial;
-import org.apache.commons.lang3.Validate;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.Nullable;
 
 public class VersionUtils {
 
@@ -35,16 +35,19 @@ public class VersionUtils {
     }
 
     public static int getMinorVersion(String version) {
-        int lastDot = version.lastIndexOf('.');
-        if (version.indexOf('.') != lastDot) {
-            return NumberUtils.toInt(version.substring(lastDot + 1), 0);
-        } else {
-            return 0;
+        if (version != null) {
+            int lastDot = version.lastIndexOf('.');
+            if (version.indexOf('.') != lastDot) {
+                return NumberUtil.toInt(version.substring(lastDot + 1), 0);
+            }
         }
+        return 0;
     }
 
-    public static String getVersionString(String version) {
-        Validate.notEmpty(version, "Cannot get major Minecraft version from null or empty string");
+    public static String getVersionString(@Nullable String version) {
+        if (version == null || version.equals("")) {
+            return null;
+        }
 
         // getVersion()
         int index = version.lastIndexOf("MC:");
