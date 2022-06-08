@@ -16,7 +16,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;

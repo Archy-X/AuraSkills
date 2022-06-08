@@ -61,9 +61,9 @@ import com.archyx.aureliumskills.skills.endurance.EnduranceLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLeveler;
 import com.archyx.aureliumskills.skills.excavation.ExcavationLootHandler;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
+import com.archyx.aureliumskills.skills.farming.FarmingHarvestLeveler;
 import com.archyx.aureliumskills.skills.farming.FarmingInteractLeveler;
 import com.archyx.aureliumskills.skills.farming.FarmingLeveler;
-import com.archyx.aureliumskills.skills.farming.FarmingHarvestLeveler;
 import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
 import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
 import com.archyx.aureliumskills.skills.fishing.FishingAbilities;
@@ -563,6 +563,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new AlchemyLeveler(this), this);
 		pm.registerEvents(new EnchantingLeveler(this), this);
 		sorceryLeveler = new SorceryLeveler(this);
+		pm.registerEvents(sorceryLeveler, this);
 		pm.registerEvents(new HealingLeveler(this), this);
 		pm.registerEvents(new ForgingLeveler(this), this);
 		pm.registerEvents(new Luck(this), this);

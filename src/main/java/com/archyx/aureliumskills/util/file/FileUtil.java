@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.util.file;
 
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;

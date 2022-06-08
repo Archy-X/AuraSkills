@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.util.version;
 
 import com.cryptomorin.xseries.XMaterial;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 

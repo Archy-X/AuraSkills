@@ -83,7 +83,11 @@ public enum ArcherySource implements Source {
     WITHER,
     AXOLOTL,
     GLOW_SQUID,
-    GOAT;
+    GOAT,
+    ALLAY,
+    FROG,
+    TADPOLE,
+    WARDEN;
 
     private String configName;
 

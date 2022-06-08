@@ -9,7 +9,7 @@ import com.archyx.aureliumskills.util.misc.DataUtil;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
