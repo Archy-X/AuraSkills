@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.excavation.ExcavationSource;
 import com.archyx.aureliumskills.skills.farming.FarmingSource;
 import com.archyx.aureliumskills.skills.foraging.ForagingSource;
 import com.archyx.aureliumskills.skills.mining.MiningSource;
+import com.archyx.aureliumskills.skills.sorcery.SorcerySource;
 import com.archyx.aureliumskills.source.SourceManager;
 import com.archyx.aureliumskills.util.block.BlockFaceUtil;
 import com.cryptomorin.xseries.XBlock;
@@ -80,8 +81,8 @@ public class RegionBlockListener implements Listener {
         if (foragingSource != null && foragingSource.isTrunk()) {
             return;
         }
-        // Add all foraging, mining, and excavation blocks
-        if (MiningSource.getSource(block) != null || ForagingSource.getSource(block) != null || ExcavationSource.getSource(block) != null) {
+        // Add all foraging, mining, excavation, and sorcery blocks
+        if (MiningSource.getSource(block) != null || ForagingSource.getSource(block) != null || ExcavationSource.getSource(block) != null || SorcerySource.getSource(block) != null) {
             regionManager.addPlacedBlock(block);
         }
         // Add farming source if has check block replace

@@ -158,6 +158,7 @@ public enum Option {
     ENCHANTING_CHECK_MULTIPLIER_PERMISSIONS("enchanting.check-multiplier-permissions", OptionType.BOOLEAN),
     SORCERY_ENABLED("sorcery.enabled", OptionType.BOOLEAN),
     SORCERY_MAX_LEVEL("sorcery.max-level", OptionType.INT),
+    SORCERY_CHECK_CANCELLED("sorcery.check-cancelled", OptionType.BOOLEAN),
     SORCERY_CHECK_MULTIPLIER_PERMISSIONS("sorcery.check-multiplier-permissions", OptionType.BOOLEAN),
     HEALING_ENABLED("healing.enabled", OptionType.BOOLEAN),
     HEALING_MAX_LEVEL("healing.max-level", OptionType.INT),

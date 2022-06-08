@@ -91,6 +91,7 @@ sources:
     ice: 0.3
     packed_ice: 0.8
     blue_ice: 1.3
+    reinforced_deepslate: 125.0
   fishing:
     cod: 25.0
     salmon: 60.0
@@ -293,6 +294,11 @@ sources:
     book_per_level: 2
   sorcery:
     mana_ability_use: 0.5
+    sculk: 1.0
+    sculk_catalyst: 12.0
+    sculk_shrieker: 27.0
+    sculk_vein: 0.5
+    sculk_sensor: 8.0
   healing:
     drink_regular: 10
     drink_extended: 15

@@ -266,6 +266,7 @@ enchanting:
 sorcery:
     enabled: true
     max-level: 97
+    check-cancelled: true
     check-multiplier-permissions: true
 healing:
     enabled: true
