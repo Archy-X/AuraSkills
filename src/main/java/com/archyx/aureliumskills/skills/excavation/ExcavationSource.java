@@ -22,7 +22,9 @@ public enum ExcavationSource implements Source, BlockSource {
     PODZOL("DIRT", 2),
     SOUL_SOIL,
     RED_SAND("SAND", 1),
-    ROOTED_DIRT;
+    ROOTED_DIRT,
+    MUD,
+    MUDDY_MANGROVE_ROOTS;
 
     private final String legacyMaterial;
     private final byte legacyData;
