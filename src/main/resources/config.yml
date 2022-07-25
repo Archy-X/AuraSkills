@@ -194,6 +194,8 @@ automatic-backups:
     enabled: true
     minimum-interval-hours: 24
 
+save-blank-profiles: false
+
 # Skill specific options
 farming:
     enabled: true

@@ -99,6 +99,7 @@ public enum Option {
     CHECK_FOR_UPDATES("check-for-updates", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_ENABLED("automatic-backups.enabled", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic-backups.minimum-interval-hours", OptionType.DOUBLE),
+    SAVE_BLANK_PROFILES("save-blank-profiles", OptionType.BOOLEAN),
     // Skill options (not including source types)
     FARMING_ENABLED("farming.enabled", OptionType.BOOLEAN),
     FARMING_MAX_LEVEL("farming.max-level", OptionType.INT),

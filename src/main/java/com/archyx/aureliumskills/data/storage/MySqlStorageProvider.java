@@ -265,6 +265,10 @@ public class MySqlStorageProvider extends StorageProvider {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
         if (playerData.shouldNotSave()) return;
+        // Don't save if blank profile
+        if (!OptionL.getBoolean(Option.SAVE_BLANK_PROFILES) && playerData.isBlankProfile()) {
+            return;
+        }
         try {
             StringBuilder sqlBuilder = new StringBuilder("INSERT INTO SkillData (ID, ");
             for (Skill skill : Skills.getOrderedValues()) {
