@@ -98,7 +98,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     private void checkEnchants(ItemStack item, Set<EnchantmentValue> enchants) {
         if (item != null) {
             for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
-                if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
+                if (plugin.getForgingLeveler().isDisenchantable(entry.getKey())) {
                     enchants.add(new EnchantmentValue(entry.getKey(), entry.getValue()));
                 }
             }
@@ -164,7 +164,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     public void anvilMaster(InventoryOpenEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.ANVIL_MASTER)) return;
-        if (!XMaterial.isNewVersion()) return;
+        if (!VersionUtils.isAtLeastVersion(13)) return;
         Inventory inventory = event.getInventory();
         if (inventory.getType() == InventoryType.ANVIL && inventory instanceof AnvilInventory) {
             AnvilInventory anvil = (AnvilInventory) inventory;

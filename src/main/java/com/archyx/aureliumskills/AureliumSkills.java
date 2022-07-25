@@ -165,6 +165,7 @@ public class AureliumSkills extends JavaPlugin {
 	private ProtocolLibSupport protocolLibSupport;
 	private Slate slate;
 	private MenuFileManager menuFileManager;
+	private ForgingLeveler forgingLeveler;
 
 	public void onEnable() {
 		// Registries
@@ -565,7 +566,8 @@ public class AureliumSkills extends JavaPlugin {
 		sorceryLeveler = new SorceryLeveler(this);
 		pm.registerEvents(sorceryLeveler, this);
 		pm.registerEvents(new HealingLeveler(this), this);
-		pm.registerEvents(new ForgingLeveler(this), this);
+		forgingLeveler = new ForgingLeveler(this);
+		pm.registerEvents(forgingLeveler, this);
 		pm.registerEvents(new Luck(this), this);
 		pm.registerEvents(new Wisdom(this), this);
 		pm.registerEvents(new FarmingAbilities(this), this);
@@ -847,4 +849,7 @@ public class AureliumSkills extends JavaPlugin {
 		return menuFileManager;
 	}
 
+	public ForgingLeveler getForgingLeveler() {
+		return forgingLeveler;
+	}
 }

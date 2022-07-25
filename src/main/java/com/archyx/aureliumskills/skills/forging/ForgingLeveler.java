@@ -24,6 +24,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
+import java.util.List;
 import java.util.Map;
 
 public class ForgingLeveler extends SkillLeveler implements Listener {
@@ -108,20 +109,35 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 		int totalLevel = 0;
 		if (item != null) {
 			for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
-				if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
+				if (isDisenchantable(entry.getKey())) {
 					totalLevel += entry.getValue();
 				}
 			}
 			if (item.getItemMeta() instanceof EnchantmentStorageMeta) {
 				EnchantmentStorageMeta esm = (EnchantmentStorageMeta) item.getItemMeta();
 				for (Map.Entry<Enchantment, Integer> entry : esm.getStoredEnchants().entrySet()) {
-					if (!entry.getKey().equals(Enchantment.BINDING_CURSE) && !entry.getKey().equals(Enchantment.VANISHING_CURSE)) {
+					if (isDisenchantable(entry.getKey())) {
 						totalLevel += entry.getValue();
 					}
 				}
 			}
 		}
 		return totalLevel;
+	}
+
+	public boolean isDisenchantable(Enchantment enchant) {
+		// Block vanilla curses
+		if (enchant.equals(Enchantment.BINDING_CURSE) || enchant.equals(Enchantment.VANISHING_CURSE)) {
+			return false;
+		}
+		// Check blocked list in config
+		List<String> blockedList = OptionL.getList(Option.FORGING_BLOCKED_GRINDSTONE_ENCHANTS);
+		for (String blockedEnchantName : blockedList) {
+			if (enchant.getKey().getKey().equalsIgnoreCase(blockedEnchantName)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

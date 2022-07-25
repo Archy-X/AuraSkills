@@ -169,6 +169,7 @@ public enum Option {
     FORGING_MAX_LEVEL("forging.max-level", OptionType.INT),
     FORGING_CHECK_CANCELLED("forging.check-cancelled", OptionType.BOOLEAN),
     FORGING_CHECK_MULTIPLIER_PERMISSIONS("forging.check-multiplier-permissions", OptionType.BOOLEAN),
+    FORGING_BLOCKED_GRINDSTONE_ENCHANTS("forging.blocked-grindstone-enchants", OptionType.LIST),
     // Stat options
     HEALTH_MODIFIER("health.modifier", OptionType.DOUBLE),
     HEALTH_HEALTH_SCALING("health.health-scaling", OptionType.BOOLEAN),
