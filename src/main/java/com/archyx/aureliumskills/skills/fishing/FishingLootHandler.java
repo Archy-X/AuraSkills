@@ -46,7 +46,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 return;
             }
             // Check if blocked by flags
-            else if (plugin.getWorldGuardSupport().blockedByFlag(player.getLocation(), player, WorldGuardFlags.FlagKey.XP_GAIN)) {
+            else if (plugin.getWorldGuardSupport().blockedByFlag(player.getLocation(), player, WorldGuardFlags.FlagKey.CUSTOM_LOOT)) {
                 return;
             }
         }

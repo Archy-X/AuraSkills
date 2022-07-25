@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
+import com.archyx.aureliumskills.support.WorldGuardFlags;
 import com.archyx.lootmanager.loot.Loot;
 import com.archyx.lootmanager.loot.LootPool;
 import com.archyx.lootmanager.loot.LootTable;
@@ -49,6 +50,12 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
 
         if (player.getGameMode() != GameMode.SURVIVAL) { // Only drop loot in survival mode
             return;
+        }
+
+        if (plugin.isWorldGuardEnabled()) {
+            if (plugin.getWorldGuardSupport().blockedByFlag(block.getLocation(), player, WorldGuardFlags.FlagKey.CUSTOM_LOOT)) {
+                return;
+            }
         }
 
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
