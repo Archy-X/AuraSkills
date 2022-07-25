@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.stats.Stat;
-import org.apache.commons.lang.math.NumberUtils;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -49,7 +49,7 @@ public class ModifierCommand extends BaseCommand {
                         String endName = modifierName.substring(name.length()); // Get the part of the string after name
                         if (endName.startsWith("(") && endName.endsWith(")")) {
                             String numberString = endName.substring(1, endName.length() - 1); // String without first and last chars
-                            int stackNumber = NumberUtils.toInt(numberString);
+                            int stackNumber = NumberUtil.toInt(numberString);
                             if (stackNumber > lastStackNumber) {
                                 lastStackNumber = stackNumber;
                             }

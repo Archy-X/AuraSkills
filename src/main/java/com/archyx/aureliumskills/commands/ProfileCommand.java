@@ -18,7 +18,6 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -122,7 +121,7 @@ public class ProfileCommand extends BaseCommand {
         StringBuilder skillEntries = new StringBuilder();
         for (Skill skill : Skills.getOrderedValues()) {
             skillEntries.append(TextUtil.replace(Lang.getMessage(CommandMessage.PROFILE_SKILL_ENTRY, locale),
-                    "{skill}", StringUtils.capitalize(skill.toString().toLowerCase(Locale.ROOT)),
+                    "{skill}", TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT)),
                     "{level}", String.valueOf(skillLevels.get(skill)),
                     "{xp}", NumberUtil.format1(skillXp.get(skill))));
         }
@@ -160,7 +159,7 @@ public class ProfileCommand extends BaseCommand {
         StringBuilder statEntries = new StringBuilder();
         for (Stat stat : plugin.getStatRegistry().getStats()) {
             statEntries.append(TextUtil.replace(Lang.getMessage(CommandMessage.PROFILE_STAT_ENTRY, locale),
-                    "{stat}", StringUtils.capitalize(stat.toString().toLowerCase(Locale.ROOT)),
+                    "{stat}", TextUtil.capitalize(stat.toString().toLowerCase(Locale.ROOT)),
                     "{total_level}", NumberUtil.format1(totalStats.getOrDefault(stat, 0.0)),
                     "{base_level}", NumberUtil.format1(baseStats.getOrDefault(stat, 0.0)),
                     "{modified_level}", NumberUtil.format1(modifiedStats.getOrDefault(stat, 0.0))));
