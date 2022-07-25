@@ -8,7 +8,6 @@ import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +28,7 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
                 return Lang.getMessage(MenuMessage.BACK, locale);
             case "back_click":
                 String previousMenu = (String) activeMenu.getProperty("previous_menu");
-                String formattedPreviousMenu = WordUtils.capitalize(TextUtil.replace(previousMenu, "_", " "));
+                String formattedPreviousMenu = TextUtil.capitalizeWord(TextUtil.replace(previousMenu, "_", " "));
                 return TextUtil.replace(Lang.getMessage(MenuMessage.BACK_CLICK, locale),
                         "{menu_name}", formattedPreviousMenu);
         }

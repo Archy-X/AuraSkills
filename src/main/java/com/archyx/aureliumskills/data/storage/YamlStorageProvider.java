@@ -15,9 +15,9 @@ import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -108,7 +108,7 @@ public class YamlStorageProvider extends StorageProvider {
                         String itemKey = splitEntry[0];
                         int amount = 1;
                         if (splitEntry.length >= 2) {
-                            amount = NumberUtils.toInt(splitEntry[1], 1);
+                            amount = NumberUtil.toInt(splitEntry[1], 1);
                         }
                         unclaimedItems.add(new KeyIntPair(itemKey, amount));
                     }

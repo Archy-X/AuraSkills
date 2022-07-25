@@ -52,7 +52,8 @@ public class WorldGuardFlags {
 
     public enum FlagKey {
 
-        XP_GAIN(true);
+        XP_GAIN(true),
+        CUSTOM_LOOT(true);
 
         private final Object def;
 

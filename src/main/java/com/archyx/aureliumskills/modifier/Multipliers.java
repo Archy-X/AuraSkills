@@ -12,7 +12,6 @@ import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
@@ -132,7 +131,7 @@ public class Multipliers extends NBTAPIUser {
 
     private String getNBTName(@Nullable Skill skill) {
         if (skill != null) {
-            return StringUtils.capitalize(skill.toString().toLowerCase(Locale.ROOT));
+            return TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
         } else {
             return "Global";
         }

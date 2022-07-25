@@ -3,9 +3,9 @@ package com.archyx.aureliumskills.support;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -30,7 +30,7 @@ public class HologramSupport implements Listener {
 
     public HologramSupport(AureliumSkills plugin) {
         this.plugin = plugin;
-        nf = new DecimalFormat("#." + StringUtils.repeat("#", OptionL.getInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
+        nf = new DecimalFormat("#." + TextUtil.repeat("#", OptionL.getInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

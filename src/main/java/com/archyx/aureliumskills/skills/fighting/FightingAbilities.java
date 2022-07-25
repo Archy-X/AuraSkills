@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.ability.AbilityProvider;
 import com.archyx.aureliumskills.configuration.OptionL;
+import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.AbilityMessage;
@@ -73,6 +74,11 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                         }
                         int id = abilityData.getInt("counter");
                         //Schedules metadata removal
+                        long cooldown = 6000L;
+                        OptionValue optionValue = plugin.getAbilityManager().getOption(Ability.FIRST_STRIKE, "cooldown_ticks");
+                        if (optionValue != null) {
+                            cooldown = optionValue.asInt();
+                        }
                         new BukkitRunnable() {
                             @Override
                             public void run() {
@@ -82,7 +88,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                                     }
                                 }
                             }
-                        }.runTaskLater(plugin, 6000L);
+                        }.runTaskLater(plugin, cooldown);
                     }
                 }
             }

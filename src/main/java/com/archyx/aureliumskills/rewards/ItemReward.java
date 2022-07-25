@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.lang.LevelerMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
-import org.apache.commons.lang.StringUtils;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,7 +30,7 @@ public class ItemReward extends MessagedReward {
         // Send warning if item not found
         if (item == null) {
             plugin.getLogger().warning("Could not find a registered item with key " + itemKey + " when granting " +
-                    "item reward (" + StringUtils.capitalize(skill.toString().toLowerCase(Locale.ROOT)) + " " + level + ")");
+                    "item reward (" + TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT)) + " " + level + ")");
             return;
         }
         if (amount != -1) {

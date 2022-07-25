@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cErreur: Ce monde n''existe pas.'
     you_must_be_holding_item: '&cErreur: Vous devez tenir un élément dans votre main principale.'
-    player_is_vanished_confirm: "&eAttention: &a{vanished} &eest invisible. Ne grillez pas sa couverture !\n&ePour confirmer votre action, ajoutez &a:confirmer &eà la fin de son nom.\n&eEx: {vanished}:confirm"
+    player_is_vanished_confirm: "&eAttention: &a{vanished} &eest invisible. Ne grillez pas sa couverture !\n&ePour confirmer votre action, ajoutez &a:confirm &eà la fin de son nom.\n&eEx: {vanished}:confirm"
     username_too_short: '&cErreur : Le nom d''utilisateur est trop court, il doit comporter au moins trois caractères.'
     is_not_a_valid_name: '&cErreur: &e{name} &cn''est pas un nom d''utilisateur valide.'
     multiple_players_match: '&cErreur: Plusieurs joueurs correspondent à &b{search} &e({all})&c, veuillez être plus précis.'
@@ -370,6 +370,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Tous les modificateurs d''armure ont été supprimés de votre objet'
+    multiplier:
+      add:
+        added: '&b{target} &7multiplicateur avec la valeur &b{value} &7a été ajouté à votre article'
+        already_exists: '&eUn multiplicateur avec la cible &b{target} &eéxiste déja sur votre armure! supprimez le d''abord avec /sk armor multiplier remove'
+        skill_lore: '&7Quand porté : &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Quand porté : &b-{value}% {skill} XP'
+        global_lore: '&7Quand porté : &9+{value}% XP de skill'
+        global_lore_subtract: '&7Quand porté : &9-{value}% XP de skill'
+      remove:
+        does_not_exist: '&eVotre objet n''a pas de modificateur de &b{target} &ed''armure!'
+        removed: '&b{target} &7Les modifications apportées à l''item viennent d''être supprimé'
+      list:
+        header: '&fLes modificateurs d''armure suivant ont été trouvés :'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Les modifications apportées à l''item viennent toutes d''être supprimées'
     requirement:
       add:
         added: 'L''exigence d''armure &3{skill}&7 niveau &b{level}&7 a été ajouté à votre item'
@@ -417,6 +433,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Tout les modificateurs ont été supprimés de votre objet'
+    multiplier:
+      add:
+        added: '&b{target} &7multiplicateur avec la valeur &b{value} &7a été ajouté à votre article'
+        already_exists: '&eUn multiplicateur avec la cible &b{target} &eéxiste déja sur votre item! supprimez le d''abord avec /sk item multiplier remove'
+        skill_lore: '&7Quand porté : &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Quand porté : &b-{value}% {skill} XP'
+        global_lore: '&7Quand porté : &9+{value}% XP de skill'
+        global_lore_subtract: '&7Quand porté : &9-{value}% XP de skill'
+      remove:
+        does_not_exist: '&eVotre objet n''a pas de modificateur de &b{target}!'
+        removed: '&b{target} &7Les modifications apportées à l''item viennent d''être supprimé'
+      list:
+        header: '&fModificateur d''item trouvé:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Les modifications apportées à l''item viennent toutes d''être supprimées'
     register:
       registered: '&fEnregistré l''élément à la clé {key}'
       already_registered: '&eIl y a déjà un élément enregistré à la clé &f{key}&e, utilisez &f/skill item unregister &epour le désinscrire en premier'
@@ -468,7 +500,9 @@ commands:
       removed_one_stat: '&b{num} &7modificateurs de {color}{stat} &7ont été supprimé du jiueur &6{player}'
       players_only: '&eSeul un joueur peut supprimer ses propre modificateurs! Essayez de spécifier un joueur.'
   multiplier:
-    list: '&fMultiplicateur d''xp pour &6{player}&f: &b{multiplier}x / +{percent}%'
+    global: Globale
+    list: '&fMultiplicateur d''XP de &6{player}&f: &b{multiplier}x / +{percent}%'
+    skill_entry: '&b{skill} Multiplicateur d''XP : &b{multiplier}x / +{percent}%'
     players_only: '&eSeuls les joueurs peuvent lister leur propre multiplicateur! Spécifiez un joueur!'
   rank:
     header: '&b&lVos classements de compétences'
@@ -531,10 +565,10 @@ menus:
     level: '&7Niveau: &e{level}'
     progress_to_level: "&7Progression vers le niveau {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6NIVEAU MAXIMUM'
-    ability_levels: "&7Niveaux de compétence:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "\n&7Niveaux de compétence:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7Stats Niveau: {stats}\n "
+    stats_leveled: "\n&7Stats Niveau : {stats}"
     mana_ability: "\n&d&lCompétence de mana &9{mana_ability} {level}\n &7Durée: &a{duration}s &7Cout en mana: &b{mana_cost} &7Rechargement: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Vos compétences
@@ -544,13 +578,16 @@ menus:
     your_skills_click: '&eCliquez sur une compétence pour voir la progression du niveau!'
     skill_click: '&eCliquez pour voir la progression des niveaux!'
     skill_locked: '&cVous n''êtes pas autorisé à afficher cette compétence!'
+    stats: '&bStats'
+    stats_desc: '&7Gagnez des buffs de stats en augmentant le niveau de compétences'
+    stats_click: '&eCliquez pour en savoir plus ou voir vos statistiques'
   level_progression_menu:
     level_progression_menu_title: 'Niveau {skill} - Page {page}'
     your_ranking: '&eVotre classement de compétences'
     rank_out_of: '&fVous êtes classé &6{rank}&f sur un total de {total} joueurs'
     rank_percent: '&fVous êtes dans le top &6{percent}%&f des joueurs'
     back: '&aRetour en arrière'
-    back_click: '&7Retour au menu des compétences'
+    back_click: '&7Revenir au menu {menu_name}'
     next_page: '&6Page suivante'
     next_page_click: '&eCliquez pour aller à la page suivante'
     previous_page: '&6Page précedente'
@@ -570,6 +607,13 @@ menus:
     mana_ability_unlock: "\n&9{mana_ability} &d&lDébloquage de compétence de mana\n&7  {desc}\n "
     mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
     progress: "&7Progrès: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: '&eCliquez pour voir le classement de {skill}'
+    sources: 'Sources d''Xp'
+    sources_desc: "&7Le menu sources montre toutes les façons dont vous\n&7pouvez gagner de l'XP dans une compétence, ainsi que combien\n&7XP chaque source donne."
+    sources_click: '&eCliquez pour afficher les sources de {skill}'
+    abilities: '&cCompétences'
+    abilities_desc: "&bLes aptitudes &7sont des compétences passives que vous débloquez et\n&7améliorez au fur et à mesure que vous améliorez vos compétences.\n&dLes capacités de mana &7sont un type spécial de capacité\n&7qui nécessite l'activation et consomme de la mana."
+    abilities_click: '&eCliquez pour voir les capacités de {skill}'
   stats_menu:
     stats_menu_title: Vos statistiques
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -591,6 +635,34 @@ menus:
     unclaimed_items_title: 'Réclamer les articles'
     inventory_full: '&eVous n''avez pas assez de place dans votre inventaire pour récupérer ceci'
     click_to_claim: '&eCliquez pour réclamer!'
+  leaderboard:
+    leaderboard_title: 'Classement de {skill}'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7Niveau &f{level}'
+  sources:
+    sources_title: 'Sources d''XP de {skill} ({current_page}/{total_pages})'
+    sorter: '&bTrier les Sources XP'
+    sort_type: "&7{selected}{type_name}\n"
+    selected: '&f> '
+    descending: 'Du plus haut au plus bas'
+    ascending: 'Du plus bas au plus haut'
+    alphabetical: 'Nom (A-Z)'
+    reverse_alphabetical: 'Nom (Z-A)'
+    sort_click: '&eCliquez pour choisir le type de tri'
+    source_name: '&f{name}'
+    source_xp: '&7XP: &a{xp}'
+    source_xp_rate: '&7XP: &a{xp}/{unit}'
+    multiplied_xp: "\n\nXP &fMultiplié : &a{xp}"
+    multiplied_xp_rate: "\n\n&fXP Multiplié : &a{xp}/{unit}"
+    multiplied_desc: "\n&7&oC'est l'XP que vous allez réellement gagner\n&7&obasé sur vos multiplicateurs d'XP actuels"
+  abilities:
+    abilities_title: 'Capacités de {skill}'
+    locked_desc: "&fDescription :\n  &7{desc}"
+    unlocked_at: '&7Déverrouillé à &3{skill} {level}'
+    your_ability_level: '&fVotre niveau: &b{level}'
+    your_ability_level_maxed: '&fVotre Niveau : &b{level} &6(MAX)'
+    unlocked_desc: "&fProchaine amélioration à &3{skill} {level}&f\n  &7{desc}"
+    unlocked_desc_maxed: "&fDescription :\n  &7{desc}"
 mana_abilities:
   replenish:
     name: Replante
@@ -701,6 +773,241 @@ skills:
   forging:
     name: Forgeron
     desc: "&7Combinez et appliquez un livre dans une enclume pour\n&7gagner de l'{xp_unit} Forgeron"
+sources:
+  farming:
+    wheat: Blé
+    potato: Patate
+    carrot: Carotte
+    beetroot: Betterave
+    nether_wart: Verrue du Nether
+    pumpkin: Citrouille
+    melon: Pastèque
+    sugar_cane: Canne à sucre
+    bamboo: Bambu
+    cocoa: Cacao
+    cactus: Cactus
+    brown_mushroom: Champignon brun
+    red_mushroom: Champignon rouge
+    kelp: Algue
+    sea_pickle: Cornichon de mer
+    sweet_berry_bush: Baies sucrées
+    glow_berries: Baies luisantes
+  foraging:
+    oak_log: Bûche de Chêne
+    spruce_log: Bûche de Sapin
+    birch_log: Bûche de Bouleau
+    jungle_log: Bûche d'Acajou
+    acacia_log: Bûche d'Acacia
+    dark_oak_log: Bûche de chêne noir
+    oak_leaves: Feuilles de Chêne
+    spruce_leaves: Feuilles de sapin
+    birch_leaves: Feuilles de bouleau
+    jungle_leaves: Feuilles d'Acajou
+    acacia_leaves: Feuilles d'acacia
+    dark_oak_leaves: Feuilles de chêne noir
+    crimson_stem: Tige carmin
+    warped_stem: Tige biscornue
+    nether_wart_block: Bloc de Verrues du Nether
+    warped_wart_block: Bloc de verrues biscornues
+    moss_block: Bloc de mousse
+    moss_carpet: Tapis de mousse
+    azalea: Azalée
+    flowering_azalea: Azalée en fleurs
+    azalea_leaves: Feuilles d'azalée
+    flowering_azalea_leaves: Feuilles d'azalée fleuries
+  mining:
+    stone: Pierre
+    cobblestone: Cobblestone
+    andesite: Andésite
+    diorite: Diorite
+    granite: Granite
+    coal_ore: Minerai de Charbon
+    nether_quartz_ore: Minerai de quartz du Nether
+    iron_ore: Minerai de fer
+    lapis_ore: Minerai de Lapis
+    redstone_ore: Minerai de Redstone
+    gold_ore: Minerai d'Or
+    diamond_ore: Minerai de diamant
+    emerald_ore: Minerai d'émeraude
+    terracotta: Terre cuite
+    white_terracotta: Terre cuite blanche
+    orange_terracotta: Terre Cuite Orange
+    yellow_terracotta: Terre cuite jaune
+    light_gray_terracotta: Terre cuite grise claire
+    brown_terracotta: Terre cuite marron
+    red_terracotta: Terre Cuite Rouge
+    netherrack: Roche du Nether
+    blackstone: Pierre Noire
+    basalt: Basalte
+    magma_block: Bloc magma
+    nether_gold_ore: Minerai d'or du Nether
+    ancient_debris: Débris antiques
+    end_stone: Pierre de l'Ender
+    obsidian: Obsidienne
+    deepslate: Ardoise des abîmes
+    copper_ore: Minerai de cuivre
+    tuff: Tuf
+    calcite: Calcite
+    smooth_basalt: Basalte lisse
+    amethyst_block: Bloc d'améthyste
+    amethyst_cluster: Amas d'améthystes
+    deepslate_coal_ore: Minerai de charbon des abîmes
+    deepslate_iron_ore: Minerai de fer des abîmes
+    deepslate_copper_ore: Minerai de cuivre des abîmes
+    deepslate_gold_ore: Minerai d'or des abîmes
+    deepslate_redstone_ore: Minerai de redstone des abîmes
+    deepslate_lapis_ore: Minerai de lapis des abîmes
+    deepslate_emerald_ore: Minerai d'émeraude des abîmes
+    deepslate_diamond_ore: Minerai de diamant des abîmes
+    dripstone_block: Bloc de spéléothème
+    ice: Glace
+    packed_ice: Glace Compactée
+    blue_ice: Glace bleue
+  fishing:
+    cod: Morue
+    salmon: Saumon
+    tropical_fish: Poisson tropical
+    pufferfish: Poisson-globe
+    treasure: Coffre à trésor
+    junk: Éléments indésirables
+    rare: Butin de groupe
+    epic: Butin Épique
+  excavation:
+    dirt: Terre
+    grass_block: Bloc d'herbe
+    sand: Sable
+    gravel: Gravier
+    mycelium: Mycelium
+    clay: Argile
+    soul_sand: Sable des Ames
+    coarse_dirt: Terre stérile
+    podzol: Podzol
+    soul_soil: Terre des âmes
+    red_sand: Sable rouge
+    rooted_dirt: Terre avec racines
+  mobs:
+    player: Joueur
+    bat: Chauve souris
+    cat: Chat
+    chicken: Poulet
+    cod: Morue
+    cow: Vache
+    donkey: Âne
+    fox: Renard
+    giant: Géant
+    horse: Cheval
+    mooshroom: Champimeuh
+    mule: Mule
+    ocelot: Ocelot
+    parrot: Perroquet
+    pig: Cochon
+    rabbit: Lapin
+    salmon: Saumon
+    sheep: Mouton
+    skeleton_horse: Cheval-squelette
+    snow_golem: Golem de Neige
+    squid: Poulpe
+    strider: Arpenteur
+    tropical_fish: Poisson tropical
+    turtle: Tortue
+    villager: Villageois
+    wandering_trader: Marchand voyageur
+    bee: Abeille
+    cave_spider: Araignée venimeuse
+    dolphin: Dauphin
+    enderman: Enderman
+    iron_golem: Golem de fer
+    llama: Lama
+    piglin: Piglin
+    panda: Panda
+    polar_bear: Ours Polaire
+    pufferfish: Poisson-globe
+    spider: Araignée
+    wolf: Loup
+    zombified_piglin: Piglin zombifié
+    blaze: Blaze
+    creeper: Creeper
+    drowned: Noyé
+    elder_guardian: Grand Gardien
+    endermite: Endermite
+    evoker: Évocateur
+    ghast: Ghast
+    guardian: Gardien
+    hoglin: Hoglin
+    husk: Zombie Momifié
+    illusioner: Illusionneur
+    magma_cube: Cube de magma
+    phantom: Fantôme
+    piglin_brute: Piglin Brute
+    pillager: Pilleur
+    ravager: Ravageur
+    shulker: Shulker
+    silverfish: Silverfish
+    skeleton: Squelette
+    slime: Slime
+    stray: Vagabond
+    vex: Vex
+    vindicator: Vindicateur
+    witch: Sorcière
+    wither_skeleton: Wither Squelette
+    zoglin: Zoglin
+    zombie: Zombie
+    zombie_villager: Zombie Villageois
+    ender_dragon: Dragon de l'Ender
+    wither: Wither
+    axolotl: Axolotl
+    glow_squid: Poulpe luisant
+    goat: Chèvre
+  defense:
+    mob_damage: Dégâts causés par les monstres
+    player_damage: Dégâts infligés par un joueur
+  endurance:
+    walk_per_meter: Marcher
+    sprint_per_meter: Sprinter
+    swim_per_meter: Nager
+  agility:
+    jump_per_100: Sauter
+    fall_damage: Subit des dégâts de chute
+  alchemy:
+    awkward: Potion étrange
+    regular: Potion normale
+    extended: Potion de durée prolongée
+    upgraded: Potion améliorée
+    splash: Potion Jetable
+    lingering: Potion persistante
+  enchanting:
+    weapon_per_level: Arme
+    armor_per_level: Armure
+    tool_per_level: Outils
+    book_per_level: Livre
+  sorcery:
+    mana_ability_use: Utiliser des aptitudes de mana
+  healing:
+    drink_regular: Buvez une potion normale
+    drink_extended: Boire Potion de durée prolongée
+    drink_upgraded: Boire Potion améliorée
+    splash_regular: Jettez une potion normal
+    splash_extended: Jettez une Potion de durée prolongée
+    splash_upgraded: Jettez une Potion améliorée
+    lingering_regular: Utiliser une potion persistante normale
+    lingering_extended: Utiliser une potion persistante de durée prolongée
+    lingering_upgraded: Utiliser une potion persistante améliorée
+    golden_apple: Pomme dorée
+    enchanted_golden_apple: Pomme Dorée Enchantée
+  forging:
+    combine_books_per_level: Combiner les livres enchantés
+    combine_weapon_per_level: Combiner une arme avec un livre
+    combine_armor_per_level: Combiner une arme avec un livre
+    combine_tool_per_level: Combiner un outil avec un livre
+    grindstone_per_level: Désenchanter un objet à l'aide de Grindstone
+  units:
+    damage: Dégâts
+    meter: Mètre
+    100_jumps: 100 Sauts
+    mana: Mana consommé
+    combine_level: Coût d'XP de l'enclume
+    grindstone_level: Niveau d'Enchantement sur un objet
+    enchant_level: Niveau d'enchantement reçu
 stats:
   strength:
     name: Force
@@ -736,4 +1043,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 23
+file_version: 25

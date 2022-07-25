@@ -2,8 +2,8 @@ package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.util.file.FileUtil;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.potion.PotionEffectType;
@@ -74,8 +74,8 @@ public class LegacyLootConverter {
                     plugin.getLogger().warning("Failed to convert the following legacy loot entry because min, max, and material were not specified: " + entry);
                     continue;
                 }
-                int minAmount = NumberUtils.toInt(split[0]);
-                int maxAmount = NumberUtils.toInt(split[1]);
+                int minAmount = NumberUtil.toInt(split[0]);
+                int maxAmount = NumberUtil.toInt(split[1]);
                 String materialName = split[2];
                 map.put("material", materialName.toLowerCase(Locale.ROOT));
                 if (minAmount == maxAmount) {

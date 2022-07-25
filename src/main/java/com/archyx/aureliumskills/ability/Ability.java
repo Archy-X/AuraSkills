@@ -51,7 +51,7 @@ public enum Ability implements AbstractAbility {
 	CRIT_DAMAGE(() -> Skills.FIGHTING, 5.0, 4.0),
 	FIGHTER(() -> Skills.FIGHTING, 10.0, 10.0),
 	SWORD_MASTER(() -> Skills.FIGHTING, 3.0, 2.0),
-	FIRST_STRIKE(() -> Skills.FIGHTING, 20.0, 10.0, new String[] {"enable_message"}, new Object[] {true}),
+	FIRST_STRIKE(() -> Skills.FIGHTING, 20.0, 10.0, new String[] {"enable_message", "cooldown_ticks"}, new Object[] {true}),
 	BLEED(() -> Skills.FIGHTING, 3.0, 4.0, 0.5, 0.5,
 			new String[] {"enable_enemy_message", "enable_self_message", "enable_stop_message", "base_ticks", "added_ticks", "max_ticks", "tick_period", "show_particles"},
 			new Object[] {true, true, true, 3, 2, 11, 40, true}),

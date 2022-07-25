@@ -2,7 +2,7 @@ package com.archyx.aureliumskills.source;
 
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import org.apache.commons.lang.StringUtils;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +19,7 @@ public class SourceRegistry {
         sources = new HashMap<>();
         try {
             for (Skill skill : Skills.values()) {
-                String className = StringUtils.capitalize(skill.toString().toLowerCase(Locale.ROOT)) + "Source";
+                String className = TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT)) + "Source";
                 Class<?> sourceClass = Class.forName("com.archyx.aureliumskills.skills." + skill.toString().toLowerCase(Locale.ROOT) + "." + className);
                 register(skill, sourceClass);
             }
