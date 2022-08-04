@@ -18,7 +18,9 @@ mysql:
     load-delay: 0
     always-load-on-join: false
     ssl: false
-
+hooks:
+    HolographicDisplays: true
+    DecentHolograms: false
 default-language: en
 
 try-detect-client-language: true
