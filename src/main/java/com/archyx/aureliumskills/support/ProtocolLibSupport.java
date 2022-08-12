@@ -8,8 +8,6 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class ProtocolLibSupport {
 
     private static ProtocolManager protocolManager;
@@ -22,11 +20,7 @@ public class ProtocolLibSupport {
         PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
         packet.setMeta("AureliumSkills", true); // Mark packet as from Aurelium Skills
-        try {
-            protocolManager.sendServerPacket(player, packet);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException("Cannot send packet " + packet, e);
-        }
+        protocolManager.sendServerPacket(player, packet);
     }
 
     public void sendLegacyActionBar(Player player, String message) {
@@ -34,11 +28,7 @@ public class ProtocolLibSupport {
         packet.getEnumModifier(EnumWrappers.TitleAction.class, 0).write(0, EnumWrappers.TitleAction.ACTIONBAR);
         packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
         packet.setMeta("AureliumSkills", true); // Mark packet as from Aurelium Skills
-        try {
-            protocolManager.sendServerPacket(player, packet);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException("Cannot send packet " + packet, e);
-        }
+        protocolManager.sendServerPacket(player, packet);
     }
 
 }
