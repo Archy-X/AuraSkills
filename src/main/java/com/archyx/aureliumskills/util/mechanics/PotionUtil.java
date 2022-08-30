@@ -89,6 +89,8 @@ public class PotionUtil {
             case INSTANT_DAMAGE:
             case WEAKNESS:
                 return true;
+            default:
+                break;
         }
         return false;
     }

@@ -35,6 +35,7 @@ public enum StatMessage implements MessageKey {
     private final Stat stat = Stats.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
     private final String path = "stats." + stat.toString().toLowerCase(Locale.ENGLISH) + "." + this.toString().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
     
+    @Override
     public String getPath() {
         return path;
     }
