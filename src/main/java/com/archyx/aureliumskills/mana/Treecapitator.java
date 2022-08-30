@@ -193,6 +193,8 @@ public class Treecapitator extends ReadiedManaAbility {
                     case DARK_OAK_LOG:
                         maxBlocks = 150;
                         break;
+                    default:
+                        break;
                 }
             } else {
                 maxBlocks = 100;

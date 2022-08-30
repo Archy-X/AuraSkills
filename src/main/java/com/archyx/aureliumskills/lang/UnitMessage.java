@@ -10,6 +10,7 @@ public enum UnitMessage implements MessageKey {
 
     private final String path = "units." + this.toString().toLowerCase(Locale.ENGLISH);
 
+    @Override
     public String getPath() {
         return path;
     }

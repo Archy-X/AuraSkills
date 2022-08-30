@@ -15,6 +15,7 @@ public enum LevelerMessage implements MessageKey {
     MONEY_REWARD,
     UNCLAIMED_ITEM;
 
+    @Override
     public String getPath() {
         return "leveler." + this.toString().toLowerCase(Locale.ENGLISH);
     }
