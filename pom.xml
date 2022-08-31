@@ -166,7 +166,7 @@
         <dependency>
             <groupId>com.github.dmulloy2</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>1beb95115f</version>
+            <version>43145bd478</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
