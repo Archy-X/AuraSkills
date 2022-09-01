@@ -135,15 +135,17 @@ public enum ForagingSource implements Source {
                 }
             }
         } else { // Legacy block handling
-            if (getLegacyData() == null) { // No data value
-                if (getLegacyMaterial().equalsIgnoreCase(materialName)) {
-                    matched = true;
+            String legacyMaterial = getLegacyMaterial();
+            if (legacyMaterial != null)
+                if (getLegacyData() == null) { // No data value
+                    if (legacyMaterial.equalsIgnoreCase(materialName)) {
+                        matched = true;
+                    }
+                } else { // With data value
+                    if (legacyMaterial.equalsIgnoreCase(materialName) && byteArrayContains(legacyData, blockState.getRawData())) {
+                        matched = true;
+                    }
                 }
-            } else { // With data value
-                if (getLegacyMaterial().equalsIgnoreCase(materialName) && byteArrayContains(legacyData, blockState.getRawData())) {
-                    matched = true;
-                }
-            }
         }
         return matched;
     }

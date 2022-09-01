@@ -23,7 +23,7 @@ import java.util.Locale;
 public class PlaceholderSupport extends PlaceholderExpansion {
 
     private final AureliumSkills plugin;
-    private final String[] xpIdentifiers = new String[] {"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
+    private final String[] xpIdentifiers = {"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
 
     public PlaceholderSupport(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -139,12 +139,14 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets stat values
         for (Stat stat : plugin.getStatRegistry().getStats()) {
-            if (identifier.equals(stat.name().toLowerCase(Locale.ENGLISH))) {
+            String name = stat.name();
+            assert (null != name);
+            if (identifier.equals(name.toLowerCase(Locale.ENGLISH))) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
                     return String.valueOf(playerData.getStatLevel(stat));
                 }
-            } else if (identifier.equals(stat.name().toLowerCase(Locale.ROOT) + "_int")) {
+            } else if (identifier.equals(name.toLowerCase(Locale.ROOT) + "_int")) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
                     return String.valueOf(Math.round(playerData.getStatLevel(stat)));
@@ -170,6 +172,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         if (identifier.startsWith("lb_")) {
             String leaderboardType = TextUtil.replace(identifier, "lb_", "");
+            assert (null != leaderboardType);
             if (leaderboardType.startsWith("power_")) {
                 int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", ""));
                 if (place > 0) {
@@ -256,6 +259,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         if (identifier.startsWith("rank_")) {
             String skillName = TextUtil.replace(identifier, "rank_", "");
+            assert (null != skillName);
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
                 return String.valueOf(plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId()));
@@ -265,7 +269,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         for (String id : xpIdentifiers) {
             if (identifier.startsWith(id)) {
                 String skillName = TextUtil.replace(identifier, id, "");
-
+                assert (null != skillName);
                 Skill skill = plugin.getSkillRegistry().getSkill(skillName);
                 if (skill != null) {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -298,6 +302,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 return NumberUtil.format2(plugin.getLeveler().getMultiplier(player));
             }
             String skillName = TextUtil.replace(identifier, "multiplier_", "");
+            assert (null != skillName);
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
                 return NumberUtil.format2(plugin.getLeveler().getMultiplier(player, skill));
@@ -309,6 +314,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player) - 1) * 100));
             }
             String skillName = TextUtil.replace(identifier, "multiplier_percent_", "");
+            assert (null != skillName);
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player, skill) - 1) * 100));

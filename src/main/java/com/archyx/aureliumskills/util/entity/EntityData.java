@@ -79,6 +79,7 @@ public class EntityData extends Parser {
         entity.setCustomNameVisible(customNameVisible);
         entity.setCustomName(customName);
         for (String scoreboardTag : scoreboardTags) {
+            assert (scoreboardTag != null);
             entity.addScoreboardTag(scoreboardTag);
         }
     }

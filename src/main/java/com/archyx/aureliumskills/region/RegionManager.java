@@ -144,6 +144,8 @@ public class RegionManager {
             chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
         }
         NBTCompoundList placedBlocks = compound.getCompoundList("placed_blocks");
+        if (placedBlocks == null)
+            return;
         for (NBTListCompound block : placedBlocks) {
             int x = block.getInteger("x");
             int y = block.getInteger("y");
@@ -188,6 +190,8 @@ public class RegionManager {
     private void saveChunk(NBTFile nbtFile, ChunkData chunkData) {
         NBTCompound chunk = nbtFile.getOrCreateCompound("chunk[" + chunkData.getX() + "," + chunkData.getZ() + "]");
         NBTCompoundList placedBlocks = chunk.getCompoundList("placed_blocks");
+        if (placedBlocks == null)
+            return;
         placedBlocks.clear(); // Clears list of block positions to account for removed positions
         // Adds all positions to nbt compound list
         for (BlockPosition block : chunkData.getPlacedBlocks().keySet()) {

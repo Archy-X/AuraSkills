@@ -36,7 +36,9 @@ public class LockedAbilityItem extends AbstractAbilityItem {
                                 "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
                                 "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1))));
             case "unlocked_at":
-                Skill skill = (Skill) menu.getProperty("skill");
+                Object property = menu.getProperty("skill");
+                assert (null != property);
+                Skill skill = (Skill) property;
                 return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
                         "{skill}", skill.getDisplayName(locale),
                         "{level}", RomanNumber.toRoman(plugin.getAbilityManager().getUnlock(ability)));
@@ -48,7 +50,9 @@ public class LockedAbilityItem extends AbstractAbilityItem {
 
     @Override
     public Set<Ability> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Set<Ability> lockedAbilities = new HashSet<>();
         if (playerData != null) {

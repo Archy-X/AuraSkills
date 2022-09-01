@@ -166,7 +166,13 @@ public class AureliumSkills extends JavaPlugin {
 	private Slate slate;
 	private MenuFileManager menuFileManager;
 	private ForgingLeveler forgingLeveler;
-
+	
+	public AureliumSkills() {
+		lang = new Lang(this);
+		manaAbilityManager = new ManaAbilityManager(this);
+		manaManager = new ManaManager(this);
+	}
+	
 	@Override
 	public void onEnable() {
 		// Registries
@@ -253,7 +259,6 @@ public class AureliumSkills extends JavaPlugin {
 		// Load	items
 		itemRegistry.loadFromFile();
 		// Load languages
-		lang = new Lang(this);
 		getServer().getPluginManager().registerEvents(lang, this);
 		lang.init();
 		lang.loadEmbeddedMessages(commandManager);
@@ -268,7 +273,6 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers events
 		registerEvents();
 		// Load ability manager
-		manaAbilityManager = new ManaAbilityManager(this);
 		getServer().getPluginManager().registerEvents(manaAbilityManager, this);
 		manaAbilityManager.init();
 		// Load ability options
@@ -457,7 +461,11 @@ public class AureliumSkills extends JavaPlugin {
 		});
 		commandManager.getCommandContexts().registerContext(Skill.class, c -> {
 			String input = c.popFirstArg();
-			Skill skill = skillRegistry.getSkill(input);
+			Skill skill = null;
+			
+			if (input != null)
+				skill = skillRegistry.getSkill(input);
+			
 			if (skill != null) {
 				return skill;
 			} else {
@@ -590,7 +598,6 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ForgingAbilities(this), this);
 		pm.registerEvents(new DamageListener(this, defenseAbilities, fightingAbilities), this);
 		// Load mana manager
-		manaManager = new ManaManager(this);
 		getServer().getPluginManager().registerEvents(manaManager, this);
 		manaManager.startRegen();
 		ItemListener itemListener = new ItemListener(this);

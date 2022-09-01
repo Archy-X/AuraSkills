@@ -31,7 +31,9 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, MAbility mAbility) {
         Locale locale = plugin.getLang().getLocale(player);
-        Skill skill = (Skill) menu.getProperty("skill");
+        Object property = menu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         switch (placeholder) {
             case "name":
                 return mAbility.getDisplayName(locale);
@@ -54,7 +56,9 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
     @Override
     public Set<MAbility> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         Set<MAbility> lockedManaAbilities = new HashSet<>();
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         MAbility mAbility = skill.getManaAbility();
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (mAbility != null && playerData != null) {

@@ -21,7 +21,9 @@ public class LeaderboardMenu extends AbstractMenu implements MenuProvider {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
         Locale locale = plugin.getLang().getLocale(player);
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         if (placeholder.equals("leaderboard_menu_title")) {
             return TextUtil.replace(Lang.getMessage(MenuMessage.LEADERBOARD_TITLE, locale),
                     "{skill}", skill.getDisplayName(locale));

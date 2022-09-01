@@ -69,7 +69,7 @@ public class PlayerData {
     }
 
     public int getSkillLevel(Skill skill) {
-        return skillLevels.getOrDefault(skill, 1);
+        return Objects.requireNonNullElse(skillLevels.get(skill), 1);
     }
 
     public void setSkillLevel(Skill skill, int level) {
@@ -77,7 +77,7 @@ public class PlayerData {
     }
 
     public double getSkillXp(Skill skill) {
-        return skillXp.getOrDefault(skill, 0.0);
+        return Objects.requireNonNullElse(skillXp.get(skill), 0.0);
     }
 
     public void setSkillXp(Skill skill, double xp) {
@@ -89,7 +89,7 @@ public class PlayerData {
     }
 
     public double getStatLevel(Stat stat) {
-        return statLevels.getOrDefault(stat, 0.0);
+        return Objects.requireNonNullElse(statLevels.get(stat), 0.0);
     }
 
     public void setStatLevel(Stat stat, double level) {
@@ -125,7 +125,7 @@ public class PlayerData {
         // Removes if already existing
         if (statModifiers.containsKey(modifier.getName())) {
             StatModifier oldModifier = statModifiers.get(modifier.getName());
-            if (oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
+            if (oldModifier != null && oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
                 return;
             }
             removeStatModifier(modifier.getName());
@@ -286,9 +286,10 @@ public class PlayerData {
     public double getTotalMultiplier(@Nullable Skill skill) {
         double totalMultiplier = 0.0;
         for (Multiplier multiplier : getMultipliers().values()) {
+            Skill multiplierSkill = multiplier.getSkill();
             if (multiplier.isGlobal()) {
                 totalMultiplier += multiplier.getValue();
-            } else if (multiplier.getSkill() != null && multiplier.getSkill().equals(skill)) {
+            } else if (multiplierSkill != null && multiplierSkill.equals(skill)) {
                 totalMultiplier += multiplier.getValue();
             }
         }

@@ -57,7 +57,9 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer num) {
         // Functionality for showing the level as the amount on the item
         int page = activeMenu.getCurrentPage();
-        int level = num + page * (int) activeMenu.getProperty("items_per_page");
+        Object property = activeMenu.getProperty("items_per_page");
+        assert (null != property);
+        int level = num + page * (int)property;
         // Don't show if level is more than max skill level
         Skill skill = (Skill) activeMenu.getProperty("skill");
         if (level > OptionL.getMaxLevel(skill)) {

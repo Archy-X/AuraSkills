@@ -52,6 +52,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                 }
             case "multiplied_xp":
                 Skill skill = (Skill) activeMenu.getProperty("skill");
+                assert (null != skill);
                 double multiplier = getMultiplier(player, skill);
                 if (multiplier > 1.0) {
                     String unit = source.getUnitName();
@@ -68,6 +69,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                 }
             case "multiplied_desc":
                 Skill skill1 = (Skill) activeMenu.getProperty("skill");
+                assert (null != skill1);
                 if (getMultiplier(player, skill1) > 1.0) {
                     return Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
                 } else {
@@ -80,9 +82,16 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
     @Override
     public Set<Source> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         // Gets the needed properties from the menu
-        SortType sortType = (SortType) activeMenu.getProperty("sort_type");
-        Skill skill = (Skill) activeMenu.getProperty("skill");
-        int itemsPerPage = (Integer) activeMenu.getProperty("items_per_page");
+        Object property = activeMenu.getProperty("sort_type");
+        assert (null != property);
+        SortType sortType = (SortType) property;
+        property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
+        assert (null != skill);
+        property = activeMenu.getProperty("items_per_page");
+        assert (null != property);
+        int itemsPerPage = (Integer) property;
         int page = activeMenu.getCurrentPage();
         Locale locale = plugin.getLang().getLocale(player);
         // Sort the sources in the skill by the selected sort type

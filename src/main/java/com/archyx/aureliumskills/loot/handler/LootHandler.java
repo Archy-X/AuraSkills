@@ -23,6 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -45,6 +46,7 @@ public abstract class LootHandler extends AbilityProvider {
     protected void giveCommandLoot(Player player, CommandLoot loot, Source source) {
         // Apply placeholders to command
         String finalCommand = TextUtil.replace(loot.getCommand(), "{player}", player.getName());
+        assert (null != finalCommand);
         if (plugin.isPlaceholderAPIEnabled()) {
             finalCommand = PlaceholderAPI.setPlaceholders(player, finalCommand);
         }
@@ -66,10 +68,8 @@ public abstract class LootHandler extends AbilityProvider {
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
         // Call event
         PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, location, cause);
-        if (cause != null) {
-            Bukkit.getPluginManager().callEvent(dropEvent);
-            if (dropEvent.isCancelled()) return;
-        }
+        Bukkit.getPluginManager().callEvent(dropEvent);
+        if (dropEvent.isCancelled()) return;
         if (dropEvent.getItemStack().getType() == Material.AIR) return;
         block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
         attemptSendMessage(player, loot);
@@ -78,21 +78,23 @@ public abstract class LootHandler extends AbilityProvider {
 
     protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable Source source, LootDropCause cause) {
         if (!(event.getCaught() instanceof Item)) return;
-        Item itemEntity = (Item) event.getCaught();
+        Entity itemEntity = event.getCaught();
 
         int amount = generateAmount(loot.getMinAmount(), loot.getMaxAmount());
         if (amount == 0) return;
 
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(amount);
-        Location location = event.getCaught().getLocation();
+        
+        if (itemEntity == null)
+            return;
+        
+        Location location = itemEntity.getLocation();
         // Call event
         PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, drop, location, cause);
-        if (cause != null) {
-            Bukkit.getPluginManager().callEvent(dropEvent);
-            if (dropEvent.isCancelled()) return;
-        }
-        itemEntity.setItemStack(drop);
+        Bukkit.getPluginManager().callEvent(dropEvent);
+        if (dropEvent.isCancelled()) return;
+        ((Item)itemEntity).setItemStack(drop);
         attemptSendMessage(player, loot);
         giveXp(player, loot, source);
     }
@@ -153,12 +155,10 @@ public abstract class LootHandler extends AbilityProvider {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = input;
-            if (ability != null) {
-                if (plugin.getAbilityManager().isEnabled(ability)) {
-                    double modifier = 1;
-                    modifier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
-                    output *= modifier;
-                }
+            if (plugin.getAbilityManager().isEnabled(ability)) {
+                double modifier = 1;
+                modifier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
+                output *= modifier;
             }
             return output;
         }

@@ -74,7 +74,9 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getModifiersTypeCompound(NBTItem item, ModifierType type) {
-		return getCompound(getModifiersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
+		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
+		assert (null != name);
+		return getCompound(getModifiersCompound(item), name);
 	}
 
 	public static NBTCompound getRequirementsCompound(NBTItem item) {
@@ -82,7 +84,9 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getRequirementsTypeCompound(NBTItem item, ModifierType type) {
-		return getCompound(getRequirementsCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
+		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
+		assert (null != name);
+		return getCompound(getRequirementsCompound(item), name);
 	}
 
 	public static NBTCompound getMultipliersCompound(NBTItem item) {
@@ -90,7 +94,9 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getMultipliersTypeCompound(NBTItem item, ModifierType type) {
-		return getCompound(getMultipliersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
+		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
+		assert (null != name);
+		return getCompound(getMultipliersCompound(item), name);
 	}
 
 	public static void removeParentCompounds(NBTCompound compound) {

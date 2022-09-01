@@ -78,7 +78,9 @@ public class Requirements extends NBTAPIUser {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
-        compound.setInteger(getName(skill), level);
+        String name = getName(skill);
+        assert (null != name);
+        compound.setInteger(name, level);
         return nbtItem.getItem();
     }
 
@@ -126,7 +128,9 @@ public class Requirements extends NBTAPIUser {
                 if (oldTypeCompound != null) {
                     NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
                     for (String key : oldTypeCompound.getKeys()) {
-                        compound.setInteger(TextUtil.capitalize(key), oldTypeCompound.getInteger(key));
+                        String keyU = TextUtil.capitalize(key);
+                        assert (null != keyU);
+                        compound.setInteger(keyU, oldTypeCompound.getInteger(key));
                     }
                 }
             }
@@ -139,9 +143,8 @@ public class Requirements extends NBTAPIUser {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             String text = TextUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_REQUIREMENT_ADD_LORE"), locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
-            List<String> lore;
-            if (meta.hasLore()) lore = meta.getLore();
-            else lore = new ArrayList<>();
+            assert (null != text);
+            List<String> lore = meta.getLore();
             if (lore != null) {
                 lore.add(text);
                 meta.setLore(lore);

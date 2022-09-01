@@ -63,7 +63,7 @@ public class MenuFileManager {
         if (!legacyFile.exists()) return;
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(legacyFile);
-        String[] legacyNames = new String[] {"skills_menu", "stats_menu", "level_progression_menu"};
+        String[] legacyNames = {"skills_menu", "stats_menu", "level_progression_menu"};
         for (String legacyName : legacyNames) {
             ConfigurationSection oldSection = config.getConfigurationSection(legacyName);
             if (oldSection == null) continue;

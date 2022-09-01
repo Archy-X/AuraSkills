@@ -68,8 +68,10 @@ public class YamlStorageProvider extends StorageProvider {
                             double value = modifierEntry.getDouble("value");
                             if (name != null && statName != null) {
                                 Stat stat = plugin.getStatRegistry().getStat(statName);
-                                StatModifier modifier = new StatModifier(name, stat, value);
-                                playerData.addStatModifier(modifier);
+                                if (stat != null) {
+                                    StatModifier modifier = new StatModifier(name, stat, value);
+                                    playerData.addStatModifier(modifier);
+                                }
                             }
                         }
                     }

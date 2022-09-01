@@ -4,6 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class BrewingStandData {
 
@@ -16,7 +17,7 @@ public class BrewingStandData {
     }
 
     public boolean isSlotBrewed(int slot) {
-        return potionSlots.getOrDefault(slot, false);
+        return Objects.requireNonNullElse(potionSlots.get(slot), false);
     }
 
     public void setSlotBrewed(int slot, boolean isSlotBrewed) {

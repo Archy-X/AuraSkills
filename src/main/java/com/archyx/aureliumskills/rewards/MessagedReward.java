@@ -45,14 +45,16 @@ public abstract class MessagedReward extends Reward {
     }
 
     private String replacePlaceholders(String message, Player player, Skill skill, int level) {
-        message = TextUtil.replace(message, "{player}", player.getName(),
+        String m = TextUtil.replace(message, "{player}", player.getName(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));
+        assert (null != m);
         if (plugin.isPlaceholderAPIEnabled()) {
-            message = PlaceholderAPI.setPlaceholders(player, message);
+            m = PlaceholderAPI.setPlaceholders(player, m);
         }
-        message = TextUtil.replaceNonEscaped(message, "&", "§");
-        return message;
+        m = TextUtil.replaceNonEscaped(m, "&", "§");
+        assert (null != m);
+        return m;
     }
 
 }

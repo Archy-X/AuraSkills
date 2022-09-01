@@ -41,6 +41,7 @@ public class CommandRewardBuilder extends MessagedRewardBuilder {
     @Override
     public Reward build() {
         Validate.notNull(command, "You must specify a command");
+        assert (null != command);
         return new CommandReward(plugin, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);
     }
 }

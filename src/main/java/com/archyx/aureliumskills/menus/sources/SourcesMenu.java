@@ -23,7 +23,9 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
         Locale locale = plugin.getLang().getLocale(player);
         if (placeholder.equals("sources_title")) {
-            Skill skill = (Skill) activeMenu.getProperty("skill");
+            Object property = activeMenu.getProperty("skill");
+            assert (null != property);
+            Skill skill = (Skill) property;
             return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_TITLE, locale),
                     "{skill}", skill.getDisplayName(locale),
                     "{current_page}", String.valueOf(activeMenu.getCurrentPage() + 1),
@@ -35,7 +37,9 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     @Override
     public int getPages(Player player, ActiveMenu activeMenu) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
-        int itemsPerPage = (Integer) activeMenu.getProperty("items_per_page");
+        Object property = activeMenu.getProperty("items_per_page");
+        assert (null != property);
+        int itemsPerPage = (Integer) property;
         Source[] sources = plugin.getSourceRegistry().values(skill);
         return (sources.length - 1) / itemsPerPage + 1;
     }

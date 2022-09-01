@@ -98,6 +98,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         String statModifiers = result.getString("STAT_MODIFIERS");
                         if (statModifiers != null) {
                             JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
+                            assert (null != jsonModifiers);
                             for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
                                 JsonObject modifierObject = modifierElement.getAsJsonObject();
                                 String name = modifierObject.get("name").getAsString();
@@ -105,8 +106,10 @@ public class MySqlStorageProvider extends StorageProvider {
                                 double value = modifierObject.get("value").getAsDouble();
                                 if (name != null && statName != null) {
                                     Stat stat = plugin.getStatRegistry().getStat(statName);
-                                    StatModifier modifier = new StatModifier(name, stat, value);
-                                    playerData.addStatModifier(modifier);
+                                    if (stat != null) {
+                                        StatModifier modifier = new StatModifier(name, stat, value);
+                                        playerData.addStatModifier(modifier);
+                                    }
                                 }
                             }
                         }
@@ -120,6 +123,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         String abilityData = result.getString("ABILITY_DATA");
                         if (abilityData != null) {
                             JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
+                            assert (null != jsonAbilityData);
                             for (Map.Entry<String, JsonElement> abilityEntry : jsonAbilityData.entrySet()) {
                                 String abilityName = abilityEntry.getKey();
                                 AbstractAbility ability = AbstractAbility.valueOf(abilityName.toUpperCase(Locale.ROOT));
@@ -246,7 +250,9 @@ public class MySqlStorageProvider extends StorageProvider {
                         statement.setInt(index++, playerData.getSkillLevel(skill));
                         statement.setDouble(index++, playerData.getSkillXp(skill));
                     }
-                    statement.setString(index++, playerData.getLocale().toString());
+                    Locale locale = playerData.getLocale();
+                    assert (null != locale);
+                    statement.setString(index++, locale.toString());
                     // Build stat modifiers json
                     StringBuilder modifiersJson = new StringBuilder();
                     if (playerData.getStatModifiers().size() > 0) {

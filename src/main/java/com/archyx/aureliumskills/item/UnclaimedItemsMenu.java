@@ -60,7 +60,9 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                         keyIntPair.setValue(leftoverItem.getAmount());
                         init(player, contents);
                     } else { // All items could not fit
-                        player.sendMessage(Lang.getMessage(MenuMessage.INVENTORY_FULL, playerData.getLocale()));
+                        String m = Lang.getMessage(MenuMessage.INVENTORY_FULL, playerData.getLocale());
+                        assert (null != m);
+                        player.sendMessage(m);
                         player.closeInventory();
                     }
                 }));
@@ -87,7 +89,9 @@ public class UnclaimedItemsMenu implements InventoryProvider {
             } else {
                 lore.add(" ");
             }
-            lore.add(Lang.getMessage(MenuMessage.CLICK_TO_CLAIM, playerData.getLocale()));
+            String t = Lang.getMessage(MenuMessage.CLICK_TO_CLAIM, playerData.getLocale());
+            assert (null != t);
+            lore.add(t);
             meta.setLore(lore);
         }
         displayItem.setItemMeta(meta);

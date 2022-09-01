@@ -24,7 +24,9 @@ public class UnlockedItem extends SkillLevelItem {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer position) {
         Locale locale = plugin.getLang().getLocale(player);
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         int level = getLevel(activeMenu, position);
         switch (placeholder) {
             case "level_unlocked":

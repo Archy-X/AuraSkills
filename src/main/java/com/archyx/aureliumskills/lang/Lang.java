@@ -130,7 +130,9 @@ public class Lang implements Listener {
 				MessageKey key = null;
 				// Try to find message key
 				for (MessageKey messageKey : MessageKey.values()) {
-					if (messageKey.getPath().equals(path)) {
+					String keyPath = messageKey.getPath();
+					assert (null != keyPath);
+					if (keyPath.equals(path)) {
 						key = messageKey;
 					}
 				}
@@ -151,7 +153,9 @@ public class Lang implements Listener {
 		}
 		// Check that each message key has a value
 		for (MessageKey key : MessageKey.values()) {
-			String message = config.getString(key.getPath());
+			String path = key.getPath();
+			assert (null != path);
+			String message = config.getString(path);
 			if (message == null && locale.equals(Locale.ENGLISH)) {
 				plugin.getLogger().warning("[" + locale.toLanguageTag() + "] Message with path " + key.getPath() + " not found!");
 			}

@@ -140,7 +140,7 @@ public class RequirementListener implements Listener {
         ItemStack item = event.getItem();
         if (item == null) return;
         if (item.getType() == Material.AIR) return;
-        checkItemRequirements(event.getPlayer(), event.getItem(), event);
+        checkItemRequirements(event.getPlayer(), item, event);
     }
 
     private void checkItemRequirements(Player player, ItemStack item, Cancellable event) {

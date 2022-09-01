@@ -34,7 +34,9 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
             case "sources_desc":
                 return Lang.getMessage(MenuMessage.SOURCES_DESC, locale);
             case "sources_click":
-                Skill skill = (Skill) activeMenu.getProperty("skill");
+                Object property = activeMenu.getProperty("skill");
+                assert (null != property);
+                Skill skill = (Skill) property;
                 return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_CLICK, locale),
                         "{skill}", skill.getDisplayName(locale));
         }

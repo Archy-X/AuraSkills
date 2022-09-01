@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Multipliers extends NBTAPIUser {
 
@@ -88,16 +89,7 @@ public class Multipliers extends NBTAPIUser {
     public void addLore(ModifierType type, ItemStack item, Skill skill, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore;
-            if (meta.getLore() != null) {
-                if (meta.getLore().size() > 0) {
-                    lore = meta.getLore();
-                } else {
-                    lore = new LinkedList<>();
-                }
-            } else {
-                lore = new LinkedList<>();
-            }
+            List<String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
             if (skill != null) { // Skill multiplier
                 CommandMessage message;
                 if (value >= 0) {
@@ -108,9 +100,11 @@ public class Multipliers extends NBTAPIUser {
                 if (lore.size() > 0) {
                     lore.add(" ");
                 }
-                lore.add(TextUtil.replace(Lang.getMessage(message, locale),
+                String t = TextUtil.replace(Lang.getMessage(message, locale),
                         "{skill}", skill.getDisplayName(locale),
-                        "{value}", NumberUtil.format1(Math.abs(value))));
+                        "{value}", NumberUtil.format1(Math.abs(value)));
+                assert (null != t);
+                lore.add(t);
             } else { // Global multiplier
                 CommandMessage message;
                 if (value >= 0) {
@@ -121,8 +115,10 @@ public class Multipliers extends NBTAPIUser {
                 if (lore.size() > 0) {
                     lore.add(" ");
                 }
-                lore.add(TextUtil.replace(Lang.getMessage(message, locale),
-                        "{value}", NumberUtil.format1(Math.abs(value))));
+                String t = TextUtil.replace(Lang.getMessage(message, locale),
+                        "{value}", NumberUtil.format1(Math.abs(value)));
+                assert (null != t);
+                lore.add(t);
             }
             meta.setLore(lore);
         }
@@ -131,7 +127,9 @@ public class Multipliers extends NBTAPIUser {
 
     private String getNBTName(@Nullable Skill skill) {
         if (skill != null) {
-            return TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
+            String name = TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
+            assert (null != name);
+            return name;
         } else {
             return "Global";
         }

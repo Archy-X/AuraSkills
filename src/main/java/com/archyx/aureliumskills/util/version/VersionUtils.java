@@ -59,6 +59,8 @@ public class VersionUtils {
             version = version.substring(0, index);
         }
 
+        assert (null != version);
+
         version = version.split(" ")[0]; // Remove extra words
 
         return version;

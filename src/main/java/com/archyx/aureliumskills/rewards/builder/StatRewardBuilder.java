@@ -29,6 +29,7 @@ public class StatRewardBuilder extends RewardBuilder {
     @Override
     public Reward build() {
         Validate.notNull(stat, "You must specify a stat");
+        assert (null != stat);
         return new StatReward(plugin, stat, value);
     }
 }

@@ -56,7 +56,9 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
                                     "{value_2}", getCurrentValue2(ability, playerData)));
                 }
             case "unlocked":
-                return Lang.getMessage(MenuMessage.UNLOCKED, locale);
+                String t = Lang.getMessage(MenuMessage.UNLOCKED, locale);
+                assert (null != t);
+                return t;
         }
         return placeholder;
     }
@@ -100,7 +102,9 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
 
     @Override
     public Set<Ability> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Set<Ability> unlockedAbilities = new HashSet<>();
         if (playerData != null) {

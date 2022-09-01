@@ -18,6 +18,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
+import java.util.Objects;
 
 public class YamlBackup extends BackupProvider {
 
@@ -67,7 +68,7 @@ public class YamlBackup extends BackupProvider {
             String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
                     , "{type}", "Yaml", "{file}", backupFile.getName());
             if (sender instanceof ConsoleCommandSender) {
-                message = ChatColor.stripColor(message);
+                message = Objects.requireNonNullElse(ChatColor.stripColor(message), "");
             }
             sender.sendMessage(message);
         } catch (Exception e) {

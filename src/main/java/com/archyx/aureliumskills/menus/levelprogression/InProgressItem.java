@@ -25,7 +25,9 @@ public class InProgressItem extends SkillLevelItem {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer position) {
         Locale locale = plugin.getLang().getLocale(player);
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return placeholder;
         int level = getLevel(activeMenu, position);
@@ -56,7 +58,9 @@ public class InProgressItem extends SkillLevelItem {
     @Override
     public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
         if (playerData != null) {

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Modifiers extends NBTAPIUser {
 
@@ -28,7 +29,9 @@ public class Modifiers extends NBTAPIUser {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
-        compound.setDouble(getName(stat), value);
+        String name = getName(stat);
+        assert (null != name);
+        compound.setDouble(name, value);
         return nbtItem.getItem();
     }
 
@@ -40,7 +43,9 @@ public class Modifiers extends NBTAPIUser {
             if (legacyModifiers.size() > 0) {
                 NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
                 for (StatModifier modifier : legacyModifiers) {
-                    compound.setDouble(getName(modifier.getStat()), modifier.getValue());
+                    String name = getName(modifier.getStat());
+                    assert (null != name);
+                    compound.setDouble(name, modifier.getValue());
                 }
                 for (String key : nbtItem.getKeys()) {
                     if (key.startsWith("skillsmodifier-" + type.name().toLowerCase(Locale.ENGLISH) + "-")) {
@@ -56,7 +61,9 @@ public class Modifiers extends NBTAPIUser {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
-        compound.removeKey(getName(stat));
+        String name = getName(stat);
+        assert (null != name);
+        compound.removeKey(name);
         ItemUtils.removeParentCompounds(compound);
         return nbtItem.getItem();
     }
@@ -127,24 +134,20 @@ public class Modifiers extends NBTAPIUser {
     public void addLore(ModifierType type, ItemStack item, Stat stat, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore;
-            if (meta.getLore() != null) {
-                if (meta.getLore().size() > 0) lore = meta.getLore();
-                else lore = new LinkedList<>();
-            }
-            else {
-                lore = new LinkedList<>();
-            }
+            List<String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
             CommandMessage message;
             if (value >= 0) {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE");
             } else {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
             }
-            lore.add(0, TextUtil.replace(Lang.getMessage(message, locale),
-                    "{stat}", stat.getDisplayName(locale),
-                    "{value}", NumberUtil.format1(Math.abs(value)),
-                    "{color}", stat.getColor(locale)));
+
+            String t =TextUtil.replace(Lang.getMessage(message, locale),
+                "{stat}", stat.getDisplayName(locale),
+                "{value}", NumberUtil.format1(Math.abs(value)),
+                "{color}", stat.getColor(locale));
+            assert (null != t);
+            lore.add(0, t);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
@@ -154,14 +157,18 @@ public class Modifiers extends NBTAPIUser {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore = meta.getLore();
-            if (lore != null && lore.size() > 0) lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
-            meta.setLore(lore);
+            if (lore != null) {
+                lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
+                meta.setLore(lore);
+            }
         }
         item.setItemMeta(meta);
     }
 
     private String getName(Stat stat) {
-        return TextUtil.capitalize(stat.name().toLowerCase(Locale.ENGLISH));
+        String name = stat.name();
+        assert (null != name);
+        return TextUtil.capitalize(name.toLowerCase(Locale.ENGLISH));
     }
     
 }

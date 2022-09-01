@@ -136,9 +136,11 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                     // Add lore
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.ALCHEMIST, "add_item_lore")) {
                         List<String> lore = new ArrayList<>();
-                        lore.add(TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
+                        String t = TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
                                 , "{duration}", PotionUtil.formatDuration(durationBonus)
-                                , "{value}", NumberUtil.format1((multiplier - 1) * 100)));
+                                , "{value}", NumberUtil.format1((multiplier - 1) * 100));
+                        assert (null != t);
+                        lore.add(t);
                         meta.setLore(lore);
                         item.setItemMeta(meta);
                     }
@@ -211,6 +213,8 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         ItemStack item = event.getPotion().getItem();
         if (item.getItemMeta() instanceof PotionMeta && item.getItemMeta() != null) {
             PotionMeta meta = (PotionMeta) item.getItemMeta();
+            if (meta == null)
+                return;
             PotionData potionData = meta.getBasePotionData();
             if (meta.hasCustomEffects() && OptionL.getBoolean(Option.ALCHEMY_IGNORE_CUSTOM_POTIONS)) return;
             // Get potion duration bonus from Alchemist ability

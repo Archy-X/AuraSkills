@@ -98,7 +98,9 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
 
     @Override
     public Set<MAbility> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Set<MAbility> unlockedManaAbilities = new HashSet<>();
         if (playerData != null) {

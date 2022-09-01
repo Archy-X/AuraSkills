@@ -77,7 +77,8 @@ public class TextUtil {
         if (strLen == 0) {
             return str;
         }
-
+        assert (null != str);
+        
         final int firstCodepoint = str.codePointAt(0);
         final int newCodePoint = Character.toTitleCase(firstCodepoint);
         if (firstCodepoint == newCodePoint) {

@@ -10,6 +10,7 @@ public class DataUtil {
         // Check if not null
         Object object = map.get(key);
         Validate.notNull(object, "Reward/loot requires entry with key " + key);
+        assert (null != object);
         return object;
     }
 

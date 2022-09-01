@@ -27,7 +27,9 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
         Locale locale = plugin.getLang().getLocale(player);
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         switch (placeholder) {
             case "your_ranking":
                 return Lang.getMessage(MenuMessage.YOUR_RANKING, locale);

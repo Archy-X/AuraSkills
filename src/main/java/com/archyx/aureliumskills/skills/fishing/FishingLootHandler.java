@@ -15,6 +15,8 @@ import com.archyx.lootmanager.loot.LootPool;
 import com.archyx.lootmanager.loot.LootTable;
 import com.archyx.lootmanager.loot.type.CommandLoot;
 import com.archyx.lootmanager.loot.type.ItemLoot;
+
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,10 +59,13 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
-
-        ItemStack originalItem = ((Item) event.getCaught()).getItemStack();
+        Entity caught = event.getCaught();
+        if (caught == null)
+            return;
+        ItemStack originalItem = ((Item)caught).getItemStack();
         FishingSource originalSource = FishingSource.valueOf(originalItem);
-
+        if (originalSource == null)
+            return;
         LootTable table = plugin.getLootTableManager().getLootTable(Skills.FISHING);
         if (table == null) return;
         for (LootPool pool : table.getPools()) {

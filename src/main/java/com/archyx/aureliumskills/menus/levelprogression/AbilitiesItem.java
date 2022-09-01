@@ -36,7 +36,9 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
             case "abilities_desc":
                 return Lang.getMessage(MenuMessage.ABILITIES_DESC, locale);
             case "abilities_click":
-                Skill skill = (Skill) menu.getProperty("skill");
+                Object property = menu.getProperty("skill");
+                assert (null != property);
+                Skill skill = (Skill) property;
                 return TextUtil.replace(Lang.getMessage(MenuMessage.ABILITIES_CLICK, locale), "{skill}", skill.getDisplayName(locale));
         }
         return placeholder;
@@ -52,7 +54,9 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Object property = activeMenu.getProperty("skill");
+        assert (null != property);
+        Skill skill = (Skill) property;
         if (skill == Skills.SORCERY) { // Disable for sorcery abilities REMOVE ONCE SORCERY ABILITIES ARE ADDED
             return null;
         }

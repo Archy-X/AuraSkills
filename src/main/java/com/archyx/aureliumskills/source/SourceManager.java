@@ -173,7 +173,7 @@ public class SourceManager {
 
     @NotNull
     public List<Source> getTag(SourceTag tag) {
-        return tags.getOrDefault(tag, new ArrayList<>());
+        return Objects.requireNonNullElseGet(tags.get(tag), ArrayList::new);
     }
 
     public Map<XMaterial, Double> getCustomBlocks(Skill skill) {

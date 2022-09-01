@@ -71,7 +71,7 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
             LootDropCause cause = getCause(pool);
 
             // Select pool and give loot
-            if (selectBlockLoot(pool, player, chance, originalSource, event, cause)) {
+            if (originalSource != null && selectBlockLoot(pool, player, chance, originalSource, event, cause)) {
                 break;
             }
         }

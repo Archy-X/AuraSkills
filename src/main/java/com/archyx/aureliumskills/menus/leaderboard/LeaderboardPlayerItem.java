@@ -77,7 +77,10 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
             }
             // Set the player skin on the head
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
-            meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
+            
+            if (meta != null)
+                meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
+            
             baseItem.setItemMeta(meta);
         }
         return baseItem;

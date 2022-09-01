@@ -213,7 +213,9 @@ public class AbilityManager {
         if (abilities == null) return;
         try {
             for (String abilityName : abilities.getKeys(false)) {
-                String newKey = TextUtil.replace(abilityName, "-", "_").toUpperCase();
+                String newKey = TextUtil.replace(abilityName, "-", "_");
+                assert (null != newKey);
+                newKey = newKey.toUpperCase();
                 if (isAbility(newKey)) {
                     Ability ability = Ability.valueOf(newKey);
                     boolean enabled = abilities.getBoolean(abilityName + ".enabled", true);
@@ -235,7 +237,9 @@ public class AbilityManager {
             ConfigurationSection manaAbilities = config.getConfigurationSection("mana-abilities");
             if (manaAbilities != null) {
                 for (String manaAbilityName : manaAbilities.getKeys(false)) {
-                    String newKey = TextUtil.replace(manaAbilityName, "-", "_").toUpperCase();
+                    String newKey = TextUtil.replace(manaAbilityName, "-", "_");
+                    assert (null != newKey);
+                    newKey = newKey.toUpperCase();
                     if (isManaAbility(newKey)) {
                         MAbility mAbility = MAbility.valueOf(newKey);
                         boolean enabled = manaAbilities.getBoolean(manaAbilityName + ".enabled", true);

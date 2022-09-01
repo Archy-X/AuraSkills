@@ -106,7 +106,9 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             scheduleUnready(player, locale);
         } else { // Cannot ready, send cooldown error
             if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
-                plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}",
+                String m = Lang.getMessage(ManaAbilityMessage.NOT_READY, locale);
+                assert (null != m);
+                plugin.getAbilityManager().sendMessage(player, m.replace("{cooldown}",
                         NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
                 manager.setErrorTimer(player.getUniqueId(), mAbility, 2);
             }
@@ -120,7 +122,9 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
                 if (!manager.isActivated(player.getUniqueId(), mAbility)) {
                     if (manager.isReady(player.getUniqueId(), mAbility)) {
                         manager.setReady(player.getUniqueId(), mAbility, false);
-                        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale));
+                        String m = Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale);
+                        assert (null != m);
+                        plugin.getAbilityManager().sendMessage(player, m);
                     }
                 }
             }
