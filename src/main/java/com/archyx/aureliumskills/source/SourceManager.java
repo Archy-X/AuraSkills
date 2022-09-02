@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -26,7 +27,7 @@ public class SourceManager {
 
     private final AureliumSkills plugin;
     private final Map<Source, Double> sources;
-    private final Map<SourceTag, List<Source>> tags;
+    private final Map<SourceTag, List<@NotNull Source>> tags;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
@@ -172,8 +173,9 @@ public class SourceManager {
     }
 
     @NotNull
-    public List<Source> getTag(SourceTag tag) {
-        return Objects.requireNonNullElseGet(tags.get(tag), ArrayList::new);
+    public List<@NotNull Source> getTag(SourceTag tag) {
+        @Nullable List<@NotNull Source> list = tags.get(tag);
+        return list != null ? list : new ArrayList<>();
     }
 
     public Map<XMaterial, Double> getCustomBlocks(Skill skill) {

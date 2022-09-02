@@ -69,7 +69,8 @@ public class PlayerData {
     }
 
     public int getSkillLevel(@Nullable Skill skill) {
-        return Objects.requireNonNullElse(skillLevels.get(skill), 1);
+        @Nullable Integer level = skillLevels.get(skill);
+        return level != null ? level : 1;
     }
 
     public void setSkillLevel(@NotNull Skill skill, int level) {
@@ -77,7 +78,8 @@ public class PlayerData {
     }
 
     public double getSkillXp(@Nullable Skill skill) {
-        return Objects.requireNonNullElse(skillXp.get(skill), 0.0);
+        @Nullable Double xp = skillXp.get(skill);
+        return xp != null ? xp : 0.0;
     }
 
     public void setSkillXp(@NotNull Skill skill, double xp) {
@@ -89,7 +91,8 @@ public class PlayerData {
     }
 
     public double getStatLevel(@Nullable Stat stat) {
-        return Objects.requireNonNullElse(statLevels.get(stat), 0.0);
+        @Nullable Double level = statLevels.get(stat);
+        return level != null ? level : 0.0;
     }
 
     public void setStatLevel(@NotNull Stat stat, double level) {
@@ -101,7 +104,7 @@ public class PlayerData {
     }
 
     public void addStatLevel(@NotNull Stat stat, int level) {
-        Double currentLevel = statLevels.get(stat);
+        @Nullable Double currentLevel = statLevels.get(stat);
         if (currentLevel != null) {
             statLevels.put(stat, currentLevel + level);
         } else {

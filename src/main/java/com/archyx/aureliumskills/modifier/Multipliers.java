@@ -18,10 +18,8 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class Multipliers extends NBTAPIUser {
 
@@ -90,7 +88,9 @@ public class Multipliers extends NBTAPIUser {
     public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, Skill skill, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            @NotNull List<@NotNull String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
+            @Nullable List<@NotNull String> lore = meta.getLore();
+            if (lore == null)
+                lore = new ArrayList<>();
             if (skill != null) { // Skill multiplier
                 CommandMessage message;
                 if (value >= 0) {

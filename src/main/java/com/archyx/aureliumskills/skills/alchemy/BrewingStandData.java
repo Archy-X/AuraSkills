@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.skills.alchemy;
 
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class BrewingStandData {
 
@@ -17,7 +17,10 @@ public class BrewingStandData {
     }
 
     public boolean isSlotBrewed(int slot) {
-        return Objects.requireNonNullElse(potionSlots.get(slot), false);
+        @Nullable Boolean isBrewed = potionSlots.get(slot);
+        if (isBrewed == null)
+            throw new IndexOutOfBoundsException();
+        return isBrewed;
     }
 
     public void setSlotBrewed(int slot, boolean isSlotBrewed) {

@@ -33,7 +33,7 @@ public class SourceContextManager extends ContextManager {
                     contexts.add(source);
                 } else {
                     SourceTag tag = SourceTag.valueOf(name.toUpperCase(Locale.ROOT));
-                    List<Source> sourceList = plugin.getSourceManager().getTag(tag);
+                    @Nullable List<@NotNull Source> sourceList = plugin.getSourceManager().getTag(tag);
                     contexts.addAll(sourceList);
                 }
             }

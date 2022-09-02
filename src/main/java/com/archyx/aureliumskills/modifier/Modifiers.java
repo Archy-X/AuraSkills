@@ -16,10 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class Modifiers extends NBTAPIUser {
 
@@ -136,7 +134,9 @@ public class Modifiers extends NBTAPIUser {
     public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Stat stat, double value, @Nullable Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            @NotNull List<@NotNull String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
+            @Nullable List<@NotNull String> lore = meta.getLore();
+            if (lore == null)
+                lore = new ArrayList<>();
             CommandMessage message;
             if (value >= 0) {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE");

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class RewardTable {
 
@@ -27,7 +26,10 @@ public class RewardTable {
     }
 
     public @NotNull ImmutableList<@NotNull Reward> getRewards(int level) {
-        return ImmutableList.copyOf(Objects.requireNonNullElseGet(rewards.get(level), ArrayList::new));
+        @Nullable List<@NotNull Reward> list = rewards.get(level);
+        if (list == null)
+            list = new ArrayList<>();
+        return ImmutableList.copyOf(list);
     }
 
     public Map<Integer, List<@NotNull Reward>> getRewardsMap() {
