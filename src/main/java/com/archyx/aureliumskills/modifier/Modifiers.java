@@ -134,7 +134,9 @@ public class Modifiers extends NBTAPIUser {
     public void addLore(ModifierType type, ItemStack item, Stat stat, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
+            List<String> lore = meta.getLore();
+            if (lore == null)
+                lore = new ArrayList<>();
             CommandMessage message;
             if (value >= 0) {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE");

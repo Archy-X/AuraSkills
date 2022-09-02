@@ -25,7 +25,10 @@ public class RewardTable {
     }
 
     public ImmutableList<Reward> getRewards(int level) {
-        return ImmutableList.copyOf(Objects.requireNonNullElseGet(rewards.get(level), ArrayList::new));
+        List<Reward> list = rewards.get(level);
+        if (list == null)
+            list = new ArrayList<>();
+        return ImmutableList.copyOf(list);
     }
 
     public Map<Integer, List<Reward>> getRewardsMap() {

@@ -68,7 +68,8 @@ public class YamlBackup extends BackupProvider {
             String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
                     , "{type}", "Yaml", "{file}", backupFile.getName());
             if (sender instanceof ConsoleCommandSender) {
-                message = Objects.requireNonNullElse(ChatColor.stripColor(message), "");
+                String m = ChatColor.stripColor(message);
+                message = m != null ? m : "";
             }
             sender.sendMessage(message);
         } catch (Exception e) {

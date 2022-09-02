@@ -89,7 +89,9 @@ public class Multipliers extends NBTAPIUser {
     public void addLore(ModifierType type, ItemStack item, Skill skill, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
+            List<String> lore = meta.getLore();
+            if (lore == null)
+                lore = new ArrayList<>();
             if (skill != null) { // Skill multiplier
                 CommandMessage message;
                 if (value >= 0) {

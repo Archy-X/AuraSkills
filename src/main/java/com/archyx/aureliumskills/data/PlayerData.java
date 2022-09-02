@@ -69,7 +69,8 @@ public class PlayerData {
     }
 
     public int getSkillLevel(Skill skill) {
-        return Objects.requireNonNullElse(skillLevels.get(skill), 1);
+        Integer level = skillLevels.get(skill);
+        return level != null ? level : 1;
     }
 
     public void setSkillLevel(Skill skill, int level) {
@@ -77,7 +78,8 @@ public class PlayerData {
     }
 
     public double getSkillXp(Skill skill) {
-        return Objects.requireNonNullElse(skillXp.get(skill), 0.0);
+        Double xp = skillXp.get(skill);
+        return xp != null ? xp : 0.0;
     }
 
     public void setSkillXp(Skill skill, double xp) {
@@ -89,7 +91,8 @@ public class PlayerData {
     }
 
     public double getStatLevel(Stat stat) {
-        return Objects.requireNonNullElse(statLevels.get(stat), 0.0);
+        Double level = statLevels.get(stat);
+        return level != null ? level : 0.0;
     }
 
     public void setStatLevel(Stat stat, double level) {
