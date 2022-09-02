@@ -13,12 +13,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class ExcavationLeveler extends SkillLeveler implements Listener{
 
 	private final ExcavationAbilities excavationAbilities;
 
-	public ExcavationLeveler(AureliumSkills plugin) {
+	public ExcavationLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.EXCAVATOR);
 		excavationAbilities = new ExcavationAbilities(plugin);
 	}

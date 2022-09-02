@@ -19,19 +19,21 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class ArmorModifierListener implements Listener {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final Modifiers modifiers;
     private final Requirements requirements;
     private final Multipliers multipliers;
     private final StatLeveler statLeveler;
     private final Map<UUID, Map<ArmorType, ItemStack>> storedArmor;
 
-    public ArmorModifierListener(AureliumSkills plugin) {
+    public ArmorModifierListener(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.modifiers = new Modifiers(plugin);
         this.requirements = new Requirements(plugin);
@@ -73,7 +75,7 @@ public class ArmorModifierListener implements Listener {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             // Equip
-            ItemStack armorPiece = event.getNewArmorPiece();
+            @Nullable ItemStack armorPiece = event.getNewArmorPiece();
             if (armorPiece != null && armorPiece.getType() != Material.AIR) {
                 if (requirements.meetsRequirements(ModifierType.ARMOR, armorPiece, player)) {
                     for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, armorPiece)) {

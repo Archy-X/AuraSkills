@@ -29,6 +29,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
@@ -38,7 +40,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     private Class<?> entityLivingClass;
     private Class<?> craftPlayerClass;
 
-    public HealingAbilities(AureliumSkills plugin) {
+    public HealingAbilities(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.HEALING);
     }
 
@@ -71,7 +73,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         }
         if (hostile) {
             if (entity.getKiller() == null) return;
-            Player player = entity.getKiller();
+            @Nullable Player player = entity.getKiller();
             if (player == null)
                 return;
             if (player.equals(entity)) return;

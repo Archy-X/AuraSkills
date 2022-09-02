@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -24,7 +25,7 @@ public class LockedItem extends SkillLevelItem {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer position) {
         Locale locale = plugin.getLang().getLocale(player);
-        Object property = activeMenu.getProperty("skill");
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         int level = getLevel(activeMenu, position);

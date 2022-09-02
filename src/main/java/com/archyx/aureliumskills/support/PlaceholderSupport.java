@@ -16,6 +16,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +25,7 @@ import java.util.Locale;
 public class PlaceholderSupport extends PlaceholderExpansion {
 
     private final AureliumSkills plugin;
-    private final String[] xpIdentifiers = {"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
+    private final @NotNull String[] xpIdentifiers = {"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
 
     public PlaceholderSupport(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -40,22 +42,22 @@ public class PlaceholderSupport extends PlaceholderExpansion {
     }
 
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "aureliumskills";
     }
 
     @Override
-    public String getAuthor() {
+    public @NotNull String getAuthor() {
         return plugin.getDescription().getAuthors().toString();
     }
 
     @Override
-    public String getVersion() {
+    public @NotNull String getVersion() {
         return plugin.getDescription().getVersion();
     }
 
     @Override
-    public String onPlaceholderRequest(Player player, String identifier) {
+    public @Nullable String onPlaceholderRequest(@Nullable Player player, @NotNull String identifier) {
         if (player == null) {
             return "";
         }
@@ -139,7 +141,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets stat values
         for (Stat stat : plugin.getStatRegistry().getStats()) {
-            String name = stat.name();
+            @Nullable String name = stat.name();
             assert (null != name);
             if (identifier.equals(name.toLowerCase(Locale.ENGLISH))) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -171,7 +173,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.startsWith("lb_")) {
-            String leaderboardType = TextUtil.replace(identifier, "lb_", "");
+            @Nullable String leaderboardType = TextUtil.replace(identifier, "lb_", "");
             assert (null != leaderboardType);
             if (leaderboardType.startsWith("power_")) {
                 int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", ""));
@@ -258,7 +260,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.startsWith("rank_")) {
-            String skillName = TextUtil.replace(identifier, "rank_", "");
+            @Nullable String skillName = TextUtil.replace(identifier, "rank_", "");
             assert (null != skillName);
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
@@ -268,7 +270,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         for (String id : xpIdentifiers) {
             if (identifier.startsWith(id)) {
-                String skillName = TextUtil.replace(identifier, id, "");
+                @Nullable String skillName = TextUtil.replace(identifier, id, "");
                 assert (null != skillName);
                 Skill skill = plugin.getSkillRegistry().getSkill(skillName);
                 if (skill != null) {
@@ -301,7 +303,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             if (identifier.equals("multiplier")) {
                 return NumberUtil.format2(plugin.getLeveler().getMultiplier(player));
             }
-            String skillName = TextUtil.replace(identifier, "multiplier_", "");
+            @Nullable String skillName = TextUtil.replace(identifier, "multiplier_", "");
             assert (null != skillName);
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
@@ -313,7 +315,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             if (identifier.equals("multiplier_percent")) {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player) - 1) * 100));
             }
-            String skillName = TextUtil.replace(identifier, "multiplier_percent_", "");
+            @Nullable String skillName = TextUtil.replace(identifier, "multiplier_percent_", "");
             assert (null != skillName);
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {

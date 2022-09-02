@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -39,9 +40,9 @@ public class SkillBossBar implements Listener {
     private Map<Skill, BarColor> colors;
     private Map<Skill, BarStyle> styles;
     private final NumberFormat nf = new DecimalFormat("#.#");
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
 
-    public SkillBossBar(AureliumSkills plugin) {
+    public SkillBossBar(@NotNull AureliumSkills plugin) {
         this.bossBars = new HashMap<>();
         this.currentActions = new HashMap<>();
         this.plugin = plugin;
@@ -100,7 +101,7 @@ public class SkillBossBar implements Listener {
         singleBossBars.clear();
     }
 
-    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+    public void sendBossBar(@NotNull Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
         if (maxed && !OptionL.getBoolean(Option.BOSS_BAR_DISPLAY_MAXED)) { // display-maxed option
             return;
         }
@@ -263,13 +264,13 @@ public class SkillBossBar implements Listener {
         }
     }
 
-    private BarColor getColor(Skill skill) {
+    private @NotNull BarColor getColor(Skill skill) {
         BarColor color = colors.get(skill);
         if (color == null) color = BarColor.GREEN;
         return color;
     }
 
-    private BarStyle getStyle(Skill skill) {
+    private @NotNull BarStyle getStyle(Skill skill) {
         BarStyle style = styles.get(skill);
         if (style == null) style = BarStyle.SOLID;
         return style;

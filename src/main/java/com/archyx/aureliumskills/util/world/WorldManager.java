@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class WorldManager {
         if (location.getWorld() == null) {
             return false;
         }
-        World world = location.getWorld();
+        @Nullable World world = location.getWorld();
         if (world == null)
             return false;
         return disabledWorlds.contains(world.getName()) || blockedWorlds.contains(world.getName());
@@ -55,7 +56,7 @@ public class WorldManager {
         if (location.getWorld() == null) {
             return false;
         }
-        World world = location.getWorld();
+        @Nullable World world = location.getWorld();
         if (world == null)
             return false;
         return disabledWorlds.contains(world.getName());
@@ -65,7 +66,7 @@ public class WorldManager {
         if (location.getWorld() == null) {
             return false;
         }
-        World world = location.getWorld();
+        @Nullable World world = location.getWorld();
         if (world == null)
             return false;
         return blockedCheckBlockReplaceWorlds.contains(world.getName());

@@ -6,6 +6,8 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -40,7 +42,7 @@ public enum MAbility implements AbstractAbility {
             new String[] {"base_duration", "duration_per_level"}, new Object[] {5.0, 4.0},
             LightningBlade.class);
 
-    private final Supplier<Skill> skill;
+    private final Supplier<@NotNull Skill> skill;
     private final double baseValue;
     private final double valuePerLevel;
     private final double baseCooldown;
@@ -50,7 +52,7 @@ public enum MAbility implements AbstractAbility {
     private Map<String, OptionValue> options;
     private Class<? extends ManaAbilityProvider> provider;
 
-    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
+    MAbility(Supplier<@NotNull Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
         this.skill = skill;
         this.baseValue = baseValue;
         this.valuePerLevel = valuePerLevel;
@@ -60,7 +62,7 @@ public enum MAbility implements AbstractAbility {
         this.manaCostPerLevel = manaCostPerLevel;
     }
 
-    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues) {
+    MAbility(Supplier<@NotNull Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues) {
         this(skill, baseValue, valuePerLevel, baseCooldown, cooldownPerLevel, baseManaCost, manaCostPerLevel);
         this.options = new HashMap<>();
         for (int i = 0; i < optionKeys.length; i++) {
@@ -70,13 +72,13 @@ public enum MAbility implements AbstractAbility {
         }
     }
 
-    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues, Class<? extends ManaAbilityProvider> provider) {
+    MAbility(Supplier<@NotNull Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues, Class<? extends ManaAbilityProvider> provider) {
         this(skill, baseValue, valuePerLevel, baseCooldown, cooldownPerLevel, baseManaCost, manaCostPerLevel, optionKeys, optionValues);
         this.provider = provider;
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return skill.get();
     }
 

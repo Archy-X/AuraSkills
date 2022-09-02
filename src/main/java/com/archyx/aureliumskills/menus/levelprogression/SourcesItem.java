@@ -14,6 +14,7 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -34,7 +35,7 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
             case "sources_desc":
                 return Lang.getMessage(MenuMessage.SOURCES_DESC, locale);
             case "sources_click":
-                Object property = activeMenu.getProperty("skill");
+                @Nullable Object property = activeMenu.getProperty("skill");
                 assert (null != property);
                 Skill skill = (Skill) property;
                 return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_CLICK, locale),

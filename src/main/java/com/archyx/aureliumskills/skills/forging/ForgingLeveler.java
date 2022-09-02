@@ -25,13 +25,15 @@ import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 
 public class ForgingLeveler extends SkillLeveler implements Listener {
 
-	public ForgingLeveler(AureliumSkills plugin) {
+	public ForgingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.FORGER);
 	}
 
@@ -64,7 +66,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 					if (event.getSlot() == 2) {
 						ItemStack addedItem = inventory.getItem(1);
 						ItemStack baseItem = inventory.getItem(0);
-						Location location = inventory.getLocation();
+						@Nullable Location location = inventory.getLocation();
 						if (location != null) {
 							if (blockXpGainLocation(location, player)) return;
 						} else {
@@ -90,7 +92,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 					}
 				} else if (inventory.getType().toString().equals("GRINDSTONE")) {
 					if (event.getSlotType() != InventoryType.SlotType.RESULT) return;
-					Location location = inventory.getLocation();
+					@Nullable Location location = inventory.getLocation();
 					if (location != null) {
 						if (blockXpGainLocation(location, player)) return;
 					} else {
@@ -112,13 +114,13 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 	private int getTotalLevel(ItemStack item) {
 		int totalLevel = 0;
 		if (item != null) {
-			for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
+			for (Map.Entry<@NotNull Enchantment, @NotNull Integer> entry : item.getEnchantments().entrySet()) {
 				if (isDisenchantable(entry.getKey())) {
 					totalLevel += entry.getValue();
 				}
 			}
 			if (item.getItemMeta() instanceof EnchantmentStorageMeta) {
-				EnchantmentStorageMeta esm = (EnchantmentStorageMeta) item.getItemMeta();
+				@Nullable EnchantmentStorageMeta esm = (EnchantmentStorageMeta) item.getItemMeta();
 				if (esm != null)
 					for (Map.Entry<Enchantment, Integer> entry : esm.getStoredEnchants().entrySet()) {
 						if (isDisenchantable(entry.getKey())) {

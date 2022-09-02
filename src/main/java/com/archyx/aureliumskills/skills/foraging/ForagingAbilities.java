@@ -24,6 +24,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -31,7 +33,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 
 	private final Random r = new Random();
 	
-	public ForagingAbilities(AureliumSkills plugin) {
+	public ForagingAbilities(@NotNull AureliumSkills plugin) {
 		super(plugin, Skills.FORAGING);
 	}
 	
@@ -79,7 +81,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 			if (ItemUtils.isArmor(event.getItem().getType())) {
 				//If last damage was from entity
 				if (event.getPlayer().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-					EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event.getPlayer().getLastDamageCause();
+					@Nullable EntityDamageByEntityEvent e = (EntityDamageByEntityEvent) event.getPlayer().getLastDamageCause();
 					//If last damage was from player
 					if (e != null && e.getDamager() instanceof Player) {
 						Player player = (Player) e.getDamager();

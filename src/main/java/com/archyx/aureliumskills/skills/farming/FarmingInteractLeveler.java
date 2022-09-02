@@ -12,10 +12,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class FarmingInteractLeveler extends FarmingLeveler implements Listener {
 
-    public FarmingInteractLeveler(AureliumSkills plugin) {
+    public FarmingInteractLeveler(@NotNull AureliumSkills plugin) {
         super(plugin);
     }
 

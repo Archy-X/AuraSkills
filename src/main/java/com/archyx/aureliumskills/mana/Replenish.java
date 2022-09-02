@@ -16,12 +16,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 public class Replenish extends ReadiedManaAbility {
 
-    public Replenish(AureliumSkills plugin) {
-        super(plugin, MAbility.REPLENISH, ManaAbilityMessage.REPLENISH_START, ManaAbilityMessage.REPLENISH_END, new String[] {"HOE"},
-                new Action[] {Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
+    public Replenish(@NotNull AureliumSkills plugin) {
+        super(plugin, MAbility.REPLENISH, ManaAbilityMessage.REPLENISH_START, ManaAbilityMessage.REPLENISH_END, new @NotNull String[] {"HOE"},
+                new @NotNull Action[] {Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
     }
 
     @Override

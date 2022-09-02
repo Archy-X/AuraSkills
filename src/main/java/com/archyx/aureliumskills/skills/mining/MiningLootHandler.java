@@ -9,10 +9,11 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.lootmanager.loot.LootPool;
 import org.bukkit.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 public class MiningLootHandler extends BlockLootHandler {
 
-    public MiningLootHandler(AureliumSkills plugin) {
+    public MiningLootHandler(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.MINING, Ability.MINER);
     }
 

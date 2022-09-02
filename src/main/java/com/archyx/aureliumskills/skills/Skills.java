@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.SkillMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.google.common.collect.ImmutableList;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -45,16 +47,16 @@ public enum Skills implements Skill {
 	FORGING(ImmutableList.of(() -> Ability.DISENCHANTER, () -> Ability.FORGER, () -> Ability.REPAIRING, () -> Ability.ANVIL_MASTER, () -> Ability.SKILL_MENDER),
 			null);
 
-	private final ImmutableList<Supplier<Ability>> abilities;
-	private final MAbility manaAbility;
+	private final @NotNull ImmutableList<@NotNull Supplier<@NotNull Ability>> abilities;
+	private final @Nullable MAbility manaAbility;
 	
-	Skills(ImmutableList<Supplier<Ability>> abilities, MAbility manaAbility) {
+	Skills(@NotNull ImmutableList<@NotNull Supplier<@NotNull Ability>> abilities, @Nullable MAbility manaAbility) {
 		this.abilities = abilities;
 		this.manaAbility = manaAbility;
 	}
 
 	@Override
-	public ImmutableList<Supplier<Ability>> getAbilities() {
+	public @NotNull ImmutableList<@NotNull Supplier<@NotNull Ability>> getAbilities() {
 		return abilities;
 	}
 
@@ -75,7 +77,7 @@ public enum Skills implements Skill {
 	}
 
 	@Override
-	public Ability getXpMultiplierAbility() {
+	public @NotNull Ability getXpMultiplierAbility() {
 		if (abilities.size() == 5) {
 			return abilities.get(1).get();
 		} else {

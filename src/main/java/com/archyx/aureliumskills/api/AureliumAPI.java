@@ -14,6 +14,7 @@ import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class AureliumAPI {
      * Sets the {@link AureliumSkills} instance that will be used by all methods.
      * @param plugin AureliumSkills instance
      */
-    public static void setPlugin(AureliumSkills plugin) {
+    public static void setPlugin(@NotNull AureliumSkills plugin) {
         if (AureliumAPI.plugin == null) {
             AureliumAPI.plugin = plugin;
         } else {
@@ -51,7 +52,7 @@ public class AureliumAPI {
      * Gets the current mana of a player
      * @return the current mana of a player
      */
-    public static double getMana(Player player) {
+    public static double getMana(@NotNull Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getMana();
@@ -60,7 +61,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static double getMana(UUID playerId) {
+    public static double getMana(@NotNull UUID playerId) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getMana();
@@ -72,7 +73,7 @@ public class AureliumAPI {
      * Gets the max mana of a player
      * @return the max mana of a player
      */
-    public static double getMaxMana(Player player) {
+    public static double getMaxMana(@NotNull Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getMaxMana();
@@ -85,7 +86,7 @@ public class AureliumAPI {
      * Gets the amount of mana a player regenerates every second
      * @return the mana regeneration per second of a player
      */
-    public static double getManaRegen(Player player) {
+    public static double getManaRegen(@NotNull Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getManaRegen();
@@ -95,7 +96,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static double getMaxMana(UUID playerId) {
+    public static double getMaxMana(@NotNull UUID playerId) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getMaxMana();
@@ -107,7 +108,7 @@ public class AureliumAPI {
     /**
      * Sets a player's mana to an amount
      */
-    public static void setMana(Player player, double amount) {
+    public static void setMana(@NotNull Player player, double amount) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.setMana(amount);
@@ -115,7 +116,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static void setMana(UUID playerId, double amount) {
+    public static void setMana(@NotNull UUID playerId, double amount) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.setMana(amount);
@@ -125,14 +126,14 @@ public class AureliumAPI {
     /**
      * Adds Skill XP to a player for a certain skill, and includes multiplier permissions
      */
-    public static void addXp(Player player, Skill skill, double amount) {
+    public static void addXp(@NotNull Player player, @NotNull Skill skill, double amount) {
         plugin.getLeveler().addXp(player, skill, amount);
     }
 
     /**
      * Adds Skill XP to a player for a certain skill, without multipliers
      */
-    public static void addXpRaw(Player player, Skill skill, double amount) {
+    public static void addXpRaw(@NotNull Player player, @NotNull Skill skill, double amount) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.addSkillXp(skill, amount);
@@ -145,7 +146,7 @@ public class AureliumAPI {
      * No longer works in beta, offline players are not stored in memory anymore.
      */
     @Deprecated
-    public static boolean addXpOffline(OfflinePlayer player, Skill skill, double amount) {
+    public static boolean addXpOffline(@NotNull OfflinePlayer player, @NotNull Skill skill, double amount) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player.getUniqueId());
         if (playerData != null) {
             playerData.addSkillXp(skill, amount);
@@ -157,7 +158,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static boolean addXpOffline(UUID playerId, Skill skill, double amount) {
+    public static boolean addXpOffline(@NotNull UUID playerId, @NotNull Skill skill, double amount) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.addSkillXp(skill, amount);
@@ -172,7 +173,7 @@ public class AureliumAPI {
      * Gets the skill level of a player
      * @return the skill level of a player, or 1 if player does not have a skills profile
      */
-    public static int getSkillLevel(Player player, Skill skill) {
+    public static int getSkillLevel(@NotNull Player player, @NotNull Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getSkillLevel(skill);
@@ -183,7 +184,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static int getSkillLevel(UUID playerId, Skill skill) {
+    public static int getSkillLevel(@NotNull UUID playerId, @NotNull Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getSkillLevel(skill);
@@ -199,7 +200,7 @@ public class AureliumAPI {
      * @param skill The skill to get
      * @return The current skill xp
      */
-    public static double getXp(Player player, Skill skill) {
+    public static double getXp(@NotNull Player player, @NotNull Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getSkillXp(skill);
@@ -210,7 +211,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static double getXp(UUID playerId, Skill skill) {
+    public static double getXp(@NotNull UUID playerId, @NotNull Skill skill) {
         PlayerData playerSkill = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerSkill != null) {
             return playerSkill.getSkillXp(skill);
@@ -226,7 +227,7 @@ public class AureliumAPI {
      * @param stat The stat to get
      * @return The stat level
      */
-    public static double getStatLevel(Player player, Stat stat) {
+    public static double getStatLevel(@NotNull Player player, @NotNull Stat stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -237,7 +238,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static double getStatLevel(UUID playerId, Stat stat) {
+    public static double getStatLevel(@NotNull UUID playerId, @NotNull Stat stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -254,7 +255,7 @@ public class AureliumAPI {
      * @return The stat level without modifiers
      */
     @Deprecated
-    public static double getBaseStatLevel(Player player, Stat stat) {
+    public static double getBaseStatLevel(@NotNull Player player, @NotNull Stat stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -265,7 +266,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static double getBaseStatLevel(UUID playerId, Stat stat) {
+    public static double getBaseStatLevel(@NotNull UUID playerId, @NotNull Stat stat) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
@@ -283,7 +284,7 @@ public class AureliumAPI {
      * @param value The value of the modifier
      * @return true if a modifier was added, false if the player does not have a skills profile
      */
-    public static boolean addStatModifier(Player player, String name, Stat stat, double value) {
+    public static boolean addStatModifier(@NotNull Player player, @NotNull String name, @NotNull Stat stat, double value) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.addStatModifier(new StatModifier(name, stat, value));
@@ -293,7 +294,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static boolean addStatModifier(UUID playerId, String name, Stat stat, double value) {
+    public static boolean addStatModifier(@NotNull UUID playerId, @NotNull String name, @NotNull Stat stat, double value) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.addStatModifier(new StatModifier(name, stat, value));
@@ -308,7 +309,7 @@ public class AureliumAPI {
      * @param name The name of the stat modifier
      * @return true if the operation was successful, false if the stat modifier was not found or the player does not have a skills profile
      */
-    public static boolean removeStatModifier(Player player, String name) {
+    public static boolean removeStatModifier(@NotNull Player player, @NotNull String name) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.removeStatModifier(name);
@@ -318,7 +319,7 @@ public class AureliumAPI {
     }
 
     @Deprecated
-    public static boolean removeStatModifier(UUID playerId, String name) {
+    public static boolean removeStatModifier(@NotNull UUID playerId, @NotNull String name) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.removeStatModifier(name);
@@ -337,7 +338,7 @@ public class AureliumAPI {
      * @param lore Whether to add lore. Added lore will use the default language.
      * @return A new ItemStack with the item modifier
      */
-    public static ItemStack addItemModifier(ItemStack item, Stat stat, double value, boolean lore) {
+    public static @NotNull ItemStack addItemModifier(@NotNull ItemStack item, @NotNull Stat stat, double value, boolean lore) {
         Modifiers modifiers = new Modifiers(plugin);
         ItemStack modifiedItem = modifiers.addModifier(ModifierType.ITEM, item, stat, value);
         if (lore) {
@@ -356,7 +357,7 @@ public class AureliumAPI {
      * @param lore Whether to add lore. Added lore will use the default language.
      * @return A new ItemStack with the armor modifier
      */
-    public static ItemStack addArmorModifier(ItemStack item, Stat stat, double value, boolean lore) {
+    public static @NotNull ItemStack addArmorModifier(@NotNull ItemStack item, @NotNull Stat stat, double value, boolean lore) {
         Modifiers modifiers = new Modifiers(plugin);
         ItemStack modifiedItem = modifiers.addModifier(ModifierType.ARMOR, item, stat, value);
         if (lore) {
@@ -375,7 +376,7 @@ public class AureliumAPI {
      * @param lore Whether to add lore. Added lore will use the default language.
      * @return A new ItemStack with the item modifier
      */
-    public static ItemStack addItemMultiplier(ItemStack item, Skill skill, double value, boolean lore) {
+    public static @NotNull ItemStack addItemMultiplier(@NotNull ItemStack item, @NotNull Skill skill, double value, boolean lore) {
         Multipliers multipliers = new Multipliers(plugin);
         ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
         if (lore) {
@@ -394,7 +395,7 @@ public class AureliumAPI {
      * @param lore Whether to add lore. Added lore will use the default language.
      * @return A new ItemStack with the armor modifier
      */
-    public static ItemStack addArmorMultiplier(ItemStack item, Skill skill, double value, boolean lore) {
+    public static @NotNull ItemStack addArmorMultiplier(@NotNull ItemStack item, @NotNull Skill skill, double value, boolean lore) {
         Multipliers multipliers = new Multipliers(plugin);
         ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
         if (lore) {

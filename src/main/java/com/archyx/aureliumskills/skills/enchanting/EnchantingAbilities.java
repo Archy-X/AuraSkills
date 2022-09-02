@@ -19,6 +19,8 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Random;
@@ -27,7 +29,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
 
     private final Random random = new Random();
 
-    public EnchantingAbilities(AureliumSkills plugin) {
+    public EnchantingAbilities(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.ENCHANTING);
         enchantedStrength();
     }
@@ -58,7 +60,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         if (blockDisabled(Ability.XP_WARRIOR)) return;
         LivingEntity entity = event.getEntity();
         if (entity.getKiller() != null) {
-            Player player = entity.getKiller();
+            @Nullable Player player = entity.getKiller();
             if (player != null && blockAbility(player)) return;
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {

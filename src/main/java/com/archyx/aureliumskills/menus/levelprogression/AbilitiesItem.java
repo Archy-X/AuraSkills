@@ -15,6 +15,8 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,7 +30,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "abilities":
@@ -36,7 +38,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
             case "abilities_desc":
                 return Lang.getMessage(MenuMessage.ABILITIES_DESC, locale);
             case "abilities_click":
-                Object property = menu.getProperty("skill");
+                @Nullable Object property = menu.getProperty("skill");
                 assert (null != property);
                 Skill skill = (Skill) property;
                 return TextUtil.replace(Lang.getMessage(MenuMessage.ABILITIES_CLICK, locale), "{skill}", skill.getDisplayName(locale));
@@ -45,7 +47,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(@NotNull Player player, @NotNull InventoryClickEvent event, @NotNull ItemStack item, @NotNull SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("skill", activeMenu.getProperty("skill"));
         properties.put("previous_menu", "level_progression");
@@ -53,8 +55,8 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("skill");
+    public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         if (skill == Skills.SORCERY) { // Disable for sorcery abilities REMOVE ONCE SORCERY ABILITIES ARE ADDED
@@ -62,7 +64,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
         }
         // Check if the skill has an enabled ability
         boolean hasEnabledAbility = false;
-        for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
+        for (Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
            if (plugin.getAbilityManager().isEnabled(abilitySupplier.get())) {
                 hasEnabledAbility = true;
                 break;

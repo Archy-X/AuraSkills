@@ -17,10 +17,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class FightingLeveler extends SkillLeveler implements Listener {
 
-	public FightingLeveler(AureliumSkills plugin) {
+	public FightingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.FIGHTER);
 	}
 
@@ -31,7 +33,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 			LivingEntity e = event.getEntity();
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
+					@Nullable EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
 					if (ee != null && ee.getDamager() instanceof Player) {
 						EntityType type = e.getType();
 						Player p = (Player) ee.getDamager();

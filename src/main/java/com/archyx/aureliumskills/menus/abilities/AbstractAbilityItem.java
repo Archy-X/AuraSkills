@@ -12,6 +12,8 @@ import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,21 +29,21 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
     }
 
     @Override
-    public Class<Ability> getContext() {
+    public Class<@NotNull Ability> getContext() {
         return Ability.class;
     }
 
     @Override
     public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Ability ability) {
-        Object property = activeMenu.getProperty("skill");
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         Object obj =  activeMenu.getItemOption(itemName, "slots");
         if (obj instanceof List<?>) {
-            List<String> slots = DataUtil.castStringList(obj);
+            List<@NotNull String> slots = DataUtil.castStringList(obj);
             // Get the index of the ability
             int index = 0;
-            for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
+            for (Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
                 Ability skillAbility = abilitySupplier.get();
                 if (plugin.getAbilityManager().isEnabled(skillAbility) && OptionL.isEnabled(skill)) {
                     if (skillAbility == ability) {
@@ -57,7 +59,7 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
         }
         // Default slots
         List<Ability> abilityList = new ArrayList<>();
-        for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
+        for (Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
             Ability skillAbility = abilitySupplier.get();
             if (plugin.getAbilityManager().isEnabled(skillAbility) && OptionL.isEnabled(skill)) {
                 abilityList.add(abilitySupplier.get());
@@ -80,7 +82,7 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Ability ability) {
+    public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull Ability ability) {
         // Hide abilities that are disabled
         if (!plugin.getAbilityManager().isEnabled(ability)) {
             return null;

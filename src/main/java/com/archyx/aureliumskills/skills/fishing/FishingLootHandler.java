@@ -24,6 +24,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -31,12 +33,12 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
     private final Random random = new Random();
 
-    public FishingLootHandler(AureliumSkills plugin) {
+    public FishingLootHandler(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.FISHING, Ability.FISHER);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onFish(PlayerFishEvent event) {
+    public void onFish(@NotNull PlayerFishEvent event) {
         if (!OptionL.isEnabled(Skills.FISHING)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
@@ -59,11 +61,11 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
-        Entity caught = event.getCaught();
+        @Nullable Entity caught = event.getCaught();
         if (caught == null)
             return;
         ItemStack originalItem = ((Item)caught).getItemStack();
-        FishingSource originalSource = FishingSource.valueOf(originalItem);
+        @Nullable FishingSource originalSource = FishingSource.valueOf(originalItem);
         if (originalSource == null)
             return;
         LootTable table = plugin.getLootTableManager().getLootTable(Skills.FISHING);
@@ -74,7 +76,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 if (!event.getHook().isInOpenWater()) continue;
             }
             // Calculate chance for pool
-            Source source;
+            @NotNull Source source;
             double chance = getCommonChance(pool, playerData);
             LootDropCause cause = LootDropCause.FISHING_OTHER_LOOT;
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {

@@ -8,6 +8,7 @@ import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractManaAbilityItem extends AbstractItem implements TemplateItemProvider<MAbility> {
 
@@ -19,7 +20,7 @@ public abstract class AbstractManaAbilityItem extends AbstractItem implements Te
     }
 
     @Override
-    public Class<MAbility> getContext() {
+    public Class<@NotNull MAbility> getContext() {
         return MAbility.class;
     }
 

@@ -16,12 +16,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 
 public class SpeedMine extends ReadiedManaAbility {
 
-    public SpeedMine(AureliumSkills plugin) {
+    public SpeedMine(@NotNull AureliumSkills plugin) {
         super(plugin, MAbility.SPEED_MINE, ManaAbilityMessage.SPEED_MINE_START, ManaAbilityMessage.SPEED_MINE_END,
-                new String[] {"PICKAXE"}, new Action[] {Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR});
+                new @NotNull String[] {"PICKAXE"}, new @NotNull Action[] {Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR});
     }
 
     @Override

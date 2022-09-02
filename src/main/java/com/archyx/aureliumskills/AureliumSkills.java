@@ -109,6 +109,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -129,8 +130,8 @@ public class AureliumSkills extends JavaPlugin {
 	private WorldGuardSupport worldGuardSupport;
 	private WorldGuardFlags worldGuardFlags;
 	private WorldManager worldManager;
-	private ManaManager manaManager;
-	private ManaAbilityManager manaAbilityManager;
+	private @NotNull ManaManager manaManager;
+	private @NotNull ManaAbilityManager manaAbilityManager;
 	private RewardManager rewardManager;
 	private boolean holographicDisplaysEnabled;
 	private boolean worldGuardEnabled;
@@ -152,7 +153,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionBlockListener regionBlockListener;
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
-	private Lang lang;
+	private @NotNull Lang lang;
 	private Leveler leveler;
 	private Health health;
 	private LeaderboardManager leaderboardManager;
@@ -460,8 +461,8 @@ public class AureliumSkills extends JavaPlugin {
 			}
 		});
 		commandManager.getCommandContexts().registerContext(Skill.class, c -> {
-			String input = c.popFirstArg();
-			Skill skill = null;
+			@Nullable String input = c.popFirstArg();
+			@Nullable Skill skill = null;
 			
 			if (input != null)
 				skill = skillRegistry.getSkill(input);
@@ -473,7 +474,7 @@ public class AureliumSkills extends JavaPlugin {
 			}
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
-			List<String> values = new ArrayList<>();
+			List<@NotNull String> values = new ArrayList<>();
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
 					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
@@ -482,7 +483,7 @@ public class AureliumSkills extends JavaPlugin {
 			return values;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills_global", c -> {
-			List<String> values = new ArrayList<>();
+			List<@NotNull String> values = new ArrayList<>();
 			values.add("global");
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
@@ -492,7 +493,7 @@ public class AureliumSkills extends JavaPlugin {
 			return values;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skillTop", c -> {
-			List<String> values = new ArrayList<>();
+			List<@NotNull String> values = new ArrayList<>();
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
 					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
@@ -502,7 +503,7 @@ public class AureliumSkills extends JavaPlugin {
 			return values;
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
-			List<String> values = new ArrayList<>();
+			List<@NotNull String> values = new ArrayList<>();
 			for (Stat stat : statRegistry.getStats()) {
 				values.add(stat.toString().toLowerCase(Locale.ENGLISH));
 			}
@@ -520,7 +521,7 @@ public class AureliumSkills extends JavaPlugin {
 		commandManager.getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
 		commandManager.getCommandCompletions().registerAsyncCompletion("sort_types", c -> {
 			SorterItem.SortType[] sortTypes = SorterItem.SortType.values();
-			List<String> typeNames = new ArrayList<>();
+			List<@NotNull String> typeNames = new ArrayList<>();
 			for (SorterItem.SortType sortType : sortTypes) {
 				typeNames.add(sortType.toString().toLowerCase(Locale.ROOT));
 			}
@@ -619,7 +620,7 @@ public class AureliumSkills extends JavaPlugin {
 		if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
 			return false;
 		}
-		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+		RegisteredServiceProvider<@NotNull Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
 		if (rsp == null) {
 			return false;
 		}

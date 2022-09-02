@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -17,9 +18,9 @@ public class RequirementManager implements Listener {
 
     private Set<GlobalRequirement> globalRequirements;
     private final Map<UUID, Integer> errorMessageTimer;
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
 
-    public RequirementManager(AureliumSkills plugin) {
+    public RequirementManager(@NotNull AureliumSkills plugin) {
         errorMessageTimer = new HashMap<>();
         this.plugin = plugin;
         tickTimer();

@@ -17,6 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -24,7 +26,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 
 	private final Random r = new Random();
 
-	public FishingAbilities(AureliumSkills plugin) {
+	public FishingAbilities(@NotNull AureliumSkills plugin) {
 		super(plugin, Skills.FISHING);
 	}
 	
@@ -39,7 +41,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 				PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 				if (playerData != null) {
 					if (r.nextDouble() < (getValue(Ability.LUCKY_CATCH, playerData) / 100)) {
-						Entity caught = event.getCaught();
+						@Nullable Entity caught = event.getCaught();
 						if (caught == null)
 							return;
 						Item item = (Item) caught;
@@ -67,7 +69,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 				if (playerData != null) {
 					Player player = event.getPlayer();
 					if (blockAbility(player)) return;
-					Entity caught = event.getCaught();
+					@Nullable Entity caught = event.getCaught();
 					if (caught == null)
 						return;
 					Vector vector = player.getLocation().toVector().subtract(caught.getLocation().toVector());

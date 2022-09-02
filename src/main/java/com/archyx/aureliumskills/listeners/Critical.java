@@ -9,15 +9,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
 public class Critical {
 
     private final Random r = new Random();
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
 
-    public Critical(AureliumSkills plugin) {
+    public Critical(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
     }
 

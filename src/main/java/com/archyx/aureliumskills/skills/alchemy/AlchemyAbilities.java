@@ -43,6 +43,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -51,7 +53,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
 
     private final AgilityAbilities agilityAbilities;
 
-    public AlchemyAbilities(AureliumSkills plugin) {
+    public AlchemyAbilities(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.ALCHEMY);
         this.agilityAbilities = new AgilityAbilities(plugin);
         wiseEffect();
@@ -79,14 +81,14 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    private void updateBrewingStand(BrewerInventory inventory, PlayerData playerData, Locale locale) {
+    private void updateBrewingStand(@NotNull BrewerInventory inventory, @NotNull PlayerData playerData, @Nullable Locale locale) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                ItemStack[] contents = inventory.getContents();
+                @Nullable ItemStack[] contents = inventory.getContents();
                 double multiplier = 1 + (getValue(Ability.ALCHEMIST, playerData) / 100);
                 for (int i = 0; i < contents.length; i++) {
-                    ItemStack item = contents[i];
+                    @Nullable ItemStack item = contents[i];
                     if (item != null) {
                         if (item.getItemMeta() instanceof PotionMeta) {
                             contents[i] = applyDurationData(item, multiplier, locale);
@@ -112,7 +114,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    private ItemStack applyDurationData(ItemStack originalItem, double multiplier, Locale locale) {
+    private @NotNull ItemStack applyDurationData(@NotNull ItemStack originalItem, double multiplier, Locale locale) {
         if (NBTAPIUser.isNBTDisabled(plugin)) return originalItem;
         PotionMeta potionMeta = (PotionMeta) originalItem.getItemMeta();
         if (potionMeta != null) {
@@ -135,8 +137,8 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                 if (duration != 0 && meta != null) {
                     // Add lore
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.ALCHEMIST, "add_item_lore")) {
-                        List<String> lore = new ArrayList<>();
-                        String t = TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
+                        List<@NotNull String> lore = new ArrayList<>();
+                        @Nullable String t = TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
                                 , "{duration}", PotionUtil.formatDuration(durationBonus)
                                 , "{value}", NumberUtil.format1((multiplier - 1) * 100));
                         assert (null != t);
@@ -212,7 +214,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         if (event.isCancelled()) return;
         ItemStack item = event.getPotion().getItem();
         if (item.getItemMeta() instanceof PotionMeta && item.getItemMeta() != null) {
-            PotionMeta meta = (PotionMeta) item.getItemMeta();
+            @Nullable PotionMeta meta = (PotionMeta) item.getItemMeta();
             if (meta == null)
                 return;
             PotionData potionData = meta.getBasePotionData();

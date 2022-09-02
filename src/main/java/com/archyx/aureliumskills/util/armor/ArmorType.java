@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.util.armor;
 
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Arnah
@@ -37,7 +38,7 @@ public enum ArmorType{
         return slot;
     }
 
-    public EquipmentSlot getEquipmentSlot() {
+    public @NotNull EquipmentSlot getEquipmentSlot() {
         switch (this) {
             case HELMET:
                 return EquipmentSlot.HEAD;

@@ -21,12 +21,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class ItemListener implements Listener {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final Map<UUID, ItemStack> heldItems;
     private final Map<UUID, ItemStack> offHandItems;
     private final ForagingAbilities foragingAbilities;
@@ -36,7 +37,7 @@ public class ItemListener implements Listener {
     private final Requirements requirements;
     private final Multipliers multipliers;
 
-    public ItemListener(AureliumSkills plugin) {
+    public ItemListener(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         heldItems = new HashMap<>();
         offHandItems = new HashMap<>();

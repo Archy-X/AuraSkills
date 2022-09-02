@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -18,7 +19,7 @@ public class ItemReward extends MessagedReward {
     private final String itemKey;
     private final int amount; // Amount of -1 means no amount was specified and should use amount of registered item
 
-    public ItemReward(AureliumSkills plugin, String menuMessage, String chatMessage, String itemKey, int amount) {
+    public ItemReward(@NotNull AureliumSkills plugin, String menuMessage, String chatMessage, String itemKey, int amount) {
         super(plugin, menuMessage, chatMessage);
         this.itemKey = itemKey;
         this.amount = amount;

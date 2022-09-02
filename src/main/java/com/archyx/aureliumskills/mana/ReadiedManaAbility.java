@@ -15,6 +15,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -25,7 +27,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
 
     private final static int READY_DURATION = 80;
 
-    public ReadiedManaAbility(AureliumSkills plugin, MAbility manaAbility, ManaAbilityMessage activateMessage, ManaAbilityMessage stopMessage, String[] materials, Action[] actions) {
+    public ReadiedManaAbility(@NotNull AureliumSkills plugin, @NotNull MAbility manaAbility, @NotNull ManaAbilityMessage activateMessage, @NotNull ManaAbilityMessage stopMessage, @NotNull String @NotNull [] materials, @NotNull Action @NotNull [] actions) {
         super(plugin, manaAbility, activateMessage, stopMessage);
         this.materials = materials;
         this.actions = actions;
@@ -36,22 +38,22 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         return false;
     }
 
-    protected boolean isActivated(Player player) {
+    protected boolean isActivated(@NotNull Player player) {
         return manager.isActivated(player.getUniqueId(), mAbility);
     }
 
     /**
      * Gets whether the ability is ready but not activated
      */
-    protected boolean isReady(Player player) {
+    protected boolean isReady(@NotNull Player player) {
         return manager.isReady(player.getUniqueId(), mAbility) && !isActivated(player);
     }
 
-    protected boolean isHoldingMaterial(Player player) {
+    protected boolean isHoldingMaterial(@NotNull Player player) {
         return materialMatches(player.getInventory().getItemInMainHand().getType().toString());
     }
 
-    protected boolean materialMatches(String checked) {
+    protected boolean materialMatches(@NotNull String checked) {
         for (String material : materials) {
             if (checked.contains(material)) {
                 return true;
@@ -61,7 +63,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
     }
 
     @EventHandler
-    public void onReady(PlayerInteractEvent event) {
+    public void onReady(@NotNull PlayerInteractEvent event) {
         if (!OptionL.isEnabled(skill)) return;
         if (!plugin.getAbilityManager().isEnabled(mAbility)) return;
         // Check action is valid
@@ -88,7 +90,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         }
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
-        Locale locale = playerData.getLocale();
+        @Nullable Locale locale = playerData.getLocale();
         if (playerData.getManaAbilityLevel(mAbility) <= 0) {
             return;
         }
@@ -106,7 +108,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             scheduleUnready(player, locale);
         } else { // Cannot ready, send cooldown error
             if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
-                String m = Lang.getMessage(ManaAbilityMessage.NOT_READY, locale);
+                @Nullable String m = Lang.getMessage(ManaAbilityMessage.NOT_READY, locale);
                 assert (null != m);
                 plugin.getAbilityManager().sendMessage(player, m.replace("{cooldown}",
                         NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
@@ -115,14 +117,14 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         }
     }
 
-    private void scheduleUnready(Player player, Locale locale) {
+    private void scheduleUnready(@NotNull Player player, Locale locale) {
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (!manager.isActivated(player.getUniqueId(), mAbility)) {
                     if (manager.isReady(player.getUniqueId(), mAbility)) {
                         manager.setReady(player.getUniqueId(), mAbility, false);
-                        String m = Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale);
+                        @Nullable String m = Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale);
                         assert (null != m);
                         plugin.getAbilityManager().sendMessage(player, m);
                     }
@@ -131,7 +133,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         }.runTaskLater(plugin, READY_DURATION);
     }
 
-    private boolean isAllowReady(Player player, PlayerInteractEvent event) {
+    private boolean isAllowReady(@NotNull Player player, @NotNull PlayerInteractEvent event) {
         // Check if requires sneak
         if (manager.getOptionAsBooleanElseFalse(mAbility, "require_sneak")) {
             if (!player.isSneaking()) return false;
@@ -148,7 +150,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         return player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ENGLISH));
     }
 
-    private boolean isBlockPlace(PlayerInteractEvent event, Player player, MAbility mAbility) {
+    private boolean isBlockPlace(@NotNull PlayerInteractEvent event, @NotNull Player player, @NotNull MAbility mAbility) {
         if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(mAbility, "check_offhand")) {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (player.isSneaking() && plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(mAbility, "sneak_offhand_bypass")) {

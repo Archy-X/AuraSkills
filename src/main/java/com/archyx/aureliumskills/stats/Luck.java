@@ -24,6 +24,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -137,7 +138,7 @@ public class Luck implements Listener {
 									}
 								}
 								else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
-									Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
+									@Nullable Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
 									if (grassBlock == null)
 										return;
 									PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);

@@ -8,6 +8,7 @@ import com.archyx.slate.menu.MenuManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class MenuFileManager {
         if (!legacyFile.exists()) return;
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(legacyFile);
-        String[] legacyNames = {"skills_menu", "stats_menu", "level_progression_menu"};
+        @NotNull String[] legacyNames = {"skills_menu", "stats_menu", "level_progression_menu"};
         for (String legacyName : legacyNames) {
             ConfigurationSection oldSection = config.getConfigurationSection(legacyName);
             if (oldSection == null) continue;
@@ -156,7 +157,7 @@ public class MenuFileManager {
             newItem.set("display_name", displayName);
 
             if (!itemName.equals("rank")) { // Migrate lore except the rank item
-                List<String> lore = oldItem.getStringList("lore");
+                List<@NotNull String> lore = oldItem.getStringList("lore");
                 if (lore.size() > 0) {
                     newItem.set("lore", lore);
                 }
@@ -176,7 +177,7 @@ public class MenuFileManager {
                 String oldMaterial = ((String) materialObj).toLowerCase(Locale.ROOT);
                 migrateBaseItem(newTemplate, oldMaterial);
             } else if (materialObj instanceof List) { // Context dependent material
-                List<String> oldMaterials = DataUtil.castStringList(materialObj);
+                List<@NotNull String> oldMaterials = DataUtil.castStringList(materialObj);
                 for (String oldMaterialEntry : oldMaterials) { // For each entry on the old list
                     String[] splitMaterial = oldMaterialEntry.split(" ", 2); // Split into context and rest of material
                     if (splitMaterial.length < 2) continue;
@@ -192,14 +193,14 @@ public class MenuFileManager {
 
             String displayName = oldTemplate.getString("display_name");
             newTemplate.set("display_name", displayName);
-            List<String> lore = oldTemplate.getStringList("lore");
+            List<@NotNull String> lore = oldTemplate.getStringList("lore");
             if (lore.size() > 0) {
                 newTemplate.set("lore", lore);
             }
 
             // Migrate template position
             if (oldTemplate.contains("pos")) {
-                List<String> posList = oldTemplate.getStringList("pos");
+                List<@NotNull String> posList = oldTemplate.getStringList("pos");
                 for (String posEntry : posList) {
                     String[] splitEntry = posEntry.split(" ", 3);
                     if (splitEntry.length < 3) continue;

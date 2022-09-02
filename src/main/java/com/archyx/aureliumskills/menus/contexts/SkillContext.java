@@ -4,8 +4,9 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class SkillContext implements ContextProvider<Skill> {
+public class SkillContext implements ContextProvider<@NotNull Skill> {
 
     private final AureliumSkills plugin;
 

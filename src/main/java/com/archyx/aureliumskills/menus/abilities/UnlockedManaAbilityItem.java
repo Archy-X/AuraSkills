@@ -15,6 +15,8 @@ import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -30,7 +32,7 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, MAbility mAbility) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull MAbility mAbility) {
         Locale locale = plugin.getLang().getLocale(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return placeholder;
@@ -67,25 +69,25 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
         return placeholder;
     }
 
-    private int getNextUpgradeLevel(MAbility mAbility, PlayerData playerData) {
+    private int getNextUpgradeLevel(@NotNull MAbility mAbility, @NotNull PlayerData playerData) {
         int unlock = manager.getUnlock(mAbility);
         int levelUp = manager.getLevelUp(mAbility);
         return unlock + levelUp * playerData.getManaAbilityLevel(mAbility);
     }
 
-    private String getUpgradeValue(MAbility mAbility, PlayerData playerData) {
+    private String getUpgradeValue(@NotNull MAbility mAbility, @NotNull PlayerData playerData) {
         String currentValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility)));
         String nextValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
         return "&7" + currentValue + "&8→" + nextValue + "&7";
     }
 
-    private String getUpgradeDuration(MAbility mAbility, PlayerData playerData) {
+    private String getUpgradeDuration(@NotNull MAbility mAbility, @NotNull PlayerData playerData) {
         String currentDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility)));
         String nextDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
         return "&7" + currentDuration + "&8→" + nextDuration + "&7";
     }
 
-    private boolean isNotMaxed(PlayerData playerData, MAbility mAbility) {
+    private boolean isNotMaxed(@NotNull PlayerData playerData, @NotNull MAbility mAbility) {
         int maxLevel = manager.getMaxLevel(mAbility);
         int unlock = manager.getUnlock(mAbility);
         int levelUp = manager.getLevelUp(mAbility);
@@ -97,12 +99,12 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
     }
 
     @Override
-    public Set<MAbility> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("skill");
+    public Set<@NotNull MAbility> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        Set<MAbility> unlockedManaAbilities = new HashSet<>();
+        Set<@NotNull MAbility> unlockedManaAbilities = new HashSet<>();
         if (playerData != null) {
             // Add abilities that player has not unlocked yet
             MAbility mAbility = skill.getManaAbility();
@@ -113,7 +115,7 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
         return unlockedManaAbilities;
     }
 
-    private double getDuration(MAbility mAbility, int level) {
+    private double getDuration(@NotNull MAbility mAbility, int level) {
         if (mAbility == MAbility.LIGHTNING_BLADE) {
             double baseDuration = manager.getOptionAsDouble(MAbility.LIGHTNING_BLADE, "base_duration");
             double durationPerLevel = manager.getOptionAsDouble(MAbility.LIGHTNING_BLADE, "duration_per_level");

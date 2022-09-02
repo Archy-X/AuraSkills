@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class DamageListener implements Listener {
 
@@ -38,7 +39,7 @@ public class DamageListener implements Listener {
     private final FightingAbilities fightingAbilities;
     private final DefenseAbilities defenseAbilities;
 
-    public DamageListener(AureliumSkills plugin, DefenseAbilities defenseAbilities, FightingAbilities fightingAbilities) {
+    public DamageListener(@NotNull AureliumSkills plugin, DefenseAbilities defenseAbilities, FightingAbilities fightingAbilities) {
         strength = new Strength();
         this.plugin = plugin;
         this.critical = new Critical(plugin);
@@ -125,7 +126,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    private void onDamaged(EntityDamageByEntityEvent event, Player player) {
+    private void onDamaged(@NotNull EntityDamageByEntityEvent event, @NotNull Player player) {
         // Check disabled world
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
@@ -152,7 +153,7 @@ public class DamageListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private DamageType getDamageType(EntityDamageByEntityEvent event, Player player) {
+    private DamageType getDamageType(@NotNull EntityDamageByEntityEvent event, @NotNull Player player) {
         if (event.getDamager() instanceof Arrow || event.getDamager() instanceof SpectralArrow || event.getDamager() instanceof TippedArrow) {
             return DamageType.BOW;
         }
@@ -183,7 +184,7 @@ public class DamageListener implements Listener {
         return DamageType.OTHER;
     }
 
-    private Player getDamager(Entity entity) {
+    private Player getDamager(@NotNull Entity entity) {
         Player player = null;
         if (entity instanceof Player) {
             player = (Player) entity;

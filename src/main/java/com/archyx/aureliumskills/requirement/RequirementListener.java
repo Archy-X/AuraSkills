@@ -20,6 +20,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Map;
@@ -62,7 +64,7 @@ public class RequirementListener implements Listener {
         }
     }
 
-    private void sendMessage(MessageKey baseMessage, MessageKey entryMessage, ModifierType modifierType, Player player, Locale locale, ItemStack item) {
+    private void sendMessage(@NotNull MessageKey baseMessage, @NotNull MessageKey entryMessage, @NotNull ModifierType modifierType, @NotNull Player player, @Nullable Locale locale, @NotNull ItemStack item) {
         // Build requirements message that shows skills and levels
         StringBuilder requirementsString = new StringBuilder();
         Map<Skill, Integer> requirementMap = requirements.getRequirements(modifierType, item);
@@ -84,7 +86,7 @@ public class RequirementListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onBlockBreak(BlockBreakEvent event) {
+    public void onBlockBreak(@NotNull BlockBreakEvent event) {
         if (event.isCancelled()) return;
         if (OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_TOOL_USE)) {
             Player player = event.getPlayer();
@@ -95,7 +97,7 @@ public class RequirementListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlace(BlockPlaceEvent event) {
+    public void onPlace(@NotNull BlockPlaceEvent event) {
         if (event.isCancelled()) return;
         if (OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE)) {
             Player player = event.getPlayer();
@@ -106,7 +108,7 @@ public class RequirementListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onAttack(EntityDamageByEntityEvent event) {
+    public void onAttack(@NotNull EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_WEAPON_USE)) {
             if (event.getDamager() instanceof Player) {
@@ -119,7 +121,7 @@ public class RequirementListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onShoot(EntityShootBowEvent event) {
+    public void onShoot(@NotNull EntityShootBowEvent event) {
         if (event.isCancelled()) return;
         if (!OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_WEAPON_USE)) return;
         if (!(event.getEntity() instanceof Player)) return;
@@ -133,7 +135,7 @@ public class RequirementListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onInteract(PlayerInteractEvent event) {
+    public void onInteract(@NotNull PlayerInteractEvent event) {
         if (event.useItemInHand() == Event.Result.DENY) return;
         if (!OptionL.getBoolean(Option.REQUIREMENT_ITEM_PREVENT_INTERACT)) return;
 
@@ -143,7 +145,7 @@ public class RequirementListener implements Listener {
         checkItemRequirements(event.getPlayer(), item, event);
     }
 
-    private void checkItemRequirements(Player player, ItemStack item, Cancellable event) {
+    private void checkItemRequirements(@NotNull Player player, @NotNull ItemStack item, @NotNull Cancellable event) {
         if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
             Locale locale = plugin.getLang().getLocale(player);
             event.setCancelled(true);

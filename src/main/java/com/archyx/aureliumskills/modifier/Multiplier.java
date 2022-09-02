@@ -1,23 +1,25 @@
 package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.skills.Skill;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
 public class Multiplier {
 
-    private final String name;
-    private final Skill skill;
+    private final @NotNull String name;
+    private final @Nullable Skill skill;
     private final double value; // The value represents the percent more XP gained
 
-    public Multiplier(String name, @Nullable Skill skill, double value) {
+    public Multiplier(@NotNull String name, @Nullable Skill skill, double value) {
         this.name = name;
         this.value = value;
         this.skill = skill;
     }
 
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 

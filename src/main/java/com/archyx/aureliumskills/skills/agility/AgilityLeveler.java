@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class AgilityLeveler extends SkillLeveler implements Listener {
 	
 	private final Set<UUID> prevPlayersOnGround = Sets.newHashSet();
 	
-	public AgilityLeveler(AureliumSkills plugin) {
+	public AgilityLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.JUMPER);
 	}
 	

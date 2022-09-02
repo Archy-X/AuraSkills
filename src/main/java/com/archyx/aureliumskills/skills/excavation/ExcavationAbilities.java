@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -26,7 +27,7 @@ public class ExcavationAbilities extends AbilityProvider implements Listener {
 
 	private final Random r = new Random();
 
-	public ExcavationAbilities(AureliumSkills plugin) {
+	public ExcavationAbilities(@NotNull AureliumSkills plugin) {
 		super(plugin, Skills.EXCAVATION);
 	}
 

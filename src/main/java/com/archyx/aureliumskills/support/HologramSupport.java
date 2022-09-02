@@ -17,6 +17,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -24,11 +26,11 @@ import java.util.Random;
 
 public class HologramSupport implements Listener {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final Random r = new Random();
     private final NumberFormat nf;
 
-    public HologramSupport(AureliumSkills plugin) {
+    public HologramSupport(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         nf = new DecimalFormat("#." + TextUtil.repeat("#", OptionL.getInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
     }
@@ -55,7 +57,7 @@ public class HologramSupport implements Listener {
                         } else if (event.getDamager() instanceof Projectile) {
                             Projectile projectile = (Projectile) event.getDamager();
                             if (projectile.getShooter() instanceof Player) {
-                                Player shooter = (Player) projectile.getShooter();
+                                @Nullable Player shooter = (Player) projectile.getShooter();
                                 if (shooter == null)
                                     return;
                                 if (shooter.equals(event.getEntity())) { // Don't display self damage

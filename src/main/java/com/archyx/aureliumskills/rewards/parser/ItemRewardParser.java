@@ -8,12 +8,13 @@ import com.archyx.aureliumskills.rewards.builder.ItemRewardBuilder;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
 public class ItemRewardParser extends RewardParser {
 
-    public ItemRewardParser(AureliumSkills plugin) {
+    public ItemRewardParser(@NotNull AureliumSkills plugin) {
         super(plugin);
     }
 

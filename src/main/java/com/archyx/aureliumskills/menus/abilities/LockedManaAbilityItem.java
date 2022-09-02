@@ -14,6 +14,8 @@ import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -29,9 +31,9 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, MAbility mAbility) {
+    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull MAbility mAbility) {
         Locale locale = plugin.getLang().getLocale(player);
-        Object property = menu.getProperty("skill");
+        @Nullable Object property = menu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         switch (placeholder) {
@@ -54,9 +56,9 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
     }
 
     @Override
-    public Set<MAbility> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+    public Set<MAbility> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
         Set<MAbility> lockedManaAbilities = new HashSet<>();
-        Object property = activeMenu.getProperty("skill");
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         MAbility mAbility = skill.getManaAbility();
@@ -69,7 +71,7 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
         return lockedManaAbilities;
     }
 
-    private double getDuration(MAbility mAbility) {
+    private double getDuration(@NotNull MAbility mAbility) {
         if (mAbility == MAbility.LIGHTNING_BLADE) {
             return manager.getOptionAsDouble(MAbility.LIGHTNING_BLADE, "base_duration");
         } else {

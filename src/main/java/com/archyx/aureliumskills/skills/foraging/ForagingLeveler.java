@@ -13,12 +13,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class ForagingLeveler extends SkillLeveler implements Listener{
 
 	private final ForagingAbilities foragingAbilities;
 
-	public ForagingLeveler(AureliumSkills plugin) {
+	public ForagingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.FORAGER);
 		this.foragingAbilities = new ForagingAbilities(plugin);
 	}

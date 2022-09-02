@@ -27,10 +27,12 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class HealingLeveler extends SkillLeveler implements Listener {
 
-	public HealingLeveler(AureliumSkills plugin) {
+	public HealingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.HEALER);
 	}
 
@@ -50,7 +52,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 			Leveler leveler = plugin.getLeveler();
 			if (event.getItem().getType().equals(Material.POTION)) {
 				if (event.getItem().getItemMeta() instanceof PotionMeta) {
-					PotionMeta meta = (PotionMeta) event.getItem().getItemMeta();
+					@Nullable PotionMeta meta = (PotionMeta) event.getItem().getItemMeta();
 					if (meta == null)
 						return;
 					PotionData data = meta.getBasePotionData();
@@ -82,7 +84,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 			}
 			else {
 				if (event.getItem().getType().equals(Material.GOLDEN_APPLE)) {
-					MaterialData materialData = event.getItem().getData();
+					@Nullable MaterialData materialData = event.getItem().getData();
 					if (materialData != null) {
 						if (materialData.getData() == 0) {
 							leveler.addXp(player, skill, getXp(player, HealingSource.GOLDEN_APPLE));
@@ -108,8 +110,8 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 			if (event.getPotion().getEffects().size() > 0) {
 				if (event.getEntity().getShooter() instanceof Player) {
 					if (event.getPotion().getItem().getItemMeta() instanceof PotionMeta) {
-						Player player = (Player) event.getEntity().getShooter();
-						PotionMeta meta = (PotionMeta) event.getPotion().getItem().getItemMeta();
+						@Nullable Player player = (Player) event.getEntity().getShooter();
+						@Nullable PotionMeta meta = (PotionMeta) event.getPotion().getItem().getItemMeta();
 						if (player == null || meta == null)
 							return;
 						PotionData data = meta.getBasePotionData();
@@ -153,7 +155,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 			return;
 		}
 
-		PotionMeta meta;
+		@Nullable PotionMeta meta;
 		Projectile projectile = projEvent.getEntity();
 		if (VersionUtils.isAtLeastVersion(14)) {
 			if (!(projectile instanceof ThrownPotion)) {

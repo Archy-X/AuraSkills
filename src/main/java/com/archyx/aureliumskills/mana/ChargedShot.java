@@ -21,12 +21,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
 public class ChargedShot extends ManaAbilityProvider {
 
-    public ChargedShot(AureliumSkills plugin) {
+    public ChargedShot(@NotNull AureliumSkills plugin) {
         super(plugin, MAbility.CHARGED_SHOT, ManaAbilityMessage.CHARGED_SHOT_SHOOT, null);
         tickChargedShotCooldown();
     }

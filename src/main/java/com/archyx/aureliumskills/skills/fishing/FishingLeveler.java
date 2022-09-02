@@ -17,10 +17,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class FishingLeveler extends SkillLeveler implements Listener {
 
-	public FishingLeveler(AureliumSkills plugin) {
+	public FishingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.FISHER);
 	}
 
@@ -37,7 +39,7 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 				Player player = event.getPlayer();
 				if (blockXpGain(player)) return;
 				if (event.getCaught() instanceof Item) {
-					Entity caught = event.getCaught();
+					@Nullable Entity caught = event.getCaught();
 					if (caught != null) {
 						ItemStack item = ((Item) caught).getItemStack();
 						Leveler leveler = plugin.getLeveler();

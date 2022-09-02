@@ -7,6 +7,8 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.source.SourceManager;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -89,25 +91,25 @@ public enum ArcherySource implements Source {
     TADPOLE,
     WARDEN;
 
-    private String configName;
+    private @Nullable String configName;
 
     ArcherySource() {
 
     }
 
-    ArcherySource(String configName) {
+    ArcherySource(@NotNull String configName) {
         this.configName = configName;
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         String name = configName;
         return name != null ? name.toUpperCase(Locale.ROOT) : name();
     }
 
     @Override
-    public String getPath() {
-        String name = configName;
+    public @NotNull String getPath() {
+        @Nullable String name = configName;
         if (name == null) {
             return getSkill().toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
         } else {
@@ -116,12 +118,12 @@ public enum ArcherySource implements Source {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.ARCHERY;
     }
 
     @Override
-    public String getUnitName() {
+    public @Nullable String getUnitName() {
         if (OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) {
             return "damage";
         }
@@ -129,7 +131,7 @@ public enum ArcherySource implements Source {
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         return SourceManager.getMenuItem(this);
     }
 

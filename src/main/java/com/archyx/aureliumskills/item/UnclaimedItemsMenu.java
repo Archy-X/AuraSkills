@@ -14,6 +14,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
     }
 
     @Override
-    public void init(Player player, InventoryContents contents) {
+    public void init(@NotNull Player player, @NotNull InventoryContents contents) {
         for (int slot = 0; slot < 54; slot++) {
             int row = slot / 9;
             int column = slot % 9;
@@ -60,7 +62,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                         keyIntPair.setValue(leftoverItem.getAmount());
                         init(player, contents);
                     } else { // All items could not fit
-                        String m = Lang.getMessage(MenuMessage.INVENTORY_FULL, playerData.getLocale());
+                        @Nullable String m = Lang.getMessage(MenuMessage.INVENTORY_FULL, playerData.getLocale());
                         assert (null != m);
                         player.sendMessage(m);
                         player.closeInventory();
@@ -70,7 +72,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
         }
     }
 
-    public static SmartInventory getInventory(AureliumSkills plugin, PlayerData playerData) {
+    public static SmartInventory getInventory(@NotNull AureliumSkills plugin, @NotNull PlayerData playerData) {
         return SmartInventory.builder()
                 .manager(plugin.getInventoryManager())
                 .provider(new UnclaimedItemsMenu(plugin, playerData))
@@ -79,17 +81,17 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                 .build();
     }
 
-    private ItemStack getDisplayItem(ItemStack baseItem) {
+    private ItemStack getDisplayItem(@NotNull ItemStack baseItem) {
         ItemStack displayItem = baseItem.clone();
-        ItemMeta meta = displayItem.getItemMeta();
+        @Nullable ItemMeta meta = displayItem.getItemMeta();
         if (meta != null) {
-            List<String> lore = meta.getLore();
+            @Nullable List<@NotNull String> lore = meta.getLore();
             if (lore == null) {
                 lore = new ArrayList<>();
             } else {
                 lore.add(" ");
             }
-            String t = Lang.getMessage(MenuMessage.CLICK_TO_CLAIM, playerData.getLocale());
+            @Nullable String t = Lang.getMessage(MenuMessage.CLICK_TO_CLAIM, playerData.getLocale());
             assert (null != t);
             lore.add(t);
             meta.setLore(lore);

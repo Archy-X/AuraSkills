@@ -5,6 +5,7 @@ import de.tr7zw.changeme.nbtapi.*;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,11 +15,11 @@ import java.util.concurrent.ConcurrentMap;
 
 public class RegionManager {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final ConcurrentMap<RegionCoordinate, Region> regions;
     private boolean saving;
 
-    public RegionManager(AureliumSkills plugin) {
+    public RegionManager(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.regions = new ConcurrentHashMap<>();
         this.saving = false;
@@ -143,7 +144,7 @@ public class RegionManager {
         if (chunkData == null) {
             chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
         }
-        NBTCompoundList placedBlocks = compound.getCompoundList("placed_blocks");
+        @Nullable NBTCompoundList placedBlocks = compound.getCompoundList("placed_blocks");
         if (placedBlocks == null)
             return;
         for (NBTListCompound block : placedBlocks) {
@@ -189,7 +190,7 @@ public class RegionManager {
 
     private void saveChunk(NBTFile nbtFile, ChunkData chunkData) {
         NBTCompound chunk = nbtFile.getOrCreateCompound("chunk[" + chunkData.getX() + "," + chunkData.getZ() + "]");
-        NBTCompoundList placedBlocks = chunk.getCompoundList("placed_blocks");
+        @Nullable NBTCompoundList placedBlocks = chunk.getCompoundList("placed_blocks");
         if (placedBlocks == null)
             return;
         placedBlocks.clear(); // Clears list of block positions to account for removed positions

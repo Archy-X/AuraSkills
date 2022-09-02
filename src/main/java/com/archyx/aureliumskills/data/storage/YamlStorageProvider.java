@@ -24,6 +24,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +69,7 @@ public class YamlStorageProvider extends StorageProvider {
                             String statName = modifierEntry.getString("stat");
                             double value = modifierEntry.getDouble("value");
                             if (name != null && statName != null) {
-                                Stat stat = plugin.getStatRegistry().getStat(statName);
+                                @Nullable Stat stat = plugin.getStatRegistry().getStat(statName);
                                 if (stat != null) {
                                     StatModifier modifier = new StatModifier(name, stat, value);
                                     playerData.addStatModifier(modifier);
@@ -240,7 +242,7 @@ public class YamlStorageProvider extends StorageProvider {
         LeaderboardManager manager = plugin.getLeaderboardManager();
         manager.setSorting(true);
         // Initialize lists
-        Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
+        Map<Skill, @NotNull List<SkillValue>> leaderboards = new HashMap<>();
         for (Skill skill : Skills.values()) {
             leaderboards.put(skill, new ArrayList<>());
         }

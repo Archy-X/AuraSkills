@@ -35,6 +35,8 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -44,11 +46,11 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
 
-    public AgilityAbilities(AureliumSkills plugin) {
+    public AgilityAbilities(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.AGILITY);
     }
 
-    private void lightFall(EntityDamageEvent event, PlayerData playerData) {
+    private void lightFall(@NotNull EntityDamageEvent event, @NotNull PlayerData playerData) {
         if (event.getFinalDamage() > 0.0) {
             double percentReduction = getValue(Ability.LIGHT_FALL, playerData);
             event.setDamage(event.getDamage() * (1 - (percentReduction / 100)));
@@ -57,7 +59,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
 
     // For potion splashes
     @EventHandler(priority = EventPriority.HIGH)
-    public void sugarRushSplash(PotionSplashEvent event) {
+    public void sugarRushSplash(@NotNull PotionSplashEvent event) {
         if (!event.isCancelled()) {
             if (blockDisabled(Ability.SUGAR_RUSH)) return;
             for (PotionEffect effect : event.getPotion().getEffects()) {
@@ -80,7 +82,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public double getSugarRushSplashMultiplier(Player player) {
+    public double getSugarRushSplashMultiplier(@NotNull Player player) {
         if (player.hasPermission("aureliumskills.agility") && plugin.getAbilityManager().isEnabled(Ability.SUGAR_RUSH)) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
@@ -94,7 +96,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
 
     // For potion drinking
     @EventHandler(priority = EventPriority.HIGH)
-    public void sugarRushDrink(PlayerItemConsumeEvent event) {
+    public void sugarRushDrink(@NotNull PlayerItemConsumeEvent event) {
         if (!event.isCancelled()) {
             if (blockDisabled(Ability.SUGAR_RUSH)) return;
             Player player = event.getPlayer();
@@ -105,7 +107,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 ItemStack item = event.getItem();
                 if (item.getType() == Material.POTION) {
                     if (item.getItemMeta() instanceof PotionMeta) {
-                        PotionMeta meta = (PotionMeta) item.getItemMeta();
+                        @Nullable PotionMeta meta = (PotionMeta) item.getItemMeta();
                         if (meta == null)
                             return;
                         PotionData potion = meta.getBasePotionData();
@@ -146,7 +148,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void fleeting(EntityDamageEvent event, PlayerData playerData, Player player) {
+    public void fleeting(@NotNull EntityDamageEvent event, @NotNull PlayerData playerData, @NotNull Player player) {
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
         if (player.getHealth() - event.getFinalDamage() < getFleetingHealthRequired() * maxHealth) {
@@ -167,7 +169,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void removeFleeting(Player player) {
+    public void removeFleeting(@NotNull Player player) {
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
         if (player.getHealth() >= getFleetingHealthRequired() * maxHealth) {
@@ -182,7 +184,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void fleetingEnd(EntityRegainHealthEvent event) {
+    public void fleetingEnd(@NotNull EntityRegainHealthEvent event) {
         if (!event.isCancelled()) {
             if (event.getEntity() instanceof Player) {
                 fleetingRemove((Player) event.getEntity(), event.getAmount());
@@ -191,14 +193,14 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void fleetingEndCustom(CustomRegenEvent event) {
+    public void fleetingEndCustom(@NotNull CustomRegenEvent event) {
         if (!event.isCancelled()) {
             Player player = event.getPlayer();
             fleetingRemove(player, event.getAmount());
         }
     }
 
-    public void fleetingRemove(Player player, double amountRegenerated) {
+    public void fleetingRemove(@NotNull Player player, double amountRegenerated) {
         if (blockAbility(player)) return;
         AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH));
         double maxHealth = attribute.getValue();
@@ -214,7 +216,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void fleetingLeave(PlayerQuitEvent event) {
+    public void fleetingLeave(@NotNull PlayerQuitEvent event) {
         Player player = event.getPlayer();
         removeFleetingQuit(player);
     }
@@ -228,7 +230,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void fleetingJoin(PlayerDataLoadEvent event) {
+    public void fleetingJoin(@NotNull PlayerDataLoadEvent event) {
         if (!OptionL.isEnabled(Skills.AGILITY)) return;
         if (!plugin.getAbilityManager().isEnabled(Ability.FLEETING)) return;
         Player player = event.getPlayerData().getPlayer();
@@ -250,7 +252,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void fleetingDeath(PlayerDeathEvent event) {
+    public void fleetingDeath(@NotNull PlayerDeathEvent event) {
         Player player = event.getEntity();
         if (player.hasMetadata("AureliumSkills-Fleeting")) {
             float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
@@ -269,7 +271,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         return healthPercentRequired / 100;
     }
 
-    public void thunderFall(EntityDamageEvent event, PlayerData playerData, Player player) {
+    public void thunderFall(@NotNull EntityDamageEvent event, @NotNull PlayerData playerData, @NotNull Player player) {
         if (player.isSneaking()) {
             // If chance
             if (r.nextDouble() < getValue(Ability.THUNDER_FALL, playerData) / 100) {
@@ -289,7 +291,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void agilityListener(EntityDamageEvent event) {
+    public void agilityListener(@NotNull EntityDamageEvent event) {
         if (!event.isCancelled()) {
             if (OptionL.isEnabled(Skills.AGILITY)) {
                 if (event.getEntity() instanceof Player) {

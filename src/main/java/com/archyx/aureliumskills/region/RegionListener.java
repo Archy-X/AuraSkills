@@ -6,13 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 public class RegionListener implements Listener {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final RegionManager regionManager;
 
-    public RegionListener(AureliumSkills plugin) {
+    public RegionListener(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         regionManager = plugin.getRegionManager();
         startSaveTimer();

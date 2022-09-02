@@ -18,6 +18,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -25,11 +27,11 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
 
-    public ArcheryAbilities(AureliumSkills plugin) {
+    public ArcheryAbilities(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.ARCHERY);
     }
 
-    public void bowMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+    public void bowMaster(@NotNull EntityDamageByEntityEvent event, Player player, @NotNull PlayerData playerData) {
         if (OptionL.isEnabled(Skills.ARCHERY)) {
             if (plugin.getAbilityManager().isEnabled(Ability.BOW_MASTER)) {
                 if (!player.hasPermission("aureliumskills.archery")) {
@@ -43,7 +45,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void stun(PlayerData playerData, LivingEntity entity) {
+    public void stun(@NotNull PlayerData playerData, @NotNull LivingEntity entity) {
         if (r.nextDouble() < (getValue(Ability.STUN, playerData) / 100)) {
             if (entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) != null) {
                 AttributeInstance speed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
@@ -71,7 +73,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void removeStun(PlayerQuitEvent event) {
+    public void removeStun(@NotNull PlayerQuitEvent event) {
         //Removes stun on logout
         AttributeInstance speed = event.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         if (speed != null) {
@@ -83,7 +85,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    public void piercing(EntityDamageByEntityEvent event, PlayerData playerData, Player player, Arrow arrow) {
+    public void piercing(@NotNull EntityDamageByEntityEvent event, @NotNull PlayerData playerData, @NotNull Player player, @NotNull Arrow arrow) {
         // Disable if enemy is blocking with a shield
         Entity damaged = event.getEntity();
         if (damaged instanceof Player) {
@@ -104,13 +106,13 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void archeryListener(EntityDamageByEntityEvent event) {
+    public void archeryListener(@NotNull EntityDamageByEntityEvent event) {
         if (OptionL.isEnabled(Skills.ARCHERY)) {
             if (!event.isCancelled()) {
                 if (event.getDamager() instanceof Arrow) {
                     Arrow arrow = (Arrow) event.getDamager();
                     if (arrow.getShooter() instanceof Player) {
-                        Player player = (Player) arrow.getShooter();
+                        @Nullable Player player = (Player) arrow.getShooter();
                         if (player != null && blockAbility(player)) return;
                         // Applies abilities
                         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);

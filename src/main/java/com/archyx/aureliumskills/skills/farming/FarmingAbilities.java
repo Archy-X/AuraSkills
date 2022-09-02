@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -27,7 +28,7 @@ public class FarmingAbilities extends AbilityProvider implements Listener {
 
 	private static final Random r = new Random();
 
-	public FarmingAbilities(AureliumSkills plugin) {
+	public FarmingAbilities(@NotNull AureliumSkills plugin) {
 		super(plugin, Skills.FARMING);
 	}
 

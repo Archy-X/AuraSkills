@@ -26,6 +26,8 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
@@ -34,10 +36,10 @@ public class RegionBlockListener implements Listener {
 
     private Material[] customMaterials;
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final RegionManager regionManager;
 
-    public RegionBlockListener(AureliumSkills plugin) {
+    public RegionBlockListener(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.regionManager = plugin.getRegionManager();
         SourceManager sourceManager = plugin.getSourceManager();
@@ -200,9 +202,9 @@ public class RegionBlockListener implements Listener {
         }
     }
 
-    private void checkAmethystCluster(Block block) {
+    private void checkAmethystCluster(@NotNull Block block) {
         // Check each side
-        for (BlockFace face : BlockFaceUtil.getBlockSides()) {
+        for (@Nullable BlockFace face : BlockFaceUtil.getBlockSides()) {
             Block checkedBlock = block.getRelative(face);
             if (MiningSource.AMETHYST_CLUSTER.isMatch(block) && regionManager.isPlacedBlock(checkedBlock)) {
                 new BukkitRunnable() {

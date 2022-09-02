@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +17,8 @@ import java.util.Objects;
 public class RewardTable {
 
     private final AureliumSkills plugin;
-    private final List<Stat> statsLeveled;
-    private final Map<Integer, List<Reward>> rewards;
+    private final @NotNull List<@NotNull Stat> statsLeveled;
+    private final Map<Integer, List<@NotNull Reward>> rewards;
 
     public RewardTable(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -24,16 +26,16 @@ public class RewardTable {
         this.statsLeveled = new ArrayList<>();
     }
 
-    public ImmutableList<Reward> getRewards(int level) {
+    public @NotNull ImmutableList<@NotNull Reward> getRewards(int level) {
         return ImmutableList.copyOf(Objects.requireNonNullElseGet(rewards.get(level), ArrayList::new));
     }
 
-    public Map<Integer, List<Reward>> getRewardsMap() {
+    public Map<Integer, List<@NotNull Reward>> getRewardsMap() {
         return rewards;
     }
 
-    public void addReward(Reward reward, int level) {
-        List<Reward> rewards = this.rewards.computeIfAbsent(level, k -> new ArrayList<>());
+    public void addReward(@NotNull Reward reward, int level) {
+        List<@NotNull Reward> rewards = this.rewards.computeIfAbsent(level, k -> new ArrayList<>());
         rewards.add(reward);
         if (reward instanceof StatReward) {
             StatReward statReward = (StatReward) reward;
@@ -43,7 +45,7 @@ public class RewardTable {
         }
     }
 
-    public ImmutableList<Stat> getStatsLeveled() {
+    public @NotNull ImmutableList<@NotNull Stat> getStatsLeveled() {
         return ImmutableList.copyOf(statsLeveled);
     }
 
@@ -55,9 +57,9 @@ public class RewardTable {
      */
     public <T extends Reward> Map<Integer, ImmutableList<T>> searchRewards(Class<T> type) {
         Map<Integer, ImmutableList<T>> rewardMap = new HashMap<>();
-        for (Map.Entry<Integer, List<Reward>> entry : rewards.entrySet()) {
+        for (Map.Entry<Integer, List<@NotNull Reward>> entry : rewards.entrySet()) {
             List<T> rewardList = new ArrayList<>();
-            for (Reward reward : entry.getValue()) {
+            for (@Nullable Reward reward : entry.getValue()) {
                 if (type.isInstance(reward)) {
                     rewardList.add(type.cast(reward));
                 }
@@ -70,8 +72,8 @@ public class RewardTable {
     /**
      * Searches all rewards of a certain type at a single level
      */
-    public <T extends Reward> ImmutableList<T> searchRewards(Class<T> type, int level) {
-        ImmutableList<Reward> levelRewards = getRewards(level);
+    public <T extends @NotNull Reward> ImmutableList<T> searchRewards(Class<T> type, int level) {
+        ImmutableList<@NotNull Reward> levelRewards = getRewards(level);
         List<T> rewardList = new ArrayList<>();
         for (Reward reward : levelRewards) {
             if (type.isInstance(reward)) {
@@ -82,9 +84,9 @@ public class RewardTable {
     }
 
     public void applyStats(PlayerData playerData, int level) {
-        Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
+        Map<Integer, ImmutableList<@NotNull StatReward>> statRewardMap = searchRewards(StatReward.class);
         for (int i = 2; i <= level; i++) {
-            ImmutableList<StatReward> statRewardList = statRewardMap.get(i);
+            ImmutableList<@NotNull StatReward> statRewardList = statRewardMap.get(i);
             if (statRewardList != null) {
                 for (StatReward statReward : statRewardList) {
                     playerData.addStatLevel(statReward.getStat(), statReward.getValue());
@@ -94,10 +96,10 @@ public class RewardTable {
     }
 
     public void applyPermissions(Player player, int level) {
-        Map<Integer, ImmutableList<PermissionReward>> permissionRewardMap = searchRewards(PermissionReward.class);
-        for (Map.Entry<Integer, ImmutableList<PermissionReward>> entry : permissionRewardMap.entrySet()) {
+        Map<Integer, ImmutableList<@NotNull PermissionReward>> permissionRewardMap = searchRewards(PermissionReward.class);
+        for (Map.Entry<Integer, ImmutableList<@NotNull PermissionReward>> entry : permissionRewardMap.entrySet()) {
             int entryLevel = entry.getKey();
-            for (PermissionReward reward : entry.getValue()) {
+            for (@Nullable PermissionReward reward : entry.getValue()) {
                 if (plugin.isLuckPermsEnabled()) {
                     // Add permission if unlocked
                     if (level >= entryLevel) {

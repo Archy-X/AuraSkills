@@ -21,6 +21,8 @@ import com.archyx.slate.menu.ActiveMenu;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -35,12 +37,12 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
     }
 
     @Override
-    public Class<Skill> getContext() {
+    public Class<@NotNull Skill> getContext() {
         return Skill.class;
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type, Skill skill) {
+    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type, @NotNull Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return placeholder;
         Locale locale = playerData.getLocale();
@@ -77,7 +79,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         return placeholder;
     }
 
-    protected int getPage(Skill skill, PlayerData playerData) {
+    protected int getPage(@NotNull Skill skill, @NotNull PlayerData playerData) {
         int page = (playerData.getSkillLevel(skill) - 2) / 24;
         int maxLevelPage = (OptionL.getMaxLevel(skill) - 2) / 24;
         if (page > maxLevelPage) {
@@ -86,8 +88,8 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         return page;
     }
 
-    private String getStatsLeveled(Skill skill, Locale locale) {
-        ImmutableList<Stat> statsLeveled = plugin.getRewardManager().getRewardTable(skill).getStatsLeveled();
+    private String getStatsLeveled(@NotNull Skill skill, @Nullable Locale locale) {
+        ImmutableList<@NotNull Stat> statsLeveled = plugin.getRewardManager().getRewardTable(skill).getStatsLeveled();
         StringBuilder statList = new StringBuilder();
         for (Stat stat : statsLeveled) {
             statList.append(stat.getColor(locale)).append(stat.getDisplayName(locale)).append(ChatColor.GRAY).append(", ");
@@ -103,18 +105,18 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         }
     }
 
-    private String getAbilityLevels(Skill skill, PlayerData playerData) {
+    private String getAbilityLevels(@NotNull Skill skill, @NotNull PlayerData playerData) {
         Locale locale = playerData.getLocale();
         StringBuilder abilityLevelsLore = new StringBuilder();
         if (skill.getAbilities().size() == 5) {
             String levelsMessage = Lang.getMessage(MenuMessage.ABILITY_LEVELS, locale);
             int num = 1;
-            List<Ability> abilities = new ArrayList<>();
-            for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
+            List<@NotNull Ability> abilities = new ArrayList<>();
+            for (Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
                 abilities.add(abilitySupplier.get());
             }
             abilities.sort(Comparator.comparingInt(a -> plugin.getAbilityManager().getUnlock(a)));
-            for (Ability ability : abilities) {
+            for (@NotNull Ability ability : abilities) {
                 if (plugin.getAbilityManager().isEnabled(ability)) {
                     if (playerData.getAbilityLevel(ability) > 0) {
                         int abilityLevel = playerData.getAbilityLevel(ability);
@@ -139,7 +141,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         return abilityLevelsLore.toString();
     }
 
-    private String getManaAbility(Skill skill, PlayerData playerData) {
+    private String getManaAbility(@NotNull Skill skill, @NotNull PlayerData playerData) {
         Locale locale = playerData.getLocale();
         StringBuilder manaAbilityLore = new StringBuilder();
         MAbility mAbility = skill.getManaAbility();
@@ -160,7 +162,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         return manaAbilityLore.toString();
     }
 
-    private MessageKey getManaAbilityMessage(MAbility mAbility) {
+    private MessageKey getManaAbilityMessage(@NotNull MAbility mAbility) {
         switch (mAbility) {
             case SHARP_HOOK:
                 return ManaAbilityMessage.SHARP_HOOK_MENU;
@@ -173,7 +175,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         }
     }
 
-    private double getDuration(MAbility mAbility, int level) {
+    private double getDuration(@NotNull MAbility mAbility, int level) {
         if (mAbility == MAbility.LIGHTNING_BLADE) {
             double baseDuration = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "base_duration");
             double durationPerLevel = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "duration_per_level");
@@ -183,7 +185,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         }
     }
 
-    private String getProgressToLevel(Skill skill, PlayerData playerData) {
+    private String getProgressToLevel(@NotNull Skill skill, @NotNull PlayerData playerData) {
         int skillLevel = playerData.getSkillLevel(skill);
         Locale locale = playerData.getLocale();
         if (skillLevel < OptionL.getMaxLevel(skill)) {

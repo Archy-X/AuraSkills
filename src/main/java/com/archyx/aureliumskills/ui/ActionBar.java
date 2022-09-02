@@ -31,6 +31,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,9 +41,9 @@ import java.util.UUID;
 
 public class ActionBar implements Listener {
 
-	private final AureliumSkills plugin;
+	private final @NotNull AureliumSkills plugin;
 
-	public ActionBar(AureliumSkills plugin) {
+	public ActionBar(@NotNull AureliumSkills plugin) {
 		this.plugin = plugin;
 	}
 
@@ -65,7 +67,7 @@ public class ActionBar implements Listener {
 								PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 								if (playerData != null) {
 									Locale locale = playerData.getLocale();
-									String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
+									@Nullable String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
 											, "{hp}", getHp(player)
 											, "{max_hp}", getMaxHp(player)
 											, "{mana}", getMana(playerData)
@@ -137,7 +139,7 @@ public class ActionBar implements Listener {
 												// Xp gained
 												if (xpAmount >= 0) {
 													if (!OptionL.getBoolean(Option.ACTION_BAR_ROUND_XP)) {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														@Nullable String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -150,7 +152,7 @@ public class ActionBar implements Listener {
 														sendActionBar(player, m);
 													}
 													else {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														@Nullable String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -166,7 +168,7 @@ public class ActionBar implements Listener {
 												// Xp removed
 												else {
 													if (!OptionL.getBoolean(Option.ACTION_BAR_ROUND_XP)) {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
+														@Nullable String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_removed}", NumberUtil.format1(xpAmount)
@@ -179,7 +181,7 @@ public class ActionBar implements Listener {
 														sendActionBar(player, m);
 													}
 													else {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														@Nullable String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -199,7 +201,7 @@ public class ActionBar implements Listener {
 											if (OptionL.getBoolean(Option.ACTION_BAR_MAXED)) {
 												// Xp gained
 												if (xpAmount >= 0) {
-													String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
+													@Nullable String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
 															, "{hp}", getHp(player)
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -211,7 +213,7 @@ public class ActionBar implements Listener {
 												}
 												// Xp removed
 												else {
-													String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
+													@Nullable String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
 															, "{hp}", getHp(player)
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_removed}", NumberUtil.format1(xpAmount)
@@ -258,7 +260,7 @@ public class ActionBar implements Listener {
 		if (!actionBarDisabled.contains(player.getUniqueId())) {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
-			String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
+			@Nullable String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
 					"{hp}", getHp(player),
 					"{max_hp}", getMaxHp(player),
 					"{mana}", getMana(playerData),
@@ -290,7 +292,7 @@ public class ActionBar implements Listener {
 		return String.valueOf(Math.round(playerData.getMaxMana()));
 	}
 
-	private void sendActionBar(Player player, String message) {
+	private void sendActionBar(@NotNull Player player, @NotNull String message) {
 		if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}

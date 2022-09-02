@@ -18,6 +18,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,7 +34,7 @@ public class Lang implements Listener {
 	private final String[] embeddedLanguages = new String[] {"en", "id", "es", "fr", "zh-TW", "tr", "pl", "pt-BR", "zh-CN", "de", "lt", "ru", "it", "ko", "cs"};
 	private static final Map<Locale, Map<MessageKey, String>> messages = new HashMap<>();
 	private static Map<Locale, String> definedLanguages;
-	private static Locale defaultLanguage;
+	private static @Nullable Locale defaultLanguage;
 	private final AureliumSkills plugin;
 	private final Pattern hexPattern = Pattern.compile("&#([A-Fa-f0-9]{6})");
 
@@ -130,7 +132,7 @@ public class Lang implements Listener {
 				MessageKey key = null;
 				// Try to find message key
 				for (MessageKey messageKey : MessageKey.values()) {
-					String keyPath = messageKey.getPath();
+					@Nullable String keyPath = messageKey.getPath();
 					assert (null != keyPath);
 					if (keyPath.equals(path)) {
 						key = messageKey;
@@ -153,7 +155,7 @@ public class Lang implements Listener {
 		}
 		// Check that each message key has a value
 		for (MessageKey key : MessageKey.values()) {
-			String path = key.getPath();
+			@Nullable String path = key.getPath();
 			assert (null != path);
 			String message = config.getString(path);
 			if (message == null && locale.equals(Locale.ENGLISH)) {
@@ -208,7 +210,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	private FileConfiguration updateFile(File file, FileConfiguration config, String language) {
+	private FileConfiguration updateFile(@NotNull File file, FileConfiguration config, String language) {
 		if (config.contains("file_version")) {
 			InputStream stream = plugin.getResource("messages/messages_" + language + ".yml");
 			if (stream != null) {
@@ -264,7 +266,7 @@ public class Lang implements Listener {
 		return YamlConfiguration.loadConfiguration(file);
 	}
 
-	public static String getMessage(MessageKey key, Locale locale) {
+	public static @Nullable String getMessage(MessageKey key, Locale locale) {
 		// Set default locale if locale not present
 		if (!messages.containsKey(locale)) {
 			locale = getDefaultLanguage();
@@ -298,7 +300,7 @@ public class Lang implements Listener {
 		return languages;
 	}
 
-	private static void setDefaultLanguage(Locale language) {
+	private static void setDefaultLanguage(@NotNull Locale language) {
 		defaultLanguage = language;
 	}
 
@@ -306,7 +308,7 @@ public class Lang implements Listener {
 		return defaultLanguage;
 	}
 
-	public Locale getLocale(Player player) {
+	public @Nullable Locale getLocale(Player player) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
 			return playerData.getLocale();
@@ -315,7 +317,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	public Locale getLocale(CommandSender sender) {
+	public @Nullable Locale getLocale(CommandSender sender) {
 		if (sender instanceof Player) {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData((Player) sender);
 			if (playerData != null) {

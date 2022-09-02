@@ -22,21 +22,21 @@ import java.util.*;
 
 public class PlayerData {
 
-    private final Player player;
+    private final @NotNull Player player;
     private final AureliumSkills plugin;
 
-    private final Map<Skill, Integer> skillLevels;
-    private final Map<Skill, Double> skillXp;
+    private final @NotNull Map<Skill, Integer> skillLevels;
+    private final @NotNull Map<Skill, Double> skillXp;
 
-    private final Map<Stat, Double> statLevels;
-    private final Map<String, StatModifier> statModifiers;
+    private final @NotNull Map<Stat, Double> statLevels;
+    private final @NotNull Map<@NotNull String, StatModifier> statModifiers;
 
     private double mana;
-    private Locale locale;
+    private @Nullable Locale locale;
 
-    private final Map<AbstractAbility, AbilityData> abilityData;
-    private final Map<String, Object> metadata;
-    private List<KeyIntPair> unclaimedItems;
+    private final @NotNull Map<AbstractAbility, AbilityData> abilityData;
+    private final @NotNull Map<String, Object> metadata;
+    private @NotNull List<KeyIntPair> unclaimedItems;
 
     private boolean saving;
     private boolean shouldSave;
@@ -44,7 +44,7 @@ public class PlayerData {
     // Not persistent data
     private final Map<String, Multiplier> multipliers;
 
-    public PlayerData(Player player, AureliumSkills plugin) {
+    public PlayerData(@NotNull Player player, AureliumSkills plugin) {
         this.player = player;
         this.plugin = plugin;
         this.skillLevels = new HashMap<>();
@@ -60,7 +60,7 @@ public class PlayerData {
         this.multipliers = new HashMap<>();
     }
 
-    public Player getPlayer() {
+    public @NotNull Player getPlayer() {
         return player;
     }
 
@@ -68,39 +68,39 @@ public class PlayerData {
         return plugin;
     }
 
-    public int getSkillLevel(Skill skill) {
+    public int getSkillLevel(@Nullable Skill skill) {
         return Objects.requireNonNullElse(skillLevels.get(skill), 1);
     }
 
-    public void setSkillLevel(Skill skill, int level) {
+    public void setSkillLevel(@NotNull Skill skill, int level) {
         skillLevels.put(skill, level);
     }
 
-    public double getSkillXp(Skill skill) {
+    public double getSkillXp(@Nullable Skill skill) {
         return Objects.requireNonNullElse(skillXp.get(skill), 0.0);
     }
 
-    public void setSkillXp(Skill skill, double xp) {
+    public void setSkillXp(@NotNull Skill skill, double xp) {
         skillXp.put(skill, xp);
     }
 
-    public void addSkillXp(Skill skill, double amount) {
+    public void addSkillXp(@NotNull Skill skill, double amount) {
         skillXp.merge(skill, amount, Double::sum);
     }
 
-    public double getStatLevel(Stat stat) {
+    public double getStatLevel(@Nullable Stat stat) {
         return Objects.requireNonNullElse(statLevels.get(stat), 0.0);
     }
 
-    public void setStatLevel(Stat stat, double level) {
+    public void setStatLevel(@NotNull Stat stat, double level) {
         statLevels.put(stat, level);
     }
 
-    public void addStatLevel(Stat stat, double level) {
+    public void addStatLevel(@NotNull Stat stat, double level) {
         statLevels.merge(stat, level, Double::sum);
     }
 
-    public void addStatLevel(Stat stat, int level) {
+    public void addStatLevel(@NotNull Stat stat, int level) {
         Double currentLevel = statLevels.get(stat);
         if (currentLevel != null) {
             statLevels.put(stat, currentLevel + level);
@@ -109,22 +109,22 @@ public class PlayerData {
         }
     }
 
-    public StatModifier getStatModifier(String name) {
+    public StatModifier getStatModifier(@NotNull String name) {
         return statModifiers.get(name);
     }
 
-    public Map<String, StatModifier> getStatModifiers() {
+    public @NotNull Map<@NotNull String, StatModifier> getStatModifiers() {
         return statModifiers;
     }
 
-    public void addStatModifier(StatModifier modifier) {
+    public void addStatModifier(@NotNull StatModifier modifier) {
         addStatModifier(modifier, true);
     }
 
-    public void addStatModifier(StatModifier modifier, boolean reload) {
+    public void addStatModifier(@NotNull StatModifier modifier, boolean reload) {
         // Removes if already existing
         if (statModifiers.containsKey(modifier.getName())) {
-            StatModifier oldModifier = statModifiers.get(modifier.getName());
+            @Nullable StatModifier oldModifier = statModifiers.get(modifier.getName());
             if (oldModifier != null && oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
                 return;
             }
@@ -142,11 +142,11 @@ public class PlayerData {
         }
     }
 
-    public boolean removeStatModifier(String name) {
+    public boolean removeStatModifier(@NotNull String name) {
         return removeStatModifier(name, true);
     }
 
-    public boolean removeStatModifier(String name, boolean reload) {
+    public boolean removeStatModifier(@NotNull String name, boolean reload) {
         StatModifier modifier = statModifiers.get(name);
         if (modifier == null) return false;
         setStatLevel(modifier.getStat(), statLevels.get(modifier.getStat()) - modifier.getValue());
@@ -178,7 +178,7 @@ public class PlayerData {
         this.mana = mana;
     }
 
-    public Locale getLocale() {
+    public @Nullable Locale getLocale() {
         return locale != null ? locale : Lang.getDefaultLanguage();
     }
 
@@ -186,7 +186,7 @@ public class PlayerData {
         this.locale = locale;
     }
 
-    public AbilityData getAbilityData(AbstractAbility ability) {
+    public AbilityData getAbilityData(@NotNull AbstractAbility ability) {
         AbilityData data = abilityData.get(ability);
         if (data == null) {
             data = new AbilityData(ability);
@@ -195,7 +195,7 @@ public class PlayerData {
         return data;
     }
 
-    public boolean containsAbilityData(AbstractAbility ability) {
+    public boolean containsAbilityData(@NotNull AbstractAbility ability) {
         return abilityData.containsKey(ability);
     }
 
@@ -203,7 +203,7 @@ public class PlayerData {
         return abilityData;
     }
 
-    public int getAbilityLevel(Ability ability) {
+    public int getAbilityLevel(@NotNull Ability ability) {
         Skill skill = ability.getSkill();
         if (getSkillLevel(skill) < plugin.getAbilityManager().getUnlock(ability)) {
             return 0;
@@ -217,7 +217,7 @@ public class PlayerData {
         }
     }
 
-    public int getManaAbilityLevel(MAbility mAbility) {
+    public int getManaAbilityLevel(@NotNull MAbility mAbility) {
         // Check if unlocked
         if (getSkillLevel(mAbility.getSkill()) < plugin.getManaAbilityManager().getUnlock(mAbility)) {
             return 0;
@@ -286,7 +286,7 @@ public class PlayerData {
     public double getTotalMultiplier(@Nullable Skill skill) {
         double totalMultiplier = 0.0;
         for (Multiplier multiplier : getMultipliers().values()) {
-            Skill multiplierSkill = multiplier.getSkill();
+            @Nullable Skill multiplierSkill = multiplier.getSkill();
             if (multiplier.isGlobal()) {
                 totalMultiplier += multiplier.getValue();
             } else if (multiplierSkill != null && multiplierSkill.equals(skill)) {
@@ -300,11 +300,11 @@ public class PlayerData {
         return multipliers;
     }
 
-    public void addMultiplier(Multiplier multiplier) {
+    public void addMultiplier(@NotNull Multiplier multiplier) {
         multipliers.put(multiplier.getName(), multiplier);
     }
 
-    public void removeMultiplier(String name) {
+    public void removeMultiplier(@NotNull String name) {
         multipliers.remove(name);
     }
 }

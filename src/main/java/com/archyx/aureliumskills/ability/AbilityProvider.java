@@ -10,22 +10,23 @@ import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.source.SourceTag;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
 public abstract class AbilityProvider {
 
-    public final AureliumSkills plugin;
-    protected final Skill skill;
+    public final @NotNull AureliumSkills plugin;
+    protected final @NotNull Skill skill;
     private final String skillName;
 
-    public AbilityProvider(AureliumSkills plugin, Skill skill) {
+    public AbilityProvider(@NotNull AureliumSkills plugin, @NotNull Skill skill) {
         this.plugin = plugin;
         this.skill = skill;
         this.skillName = skill.toString().toLowerCase(Locale.ENGLISH);
     }
 
-    public boolean blockAbility(Player player) {
+    public boolean blockAbility(@NotNull Player player) {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return true;
         }
@@ -38,21 +39,21 @@ public abstract class AbilityProvider {
         return false;
     }
 
-    public boolean blockDisabled(Ability ability) {
+    public boolean blockDisabled(@NotNull Ability ability) {
         if (!OptionL.isEnabled(ability.getSkill())) {
             return true;
         }
         return !plugin.getAbilityManager().isEnabled(ability);
     }
 
-    public boolean blockDisabled(MAbility ability) {
+    public boolean blockDisabled(@NotNull MAbility ability) {
         if (!OptionL.isEnabled(ability.getSkill())) {
             return true;
         }
         return !plugin.getAbilityManager().isEnabled(ability);
     }
 
-    public double getXp(Player player, Source source, Ability ability) {
+    public double getXp(@NotNull Player player, @NotNull Source source, @NotNull Ability ability) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = plugin.getSourceManager().getXp(source);
@@ -66,23 +67,23 @@ public abstract class AbilityProvider {
         return 0.0;
     }
 
-    public boolean isEnabled(Ability ability) {
+    public boolean isEnabled(@NotNull Ability ability) {
         return plugin.getAbilityManager().isEnabled(ability);
     }
 
-    public double getValue(Ability ability, PlayerData playerData) {
+    public double getValue(@NotNull Ability ability, @NotNull PlayerData playerData) {
         return plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability));
     }
 
-    public double getValue2(Ability ability, PlayerData playerData) {
+    public double getValue2(@NotNull Ability ability, @NotNull PlayerData playerData) {
         return plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability));
     }
 
-    public double getValue(MAbility mability, PlayerData playerData) {
+    public double getValue(@NotNull MAbility mability, @NotNull PlayerData playerData) {
         return plugin.getManaAbilityManager().getValue(mability, playerData.getManaAbilityLevel(mability));
     }
 
-    public double getManaCost(MAbility mability, PlayerData playerData) {
+    public double getManaCost(@NotNull MAbility mability, @NotNull PlayerData playerData) {
         return plugin.getManaAbilityManager().getManaCost(mability, playerData);
     }
 

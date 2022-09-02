@@ -12,6 +12,8 @@ import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,17 +27,17 @@ public class Modifiers extends NBTAPIUser {
         super(plugin);
     }
 
-    public ItemStack addModifier(ModifierType type, ItemStack item, Stat stat, double value) {
+    public @NotNull ItemStack addModifier(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Stat stat, double value) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
-        String name = getName(stat);
+        @Nullable String name = getName(stat);
         assert (null != name);
         compound.setDouble(name, value);
         return nbtItem.getItem();
     }
 
-    public ItemStack convertFromLegacy(ItemStack item) {
+    public @NotNull ItemStack convertFromLegacy(@NotNull ItemStack item) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         for (ModifierType type : ModifierType.values()) {
@@ -43,7 +45,7 @@ public class Modifiers extends NBTAPIUser {
             if (legacyModifiers.size() > 0) {
                 NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
                 for (StatModifier modifier : legacyModifiers) {
-                    String name = getName(modifier.getStat());
+                    @Nullable String name = getName(modifier.getStat());
                     assert (null != name);
                     compound.setDouble(name, modifier.getValue());
                 }
@@ -57,18 +59,18 @@ public class Modifiers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public ItemStack removeModifier(ModifierType type, ItemStack item, Stat stat) {
+    public @NotNull ItemStack removeModifier(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Stat stat) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
-        String name = getName(stat);
+        @Nullable String name = getName(stat);
         assert (null != name);
         compound.removeKey(name);
         ItemUtils.removeParentCompounds(compound);
         return nbtItem.getItem();
     }
 
-    public ItemStack removeAllModifiers(ModifierType type, ItemStack item) {
+    public @NotNull ItemStack removeAllModifiers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
@@ -79,7 +81,7 @@ public class Modifiers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public List<StatModifier> getLegacyModifiers(ModifierType type, NBTItem nbtItem) {
+    public @NotNull List<StatModifier> getLegacyModifiers(@NotNull ModifierType type, @NotNull NBTItem nbtItem) {
         if (isNBTDisabled()) return new ArrayList<>();
         List<StatModifier> modifiers = new ArrayList<>();
         for (String key : nbtItem.getKeys()) {
@@ -103,10 +105,10 @@ public class Modifiers extends NBTAPIUser {
         return modifiers;
     }
 
-    public List<StatModifier> getModifiers(ModifierType type, ItemStack item) {
+    public @NotNull List<@NotNull StatModifier> getModifiers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (isNBTDisabled()) return new ArrayList<>();
         NBTItem nbtItem = new NBTItem(item);
-        List<StatModifier> modifiers = new ArrayList<>();
+        List<@NotNull StatModifier> modifiers = new ArrayList<>();
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
             Stat stat = plugin.getStatRegistry().getStat(key);
@@ -131,10 +133,10 @@ public class Modifiers extends NBTAPIUser {
         return modifiers;
     }
 
-    public void addLore(ModifierType type, ItemStack item, Stat stat, double value, Locale locale) {
+    public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Stat stat, double value, @Nullable Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
+            @NotNull List<@NotNull String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
             CommandMessage message;
             if (value >= 0) {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE");
@@ -142,7 +144,7 @@ public class Modifiers extends NBTAPIUser {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
             }
 
-            String t =TextUtil.replace(Lang.getMessage(message, locale),
+            @Nullable String t =TextUtil.replace(Lang.getMessage(message, locale),
                 "{stat}", stat.getDisplayName(locale),
                 "{value}", NumberUtil.format1(Math.abs(value)),
                 "{color}", stat.getColor(locale));
@@ -153,10 +155,10 @@ public class Modifiers extends NBTAPIUser {
         item.setItemMeta(meta);
     }
 
-    public void removeLore(ItemStack item, Stat stat, Locale locale) {
+    public void removeLore(@NotNull ItemStack item, @NotNull Stat stat, @Nullable Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore = meta.getLore();
+            @Nullable List<@NotNull String> lore = meta.getLore();
             if (lore != null) {
                 lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
                 meta.setLore(lore);
@@ -165,8 +167,8 @@ public class Modifiers extends NBTAPIUser {
         item.setItemMeta(meta);
     }
 
-    private String getName(Stat stat) {
-        String name = stat.name();
+    private @Nullable String getName(@NotNull Stat stat) {
+        @Nullable String name = stat.name();
         assert (null != name);
         return TextUtil.capitalize(name.toLowerCase(Locale.ENGLISH));
     }

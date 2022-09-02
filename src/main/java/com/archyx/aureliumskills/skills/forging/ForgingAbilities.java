@@ -29,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -36,7 +37,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
 
     private final Random random = new Random();
 
-    public ForgingAbilities(AureliumSkills plugin) {
+    public ForgingAbilities(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.FORGING);
     }
 
@@ -48,7 +49,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         if (event.getWhoClicked() instanceof Player) {
             Player player = (Player) event.getWhoClicked();
             if (blockAbility(player)) return;
-            Inventory inventory = event.getClickedInventory();
+            @Nullable Inventory inventory = event.getClickedInventory();
             if (inventory == null) return;
             ClickType click = event.getClick();
             // Only allow right and left clicks if inventory full
@@ -97,7 +98,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
 
     private void checkEnchants(ItemStack item, Set<EnchantmentValue> enchants) {
         if (item != null) {
-            for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
+            for (Map.Entry<@NotNull Enchantment, @NotNull Integer> entry : item.getEnchantments().entrySet()) {
                 if (plugin.getForgingLeveler().isDisenchantable(entry.getKey())) {
                     enchants.add(new EnchantmentValue(entry.getKey(), entry.getValue()));
                 }

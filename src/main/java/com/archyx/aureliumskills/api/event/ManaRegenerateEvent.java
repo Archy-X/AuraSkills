@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ManaRegenerateEvent extends Event {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static final @NotNull HandlerList handlers = new HandlerList();
 
     private final Player player;
     private double amount;

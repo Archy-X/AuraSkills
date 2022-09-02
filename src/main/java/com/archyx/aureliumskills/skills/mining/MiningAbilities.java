@@ -25,6 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Random;
@@ -33,7 +34,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 
 	private final Random r = new Random();
 
-	public MiningAbilities(AureliumSkills plugin) {
+	public MiningAbilities(@NotNull AureliumSkills plugin) {
 		super(plugin, Skills.MINING);
 	}
 
@@ -61,7 +62,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 									}
 								}
 							}
-							Collection<ItemStack> drops = block.getDrops(tool);
+							Collection<@NotNull ItemStack> drops = block.getDrops(tool);
 							for (ItemStack item : drops) {
 								PlayerLootDropEvent event = new PlayerLootDropEvent(player, item.clone(), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCKY_MINER);
 								Bukkit.getPluginManager().callEvent(event);

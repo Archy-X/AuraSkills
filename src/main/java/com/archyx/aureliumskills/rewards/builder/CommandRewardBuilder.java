@@ -5,41 +5,43 @@ import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.rewards.CommandReward;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.util.misc.Validate;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CommandRewardBuilder extends MessagedRewardBuilder {
 
-    private CommandExecutor executor;
-    private String command;
+    private @NotNull CommandExecutor executor;
+    private @Nullable String command;
     private CommandExecutor revertExecutor;
-    private String revertCommand;
+    private @Nullable String revertCommand;
 
-    public CommandRewardBuilder(AureliumSkills plugin) {
+    public CommandRewardBuilder(@NotNull AureliumSkills plugin) {
         super(plugin);
         this.executor = CommandExecutor.CONSOLE;
     }
 
-    public CommandRewardBuilder executor(CommandExecutor executor) {
+    public @NotNull CommandRewardBuilder executor(@NotNull CommandExecutor executor) {
         this.executor = executor;
         return this;
     }
 
-    public CommandRewardBuilder command(String command) {
+    public @NotNull CommandRewardBuilder command(@NotNull String command) {
         this.command = command;
         return this;
     }
 
-    public CommandRewardBuilder revertCommand(String revertCommand) {
+    public @NotNull CommandRewardBuilder revertCommand(@NotNull String revertCommand) {
         this.revertCommand = revertCommand;
         return this;
     }
 
-    public CommandRewardBuilder revertExecutor(CommandExecutor revertExecutor) {
+    public @NotNull CommandRewardBuilder revertExecutor(@NotNull CommandExecutor revertExecutor) {
         this.revertExecutor = revertExecutor;
         return this;
     }
 
     @Override
-    public Reward build() {
+    public @NotNull Reward build() {
         Validate.notNull(command, "You must specify a command");
         assert (null != command);
         return new CommandReward(plugin, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);

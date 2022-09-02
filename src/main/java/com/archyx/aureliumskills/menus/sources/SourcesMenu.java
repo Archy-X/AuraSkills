@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.menu.ActiveMenu;
 import com.archyx.slate.menu.MenuProvider;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -23,7 +24,7 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
         Locale locale = plugin.getLang().getLocale(player);
         if (placeholder.equals("sources_title")) {
-            Object property = activeMenu.getProperty("skill");
+            @Nullable Object property = activeMenu.getProperty("skill");
             assert (null != property);
             Skill skill = (Skill) property;
             return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_TITLE, locale),
@@ -37,7 +38,7 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     @Override
     public int getPages(Player player, ActiveMenu activeMenu) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
-        Object property = activeMenu.getProperty("items_per_page");
+        @Nullable Object property = activeMenu.getProperty("items_per_page");
         assert (null != property);
         int itemsPerPage = (Integer) property;
         Source[] sources = plugin.getSourceRegistry().values(skill);

@@ -135,7 +135,7 @@ public class SourceManager {
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources and " + tagsLoaded + " tags in " + (System.currentTimeMillis() - start) + "ms");
     }
 
-    private FileConfiguration updateFile(File file, FileConfiguration config) {
+    private FileConfiguration updateFile(@NotNull File file, FileConfiguration config) {
         if (config.contains("file_version")) {
             InputStream stream = plugin.getResource("sources_config.yml");
             if (stream != null) {

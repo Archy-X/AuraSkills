@@ -22,17 +22,18 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
 public class SharpHook extends ManaAbilityProvider {
 
-    public SharpHook(AureliumSkills plugin) {
+    public SharpHook(@NotNull AureliumSkills plugin) {
         super(plugin, MAbility.SHARP_HOOK, ManaAbilityMessage.SHARP_HOOK_USE, null);
     }
 
     @Override
-    public void onActivate(Player player, PlayerData playerData) {
+    public void onActivate(@NotNull Player player, @NotNull PlayerData playerData) {
         if (plugin.getManaAbilityManager().getOptionAsBooleanElseTrue(MAbility.SHARP_HOOK, "enable_sound")) {
             if (XMaterial.isNewVersion()) {
                 player.playSound(player.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1f, 1.5f);
@@ -48,7 +49,7 @@ public class SharpHook extends ManaAbilityProvider {
     }
 
     @EventHandler
-    public void sharpHook(PlayerInteractEvent event) {
+    public void sharpHook(@NotNull PlayerInteractEvent event) {
         if (!OptionL.isEnabled(Skills.FISHING) || !plugin.getAbilityManager().isEnabled(MAbility.SHARP_HOOK)) return;
         // If left click with fishing rod
         if (event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
@@ -108,7 +109,7 @@ public class SharpHook extends ManaAbilityProvider {
         }
     }
 
-    private void activateSharpHook(Player player, PlayerData playerData, LivingEntity caught) {
+    private void activateSharpHook(@NotNull Player player, @NotNull PlayerData playerData, @NotNull LivingEntity caught) {
         if (hasEnoughMana(player)) {
             double damage = plugin.getManaAbilityManager().getValue(MAbility.SHARP_HOOK, playerData);
             double healthBefore = caught.getHealth();
@@ -120,7 +121,7 @@ public class SharpHook extends ManaAbilityProvider {
         }
     }
 
-    private boolean areValidLocations(Player damager, LivingEntity hooked) {
+    private boolean areValidLocations(@NotNull Player damager, @NotNull LivingEntity hooked) {
         Location damagerLocation = damager.getLocation();
         Location hookedLocation = hooked.getLocation();
         // Disallow if in different worlds
@@ -136,7 +137,7 @@ public class SharpHook extends ManaAbilityProvider {
     }
 
     @Override
-    protected int getDuration(PlayerData playerData) {
+    protected int getDuration(@NotNull PlayerData playerData) {
         return 0;
     }
 }

@@ -30,20 +30,21 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public abstract class LootHandler extends AbilityProvider {
 
     private final Random random = new Random();
-    private final Ability ability;
+    private final @NotNull Ability ability;
 
-    public LootHandler(AureliumSkills plugin, Skill skill, Ability ability) {
+    public LootHandler(@NotNull AureliumSkills plugin, @NotNull Skill skill, @NotNull Ability ability) {
         super(plugin, skill);
         this.ability = ability;
     }
 
-    protected void giveCommandLoot(Player player, CommandLoot loot, Source source) {
+    protected void giveCommandLoot(@NotNull Player player, @NotNull CommandLoot loot, @NotNull Source source) {
         // Apply placeholders to command
         String finalCommand = TextUtil.replace(loot.getCommand(), "{player}", player.getName());
         assert (null != finalCommand);
@@ -61,7 +62,7 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event, @Nullable Source source, LootDropCause cause) {
+    protected void giveBlockItemLoot(@NotNull Player player, @NotNull ItemLoot loot, @NotNull BlockBreakEvent event, @Nullable Source source, @NotNull LootDropCause cause) {
         Block block = event.getBlock();
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
@@ -76,9 +77,9 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable Source source, LootDropCause cause) {
+    protected void giveFishingItemLoot(@NotNull Player player, @NotNull ItemLoot loot, @NotNull PlayerFishEvent event, @Nullable Source source, @NotNull LootDropCause cause) {
         if (!(event.getCaught() instanceof Item)) return;
-        Entity itemEntity = event.getCaught();
+        @Nullable Entity itemEntity = event.getCaught();
 
         int amount = generateAmount(loot.getMinAmount(), loot.getMaxAmount());
         if (amount == 0) return;
@@ -100,7 +101,7 @@ public abstract class LootHandler extends AbilityProvider {
     }
 
     @Nullable
-    protected Loot selectLoot(LootPool pool, @Nullable Source source) {
+    protected Loot selectLoot(@NotNull LootPool pool, @Nullable Source source) {
         List<Loot> lootList = new ArrayList<>();
         // Add applicable loot to list for selection
         for (Loot loot : pool.getLoot()) {
@@ -140,7 +141,7 @@ public abstract class LootHandler extends AbilityProvider {
         return selectedLoot;
     }
 
-    private void giveXp(Player player, Loot loot, @Nullable Source source) {
+    private void giveXp(@NotNull Player player, @NotNull Loot loot, @Nullable Source source) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         double xp = loot.getOption("xp", Double.class, -1.0);
@@ -151,7 +152,7 @@ public abstract class LootHandler extends AbilityProvider {
         }
     }
 
-    private double getXp(Player player, double input) {
+    private double getXp(@NotNull Player player, double input) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = input;
@@ -169,7 +170,7 @@ public abstract class LootHandler extends AbilityProvider {
         return new Random().nextInt(maxAmount - minAmount + 1) + minAmount;
     }
 
-    private void attemptSendMessage(Player player, Loot loot) {
+    private void attemptSendMessage(@NotNull Player player, @NotNull Loot loot) {
         String message = loot.getMessage();
         if (message != null && !message.equals("")) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -191,7 +192,7 @@ public abstract class LootHandler extends AbilityProvider {
         }
     }
 
-    protected double getCommonChance(LootPool pool, PlayerData playerData) {
+    protected double getCommonChance(@NotNull LootPool pool, @NotNull PlayerData playerData) {
         double chancePerLuck = pool.getOption("chance_per_luck", Double.class, 0.0) / 100;
         return pool.getBaseChance() + chancePerLuck * playerData.getStatLevel(Stats.LUCK);
     }

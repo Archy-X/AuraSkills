@@ -20,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,13 +29,13 @@ import java.util.UUID;
 
 public class Health implements Listener {
 
-	private final AureliumSkills plugin;
+	private final @NotNull AureliumSkills plugin;
 	private final AgilityAbilities agilityAbilities;
 	private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
 	private final Map<Integer, Double> hearts = new HashMap<>();
 	private static final double threshold = 0.1;
 
-	public Health(AureliumSkills plugin) {
+	public Health(@NotNull AureliumSkills plugin) {
 		this.plugin = plugin;
 		this.agilityAbilities = new AgilityAbilities(plugin);
 	}

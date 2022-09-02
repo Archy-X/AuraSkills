@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.stats.Stats;
 
 import java.util.Locale;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum StatMessage implements MessageKey {
     
     STRENGTH_NAME,
@@ -33,10 +35,10 @@ public enum StatMessage implements MessageKey {
     TOUGHNESS_SYMBOL;
     
     private final Stat stat = Stats.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-    private final String path = "stats." + stat.toString().toLowerCase(Locale.ENGLISH) + "." + this.toString().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
+    private final @NotNull String path = "stats." + stat.toString().toLowerCase(Locale.ENGLISH) + "." + this.toString().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
     
     @Override
-    public String getPath() {
+    public @NotNull String getPath() {
         return path;
     }
 }

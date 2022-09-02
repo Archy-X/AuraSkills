@@ -15,10 +15,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class DefenseLeveler extends SkillLeveler implements Listener {
 
-	public DefenseLeveler(AureliumSkills plugin) {
+	public DefenseLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.DEFENDER);
 	}
 
@@ -60,7 +62,7 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 							// Make sure player didn't cause own damage
 							if (event.getDamager() instanceof Projectile) {
 								Projectile projectile = (Projectile) event.getDamager();
-								ProjectileSource shooter = projectile.getShooter();
+								@Nullable ProjectileSource shooter = projectile.getShooter();
 								if (shooter != null && projectile.getShooter() instanceof Player) {
 									if (shooter.equals(player)) return;
 								}

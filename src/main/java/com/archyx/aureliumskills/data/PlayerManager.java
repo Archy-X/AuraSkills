@@ -14,10 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerManager {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final ConcurrentHashMap<UUID, PlayerData> playerData;
 
-    public PlayerManager(AureliumSkills plugin) {
+    public PlayerManager(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.playerData = new ConcurrentHashMap<>();
         if (OptionL.getBoolean(Option.AUTO_SAVE_ENABLED)) {

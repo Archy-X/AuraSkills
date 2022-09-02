@@ -4,8 +4,9 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class StatContext implements ContextProvider<Stat> {
+public class StatContext implements ContextProvider<@NotNull Stat> {
 
     private final AureliumSkills plugin;
 

@@ -3,26 +3,27 @@ package com.archyx.aureliumskills.modifier;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
 public class StatModifier {
 
-    private final String name;
-    private final Stat stat;
+    private final @NotNull String name;
+    private final @NotNull Stat stat;
     private final double value;
 
-    public StatModifier(String name, Stat stat, double value) {
+    public StatModifier(@NotNull String name, @NotNull Stat stat, double value) {
         this.name = name;
         this.stat = stat;
         this.value = value;
     }
 
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
-    public Stat getStat() {
+    public @NotNull Stat getStat() {
         return stat;
     }
 

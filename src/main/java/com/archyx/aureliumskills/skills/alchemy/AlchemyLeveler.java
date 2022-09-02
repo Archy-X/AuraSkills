@@ -28,6 +28,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +40,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 
 	private final Map<BlockPosition, BrewingStandData> brewingStands;
 
-	public AlchemyLeveler(AureliumSkills plugin) {
+	public AlchemyLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.BREWER);
 		this.brewingStands = new HashMap<>();
 	}
@@ -63,7 +65,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 						if (player != null) {
 							if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
 							if (blockXpGainPlayer(player)) return;
-							ItemStack item = event.getContents().getIngredient();
+							@Nullable ItemStack item = event.getContents().getIngredient();
 							if (item != null)
 								addAlchemyXp(player, item.getType());
 						}
@@ -73,7 +75,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 		}
 	}
 
-	private void addAlchemyXp(Player player, Material mat) {
+	private void addAlchemyXp(@NotNull Player player, Material mat) {
 		Leveler leveler = plugin.getLeveler();
 		if (mat.equals(Material.REDSTONE)) {
 			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.EXTENDED));
@@ -148,7 +150,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 			if (OptionL.isEnabled(Skills.ALCHEMY)) {
 				if (event.getInventory().getHolder() != null) {
 					if (event.getInventory().getLocation() != null) {
-						Location location = event.getInventory().getLocation();
+						@Nullable Location location = event.getInventory().getLocation();
 						if (location == null)
 							return;
 						Block block = location.getBlock();

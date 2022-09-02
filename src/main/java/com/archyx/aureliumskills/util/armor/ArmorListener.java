@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,7 +68,7 @@ public class ArmorListener implements Listener{
             numberkey = true;
         }
         if(e.getSlotType() != SlotType.ARMOR && e.getSlotType() != SlotType.QUICKBAR && e.getSlotType() != SlotType.CONTAINER) return;
-        Inventory inventory = e.getClickedInventory();
+        @Nullable Inventory inventory = e.getClickedInventory();
         if (inventory == null)
             return;
         if(!inventory.getType().equals(InventoryType.PLAYER)) return;
@@ -139,7 +140,7 @@ public class ArmorListener implements Listener{
         if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
             Player player = e.getPlayer();
             if (e.getItem() != null) {
-                ItemStack itemStack = e.getItem();
+                @Nullable ItemStack itemStack = e.getItem();
                 if (itemStack == null)
                     return;
                 Material mat = itemStack.getType();
@@ -150,7 +151,7 @@ public class ArmorListener implements Listener{
             if(!e.useInteractedBlock().equals(Result.DENY)){
                 if(e.getClickedBlock() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()){// Having both of these checks is useless, might as well do it though.
                     // Some blocks have actions when you right click them which stops the client from equipping the armor in hand.
-                    Block clickedBlock = e.getClickedBlock();
+                    @Nullable Block clickedBlock = e.getClickedBlock();
                     if (clickedBlock == null)
                         return;
                     Material mat = clickedBlock.getType();

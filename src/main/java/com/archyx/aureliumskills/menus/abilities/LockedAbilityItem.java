@@ -12,6 +12,8 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -25,7 +27,7 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, Ability ability) {
+    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull Ability ability) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "name":
@@ -36,7 +38,7 @@ public class LockedAbilityItem extends AbstractAbilityItem {
                                 "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
                                 "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1))));
             case "unlocked_at":
-                Object property = menu.getProperty("skill");
+                @Nullable Object property = menu.getProperty("skill");
                 assert (null != property);
                 Skill skill = (Skill) property;
                 return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
@@ -49,16 +51,16 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public Set<Ability> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("skill");
+    public Set<Ability> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Set<Ability> lockedAbilities = new HashSet<>();
         if (playerData != null) {
             // Add abilities that player has not unlocked yet
-            for (Supplier<Ability> abilitySupplier : skill.getAbilities()) {
-                Ability ability = abilitySupplier.get();
+            for (Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
+                @Nullable Ability ability = abilitySupplier.get();
                 if (playerData.getAbilityLevel(ability) <= 0) {
                     lockedAbilities.add(ability);
                 }

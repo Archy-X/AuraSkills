@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -23,7 +24,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
 
     private final Random r = new Random();
 
-    public EnduranceAbilities(AureliumSkills plugin) {
+    public EnduranceAbilities(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.ENDURANCE);
     }
 

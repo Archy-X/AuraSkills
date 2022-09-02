@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 public class EntityData extends Parser {
 
-    private final EntityType type;
+    private final @NotNull EntityType type;
     private final boolean glowing;
     private final int fireTicks;
     private final boolean visualFire;
@@ -24,10 +25,10 @@ public class EntityData extends Parser {
     private final boolean silent;
     private final boolean gravity;
     private final boolean customNameVisible;
-    private final String customName;
-    private final List<String> scoreboardTags;
+    private final @Nullable String customName;
+    private final @NotNull List<@NotNull String> scoreboardTags;
 
-    public EntityData(Map<?, ?> data) {
+    public EntityData(@NotNull Map<?, ?> data) {
         type = EntityType.valueOf(getString(data, "entity_type"));
         glowing = getBooleanOrDefault(data, "glowing", false);
         fireTicks = getIntOrDefault(data, "fire_ticks", 0);
@@ -51,7 +52,7 @@ public class EntityData extends Parser {
      * @return The Entity spawned, null if the location does not have a World
      */
     @Nullable
-    public Entity spawn(Location location) {
+    public Entity spawn(@NotNull Location location) {
         // Spawn entity
         World world = location.getWorld();
         if (world == null) return null;
@@ -60,7 +61,7 @@ public class EntityData extends Parser {
         return entity;
     }
 
-    protected void applyData(Entity entity, Location location) {
+    protected void applyData(Entity entity, @NotNull Location location) {
         entity.setGlowing(glowing);
         entity.setFireTicks(fireTicks);
         if (VersionUtils.isAtLeastVersion(17)) {

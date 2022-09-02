@@ -10,10 +10,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerHarvestBlockEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class FarmingHarvestLeveler extends FarmingLeveler implements Listener {
 
-    public FarmingHarvestLeveler(AureliumSkills plugin) {
+    public FarmingHarvestLeveler(@NotNull AureliumSkills plugin) {
         super(plugin);
     }
 

@@ -18,14 +18,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 
 public class Terraform extends ReadiedManaAbility {
 
-    public Terraform(AureliumSkills plugin) {
+    public Terraform(@NotNull AureliumSkills plugin) {
         super(plugin, MAbility.TERRAFORM, ManaAbilityMessage.TERRAFORM_START, ManaAbilityMessage.TERRAFORM_END,
-                new String[]{"SHOVEL", "SPADE"}, new Action[]{Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR});
+                new @NotNull String[]{"SHOVEL", "SPADE"}, new @NotNull Action[]{Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR});
     }
 
     @Override
@@ -54,7 +56,7 @@ public class Terraform extends ReadiedManaAbility {
         }
     }
 
-    private void applyTerraform(Player player, Block block) {
+    private void applyTerraform(@NotNull Player player, @NotNull Block block) {
         // Check if block is applicable to ability
         ExcavationSource source = ExcavationSource.getSource(block);
         if (source == null) return;
@@ -71,18 +73,18 @@ public class Terraform extends ReadiedManaAbility {
         }
     }
 
-    private void terraformBreak(Player player, Block block) {
+    private void terraformBreak(@NotNull Player player, @NotNull Block block) {
         Material material = block.getType();
         BlockFace[] faces = new BlockFace[] {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
         LinkedList<Block> toCheck = new LinkedList<>();
         toCheck.add(block);
         int count = 0;
-        Block nextBlock;
+        @Nullable Block nextBlock;
         while ((nextBlock = toCheck.poll()) != null && count < 61) {
             if (nextBlock.getType() == material) {
                 nextBlock.setMetadata("AureliumSkills-Terraform", new FixedMetadataValue(plugin, true));
                 breakBlock(player, nextBlock);
-                for (BlockFace face : faces) {
+                for (@NotNull BlockFace face : faces) {
                     toCheck.add(nextBlock.getRelative(face));
                 }
                 count++;
@@ -90,7 +92,7 @@ public class Terraform extends ReadiedManaAbility {
         }
     }
 
-    private void breakBlock(Player player, Block block) {
+    private void breakBlock(@NotNull Player player, @NotNull Block block) {
         if (!plugin.getTownySupport().canBreak(player, block)) {
             block.removeMetadata("AureliumSkills-Terraform", plugin);
             return;

@@ -13,13 +13,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.jetbrains.annotations.NotNull;
 
 
 public class MiningLeveler extends SkillLeveler implements Listener {
 
 	private final MiningAbilities miningAbilities;
 
-	public MiningLeveler(AureliumSkills plugin) {
+	public MiningLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.MINER);
 		this.miningAbilities = new MiningAbilities(plugin);
 	}

@@ -11,6 +11,7 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -35,7 +36,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
     }
 
     @Override
-    public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+    public Set<@NotNull Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         return new HashSet<>(plugin.getSkillRegistry().getSkills());
     }
 

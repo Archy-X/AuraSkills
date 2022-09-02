@@ -16,6 +16,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -26,7 +28,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public Class<Integer> getContext() {
+    public Class<@NotNull Integer> getContext() {
         return Integer.class;
     }
 
@@ -76,7 +78,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
                 }
             }
             // Set the player skin on the head
-            SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
+            @Nullable SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
             
             if (meta != null)
                 meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));

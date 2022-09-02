@@ -2,6 +2,9 @@ package com.archyx.aureliumskills.lang;
 
 import java.util.Locale;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public enum MenuMessage implements MessageKey {
 
     //Common
@@ -108,7 +111,7 @@ public enum MenuMessage implements MessageKey {
     UNLOCKED_DESC(7),
     UNLOCKED_DESC_MAXED(7);
 
-    private String path;
+    private @Nullable String path;
     
     MenuMessage(int section) {
         String key = this.name().toLowerCase(Locale.ENGLISH);
@@ -134,7 +137,7 @@ public enum MenuMessage implements MessageKey {
     }
 
     @Override
-    public String getPath() {
+    public @NotNull String getPath() {
         assert (null != path);
         
         return path;

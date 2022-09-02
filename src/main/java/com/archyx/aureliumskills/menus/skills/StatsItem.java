@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -48,7 +49,7 @@ public class StatsItem extends AbstractItem implements SingleItemProvider {
     @Override
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
         if (baseItem.getItemMeta() instanceof SkullMeta) {
-            SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
+            @Nullable SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
             if (meta != null) {
                 meta.setOwningPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()));
                 baseItem.setItemMeta(meta);

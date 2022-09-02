@@ -4,6 +4,8 @@ import com.archyx.aureliumskills.commands.Command;
 
 import java.util.Locale;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum CommandMessage implements MessageKey {
 
     PREFIX,
@@ -144,22 +146,22 @@ public enum CommandMessage implements MessageKey {
     XP_REMOVE,
     UNKNOWN_SKILL("unknown_skill");
 
-    private final String path;
+    private final @NotNull String path;
 
     CommandMessage() {
         this.path = "commands." + this.name().toLowerCase(Locale.ENGLISH).replace("_", ".");
     }
     
-    CommandMessage(Command command, String path) {
+    CommandMessage(@NotNull Command command, @NotNull String path) {
         this.path = "commands." + command.name().toLowerCase(Locale.ENGLISH).replace("_", ".") + "." + path;
     }
 
-    CommandMessage(String path) {
+    CommandMessage(@NotNull String path) {
         this.path = "commands." + path;
     }
 
     @Override
-    public String getPath() {
+    public @NotNull String getPath() {
         return path;
     }
 

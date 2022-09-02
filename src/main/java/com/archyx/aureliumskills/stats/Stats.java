@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.lang.StatMessage;
 
 import java.util.Locale;
 
+import org.jetbrains.annotations.Nullable;
+
 public enum Stats implements Stat {
 
 	STRENGTH,
@@ -15,22 +17,22 @@ public enum Stats implements Stat {
 	TOUGHNESS;
 
 	@Override
-	public String getDisplayName(Locale locale) {
+	public @Nullable String getDisplayName(@Nullable Locale locale) {
 		return Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"), locale);
 	}
 
 	@Override
-	public String getColor(Locale locale) {
+	public @Nullable String getColor(@Nullable Locale locale) {
 		return Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"), locale);
 	}
 
 	@Override
-	public String getSymbol(Locale locale) {
+	public @Nullable String getSymbol(@Nullable Locale locale) {
 		return Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"), locale);
 	}
 
 	@Override
-	public String getDescription(Locale locale) {
+	public @Nullable String getDescription(@Nullable Locale locale) {
 		return Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"), locale);
 	}
 

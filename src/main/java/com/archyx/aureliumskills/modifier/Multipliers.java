@@ -15,6 +15,7 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,12 +29,12 @@ public class Multipliers extends NBTAPIUser {
         super(plugin);
     }
 
-    public List<Multiplier> getMultipliers(ModifierType type, ItemStack item) {
+    public List<@NotNull Multiplier> getMultipliers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (!OptionL.getBoolean(Option.MODIFIER_MULTIPLIER_ENABLED) || isNBTDisabled()) { // Return empty list if disabled
             return new ArrayList<>();
         }
         NBTItem nbtItem = new NBTItem(item);
-        List<Multiplier> multipliers = new ArrayList<>();
+        List<@NotNull Multiplier> multipliers = new ArrayList<>();
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
             double value = compound.getDouble(key);
@@ -58,15 +59,15 @@ public class Multipliers extends NBTAPIUser {
         return multipliers;
     }
 
-    public ItemStack addMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill, double value) {
+    public @NotNull ItemStack addMultiplier(@NotNull ModifierType type, @NotNull ItemStack item, @Nullable Skill skill, double value) {
         if (isNBTDisabled()) return item;
-        NBTItem nbtItem = new NBTItem(item);
+        @NotNull NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         compound.setDouble(getNBTName(skill), value);
         return nbtItem.getItem();
     }
 
-    public ItemStack removeMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill) {
+    public @NotNull ItemStack removeMultiplier(@NotNull ModifierType type, @NotNull ItemStack item, @Nullable Skill skill) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
@@ -75,7 +76,7 @@ public class Multipliers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public ItemStack removeAllMultipliers(ModifierType type, ItemStack item) {
+    public @NotNull ItemStack removeAllMultipliers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
@@ -86,10 +87,10 @@ public class Multipliers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public void addLore(ModifierType type, ItemStack item, Skill skill, double value, Locale locale) {
+    public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, Skill skill, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            List<String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
+            @NotNull List<@NotNull String> lore = Objects.requireNonNullElseGet(meta.getLore(), LinkedList::new);
             if (skill != null) { // Skill multiplier
                 CommandMessage message;
                 if (value >= 0) {
@@ -100,7 +101,7 @@ public class Multipliers extends NBTAPIUser {
                 if (lore.size() > 0) {
                     lore.add(" ");
                 }
-                String t = TextUtil.replace(Lang.getMessage(message, locale),
+                @Nullable String t = TextUtil.replace(Lang.getMessage(message, locale),
                         "{skill}", skill.getDisplayName(locale),
                         "{value}", NumberUtil.format1(Math.abs(value)));
                 assert (null != t);
@@ -115,7 +116,7 @@ public class Multipliers extends NBTAPIUser {
                 if (lore.size() > 0) {
                     lore.add(" ");
                 }
-                String t = TextUtil.replace(Lang.getMessage(message, locale),
+                @Nullable String t = TextUtil.replace(Lang.getMessage(message, locale),
                         "{value}", NumberUtil.format1(Math.abs(value)));
                 assert (null != t);
                 lore.add(t);
@@ -125,9 +126,9 @@ public class Multipliers extends NBTAPIUser {
         item.setItemMeta(meta);
     }
 
-    private String getNBTName(@Nullable Skill skill) {
+    private @NotNull String getNBTName(@Nullable Skill skill) {
         if (skill != null) {
-            String name = TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
+            @Nullable String name = TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
             assert (null != name);
             return name;
         } else {

@@ -7,6 +7,7 @@ import com.udojava.evalex.Expression;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class XpRequirements {
         }
     }
 
-    private void loadDefaultSection(File file, FileConfiguration config, double oldMultiplier) {
+    private void loadDefaultSection(@NotNull File file, FileConfiguration config, double oldMultiplier) {
         ConfigurationSection section = config.getConfigurationSection("default");
         if (section != null) {
             if (oldMultiplier != 0.0) { // Migrate old multiplier

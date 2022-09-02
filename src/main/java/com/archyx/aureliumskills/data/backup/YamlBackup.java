@@ -13,6 +13,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -65,7 +66,7 @@ public class YamlBackup extends BackupProvider {
             }
             backup.save(backupFile);
             Locale locale = plugin.getLang().getLocale(sender);
-            String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
+            @NotNull String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
                     , "{type}", "Yaml", "{file}", backupFile.getName());
             if (sender instanceof ConsoleCommandSender) {
                 message = Objects.requireNonNullElse(ChatColor.stripColor(message), "");

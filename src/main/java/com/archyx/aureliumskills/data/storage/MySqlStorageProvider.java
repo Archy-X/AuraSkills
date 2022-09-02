@@ -25,6 +25,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.sql.*;
@@ -97,7 +99,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         // Load stat modifiers
                         String statModifiers = result.getString("STAT_MODIFIERS");
                         if (statModifiers != null) {
-                            JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
+                            @Nullable JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
                             assert (null != jsonModifiers);
                             for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
                                 JsonObject modifierObject = modifierElement.getAsJsonObject();
@@ -105,7 +107,7 @@ public class MySqlStorageProvider extends StorageProvider {
                                 String statName = modifierObject.get("stat").getAsString();
                                 double value = modifierObject.get("value").getAsDouble();
                                 if (name != null && statName != null) {
-                                    Stat stat = plugin.getStatRegistry().getStat(statName);
+                                    @Nullable Stat stat = plugin.getStatRegistry().getStat(statName);
                                     if (stat != null) {
                                         StatModifier modifier = new StatModifier(name, stat, value);
                                         playerData.addStatModifier(modifier);
@@ -122,7 +124,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         // Load ability data
                         String abilityData = result.getString("ABILITY_DATA");
                         if (abilityData != null) {
-                            JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
+                            @Nullable JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
                             assert (null != jsonAbilityData);
                             for (Map.Entry<String, JsonElement> abilityEntry : jsonAbilityData.entrySet()) {
                                 String abilityName = abilityEntry.getKey();
@@ -250,7 +252,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         statement.setInt(index++, playerData.getSkillLevel(skill));
                         statement.setDouble(index++, playerData.getSkillXp(skill));
                     }
-                    Locale locale = playerData.getLocale();
+                    @Nullable Locale locale = playerData.getLocale();
                     assert (null != locale);
                     statement.setString(index++, locale.toString());
                     // Build stat modifiers json
@@ -422,7 +424,7 @@ public class MySqlStorageProvider extends StorageProvider {
         LeaderboardManager manager = plugin.getLeaderboardManager();
         manager.setSorting(true);
         // Initialize lists
-        Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
+        Map<Skill, @NotNull List<SkillValue>> leaderboards = new HashMap<>();
         for (Skill skill : Skills.values()) {
             leaderboards.put(skill, new ArrayList<>());
         }

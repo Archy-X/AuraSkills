@@ -22,13 +22,14 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
 
 public abstract class StorageProvider {
 
-    public final AureliumSkills plugin;
+    public final @NotNull AureliumSkills plugin;
     public final PlayerManager playerManager;
 
     public StorageProvider(AureliumSkills plugin) {
@@ -36,7 +37,7 @@ public abstract class StorageProvider {
         this.plugin = plugin;
     }
 
-    public PlayerData createNewPlayer(Player player) {
+    public PlayerData createNewPlayer(@NotNull Player player) {
         PlayerData playerData = new PlayerData(player, plugin);
         playerManager.addPlayerData(playerData);
         plugin.getLeveler().updatePermissions(player);
@@ -50,13 +51,13 @@ public abstract class StorageProvider {
         return playerData;
     }
 
-    protected void sendErrorMessageToPlayer(Player player, Exception e) {
+    protected void sendErrorMessageToPlayer(@NotNull Player player, @NotNull Exception e) {
         player.sendMessage(ChatColor.RED + "There was an error loading your skill data: " + e.getMessage() +
                 ". Please report the error to your server administrator. To prevent your data from resetting permanently" +
                 ", your skill data will not be saved. Try relogging to attempt loading again.");
     }
 
-    protected void applyData(PlayerData playerData, Map<Skill, Integer> levels, Map<Skill, Double> xpLevels) {
+    protected void applyData(@NotNull PlayerData playerData, @NotNull Map<Skill, Integer> levels, @NotNull Map<Skill, Double> xpLevels) {
         for (Stat stat : plugin.getStatRegistry().getStats()) {
             playerData.setStatLevel(stat, 0);
         }
@@ -76,7 +77,7 @@ public abstract class StorageProvider {
         save(playerData.getPlayer(), false);
     }
 
-    protected Map<Skill, Integer> getLevelsFromBackup(ConfigurationSection playerDataSection, String stringId) {
+    protected @NotNull Map<Skill, Integer> getLevelsFromBackup(@NotNull ConfigurationSection playerDataSection, @NotNull String stringId) {
         Map<Skill, Integer> levels = new HashMap<>();
         for (Skill skill : Skills.values()) {
             int level = playerDataSection.getInt(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".level", 1);
@@ -85,7 +86,7 @@ public abstract class StorageProvider {
         return levels;
     }
 
-    protected Map<Skill, Double> getXpLevelsFromBackup(ConfigurationSection playerDataSection, String stringId) {
+    protected @NotNull Map<Skill, Double> getXpLevelsFromBackup(@NotNull ConfigurationSection playerDataSection, @NotNull String stringId) {
         Map<Skill, Double> xpLevels = new HashMap<>();
         for (Skill skill : Skills.values()) {
             double xp = playerDataSection.getDouble(stringId + "." + skill.toString().toLowerCase(Locale.ROOT) + ".xp");
@@ -94,7 +95,7 @@ public abstract class StorageProvider {
         return xpLevels;
     }
 
-    protected Set<UUID> addLoadedPlayersToLeaderboards(Map<Skill, List<SkillValue>> leaderboards, List<SkillValue> powerLeaderboard, List<SkillValue> averageLeaderboard) {
+    protected @NotNull Set<UUID> addLoadedPlayersToLeaderboards(@NotNull Map<Skill, @NotNull List<SkillValue>> leaderboards, @NotNull List<SkillValue> powerLeaderboard, @NotNull List<SkillValue> averageLeaderboard) {
         Set<UUID> loadedFromMemory = new HashSet<>();
         for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
             UUID id = playerData.getPlayer().getUniqueId();
@@ -126,7 +127,7 @@ public abstract class StorageProvider {
         return loadedFromMemory;
     }
 
-    protected void sortLeaderboards(Map<Skill, List<SkillValue>> leaderboards, List<SkillValue> powerLeaderboard, List<SkillValue> averageLeaderboard) {
+    protected void sortLeaderboards(@NotNull Map<Skill, @NotNull List<SkillValue>> leaderboards, @NotNull List<SkillValue> powerLeaderboard, @NotNull List<SkillValue> averageLeaderboard) {
         LeaderboardManager manager = plugin.getLeaderboardManager();
         LeaderboardSorter sorter = new LeaderboardSorter();
         for (Skill skill : Skills.values()) {

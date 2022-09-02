@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.menu.ActiveMenu;
 import com.archyx.slate.menu.MenuProvider;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -22,7 +23,7 @@ public class AbilitiesMenu extends AbstractMenu implements MenuProvider {
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu) {
         Locale locale = plugin.getLang().getLocale(player);
         if ("abilities_title".equals(placeholder)) {
-            Object property = menu.getProperty("skill");
+            @Nullable Object property = menu.getProperty("skill");
             assert (null != property);
             Skill skill = (Skill) property;
             return TextUtil.replace(Lang.getMessage(MenuMessage.ABILITIES_TITLE, locale),

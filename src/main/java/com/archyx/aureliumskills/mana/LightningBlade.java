@@ -17,12 +17,13 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class LightningBlade extends ReadiedManaAbility {
 
-    public LightningBlade(AureliumSkills plugin) {
+    public LightningBlade(@NotNull AureliumSkills plugin) {
         super(plugin, MAbility.LIGHTNING_BLADE, ManaAbilityMessage.LIGHTNING_BLADE_START, ManaAbilityMessage.LIGHTNING_BLADE_END,
-                new String[] {"SWORD"}, new Action[] {Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
+                new @NotNull String[] {"SWORD"}, new @NotNull Action[] {Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
 
     }
 

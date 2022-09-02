@@ -11,6 +11,8 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -23,9 +25,9 @@ public class InProgressItem extends SkillLevelItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer position) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Integer position) {
         Locale locale = plugin.getLang().getLocale(player);
-        Object property = activeMenu.getProperty("skill");
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -56,9 +58,9 @@ public class InProgressItem extends SkillLevelItem {
     }
 
     @Override
-    public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+    public @NotNull Set<@NotNull Integer> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        Object property = activeMenu.getProperty("skill");
+        @Nullable Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
         int itemsPerPage = getItemsPerPage(activeMenu);
@@ -66,7 +68,7 @@ public class InProgressItem extends SkillLevelItem {
         if (playerData != null) {
             int level = playerData.getSkillLevel(skill);
             if (level >= 1 + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + 2) {
-                Set<Integer> levels = new HashSet<>();
+                Set<@NotNull Integer> levels = new HashSet<>();
                 int position = (level + 1) % itemsPerPage; // Calculate the first-page equivalent next level
                 if (position == 0) { // Account for next skill level 24
                     position = 24;

@@ -13,10 +13,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ArcheryLeveler extends SkillLeveler implements Listener {
 
-	public ArcheryLeveler(AureliumSkills plugin) {
+	public ArcheryLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.ARCHER);
 	}
 
@@ -27,10 +29,10 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 			LivingEntity e = event.getEntity();
 			if (e.getKiller() != null) {
 				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
+					@Nullable EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
 					if (ee != null && ee.getDamager() instanceof Projectile) {
 						EntityType type = e.getType();
-						Player p = e.getKiller();
+						@Nullable Player p = e.getKiller();
 						Skill skill = Skills.ARCHERY;
 						if (ee.getDamager() instanceof ThrownPotion) {
 							if (OptionL.getBoolean(Option.ALCHEMY_GIVE_XP_ON_POTION_COMBAT)) { // Reward alchemy if potion used
@@ -83,7 +85,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 					}
 				}
 				if (projectile.getShooter() instanceof Player) {
-					Player player = (Player) projectile.getShooter();
+					@Nullable Player player = (Player) projectile.getShooter();
 					if (player != null && event.getEntity() instanceof LivingEntity) {
 						LivingEntity entity = (LivingEntity) event.getEntity();
 						if (blockXpGainLocation(entity.getLocation(), player)) return;
