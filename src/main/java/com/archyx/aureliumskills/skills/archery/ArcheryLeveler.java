@@ -13,15 +13,16 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class ArcheryLeveler extends SkillLeveler implements Listener {
 
-	public ArcheryLeveler(AureliumSkills plugin) {
+	public ArcheryLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.ARCHER);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onEntityDeath(EntityDeathEvent event) {
+	public void onEntityDeath(@NotNull EntityDeathEvent event) {
 		if (OptionL.isEnabled(Skills.ARCHERY)) {
 			if (OptionL.getBoolean(Option.ARCHERY_DAMAGE_BASED)) return;
 			LivingEntity e = event.getEntity();
@@ -67,7 +68,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onEntityDamage(EntityDamageByEntityEvent event) {
+	public void onEntityDamage(@NotNull EntityDamageByEntityEvent event) {
 		// Damage based listener
 		if (OptionL.isEnabled(Skills.ARCHERY)) {
 			if (event.isCancelled()) return;

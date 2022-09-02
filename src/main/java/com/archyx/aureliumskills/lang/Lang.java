@@ -18,6 +18,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -53,7 +54,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	public void loadEmbeddedMessages(PaperCommandManager commandManager) {
+	public void loadEmbeddedMessages(@NotNull PaperCommandManager commandManager) {
 		// Loads default file from embedded resource
 		InputStream inputStream = plugin.getResource("messages/messages_en.yml");
 		if (inputStream != null) {
@@ -64,7 +65,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	public void loadLanguages(PaperCommandManager commandManager) {
+	public void loadLanguages(@NotNull PaperCommandManager commandManager) {
 		Bukkit.getLogger().info("[AureliumSkills] Loading languages...");
 		long startTime = System.currentTimeMillis();
 		FileConfiguration pluginConfig = plugin.getConfig();
@@ -111,7 +112,7 @@ public class Lang implements Listener {
 		Bukkit.getLogger().info("[AureliumSkills] Loaded " + languagesLoaded + " languages in " + (endTime - startTime) + "ms");
 	}
 
-	private void loadMessages(FileConfiguration config, Locale locale, PaperCommandManager commandManager) {
+	private void loadMessages(@NotNull FileConfiguration config, @NotNull Locale locale, @NotNull PaperCommandManager commandManager) {
 		// Load units
 		Map<UnitMessage, String> units = new HashMap<>();
 		for (UnitMessage key : UnitMessage.values()) {
@@ -208,7 +209,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	private FileConfiguration updateFile(File file, FileConfiguration config, String language) {
+	private @NotNull FileConfiguration updateFile(@NotNull File file, @NotNull FileConfiguration config, String language) {
 		if (config.contains("file_version")) {
 			InputStream stream = plugin.getResource("messages/messages_" + language + ".yml");
 			if (stream != null) {
@@ -290,7 +291,7 @@ public class Lang implements Listener {
 		return definedLanguages;
 	}
 
-	public static Set<String> getDefinedLanguagesSet() {
+	public static @NotNull Set<String> getDefinedLanguagesSet() {
 		Set<String> languages = new HashSet<>();
 		for (Map.Entry<Locale, String> entry : definedLanguages.entrySet()) {
 			languages.add(entry.getValue());
@@ -306,7 +307,7 @@ public class Lang implements Listener {
 		return defaultLanguage;
 	}
 
-	public Locale getLocale(Player player) {
+	public Locale getLocale(@NotNull Player player) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
 			return playerData.getLocale();
@@ -326,7 +327,7 @@ public class Lang implements Listener {
 	}
 
 	@EventHandler
-	public void onJoin(PlayerDataLoadEvent event) {
+	public void onJoin(@NotNull PlayerDataLoadEvent event) {
 		Player player = event.getPlayerData().getPlayer();
 		PlayerData playerData = event.getPlayerData();
 		if (playerData.getLocale() == null) {
@@ -349,7 +350,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	private String applyColor(String message) {
+	private String applyColor(@NotNull String message) {
 		Matcher matcher = hexPattern.matcher(message);
 		StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
 		while (matcher.find()) {

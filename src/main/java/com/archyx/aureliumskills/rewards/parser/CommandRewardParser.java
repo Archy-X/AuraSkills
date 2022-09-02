@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.rewards.builder.CommandRewardBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class CommandRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(Map<?, ?> map) {
+    public Reward parse(@NotNull Map<?, ?> map) {
         CommandRewardBuilder builder = new CommandRewardBuilder(plugin);
 
         CommandExecutor executor;

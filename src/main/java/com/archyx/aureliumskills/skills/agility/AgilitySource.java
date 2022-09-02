@@ -7,6 +7,8 @@ import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -15,16 +17,16 @@ public enum AgilitySource implements Source {
     JUMP_PER_100("FEATHER", "100_jumps"),
     FALL_DAMAGE("DIAMOND_BOOTS", "damage");
 
-    private final String material;
+    private final @NotNull String material;
     private final String unitName;
 
-    AgilitySource(String material, String unitName) {
+    AgilitySource(@NotNull String material, String unitName) {
         this.material = material.toUpperCase(Locale.ROOT);
         this.unitName = unitName;
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.AGILITY;
     }
 
@@ -34,7 +36,7 @@ public enum AgilitySource implements Source {
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         ItemStack item = ItemUtils.parseItem(material);
         if (item != null) {
             ItemMeta meta = item.getItemMeta();

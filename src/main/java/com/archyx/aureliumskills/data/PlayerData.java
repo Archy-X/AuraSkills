@@ -25,24 +25,24 @@ public class PlayerData {
     private final Player player;
     private final AureliumSkills plugin;
 
-    private final Map<Skill, Integer> skillLevels;
-    private final Map<Skill, Double> skillXp;
+    private final @NotNull Map<Skill, Integer> skillLevels;
+    private final @NotNull Map<Skill, Double> skillXp;
 
-    private final Map<Stat, Double> statLevels;
-    private final Map<String, StatModifier> statModifiers;
+    private final @NotNull Map<Stat, Double> statLevels;
+    private final @NotNull Map<String, StatModifier> statModifiers;
 
     private double mana;
     private Locale locale;
 
-    private final Map<AbstractAbility, AbilityData> abilityData;
-    private final Map<String, Object> metadata;
+    private final @NotNull Map<AbstractAbility, AbilityData> abilityData;
+    private final @NotNull Map<String, Object> metadata;
     private List<KeyIntPair> unclaimedItems;
 
     private boolean saving;
     private boolean shouldSave;
 
     // Not persistent data
-    private final Map<String, Multiplier> multipliers;
+    private final @NotNull Map<String, Multiplier> multipliers;
 
     public PlayerData(Player player, AureliumSkills plugin) {
         this.player = player;
@@ -120,11 +120,11 @@ public class PlayerData {
         return statModifiers;
     }
 
-    public void addStatModifier(StatModifier modifier) {
+    public void addStatModifier(@NotNull StatModifier modifier) {
         addStatModifier(modifier, true);
     }
 
-    public void addStatModifier(StatModifier modifier, boolean reload) {
+    public void addStatModifier(@NotNull StatModifier modifier, boolean reload) {
         // Removes if already existing
         if (statModifiers.containsKey(modifier.getName())) {
             StatModifier oldModifier = statModifiers.get(modifier.getName());
@@ -189,7 +189,7 @@ public class PlayerData {
         this.locale = locale;
     }
 
-    public AbilityData getAbilityData(AbstractAbility ability) {
+    public @NotNull AbilityData getAbilityData(AbstractAbility ability) {
         AbilityData data = abilityData.get(ability);
         if (data == null) {
             data = new AbilityData(ability);
@@ -206,7 +206,7 @@ public class PlayerData {
         return abilityData;
     }
 
-    public int getAbilityLevel(Ability ability) {
+    public int getAbilityLevel(@NotNull Ability ability) {
         Skill skill = ability.getSkill();
         if (getSkillLevel(skill) < plugin.getAbilityManager().getUnlock(ability)) {
             return 0;
@@ -220,7 +220,7 @@ public class PlayerData {
         }
     }
 
-    public int getManaAbilityLevel(MAbility mAbility) {
+    public int getManaAbilityLevel(@NotNull MAbility mAbility) {
         // Check if unlocked
         if (getSkillLevel(mAbility.getSkill()) < plugin.getManaAbilityManager().getUnlock(mAbility)) {
             return 0;
@@ -303,7 +303,7 @@ public class PlayerData {
         return multipliers;
     }
 
-    public void addMultiplier(Multiplier multiplier) {
+    public void addMultiplier(@NotNull Multiplier multiplier) {
         multipliers.put(multiplier.getName(), multiplier);
     }
 

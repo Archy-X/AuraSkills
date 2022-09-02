@@ -9,6 +9,8 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.menu.ActiveMenu;
 import com.archyx.slate.menu.MenuProvider;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -19,7 +21,7 @@ public class LeaderboardMenu extends AbstractMenu implements MenuProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
         Locale locale = plugin.getLang().getLocale(player);
         Object property = activeMenu.getProperty("skill");
         assert (null != property);

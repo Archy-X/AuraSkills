@@ -22,6 +22,8 @@ import com.google.common.collect.ImmutableList;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.Locale;
 
 public abstract class SkillLevelItem extends AbstractItem implements TemplateItemProvider<Integer> {
 
-    private final List<Integer> track;
+    private final @NotNull List<Integer> track;
     
     public SkillLevelItem(AureliumSkills plugin) {
         super(plugin);
@@ -42,19 +44,19 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     }
 
     @Override
-    public Class<Integer> getContext() {
+    public @NotNull Class<Integer> getContext() {
         return Integer.class;
     }
 
     @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer context) {
+    public @NotNull SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer context) {
         int index = context - 2;
         int pos = track.get(index);
         return SlotPos.of(pos / 9, pos % 9);
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer num) {
+    public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, Player player, @NotNull ActiveMenu activeMenu, Integer num) {
         // Functionality for showing the level as the amount on the item
         int page = activeMenu.getCurrentPage();
         Object property = activeMenu.getProperty("items_per_page");
@@ -77,7 +79,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         return baseItem;
     }
 
-    protected String getRewardsLore(Skill skill, int level, Player player, Locale locale) {
+    protected @Nullable String getRewardsLore(Skill skill, int level, Player player, Locale locale) {
         ImmutableList<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
         StringBuilder message = new StringBuilder();
         double totalMoney = 0;
@@ -101,7 +103,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         return TextUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", message.toString());
     }
 
-    protected String getAbilityLore(Skill skill, int level, Locale locale) {
+    protected @NotNull String getAbilityLore(@NotNull Skill skill, int level, Locale locale) {
         StringBuilder abilityLore = new StringBuilder();
         if (skill.getAbilities().size() == 5) {
             AbilityManager manager = plugin.getAbilityManager();
@@ -130,7 +132,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         return abilityLore.toString();
     }
 
-    protected String getManaAbilityLore(Skill skill, int level, Locale locale) {
+    protected @NotNull String getManaAbilityLore(@NotNull Skill skill, int level, Locale locale) {
         ManaAbilityManager manager = plugin.getManaAbilityManager();
         MAbility mAbility = manager.getManaAbility(skill, level);
         StringBuilder manaAbilityLore = new StringBuilder();
@@ -161,7 +163,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         return manaAbilityLore.toString();
     }
 
-    private double getDuration(MAbility mAbility, int level) {
+    private double getDuration(@NotNull MAbility mAbility, int level) {
         if (mAbility == MAbility.LIGHTNING_BLADE) {
             double baseDuration = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "base_duration");
             double durationPerLevel = plugin.getManaAbilityManager().getOptionAsDouble(MAbility.LIGHTNING_BLADE, "duration_per_level");
@@ -171,7 +173,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         }
     }
 
-    protected int getItemsPerPage(ActiveMenu activeMenu) {
+    protected int getItemsPerPage(@NotNull ActiveMenu activeMenu) {
         Object property = activeMenu.getProperty("items_per_page");
         int itemsPerPage;
         if (property instanceof Integer) {
@@ -182,7 +184,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         return itemsPerPage;
     }
 
-    protected int getLevel(ActiveMenu activeMenu, int position) {
+    protected int getLevel(@NotNull ActiveMenu activeMenu, int position) {
         int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
         return currentPage * itemsPerPage + position;

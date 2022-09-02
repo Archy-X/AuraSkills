@@ -12,6 +12,8 @@ import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +29,12 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
     }
 
     @Override
-    public Class<Ability> getContext() {
+    public @NotNull Class<Ability> getContext() {
         return Ability.class;
     }
 
     @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Ability ability) {
+    public @NotNull SlotPos getSlotPos(Player player, @NotNull ActiveMenu activeMenu, Ability ability) {
         Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;
@@ -67,7 +69,7 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
         return SlotPos.of(1, 2 + index);
     }
 
-    private SlotPos parseSlot(String slotString) {
+    private @NotNull SlotPos parseSlot(@NotNull String slotString) {
         String[] split = slotString.split(",", 2);
         if (split.length == 2) {
             return SlotPos.of(NumberUtil.toInt(split[0]), NumberUtil.toInt(split[1]));
@@ -80,7 +82,7 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Ability ability) {
+    public @Nullable ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Ability ability) {
         // Hide abilities that are disabled
         if (!plugin.getAbilityManager().isEnabled(ability)) {
             return null;

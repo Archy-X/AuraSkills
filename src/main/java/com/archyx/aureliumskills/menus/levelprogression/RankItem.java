@@ -14,6 +14,8 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Map;
@@ -25,7 +27,7 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, PlaceholderType type) {
         Locale locale = plugin.getLang().getLocale(player);
         Object property = activeMenu.getProperty("skill");
         assert (null != property);
@@ -56,19 +58,19 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Map<String, Object> properties = activeMenu.getProperties();
         properties.put("previous_menu", "level_progression");
         plugin.getMenuManager().openMenu(player, "leaderboard", properties);
     }
 
-    private double getPercent(Skill skill, Player player) {
+    private double getPercent(Skill skill, @NotNull Player player) {
         int rank = getRank(skill, player);
         int size = getSize(skill, player);
         return (double) rank / (double) size * 100;
     }
 
-    private int getRank(Skill skill, Player player) {
+    private int getRank(Skill skill, @NotNull Player player) {
         return plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId());
     }
 

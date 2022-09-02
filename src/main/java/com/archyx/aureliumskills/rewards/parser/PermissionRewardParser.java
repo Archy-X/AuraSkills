@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.rewards.parser;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.rewards.builder.PermissionRewardBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -13,7 +14,7 @@ public class PermissionRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(Map<?, ?> map) {
+    public Reward parse(@NotNull Map<?, ?> map) {
         PermissionRewardBuilder builder = new PermissionRewardBuilder(plugin);
 
         builder.permission(getString(map, "permission"));

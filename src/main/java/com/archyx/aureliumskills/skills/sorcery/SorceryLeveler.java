@@ -11,10 +11,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class SorceryLeveler extends SkillLeveler implements Listener {
 
-    public SorceryLeveler(AureliumSkills plugin) {
+    public SorceryLeveler(@NotNull AureliumSkills plugin) {
         super(plugin, Skills.SORCERY);
     }
 
@@ -23,7 +24,7 @@ public class SorceryLeveler extends SkillLeveler implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlockBreak(BlockBreakEvent event) {
+    public void onBlockBreak(@NotNull BlockBreakEvent event) {
         if (!OptionL.isEnabled(Skills.SORCERY)) {
             return;
         }

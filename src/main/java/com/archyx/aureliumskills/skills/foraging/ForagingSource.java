@@ -8,6 +8,7 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum ForagingSource implements Source {
@@ -118,7 +119,7 @@ public enum ForagingSource implements Source {
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isMatch(BlockState blockState) {
+    public boolean isMatch(@NotNull BlockState blockState) {
         boolean matched = false;
         String materialName = blockState.getType().toString();
         if (XMaterial.isNewVersion() || getLegacyMaterial() == null) { // Standard block handling
@@ -150,11 +151,11 @@ public enum ForagingSource implements Source {
         return matched;
     }
 
-    public boolean isMatch(Block block) {
+    public boolean isMatch(@NotNull Block block) {
         return isMatch(block.getState());
     }
 
-    private boolean byteArrayContains(byte[] array, byte input) {
+    private boolean byteArrayContains(byte @NotNull [] array, byte input) {
         for (byte b : array) {
             if (b == input) return true;
         }
@@ -162,12 +163,12 @@ public enum ForagingSource implements Source {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.FORAGING;
     }
 
     @Nullable
-    public static ForagingSource getSource(BlockState blockState) {
+    public static ForagingSource getSource(@NotNull BlockState blockState) {
         for (ForagingSource source : values()) {
             if (source.isMatch(blockState)) {
                 return source;
@@ -177,12 +178,12 @@ public enum ForagingSource implements Source {
     }
 
     @Nullable
-    public static ForagingSource getSource(Block block) {
+    public static ForagingSource getSource(@NotNull Block block) {
         return getSource(block.getState());
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         return ItemUtils.parseItem(this.toString());
     }
 }

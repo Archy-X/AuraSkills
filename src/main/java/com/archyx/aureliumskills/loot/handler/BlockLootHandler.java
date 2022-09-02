@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -27,7 +28,7 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
 
     private final Random random = new Random();
 
-    public BlockLootHandler(AureliumSkills plugin, Skill skill, Ability ability) {
+    public BlockLootHandler(AureliumSkills plugin, @NotNull Skill skill, Ability ability) {
         super(plugin, skill, ability);
     }
 
@@ -38,7 +39,7 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
     public abstract LootDropCause getCause(LootPool pool);
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onBreak(BlockBreakEvent event) {
+    public void onBreak(@NotNull BlockBreakEvent event) {
         if (!OptionL.isEnabled(skill)) return;
         if (event.isCancelled()) return;
 
@@ -77,7 +78,7 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
         }
     }
 
-    private boolean selectBlockLoot(LootPool pool, Player player, double chance, Source originalSource, BlockBreakEvent event, LootDropCause cause) {
+    private boolean selectBlockLoot(@NotNull LootPool pool, @NotNull Player player, double chance, Source originalSource, @NotNull BlockBreakEvent event, LootDropCause cause) {
         if (random.nextDouble() < chance) { // Pool is selected
             Loot selectedLoot = selectLoot(pool, originalSource);
             // Give loot

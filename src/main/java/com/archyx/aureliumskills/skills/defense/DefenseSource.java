@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public enum DefenseSource implements Source {
 
@@ -18,17 +20,17 @@ public enum DefenseSource implements Source {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.DEFENSE;
     }
 
     @Override
-    public String getUnitName() {
+    public @NotNull String getUnitName() {
         return "damage";
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         return ItemUtils.parseItem(material);
     }
 }

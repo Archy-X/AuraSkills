@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.util.math;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -32,7 +34,7 @@ public class NumberUtil {
         return toInt(str, 0);
     }
 
-    public static int toInt(String str, int defaultValue) {
+    public static int toInt(@Nullable String str, int defaultValue) {
         if (str == null) {
             return defaultValue;
         }

@@ -24,6 +24,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onFish(PlayerFishEvent event) {
+    public void onFish(@NotNull PlayerFishEvent event) {
         if (!OptionL.isEnabled(Skills.FISHING)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;

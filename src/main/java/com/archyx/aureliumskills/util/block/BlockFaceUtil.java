@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.util.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class BlockFaceUtil {
         return faces;
     }
 
-    public static List<Block> getSurroundingBlocks(Block block) {
+    public static @NotNull List<Block> getSurroundingBlocks(@NotNull Block block) {
         List<Block> blocks = new ArrayList<>();
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {

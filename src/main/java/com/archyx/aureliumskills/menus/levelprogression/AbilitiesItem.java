@@ -15,6 +15,8 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,7 +30,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, PlaceholderType type) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "abilities":
@@ -45,7 +47,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("skill", activeMenu.getProperty("skill"));
         properties.put("previous_menu", "level_progression");
@@ -53,7 +55,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
+    public @Nullable ItemStack onItemModify(ItemStack baseItem, Player player, @NotNull ActiveMenu activeMenu) {
         Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;

@@ -5,6 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -17,14 +18,14 @@ import java.util.concurrent.ConcurrentMap;
 public class ItemRegistry {
 
     private final AureliumSkills plugin;
-    private final ConcurrentMap<String, ItemStack> items;
+    private final @NotNull ConcurrentMap<String, ItemStack> items;
 
     public ItemRegistry(AureliumSkills plugin) {
         this.plugin = plugin;
         items = new ConcurrentHashMap<>();
     }
 
-    public void register(String key, ItemStack item) {
+    public void register(String key, @NotNull ItemStack item) {
         items.put(key, item.clone());
     }
 
@@ -42,7 +43,7 @@ public class ItemRegistry {
         }
     }
 
-    public Set<String> getKeys() {
+    public @NotNull Set<String> getKeys() {
         return items.keySet();
     }
 

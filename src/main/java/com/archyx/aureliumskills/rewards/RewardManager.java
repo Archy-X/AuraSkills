@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.util.misc.DataUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -18,7 +19,7 @@ import java.util.*;
 public class RewardManager {
 
     private final AureliumSkills plugin;
-    private final Map<Skill, RewardTable> rewardTables;
+    private final @NotNull Map<Skill, RewardTable> rewardTables;
 
     public RewardManager(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -74,7 +75,7 @@ public class RewardManager {
         plugin.getLogger().info("Loaded " + patternsLoaded + " pattern rewards and " + levelsLoaded + " level rewards");
     }
 
-    private int loadPatterns(RewardTable rewardTable, FileConfiguration rewardsConfig, File rewardsFile, int maxLevel) {
+    private int loadPatterns(@NotNull RewardTable rewardTable, @NotNull FileConfiguration rewardsConfig, @NotNull File rewardsFile, int maxLevel) {
         // Load patterns section
         int patternsLoaded = 0;
         List<Map<?, ?>> patterns = rewardsConfig.getMapList("patterns");
@@ -110,7 +111,7 @@ public class RewardManager {
         return patternsLoaded;
     }
 
-    private int loadLevels(RewardTable rewardTable, FileConfiguration rewardsConfig, File rewardsFile) {
+    private int loadLevels(@NotNull RewardTable rewardTable, @NotNull FileConfiguration rewardsConfig, @NotNull File rewardsFile) {
         int levelsLoaded = 0;
         ConfigurationSection levelsSection = rewardsConfig.getConfigurationSection("levels");
         if (levelsSection != null) {
@@ -138,7 +139,7 @@ public class RewardManager {
         return levelsLoaded;
     }
 
-    private Reward parseReward(Map<?, ?> map) {
+    private Reward parseReward(@NotNull Map<?, ?> map) {
         // Get type of reward
         String type = DataUtil.getString(map, "type");
         // Parse the type
@@ -156,7 +157,7 @@ public class RewardManager {
     }
 
     // Gets all the skills a stat is leveled by
-    public List<Skill> getSkillsLeveledBy(Stat stat) {
+    public @NotNull List<Skill> getSkillsLeveledBy(Stat stat) {
         List<Skill> skillsLeveledBy = new ArrayList<>();
         for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             if (!OptionL.isEnabled(skill)) continue; // Skip disabled skills

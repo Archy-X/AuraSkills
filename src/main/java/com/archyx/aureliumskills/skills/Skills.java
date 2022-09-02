@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.SkillMessage;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.google.common.collect.ImmutableList;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public enum Skills implements Skill {
 		}
 	}
 
-	public static List<Skills> getOrderedValues() {
+	public static @NotNull List<Skills> getOrderedValues() {
 		List<Skills> list = new ArrayList<>();
 		list.add(Skills.AGILITY);
 		list.add(Skills.ALCHEMY);

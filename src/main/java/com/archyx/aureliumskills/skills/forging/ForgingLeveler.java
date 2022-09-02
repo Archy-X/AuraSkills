@@ -25,18 +25,20 @@ import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 
 public class ForgingLeveler extends SkillLeveler implements Listener {
 
-	public ForgingLeveler(AureliumSkills plugin) {
+	public ForgingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.FORGER);
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onForge(InventoryClickEvent event) {
+	public void onForge(@NotNull InventoryClickEvent event) {
 		if (OptionL.isEnabled(Skills.FORGING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.FORGING_CHECK_CANCELLED)) {
@@ -109,7 +111,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 		}
 	}
 
-	private int getTotalLevel(ItemStack item) {
+	private int getTotalLevel(@Nullable ItemStack item) {
 		int totalLevel = 0;
 		if (item != null) {
 			for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
@@ -130,7 +132,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 		return totalLevel;
 	}
 
-	public boolean isDisenchantable(Enchantment enchant) {
+	public boolean isDisenchantable(@NotNull Enchantment enchant) {
 		// Block vanilla curses
 		if (enchant.equals(Enchantment.BINDING_CURSE) || enchant.equals(Enchantment.VANISHING_CURSE)) {
 			return false;

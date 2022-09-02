@@ -28,6 +28,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -41,7 +42,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void disenchanter(InventoryClickEvent event) {
+    public void disenchanter(@NotNull InventoryClickEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.DISENCHANTER)) return;
         if (!VersionUtils.isAtLeastVersion(14)) return; // This ability requires at least 1.14
@@ -95,7 +96,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    private void checkEnchants(ItemStack item, Set<EnchantmentValue> enchants) {
+    private void checkEnchants(@Nullable ItemStack item, @NotNull Set<EnchantmentValue> enchants) {
         if (item != null) {
             for (Map.Entry<Enchantment, Integer> entry : item.getEnchantments().entrySet()) {
                 if (plugin.getForgingLeveler().isDisenchantable(entry.getKey())) {
@@ -107,7 +108,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     @SuppressWarnings("deprecation")
-    public void repairing(PrepareAnvilEvent event) {
+    public void repairing(@NotNull PrepareAnvilEvent event) {
         if (blockDisabled(Ability.REPAIRING)) return;
         Player player = getHighestPlayer(event.getViewers());
         if (player == null) return;
@@ -161,7 +162,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void anvilMaster(InventoryOpenEvent event) {
+    public void anvilMaster(@NotNull InventoryOpenEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.ANVIL_MASTER)) return;
         if (!VersionUtils.isAtLeastVersion(13)) return;
@@ -183,7 +184,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     @SuppressWarnings("deprecation")
-    public void skillMender(XpGainEvent event) {
+    public void skillMender(@NotNull XpGainEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.SKILL_MENDER)) return;
         Player player = event.getPlayer();
@@ -228,7 +229,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     }
 
     @Nullable
-    private XMaterial getRawMaterial(Material material) {
+    private XMaterial getRawMaterial(@NotNull Material material) {
         String name = material.name();
         if (name.startsWith("DIAMOND_")) {
             if (!name.equals("DIAMOND_ORE") && !name.equals("DIAMOND_BLOCK") && !name.equals("DIAMOND_HORSE_ARMOR")) {
@@ -265,7 +266,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     }
 
     @Nullable
-    private Player getHighestPlayer(List<HumanEntity> viewers) {
+    private Player getHighestPlayer(@NotNull List<HumanEntity> viewers) {
         int highestLevel = 0;
         Player highestPlayer = null;
         for (HumanEntity entity : viewers) {
@@ -285,7 +286,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private boolean hasDamage(ItemStack item) {
+    private boolean hasDamage(@NotNull ItemStack item) {
         if (XMaterial.isNewVersion()) {
             ItemMeta meta = item.getItemMeta();
             if (meta != null) {

@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -22,13 +23,13 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
 
     protected final AureliumSkills plugin;
     protected final ManaAbilityManager manager;
-    protected final MAbility mAbility;
+    protected final @NotNull MAbility mAbility;
     protected final Skill skill;
     protected final SorceryLeveler sorceryLeveler;
     protected final ManaAbilityMessage activateMessage;
-    protected final ManaAbilityMessage stopMessage;
+    protected final @Nullable ManaAbilityMessage stopMessage;
 
-    public ManaAbilityProvider(AureliumSkills plugin, MAbility mAbility, ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage) {
+    public ManaAbilityProvider(@NotNull AureliumSkills plugin, @NotNull MAbility mAbility, ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage) {
         super(plugin, mAbility.getSkill());
         this.plugin = plugin;
         this.manager = plugin.getManaAbilityManager();
@@ -39,7 +40,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
         this.stopMessage = stopMessage;
     }
 
-    public void activate(Player player) {
+    public void activate(@NotNull Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
 
@@ -72,7 +73,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
 
     public abstract void onActivate(Player player, PlayerData playerData);
 
-    public void stop(Player player) {
+    public void stop(@NotNull Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         onStop(player, playerData); // Mana ability specific stop behavior is run
@@ -85,11 +86,11 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
 
     public abstract void onStop(Player player, PlayerData playerData);
 
-    protected int getDuration(PlayerData playerData) {
+    protected int getDuration(@NotNull PlayerData playerData) {
         return (int) Math.round(getValue(mAbility, playerData) * 20);
     }
 
-    protected void consumeMana(Player player, PlayerData playerData) {
+    protected void consumeMana(Player player, @NotNull PlayerData playerData) {
         double manaConsumed = manager.getManaCost(mAbility, playerData);
         playerData.setMana(playerData.getMana() - manaConsumed);
         sorceryLeveler.level(player, manaConsumed);
@@ -98,7 +99,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
     }
 
     // Returns true if player has enough mana
-    protected boolean hasEnoughMana(Player player) {
+    protected boolean hasEnoughMana(@NotNull Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return false;
         Locale locale = playerData.getLocale();

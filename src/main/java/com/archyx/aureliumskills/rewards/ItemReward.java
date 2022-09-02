@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -25,7 +26,7 @@ public class ItemReward extends MessagedReward {
     }
 
     @Override
-    public void giveReward(Player player, Skill skill, int level) {
+    public void giveReward(@NotNull Player player, @NotNull Skill skill, int level) {
         ItemStack item = plugin.getItemRegistry().getItem(itemKey);
         // Send warning if item not found
         if (item == null) {

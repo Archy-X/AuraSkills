@@ -9,43 +9,44 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class ItemUtils {
 
-	public static boolean isArmor(Material material) {
+	public static boolean isArmor(@NotNull Material material) {
 		String materialName = material.name().toLowerCase(Locale.ENGLISH);
 		return materialName.contains("helmet") || materialName.contains("chestplate") || materialName.contains("leggings") || materialName.contains("boots") || materialName.equals("elytra");
 	}
 
-	public static boolean isWeapon(Material material) {
+	public static boolean isWeapon(@NotNull Material material) {
 		String materialName = material.name().toLowerCase(Locale.ENGLISH);
 		return materialName.contains("sword") || materialName.equals("bow") || materialName.equals("trident") || materialName.equals("crossbow");
 	}
 
-	public static boolean isTool(Material material) {
+	public static boolean isTool(@NotNull Material material) {
 		String materialName = material.name().toLowerCase(Locale.ENGLISH);
 		return materialName.contains("pickaxe") || materialName.contains("axe") || materialName.contains("hoe") || materialName.contains("shovel") || materialName.contains("spade")
 				|| materialName.equals("shears") || materialName.equals("fishing_rod") || materialName.equals("flint_and_steel") || materialName.equals("shield")
 				|| materialName.contains("on_a_stick");
 	}
 
-	public static boolean isAxe(Material material) {
+	public static boolean isAxe(@NotNull Material material) {
 		String materialName = material.name().toLowerCase(Locale.ENGLISH);
 		return materialName.contains("_axe");
 	}
 
-	public static boolean isPickaxe(Material material) {
+	public static boolean isPickaxe(@NotNull Material material) {
 		return material.name().toLowerCase(Locale.ENGLISH).contains("pickaxe");
 	}
 
-	public static boolean isDurable(Material material) {
+	public static boolean isDurable(@NotNull Material material) {
 		return isArmor(material) || isWeapon(material) || isTool(material);
 	}
 
-	public static List<String> formatLore(List<String> input) {
+	public static @NotNull List<String> formatLore(@NotNull List<String> input) {
 		List<String> lore = new ArrayList<>();
 		for (String entry : input) {
 			lore.addAll(Arrays.asList(entry.split("(\\u005C\\u006E)|(\\n)")));
@@ -53,7 +54,7 @@ public class ItemUtils {
 		return lore;
 	}
 
-	public static NBTCompound getCompound(NBTCompound root, String name) {
+	public static NBTCompound getCompound(@NotNull NBTCompound root, String name) {
 		NBTCompound compound = root.getCompound(name);
 		if (compound == null) {
 			compound = root.addCompound(name);
@@ -61,7 +62,7 @@ public class ItemUtils {
 		return compound;
 	}
 
-	public static NBTCompound getRootCompound(NBTItem item) {
+	public static NBTCompound getRootCompound(@NotNull NBTItem item) {
 		NBTCompound compound = item.getCompound("AureliumSkills");
 		if (compound == null) {
 			compound = item.addCompound("AureliumSkills");
@@ -69,37 +70,37 @@ public class ItemUtils {
 		return compound;
 	}
 
-	public static NBTCompound getModifiersCompound(NBTItem item) {
+	public static NBTCompound getModifiersCompound(@NotNull NBTItem item) {
 		return getCompound(getRootCompound(item), "Modifiers");
 	}
 
-	public static NBTCompound getModifiersTypeCompound(NBTItem item, ModifierType type) {
+	public static NBTCompound getModifiersTypeCompound(@NotNull NBTItem item, @NotNull ModifierType type) {
 		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
 		assert (null != name);
 		return getCompound(getModifiersCompound(item), name);
 	}
 
-	public static NBTCompound getRequirementsCompound(NBTItem item) {
+	public static NBTCompound getRequirementsCompound(@NotNull NBTItem item) {
 		return getCompound(getRootCompound(item), "Requirements");
 	}
 
-	public static NBTCompound getRequirementsTypeCompound(NBTItem item, ModifierType type) {
+	public static NBTCompound getRequirementsTypeCompound(@NotNull NBTItem item, @NotNull ModifierType type) {
 		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
 		assert (null != name);
 		return getCompound(getRequirementsCompound(item), name);
 	}
 
-	public static NBTCompound getMultipliersCompound(NBTItem item) {
+	public static NBTCompound getMultipliersCompound(@NotNull NBTItem item) {
 		return getCompound(getRootCompound(item), "Multipliers");
 	}
 
-	public static NBTCompound getMultipliersTypeCompound(NBTItem item, ModifierType type) {
+	public static NBTCompound getMultipliersTypeCompound(@NotNull NBTItem item, @NotNull ModifierType type) {
 		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
 		assert (null != name);
 		return getCompound(getMultipliersCompound(item), name);
 	}
 
-	public static void removeParentCompounds(NBTCompound compound) {
+	public static void removeParentCompounds(@NotNull NBTCompound compound) {
 		if (compound.getKeys().size() == 0) {
 			NBTCompound parent = compound.getParent();
 			parent.removeKey(compound.getName());
@@ -112,7 +113,7 @@ public class ItemUtils {
 		}
 	}
 
-	public static boolean isInventoryFull(Player player) {
+	public static boolean isInventoryFull(@NotNull Player player) {
 		for (ItemStack item : player.getInventory().getStorageContents()) {
 			if (item == null || item.getType() == Material.AIR) {
 				return false;
@@ -122,7 +123,7 @@ public class ItemUtils {
 	}
 
 	@Nullable
-	public static ItemStack addItemToInventory(Player player, ItemStack item) {
+	public static ItemStack addItemToInventory(@NotNull Player player, @NotNull ItemStack item) {
 		PlayerInventory inventory = player.getInventory();
 		int amountRemaining = item.getAmount();
 		for (int slot = 0; slot < 36; slot++) {
@@ -155,7 +156,7 @@ public class ItemUtils {
 		return null;
 	}
 
-	public static boolean canAddItemToInventory(Player player, ItemStack item) {
+	public static boolean canAddItemToInventory(@NotNull Player player, @NotNull ItemStack item) {
 		PlayerInventory inventory = player.getInventory();
 		int amountRemaining = item.getAmount();
 		for (int slot = 0; slot < 36; slot++) {
@@ -178,7 +179,7 @@ public class ItemUtils {
 
 
 	@Nullable
-	public static ItemStack parseItem(String name) {
+	public static ItemStack parseItem(@NotNull String name) {
 		Material material = Material.getMaterial(name);
 		if (material != null) {
 			return new ItemStack(material);

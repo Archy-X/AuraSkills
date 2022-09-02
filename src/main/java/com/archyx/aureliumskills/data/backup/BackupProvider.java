@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -12,7 +13,7 @@ public abstract class BackupProvider {
     public final AureliumSkills plugin;
     public final PlayerManager playerManager;
 
-    public BackupProvider(AureliumSkills plugin) {
+    public BackupProvider(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.playerManager = plugin.getPlayerManager();
     }

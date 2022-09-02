@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -28,12 +29,12 @@ import java.util.Map;
 
 public class SkillBossBar implements Listener {
 
-    private final Map<Player, Map<Skill, BossBar>> bossBars;
-    private final Map<Player, Map<Skill, Integer>> currentActions;
-    private final Map<Player, Map<Skill, Integer>> checkCurrentActions;
-    private final Map<Player, BossBar> singleBossBars;
-    private final Map<Player, Integer> singleCurrentActions;
-    private final Map<Player, Integer> singleCheckCurrentActions;
+    private final @NotNull Map<Player, Map<Skill, BossBar>> bossBars;
+    private final @NotNull Map<Player, Map<Skill, Integer>> currentActions;
+    private final @NotNull Map<Player, Map<Skill, Integer>> checkCurrentActions;
+    private final @NotNull Map<Player, BossBar> singleBossBars;
+    private final @NotNull Map<Player, Integer> singleCurrentActions;
+    private final @NotNull Map<Player, Integer> singleCheckCurrentActions;
     private String mode;
     private int stayTime;
     private Map<Skill, BarColor> colors;
@@ -100,7 +101,7 @@ public class SkillBossBar implements Listener {
         singleBossBars.clear();
     }
 
-    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+    public void sendBossBar(@NotNull Player player, @NotNull Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
         if (maxed && !OptionL.getBoolean(Option.BOSS_BAR_DISPLAY_MAXED)) { // display-maxed option
             return;
         }
@@ -226,7 +227,7 @@ public class SkillBossBar implements Listener {
         }
     }
 
-    private void scheduleHide(Player player, Skill skill, BossBar bossBar) {
+    private void scheduleHide(Player player, Skill skill, @NotNull BossBar bossBar) {
         if (mode.equals("single")) {
             final int currentAction = singleCurrentActions.get(player);
             new BukkitRunnable() {
@@ -263,13 +264,13 @@ public class SkillBossBar implements Listener {
         }
     }
 
-    private BarColor getColor(Skill skill) {
+    private @NotNull BarColor getColor(Skill skill) {
         BarColor color = colors.get(skill);
         if (color == null) color = BarColor.GREEN;
         return color;
     }
 
-    private BarStyle getStyle(Skill skill) {
+    private @NotNull BarStyle getStyle(Skill skill) {
         BarStyle style = styles.get(skill);
         if (style == null) style = BarStyle.SOLID;
         return style;
@@ -289,7 +290,7 @@ public class SkillBossBar implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
+    public void onQuit(@NotNull PlayerQuitEvent event) {
         Player player = event.getPlayer();
         bossBars.remove(player);
         currentActions.remove(player);

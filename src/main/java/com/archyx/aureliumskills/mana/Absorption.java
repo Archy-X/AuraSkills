@@ -10,6 +10,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -21,7 +22,7 @@ public class Absorption extends ReadiedManaAbility {
     }
 
     @Override
-    public void onActivate(Player player, PlayerData playerData) {
+    public void onActivate(@NotNull Player player, @NotNull PlayerData playerData) {
         playerData.getAbilityData(MAbility.ABSORPTION).setData("activated", true); // Register as absorption activated
         // Play sound
         if (XMaterial.isNewVersion()) {
@@ -32,11 +33,11 @@ public class Absorption extends ReadiedManaAbility {
     }
 
     @Override
-    public void onStop(Player player, PlayerData playerData) {
+    public void onStop(Player player, @NotNull PlayerData playerData) {
         playerData.getAbilityData(MAbility.ABSORPTION).setData("activated", false);
     }
 
-    public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+    public void handleAbsorption(@NotNull EntityDamageByEntityEvent event, @NotNull Player player, @NotNull PlayerData playerData) {
         if (playerData.getAbilityData(MAbility.ABSORPTION).getBoolean("activated") && isActivated(player)) {
             handleAbsorbedHit(event, player, playerData);
         } else if (isReady(player)) {
@@ -51,7 +52,7 @@ public class Absorption extends ReadiedManaAbility {
         }
     }
 
-    private void handleAbsorbedHit(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+    private void handleAbsorbedHit(@NotNull EntityDamageByEntityEvent event, @NotNull Player player, @NotNull PlayerData playerData) {
         // Decrease mana and cancel event
         double mana = playerData.getMana() - event.getDamage() * 2;
         if (mana > 0) {

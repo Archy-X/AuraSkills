@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -29,7 +30,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void luckyCatch(PlayerFishEvent event) {
+	public void luckyCatch(@NotNull PlayerFishEvent event) {
 		if (blockDisabled(Ability.LUCKY_CATCH)) return;
 		Player player = event.getPlayer();
 		if (blockAbility(player)) return;
@@ -59,7 +60,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 	}
 
 	@EventHandler
-	public void grappler(PlayerFishEvent event) {
+	public void grappler(@NotNull PlayerFishEvent event) {
 		if (blockDisabled(Ability.GRAPPLER)) return;
 		if (event.getCaught() != null) {
 			if (!(event.getCaught() instanceof Item)) {
@@ -82,7 +83,7 @@ public class FishingAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	private boolean isUnsafeVelocity(Vector vector) {
+	private boolean isUnsafeVelocity(@NotNull Vector vector) {
 		double x = vector.getX();
 		double y = vector.getY();
 		double z = vector.getZ();

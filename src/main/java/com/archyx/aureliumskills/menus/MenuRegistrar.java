@@ -27,6 +27,7 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.context.ContextManager;
 import com.archyx.slate.item.provider.ProviderManager;
 import com.archyx.slate.menu.MenuManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class MenuRegistrar {
     private final AureliumSkills plugin;
     private final Slate slate;
 
-    public MenuRegistrar(AureliumSkills plugin) {
+    public MenuRegistrar(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.slate = plugin.getSlate();
     }

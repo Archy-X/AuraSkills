@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.region;
 
 import org.bukkit.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -12,7 +13,7 @@ public class Region {
     private final World world;
     private final int x;
     private final int z;
-    private final ConcurrentMap<ChunkCoordinate, ChunkData> chunks;
+    private final @NotNull ConcurrentMap<ChunkCoordinate, ChunkData> chunks;
     private boolean reload;
     private boolean loading;
 
@@ -46,7 +47,7 @@ public class Region {
         chunks.put(chunkCoordinate, chunkData);
     }
 
-    public Map<ChunkCoordinate, ChunkData> getChunkMap() {
+    public @NotNull Map<ChunkCoordinate, ChunkData> getChunkMap() {
         return chunks;
     }
 

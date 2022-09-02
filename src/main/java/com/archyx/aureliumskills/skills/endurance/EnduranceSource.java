@@ -7,6 +7,8 @@ import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public enum EnduranceSource implements Source {
 
@@ -21,17 +23,17 @@ public enum EnduranceSource implements Source {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.ENDURANCE;
     }
 
     @Override
-    public String getUnitName() {
+    public @NotNull String getUnitName() {
         return "meter";
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         ItemStack item = ItemUtils.parseItem(material);
         if (item != null) {
             ItemMeta meta = item.getItemMeta();

@@ -1,15 +1,17 @@
 package com.archyx.aureliumskills.util.misc;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Map;
 
 public class Parser {
 
-    protected Object getElement(Map<?, ?> map, String key) {
+    protected Object getElement(@NotNull Map<?, ?> map, String key) {
         return DataUtil.getElement(map, key);
     }
 
-    protected Object getElementOrDefault(Map<?, ?> map, String key, Object def) {
+    protected Object getElementOrDefault(@NotNull Map<?, ?> map, String key, Object def) {
         try {
             return getElement(map, key);
         } catch (IllegalArgumentException e) {
@@ -17,7 +19,7 @@ public class Parser {
         }
     }
     
-    protected String getString(Map<?, ?> map, String key) {
+    protected @NotNull String getString(Map<?, ?> map, String key) {
         return DataUtil.getString(map, key);
     }
 
@@ -65,7 +67,7 @@ public class Parser {
         }
     }
     
-    protected List<String> getStringList(Map<?, ?> map, String key) {
+    protected @NotNull List<String> getStringList(Map<?, ?> map, String key) {
         return DataUtil.getStringList(map, key);
     }
 
@@ -77,7 +79,7 @@ public class Parser {
         }
     }
 
-    protected Map<?, ?> getMap(Map<?, ?> map, String key) {
+    protected @NotNull Map<?, ?> getMap(Map<?, ?> map, String key) {
         return DataUtil.getMap(map, key);
     }
 
@@ -89,7 +91,7 @@ public class Parser {
         }
     }
 
-    protected List<Map<?, ?>> getMapList(Map<?, ?> map, String key) {
+    protected @NotNull List<Map<?, ?>> getMapList(Map<?, ?> map, String key) {
         return DataUtil.getMapList(map, key);
     }
 

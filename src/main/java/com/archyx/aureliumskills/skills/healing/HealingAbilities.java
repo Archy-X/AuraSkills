@@ -29,21 +29,23 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
 
 public class HealingAbilities extends AbilityProvider implements Listener {
 
-    private Class<?> entityLivingClass;
-    private Class<?> craftPlayerClass;
+    private @Nullable Class<?> entityLivingClass;
+    private @Nullable Class<?> craftPlayerClass;
 
     public HealingAbilities(AureliumSkills plugin) {
         super(plugin, Skills.HEALING);
     }
 
     @EventHandler
-    public void lifeEssence(EntityRegainHealthEvent event) {
+    public void lifeEssence(@NotNull EntityRegainHealthEvent event) {
         if (blockDisabled(Ability.LIFE_ESSENCE)) return;
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
@@ -60,7 +62,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void lifeSteal(EntityDeathEvent event) {
+    public void lifeSteal(@NotNull EntityDeathEvent event) {
         if (blockDisabled(Ability.LIFE_STEAL)) return;
         LivingEntity entity = event.getEntity();
         boolean hostile = entity instanceof Monster || entity instanceof Player;
@@ -92,7 +94,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void goldenHeart(EntityDamageEvent event) {
+    public void goldenHeart(@NotNull EntityDamageEvent event) {
         if (blockDisabled(Ability.GOLDEN_HEART)) return;
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
@@ -110,7 +112,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void revival(PlayerRespawnEvent event) {
+    public void revival(@NotNull PlayerRespawnEvent event) {
         if (blockDisabled(Ability.REVIVAL)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
@@ -140,7 +142,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void revivalLeave(PlayerQuitEvent event) {
+    public void revivalLeave(@NotNull PlayerQuitEvent event) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(event.getPlayer());
         if (playerData == null) {
             return;
@@ -149,7 +151,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         playerData.removeStatModifier("AureliumSkills.Ability.Revival.Regeneration");
     }
 
-    private double getAbsorptionAmount(Player player) {
+    private double getAbsorptionAmount(@NotNull Player player) {
         if (VersionUtils.isAtLeastVersion(14, 4)) {
             return player.getAbsorptionAmount();
         } else {

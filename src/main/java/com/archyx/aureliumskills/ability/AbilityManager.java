@@ -15,6 +15,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -26,8 +27,8 @@ import java.util.function.Supplier;
 
 public class AbilityManager {
 
-    private final Map<Ability, AbilityOption> abilityOptions;
-    private final Map<MAbility, ManaAbilityOption> manaAbilityOptions;
+    private final @NotNull Map<Ability, AbilityOption> abilityOptions;
+    private final @NotNull Map<MAbility, ManaAbilityOption> manaAbilityOptions;
     private final AureliumSkills plugin;
 
     public AbilityManager(AureliumSkills plugin) {
@@ -176,7 +177,7 @@ public class AbilityManager {
         plugin.getLogger().info("Loaded " + amountLoaded + " Ability Options in " + timeElapsed + "ms");
     }
 
-    private FileConfiguration updateFile(File file, FileConfiguration config) {
+    private @NotNull FileConfiguration updateFile(@NotNull File file, @NotNull FileConfiguration config) {
         if (config.contains("file_version")) {
             InputStream stream = plugin.getResource("abilities_config.yml");
             if (stream != null) {
@@ -207,7 +208,7 @@ public class AbilityManager {
         return YamlConfiguration.loadConfiguration(file);
     }
 
-    private void migrateOptions(File file, FileConfiguration abilitiesConfig) {
+    private void migrateOptions(@NotNull File file, @NotNull FileConfiguration abilitiesConfig) {
         FileConfiguration config = plugin.getConfig();
         ConfigurationSection abilities = config.getConfigurationSection("abilities");
         if (abilities == null) return;
@@ -285,7 +286,7 @@ public class AbilityManager {
         return true;
     }
 
-    public boolean isPlayerEnabled(AbstractAbility ability, PlayerData playerData) {
+    public boolean isPlayerEnabled(AbstractAbility ability, @NotNull PlayerData playerData) {
         return !playerData.getAbilityData(ability).getBoolean("disabled");
     }
 
@@ -296,11 +297,11 @@ public class AbilityManager {
         return true;
     }
 
-    public double getValue(Ability ability, int level) {
+    public double getValue(@NotNull Ability ability, int level) {
         return getBaseValue(ability) + (getValuePerLevel(ability) * (level - 1));
     }
 
-    public double getBaseValue(Ability ability) {
+    public double getBaseValue(@NotNull Ability ability) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
             return option.getBaseValue();
@@ -308,7 +309,7 @@ public class AbilityManager {
         return ability.getDefaultBaseValue();
     }
 
-    public double getValuePerLevel(Ability ability) {
+    public double getValuePerLevel(@NotNull Ability ability) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
             return option.getValuePerLevel();
@@ -316,11 +317,11 @@ public class AbilityManager {
         return ability.getDefaultValuePerLevel();
     }
 
-    public double getValue2(Ability ability, int level) {
+    public double getValue2(@NotNull Ability ability, int level) {
         return getBaseValue2(ability) + (getValuePerLevel2(ability) * (level - 1));
     }
 
-    public double getBaseValue2(Ability ability) {
+    public double getBaseValue2(@NotNull Ability ability) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
             return option.getBaseValue2();
@@ -328,7 +329,7 @@ public class AbilityManager {
         return ability.getDefaultBaseValue2();
     }
 
-    public double getValuePerLevel2(Ability ability) {
+    public double getValuePerLevel2(@NotNull Ability ability) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
             return option.getValuePerLevel2();
@@ -336,7 +337,7 @@ public class AbilityManager {
         return ability.getDefaultValuePerLevel2();
     }
 
-    public int getUnlock(Ability ability) {
+    public int getUnlock(@NotNull Ability ability) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
             return option.getUnlock();
@@ -374,7 +375,7 @@ public class AbilityManager {
      * @param level The skill level
      * @return A list of abilities
      */
-    public List<Ability> getAbilities(Skill skill, int level) {
+    public @NotNull List<Ability> getAbilities(@NotNull Skill skill, int level) {
         ImmutableList<Supplier<Ability>> skillAbilities = skill.getAbilities();
         List<Ability> abilities = new ArrayList<>();
         if (skillAbilities.size() == 5) {
@@ -388,7 +389,7 @@ public class AbilityManager {
         return abilities;
     }
 
-    public OptionValue getOption(Ability ability, String key) {
+    public OptionValue getOption(@NotNull Ability ability, String key) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
             OptionValue optionValue = option.getOption(key);
@@ -402,7 +403,7 @@ public class AbilityManager {
         }
     }
 
-    public boolean getOptionAsBooleanElseTrue(Ability ability, String key) {
+    public boolean getOptionAsBooleanElseTrue(@NotNull Ability ability, String key) {
         OptionValue value = getOption(ability, key);
         if (value != null) {
             if (value.getValue() != null) {
@@ -413,14 +414,14 @@ public class AbilityManager {
     }
 
     @Nullable
-    public Set<String> getOptionKeys(Ability ability) {
+    public Set<String> getOptionKeys(@NotNull Ability ability) {
         if (ability.getDefaultOptions() != null) {
             return ability.getDefaultOptions().keySet();
         }
         return null;
     }
 
-    public void sendMessage(Player player, String message) {
+    public void sendMessage(@NotNull Player player, String message) {
         if (OptionL.getBoolean(Option.ACTION_BAR_ABILITY) && OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) {
             plugin.getActionBar().sendAbilityActionBar(player, message);
         } else {

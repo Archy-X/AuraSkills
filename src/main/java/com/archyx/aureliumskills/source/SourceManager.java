@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -25,8 +26,8 @@ import java.util.*;
 public class SourceManager {
 
     private final AureliumSkills plugin;
-    private final Map<Source, Double> sources;
-    private final Map<SourceTag, List<Source>> tags;
+    private final @NotNull Map<Source, Double> sources;
+    private final @NotNull Map<SourceTag, List<Source>> tags;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
@@ -135,7 +136,7 @@ public class SourceManager {
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources and " + tagsLoaded + " tags in " + (System.currentTimeMillis() - start) + "ms");
     }
 
-    private FileConfiguration updateFile(File file, FileConfiguration config) {
+    private @NotNull FileConfiguration updateFile(@NotNull File file, @NotNull FileConfiguration config) {
         if (config.contains("file_version")) {
             InputStream stream = plugin.getResource("sources_config.yml");
             if (stream != null) {
@@ -193,7 +194,7 @@ public class SourceManager {
         return customMobSet;
     }
 
-    public static ItemStack getMenuItem(Source source) {
+    public static @Nullable ItemStack getMenuItem(@NotNull Source source) {
         String material = source + "_SPAWN_EGG";
         ItemStack item = null;
         switch (source.name()) {

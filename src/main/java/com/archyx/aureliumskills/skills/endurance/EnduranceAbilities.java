@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -28,7 +29,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void antiHunger(FoodLevelChangeEvent event) {
+    public void antiHunger(@NotNull FoodLevelChangeEvent event) {
         if (blockDisabled(Ability.ANTI_HUNGER)) return;
         if (!event.isCancelled()) {
             if (event.getEntity() instanceof Player) {
@@ -48,7 +49,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void goldenHealAndRecovery(EntityRegainHealthEvent event) {
+    public void goldenHealAndRecovery(@NotNull EntityRegainHealthEvent event) {
         if (OptionL.isEnabled(Skills.ENDURANCE)) {
             if (!event.isCancelled()) {
                 if (event.getEntity() instanceof Player) {
@@ -87,7 +88,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void recoveryCustom(CustomRegenEvent event) {
+    public void recoveryCustom(@NotNull CustomRegenEvent event) {
         if (!event.isCancelled()) {
             if (isEnabled(Ability.RECOVERY)) {
                 Player player = event.getPlayer();
@@ -110,7 +111,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void mealSteal(EntityDamageByEntityEvent event) {
+    public void mealSteal(@NotNull EntityDamageByEntityEvent event) {
         if (blockDisabled(Ability.MEAL_STEAL)) return;
         if (!event.isCancelled()) {
             // Checks if entity and damager are players

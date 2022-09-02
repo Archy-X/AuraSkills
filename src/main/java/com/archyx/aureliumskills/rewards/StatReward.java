@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -26,7 +27,7 @@ public class StatReward extends Reward {
     }
 
     @Override
-    public void giveReward(Player player, Skill skill, int level) {
+    public void giveReward(@NotNull Player player, Skill skill, int level) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
 

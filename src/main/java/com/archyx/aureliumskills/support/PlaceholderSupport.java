@@ -16,6 +16,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +42,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
     }
 
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "aureliumskills";
     }
 
@@ -50,12 +52,12 @@ public class PlaceholderSupport extends PlaceholderExpansion {
     }
 
     @Override
-    public String getVersion() {
+    public @NotNull String getVersion() {
         return plugin.getDescription().getVersion();
     }
 
     @Override
-    public String onPlaceholderRequest(Player player, String identifier) {
+    public @Nullable String onPlaceholderRequest(@Nullable Player player, @NotNull String identifier) {
         if (player == null) {
             return "";
         }

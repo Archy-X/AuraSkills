@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 public enum MenuMessage implements MessageKey {
@@ -134,7 +136,7 @@ public enum MenuMessage implements MessageKey {
     }
 
     @Override
-    public String getPath() {
+    public @NotNull String getPath() {
         assert (null != path);
         
         return path;

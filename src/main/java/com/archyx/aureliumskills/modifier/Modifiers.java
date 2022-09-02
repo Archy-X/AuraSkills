@@ -12,6 +12,7 @@ import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class Modifiers extends NBTAPIUser {
         super(plugin);
     }
 
-    public ItemStack addModifier(ModifierType type, ItemStack item, Stat stat, double value) {
+    public ItemStack addModifier(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Stat stat, double value) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
@@ -35,7 +36,7 @@ public class Modifiers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public ItemStack convertFromLegacy(ItemStack item) {
+    public ItemStack convertFromLegacy(@NotNull ItemStack item) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         for (ModifierType type : ModifierType.values()) {
@@ -57,7 +58,7 @@ public class Modifiers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public ItemStack removeModifier(ModifierType type, ItemStack item, Stat stat) {
+    public ItemStack removeModifier(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Stat stat) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
@@ -68,7 +69,7 @@ public class Modifiers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public ItemStack removeAllModifiers(ModifierType type, ItemStack item) {
+    public ItemStack removeAllModifiers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
@@ -79,7 +80,7 @@ public class Modifiers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public List<StatModifier> getLegacyModifiers(ModifierType type, NBTItem nbtItem) {
+    public @NotNull List<StatModifier> getLegacyModifiers(@NotNull ModifierType type, @NotNull NBTItem nbtItem) {
         if (isNBTDisabled()) return new ArrayList<>();
         List<StatModifier> modifiers = new ArrayList<>();
         for (String key : nbtItem.getKeys()) {
@@ -103,7 +104,7 @@ public class Modifiers extends NBTAPIUser {
         return modifiers;
     }
 
-    public List<StatModifier> getModifiers(ModifierType type, ItemStack item) {
+    public @NotNull List<StatModifier> getModifiers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (isNBTDisabled()) return new ArrayList<>();
         NBTItem nbtItem = new NBTItem(item);
         List<StatModifier> modifiers = new ArrayList<>();
@@ -131,7 +132,7 @@ public class Modifiers extends NBTAPIUser {
         return modifiers;
     }
 
-    public void addLore(ModifierType type, ItemStack item, Stat stat, double value, Locale locale) {
+    public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Stat stat, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore = meta.getLore();
@@ -155,7 +156,7 @@ public class Modifiers extends NBTAPIUser {
         item.setItemMeta(meta);
     }
 
-    public void removeLore(ItemStack item, Stat stat, Locale locale) {
+    public void removeLore(@NotNull ItemStack item, @NotNull Stat stat, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore = meta.getLore();
@@ -167,7 +168,7 @@ public class Modifiers extends NBTAPIUser {
         item.setItemMeta(meta);
     }
 
-    private String getName(Stat stat) {
+    private String getName(@NotNull Stat stat) {
         String name = stat.name();
         assert (null != name);
         return TextUtil.capitalize(name.toLowerCase(Locale.ENGLISH));

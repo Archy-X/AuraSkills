@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.source.SourceTag;
 import com.archyx.aureliumskills.util.misc.DataUtil;
 import com.archyx.lootmanager.loot.context.ContextManager;
 import com.archyx.lootmanager.loot.context.LootContext;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -21,7 +22,7 @@ public class SourceContextManager extends ContextManager {
 
     @Override
     @Nullable
-    public Set<LootContext> parseContext(Map<?, ?> parentMap) {
+    public Set<LootContext> parseContext(@NotNull Map<?, ?> parentMap) {
         Set<LootContext> contexts = new HashSet<>();
         if (parentMap.containsKey("sources")) {
             List<String> sourcesList = DataUtil.getStringList(parentMap, "sources");

@@ -25,6 +25,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Random;
@@ -37,7 +38,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		super(plugin, Skills.MINING);
 	}
 
-	public void luckyMiner(Player player, Block block, MiningSource source) {
+	public void luckyMiner(@NotNull Player player, @NotNull Block block, @NotNull MiningSource source) {
 		if (OptionL.isEnabled(Skills.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUCKY_MINER)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
@@ -76,7 +77,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void pickMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+	public void pickMaster(@NotNull EntityDamageByEntityEvent event, @NotNull Player player, @NotNull PlayerData playerData) {
 		if (OptionL.isEnabled(Skills.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.PICK_MASTER)) {
 				//Check permission
@@ -91,7 +92,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void hardenedArmor(PlayerItemDamageEvent event) {
+	public void hardenedArmor(@NotNull PlayerItemDamageEvent event) {
 		if (blockDisabled(Ability.HARDENED_ARMOR)) return;
 		Player player = event.getPlayer();
 		if (blockAbility(player)) return;
@@ -106,7 +107,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void applyStamina(PlayerData playerData) {
+	public void applyStamina(@NotNull PlayerData playerData) {
 		if (OptionL.isEnabled(Skills.MINING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.STAMINA)) {
 				if (playerData.getAbilityLevel(Ability.STAMINA) > 0) {
@@ -116,7 +117,7 @@ public class MiningAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void removeStamina(PlayerData playerData) {
+	public void removeStamina(@NotNull PlayerData playerData) {
 		playerData.removeStatModifier("mining-stamina");
 	}
 }

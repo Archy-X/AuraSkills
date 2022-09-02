@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -101,7 +102,7 @@ public enum Ability implements AbstractAbility {
 		this.skill = skill;
 	}
 
-	Ability(Supplier<Skill> skill, double baseValue, double valuePerLevel, String[] optionKeys, Object[] optionValues) {
+	Ability(Supplier<Skill> skill, double baseValue, double valuePerLevel, String @NotNull [] optionKeys, Object @NotNull [] optionValues) {
 		this(skill, baseValue, valuePerLevel);
 		this.options = new HashMap<>();
 		for (int i = 0; i < optionKeys.length; i++) {
@@ -118,7 +119,7 @@ public enum Ability implements AbstractAbility {
 		this.valuePerLevel2 = valuePerLevel2;
 	}
 
-	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, String[] optionKeys, Object[] optionValues) {
+	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, String @NotNull [] optionKeys, Object @NotNull [] optionValues) {
 		this(skill, baseValue1, valuePerLevel1, baseValue2, valuePerLevel2);
 		this.options = new HashMap<>();
 		for (int i = 0; i < optionKeys.length; i++) {

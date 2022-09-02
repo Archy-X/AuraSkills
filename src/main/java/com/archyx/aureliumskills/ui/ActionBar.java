@@ -31,6 +31,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -95,7 +96,7 @@ public class ActionBar implements Listener {
 		}, 0L, 2L);
 	}
 
-	public void sendXpActionBar(Player player, Skill skill, double xpAmount) {
+	public void sendXpActionBar(@NotNull Player player, @NotNull Skill skill, double xpAmount) {
 		if (OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) { // If action bar enabled
 			if (!actionBarDisabled.contains(player.getUniqueId())) { // If the player's action bar is enabled
 				// Get player skill data
@@ -254,7 +255,7 @@ public class ActionBar implements Listener {
 		}
 	}
 
-	public void sendAbilityActionBar(Player player, String message) {
+	public void sendAbilityActionBar(@NotNull Player player, String message) {
 		if (!actionBarDisabled.contains(player.getUniqueId())) {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
@@ -270,11 +271,11 @@ public class ActionBar implements Listener {
 		}
 	}
 
-	private String getHp(Player player) {
+	private @NotNull String getHp(@NotNull Player player) {
 		return String.valueOf(Math.round(player.getHealth() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
 	}
 
-	private String getMaxHp(Player player) {
+	private @NotNull String getMaxHp(@NotNull Player player) {
 		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 		if (attribute != null) {
 			return String.valueOf(Math.round(attribute.getValue() * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
@@ -282,15 +283,15 @@ public class ActionBar implements Listener {
 		return "";
 	}
 
-	private String getMana(PlayerData playerData) {
+	private @NotNull String getMana(@NotNull PlayerData playerData) {
 		return String.valueOf(Math.round(playerData.getMana()));
 	}
 
-	private String getMaxMana(PlayerData playerData) {
+	private @NotNull String getMaxMana(@NotNull PlayerData playerData) {
 		return String.valueOf(Math.round(playerData.getMaxMana()));
 	}
 
-	private void sendActionBar(Player player, String message) {
+	private void sendActionBar(@NotNull Player player, String message) {
 		if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
@@ -319,7 +320,7 @@ public class ActionBar implements Listener {
 		isPaused.remove(player);
 	}
 
-	public HashSet<UUID> getActionBarDisabled() {
+	public @NotNull HashSet<UUID> getActionBarDisabled() {
 		return actionBarDisabled;
 	}
 
@@ -347,7 +348,7 @@ public class ActionBar implements Listener {
 
 	@EventHandler
 	@SuppressWarnings("deprecation")
-	public void onInteract(PlayerInteractEvent event) {
+	public void onInteract(@NotNull PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			Block block = event.getClickedBlock();

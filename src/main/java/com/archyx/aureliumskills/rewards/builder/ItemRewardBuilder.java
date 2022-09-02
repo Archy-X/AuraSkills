@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.rewards.ItemReward;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.util.misc.Validate;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemRewardBuilder extends MessagedRewardBuilder {
 
@@ -15,18 +16,18 @@ public class ItemRewardBuilder extends MessagedRewardBuilder {
         this.amount = -1;
     }
 
-    public ItemRewardBuilder itemKey(String itemKey) {
+    public @NotNull ItemRewardBuilder itemKey(String itemKey) {
         this.itemKey = itemKey;
         return this;
     }
 
-    public ItemRewardBuilder amount(int amount) {
+    public @NotNull ItemRewardBuilder amount(int amount) {
         this.amount = amount;
         return this;
     }
 
     @Override
-    public Reward build() {
+    public @NotNull Reward build() {
         Validate.notNull(itemKey, "You must specify an item key");
         return new ItemReward(plugin, menuMessage, chatMessage, itemKey, amount);
     }

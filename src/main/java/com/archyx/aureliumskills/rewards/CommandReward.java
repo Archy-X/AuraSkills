@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -26,17 +27,17 @@ public class CommandReward extends MessagedReward {
     }
 
     @Override
-    public void giveReward(Player player, Skill skill, int level) {
+    public void giveReward(@NotNull Player player, @NotNull Skill skill, int level) {
         executeCommand(executor, command, player, skill, level);
     }
 
-    public void executeRevert(Player player, Skill skill, int level) {
+    public void executeRevert(@NotNull Player player, @NotNull Skill skill, int level) {
         if (revertCommand != null) {
             executeCommand(revertExecutor != null ? revertExecutor : CommandExecutor.CONSOLE, command, player, skill, level);
         }
     }
 
-    private void executeCommand(CommandExecutor executor, String command, Player player, Skill skill, int level) {
+    private void executeCommand(CommandExecutor executor, String command, @NotNull Player player, @NotNull Skill skill, int level) {
         String executedCommand = TextUtil.replace(command, "{player}", player.getName(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));

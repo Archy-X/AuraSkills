@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 public enum ACFMinecraftMessage {
@@ -19,7 +21,7 @@ public enum ACFMinecraftMessage {
 
     private final String path = "acf.minecraft." + this.name().toLowerCase(Locale.ENGLISH);
 
-    public String getPath() {
+    public @NotNull String getPath() {
         return path;
     }
 

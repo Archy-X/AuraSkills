@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum SorcerySource implements Source, BlockSource {
@@ -29,12 +30,12 @@ public enum SorcerySource implements Source, BlockSource {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.SORCERY;
     }
 
     @Override
-    public String getUnitName() {
+    public @Nullable String getUnitName() {
         if (this == MANA_ABILITY_USE) {
             return "mana";
         } else {
@@ -43,12 +44,12 @@ public enum SorcerySource implements Source, BlockSource {
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         return ItemUtils.parseItem(material);
     }
 
     @Nullable
-    public static SorcerySource getSource(Block block) {
+    public static SorcerySource getSource(@NotNull Block block) {
         for (SorcerySource source : values()) {
             if (source.isMatch(block)) {
                 return source;
@@ -58,7 +59,7 @@ public enum SorcerySource implements Source, BlockSource {
     }
 
     @Override
-    public String getLegacyMaterial() {
+    public @Nullable String getLegacyMaterial() {
         return null;
     }
 

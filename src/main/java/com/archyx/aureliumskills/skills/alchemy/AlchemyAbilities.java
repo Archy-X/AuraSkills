@@ -43,13 +43,14 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class AlchemyAbilities extends AbilityProvider implements Listener {
 
-    private final AgilityAbilities agilityAbilities;
+    private final @NotNull AgilityAbilities agilityAbilities;
 
     public AlchemyAbilities(AureliumSkills plugin) {
         super(plugin, Skills.ALCHEMY);
@@ -58,7 +59,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void alchemist(BrewEvent event) {
+    public void alchemist(@NotNull BrewEvent event) {
         if (blockDisabled(Ability.ALCHEMIST)) return;
         if (!event.isCancelled()) {
             if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
@@ -79,7 +80,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    private void updateBrewingStand(BrewerInventory inventory, PlayerData playerData, Locale locale) {
+    private void updateBrewingStand(@NotNull BrewerInventory inventory, @NotNull PlayerData playerData, Locale locale) {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -98,7 +99,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         }.runTaskLater(plugin, 1L);
     }
 
-    private boolean isApplicablePotion(PotionType potionType) {
+    private boolean isApplicablePotion(@NotNull PotionType potionType) {
         switch (potionType) {
             case INSTANT_DAMAGE:
             case INSTANT_HEAL:
@@ -112,7 +113,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    private ItemStack applyDurationData(ItemStack originalItem, double multiplier, Locale locale) {
+    private ItemStack applyDurationData(@NotNull ItemStack originalItem, double multiplier, Locale locale) {
         if (NBTAPIUser.isNBTDisabled(plugin)) return originalItem;
         PotionMeta potionMeta = (PotionMeta) originalItem.getItemMeta();
         if (potionMeta != null) {
@@ -152,7 +153,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onDrink(PlayerItemConsumeEvent event) {
+    public void onDrink(@NotNull PlayerItemConsumeEvent event) {
         if (blockDisabled(Ability.ALCHEMIST)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
@@ -207,7 +208,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
 
     // Handles duration boosts for splash potions. Includes Alchemist, Sugar Rush, and Splasher.
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onSplash(PotionSplashEvent event) {
+    public void onSplash(@NotNull PotionSplashEvent event) {
         if (blockDisabled(Ability.ALCHEMIST)) return;
         if (event.isCancelled()) return;
         ItemStack item = event.getPotion().getItem();
@@ -263,7 +264,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    private double getSplasherMultiplier(ProjectileSource source, Collection<LivingEntity> affectedEntities) {
+    private double getSplasherMultiplier(ProjectileSource source, @NotNull Collection<LivingEntity> affectedEntities) {
         double splasherMultiplier = 1.0;
         if (source instanceof Player) {
             Player player = (Player) source;
@@ -282,7 +283,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
     // Handles the Lingering ability
     @EventHandler
     @SuppressWarnings("deprecation")
-    public void lingering(LingeringPotionSplashEvent event) {
+    public void lingering(@NotNull LingeringPotionSplashEvent event) {
         if (blockDisabled(Ability.LINGERING)) return;
         if (event.isCancelled()) return;
         Player player = null;

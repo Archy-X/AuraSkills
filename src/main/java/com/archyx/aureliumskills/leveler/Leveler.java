@@ -27,6 +27,8 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -37,8 +39,8 @@ import java.util.regex.Pattern;
 public class Leveler {
 	
 	private final AureliumSkills plugin;
-	private final XpRequirements xpRequirements;
-	private final StatLeveler statLeveler;
+	private final @NotNull XpRequirements xpRequirements;
+	private final @NotNull StatLeveler statLeveler;
 	private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public Leveler(AureliumSkills plugin) {
@@ -51,7 +53,7 @@ public class Leveler {
 		xpRequirements.loadXpRequirements();
 	}
 
-	public double getMultiplier(Player player, Skill skill) {
+	public double getMultiplier(@NotNull Player player, @Nullable Skill skill) {
 		double multiplier = 1.0;
 		if (skill != null && !OptionL.getBoolean(Option.valueOf(skill + "_CHECK_MULTIPLIER_PERMISSIONS"))) { // Disable check option
 			return multiplier;
@@ -83,12 +85,12 @@ public class Leveler {
 		return multiplier;
 	}
 
-	public double getMultiplier(Player player) {
+	public double getMultiplier(@NotNull Player player) {
 		return getMultiplier(player, null);
 	}
 
 	//Method for adding xp with a defined amount
-	public void addXp(Player player, Skill skill, double amount) {
+	public void addXp(@NotNull Player player, @NotNull Skill skill, double amount) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		//Checks if player has a skill profile for safety
 		if (playerData != null) {
@@ -113,7 +115,7 @@ public class Leveler {
 		}
 	}
 
-	private void sendBossBar(Player player, Skill skill, PlayerData playerData) {
+	private void sendBossBar(@NotNull Player player, @NotNull Skill skill, @NotNull PlayerData playerData) {
 		if (OptionL.getBoolean(Option.BOSS_BAR_ENABLED)) {
 			// Check whether boss bar should update
 			plugin.getBossBar().incrementAction(player, skill);
@@ -131,7 +133,7 @@ public class Leveler {
 	}
 
 	//Method for setting xp with a defined amount
-	public void setXp(Player player, Skill skill, double amount) {
+	public void setXp(@NotNull Player player, @NotNull Skill skill, double amount) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		//Checks if player has a skill profile for safety
 		if (playerData != null) {
@@ -147,7 +149,7 @@ public class Leveler {
 		}
 	}
 	
-	public void updateStats(Player player) {
+	public void updateStats(@NotNull Player player) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
 		for (Stat stat : plugin.getStatRegistry().getStats()) {
@@ -165,7 +167,7 @@ public class Leveler {
 		statLeveler.reloadStat(player, Stats.WISDOM);
 	}
 
-	public void updatePermissions(Player player) {
+	public void updatePermissions(@NotNull Player player) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
 		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
@@ -193,7 +195,7 @@ public class Leveler {
 		}
 	}
 
-	public void checkLevelUp(Player player, Skill skill) {
+	public void checkLevelUp(@NotNull Player player, @NotNull Skill skill) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
 		int currentLevel = playerData.getSkillLevel(skill);
@@ -207,7 +209,7 @@ public class Leveler {
 		}
 	}
 
-	private void levelUpSkill(PlayerData playerData, Skill skill) {
+	private void levelUpSkill(@NotNull PlayerData playerData, @NotNull Skill skill) {
 		Player player = playerData.getPlayer();
 		Locale locale = playerData.getLocale();
 
@@ -246,7 +248,7 @@ public class Leveler {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
 	}
 
-	private void sendTitle(Player player, Locale locale, Skill skill, int level) {
+	private void sendTitle(@NotNull Player player, Locale locale, @NotNull Skill skill, int level) {
 		player.sendTitle(TextUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),
 						"{skill}", skill.getDisplayName(locale),
 						"{old}", RomanNumber.toRoman(level - 1),
@@ -258,7 +260,7 @@ public class Leveler {
 				, OptionL.getInt(Option.LEVELER_TITLE_FADE_IN), OptionL.getInt(Option.LEVELER_TITLE_STAY), OptionL.getInt(Option.LEVELER_TITLE_FADE_OUT));
 	}
 
-	private void playSound(Player player) {
+	private void playSound(@NotNull Player player) {
 		try {
 			player.playSound(player.getLocation(), Sound.valueOf(OptionL.getString(Option.LEVELER_SOUND_TYPE))
 					, SoundCategory.valueOf(OptionL.getString(Option.LEVELER_SOUND_CATEGORY))
@@ -270,7 +272,7 @@ public class Leveler {
 		}
 	}
 
-	private String getLevelUpMessage(Player player, PlayerData playerData, Skill skill, int newLevel, Locale locale, List<Reward> rewards) {
+	private @NotNull String getLevelUpMessage(Player player, @NotNull PlayerData playerData, @NotNull Skill skill, int newLevel, Locale locale, @NotNull List<Reward> rewards) {
 		String message = TextUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
@@ -341,7 +343,7 @@ public class Leveler {
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
 
-	public XpRequirements getXpRequirements() {
+	public @NotNull XpRequirements getXpRequirements() {
 		return xpRequirements;
 	}
 

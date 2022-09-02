@@ -13,6 +13,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ import java.util.Objects;
 
 public class YamlBackup extends BackupProvider {
 
-    public YamlBackup(AureliumSkills plugin) {
+    public YamlBackup(@NotNull AureliumSkills plugin) {
         super(plugin);
     }
 

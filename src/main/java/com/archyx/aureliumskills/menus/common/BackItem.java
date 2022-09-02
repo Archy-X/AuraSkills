@@ -11,6 +11,8 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -21,7 +23,7 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, PlaceholderType type) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "back":
@@ -36,7 +38,7 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Object object = activeMenu.getProperty("previous_menu");
         if (object != null) {
             String previousMenu = (String) object;
@@ -45,7 +47,7 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
+    public @Nullable ItemStack onItemModify(ItemStack baseItem, Player player, @NotNull ActiveMenu activeMenu) {
         if (activeMenu.getProperty("previous_menu") == null) {
             return null;
         }

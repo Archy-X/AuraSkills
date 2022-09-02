@@ -11,6 +11,8 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -23,7 +25,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu, Skill skill) {
+    public void onClick(@NotNull Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu, @NotNull Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) {
             return;
@@ -35,12 +37,12 @@ public class ClickableSkillItem extends AbstractSkillItem {
     }
 
     @Override
-    public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+    public @NotNull Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         return new HashSet<>(plugin.getSkillRegistry().getSkills());
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Skill skill) {
+    public @Nullable ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, @NotNull Skill skill) {
         if (OptionL.isEnabled(skill)) {
             return baseItem;
         } else {

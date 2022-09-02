@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.data;
 
 import com.archyx.aureliumskills.ability.AbstractAbility;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.Map;
 public class AbilityData {
 
     private final AbstractAbility ability;
-    private final Map<String, Object> data;
+    private final @NotNull Map<String, Object> data;
 
     public AbilityData(AbstractAbility ability) {
         this.ability = ability;
@@ -25,7 +26,7 @@ public class AbilityData {
         return data.get(key);
     }
 
-    public Map<String, Object> getDataMap() {
+    public @NotNull Map<String, Object> getDataMap() {
         return data;
     }
 

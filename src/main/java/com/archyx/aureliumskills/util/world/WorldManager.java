@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class WorldManager {
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + blockedWorldsLoaded + " blocked worlds.");
     }
 
-    public boolean isInBlockedWorld(Location location) {
+    public boolean isInBlockedWorld(@NotNull Location location) {
         if (location.getWorld() == null) {
             return false;
         }
@@ -51,7 +52,7 @@ public class WorldManager {
         return disabledWorlds.contains(world.getName()) || blockedWorlds.contains(world.getName());
     }
 
-    public boolean isInDisabledWorld(Location location) {
+    public boolean isInDisabledWorld(@NotNull Location location) {
         if (location.getWorld() == null) {
             return false;
         }
@@ -61,7 +62,7 @@ public class WorldManager {
         return disabledWorlds.contains(world.getName());
     }
 
-    public boolean isInBlockedCheckWorld(Location location) {
+    public boolean isInBlockedCheckWorld(@NotNull Location location) {
         if (location.getWorld() == null) {
             return false;
         }
@@ -71,7 +72,7 @@ public class WorldManager {
         return blockedCheckBlockReplaceWorlds.contains(world.getName());
     }
 
-    public boolean isDisabledWorld(World world) {
+    public boolean isDisabledWorld(@NotNull World world) {
         return disabledWorlds.contains(world.getName());
     }
 }

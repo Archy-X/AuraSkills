@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import de.tr7zw.changeme.nbtapi.*;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 public class RegionManager {
 
     private final AureliumSkills plugin;
-    private final ConcurrentMap<RegionCoordinate, Region> regions;
+    private final @NotNull ConcurrentMap<RegionCoordinate, Region> regions;
     private boolean saving;
 
     public RegionManager(AureliumSkills plugin) {
@@ -29,7 +30,7 @@ public class RegionManager {
         return regions.get(regionCoordinate);
     }
 
-    public boolean isPlacedBlock(Block block) {
+    public boolean isPlacedBlock(@NotNull Block block) {
         int chunkX = block.getChunk().getX();
         int chunkZ = block.getChunk().getZ();
 
@@ -49,7 +50,7 @@ public class RegionManager {
         return false;
     }
 
-    public void addPlacedBlock(Block block) {
+    public void addPlacedBlock(@NotNull Block block) {
         int chunkX = block.getChunk().getX();
         int chunkZ = block.getChunk().getZ();
 
@@ -77,7 +78,7 @@ public class RegionManager {
         chunkData.addPlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()));
     }
 
-    public void removePlacedBlock(Block block) {
+    public void removePlacedBlock(@NotNull Block block) {
         int chunkX = block.getChunk().getX();
         int chunkZ = block.getChunk().getZ();
 
@@ -98,7 +99,7 @@ public class RegionManager {
         }
     }
 
-    public void loadRegion(Region region) {
+    public void loadRegion(@NotNull Region region) {
         if (region.isLoading()) return;
         region.setLoading(true);
         RegionCoordinate regionCoordinate = new RegionCoordinate(region.getWorld(), region.getX(), region.getZ());
@@ -138,7 +139,7 @@ public class RegionManager {
         region.setLoading(false);
     }
 
-    private void loadChunk(Region region, ChunkCoordinate chunkCoordinate, NBTCompound compound) {
+    private void loadChunk(@NotNull Region region, @NotNull ChunkCoordinate chunkCoordinate, @NotNull NBTCompound compound) {
         ChunkData chunkData = region.getChunkData(chunkCoordinate);
         if (chunkData == null) {
             chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
@@ -155,7 +156,7 @@ public class RegionManager {
         region.setChunkData(chunkCoordinate, chunkData);
     }
 
-    private void saveRegion(World world, int regionX, int regionZ) throws IOException {
+    private void saveRegion(@NotNull World world, int regionX, int regionZ) throws IOException {
         RegionCoordinate regionCoordinate = new RegionCoordinate(world, regionX, regionZ);
         Region region = getRegion(regionCoordinate);
         if (region == null) return;
@@ -187,7 +188,7 @@ public class RegionManager {
         }
     }
 
-    private void saveChunk(NBTFile nbtFile, ChunkData chunkData) {
+    private void saveChunk(@NotNull NBTFile nbtFile, @NotNull ChunkData chunkData) {
         NBTCompound chunk = nbtFile.getOrCreateCompound("chunk[" + chunkData.getX() + "," + chunkData.getZ() + "]");
         NBTCompoundList placedBlocks = chunk.getCompoundList("placed_blocks");
         if (placedBlocks == null)
@@ -232,7 +233,7 @@ public class RegionManager {
         }
     }
 
-    private boolean isRegionUnused(Region region) {
+    private boolean isRegionUnused(@NotNull Region region) {
         for (int chunkX = region.getX() * 32; chunkX < region.getX() * 32 + 32; chunkX++) {
             for (int chunkZ = region.getZ() * 32; chunkZ < region.getZ() * 32 + 32; chunkZ++) {
                 if (region.getWorld().isChunkLoaded(chunkX, chunkZ)) {

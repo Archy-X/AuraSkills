@@ -9,6 +9,7 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class BackToLevelProgressionItem extends BackItem {
 
@@ -17,7 +18,7 @@ public class BackToLevelProgressionItem extends BackItem {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(@NotNull Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {

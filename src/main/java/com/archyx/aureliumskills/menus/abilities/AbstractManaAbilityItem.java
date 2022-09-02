@@ -8,23 +8,25 @@ import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractManaAbilityItem extends AbstractItem implements TemplateItemProvider<MAbility> {
 
     protected final ManaAbilityManager manager;
 
-    public AbstractManaAbilityItem(AureliumSkills plugin) {
+    public AbstractManaAbilityItem(@NotNull AureliumSkills plugin) {
         super(plugin);
         this.manager = plugin.getManaAbilityManager();
     }
 
     @Override
-    public Class<MAbility> getContext() {
+    public @NotNull Class<MAbility> getContext() {
         return MAbility.class;
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, MAbility mAbility) {
+    public @Nullable ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, MAbility mAbility) {
         // Hide disabled mana abilities
         if (!plugin.getAbilityManager().isEnabled(mAbility)) {
             return null;

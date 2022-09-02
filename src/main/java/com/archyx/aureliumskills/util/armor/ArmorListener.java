@@ -17,6 +17,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +31,7 @@ import java.util.List;
  */
 public class ArmorListener implements Listener{
 
-    private final List<String> blockedMaterials;
+    private final @NotNull List<String> blockedMaterials;
 
     private static final String[] defBlocked = new String[] {
             "CHEST", "TRAPPED_CHEST", "ENDER_CHEST",
@@ -48,7 +50,7 @@ public class ArmorListener implements Listener{
             "*SIGN"
     };
 
-    public ArmorListener(List<String> blockedMaterials){
+    public ArmorListener(@NotNull List<String> blockedMaterials){
         this.blockedMaterials = new LinkedList<>();
         this.blockedMaterials.addAll(Arrays.asList(defBlocked));
         this.blockedMaterials.addAll(blockedMaterials);
@@ -56,7 +58,7 @@ public class ArmorListener implements Listener{
     //Event Priority is highest because other plugins might cancel the events before we check.
 
     @EventHandler(priority =  EventPriority.HIGHEST, ignoreCancelled = true)
-    public final void inventoryClick(final InventoryClickEvent e){
+    public final void inventoryClick(final @NotNull InventoryClickEvent e){
         boolean shift = false, numberkey = false;
         if(e.isCancelled()) return;
         if(e.getAction() == InventoryAction.NOTHING) return;// Why does this get called if nothing happens??
@@ -132,7 +134,7 @@ public class ArmorListener implements Listener{
     }
 
     @EventHandler(priority =  EventPriority.HIGHEST)
-    public void playerInteractEvent(PlayerInteractEvent e){
+    public void playerInteractEvent(@NotNull PlayerInteractEvent e){
         if(e.useItemInHand().equals(Result.DENY))return;
         //
         if(e.getAction() == Action.PHYSICAL) return;
@@ -190,7 +192,7 @@ public class ArmorListener implements Listener{
         }
     }
 
-    private boolean isExcluded(Material mat, List<String> excluded) {
+    private boolean isExcluded(@NotNull Material mat, @NotNull List<String> excluded) {
         boolean isExcluded = false;
         //Check exclusions
         for (String exclusion : excluded) {
@@ -211,7 +213,7 @@ public class ArmorListener implements Listener{
     }
 
     @EventHandler(priority =  EventPriority.HIGHEST, ignoreCancelled = true)
-    public void inventoryDrag(InventoryDragEvent event){
+    public void inventoryDrag(@NotNull InventoryDragEvent event){
         // getType() seems to always be even.
         // Old Cursor gives the item you are equipping
         // Raw slot is the ArmorType slot
@@ -239,7 +241,7 @@ public class ArmorListener implements Listener{
     }
 
     @EventHandler
-    public void itemBreakEvent(PlayerItemBreakEvent e){
+    public void itemBreakEvent(@NotNull PlayerItemBreakEvent e){
         ArmorType type = ArmorType.matchType(e.getBrokenItem());
         if(type != null){
             Player p = e.getPlayer();
@@ -263,7 +265,7 @@ public class ArmorListener implements Listener{
     }
 
     @EventHandler
-    public void playerDeathEvent(PlayerDeathEvent e){
+    public void playerDeathEvent(@NotNull PlayerDeathEvent e){
         Player p = e.getEntity();
         if(e.getKeepInventory()) return;
         for(ItemStack i : p.getInventory().getArmorContents()){
@@ -277,7 +279,7 @@ public class ArmorListener implements Listener{
     /**
      * A utility method to support versions that use null or air ItemStacks.
      */
-    public static boolean isAirOrNull(ItemStack item){
+    public static boolean isAirOrNull(@Nullable ItemStack item){
         return item == null || item.getType().equals(Material.AIR);
     }
 }

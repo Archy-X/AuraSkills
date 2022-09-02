@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -25,7 +26,7 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
+    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, ActiveMenu activeMenu, PlaceholderType type) {
         Locale locale = plugin.getLang().getLocale(player);
         if (placeholder.equals("player")) {
             return player.getName();
@@ -46,7 +47,7 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
+    public @NotNull ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, ActiveMenu activeMenu) {
         if (baseItem.getItemMeta() instanceof SkullMeta) {
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
             if (meta != null) {

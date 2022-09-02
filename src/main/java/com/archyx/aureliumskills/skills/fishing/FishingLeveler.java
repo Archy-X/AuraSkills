@@ -17,15 +17,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class FishingLeveler extends SkillLeveler implements Listener {
 
-	public FishingLeveler(AureliumSkills plugin) {
+	public FishingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.FISHER);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onFish(PlayerFishEvent event) {
+	public void onFish(@NotNull PlayerFishEvent event) {
 		if (OptionL.isEnabled(Skills.FISHING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.FISHING_CHECK_CANCELLED)) {

@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Multiplier {
 
     private final String name;
-    private final Skill skill;
+    private final @Nullable Skill skill;
     private final double value; // The value represents the percent more XP gained
 
     public Multiplier(String name, @Nullable Skill skill, double value) {
@@ -35,7 +35,7 @@ public class Multiplier {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Multiplier that = (Multiplier) o;

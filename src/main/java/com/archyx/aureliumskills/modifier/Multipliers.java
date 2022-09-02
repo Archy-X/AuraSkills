@@ -14,6 +14,7 @@ import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class Multipliers extends NBTAPIUser {
         super(plugin);
     }
 
-    public List<Multiplier> getMultipliers(ModifierType type, ItemStack item) {
+    public @NotNull List<Multiplier> getMultipliers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (!OptionL.getBoolean(Option.MODIFIER_MULTIPLIER_ENABLED) || isNBTDisabled()) { // Return empty list if disabled
             return new ArrayList<>();
         }
@@ -58,7 +59,7 @@ public class Multipliers extends NBTAPIUser {
         return multipliers;
     }
 
-    public ItemStack addMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill, double value) {
+    public ItemStack addMultiplier(@NotNull ModifierType type, @NotNull ItemStack item, @Nullable Skill skill, double value) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
@@ -66,7 +67,7 @@ public class Multipliers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public ItemStack removeMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill) {
+    public ItemStack removeMultiplier(@NotNull ModifierType type, @NotNull ItemStack item, @Nullable Skill skill) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
@@ -75,7 +76,7 @@ public class Multipliers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public ItemStack removeAllMultipliers(ModifierType type, ItemStack item) {
+    public ItemStack removeAllMultipliers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
@@ -86,7 +87,7 @@ public class Multipliers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public void addLore(ModifierType type, ItemStack item, Skill skill, double value, Locale locale) {
+    public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, @Nullable Skill skill, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             List<String> lore = meta.getLore();
@@ -127,7 +128,7 @@ public class Multipliers extends NBTAPIUser {
         item.setItemMeta(meta);
     }
 
-    private String getNBTName(@Nullable Skill skill) {
+    private @NotNull String getNBTName(@Nullable Skill skill) {
         if (skill != null) {
             String name = TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
             assert (null != name);

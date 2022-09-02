@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -22,12 +23,12 @@ public abstract class MessagedReward extends Reward {
     }
 
     @Override
-    public String getMenuMessage(Player player, Locale locale, Skill skill, int level) {
+    public String getMenuMessage(@NotNull Player player, Locale locale, @NotNull Skill skill, int level) {
         return attemptAsMessageKey(menuMessage, player, locale, skill, level);
     }
 
     @Override
-    public String getChatMessage(Player player, Locale locale, Skill skill, int level) {
+    public String getChatMessage(@NotNull Player player, Locale locale, @NotNull Skill skill, int level) {
         return attemptAsMessageKey(chatMessage, player, locale, skill, level);
     }
 
@@ -35,7 +36,7 @@ public abstract class MessagedReward extends Reward {
      * Attempts to use the input as a message key. If a matching translation for the key is found, it will return the translation.
      * Otherwise it will return the key.
      */
-    private String attemptAsMessageKey(String potentialKey, Player player, Locale locale, Skill skill, int level) {
+    private String attemptAsMessageKey(String potentialKey, @NotNull Player player, Locale locale, @NotNull Skill skill, int level) {
         CustomMessageKey key = new CustomMessageKey(potentialKey);
         String message = Lang.getMessage(key, locale);
         if (message == null) {
@@ -44,7 +45,7 @@ public abstract class MessagedReward extends Reward {
         return replacePlaceholders(message, player, skill, level);
     }
 
-    private String replacePlaceholders(String message, Player player, Skill skill, int level) {
+    private @NotNull String replacePlaceholders(String message, @NotNull Player player, @NotNull Skill skill, int level) {
         String m = TextUtil.replace(message, "{player}", player.getName(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));

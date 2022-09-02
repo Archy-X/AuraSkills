@@ -24,6 +24,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -37,22 +39,22 @@ public class Luck implements Listener {
 	}
 
 	@EventHandler
-	public void onJoin(PlayerDataLoadEvent event) {
+	public void onJoin(@NotNull PlayerDataLoadEvent event) {
 		setLuck(event.getPlayerData().getPlayer());
 	}
 	
-	public void reload(Player player) {
+	public void reload(@Nullable Player player) {
 		if (player != null) {
 			setLuck(player);
 		}
 	}
 
 	@EventHandler
-	public void worldChange(PlayerChangedWorldEvent event) {
+	public void worldChange(@NotNull PlayerChangedWorldEvent event) {
 		setLuck(event.getPlayer());
 	}
 
-	private void setLuck(Player player) {
+	private void setLuck(@NotNull Player player) {
 		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_LUCK);
 		if (attribute != null) {
 			boolean hasModifier = false;
@@ -79,7 +81,7 @@ public class Luck implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	@SuppressWarnings("deprecation")
-	public void onBlockBreak(BlockBreakEvent event) {
+	public void onBlockBreak(@NotNull BlockBreakEvent event) {
 		if (OptionL.getBoolean(Option.LUCK_DOUBLE_DROP_ENABLED) && !event.isCancelled()) {
 			Player player = event.getPlayer();
 			Block block = event.getBlock();

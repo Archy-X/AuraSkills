@@ -24,17 +24,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class DamageListener implements Listener {
 
-    private final Strength strength;
-    private final Critical critical;
+    private final @NotNull Strength strength;
+    private final @NotNull Critical critical;
     private final AureliumSkills plugin;
-    private final ExcavationAbilities excavationAbilities;
-    private final FarmingAbilities farmingAbilities;
-    private final MiningAbilities miningAbilities;
-    private final ForagingAbilities foragingAbilities;
-    private final ArcheryAbilities archeryAbilities;
+    private final @NotNull ExcavationAbilities excavationAbilities;
+    private final @NotNull FarmingAbilities farmingAbilities;
+    private final @NotNull MiningAbilities miningAbilities;
+    private final @NotNull ForagingAbilities foragingAbilities;
+    private final @NotNull ArcheryAbilities archeryAbilities;
     private final FightingAbilities fightingAbilities;
     private final DefenseAbilities defenseAbilities;
 
@@ -52,7 +53,7 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onDamage(EntityDamageByEntityEvent event) {
+    public void onDamage(@NotNull EntityDamageByEntityEvent event) {
 
         //Check if not cancelled
         if (event.isCancelled()) {
@@ -125,7 +126,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    private void onDamaged(EntityDamageByEntityEvent event, Player player) {
+    private void onDamaged(@NotNull EntityDamageByEntityEvent event, @NotNull Player player) {
         // Check disabled world
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
@@ -152,7 +153,7 @@ public class DamageListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private DamageType getDamageType(EntityDamageByEntityEvent event, Player player) {
+    private @NotNull DamageType getDamageType(@NotNull EntityDamageByEntityEvent event, @NotNull Player player) {
         if (event.getDamager() instanceof Arrow || event.getDamager() instanceof SpectralArrow || event.getDamager() instanceof TippedArrow) {
             return DamageType.BOW;
         }

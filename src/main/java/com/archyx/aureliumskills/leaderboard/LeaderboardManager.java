@@ -1,12 +1,13 @@
 package com.archyx.aureliumskills.leaderboard;
 
 import com.archyx.aureliumskills.skills.Skill;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class LeaderboardManager {
 
-    private final Map<Skill, List<SkillValue>> skillLeaderboards;
+    private final @NotNull Map<Skill, List<SkillValue>> skillLeaderboards;
     private List<SkillValue> powerLeaderboard;
     private List<SkillValue> averageLeaderboard;
     private volatile boolean sorting = false;
@@ -25,7 +26,7 @@ public class LeaderboardManager {
         this.skillLeaderboards.put(skill, leaderboard);
     }
 
-    public List<SkillValue> getLeaderboard(Skill skill, int page, int numPerPage) {
+    public @NotNull List<SkillValue> getLeaderboard(Skill skill, int page, int numPerPage) {
         List<SkillValue> leaderboard = skillLeaderboards.get(skill);
         int from = (Math.max(page, 1) - 1) * numPerPage;
         int to = from + numPerPage;
@@ -36,7 +37,7 @@ public class LeaderboardManager {
         return powerLeaderboard;
     }
 
-    public List<SkillValue> getPowerLeaderboard(int page, int numPerPage) {
+    public @NotNull List<SkillValue> getPowerLeaderboard(int page, int numPerPage) {
         int from = (Math.max(page, 1) - 1) * numPerPage;
         int to = from + numPerPage;
         return powerLeaderboard.subList(Math.min(from, powerLeaderboard.size()), Math.min(to, powerLeaderboard.size()));
@@ -50,7 +51,7 @@ public class LeaderboardManager {
         return averageLeaderboard;
     }
 
-    public List<SkillValue> getAverageLeaderboard(int page, int numPerPage) {
+    public @NotNull List<SkillValue> getAverageLeaderboard(int page, int numPerPage) {
         int from = (Math.max(page, 1) - 1) * numPerPage;
         int to = from + numPerPage;
         return averageLeaderboard.subList(Math.min(from, averageLeaderboard.size()), Math.min(to, averageLeaderboard.size()));

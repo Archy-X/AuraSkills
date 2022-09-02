@@ -15,16 +15,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
+import org.jetbrains.annotations.NotNull;
 
 public class DefenseLeveler extends SkillLeveler implements Listener {
 
-	public DefenseLeveler(AureliumSkills plugin) {
+	public DefenseLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.DEFENDER);
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	@SuppressWarnings("deprecation")
-	public void onDamage(EntityDamageByEntityEvent event) {
+	public void onDamage(@NotNull EntityDamageByEntityEvent event) {
 		if (OptionL.isEnabled(Skills.DEFENSE)) {
 			//Checks cancelled
 			if (OptionL.getBoolean(Option.DEFENSE_CHECK_CANCELLED)) {

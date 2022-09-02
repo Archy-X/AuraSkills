@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.source;
 
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -28,7 +29,7 @@ public enum SourceTag {
         return skill;
     }
 
-    public String getPath() {
+    public @NotNull String getPath() {
         return skill.toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
     }
 

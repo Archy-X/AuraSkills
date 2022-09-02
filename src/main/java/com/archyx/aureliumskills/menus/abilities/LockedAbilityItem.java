@@ -12,6 +12,8 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -25,7 +27,7 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, Ability ability) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, PlaceholderType type, @NotNull Ability ability) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "name":
@@ -49,7 +51,7 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public Set<Ability> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+    public @NotNull Set<Ability> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
         Object property = activeMenu.getProperty("skill");
         assert (null != property);
         Skill skill = (Skill) property;

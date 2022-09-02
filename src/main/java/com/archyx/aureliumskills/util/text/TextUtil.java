@@ -1,12 +1,15 @@
 package com.archyx.aureliumskills.util.text;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class TextUtil {
 
-    public static String replace(String source, String os, String ns) {
+    public static String replace(@Nullable String source, @NotNull String os, @NotNull String ns) {
         if (source == null) {
             return null;
         }
@@ -32,33 +35,33 @@ public class TextUtil {
         return source;
     }
 
-    public static String replace(String source, String os1, String ns1, String os2, String ns2) {
+    public static @Nullable String replace(String source, @NotNull String os1, @NotNull String ns1, @NotNull String os2, @NotNull String ns2) {
         return replace(replace(source, os1, ns1), os2, ns2);
     }
 
-    public static String replace(String source, String os1, String ns1, String os2, String ns2, String os3, String ns3) {
+    public static @Nullable String replace(String source, @NotNull String os1, @NotNull String ns1, @NotNull String os2, @NotNull String ns2, @NotNull String os3, @NotNull String ns3) {
         return replace(replace(replace(source, os1, ns1), os2, ns2), os3, ns3);
     }
 
-    public static String replace(String source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4) {
+    public static @Nullable String replace(String source, @NotNull String os1, @NotNull String ns1, @NotNull String os2, @NotNull String ns2, @NotNull String os3, @NotNull String ns3, @NotNull String os4, @NotNull String ns4) {
         return replace(replace(replace(replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4);
     }
 
-    public static String replace(String source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4, String os5, String ns5) {
+    public static @Nullable String replace(String source, @NotNull String os1, @NotNull String ns1, @NotNull String os2, @NotNull String ns2, @NotNull String os3, @NotNull String ns3, @NotNull String os4, @NotNull String ns4, @NotNull String os5, @NotNull String ns5) {
         return replace(replace(replace(replace(replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4), os5, ns5);
     }
 
-    public static String replace(String source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4, String os5, String ns5, String os6, String ns6) {
+    public static @Nullable String replace(String source, @NotNull String os1, @NotNull String ns1, @NotNull String os2, @NotNull String ns2, @NotNull String os3, @NotNull String ns3, @NotNull String os4, @NotNull String ns4, @NotNull String os5, @NotNull String ns5, @NotNull String os6, @NotNull String ns6) {
         return replace(replace(replace(replace(replace(replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4), os5, ns5), os6, ns6);
     }
 
-    public static String replaceNonEscaped(String source, String os, String ns) {
+    public static @Nullable String replaceNonEscaped(String source, @NotNull String os, @NotNull String ns) {
         String replaced = replace(source, "\\" + os, "\uE000"); // Replace escaped characters with intermediate char
         replaced = replace(replaced, os, ns); // Replace normal chars
         return replace(replaced, "\uE000", os); // Replace intermediate with original
     }
 
-    public static String removeEnd(final String str, final String remove) {
+    public static @Nullable String removeEnd(final @NotNull String str, final @NotNull String remove) {
         if (isEmpty(str) || isEmpty(remove)) {
             return str;
         }
@@ -68,11 +71,11 @@ public class TextUtil {
         return str;
     }
 
-    public static boolean isEmpty(final CharSequence cs) {
+    public static boolean isEmpty(final @Nullable CharSequence cs) {
         return cs == null || cs.length() == 0;
     }
 
-    public static String capitalize(final String str) {
+    public static String capitalize(final @Nullable String str) {
         final int strLen = length(str);
         if (strLen == 0) {
             return str;
@@ -97,11 +100,11 @@ public class TextUtil {
         return new String(newCodePoints, 0, outOffset);
     }
 
-    public static int length(final CharSequence cs) {
+    public static int length(final @Nullable CharSequence cs) {
         return cs == null ? 0 : cs.length();
     }
 
-    public static String repeat(final char ch, final int repeat) {
+    public static @NotNull String repeat(final char ch, final int repeat) {
         if (repeat <= 0) {
             return "";
         }
@@ -111,7 +114,7 @@ public class TextUtil {
     }
 
 
-    public static String repeat(final String str, final int repeat) {
+    public static String repeat(final @Nullable String str, final int repeat) {
         // Performance tuned for 2.0 (JDK1.4)
         if (str == null) {
             return null;
@@ -149,7 +152,7 @@ public class TextUtil {
         }
     }
 
-    private static Set<Integer> generateDelimiterSet(final char[] delimiters) {
+    private static @NotNull Set<Integer> generateDelimiterSet(final char @Nullable [] delimiters) {
         final Set<Integer> delimiterHashSet = new HashSet<>();
         if (delimiters == null || delimiters.length == 0) {
             if (delimiters == null) {
@@ -165,7 +168,7 @@ public class TextUtil {
         return delimiterHashSet;
     }
 
-    public static String capitalizeWord(final String str, final char... delimiters) {
+    public static @Nullable String capitalizeWord(final @NotNull String str, final char... delimiters) {
         if (isEmpty(str)) {
             return str;
         }
@@ -195,7 +198,7 @@ public class TextUtil {
         return new String(newCodePoints, 0, outOffset);
     }
 
-    public static String capitalizeWord(final String str) {
+    public static String capitalizeWord(final @NotNull String str) {
         return capitalizeWord(str, null);
     }
 

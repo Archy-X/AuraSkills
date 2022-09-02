@@ -8,6 +8,7 @@ import com.archyx.slate.menu.MenuManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class MenuFileManager {
     private final AureliumSkills plugin;
     private final MenuManager manager;
 
-    public MenuFileManager(AureliumSkills plugin) {
+    public MenuFileManager(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.manager = plugin.getMenuManager();
     }
@@ -108,7 +109,7 @@ public class MenuFileManager {
         }
     }
 
-    private void migrateItems(ConfigurationSection oldSection, ConfigurationSection newSection, ConfigurationSection templatesSection) {
+    private void migrateItems(@NotNull ConfigurationSection oldSection, @NotNull ConfigurationSection newSection, @NotNull ConfigurationSection templatesSection) {
         for (String itemName : oldSection.getKeys(false)) {
             // Get the configuration sections of new and old items
             ConfigurationSection oldItem = oldSection.getConfigurationSection(itemName);
@@ -164,7 +165,7 @@ public class MenuFileManager {
         }
     }
 
-    private void migrateTemplates(ConfigurationSection oldSection, ConfigurationSection newSection) {
+    private void migrateTemplates(@NotNull ConfigurationSection oldSection, @NotNull ConfigurationSection newSection) {
         for (String templateName : oldSection.getKeys(false)) {
             ConfigurationSection oldTemplate = oldSection.getConfigurationSection(templateName);
             if (oldTemplate == null) continue;
@@ -217,7 +218,7 @@ public class MenuFileManager {
         }
     }
 
-    private void migrateBaseItem(ConfigurationSection newItem, String oldMaterial) {
+    private void migrateBaseItem(@NotNull ConfigurationSection newItem, @NotNull String oldMaterial) {
         String[] tokens = oldMaterial.split(" ", 2);
         if (tokens.length == 0) return;
         // Migrate material

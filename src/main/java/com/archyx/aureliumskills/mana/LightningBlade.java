@@ -17,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class LightningBlade extends ReadiedManaAbility {
 
@@ -27,7 +28,7 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void activationListener(EntityDamageByEntityEvent event) {
+    public void activationListener(@NotNull EntityDamageByEntityEvent event) {
         if (!OptionL.isEnabled(Skills.FIGHTING)) return;
         if (event.isCancelled()) return;
         if (!(event.getDamager() instanceof Player)) return;
@@ -51,7 +52,7 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @Override
-    protected int getDuration(PlayerData playerData) {
+    protected int getDuration(@NotNull PlayerData playerData) {
         double baseDuration = manager.getOptionAsDouble(mAbility, "base_duration");
         double durationPerLevel = manager.getOptionAsDouble(mAbility, "duration_per_level");
         double durationSeconds = baseDuration + (durationPerLevel * (playerData.getManaAbilityLevel(mAbility) - 1));
@@ -59,7 +60,7 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @Override
-    public void onActivate(Player player, PlayerData playerData) {
+    public void onActivate(@NotNull Player player, @NotNull PlayerData playerData) {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         if (attribute == null) return;
 
@@ -82,7 +83,7 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @Override
-    public void onStop(Player player, PlayerData playerData) {
+    public void onStop(@NotNull Player player, PlayerData playerData) {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         if (attribute == null) return;
         // Remove modifier if exists
@@ -94,7 +95,7 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @EventHandler
-    public void lightningBladeJoin(PlayerJoinEvent event) {
+    public void lightningBladeJoin(@NotNull PlayerJoinEvent event) {
         // Only remove if not activated
         Player player = event.getPlayer();
         if (plugin.getManaAbilityManager().isActivated(player.getUniqueId(), MAbility.LIGHTNING_BLADE)) {

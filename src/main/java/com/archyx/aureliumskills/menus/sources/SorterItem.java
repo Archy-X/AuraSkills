@@ -12,6 +12,7 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -22,7 +23,7 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType) {
+    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, PlaceholderType placeholderType) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "sorter":
@@ -36,7 +37,7 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, @NotNull ActiveMenu activeMenu) {
         SortType[] sortTypes = SortType.values();
         SortType currentType = (SortType) activeMenu.getProperty("sort_type");
         // Get the index of the current sort type in the array
@@ -60,7 +61,7 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
         activeMenu.setCooldown("sorter", 5);
     }
 
-    private String getSortedTypesLore(Locale locale, ActiveMenu activeMenu) {
+    private @NotNull String getSortedTypesLore(Locale locale, @NotNull ActiveMenu activeMenu) {
         StringBuilder builder = new StringBuilder();
         SortType selectedSort = (SortType) activeMenu.getProperty("sort_type");
         for (SortType sortType : SortType.values()) {
@@ -83,7 +84,7 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
         ALPHABETICAL,
         REVERSE_ALPHABETICAL;
 
-        public SourceComparator getComparator(AureliumSkills plugin, Locale locale) {
+        public @NotNull SourceComparator getComparator(AureliumSkills plugin, Locale locale) {
             switch (this) {
                 case DESCENDING:
                     return new SourceComparator.Descending(plugin);

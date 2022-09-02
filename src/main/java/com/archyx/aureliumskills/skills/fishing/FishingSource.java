@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.util.item.ItemUtils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -29,18 +30,18 @@ public enum FishingSource implements Source {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.FISHING;
     }
 
     @Override
-    public String getPath() {
+    public @NotNull String getPath() {
         return "fishing." + toString().toLowerCase(Locale.ROOT);
     }
 
     @SuppressWarnings("deprecation")
     @Nullable
-    public static FishingSource valueOf(ItemStack item) {
+    public static FishingSource valueOf(@NotNull ItemStack item) {
         Material mat = item.getType();
         if (XMaterial.isNewVersion()) {
             if (mat.equals(XMaterial.COD.parseMaterial())) {
@@ -82,7 +83,7 @@ public enum FishingSource implements Source {
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         return ItemUtils.parseItem(material);
     }
 }

@@ -17,6 +17,7 @@ public interface Skill {
     String getDisplayName(Locale locale);
 
     @Nullable
+    @org.jetbrains.annotations.Nullable
     MAbility getManaAbility();
 
     String name();

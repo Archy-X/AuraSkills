@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.rewards.CommandReward;
 import com.archyx.aureliumskills.rewards.Reward;
 import com.archyx.aureliumskills.util.misc.Validate;
+import org.jetbrains.annotations.NotNull;
 
 public class CommandRewardBuilder extends MessagedRewardBuilder {
 
@@ -18,28 +19,28 @@ public class CommandRewardBuilder extends MessagedRewardBuilder {
         this.executor = CommandExecutor.CONSOLE;
     }
 
-    public CommandRewardBuilder executor(CommandExecutor executor) {
+    public @NotNull CommandRewardBuilder executor(CommandExecutor executor) {
         this.executor = executor;
         return this;
     }
 
-    public CommandRewardBuilder command(String command) {
+    public @NotNull CommandRewardBuilder command(String command) {
         this.command = command;
         return this;
     }
 
-    public CommandRewardBuilder revertCommand(String revertCommand) {
+    public @NotNull CommandRewardBuilder revertCommand(String revertCommand) {
         this.revertCommand = revertCommand;
         return this;
     }
 
-    public CommandRewardBuilder revertExecutor(CommandExecutor revertExecutor) {
+    public @NotNull CommandRewardBuilder revertExecutor(CommandExecutor revertExecutor) {
         this.revertExecutor = revertExecutor;
         return this;
     }
 
     @Override
-    public Reward build() {
+    public @NotNull Reward build() {
         Validate.notNull(command, "You must specify a command");
         assert (null != command);
         return new CommandReward(plugin, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);

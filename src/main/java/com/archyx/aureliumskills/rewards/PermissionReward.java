@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.rewards;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class PermissionReward extends MessagedReward {
 
@@ -16,7 +17,7 @@ public class PermissionReward extends MessagedReward {
     }
 
     @Override
-    public void giveReward(Player player, Skill skill, int level) {
+    public void giveReward(@NotNull Player player, Skill skill, int level) {
         if (plugin.isLuckPermsEnabled()) {
             plugin.getLuckPermsSupport().addPermission(player, permission, value);
         }

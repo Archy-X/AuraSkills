@@ -1,6 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
 import com.archyx.aureliumskills.mana.MAbility;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -56,7 +57,7 @@ public enum ManaAbilityMessage implements MessageKey {
     NOT_READY("not_ready"),
     NOT_ENOUGH_MANA("not_enough_mana");
 
-    private final String path;
+    private final @NotNull String path;
 
     ManaAbilityMessage() {
         MAbility manaAbility = MAbility.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));

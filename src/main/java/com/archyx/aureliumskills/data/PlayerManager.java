@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerManager {
 
     private final AureliumSkills plugin;
-    private final ConcurrentHashMap<UUID, PlayerData> playerData;
+    private final @NotNull ConcurrentHashMap<UUID, PlayerData> playerData;
 
     public PlayerManager(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -26,7 +26,7 @@ public class PlayerManager {
     }
 
     @Nullable
-    public PlayerData getPlayerData(Player player) {
+    public PlayerData getPlayerData(@NotNull Player player) {
         return playerData.get(player.getUniqueId());
     }
 
@@ -39,11 +39,11 @@ public class PlayerManager {
         this.playerData.put(playerData.getPlayer().getUniqueId(), playerData);
     }
 
-    public void removePlayerData(UUID id) {
+    public void removePlayerData(@NotNull UUID id) {
         this.playerData.remove(id);
     }
 
-    public boolean hasPlayerData(Player player) {
+    public boolean hasPlayerData(@NotNull Player player) {
         return playerData.containsKey(player.getUniqueId());
     }
 

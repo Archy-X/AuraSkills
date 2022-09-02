@@ -16,6 +16,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -26,12 +28,12 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public Class<Integer> getContext() {
+    public @NotNull Class<Integer> getContext() {
         return Integer.class;
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer place) {
+    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, PlaceholderType placeholderType, Integer place) {
         Locale locale = plugin.getLang().getLocale(player);
         Skill skill = (Skill) activeMenu.getProperty("skill");
         SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
@@ -50,7 +52,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+    public @NotNull Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         Set<Integer> places = new HashSet<>();
         for (int i = 1; i <= 10; i++) {
             places.add(i);
@@ -59,7 +61,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer place) {
+    public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, Player player, @NotNull ActiveMenu activeMenu, Integer place) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         List<SkillValue> values = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1);
         if (values.size() == 0) {

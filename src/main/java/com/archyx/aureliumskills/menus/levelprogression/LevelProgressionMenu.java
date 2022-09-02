@@ -11,6 +11,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import com.archyx.slate.menu.ConfigurableMenu;
 import com.archyx.slate.menu.MenuProvider;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -21,7 +22,7 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
+    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
         Locale locale = plugin.getLang().getLocale(player);
         Skill skill = getSkill(activeMenu);
         if (placeholder.equals("level_progression_menu_title")) {
@@ -33,7 +34,7 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
     }
 
     @Override
-    public int getPages(Player player, ActiveMenu activeMenu) {
+    public int getPages(Player player, @NotNull ActiveMenu activeMenu) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         int itemsPerPage = 24;
         ConfigurableMenu levelProgressionMenu = plugin.getSlate().getMenuManager().getMenu("level_progression");
@@ -46,7 +47,7 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
         return (OptionL.getMaxLevel(skill) - 2) / itemsPerPage + 1;
     }
 
-    private Skill getSkill(ActiveMenu activeMenu) {
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
         Object property = activeMenu.getProperty("skill");
         if (property instanceof Skill) {
             return (Skill) property;
