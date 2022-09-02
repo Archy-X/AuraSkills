@@ -77,12 +77,13 @@ public class Terraform extends ReadiedManaAbility {
         LinkedList<Block> toCheck = new LinkedList<>();
         toCheck.add(block);
         int count = 0;
-        while ((block = toCheck.poll()) != null && count < 61) {
-            if (block.getType() == material) {
-                block.setMetadata("AureliumSkills-Terraform", new FixedMetadataValue(plugin, true));
-                breakBlock(player, block);
+        Block nextBlock;
+        while ((nextBlock = toCheck.poll()) != null && count < 61) {
+            if (nextBlock.getType() == material) {
+                nextBlock.setMetadata("AureliumSkills-Terraform", new FixedMetadataValue(plugin, true));
+                breakBlock(player, nextBlock);
                 for (BlockFace face : faces) {
-                    toCheck.add(block.getRelative(face));
+                    toCheck.add(nextBlock.getRelative(face));
                 }
                 count++;
             }
