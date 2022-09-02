@@ -126,7 +126,7 @@ public class SharpHook extends ManaAbilityProvider {
         // Disallow if in different worlds
         World damagerWorld = damagerLocation.getWorld();
         World hookedWorld = hookedLocation.getWorld();
-        if (damagerWorld != null & hookedWorld != null) {
+        if (damagerWorld != null && hookedWorld != null) {
             if (!damagerWorld.equals(hookedWorld)) {
                 return false;
             }
