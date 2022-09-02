@@ -158,6 +158,7 @@ public enum CommandMessage implements MessageKey {
         this.path = "commands." + path;
     }
 
+    @Override
     public String getPath() {
         return path;
     }

@@ -41,6 +41,7 @@ public enum SkillMessage implements MessageKey {
     private final Skill skill = Skills.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
     private final String path = "skills." + skill.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
 
+    @Override
     public String getPath() {
         return path;
     }

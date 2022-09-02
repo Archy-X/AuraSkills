@@ -167,6 +167,7 @@ public class AureliumSkills extends JavaPlugin {
 	private MenuFileManager menuFileManager;
 	private ForgingLeveler forgingLeveler;
 
+	@Override
 	public void onEnable() {
 		// Registries
 		statRegistry = new StatRegistry();
@@ -344,6 +345,7 @@ public class AureliumSkills extends JavaPlugin {
 		}
 	}
 	
+	@Override
 	public void onDisable() {
 		for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
 			storageProvider.save(playerData.getPlayer(), false);
