@@ -55,7 +55,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	public void loadEmbeddedMessages(PaperCommandManager commandManager) {
+	public void loadEmbeddedMessages(@NotNull PaperCommandManager commandManager) {
 		// Loads default file from embedded resource
 		InputStream inputStream = plugin.getResource("messages/messages_en.yml");
 		if (inputStream != null) {
@@ -66,7 +66,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	public void loadLanguages(PaperCommandManager commandManager) {
+	public void loadLanguages(@NotNull PaperCommandManager commandManager) {
 		Bukkit.getLogger().info("[AureliumSkills] Loading languages...");
 		long startTime = System.currentTimeMillis();
 		FileConfiguration pluginConfig = plugin.getConfig();
@@ -113,7 +113,7 @@ public class Lang implements Listener {
 		Bukkit.getLogger().info("[AureliumSkills] Loaded " + languagesLoaded + " languages in " + (endTime - startTime) + "ms");
 	}
 
-	private void loadMessages(FileConfiguration config, Locale locale, PaperCommandManager commandManager) {
+	private void loadMessages(@NotNull FileConfiguration config, @NotNull Locale locale, @NotNull PaperCommandManager commandManager) {
 		// Load units
 		Map<UnitMessage, String> units = new HashMap<>();
 		for (UnitMessage key : UnitMessage.values()) {
@@ -145,10 +145,12 @@ public class Lang implements Listener {
 				if (key != null) {
 					String message = config.getString(path);
 					if (message != null) {
-						messages.put(key, applyColor(TextUtil.replace(message
-								, "{mana_unit}", units.get(UnitMessage.MANA)
-								, "{hp_unit}", units.get(UnitMessage.HP)
-								, "{xp_unit}", units.get(UnitMessage.XP))));
+					    @Nullable String t = TextUtil.replace(message
+                                , "{mana_unit}", units.get(UnitMessage.MANA)
+                                , "{hp_unit}", units.get(UnitMessage.HP)
+                                , "{xp_unit}", units.get(UnitMessage.XP));
+					    assert(null != t);
+						messages.put(key, applyColor(t));
 					}
 				}
 			}
@@ -266,22 +268,23 @@ public class Lang implements Listener {
 		return YamlConfiguration.loadConfiguration(file);
 	}
 
-	public static @Nullable String getMessage(MessageKey key, Locale locale) {
+	public static @NotNull String getMessage(MessageKey key, @Nullable Locale locale) {
 		// Set default locale if locale not present
 		if (!messages.containsKey(locale)) {
 			locale = getDefaultLanguage();
 		}
-		String message = messages.get(locale).get(key);
-		if (message != null) {
-			return message;
-		} else {
-			String defaultMessage = Lang.messages.get(getDefaultLanguage()).get(key);
-			if (defaultMessage != null) {
-				return defaultMessage;
-			} else {
-				return Lang.messages.get(Locale.ENGLISH).get(key);
-			}
+		@Nullable String localeMessage = messages.get(locale).get(key);
+		if (localeMessage != null) {
+			return localeMessage;
 		}
+		@Nullable String defaultLocaleMessage = Lang.messages.get(getDefaultLanguage()).get(key);
+		if (defaultLocaleMessage != null) {
+			return defaultLocaleMessage;
+		}
+		@Nullable String fallbackEnglishMessage = Lang.messages.get(Locale.ENGLISH).get(key);
+		if (fallbackEnglishMessage != null)
+		    return fallbackEnglishMessage;
+		throw new IllegalStateException("Missing translation for key: " + key + " for locale: " + locale);
 	}
 
 	public static boolean hasLocale(Locale locale) {
@@ -292,7 +295,7 @@ public class Lang implements Listener {
 		return definedLanguages;
 	}
 
-	public static Set<String> getDefinedLanguagesSet() {
+	public static @NotNull Set<String> getDefinedLanguagesSet() {
 		Set<String> languages = new HashSet<>();
 		for (Map.Entry<Locale, String> entry : definedLanguages.entrySet()) {
 			languages.add(entry.getValue());
@@ -328,7 +331,7 @@ public class Lang implements Listener {
 	}
 
 	@EventHandler
-	public void onJoin(PlayerDataLoadEvent event) {
+	public void onJoin(@NotNull PlayerDataLoadEvent event) {
 		Player player = event.getPlayerData().getPlayer();
 		PlayerData playerData = event.getPlayerData();
 		if (playerData.getLocale() == null) {
@@ -351,7 +354,7 @@ public class Lang implements Listener {
 		}
 	}
 
-	private String applyColor(String message) {
+	private String applyColor(@NotNull String message) {
 		Matcher matcher = hexPattern.matcher(message);
 		StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
 		while (matcher.find()) {

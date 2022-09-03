@@ -30,20 +30,26 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "abilities":
-                return Lang.getMessage(MenuMessage.ABILITIES, locale);
+                m = Lang.getMessage(MenuMessage.ABILITIES, locale);
+                break;
             case "abilities_desc":
-                return Lang.getMessage(MenuMessage.ABILITIES_DESC, locale);
+                m = Lang.getMessage(MenuMessage.ABILITIES_DESC, locale);
+                break;
             case "abilities_click":
-                @Nullable Object property = menu.getProperty("skill");
-                assert (null != property);
-                Skill skill = (Skill) property;
-                return TextUtil.replace(Lang.getMessage(MenuMessage.ABILITIES_CLICK, locale), "{skill}", skill.getDisplayName(locale));
+                Skill skill = (Skill) menu.getProperty("skill");
+                assert (null != skill);
+                m = Lang.getMessage(MenuMessage.ABILITIES_CLICK, locale);
+                assert (null != m);
+                m = TextUtil.replace(m, "{skill}", skill.getDisplayName(locale));
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
@@ -56,9 +62,8 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
+        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
         if (skill == Skills.SORCERY) { // Disable for sorcery abilities REMOVE ONCE SORCERY ABILITIES ARE ADDED
             return null;
         }
@@ -72,8 +77,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
         }
         if (hasEnabledAbility) {
             return baseItem;
-        } else {
-            return null; // Don't show item if no abilities are enabled
         }
+        return null; // Don't show item if no abilities are enabled
     }
 }

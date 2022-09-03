@@ -14,6 +14,8 @@ import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -27,25 +29,29 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "sources":
-                return Lang.getMessage(MenuMessage.SOURCES, locale);
+                m = Lang.getMessage(MenuMessage.SOURCES, locale);
+                break;
             case "sources_desc":
-                return Lang.getMessage(MenuMessage.SOURCES_DESC, locale);
+                m = Lang.getMessage(MenuMessage.SOURCES_DESC, locale);
+                break;
             case "sources_click":
-                @Nullable Object property = activeMenu.getProperty("skill");
-                assert (null != property);
-                Skill skill = (Skill) property;
-                return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_CLICK, locale),
+                Skill skill = (Skill) activeMenu.getProperty("skill");
+                assert (null != skill);
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_CLICK, locale),
                         "{skill}", skill.getDisplayName(locale));
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(@NotNull Player player, @NotNull InventoryClickEvent event, @NotNull ItemStack item, @NotNull SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("skill", activeMenu.getProperty("skill"));
         properties.put("items_per_page", 28);

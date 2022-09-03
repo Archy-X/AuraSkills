@@ -6,8 +6,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.jetbrains.annotations.Nullable;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class EntityData extends Parser {
     private final int fireTicks;
     private final boolean visualFire;
     private final boolean persistent;
-    private final List<EntityData> passengers;
+    private final @NotNull List<EntityData> passengers;
     private final boolean invulnerable;
     private final boolean silent;
     private final boolean gravity;

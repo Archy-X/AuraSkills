@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,23 +31,23 @@ public class RequirementListener implements Listener {
 
     private final AureliumSkills plugin;
     private final RequirementManager manager;
-    private final Requirements requirements;
+    private final @NotNull Requirements requirements;
 
-    public RequirementListener(AureliumSkills plugin) {
+    public RequirementListener(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.manager = plugin.getRequirementManager();
         this.requirements = new Requirements(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onEquip(ArmorEquipEvent event) {
+    public void onEquip(@NotNull ArmorEquipEvent event) {
         if (event.isCancelled()) return;
         Player player = event.getPlayer();
         ItemStack item = event.getNewArmorPiece();
         if (item != null) {
             if (item.getType() != Material.AIR) {
                 if (!requirements.meetsRequirements(ModifierType.ARMOR, item, player)) {
-                    Locale locale = plugin.getLang().getLocale(player);
+                    @Nullable Locale locale = plugin.getLang().getLocale(player);
                     event.setCancelled(true);
                     Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
                     if (timer != null) {
@@ -68,14 +69,19 @@ public class RequirementListener implements Listener {
         // Build requirements message that shows skills and levels
         StringBuilder requirementsString = new StringBuilder();
         Map<Skill, Integer> requirementMap = requirements.getRequirements(modifierType, item);
+        @Nullable String m;
         for (Map.Entry<Skill, Integer> entry : requirementMap.entrySet()) {
-            requirementsString.append(TextUtil.replace(Lang.getMessage(entryMessage, locale),
-                    "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
+            m = TextUtil.replace(Lang.getMessage(entryMessage, locale),
+                    "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue()));
+            assert (null != m);
+            requirementsString.append(m);
         }
         Map<Skill, Integer> globalRequirementMap = requirements.getGlobalRequirements(modifierType, item);
         for (Map.Entry<Skill, Integer> entry : globalRequirementMap.entrySet()) {
-            requirementsString.append(TextUtil.replace(Lang.getMessage(entryMessage, locale),
-                    "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue())));
+            m = TextUtil.replace(Lang.getMessage(entryMessage, locale),
+                    "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue()));
+            assert (null != m);
+            requirementsString.append(m);
         }
         if (requirementsString.length() >= 2) {
             requirementsString.delete(requirementsString.length() - 2, requirementsString.length());
@@ -147,7 +153,7 @@ public class RequirementListener implements Listener {
 
     private void checkItemRequirements(@NotNull Player player, @NotNull ItemStack item, @NotNull Cancellable event) {
         if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
-            Locale locale = plugin.getLang().getLocale(player);
+            @Nullable Locale locale = plugin.getLang().getLocale(player);
             event.setCancelled(true);
             Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
             if (timer != null) {

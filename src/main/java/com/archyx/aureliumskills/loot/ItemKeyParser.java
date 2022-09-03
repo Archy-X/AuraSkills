@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.util.misc.Parser;
 import com.archyx.lootmanager.loot.parser.CustomItemParser;
 import org.bukkit.inventory.ItemStack;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Map;
 
 public class ItemKeyParser extends Parser implements CustomItemParser {
@@ -16,12 +18,12 @@ public class ItemKeyParser extends Parser implements CustomItemParser {
     }
 
     @Override
-    public boolean shouldUseParser(Map<?, ?> map) {
+    public boolean shouldUseParser(@NotNull Map<?, ?> map) {
         return map.containsKey("key");
     }
 
     @Override
-    public ItemStack parseCustomItem(Map<?, ?> map) {
+    public @NotNull ItemStack parseCustomItem(Map<?, ?> map) {
         String itemKey = getString(map, "key");
         ItemStack item = plugin.getItemRegistry().getItem(itemKey);
         if (item != null) {

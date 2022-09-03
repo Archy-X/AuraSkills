@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.util.misc.DataUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import java.util.*;
 public class RewardManager {
 
     private final AureliumSkills plugin;
-    private final Map<Skill, RewardTable> rewardTables;
+    private final @NotNull Map<Skill, RewardTable> rewardTables;
 
     public RewardManager(AureliumSkills plugin) {
         this.plugin = plugin;

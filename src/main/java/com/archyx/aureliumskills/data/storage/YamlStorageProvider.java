@@ -33,12 +33,12 @@ import java.util.*;
 
 public class YamlStorageProvider extends StorageProvider {
 
-    public YamlStorageProvider(AureliumSkills plugin) {
+    public YamlStorageProvider(@NotNull AureliumSkills plugin) {
         super(plugin);
     }
 
     @Override
-    public void load(Player player) {
+    public void load(@NotNull Player player) {
         File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId() + ".yml");
         if (file.exists()) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -139,7 +139,7 @@ public class YamlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(Player player, boolean removeFromMemory) {
+    public void save(@NotNull Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
         if (playerData.shouldNotSave()) return;
@@ -202,7 +202,7 @@ public class YamlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void loadBackup(FileConfiguration config, CommandSender sender) {
+    public void loadBackup(@NotNull FileConfiguration config, @NotNull CommandSender sender) {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
         Locale locale = plugin.getLang().getLocale(sender);
         if (playerDataSection != null) {
@@ -299,7 +299,7 @@ public class YamlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void delete(UUID uuid) throws IOException {
+    public void delete(@NotNull UUID uuid) throws IOException {
         File file = new File(plugin.getDataFolder() + "/playerdata/" + uuid.toString() + ".yml");
         if (file.exists()) {
             boolean success = file.delete();

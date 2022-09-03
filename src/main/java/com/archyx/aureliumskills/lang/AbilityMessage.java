@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.lang;
 
 import com.archyx.aureliumskills.ability.Ability;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 import org.jetbrains.annotations.NotNull;

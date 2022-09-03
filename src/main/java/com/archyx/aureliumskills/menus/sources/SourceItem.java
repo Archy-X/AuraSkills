@@ -19,6 +19,7 @@ import com.cryptomorin.xseries.XMaterial;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,24 +32,25 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
     }
 
     @Override
-    public Class<@NotNull Source> getContext() {
+    public @NotNull Class<Source> getContext() {
         return Source.class;
     }
 
     @Override
-    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Source source) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Source source) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "source_name":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_NAME, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_NAME, locale),
                         "{name}", source.getDisplayName(locale));
             case "source_xp":
                 String unitName = source.getUnitName();
                 if (unitName == null) {
-                    return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP, locale),
+                    m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP, locale),
                             "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source)));
                 } else {
-                    return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP_RATE, locale),
+                    m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP_RATE, locale),
                             "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source)),
                             "{unit}", getCustomMessage("sources.units." + unitName, locale));
                 }
@@ -59,26 +61,27 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                 if (multiplier > 1.0) {
                     String unit = source.getUnitName();
                     if (unit == null) {
-                        return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP, locale),
+                        m = TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP, locale),
                                 "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier));
                     } else {
-                        return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP_RATE, locale),
+                        m = TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP_RATE, locale),
                                 "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier),
                                 "{unit}", getCustomMessage("sources.units." + unit, locale));
                     }
                 } else {
-                    return "";
+                    m = "";
                 }
             case "multiplied_desc":
                 Skill skill1 = (Skill) activeMenu.getProperty("skill");
                 assert (null != skill1);
                 if (getMultiplier(player, skill1) > 1.0) {
-                    return Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
+                    m = Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
                 } else {
-                    return "";
+                    m = "";
                 }
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
@@ -177,14 +180,15 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
         return multiplier;
     }
 
-    private @Nullable String getCustomMessage(@NotNull String path, @Nullable Locale locale) {
-        String message = Lang.getMessage(new CustomMessageKey(path), locale);
-        if (message != null) {
-            return message;
-        } else {
-            plugin.getLogger().warning("Unknown message with path " + path);
-            return path;
+    private @NotNull String getCustomMessage(@NotNull String path, @Nullable Locale locale) {
+        String message;
+        try {
+            message = Lang.getMessage(new CustomMessageKey(path), locale);
         }
+        catch (IllegalStateException ex) {
+            plugin.getLogger().warning("Unknown message with path: " + path);
+        }
+        return path;
     }
 
 }

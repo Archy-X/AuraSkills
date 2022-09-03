@@ -3,6 +3,8 @@ package com.archyx.aureliumskills.lang;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 import org.jetbrains.annotations.NotNull;

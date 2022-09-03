@@ -25,42 +25,46 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
 
     private final ManaAbilityManager manager;
 
-    public LockedManaAbilityItem(AureliumSkills plugin) {
+    public LockedManaAbilityItem(@NotNull AureliumSkills plugin) {
         super(plugin);
         this.manager = plugin.getManaAbilityManager();
     }
 
     @Override
-    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull MAbility mAbility) {
-        Locale locale = plugin.getLang().getLocale(player);
-        @Nullable Object property = menu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull MAbility mAbility) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        Skill skill = (Skill) menu.getProperty("skill");
+        assert (null != skill);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "name":
-                return mAbility.getDisplayName(locale);
+                m = mAbility.getDisplayName(locale);
+                break;
             case "locked_desc":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
                         "{desc}", TextUtil.replace(mAbility.getDescription(locale),
                             "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, 1)),
                             "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
                             "{duration}", NumberUtil.format1(getDuration(mAbility))));
+                break;
             case "unlocked_at":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
                         "{skill}", skill.getDisplayName(locale),
                         "{level}", RomanNumber.toRoman(plugin.getManaAbilityManager().getUnlock(mAbility)));
+                break;
             case "locked":
-                return Lang.getMessage(MenuMessage.LOCKED, locale);
+                m = Lang.getMessage(MenuMessage.LOCKED, locale);
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
-    public Set<MAbility> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        Set<MAbility> lockedManaAbilities = new HashSet<>();
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
+    public @NotNull Set<@NotNull MAbility> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        Set<@NotNull MAbility> lockedManaAbilities = new HashSet<>();
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
         MAbility mAbility = skill.getManaAbility();
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (mAbility != null && playerData != null) {

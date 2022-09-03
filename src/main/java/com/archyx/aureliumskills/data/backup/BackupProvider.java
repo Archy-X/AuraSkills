@@ -5,6 +5,8 @@ import com.archyx.aureliumskills.data.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
 public abstract class BackupProvider {
@@ -12,12 +14,12 @@ public abstract class BackupProvider {
     public final AureliumSkills plugin;
     public final PlayerManager playerManager;
 
-    public BackupProvider(AureliumSkills plugin) {
+    public BackupProvider(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.playerManager = plugin.getPlayerManager();
     }
 
-    public abstract void saveBackup(CommandSender sender, boolean savePlayerData);
+    public abstract void saveBackup(@NotNull CommandSender sender, boolean savePlayerData);
 
     public void createBackupFolder() {
         File backupFolder = new File(plugin.getDataFolder() + "/backups");

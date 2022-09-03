@@ -10,6 +10,8 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
@@ -23,48 +25,54 @@ public class LockedItem extends SkillLevelItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer position) {
-        Locale locale = plugin.getLang().getLocale(player);
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Integer position) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
         int level = getLevel(activeMenu, position);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "level_locked":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_LOCKED, locale),"{level}", RomanNumber.toRoman(level));
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_LOCKED, locale),"{level}", RomanNumber.toRoman(level));
+                break;
             case "level_number":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
+                break;
             case "rewards":
-                return getRewardsLore(skill, level, player, locale);
+                m = getRewardsLore(skill, level, player, locale);
+                break;
             case "ability":
-                return getAbilityLore(skill, level, locale);
+                m = getAbilityLore(skill, level, locale);
+                break;
             case "mana_ability":
-                return getManaAbilityLore(skill, level, locale);
+                m = getManaAbilityLore(skill, level, locale);
+                break;
             case "locked":
-                return Lang.getMessage(MenuMessage.LOCKED, locale);
+                m = Lang.getMessage(MenuMessage.LOCKED, locale);
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
-    public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData != null) {
-            Skill skill = (Skill) activeMenu.getProperty("skill");
-            int level = playerData.getSkillLevel(skill);
-            int itemsPerPage = getItemsPerPage(activeMenu);
-            int currentPage = activeMenu.getCurrentPage();
-            Set<Integer> levels = new HashSet<>();
-            for (int i = itemsPerPage - 1; i >= 0; i--) {
-                if (1 + currentPage * itemsPerPage + i > level) {
-                    levels.add(2 + i);
-                } else {
-                    break;
-                }
-            }
+    public @NotNull Set<@NotNull Integer> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        Set<@NotNull Integer> levels = new HashSet<>();
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null)
             return levels;
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        int level = playerData.getSkillLevel(skill);
+        int itemsPerPage = getItemsPerPage(activeMenu);
+        int currentPage = activeMenu.getCurrentPage();
+        for (int i = itemsPerPage - 1; i >= 0; i--) {
+            if (1 + currentPage * itemsPerPage + i > level) {
+                levels.add(2 + i);
+            } else {
+                break;
+            }
         }
-        return new HashSet<>();
+        return levels;
     }
 
 }

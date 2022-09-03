@@ -13,11 +13,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+
 import org.jetbrains.annotations.NotNull;
 
 public class ExcavationLeveler extends SkillLeveler implements Listener{
 
-	private final ExcavationAbilities excavationAbilities;
+	private final @NotNull ExcavationAbilities excavationAbilities;
 
 	public ExcavationLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.EXCAVATOR);
@@ -25,7 +26,7 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onBlockBreak(BlockBreakEvent event) {
+	public void onBlockBreak(@NotNull BlockBreakEvent event) {
 		if (!OptionL.isEnabled(Skills.EXCAVATION)) return;
 		//Check cancelled
 		if (OptionL.getBoolean(Option.EXCAVATION_CHECK_CANCELLED) && event.isCancelled()) {

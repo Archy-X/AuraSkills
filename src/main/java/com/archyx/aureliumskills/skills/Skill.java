@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.mana.MAbility;
 import com.google.common.collect.ImmutableList;
 
 import org.jetbrains.annotations.NotNull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -14,12 +14,11 @@ public interface Skill {
 
     @NotNull ImmutableList<@NotNull Supplier<@NotNull Ability>> getAbilities();
 
-    String getDescription(@Nullable Locale locale);
+    @NotNull String getDescription(@Nullable Locale locale);
 
-    String getDisplayName(@Nullable Locale locale);
+    @NotNull String getDisplayName(@Nullable Locale locale);
 
-    @Nullable
-    MAbility getManaAbility();
+    @Nullable MAbility getManaAbility();
 
     @NotNull String name();
 

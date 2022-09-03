@@ -16,6 +16,7 @@ import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,7 +32,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
     }
 
     @Override
-    public Class<@NotNull Stat> getContext() {
+    public @NotNull Class<Stat> getContext() {
         return Stat.class;
     }
 
@@ -41,115 +42,145 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
     }
 
     @Override
-    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type, @NotNull Stat stat) {
-        Locale locale = plugin.getLang().getLocale(player);
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        @Nullable String name = stat.name();
-        assert (null != name);
-        if (playerData == null) return placeholder;
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type, @NotNull Stat stat) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null)
+            return placeholder;
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "color":
-                return stat.getColor(locale);
+                m = stat.getColor(locale);
+                break;
             case "stat":
-                return stat.getDisplayName(locale);
+                m = stat.getDisplayName(locale);
+                break;
             case "stat_desc":
-                return stat.getDescription(locale);
+                m = stat.getDescription(locale);
+                break;
             case "skills":
-                return getSkillsLeveledBy(stat, locale);
+                m = getSkillsLeveledBy(stat, locale);
+                break;
             case "your_level":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_LEVEL, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_LEVEL, locale),
                         "{color}", stat.getColor(locale),
                         "{level}", NumberUtil.format1(playerData.getStatLevel(stat)));
+                break;
             case "descriptors":
+                @Nullable String name = stat.name();
+                assert (null != name);
                 switch (name.toLowerCase(Locale.ROOT)) {
                     case "strength":
-                        return getStrengthDescriptors(playerData, locale);
+                        m = getStrengthDescriptors(playerData, locale);
+                        break;
                     case "health":
-                        return getHealthDescriptors(playerData, locale);
+                        m = getHealthDescriptors(playerData, locale);
+                        break;
                     case "regeneration":
-                        return getRegenerationDescriptors(playerData, locale);
+                        m = getRegenerationDescriptors(playerData, locale);
+                        break;
                     case "luck":
-                        return getLuckDescriptors(playerData, locale);
+                        m = getLuckDescriptors(playerData, locale);
+                        break;
                     case "wisdom":
-                        return getWisdomDescriptors(playerData, locale);
+                        m = getWisdomDescriptors(playerData, locale);
+                        break;
                     case "toughness":
-                        return getToughnessDescriptors(playerData, locale);
+                        m = getToughnessDescriptors(playerData, locale);
+                        break;
                     default:
-                        return "";
+                        m = "";
+                        break;
                 }
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
-    private @Nullable String getSkillsLeveledBy(@NotNull Stat stat, @Nullable Locale locale) {
+    private @NotNull String getSkillsLeveledBy(@NotNull Stat stat, @Nullable Locale locale) {
         List<Skill> skillsLeveledBy = plugin.getRewardManager().getSkillsLeveledBy(stat);
         StringBuilder skillList = new StringBuilder();
         for (Skill skill : skillsLeveledBy) {
-            skillList.append(skill.getDisplayName(locale)).append(", ");
+            @Nullable String displayName = skill.getDisplayName(locale);
+            assert (null != displayName);
+            skillList.append(displayName).append(", ");
         }
         if (skillList.length() > 1) {
             skillList.delete(skillList.length() - 2, skillList.length());
         }
         if (skillsLeveledBy.size() > 0) {
-            return TextUtil.replace(Lang.getMessage(MenuMessage.SKILLS, locale),
+            @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.SKILLS, locale),
                     "{skills}", skillList.toString());
-        } else {
-            return "";
+            assert (null != m);
+            return m;
         }
+        return "";
     }
 
-    private @Nullable String getStrengthDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
+    private @NotNull String getStrengthDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
         double strengthLevel = playerData.getStatLevel(Stats.STRENGTH);
         double attackDamage = strengthLevel * OptionL.getDouble(Option.STRENGTH_MODIFIER);
         if (OptionL.getBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING) && !OptionL.getBoolean(Option.STRENGTH_USE_PERCENT)) {
             attackDamage *= OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         }
-        return TextUtil.replace(Lang.getMessage(MenuMessage.ATTACK_DAMAGE, locale),"{value}", NumberUtil.format2(attackDamage));
+        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.ATTACK_DAMAGE, locale),"{value}", NumberUtil.format2(attackDamage));
+        assert (null != m);
+        return m;
     }
 
-    private @Nullable String getHealthDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
+    private @NotNull String getHealthDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
         double modifier = playerData.getStatLevel(Stats.HEALTH) * OptionL.getDouble(Option.HEALTH_MODIFIER);
         double scaledHealth = modifier * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        return TextUtil.replace(Lang.getMessage(MenuMessage.HP, locale),"{value}", NumberUtil.format2(scaledHealth));
+        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.HP, locale),"{value}", NumberUtil.format2(scaledHealth));
+        assert (null != m);
+        return m;
     }
 
-    private @Nullable String getRegenerationDescriptors(PlayerData playerData, Locale locale) {
+    private @NotNull String getRegenerationDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
         double regenLevel = playerData.getStatLevel(Stats.REGENERATION);
         double saturatedRegen = regenLevel * OptionL.getDouble(Option.REGENERATION_SATURATED_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double hungerFullRegen = regenLevel *  OptionL.getDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double almostFullRegen = regenLevel *  OptionL.getDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * OptionL.getDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double manaRegen = playerData.getManaRegen();
-        return TextUtil.replace(Lang.getMessage(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
+        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
                 + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(hungerFullRegen))
                 + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))
                 + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.MANA_REGEN, locale),"{value}", String.valueOf(Math.round(manaRegen)));
+        assert (null != m);
+        return m;
     }
 
-    private @Nullable String getLuckDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
+    private @NotNull String getLuckDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
         double luckLevel = playerData.getStatLevel(Stats.LUCK);
         double luck = luckLevel * OptionL.getDouble(Option.LUCK_MODIFIER);
         double doubleDropChance = luckLevel * OptionL.getDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) * 100;
         if (doubleDropChance > OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
             doubleDropChance = OptionL.getDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
         }
-        return TextUtil.replace(Lang.getMessage(MenuMessage.LUCK, locale),"{value}", NumberUtil.format2(luck))
+        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.LUCK, locale),"{value}", NumberUtil.format2(luck))
                 + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.DOUBLE_DROP_CHANCE, locale),"{value}", NumberUtil.format2(doubleDropChance));
+        assert (null != m);
+        return m;
     }
 
-    private @Nullable String getWisdomDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
+    private @NotNull String getWisdomDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
         double wisdomLevel = playerData.getStatLevel(Stats.WISDOM);
         double xpModifier = wisdomLevel * OptionL.getDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
         double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * OptionL.getDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
         double maxMana = playerData.getMaxMana();
-        return TextUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", NumberUtil.format2(xpModifier))
+        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.XP_GAIN, locale),"{value}", NumberUtil.format2(xpModifier))
                 + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction)) + " "
                 + "\n" + TextUtil.replace(Lang.getMessage(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana));
+        assert (null != m);
+        return m;
     }
 
-    private @Nullable String getToughnessDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
+    private @NotNull String getToughnessDescriptors(@NotNull PlayerData playerData, @Nullable Locale locale) {
         double toughness = playerData.getStatLevel(Stats.TOUGHNESS) * OptionL.getDouble(Option.TOUGHNESS_NEW_MODIFIER);
         double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
-        return TextUtil.replace(Lang.getMessage(MenuMessage.INCOMING_DAMAGE, locale),"{value}", NumberUtil.format2(damageReduction));
+        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.INCOMING_DAMAGE, locale),"{value}", NumberUtil.format2(damageReduction));
+        assert (null != m);
+        return m;
     }
 
 }

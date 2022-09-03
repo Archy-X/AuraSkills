@@ -12,6 +12,7 @@ import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -144,7 +145,7 @@ public class Modifiers extends NBTAPIUser {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
             }
 
-            @Nullable String t =TextUtil.replace(Lang.getMessage(message, locale),
+            @Nullable String t = TextUtil.replace(Lang.getMessage(message, locale),
                 "{stat}", stat.getDisplayName(locale),
                 "{value}", NumberUtil.format1(Math.abs(value)),
                 "{color}", stat.getColor(locale));

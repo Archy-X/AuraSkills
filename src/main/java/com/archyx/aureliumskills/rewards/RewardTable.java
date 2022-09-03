@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.Player;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +33,7 @@ public class RewardTable {
         return ImmutableList.copyOf(list);
     }
 
-    public Map<Integer, List<@NotNull Reward>> getRewardsMap() {
+    public @NotNull Map<Integer, List<@NotNull Reward>> getRewardsMap() {
         return rewards;
     }
 
@@ -57,7 +58,7 @@ public class RewardTable {
      * @param <T> The reward type
      * @return A map of each level to a list of rewards of that type
      */
-    public <T extends Reward> Map<Integer, ImmutableList<T>> searchRewards(Class<T> type) {
+    public <T extends Reward> @NotNull Map<Integer, ImmutableList<T>> searchRewards(@NotNull Class<T> type) {
         Map<Integer, ImmutableList<T>> rewardMap = new HashMap<>();
         for (Map.Entry<Integer, List<@NotNull Reward>> entry : rewards.entrySet()) {
             List<T> rewardList = new ArrayList<>();
@@ -85,7 +86,7 @@ public class RewardTable {
         return ImmutableList.copyOf(rewardList);
     }
 
-    public void applyStats(PlayerData playerData, int level) {
+    public void applyStats(@NotNull PlayerData playerData, int level) {
         Map<Integer, ImmutableList<@NotNull StatReward>> statRewardMap = searchRewards(StatReward.class);
         for (int i = 2; i <= level; i++) {
             ImmutableList<@NotNull StatReward> statRewardList = statRewardMap.get(i);
@@ -97,7 +98,7 @@ public class RewardTable {
         }
     }
 
-    public void applyPermissions(Player player, int level) {
+    public void applyPermissions(@NotNull Player player, int level) {
         Map<Integer, ImmutableList<@NotNull PermissionReward>> permissionRewardMap = searchRewards(PermissionReward.class);
         for (Map.Entry<Integer, ImmutableList<@NotNull PermissionReward>> entry : permissionRewardMap.entrySet()) {
             int entryLevel = entry.getKey();

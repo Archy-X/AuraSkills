@@ -12,6 +12,9 @@ import com.archyx.slate.menu.ConfigurableMenu;
 import com.archyx.slate.menu.MenuProvider;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Locale;
 
 public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
@@ -21,20 +24,25 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
         Skill skill = getSkill(activeMenu);
-        if (placeholder.equals("level_progression_menu_title")) {
-            return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale),
-                    "{skill}", skill.getDisplayName(locale),
-                    "{page}", String.valueOf(activeMenu.getCurrentPage() + 1));
+        @Nullable String m = placeholder;
+        switch (placeholder) {
+            case "level_progression_menu_title":
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale),
+                        "{skill}", skill.getDisplayName(locale),
+                        "{page}", String.valueOf(activeMenu.getCurrentPage() + 1));
+            break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
-    public int getPages(Player player, ActiveMenu activeMenu) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+    public int getPages(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
         int itemsPerPage = 24;
         ConfigurableMenu levelProgressionMenu = plugin.getSlate().getMenuManager().getMenu("level_progression");
         if (levelProgressionMenu != null) {
@@ -46,12 +54,11 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
         return (OptionL.getMaxLevel(skill) - 2) / itemsPerPage + 1;
     }
 
-    private Skill getSkill(ActiveMenu activeMenu) {
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
         Object property = activeMenu.getProperty("skill");
         if (property instanceof Skill) {
             return (Skill) property;
-        } else {
-            throw new IllegalArgumentException("Could not get skill property");
         }
+        throw new IllegalArgumentException("Could not get skill property");
     }
 }

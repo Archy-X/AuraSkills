@@ -6,7 +6,7 @@ import com.archyx.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-public class SourceContext implements ContextProvider<@NotNull Source> {
+public class SourceContext implements ContextProvider<Source> {
 
     private final AureliumSkills plugin;
 
@@ -16,7 +16,7 @@ public class SourceContext implements ContextProvider<@NotNull Source> {
 
     @Override
     @Nullable
-    public Source parse(String input) {
+    public Source parse(@NotNull String input) {
         return plugin.getSourceRegistry().valueOf(input);
     }
 }

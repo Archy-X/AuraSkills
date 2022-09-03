@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.potion.PotionEffectType;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,7 +60,7 @@ public class LegacyLootConverter {
         }
     }
 
-    private void convertSection(FileConfiguration config, List<String> legacyLoot, String sectionPath) {
+    private void convertSection(@NotNull FileConfiguration config, @NotNull List<String> legacyLoot, String sectionPath) {
         // Convert loot
         List<Map<String, Object>> mapList = new ArrayList<>();
         for (String entry : legacyLoot) {

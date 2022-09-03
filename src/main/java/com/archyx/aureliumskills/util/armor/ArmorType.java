@@ -2,7 +2,9 @@ package com.archyx.aureliumskills.util.armor;
 
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Arnah
@@ -24,8 +26,9 @@ public enum ArmorType{
      * @param itemStack The ItemStack to parse the type of.
      * @return The parsed ArmorType, or null if not found.
      */
-    public static ArmorType matchType(final ItemStack itemStack){
+    public static @Nullable ArmorType matchType(final @Nullable ItemStack itemStack){
         if(ArmorListener.isAirOrNull(itemStack)) return null;
+        assert(null != itemStack);
         String type = itemStack.getType().name();
         if(type.endsWith("_HELMET") || type.endsWith("_SKULL") || type.endsWith("_HEAD") || type.endsWith("SKULL_ITEM")) return HELMET;
         else if(type.endsWith("_CHESTPLATE") || type.equals("ELYTRA")) return CHESTPLATE;

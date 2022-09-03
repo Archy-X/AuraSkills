@@ -9,6 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 public class ReloadManager {
@@ -16,12 +18,12 @@ public class ReloadManager {
     private final AureliumSkills plugin;
     private final Lang lang;
 
-    public ReloadManager(AureliumSkills plugin) {
+    public ReloadManager(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.lang = plugin.getLang();
     }
 
-    public void reload(CommandSender sender) {
+    public void reload(@NotNull CommandSender sender) {
         Locale locale = plugin.getLang().getLocale(sender);
         // Load config
         plugin.reloadConfig();

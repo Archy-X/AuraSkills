@@ -23,7 +23,7 @@ public class SourceContextManager extends ContextManager {
 
     @Override
     @Nullable
-    public Set<LootContext> parseContext(Map<?, ?> parentMap) {
+    public Set<LootContext> parseContext(@NotNull Map<?, ?> parentMap) {
         Set<LootContext> contexts = new HashSet<>();
         if (parentMap.containsKey("sources")) {
             List<@NotNull String> sourcesList = DataUtil.getStringList(parentMap, "sources");

@@ -12,6 +12,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class AbstractAbilityItem extends AbstractItem implements TemplateItemProvider<Ability> {
+public abstract class AbstractAbilityItem extends AbstractItem implements TemplateItemProvider<@NotNull Ability> {
 
     private final String itemName;
 
-    public AbstractAbilityItem(AureliumSkills plugin, String itemName) {
+    public AbstractAbilityItem(AureliumSkills plugin, @NotNull String itemName) {
         super(plugin);
         this.itemName = itemName;
     }
@@ -34,10 +35,9 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
     }
 
     @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Ability ability) {
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
+    public @NotNull SlotPos getSlotPos(@NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull Ability ability) {
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
         Object obj =  activeMenu.getItemOption(itemName, "slots");
         if (obj instanceof List<?>) {
             List<@NotNull String> slots = DataUtil.castStringList(obj);
@@ -69,7 +69,7 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
         return SlotPos.of(1, 2 + index);
     }
 
-    private SlotPos parseSlot(String slotString) {
+    private @NotNull SlotPos parseSlot(@NotNull String slotString) {
         String[] split = slotString.split(",", 2);
         if (split.length == 2) {
             return SlotPos.of(NumberUtil.toInt(split[0]), NumberUtil.toInt(split[1]));

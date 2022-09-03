@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 
 public class RegionListener implements Listener {
@@ -20,7 +21,7 @@ public class RegionListener implements Listener {
     }
 
     @EventHandler
-    public void onChunkLoad(ChunkLoadEvent event) {
+    public void onChunkLoad(@NotNull ChunkLoadEvent event) {
         Chunk chunk = event.getChunk();
         int regionX = (int) Math.floor((double) chunk.getX() / 32.0);
         int regionZ = (int) Math.floor((double) chunk.getZ() / 32.0);

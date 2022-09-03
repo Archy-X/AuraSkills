@@ -3,6 +3,9 @@ package com.archyx.aureliumskills.region;
 import com.google.common.base.Objects;
 import org.bukkit.World;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public class RegionCoordinate {
 
     private final World world;
@@ -28,7 +31,7 @@ public class RegionCoordinate {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@Nullable Object obj) {
         if (this == obj) {
             return true;
         } else if (obj == null) {
@@ -42,7 +45,7 @@ public class RegionCoordinate {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return world.getName() + ", " + x + ", " + z;
     }
 

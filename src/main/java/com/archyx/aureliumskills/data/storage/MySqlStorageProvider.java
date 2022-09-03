@@ -39,7 +39,7 @@ public class MySqlStorageProvider extends StorageProvider {
     private final int port;
     private final boolean ssl;
 
-    public MySqlStorageProvider(AureliumSkills plugin) {
+    public MySqlStorageProvider(@NotNull AureliumSkills plugin) {
         super(plugin);
         this.host = OptionL.getString(Option.MYSQL_HOST);
         this.database = OptionL.getString(Option.MYSQL_DATABASE);
@@ -79,7 +79,7 @@ public class MySqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void load(Player player) {
+    public void load(@NotNull Player player) {
         try {
             String query = "SELECT * FROM SkillData WHERE ID=?;";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -218,7 +218,7 @@ public class MySqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(Player player, boolean removeFromMemory) {
+    public void save(@NotNull Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
         if (playerData.shouldNotSave()) return;
@@ -333,7 +333,7 @@ public class MySqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void loadBackup(FileConfiguration config, CommandSender sender) {
+    public void loadBackup(@NotNull FileConfiguration config, @NotNull CommandSender sender) {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
         Locale locale = plugin.getLang().getLocale(sender);
         if (playerDataSection != null) {
@@ -386,7 +386,7 @@ public class MySqlStorageProvider extends StorageProvider {
         }
     }
 
-    private Object parsePrimitive(JsonPrimitive primitive) {
+    private @Nullable Object parsePrimitive(@NotNull JsonPrimitive primitive) {
         if (primitive.isBoolean()) {
             return primitive.getAsBoolean();
         } else if (primitive.isString()) {
@@ -484,7 +484,7 @@ public class MySqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void delete(UUID uuid) throws IOException {
+    public void delete(@NotNull UUID uuid) throws IOException {
         String query = "DELETE FROM SkillData WHERE ID=?;";
         try {
             try (PreparedStatement statement = connection.prepareStatement(query)) {

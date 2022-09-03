@@ -12,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
 import org.jetbrains.annotations.NotNull;
 
 public class FarmingInteractLeveler extends FarmingLeveler implements Listener {
@@ -21,7 +22,7 @@ public class FarmingInteractLeveler extends FarmingLeveler implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onRightClick(PlayerInteractEvent event) {
+    public void onRightClick(@NotNull PlayerInteractEvent event) {
         if (!OptionL.isEnabled(Skills.FARMING)) return;
         if (OptionL.getBoolean(Option.FARMING_CHECK_CANCELLED) && event.useInteractedBlock() == Event.Result.DENY) {
             return;

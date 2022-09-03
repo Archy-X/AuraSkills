@@ -32,7 +32,7 @@ public abstract class StorageProvider {
     public final @NotNull AureliumSkills plugin;
     public final PlayerManager playerManager;
 
-    public StorageProvider(AureliumSkills plugin) {
+    public StorageProvider(@NotNull AureliumSkills plugin) {
         this.playerManager = plugin.getPlayerManager();
         this.plugin = plugin;
     }
@@ -146,18 +146,18 @@ public abstract class StorageProvider {
         manager.setSorting(false);
     }
 
-    public abstract void load(Player player);
+    public abstract void load(@NotNull Player player);
 
-    public void save(Player player) {
+    public void save(@NotNull Player player) {
         save(player, true);
     }
 
-    public abstract void save(Player player, boolean removeFromMemory);
+    public abstract void save(@NotNull Player player, boolean removeFromMemory);
 
-    public abstract void loadBackup(FileConfiguration file, CommandSender sender);
+    public abstract void loadBackup(@NotNull FileConfiguration file, @NotNull CommandSender sender);
 
     public abstract void updateLeaderboards();
 
-    public abstract void delete(UUID uuid) throws IOException;
+    public abstract void delete(@NotNull UUID uuid) throws IOException;
 
 }

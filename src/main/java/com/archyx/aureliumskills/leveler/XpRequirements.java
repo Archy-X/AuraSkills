@@ -17,8 +17,8 @@ import java.util.*;
 public class XpRequirements {
 
     private final AureliumSkills plugin;
-    private final List<Integer> defaultXpRequirements;
-    private final Map<Skill, List<Integer>> skillXpRequirements;
+    private final @NotNull List<Integer> defaultXpRequirements;
+    private final @NotNull Map<Skill, List<Integer>> skillXpRequirements;
 
     public XpRequirements(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -97,7 +97,7 @@ public class XpRequirements {
         }
     }
 
-    private void loadSkillSection(File file, FileConfiguration config, Skill skill) {
+    private void loadSkillSection(File file, @NotNull FileConfiguration config, @NotNull Skill skill) {
         ConfigurationSection section = config.getConfigurationSection("skills." + skill.toString().toLowerCase(Locale.ROOT));
         if (section == null) return;
 
@@ -112,7 +112,7 @@ public class XpRequirements {
         skillXpRequirements.put(skill, xpRequirements);
     }
 
-    private Expression getXpExpression(ConfigurationSection section) {
+    private @NotNull Expression getXpExpression(@NotNull ConfigurationSection section) {
         String expressionString = section.getString("expression");
         Expression expression = new Expression(expressionString);
         // Set variables

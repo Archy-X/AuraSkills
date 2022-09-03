@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -17,7 +18,7 @@ import java.util.*;
 public class RequirementManager implements Listener {
 
     private Set<GlobalRequirement> globalRequirements;
-    private final Map<UUID, Integer> errorMessageTimer;
+    private final @NotNull Map<UUID, Integer> errorMessageTimer;
     private final @NotNull AureliumSkills plugin;
 
     public RequirementManager(@NotNull AureliumSkills plugin) {
@@ -62,7 +63,7 @@ public class RequirementManager implements Listener {
         return globalRequirements;
     }
 
-    public Set<GlobalRequirement> getGlobalRequirementsType(ModifierType type) {
+    public @NotNull Set<GlobalRequirement> getGlobalRequirementsType(ModifierType type) {
         Set<GlobalRequirement> matched = new HashSet<>();
         for (GlobalRequirement requirement : globalRequirements) {
             if (requirement.getType() == type) {
@@ -73,7 +74,7 @@ public class RequirementManager implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
+    public void onQuit(@NotNull PlayerQuitEvent event) {
         errorMessageTimer.remove(event.getPlayer().getUniqueId());
     }
 

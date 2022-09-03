@@ -25,61 +25,68 @@ public class InProgressItem extends SkillLevelItem {
     }
 
     @Override
-    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Integer position) {
-        Locale locale = plugin.getLang().getLocale(player);
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData == null) return placeholder;
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Integer position) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null)
+            return placeholder;
         int level = getLevel(activeMenu, position);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "level_in_progress":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS, locale),"{level}", RomanNumber.toRoman(level));
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS, locale),"{level}", RomanNumber.toRoman(level));
+                break;
             case "level_number":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
+                break;
             case "rewards":
-                return getRewardsLore(skill, level, player, locale);
+                m = getRewardsLore(skill, level, player, locale);
+                break;
             case "ability":
-                return getAbilityLore(skill, level, locale);
+                m = getAbilityLore(skill, level, locale);
+                break;
             case "mana_ability":
-                return getManaAbilityLore(skill, level, locale);
+                m = getManaAbilityLore(skill, level, locale);
+                break;
             case "progress":
                 double currentXp = playerData.getSkillXp(skill);
                 double xpToNext = plugin.getLeveler().getXpRequirements().getXpRequired(skill, level);
-                return TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
                         ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
                         ,"{current_xp}", NumberUtil.format2(currentXp)
                         ,"{level_xp}", String.valueOf((int) xpToNext));
+                break;
             case "in_progress":
-                return Lang.getMessage(MenuMessage.IN_PROGRESS, locale);
+                m = Lang.getMessage(MenuMessage.IN_PROGRESS, locale);
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
     public @NotNull Set<@NotNull Integer> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
+        Set<@NotNull Integer> levels = new HashSet<>();
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null)
+            return levels;
+        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
         int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
-        if (playerData != null) {
-            int level = playerData.getSkillLevel(skill);
-            if (level >= 1 + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + 2) {
-                Set<@NotNull Integer> levels = new HashSet<>();
-                int position = (level + 1) % itemsPerPage; // Calculate the first-page equivalent next level
-                if (position == 0) { // Account for next skill level 24
-                    position = 24;
-                } else if (position == 1) { // Account for next skill level 25
-                    position = 25;
-                }
-                levels.add(position);
-                return levels;
+        int level = playerData.getSkillLevel(skill);
+        if (level >= 1 + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + 2) {
+            int position = (level + 1) % itemsPerPage; // Calculate the first-page equivalent next level
+            if (position == 0) { // Account for next skill level 24
+                position = 24;
+            } else if (position == 1) { // Account for next skill level 25
+                position = 25;
             }
+            levels.add(position);
         }
-        return new HashSet<>();
+        return levels;
     }
 
 }

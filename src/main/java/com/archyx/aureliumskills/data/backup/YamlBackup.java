@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class YamlBackup extends BackupProvider {
 
-    public YamlBackup(AureliumSkills plugin) {
+    public YamlBackup(@NotNull AureliumSkills plugin) {
         super(plugin);
     }
 

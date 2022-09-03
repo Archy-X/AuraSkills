@@ -7,6 +7,8 @@ import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.util.item.ItemUtils;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum ExcavationSource implements Source, BlockSource {
@@ -69,12 +71,12 @@ public enum ExcavationSource implements Source, BlockSource {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.EXCAVATION;
     }
 
     @Nullable
-    public static ExcavationSource getSource(Block block) {
+    public static ExcavationSource getSource(@NotNull Block block) {
         for (ExcavationSource source : values()) {
             if (source.isMatch(block)) {
                 return source;
@@ -84,7 +86,7 @@ public enum ExcavationSource implements Source, BlockSource {
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         return ItemUtils.parseItem(this.toString());
     }
 }

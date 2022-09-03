@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,11 +28,11 @@ import java.util.*;
 public class ArmorModifierListener implements Listener {
 
     private final @NotNull AureliumSkills plugin;
-    private final Modifiers modifiers;
-    private final Requirements requirements;
-    private final Multipliers multipliers;
-    private final StatLeveler statLeveler;
-    private final Map<UUID, Map<ArmorType, ItemStack>> storedArmor;
+    private final @NotNull Modifiers modifiers;
+    private final @NotNull Requirements requirements;
+    private final @NotNull Multipliers multipliers;
+    private final @NotNull StatLeveler statLeveler;
+    private final @NotNull Map<UUID, Map<ArmorType, ItemStack>> storedArmor;
 
     public ArmorModifierListener(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
@@ -46,7 +47,7 @@ public class ArmorModifierListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onJoin(PlayerDataLoadEvent event) {
+    public void onJoin(@NotNull PlayerDataLoadEvent event) {
         Player player = event.getPlayerData().getPlayer();
         PlayerData playerData = event.getPlayerData();
         for (ItemStack armor : player.getInventory().getArmorContents()) {
@@ -69,7 +70,7 @@ public class ArmorModifierListener implements Listener {
     }
 
     @EventHandler
-    public void onEquip(ArmorEquipEvent event) {
+    public void onEquip(@NotNull ArmorEquipEvent event) {
         if (OptionL.getBoolean(Option.MODIFIER_ARMOR_TIMER_ENABLED)) return; // Don't use if timer is enabled
         Player player = event.getPlayer();
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
@@ -166,7 +167,7 @@ public class ArmorModifierListener implements Listener {
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent event) {
+    public void onLeave(@NotNull PlayerQuitEvent event) {
         storedArmor.remove(event.getPlayer().getUniqueId());
     }
 

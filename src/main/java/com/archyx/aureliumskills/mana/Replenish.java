@@ -16,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 
 public class Replenish extends ReadiedManaAbility {
@@ -26,7 +27,7 @@ public class Replenish extends ReadiedManaAbility {
     }
 
     @Override
-    public void onActivate(Player player, PlayerData playerData) {
+    public void onActivate(@NotNull Player player, PlayerData playerData) {
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }
 
@@ -36,7 +37,7 @@ public class Replenish extends ReadiedManaAbility {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void activationListener(BlockBreakEvent event) {
+    public void activationListener(@NotNull BlockBreakEvent event) {
         if (event.isCancelled()) return;
         if (!BlockUtil.isReplenishable(event.getBlock().getType())) return;
         Player player = event.getPlayer();
@@ -48,7 +49,7 @@ public class Replenish extends ReadiedManaAbility {
         }
     }
 
-    public void onBreak(BlockBreakEvent event) {
+    public void onBreak(@NotNull BlockBreakEvent event) {
         Block block = event.getBlock();
         if (BlockUtil.isFullyGrown(block)) {
             replantCrop(block);
@@ -57,7 +58,7 @@ public class Replenish extends ReadiedManaAbility {
         }
     }
 
-    private void replantCrop(Block block) {
+    private void replantCrop(@NotNull Block block) {
         Material material = block.getType();
         new BukkitRunnable() {
             @Override
@@ -77,7 +78,7 @@ public class Replenish extends ReadiedManaAbility {
         }.runTaskLater(plugin, manager.getOptionAsInt(MAbility.REPLENISH, "replant_delay", 4));
     }
 
-    private void attemptSpawnParticle(Block block) {
+    private void attemptSpawnParticle(@NotNull Block block) {
         if (manager.getOptionAsBooleanElseTrue(mAbility, "show_particles")) {
             block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.2, 0.5), 8, 0.25, 0, 0.25);
         }
@@ -85,7 +86,7 @@ public class Replenish extends ReadiedManaAbility {
 
     @Override
     @SuppressWarnings("deprecation")
-    protected boolean isExcludedBlock(Block block) {
+    protected boolean isExcludedBlock(@NotNull Block block) {
         if (XMaterial.isNewVersion()) {
             return block.getType() == XMaterial.DIRT.parseMaterial()
                     || block.getType() == XMaterial.GRASS_BLOCK.parseMaterial()

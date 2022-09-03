@@ -19,6 +19,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +36,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void xpConvert(XpGainEvent event) {
+    public void xpConvert(@NotNull XpGainEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.XP_CONVERT)) return;
         Player player = event.getPlayer();
@@ -56,12 +57,15 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler
-    public void xpWarrior(EntityDeathEvent event) {
+    public void xpWarrior(@NotNull EntityDeathEvent event) {
         if (blockDisabled(Ability.XP_WARRIOR)) return;
         LivingEntity entity = event.getEntity();
         if (entity.getKiller() != null) {
             @Nullable Player player = entity.getKiller();
-            if (player != null && blockAbility(player)) return;
+            if (player == null)
+                return;
+            if (blockAbility(player))
+                return;
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 if (playerData.getAbilityLevel(Ability.XP_WARRIOR) > 0 && event.getDroppedExp() > 0) {
@@ -101,7 +105,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void luckyTable(EnchantItemEvent event) {
+    public void luckyTable(@NotNull EnchantItemEvent event) {
         if (event.isCancelled()) return;
         if (blockDisabled(Ability.LUCKY_TABLE)) return;
         Player player = event.getEnchanter();

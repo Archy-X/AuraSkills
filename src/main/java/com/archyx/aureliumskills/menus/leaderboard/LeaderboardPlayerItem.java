@@ -28,32 +28,36 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public Class<@NotNull Integer> getContext() {
+    public @NotNull Class<Integer> getContext() {
         return Integer.class;
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer place) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Integer place) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
         Skill skill = (Skill) activeMenu.getProperty("skill");
         SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "player_entry":
                 UUID id = value.getId();
                 String name = Bukkit.getOfflinePlayer(id).getName();
-                return TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_ENTRY, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_ENTRY, locale),
                         "{place}", String.valueOf(place),
                         "{player}", name != null ? name : "?");
+                break;
             case "skill_level":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.SKILL_LEVEL, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.SKILL_LEVEL, locale),
                         "{level}", String.valueOf(value.getLevel()));
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
-    public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Set<Integer> places = new HashSet<>();
+    public @NotNull Set<@NotNull Integer> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        Set<@NotNull Integer> places = new HashSet<>();
         for (int i = 1; i <= 10; i++) {
             places.add(i);
         }
@@ -61,7 +65,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer place) {
+    public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, Player player, @NotNull ActiveMenu activeMenu, @NotNull Integer place) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         List<SkillValue> values = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1);
         if (values.size() == 0) {

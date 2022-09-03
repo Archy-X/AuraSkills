@@ -22,11 +22,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 
 public class FarmingLeveler extends SkillLeveler implements Listener {
 
-	private final FarmingAbilities farmingAbilities;
+	private final @NotNull FarmingAbilities farmingAbilities;
 
 	public FarmingLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.FARMER);

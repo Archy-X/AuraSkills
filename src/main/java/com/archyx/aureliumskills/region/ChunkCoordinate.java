@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.region;
 
 import com.google.common.base.Objects;
 
+import org.jetbrains.annotations.Nullable;
+
 public class ChunkCoordinate {
 
     private final byte x;
@@ -21,7 +23,7 @@ public class ChunkCoordinate {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@Nullable Object obj) {
         if (this == obj) {
             return true;
         } else if (obj == null) {

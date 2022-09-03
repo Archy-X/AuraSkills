@@ -61,18 +61,21 @@ public enum Skills implements Skill {
 	}
 
 	@Override
-	public String getDescription(Locale locale) {
-		return Lang.getMessage(SkillMessage.valueOf(this.name() + "_DESC"), locale);
+	public @NotNull String getDescription(@Nullable Locale locale) {
+	    @Nullable String description = Lang.getMessage(SkillMessage.valueOf(this.name() + "_DESC"), locale);
+	    assert (null != description);
+		return description;
 	}
 
 	@Override
-	public String getDisplayName(Locale locale) {
-		return Lang.getMessage(SkillMessage.valueOf(this.name().toUpperCase() + "_NAME"), locale);
+	public @NotNull String getDisplayName(@Nullable Locale locale) {
+	    @Nullable String displayName = Lang.getMessage(SkillMessage.valueOf(this.name().toUpperCase() + "_NAME"), locale);
+	    assert (null != displayName);
+		return displayName;
 	}
 
 	@Override
-	@Nullable
-	public MAbility getManaAbility() {
+	public @Nullable MAbility getManaAbility() {
 		return manaAbility;
 	}
 
@@ -85,7 +88,7 @@ public enum Skills implements Skill {
 		}
 	}
 
-	public static List<Skills> getOrderedValues() {
+	public static @NotNull List<Skills> getOrderedValues() {
 		List<Skills> list = new ArrayList<>();
 		list.add(Skills.AGILITY);
 		list.add(Skills.ALCHEMY);

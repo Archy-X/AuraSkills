@@ -24,6 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +38,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		super(plugin, Skills.FORAGING);
 	}
 	
-	public void lumberjack(Player player, Block block) {
+	public void lumberjack(@NotNull Player player, @NotNull Block block) {
 		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUMBERJACK)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
@@ -59,7 +60,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void axeMaster(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {
+	public void axeMaster(@NotNull EntityDamageByEntityEvent event, @NotNull Player player, @NotNull PlayerData playerData) {
 		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.AXE_MASTER)) {
 				//Check permission
@@ -74,7 +75,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGH)
-	public void shredder(PlayerItemDamageEvent event) {
+	public void shredder(@NotNull PlayerItemDamageEvent event) {
 		if (blockDisabled(Ability.SHREDDER)) return;
 		if (!event.isCancelled()) {
 			//If is item taking durabilty damage is armor
@@ -108,7 +109,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void applyValor(PlayerData playerData) {
+	public void applyValor(@NotNull PlayerData playerData) {
 		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.VALOR)) {
 				if (playerData.getAbilityLevel(Ability.VALOR) > 0) {
@@ -118,7 +119,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		}
 	}
 
-	public void removeValor(PlayerData playerData) {
+	public void removeValor(@NotNull PlayerData playerData) {
 		playerData.removeStatModifier("foraging-valor");
 	}
 }

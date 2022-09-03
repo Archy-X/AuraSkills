@@ -39,8 +39,8 @@ import java.util.regex.Pattern;
 public class Leveler {
 	
 	private final @NotNull AureliumSkills plugin;
-	private final XpRequirements xpRequirements;
-	private final StatLeveler statLeveler;
+	private final @NotNull XpRequirements xpRequirements;
+	private final @NotNull StatLeveler statLeveler;
 	private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public Leveler(@NotNull AureliumSkills plugin) {
@@ -283,19 +283,26 @@ public class Leveler {
 		}
 		StringBuilder rewardMessage = new StringBuilder();
 		for (Reward reward : rewards) {
-			rewardMessage.append(reward.getChatMessage(player, locale, skill, newLevel));
+		    @Nullable String m = reward.getChatMessage(player, locale, skill, newLevel);
+		    assert (null != m);
+			rewardMessage.append(m);
 		}
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
 		StringBuilder abilityLevelUpMessage = new StringBuilder();
+		@Nullable String m;
 		for (Ability ability : plugin.getAbilityManager().getAbilities(skill, newLevel)) {
 			if (plugin.getAbilityManager().isEnabled(ability)) {
 				if (plugin.getAbilityManager().getUnlock(ability) == newLevel) {
-					abilityUnlockMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale)));
+				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale));
+                    assert (null != m);
+					abilityUnlockMessage.append(m);
 				} else {
-					abilityLevelUpMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
-							,"{ability}", ability.getDisplayName(locale)
-							,"{level}", RomanNumber.toRoman(playerData.getAbilityLevel(ability))));
+				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
+                            ,"{ability}", ability.getDisplayName(locale)
+                            ,"{level}", RomanNumber.toRoman(playerData.getAbilityLevel(ability)));
+                    assert (null != m);
+					abilityLevelUpMessage.append(m);
 				}
 			}
 		}
@@ -309,11 +316,15 @@ public class Leveler {
 		if (mAbility != null) {
 			if (plugin.getAbilityManager().isEnabled(mAbility)) {
 				if (plugin.getManaAbilityManager().getUnlock(mAbility) == newLevel) {
-					manaAbilityUnlockMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale)));
+				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale));
+                    assert (null != m);
+					manaAbilityUnlockMessage.append(m);
 				} else {
-					manaAbilityLevelUpMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
-							, "{mana_ability}", mAbility.getDisplayName(locale)
-							, "{level}", RomanNumber.toRoman(playerData.getManaAbilityLevel(mAbility))));
+				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
+                            , "{mana_ability}", mAbility.getDisplayName(locale)
+                            , "{level}", RomanNumber.toRoman(playerData.getManaAbilityLevel(mAbility)));
+				    assert (null != m);
+					manaAbilityLevelUpMessage.append(m);
 				}
 			}
 		}
@@ -335,15 +346,17 @@ public class Leveler {
 		}
 		if (totalMoney > 0) {
 			NumberFormat nf = new DecimalFormat("#.##");
-			moneyRewardMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
-					"{amount}", nf.format(totalMoney)));
+			m = TextUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
+                    "{amount}", nf.format(totalMoney));
+            assert (null != m);
+			moneyRewardMessage.append(m);
 		}
 		message = TextUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
 		assert (null != message);
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
 
-	public XpRequirements getXpRequirements() {
+	public @NotNull XpRequirements getXpRequirements() {
 		return xpRequirements;
 	}
 

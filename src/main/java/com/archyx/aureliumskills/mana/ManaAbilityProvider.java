@@ -14,8 +14,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.Nullable;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -27,7 +28,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
     protected final Skill skill;
     protected final SorceryLeveler sorceryLeveler;
     protected final ManaAbilityMessage activateMessage;
-    protected final ManaAbilityMessage stopMessage;
+    protected final @Nullable ManaAbilityMessage stopMessage;
 
     public ManaAbilityProvider(@NotNull AureliumSkills plugin, @NotNull MAbility mAbility, @NotNull ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage) {
         super(plugin, mAbility.getSkill());

@@ -1,5 +1,7 @@
 package com.archyx.aureliumskills.lang;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Objects;
 
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +25,7 @@ public class CustomMessageKey implements MessageKey {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CustomMessageKey that = (CustomMessageKey) o;

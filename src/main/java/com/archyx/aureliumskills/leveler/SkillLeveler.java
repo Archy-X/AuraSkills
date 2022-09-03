@@ -27,7 +27,7 @@ public abstract class SkillLeveler {
     public final @NotNull AureliumSkills plugin;
     private final SourceManager sourceManager;
     private @Nullable Ability ability;
-    private final String skillName;
+    private final @NotNull String skillName;
 
     public SkillLeveler(@NotNull AureliumSkills plugin, @NotNull Skill skill) {
         this.plugin = plugin;

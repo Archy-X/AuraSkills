@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.lang.StatMessage;
 
 import java.util.Locale;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum Stats implements Stat {
@@ -17,23 +18,31 @@ public enum Stats implements Stat {
 	TOUGHNESS;
 
 	@Override
-	public @Nullable String getDisplayName(@Nullable Locale locale) {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"), locale);
+	public @NotNull String getDisplayName(@Nullable Locale locale) {
+	    @Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"), locale);
+	    assert (null != m);
+		return m;
 	}
 
 	@Override
-	public @Nullable String getColor(@Nullable Locale locale) {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"), locale);
+	public @NotNull String getColor(@Nullable Locale locale) {
+		@Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"), locale);
+        assert (null != m);
+		return m;
 	}
 
 	@Override
-	public @Nullable String getSymbol(@Nullable Locale locale) {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"), locale);
+	public @NotNull String getSymbol(@Nullable Locale locale) {
+		@Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"), locale);
+        assert (null != m);
+		return m;
 	}
 
 	@Override
-	public @Nullable String getDescription(@Nullable Locale locale) {
-		return Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"), locale);
+	public @NotNull String getDescription(@Nullable Locale locale) {
+		@Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"), locale);
+        assert (null != m);
+		return m;
 	}
 
 }

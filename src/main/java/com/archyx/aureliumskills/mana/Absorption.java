@@ -22,7 +22,7 @@ public class Absorption extends ReadiedManaAbility {
     }
 
     @Override
-    public void onActivate(Player player, PlayerData playerData) {
+    public void onActivate(@NotNull Player player, @NotNull PlayerData playerData) {
         playerData.getAbilityData(MAbility.ABSORPTION).setData("activated", true); // Register as absorption activated
         // Play sound
         if (XMaterial.isNewVersion()) {

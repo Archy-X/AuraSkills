@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerHarvestBlockEvent;
+
 import org.jetbrains.annotations.NotNull;
 
 public class FarmingHarvestLeveler extends FarmingLeveler implements Listener {
@@ -19,7 +20,7 @@ public class FarmingHarvestLeveler extends FarmingLeveler implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onRightClick(PlayerHarvestBlockEvent event) {
+    public void onRightClick(@NotNull PlayerHarvestBlockEvent event) {
         if (!OptionL.isEnabled(Skills.FARMING)) return;
         if (OptionL.getBoolean(Option.FARMING_CHECK_CANCELLED) && event.isCancelled()) {
             return;

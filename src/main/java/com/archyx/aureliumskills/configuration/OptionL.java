@@ -7,6 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -122,11 +124,11 @@ public class OptionL {
         return options.get(option).asColor();
     }
 
-    public static boolean isEnabled(Skill skill) {
+    public static boolean isEnabled(@NotNull Skill skill) {
         return getBoolean(Option.valueOf(skill.name() + "_ENABLED"));
     }
 
-    public static int getMaxLevel(Skill skill) {
+    public static int getMaxLevel(@NotNull Skill skill) {
         return getInt(Option.valueOf(skill.name() + "_MAX_LEVEL"));
     }
 
@@ -141,7 +143,7 @@ public class OptionL {
         return highest;
     }
 
-    public static boolean criticalEnabled(DamageType type) {
+    public static boolean criticalEnabled(@NotNull DamageType type) {
         return getBoolean(Option.valueOf("CRITICAL_ENABLED_" + type.name()));
     }
 

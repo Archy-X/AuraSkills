@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -194,7 +195,7 @@ public class SourceManager {
         return customMobSet;
     }
 
-    public static ItemStack getMenuItem(Source source) {
+    public static @Nullable ItemStack getMenuItem(@NotNull Source source) {
         String material = source + "_SPAWN_EGG";
         ItemStack item = null;
         switch (source.name()) {

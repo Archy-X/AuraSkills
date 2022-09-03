@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,12 +24,12 @@ import java.util.*;
 
 public class ManaAbilityManager implements Listener {
 
-    private final Map<UUID, Map<MAbility, Integer>> cooldowns;
-    private final Map<UUID, Map<MAbility, Boolean>> ready;
-    private final Map<UUID, Map<MAbility, Boolean>> activated;
-    private final Map<UUID, Map<MAbility, Integer>> errorTimer;
+    private final @NotNull Map<UUID, Map<MAbility, Integer>> cooldowns;
+    private final @NotNull Map<UUID, Map<MAbility, Boolean>> ready;
+    private final @NotNull Map<UUID, Map<MAbility, Boolean>> activated;
+    private final @NotNull Map<UUID, Map<MAbility, Integer>> errorTimer;
 
-    private final Map<MAbility, ManaAbilityProvider> providers;
+    private final @NotNull Map<MAbility, ManaAbilityProvider> providers;
 
     private final @NotNull AureliumSkills plugin;
 
@@ -441,7 +442,7 @@ public class ManaAbilityManager implements Listener {
 
     @Nullable
     public Set<String> getOptionKeys(@NotNull MAbility mAbility) {
-        if (mAbility.getDefaultOptions() != null) {
+        if (!mAbility.getDefaultOptions().isEmpty()) {
             return mAbility.getDefaultOptions().keySet();
         }
         return null;

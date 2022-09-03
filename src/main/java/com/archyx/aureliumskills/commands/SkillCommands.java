@@ -13,6 +13,8 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SkillCommands {
 
     public static class SkillCommand extends BaseCommand {
@@ -25,7 +27,7 @@ public class SkillCommands {
             this.skill = skill;
         }
         
-        protected void openMenu(Player player, PlayerData playerData) {
+        protected void openMenu(Player player, @NotNull PlayerData playerData) {
             if (OptionL.isEnabled(skill)) {
                 new LevelProgressionOpener(plugin).open(player, playerData, skill);
             } else {
@@ -42,7 +44,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -57,7 +59,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -72,7 +74,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -87,7 +89,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -102,7 +104,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -117,7 +119,7 @@ public class SkillCommands {
         }
         
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -132,7 +134,7 @@ public class SkillCommands {
         }
         
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -147,7 +149,7 @@ public class SkillCommands {
         }
         
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -162,7 +164,7 @@ public class SkillCommands {
         }
         
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -177,7 +179,7 @@ public class SkillCommands {
         }
         
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -192,7 +194,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -207,7 +209,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -222,7 +224,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -237,7 +239,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
@@ -252,7 +254,7 @@ public class SkillCommands {
         }
 
         @Default
-        public void onCommand(Player player) {
+        public void onCommand(@NotNull Player player) {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);

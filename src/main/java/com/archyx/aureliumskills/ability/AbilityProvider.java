@@ -18,7 +18,7 @@ public abstract class AbilityProvider {
 
     public final @NotNull AureliumSkills plugin;
     protected final @NotNull Skill skill;
-    private final String skillName;
+    private final @NotNull String skillName;
 
     public AbilityProvider(@NotNull AureliumSkills plugin, @NotNull Skill skill) {
         this.plugin = plugin;

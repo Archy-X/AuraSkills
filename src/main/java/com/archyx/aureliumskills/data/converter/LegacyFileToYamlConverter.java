@@ -7,13 +7,15 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.util.Locale;
 import java.util.UUID;
 
 public class LegacyFileToYamlConverter extends DataConverter {
 
-    public LegacyFileToYamlConverter(AureliumSkills plugin) {
+    public LegacyFileToYamlConverter(@NotNull AureliumSkills plugin) {
         super(plugin);
     }
 

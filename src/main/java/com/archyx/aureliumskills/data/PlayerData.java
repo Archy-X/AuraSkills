@@ -42,7 +42,7 @@ public class PlayerData {
     private boolean shouldSave;
 
     // Not persistent data
-    private final Map<String, Multiplier> multipliers;
+    private final @NotNull Map<String, Multiplier> multipliers;
 
     public PlayerData(@NotNull Player player, AureliumSkills plugin) {
         this.player = player;

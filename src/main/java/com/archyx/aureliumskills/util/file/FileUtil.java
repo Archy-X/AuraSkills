@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.util.file;
 
 import com.archyx.aureliumskills.util.math.NumberUtil;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -8,7 +10,7 @@ import java.io.File;
 public class FileUtil {
 
     @Nullable
-    public static String renameNoDuplicates(File file, String resultName, File directory) {
+    public static String renameNoDuplicates(@NotNull File file, @NotNull String resultName, @NotNull File directory) {
         // Count duplicates
         int duplicates = 0;
         File[] subFiles = directory.listFiles();
@@ -46,11 +48,11 @@ public class FileUtil {
         }
     }
 
-    public static String getBaseName(String fileName) {
+    public static String getBaseName(@NotNull String fileName) {
         return fileName.split("\\.(?=[^.]+$)")[0];
     }
 
-    public static String getExtension(String fileName) {
+    public static String getExtension(@NotNull String fileName) {
         try {
             return fileName.split("\\.(?=[^.]+$)")[1];
         } catch (ArrayIndexOutOfBoundsException e) {

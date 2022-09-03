@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
+
 import org.jetbrains.annotations.NotNull;
 
 public class EnchantingLeveler extends SkillLeveler implements Listener {
@@ -22,7 +23,7 @@ public class EnchantingLeveler extends SkillLeveler implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onEnchant(EnchantItemEvent event) {
+	public void onEnchant(@NotNull EnchantItemEvent event) {
 		if (OptionL.isEnabled(Skills.ENCHANTING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.ENCHANTING_CHECK_CANCELLED)) {

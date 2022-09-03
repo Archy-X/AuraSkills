@@ -4,13 +4,15 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import org.bukkit.Bukkit;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.*;
 
 public class LegacyMysqlToMysqlConverter extends DataConverter {
 
     private final MySqlStorageProvider storageProvider;
 
-    public LegacyMysqlToMysqlConverter(AureliumSkills plugin, MySqlStorageProvider storageProvider) {
+    public LegacyMysqlToMysqlConverter(@NotNull AureliumSkills plugin, MySqlStorageProvider storageProvider) {
         super(plugin);
         this.storageProvider = storageProvider;
     }

@@ -20,7 +20,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +32,7 @@ import java.util.UUID;
 public class Health implements Listener {
 
 	private final @NotNull AureliumSkills plugin;
-	private final AgilityAbilities agilityAbilities;
+	private final @NotNull AgilityAbilities agilityAbilities;
 	private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
 	private final Map<Integer, Double> hearts = new HashMap<>();
 	private static final double threshold = 0.1;
@@ -41,16 +43,16 @@ public class Health implements Listener {
 	}
 
 	@EventHandler
-	public void onJoin(PlayerJoinEvent event) {
+	public void onJoin(@NotNull PlayerJoinEvent event) {
 		applyScaling(event.getPlayer());
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onLoad(PlayerDataLoadEvent event) {
+	public void onLoad(@NotNull PlayerDataLoadEvent event) {
 		setHealth(event.getPlayerData().getPlayer());
 	}
 
-	public void reload(Player player) {
+	public void reload(@Nullable Player player) {
 		if (player != null) {
 			setHealth(player);
 			agilityAbilities.removeFleeting(player);
@@ -58,7 +60,7 @@ public class Health implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void worldChange(PlayerChangedWorldEvent event) {
+	public void worldChange(@NotNull PlayerChangedWorldEvent event) {
 		Player player = event.getPlayer();
 		if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) && !plugin.getWorldManager().isDisabledWorld(event.getFrom())) {
 			worldChangeHealth.put(player.getUniqueId(), player.getHealth());
@@ -87,7 +89,7 @@ public class Health implements Listener {
 		}
 	}
 
-	private void setHealth(Player player) {
+	private void setHealth(@NotNull Player player) {
 		// Calculates the amount of health to add
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
@@ -141,7 +143,7 @@ public class Health implements Listener {
 		applyScaling(player);
 	}
 
-	private void applyScaling(Player player) {
+	private void applyScaling(@NotNull Player player) {
 		AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 		if (attribute == null) return;
 		if (OptionL.getBoolean(Option.HEALTH_HEALTH_SCALING)) {
@@ -165,7 +167,7 @@ public class Health implements Listener {
 		}
 	}
 
-	public void loadHearts(FileConfiguration config) {
+	public void loadHearts(@NotNull FileConfiguration config) {
 		// Load default hearts
 		this.hearts.clear();
 		this.hearts.put(10, 0.0);

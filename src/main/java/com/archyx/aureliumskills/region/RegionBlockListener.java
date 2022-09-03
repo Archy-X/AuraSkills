@@ -26,6 +26,7 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -62,7 +63,7 @@ public class RegionBlockListener implements Listener {
     }
 
     @EventHandler
-    public void checkPlace(BlockPlaceEvent event) {
+    public void checkPlace(@NotNull BlockPlaceEvent event) {
         // Checks if world is blocked
         if (plugin.getWorldManager().isInBlockedCheckWorld(event.getBlock().getLocation())) {
             return;
@@ -108,7 +109,7 @@ public class RegionBlockListener implements Listener {
     }
 
     @EventHandler
-    public void onSandFall(EntityChangeBlockEvent event) {
+    public void onSandFall(@NotNull EntityChangeBlockEvent event) {
         Block block = event.getBlock();
         if (!regionManager.isPlacedBlock(block)) return;
         Material type = block.getType();
@@ -140,7 +141,7 @@ public class RegionBlockListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void checkBreak(BlockBreakEvent event) {
+    public void checkBreak(@NotNull BlockBreakEvent event) {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
         regionManager.removePlacedBlock(block);
@@ -152,7 +153,7 @@ public class RegionBlockListener implements Listener {
     }
 
     @EventHandler
-    public void onBlockPistonExtend(BlockPistonExtendEvent event) {
+    public void onBlockPistonExtend(@NotNull BlockPistonExtendEvent event) {
         for (Block block : event.getBlocks()) {
             regionManager.addPlacedBlock(block.getRelative(event.getDirection()));
         }
@@ -160,7 +161,7 @@ public class RegionBlockListener implements Listener {
     }
 
     @EventHandler
-    public void onBlockPistonRetract(BlockPistonRetractEvent event) {
+    public void onBlockPistonRetract(@NotNull BlockPistonRetractEvent event) {
         Block lastBlock = event.getBlock();
         for (Block block : event.getBlocks()) {
             if (regionManager.isPlacedBlock(block)) {
@@ -173,7 +174,7 @@ public class RegionBlockListener implements Listener {
         regionManager.removePlacedBlock(lastBlock);
     }
 
-    private void checkTallPlant(Block block, int num, Predicate<Material> isMaterial) {
+    private void checkTallPlant(@NotNull Block block, int num, @NotNull Predicate<Material> isMaterial) {
         if (num < 20) {
             Block above = block.getRelative(BlockFace.UP);
             if (isMaterial.test(above.getType())) {
@@ -185,7 +186,7 @@ public class RegionBlockListener implements Listener {
         }
     }
 
-    private void checkBlocksRequiringSupportBelow(Block block) {
+    private void checkBlocksRequiringSupportBelow(@NotNull Block block) {
         // Check if the block above requires support
         Block above = block.getRelative(BlockFace.UP);
         ForagingSource source = ForagingSource.getSource(above);

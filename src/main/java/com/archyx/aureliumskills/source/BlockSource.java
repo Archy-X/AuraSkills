@@ -3,16 +3,19 @@ package com.archyx.aureliumskills.source;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public interface BlockSource {
 
-    String getLegacyMaterial();
+    @Nullable String getLegacyMaterial();
 
     byte getLegacyData();
 
     boolean allowBothIfLegacy();
 
     @SuppressWarnings("deprecation")
-    default boolean isMatch(Block block) {
+    default boolean isMatch(@NotNull Block block) {
         boolean matched = false;
         String materialName = block.getType().toString();
         if (XMaterial.isNewVersion() || getLegacyMaterial() == null) { // Standard block handling

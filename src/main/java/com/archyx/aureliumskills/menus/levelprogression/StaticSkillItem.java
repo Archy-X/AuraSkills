@@ -6,6 +6,8 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +18,10 @@ public class StaticSkillItem extends AbstractSkillItem {
     }
 
     @Override
-    public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("skill");
-        Skill skill = (Skill) property;
-        Set<Skill> skills = new HashSet<>();
+    public @NotNull Set<@NotNull Skill> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
+        Set<@NotNull Skill> skills = new HashSet<>();
         skills.add(skill);
         return skills;
     }

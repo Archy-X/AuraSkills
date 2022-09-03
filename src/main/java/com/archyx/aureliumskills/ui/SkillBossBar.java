@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
@@ -29,12 +30,12 @@ import java.util.Map;
 
 public class SkillBossBar implements Listener {
 
-    private final Map<Player, Map<Skill, BossBar>> bossBars;
-    private final Map<Player, Map<Skill, Integer>> currentActions;
-    private final Map<Player, Map<Skill, Integer>> checkCurrentActions;
-    private final Map<Player, BossBar> singleBossBars;
-    private final Map<Player, Integer> singleCurrentActions;
-    private final Map<Player, Integer> singleCheckCurrentActions;
+    private final @NotNull Map<Player, Map<Skill, BossBar>> bossBars;
+    private final @NotNull Map<Player, Map<Skill, Integer>> currentActions;
+    private final @NotNull Map<Player, Map<Skill, Integer>> checkCurrentActions;
+    private final @NotNull Map<Player, BossBar> singleBossBars;
+    private final @NotNull Map<Player, Integer> singleCurrentActions;
+    private final @NotNull Map<Player, Integer> singleCheckCurrentActions;
     private String mode;
     private int stayTime;
     private Map<Skill, BarColor> colors;
@@ -227,7 +228,7 @@ public class SkillBossBar implements Listener {
         }
     }
 
-    private void scheduleHide(Player player, Skill skill, BossBar bossBar) {
+    private void scheduleHide(Player player, Skill skill, @NotNull BossBar bossBar) {
         if (mode.equals("single")) {
             final int currentAction = singleCurrentActions.get(player);
             new BukkitRunnable() {
@@ -290,7 +291,7 @@ public class SkillBossBar implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
+    public void onQuit(@NotNull PlayerQuitEvent event) {
         Player player = event.getPlayer();
         bossBars.remove(player);
         currentActions.remove(player);

@@ -5,6 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +40,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable{
      *
      * @return A list of handlers handling this event.
      */
-    public static HandlerList getHandlerList(){
+    public static @NotNull HandlerList getHandlerList(){
         return handlers;
     }
 
@@ -49,7 +50,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable{
      * @return A list of handlers handling this event.
      */
     @Override
-    public final HandlerList getHandlers(){
+    public final @NotNull HandlerList getHandlers(){
         return handlers;
     }
 

@@ -10,20 +10,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
 public class ModifierManager {
 
     private final AureliumSkills plugin;
-    private final StatLeveler statLeveler;
+    private final @NotNull StatLeveler statLeveler;
 
     public ModifierManager(AureliumSkills plugin) {
         this.plugin = plugin;
         this.statLeveler = new StatLeveler(plugin);
     }
 
-    public void reloadPlayer(Player player) {
+    public void reloadPlayer(@NotNull Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Requirements requirements = new Requirements(plugin);
         Modifiers modifiers = new Modifiers(plugin);

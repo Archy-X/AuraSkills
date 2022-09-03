@@ -13,12 +13,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+
 import org.jetbrains.annotations.NotNull;
 
 
 public class MiningLeveler extends SkillLeveler implements Listener {
 
-	private final MiningAbilities miningAbilities;
+	private final @NotNull MiningAbilities miningAbilities;
 
 	public MiningLeveler(@NotNull AureliumSkills plugin) {
 		super(plugin, Ability.MINER);
@@ -26,7 +27,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onBlockBreak(BlockBreakEvent event) {
+	public void onBlockBreak(@NotNull BlockBreakEvent event) {
 		if (OptionL.isEnabled(Skills.MINING)) {
 			// Check cancelled
 			if (OptionL.getBoolean(Option.MINING_CHECK_CANCELLED) && event.isCancelled()) {

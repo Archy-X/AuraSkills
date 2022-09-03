@@ -28,41 +28,45 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public @Nullable String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull Ability ability) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData == null) return placeholder;
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull Ability ability) {
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null)
+            return placeholder;
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "name":
-                return ability.getDisplayName(locale);
+                m = ability.getDisplayName(locale);
             case "your_ability_level":
                 if (isNotMaxed(playerData, ability)) {
-                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
+                    m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
                             "{level}", String.valueOf(playerData.getAbilityLevel(ability)));
                 } else {
-                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
+                    m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
                             "{level}", String.valueOf(playerData.getAbilityLevel(ability)));
                 }
+                break;
             case "unlocked_desc":
                 if (isNotMaxed(playerData, ability)) {
-                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
+                    m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
                             "{skill}", ability.getSkill().getDisplayName(locale),
                             "{level}", RomanNumber.toRoman(getNextUpgradeLevel(ability, playerData)),
                             "{desc}", TextUtil.replace(ability.getDescription(locale),
                                     "{value}", getUpgradeValue(ability, playerData),
                                     "{value_2}", getUpgradeValue2(ability, playerData)));
                 } else {
-                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
+                    m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
                             "{desc}", TextUtil.replace(ability.getDescription(locale),
                                     "{value}", getCurrentValue(ability, playerData),
                                     "{value_2}", getCurrentValue2(ability, playerData)));
                 }
+                break;
             case "unlocked":
-                @Nullable String t = Lang.getMessage(MenuMessage.UNLOCKED, locale);
-                assert (null != t);
-                return t;
+                m = Lang.getMessage(MenuMessage.UNLOCKED, locale);
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     private int getNextUpgradeLevel(@NotNull Ability ability, @NotNull PlayerData playerData) {
@@ -71,21 +75,21 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
         return unlock + levelUp * playerData.getAbilityLevel(ability);
     }
 
-    private String getCurrentValue(@NotNull Ability ability, @NotNull PlayerData playerData) {
+    private @NotNull String getCurrentValue(@NotNull Ability ability, @NotNull PlayerData playerData) {
         return NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)));
     }
 
-    private String getCurrentValue2(@NotNull Ability ability, @NotNull PlayerData playerData) {
+    private @NotNull String getCurrentValue2(@NotNull Ability ability, @NotNull PlayerData playerData) {
         return NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability)));
     }
 
-    private String getUpgradeValue(@NotNull Ability ability, @NotNull PlayerData playerData) {
+    private @NotNull String getUpgradeValue(@NotNull Ability ability, @NotNull PlayerData playerData) {
         String currentValue = getCurrentValue(ability, playerData);
         String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability) + 1));
         return "&7" + currentValue + "&8→" + nextValue + "&7";
     }
 
-    private String getUpgradeValue2(@NotNull Ability ability, @NotNull PlayerData playerData) {
+    private @NotNull String getUpgradeValue2(@NotNull Ability ability, @NotNull PlayerData playerData) {
         String currentValue = getCurrentValue2(ability, playerData);
         String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability) + 1));
         return "&7" + currentValue + "&8→" + nextValue + "&7";
@@ -104,18 +108,17 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
 
     @Override
     public @NotNull Set<@NotNull Ability> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         @NotNull Set<@NotNull Ability> unlockedAbilities = new HashSet<>();
-        if (playerData != null) {
-            // Add abilities that player has not unlocked yet
-            for (@NotNull Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
-                Ability ability = abilitySupplier.get();
-                if (playerData.getAbilityLevel(ability) >= 1) {
-                    unlockedAbilities.add(ability);
-                }
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null)
+            return unlockedAbilities;
+        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
+        // Add abilities that player has not unlocked yet
+        for (@NotNull Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
+            Ability ability = abilitySupplier.get();
+            if (playerData.getAbilityLevel(ability) >= 1) {
+                unlockedAbilities.add(ability);
             }
         }
         return unlockedAbilities;

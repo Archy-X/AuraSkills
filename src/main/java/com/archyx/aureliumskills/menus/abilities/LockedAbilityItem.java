@@ -27,27 +27,33 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull Ability ability) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull Ability ability) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "name":
-                return ability.getDisplayName(locale);
+                m = ability.getDisplayName(locale);
+                break;
             case "locked_desc":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
                         "{desc}", TextUtil.replace(ability.getDescription(locale),
-                                "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
-                                "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1))));
+                        "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
+                        "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1))));
+                break;
             case "unlocked_at":
                 @Nullable Object property = menu.getProperty("skill");
                 assert (null != property);
                 Skill skill = (Skill) property;
-                return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
                         "{skill}", skill.getDisplayName(locale),
                         "{level}", RomanNumber.toRoman(plugin.getAbilityManager().getUnlock(ability)));
+                break;
             case "locked":
-                return Lang.getMessage(MenuMessage.LOCKED, locale);
+                m = Lang.getMessage(MenuMessage.LOCKED, locale);
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override

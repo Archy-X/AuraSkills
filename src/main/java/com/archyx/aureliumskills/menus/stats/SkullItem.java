@@ -16,6 +16,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Locale;
 
 public class SkullItem extends AbstractItem implements SingleItemProvider {
@@ -25,28 +28,30 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
         if (placeholder.equals("player")) {
             return player.getName();
         }
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData != null) {
-            // Handle each stat entry
-            Stat stat = plugin.getStatRegistry().getStat(placeholder);
-            if (stat != null) {
-                return TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_STAT_ENTRY, locale),
-                        "{color}", stat.getColor(locale),
-                        "{symbol}", stat.getSymbol(locale),
-                        "{stat}", stat.getDisplayName(locale),
-                        "{level}", NumberUtil.format1(playerData.getStatLevel(stat)));
-            }
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        if (playerData == null)
+            return placeholder;
+        @Nullable String m = placeholder;
+        // Handle each stat entry
+        Stat stat = plugin.getStatRegistry().getStat(placeholder);
+        if (stat != null) {
+            m = TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_STAT_ENTRY, locale),
+                    "{color}", stat.getColor(locale),
+                    "{symbol}", stat.getSymbol(locale),
+                    "{stat}", stat.getDisplayName(locale),
+                    "{level}", NumberUtil.format1(playerData.getStatLevel(stat)));
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu) {
+    public @NotNull ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, ActiveMenu activeMenu) {
         if (baseItem.getItemMeta() instanceof SkullMeta) {
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
             if (meta != null) {

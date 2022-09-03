@@ -33,7 +33,7 @@ public class ManaAbilityRefreshEvent extends Event {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    public static @NotNull HandlerList getHandlerList() {
         return handlers;
     }
 }

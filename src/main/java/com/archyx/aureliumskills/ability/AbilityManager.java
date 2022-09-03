@@ -27,8 +27,9 @@ import java.util.function.Supplier;
 
 public class AbilityManager {
 
-    private final Map<Ability, @NotNull AbilityOption> abilityOptions;
-    private final Map<MAbility, @NotNull ManaAbilityOption> manaAbilityOptions;
+
+    private final @NotNull Map<Ability, @NotNull AbilityOption> abilityOptions;
+    private final @NotNull Map<MAbility, @NotNull ManaAbilityOption> manaAbilityOptions;
     private final AureliumSkills plugin;
 
     public AbilityManager(AureliumSkills plugin) {
@@ -177,7 +178,7 @@ public class AbilityManager {
         plugin.getLogger().info("Loaded " + amountLoaded + " Ability Options in " + timeElapsed + "ms");
     }
 
-    private FileConfiguration updateFile(@NotNull File file, FileConfiguration config) {
+    private @NotNull FileConfiguration updateFile(@NotNull File file, @NotNull FileConfiguration config) {
         if (config.contains("file_version")) {
             InputStream stream = plugin.getResource("abilities_config.yml");
             if (stream != null) {
@@ -208,7 +209,7 @@ public class AbilityManager {
         return YamlConfiguration.loadConfiguration(file);
     }
 
-    private void migrateOptions(@NotNull File file, FileConfiguration abilitiesConfig) {
+    private void migrateOptions(@NotNull File file, @NotNull FileConfiguration abilitiesConfig) {
         FileConfiguration config = plugin.getConfig();
         ConfigurationSection abilities = config.getConfigurationSection("abilities");
         if (abilities == null) return;
@@ -414,8 +415,8 @@ public class AbilityManager {
     }
 
     @Nullable
-    public Set<String> getOptionKeys(Ability ability) {
-        if (ability.getDefaultOptions() != null) {
+    public Set<String> getOptionKeys(@NotNull Ability ability) {
+        if (!ability.getDefaultOptions().isEmpty()) {
             return ability.getDefaultOptions().keySet();
         }
         return null;

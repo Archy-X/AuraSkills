@@ -27,6 +27,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,7 +39,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	@SuppressWarnings("deprecation")
-	public void onConsume(PlayerItemConsumeEvent event) {
+	public void onConsume(@NotNull PlayerItemConsumeEvent event) {
 		if (OptionL.isEnabled(Skills.HEALING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {
@@ -99,7 +100,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onThrow(PotionSplashEvent event) {
+	public void onThrow(@NotNull PotionSplashEvent event) {
 		if (OptionL.isEnabled(Skills.HEALING)) {
 			//Check cancelled
 			if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {
@@ -140,7 +141,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 
 	@EventHandler
 	@SuppressWarnings("deprecation")
-	public void onLingeringPotionSplash(LingeringPotionSplashEvent event) {
+	public void onLingeringPotionSplash(@NotNull LingeringPotionSplashEvent event) {
 		if (!OptionL.isEnabled(Skills.HEALING)) return;
 		// Check cancelled
 		if (OptionL.getBoolean(Option.HEALING_CHECK_CANCELLED)) {

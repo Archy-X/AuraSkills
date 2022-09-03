@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import org.jetbrains.annotations.NotNull;
+
 public class BackToLevelProgressionItem extends BackItem {
 
     public BackToLevelProgressionItem(AureliumSkills plugin) {
@@ -17,8 +19,9 @@ public class BackToLevelProgressionItem extends BackItem {
     }
 
     @Override
-    public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
+    public void onClick(@NotNull Player player, @NotNull InventoryClickEvent event, @NotNull ItemStack item, @NotNull SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
+        assert (null != skill);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             new LevelProgressionOpener(plugin).open(player, playerData, skill);

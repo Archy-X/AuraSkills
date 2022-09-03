@@ -41,7 +41,7 @@ public class AureliumAPI {
      * between versions without warning. Use at your own risk.
      * @return AureliumSkills instance.
      */
-    public static AureliumSkills getPlugin() {
+    public static @NotNull AureliumSkills getPlugin() {
         if (plugin == null) {
             throw new IllegalStateException("The AureliumSkills API is not loaded yet");
         }

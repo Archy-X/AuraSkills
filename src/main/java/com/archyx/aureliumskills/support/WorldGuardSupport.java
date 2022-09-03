@@ -16,6 +16,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class WorldGuardSupport {
         }
     }
 
-    public boolean isInBlockedRegion(Location location) {
+    public boolean isInBlockedRegion(@NotNull Location location) {
         if (location.getWorld() == null) {
             return false;
         }
@@ -63,7 +65,7 @@ public class WorldGuardSupport {
         return false;
     }
 
-    public boolean blockedByFlag(Location location, Player player, WorldGuardFlags.FlagKey flagKey) {
+    public boolean blockedByFlag(@NotNull Location location, Player player, WorldGuardFlags.FlagKey flagKey) {
         WorldGuardFlags worldGuardFlags = plugin.getWorldGuardFlags();
         if (worldGuardFlags == null) return false;
 
@@ -83,7 +85,7 @@ public class WorldGuardSupport {
         return state == StateFlag.State.DENY;
     }
 
-    public boolean isInBlockedCheckRegion(Location location) {
+    public boolean isInBlockedCheckRegion(@NotNull Location location) {
         if (location.getWorld() == null) {
             return false;
         }

@@ -706,7 +706,7 @@ public class AureliumSkills extends JavaPlugin {
 		return commandManager;
 	}
 
-	public static String getPrefix(Locale locale) {
+	public static @NotNull String getPrefix(@Nullable Locale locale) {
 		return Lang.getMessage(CommandMessage.PREFIX, locale);
 	}
 

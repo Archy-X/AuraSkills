@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,7 +27,7 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	@SuppressWarnings("deprecation")
-	public void onDamage(EntityDamageByEntityEvent event) {
+	public void onDamage(@NotNull EntityDamageByEntityEvent event) {
 		if (OptionL.isEnabled(Skills.DEFENSE)) {
 			//Checks cancelled
 			if (OptionL.getBoolean(Option.DEFENSE_CHECK_CANCELLED)) {

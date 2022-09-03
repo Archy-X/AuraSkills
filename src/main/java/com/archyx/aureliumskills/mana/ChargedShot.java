@@ -33,7 +33,7 @@ public class ChargedShot extends ManaAbilityProvider {
     }
 
     @EventHandler
-    public void onToggle(PlayerInteractEvent event) {
+    public void onToggle(@NotNull PlayerInteractEvent event) {
         if (blockDisabled(MAbility.CHARGED_SHOT)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
@@ -80,7 +80,7 @@ public class ChargedShot extends ManaAbilityProvider {
     }
 
     @EventHandler
-    public void activationListener(EntityShootBowEvent event) {
+    public void activationListener(@NotNull EntityShootBowEvent event) {
         if (blockDisabled(MAbility.CHARGED_SHOT)) return;
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
@@ -106,7 +106,7 @@ public class ChargedShot extends ManaAbilityProvider {
         }
     }
 
-    public void applyChargedShot(EntityDamageByEntityEvent event) {
+    public void applyChargedShot(@NotNull EntityDamageByEntityEvent event) {
         if (event.getDamager().hasMetadata("ChargedShotMultiplier")) {
             double multiplier = event.getDamager().getMetadata("ChargedShotMultiplier").get(0).asDouble();
             event.setDamage(event.getDamage() * multiplier);
@@ -114,7 +114,7 @@ public class ChargedShot extends ManaAbilityProvider {
     }
 
     @Override
-    public void onActivate(Player player, PlayerData playerData) {
+    public void onActivate(@NotNull Player player, @NotNull PlayerData playerData) {
         // Calculate damage increase
         double manaConsumed = getManaConsumed(playerData);
         if (manaConsumed <= 0) return;
@@ -135,13 +135,13 @@ public class ChargedShot extends ManaAbilityProvider {
     }
 
     @Override
-    public void onStop(Player player, PlayerData playerData) {
+    public void onStop(Player player, @NotNull PlayerData playerData) {
         playerData.getMetadata().remove("charged_shot_projectile");
         playerData.getMetadata().remove("charged_shot_force");
     }
 
     @Override
-    protected void consumeMana(Player player, PlayerData playerData) {
+    protected void consumeMana(Player player, @NotNull PlayerData playerData) {
         double manaConsumed = getManaConsumed(playerData);
         if (manaConsumed <= 0) return;
         double damagePercent = manaConsumed * plugin.getManaAbilityManager().getValue(MAbility.CHARGED_SHOT, playerData);
@@ -154,7 +154,7 @@ public class ChargedShot extends ManaAbilityProvider {
         }
     }
 
-    private double getManaConsumed(PlayerData playerData) {
+    private double getManaConsumed(@NotNull PlayerData playerData) {
         Object obj = playerData.getMetadata().get("charged_shot_force");
         float force = 0;
         if (obj instanceof Float) {

@@ -8,6 +8,7 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -155,7 +156,7 @@ public enum ForagingSource implements Source {
         return isMatch(block.getState());
     }
 
-    private boolean byteArrayContains(byte[] array, byte input) {
+    private boolean byteArrayContains(byte @NotNull [] array, byte input) {
         for (byte b : array) {
             if (b == input) return true;
         }
@@ -163,7 +164,7 @@ public enum ForagingSource implements Source {
     }
 
     @Override
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return Skills.FORAGING;
     }
 
@@ -183,7 +184,7 @@ public enum ForagingSource implements Source {
     }
 
     @Override
-    public ItemStack getMenuItem() {
+    public @Nullable ItemStack getMenuItem() {
         return ItemUtils.parseItem(this.toString());
     }
 }

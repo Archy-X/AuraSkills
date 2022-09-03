@@ -15,6 +15,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +35,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
     }
 
     // Gets whether the clicked block should not ready the ability, override to implement
-    protected boolean isExcludedBlock(Block block) {
+    protected boolean isExcludedBlock(@NotNull Block block) {
         return false;
     }
 

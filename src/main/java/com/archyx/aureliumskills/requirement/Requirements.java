@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,7 +28,7 @@ public class Requirements extends NBTAPIUser {
 
     private final RequirementManager manager;
 
-    public Requirements(AureliumSkills plugin) {
+    public Requirements(@NotNull AureliumSkills plugin) {
         super(plugin);
         this.manager = plugin.getRequirementManager();
     }
@@ -74,7 +75,6 @@ public class Requirements extends NBTAPIUser {
         }
         return requirements;
     }
-
 
     public @NotNull ItemStack addRequirement(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Skill skill, int level) {
         if (isNBTDisabled()) return item;

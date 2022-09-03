@@ -35,6 +35,7 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -221,7 +222,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
         removeFleetingQuit(player);
     }
 
-    public void removeFleetingQuit(Player player) {
+    public void removeFleetingQuit(@NotNull Player player) {
         if (player.hasMetadata("AureliumSkills-Fleeting")) {
             float walkSpeedChange = player.getMetadata("AureliumSkills-Fleeting").get(0).asFloat();
             player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);

@@ -2,6 +2,8 @@ package com.archyx.aureliumskills.configuration;
 
 import org.bukkit.ChatColor;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,7 @@ public class OptionValue {
         }
     }
 
-    public List<String> asList() {
+    public @NotNull List<String> asList() {
         List<String> stringList = new ArrayList<>();
         if (value instanceof List<?>) {
             for (Object obj : (List<?>) value) {
@@ -71,7 +73,7 @@ public class OptionValue {
         return stringList;
     }
 
-    public ChatColor asColor() {
+    public @NotNull ChatColor asColor() {
         if (value instanceof ChatColor) {
             return (ChatColor) value;
         }

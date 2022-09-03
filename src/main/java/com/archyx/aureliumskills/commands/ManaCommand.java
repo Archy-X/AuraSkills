@@ -13,6 +13,9 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Locale;
 
 @CommandAlias("mana")
@@ -27,12 +30,13 @@ public class ManaCommand extends BaseCommand {
     @Default
     @CommandPermission("aureliumskills.mana")
     @Description("Display your or another player's current and max mana")
-    public void onMana(CommandSender sender, @Flags("other") @CommandPermission("aureliumskills.mana.other") @Optional Player player) {
+    public void onMana(CommandSender sender, @Flags("other") @CommandPermission("aureliumskills.mana.other") @Optional @Nullable Player player) {
         if (sender instanceof Player && player == null) {
             Player target = (Player) sender;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(target);
-            if (playerData == null) return;
-            Locale locale = playerData.getLocale();
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(target);
+            if (playerData == null)
+                return;
+            @Nullable Locale locale = playerData.getLocale();
             sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.MANA_DISPLAY, locale)
                     , "{current}", NumberUtil.format1(playerData.getMana())
                     , "{max}", NumberUtil.format1(playerData.getMaxMana())));
@@ -53,7 +57,7 @@ public class ManaCommand extends BaseCommand {
     @CommandPermission("aureliumskills.mana.add")
     @CommandCompletion("@players @nothing false|true")
     @Description("Adds mana to a player")
-    public void onManaAdd(CommandSender sender, @Flags("other") Player player, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
+    public void onManaAdd(@NotNull CommandSender sender, @Flags("other") @NotNull Player player, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         Locale locale = playerData.getLocale();
@@ -102,7 +106,7 @@ public class ManaCommand extends BaseCommand {
     @CommandPermission("aureliumskills.mana.remove")
     @CommandCompletion("@players")
     @Description("Removes mana from a player")
-    public void onManaRemove(CommandSender sender, @Flags("other") Player player, double amount, @Default("false") boolean silent) {
+    public void onManaRemove(@NotNull CommandSender sender, @Flags("other") @NotNull Player player, double amount, @Default("false") boolean silent) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         Locale locale = playerData.getLocale();
@@ -134,7 +138,7 @@ public class ManaCommand extends BaseCommand {
     @CommandPermission("aureliumskills.mana.set")
     @CommandCompletion("@players @nothing false|true")
     @Description("Sets the mana of player")
-    public void onManaSet(CommandSender sender, @Flags("other") Player player, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
+    public void onManaSet(@NotNull CommandSender sender, @Flags("other") @NotNull Player player, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         Locale locale = playerData.getLocale();

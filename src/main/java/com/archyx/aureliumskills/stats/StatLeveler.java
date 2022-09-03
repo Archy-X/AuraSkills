@@ -6,6 +6,8 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+
 public class StatLeveler {
 
 	private final AureliumSkills plugin;
@@ -14,7 +16,7 @@ public class StatLeveler {
 		this.plugin = plugin;
 	}
 
-	public void reloadStat(Player player, Stat stat) {
+	public void reloadStat(@NotNull Player player, @NotNull Stat stat) {
 		if (stat.equals(Stats.HEALTH)) {
 			plugin.getHealth().reload(player);
 		}

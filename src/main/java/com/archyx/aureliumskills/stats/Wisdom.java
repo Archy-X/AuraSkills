@@ -13,6 +13,8 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.inventory.AnvilInventory;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Wisdom implements Listener {
 
 	private final AureliumSkills plugin;
@@ -22,7 +24,7 @@ public class Wisdom implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
-	public void onPlayerExpChange(PlayerExpChangeEvent event) {
+	public void onPlayerExpChange(@NotNull PlayerExpChangeEvent event) {
 		Player player = event.getPlayer();
 		//Check for disabled world
 		if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
@@ -34,7 +36,7 @@ public class Wisdom implements Listener {
 	}
 	
 	@EventHandler
-	public void onAnvilPrepare(PrepareAnvilEvent event) {
+	public void onAnvilPrepare(@NotNull PrepareAnvilEvent event) {
 		PlayerData playerData = null;
 		//Finds the viewer with the highest wisdom level
 		for (HumanEntity entity : event.getViewers()) {

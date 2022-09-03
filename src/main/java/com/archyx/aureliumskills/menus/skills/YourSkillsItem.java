@@ -10,6 +10,9 @@ import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Locale;
 
 public class YourSkillsItem extends AbstractItem implements SingleItemProvider {
@@ -19,19 +22,25 @@ public class YourSkillsItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
-        Locale locale = plugin.getLang().getLocale(player);
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
+        @Nullable Locale locale = plugin.getLang().getLocale(player);
+        @Nullable String m = placeholder;
         switch (placeholder) {
             case "your_skills":
-                return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_SKILLS, locale),
+                m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_SKILLS, locale),
                         "{player}", player.getName());
+                break;
             case "desc":
-                return Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC, locale);
+                m = Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC, locale);
+                break;
             case "hover":
-                return Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER, locale);
+                m = Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER, locale);
+                break;
             case "click":
-                return Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK, locale);
+                m = Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK, locale);
+                break;
         }
-        return placeholder;
+        assert (null != m);
+        return m;
     }
 }

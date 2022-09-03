@@ -28,14 +28,14 @@ import java.util.*;
 public class ItemListener implements Listener {
 
     private final @NotNull AureliumSkills plugin;
-    private final Map<UUID, ItemStack> heldItems;
-    private final Map<UUID, ItemStack> offHandItems;
-    private final ForagingAbilities foragingAbilities;
-    private final MiningAbilities miningAbilities;
-    private final StatLeveler statLeveler;
-    private final Modifiers modifiers;
-    private final Requirements requirements;
-    private final Multipliers multipliers;
+    private final @NotNull Map<UUID, ItemStack> heldItems;
+    private final @NotNull Map<UUID, ItemStack> offHandItems;
+    private final @NotNull ForagingAbilities foragingAbilities;
+    private final @NotNull MiningAbilities miningAbilities;
+    private final @NotNull StatLeveler statLeveler;
+    private final @NotNull Modifiers modifiers;
+    private final @NotNull Requirements requirements;
+    private final @NotNull Multipliers multipliers;
 
     public ItemListener(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
@@ -50,7 +50,7 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onJoin(PlayerDataLoadEvent event) {
+    public void onJoin(@NotNull PlayerDataLoadEvent event) {
         Player player = event.getPlayerData().getPlayer();
         ItemStack held = player.getInventory().getItemInMainHand();
         heldItems.put(player.getUniqueId(), held);
@@ -93,7 +93,7 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent event) {
+    public void onLeave(@NotNull PlayerQuitEvent event) {
         Player player = event.getPlayer();
         heldItems.remove(player.getUniqueId());
         offHandItems.remove(player.getUniqueId());
@@ -181,7 +181,7 @@ public class ItemListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onSwap(PlayerSwapHandItemsEvent event) {
+    public void onSwap(@NotNull PlayerSwapHandItemsEvent event) {
         if (!event.isCancelled()) { // Make sure event is not cancelled
             if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) { // Check off hand support is enabled
                 Player player = event.getPlayer();

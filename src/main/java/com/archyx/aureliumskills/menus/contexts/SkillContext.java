@@ -6,7 +6,7 @@ import com.archyx.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-public class SkillContext implements ContextProvider<@NotNull Skill> {
+public class SkillContext implements ContextProvider<Skill> {
 
     private final AureliumSkills plugin;
 
@@ -16,7 +16,7 @@ public class SkillContext implements ContextProvider<@NotNull Skill> {
 
     @Nullable
     @Override
-    public Skill parse(String input) {
+    public Skill parse(@NotNull String input) {
         assert (null != input);
         return plugin.getSkillRegistry().getSkill(input);
     }

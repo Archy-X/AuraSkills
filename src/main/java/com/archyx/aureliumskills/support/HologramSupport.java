@@ -17,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +29,7 @@ public class HologramSupport implements Listener {
 
     private final @NotNull AureliumSkills plugin;
     private final Random r = new Random();
-    private final NumberFormat nf;
+    private final @NotNull NumberFormat nf;
 
     public HologramSupport(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
@@ -36,7 +37,7 @@ public class HologramSupport implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+    public void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
         if (!event.isCancelled()) {
             if (event.getEntity() instanceof LivingEntity) {
                 if (plugin.isHolographicDisplaysEnabled()) {
@@ -77,7 +78,7 @@ public class HologramSupport implements Listener {
         }
     }
 
-    private Location getLocation(Entity entity) {
+    private @NotNull Location getLocation(@NotNull Entity entity) {
         Location location = entity.getLocation();
         if (OptionL.getBoolean(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_ENABLED)) {
             //Calculate random holograms
@@ -101,7 +102,7 @@ public class HologramSupport implements Listener {
         return location;
     }
 
-    private String getText(double damage, boolean critical) {
+    private @NotNull String getText(double damage, boolean critical) {
         StringBuilder text = new StringBuilder(ChatColor.GRAY + "");
         String damageText;
         if (OptionL.getBoolean(Option.DAMAGE_HOLOGRAMS_SCALING)) {
@@ -130,7 +131,7 @@ public class HologramSupport implements Listener {
         return text.toString();
     }
 
-    private String getCriticalText(String damageText) {
+    private @NotNull String getCriticalText(@NotNull String damageText) {
         StringBuilder text = new StringBuilder(ChatColor.GRAY + "");
         for (int i = 0; i < damageText.length(); i++) {
             int j = Math.abs(i - (damageText.length() - 1));
