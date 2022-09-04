@@ -116,7 +116,7 @@ public class SkillBossBar implements Listener {
             if (!bossBars.containsKey(player)) bossBars.put(player, new HashMap<>());
             Map<Skill, BossBar> bars = bossBars.get(player);
             if (bars == null)
-                throw new IllegalStateException("Invalid boss bar player index key: " + player);
+                throw new IllegalStateException("Invalid boss bar player index key: " + player.getName());
             bossBar = bars.get(skill);
         }
         // If player does not have a boss bar in that skill
