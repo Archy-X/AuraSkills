@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.skills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.mana.MAbility;
 import com.google.common.collect.ImmutableList;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

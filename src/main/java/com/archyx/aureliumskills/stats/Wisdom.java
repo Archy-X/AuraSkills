@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.inventory.AnvilInventory;
-
 import org.jetbrains.annotations.NotNull;
 
 public class Wisdom implements Listener {

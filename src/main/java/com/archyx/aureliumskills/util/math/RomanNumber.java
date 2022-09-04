@@ -2,11 +2,10 @@ package com.archyx.aureliumskills.util.math;
 
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-
-import java.util.TreeMap;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.TreeMap;
 
 public class RomanNumber {
 	

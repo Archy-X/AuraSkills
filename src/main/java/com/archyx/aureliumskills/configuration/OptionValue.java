@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.configuration;
 
 import org.bukkit.ChatColor;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

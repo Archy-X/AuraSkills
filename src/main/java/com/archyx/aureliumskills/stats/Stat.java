@@ -1,9 +1,9 @@
 package com.archyx.aureliumskills.stats;
 
-import java.util.Locale;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
 
 public interface Stat {
 

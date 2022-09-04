@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
-
 import org.jetbrains.annotations.NotNull;
 
 public class PotionUtil {

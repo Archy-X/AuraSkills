@@ -4,7 +4,6 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 public class LuckPermsSupport {

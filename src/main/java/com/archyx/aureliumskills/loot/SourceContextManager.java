@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.source.SourceTag;
 import com.archyx.aureliumskills.util.misc.DataUtil;
 import com.archyx.lootmanager.loot.context.ContextManager;
 import com.archyx.lootmanager.loot.context.LootContext;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

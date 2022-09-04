@@ -12,7 +12,6 @@ import com.archyx.aureliumskills.menus.levelprogression.LevelProgressionOpener;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

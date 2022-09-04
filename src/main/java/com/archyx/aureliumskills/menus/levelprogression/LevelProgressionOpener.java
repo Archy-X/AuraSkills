@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.slate.menu.ConfigurableMenu;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

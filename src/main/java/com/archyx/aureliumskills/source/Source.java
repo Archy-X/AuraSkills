@@ -7,7 +7,6 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.lootmanager.loot.context.LootContext;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

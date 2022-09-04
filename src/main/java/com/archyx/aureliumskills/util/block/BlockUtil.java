@@ -9,7 +9,6 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.material.CocoaPlant;
 import org.bukkit.material.Crops;
 import org.bukkit.material.NetherWarts;
-
 import org.jetbrains.annotations.NotNull;
 
 public class BlockUtil {

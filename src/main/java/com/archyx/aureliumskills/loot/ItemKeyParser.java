@@ -4,7 +4,6 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.util.misc.Parser;
 import com.archyx.lootmanager.loot.parser.CustomItemParser;
 import org.bukkit.inventory.ItemStack;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

@@ -1,10 +1,9 @@
 package com.archyx.aureliumskills.lang;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
-
-import org.jetbrains.annotations.Nullable;
 
 public enum MenuMessage implements MessageKey {
 

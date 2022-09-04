@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.util.entity;
 
 import org.bukkit.entity.EntityType;
-
 import org.jetbrains.annotations.NotNull;
 
 public class EntityDataMappings {

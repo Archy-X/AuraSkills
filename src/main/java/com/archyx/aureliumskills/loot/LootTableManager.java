@@ -9,7 +9,6 @@ import com.archyx.lootmanager.loot.LootTable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -105,8 +104,7 @@ public class LootTableManager extends Parser {
 		plugin.getLogger().info("Loaded " + lootLoaded + " loot entries in " + poolsLoaded + " pools and " + tablesLoaded + " tables");
 	}
 
-	@Nullable
-	public LootTable getLootTable(Skill skill) {
+	public @Nullable LootTable getLootTable(Skill skill) {
 		return lootTables.get(skill);
 	}
 	

@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.menus.common.AbstractSkillItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

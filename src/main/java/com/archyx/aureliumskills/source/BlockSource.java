@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.source;
 
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

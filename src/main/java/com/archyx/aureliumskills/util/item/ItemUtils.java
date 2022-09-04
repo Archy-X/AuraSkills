@@ -116,8 +116,7 @@ public class ItemUtils {
 		return true;
 	}
 
-	@Nullable
-	public static ItemStack addItemToInventory(@NotNull Player player, @NotNull ItemStack item) {
+	public static @Nullable ItemStack addItemToInventory(@NotNull Player player, @NotNull ItemStack item) {
 		PlayerInventory inventory = player.getInventory();
 		int amountRemaining = item.getAmount();
 		for (int slot = 0; slot < 36; slot++) {
@@ -171,9 +170,7 @@ public class ItemUtils {
 		return amountRemaining <= 0;
 	}
 
-
-	@Nullable
-	public static ItemStack parseItem(@NotNull String name) {
+	public static @Nullable ItemStack parseItem(@NotNull String name) {
 		Material material = Material.getMaterial(name);
 		if (material != null) {
 			return new ItemStack(material);

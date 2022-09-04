@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.lang;
 
 import com.archyx.aureliumskills.mana.MAbility;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;

@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.data.converter;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import org.bukkit.Bukkit;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;

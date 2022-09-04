@@ -7,7 +7,6 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import com.archyx.aureliumskills.AureliumSkills;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 @CommandAlias("stats")

@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.menus.contexts;
 
 import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.slate.context.ContextProvider;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

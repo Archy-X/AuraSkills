@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.menus.sources;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.source.Source;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

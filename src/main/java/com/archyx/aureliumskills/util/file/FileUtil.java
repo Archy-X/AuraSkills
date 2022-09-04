@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.util.file;
 
 import com.archyx.aureliumskills.util.math.NumberUtil;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

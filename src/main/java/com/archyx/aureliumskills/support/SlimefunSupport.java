@@ -5,7 +5,6 @@ import io.github.thebusybiscuit.slimefun4.api.events.BlockPlacerPlaceEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
 import org.jetbrains.annotations.NotNull;
 
 public class SlimefunSupport implements Listener {

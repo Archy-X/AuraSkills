@@ -4,11 +4,10 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.commands.CommandExecutor;
 import com.archyx.aureliumskills.rewards.CommandReward;
 import com.archyx.aureliumskills.rewards.Reward;
-
-import java.util.Objects;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 public class CommandRewardBuilder extends MessagedRewardBuilder {
 

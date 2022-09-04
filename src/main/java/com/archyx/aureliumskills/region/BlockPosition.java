@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.region;
 
 import com.google.common.base.Objects;
 import org.bukkit.block.Block;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

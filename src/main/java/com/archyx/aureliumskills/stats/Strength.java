@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.util.mechanics.DamageType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
 import org.jetbrains.annotations.NotNull;
 
 public class Strength {

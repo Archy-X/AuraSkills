@@ -1,8 +1,8 @@
 package com.archyx.aureliumskills.leaderboard;
 
-import java.util.UUID;
-
 import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public class SkillValue {
 

@@ -12,7 +12,6 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ActionBarCompatHandler {

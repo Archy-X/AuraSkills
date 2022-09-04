@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.data;
 
 import com.archyx.aureliumskills.ability.AbstractAbility;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

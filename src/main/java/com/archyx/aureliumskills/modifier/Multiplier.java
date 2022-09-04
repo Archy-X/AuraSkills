@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.modifier;
 
 import com.archyx.aureliumskills.skills.Skill;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

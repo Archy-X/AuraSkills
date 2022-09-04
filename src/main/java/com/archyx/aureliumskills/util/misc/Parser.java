@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.util.misc;
 
-import java.util.List;
-import java.util.Map;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Map;
 
 public class Parser {
 

@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.skills.alchemy;
 
 import org.bukkit.inventory.ItemStack;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -2,11 +2,10 @@ package com.archyx.aureliumskills.stats;
 
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.StatMessage;
-
-import java.util.Locale;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
 
 public enum Stats implements Stat {
 

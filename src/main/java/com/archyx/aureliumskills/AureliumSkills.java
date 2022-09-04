@@ -871,7 +871,6 @@ public class AureliumSkills extends JavaPlugin {
 		return itemRegistry;
 	}
 
-	@Nullable
 	public WorldGuardFlags getWorldGuardFlags() {
 		return worldGuardFlags;
 	}

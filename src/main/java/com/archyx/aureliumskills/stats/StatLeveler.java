@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 public class StatLeveler {

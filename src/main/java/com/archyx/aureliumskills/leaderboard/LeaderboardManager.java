@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.leaderboard;
 
 import com.archyx.aureliumskills.skills.Skill;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

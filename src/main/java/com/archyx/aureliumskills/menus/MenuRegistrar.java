@@ -27,7 +27,6 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.context.ContextManager;
 import com.archyx.slate.item.provider.ProviderManager;
 import com.archyx.slate.menu.MenuManager;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

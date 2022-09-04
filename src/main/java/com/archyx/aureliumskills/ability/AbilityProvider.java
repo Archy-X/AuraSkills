@@ -10,7 +10,6 @@ import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.source.SourceTag;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -4,7 +4,6 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
 import org.jetbrains.annotations.NotNull;
 
 public class Toughness {

@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.rewards;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 public class PermissionReward extends MessagedReward {

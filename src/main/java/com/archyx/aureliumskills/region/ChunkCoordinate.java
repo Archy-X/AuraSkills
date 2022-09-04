@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.region;
 
 import com.google.common.base.Objects;
-
 import org.jetbrains.annotations.Nullable;
 
 public class ChunkCoordinate {

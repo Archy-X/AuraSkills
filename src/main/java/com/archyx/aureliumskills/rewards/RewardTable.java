@@ -5,7 +5,6 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.stats.Stat;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

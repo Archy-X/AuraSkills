@@ -1,7 +1,6 @@
 package com.archyx.aureliumskills.util.item;
 
 import com.archyx.aureliumskills.AureliumSkills;
-
 import org.jetbrains.annotations.NotNull;
 
 public abstract class NBTAPIUser {

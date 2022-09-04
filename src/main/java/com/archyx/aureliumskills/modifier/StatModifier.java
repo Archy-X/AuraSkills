@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.modifier;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.bukkit.entity.Player;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;

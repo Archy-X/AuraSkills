@@ -4,7 +4,6 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
