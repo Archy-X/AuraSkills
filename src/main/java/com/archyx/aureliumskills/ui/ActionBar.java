@@ -7,6 +7,7 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.ActionBarMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.support.ProtocolLibSupport;
 import com.archyx.aureliumskills.util.math.BigNumber;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
@@ -285,11 +286,12 @@ public class ActionBar implements Listener {
 		if (OptionL.getBoolean(Option.ACTION_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
-		if (plugin.isProtocolLibEnabled()) {
+		ProtocolLibSupport protocolLibSupport = plugin.getProtocolLibSupport();
+		if (plugin.isProtocolLibEnabled() && protocolLibSupport != null) {
 			if (VersionUtils.isAtLeastVersion(17)) {
-				plugin.getProtocolLibSupport().sendNewActionBar(player, message);
+				protocolLibSupport.sendNewActionBar(player, message);
 			} else {
-				plugin.getProtocolLibSupport().sendLegacyActionBar(player, message);
+				protocolLibSupport.sendLegacyActionBar(player, message);
 			}
 		} else {
 			player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));

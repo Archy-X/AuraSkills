@@ -8,6 +8,8 @@ import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.skills.excavation.ExcavationSource;
 import com.archyx.aureliumskills.source.SourceTag;
+import com.archyx.aureliumskills.support.TownySupport;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -93,9 +95,12 @@ public class Terraform extends ReadiedManaAbility {
     }
 
     private void breakBlock(@NotNull Player player, @NotNull Block block) {
-        if (!plugin.getTownySupport().canBreak(player, block)) {
-            block.removeMetadata("AureliumSkills-Terraform", plugin);
-            return;
+        TownySupport townySupport = plugin.getTownySupport();
+        if (plugin.isTownyEnabled() && townySupport != null) {
+            if (!townySupport.canBreak(player, block)) {
+                block.removeMetadata("AureliumSkills-Terraform", plugin);
+                return;
+            }
         }
         TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
         Bukkit.getPluginManager().callEvent(event);
