@@ -9,8 +9,7 @@ import java.util.Optional;
 
 public class MaterialUtil {
 
-    @Nullable
-    public static Material parse(@NotNull String name) {
+    public static @Nullable Material parse(@NotNull String name) {
         Material material = Material.getMaterial(name);
         if (material != null) {
             return material;

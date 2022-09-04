@@ -11,8 +11,7 @@ import java.util.Locale;
 public class AbilityContext implements ContextProvider<@NotNull Ability> {
 
     @Override
-    @Nullable
-    public Ability parse(@NotNull String input) {
+    public @Nullable Ability parse(@NotNull String input) {
         try {
             return Ability.valueOf(input.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {

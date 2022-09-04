@@ -23,8 +23,7 @@ public class Multiplier {
         return name;
     }
 
-    @Nullable
-    public Skill getSkill() {
+    public @Nullable Skill getSkill() {
         return skill;
     }
 

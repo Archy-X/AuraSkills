@@ -27,8 +27,7 @@ public class RegionManager {
         this.saving = false;
     }
 
-    @Nullable
-    public Region getRegion(RegionCoordinate regionCoordinate) {
+    public @Nullable Region getRegion(RegionCoordinate regionCoordinate) {
         return regions.get(regionCoordinate);
     }
 

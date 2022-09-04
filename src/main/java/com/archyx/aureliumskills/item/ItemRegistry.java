@@ -34,8 +34,7 @@ public class ItemRegistry {
         items.remove(key);
     }
 
-    @Nullable
-    public ItemStack getItem(String key) {
+    public @Nullable ItemStack getItem(String key) {
         ItemStack item = items.get(key);
         if (item != null) {
             return item.clone();

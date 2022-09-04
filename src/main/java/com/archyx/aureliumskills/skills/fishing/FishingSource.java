@@ -41,8 +41,7 @@ public enum FishingSource implements Source {
     }
 
     @SuppressWarnings("deprecation")
-    @Nullable
-    public static FishingSource valueOf(@NotNull ItemStack item) {
+    public static @Nullable FishingSource valueOf(@NotNull ItemStack item) {
         Material mat = item.getType();
         if (XMaterial.isNewVersion()) {
             if (mat.equals(XMaterial.COD.parseMaterial())) {

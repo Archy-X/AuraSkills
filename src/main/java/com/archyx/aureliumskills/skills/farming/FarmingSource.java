@@ -106,8 +106,7 @@ public enum FarmingSource implements Source {
         return Skills.FARMING;
     }
 
-    @Nullable
-    public static FarmingSource getSource(@NotNull Block block) {
+    public static @Nullable FarmingSource getSource(@NotNull Block block) {
         for (FarmingSource source : values()) {
             if (source.isMatch(block)) {
                 return source;

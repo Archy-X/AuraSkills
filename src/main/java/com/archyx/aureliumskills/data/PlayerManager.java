@@ -25,13 +25,11 @@ public class PlayerManager {
         }
     }
 
-    @Nullable
-    public PlayerData getPlayerData(@NotNull Player player) {
+    public @Nullable PlayerData getPlayerData(@NotNull Player player) {
         return playerData.get(player.getUniqueId());
     }
 
-    @Nullable
-    public PlayerData getPlayerData(UUID id) {
+    public @Nullable PlayerData getPlayerData(UUID id) {
         return this.playerData.get(id);
     }
 

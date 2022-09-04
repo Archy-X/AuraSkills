@@ -52,8 +52,7 @@ public class EntityData extends Parser {
      * @param location The location to spawn
      * @return The Entity spawned, null if the location does not have a World
      */
-    @Nullable
-    public Entity spawn(@NotNull Location location) {
+    public @Nullable Entity spawn(@NotNull Location location) {
         // Spawn entity
         World world = location.getWorld();
         if (world == null) return null;

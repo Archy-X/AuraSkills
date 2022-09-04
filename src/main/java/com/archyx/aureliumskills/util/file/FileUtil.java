@@ -9,8 +9,7 @@ import java.io.File;
 
 public class FileUtil {
 
-    @Nullable
-    public static String renameNoDuplicates(@NotNull File file, @NotNull String resultName, @NotNull File directory) {
+    public static @Nullable String renameNoDuplicates(@NotNull File file, @NotNull String resultName, @NotNull File directory) {
         // Count duplicates
         int duplicates = 0;
         File[] subFiles = directory.listFiles();

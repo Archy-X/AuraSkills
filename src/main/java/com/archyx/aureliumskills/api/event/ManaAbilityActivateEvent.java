@@ -46,9 +46,8 @@ public class ManaAbilityActivateEvent extends Event {
         this.duration = duration;
     }
 
-    @NotNull
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

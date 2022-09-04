@@ -48,8 +48,7 @@ public enum SorcerySource implements Source, BlockSource {
         return ItemUtils.parseItem(material);
     }
 
-    @Nullable
-    public static SorcerySource getSource(@NotNull Block block) {
+    public static @Nullable SorcerySource getSource(@NotNull Block block) {
         for (SorcerySource source : values()) {
             if (source.isMatch(block)) {
                 return source;

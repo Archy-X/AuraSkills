@@ -67,8 +67,7 @@ public class ManaAbilityManager implements Listener {
         Bukkit.getPluginManager().registerEvents(provider, plugin);
     }
 
-    @Nullable
-    public ManaAbilityProvider getProvider(@NotNull MAbility mAbility) {
+    public @Nullable ManaAbilityProvider getProvider(@NotNull MAbility mAbility) {
         return providers.get(mAbility);
     }
 
@@ -391,8 +390,7 @@ public class ManaAbilityManager implements Listener {
      * @param level The skill level
      * @return The mana ability unlocked or leveled up, or null
      */
-    @Nullable
-    public MAbility getManaAbility(@NotNull Skill skill, int level) {
+    public @Nullable MAbility getManaAbility(@NotNull Skill skill, int level) {
         MAbility mAbility = skill.getManaAbility();
         if (mAbility != null) {
             if (level >= getUnlock(mAbility) && (level - getUnlock(mAbility)) % getLevelUp(mAbility) == 0) {
@@ -402,8 +400,7 @@ public class ManaAbilityManager implements Listener {
         return null;
     }
 
-    @Nullable
-    public OptionValue getOption(@NotNull MAbility mAbility, @NotNull String key) {
+    public @Nullable OptionValue getOption(@NotNull MAbility mAbility, @NotNull String key) {
         ManaAbilityOption option = plugin.getAbilityManager().getAbilityOption(mAbility);
         if (option != null) {
             return option.getOption(key);

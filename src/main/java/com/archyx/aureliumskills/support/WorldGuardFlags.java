@@ -23,8 +23,7 @@ public class WorldGuardFlags {
         this.stateFlags = new HashMap<>();
     }
 
-    @Nullable
-    public StateFlag getStateFlag(FlagKey flagKey) {
+    public @Nullable StateFlag getStateFlag(FlagKey flagKey) {
         return stateFlags.get(flagKey);
     }
 

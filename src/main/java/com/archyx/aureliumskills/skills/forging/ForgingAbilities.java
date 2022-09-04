@@ -229,8 +229,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    @Nullable
-    private XMaterial getRawMaterial(@NotNull Material material) {
+    private @Nullable XMaterial getRawMaterial(@NotNull Material material) {
         String name = material.name();
         if (name.startsWith("DIAMOND_")) {
             if (!name.equals("DIAMOND_ORE") && !name.equals("DIAMOND_BLOCK") && !name.equals("DIAMOND_HORSE_ARMOR")) {
@@ -266,8 +265,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         return null;
     }
 
-    @Nullable
-    private Player getHighestPlayer(@NotNull List<HumanEntity> viewers) {
+    private @Nullable Player getHighestPlayer(@NotNull List<HumanEntity> viewers) {
         int highestLevel = 0;
         Player highestPlayer = null;
         for (HumanEntity entity : viewers) {

@@ -39,8 +39,7 @@ public class Region {
         return z;
     }
 
-    @Nullable
-    public ChunkData getChunkData(@NotNull ChunkCoordinate chunkCoordinate) {
+    public @Nullable ChunkData getChunkData(@NotNull ChunkCoordinate chunkCoordinate) {
         return chunks.get(chunkCoordinate);
     }
 

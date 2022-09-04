@@ -142,8 +142,7 @@ public enum MAbility implements AbstractAbility {
         return options;
     }
 
-    @Nullable
-    public Class<? extends @NotNull ManaAbilityProvider> getProvider() {
+    public @Nullable Class<? extends @NotNull ManaAbilityProvider> getProvider() {
         return provider;
     }
 

@@ -176,8 +176,7 @@ public class SourceManager {
         return xp;
     }
 
-    @NotNull
-    public List<@NotNull Source> getTag(SourceTag tag) {
+    public @NotNull List<@NotNull Source> getTag(SourceTag tag) {
         @Nullable List<@NotNull Source> list = tags.get(tag);
         return list != null ? list : new ArrayList<>();
     }

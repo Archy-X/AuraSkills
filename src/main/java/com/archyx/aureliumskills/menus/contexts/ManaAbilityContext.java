@@ -11,8 +11,7 @@ import java.util.Locale;
 public class ManaAbilityContext implements ContextProvider<@NotNull MAbility> {
 
     @Override
-    @Nullable
-    public MAbility parse(@NotNull String input) {
+    public @Nullable MAbility parse(@NotNull String input) {
         return MAbility.valueOf(input.toUpperCase(Locale.ROOT));
     }
 }

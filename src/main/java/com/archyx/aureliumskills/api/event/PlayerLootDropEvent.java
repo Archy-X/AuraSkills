@@ -60,9 +60,8 @@ public class PlayerLootDropEvent extends Event {
         this.isCancelled = cancelled;
     }
 
-    @NotNull
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

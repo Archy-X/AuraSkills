@@ -24,8 +24,7 @@ public class SkillRegistry {
         return skills.values();
     }
 
-    @Nullable
-    public Skill getSkill(@NotNull String key) {
+    public @Nullable Skill getSkill(@NotNull String key) {
         return this.skills.get(key.toLowerCase(Locale.ROOT));
     }
 

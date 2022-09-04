@@ -93,8 +93,7 @@ public enum ForagingSource implements Source {
         this.isTrunk = isTrunk;
     }
 
-    @Nullable
-    public String getLegacyMaterial() {
+    public @Nullable String getLegacyMaterial() {
         return legacyMaterial;
     }
 
@@ -106,8 +105,7 @@ public enum ForagingSource implements Source {
         return requiresBlockBelow;
     }
 
-    @Nullable
-    public String[] getAlternateMaterials() {
+    public @Nullable String[] getAlternateMaterials() {
         return alternateMaterials;
     }
 
@@ -167,8 +165,7 @@ public enum ForagingSource implements Source {
         return Skills.FORAGING;
     }
 
-    @Nullable
-    public static ForagingSource getSource(@NotNull BlockState blockState) {
+    public static @Nullable ForagingSource getSource(@NotNull BlockState blockState) {
         for (ForagingSource source : values()) {
             if (source.isMatch(blockState)) {
                 return source;
@@ -177,8 +174,7 @@ public enum ForagingSource implements Source {
         return null;
     }
 
-    @Nullable
-    public static ForagingSource getSource(@NotNull Block block) {
+    public static @Nullable ForagingSource getSource(@NotNull Block block) {
         return getSource(block.getState());
     }
 

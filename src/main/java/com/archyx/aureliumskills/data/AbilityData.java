@@ -22,8 +22,7 @@ public class AbilityData {
         return ability;
     }
 
-    @Nullable
-    public Object getData(String key) {
+    public @Nullable Object getData(String key) {
         return data.get(key);
     }
 

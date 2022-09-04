@@ -63,8 +63,7 @@ public class SourceRegistry {
         return sourceSet;
     }
 
-    @Nullable
-    public Source valueOf(@NotNull String sourceString) {
+    public @Nullable Source valueOf(@NotNull String sourceString) {
         for (Source source : values()) {
             if (source.toString().equals(sourceString.toUpperCase(Locale.ROOT))) {
                 return source;

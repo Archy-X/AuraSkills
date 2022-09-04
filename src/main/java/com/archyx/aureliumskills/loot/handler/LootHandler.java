@@ -100,8 +100,7 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    @Nullable
-    protected Loot selectLoot(@NotNull LootPool pool, @Nullable Source source) {
+    protected @Nullable Loot selectLoot(@NotNull LootPool pool, @Nullable Source source) {
         List<Loot> lootList = new ArrayList<>();
         // Add applicable loot to list for selection
         for (Loot loot : pool.getLoot()) {

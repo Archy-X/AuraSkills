@@ -15,8 +15,7 @@ public interface AbstractAbility {
 
     double getDefaultValuePerLevel();
 
-    @Nullable
-    static AbstractAbility valueOf(@NotNull String abilityName) {
+    static @Nullable AbstractAbility valueOf(@NotNull String abilityName) {
         try {
             return Ability.valueOf(abilityName.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {

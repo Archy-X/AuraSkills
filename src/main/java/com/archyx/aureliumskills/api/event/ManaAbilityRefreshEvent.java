@@ -27,9 +27,8 @@ public class ManaAbilityRefreshEvent extends Event {
         return manaAbility;
     }
 
-    @NotNull
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

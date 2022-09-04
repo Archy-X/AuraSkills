@@ -54,9 +54,8 @@ public enum ExcavationSource implements Source, BlockSource {
         this.allowBothIfLegacy = allowBothIfLegacy;
     }
 
-    @Nullable
     @Override
-    public String getLegacyMaterial() {
+    public @Nullable String getLegacyMaterial() {
         return legacyMaterial;
     }
 
@@ -75,8 +74,7 @@ public enum ExcavationSource implements Source, BlockSource {
         return Skills.EXCAVATION;
     }
 
-    @Nullable
-    public static ExcavationSource getSource(@NotNull Block block) {
+    public static @Nullable ExcavationSource getSource(@NotNull Block block) {
         for (ExcavationSource source : values()) {
             if (source.isMatch(block)) {
                 return source;

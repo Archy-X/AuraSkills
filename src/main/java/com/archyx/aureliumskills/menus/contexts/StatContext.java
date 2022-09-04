@@ -15,9 +15,8 @@ public class StatContext implements ContextProvider<@NotNull Stat> {
         this.plugin = plugin;
     }
 
-    @Nullable
     @Override
-    public Stat parse(@NotNull String input) {
+    public @Nullable Stat parse(@NotNull String input) {
         return plugin.getStatRegistry().getStat(input);
     }
 
