@@ -22,6 +22,7 @@ public interface Skill {
 
     @NotNull String name();
 
+    @Override
     String toString();
 
     @NotNull Ability getXpMultiplierAbility();

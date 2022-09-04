@@ -71,7 +71,7 @@ public class RewardTable {
     /**
      * Searches all rewards of a certain type at a single level
      */
-    public <T extends @NotNull Reward> ImmutableList<T> searchRewards(Class<T> type, int level) {
+    public <T extends @NotNull Reward> @NotNull ImmutableList<T> searchRewards(@NotNull Class<T> type, int level) {
         ImmutableList<@NotNull Reward> levelRewards = getRewards(level);
         List<T> rewardList = new ArrayList<>();
         for (Reward reward : levelRewards) {

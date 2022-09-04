@@ -194,7 +194,7 @@ public class PlayerData {
         this.locale = locale;
     }
 
-    public AbilityData getAbilityData(@NotNull AbstractAbility ability) {
+    public @NotNull AbilityData getAbilityData(@NotNull AbstractAbility ability) {
         AbilityData data = abilityData.get(ability);
         if (data == null) {
             data = new AbilityData(ability);

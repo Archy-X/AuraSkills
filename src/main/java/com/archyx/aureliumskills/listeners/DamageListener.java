@@ -32,7 +32,7 @@ public class DamageListener implements Listener {
 
     private final @NotNull Strength strength;
     private final @NotNull Critical critical;
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final @NotNull ExcavationAbilities excavationAbilities;
     private final @NotNull FarmingAbilities farmingAbilities;
     private final @NotNull MiningAbilities miningAbilities;
@@ -155,7 +155,7 @@ public class DamageListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private DamageType getDamageType(@NotNull EntityDamageByEntityEvent event, @NotNull Player player) {
+    private @NotNull DamageType getDamageType(@NotNull EntityDamageByEntityEvent event, @NotNull Player player) {
         if (event.getDamager() instanceof Arrow || event.getDamager() instanceof SpectralArrow || event.getDamager() instanceof TippedArrow) {
             return DamageType.BOW;
         }

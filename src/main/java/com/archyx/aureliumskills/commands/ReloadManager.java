@@ -16,8 +16,8 @@ import java.util.Locale;
 
 public class ReloadManager {
 
-    private final AureliumSkills plugin;
-    private final Lang lang;
+    private final @NotNull AureliumSkills plugin;
+    private final @NotNull Lang lang;
 
     public ReloadManager(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;

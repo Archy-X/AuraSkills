@@ -28,7 +28,7 @@ public class Multipliers extends NBTAPIUser {
         super(plugin);
     }
 
-    public List<@NotNull Multiplier> getMultipliers(@NotNull ModifierType type, @NotNull ItemStack item) {
+    public @NotNull List<@NotNull Multiplier> getMultipliers(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (!OptionL.getBoolean(Option.MODIFIER_MULTIPLIER_ENABLED) || isNBTDisabled()) { // Return empty list if disabled
             return new ArrayList<>();
         }
@@ -86,7 +86,7 @@ public class Multipliers extends NBTAPIUser {
         return nbtItem.getItem();
     }
 
-    public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, Skill skill, double value, Locale locale) {
+    public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, @Nullable Skill skill, double value, Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             @Nullable List<@NotNull String> lore = meta.getLore();

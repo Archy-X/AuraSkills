@@ -11,8 +11,8 @@ import java.io.File;
 
 public abstract class BackupProvider {
 
-    public final AureliumSkills plugin;
-    public final PlayerManager playerManager;
+    public final @NotNull AureliumSkills plugin;
+    public final @NotNull PlayerManager playerManager;
 
     public BackupProvider(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;

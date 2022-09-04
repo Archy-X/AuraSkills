@@ -17,9 +17,9 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable{
 
     private static final @NotNull HandlerList handlers = new HandlerList();
     private boolean cancel = false;
-    private final EquipMethod equipType;
+    private final @NotNull EquipMethod equipType;
     private final ArmorType type;
-    private ItemStack oldArmorPiece, newArmorPiece;
+    private @Nullable ItemStack oldArmorPiece, newArmorPiece;
 
     /**
      * @param player The player who put on / removed the armor.

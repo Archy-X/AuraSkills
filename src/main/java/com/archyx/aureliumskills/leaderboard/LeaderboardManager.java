@@ -8,7 +8,7 @@ import java.util.*;
 
 public class LeaderboardManager {
 
-    private final Map<@NotNull Skill, List<SkillValue>> skillLeaderboards;
+    private final @NotNull Map<@NotNull Skill, List<SkillValue>> skillLeaderboards;
     private @NotNull List<SkillValue> powerLeaderboard;
     private @NotNull List<SkillValue> averageLeaderboard;
     private volatile boolean sorting = false;

@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 
 public abstract class AbstractAbilityItem extends AbstractItem implements TemplateItemProvider<@NotNull Ability> {
 
-    private final String itemName;
+    private final @NotNull String itemName;
 
     public AbstractAbilityItem(AureliumSkills plugin, @NotNull String itemName) {
         super(plugin);
@@ -30,7 +30,7 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
     }
 
     @Override
-    public Class<@NotNull Ability> getContext() {
+    public @NotNull Class<@NotNull Ability> getContext() {
         return Ability.class;
     }
 

@@ -21,14 +21,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemProvider<Integer> {
+public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemProvider<@NotNull Integer> {
 
     public LeaderboardPlayerItem(AureliumSkills plugin) {
         super(plugin);
     }
 
     @Override
-    public Class<@NotNull Integer> getContext() {
+    public @NotNull Class<@NotNull Integer> getContext() {
         return Integer.class;
     }
 
@@ -52,8 +52,8 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public @NotNull Set<Integer> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        Set<Integer> places = new HashSet<>();
+    public @NotNull Set<@NotNull Integer> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        Set<@NotNull Integer> places = new HashSet<>();
         for (int i = 1; i <= 10; i++) {
             places.add(i);
         }

@@ -50,7 +50,7 @@ import java.util.*;
 public class SkillsCommand extends BaseCommand {
  
 	private final @NotNull AureliumSkills plugin;
-	private final ReloadManager reloadManager;
+	private final @NotNull ReloadManager reloadManager;
 
 	public SkillsCommand(@NotNull AureliumSkills plugin) {
 		this.plugin = plugin;
@@ -1431,7 +1431,7 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("help")
 	@CommandPermission("aureliumskills.help")
-	public void onHelp(CommandSender sender, CommandHelp help) {
+	public void onHelp(CommandSender sender, @NotNull CommandHelp help) {
 		help.showHelp();
 	}
 }

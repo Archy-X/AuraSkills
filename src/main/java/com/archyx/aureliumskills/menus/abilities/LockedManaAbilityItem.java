@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class LockedManaAbilityItem extends AbstractManaAbilityItem implements TemplateItemProvider<@NotNull MAbility> {
 
-    private final ManaAbilityManager manager;
+    private final @NotNull ManaAbilityManager manager;
 
     public LockedManaAbilityItem(@NotNull AureliumSkills plugin) {
         super(plugin);

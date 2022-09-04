@@ -130,8 +130,8 @@ public class AureliumSkills extends JavaPlugin {
 	private WorldGuardSupport worldGuardSupport;
 	private WorldGuardFlags worldGuardFlags;
 	private WorldManager worldManager;
-	private @NotNull ManaManager manaManager;
-	private @NotNull ManaAbilityManager manaAbilityManager;
+	private ManaManager manaManager;
+	private ManaAbilityManager manaAbilityManager;
 	private RewardManager rewardManager;
 	private boolean holographicDisplaysEnabled;
 	private boolean worldGuardEnabled;
@@ -153,7 +153,7 @@ public class AureliumSkills extends JavaPlugin {
 	private RegionBlockListener regionBlockListener;
 	private RequirementManager requirementManager;
 	private ModifierManager modifierManager;
-	private @NotNull Lang lang;
+	private Lang lang;
 	private Leveler leveler;
 	private Health health;
 	private LeaderboardManager leaderboardManager;
@@ -167,13 +167,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Slate slate;
 	private MenuFileManager menuFileManager;
 	private ForgingLeveler forgingLeveler;
-	
-	public AureliumSkills() {
-		lang = new Lang(this);
-		manaAbilityManager = new ManaAbilityManager(this);
-		manaManager = new ManaManager(this);
-	}
-	
+
 	@Override
 	public void onEnable() {
 		// Registries
@@ -260,7 +254,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Load	items
 		itemRegistry.loadFromFile();
 		// Load languages
-		getServer().getPluginManager().registerEvents(lang, this);
+		lang = new Lang(this);
+		getServer().getPluginManager().registerEvents(getLang(), this);
 		lang.init();
 		lang.loadEmbeddedMessages(getCommandManager());
 		lang.loadLanguages(getCommandManager());
@@ -274,7 +269,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers events
 		registerEvents();
 		// Load ability manager
-		getServer().getPluginManager().registerEvents(manaAbilityManager, this);
+		manaAbilityManager = new ManaAbilityManager(this);
+		getServer().getPluginManager().registerEvents(getManaAbilityManager(), this);
 		manaAbilityManager.init();
 		// Load ability options
 		abilityManager = new AbilityManager(this);
@@ -603,7 +599,8 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ForgingAbilities(this), this);
 		pm.registerEvents(new DamageListener(this, defenseAbilities, fightingAbilities), this);
 		// Load mana manager
-		getServer().getPluginManager().registerEvents(manaManager, this);
+		manaManager = new ManaManager(this);
+		getServer().getPluginManager().registerEvents(getManaManager(), this);
 		manaManager.startRegen();
 		ItemListener itemListener = new ItemListener(this);
 		pm.registerEvents(itemListener, this);
@@ -666,7 +663,10 @@ public class AureliumSkills extends JavaPlugin {
 		menuFileManager.loadMenus();
 	}
 
-	public RewardManager getRewardManager() {
+	public @NotNull RewardManager getRewardManager() {
+        RewardManager rewardManager = this.rewardManager;
+        if (rewardManager == null)
+            throw new IllegalStateException("RewardManager has not been initialized");
 		return rewardManager;
 	}
 
@@ -677,42 +677,66 @@ public class AureliumSkills extends JavaPlugin {
 		return playerManager;
 	}
 
-	public Economy getEconomy() {
+	public @NotNull Economy getEconomy() {
+        Economy economy = this.economy;
+        if (economy == null)
+            throw new IllegalStateException("Economy has not been initialized");
 		return economy;
 	}
 
-	public LootTableManager getLootTableManager() {
+	public @NotNull LootTableManager getLootTableManager() {
+        LootTableManager lootTableManager = this.lootTableManager;
+        if (lootTableManager == null)
+            throw new IllegalStateException("LootTableManager has not been initialized");
 		return lootTableManager;
 	}
 
-	public InventoryManager getInventoryManager() {
+	public @NotNull InventoryManager getInventoryManager() {
+        InventoryManager inventoryManager = this.inventoryManager;
+        if (inventoryManager == null)
+            throw new IllegalStateException("InventoryManager has not been initialized");
 		return inventoryManager;
 	}
 
-	public AbilityManager getAbilityManager() {
+	public @NotNull AbilityManager getAbilityManager() {
+        AbilityManager abilityManager = this.abilityManager;
+        if (abilityManager == null)
+            throw new IllegalStateException("AbilityManager has not been initialized");
 		return abilityManager;
 	}
 
-	public WorldGuardSupport getWorldGuardSupport() {
+	public @NotNull WorldGuardSupport getWorldGuardSupport() {
+        WorldGuardSupport worldGuardSupport = this.worldGuardSupport;
+        if (worldGuardSupport == null)
+            throw new IllegalStateException("WorldGuardSupport has not been initialized");
 		return worldGuardSupport;
 	}
 
-	public WorldManager getWorldManager() {
+	public @NotNull WorldManager getWorldManager() {
+        WorldManager worldManager = this.worldManager;
+        if (worldManager == null)
+            throw new IllegalStateException("WorldManager has not been initialized");
 		return worldManager;
 	}
 
 	public @NotNull ManaManager getManaManager() {
+        ManaManager manaManager = this.manaManager;
+        if (manaManager == null)
+            throw new IllegalStateException("ManaManager has not been initialized");
 		return manaManager;
 	}
 
 	public @NotNull ManaAbilityManager getManaAbilityManager() {
+        ManaAbilityManager manaAbilityManager = this.manaAbilityManager;
+        if (manaAbilityManager == null)
+            throw new IllegalStateException("ManaAbilityManager has not been initialized");
 		return manaAbilityManager;
 	}
 
 	public @NotNull PaperCommandManager getCommandManager() {
 	    PaperCommandManager commandManager = this.commandManager;
 	    if (commandManager == null)
-	        throw new IllegalStateException("PaperCommandManager has not been initialized!");
+	        throw new IllegalStateException("PaperCommandManager has not been initialized");
 		return commandManager;
 	}
 
@@ -753,6 +777,9 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public @NotNull Lang getLang() {
+        Lang lang = this.lang;
+        if (lang == null)
+            throw new IllegalStateException("Lang has not been initialized");
 		return lang;
 	}
 

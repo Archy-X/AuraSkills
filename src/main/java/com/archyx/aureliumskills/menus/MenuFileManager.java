@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class MenuFileManager {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final MenuManager manager;
 
     public MenuFileManager(@NotNull AureliumSkills plugin) {

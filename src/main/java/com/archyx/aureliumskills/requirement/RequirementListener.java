@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class RequirementListener implements Listener {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final RequirementManager manager;
     private final @NotNull Requirements requirements;
 

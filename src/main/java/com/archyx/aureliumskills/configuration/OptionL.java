@@ -129,14 +129,14 @@ public class OptionL {
         return value.asString();
     }
 
-    public static @NotNull List<@NotNull String> getList(Option option) {
+    public static @NotNull List<@NotNull String> getList(@NotNull Option option) {
         @Nullable OptionValue value = options.get(option);
         if (value == null)
             throw new IllegalStateException("Invalid or missing configuration option: " + option.getPath());
         return value.asList();
     }
 
-    public static @NotNull ChatColor getColor(Option option) {
+    public static @NotNull ChatColor getColor(@NotNull Option option) {
         @Nullable OptionValue value = options.get(option);
         if (value == null)
             throw new IllegalStateException("Invalid or missing configuration option: " + option.getPath());

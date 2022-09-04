@@ -49,8 +49,8 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public Set<Ability> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        Set<Ability> lockedAbilities = new HashSet<>();
+    public @NotNull Set<@NotNull Ability> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+        Set<@NotNull Ability> lockedAbilities = new HashSet<>();
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             Skill skill = getSkill(activeMenu);

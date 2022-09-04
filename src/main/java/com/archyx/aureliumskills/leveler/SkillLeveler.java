@@ -42,7 +42,7 @@ public abstract class SkillLeveler {
         this.sourceManager = plugin.getSourceManager();
     }
 
-    public double getXp(Source source) {
+    public double getXp(@NotNull Source source) {
         return sourceManager.getXp(source);
     }
 

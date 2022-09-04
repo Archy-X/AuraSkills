@@ -62,7 +62,7 @@ public class EntityData extends Parser {
         return entity;
     }
 
-    protected void applyData(Entity entity, @NotNull Location location) {
+    protected void applyData(@NotNull Entity entity, @NotNull Location location) {
         entity.setGlowing(glowing);
         entity.setFireTicks(fireTicks);
         if (VersionUtils.isAtLeastVersion(17)) {

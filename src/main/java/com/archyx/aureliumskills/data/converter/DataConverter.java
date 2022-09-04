@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class DataConverter {
 
-    public final AureliumSkills plugin;
-    public final PlayerManager playerManager;
+    public final @NotNull AureliumSkills plugin;
+    public final @NotNull PlayerManager playerManager;
 
     public DataConverter(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;

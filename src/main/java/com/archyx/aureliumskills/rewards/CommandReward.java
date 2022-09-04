@@ -16,8 +16,8 @@ public class CommandReward extends MessagedReward {
 
     private final @NotNull CommandExecutor executor;
     private final @NotNull String command;
-    private final CommandExecutor revertExecutor;
-    private final String revertCommand;
+    private final @Nullable CommandExecutor revertExecutor;
+    private final @Nullable String revertCommand;
 
     public CommandReward(@NotNull AureliumSkills plugin, @NotNull String menuMessage, @NotNull String chatMessage, @NotNull CommandExecutor executor, @NotNull String command, @Nullable CommandExecutor revertExecutor, @Nullable String revertCommand) {
         super(plugin, menuMessage, chatMessage);

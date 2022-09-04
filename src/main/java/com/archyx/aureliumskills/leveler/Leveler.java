@@ -41,7 +41,7 @@ public class Leveler {
 	
 	private final @NotNull AureliumSkills plugin;
 	private final @NotNull XpRequirements xpRequirements;
-	private final StatLeveler statLeveler;
+	private final @NotNull StatLeveler statLeveler;
 	private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public Leveler(@NotNull AureliumSkills plugin) {

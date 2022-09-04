@@ -31,7 +31,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
     }
 
     @Override
-    public void init(Player player, InventoryContents contents) {
+    public void init(@NotNull Player player, @NotNull InventoryContents contents) {
         for (int slot = 0; slot < 54; slot++) {
             int row = slot / 9;
             int column = slot % 9;
@@ -70,7 +70,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
         }
     }
 
-    public static SmartInventory getInventory(AureliumSkills plugin, PlayerData playerData) {
+    public static @NotNull SmartInventory getInventory(@NotNull AureliumSkills plugin, @NotNull PlayerData playerData) {
         return SmartInventory.builder()
                 .manager(plugin.getInventoryManager())
                 .provider(new UnclaimedItemsMenu(plugin, playerData))
@@ -79,7 +79,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                 .build();
     }
 
-    private ItemStack getDisplayItem(ItemStack baseItem) {
+    private @NotNull ItemStack getDisplayItem(@NotNull ItemStack baseItem) {
         ItemStack displayItem = baseItem.clone();
         ItemMeta meta = displayItem.getItemMeta();
         if (meta != null) {

@@ -33,7 +33,7 @@ import java.util.*;
 public abstract class StorageProvider {
 
     public final @NotNull AureliumSkills plugin;
-    public final PlayerManager playerManager;
+    public final @NotNull PlayerManager playerManager;
 
     public StorageProvider(@NotNull AureliumSkills plugin) {
         this.playerManager = plugin.getPlayerManager();

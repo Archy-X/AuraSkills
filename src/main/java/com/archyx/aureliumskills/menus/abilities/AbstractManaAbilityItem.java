@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractManaAbilityItem extends AbstractItem implements TemplateItemProvider<@NotNull MAbility> {
 
-    protected final ManaAbilityManager manager;
+    protected final @NotNull ManaAbilityManager manager;
 
     public AbstractManaAbilityItem(@NotNull AureliumSkills plugin) {
         super(plugin);

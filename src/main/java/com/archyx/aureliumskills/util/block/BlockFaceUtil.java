@@ -14,7 +14,7 @@ public class BlockFaceUtil {
         return faces;
     }
 
-    public static @NotNull List<@NotNull Block> getSurroundingBlocks(Block block) {
+    public static @NotNull List<@NotNull Block> getSurroundingBlocks(@NotNull Block block) {
         List<@NotNull Block> blocks = new ArrayList<>();
         for (int x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {

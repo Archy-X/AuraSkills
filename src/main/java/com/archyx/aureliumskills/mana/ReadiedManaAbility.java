@@ -23,8 +23,8 @@ import java.util.Locale;
 
 public abstract class ReadiedManaAbility extends ManaAbilityProvider {
 
-    private final Action[] actions;
-    protected final String[] materials;
+    private final @NotNull Action @NotNull [] actions;
+    protected final @NotNull String @NotNull [] materials;
 
     private final static int READY_DURATION = 80;
 

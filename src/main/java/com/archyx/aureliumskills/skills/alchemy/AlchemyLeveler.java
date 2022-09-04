@@ -76,7 +76,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 		}
 	}
 
-	private void addAlchemyXp(@NotNull Player player, Material mat) {
+	private void addAlchemyXp(@NotNull Player player, @NotNull Material mat) {
 		Leveler leveler = plugin.getLeveler();
 		if (mat.equals(Material.REDSTONE)) {
 			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.EXTENDED));

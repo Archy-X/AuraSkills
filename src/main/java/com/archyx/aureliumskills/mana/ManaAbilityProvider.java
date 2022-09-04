@@ -23,7 +23,7 @@ import java.util.Locale;
 public abstract class ManaAbilityProvider extends AbilityProvider implements Listener {
 
     protected final @NotNull AureliumSkills plugin;
-    protected final ManaAbilityManager manager;
+    protected final @NotNull ManaAbilityManager manager;
     protected final @NotNull MAbility mAbility;
     protected final @NotNull Skill skill;
     protected final SorceryLeveler sorceryLeveler;

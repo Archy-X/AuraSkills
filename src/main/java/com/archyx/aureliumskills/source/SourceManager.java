@@ -27,8 +27,8 @@ import java.util.*;
 public class SourceManager {
 
     private final AureliumSkills plugin;
-    private final Map<Source, Double> sources;
-    private final Map<SourceTag, List<@NotNull Source>> tags;
+    private final @NotNull Map<Source, Double> sources;
+    private final @NotNull Map<SourceTag, List<@NotNull Source>> tags;
     private Map<Skill, Map<XMaterial, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
     private Set<XMaterial> customBlockSet;
@@ -137,7 +137,7 @@ public class SourceManager {
         Bukkit.getLogger().info("[AureliumSkills] Loaded " + sourcesLoaded + " sources and " + tagsLoaded + " tags in " + (System.currentTimeMillis() - start) + "ms");
     }
 
-    private FileConfiguration updateFile(@NotNull File file, FileConfiguration config) {
+    private @NotNull FileConfiguration updateFile(@NotNull File file, @NotNull FileConfiguration config) {
         if (config.contains("file_version")) {
             InputStream stream = plugin.getResource("sources_config.yml");
             if (stream != null) {
@@ -169,7 +169,7 @@ public class SourceManager {
         return YamlConfiguration.loadConfiguration(file);
     }
 
-    public double getXp(Source source) {
+    public double getXp(@NotNull Source source) {
         Double xp = sources.get(source);
         if (xp == null)
             throw new IllegalStateException("Invalid xp souce index key: " + source.getPath());

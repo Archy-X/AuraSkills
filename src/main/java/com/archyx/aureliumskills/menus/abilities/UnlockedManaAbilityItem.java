@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements TemplateItemProvider<@NotNull MAbility> {
 
-    private final ManaAbilityManager manager;
+    private final @NotNull ManaAbilityManager manager;
     
     public UnlockedManaAbilityItem(@NotNull AureliumSkills plugin) {
         super(plugin);
@@ -100,7 +100,7 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
     }
 
     @Override
-    public Set<@NotNull MAbility> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
+    public @NotNull Set<@NotNull MAbility> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
         Skill skill = getSkill(activeMenu);
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Set<@NotNull MAbility> unlockedManaAbilities = new HashSet<>();

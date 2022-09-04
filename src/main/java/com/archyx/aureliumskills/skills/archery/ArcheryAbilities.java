@@ -31,7 +31,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         super(plugin, Skills.ARCHERY);
     }
 
-    public void bowMaster(@NotNull EntityDamageByEntityEvent event, Player player, @NotNull PlayerData playerData) {
+    public void bowMaster(@NotNull EntityDamageByEntityEvent event, @NotNull Player player, @NotNull PlayerData playerData) {
         if (OptionL.isEnabled(Skills.ARCHERY)) {
             if (plugin.getAbilityManager().isEnabled(Ability.BOW_MASTER)) {
                 if (!player.hasPermission("aureliumskills.archery")) {

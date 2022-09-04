@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ItemRewardBuilder extends MessagedRewardBuilder {
 
-    private String itemKey;
+    private @Nullable String itemKey;
     private int amount;
 
     public ItemRewardBuilder(@NotNull AureliumSkills plugin) {

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PermissionRewardBuilder extends MessagedRewardBuilder {
 
-    private String permission;
+    private @Nullable String permission;
     private boolean value;
 
     public PermissionRewardBuilder(@NotNull AureliumSkills plugin) {

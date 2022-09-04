@@ -33,7 +33,7 @@ public class Requirements extends NBTAPIUser {
         this.manager = plugin.getRequirementManager();
     }
 
-    public Map<Skill, Integer> getRequirements(@NotNull ModifierType type, @NotNull ItemStack item) {
+    public @NotNull Map<Skill, Integer> getRequirements(@NotNull ModifierType type, @NotNull ItemStack item) {
         if (isNBTDisabled()) return new HashMap<>();
         NBTItem nbtItem = new NBTItem(item);
         Map<Skill, Integer> requirements = new HashMap<>();
@@ -52,7 +52,7 @@ public class Requirements extends NBTAPIUser {
     }
 
     @SuppressWarnings("deprecation")
-    public Map<Skill, Integer> getGlobalRequirements(@NotNull ModifierType type, @NotNull ItemStack item) {
+    public @NotNull Map<Skill, Integer> getGlobalRequirements(@NotNull ModifierType type, @NotNull ItemStack item) {
         Map<Skill, Integer> requirements = new HashMap<>();
         for (GlobalRequirement global : manager.getGlobalRequirementsType(type)) {
             if (XMaterial.isNewVersion()) {

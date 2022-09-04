@@ -35,7 +35,7 @@ import java.util.*;
 public class MySqlStorageProvider extends StorageProvider {
 
     private Connection connection;
-    private final String host, database, username, password;
+    private final @NotNull String host, database, username, password;
     private final int port;
     private final boolean ssl;
 

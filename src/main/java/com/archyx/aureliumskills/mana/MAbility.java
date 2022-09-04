@@ -42,7 +42,7 @@ public enum MAbility implements AbstractAbility {
             new @NotNull String[] {"base_duration", "duration_per_level"}, new @NotNull Object[] {5.0, 4.0},
             LightningBlade.class);
 
-    private final Supplier<@NotNull Skill> skill;
+    private final @NotNull Supplier<@NotNull Skill> skill;
     private final double baseValue;
     private final double valuePerLevel;
     private final double baseCooldown;

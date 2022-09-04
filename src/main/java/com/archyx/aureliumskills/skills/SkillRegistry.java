@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class SkillRegistry {
 
-    public final Map<String, @NotNull Skill> skills;
+    public final @NotNull Map<String, @NotNull Skill> skills;
 
     public SkillRegistry() {
         this.skills = new HashMap<>();

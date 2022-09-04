@@ -89,7 +89,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<@No
         int page = activeMenu.getCurrentPage();
         @Nullable Locale locale = plugin.getLang().getLocale(player);
         // Sort the sources in the skill by the selected sort type
-        Source[] allSources = plugin.getSourceRegistry().values(skill);
+        @NotNull Source[] allSources = plugin.getSourceRegistry().values(skill);
         // Filter valid sources
         List<@NotNull Source> filteredSources = new ArrayList<>();
         for (Source source : allSources) {
