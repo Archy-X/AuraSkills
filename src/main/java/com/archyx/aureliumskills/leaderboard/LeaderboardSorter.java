@@ -1,13 +1,11 @@
 package com.archyx.aureliumskills.leaderboard;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Comparator;
 
 public class LeaderboardSorter implements Comparator<SkillValue>{
 
     @Override
-    public int compare(@NotNull SkillValue a, @NotNull SkillValue b) {
+    public int compare(SkillValue a, SkillValue b) {
         int levelA = a.getLevel();
         int levelB = b.getLevel();
         if (levelA != levelB) {

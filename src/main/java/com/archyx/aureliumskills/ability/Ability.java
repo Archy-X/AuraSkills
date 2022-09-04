@@ -137,7 +137,7 @@ public enum Ability implements AbstractAbility {
 	}
 
 	@Override
-	public Skill getSkill() {
+	public @NotNull Skill getSkill() {
 		return skill.get();
 	}
 

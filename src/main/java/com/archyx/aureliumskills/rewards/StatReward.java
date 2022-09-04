@@ -29,7 +29,7 @@ public class StatReward extends Reward {
     }
 
     @Override
-    public void giveReward(@NotNull Player player, Skill skill, int level) {
+    public void giveReward(@NotNull Player player, @NotNull Skill skill, int level) {
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
 
@@ -46,7 +46,7 @@ public class StatReward extends Reward {
     }
 
     @Override
-    public @NotNull String getMenuMessage(Player player, Locale locale, Skill skill, int level) {
+    public @NotNull String getMenuMessage(@NotNull Player player, @Nullable Locale locale, @NotNull Skill skill, int level) {
         return TextUtil.replace(Lang.getMessage(MenuMessage.REWARDS_ENTRY, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
@@ -55,7 +55,7 @@ public class StatReward extends Reward {
     }
 
     @Override
-    public @NotNull String getChatMessage(Player player, Locale locale, Skill skill, int level) {
+    public @NotNull String getChatMessage(@NotNull Player player, @Nullable Locale locale, @NotNull Skill skill, int level) {
         return TextUtil.replace(Lang.getMessage(LevelerMessage.STAT_LEVEL, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),

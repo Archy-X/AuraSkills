@@ -701,11 +701,11 @@ public class AureliumSkills extends JavaPlugin {
 		return worldManager;
 	}
 
-	public ManaManager getManaManager() {
+	public @NotNull ManaManager getManaManager() {
 		return manaManager;
 	}
 
-	public ManaAbilityManager getManaAbilityManager() {
+	public @NotNull ManaAbilityManager getManaAbilityManager() {
 		return manaAbilityManager;
 	}
 
@@ -752,7 +752,7 @@ public class AureliumSkills extends JavaPlugin {
 		return modifierManager;
 	}
 
-	public Lang getLang() {
+	public @NotNull Lang getLang() {
 		return lang;
 	}
 

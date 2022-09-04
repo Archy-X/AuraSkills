@@ -1,13 +1,11 @@
 package com.archyx.aureliumskills.leaderboard;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Comparator;
 
 public class AverageSorter implements Comparator<SkillValue> {
 
     @Override
-    public int compare(@NotNull SkillValue a, @NotNull SkillValue b) {
+    public int compare(SkillValue a, SkillValue b) {
         return (int) (b.getXp() * 100) - (int) (a.getXp() * 100);
     }
 }

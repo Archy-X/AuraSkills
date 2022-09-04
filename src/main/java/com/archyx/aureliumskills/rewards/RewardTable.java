@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.Player;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,7 +98,7 @@ public class RewardTable {
         Map<Integer, ImmutableList<@NotNull PermissionReward>> permissionRewardMap = searchRewards(PermissionReward.class);
         for (Map.Entry<Integer, ImmutableList<@NotNull PermissionReward>> entry : permissionRewardMap.entrySet()) {
             int entryLevel = entry.getKey();
-            for (@Nullable PermissionReward reward : entry.getValue()) {
+            for (PermissionReward reward : entry.getValue()) {
                 if (plugin.isLuckPermsEnabled()) {
                     // Add permission if unlocked
                     if (level >= entryLevel) {

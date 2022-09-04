@@ -140,8 +140,7 @@ public class Requirements extends NBTAPIUser {
     public void addLore(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Skill skill, int level, @Nullable Locale locale) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            @Nullable String text = TextUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_REQUIREMENT_ADD_LORE"), locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
-            assert (null != text);
+            String text = TextUtil.replace(Lang.getMessage(CommandMessage.valueOf(type.name() + "_REQUIREMENT_ADD_LORE"), locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
             @Nullable List<@NotNull String> lore = meta.getLore();
             if (lore != null) {
                 lore.add(text);

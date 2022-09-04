@@ -119,8 +119,7 @@ public class ArmorModifierListener implements Listener {
                         } else if (stored.equals(wearing)) { // Don't check if stored and wearing are the same item
                             continue;
                         }
-
-                        assert (stored != null);
+                        assert (null != stored);
 
                         Set<@NotNull Stat> statsToReload = new HashSet<>();
                         // Remove modifiers and multipliers that are on stored item from player

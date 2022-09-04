@@ -94,7 +94,7 @@ public class RequirementManager implements Listener {
         }.runTaskTimer(plugin, 0, 5);
     }
 
-    public Map<UUID, Integer> getErrorMessageTimer() {
+    public @NotNull Map<UUID, Integer> getErrorMessageTimer() {
         return errorMessageTimer;
     }
 

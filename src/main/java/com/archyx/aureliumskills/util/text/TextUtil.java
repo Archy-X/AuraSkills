@@ -86,7 +86,6 @@ public class TextUtil {
         if (strLen == 0) {
             return str;
         }
-        assert (null != str);
         
         int firstCodepoint = str.codePointAt(0);
         int newCodePoint = Character.toTitleCase(firstCodepoint);
@@ -202,7 +201,7 @@ public class TextUtil {
 
     public static @NotNull String capitalizeWord(@NotNull String str) {
         Objects.requireNonNull(str);
-        return capitalizeWord(str, new char[] {' '});
+        return capitalizeWord(str, ' ');
     }
 
 

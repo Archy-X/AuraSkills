@@ -141,8 +141,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets stat values
         for (Stat stat : plugin.getStatRegistry().getStats()) {
-            @Nullable String name = stat.name();
-            assert (null != name);
+            String name = stat.name();
             if (identifier.equals(name.toLowerCase(Locale.ENGLISH))) {
                 @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
@@ -173,8 +172,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         }
 
         if (identifier.startsWith("lb_")) {
-            @Nullable String leaderboardType = TextUtil.replace(identifier, "lb_", "");
-            assert (null != leaderboardType);
+            String leaderboardType = TextUtil.replace(identifier, "lb_", "");
             if (leaderboardType.startsWith("power_")) {
                 int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", ""));
                 if (place > 0) {

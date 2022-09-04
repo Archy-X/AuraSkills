@@ -20,7 +20,7 @@ public class ItemRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(@NotNull Map<?, ?> map) {
+    public @NotNull Reward parse(@NotNull Map<?, ?> map) {
         String key = getString(map, "key");
         ItemRewardBuilder builder = new ItemRewardBuilder(plugin).itemKey(key);
 

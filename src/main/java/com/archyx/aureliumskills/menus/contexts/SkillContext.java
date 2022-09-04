@@ -17,7 +17,6 @@ public class SkillContext implements ContextProvider<@NotNull Skill> {
     @Nullable
     @Override
     public Skill parse(@NotNull String input) {
-        assert (null != input);
         return plugin.getSkillRegistry().getSkill(input);
     }
 }

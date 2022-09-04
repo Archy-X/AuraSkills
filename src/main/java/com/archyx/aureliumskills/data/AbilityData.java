@@ -18,7 +18,7 @@ public class AbilityData {
         this.data = new HashMap<>();
     }
 
-    public AbstractAbility getAbility() {
+    public @NotNull AbstractAbility getAbility() {
         return ability;
     }
 

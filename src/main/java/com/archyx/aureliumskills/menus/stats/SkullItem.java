@@ -48,7 +48,7 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public @NotNull ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, ActiveMenu activeMenu) {
+    public @NotNull ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
         if (baseItem.getItemMeta() instanceof SkullMeta) {
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
             if (meta != null) {

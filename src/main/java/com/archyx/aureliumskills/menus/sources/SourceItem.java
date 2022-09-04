@@ -172,10 +172,9 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<@No
             message = Lang.getMessage(new CustomMessageKey(path), locale);
         }
         catch (IllegalStateException ex) {
-            // No custom message exists when using the message as a key
-            plugin.getLogger().warning("Unknown custom message with path: " + path);
+            throw new IllegalStateException("Unknown custom message with path: " + path);
         }
-        return path;
+        return message;
     }
 
     private @NotNull List<?> getSources(@NotNull ActiveMenu activeMenu) {

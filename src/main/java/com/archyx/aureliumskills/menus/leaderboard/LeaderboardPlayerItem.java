@@ -61,7 +61,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, Player player, @NotNull ActiveMenu activeMenu, @NotNull Integer place) {
+    public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull Integer place) {
         Skill skill = getSkill(activeMenu);
         List<SkillValue> values = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1);
         if (values.size() == 0) {

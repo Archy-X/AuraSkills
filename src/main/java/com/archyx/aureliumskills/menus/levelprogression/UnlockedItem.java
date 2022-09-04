@@ -47,7 +47,7 @@ public class UnlockedItem extends SkillLevelItem {
     }
 
     @Override
-    public @NotNull Set<@NotNull Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+    public @NotNull Set<@NotNull Integer> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
         Set<@NotNull Integer> levels = new HashSet<>();
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null)

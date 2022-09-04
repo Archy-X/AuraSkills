@@ -28,7 +28,6 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
@@ -205,7 +204,7 @@ public class RegionBlockListener implements Listener {
 
     private void checkAmethystCluster(@NotNull Block block) {
         // Check each side
-        for (@Nullable BlockFace face : BlockFaceUtil.getBlockSides()) {
+        for (BlockFace face : BlockFaceUtil.getBlockSides()) {
             Block checkedBlock = block.getRelative(face);
             if (MiningSource.AMETHYST_CLUSTER.isMatch(block) && regionManager.isPlacedBlock(checkedBlock)) {
                 new BukkitRunnable() {

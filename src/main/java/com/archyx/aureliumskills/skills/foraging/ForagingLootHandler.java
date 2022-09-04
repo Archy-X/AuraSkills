@@ -30,7 +30,7 @@ public class ForagingLootHandler extends BlockLootHandler {
     }
 
     @Override
-    public @NotNull LootDropCause getCause(LootPool pool) {
+    public @NotNull LootDropCause getCause(@NotNull LootPool pool) {
         return LootDropCause.FORAGING_OTHER_LOOT;
     }
 }

@@ -85,7 +85,7 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @Override
-    public void onStop(@NotNull Player player, PlayerData playerData) {
+    public void onStop(@NotNull Player player, @NotNull PlayerData playerData) {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         if (attribute == null) return;
         // Remove modifier if exists

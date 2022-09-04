@@ -62,7 +62,7 @@ public enum ManaAbilityMessage implements MessageKey {
     private final @NotNull String path;
 
     ManaAbilityMessage() {
-        if (this.name() == "NONE") {
+        if (this.name().equals("NONE")) {
             this.path = "";
             return;
         }

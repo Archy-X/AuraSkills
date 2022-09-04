@@ -23,7 +23,7 @@ public class ItemKeyParser extends Parser implements CustomItemParser {
     }
 
     @Override
-    public @NotNull ItemStack parseCustomItem(Map<?, ?> map) {
+    public @NotNull ItemStack parseCustomItem(@NotNull Map<?, ?> map) {
         String itemKey = getString(map, "key");
         ItemStack item = plugin.getItemRegistry().getItem(itemKey);
         if (item != null) {

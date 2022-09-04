@@ -323,7 +323,7 @@ public class Lang implements Listener {
 		defaultLanguage = language;
 	}
 
-	public static Locale getDefaultLanguage() {
+	public static @Nullable Locale getDefaultLanguage() {
 		return defaultLanguage;
 	}
 

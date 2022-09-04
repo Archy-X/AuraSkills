@@ -48,7 +48,6 @@ public abstract class LootHandler extends AbilityProvider {
     protected void giveCommandLoot(@NotNull Player player, @NotNull CommandLoot loot, @NotNull Source source) {
         // Apply placeholders to command
         String finalCommand = TextUtil.replace(loot.getCommand(), "{player}", player.getName());
-        assert (null != finalCommand);
         if (plugin.isPlaceholderAPIEnabled()) {
             finalCommand = PlaceholderAPI.setPlaceholders(player, finalCommand);
         }

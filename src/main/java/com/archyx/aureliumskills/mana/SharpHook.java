@@ -45,7 +45,7 @@ public class SharpHook extends ManaAbilityProvider {
     }
 
     @Override
-    public void onStop(Player player, PlayerData playerData) {
+    public void onStop(@NotNull Player player, @NotNull PlayerData playerData) {
 
     }
 

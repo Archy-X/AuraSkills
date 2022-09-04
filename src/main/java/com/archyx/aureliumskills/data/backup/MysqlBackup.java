@@ -37,7 +37,7 @@ public class MysqlBackup extends BackupProvider {
     }
 
     @Override
-    public void saveBackup(CommandSender sender, boolean savePlayerData) {
+    public void saveBackup(@NotNull CommandSender sender, boolean savePlayerData) {
         try {
             // Save online players
             if (savePlayerData) {

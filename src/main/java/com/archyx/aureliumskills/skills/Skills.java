@@ -63,14 +63,12 @@ public enum Skills implements Skill {
 	@Override
 	public @NotNull String getDescription(@Nullable Locale locale) {
 	    @Nullable String description = Lang.getMessage(SkillMessage.valueOf(this.name() + "_DESC"), locale);
-	    assert (null != description);
 		return description;
 	}
 
 	@Override
 	public @NotNull String getDisplayName(@Nullable Locale locale) {
 	    @Nullable String displayName = Lang.getMessage(SkillMessage.valueOf(this.name().toUpperCase() + "_NAME"), locale);
-	    assert (null != displayName);
 		return displayName;
 	}
 

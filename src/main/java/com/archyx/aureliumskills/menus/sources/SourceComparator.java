@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.menus.sources;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.source.Source;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
@@ -24,7 +23,7 @@ public abstract class SourceComparator implements Comparator<Source> {
         }
 
         @Override
-        public int compare(@NotNull Source source1, @NotNull Source source2) {
+        public int compare(Source source1, Source source2) {
             return (int) (plugin.getSourceManager().getXp(source1) * 100) - (int) (plugin.getSourceManager().getXp(source2) * 100);
         }
     }
@@ -36,7 +35,7 @@ public abstract class SourceComparator implements Comparator<Source> {
         }
 
         @Override
-        public int compare(@NotNull Source source1, @NotNull Source source2) {
+        public int compare(Source source1, Source source2) {
             return (int) (plugin.getSourceManager().getXp(source2) * 100) - (int) (plugin.getSourceManager().getXp(source1) * 100);
         }
     }
@@ -51,7 +50,7 @@ public abstract class SourceComparator implements Comparator<Source> {
         }
 
         @Override
-        public int compare(@NotNull Source source1, @NotNull Source source2) {
+        public int compare(Source source1, Source source2) {
             return source1.getDisplayName(locale).compareTo(source2.getDisplayName(locale));
         }
     }
@@ -66,7 +65,7 @@ public abstract class SourceComparator implements Comparator<Source> {
         }
 
         @Override
-        public int compare(@NotNull Source source1, @NotNull Source source2) {
+        public int compare(Source source1, Source source2) {
             return source2.getDisplayName(locale).compareTo(source1.getDisplayName(locale));
         }
     }

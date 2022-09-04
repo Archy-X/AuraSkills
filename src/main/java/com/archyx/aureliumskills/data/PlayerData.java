@@ -64,7 +64,7 @@ public class PlayerData {
         return player;
     }
 
-    public AureliumSkills getPlugin() {
+    public @NotNull AureliumSkills getPlugin() {
         return plugin;
     }
 
@@ -190,7 +190,7 @@ public class PlayerData {
         return locale != null ? locale : Lang.getDefaultLanguage();
     }
 
-    public void setLocale(Locale locale) {
+    public void setLocale(@Nullable Locale locale) {
         this.locale = locale;
     }
 

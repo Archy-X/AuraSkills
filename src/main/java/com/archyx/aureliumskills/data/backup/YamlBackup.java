@@ -28,7 +28,7 @@ public class YamlBackup extends BackupProvider {
     }
 
     @Override
-    public void saveBackup(CommandSender sender, boolean savePlayerData) {
+    public void saveBackup(@NotNull CommandSender sender, boolean savePlayerData) {
         try {
             if (savePlayerData) {
                 // Save online players
@@ -70,7 +70,8 @@ public class YamlBackup extends BackupProvider {
                     , "{type}", "Yaml", "{file}", backupFile.getName());
             if (sender instanceof ConsoleCommandSender) {
                 @Nullable String m = ChatColor.stripColor(message);
-                message = m != null ? m : "";
+                assert (null != m);
+                message = m;
             }
             sender.sendMessage(message);
         } catch (Exception e) {

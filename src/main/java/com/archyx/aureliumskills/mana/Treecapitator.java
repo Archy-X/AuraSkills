@@ -144,7 +144,7 @@ public class Treecapitator extends ReadiedManaAbility {
             setMaxBlocks();
         }
 
-        public Block getOriginalBlock() {
+        public @NotNull Block getOriginalBlock() {
             return originalBlock;
         }
 

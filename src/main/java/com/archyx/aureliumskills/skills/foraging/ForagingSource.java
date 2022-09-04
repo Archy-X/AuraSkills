@@ -98,7 +98,7 @@ public enum ForagingSource implements Source {
         return legacyMaterial;
     }
 
-    public byte[] getLegacyData() {
+    public byte @NotNull [] getLegacyData() {
         return legacyData;
     }
 
@@ -123,7 +123,8 @@ public enum ForagingSource implements Source {
     public boolean isMatch(@NotNull BlockState blockState) {
         boolean matched = false;
         String materialName = blockState.getType().toString();
-        if (XMaterial.isNewVersion() || getLegacyMaterial() == null) { // Standard block handling
+        String legacyMaterial = getLegacyMaterial();
+        if (XMaterial.isNewVersion() || legacyMaterial == null) { // Standard block handling
             if (toString().equalsIgnoreCase(materialName)) {
                 matched = true;
             } else if (getAlternateMaterials() != null) {
@@ -137,17 +138,15 @@ public enum ForagingSource implements Source {
                 }
             }
         } else { // Legacy block handling
-            @Nullable String legacyMaterial = getLegacyMaterial();
-            if (legacyMaterial != null)
-                if (getLegacyData() == null) { // No data value
-                    if (legacyMaterial.equalsIgnoreCase(materialName)) {
-                        matched = true;
-                    }
-                } else { // With data value
-                    if (legacyMaterial.equalsIgnoreCase(materialName) && byteArrayContains(legacyData, blockState.getRawData())) {
-                        matched = true;
-                    }
+            if (getLegacyData().length == 0) { // No data value
+                if (legacyMaterial.equalsIgnoreCase(materialName)) {
+                    matched = true;
                 }
+            } else { // With data value
+                if (legacyMaterial.equalsIgnoreCase(materialName) && byteArrayContains(legacyData, blockState.getRawData())) {
+                    matched = true;
+                }
+            }
         }
         return matched;
     }

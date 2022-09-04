@@ -42,17 +42,14 @@ public class CommandReward extends MessagedReward {
         @Nullable String executedCommand = TextUtil.replace(command, "{player}", player.getName(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));
-        assert (null != executedCommand);
         if (plugin.isPlaceholderAPIEnabled()) {
             executedCommand = PlaceholderAPI.setPlaceholders(player, executedCommand);
         }
         executedCommand = TextUtil.replaceNonEscaped(executedCommand, "&", "§");
         // Executes the commands
         if (executor == CommandExecutor.CONSOLE) {
-            assert (null != executedCommand);
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), executedCommand);
         } else {
-            assert (null != executedCommand);
             player.performCommand(executedCommand);
         }
     }

@@ -36,7 +36,7 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     }
 
     @Override
-    public int getPages(Player player, @NotNull ActiveMenu activeMenu) {
+    public int getPages(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
         Skill skill = getSkill(activeMenu);
         int itemsPerPage = getItemsPerPage(activeMenu);
         Source[] sources = plugin.getSourceRegistry().values(skill);

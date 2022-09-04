@@ -137,13 +137,13 @@ public class ChargedShot extends ManaAbilityProvider {
     }
 
     @Override
-    public void onStop(Player player, @NotNull PlayerData playerData) {
+    public void onStop(@NotNull Player player, @NotNull PlayerData playerData) {
         playerData.getMetadata().remove("charged_shot_projectile");
         playerData.getMetadata().remove("charged_shot_force");
     }
 
     @Override
-    protected void consumeMana(Player player, @NotNull PlayerData playerData) {
+    protected void consumeMana(@NotNull Player player, @NotNull PlayerData playerData) {
         double manaConsumed = getManaConsumed(playerData);
         if (manaConsumed <= 0) return;
         double damagePercent = manaConsumed * plugin.getManaAbilityManager().getValue(MAbility.CHARGED_SHOT, playerData);
@@ -166,7 +166,7 @@ public class ChargedShot extends ManaAbilityProvider {
     }
 
     @Override
-    protected int getDuration(PlayerData playerData) {
+    protected int getDuration(@NotNull PlayerData playerData) {
         return 0;
     }
 

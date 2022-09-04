@@ -18,7 +18,7 @@ public class MoneyReward extends Reward {
     }
 
     @Override
-    public void giveReward(Player player, Skill skill, int level) {
+    public void giveReward(@NotNull Player player, @NotNull Skill skill, int level) {
         if (plugin.isVaultEnabled()) {
             plugin.getEconomy().depositPlayer(player, amount);
         }
@@ -29,12 +29,12 @@ public class MoneyReward extends Reward {
     }
 
     @Override
-    public @NotNull String getMenuMessage(Player player, Locale locale, Skill skill, int level) {
+    public @NotNull String getMenuMessage(@NotNull Player player, Locale locale, @NotNull Skill skill, int level) {
         return ""; // All money rewards have to be added into one line
     }
 
     @Override
-    public @NotNull String getChatMessage(Player player, Locale locale, Skill skill, int level) {
+    public @NotNull String getChatMessage(@NotNull Player player, Locale locale, @NotNull Skill skill, int level) {
         return ""; // ALl money rewards have to be added into one line
     }
 }

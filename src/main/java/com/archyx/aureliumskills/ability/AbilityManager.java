@@ -216,7 +216,6 @@ public class AbilityManager {
         try {
             for (String abilityName : abilities.getKeys(false)) {
                 String newKey = TextUtil.replace(abilityName, "-", "_");
-                assert (null != newKey);
                 newKey = newKey.toUpperCase();
                 if (isAbility(newKey)) {
                     Ability ability = Ability.valueOf(newKey);
@@ -240,7 +239,6 @@ public class AbilityManager {
             if (manaAbilities != null) {
                 for (String manaAbilityName : manaAbilities.getKeys(false)) {
                     String newKey = TextUtil.replace(manaAbilityName, "-", "_");
-                    assert (null != newKey);
                     newKey = newKey.toUpperCase();
                     if (isManaAbility(newKey)) {
                         MAbility mAbility = MAbility.valueOf(newKey);

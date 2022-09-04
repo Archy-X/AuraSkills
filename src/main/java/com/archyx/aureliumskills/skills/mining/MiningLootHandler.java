@@ -30,7 +30,7 @@ public class MiningLootHandler extends BlockLootHandler {
     }
 
     @Override
-    public @NotNull LootDropCause getCause(LootPool pool) {
+    public @NotNull LootDropCause getCause(@NotNull LootPool pool) {
         return LootDropCause.MINING_OTHER_LOOT;
     }
 }
