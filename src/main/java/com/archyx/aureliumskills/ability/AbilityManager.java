@@ -15,7 +15,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -214,7 +213,6 @@ public class AbilityManager {
         try {
             for (String abilityName : abilities.getKeys(false)) {
                 String newKey = TextUtil.replace(abilityName, "-", "_");
-                assert (null != newKey);
                 newKey = newKey.toUpperCase();
                 if (isAbility(newKey)) {
                     Ability ability = Ability.valueOf(newKey);
@@ -238,7 +236,6 @@ public class AbilityManager {
             if (manaAbilities != null) {
                 for (String manaAbilityName : manaAbilities.getKeys(false)) {
                     String newKey = TextUtil.replace(manaAbilityName, "-", "_");
-                    assert (null != newKey);
                     newKey = newKey.toUpperCase();
                     if (isManaAbility(newKey)) {
                         MAbility mAbility = MAbility.valueOf(newKey);
@@ -279,8 +276,9 @@ public class AbilityManager {
     }
 
     public boolean isEnabled(Ability ability) {
-        if (abilityOptions.containsKey(ability)) {
-            return abilityOptions.get(ability).isEnabled();
+        AbilityOption option = abilityOptions.get(ability);
+        if (option != null) {
+            return option.isEnabled();
         }
         return true;
     }
@@ -290,8 +288,9 @@ public class AbilityManager {
     }
 
     public boolean isEnabled(MAbility mAbility) {
-        if (manaAbilityOptions.containsKey(mAbility)) {
-            return manaAbilityOptions.get(mAbility).isEnabled();
+        ManaAbilityOption option = manaAbilityOptions.get(mAbility);
+        if (option != null) {
+            return option.isEnabled();
         }
         return true;
     }
@@ -405,16 +404,13 @@ public class AbilityManager {
     public boolean getOptionAsBooleanElseTrue(Ability ability, String key) {
         OptionValue value = getOption(ability, key);
         if (value != null) {
-            if (value.getValue() != null) {
-                return value.asBoolean();
-            }
+            return value.asBoolean();
         }
         return true;
     }
 
-    @Nullable
     public Set<String> getOptionKeys(Ability ability) {
-        if (ability.getDefaultOptions() != null) {
+        if (!ability.getDefaultOptions().isEmpty()) {
             return ability.getDefaultOptions().keySet();
         }
         return null;

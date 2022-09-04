@@ -136,14 +136,16 @@ public class Luck implements Listener {
 										}
 									}
 								}
-								else if (mat.equals(XMaterial.GRASS_BLOCK.parseMaterial())) {
+								else {
 									Material grassBlock = XMaterial.GRASS_BLOCK.parseMaterial();
 									if (grassBlock == null)
 										return;
-									PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
-									Bukkit.getPluginManager().callEvent(dropEvent);
-									if (!event.isCancelled()) {
-										block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+									if (mat.equals(grassBlock)) {
+										PlayerLootDropEvent dropEvent = new PlayerLootDropEvent(player, new ItemStack(grassBlock), block.getLocation().add(0.5, 0.5, 0.5), LootDropCause.LUCK_DOUBLE_DROP);
+										Bukkit.getPluginManager().callEvent(dropEvent);
+										if (!event.isCancelled()) {
+											block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItemStack());
+										}
 									}
 								}
 							}

@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -58,9 +57,10 @@ public enum MAbility implements AbstractAbility {
         this.cooldownPerLevel = cooldownPerLevel;
         this.baseManaCost = baseManaCost;
         this.manaCostPerLevel = manaCostPerLevel;
+        this.options = new HashMap<>();
     }
 
-    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues) {
+    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String [] optionKeys, Object [] optionValues) {
         this(skill, baseValue, valuePerLevel, baseCooldown, cooldownPerLevel, baseManaCost, manaCostPerLevel);
         this.options = new HashMap<>();
         for (int i = 0; i < optionKeys.length; i++) {
@@ -70,7 +70,7 @@ public enum MAbility implements AbstractAbility {
         }
     }
 
-    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String[] optionKeys, Object[] optionValues, Class<? extends ManaAbilityProvider> provider) {
+    MAbility(Supplier<Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel, String [] optionKeys, Object [] optionValues, Class<? extends ManaAbilityProvider> provider) {
         this(skill, baseValue, valuePerLevel, baseCooldown, cooldownPerLevel, baseManaCost, manaCostPerLevel, optionKeys, optionValues);
         this.provider = provider;
     }
@@ -139,7 +139,6 @@ public enum MAbility implements AbstractAbility {
         return options;
     }
 
-    @Nullable
     public Class<? extends ManaAbilityProvider> getProvider() {
         return provider;
     }

@@ -33,9 +33,7 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
 
     @Override
     public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Ability ability) {
-        Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
+        Skill skill = getSkill(activeMenu);
         Object obj =  activeMenu.getItemOption(itemName, "slots");
         if (obj instanceof List<?>) {
             List<String> slots = DataUtil.castStringList(obj);
@@ -87,4 +85,13 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
         }
         return baseItem;
     }
+
+    private Skill getSkill(ActiveMenu activeMenu) {
+        Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

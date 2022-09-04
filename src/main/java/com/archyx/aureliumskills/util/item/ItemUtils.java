@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -74,9 +73,7 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getModifiersTypeCompound(NBTItem item, ModifierType type) {
-		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
-		assert (null != name);
-		return getCompound(getModifiersCompound(item), name);
+		return getCompound(getModifiersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
 	public static NBTCompound getRequirementsCompound(NBTItem item) {
@@ -84,9 +81,7 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getRequirementsTypeCompound(NBTItem item, ModifierType type) {
-		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
-		assert (null != name);
-		return getCompound(getRequirementsCompound(item), name);
+		return getCompound(getRequirementsCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
 	public static NBTCompound getMultipliersCompound(NBTItem item) {
@@ -94,9 +89,7 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getMultipliersTypeCompound(NBTItem item, ModifierType type) {
-		String name = TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT));
-		assert (null != name);
-		return getCompound(getMultipliersCompound(item), name);
+		return getCompound(getMultipliersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
 	public static void removeParentCompounds(NBTCompound compound) {
@@ -121,7 +114,6 @@ public class ItemUtils {
 		return true;
 	}
 
-	@Nullable
 	public static ItemStack addItemToInventory(Player player, ItemStack item) {
 		PlayerInventory inventory = player.getInventory();
 		int amountRemaining = item.getAmount();
@@ -176,8 +168,6 @@ public class ItemUtils {
 		return amountRemaining <= 0;
 	}
 
-
-	@Nullable
 	public static ItemStack parseItem(String name) {
 		Material material = Material.getMaterial(name);
 		if (material != null) {

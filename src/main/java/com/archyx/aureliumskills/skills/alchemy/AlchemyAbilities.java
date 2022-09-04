@@ -136,11 +136,9 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                     // Add lore
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.ALCHEMIST, "add_item_lore")) {
                         List<String> lore = new ArrayList<>();
-                        String t = TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
+                        lore.add(TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
                                 , "{duration}", PotionUtil.formatDuration(durationBonus)
-                                , "{value}", NumberUtil.format1((multiplier - 1) * 100));
-                        assert (null != t);
-                        lore.add(t);
+                                , "{value}", NumberUtil.format1((multiplier - 1) * 100)));
                         meta.setLore(lore);
                         item.setItemMeta(meta);
                     }

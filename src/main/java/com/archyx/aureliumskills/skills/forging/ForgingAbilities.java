@@ -28,7 +28,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -227,7 +226,6 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    @Nullable
     private XMaterial getRawMaterial(Material material) {
         String name = material.name();
         if (name.startsWith("DIAMOND_")) {
@@ -264,7 +262,6 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         return null;
     }
 
-    @Nullable
     private Player getHighestPlayer(List<HumanEntity> viewers) {
         int highestLevel = 0;
         Player highestPlayer = null;

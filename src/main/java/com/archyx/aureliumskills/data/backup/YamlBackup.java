@@ -18,7 +18,6 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Locale;
-import java.util.Objects;
 
 public class YamlBackup extends BackupProvider {
 
@@ -69,7 +68,8 @@ public class YamlBackup extends BackupProvider {
                     , "{type}", "Yaml", "{file}", backupFile.getName());
             if (sender instanceof ConsoleCommandSender) {
                 String m = ChatColor.stripColor(message);
-                message = m != null ? m : "";
+                assert (null != m);
+                message = m;
             }
             sender.sendMessage(message);
         } catch (Exception e) {

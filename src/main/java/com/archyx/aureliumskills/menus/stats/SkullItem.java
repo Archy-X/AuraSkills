@@ -32,7 +32,6 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
         }
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
-            // Handle each stat entry
             Stat stat = plugin.getStatRegistry().getStat(placeholder);
             if (stat != null) {
                 return TextUtil.replace(Lang.getMessage(MenuMessage.PLAYER_STAT_ENTRY, locale),

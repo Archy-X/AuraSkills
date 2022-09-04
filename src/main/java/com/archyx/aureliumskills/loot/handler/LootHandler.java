@@ -29,7 +29,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -46,7 +45,6 @@ public abstract class LootHandler extends AbilityProvider {
     protected void giveCommandLoot(Player player, CommandLoot loot, Source source) {
         // Apply placeholders to command
         String finalCommand = TextUtil.replace(loot.getCommand(), "{player}", player.getName());
-        assert (null != finalCommand);
         if (plugin.isPlaceholderAPIEnabled()) {
             finalCommand = PlaceholderAPI.setPlaceholders(player, finalCommand);
         }
@@ -61,7 +59,7 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event, @Nullable Source source, LootDropCause cause) {
+    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event, Source source, LootDropCause cause) {
         Block block = event.getBlock();
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
@@ -76,7 +74,7 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable Source source, LootDropCause cause) {
+    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, Source source, LootDropCause cause) {
         if (!(event.getCaught() instanceof Item)) return;
         Entity itemEntity = event.getCaught();
 
@@ -99,8 +97,7 @@ public abstract class LootHandler extends AbilityProvider {
         giveXp(player, loot, source);
     }
 
-    @Nullable
-    protected Loot selectLoot(LootPool pool, @Nullable Source source) {
+    protected Loot selectLoot(LootPool pool, Source source) {
         List<Loot> lootList = new ArrayList<>();
         // Add applicable loot to list for selection
         for (Loot loot : pool.getLoot()) {
@@ -140,7 +137,7 @@ public abstract class LootHandler extends AbilityProvider {
         return selectedLoot;
     }
 
-    private void giveXp(Player player, Loot loot, @Nullable Source source) {
+    private void giveXp(Player player, Loot loot, Source source) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         double xp = loot.getOption("xp", Double.class, -1.0);
@@ -178,10 +175,14 @@ public abstract class LootHandler extends AbilityProvider {
             Locale locale = playerData.getLocale();
             // Try to get message as message key
             CustomMessageKey key = new CustomMessageKey(message);
-            String finalMessage = Lang.getMessage(key, locale);
             // Use input as message if fail
-            if (finalMessage == null) {
-                finalMessage = message;
+            String finalMessage = message;
+            try {
+                finalMessage = Lang.getMessage(key, locale);
+            }
+            catch (IllegalStateException ex) {
+                // No custom message exists when using the message as a key
+                plugin.getLogger().warning("Unknown custom message with path: " + key);
             }
             // Replace placeholders
             if (plugin.isPlaceholderAPIEnabled()) {

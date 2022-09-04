@@ -108,7 +108,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -166,13 +165,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Slate slate;
 	private MenuFileManager menuFileManager;
 	private ForgingLeveler forgingLeveler;
-	
-	public AureliumSkills() {
-		lang = new Lang(this);
-		manaAbilityManager = new ManaAbilityManager(this);
-		manaManager = new ManaManager(this);
-	}
-	
+
 	@Override
 	public void onEnable() {
 		// Registries
@@ -259,10 +252,11 @@ public class AureliumSkills extends JavaPlugin {
 		// Load	items
 		itemRegistry.loadFromFile();
 		// Load languages
-		getServer().getPluginManager().registerEvents(lang, this);
+		lang = new Lang(this);
+		getServer().getPluginManager().registerEvents(getLang(), this);
 		lang.init();
-		lang.loadEmbeddedMessages(commandManager);
-		lang.loadLanguages(commandManager);
+		lang.loadEmbeddedMessages(getCommandManager());
+		lang.loadLanguages(getCommandManager());
 		// Load rewards
 		rewardManager = new RewardManager(this);
 		rewardManager.loadRewards();
@@ -273,7 +267,8 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers events
 		registerEvents();
 		// Load ability manager
-		getServer().getPluginManager().registerEvents(manaAbilityManager, this);
+		manaAbilityManager = new ManaAbilityManager(this);
+		getServer().getPluginManager().registerEvents(getManaAbilityManager(), this);
 		manaAbilityManager.init();
 		// Load ability options
 		abilityManager = new AbilityManager(this);
@@ -351,10 +346,10 @@ public class AureliumSkills extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
+		for (PlayerData playerData : getPlayerManager().getPlayerDataMap().values()) {
 			storageProvider.save(playerData.getPlayer(), false);
 		}
-		playerManager.getPlayerDataMap().clear();
+		getPlayerManager().getPlayerDataMap().clear();
 		File file = new File(this.getDataFolder(), "config.yml");
 		if (file.exists()) {
 			// Reloads config
@@ -448,10 +443,12 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	private void registerCommands() {
-		commandManager.enableUnstableAPI("help");
-		commandManager.usePerIssuerLocale(true, false);
-		commandManager.getCommandContexts().registerContext(Stat.class, c -> {
+		getCommandManager().enableUnstableAPI("help");
+		getCommandManager().usePerIssuerLocale(true, false);
+		getCommandManager().getCommandContexts().registerContext(Stat.class, c -> {
 			String input = c.popFirstArg();
+			if (input == null)
+			    throw new IndexOutOfBoundsException();
 			Stat stat = statRegistry.getStat(input);
 			if (stat != null) {
 				return stat;
@@ -459,7 +456,7 @@ public class AureliumSkills extends JavaPlugin {
 				throw new InvalidCommandArgument("Stat " + input + " not found!");
 			}
 		});
-		commandManager.getCommandContexts().registerContext(Skill.class, c -> {
+		getCommandManager().getCommandContexts().registerContext(Skill.class, c -> {
 			String input = c.popFirstArg();
 			Skill skill = null;
 			
@@ -472,7 +469,7 @@ public class AureliumSkills extends JavaPlugin {
 				throw new InvalidCommandArgument("Skill " + input + " not found!");
 			}
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
@@ -481,7 +478,7 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return values;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("skills_global", c -> {
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("skills_global", c -> {
 			List<String> values = new ArrayList<>();
 			values.add("global");
 			for (Skill skill : skillRegistry.getSkills()) {
@@ -491,7 +488,7 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return values;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("skillTop", c -> {
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("skillTop", c -> {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
@@ -501,24 +498,26 @@ public class AureliumSkills extends JavaPlugin {
 			values.add("average");
 			return values;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("stats", c -> {
 			List<String> values = new ArrayList<>();
 			for (Stat stat : statRegistry.getStats()) {
 				values.add(stat.toString().toLowerCase(Locale.ENGLISH));
 			}
 			return values;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("lang", c -> Lang.getDefinedLanguagesSet());
-		commandManager.getCommandCompletions().registerAsyncCompletion("modifiers", c -> {
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("lang", c -> Lang.getDefinedLanguagesSet());
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("modifiers", c -> {
 			Player player = c.getPlayer();
-			PlayerData playerData = getPlayerManager().getPlayerData(player);
-			if (playerData != null) {
-				return playerData.getStatModifiers().keySet();
+			if (player != null) {
+				PlayerData playerData = getPlayerManager().getPlayerData(player);
+				if (playerData != null) {
+					return playerData.getStatModifiers().keySet();
+				}
 			}
 			return null;
 		});
-		commandManager.getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
-		commandManager.getCommandCompletions().registerAsyncCompletion("sort_types", c -> {
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("item_keys", c -> itemRegistry.getKeys());
+		getCommandManager().getCommandCompletions().registerAsyncCompletion("sort_types", c -> {
 			SorterItem.SortType[] sortTypes = SorterItem.SortType.values();
 			List<String> typeNames = new ArrayList<>();
 			for (SorterItem.SortType sortType : sortTypes) {
@@ -526,25 +525,25 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return typeNames;
 		});
-		commandManager.registerCommand(new SkillsCommand(this));
-		commandManager.registerCommand(new StatsCommand(this));
-		commandManager.registerCommand(new ManaCommand(this));
+		getCommandManager().registerCommand(new SkillsCommand(this));
+		getCommandManager().registerCommand(new StatsCommand(this));
+		getCommandManager().registerCommand(new ManaCommand(this));
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
-			if (OptionL.isEnabled(Skills.FARMING)) { commandManager.registerCommand(new SkillCommands.FarmingCommand(this)); }
-			if (OptionL.isEnabled(Skills.FORAGING)) { commandManager.registerCommand(new SkillCommands.ForagingCommand(this)); }
-			if (OptionL.isEnabled(Skills.MINING)) { commandManager.registerCommand(new SkillCommands.MiningCommand(this)); }
-			if (OptionL.isEnabled(Skills.FISHING)) { commandManager.registerCommand(new SkillCommands.FishingCommand(this)); }
-			if (OptionL.isEnabled(Skills.EXCAVATION)) { commandManager.registerCommand(new SkillCommands.ExcavationCommand(this)); }
-			if (OptionL.isEnabled(Skills.ARCHERY)) { commandManager.registerCommand(new SkillCommands.ArcheryCommand(this)); }
-			if (OptionL.isEnabled(Skills.DEFENSE)) { commandManager.registerCommand(new SkillCommands.DefenseCommand(this)); }
-			if (OptionL.isEnabled(Skills.FIGHTING)) { commandManager.registerCommand(new SkillCommands.FightingCommand(this)); }
-			if (OptionL.isEnabled(Skills.ENDURANCE)) { commandManager.registerCommand(new SkillCommands.EnduranceCommand(this)); }
-			if (OptionL.isEnabled(Skills.AGILITY)) { commandManager.registerCommand(new SkillCommands.AgilityCommand(this)); }
-			if (OptionL.isEnabled(Skills.ALCHEMY)) { commandManager.registerCommand(new SkillCommands.AlchemyCommand(this)); }
-			if (OptionL.isEnabled(Skills.ENCHANTING)) { commandManager.registerCommand(new SkillCommands.EnchantingCommand(this)); }
-			if (OptionL.isEnabled(Skills.SORCERY)) { commandManager.registerCommand(new SkillCommands.SorceryCommand(this)); }
-			if (OptionL.isEnabled(Skills.HEALING)) { commandManager.registerCommand(new SkillCommands.HealingCommand(this)); }
-			if (OptionL.isEnabled(Skills.FORGING)) { commandManager.registerCommand(new SkillCommands.ForgingCommand(this)); }
+			if (OptionL.isEnabled(Skills.FARMING)) { getCommandManager().registerCommand(new SkillCommands.FarmingCommand(this)); }
+			if (OptionL.isEnabled(Skills.FORAGING)) { getCommandManager().registerCommand(new SkillCommands.ForagingCommand(this)); }
+			if (OptionL.isEnabled(Skills.MINING)) { getCommandManager().registerCommand(new SkillCommands.MiningCommand(this)); }
+			if (OptionL.isEnabled(Skills.FISHING)) { getCommandManager().registerCommand(new SkillCommands.FishingCommand(this)); }
+			if (OptionL.isEnabled(Skills.EXCAVATION)) { getCommandManager().registerCommand(new SkillCommands.ExcavationCommand(this)); }
+			if (OptionL.isEnabled(Skills.ARCHERY)) { getCommandManager().registerCommand(new SkillCommands.ArcheryCommand(this)); }
+			if (OptionL.isEnabled(Skills.DEFENSE)) { getCommandManager().registerCommand(new SkillCommands.DefenseCommand(this)); }
+			if (OptionL.isEnabled(Skills.FIGHTING)) { getCommandManager().registerCommand(new SkillCommands.FightingCommand(this)); }
+			if (OptionL.isEnabled(Skills.ENDURANCE)) { getCommandManager().registerCommand(new SkillCommands.EnduranceCommand(this)); }
+			if (OptionL.isEnabled(Skills.AGILITY)) { getCommandManager().registerCommand(new SkillCommands.AgilityCommand(this)); }
+			if (OptionL.isEnabled(Skills.ALCHEMY)) { getCommandManager().registerCommand(new SkillCommands.AlchemyCommand(this)); }
+			if (OptionL.isEnabled(Skills.ENCHANTING)) { getCommandManager().registerCommand(new SkillCommands.EnchantingCommand(this)); }
+			if (OptionL.isEnabled(Skills.SORCERY)) { getCommandManager().registerCommand(new SkillCommands.SorceryCommand(this)); }
+			if (OptionL.isEnabled(Skills.HEALING)) { getCommandManager().registerCommand(new SkillCommands.HealingCommand(this)); }
+			if (OptionL.isEnabled(Skills.FORGING)) { getCommandManager().registerCommand(new SkillCommands.ForgingCommand(this)); }
 		}
 	}
 
@@ -598,7 +597,8 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ForgingAbilities(this), this);
 		pm.registerEvents(new DamageListener(this, defenseAbilities, fightingAbilities), this);
 		// Load mana manager
-		getServer().getPluginManager().registerEvents(manaManager, this);
+		manaManager = new ManaManager(this);
+		getServer().getPluginManager().registerEvents(getManaManager(), this);
 		manaManager.startRegen();
 		ItemListener itemListener = new ItemListener(this);
 		pm.registerEvents(itemListener, this);
@@ -662,46 +662,79 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public RewardManager getRewardManager() {
+        RewardManager rewardManager = this.rewardManager;
+        if (rewardManager == null)
+            throw new IllegalStateException("RewardManager has not been initialized");
 		return rewardManager;
 	}
 
 	public PlayerManager getPlayerManager() {
+        PlayerManager playerManager = this.playerManager;
+        if (playerManager == null)
+            throw new IllegalStateException("PlayerManager has not been initialized!");
 		return playerManager;
 	}
 
 	public Economy getEconomy() {
+        Economy economy = this.economy;
+        if (economy == null)
+            throw new IllegalStateException("Economy has not been initialized");
 		return economy;
 	}
 
 	public LootTableManager getLootTableManager() {
+        LootTableManager lootTableManager = this.lootTableManager;
+        if (lootTableManager == null)
+            throw new IllegalStateException("LootTableManager has not been initialized");
 		return lootTableManager;
 	}
 
 	public InventoryManager getInventoryManager() {
+        InventoryManager inventoryManager = this.inventoryManager;
+        if (inventoryManager == null)
+            throw new IllegalStateException("InventoryManager has not been initialized");
 		return inventoryManager;
 	}
 
 	public AbilityManager getAbilityManager() {
+        AbilityManager abilityManager = this.abilityManager;
+        if (abilityManager == null)
+            throw new IllegalStateException("AbilityManager has not been initialized");
 		return abilityManager;
 	}
 
 	public WorldGuardSupport getWorldGuardSupport() {
+        WorldGuardSupport worldGuardSupport = this.worldGuardSupport;
+        if (worldGuardSupport == null)
+            throw new IllegalStateException("WorldGuardSupport has not been initialized");
 		return worldGuardSupport;
 	}
 
 	public WorldManager getWorldManager() {
+        WorldManager worldManager = this.worldManager;
+        if (worldManager == null)
+            throw new IllegalStateException("WorldManager has not been initialized");
 		return worldManager;
 	}
 
 	public ManaManager getManaManager() {
+        ManaManager manaManager = this.manaManager;
+        if (manaManager == null)
+            throw new IllegalStateException("ManaManager has not been initialized");
 		return manaManager;
 	}
 
 	public ManaAbilityManager getManaAbilityManager() {
+        ManaAbilityManager manaAbilityManager = this.manaAbilityManager;
+        if (manaAbilityManager == null)
+            throw new IllegalStateException("ManaAbilityManager has not been initialized");
 		return manaAbilityManager;
 	}
 
 	public PaperCommandManager getCommandManager() {
+	    PaperCommandManager commandManager = this.commandManager;
+	    if (commandManager == null)
+	        throw new IllegalStateException("PaperCommandManager has not been initialized");
 		return commandManager;
 	}
 
@@ -742,6 +775,9 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public Lang getLang() {
+        Lang lang = this.lang;
+        if (lang == null)
+            throw new IllegalStateException("Lang has not been initialized");
 		return lang;
 	}
 
@@ -833,7 +869,6 @@ public class AureliumSkills extends JavaPlugin {
 		return itemRegistry;
 	}
 
-	@Nullable
 	public WorldGuardFlags getWorldGuardFlags() {
 		return worldGuardFlags;
 	}

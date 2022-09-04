@@ -33,7 +33,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer place) {
         Locale locale = plugin.getLang().getLocale(player);
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Skill skill = getSkill(activeMenu);
         SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
         switch (placeholder) {
             case "player_entry":
@@ -60,7 +60,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
 
     @Override
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer place) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Skill skill = getSkill(activeMenu);
         List<SkillValue> values = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1);
         if (values.size() == 0) {
             return null;
@@ -85,4 +85,13 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
         }
         return baseItem;
     }
+
+    private Skill getSkill(ActiveMenu activeMenu) {
+        Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

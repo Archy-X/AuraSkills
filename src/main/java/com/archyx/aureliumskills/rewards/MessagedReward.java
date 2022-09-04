@@ -37,24 +37,27 @@ public abstract class MessagedReward extends Reward {
      */
     private String attemptAsMessageKey(String potentialKey, Player player, Locale locale, Skill skill, int level) {
         CustomMessageKey key = new CustomMessageKey(potentialKey);
-        String message = Lang.getMessage(key, locale);
-        if (message == null) {
-            message = potentialKey;
+        String message = potentialKey;
+        try {
+            message = Lang.getMessage(key, locale);
         }
+        catch (IllegalStateException ex) {
+            // No custom message exists when using the message as a key
+            plugin.getLogger().warning("Unknown custom message with path: " + key);
+        }
+        
         return replacePlaceholders(message, player, skill, level);
     }
 
     private String replacePlaceholders(String message, Player player, Skill skill, int level) {
-        String m = TextUtil.replace(message, "{player}", player.getName(),
+        message = TextUtil.replace(message, "{player}", player.getName(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));
-        assert (null != m);
         if (plugin.isPlaceholderAPIEnabled()) {
-            m = PlaceholderAPI.setPlaceholders(player, m);
+            message = PlaceholderAPI.setPlaceholders(player, message);
         }
-        m = TextUtil.replaceNonEscaped(m, "&", "§");
-        assert (null != m);
-        return m;
+        message = TextUtil.replaceNonEscaped(message, "&", "§");
+        return message;
     }
 
 }

@@ -131,13 +131,12 @@ public class MySqlStorageProvider extends StorageProvider {
                                     AbilityData data = playerData.getAbilityData(ability);
                                     JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
                                     for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
-                                        String key = dataEntry.getKey();
+                                        String key = Objects.requireNonNull(dataEntry.getKey());
                                         JsonElement element = dataEntry.getValue();
                                         if (element.isJsonPrimitive()) {
-                                            Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
-                                            if (value != null) {
-                                                data.setData(key, value);
-                                            }
+                                            JsonPrimitive primitive = Objects.requireNonNull(dataEntry.getValue().getAsJsonPrimitive());
+                                            Object value = Objects.requireNonNull(parsePrimitive(primitive));
+                                            data.setData(key, value);
                                         }
                                     }
                                 }
@@ -305,10 +304,8 @@ public class MySqlStorageProvider extends StorageProvider {
                     // Unclaimed items
                     StringBuilder unclaimedItemsStringBuilder = new StringBuilder();
                     List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
-                    if (unclaimedItems != null) {
-                        for (KeyIntPair unclaimedItem : unclaimedItems) {
-                            unclaimedItemsStringBuilder.append(unclaimedItem.getKey()).append(" ").append(unclaimedItem.getValue()).append(",");
-                        }
+                    for (KeyIntPair unclaimedItem : unclaimedItems) {
+                        unclaimedItemsStringBuilder.append(unclaimedItem.getKey()).append(" ").append(unclaimedItem.getValue()).append(",");
                     }
                     if (unclaimedItemsStringBuilder.length() > 0) {
                         unclaimedItemsStringBuilder.deleteCharAt(unclaimedItemsStringBuilder.length() - 1);
@@ -369,8 +366,14 @@ public class MySqlStorageProvider extends StorageProvider {
                             int index = 2;
                             for (int i = 0; i < 2; i++) {
                                 for (Skill skill : Skills.getOrderedValues()) {
-                                    statement.setInt(index++, levels.get(skill));
-                                    statement.setDouble(index++, xpLevels.get(skill));
+                                    Integer level = levels.get(skill);
+                                    if (level == null)
+                                        throw new IllegalStateException("Invalid level for skill index key: " + skill.name());
+                                    statement.setInt(index++, level);
+                                    Double xpLevel = xpLevels.get(skill);
+                                    if (xpLevel == null)
+                                        throw new IllegalStateException("Invalid experience level for skill index key: " + skill.name());
+                                    statement.setDouble(index++, xpLevel);
                                 }
                             }
                             statement.executeUpdate();
@@ -379,7 +382,11 @@ public class MySqlStorageProvider extends StorageProvider {
                     }
                 }
             } catch (Exception e) {
-                sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
+                String message = Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale);
+                String m = e.getMessage();
+                if (m != null)
+                    message = TextUtil.replace(m, "{error}", m);
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + message);
             }
         }
     }

@@ -2,14 +2,15 @@ package com.archyx.aureliumskills.util.block;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockFaceUtil {
-    static final BlockFace[] faces = {BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.UP, BlockFace.DOWN};
+    static final BlockFace @NotNull[] faces = {BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.UP, BlockFace.DOWN};
     
-    public static final BlockFace[] getBlockSides() {
+    public static final BlockFace @NotNull[] getBlockSides() {
         return faces;
     }
 

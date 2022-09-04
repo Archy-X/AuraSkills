@@ -111,7 +111,10 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                     Arrow arrow = (Arrow) event.getDamager();
                     if (arrow.getShooter() instanceof Player) {
                         Player player = (Player) arrow.getShooter();
-                        if (player != null && blockAbility(player)) return;
+                        if (player == null)
+                            return;
+                        if (blockAbility(player))
+                            return;
                         // Applies abilities
                         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData == null) return;
@@ -122,7 +125,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                                 stun(playerData, entity);
                             }
                         }
-                        if (player != null && options.isEnabled(Ability.PIERCING)) {
+                        if (options.isEnabled(Ability.PIERCING)) {
                             piercing(event, playerData, player, arrow);
                         }
                     }

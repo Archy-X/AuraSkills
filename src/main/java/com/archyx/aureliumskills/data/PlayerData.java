@@ -15,8 +15,6 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.Stats;
 import com.archyx.aureliumskills.util.misc.KeyIntPair;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -128,7 +126,9 @@ public class PlayerData {
         // Removes if already existing
         if (statModifiers.containsKey(modifier.getName())) {
             StatModifier oldModifier = statModifiers.get(modifier.getName());
-            if (oldModifier != null && oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
+            if (oldModifier == null)
+                throw new IllegalStateException("Invalid modifier stat index key: " + modifier.getName());
+            if (oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
                 return;
             }
             removeStatModifier(modifier.getName());
@@ -152,7 +152,10 @@ public class PlayerData {
     public boolean removeStatModifier(String name, boolean reload) {
         StatModifier modifier = statModifiers.get(name);
         if (modifier == null) return false;
-        setStatLevel(modifier.getStat(), statLevels.get(modifier.getStat()) - modifier.getValue());
+        Double level = statLevels.get(modifier.getStat());
+        if (level == null)
+            throw new IllegalStateException("Invalid modifier stat index key: " + modifier.getStat());
+        setStatLevel(modifier.getStat(), level - modifier.getValue());
         statModifiers.remove(name);
         // Reloads stats
         if (reload) {
@@ -266,7 +269,7 @@ public class PlayerData {
         }
     }
 
-    public void setUnclaimedItems(@NotNull List<KeyIntPair> unclaimedItems) {
+    public void setUnclaimedItems(List<KeyIntPair> unclaimedItems) {
         this.unclaimedItems = unclaimedItems;
     }
 
@@ -286,7 +289,7 @@ public class PlayerData {
         this.shouldSave = shouldSave;
     }
 
-    public double getTotalMultiplier(@Nullable Skill skill) {
+    public double getTotalMultiplier(Skill skill) {
         double totalMultiplier = 0.0;
         for (Multiplier multiplier : getMultipliers().values()) {
             Skill multiplierSkill = multiplier.getSkill();

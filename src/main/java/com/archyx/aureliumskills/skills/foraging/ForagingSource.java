@@ -8,7 +8,6 @@ import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 public enum ForagingSource implements Source {
 
@@ -40,7 +39,7 @@ public enum ForagingSource implements Source {
 
     private String[] alternateMaterials;
     private String legacyMaterial;
-    private byte[] legacyData;
+    private byte [] legacyData = {};
     private boolean requiresBlockBelow;
     private boolean isTrunk;
     private boolean isLeaf;
@@ -71,32 +70,31 @@ public enum ForagingSource implements Source {
         this.isTrunk = isTrunk;
     }
 
-    ForagingSource(String legacyMaterial, byte[] legacyData) {
+    ForagingSource(String legacyMaterial, byte [] legacyData) {
         this(legacyMaterial);
         this.legacyData = legacyData;
     }
 
-    ForagingSource(String legacyMaterial, byte[] legacyData, boolean isLeaf) {
+    ForagingSource(String legacyMaterial, byte [] legacyData, boolean isLeaf) {
         this(legacyMaterial, legacyData);
         this.isLeaf = isLeaf;
     }
 
-    ForagingSource(String legacyMaterial, byte[] legacyData, String... alternateMaterials) {
+    ForagingSource(String legacyMaterial, byte [] legacyData, String... alternateMaterials) {
         this(legacyMaterial, legacyData);
         this.alternateMaterials = alternateMaterials;
     }
 
-    ForagingSource(String legacyMaterial, byte[] legacyData, boolean isTrunk, String... alternateMaterials) {
+    ForagingSource(String legacyMaterial, byte [] legacyData, boolean isTrunk, String... alternateMaterials) {
         this(legacyMaterial, legacyData, alternateMaterials);
         this.isTrunk = isTrunk;
     }
 
-    @Nullable
     public String getLegacyMaterial() {
         return legacyMaterial;
     }
 
-    public byte[] getLegacyData() {
+    public byte [] getLegacyData() {
         return legacyData;
     }
 
@@ -104,7 +102,6 @@ public enum ForagingSource implements Source {
         return requiresBlockBelow;
     }
 
-    @Nullable
     public String[] getAlternateMaterials() {
         return alternateMaterials;
     }
@@ -121,7 +118,8 @@ public enum ForagingSource implements Source {
     public boolean isMatch(BlockState blockState) {
         boolean matched = false;
         String materialName = blockState.getType().toString();
-        if (XMaterial.isNewVersion() || getLegacyMaterial() == null) { // Standard block handling
+        String legacyMaterial = getLegacyMaterial();
+        if (XMaterial.isNewVersion() || legacyMaterial == null) { // Standard block handling
             if (toString().equalsIgnoreCase(materialName)) {
                 matched = true;
             } else if (getAlternateMaterials() != null) {
@@ -135,17 +133,15 @@ public enum ForagingSource implements Source {
                 }
             }
         } else { // Legacy block handling
-            String legacyMaterial = getLegacyMaterial();
-            if (legacyMaterial != null)
-                if (getLegacyData() == null) { // No data value
-                    if (legacyMaterial.equalsIgnoreCase(materialName)) {
-                        matched = true;
-                    }
-                } else { // With data value
-                    if (legacyMaterial.equalsIgnoreCase(materialName) && byteArrayContains(legacyData, blockState.getRawData())) {
-                        matched = true;
-                    }
+            if (getLegacyData().length == 0) { // No data value
+                if (legacyMaterial.equalsIgnoreCase(materialName)) {
+                    matched = true;
                 }
+            } else { // With data value
+                if (legacyMaterial.equalsIgnoreCase(materialName) && byteArrayContains(legacyData, blockState.getRawData())) {
+                    matched = true;
+                }
+            }
         }
         return matched;
     }
@@ -154,7 +150,7 @@ public enum ForagingSource implements Source {
         return isMatch(block.getState());
     }
 
-    private boolean byteArrayContains(byte[] array, byte input) {
+    private boolean byteArrayContains(byte [] array, byte input) {
         for (byte b : array) {
             if (b == input) return true;
         }
@@ -166,7 +162,6 @@ public enum ForagingSource implements Source {
         return Skills.FORAGING;
     }
 
-    @Nullable
     public static ForagingSource getSource(BlockState blockState) {
         for (ForagingSource source : values()) {
             if (source.isMatch(blockState)) {
@@ -176,7 +171,6 @@ public enum ForagingSource implements Source {
         return null;
     }
 
-    @Nullable
     public static ForagingSource getSource(Block block) {
         return getSource(block.getState());
     }

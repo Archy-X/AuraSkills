@@ -65,13 +65,11 @@ public class ActionBar implements Listener {
 								PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 								if (playerData != null) {
 									Locale locale = playerData.getLocale();
-									String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
+									sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.IDLE, locale)
 											, "{hp}", getHp(player)
 											, "{max_hp}", getMaxHp(player)
 											, "{mana}", getMana(playerData)
-											, "{max_mana}", getMaxMana(playerData));
-									assert (null != m);
-									sendActionBar(player, m);
+											, "{max_mana}", getMaxMana(playerData)));
 								}
 							}
 						}
@@ -119,8 +117,13 @@ public class ActionBar implements Listener {
 						currentAction.put(player, 0);
 					}
 					//Add to current action
-					currentAction.put(player, currentAction.get(player) + 1);
-					int thisAction = this.currentAction.get(player);
+					Integer action = currentAction.get(player);
+					if (action == null) {
+						plugin.getLogger().warning("Current action is not cached for player: " + player.getName());
+						return;
+					}
+					int thisAction = action + 1;
+					currentAction.put(player, thisAction);
 					new BukkitRunnable() {
 						@Override
 						public void run() {
@@ -137,7 +140,7 @@ public class ActionBar implements Listener {
 												// Xp gained
 												if (xpAmount >= 0) {
 													if (!OptionL.getBoolean(Option.ACTION_BAR_ROUND_XP)) {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -145,12 +148,10 @@ public class ActionBar implements Listener {
 																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
 																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
-																, "{max_mana}", getMaxMana(playerData));
-														assert (null != m);
-														sendActionBar(player, m);
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 													else {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -158,15 +159,13 @@ public class ActionBar implements Listener {
 																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
 																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
-																, "{max_mana}", getMaxMana(playerData));
-														assert (null != m);
-														sendActionBar(player, m);
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 												}
 												// Xp removed
 												else {
 													if (!OptionL.getBoolean(Option.ACTION_BAR_ROUND_XP)) {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP_REMOVED, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_removed}", NumberUtil.format1(xpAmount)
@@ -174,12 +173,10 @@ public class ActionBar implements Listener {
 																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
 																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
-																, "{max_mana}", getMaxMana(playerData));
-														assert (null != m);
-														sendActionBar(player, m);
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 													else {
-														String m = TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
+														sendActionBar(player, TextUtil.replace(TextUtil.replace(Lang.getMessage(ActionBarMessage.XP, locale)
 																, "{hp}", getHp(player)
 																, "{max_hp}", getMaxHp(player)
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
@@ -187,9 +184,7 @@ public class ActionBar implements Listener {
 																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
 																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
-																, "{max_mana}", getMaxMana(playerData));
-														assert (null != m);
-														sendActionBar(player, m);
+																, "{max_mana}", getMaxMana(playerData)));
 													}
 												}
 											}
@@ -199,27 +194,23 @@ public class ActionBar implements Listener {
 											if (OptionL.getBoolean(Option.ACTION_BAR_MAXED)) {
 												// Xp gained
 												if (xpAmount >= 0) {
-													String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
+													sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED, locale)
 															, "{hp}", getHp(player)
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_gained}", NumberUtil.format1(xpAmount)
 															, "{skill}", skill.getDisplayName(locale)
 															, "{mana}", getMana(playerData)
-															, "{max_mana}", getMaxMana(playerData));
-													assert (null != m);
-													sendActionBar(player, m);
+															, "{max_mana}", getMaxMana(playerData)));
 												}
 												// Xp removed
 												else {
-													String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
+													sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.MAXED_REMOVED, locale)
 															, "{hp}", getHp(player)
 															, "{max_hp}", getMaxHp(player)
 															, "{xp_removed}", NumberUtil.format1(xpAmount)
 															, "{skill}", skill.getDisplayName(locale)
 															, "{mana}", getMana(playerData)
-															, "{max_mana}", getMaxMana(playerData));
-													assert (null != m);
-													sendActionBar(player, m);
+															, "{max_mana}", getMaxMana(playerData)));
 												}
 											}
 										}
@@ -258,14 +249,12 @@ public class ActionBar implements Listener {
 		if (!actionBarDisabled.contains(player.getUniqueId())) {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;
-			String m = TextUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
+			sendActionBar(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.ABILITY, playerData.getLocale()),
 					"{hp}", getHp(player),
 					"{max_hp}", getMaxHp(player),
 					"{mana}", getMana(playerData),
 					"{max_mana}", getMaxMana(playerData),
-					"{message}", message);
-			assert (null != m);
-			sendActionBar(player, m);
+					"{message}", message));
 			setPaused(player, 40);
 		}
 	}
@@ -331,7 +320,9 @@ public class ActionBar implements Listener {
 		} else {
 			currentAction.put(player, 0);
 		}
-		int thisAction = this.currentAction.get(player);
+		Integer thisAction = this.currentAction.get(player);
+		if (thisAction == null)
+			throw new IllegalStateException("Invalid player index key for: " + player.getName());
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -466,7 +457,7 @@ public class ActionBar implements Listener {
 				if (item != null) {
 					if (item.getType().isBlock()) {
 						if (block.getY() == block.getWorld().getMaxHeight() - 1) {
-							if (event.getBlockFace() == BlockFace.UP)	 {
+							if (event.getBlockFace() == BlockFace.UP)	{
 								setPaused(player, 40);
 							}
 						}

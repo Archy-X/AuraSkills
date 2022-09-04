@@ -42,9 +42,8 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type, Stat stat) {
         Locale locale = plugin.getLang().getLocale(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        String name = stat.name();
-        assert (null != name);
-        if (playerData == null) return placeholder;
+        if (playerData == null)
+            return placeholder;
         switch (placeholder) {
             case "color":
                 return stat.getColor(locale);
@@ -59,7 +58,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
                         "{color}", stat.getColor(locale),
                         "{level}", NumberUtil.format1(playerData.getStatLevel(stat)));
             case "descriptors":
-                switch (name.toLowerCase(Locale.ROOT)) {
+                switch (stat.name().toLowerCase(Locale.ROOT)) {
                     case "strength":
                         return getStrengthDescriptors(playerData, locale);
                     case "health":

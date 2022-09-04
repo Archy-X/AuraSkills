@@ -3,7 +3,6 @@ package com.archyx.aureliumskills.source;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,7 +11,7 @@ import java.util.*;
 public class SourceRegistry {
 
     private final Map<Skill, Class<?>> registry;
-    private final Map<Skill, Source[]> sources;
+    private final Map<Skill, Source []> sources;
 
     public SourceRegistry() {
         registry = new HashMap<>();
@@ -49,7 +48,7 @@ public class SourceRegistry {
         }
     }
 
-    public Source[] values(Skill skill) {
+    public Source [] values(Skill skill) {
         return sources.get(skill);
     }
 
@@ -61,7 +60,6 @@ public class SourceRegistry {
         return sourceSet;
     }
 
-    @Nullable
     public Source valueOf(String sourceString) {
         for (Source source : values()) {
             if (source.toString().equals(sourceString.toUpperCase(Locale.ROOT))) {

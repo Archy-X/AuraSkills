@@ -3,14 +3,14 @@ package com.archyx.aureliumskills.util.misc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class DataUtil {
 
     public static Object getElement(Map<?, ?> map, String key) {
         // Check if not null
         Object object = map.get(key);
-        Validate.notNull(object, "Reward/loot requires entry with key " + key);
-        assert (null != object);
+        Objects.requireNonNull(object, "Reward/loot requires entry with key " + key);
         return object;
     }
 

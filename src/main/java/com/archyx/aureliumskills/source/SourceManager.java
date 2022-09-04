@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
@@ -168,10 +167,12 @@ public class SourceManager {
     }
 
     public double getXp(Source source) {
-        return sources.get(source);
+        Double xp = sources.get(source);
+        if (xp == null)
+            throw new IllegalStateException("Invalid xp souce index key: " + source.getPath());
+        return xp;
     }
 
-    @NotNull
     public List<Source> getTag(SourceTag tag) {
         List<Source> list = tags.get(tag);
         return list != null ? list : new ArrayList<>();

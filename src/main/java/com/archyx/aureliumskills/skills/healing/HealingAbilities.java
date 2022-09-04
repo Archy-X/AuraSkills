@@ -153,6 +153,8 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (VersionUtils.isAtLeastVersion(14, 4)) {
             return player.getAbsorptionAmount();
         } else {
+            Class<?> entityLivingClass = this.entityLivingClass;
+            Class<?> craftPlayerClass = this.craftPlayerClass;
             if (entityLivingClass == null) {
                 entityLivingClass = ReflectionUtils.getNMSClass("EntityLiving");
             }

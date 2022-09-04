@@ -65,7 +65,6 @@ public class Leveler {
 					multiplier += Double.parseDouble(permission) / 100;
 				} else if (skill != null) { // Skill specific multiplier
 					String skillName = skill.toString().toLowerCase(Locale.ROOT);
-					assert (null != permission);
 					if (permission.startsWith(skillName)) {
 						permission = TextUtil.replace(permission, skillName + ".", "");
 						if (pattern.matcher(permission).matches()) {
@@ -159,6 +158,8 @@ public class Leveler {
 		// Reloads modifiers
 		for (String key : playerData.getStatModifiers().keySet()) {
 			StatModifier modifier = playerData.getStatModifiers().get(key);
+			if (modifier == null)
+				throw new IllegalStateException("Invalid stat modifier index key: " + key);
 			playerData.addStatLevel(modifier.getStat(), modifier.getValue());
 		}
 		statLeveler.reloadStat(player, Stats.HEALTH);
@@ -275,7 +276,6 @@ public class Leveler {
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
 				,"{new}", RomanNumber.toRoman(newLevel));
-		assert (null != message);
 		if (plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
@@ -337,7 +337,6 @@ public class Leveler {
 					"{amount}", nf.format(totalMoney)));
 		}
 		message = TextUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
-		assert (null != message);
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
 
