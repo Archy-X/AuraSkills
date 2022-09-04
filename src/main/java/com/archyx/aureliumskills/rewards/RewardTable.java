@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.rewards;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.support.LuckPermsSupport;
 import com.google.common.collect.ImmutableList;
 import org.bukkit.entity.Player;
 
@@ -97,7 +98,8 @@ public class RewardTable {
         for (Map.Entry<Integer, ImmutableList<PermissionReward>> entry : permissionRewardMap.entrySet()) {
             int entryLevel = entry.getKey();
             for (PermissionReward reward : entry.getValue()) {
-                if (plugin.isLuckPermsEnabled()) {
+                LuckPermsSupport luckPermsSupport = plugin.getLuckPermsSupport();
+                if (plugin.isLuckPermsEnabled() && luckPermsSupport != null) {
                     // Add permission if unlocked
                     if (level >= entryLevel) {
                         plugin.getLuckPermsSupport().addPermission(player, reward.getPermission(), reward.getValue());

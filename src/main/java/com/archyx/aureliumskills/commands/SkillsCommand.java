@@ -1037,11 +1037,9 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.backup.save")
 	public void onBackupSave(CommandSender sender) {
 		BackupProvider backupProvider = plugin.getBackupProvider();
-		if (backupProvider != null) {
-			Locale locale = plugin.getLang().getLocale(sender);
-			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVING, locale));
-			backupProvider.saveBackup(sender, true);
-		}
+		Locale locale = plugin.getLang().getLocale(sender);
+		sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVING, locale));
+		backupProvider.saveBackup(sender, true);
 	}
 
 	@Subcommand("backup load")
@@ -1049,36 +1047,32 @@ public class SkillsCommand extends BaseCommand {
 	public void onBackupLoad(CommandSender sender, String fileName) {
 		StorageProvider storageProvider = plugin.getStorageProvider();
 		Locale locale = plugin.getLang().getLocale(sender);
-		if (storageProvider != null) {
-			File file = new File(plugin.getDataFolder() + "/backups/" + fileName);
-			if (file.exists()) {
-				if (file.getName().endsWith(".yml")) {
-					// Require player to double type command
-					if (sender instanceof Player) {
-						PlayerData playerData = plugin.getPlayerManager().getPlayerData((Player) sender);
-						if (playerData == null) return;
-						Object typed = playerData.getMetadata().get("backup_command");
-						if (typed instanceof String) {
-							String typedFile = (String) typed;
-							if (typedFile.equals(file.getName())) {
-								sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
-								storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
-								playerData.getMetadata().remove("backup_command");
-							} else {
-								backupLoadConfirm(playerData, sender, file);
-							}
+		File file = new File(plugin.getDataFolder() + "/backups/" + fileName);
+		if (file.exists()) {
+			if (file.getName().endsWith(".yml")) {
+				// Require player to double type command
+				if (sender instanceof Player) {
+					PlayerData playerData = plugin.getPlayerManager().getPlayerData((Player) sender);
+					if (playerData == null) return;
+					Object typed = playerData.getMetadata().get("backup_command");
+					if (typed instanceof String) {
+						String typedFile = (String) typed;
+						if (typedFile.equals(file.getName())) {
+							sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
+							storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
+							playerData.getMetadata().remove("backup_command");
 						} else {
 							backupLoadConfirm(playerData, sender, file);
 						}
 					} else {
-						sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
-						storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
+						backupLoadConfirm(playerData, sender, file);
 					}
 				} else {
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_MUST_BE_YAML, locale));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
+					storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
 				}
-			} else { // If file does not exist
-				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_FILE_NOT_FOUND, locale));
+			} else {
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_MUST_BE_YAML, locale));
 			}
 		}
 	}

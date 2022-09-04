@@ -116,6 +116,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AureliumSkills extends JavaPlugin {
 
@@ -249,7 +250,7 @@ public class AureliumSkills extends JavaPlugin {
 			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
-		// Load	items
+		// Load items
 		itemRegistry.loadFromFile();
 		// Load languages
 		lang = new Lang(this);
@@ -438,8 +439,8 @@ public class AureliumSkills extends JavaPlugin {
 				saveConfig();
 			}
 		} catch (Exception e) {
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		}
 	}
 
 	private void registerCommands() {
@@ -448,7 +449,7 @@ public class AureliumSkills extends JavaPlugin {
 		getCommandManager().getCommandContexts().registerContext(Stat.class, c -> {
 			String input = c.popFirstArg();
 			if (input == null)
-			    throw new IndexOutOfBoundsException();
+				throw new IndexOutOfBoundsException();
 			Stat stat = statRegistry.getStat(input);
 			if (stat != null) {
 				return stat;
@@ -662,79 +663,56 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public RewardManager getRewardManager() {
-        RewardManager rewardManager = this.rewardManager;
-        if (rewardManager == null)
-            throw new IllegalStateException("RewardManager has not been initialized");
+		Objects.requireNonNull(rewardManager);
 		return rewardManager;
 	}
 
 	public PlayerManager getPlayerManager() {
-        PlayerManager playerManager = this.playerManager;
-        if (playerManager == null)
-            throw new IllegalStateException("PlayerManager has not been initialized!");
+		Objects.requireNonNull(playerManager);
 		return playerManager;
 	}
 
 	public Economy getEconomy() {
-        Economy economy = this.economy;
-        if (economy == null)
-            throw new IllegalStateException("Economy has not been initialized");
+		Objects.requireNonNull(economy);
 		return economy;
 	}
 
 	public LootTableManager getLootTableManager() {
-        LootTableManager lootTableManager = this.lootTableManager;
-        if (lootTableManager == null)
-            throw new IllegalStateException("LootTableManager has not been initialized");
+		Objects.requireNonNull(lootTableManager);
 		return lootTableManager;
 	}
 
 	public InventoryManager getInventoryManager() {
-        InventoryManager inventoryManager = this.inventoryManager;
-        if (inventoryManager == null)
-            throw new IllegalStateException("InventoryManager has not been initialized");
+		Objects.requireNonNull(inventoryManager);
 		return inventoryManager;
 	}
 
 	public AbilityManager getAbilityManager() {
-        AbilityManager abilityManager = this.abilityManager;
-        if (abilityManager == null)
-            throw new IllegalStateException("AbilityManager has not been initialized");
+		Objects.requireNonNull(abilityManager);
 		return abilityManager;
 	}
 
 	public WorldGuardSupport getWorldGuardSupport() {
-        WorldGuardSupport worldGuardSupport = this.worldGuardSupport;
-        if (worldGuardSupport == null)
-            throw new IllegalStateException("WorldGuardSupport has not been initialized");
 		return worldGuardSupport;
 	}
 
 	public WorldManager getWorldManager() {
-        WorldManager worldManager = this.worldManager;
-        if (worldManager == null)
-            throw new IllegalStateException("WorldManager has not been initialized");
+		Objects.requireNonNull(worldManager);
 		return worldManager;
 	}
 
 	public ManaManager getManaManager() {
-        ManaManager manaManager = this.manaManager;
-        if (manaManager == null)
-            throw new IllegalStateException("ManaManager has not been initialized");
+		Objects.requireNonNull(manaManager);
 		return manaManager;
 	}
 
 	public ManaAbilityManager getManaAbilityManager() {
-        ManaAbilityManager manaAbilityManager = this.manaAbilityManager;
-        if (manaAbilityManager == null)
-            throw new IllegalStateException("ManaAbilityManager has not been initialized");
+		Objects.requireNonNull(manaAbilityManager);
 		return manaAbilityManager;
 	}
 
 	public PaperCommandManager getCommandManager() {
-	    PaperCommandManager commandManager = this.commandManager;
-	    if (commandManager == null)
-	        throw new IllegalStateException("PaperCommandManager has not been initialized");
+		Objects.requireNonNull(commandManager);
 		return commandManager;
 	}
 
@@ -743,53 +721,62 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public ActionBar getActionBar() {
+		Objects.requireNonNull(actionBar);
 		return actionBar;
 	}
 
 	public SkillBossBar getBossBar() {
+		Objects.requireNonNull(bossBar);
 		return bossBar;
 	}
 
 	public SourceManager getSourceManager() {
+		Objects.requireNonNull(sourceManager);
 		return sourceManager;
 	}
 
 	public SorceryLeveler getSorceryLeveler() {
+		Objects.requireNonNull(sorceryLeveler);
 		return sorceryLeveler;
 	}
 
 	public RegionBlockListener getCheckBlockReplace() {
+		Objects.requireNonNull(regionBlockListener);
 		return regionBlockListener;
 	}
 
 	public RequirementManager getRequirementManager() {
+		Objects.requireNonNull(requirementManager);
 		return requirementManager;
 	}
 
 	public OptionL getOptionLoader() {
+		Objects.requireNonNull(optionLoader);
 		return optionLoader;
 	}
 
 	public ModifierManager getModifierManager() {
+		Objects.requireNonNull(modifierManager);
 		return modifierManager;
 	}
 
 	public Lang getLang() {
-        Lang lang = this.lang;
-        if (lang == null)
-            throw new IllegalStateException("Lang has not been initialized");
+		Objects.requireNonNull(lang);
 		return lang;
 	}
 
 	public Leveler getLeveler() {
+		Objects.requireNonNull(leveler);
 		return leveler;
 	}
 
 	public boolean isHolographicDisplaysEnabled() {
+		Objects.requireNonNull(holographicDisplaysEnabled);
 		return holographicDisplaysEnabled;
 	}
 
 	public boolean isWorldGuardEnabled() {
+		Objects.requireNonNull(worldGuardEnabled);
 		return worldGuardEnabled;
 	}
 
@@ -818,10 +805,12 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public Health getHealth() {
+		Objects.requireNonNull(health);
 		return health;
 	}
 
 	public StorageProvider getStorageProvider() {
+		Objects.requireNonNull(storageProvider);
 		return storageProvider;
 	}
 
@@ -830,10 +819,12 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public BackupProvider getBackupProvider() {
+		Objects.requireNonNull(backupProvider);
 		return backupProvider;
 	}
 
 	public LeaderboardManager getLeaderboardManager() {
+		Objects.requireNonNull(leaderboardManager);
 		return leaderboardManager;
 	}
 
@@ -846,14 +837,17 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public RegionManager getRegionManager() {
+		Objects.requireNonNull(regionManager);
 		return regionManager;
 	}
 
 	public StatRegistry getStatRegistry() {
+		Objects.requireNonNull(statRegistry);
 		return statRegistry;
 	}
 
 	public SkillRegistry getSkillRegistry() {
+		Objects.requireNonNull(skillRegistry);
 		return skillRegistry;
 	}
 
@@ -862,10 +856,12 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public SourceRegistry getSourceRegistry() {
+		Objects.requireNonNull(sourceRegistry);
 		return sourceRegistry;
 	}
 
 	public ItemRegistry getItemRegistry() {
+		Objects.requireNonNull(itemRegistry);
 		return itemRegistry;
 	}
 
@@ -882,6 +878,7 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public Slate getSlate() {
+		Objects.requireNonNull(slate);
 		return slate;
 	}
 
@@ -890,10 +887,12 @@ public class AureliumSkills extends JavaPlugin {
 	}
 
 	public MenuFileManager getMenuFileManager() {
+		Objects.requireNonNull(menuFileManager);
 		return menuFileManager;
 	}
 
 	public ForgingLeveler getForgingLeveler() {
+		Objects.requireNonNull(forgingLeveler);
 		return forgingLeveler;
 	}
 }
