@@ -49,7 +49,7 @@ public enum MAbility implements AbstractAbility {
     private final double cooldownPerLevel;
     private final int baseManaCost;
     private final int manaCostPerLevel;
-    private @NotNull Map<@NotNull String, @NotNull OptionValue> options;
+    private @NotNull Map<@NotNull String, OptionValue> options;
     private @Nullable Class<? extends @NotNull ManaAbilityProvider> provider;
 
     MAbility(@NotNull Supplier<@NotNull Skill> skill, double baseValue, double valuePerLevel, double baseCooldown, double cooldownPerLevel, int baseManaCost, int manaCostPerLevel) {
@@ -138,7 +138,7 @@ public enum MAbility implements AbstractAbility {
         return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_DESC"), locale);
     }
 
-    public @NotNull Map<@NotNull String, @NotNull OptionValue> getDefaultOptions() {
+    public @NotNull Map<@NotNull String, OptionValue> getDefaultOptions() {
         return options;
     }
 

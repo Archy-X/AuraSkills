@@ -12,7 +12,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class CloseItem extends AbstractItem implements SingleItemProvider {
 
@@ -22,14 +21,10 @@ public class CloseItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
-        @Nullable String m = placeholder;
-        switch (placeholder) {
-            case "close":
-                m = Lang.getMessage(MenuMessage.CLOSE, plugin.getLang().getLocale(player));
-                break;
+        if (placeholder.equals("close")) {
+            return Lang.getMessage(MenuMessage.CLOSE, plugin.getLang().getLocale(player));
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override

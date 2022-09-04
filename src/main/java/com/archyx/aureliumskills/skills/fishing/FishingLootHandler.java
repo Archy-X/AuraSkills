@@ -59,7 +59,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
         if (!event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) return;
         if (event.getExpToDrop() == 0) return;
 
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         @Nullable Entity caught = event.getCaught();
         if (caught == null)

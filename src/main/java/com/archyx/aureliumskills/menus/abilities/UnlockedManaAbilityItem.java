@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements TemplateItemProvider<MAbility> {
+public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements TemplateItemProvider<@NotNull MAbility> {
 
     private final ManaAbilityManager manager;
     
@@ -32,28 +32,25 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
     }
 
     @Override
-    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull MAbility mAbility) {
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type, @NotNull MAbility mAbility) {
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null)
             return placeholder;
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "name":
-                m = mAbility.getDisplayName(locale);
-                break;
+                return mAbility.getDisplayName(locale);
             case "your_ability_level":
                 if (isNotMaxed(playerData, mAbility)) {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
                             "{level}", String.valueOf(playerData.getManaAbilityLevel(mAbility)));
                 } else {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
                             "{level}", String.valueOf(playerData.getManaAbilityLevel(mAbility)));
                 }
-                break;
             case "unlocked_desc":
                 if (isNotMaxed(playerData, mAbility)) {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
                             "{skill}", mAbility.getSkill().getDisplayName(locale),
                             "{level}", RomanNumber.toRoman(getNextUpgradeLevel(mAbility, playerData)),
                             "{desc}", TextUtil.replace(mAbility.getDescription(locale),
@@ -61,19 +58,16 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
                                     "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
                                     "{duration}", getUpgradeDuration(mAbility, playerData)));
                 } else {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
                             "{desc}", TextUtil.replace(mAbility.getDescription(locale),
                                     "{value}", getUpgradeValue(mAbility, playerData),
                                     "{haste_level}", String.valueOf(manager.getOptionAsInt(mAbility, "haste_level", 10)),
                                     "{duration}", getUpgradeDuration(mAbility, playerData)));
                 }
-                break;
             case "unlocked":
-                m = Lang.getMessage(MenuMessage.UNLOCKED, locale);
-                break;
+                return Lang.getMessage(MenuMessage.UNLOCKED, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     private int getNextUpgradeLevel(@NotNull MAbility mAbility, @NotNull PlayerData playerData) {
@@ -107,10 +101,8 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
 
     @Override
     public Set<@NotNull MAbility> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Skill skill = getSkill(activeMenu);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Set<@NotNull MAbility> unlockedManaAbilities = new HashSet<>();
         if (playerData != null) {
             // Add abilities that player has not unlocked yet
@@ -130,6 +122,14 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
         } else {
             return manager.getValue(mAbility, level);
         }
+    }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
     }
 
 }

@@ -42,7 +42,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 		if (OptionL.isEnabled(Skills.FORAGING)) {
 			if (plugin.getAbilityManager().isEnabled(Ability.LUMBERJACK)) {
 				if (player.getGameMode().equals(GameMode.SURVIVAL)) {
-					PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+					@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 					if (playerData == null) return;
 					if (playerData.getAbilityLevel(Ability.LUMBERJACK) > 0) {
 						if (r.nextDouble() < ((getValue(Ability.LUMBERJACK, playerData)) / 100)) {
@@ -93,7 +93,7 @@ public class ForagingAbilities extends AbilityProvider implements Listener {
 							Material mat = player.getInventory().getItemInMainHand().getType();
 							if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
 									|| mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
-								PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+								@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 								if (playerData == null) return;
 								//Checks if shredder is used
 								if (playerData.getAbilityLevel(Ability.SHREDDER) > 0) {

@@ -27,22 +27,17 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
         Skill skill = getSkill(activeMenu);
-        @Nullable String m = placeholder;
-        switch (placeholder) {
-            case "level_progression_menu_title":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale),
-                        "{skill}", skill.getDisplayName(locale),
-                        "{page}", String.valueOf(activeMenu.getCurrentPage() + 1));
-            break;
+        if (placeholder.equals("level_progression_menu_title")) {
+            return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale),
+                    "{skill}", skill.getDisplayName(locale),
+                    "{page}", String.valueOf(activeMenu.getCurrentPage() + 1));
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public int getPages(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
+        @Nullable Skill skill = getSkill(activeMenu);
         int itemsPerPage = 24;
         ConfigurableMenu levelProgressionMenu = plugin.getSlate().getMenuManager().getMenu("level_progression");
         if (levelProgressionMenu != null) {
@@ -55,10 +50,11 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
     }
 
     private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("skill");
-        if (property instanceof Skill) {
-            return (Skill) property;
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
         }
-        throw new IllegalArgumentException("Could not get skill property");
+        return (Skill) property;
     }
+
 }

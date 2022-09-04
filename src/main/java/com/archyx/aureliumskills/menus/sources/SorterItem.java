@@ -27,26 +27,21 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "sorter":
-                m = Lang.getMessage(MenuMessage.SORTER, locale);
-                break;
+                return Lang.getMessage(MenuMessage.SORTER, locale);
             case "sorted_types":
-                m = getSortedTypesLore(locale, activeMenu);
-                break;
+                return getSortedTypesLore(locale, activeMenu);
             case "sort_click":
-                m = Lang.getMessage(MenuMessage.SORT_CLICK, locale);
-                break;
+                return Lang.getMessage(MenuMessage.SORT_CLICK, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public void onClick(@NotNull Player player, @NotNull InventoryClickEvent event, @NotNull ItemStack item, @NotNull SlotPos pos, @NotNull ActiveMenu activeMenu) {
         SortType[] sortTypes = SortType.values();
-        SortType currentType = (SortType) activeMenu.getProperty("sort_type");
+        SortType currentType = getSortType(activeMenu);
         // Get the index of the current sort type in the array
         int currentTypeIndex = 0;
         for (int i = 0; i < sortTypes.length; i++) {
@@ -70,7 +65,7 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
 
     private @NotNull String getSortedTypesLore(@Nullable Locale locale, @NotNull ActiveMenu activeMenu) {
         StringBuilder builder = new StringBuilder();
-        SortType selectedSort = (SortType) activeMenu.getProperty("sort_type");
+        SortType selectedSort = getSortType(activeMenu);
         for (SortType sortType : SortType.values()) {
             String typeString = TextUtil.replace(Lang.getMessage(MenuMessage.SORT_TYPE, locale)
                     , "{type_name}", Lang.getMessage(MenuMessage.valueOf(sortType.toString()), locale));
@@ -104,6 +99,14 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
             }
         }
 
+    }
+
+    private @NotNull SortType getSortType(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("sort_type");
+        if (!(property instanceof SortType)) {
+            throw new IllegalArgumentException("Could not get menu sort_type property");
+        }
+        return (SortType) property;
     }
 
 }

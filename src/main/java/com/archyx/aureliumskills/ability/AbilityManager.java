@@ -28,8 +28,8 @@ import java.util.function.Supplier;
 public class AbilityManager {
 
 
-    private final @NotNull Map<Ability, @NotNull AbilityOption> abilityOptions;
-    private final @NotNull Map<MAbility, @NotNull ManaAbilityOption> manaAbilityOptions;
+    private final @NotNull Map<Ability, AbilityOption> abilityOptions;
+    private final @NotNull Map<MAbility, ManaAbilityOption> manaAbilityOptions;
     private final AureliumSkills plugin;
 
     public AbilityManager(AureliumSkills plugin) {
@@ -85,7 +85,7 @@ public class AbilityManager {
                             int levelUp = config.getInt(path + "level_up", 5);
                             int maxLevel = config.getInt(path + "max_level", 0);
                             // Load options
-                            Set<String> optionKeys = getOptionKeys(ability);
+                            Set<@NotNull String> optionKeys = getOptionKeys(ability);
                             Map<String, OptionValue> options = null;
                             if (optionKeys != null) {
                                 options = new HashMap<>();
@@ -148,7 +148,7 @@ public class AbilityManager {
                     int levelUp = config.getInt(path + "level_up", 7);
                     int maxLevel = config.getInt(path + "max_level", 0);
                     // Load options
-                    Set<String> optionKeys = plugin.getManaAbilityManager().getOptionKeys(mAbility);
+                    Set<@NotNull String> optionKeys = plugin.getManaAbilityManager().getOptionKeys(mAbility);
                     Map<String, OptionValue> options = null;
                     if (optionKeys != null) {
                         options = new HashMap<>();
@@ -272,17 +272,18 @@ public class AbilityManager {
         }
     }
 
-    public AbilityOption getAbilityOption(@NotNull Ability ability) {
+    public @Nullable AbilityOption getAbilityOption(@NotNull Ability ability) {
         return abilityOptions.get(ability);
     }
 
-    public ManaAbilityOption getAbilityOption(@NotNull MAbility mAbility) {
+    public @Nullable ManaAbilityOption getAbilityOption(@NotNull MAbility mAbility) {
         return manaAbilityOptions.get(mAbility);
     }
 
     public boolean isEnabled(@NotNull Ability ability) {
-        if (abilityOptions.containsKey(ability)) {
-            return abilityOptions.get(ability).isEnabled();
+        @Nullable AbilityOption option = abilityOptions.get(ability);
+        if (option != null) {
+            return option.isEnabled();
         }
         return true;
     }
@@ -292,8 +293,9 @@ public class AbilityManager {
     }
 
     public boolean isEnabled(@NotNull MAbility mAbility) {
-        if (manaAbilityOptions.containsKey(mAbility)) {
-            return manaAbilityOptions.get(mAbility).isEnabled();
+        @Nullable ManaAbilityOption option = manaAbilityOptions.get(mAbility);
+        if (option != null) {
+            return option.isEnabled();
         }
         return true;
     }
@@ -390,7 +392,7 @@ public class AbilityManager {
         return abilities;
     }
 
-    public OptionValue getOption(@NotNull Ability ability, String key) {
+    public @Nullable OptionValue getOption(@NotNull Ability ability, @NotNull String key) {
         AbilityOption option = getAbilityOption(ability);
         if (option != null) {
             OptionValue optionValue = option.getOption(key);
@@ -404,29 +406,26 @@ public class AbilityManager {
         }
     }
 
-    public boolean getOptionAsBooleanElseTrue(@NotNull Ability ability, String key) {
+    public boolean getOptionAsBooleanElseTrue(@NotNull Ability ability, @NotNull String key) {
         OptionValue value = getOption(ability, key);
         if (value != null) {
-            if (value.getValue() != null) {
-                return value.asBoolean();
-            }
+            return value.asBoolean();
         }
         return true;
     }
 
-    @Nullable
-    public Set<String> getOptionKeys(@NotNull Ability ability) {
+    public @Nullable Set<@NotNull String> getOptionKeys(@NotNull Ability ability) {
         if (!ability.getDefaultOptions().isEmpty()) {
             return ability.getDefaultOptions().keySet();
         }
         return null;
     }
 
-    public void sendMessage(@NotNull Player player, String message) {
+    public void sendMessage(@NotNull Player player, @NotNull String message) {
         if (OptionL.getBoolean(Option.ACTION_BAR_ABILITY) && OptionL.getBoolean(Option.ACTION_BAR_ENABLED)) {
             plugin.getActionBar().sendAbilityActionBar(player, message);
         } else {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             player.sendMessage(AureliumSkills.getPrefix(playerData.getLocale()) + message);
         }

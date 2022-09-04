@@ -36,9 +36,8 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
 
     @Override
     public @NotNull SlotPos getSlotPos(@NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull Ability ability) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
-        Object obj =  activeMenu.getItemOption(itemName, "slots");
+        Skill skill = getSkill(activeMenu);
+        @Nullable Object obj =  activeMenu.getItemOption(itemName, "slots");
         if (obj instanceof List<?>) {
             List<@NotNull String> slots = DataUtil.castStringList(obj);
             // Get the index of the ability
@@ -89,4 +88,13 @@ public abstract class AbstractAbilityItem extends AbstractItem implements Templa
         }
         return baseItem;
     }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

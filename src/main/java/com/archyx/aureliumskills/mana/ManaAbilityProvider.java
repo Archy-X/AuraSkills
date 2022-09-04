@@ -25,12 +25,12 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
     protected final @NotNull AureliumSkills plugin;
     protected final ManaAbilityManager manager;
     protected final @NotNull MAbility mAbility;
-    protected final Skill skill;
+    protected final @NotNull Skill skill;
     protected final SorceryLeveler sorceryLeveler;
-    protected final ManaAbilityMessage activateMessage;
-    protected final @Nullable ManaAbilityMessage stopMessage;
+    protected final @NotNull ManaAbilityMessage activateMessage;
+    protected final @NotNull ManaAbilityMessage stopMessage;
 
-    public ManaAbilityProvider(@NotNull AureliumSkills plugin, @NotNull MAbility mAbility, @NotNull ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage) {
+    public ManaAbilityProvider(@NotNull AureliumSkills plugin, @NotNull MAbility mAbility, @NotNull ManaAbilityMessage activateMessage, @NotNull ManaAbilityMessage stopMessage) {
         super(plugin, mAbility.getSkill());
         this.plugin = plugin;
         this.manager = plugin.getManaAbilityManager();
@@ -42,7 +42,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
     }
 
     public void activate(@NotNull Player player) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
 
         int duration = getDuration(playerData);
@@ -75,12 +75,12 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
     public abstract void onActivate(@NotNull Player player, @NotNull PlayerData playerData);
 
     public void stop(@NotNull Player player) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         onStop(player, playerData); // Mana ability specific stop behavior is run
         manager.setPlayerCooldown(player, mAbility); // Apply cooldown
         // Send stop message if applicable
-        if (stopMessage != null) {
+        if (stopMessage != ManaAbilityMessage.NONE) {
             plugin.getAbilityManager().sendMessage(player, Lang.getMessage(stopMessage, plugin.getLang().getLocale(player)));
         }
     }
@@ -101,7 +101,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
 
     // Returns true if player has enough mana
     protected boolean hasEnoughMana(@NotNull Player player) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return false;
         Locale locale = playerData.getLocale();
         if (playerData.getMana() >= plugin.getManaAbilityManager().getManaCost(mAbility, playerData)) {

@@ -8,23 +8,23 @@ import org.jetbrains.annotations.NotNull;
 
 public class PermissionReward extends MessagedReward {
 
-    private final String permission;
+    private final @NotNull String permission;
     private final boolean value;
 
-    public PermissionReward(@NotNull AureliumSkills plugin, String menuMessage, String chatMessage, String permission, boolean value) {
+    public PermissionReward(@NotNull AureliumSkills plugin, @NotNull String menuMessage, @NotNull String chatMessage, @NotNull String permission, boolean value) {
         super(plugin, menuMessage, chatMessage);
         this.permission = permission;
         this.value = value;
     }
 
     @Override
-    public void giveReward(@NotNull Player player, Skill skill, int level) {
+    public void giveReward(@NotNull Player player, @NotNull Skill skill, int level) {
         if (plugin.isLuckPermsEnabled()) {
             plugin.getLuckPermsSupport().addPermission(player, permission, value);
         }
     }
 
-    public String getPermission() {
+    public @NotNull String getPermission() {
         return permission;
     }
 

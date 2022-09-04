@@ -20,13 +20,13 @@ public enum SourceTag {
     LUCKY_SPADES_APPLICABLE(Skills.EXCAVATION),
     TERRAFORM_APPLICABLE(Skills.EXCAVATION);
 
-    private final Skill skill;
+    private final @NotNull Skill skill;
 
-    SourceTag(Skill skill) {
+    SourceTag(@NotNull Skill skill) {
         this.skill = skill;
     }
 
-    public Skill getSkill() {
+    public @NotNull Skill getSkill() {
         return skill;
     }
 

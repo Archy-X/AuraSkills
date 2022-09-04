@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -122,7 +123,7 @@ public class RegionManager {
                         byte chunkX = Byte.parseByte(key.substring(key.indexOf("[") + 1, commaIndex));
                         byte chunkZ = Byte.parseByte(key.substring(commaIndex + 1, key.lastIndexOf("]")));
                         // Load chunk
-                        NBTCompound chunkCompound = nbtFile.getCompound(key);
+                        NBTCompound chunkCompound = Objects.requireNonNull(nbtFile.getCompound(key));
                         ChunkCoordinate chunkCoordinate = new ChunkCoordinate(chunkX, chunkZ);
                         loadChunk(region, chunkCoordinate, chunkCompound);
                     }

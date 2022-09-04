@@ -47,7 +47,7 @@ public abstract class SkillLeveler {
     }
 
     public double getXp(@NotNull Player player, @NotNull Source source) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = getXp(source);
             @Nullable Ability ability = this.ability;
@@ -64,7 +64,7 @@ public abstract class SkillLeveler {
     }
 
     public double getXp(@NotNull Player player, double input) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = input;
             @Nullable Ability ability = this.ability;
@@ -81,7 +81,7 @@ public abstract class SkillLeveler {
     }
 
     public double getXp(@NotNull Player player, double input, @NotNull Ability ability) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = input;
             if (plugin.getAbilityManager().isEnabled(ability)) {

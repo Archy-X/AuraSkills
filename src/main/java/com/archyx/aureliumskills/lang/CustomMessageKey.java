@@ -1,21 +1,20 @@
 package com.archyx.aureliumskills.lang;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.Nullable;
-
 public class CustomMessageKey implements MessageKey {
 
-    private final @Nullable String path;
+    private final @NotNull String path;
 
-    public CustomMessageKey(String path) {
+    public CustomMessageKey(@NotNull String path) {
         this.path = path;
     }
 
     @Override
-    public @Nullable String getPath() {
+    public @NotNull String getPath() {
         return path;
     }
 

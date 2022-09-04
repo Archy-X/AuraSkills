@@ -15,6 +15,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.stats.Stats;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +23,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.*;
@@ -37,8 +40,8 @@ public abstract class StorageProvider {
         this.plugin = plugin;
     }
 
-    public PlayerData createNewPlayer(@NotNull Player player) {
-        PlayerData playerData = new PlayerData(player, plugin);
+    public @NotNull PlayerData createNewPlayer(@NotNull Player player) {
+        @Nullable PlayerData playerData = new PlayerData(player, plugin);
         playerManager.addPlayerData(playerData);
         plugin.getLeveler().updatePermissions(player);
         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
@@ -63,9 +66,14 @@ public abstract class StorageProvider {
         }
         // Apply to object if in memory
         for (Skill skill : Skills.values()) {
-            int level = levels.get(skill);
+            Integer level = levels.get(skill);
+            if (level == null)
+                throw new IllegalStateException("Invalid level for skill index key: " + skill.name());
             playerData.setSkillLevel(skill, level);
-            playerData.setSkillXp(skill, xpLevels.get(skill));
+            Double xpLevel = xpLevels.get(skill);
+            if (xpLevel == null)
+                throw new IllegalStateException("Invalid experience level for skill index key: " + skill.name());
+            playerData.setSkillXp(skill, xpLevel);
             // Add stat levels
             plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, level);
         }
@@ -95,7 +103,7 @@ public abstract class StorageProvider {
         return xpLevels;
     }
 
-    protected @NotNull Set<UUID> addLoadedPlayersToLeaderboards(@NotNull Map<Skill, @NotNull List<SkillValue>> leaderboards, @NotNull List<SkillValue> powerLeaderboard, @NotNull List<SkillValue> averageLeaderboard) {
+    protected @NotNull Set<UUID> addLoadedPlayersToLeaderboards(@NotNull Map<Skill, List<SkillValue>> leaderboards, @NotNull List<SkillValue> powerLeaderboard, @NotNull List<SkillValue> averageLeaderboard) {
         Set<UUID> loadedFromMemory = new HashSet<>();
         for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
             UUID id = playerData.getPlayer().getUniqueId();
@@ -107,8 +115,10 @@ public abstract class StorageProvider {
                 double xp = playerData.getSkillXp(skill);
                 // Add to lists
                 SkillValue skillLevel = new SkillValue(id, level, xp);
-                leaderboards.get(skill).add(skillLevel);
-
+                List<SkillValue> skillList = leaderboards.get(skill);
+                if (skillList == null)
+                    throw new IllegalStateException("Invalid skill leaderboard skill index key: " + skill);
+                skillList.add(skillLevel);
                 if (OptionL.isEnabled(skill)) {
                     powerLevel += level;
                     powerXp += xp;
@@ -127,7 +137,7 @@ public abstract class StorageProvider {
         return loadedFromMemory;
     }
 
-    protected void sortLeaderboards(@NotNull Map<Skill, @NotNull List<SkillValue>> leaderboards, @NotNull List<SkillValue> powerLeaderboard, @NotNull List<SkillValue> averageLeaderboard) {
+    protected void sortLeaderboards(@NotNull Map<Skill, List<SkillValue>> leaderboards, @NotNull List<SkillValue> powerLeaderboard, @NotNull List<SkillValue> averageLeaderboard) {
         LeaderboardManager manager = plugin.getLeaderboardManager();
         LeaderboardSorter sorter = new LeaderboardSorter();
         for (Skill skill : Skills.values()) {

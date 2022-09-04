@@ -25,6 +25,7 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Random;
@@ -99,8 +100,14 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     public void bleed(@NotNull EntityDamageByEntityEvent event, @NotNull PlayerData playerData, @NotNull LivingEntity entity) {
         if (r.nextDouble() < (getValue(Ability.BLEED, playerData) / 100)) {
             if (event.getFinalDamage() < entity.getHealth()) {
+                String key;
+                OptionValue optionValue;
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
-                    int baseTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "base_ticks").asInt();
+                    key = "base_ticks";
+                    optionValue = plugin.getAbilityManager().getOption(Ability.BLEED, key);
+                    if (optionValue == null)
+                        throw new IllegalStateException("Invalid ability manager option index key: " + key);
+                    int baseTicks = optionValue.asInt();
                     entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, baseTicks));
                     // Send messages
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_enemy_message")) {
@@ -121,8 +128,16 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     scheduleBleedTicks(entity, playerData);
                 } else {
                     int currentTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
-                    int addedTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "added_ticks").asInt();
-                    int maxTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "max_ticks").asInt();
+                    key = "added_ticks";
+                    optionValue = plugin.getAbilityManager().getOption(Ability.BLEED, key);
+                    if (optionValue == null)
+                        throw new IllegalStateException("Invalid ability manager option index key: " + key);
+                    int addedTicks = optionValue.asInt();
+                    key = "max_ticks";
+                    optionValue = plugin.getAbilityManager().getOption(Ability.BLEED, key);
+                    if (optionValue == null)
+                        throw new IllegalStateException("Invalid ability manager option index key: " + key);
+                    int maxTicks = optionValue.asInt();
                     int resultingTicks = currentTicks + addedTicks;
                     if (resultingTicks <= maxTicks) { // Check that resulting bleed ticks does not exceed maximum
                         entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, resultingTicks));
@@ -133,6 +148,10 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     }
 
     private void scheduleBleedTicks(@NotNull LivingEntity entity, @NotNull PlayerData playerData) {
+        String key = "tick_period";
+        OptionValue optionValue = plugin.getAbilityManager().getOption(Ability.BLEED, key);
+        if (optionValue == null)
+            throw new IllegalStateException("Invalid ability manager option index key: " + key);
         // Schedules bleed ticks
         new BukkitRunnable() {
             @Override
@@ -170,7 +189,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                 }
                 cancel();
             }
-        }.runTaskTimer(plugin, 40L, plugin.getAbilityManager().getOption(Ability.BLEED, "tick_period").asInt());
+        }.runTaskTimer(plugin, 40L, optionValue.asInt());
     }
 
     @SuppressWarnings("deprecation")
@@ -203,7 +222,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     if (blockAbility(player)) return;
                     //If player used sword
                     if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData == null) return;
                         if (isEnabled(Ability.BLEED)) {
                             if (event.getEntity() instanceof LivingEntity) {

@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum MenuMessage implements MessageKey {

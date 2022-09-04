@@ -30,9 +30,7 @@ public class Modifiers extends NBTAPIUser {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
-        @Nullable String name = getName(stat);
-        assert (null != name);
-        compound.setDouble(name, value);
+        compound.setDouble(getName(stat), value);
         return nbtItem.getItem();
     }
 
@@ -44,9 +42,7 @@ public class Modifiers extends NBTAPIUser {
             if (legacyModifiers.size() > 0) {
                 NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
                 for (StatModifier modifier : legacyModifiers) {
-                    @Nullable String name = getName(modifier.getStat());
-                    assert (null != name);
-                    compound.setDouble(name, modifier.getValue());
+                    compound.setDouble(getName(modifier.getStat()), modifier.getValue());
                 }
                 for (String key : nbtItem.getKeys()) {
                     if (key.startsWith("skillsmodifier-" + type.name().toLowerCase(Locale.ENGLISH) + "-")) {
@@ -62,9 +58,7 @@ public class Modifiers extends NBTAPIUser {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
-        @Nullable String name = getName(stat);
-        assert (null != name);
-        compound.removeKey(name);
+        compound.removeKey(getName(stat));
         ItemUtils.removeParentCompounds(compound);
         return nbtItem.getItem();
     }
@@ -144,13 +138,10 @@ public class Modifiers extends NBTAPIUser {
             } else {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
             }
-
-            @Nullable String t = TextUtil.replace(Lang.getMessage(message, locale),
-                "{stat}", stat.getDisplayName(locale),
-                "{value}", NumberUtil.format1(Math.abs(value)),
-                "{color}", stat.getColor(locale));
-            assert (null != t);
-            lore.add(0, t);
+            lore.add(0, TextUtil.replace(Lang.getMessage(message, locale),
+                    "{stat}", stat.getDisplayName(locale),
+                    "{value}", NumberUtil.format1(Math.abs(value)),
+                    "{color}", stat.getColor(locale)));
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
@@ -168,10 +159,8 @@ public class Modifiers extends NBTAPIUser {
         item.setItemMeta(meta);
     }
 
-    private @Nullable String getName(@NotNull Stat stat) {
-        @Nullable String name = stat.name();
-        assert (null != name);
-        return TextUtil.capitalize(name.toLowerCase(Locale.ENGLISH));
+    private @NotNull String getName(@NotNull Stat stat) {
+        return TextUtil.capitalize(stat.name().toLowerCase(Locale.ENGLISH));
     }
     
 }

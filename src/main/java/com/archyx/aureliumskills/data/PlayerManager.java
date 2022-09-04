@@ -57,7 +57,7 @@ public class PlayerManager {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData != null && !playerData.isSaving()) {
                         plugin.getStorageProvider().save(player, false);
                     }

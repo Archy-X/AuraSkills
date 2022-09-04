@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -24,7 +25,7 @@ public class ReloadManager {
     }
 
     public void reload(@NotNull CommandSender sender) {
-        Locale locale = plugin.getLang().getLocale(sender);
+        @Nullable Locale locale = plugin.getLang().getLocale(sender);
         // Load config
         plugin.reloadConfig();
         plugin.saveDefaultConfig();

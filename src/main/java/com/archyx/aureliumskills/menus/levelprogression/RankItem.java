@@ -30,37 +30,30 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
-        @Nullable String m = placeholder;
+        Skill skill = getSkill(activeMenu);
         switch (placeholder) {
             case "your_ranking":
-                m = Lang.getMessage(MenuMessage.YOUR_RANKING, locale);
-                break;
+                return Lang.getMessage(MenuMessage.YOUR_RANKING, locale);
             case "out_of":
                 int rank = getRank(skill, player);
                 int size = getSize(skill, player);
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.RANK_OUT_OF, locale),
+                return TextUtil.replace(Lang.getMessage(MenuMessage.RANK_OUT_OF, locale),
                         "{rank}", String.valueOf(rank),
                         "{total}", String.valueOf(size));
-                break;
             case "percent":
                 double percent = getPercent(skill, player);
                 if (percent > 1) {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),
                             "{percent}", String.valueOf(Math.round(percent)));
                 } else {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.RANK_PERCENT, locale),
                             "{percent}", NumberUtil.format2(percent));
                 }
-                break;
             case "leaderboard_click":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEADERBOARD_CLICK, locale),
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEADERBOARD_CLICK, locale),
                         "{skill}", skill.getDisplayName(locale));
-                break;
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
@@ -83,4 +76,13 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     private int getSize(@NotNull Skill skill, @NotNull Player player) {
         return plugin.getLeaderboardManager().getLeaderboard(skill).size();
     }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

@@ -52,7 +52,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
             if (event.getRegainReason() == EntityRegainHealthEvent.RegainReason.MAGIC) {
-                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData == null) return;
                 if (playerData.getAbilityLevel(Ability.LIFE_ESSENCE) > 0) {
                     double multiplier = 1 + getValue(Ability.LIFE_ESSENCE, playerData) / 100;
@@ -79,7 +79,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
                 return;
             if (player.equals(entity)) return;
             if (blockAbility(player)) return;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             if (playerData.getAbilityLevel(Ability.LIFE_STEAL) > 0) {
                 AttributeInstance entityAttribute = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -100,7 +100,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             if (getAbsorptionAmount(player) > 0 && playerData.getAbilityLevel(Ability.GOLDEN_HEART) > 0) {
                 double multiplier = 1 - getValue(Ability.GOLDEN_HEART, playerData) / 100;
@@ -117,7 +117,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (blockDisabled(Ability.REVIVAL)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         if (playerData.getAbilityLevel(Ability.REVIVAL) > 0) {
             double healthBonus = getValue(Ability.REVIVAL, playerData);
@@ -144,7 +144,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void revivalLeave(@NotNull PlayerQuitEvent event) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(event.getPlayer());
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(event.getPlayer());
         if (playerData == null) {
             return;
         }
@@ -156,6 +156,8 @@ public class HealingAbilities extends AbilityProvider implements Listener {
         if (VersionUtils.isAtLeastVersion(14, 4)) {
             return player.getAbsorptionAmount();
         } else {
+            @Nullable Class<?> entityLivingClass = this.entityLivingClass;
+            @Nullable Class<?> craftPlayerClass = this.craftPlayerClass;
             if (entityLivingClass == null) {
                 entityLivingClass = ReflectionUtils.getNMSClass("EntityLiving");
             }

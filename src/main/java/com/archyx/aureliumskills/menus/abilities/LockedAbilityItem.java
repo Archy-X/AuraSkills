@@ -27,43 +27,33 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull Ability ability) {
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type, @NotNull Ability ability) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "name":
-                m = ability.getDisplayName(locale);
-                break;
+                return ability.getDisplayName(locale);
             case "locked_desc":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LOCKED_DESC, locale),
                         "{desc}", TextUtil.replace(ability.getDescription(locale),
                         "{value}", NumberUtil.format1(plugin.getAbilityManager().getValue(ability, 1)),
                         "{value_2}", NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, 1))));
-                break;
             case "unlocked_at":
-                @Nullable Object property = menu.getProperty("skill");
-                assert (null != property);
-                Skill skill = (Skill) property;
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
+                Skill skill = getSkill(activeMenu);
+                return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_AT, locale),
                         "{skill}", skill.getDisplayName(locale),
                         "{level}", RomanNumber.toRoman(plugin.getAbilityManager().getUnlock(ability)));
-                break;
             case "locked":
-                m = Lang.getMessage(MenuMessage.LOCKED, locale);
-                break;
+                return Lang.getMessage(MenuMessage.LOCKED, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public Set<Ability> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        @Nullable Object property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Set<Ability> lockedAbilities = new HashSet<>();
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
+            Skill skill = getSkill(activeMenu);
             // Add abilities that player has not unlocked yet
             for (Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
                 @Nullable Ability ability = abilitySupplier.get();
@@ -74,4 +64,13 @@ public class LockedAbilityItem extends AbstractAbilityItem {
         }
         return lockedAbilities;
     }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

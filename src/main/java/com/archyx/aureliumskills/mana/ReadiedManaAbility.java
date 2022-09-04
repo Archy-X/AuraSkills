@@ -89,9 +89,9 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         if (!isAllowReady(player, event)) {
             return;
         }
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
-        @Nullable Locale locale = playerData.getLocale();
+        Locale locale = playerData.getLocale();
         if (playerData.getManaAbilityLevel(mAbility) <= 0) {
             return;
         }
@@ -109,25 +109,21 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             scheduleUnready(player, locale);
         } else { // Cannot ready, send cooldown error
             if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {
-                @Nullable String m = Lang.getMessage(ManaAbilityMessage.NOT_READY, locale);
-                assert (null != m);
-                plugin.getAbilityManager().sendMessage(player, m.replace("{cooldown}",
+                plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.NOT_READY, locale).replace("{cooldown}",
                         NumberUtil.format0((double) plugin.getManaAbilityManager().getPlayerCooldown(player.getUniqueId(), mAbility) / 20)));
                 manager.setErrorTimer(player.getUniqueId(), mAbility, 2);
             }
         }
     }
 
-    private void scheduleUnready(@NotNull Player player, Locale locale) {
+    private void scheduleUnready(@NotNull Player player, @Nullable Locale locale) {
         new BukkitRunnable() {
             @Override
             public void run() {
                 if (!manager.isActivated(player.getUniqueId(), mAbility)) {
                     if (manager.isReady(player.getUniqueId(), mAbility)) {
                         manager.setReady(player.getUniqueId(), mAbility, false);
-                        @Nullable String m = Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale);
-                        assert (null != m);
-                        plugin.getAbilityManager().sendMessage(player, m);
+                        plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_LOWER"), locale));
                     }
                 }
             }

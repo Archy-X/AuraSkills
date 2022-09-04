@@ -20,20 +20,12 @@ public class SkillsMenu extends AbstractMenu implements MenuProvider {
     }
 
     @Override
-    public void onOpen(Player player, ActiveMenu menu) {
-
-    }
-
-    @Override
-    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, ActiveMenu menu) {
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, ActiveMenu activeMenu) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
-        switch (placeholder) {
-            case "skills_menu_title":
-                m = Lang.getMessage(MenuMessage.SKILLS_MENU_TITLE, locale);;
+        if (placeholder.equals("skills_menu_title")) {
+            return Lang.getMessage(MenuMessage.SKILLS_MENU_TITLE, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
 }

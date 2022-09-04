@@ -25,28 +25,40 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     @Override
     public String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
-        switch (placeholder) {
-            case "sources_title":
-            Skill skill = (Skill) activeMenu.getProperty("skill");
-            assert (null != skill);
-            m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_TITLE, locale),
+        if (placeholder.equals("sources_title")) {
+            Skill skill = getSkill(activeMenu);
+            return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_TITLE, locale),
                     "{skill}", skill.getDisplayName(locale),
                     "{current_page}", String.valueOf(activeMenu.getCurrentPage() + 1),
                     "{total_pages}", String.valueOf(activeMenu.getTotalPages()));
-            break;
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public int getPages(Player player, @NotNull ActiveMenu activeMenu) {
-        Skill skill = (Skill) activeMenu.getProperty("skill");
-        @Nullable Object property = activeMenu.getProperty("items_per_page");
-        assert (null != property);
-        int itemsPerPage = (Integer) property;
+        Skill skill = getSkill(activeMenu);
+        int itemsPerPage = getItemsPerPage(activeMenu);
         Source[] sources = plugin.getSourceRegistry().values(skill);
         return (sources.length - 1) / itemsPerPage + 1;
+    }
+
+    protected int getItemsPerPage(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("items_per_page");
+        int itemsPerPage;
+        if (property instanceof Integer) {
+            itemsPerPage = (Integer) property;
+        } else {
+            itemsPerPage = 24;
+        }
+        return itemsPerPage;
+    }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
     }
 }

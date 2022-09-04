@@ -42,7 +42,7 @@ public class YamlStorageProvider extends StorageProvider {
         File file = new File(plugin.getDataFolder() + "/playerdata/" + player.getUniqueId() + ".yml");
         if (file.exists()) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-            PlayerData playerData = new PlayerData(player, plugin);
+            @Nullable PlayerData playerData = new PlayerData(player, plugin);
             try {
                 // Make sure file name and uuid match
                 UUID id = UUID.fromString(config.getString("uuid", player.getUniqueId().toString()));
@@ -95,6 +95,8 @@ public class YamlStorageProvider extends StorageProvider {
                                 AbilityData abilityData = playerData.getAbilityData(ability);
                                 for (String key : abilityEntry.getKeys(false)) {
                                     Object value = abilityEntry.get(key);
+                                    if (value == null)
+                                        throw new IllegalStateException("Invalid configuration index key: " + key);
                                     abilityData.setData(key, value);
                                 }
                             }
@@ -104,9 +106,9 @@ public class YamlStorageProvider extends StorageProvider {
                 // Unclaimed item rewards
                 List<String> unclaimedItemsList = config.getStringList("unclaimed_items");
                 if (unclaimedItemsList.size() > 0) {
-                    List<KeyIntPair> unclaimedItems = new ArrayList<>();
+                    List<@NotNull KeyIntPair> unclaimedItems = new ArrayList<>();
                     for (String entry : unclaimedItemsList) {
-                        String[] splitEntry = entry.split(" ");
+                        @NotNull String[] splitEntry = entry.split(" ");
                         String itemKey = splitEntry[0];
                         int amount = 1;
                         if (splitEntry.length >= 2) {
@@ -129,8 +131,8 @@ public class YamlStorageProvider extends StorageProvider {
             } catch (Exception e) {
                 Bukkit.getLogger().warning("There was an error loading player data for player " + player.getName() + " with UUID " + player.getUniqueId() + ", see below for details.");
                 e.printStackTrace();
-                PlayerData data = createNewPlayer(player);
-                data.setShouldSave(false);
+                @Nullable PlayerData newPlayerData = createNewPlayer(player);
+                newPlayerData.setShouldSave(false);
                 sendErrorMessageToPlayer(player, e);
             }
         } else {
@@ -140,7 +142,7 @@ public class YamlStorageProvider extends StorageProvider {
 
     @Override
     public void save(@NotNull Player player, boolean removeFromMemory) {
-        PlayerData playerData = playerManager.getPlayerData(player);
+        @Nullable PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
         if (playerData.shouldNotSave()) return;
         // Save lock
@@ -176,15 +178,15 @@ public class YamlStorageProvider extends StorageProvider {
             // Save ability data
             for (AbilityData abilityData : playerData.getAbilityDataMap().values()) {
                 String path = "ability_data." + abilityData.getAbility().toString().toLowerCase(Locale.ROOT) + ".";
-                for (Map.Entry<String, Object> entry : abilityData.getDataMap().entrySet()) {
+                for (Map.Entry<@NotNull String, Object> entry : abilityData.getDataMap().entrySet()) {
                     config.set(path + entry.getKey(), entry.getValue());
                 }
             }
             // Save unclaimed items
-            List<KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
+            List<@NotNull KeyIntPair> unclaimedItems = playerData.getUnclaimedItems();
             config.set("unclaimed_items", null);
-            if (unclaimedItems != null && unclaimedItems.size() > 0) {
-                List<String> stringList = new ArrayList<>();
+            if (unclaimedItems.size() > 0) {
+                List<@NotNull String> stringList = new ArrayList<>();
                 for (KeyIntPair unclaimedItem : unclaimedItems) {
                     stringList.add(unclaimedItem.getKey() + " " + unclaimedItem.getValue());
                 }
@@ -212,7 +214,7 @@ public class YamlStorageProvider extends StorageProvider {
                     // Load levels and xp from backup
                     Map<Skill, Integer> levels = getLevelsFromBackup(playerDataSection, stringId);
                     Map<Skill, Double> xpLevels = getXpLevelsFromBackup(playerDataSection, stringId);
-                    PlayerData playerData = playerManager.getPlayerData(id);
+                    @Nullable PlayerData playerData = playerManager.getPlayerData(id);
                     if (playerData != null) {
                         applyData(playerData, levels, xpLevels);
                     } else {
@@ -232,7 +234,11 @@ public class YamlStorageProvider extends StorageProvider {
                 }
                 sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADED, locale));
             } catch (Exception e) {
-                sender.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale), "{error}", e.getMessage()));
+                String message = Lang.getMessage(CommandMessage.BACKUP_LOAD_ERROR, locale);
+                @Nullable String m = e.getMessage();
+                if (m != null)
+                    message = TextUtil.replace(m, "{error}", m);
+                sender.sendMessage(AureliumSkills.getPrefix(locale) + message);
             }
         }
     }
@@ -242,7 +248,7 @@ public class YamlStorageProvider extends StorageProvider {
         LeaderboardManager manager = plugin.getLeaderboardManager();
         manager.setSorting(true);
         // Initialize lists
-        Map<Skill, @NotNull List<SkillValue>> leaderboards = new HashMap<>();
+        Map<Skill, List<SkillValue>> leaderboards = new HashMap<>();
         for (Skill skill : Skills.values()) {
             leaderboards.put(skill, new ArrayList<>());
         }
@@ -272,7 +278,10 @@ public class YamlStorageProvider extends StorageProvider {
                                     double xp = config.getDouble(path + "xp");
                                     // Add to lists
                                     SkillValue skillLevel = new SkillValue(id, level, xp);
-                                    leaderboards.get(skill).add(skillLevel);
+                                    List<SkillValue> skillList = leaderboards.get(skill);
+                                    if (skillList == null)
+                                        throw new IllegalStateException("Invalid skill leaderboard skill index key: " + skill);
+                                    skillList.add(skillLevel);
 
                                     if (OptionL.isEnabled(skill)) {
                                         powerLevel += level;

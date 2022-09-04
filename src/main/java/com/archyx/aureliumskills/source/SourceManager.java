@@ -70,7 +70,7 @@ public class SourceManager {
             String path = tag.getPath();
             if (config.contains("tags." + path)) {
                 List<String> sourceStringList = config.getStringList("tags." + path);
-                List<Source> sourcesList = new ArrayList<>();
+                List<@NotNull Source> sourcesList = new ArrayList<>();
                 for (String sourceString : sourceStringList) {
                     if (sourceString.equals("*")) { // Add all sources in that skill if use * syntax
                         sourcesList.addAll(Arrays.asList(plugin.getSourceRegistry().values(tag.getSkill())));
@@ -170,7 +170,10 @@ public class SourceManager {
     }
 
     public double getXp(Source source) {
-        return sources.get(source);
+        Double xp = sources.get(source);
+        if (xp == null)
+            throw new IllegalStateException("Invalid xp souce index key: " + source.getPath());
+        return xp;
     }
 
     @NotNull

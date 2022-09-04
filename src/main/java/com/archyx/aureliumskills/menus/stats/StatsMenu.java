@@ -27,13 +27,9 @@ public class StatsMenu extends AbstractMenu implements MenuProvider {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
-        switch (placeholder) {
-            case "stats_menu_title":
-                m = Lang.getMessage(MenuMessage.STATS_MENU_TITLE, locale);
-                break;
+        if (placeholder.equals("stats_menu_title")) {
+            return Lang.getMessage(MenuMessage.STATS_MENU_TITLE, locale);
         }
-        assert (null != m);
         return placeholder;
     }
 }

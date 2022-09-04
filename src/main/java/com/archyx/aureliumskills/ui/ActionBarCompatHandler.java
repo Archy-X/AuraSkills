@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ActionBarCompatHandler {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final ActionBar actionBar;
     private static final int PAUSE_TICKS = 50;
 

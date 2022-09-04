@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public class SortTypeContext implements ContextProvider<SorterItem.SortType> {
+public class SortTypeContext implements ContextProvider<SorterItem.@NotNull SortType> {
 
     @Override
     public SorterItem.@NotNull SortType parse(@NotNull String s) {

@@ -23,13 +23,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public class SharpHook extends ManaAbilityProvider {
 
     public SharpHook(@NotNull AureliumSkills plugin) {
-        super(plugin, MAbility.SHARP_HOOK, ManaAbilityMessage.SHARP_HOOK_USE, null);
+        super(plugin, MAbility.SHARP_HOOK, ManaAbilityMessage.SHARP_HOOK_USE, ManaAbilityMessage.NONE);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class SharpHook extends ManaAbilityProvider {
 
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) {
             return;
         }

@@ -80,9 +80,7 @@ public class Requirements extends NBTAPIUser {
         if (isNBTDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
-        @Nullable String name = getName(skill);
-        assert (null != name);
-        compound.setInteger(name, level);
+        compound.setInteger(getName(skill), level);
         return nbtItem.getItem();
     }
 
@@ -130,9 +128,7 @@ public class Requirements extends NBTAPIUser {
                 if (oldTypeCompound != null) {
                     NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
                     for (String key : oldTypeCompound.getKeys()) {
-                        @Nullable String keyU = TextUtil.capitalize(key);
-                        assert (null != keyU);
-                        compound.setInteger(keyU, oldTypeCompound.getInteger(key));
+                        compound.setInteger(TextUtil.capitalize(key), oldTypeCompound.getInteger(key));
                     }
                 }
             }
@@ -174,7 +170,7 @@ public class Requirements extends NBTAPIUser {
 
     public boolean meetsRequirements(@NotNull ModifierType type, @NotNull ItemStack item, @NotNull Player player) {
         if (!OptionL.getBoolean(Option.REQUIREMENT_ENABLED)) return true;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return true;
         // Check global requirements
         for (Map.Entry<Skill, Integer> entry : getGlobalRequirements(type, item).entrySet()) {
@@ -190,7 +186,7 @@ public class Requirements extends NBTAPIUser {
         return true;
     }
 
-    private @Nullable String getName(@NotNull Skill skill) {
+    private @NotNull String getName(@NotNull Skill skill) {
         return TextUtil.capitalize(skill.name().toLowerCase(Locale.ENGLISH));
     }
 

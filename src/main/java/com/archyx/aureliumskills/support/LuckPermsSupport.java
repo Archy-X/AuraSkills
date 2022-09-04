@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class LuckPermsSupport {
 
-    private final @NotNull LuckPerms luckPerms;
+    private final LuckPerms luckPerms;
 
     public LuckPermsSupport() {
         luckPerms = LuckPermsProvider.get();

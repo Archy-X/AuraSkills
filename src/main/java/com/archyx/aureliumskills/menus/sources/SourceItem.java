@@ -25,78 +25,67 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class SourceItem extends AbstractItem implements TemplateItemProvider<Source> {
+public class SourceItem extends AbstractItem implements TemplateItemProvider<@NotNull Source> {
 
     public SourceItem(AureliumSkills plugin) {
         super(plugin);
     }
 
     @Override
-    public @NotNull Class<Source> getContext() {
+    public @NotNull Class<@NotNull Source> getContext() {
         return Source.class;
     }
 
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Source source) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "source_name":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_NAME, locale),
+                return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_NAME, locale),
                         "{name}", source.getDisplayName(locale));
             case "source_xp":
                 String unitName = source.getUnitName();
                 if (unitName == null) {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP, locale),
                             "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source)));
                 } else {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP_RATE, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCE_XP_RATE, locale),
                             "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source)),
                             "{unit}", getCustomMessage("sources.units." + unitName, locale));
                 }
             case "multiplied_xp":
-                Skill skill = (Skill) activeMenu.getProperty("skill");
-                assert (null != skill);
+                Skill skill = getSkill(activeMenu);
                 double multiplier = getMultiplier(player, skill);
                 if (multiplier > 1.0) {
                     String unit = source.getUnitName();
                     if (unit == null) {
-                        m = TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP, locale),
+                        return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP, locale),
                                 "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier));
                     } else {
-                        m = TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP_RATE, locale),
+                        return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP_RATE, locale),
                                 "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier),
                                 "{unit}", getCustomMessage("sources.units." + unit, locale));
                     }
                 } else {
-                    m = "";
+                    return "";
                 }
             case "multiplied_desc":
-                Skill skill1 = (Skill) activeMenu.getProperty("skill");
-                assert (null != skill1);
+                Skill skill1 = getSkill(activeMenu);
                 if (getMultiplier(player, skill1) > 1.0) {
-                    m = Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
+                    return Lang.getMessage(MenuMessage.MULTIPLIED_DESC, locale);
                 } else {
-                    m = "";
+                    return "";
                 }
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public @NotNull Set<@NotNull Source> getDefinedContexts(@NotNull Player player, @NotNull ActiveMenu activeMenu) {
         // Gets the needed properties from the menu
-        @Nullable Object property = activeMenu.getProperty("sort_type");
-        assert (null != property);
-        SortType sortType = (SortType) property;
-        property = activeMenu.getProperty("skill");
-        assert (null != property);
-        Skill skill = (Skill) property;
-        assert (null != skill);
-        property = activeMenu.getProperty("items_per_page");
-        assert (null != property);
-        int itemsPerPage = (Integer) property;
+        SortType sortType = getSortType(activeMenu);
+        Skill skill = getSkill(activeMenu);
+        int itemsPerPage = getItemsPerPage(activeMenu);
         int page = activeMenu.getCurrentPage();
         @Nullable Locale locale = plugin.getLang().getLocale(player);
         // Sort the sources in the skill by the selected sort type
@@ -151,14 +140,11 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
 
     // Safely get list of sources from property
     private @NotNull List<@NotNull Source> getSortedSources(@NotNull ActiveMenu activeMenu) {
-        Object object = activeMenu.getProperty("sources");
         List<@NotNull Source> sources = new ArrayList<>();
-        if (object instanceof List<?>) {
-            List<?> list = (List<?>) object;
-            for (Object element : list) {
-                if (element instanceof Source) {
-                    sources.add((Source) element);
-                }
+        List<?> list = getSources(activeMenu);
+        for (Object element : list) {
+            if (element instanceof Source) {
+                sources.add((Source) element);
             }
         }
         return sources;
@@ -166,7 +152,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
 
     private double getMultiplier(@NotNull Player player, @NotNull Skill skill) {
         Ability ability = skill.getXpMultiplierAbility();
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) {
             return 1.0;
         }
@@ -186,9 +172,47 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
             message = Lang.getMessage(new CustomMessageKey(path), locale);
         }
         catch (IllegalStateException ex) {
-            plugin.getLogger().warning("Unknown message with path: " + path);
+            // No custom message exists when using the message as a key
+            plugin.getLogger().warning("Unknown custom message with path: " + path);
         }
         return path;
+    }
+
+    private @NotNull List<?> getSources(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("sources");
+        if (!(property instanceof List)) {
+            // TODO: Unclear if this should throw an exception
+            //throw new IllegalArgumentException("Could not get menu sources property");
+            return Collections.EMPTY_LIST;
+        }
+        return (List<?>) property;
+    }
+
+    protected int getItemsPerPage(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("items_per_page");
+        int itemsPerPage;
+        if (property instanceof Integer) {
+            itemsPerPage = (Integer) property;
+        } else {
+            itemsPerPage = 24;
+        }
+        return itemsPerPage;
+    }
+
+    private @NotNull SortType getSortType(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("sort_type");
+        if (!(property instanceof SortType)) {
+            throw new IllegalArgumentException("Could not get menu sort_type property");
+        }
+        return (SortType) property;
+    }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
     }
 
 }

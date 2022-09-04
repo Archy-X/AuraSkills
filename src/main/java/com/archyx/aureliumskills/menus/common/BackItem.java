@@ -26,36 +26,39 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "back":
-                m = Lang.getMessage(MenuMessage.BACK, locale);
-                break;
+                return Lang.getMessage(MenuMessage.BACK, locale);
             case "back_click":
-                String previousMenu = (String) activeMenu.getProperty("previous_menu");
+                String previousMenu = getPreviousMenu(activeMenu);
                 String formattedPreviousMenu = TextUtil.capitalizeWord(TextUtil.replace(previousMenu, "_", " "));
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.BACK_CLICK, locale),
+                return TextUtil.replace(Lang.getMessage(MenuMessage.BACK_CLICK, locale),
                         "{menu_name}", formattedPreviousMenu);
-                break;
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public void onClick(@NotNull Player player, @NotNull InventoryClickEvent event, @NotNull ItemStack item, @NotNull SlotPos pos, @NotNull ActiveMenu activeMenu) {
-        Object object = activeMenu.getProperty("previous_menu");
-        if (object != null) {
-            String previousMenu = (String) object;
+        String previousMenu = getPreviousMenu(activeMenu);
+        if (!previousMenu.isEmpty())
             plugin.getMenuManager().openMenu(player, previousMenu);
-        }
     }
 
     @Override
     public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        if (activeMenu.getProperty("previous_menu") == null) {
+        if (getPreviousMenu(activeMenu).isEmpty()) {
             return null;
         }
         return baseItem;
     }
+
+    private @NotNull String getPreviousMenu(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("previous_menu");
+        if (!(property instanceof String)) {
+            property = "";
+        }
+        return (String) property;
+    }
+
 }

@@ -71,7 +71,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                     BrewerInventory inventory = event.getContents();
                     if (player != null) {
                         if (blockAbility(player)) return;
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData == null) return;
                         if (playerData.getAbilityLevel(Ability.ALCHEMIST) > 0) {
                             updateBrewingStand(inventory, playerData, playerData.getLocale());
@@ -139,11 +139,9 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                     // Add lore
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.ALCHEMIST, "add_item_lore")) {
                         List<@NotNull String> lore = new ArrayList<>();
-                        @Nullable String t = TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
+                        lore.add(TextUtil.replace(Lang.getMessage(AbilityMessage.ALCHEMIST_LORE, locale)
                                 , "{duration}", PotionUtil.formatDuration(durationBonus)
-                                , "{value}", NumberUtil.format1((multiplier - 1) * 100));
-                        assert (null != t);
-                        lore.add(t);
+                                , "{value}", NumberUtil.format1((multiplier - 1) * 100)));
                         meta.setLore(lore);
                         item.setItemMeta(meta);
                     }
@@ -270,7 +268,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         double splasherMultiplier = 1.0;
         if (source instanceof Player) {
             Player player = (Player) source;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null && plugin.getAbilityManager().isEnabled(Ability.SPLASHER)) {
                 if (playerData.getAbilityLevel(Ability.SPLASHER) > 0) {
                     double splasherPercent = getValue(Ability.SPLASHER, playerData);
@@ -306,7 +304,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
         }
         if (player != null) {
             if (blockAbility(player)) return;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             if (playerData.getAbilityLevel(Ability.LINGERING) > 0) {
                 AreaEffectCloud cloud = event.getAreaEffectCloud();
@@ -330,7 +328,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
             public void run() {
                 if (!blockDisabled(Ability.WISE_EFFECT)) {
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData != null) {
                             if (player.getActivePotionEffects().size() > 0) {
                                 if (playerData.getAbilityLevel(Ability.WISE_EFFECT) <= 0) {

@@ -30,20 +30,15 @@ public class StatsItem extends AbstractItem implements SingleItemProvider {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "stats":
-                m = Lang.getMessage(MenuMessage.STATS, locale);
-                break;
+                return Lang.getMessage(MenuMessage.STATS, locale);
             case "stats_desc":
-                m = Lang.getMessage(MenuMessage.STATS_DESC, locale);
-                break;
+                return Lang.getMessage(MenuMessage.STATS_DESC, locale);
             case "stats_click":
-                m = Lang.getMessage(MenuMessage.STATS_CLICK, locale);
-                break;
+                return Lang.getMessage(MenuMessage.STATS_CLICK, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override

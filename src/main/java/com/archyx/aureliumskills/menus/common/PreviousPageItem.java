@@ -25,17 +25,13 @@ public class PreviousPageItem extends AbstractItem implements SingleItemProvider
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "previous_page":
-                m = Lang.getMessage(MenuMessage.PREVIOUS_PAGE, locale);
-                break;
+                return Lang.getMessage(MenuMessage.PREVIOUS_PAGE, locale);
             case "previous_page_click":
-                m = Lang.getMessage(MenuMessage.PREVIOUS_PAGE_CLICK, locale);
-                break;
+                return Lang.getMessage(MenuMessage.PREVIOUS_PAGE_CLICK, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override

@@ -59,7 +59,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
             if (player.getItemOnCursor().getType() != Material.AIR) return; // Make sure cursor is empty
             if (inventory.getType() == InventoryType.GRINDSTONE) {
                 if (event.getSlotType() == InventoryType.SlotType.RESULT) {
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData == null) return;
                     if (playerData.getAbilityLevel(Ability.DISENCHANTER) == 0) return;
                     Location location = inventory.getLocation();
@@ -115,7 +115,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         if (player == null) return;
         if (blockAbility(player)) return;
         AnvilInventory inventory = event.getInventory();
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         if (playerData.getAbilityLevel(Ability.REPAIRING) == 0) return;
         ItemStack first = inventory.getItem(0);
@@ -173,7 +173,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
             if (event.getPlayer() instanceof Player) {
                 Player player = (Player) event.getPlayer();
                 if (blockAbility(player)) return;
-                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData == null) return;
                 if (playerData.getAbilityLevel(Ability.ANVIL_MASTER) > 0) {
                     int maxCost = (int) Math.round(getValue(Ability.ANVIL_MASTER, playerData));
@@ -190,7 +190,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         if (blockDisabled(Ability.SKILL_MENDER)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         if (playerData.getAbilityLevel(Ability.SKILL_MENDER) == 0) return;
         if (random.nextDouble() < getValue(Ability.SKILL_MENDER, playerData) / 100) {
@@ -273,7 +273,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
         for (HumanEntity entity : viewers) {
             if (entity instanceof Player) {
                 Player player = (Player) entity;
-                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
                     int level = playerData.getSkillLevel(Skills.FORGING);
                     if (level > highestLevel) {

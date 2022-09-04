@@ -41,7 +41,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         if (blockDisabled(Ability.XP_CONVERT)) return;
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             if (playerData.getAbilityLevel(Ability.XP_CONVERT) > 0 && event.getAmount() > 0) {
                 double totalXp = playerData.getAbilityData(Ability.XP_CONVERT).getDouble("xp") + event.getAmount();
@@ -66,7 +66,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
                 return;
             if (blockAbility(player))
                 return;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 if (playerData.getAbilityLevel(Ability.XP_WARRIOR) > 0 && event.getDroppedExp() > 0) {
                     if (random.nextDouble() < getValue(Ability.XP_WARRIOR, playerData) / 100) {
@@ -83,7 +83,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
             public void run() {
                 if (blockDisabled(Ability.ENCHANTED_STRENGTH)) return;
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData != null) {
                         if (playerData.getAbilityLevel(Ability.ENCHANTED_STRENGTH) > 0) {
                             ItemStack item = player.getInventory().getItemInMainHand();
@@ -110,7 +110,7 @@ public class EnchantingAbilities extends AbilityProvider implements Listener {
         if (blockDisabled(Ability.LUCKY_TABLE)) return;
         Player player = event.getEnchanter();
         if (blockAbility(player)) return;
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         if (playerData.getAbilityLevel(Ability.LUCKY_TABLE) > 0) {
             for (Map.Entry<Enchantment, Integer> entry : event.getEnchantsToAdd().entrySet()) {

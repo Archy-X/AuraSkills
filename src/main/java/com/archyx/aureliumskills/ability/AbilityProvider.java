@@ -10,7 +10,9 @@ import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.source.SourceTag;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -54,7 +56,7 @@ public abstract class AbilityProvider {
     }
 
     public double getXp(@NotNull Player player, @NotNull Source source, @NotNull Ability ability) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = plugin.getSourceManager().getXp(source);
             if (plugin.getAbilityManager().isEnabled(ability)) {

@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class MenuRegistrar {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final Slate slate;
 
     public MenuRegistrar(@NotNull AureliumSkills plugin) {

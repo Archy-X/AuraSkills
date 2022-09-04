@@ -10,7 +10,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,15 +82,14 @@ public class MenuFileManager {
             ConfigurationSection fillSection = newConfig.getConfigurationSection("fill");
             if (fillSection != null) {
                 fillSection.set("enabled", oldSection.getBoolean("fill.enabled"));
-                @Nullable String s = oldSection.getString("fill.material", "black_stained_glass_pane");
-                assert (null != s);
-                migrateBaseItem(fillSection, s);
+                String material = oldSection.getString("fill.material");
+                migrateBaseItem(fillSection, material != null ? material : "black_stained_glass_pane");
             }
             // Migrate items
             ConfigurationSection itemsSection = oldSection.getConfigurationSection("items");
             ConfigurationSection newItemsSection = newConfig.getConfigurationSection("items");
             ConfigurationSection newTemplatesSection = newConfig.getConfigurationSection("templates");
-            if (itemsSection != null && newItemsSection != null) {
+            if (itemsSection != null && newItemsSection != null && newTemplatesSection != null) {
                 migrateItems(itemsSection, newItemsSection, newTemplatesSection);
             }
             // Migrate templates
@@ -145,7 +143,7 @@ public class MenuFileManager {
                 }
                 // Migrate material item contexts
                 for (String material : materialList) {
-                    String[] splitMaterial = material.split(" ", 2);
+                    @NotNull String @NotNull [] splitMaterial = material.split(" ", 2);
                     if (splitMaterial.length < 2) continue;
                     String contextString = splitMaterial[0].toLowerCase(Locale.ROOT);
 
@@ -183,7 +181,7 @@ public class MenuFileManager {
             } else if (materialObj instanceof List) { // Context dependent material
                 List<@NotNull String> oldMaterials = DataUtil.castStringList(materialObj);
                 for (String oldMaterialEntry : oldMaterials) { // For each entry on the old list
-                    String[] splitMaterial = oldMaterialEntry.split(" ", 2); // Split into context and rest of material
+                    @NotNull String[] splitMaterial = oldMaterialEntry.split(" ", 2); // Split into context and rest of material
                     if (splitMaterial.length < 2) continue;
                     String contextString = splitMaterial[0].toLowerCase(Locale.ROOT);
                     // Get context section in new template

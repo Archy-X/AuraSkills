@@ -19,30 +19,22 @@ public enum Stats implements Stat {
 
 	@Override
 	public @NotNull String getDisplayName(@Nullable Locale locale) {
-	    @Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"), locale);
-	    assert (null != m);
-		return m;
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_NAME"), locale);
 	}
 
 	@Override
 	public @NotNull String getColor(@Nullable Locale locale) {
-		@Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"), locale);
-        assert (null != m);
-		return m;
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_COLOR"), locale);
 	}
 
 	@Override
 	public @NotNull String getSymbol(@Nullable Locale locale) {
-		@Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"), locale);
-        assert (null != m);
-		return m;
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_SYMBOL"), locale);
 	}
 
 	@Override
 	public @NotNull String getDescription(@Nullable Locale locale) {
-		@Nullable String m = Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"), locale);
-        assert (null != m);
-		return m;
+		return Lang.getMessage(StatMessage.valueOf(this.name() + "_DESC"), locale);
 	}
 
 }

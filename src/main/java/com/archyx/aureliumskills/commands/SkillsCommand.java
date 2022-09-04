@@ -50,7 +50,7 @@ import java.util.*;
 public class SkillsCommand extends BaseCommand {
  
 	private final @NotNull AureliumSkills plugin;
-	private final @NotNull ReloadManager reloadManager;
+	private final ReloadManager reloadManager;
 
 	public SkillsCommand(@NotNull AureliumSkills plugin) {
 		this.plugin = plugin;
@@ -64,12 +64,10 @@ public class SkillsCommand extends BaseCommand {
 		if (plugin.getPlayerManager().hasPlayerData(player)) {
 			plugin.getMenuManager().openMenu(player, "skills");
 		} else {
-			@Nullable String m = Lang.getMessage(CommandMessage.NO_PROFILE, Lang.getDefaultLanguage());
-			assert(m != null);
-			player.sendMessage(m);
+			player.sendMessage(Lang.getMessage(CommandMessage.NO_PROFILE, Lang.getDefaultLanguage()));
 		}
 	}
-	
+
 	@Subcommand("xp add")
 	@CommandCompletion("@players @skills")
 	@CommandPermission("aureliumskills.xp.add")
@@ -79,9 +77,7 @@ public class SkillsCommand extends BaseCommand {
 		if (OptionL.isEnabled(skill)) {
 			plugin.getLeveler().addXp(player, skill, amount);
 			if (!silent) {
-				@Nullable String m = Lang.getMessage(CommandMessage.XP_ADD, locale);
-				assert(m != null);
-				sender.sendMessage(AureliumSkills.getPrefix(locale) + m.replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_ADD, locale).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
 			}
 		} else {
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(CommandMessage.UNKNOWN_SKILL, locale));
@@ -97,9 +93,7 @@ public class SkillsCommand extends BaseCommand {
 		if (OptionL.isEnabled(skill)) {
 			plugin.getLeveler().setXp(player, skill, amount);
 			if (!silent) {
-				@Nullable String m = Lang.getMessage(CommandMessage.XP_SET, locale);
-				assert(m != null);
-				sender.sendMessage(AureliumSkills.getPrefix(locale) + m.replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_SET, locale).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
 			}
 		} else {
 			sender.sendMessage(AureliumSkills.getPrefix(locale) + ChatColor.YELLOW + Lang.getMessage(CommandMessage.UNKNOWN_SKILL, locale));
@@ -118,15 +112,11 @@ public class SkillsCommand extends BaseCommand {
 			if (playerData.getSkillXp(skill) - amount >= 0) {
 				plugin.getLeveler().setXp(player, skill, playerData.getSkillXp(skill) - amount);
 				if (!silent) {
-					@Nullable String m = Lang.getMessage(CommandMessage.XP_REMOVE, locale);
-					assert(m != null);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + m.replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_REMOVE, locale).replace("{amount}", String.valueOf(amount)).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
 				}
 			} else {
 				if (!silent) {
-					@Nullable String m = Lang.getMessage(CommandMessage.XP_REMOVE, locale);
-					assert(m != null);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + m.replace("{amount}", String.valueOf(playerData.getSkillXp(skill))).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.XP_REMOVE, locale).replace("{amount}", String.valueOf(playerData.getSkillXp(skill))).replace("{skill}", skill.getDisplayName(locale)).replace("{player}", player.getName()));
 				}
 				plugin.getLeveler().setXp(player, skill, 0);
 			}
@@ -145,14 +135,10 @@ public class SkillsCommand extends BaseCommand {
 		@Nullable Locale locale = plugin.getLang().getLocale(sender);
 		if (args.length == 0) {
 			List<SkillValue> lb = plugin.getLeaderboardManager().getPowerLeaderboard(1, 10);
-			@Nullable String m = Lang.getMessage(CommandMessage.TOP_POWER_HEADER, locale);
-			assert(m != null);
-			sender.sendMessage(m);
+			sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_HEADER, locale));
 			for (SkillValue skillValue : lb) {
 				String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-				m = Lang.getMessage(CommandMessage.TOP_POWER_ENTRY, locale);
-				assert (null != m);
-				sender.sendMessage(m
+				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_ENTRY, locale)
 						.replace("{rank}", String.valueOf(lb.indexOf(skillValue) + 1))
 						.replace("{player}", name != null ? name : "?")
 						.replace("{level}", String.valueOf(skillValue.getLevel())));
@@ -161,22 +147,16 @@ public class SkillsCommand extends BaseCommand {
 		else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("average")) {
 				List<SkillValue> lb = plugin.getLeaderboardManager().getAverageLeaderboard(1, 10);
-				@Nullable String m = Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER, locale);
-				assert(m != null);
-				sender.sendMessage(m);
+				sender.sendMessage(Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER, locale));
 				sendLeaderboardEntries(sender, locale, lb);
 			} else {
 				try {
 					int page = Integer.parseInt(args[0]);
 					List<SkillValue> lb = plugin.getLeaderboardManager().getPowerLeaderboard(page, 10);
-					@Nullable String m = Lang.getMessage(CommandMessage.TOP_POWER_HEADER_PAGE, locale);
-					assert (null != m);
-					sender.sendMessage(m.replace("{page}", String.valueOf(page)));
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_HEADER_PAGE, locale).replace("{page}", String.valueOf(page)));
 					for (SkillValue skillValue : lb) {
 						String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-						m = Lang.getMessage(CommandMessage.TOP_POWER_ENTRY, locale);
-						assert (null != m);
-						sender.sendMessage(m
+						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_POWER_ENTRY, locale)
 								.replace("{rank}", String.valueOf((page - 1) * 10 + lb.indexOf(skillValue) + 1))
 								.replace("{player}", name != null ? name : "?")
 								.replace("{level}", String.valueOf(skillValue.getLevel())));
@@ -185,22 +165,16 @@ public class SkillsCommand extends BaseCommand {
 					Skill skill = plugin.getSkillRegistry().getSkill(args[0]);
 					if (skill != null) {
 						List<SkillValue> lb = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 10);
-						@Nullable String m = Lang.getMessage(CommandMessage.TOP_SKILL_HEADER, locale);
-						assert (null != m);
-						sender.sendMessage(m.replace("{skill}", skill.getDisplayName(locale)));
+						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER, locale).replace("{skill}", skill.getDisplayName(locale)));
 						for (SkillValue skillValue : lb) {
 							String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-							m = Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY, locale);
-							assert (null != m);
-							sender.sendMessage(m
+							sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY, locale)
 									.replace("{rank}", String.valueOf(lb.indexOf(skillValue) + 1))
 									.replace("{player}", name != null ? name : "?")
 									.replace("{level}", String.valueOf(skillValue.getLevel())));
 						}
 					} else {
-						@Nullable String m = Lang.getMessage(CommandMessage.TOP_USAGE, locale);
-						assert(m != null);
-						sender.sendMessage(m);
+						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 					}
 				}
 			}
@@ -210,14 +184,11 @@ public class SkillsCommand extends BaseCommand {
 				try {
 					int page = Integer.parseInt(args[1]);
 					List<SkillValue> lb = plugin.getLeaderboardManager().getAverageLeaderboard(page, 10);
-					@Nullable String m = TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER_PAGE, locale), "{page}", String.valueOf(page));
-					assert(m != null);
-					sender.sendMessage(m);
+					sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_HEADER_PAGE, locale),
+							"{page}", String.valueOf(page)));
 					sendLeaderboardEntries(sender, locale, lb);
 				} catch (Exception e) {
-					@Nullable String m = Lang.getMessage(CommandMessage.TOP_USAGE, locale);
-					assert(m != null);
-					sender.sendMessage(m);
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
 			} else {
 				Skill skill = plugin.getSkillRegistry().getSkill(args[0]);
@@ -225,43 +196,31 @@ public class SkillsCommand extends BaseCommand {
 					try {
 						int page = Integer.parseInt(args[1]);
 						List<SkillValue> lb = plugin.getLeaderboardManager().getLeaderboard(skill, page, 10);
-						@Nullable String m = Lang.getMessage(CommandMessage.TOP_SKILL_HEADER_PAGE, locale);
-						assert (null != m);
-						sender.sendMessage(m.replace("{page}", String.valueOf(page)).replace("{skill}", skill.getDisplayName(locale)));
+						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_HEADER_PAGE, locale).replace("{page}", String.valueOf(page)).replace("{skill}", skill.getDisplayName(locale)));
 						for (SkillValue skillValue : lb) {
 							String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-							m = Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY, locale);
-							assert (null != m);
-							sender.sendMessage(m
+							sender.sendMessage(Lang.getMessage(CommandMessage.TOP_SKILL_ENTRY, locale)
 									.replace("{rank}", String.valueOf((page - 1) * 10 + lb.indexOf(skillValue) + 1))
 									.replace("{player}", name != null ? name : "?")
 									.replace("{level}", String.valueOf(skillValue.getLevel())));
 						}
 					} catch (Exception e) {
-						@Nullable String m = Lang.getMessage(CommandMessage.TOP_USAGE, locale);
-						assert(m != null);
-						sender.sendMessage(m);
+						sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 					}
 				} else {
-					@Nullable String m = Lang.getMessage(CommandMessage.TOP_USAGE, locale);
-					assert(m != null);
-					sender.sendMessage(m);
+					sender.sendMessage(Lang.getMessage(CommandMessage.TOP_USAGE, locale));
 				}
 			}
 		}
 	}
 
-	private void sendLeaderboardEntries(CommandSender sender, @Nullable Locale locale, List<SkillValue> lb) {
+	private void sendLeaderboardEntries(@NotNull CommandSender sender, @Nullable Locale locale, @NotNull List<SkillValue> lb) {
 		for (SkillValue skillValue : lb) {
 			String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-			@Nullable String m = TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
+			sender.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.TOP_AVERAGE_ENTRY, locale),
 					"{rank}", String.valueOf(lb.indexOf(skillValue) + 1),
 					"{player}", name != null ? name : "?",
-					"{level}", NumberUtil.format2(skillValue.getXp()));
-			
-			assert (null != m);
-			
-			sender.sendMessage(m);
+					"{level}", NumberUtil.format2(skillValue.getXp())));
 		}
 	}
 
@@ -338,20 +297,13 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Shows your skill rankings")
 	public void onRank(@NotNull Player player) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@Nullable String m;
-		m = Lang.getMessage(CommandMessage.RANK_HEADER, locale);
-		assert(m != null);
-		player.sendMessage(m);
-		m = Lang.getMessage(CommandMessage.RANK_POWER, locale);
-		assert(m != null);
-		player.sendMessage(m
+		player.sendMessage(Lang.getMessage(CommandMessage.RANK_HEADER, locale));
+		player.sendMessage(Lang.getMessage(CommandMessage.RANK_POWER, locale)
 				.replace("{rank}", String.valueOf(plugin.getLeaderboardManager().getPowerRank(player.getUniqueId())))
 				.replace("{total}", String.valueOf(plugin.getLeaderboardManager().getPowerLeaderboard().size())));
 		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 			if (OptionL.isEnabled(skill)) {
-				m = Lang.getMessage(CommandMessage.RANK_ENTRY, locale);
-				assert (null != m);
-				player.sendMessage(m
+				player.sendMessage(Lang.getMessage(CommandMessage.RANK_ENTRY, locale)
 						.replace("{skill}", String.valueOf(skill.getDisplayName(locale)))
 						.replace("{rank}", String.valueOf(plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId())))
 						.replace("{total}", String.valueOf(plugin.getLeaderboardManager().getLeaderboard(skill).size())));
@@ -370,14 +322,10 @@ public class SkillsCommand extends BaseCommand {
 			if (playerData == null) return;
 			playerData.setLocale(locale);
 			plugin.getCommandManager().setPlayerLocale(player, locale);
-			@Nullable String m = Lang.getMessage(CommandMessage.LANG_SET, locale);
-			assert (null != m);
-			player.sendMessage(AureliumSkills.getPrefix(locale) + m.replace("{lang}", Lang.getDefinedLanguages().get(locale)));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_SET, locale).replace("{lang}", Lang.getDefinedLanguages().get(locale)));
 		}
 		else {
-			@Nullable String m = Lang.getMessage(CommandMessage.LANG_NOT_FOUND, plugin.getLang().getLocale(player));
-			assert (null != m);
-			player.sendMessage(AureliumSkills.getPrefix(locale) + m);
+			player.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.LANG_NOT_FOUND, plugin.getLang().getLocale(player)));
 		}
 	}
 	
@@ -407,9 +355,8 @@ public class SkillsCommand extends BaseCommand {
 				plugin.getLeveler().applyLevelUpCommands(player, skill, oldLevel, level);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
-				@Nullable String m = Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale);
-				assert (null != m);
-				sender.sendMessage((AureliumSkills.getPrefix(locale) + m.replace("{skill}", skill.getDisplayName(locale)))
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETLEVEL_SET, locale)
+						.replace("{skill}", skill.getDisplayName(locale))
 						.replace("{level}", String.valueOf(level))
 						.replace("{player}", player.getName()));
 			} else {
@@ -443,9 +390,7 @@ public class SkillsCommand extends BaseCommand {
 			}
 			plugin.getLeveler().updateStats(player);
 			plugin.getLeveler().updatePermissions(player);
-			@Nullable String m = Lang.getMessage(CommandMessage.SKILL_SETALL_SET, locale);
-			assert (null != m);
-			sender.sendMessage(AureliumSkills.getPrefix(locale) + m
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_SETALL_SET, locale)
 					.replace("{level}", String.valueOf(level))
 					.replace("{player}", player.getName()));
 		} else {
@@ -460,16 +405,14 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Resets all skills or a specific skill to level 1 for a player.")
 	public void onSkillReset(@NotNull CommandSender sender, @Flags("other") @NotNull Player player, @Optional @Nullable Skill skill) {
 		@Nullable Locale locale = plugin.getLang().getLocale(sender);
+		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		if (playerData == null) return;
 		if (skill != null) {
 			if (OptionL.isEnabled(skill)) {
-				@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-				if (playerData == null) return;
 				resetPlayerSkills(player, playerData, skill);
 				// Reload items and armor to check for newly met requirements
 				this.plugin.getModifierManager().reloadPlayer(player);
-				@Nullable String m = Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale);
-				assert (null != m);
-				sender.sendMessage(AureliumSkills.getPrefix(locale) + m
+				sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
 						.replace("{skill}", skill.getDisplayName(locale))
 						.replace("{player}", player.getName()));
 			} else {
@@ -477,14 +420,11 @@ public class SkillsCommand extends BaseCommand {
 			}
 		}
 		else {
-			@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-			if (playerData == null) return;
 			for (Skill s : plugin.getSkillRegistry().getSkills()) {
+			playerData.clearInvalidItems();
 				resetPlayerSkills(player, playerData, s);
 			}
-			@Nullable String m = Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale);
-			assert (m != null);
-			sender.sendMessage(AureliumSkills.getPrefix(locale) + m
+			sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.SKILL_RESET_RESET_ALL, locale)
 					.replace("{player}", player.getName()));
 		}
 	}
@@ -510,9 +450,7 @@ public class SkillsCommand extends BaseCommand {
 			if (!playerData.getStatModifiers().containsKey(name)) {
 				playerData.addStatModifier(modifier);
 				if (!silent) {
-				    @Nullable String m = Lang.getMessage(CommandMessage.MODIFIER_ADD_ADDED, locale);
-				    assert (null != m);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, modifier, player, locale));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_ADD_ADDED, locale), modifier, player, locale));
 				}
 			} else if (stack) { // Stack modifier by using a numbered name
 				Set<@NotNull String> modifierNames = playerData.getStatModifiers().keySet();
@@ -535,15 +473,11 @@ public class SkillsCommand extends BaseCommand {
 				StatModifier newModifier = new StatModifier(newModifierName, stat, value);
 				playerData.addStatModifier(newModifier);
 				if (!silent) {
-				    @Nullable String m = Lang.getMessage(CommandMessage.MODIFIER_ADD_ADDED, locale);
-				    assert (null != m);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, newModifier, player, locale));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_ADD_ADDED, locale), newModifier, player, locale));
 				}
 			} else {
 				if (!silent) {
-                    @Nullable String m = Lang.getMessage(CommandMessage.MODIFIER_ADD_ALREADY_EXISTS, locale);
-                    assert (null != m);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, modifier, player, locale));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_ADD_ALREADY_EXISTS, locale), modifier, player, locale));
 				}
 			}
 		} else {
@@ -563,16 +497,12 @@ public class SkillsCommand extends BaseCommand {
 		if (playerData != null) {
 			if (playerData.removeStatModifier(name)) {
 				if (!silent) {
-				    @Nullable String m = Lang.getMessage(CommandMessage.MODIFIER_REMOVE_REMOVED, locale);
-				    assert (null != m);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, name, player));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVE_REMOVED, locale), name, player));
 				}
 			}
 			else {
 				if (!silent) {
-				    @Nullable String m = Lang.getMessage(CommandMessage.MODIFIER_REMOVE_NOT_FOUND, locale);
-				    assert (null != m);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, name, player));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVE_NOT_FOUND, locale), name, player));
 				}
 			}
 		}
@@ -587,7 +517,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@players @stats")
 	@CommandPermission("aureliumskills.modifier.list")
 	@Description("Lists all or a specific stat's modifiers for a player.")
-	public void onList(@NotNull CommandSender sender, @Flags("other") @Optional @Nullable Player player, @Optional @NotNull Stat stat) {
+	public void onList(@NotNull CommandSender sender, @Flags("other") @Optional @Nullable Player player, @Optional @Nullable Stat stat) {
 		@Nullable Locale locale = plugin.getLang().getLocale(sender);
 		if (player == null) {
 			if (sender instanceof Player) {
@@ -603,31 +533,26 @@ public class SkillsCommand extends BaseCommand {
 		}
 	}
 
-	private void listModifiers(@NotNull CommandSender sender, @NotNull @Optional @Flags("other") Player player, @Optional @Nullable Stat stat, @Nullable Locale locale) {
+	private void listModifiers(@NotNull CommandSender sender, @Optional @Flags("other") @NotNull Player player, @Optional @Nullable Stat stat, @Nullable Locale locale) {
 		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
 			StringBuilder message;
 			if (stat == null) {
-			    @Nullable String allStatsHeader = Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER, locale);
-			    assert (null != allStatsHeader);
-				message = new StringBuilder(StatModifier.applyPlaceholders(allStatsHeader, player));
-				for (String key : playerData.getStatModifiers().keySet()) {
-					@Nullable StatModifier modifier = playerData.getStatModifiers().get(key);
-					assert (null != modifier);
-                    @Nullable String allStatsEntry = Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY, locale);
-                    assert (null != allStatsEntry);
-					message.append("\n").append(StatModifier.applyPlaceholders(allStatsEntry, modifier, player, locale));
-				}
-			} else {
-                @Nullable String oneStatHeader = Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER, locale);
-                assert (null != oneStatHeader);
-				message = new StringBuilder(StatModifier.applyPlaceholders(oneStatHeader, stat, player, locale));
+				message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER, locale), player));
 				for (String key : playerData.getStatModifiers().keySet()) {
 					StatModifier modifier = playerData.getStatModifiers().get(key);
+					if (modifier == null)
+						throw new IllegalStateException("Invalid stat modifier index key: " + key);
+					message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY, locale), modifier, player, locale));
+				}
+			} else {
+				message = new StringBuilder(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER, locale), stat, player, locale));
+				for (String key : playerData.getStatModifiers().keySet()) {
+					StatModifier modifier = playerData.getStatModifiers().get(key);
+					if (modifier == null)
+						throw new IllegalStateException("Invalid stat modifier index key: " + key);
 					if (modifier.getStat() == stat) {
-                        @Nullable String oneStatEntry = Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY, locale);
-                        assert (null != oneStatEntry);
-						message.append("\n").append(StatModifier.applyPlaceholders(oneStatEntry, modifier, player, locale));
+						message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY, locale), modifier, player, locale));
 					}
 				}
 			}
@@ -641,7 +566,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandCompletion("@players @stats")
 	@CommandPermission("aureliumskills.modifier.removeall")
 	@Description("Removes all stat modifiers from a player.")
-	public void onRemoveAll(@NotNull CommandSender sender, @Flags("other") @Optional @Nullable Player player, @Optional @NotNull Stat stat, @Default("false") boolean silent) {
+	public void onRemoveAll(@NotNull CommandSender sender, @Flags("other") @Optional @Nullable Player player, @Optional @Nullable Stat stat, @Default("false") boolean silent) {
 		@Nullable Locale locale = plugin.getLang().getLocale(sender);
 		if (player == null) {
 			if (sender instanceof Player) {
@@ -665,14 +590,17 @@ public class SkillsCommand extends BaseCommand {
 		if (playerData != null) {
 			int removed = 0;
 			List<@NotNull String> toRemove = new ArrayList<>();
-			for (@NotNull String key : playerData.getStatModifiers().keySet()) {
+			for (String key : playerData.getStatModifiers().keySet()) {
 				if (stat == null) {
 					toRemove.add(key);
 					removed++;
 				}
-				else if (playerData.getStatModifiers().get(key).getStat() == stat) {
-					toRemove.add(key);
-					removed++;
+				else {
+					StatModifier modifier = playerData.getStatModifiers().get(key);
+					if (modifier.getStat() == stat) {
+						toRemove.add(key);
+						removed++;
+					}
 				}
 			}
 			for (String key : toRemove) {
@@ -680,14 +608,10 @@ public class SkillsCommand extends BaseCommand {
 			}
 			if (!silent) {
 				if (stat == null) {
-                    @Nullable String m = Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS, locale);
-                    assert (null != m);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, target).replace("{num}", String.valueOf(removed)));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS, locale), target).replace("{num}", String.valueOf(removed)));
 				}
 				else {
-                    @Nullable String m = Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT, locale);
-                    assert (null != m);
-					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, target, locale).replace("{num}", String.valueOf(removed)));
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT, locale), stat, target, locale).replace("{num}", String.valueOf(removed)));
 				}
 			}
 		}
@@ -708,20 +632,16 @@ public class SkillsCommand extends BaseCommand {
 		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier statModifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
 			if (statModifier.getStat() == stat) {
-                @Nullable String m = Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ALREADY_EXISTS, locale);
-                assert (null != m);
-				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, locale));
+				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
 				return;
 			}
 		}
 		if (lore) {
 			modifiers.addLore(ModifierType.ITEM, item, stat, value, locale);
 		}
-		@NotNull ItemStack newItem = modifiers.addModifier(ModifierType.ITEM, item, stat, value);
+		ItemStack newItem = modifiers.addModifier(ModifierType.ITEM, item, stat, value);
 		player.getInventory().setItemInMainHand(newItem);
-        @Nullable String m = Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ADDED, locale);
-        assert (null != m);
-		player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, value, locale));
+		player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_ADD_ADDED, locale), stat, value, locale));
 	}
 
 	@Subcommand("item modifier remove")
@@ -730,7 +650,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes an item stat modifier from the item held, and the lore associated with it by default.")
 	public void onItemModifierRemove(@Flags("itemheld") @NotNull Player player, @NotNull Stat stat, @Default("true") boolean lore) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@NotNull ItemStack item = player.getInventory().getItemInMainHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		boolean removed = false;
 		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
@@ -745,14 +665,10 @@ public class SkillsCommand extends BaseCommand {
 		}
 		player.getInventory().setItemInMainHand(item);
 		if (removed) {
-            @Nullable String m = Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVE_REMOVED, locale);
-            assert (null != m);
-			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, locale));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVE_REMOVED, locale), stat, locale));
 		}
 		else {
-            @Nullable String m = Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVE_DOES_NOT_EXIST, locale);
-            assert (null != m);
-			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, locale));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_REMOVE_DOES_NOT_EXIST, locale), stat, locale));
 		}
 	}
 
@@ -762,14 +678,10 @@ public class SkillsCommand extends BaseCommand {
 	public void onItemModifierList(@Flags("itemheld") @NotNull Player player) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		@Nullable String m = Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_HEADER, locale);
-		assert (null != m);
-		StringBuilder message = new StringBuilder(m);
+		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_HEADER, locale));
 		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {
-            m = Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_ENTRY, locale);
-            assert (null != m);
-			message.append("\n").append(StatModifier.applyPlaceholders(m, modifier, locale));
+			message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ITEM_MODIFIER_LIST_ENTRY, locale), modifier, locale));
 		}
 		player.sendMessage(message.toString());
 	}
@@ -795,9 +707,7 @@ public class SkillsCommand extends BaseCommand {
 		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier statModifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
 			if (statModifier.getStat() == stat) {
-                @Nullable String m = Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ALREADY_EXISTS, locale);
-                assert (null != m);
-				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, locale));
+				player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
 				return;
 			}
 		}
@@ -806,9 +716,7 @@ public class SkillsCommand extends BaseCommand {
 		}
 		ItemStack newItem = modifiers.addModifier(ModifierType.ARMOR, item, stat, value);
 		player.getInventory().setItemInMainHand(newItem);
-        @Nullable String m = Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale);
-        assert (null != m);
-		player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, value, locale));
+		player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale), stat, value, locale));
 
 	}
 
@@ -818,7 +726,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes an armor stat modifier from the item held, and the lore associated with it by default.")
 	public void onArmorModifierRemove(@Flags("itemheld") @NotNull Player player, @NotNull Stat stat, @Default("true") boolean lore) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@NotNull ItemStack item = player.getInventory().getItemInMainHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		boolean removed = false;
 		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
@@ -833,14 +741,10 @@ public class SkillsCommand extends BaseCommand {
 		}
 		player.getInventory().setItemInMainHand(item);
 		if (removed) {
-            @Nullable String m = Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVE_REMOVED, locale);
-            assert (null != m);
-			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, locale));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVE_REMOVED, locale), stat, locale));
 		}
 		else {
-            @Nullable String m = Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVE_DOES_NOT_EXIST, locale);
-            assert (null != m);
-			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(m, stat, locale));
+			player.sendMessage(AureliumSkills.getPrefix(locale) + StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_REMOVE_DOES_NOT_EXIST, locale), stat, locale));
 		}
 	}
 
@@ -850,14 +754,10 @@ public class SkillsCommand extends BaseCommand {
 	public void onArmorModifierList(@Flags("itemheld") @NotNull Player player) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		@Nullable String m = Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_HEADER, locale);
-		assert (null != m);
-		StringBuilder message = new StringBuilder(m);
+		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_HEADER, locale));
 		Modifiers modifiers = new Modifiers(plugin);
 		for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
-            m = Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_ENTRY, locale);
-            assert (null != m);
-			message.append("\n").append(StatModifier.applyPlaceholders(m, modifier, locale));
+			message.append("\n").append(StatModifier.applyPlaceholders(Lang.getMessage(CommandMessage.ARMOR_MODIFIER_LIST_ENTRY, locale), modifier, locale));
 		}
 		player.sendMessage(message.toString());
 	}
@@ -879,7 +779,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Adds an item requirement to the item held, along with lore by default.")
 	public void onItemRequirementAdd(@Flags("itemheld") @NotNull Player player, @NotNull Skill skill, int level, @Default("true") boolean lore) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@NotNull ItemStack item = player.getInventory().getItemInMainHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		Requirements requirements = new Requirements(plugin);
 		if (requirements.hasRequirement(ModifierType.ITEM, item, skill)) {
 			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_ADD_ALREADY_EXISTS, locale), "{skill}", skill.getDisplayName(locale)));
@@ -901,7 +801,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes an item requirement from the item held, and the lore associated with it by default.")
 	public void onItemRequirementRemove(@Flags("itemheld") @NotNull Player player, @NotNull Skill skill, @Default("true") boolean lore) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@NotNull ItemStack item = player.getInventory().getItemInMainHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		Requirements requirements = new Requirements(plugin);
 		if (requirements.hasRequirement(ModifierType.ITEM, item, skill)) {
 			item = requirements.removeRequirement(ModifierType.ITEM, item, skill);
@@ -923,16 +823,12 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Lists the item requirements on the item held.")
 	public void onItemRequirementList(@Flags("itemheld") @NotNull Player player) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@Nullable String m = Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_LIST_HEADER, locale);
-		assert(m != null);
-		player.sendMessage(m);
+		player.sendMessage(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_LIST_HEADER, locale));
 		Requirements requirements = new Requirements(plugin);
 		for (Map.Entry<Skill, Integer> entry : requirements.getRequirements(ModifierType.ITEM, player.getInventory().getItemInMainHand()).entrySet()) {
-			m = TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_LIST_ENTRY, locale),
+			player.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_REQUIREMENT_LIST_ENTRY, locale),
 					"{skill}", entry.getKey().getDisplayName(locale),
-					"{level}", String.valueOf(entry.getValue()));
-			assert (m != null);
-			player.sendMessage(m);
+					"{level}", String.valueOf(entry.getValue())));
 		}
 	}
 
@@ -998,16 +894,12 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Lists the armor requirements on the item held.")
 	public void onArmorRequirementList(@Flags("itemheld") @NotNull Player player) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@Nullable String m = Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_LIST_HEADER, locale);
-		assert(m != null);
-		player.sendMessage(m);
+		player.sendMessage(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_LIST_HEADER, locale));
 		Requirements requirements = new Requirements(plugin);
 		for (Map.Entry<Skill, Integer> entry : requirements.getRequirements(ModifierType.ARMOR, player.getInventory().getItemInMainHand()).entrySet()) {
-			m = TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_LIST_ENTRY, locale),
+			player.sendMessage(TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_REQUIREMENT_LIST_ENTRY, locale),
 					"{skill}", entry.getKey().getDisplayName(locale),
-					"{level}", String.valueOf(entry.getValue()));
-			assert (m != null);
-			player.sendMessage(m);
+					"{level}", String.valueOf(entry.getValue())));
 		}
 	}
 
@@ -1072,14 +964,14 @@ public class SkillsCommand extends BaseCommand {
 					if (playerFile.exists() && playerFile.canWrite()) {
 						try {
 							NBTFile nbtFile = new NBTFile(playerFile);
-							@Nullable NBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
+							NBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
 							if (compoundList != null) {
 								boolean save = false;
 								for (NBTListCompound listCompound : compoundList.subList(0, compoundList.size())) {
 									switch (listCompound.getString("Name")) {
 										case "generic.maxHealth":
 										case "minecraft:generic.max_health": {
-											@Nullable NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
 											if (modifierList != null) {
 												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
 													if (modifier.getString("Name").equals("skillsHealth")) {
@@ -1095,7 +987,7 @@ public class SkillsCommand extends BaseCommand {
 										}
 										case "generic.luck":
 										case "minecraft:generic.luck": {
-											@Nullable NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
 											if (modifierList != null) {
 												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
 													if (modifier.getString("Name").equals("AureliumSkills-Luck")) {
@@ -1169,16 +1061,12 @@ public class SkillsCommand extends BaseCommand {
 						@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData((Player) sender);
 						if (playerData == null) return;
 						Object typed = playerData.getMetadata().get("backup_command");
-						if (typed != null) {
-							if (typed instanceof String) {
-								String typedFile = (String) typed;
-								if (typedFile.equals(file.getName())) {
-									sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
-									storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
-									playerData.getMetadata().remove("backup_command");
-								} else {
-									backupLoadConfirm(playerData, sender, file);
-								}
+						if (typed instanceof String) {
+							String typedFile = (String) typed;
+							if (typedFile.equals(file.getName())) {
+								sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.BACKUP_LOAD_LOADING, locale));
+								storageProvider.loadBackup(YamlConfiguration.loadConfiguration(file), sender);
+								playerData.getMetadata().remove("backup_command");
 							} else {
 								backupLoadConfirm(playerData, sender, file);
 							}
@@ -1306,7 +1194,7 @@ public class SkillsCommand extends BaseCommand {
 			if (lore) {
 				multipliers.addLore(ModifierType.ITEM, item, skill, value, locale);
 			}
-			@NotNull ItemStack newItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
+			ItemStack newItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
 			player.getInventory().setItemInMainHand(newItem);
 			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_ADD_ADDED, locale),
 					"{target}", skill.getDisplayName(locale), "{value}", String.valueOf(value)));
@@ -1322,7 +1210,7 @@ public class SkillsCommand extends BaseCommand {
 			if (lore) {
 				multipliers.addLore(ModifierType.ITEM, item, null, value, locale);
 			}
-			@NotNull ItemStack newItem = multipliers.addMultiplier(ModifierType.ITEM, item, null, value);
+			ItemStack newItem = multipliers.addMultiplier(ModifierType.ITEM, item, null, value);
 			player.getInventory().setItemInMainHand(newItem);
 			player.sendMessage(AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_ADD_ADDED, locale),
 					"{target}", global, "{value}", String.valueOf(value)));
@@ -1374,22 +1262,18 @@ public class SkillsCommand extends BaseCommand {
 	public void onItemMultiplierList(@Flags("itemheld") @NotNull Player player) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		@Nullable String m = Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_LIST_HEADER, locale);
-		assert (null != m);
-		StringBuilder message = new StringBuilder(m);
+		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_LIST_HEADER, locale));
 		Multipliers multipliers = new Multipliers(plugin);
 		for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, item)) {
 			String targetName;
-			@Nullable Skill skill = multiplier.getSkill();
+			Skill skill = multiplier.getSkill();
 			if (skill != null) {
 				targetName = skill.getDisplayName(locale);
 			} else {
 				targetName = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
 			}
-			m = TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_LIST_ENTRY, locale),
-                    "{target}", targetName, "{value}", String.valueOf(multiplier.getValue()));
-			assert (null != m);
-			message.append("\n").append(m);
+			message.append("\n").append(TextUtil.replace(Lang.getMessage(CommandMessage.ITEM_MULTIPLIER_LIST_ENTRY, locale),
+					"{target}", targetName, "{value}", String.valueOf(multiplier.getValue())));
 		}
 		player.sendMessage(message.toString());
 	}
@@ -1457,7 +1341,7 @@ public class SkillsCommand extends BaseCommand {
 	@Description("Removes an armor multiplier of a the specified skill or global from the held item.")
 	public void onArmorMultiplierRemove(@Flags("itemheld") @NotNull Player player, @NotNull String target) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
-		@NotNull ItemStack item = player.getInventory().getItemInMainHand();
+		ItemStack item = player.getInventory().getItemInMainHand();
 		Skill skill = plugin.getSkillRegistry().getSkill(target);
 		boolean removed = false;
 
@@ -1494,22 +1378,18 @@ public class SkillsCommand extends BaseCommand {
 	public void onArmorMultiplierList(@Flags("itemheld") @NotNull Player player) {
 		@Nullable Locale locale = plugin.getLang().getLocale(player);
 		ItemStack item = player.getInventory().getItemInMainHand();
-		@Nullable String m = Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_LIST_HEADER, locale);
-        assert (null != m);
-		StringBuilder message = new StringBuilder(m);
+		StringBuilder message = new StringBuilder(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_LIST_HEADER, locale));
 		Multipliers multipliers = new Multipliers(plugin);
 		for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
 			String targetName;
-			@Nullable Skill skill = multiplier.getSkill();
+			Skill skill = multiplier.getSkill();
 			if (skill != null) {
 				targetName = skill.getDisplayName(locale);
 			} else {
 				targetName = Lang.getMessage(CommandMessage.MULTIPLIER_GLOBAL, locale);
 			}
-			m = TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_LIST_ENTRY, locale),
-                    "{target}", targetName, "{value}", String.valueOf(multiplier.getValue()));
-			assert (null != m);
-			message.append("\n").append(m);
+			message.append("\n").append(TextUtil.replace(Lang.getMessage(CommandMessage.ARMOR_MULTIPLIER_LIST_ENTRY, locale),
+					"{target}", targetName, "{value}", String.valueOf(multiplier.getValue())));
 		}
 		player.sendMessage(message.toString());
 	}
@@ -1538,7 +1418,7 @@ public class SkillsCommand extends BaseCommand {
 	@Subcommand("sources")
 	@CommandPermission("aureliumskills.sources")
 	@CommandCompletion("@skills @sort_types")
-	public void onSources(@NotNull Player player, @NotNull Skill skill, @Optional SorterItem.@Nullable SortType sortType) {
+	public void onSources(@NotNull Player player, @NotNull Skill skill, @Optional @Nullable SorterItem.SortType sortType) {
 		Map<String, Object> properties = new HashMap<>();
 		properties.put("skill", skill);
 		properties.put("items_per_page", 28);
@@ -1551,7 +1431,7 @@ public class SkillsCommand extends BaseCommand {
 
 	@Subcommand("help")
 	@CommandPermission("aureliumskills.help")
-	public void onHelp(@NotNull CommandSender sender, @NotNull CommandHelp help) {
+	public void onHelp(CommandSender sender, CommandHelp help) {
 		help.showHelp();
 	}
 }

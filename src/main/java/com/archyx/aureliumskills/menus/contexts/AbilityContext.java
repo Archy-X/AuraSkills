@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
-public class AbilityContext implements ContextProvider<Ability> {
+public class AbilityContext implements ContextProvider<@NotNull Ability> {
 
     @Override
     @Nullable

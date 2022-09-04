@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
-public class ManaAbilityContext implements ContextProvider<MAbility> {
+public class ManaAbilityContext implements ContextProvider<@NotNull MAbility> {
 
     @Override
     @Nullable

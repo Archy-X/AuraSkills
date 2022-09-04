@@ -26,6 +26,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class DamageListener implements Listener {
 
@@ -70,7 +71,7 @@ public class DamageListener implements Listener {
                 return;
             }
             //Gets player skill
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
 
             DamageType damageType = getDamageType(event, player);
@@ -133,7 +134,7 @@ public class DamageListener implements Listener {
             return;
         }
         // Gets player skill
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         // Checks for absorption activation and applies
         ManaAbilityProvider provider = plugin.getManaAbilityManager().getProvider(MAbility.ABSORPTION);

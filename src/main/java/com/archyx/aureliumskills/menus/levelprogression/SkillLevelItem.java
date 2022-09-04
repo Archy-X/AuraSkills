@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class SkillLevelItem extends AbstractItem implements TemplateItemProvider<Integer> {
+public abstract class SkillLevelItem extends AbstractItem implements TemplateItemProvider<@NotNull Integer> {
 
     private final @NotNull List<Integer> track;
     
@@ -45,7 +45,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     }
 
     @Override
-    public @NotNull Class<Integer> getContext() {
+    public @NotNull Class<@NotNull Integer> getContext() {
         return Integer.class;
     }
 
@@ -60,12 +60,9 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull Integer num) {
         // Functionality for showing the level as the amount on the item
         int page = activeMenu.getCurrentPage();
-        @Nullable Object property = activeMenu.getProperty("items_per_page");
-        assert (null != property);
-        int level = num + page * (int)property;
+        int level = num + page * getItemsPerPage(activeMenu);
         // Don't show if level is more than max skill level
-        Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
+        Skill skill = getSkill(activeMenu);
         if (level > OptionL.getMaxLevel(skill)) {
             return null;
         }
@@ -85,11 +82,8 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         ImmutableList<@NotNull Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
         StringBuilder message = new StringBuilder();
         double totalMoney = 0;
-        @Nullable String m;
         for (Reward reward : rewards) {
-            m = reward.getMenuMessage(player, locale, skill, level);
-            assert (null != m);
-            message.append(m);
+            message.append(reward.getMenuMessage(player, locale, skill, level));
             if (reward instanceof MoneyReward) {
                 totalMoney += ((MoneyReward) reward).getAmount();
             }
@@ -103,40 +97,32 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
             }
         }
         if (totalMoney > 0) {
-            m = TextUtil.replace(Lang.getMessage(MenuMessage.MONEY_REWARD, locale), "{amount}", NumberUtil.format2(totalMoney));
-            assert (null != m);
-            message.append(m);
+            message.append(TextUtil.replace(Lang.getMessage(MenuMessage.MONEY_REWARD, locale), "{amount}", NumberUtil.format2(totalMoney)));
         }
-        m = TextUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", message.toString());
-        assert (null != m);
-        return m;
+        return TextUtil.replace(Lang.getMessage(MenuMessage.REWARDS, locale),"{rewards}", message.toString());
     }
 
-    protected @NotNull String getAbilityLore(@NotNull Skill skill, int level, @Nullable Locale locale) {
+    protected @NotNull String getAbilityLore(@NotNull Skill skill, int level, Locale locale) {
         StringBuilder abilityLore = new StringBuilder();
         if (skill.getAbilities().size() == 5) {
             AbilityManager manager = plugin.getAbilityManager();
             for (Ability ability : manager.getAbilities(skill, level)) {
                 if (manager.isEnabled(ability)) {
                     if (level == manager.getUnlock(ability)) {
-                        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
+                        abilityLore.append(TextUtil.replace(Lang.getMessage(MenuMessage.ABILITY_UNLOCK, locale)
                                 , "{ability}", ability.getDisplayName(locale)
                                 , "{desc}", TextUtil.replace(ability.getDescription(locale)
                                 , "{value_2}", NumberUtil.format1(manager.getValue2(ability, 1))
-                                , "{value}", NumberUtil.format1(manager.getValue(ability, 1))));
-                        assert (null != m);
-                        abilityLore.append(m);
+                                , "{value}", NumberUtil.format1(manager.getValue(ability, 1)))));
                     } else {
                         int abilityLevel = ((level - manager.getUnlock(ability)) / manager.getLevelUp(ability)) + 1;
                         if (abilityLevel <= manager.getMaxLevel(ability) || manager.getMaxLevel(ability) == 0) { // Check max level
-                            @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
+                            abilityLore.append(TextUtil.replace(Lang.getMessage(MenuMessage.ABILITY_LEVEL, locale)
                                     , "{ability}", ability.getDisplayName(locale)
                                     , "{level}", RomanNumber.toRoman(abilityLevel)
                                     , "{desc}", TextUtil.replace(ability.getDescription(locale)
                                     , "{value_2}", NumberUtil.format1(manager.getValue2(ability, abilityLevel))
-                                    , "{value}", NumberUtil.format1(manager.getValue(ability, abilityLevel))));
-                            assert (null != m);
-                            abilityLore.append(m);
+                                    , "{value}", NumberUtil.format1(manager.getValue(ability, abilityLevel)))));
                         }
                     }
                 }
@@ -152,27 +138,23 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         if (mAbility != null) {
             if (plugin.getAbilityManager().isEnabled(mAbility)) {
                 if (level == manager.getUnlock(mAbility)) {
-                    @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)
+                    manaAbilityLore.append(TextUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_UNLOCK, locale)
                             , "{mana_ability}", mAbility.getDisplayName(locale)
                             , "{desc}", TextUtil.replace(mAbility.getDescription(locale)
                             , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, 1))
                             , "{duration}", NumberUtil.format1(getDuration(mAbility, 1))
-                            , "{haste_level}", String.valueOf(manager.getOptionAsInt(MAbility.SPEED_MINE, "haste_level", 10))));
-                    assert (null != m);
-                    manaAbilityLore.append(m);
+                            , "{haste_level}", String.valueOf(manager.getOptionAsInt(MAbility.SPEED_MINE, "haste_level", 10)))));
                 }
                 else {
                     int manaAbilityLevel = ((level - manager.getUnlock(mAbility)) / manager.getLevelUp(mAbility)) + 1;
                     if (manaAbilityLevel <= manager.getMaxLevel(mAbility) || manager.getMaxLevel(mAbility) == 0) {
-                        @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL, locale)
+                        manaAbilityLore.append(TextUtil.replace(Lang.getMessage(MenuMessage.MANA_ABILITY_LEVEL, locale)
                                 , "{mana_ability}", mAbility.getDisplayName(locale)
                                 , "{level}", RomanNumber.toRoman(manaAbilityLevel)
                                 , "{desc}", TextUtil.replace(mAbility.getDescription(locale)
                                 , "{value}", NumberUtil.format1(manager.getDisplayValue(mAbility, manaAbilityLevel))
                                 , "{duration}", NumberUtil.format1(getDuration(mAbility, manaAbilityLevel))
-                                , "{haste_level}", String.valueOf(manager.getOptionAsInt(MAbility.SPEED_MINE, "haste_level", 10))));
-                        assert (null != m);
-                        manaAbilityLore.append(m);
+                                , "{haste_level}", String.valueOf(manager.getOptionAsInt(MAbility.SPEED_MINE, "haste_level", 10)))));
                     }
                 }
             }
@@ -191,7 +173,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     }
 
     protected int getItemsPerPage(@NotNull ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("items_per_page");
+        @Nullable Object property = activeMenu.getProperty("items_per_page");
         int itemsPerPage;
         if (property instanceof Integer) {
             itemsPerPage = (Integer) property;
@@ -205,6 +187,14 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
         int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
         return currentPage * itemsPerPage + position;
+    }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
     }
 
 }

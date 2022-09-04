@@ -27,43 +27,33 @@ public class InProgressItem extends SkillLevelItem {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Integer position) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
+        Skill skill = getSkill(activeMenu);
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null)
             return placeholder;
         int level = getLevel(activeMenu, position);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "level_in_progress":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS, locale),"{level}", RomanNumber.toRoman(level));
-                break;
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_IN_PROGRESS, locale),"{level}", RomanNumber.toRoman(level));
             case "level_number":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
-                break;
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
             case "rewards":
-                m = getRewardsLore(skill, level, player, locale);
-                break;
+                return getRewardsLore(skill, level, player, locale);
             case "ability":
-                m = getAbilityLore(skill, level, locale);
-                break;
+                return getAbilityLore(skill, level, locale);
             case "mana_ability":
-                m = getManaAbilityLore(skill, level, locale);
-                break;
+                return getManaAbilityLore(skill, level, locale);
             case "progress":
                 double currentXp = playerData.getSkillXp(skill);
                 double xpToNext = plugin.getLeveler().getXpRequirements().getXpRequired(skill, level);
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
+                return TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS, locale)
                         ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
                         ,"{current_xp}", NumberUtil.format2(currentXp)
                         ,"{level_xp}", String.valueOf((int) xpToNext));
-                break;
             case "in_progress":
-                m = Lang.getMessage(MenuMessage.IN_PROGRESS, locale);
-                break;
+                return Lang.getMessage(MenuMessage.IN_PROGRESS, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
@@ -72,8 +62,7 @@ public class InProgressItem extends SkillLevelItem {
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null)
             return levels;
-        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
+        Skill skill = getSkill(activeMenu);
         int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
         int level = playerData.getSkillLevel(skill);
@@ -87,6 +76,14 @@ public class InProgressItem extends SkillLevelItem {
             levels.add(position);
         }
         return levels;
+    }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
     }
 
 }

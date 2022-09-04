@@ -18,8 +18,8 @@ public abstract class Reward {
 
     public abstract void giveReward(@NotNull Player player, @NotNull Skill skill, int level);
 
-    public abstract @Nullable String getMenuMessage(@NotNull Player player, @Nullable Locale locale, @NotNull Skill skill, int level);
+    public abstract @NotNull String getMenuMessage(@NotNull Player player, @Nullable Locale locale, @NotNull Skill skill, int level);
 
-    public abstract @Nullable String getChatMessage(@NotNull Player player, @Nullable Locale locale, @NotNull Skill skill, int level);
+    public abstract @NotNull String getChatMessage(@NotNull Player player, @Nullable Locale locale, @NotNull Skill skill, int level);
 
 }

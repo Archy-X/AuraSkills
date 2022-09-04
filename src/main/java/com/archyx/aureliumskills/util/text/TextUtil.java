@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.util.text;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 public class TextUtil {
 
     public static @NotNull String replace(@NotNull String source, @NotNull String os, @NotNull String ns) {
+        Objects.requireNonNull(source);
+        Objects.requireNonNull(os);
+        Objects.requireNonNull(ns);
         int i = 0;
         if ((i = source.indexOf(os, i)) >= 0) {
             char[] sourceArray = source.toCharArray();
@@ -52,12 +56,17 @@ public class TextUtil {
     }
 
     public static @NotNull String replaceNonEscaped(@NotNull String source, @NotNull String os, @NotNull String ns) {
+        Objects.requireNonNull(source);
+        Objects.requireNonNull(os);
+        Objects.requireNonNull(ns);
         String replaced = replace(source, "\\" + os, "\uE000"); // Replace escaped characters with intermediate char
         replaced = replace(replaced, os, ns); // Replace normal chars
         return replace(replaced, "\uE000", os); // Replace intermediate with original
     }
 
     public static @NotNull String removeEnd(@NotNull String str, @NotNull String remove) {
+        Objects.requireNonNull(str);
+        Objects.requireNonNull(remove);
         if (isEmpty(str) || isEmpty(remove)) {
             return str;
         }
@@ -72,6 +81,7 @@ public class TextUtil {
     }
 
     public static @NotNull String capitalize(@NotNull String str) {
+        Objects.requireNonNull(str);
         int strLen = length(str);
         if (strLen == 0) {
             return str;
@@ -111,6 +121,7 @@ public class TextUtil {
 
 
     public static @NotNull String repeat(@NotNull String str, int repeat) {
+        Objects.requireNonNull(str);
         if (repeat <= 0) {
             return "";
         }
@@ -145,6 +156,7 @@ public class TextUtil {
     }
 
     private static @NotNull Set<Integer> generateDelimiterSet(char @NotNull [] delimiters) {
+        Objects.requireNonNull(delimiters);
         Set<Integer> delimiterHashSet = new HashSet<>();
         if (delimiters.length == 0) {
             return delimiterHashSet;
@@ -157,6 +169,8 @@ public class TextUtil {
     }
 
     public static @NotNull String capitalizeWord(@NotNull String str, char @NotNull ... delimiters) {
+        Objects.requireNonNull(str);
+        Objects.requireNonNull(delimiters);
         if (isEmpty(str)) {
             return str;
         }
@@ -187,6 +201,7 @@ public class TextUtil {
     }
 
     public static @NotNull String capitalizeWord(@NotNull String str) {
+        Objects.requireNonNull(str);
         return capitalizeWord(str, new char[] {' '});
     }
 

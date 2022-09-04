@@ -143,7 +143,7 @@ public abstract class LootHandler extends AbilityProvider {
     }
 
     private void giveXp(@NotNull Player player, @NotNull Loot loot, @Nullable Source source) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
         double xp = loot.getOption("xp", Double.class, -1.0);
         if (xp == -1.0 && source != null) {
@@ -154,7 +154,7 @@ public abstract class LootHandler extends AbilityProvider {
     }
 
     private double getXp(@NotNull Player player, double input) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double output = input;
             if (plugin.getAbilityManager().isEnabled(ability)) {
@@ -174,16 +174,20 @@ public abstract class LootHandler extends AbilityProvider {
     private void attemptSendMessage(@NotNull Player player, @NotNull Loot loot) {
         String message = loot.getMessage();
         if (message != null && !message.equals("")) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
 
             Locale locale = playerData.getLocale();
             // Try to get message as message key
             CustomMessageKey key = new CustomMessageKey(message);
-            String finalMessage = Lang.getMessage(key, locale);
             // Use input as message if fail
-            if (finalMessage == null) {
-                finalMessage = message;
+            String finalMessage = message;
+            try {
+                finalMessage = Lang.getMessage(key, locale);
+            }
+            catch (IllegalStateException ex) {
+                // No custom message exists when using the message as a key
+                plugin.getLogger().warning("Unknown custom message with path: " + key);
             }
             // Replace placeholders
             if (plugin.isPlaceholderAPIEnabled()) {

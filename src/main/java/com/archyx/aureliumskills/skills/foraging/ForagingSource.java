@@ -42,7 +42,7 @@ public enum ForagingSource implements Source {
 
     private @Nullable String[] alternateMaterials;
     private @Nullable String legacyMaterial;
-    private byte[] legacyData;
+    private byte @NotNull [] legacyData = {};
     private boolean requiresBlockBelow;
     private boolean isTrunk;
     private boolean isLeaf;
@@ -73,22 +73,22 @@ public enum ForagingSource implements Source {
         this.isTrunk = isTrunk;
     }
 
-    ForagingSource(@NotNull String legacyMaterial, byte[] legacyData) {
+    ForagingSource(@NotNull String legacyMaterial, byte @NotNull [] legacyData) {
         this(legacyMaterial);
         this.legacyData = legacyData;
     }
 
-    ForagingSource(@NotNull String legacyMaterial, byte[] legacyData, boolean isLeaf) {
+    ForagingSource(@NotNull String legacyMaterial, byte @NotNull [] legacyData, boolean isLeaf) {
         this(legacyMaterial, legacyData);
         this.isLeaf = isLeaf;
     }
 
-    ForagingSource(@NotNull String legacyMaterial, byte[] legacyData, @Nullable String... alternateMaterials) {
+    ForagingSource(@NotNull String legacyMaterial, byte @NotNull [] legacyData, @Nullable String... alternateMaterials) {
         this(legacyMaterial, legacyData);
         this.alternateMaterials = alternateMaterials;
     }
 
-    ForagingSource(@NotNull String legacyMaterial, byte[] legacyData, boolean isTrunk, @Nullable String... alternateMaterials) {
+    ForagingSource(@NotNull String legacyMaterial, byte @NotNull [] legacyData, boolean isTrunk, @Nullable String... alternateMaterials) {
         this(legacyMaterial, legacyData, alternateMaterials);
         this.isTrunk = isTrunk;
     }

@@ -30,40 +30,31 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type) {
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "abilities":
-                m = Lang.getMessage(MenuMessage.ABILITIES, locale);
-                break;
+                return Lang.getMessage(MenuMessage.ABILITIES, locale);
             case "abilities_desc":
-                m = Lang.getMessage(MenuMessage.ABILITIES_DESC, locale);
-                break;
+                return Lang.getMessage(MenuMessage.ABILITIES_DESC, locale);
             case "abilities_click":
-                Skill skill = (Skill) menu.getProperty("skill");
-                assert (null != skill);
-                m = Lang.getMessage(MenuMessage.ABILITIES_CLICK, locale);
-                assert (null != m);
-                m = TextUtil.replace(m, "{skill}", skill.getDisplayName(locale));
-                break;
+                Skill skill = getSkill(activeMenu);
+                return TextUtil.replace(Lang.getMessage(MenuMessage.ABILITIES_CLICK, locale), "{skill}", skill.getDisplayName(locale));
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public void onClick(@NotNull Player player, @NotNull InventoryClickEvent event, @NotNull ItemStack item, @NotNull SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("skill", activeMenu.getProperty("skill"));
+        properties.put("skill", getSkill(activeMenu));
         properties.put("previous_menu", "level_progression");
         plugin.getMenuManager().openMenu(player, "abilities", properties);
     }
 
     @Override
     public @Nullable ItemStack onItemModify(@NotNull ItemStack baseItem, @NotNull Player player, @NotNull ActiveMenu activeMenu) {
-        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
+        @Nullable Skill skill = getSkill(activeMenu);
         if (skill == Skills.SORCERY) { // Disable for sorcery abilities REMOVE ONCE SORCERY ABILITIES ARE ADDED
             return null;
         }
@@ -80,4 +71,13 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
         }
         return null; // Don't show item if no abilities are enabled
     }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

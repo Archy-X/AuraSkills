@@ -51,7 +51,7 @@ public class ArmorListener implements Listener{
             "*SIGN"
     };
 
-    public ArmorListener(@NotNull List<String> blockedMaterials){
+    public ArmorListener(@NotNull List<@NotNull String> blockedMaterials){
         this.blockedMaterials = new LinkedList<>();
         this.blockedMaterials.addAll(Arrays.asList(defBlocked));
         this.blockedMaterials.addAll(blockedMaterials);

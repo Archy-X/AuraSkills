@@ -12,15 +12,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public class ItemReward extends MessagedReward {
 
-    private final String itemKey;
+    private final @NotNull String itemKey;
     private final int amount; // Amount of -1 means no amount was specified and should use amount of registered item
 
-    public ItemReward(@NotNull AureliumSkills plugin, String menuMessage, String chatMessage, String itemKey, int amount) {
+    public ItemReward(@NotNull AureliumSkills plugin, @NotNull String menuMessage, @NotNull String chatMessage, @NotNull String itemKey, int amount) {
         super(plugin, menuMessage, chatMessage);
         this.itemKey = itemKey;
         this.amount = amount;
@@ -41,7 +42,7 @@ public class ItemReward extends MessagedReward {
         ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item); // Attempt item give
         // Handle items that could not fit in the inventory
         if (leftoverItem != null) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             // Add unclaimed item key and amount to player data
             playerData.getUnclaimedItems().add(new KeyIntPair(itemKey, leftoverItem.getAmount()));

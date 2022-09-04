@@ -21,14 +21,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public class ChargedShot extends ManaAbilityProvider {
 
     public ChargedShot(@NotNull AureliumSkills plugin) {
-        super(plugin, MAbility.CHARGED_SHOT, ManaAbilityMessage.CHARGED_SHOT_SHOOT, null);
+        super(plugin, MAbility.CHARGED_SHOT, ManaAbilityMessage.CHARGED_SHOT_SHOOT, ManaAbilityMessage.NONE);
         tickChargedShotCooldown();
     }
 
@@ -41,7 +43,7 @@ public class ChargedShot extends ManaAbilityProvider {
         if (item == null) return;
         if (item.getType() != Material.BOW) return;
         if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
             Locale locale = playerData.getLocale();
@@ -64,7 +66,7 @@ public class ChargedShot extends ManaAbilityProvider {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData != null) {
                         if (playerData.containsAbilityData(MAbility.CHARGED_SHOT)) {
                             AbilityData abilityData = playerData.getAbilityData(MAbility.CHARGED_SHOT);
@@ -85,7 +87,7 @@ public class ChargedShot extends ManaAbilityProvider {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             if (blockAbility(player)) return;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             if (playerData.getAbilityData(MAbility.CHARGED_SHOT).getBoolean("enabled")) {
                 if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;

@@ -6,11 +6,11 @@ import com.archyx.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-public class SkillContext implements ContextProvider<Skill> {
+public class SkillContext implements ContextProvider<@NotNull Skill> {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
 
-    public SkillContext(AureliumSkills plugin) {
+    public SkillContext(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
     }
 

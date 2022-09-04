@@ -102,11 +102,9 @@ public class Multipliers extends NBTAPIUser {
                 if (lore.size() > 0) {
                     lore.add(" ");
                 }
-                @Nullable String t = TextUtil.replace(Lang.getMessage(message, locale),
+                lore.add(TextUtil.replace(Lang.getMessage(message, locale),
                         "{skill}", skill.getDisplayName(locale),
-                        "{value}", NumberUtil.format1(Math.abs(value)));
-                assert (null != t);
-                lore.add(t);
+                        "{value}", NumberUtil.format1(Math.abs(value))));
             } else { // Global multiplier
                 CommandMessage message;
                 if (value >= 0) {
@@ -117,10 +115,8 @@ public class Multipliers extends NBTAPIUser {
                 if (lore.size() > 0) {
                     lore.add(" ");
                 }
-                @Nullable String t = TextUtil.replace(Lang.getMessage(message, locale),
-                        "{value}", NumberUtil.format1(Math.abs(value)));
-                assert (null != t);
-                lore.add(t);
+                lore.add(TextUtil.replace(Lang.getMessage(message, locale),
+                        "{value}", NumberUtil.format1(Math.abs(value))));
             }
             meta.setLore(lore);
         }
@@ -129,9 +125,7 @@ public class Multipliers extends NBTAPIUser {
 
     private @NotNull String getNBTName(@Nullable Skill skill) {
         if (skill != null) {
-            @Nullable String name = TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
-            assert (null != name);
-            return name;
+            return TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
         } else {
             return "Global";
         }

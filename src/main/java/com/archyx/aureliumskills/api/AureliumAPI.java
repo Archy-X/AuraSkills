@@ -14,13 +14,16 @@ import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 import java.util.UUID;
 
 public class AureliumAPI {
 
-    private static AureliumSkills plugin;
+    private static @Nullable AureliumSkills plugin;
 
     /**
      * Internal usage only.
@@ -42,6 +45,7 @@ public class AureliumAPI {
      * @return AureliumSkills instance.
      */
     public static @NotNull AureliumSkills getPlugin() {
+        AureliumSkills plugin = AureliumAPI.plugin;
         if (plugin == null) {
             throw new IllegalStateException("The AureliumSkills API is not loaded yet");
         }
@@ -53,7 +57,8 @@ public class AureliumAPI {
      * @return the current mana of a player
      */
     public static double getMana(@NotNull Player player) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getMana();
         }
@@ -62,7 +67,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static double getMana(@NotNull UUID playerId) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getMana();
         }
@@ -74,7 +80,8 @@ public class AureliumAPI {
      * @return the max mana of a player
      */
     public static double getMaxMana(@NotNull Player player) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getMaxMana();
         } else {
@@ -87,7 +94,8 @@ public class AureliumAPI {
      * @return the mana regeneration per second of a player
      */
     public static double getManaRegen(@NotNull Player player) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getManaRegen();
         } else {
@@ -97,7 +105,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static double getMaxMana(@NotNull UUID playerId) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getMaxMana();
         } else {
@@ -109,7 +118,8 @@ public class AureliumAPI {
      * Sets a player's mana to an amount
      */
     public static void setMana(@NotNull Player player, double amount) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.setMana(amount);
         }
@@ -117,7 +127,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static void setMana(@NotNull UUID playerId, double amount) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.setMana(amount);
         }
@@ -127,6 +138,7 @@ public class AureliumAPI {
      * Adds Skill XP to a player for a certain skill, and includes multiplier permissions
      */
     public static void addXp(@NotNull Player player, @NotNull Skill skill, double amount) {
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
         plugin.getLeveler().addXp(player, skill, amount);
     }
 
@@ -134,7 +146,9 @@ public class AureliumAPI {
      * Adds Skill XP to a player for a certain skill, without multipliers
      */
     public static void addXpRaw(@NotNull Player player, @NotNull Skill skill, double amount) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        AureliumSkills plugin = AureliumAPI.plugin;
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.addSkillXp(skill, amount);
             plugin.getLeveler().checkLevelUp(player, skill);
@@ -147,7 +161,8 @@ public class AureliumAPI {
      */
     @Deprecated
     public static boolean addXpOffline(@NotNull OfflinePlayer player, @NotNull Skill skill, double amount) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player.getUniqueId());
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player.getUniqueId());
         if (playerData != null) {
             playerData.addSkillXp(skill, amount);
             return true;
@@ -159,7 +174,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static boolean addXpOffline(@NotNull UUID playerId, @NotNull Skill skill, double amount) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.addSkillXp(skill, amount);
             return true;
@@ -174,7 +190,8 @@ public class AureliumAPI {
      * @return the skill level of a player, or 1 if player does not have a skills profile
      */
     public static int getSkillLevel(@NotNull Player player, @NotNull Skill skill) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getSkillLevel(skill);
         }
@@ -185,7 +202,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static int getSkillLevel(@NotNull UUID playerId, @NotNull Skill skill) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getSkillLevel(skill);
         }
@@ -201,7 +219,8 @@ public class AureliumAPI {
      * @return The current skill xp
      */
     public static double getXp(@NotNull Player player, @NotNull Skill skill) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getSkillXp(skill);
         }
@@ -212,9 +231,10 @@ public class AureliumAPI {
 
     @Deprecated
     public static double getXp(@NotNull UUID playerId, @NotNull Skill skill) {
-        PlayerData playerSkill = plugin.getPlayerManager().getPlayerData(playerId);
-        if (playerSkill != null) {
-            return playerSkill.getSkillXp(skill);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        if (playerData != null) {
+            return playerData.getSkillXp(skill);
         }
         else {
             return 1;
@@ -228,7 +248,8 @@ public class AureliumAPI {
      * @return The stat level
      */
     public static double getStatLevel(@NotNull Player player, @NotNull Stat stat) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
         }
@@ -239,7 +260,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static double getStatLevel(@NotNull UUID playerId, @NotNull Stat stat) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
         }
@@ -256,7 +278,8 @@ public class AureliumAPI {
      */
     @Deprecated
     public static double getBaseStatLevel(@NotNull Player player, @NotNull Stat stat) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
         }
@@ -267,7 +290,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static double getBaseStatLevel(@NotNull UUID playerId, @NotNull Stat stat) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             return playerData.getStatLevel(stat);
         }
@@ -285,7 +309,8 @@ public class AureliumAPI {
      * @return true if a modifier was added, false if the player does not have a skills profile
      */
     public static boolean addStatModifier(@NotNull Player player, @NotNull String name, @NotNull Stat stat, double value) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.addStatModifier(new StatModifier(name, stat, value));
             return true;
@@ -295,7 +320,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static boolean addStatModifier(@NotNull UUID playerId, @NotNull String name, @NotNull Stat stat, double value) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.addStatModifier(new StatModifier(name, stat, value));
             return true;
@@ -310,7 +336,8 @@ public class AureliumAPI {
      * @return true if the operation was successful, false if the stat modifier was not found or the player does not have a skills profile
      */
     public static boolean removeStatModifier(@NotNull Player player, @NotNull String name) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             playerData.removeStatModifier(name);
             return true;
@@ -320,7 +347,8 @@ public class AureliumAPI {
 
     @Deprecated
     public static boolean removeStatModifier(@NotNull UUID playerId, @NotNull String name) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
         if (playerData != null) {
             playerData.removeStatModifier(name);
             return true;
@@ -339,6 +367,7 @@ public class AureliumAPI {
      * @return A new ItemStack with the item modifier
      */
     public static @NotNull ItemStack addItemModifier(@NotNull ItemStack item, @NotNull Stat stat, double value, boolean lore) {
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
         Modifiers modifiers = new Modifiers(plugin);
         ItemStack modifiedItem = modifiers.addModifier(ModifierType.ITEM, item, stat, value);
         if (lore) {
@@ -358,6 +387,7 @@ public class AureliumAPI {
      * @return A new ItemStack with the armor modifier
      */
     public static @NotNull ItemStack addArmorModifier(@NotNull ItemStack item, @NotNull Stat stat, double value, boolean lore) {
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
         Modifiers modifiers = new Modifiers(plugin);
         ItemStack modifiedItem = modifiers.addModifier(ModifierType.ARMOR, item, stat, value);
         if (lore) {
@@ -377,6 +407,7 @@ public class AureliumAPI {
      * @return A new ItemStack with the item modifier
      */
     public static @NotNull ItemStack addItemMultiplier(@NotNull ItemStack item, @NotNull Skill skill, double value, boolean lore) {
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
         Multipliers multipliers = new Multipliers(plugin);
         ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
         if (lore) {
@@ -396,6 +427,7 @@ public class AureliumAPI {
      * @return A new ItemStack with the armor modifier
      */
     public static @NotNull ItemStack addArmorMultiplier(@NotNull ItemStack item, @NotNull Skill skill, double value, boolean lore) {
+        Objects.requireNonNull(plugin, "The AureliumSkills API is not loaded yet");
         Multipliers multipliers = new Multipliers(plugin);
         ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
         if (lore) {

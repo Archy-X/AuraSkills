@@ -23,28 +23,28 @@ import java.util.*;
 public class PlayerData {
 
     private final @NotNull Player player;
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
 
-    private final @NotNull Map<Skill, Integer> skillLevels;
-    private final @NotNull Map<Skill, Double> skillXp;
+    private final @NotNull Map<@NotNull Skill, Integer> skillLevels;
+    private final @NotNull Map<@NotNull Skill, Double> skillXp;
 
-    private final @NotNull Map<Stat, Double> statLevels;
+    private final @NotNull Map<@NotNull Stat, Double> statLevels;
     private final @NotNull Map<@NotNull String, StatModifier> statModifiers;
 
     private double mana;
     private @Nullable Locale locale;
 
     private final @NotNull Map<AbstractAbility, AbilityData> abilityData;
-    private final @NotNull Map<String, Object> metadata;
-    private @NotNull List<KeyIntPair> unclaimedItems;
+    private final @NotNull Map<@NotNull String, @NotNull Object> metadata;
+    private @NotNull List<@NotNull KeyIntPair> unclaimedItems;
 
     private boolean saving;
     private boolean shouldSave;
 
     // Not persistent data
-    private final @NotNull Map<String, Multiplier> multipliers;
+    private final @NotNull Map<@NotNull String, @NotNull Multiplier> multipliers;
 
-    public PlayerData(@NotNull Player player, AureliumSkills plugin) {
+    public PlayerData(@NotNull Player player, @NotNull AureliumSkills plugin) {
         this.player = player;
         this.plugin = plugin;
         this.skillLevels = new HashMap<>();
@@ -128,7 +128,9 @@ public class PlayerData {
         // Removes if already existing
         if (statModifiers.containsKey(modifier.getName())) {
             @Nullable StatModifier oldModifier = statModifiers.get(modifier.getName());
-            if (oldModifier != null && oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
+            if (oldModifier == null)
+                throw new IllegalStateException("Invalid modifier stat index key: " + modifier.getName());
+            if (oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
                 return;
             }
             removeStatModifier(modifier.getName());
@@ -152,7 +154,10 @@ public class PlayerData {
     public boolean removeStatModifier(@NotNull String name, boolean reload) {
         StatModifier modifier = statModifiers.get(name);
         if (modifier == null) return false;
-        setStatLevel(modifier.getStat(), statLevels.get(modifier.getStat()) - modifier.getValue());
+        Double level = statLevels.get(modifier.getStat());
+        if (level == null)
+            throw new IllegalStateException("Invalid modifier stat index key: " + modifier.getStat());
+        setStatLevel(modifier.getStat(), level - modifier.getValue());
         statModifiers.remove(name);
         // Reloads stats
         if (reload) {
@@ -202,7 +207,7 @@ public class PlayerData {
         return abilityData.containsKey(ability);
     }
 
-    public Map<AbstractAbility, AbilityData> getAbilityDataMap() {
+    public @NotNull Map<AbstractAbility, AbilityData> getAbilityDataMap() {
         return abilityData;
     }
 
@@ -236,7 +241,7 @@ public class PlayerData {
 
     public int getPowerLevel() {
         int power = 0;
-        for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
+        for (Map.@NotNull Entry<@NotNull Skill, Integer> entry : skillLevels.entrySet()) {
             if (OptionL.isEnabled(entry.getKey())) {
                 power += entry.getValue();
             }
@@ -244,11 +249,11 @@ public class PlayerData {
         return power;
     }
 
-    public Map<String, Object> getMetadata() {
+    public @NotNull Map<@NotNull String, @NotNull Object> getMetadata() {
         return metadata;
     }
 
-    public List<KeyIntPair> getUnclaimedItems() {
+    public @NotNull List<@NotNull KeyIntPair> getUnclaimedItems() {
         return unclaimedItems;
     }
 
@@ -266,7 +271,7 @@ public class PlayerData {
         }
     }
 
-    public void setUnclaimedItems(@NotNull List<KeyIntPair> unclaimedItems) {
+    public void setUnclaimedItems(@NotNull List<@NotNull KeyIntPair> unclaimedItems) {
         this.unclaimedItems = unclaimedItems;
     }
 
@@ -299,7 +304,7 @@ public class PlayerData {
         return totalMultiplier;
     }
 
-    public Map<String, Multiplier> getMultipliers() {
+    public @NotNull Map<@NotNull String, @NotNull Multiplier> getMultipliers() {
         return multipliers;
     }
 

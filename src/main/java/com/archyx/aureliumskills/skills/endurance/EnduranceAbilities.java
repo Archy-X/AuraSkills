@@ -18,6 +18,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                 if (blockAbility(player)) return;
                 // Checks if food level would be decreased
                 if (player.getFoodLevel() > event.getFoodLevel()) {
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData == null) return;
                     double chance = getValue(Ability.ANTI_HUNGER, playerData) / 100;
                     if (r.nextDouble() < chance) {
@@ -56,7 +57,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
                     if (blockAbility(player)) return;
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData == null) return;
                     // Golden Heal
                     if (event.getRegainReason().equals(EntityRegainHealthEvent.RegainReason.MAGIC_REGEN)) {
@@ -93,7 +94,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
         if (!event.isCancelled()) {
             if (isEnabled(Ability.RECOVERY)) {
                 Player player = event.getPlayer();
-                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData == null) return;
                 // Gets health
                 AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -120,7 +121,7 @@ public class EnduranceAbilities extends AbilityProvider implements Listener {
                 Player player = (Player) event.getDamager();
                 Player enemy = (Player) event.getEntity();
                 if (blockAbility(player)) return;
-                PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData == null) return;
                 // Calculates chance
                 double chance = getValue(Ability.MEAL_STEAL, playerData) / 100;

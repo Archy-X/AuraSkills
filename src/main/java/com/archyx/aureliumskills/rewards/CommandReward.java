@@ -19,7 +19,7 @@ public class CommandReward extends MessagedReward {
     private final CommandExecutor revertExecutor;
     private final String revertCommand;
 
-    public CommandReward(@NotNull AureliumSkills plugin, @Nullable String menuMessage, @Nullable String chatMessage, @NotNull CommandExecutor executor, @NotNull String command, @Nullable CommandExecutor revertExecutor, @Nullable String revertCommand) {
+    public CommandReward(@NotNull AureliumSkills plugin, @NotNull String menuMessage, @NotNull String chatMessage, @NotNull CommandExecutor executor, @NotNull String command, @Nullable CommandExecutor revertExecutor, @Nullable String revertCommand) {
         super(plugin, menuMessage, chatMessage);
         this.executor = executor;
         this.command = command;

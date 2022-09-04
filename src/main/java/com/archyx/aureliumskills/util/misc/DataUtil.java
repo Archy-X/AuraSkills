@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.util.misc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,8 +12,7 @@ public class DataUtil {
     public static @NotNull Object getElement(@NotNull Map<?, ?> map, @NotNull String key) {
         // Check if not null
         Object object = map.get(key);
-        Validate.notNull(object, "Reward/loot requires entry with key " + key);
-        assert (null != object);
+        Objects.requireNonNull(object, "Reward/loot requires entry with key " + key);
         return object;
     }
 

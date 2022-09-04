@@ -14,15 +14,16 @@ import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.entity.Player;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SkillCommands {
 
     public static class SkillCommand extends BaseCommand {
         
-        protected final AureliumSkills plugin;
-        protected final Skill skill;
+        protected final @NotNull AureliumSkills plugin;
+        protected final @NotNull Skill skill;
         
-        public SkillCommand(AureliumSkills plugin, Skill skill) {
+        public SkillCommand(@NotNull AureliumSkills plugin, @NotNull Skill skill) {
             this.plugin = plugin;
             this.skill = skill;
         }
@@ -39,13 +40,13 @@ public class SkillCommands {
     @CommandAlias("farming")
     public static class FarmingCommand extends SkillCommand {
         
-        public FarmingCommand(AureliumSkills plugin) {
+        public FarmingCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.FARMING);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -54,13 +55,13 @@ public class SkillCommands {
     @CommandAlias("foraging")
     public static class ForagingCommand extends SkillCommand {
 
-        public ForagingCommand(AureliumSkills plugin) {
+        public ForagingCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.FORAGING);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -69,13 +70,13 @@ public class SkillCommands {
     @CommandAlias("mining")
     public static class MiningCommand extends SkillCommand {
 
-        public MiningCommand(AureliumSkills plugin) {
+        public MiningCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.MINING);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -84,13 +85,13 @@ public class SkillCommands {
     @CommandAlias("fishing")
     public static class FishingCommand extends SkillCommand {
 
-        public FishingCommand(AureliumSkills plugin) {
+        public FishingCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.FISHING);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -99,13 +100,13 @@ public class SkillCommands {
     @CommandAlias("excavation")
     public static class ExcavationCommand extends SkillCommand {
 
-        public ExcavationCommand(AureliumSkills plugin) {
+        public ExcavationCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.EXCAVATION);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -114,13 +115,13 @@ public class SkillCommands {
     @CommandAlias("archery")
     public static class ArcheryCommand extends SkillCommand {
 
-        public ArcheryCommand(AureliumSkills plugin) {
+        public ArcheryCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.ARCHERY);
         }
         
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -129,13 +130,13 @@ public class SkillCommands {
     @CommandAlias("defense")
     public static class DefenseCommand extends SkillCommand {
 
-        public DefenseCommand(AureliumSkills plugin) {
+        public DefenseCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.DEFENSE);
         }
         
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -144,13 +145,13 @@ public class SkillCommands {
     @CommandAlias("fighting")
     public static class FightingCommand extends SkillCommand {
 
-        public FightingCommand(AureliumSkills plugin) {
+        public FightingCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.FIGHTING);
         }
         
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -159,13 +160,13 @@ public class SkillCommands {
     @CommandAlias("endurance")
     public static class EnduranceCommand extends SkillCommand {
 
-        public EnduranceCommand(AureliumSkills plugin) {
+        public EnduranceCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.ENDURANCE);
         }
         
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -174,13 +175,13 @@ public class SkillCommands {
     @CommandAlias("agility")
     public static class AgilityCommand extends SkillCommand {
 
-        public AgilityCommand(AureliumSkills plugin) {
+        public AgilityCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.AGILITY);
         }
         
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -189,13 +190,13 @@ public class SkillCommands {
     @CommandAlias("alchemy")
     public static class AlchemyCommand extends SkillCommand {
 
-        public AlchemyCommand(AureliumSkills plugin) {
+        public AlchemyCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.ALCHEMY);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -204,13 +205,13 @@ public class SkillCommands {
     @CommandAlias("enchanting")
     public static class EnchantingCommand extends SkillCommand {
 
-        public EnchantingCommand(AureliumSkills plugin) {
+        public EnchantingCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.ENCHANTING);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -219,13 +220,13 @@ public class SkillCommands {
     @CommandAlias("sorcery")
     public static class SorceryCommand extends SkillCommand {
 
-        public SorceryCommand(AureliumSkills plugin) {
+        public SorceryCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.SORCERY);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -234,13 +235,13 @@ public class SkillCommands {
     @CommandAlias("healing")
     public static class HealingCommand extends SkillCommand {
 
-        public HealingCommand(AureliumSkills plugin) {
+        public HealingCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.HEALING);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }
@@ -249,13 +250,13 @@ public class SkillCommands {
     @CommandAlias("forging")
     public static class ForgingCommand extends SkillCommand {
 
-        public ForgingCommand(AureliumSkills plugin) {
+        public ForgingCommand(@NotNull AureliumSkills plugin) {
             super(plugin, Skills.FORGING);
         }
 
         @Default
         public void onCommand(@NotNull Player player) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 openMenu(player, playerData);
             }

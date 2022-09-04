@@ -7,8 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-import org.jetbrains.annotations.NotNull;
-
 public enum SkillMessage implements MessageKey {
 
     FARMING_NAME,

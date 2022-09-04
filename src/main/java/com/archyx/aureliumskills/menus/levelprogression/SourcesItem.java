@@ -31,32 +31,35 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "sources":
-                m = Lang.getMessage(MenuMessage.SOURCES, locale);
-                break;
+                return Lang.getMessage(MenuMessage.SOURCES, locale);
             case "sources_desc":
-                m = Lang.getMessage(MenuMessage.SOURCES_DESC, locale);
-                break;
+                return Lang.getMessage(MenuMessage.SOURCES_DESC, locale);
             case "sources_click":
-                Skill skill = (Skill) activeMenu.getProperty("skill");
-                assert (null != skill);
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_CLICK, locale),
+                Skill skill = getSkill(activeMenu);
+                return TextUtil.replace(Lang.getMessage(MenuMessage.SOURCES_CLICK, locale),
                         "{skill}", skill.getDisplayName(locale));
-                break;
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
     public void onClick(@NotNull Player player, @NotNull InventoryClickEvent event, @NotNull ItemStack item, @NotNull SlotPos pos, @NotNull ActiveMenu activeMenu) {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("skill", activeMenu.getProperty("skill"));
+        properties.put("skill", getSkill(activeMenu));
         properties.put("items_per_page", 28);
         properties.put("sort_type", SorterItem.SortType.ASCENDING);
         properties.put("previous_menu", "level_progression");
         plugin.getMenuManager().openMenu(player, "sources", properties, 0);
     }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

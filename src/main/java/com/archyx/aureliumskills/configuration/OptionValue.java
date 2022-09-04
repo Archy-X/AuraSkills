@@ -9,13 +9,13 @@ import java.util.List;
 
 public class OptionValue {
 
-    private Object value;
+    private @NotNull Object value;
 
-    public OptionValue(Object value) {
+    public OptionValue(@NotNull Object value) {
         this.value = value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(@NotNull Object value) {
         this.value = value;
     }
 
@@ -31,7 +31,7 @@ public class OptionValue {
         this.value = value;
     }
 
-    public Object getValue() {
+    public @NotNull Object getValue() {
         return value;
     }
 
@@ -52,7 +52,7 @@ public class OptionValue {
         return (boolean) value;
     }
 
-    public String asString() {
+    public @NotNull String asString() {
         if (value instanceof String) {
             return (String) value;
         }
@@ -61,8 +61,8 @@ public class OptionValue {
         }
     }
 
-    public @NotNull List<String> asList() {
-        List<String> stringList = new ArrayList<>();
+    public @NotNull List<@NotNull String> asList() {
+        List<@NotNull String> stringList = new ArrayList<>();
         if (value instanceof List<?>) {
             for (Object obj : (List<?>) value) {
                 if (obj instanceof String) {

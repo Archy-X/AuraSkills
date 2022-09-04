@@ -118,7 +118,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                         if (blockAbility(player))
                             return;
                         // Applies abilities
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData == null) return;
                         AbilityManager options = plugin.getAbilityManager();
                         if (options.isEnabled(Ability.STUN)) {

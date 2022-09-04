@@ -31,14 +31,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-public abstract class AbstractSkillItem extends AbstractItem implements TemplateItemProvider<Skill> {
+public abstract class AbstractSkillItem extends AbstractItem implements TemplateItemProvider<@NotNull Skill> {
 
     public AbstractSkillItem(AureliumSkills plugin) {
         super(plugin);
     }
 
     @Override
-    public @NotNull Class<Skill> getContext() {
+    public @NotNull Class<@NotNull Skill> getContext() {
         return Skill.class;
     }
 
@@ -49,48 +49,36 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
             return placeholder;
         @Nullable Locale locale = playerData.getLocale();
         int skillLevel = playerData.getSkillLevel(skill);
-        @Nullable String m = placeholder;
+
         switch (placeholder) {
             case "skill":
-                m = skill.getDisplayName(locale);
-                break;
+                return skill.getDisplayName(locale);
             case "skill_desc":
-                m = skill.getDescription(locale);
-                break;
+                return skill.getDescription(locale);
             case "stats_leveled":
-                m = getStatsLeveled(skill, locale);
-                break;
+                return getStatsLeveled(skill, locale);
             case "ability_levels":
-                m = getAbilityLevels(skill, playerData);
-                break;
+                return getAbilityLevels(skill, playerData);
             case "mana_ability":
-                m = getManaAbility(skill, playerData);
-                break;
+                return getManaAbility(skill, playerData);
             case "level":
                 if (type == PlaceholderType.DISPLAY_NAME) {
-                    m = RomanNumber.toRoman(skillLevel);
+                    return RomanNumber.toRoman(skillLevel);
                 } else {
-                    m = Lang.getMessage(MenuMessage.LEVEL, locale);
-                    assert (null != m);
-                    m = TextUtil.replace(m, "{level}", RomanNumber.toRoman(skillLevel));
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale), "{level}", RomanNumber.toRoman(skillLevel));
                 }
-                break;
             case "progress_to_level":
-                m = getProgressToLevel(skill, playerData);
-                break;
+                return getProgressToLevel(skill, playerData);
             case "max_level":
                 if (skillLevel >= OptionL.getMaxLevel(skill)) {
-                    m = Lang.getMessage(MenuMessage.MAX_LEVEL, locale);
+                    return Lang.getMessage(MenuMessage.MAX_LEVEL, locale);
                 } else {
-                    m = "";
+                    return "";
                 }
-                break;
             case "skill_click":
-                m = Lang.getMessage(MenuMessage.SKILL_CLICK, locale);
-                break;
+                return Lang.getMessage(MenuMessage.SKILL_CLICK, locale);
         }
-        assert (m != null);
-        return m;
+        return placeholder;
     }
 
     protected int getPage(@NotNull Skill skill, @NotNull PlayerData playerData) {
@@ -112,12 +100,11 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
             statList.delete(statList.length() - 2, statList.length());
         }
         if (statsLeveled.size() > 0) {
-            @Nullable String m = Lang.getMessage(MenuMessage.STATS_LEVELED, locale);
-            assert (null != m);
-            m = TextUtil.replace(m, "{stats}", statList.toString());
-            return m;
+            return TextUtil.replace(Lang.getMessage(MenuMessage.STATS_LEVELED, locale),
+                    "{stats}", statList.toString());
+        } else {
+            return "";
         }
-        return "";
     }
 
     private @NotNull String getAbilityLevels(@NotNull Skill skill, @NotNull PlayerData playerData) {
@@ -164,15 +151,13 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
             int level = playerData.getManaAbilityLevel(mAbility);
             if (level > 0 && plugin.getAbilityManager().isEnabled(mAbility)) {
                 ManaAbilityManager manager = plugin.getManaAbilityManager();
-                @Nullable String m = TextUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)
+                manaAbilityLore.append(TextUtil.replace(Lang.getMessage(getManaAbilityMessage(mAbility), locale)
                         , "{mana_ability}", mAbility.getDisplayName(locale)
                         , "{level}", RomanNumber.toRoman(level)
                         , "{duration}", NumberUtil.format1(getDuration(mAbility, level))
                         , "{value}", NumberUtil.format1(manager.getValue(mAbility, level))
                         , "{mana_cost}", NumberUtil.format1(manager.getManaCost(mAbility, level))
-                        , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level)));
-                assert (null != m);
-                manaAbilityLore.append(m);
+                        , "{cooldown}", NumberUtil.format1(manager.getCooldown(mAbility, level))));
 
             }
         }
@@ -208,15 +193,14 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         if (skillLevel < OptionL.getMaxLevel(skill)) {
             double currentXp = playerData.getSkillXp(skill);
             double xpToNext = plugin.getLeveler().getXpRequirements().getXpRequired(skill, skillLevel + 1);
-            @Nullable String m = TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
+            return TextUtil.replace(Lang.getMessage(MenuMessage.PROGRESS_TO_LEVEL, locale)
                     ,"{level}", RomanNumber.toRoman(skillLevel + 1)
                     ,"{percent}", NumberUtil.format2(currentXp / xpToNext * 100)
                     ,"{current_xp}", NumberUtil.format2(currentXp)
                     ,"{level_xp}", String.valueOf((int) xpToNext));
-            assert (null != m);
-            return m;
+        } else {
+            return "";
         }
-        return "";
     }
 
 }

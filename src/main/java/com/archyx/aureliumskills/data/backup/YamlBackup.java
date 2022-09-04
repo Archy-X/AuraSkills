@@ -65,7 +65,7 @@ public class YamlBackup extends BackupProvider {
                 }
             }
             backup.save(backupFile);
-            Locale locale = plugin.getLang().getLocale(sender);
+            @Nullable Locale locale = plugin.getLang().getLocale(sender);
             @NotNull String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
                     , "{type}", "Yaml", "{file}", backupFile.getName());
             if (sender instanceof ConsoleCommandSender) {
@@ -74,7 +74,7 @@ public class YamlBackup extends BackupProvider {
             }
             sender.sendMessage(message);
         } catch (Exception e) {
-            Locale locale = plugin.getLang().getLocale(sender);
+            @Nullable Locale locale = plugin.getLang().getLocale(sender);
             String message = AureliumSkills.getPrefix(locale) + TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_ERROR, locale), "{type}", "Yaml");
             if (sender instanceof ConsoleCommandSender) {
                 Bukkit.getLogger().warning(ChatColor.stripColor(message));

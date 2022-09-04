@@ -6,10 +6,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-import org.jetbrains.annotations.NotNull;
-
 public enum ManaAbilityMessage implements MessageKey {
     
+    NONE,
     REPLENISH_NAME,
     REPLENISH_DESC,
     REPLENISH_RAISE,
@@ -63,6 +62,10 @@ public enum ManaAbilityMessage implements MessageKey {
     private final @NotNull String path;
 
     ManaAbilityMessage() {
+        if (this.name() == "NONE") {
+            this.path = "";
+            return;
+        }
         MAbility manaAbility = MAbility.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
         this.path = "mana_abilities." + manaAbility.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
     }

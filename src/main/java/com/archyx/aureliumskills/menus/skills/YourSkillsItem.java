@@ -24,23 +24,17 @@ public class YourSkillsItem extends AbstractItem implements SingleItemProvider {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "your_skills":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_SKILLS, locale),
+                return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_SKILLS, locale),
                         "{player}", player.getName());
-                break;
             case "desc":
-                m = Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC, locale);
-                break;
+                return Lang.getMessage(MenuMessage.YOUR_SKILLS_DESC, locale);
             case "hover":
-                m = Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER, locale);
-                break;
+                return Lang.getMessage(MenuMessage.YOUR_SKILLS_HOVER, locale);
             case "click":
-                m = Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK, locale);
-                break;
+                return Lang.getMessage(MenuMessage.YOUR_SKILLS_CLICK, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 }

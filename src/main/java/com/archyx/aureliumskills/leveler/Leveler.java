@@ -27,6 +27,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,7 +41,7 @@ public class Leveler {
 	
 	private final @NotNull AureliumSkills plugin;
 	private final @NotNull XpRequirements xpRequirements;
-	private final @NotNull StatLeveler statLeveler;
+	private final StatLeveler statLeveler;
 	private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
 	public Leveler(@NotNull AureliumSkills plugin) {
@@ -60,14 +61,13 @@ public class Leveler {
 		}
 		// Add permission multipliers
 		for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
-			@Nullable String permission = info.getPermission().toLowerCase(Locale.ROOT);
+			String permission = info.getPermission().toLowerCase(Locale.ROOT);
 			if (permission.startsWith("aureliumskills.multiplier.")) {
 				permission = TextUtil.replace(permission, "aureliumskills.multiplier.", "");
 				if (pattern.matcher(permission).matches()) { // Parse all skills multiplier
 					multiplier += Double.parseDouble(permission) / 100;
 				} else if (skill != null) { // Skill specific multiplier
 					String skillName = skill.toString().toLowerCase(Locale.ROOT);
-					assert (null != permission);
 					if (permission.startsWith(skillName)) {
 						permission = TextUtil.replace(permission, skillName + ".", "");
 						if (pattern.matcher(permission).matches()) {
@@ -78,7 +78,7 @@ public class Leveler {
 			}
 		}
 		// Add multiplier modifiers
-		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData != null) {
 			multiplier += playerData.getTotalMultiplier(skill) / 100;
 		}
@@ -91,7 +91,7 @@ public class Leveler {
 
 	//Method for adding xp with a defined amount
 	public void addXp(@NotNull Player player, @NotNull Skill skill, double amount) {
-		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		//Checks if player has a skill profile for safety
 		if (playerData != null) {
 			//Checks if xp amount is not zero
@@ -134,7 +134,7 @@ public class Leveler {
 
 	//Method for setting xp with a defined amount
 	public void setXp(@NotNull Player player, @NotNull Skill skill, double amount) {
-		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		//Checks if player has a skill profile for safety
 		if (playerData != null) {
 			double originalAmount = playerData.getSkillXp(skill);
@@ -150,7 +150,7 @@ public class Leveler {
 	}
 	
 	public void updateStats(@NotNull Player player) {
-		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
 		for (Stat stat : plugin.getStatRegistry().getStats()) {
 			playerData.setStatLevel(stat, 0);
@@ -161,6 +161,8 @@ public class Leveler {
 		// Reloads modifiers
 		for (String key : playerData.getStatModifiers().keySet()) {
 			StatModifier modifier = playerData.getStatModifiers().get(key);
+			if (modifier == null)
+				throw new IllegalStateException("Invalid stat modifier index key: " + key);
 			playerData.addStatLevel(modifier.getStat(), modifier.getValue());
 		}
 		statLeveler.reloadStat(player, Stats.HEALTH);
@@ -168,7 +170,7 @@ public class Leveler {
 	}
 
 	public void updatePermissions(@NotNull Player player) {
-		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
 		for (Skill skill : plugin.getSkillRegistry().getSkills()) {
 			plugin.getRewardManager().getRewardTable(skill).applyPermissions(player, playerData.getSkillLevel(skill));
@@ -196,7 +198,7 @@ public class Leveler {
 	}
 
 	public void checkLevelUp(@NotNull Player player, @NotNull Skill skill) {
-		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+		@Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 		if (playerData == null) return;
 		int currentLevel = playerData.getSkillLevel(skill);
 		double currentXp = playerData.getSkillXp(skill);
@@ -219,7 +221,7 @@ public class Leveler {
 		playerData.setSkillXp(skill, currentXp - xpRequirements.getXpRequired(skill, level));
 		playerData.setSkillLevel(skill, level);
 		// Give custom rewards
-		@NotNull List<@NotNull Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
+		List<@NotNull Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
 		for (Reward reward : rewards) {
 			reward.giveReward(player, skill, level);
 		}
@@ -248,7 +250,7 @@ public class Leveler {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> checkLevelUp(player, skill), OptionL.getInt(Option.LEVELER_DOUBLE_CHECK_DELAY));
 	}
 
-	private void sendTitle(@NotNull Player player, Locale locale, Skill skill, int level) {
+	private void sendTitle(@NotNull Player player, @Nullable Locale locale, @NotNull Skill skill, int level) {
 		player.sendTitle(TextUtil.replace(Lang.getMessage(LevelerMessage.TITLE, locale),
 						"{skill}", skill.getDisplayName(locale),
 						"{old}", RomanNumber.toRoman(level - 1),
@@ -273,36 +275,28 @@ public class Leveler {
 	}
 
 	private @NotNull String getLevelUpMessage(@NotNull Player player, @NotNull PlayerData playerData, @NotNull Skill skill, int newLevel, @Nullable Locale locale, @NotNull List<@NotNull Reward> rewards) {
-		@Nullable String message = TextUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
+		String message = TextUtil.replace(Lang.getMessage(LevelerMessage.LEVEL_UP, locale)
 				,"{skill}", skill.getDisplayName(locale)
 				,"{old}", RomanNumber.toRoman(newLevel - 1)
 				,"{new}", RomanNumber.toRoman(newLevel));
-		assert (null != message);
 		if (plugin.isPlaceholderAPIEnabled()) {
 			message = PlaceholderAPI.setPlaceholders(player, message);
 		}
 		StringBuilder rewardMessage = new StringBuilder();
 		for (Reward reward : rewards) {
-		    @Nullable String m = reward.getChatMessage(player, locale, skill, newLevel);
-		    assert (null != m);
-			rewardMessage.append(m);
+			rewardMessage.append(reward.getChatMessage(player, locale, skill, newLevel));
 		}
 		// Ability unlocks and level ups
 		StringBuilder abilityUnlockMessage = new StringBuilder();
 		StringBuilder abilityLevelUpMessage = new StringBuilder();
-		@Nullable String m;
 		for (Ability ability : plugin.getAbilityManager().getAbilities(skill, newLevel)) {
 			if (plugin.getAbilityManager().isEnabled(ability)) {
 				if (plugin.getAbilityManager().getUnlock(ability) == newLevel) {
-				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale));
-                    assert (null != m);
-					abilityUnlockMessage.append(m);
+					abilityUnlockMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_UNLOCK, locale),"{ability}", ability.getDisplayName(locale)));
 				} else {
-				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
-                            ,"{ability}", ability.getDisplayName(locale)
-                            ,"{level}", RomanNumber.toRoman(playerData.getAbilityLevel(ability)));
-                    assert (null != m);
-					abilityLevelUpMessage.append(m);
+					abilityLevelUpMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.ABILITY_LEVEL_UP, locale)
+							,"{ability}", ability.getDisplayName(locale)
+							,"{level}", RomanNumber.toRoman(playerData.getAbilityLevel(ability))));
 				}
 			}
 		}
@@ -316,15 +310,11 @@ public class Leveler {
 		if (mAbility != null) {
 			if (plugin.getAbilityManager().isEnabled(mAbility)) {
 				if (plugin.getManaAbilityManager().getUnlock(mAbility) == newLevel) {
-				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale));
-                    assert (null != m);
-					manaAbilityUnlockMessage.append(m);
+					manaAbilityUnlockMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_UNLOCK, locale), "{mana_ability}", mAbility.getDisplayName(locale)));
 				} else {
-				    m = TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
-                            , "{mana_ability}", mAbility.getDisplayName(locale)
-                            , "{level}", RomanNumber.toRoman(playerData.getManaAbilityLevel(mAbility)));
-				    assert (null != m);
-					manaAbilityLevelUpMessage.append(m);
+					manaAbilityLevelUpMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale)
+							, "{mana_ability}", mAbility.getDisplayName(locale)
+							, "{level}", RomanNumber.toRoman(playerData.getManaAbilityLevel(mAbility))));
 				}
 			}
 		}
@@ -346,13 +336,10 @@ public class Leveler {
 		}
 		if (totalMoney > 0) {
 			NumberFormat nf = new DecimalFormat("#.##");
-			m = TextUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
-                    "{amount}", nf.format(totalMoney));
-            assert (null != m);
-			moneyRewardMessage.append(m);
+			moneyRewardMessage.append(TextUtil.replace(Lang.getMessage(LevelerMessage.MONEY_REWARD, locale),
+					"{amount}", nf.format(totalMoney)));
 		}
 		message = TextUtil.replace(message, "{money_reward}", moneyRewardMessage.toString());
-		assert (null != message);
 		return message.replaceAll("(\\u005C\\u006E)|(\\n)", "\n");
 	}
 

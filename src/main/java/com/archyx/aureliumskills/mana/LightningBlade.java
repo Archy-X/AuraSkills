@@ -17,7 +17,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class LightningBlade extends ReadiedManaAbility {
 
@@ -43,7 +45,7 @@ public class LightningBlade extends ReadiedManaAbility {
         }
         // Checks if ready
         if (isReady(player)) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             if (hasEnoughMana(player)) {
                 activate(player);

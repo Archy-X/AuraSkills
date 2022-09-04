@@ -123,7 +123,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 			if (item.getItemMeta() instanceof EnchantmentStorageMeta) {
 				@Nullable EnchantmentStorageMeta esm = (EnchantmentStorageMeta) item.getItemMeta();
 				if (esm != null)
-					for (Map.Entry<Enchantment, Integer> entry : esm.getStoredEnchants().entrySet()) {
+					for (Map.Entry<@NotNull Enchantment, @NotNull Integer> entry : esm.getStoredEnchants().entrySet()) {
 						if (isDisenchantable(entry.getKey())) {
 							totalLevel += entry.getValue();
 						}
@@ -139,7 +139,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 			return false;
 		}
 		// Check blocked list in config
-		List<String> blockedList = OptionL.getList(Option.FORGING_BLOCKED_GRINDSTONE_ENCHANTS);
+		List<@NotNull String> blockedList = OptionL.getList(Option.FORGING_BLOCKED_GRINDSTONE_ENCHANTS);
 		for (String blockedEnchantName : blockedList) {
 			if (enchant.getKey().getKey().equalsIgnoreCase(blockedEnchantName)) {
 				return false;

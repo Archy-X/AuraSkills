@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-import org.jetbrains.annotations.NotNull;
-
 public enum ACFMinecraftMessage {
 
     INVALID_WORLD,

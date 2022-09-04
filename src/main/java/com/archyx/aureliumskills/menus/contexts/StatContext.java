@@ -7,11 +7,11 @@ import com.archyx.slate.context.ContextProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class StatContext implements ContextProvider<Stat> {
+public class StatContext implements ContextProvider<@NotNull Stat> {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
 
-    public StatContext(AureliumSkills plugin) {
+    public StatContext(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
     }
 

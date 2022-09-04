@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractManaAbilityItem extends AbstractItem implements TemplateItemProvider<MAbility> {
+public abstract class AbstractManaAbilityItem extends AbstractItem implements TemplateItemProvider<@NotNull MAbility> {
 
     protected final ManaAbilityManager manager;
 
@@ -22,7 +22,7 @@ public abstract class AbstractManaAbilityItem extends AbstractItem implements Te
     }
 
     @Override
-    public @NotNull Class<MAbility> getContext() {
+    public @NotNull Class<@NotNull MAbility> getContext() {
         return MAbility.class;
     }
 

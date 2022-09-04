@@ -49,7 +49,7 @@ public class ArmorModifierListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(@NotNull PlayerDataLoadEvent event) {
         Player player = event.getPlayerData().getPlayer();
-        PlayerData playerData = event.getPlayerData();
+        @Nullable PlayerData playerData = event.getPlayerData();
         for (ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor != null) {
                 if (OptionL.getBoolean(Option.MODIFIER_ARMOR_TIMER_ENABLED)) {
@@ -73,7 +73,7 @@ public class ArmorModifierListener implements Listener {
     public void onEquip(@NotNull ArmorEquipEvent event) {
         if (OptionL.getBoolean(Option.MODIFIER_ARMOR_TIMER_ENABLED)) return; // Don't use if timer is enabled
         Player player = event.getPlayer();
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             // Equip
             @Nullable ItemStack armorPiece = event.getNewArmorPiece();
@@ -122,10 +122,10 @@ public class ArmorModifierListener implements Listener {
 
                         assert (stored != null);
 
-                        Set<Stat> statsToReload = new HashSet<>();
+                        Set<@NotNull Stat> statsToReload = new HashSet<>();
                         // Remove modifiers and multipliers that are on stored item from player
                         if (remove && stored.getType() != Material.AIR) {
-                            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                             if (playerData == null) continue;
 
                             for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, stored)) {
@@ -138,7 +138,7 @@ public class ArmorModifierListener implements Listener {
                         }
                         // Add modifiers and multipliers that are on worn item to the player
                         if (wearing != null && wearing.getType() != Material.AIR) {
-                            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                             if (playerData == null) continue;
 
                             if (requirements.meetsRequirements(ModifierType.ARMOR, wearing, player)) {

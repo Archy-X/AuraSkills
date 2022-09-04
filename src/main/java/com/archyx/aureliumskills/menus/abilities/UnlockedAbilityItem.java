@@ -28,45 +28,40 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu menu, @NotNull PlaceholderType type, @NotNull Ability ability) {
+    public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType type, @NotNull Ability ability) {
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null)
             return placeholder;
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "name":
-                m = ability.getDisplayName(locale);
+                return ability.getDisplayName(locale);
             case "your_ability_level":
                 if (isNotMaxed(playerData, ability)) {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL, locale),
                             "{level}", String.valueOf(playerData.getAbilityLevel(ability)));
                 } else {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.YOUR_ABILITY_LEVEL_MAXED, locale),
                             "{level}", String.valueOf(playerData.getAbilityLevel(ability)));
                 }
-                break;
             case "unlocked_desc":
                 if (isNotMaxed(playerData, ability)) {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC, locale),
                             "{skill}", ability.getSkill().getDisplayName(locale),
                             "{level}", RomanNumber.toRoman(getNextUpgradeLevel(ability, playerData)),
                             "{desc}", TextUtil.replace(ability.getDescription(locale),
                                     "{value}", getUpgradeValue(ability, playerData),
                                     "{value_2}", getUpgradeValue2(ability, playerData)));
                 } else {
-                    m = TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
+                    return TextUtil.replace(Lang.getMessage(MenuMessage.UNLOCKED_DESC_MAXED, locale),
                             "{desc}", TextUtil.replace(ability.getDescription(locale),
                                     "{value}", getCurrentValue(ability, playerData),
                                     "{value_2}", getCurrentValue2(ability, playerData)));
                 }
-                break;
             case "unlocked":
-                m = Lang.getMessage(MenuMessage.UNLOCKED, locale);
-                break;
+                return Lang.getMessage(MenuMessage.UNLOCKED, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     private int getNextUpgradeLevel(@NotNull Ability ability, @NotNull PlayerData playerData) {
@@ -112,8 +107,7 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null)
             return unlockedAbilities;
-        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
+        Skill skill = getSkill(activeMenu);
         // Add abilities that player has not unlocked yet
         for (@NotNull Supplier<@NotNull Ability> abilitySupplier : skill.getAbilities()) {
             Ability ability = abilitySupplier.get();
@@ -123,4 +117,13 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
         }
         return unlockedAbilities;
     }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
+    }
+
 }

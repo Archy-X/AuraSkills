@@ -2,12 +2,11 @@ package com.archyx.aureliumskills.rewards.builder;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class MessagedRewardBuilder extends RewardBuilder {
 
-    protected @Nullable String menuMessage;
-    protected @Nullable String chatMessage;
+    protected @NotNull String menuMessage;
+    protected @NotNull String chatMessage;
 
     public MessagedRewardBuilder(@NotNull AureliumSkills plugin) {
         super(plugin);
@@ -15,12 +14,12 @@ public abstract class MessagedRewardBuilder extends RewardBuilder {
         this.chatMessage = "";
     }
 
-    public @NotNull MessagedRewardBuilder menuMessage(@Nullable String menuMessage) {
+    public @NotNull MessagedRewardBuilder menuMessage(@NotNull String menuMessage) {
         this.menuMessage = menuMessage;
         return this;
     }
 
-    public @NotNull MessagedRewardBuilder chatMessage(@Nullable String chatMessage) {
+    public @NotNull MessagedRewardBuilder chatMessage(@NotNull String chatMessage) {
         this.chatMessage = chatMessage;
         return this;
     }

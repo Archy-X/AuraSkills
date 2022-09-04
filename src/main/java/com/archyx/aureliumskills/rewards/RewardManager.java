@@ -61,13 +61,13 @@ public class RewardManager {
         patternsLoaded += loadPatterns(globalTable, globalConfig, globalFile, plugin.getOptionLoader().getHighestMaxLevel());
         levelsLoaded += loadLevels(globalTable, globalConfig, globalFile);
         // Apply global rewards table to each skill reward table
-        for (Map.Entry<Integer, List<@NotNull Reward>> entry : globalTable.getRewardsMap().entrySet()) {
-            int level = entry.getKey();
+        for (Map.Entry<Integer, @NotNull List<@NotNull Reward>> entry : globalTable.getRewardsMap().entrySet()) {
+            Integer level = entry.getKey();
             List<@NotNull Reward> rewards = entry.getValue();
             for (Skill skill : plugin.getSkillRegistry().getSkills()) {
                 RewardTable rewardTable = this.rewardTables.get(skill);
                 if (rewardTable != null) {
-                    for (@NotNull Reward reward : rewards) {
+                    for (Reward reward : rewards) {
                         rewardTable.addReward(reward, level);
                     }
                 }

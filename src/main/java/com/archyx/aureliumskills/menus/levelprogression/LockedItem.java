@@ -27,32 +27,23 @@ public class LockedItem extends SkillLevelItem {
     @Override
     public @NotNull String onPlaceholderReplace(@NotNull String placeholder, @NotNull Player player, @NotNull ActiveMenu activeMenu, @NotNull PlaceholderType placeholderType, @NotNull Integer position) {
         @Nullable Locale locale = plugin.getLang().getLocale(player);
-        @Nullable Skill skill = (Skill) activeMenu.getProperty("skill");
-        assert (null != skill);
+        Skill skill = getSkill(activeMenu);
         int level = getLevel(activeMenu, position);
-        @Nullable String m = placeholder;
         switch (placeholder) {
             case "level_locked":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_LOCKED, locale),"{level}", RomanNumber.toRoman(level));
-                break;
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_LOCKED, locale),"{level}", RomanNumber.toRoman(level));
             case "level_number":
-                m = TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
-                break;
+                return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
             case "rewards":
-                m = getRewardsLore(skill, level, player, locale);
-                break;
+                return getRewardsLore(skill, level, player, locale);
             case "ability":
-                m = getAbilityLore(skill, level, locale);
-                break;
+                return getAbilityLore(skill, level, locale);
             case "mana_ability":
-                m = getManaAbilityLore(skill, level, locale);
-                break;
+                return getManaAbilityLore(skill, level, locale);
             case "locked":
-                m = Lang.getMessage(MenuMessage.LOCKED, locale);
-                break;
+                return Lang.getMessage(MenuMessage.LOCKED, locale);
         }
-        assert (null != m);
-        return m;
+        return placeholder;
     }
 
     @Override
@@ -61,7 +52,7 @@ public class LockedItem extends SkillLevelItem {
         @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null)
             return levels;
-        Skill skill = (Skill) activeMenu.getProperty("skill");
+        Skill skill = getSkill(activeMenu);
         int level = playerData.getSkillLevel(skill);
         int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
@@ -73,6 +64,14 @@ public class LockedItem extends SkillLevelItem {
             }
         }
         return levels;
+    }
+
+    private @NotNull Skill getSkill(@NotNull ActiveMenu activeMenu) {
+        @Nullable Object property = activeMenu.getProperty("skill");
+        if (!(property instanceof Skill)) {
+            throw new IllegalArgumentException("Could not get menu skill property");
+        }
+        return (Skill) property;
     }
 
 }

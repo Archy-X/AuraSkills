@@ -90,7 +90,7 @@ public class ManaAbilityManager implements Listener {
     }
 
     public void setPlayerCooldown(@NotNull Player player, @NotNull MAbility mAbility) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData != null) {
             double cooldown = getCooldown(mAbility, playerData);
             if (cooldown != 0) {
@@ -183,14 +183,16 @@ public class ManaAbilityManager implements Listener {
                     Map<MAbility, Integer> abilityCooldowns = cooldowns.get(id);
                     if (abilityCooldowns != null) {
                         for (MAbility ab : abilityCooldowns.keySet()) {
-                            int cooldown = abilityCooldowns.get(ab);
+                            Integer cooldown = abilityCooldowns.get(ab);
+                            if (cooldown == null)
+                                throw new IllegalStateException("Invalid ability cooldown index key: " + ab);
                             if (cooldown >= 2) {
                                 abilityCooldowns.put(ab, cooldown - 2);
                             } else if (cooldown == 1) {
                                 abilityCooldowns.put(ab, 0);
                             }
                             if (cooldown == 2 || cooldown == 1) {
-                                PlayerData playerData = plugin.getPlayerManager().getPlayerData(id);
+                                @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(id);
                                 if (playerData != null) {
                                     ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(playerData.getPlayer(), ab);
                                     Bukkit.getPluginManager().callEvent(event);
@@ -210,7 +212,9 @@ public class ManaAbilityManager implements Listener {
                     Map<MAbility, Integer> errorTimers = errorTimer.get(id);
                     if (errorTimers != null) {
                         for (MAbility ab : errorTimers.keySet()) {
-                            int timer = errorTimers.get(ab);
+                            Integer timer = errorTimers.get(ab);
+                            if (timer == null)
+                                throw new IllegalStateException("Invalid ability timer index key: " + timer);
                             if (timer > 0) {
                                 errorTimers.put(ab, timer - 1);
                             }
@@ -312,7 +316,7 @@ public class ManaAbilityManager implements Listener {
         return cooldown > 0 ? cooldown : 0;
     }
 
-    public double getCooldown(@NotNull MAbility mAbility, PlayerData playerData) {
+    public double getCooldown(@NotNull MAbility mAbility, @NotNull PlayerData playerData) {
         double cooldown = getBaseCooldown(mAbility) + (getCooldownPerLevel(mAbility) * (playerData.getManaAbilityLevel(mAbility) - 1));
         return cooldown > 0 ? cooldown : 0;
     }
@@ -333,7 +337,7 @@ public class ManaAbilityManager implements Listener {
         return mAbility.getDefaultCooldownPerLevel();
     }
 
-    public double getManaCost(@NotNull MAbility mAbility, PlayerData playerData) {
+    public double getManaCost(@NotNull MAbility mAbility, @NotNull PlayerData playerData) {
         return getBaseManaCost(mAbility) + (getManaCostPerLevel(mAbility) * (playerData.getManaAbilityLevel(mAbility) - 1));
     }
 
@@ -399,7 +403,7 @@ public class ManaAbilityManager implements Listener {
     }
 
     @Nullable
-    public OptionValue getOption(@NotNull MAbility mAbility, String key) {
+    public OptionValue getOption(@NotNull MAbility mAbility, @NotNull String key) {
         ManaAbilityOption option = plugin.getAbilityManager().getAbilityOption(mAbility);
         if (option != null) {
             return option.getOption(key);
@@ -408,7 +412,7 @@ public class ManaAbilityManager implements Listener {
         }
     }
 
-    public boolean getOptionAsBooleanElseTrue(@NotNull MAbility mAbility, String key) {
+    public boolean getOptionAsBooleanElseTrue(@NotNull MAbility mAbility, @NotNull String key) {
         OptionValue value = getOption(mAbility, key);
         if (value != null) {
             return value.asBoolean();
@@ -416,7 +420,7 @@ public class ManaAbilityManager implements Listener {
         return true;
     }
 
-    public boolean getOptionAsBooleanElseFalse(@NotNull MAbility mAbility, String key) {
+    public boolean getOptionAsBooleanElseFalse(@NotNull MAbility mAbility, @NotNull String key) {
         OptionValue value = getOption(mAbility, key);
         if (value != null) {
             return value.asBoolean();
@@ -424,7 +428,7 @@ public class ManaAbilityManager implements Listener {
         return false;
     }
 
-    public int getOptionAsInt(@NotNull MAbility mAbility, String key, int defaultValue) {
+    public int getOptionAsInt(@NotNull MAbility mAbility, @NotNull String key, int defaultValue) {
         OptionValue value = getOption(mAbility, key);
         if (value != null) {
             return value.asInt();
@@ -432,16 +436,18 @@ public class ManaAbilityManager implements Listener {
         return defaultValue;
     }
 
-    public double getOptionAsDouble(@NotNull MAbility mAbility, String key) {
+    public double getOptionAsDouble(@NotNull MAbility mAbility, @NotNull String key) {
         OptionValue value = getOption(mAbility, key);
         if (value != null) {
             return value.asDouble();
         }
-        return mAbility.getDefaultOptions().get(key).asDouble();
+        value = mAbility.getDefaultOptions().get(key);
+        if (value == null)
+            throw new IllegalStateException("Invalid option index key: " + key);
+        return value.asDouble();
     }
 
-    @Nullable
-    public Set<String> getOptionKeys(@NotNull MAbility mAbility) {
+    public @Nullable Set<@NotNull String> getOptionKeys(@NotNull MAbility mAbility) {
         if (!mAbility.getDefaultOptions().isEmpty()) {
             return mAbility.getDefaultOptions().keySet();
         }

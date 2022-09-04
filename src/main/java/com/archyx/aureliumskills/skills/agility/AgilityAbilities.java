@@ -69,7 +69,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
                             if (blockAbility(player)) return;
-                            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                             if (playerData == null) return;
                             if (playerData.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
                                 double intensity = event.getIntensity(player);
@@ -85,7 +85,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
 
     public double getSugarRushSplashMultiplier(@NotNull Player player) {
         if (player.hasPermission("aureliumskills.agility") && plugin.getAbilityManager().isEnabled(Ability.SUGAR_RUSH)) {
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 if (playerData.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
                     return 1 + (getValue(Ability.SUGAR_RUSH, playerData) / 100);
@@ -102,7 +102,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
             if (blockDisabled(Ability.SUGAR_RUSH)) return;
             Player player = event.getPlayer();
             if (blockAbility(player)) return;
-            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
             if (playerData.getAbilityLevel(Ability.SUGAR_RUSH) > 0) {
                 ItemStack item = event.getItem();
@@ -298,7 +298,7 @@ public class AgilityAbilities extends AbilityProvider implements Listener {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
                     if (blockAbility(player)) return;
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData == null) return;
                     // If from fall damage
                     if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {

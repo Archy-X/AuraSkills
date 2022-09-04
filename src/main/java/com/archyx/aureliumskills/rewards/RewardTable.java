@@ -18,7 +18,7 @@ public class RewardTable {
 
     private final AureliumSkills plugin;
     private final @NotNull List<@NotNull Stat> statsLeveled;
-    private final Map<Integer, List<@NotNull Reward>> rewards;
+    private final @NotNull Map<Integer, @NotNull List<@NotNull Reward>> rewards;
 
     public RewardTable(AureliumSkills plugin) {
         this.plugin = plugin;
@@ -27,13 +27,10 @@ public class RewardTable {
     }
 
     public @NotNull ImmutableList<@NotNull Reward> getRewards(int level) {
-        @Nullable List<@NotNull Reward> list = rewards.get(level);
-        if (list == null)
-            list = new ArrayList<>();
-        return ImmutableList.copyOf(list);
+        return ImmutableList.copyOf(rewards.get(level));
     }
 
-    public @NotNull Map<Integer, List<@NotNull Reward>> getRewardsMap() {
+    public @NotNull Map<Integer, @NotNull List<@NotNull Reward>> getRewardsMap() {
         return rewards;
     }
 
@@ -58,11 +55,11 @@ public class RewardTable {
      * @param <T> The reward type
      * @return A map of each level to a list of rewards of that type
      */
-    public <T extends Reward> @NotNull Map<Integer, ImmutableList<T>> searchRewards(@NotNull Class<T> type) {
+    public <T extends @NotNull Reward> @NotNull Map<Integer, ImmutableList<T>> searchRewards(@NotNull Class<T> type) {
         Map<Integer, ImmutableList<T>> rewardMap = new HashMap<>();
-        for (Map.Entry<Integer, List<@NotNull Reward>> entry : rewards.entrySet()) {
+        for (Map.Entry<Integer, @NotNull List<@NotNull Reward>> entry : rewards.entrySet()) {
             List<T> rewardList = new ArrayList<>();
-            for (@Nullable Reward reward : entry.getValue()) {
+            for (@NotNull Reward reward : entry.getValue()) {
                 if (type.isInstance(reward)) {
                     rewardList.add(type.cast(reward));
                 }

@@ -60,7 +60,7 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
             }
         }
 
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return;
 
         Source originalSource = getSource(block);

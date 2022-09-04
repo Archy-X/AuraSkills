@@ -60,7 +60,7 @@ public class LegacyLootConverter {
         }
     }
 
-    private void convertSection(@NotNull FileConfiguration config, @NotNull List<String> legacyLoot, String sectionPath) {
+    private void convertSection(@NotNull FileConfiguration config, @NotNull List<String> legacyLoot, @NotNull String sectionPath) {
         // Convert loot
         List<Map<String, Object>> mapList = new ArrayList<>();
         for (String entry : legacyLoot) {
@@ -150,7 +150,7 @@ public class LegacyLootConverter {
         config.set(sectionPath + ".loot", mapList);
     }
 
-    private void renameLegacyFile(File file) {
+    private void renameLegacyFile(@NotNull File file) {
         String renamedName = FileUtil.renameNoDuplicates(file, "loot-OLD.yml", plugin.getDataFolder());
         if (renamedName != null) {
             plugin.getLogger().info("Successfully renamed loot.yml to " + renamedName);

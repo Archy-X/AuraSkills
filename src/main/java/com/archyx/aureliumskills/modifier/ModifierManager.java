@@ -11,27 +11,28 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class ModifierManager {
 
-    private final AureliumSkills plugin;
+    private final @NotNull AureliumSkills plugin;
     private final @NotNull StatLeveler statLeveler;
 
-    public ModifierManager(AureliumSkills plugin) {
+    public ModifierManager(@NotNull AureliumSkills plugin) {
         this.plugin = plugin;
         this.statLeveler = new StatLeveler(plugin);
     }
 
     public void reloadPlayer(@NotNull Player player) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         Requirements requirements = new Requirements(plugin);
         Modifiers modifiers = new Modifiers(plugin);
         Multipliers multipliers = new Multipliers(plugin);
         if (playerData != null) {
-            Set<Stat> statsToReload = new HashSet<>();
+            Set<@NotNull Stat> statsToReload = new HashSet<>();
             ItemStack item = player.getInventory().getItemInMainHand();
             if (!(item.getType() == Material.AIR)) {
                 for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, item)) {

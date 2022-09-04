@@ -24,8 +24,7 @@ public class StatRegistry {
         return stats.values();
     }
 
-    @Nullable
-    public Stat getStat(@NotNull String key) {
+    public @Nullable Stat getStat(@NotNull String key) {
         return this.stats.get(key.toLowerCase(Locale.ROOT));
     }
 

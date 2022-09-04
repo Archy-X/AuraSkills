@@ -72,7 +72,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                             type.equals(PotionEffectType.WEAKNESS) || type.equals(PotionEffectType.SLOW_DIGGING) || type.equals(PotionEffectType.SLOW) ||
                             type.equals(PotionEffectType.HUNGER) || type.equals(PotionEffectType.HARM) || type.equals(PotionEffectType.CONFUSION) ||
                             type.equals(PotionEffectType.BLINDNESS)) {
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                        @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                         if (playerData == null) return;
                         double chance = getValue(Ability.NO_DEBUFF, playerData) / 100;
                         if (r.nextDouble() < chance) {
@@ -110,7 +110,7 @@ public class DefenseAbilities extends AbilityProvider implements Listener {
                 if (event.getEntity() instanceof Player) {
                     Player player = (Player) event.getEntity();
                     if (blockAbility(player)) return;
-                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    @Nullable PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData == null) return;
                     if (plugin.getAbilityManager().isEnabled(Ability.NO_DEBUFF)) {
                         if (event.getDamager() instanceof LivingEntity) {

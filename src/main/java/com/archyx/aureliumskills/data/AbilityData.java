@@ -10,10 +10,10 @@ import java.util.Map;
 
 public class AbilityData {
 
-    private final AbstractAbility ability;
-    private final @NotNull Map<String, Object> data;
+    private final @NotNull AbstractAbility ability;
+    private final @NotNull Map<@NotNull String, Object> data;
 
-    public AbilityData(AbstractAbility ability) {
+    public AbilityData(@NotNull AbstractAbility ability) {
         this.ability = ability;
         this.data = new HashMap<>();
     }
@@ -27,11 +27,11 @@ public class AbilityData {
         return data.get(key);
     }
 
-    public @NotNull Map<String, Object> getDataMap() {
+    public @NotNull Map<@NotNull String, Object> getDataMap() {
         return data;
     }
 
-    public void setData(String key, Object value) {
+    public void setData(@NotNull String key, @NotNull Object value) {
         this.data.put(key, value);
     }
 
@@ -40,7 +40,7 @@ public class AbilityData {
      * @param key The key of the data to look up
      * @return The value as an int, or 0 if no mapping exists
      */
-    public int getInt(String key) {
+    public int getInt(@NotNull String key) {
         Object o = data.get(key);
         return o != null ? (int) o : 0;
     }
@@ -50,7 +50,7 @@ public class AbilityData {
      * @param key The key of the data to look up
      * @return The value as a boolean, or false if no mapping exists
      */
-    public boolean getBoolean(String key) {
+    public boolean getBoolean(@NotNull String key) {
         Object o = data.get(key);
         return o != null && (boolean) o;
     }
@@ -60,7 +60,7 @@ public class AbilityData {
      * @param key The key of the data to look up
      * @return The value as a double, or 0.0 if no mapping exists
      */
-    public double getDouble(String key) {
+    public double getDouble(@NotNull String key) {
         Object o = data.get(key);
         if (o != null) {
             if (o instanceof Integer) {
@@ -72,7 +72,7 @@ public class AbilityData {
         return 0.0;
     }
 
-    public boolean containsKey(String key) {
+    public boolean containsKey(@NotNull String key) {
         return data.containsKey(key);
     }
 
