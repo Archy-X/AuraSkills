@@ -128,7 +128,7 @@ public class SkillsCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.top")
 	@Description("Shows the top players in a skill")
 	@Syntax("Usage: /sk top <page> or /sk top [skill] <page>")
-	public void onTop(CommandSender sender, String [] args) {
+	public void onTop(CommandSender sender, String[] args) {
 		Locale locale = plugin.getLang().getLocale(sender);
 		if (args.length == 0) {
 			List<SkillValue> lb = plugin.getLeaderboardManager().getPowerLeaderboard(1, 10);

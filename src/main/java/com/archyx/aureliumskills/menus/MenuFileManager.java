@@ -141,7 +141,7 @@ public class MenuFileManager {
                 }
                 // Migrate material item contexts
                 for (String material : materialList) {
-                    String [] splitMaterial = material.split(" ", 2);
+                    String[] splitMaterial = material.split(" ", 2);
                     if (splitMaterial.length < 2) continue;
                     String contextString = splitMaterial[0].toLowerCase(Locale.ROOT);
 

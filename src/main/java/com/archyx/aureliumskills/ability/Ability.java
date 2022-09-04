@@ -102,7 +102,7 @@ public enum Ability implements AbstractAbility {
 		this.options = new HashMap<>();
 	}
 
-	Ability(Supplier<Skill> skill, double baseValue, double valuePerLevel, String [] optionKeys, Object [] optionValues) {
+	Ability(Supplier<Skill> skill, double baseValue, double valuePerLevel, String[] optionKeys, Object[] optionValues) {
 		this(skill, baseValue, valuePerLevel);
 		this.options = new HashMap<>();
 		for (int i = 0; i < optionKeys.length; i++) {
@@ -119,7 +119,7 @@ public enum Ability implements AbstractAbility {
 		this.valuePerLevel2 = valuePerLevel2;
 	}
 
-	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, String [] optionKeys, Object [] optionValues) {
+	Ability(Supplier<Skill> skill, double baseValue1, double valuePerLevel1, double baseValue2, double valuePerLevel2, String[] optionKeys, Object[] optionValues) {
 		this(skill, baseValue1, valuePerLevel1, baseValue2, valuePerLevel2);
 		this.options = new HashMap<>();
 		for (int i = 0; i < optionKeys.length; i++) {

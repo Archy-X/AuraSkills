@@ -20,12 +20,12 @@ import java.util.Locale;
 
 public abstract class ReadiedManaAbility extends ManaAbilityProvider {
 
-    private final Action [] actions;
-    protected final String [] materials;
+    private final Action[] actions;
+    protected final String[] materials;
 
     private final static int READY_DURATION = 80;
 
-    public ReadiedManaAbility(AureliumSkills plugin, MAbility manaAbility, ManaAbilityMessage activateMessage, ManaAbilityMessage stopMessage, String [] materials, Action [] actions) {
+    public ReadiedManaAbility(AureliumSkills plugin, MAbility manaAbility, ManaAbilityMessage activateMessage, ManaAbilityMessage stopMessage, String[] materials, Action[] actions) {
         super(plugin, manaAbility, activateMessage, stopMessage);
         this.materials = materials;
         this.actions = actions;

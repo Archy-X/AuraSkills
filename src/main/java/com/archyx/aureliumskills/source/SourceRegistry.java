@@ -11,7 +11,7 @@ import java.util.*;
 public class SourceRegistry {
 
     private final Map<Skill, Class<?>> registry;
-    private final Map<Skill, Source []> sources;
+    private final Map<Skill, Source[]> sources;
 
     public SourceRegistry() {
         registry = new HashMap<>();
@@ -48,7 +48,7 @@ public class SourceRegistry {
         }
     }
 
-    public Source [] values(Skill skill) {
+    public Source[] values(Skill skill) {
         return sources.get(skill);
     }
 

@@ -152,7 +152,7 @@ public class TextUtil {
         }
     }
 
-    private static Set<Integer> generateDelimiterSet(char [] delimiters) {
+    private static Set<Integer> generateDelimiterSet(char[] delimiters) {
         Objects.requireNonNull(delimiters);
         Set<Integer> delimiterHashSet = new HashSet<>();
         if (delimiters.length == 0) {
