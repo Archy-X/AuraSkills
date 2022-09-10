@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.skills.fighting;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.ability.AbilityProvider;
+import com.archyx.aureliumskills.api.event.AbilityActivateEvent;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.configuration.OptionValue;
 import com.archyx.aureliumskills.data.AbilityData;
@@ -11,6 +12,7 @@ import com.archyx.aureliumskills.lang.AbilityMessage;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skills;
 import com.cryptomorin.xseries.XMaterial;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -43,9 +45,13 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     return;
                 }
                 if (playerData.getAbilityLevel(Ability.SWORD_MASTER) > 0) {
-                    //Modifies damage
-                    double modifier = getValue(Ability.SWORD_MASTER, playerData) / 100;
-                    event.setDamage(event.getDamage() * (1 + modifier));
+                    AbilityActivateEvent e = new AbilityActivateEvent(player, event.getEntity(), Ability.SWORD_MASTER, 0);
+                    Bukkit.getPluginManager().callEvent(e);
+                    if (!e.isCancelled()){
+                        //Modifies damage
+                        double modifier = getValue(Ability.SWORD_MASTER, playerData) / 100;
+                        event.setDamage(event.getDamage() * (1 + modifier));
+                    }
                 }
             }
         }
@@ -56,6 +62,13 @@ public class FightingAbilities extends AbilityProvider implements Listener {
             if (plugin.getAbilityManager().isEnabled(Ability.FIRST_STRIKE)) {
                 if (!player.hasMetadata("AureliumSkills-FirstStrike")) {
                     if (playerData.getAbilityLevel(Ability.FIRST_STRIKE) > 0) {
+
+                        AbilityActivateEvent e = new AbilityActivateEvent(player, event.getEntity(), Ability.FIRST_STRIKE, 0);
+                        Bukkit.getPluginManager().callEvent(e);
+                        if (e.isCancelled()){
+                            return;
+                        }
+
                         Locale locale = playerData.getLocale();
                         //Modifies damage
                         double modifier = getValue(Ability.FIRST_STRIKE, playerData) / 100;
@@ -99,6 +112,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
         if (r.nextDouble() < (getValue(Ability.BLEED, playerData) / 100)) {
             if (event.getFinalDamage() < entity.getHealth()) {
                 if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
+
                     int baseTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "base_ticks").asInt();
                     entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, baseTicks));
                     // Send messages
@@ -140,6 +154,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     cancel();
                     return;
                 }
+
                 if (entity.hasMetadata("AureliumSkills-BleedTicks")) {
                     int bleedTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
                     if (bleedTicks > 0) {
@@ -206,7 +221,11 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                         if (playerData == null) return;
                         if (isEnabled(Ability.BLEED)) {
                             if (event.getEntity() instanceof LivingEntity) {
-                                bleed(event, playerData, (LivingEntity) event.getEntity());
+                                AbilityActivateEvent e = new AbilityActivateEvent(player, event.getEntity(), Ability.BLEED, plugin.getAbilityManager().getOption(Ability.BLEED, "tick_period").asInt());
+                                Bukkit.getPluginManager().callEvent(e);
+                                if (!e.isCancelled()){
+                                    bleed(event, playerData, (LivingEntity) event.getEntity());
+                                }
                             }
                         }
                     }
