@@ -1,3 +1,12 @@
+Version Beta 1.3.7
+  New Features:
+    - Add cooldown_ticks option to First Strike ability
+    - Add blocked-grindstone-enchants Forging option to stop XP gain from custom curses
+    - Add aureliumskills-custom-loot WorldGuard flag to toggle custom loot table functionality
+  Bug Fixes:
+    - Fix Piercing arrows multiplying by blocking shield
+    - Fix sources menu showing multiplied XP incorrectly
+
 Version Beta 1.3.6
   Bug Fixes:
     - Fix missing names in sources menu for 1.19 sources

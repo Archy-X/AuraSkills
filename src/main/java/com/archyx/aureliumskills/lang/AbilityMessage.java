@@ -252,6 +252,7 @@ public enum AbilityMessage implements MessageKey {
         path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ENGLISH) + "." + ability.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(ability.name().length() + 1).toLowerCase(Locale.ENGLISH);
     }
 
+    @Override
     public String getPath() {
         return path;
     }

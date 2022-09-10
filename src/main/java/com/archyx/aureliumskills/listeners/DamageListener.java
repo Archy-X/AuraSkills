@@ -96,6 +96,8 @@ public class DamageListener implements Listener {
                 case SHOVEL:
                     excavationAbilities.spadeMaster(event, player, playerData);
                     break;
+                default:
+                    break;
             }
 
             //First strike

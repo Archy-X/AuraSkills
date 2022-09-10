@@ -67,6 +67,7 @@ public enum ManaAbilityMessage implements MessageKey {
         this.path = "mana_abilities." + path;
     }
 
+    @Override
     public String getPath() {
         return path;
     }

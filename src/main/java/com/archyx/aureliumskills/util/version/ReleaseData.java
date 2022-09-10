@@ -2,6 +2,6 @@ package com.archyx.aureliumskills.util.version;
 
 public class ReleaseData {
 
-    public static final long RELEASE_TIME = 1654671118992L;
+    public static final long RELEASE_TIME = 1659602266628L;
 
 }

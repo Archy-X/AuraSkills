@@ -9,6 +9,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import org.bukkit.entity.Player;
 
@@ -30,6 +31,9 @@ public class ActionBarCompatHandler {
         } else {
             registerLegacyListener(manager);
         }
+        if (VersionUtils.isAtLeastVersion(19)) {
+            registerSystemChatListener(manager);
+        }
         registerChatListener(manager);
     }
 
@@ -41,6 +45,25 @@ public class ActionBarCompatHandler {
                 PacketContainer packet = event.getPacket();
                 if (packet.getMeta("AureliumSkills").isPresent()) return; // Ignore Aurelium Skills action bars
                 actionBar.setPaused(player, PAUSE_TICKS);
+            }
+        });
+    }
+
+    private void registerSystemChatListener(ProtocolManager manager) {
+        manager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.MONITOR, PacketType.Play.Server.SYSTEM_CHAT) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                Player player = event.getPlayer();
+                PacketContainer packet = event.getPacket();
+                if (packet.getMeta("AureliumSkills").isPresent()) return;
+                StructureModifier<Integer> integers = packet.getIntegers();
+                if (integers.size() == 1) {
+                    if (integers.read(0) == EnumWrappers.ChatType.GAME_INFO.getId()) {
+                        actionBar.setPaused(player, PAUSE_TICKS);
+                    }
+                } else if (packet.getBooleans().read(0)) {
+                    actionBar.setPaused(player, PAUSE_TICKS);
+                }
             }
         });
     }
