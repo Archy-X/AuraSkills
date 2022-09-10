@@ -8,7 +8,7 @@ import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.version.VersionUtils;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.Bukkit;
@@ -31,7 +31,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer place) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer place) {
         Locale locale = plugin.getLang().getLocale(player);
         Skill skill = (Skill) activeMenu.getProperty("skill");
         SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
