@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.modifier.Modifiers;
 import com.archyx.aureliumskills.modifier.Multipliers;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -191,6 +192,18 @@ public class AureliumAPI {
         else {
             return 1;
         }
+    }
+
+    /**
+     * Gets the total skill level of a player
+     * @return the total skill level of a player, will display number of skills available if player does not have a skills profile
+     */
+    public static int getTotalLevel(Player player) {
+        int totalLevel = 0;
+        for(Skill skill : Skills.values()){
+            totalLevel += getSkillLevel(player, skill);
+        }
+        return totalLevel;
     }
 
     /**
