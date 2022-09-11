@@ -3,8 +3,8 @@ package com.archyx.aureliumskills.menus;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.util.file.FileUtil;
 import com.archyx.aureliumskills.util.misc.DataUtil;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.slate.menu.MenuManager;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -44,15 +44,20 @@ public class MenuFileManager {
         }
         int menusLoaded = 0;
         for (String menuName : manager.getMenuProviderNames()) {
-            File file = new File(plugin.getDataFolder() + "/menus", menuName + ".yml");
-            if (file.exists()) {
-                try {
-                    manager.loadMenu(file);
-                    menusLoaded++;
-                } catch (Exception e) {
-                    plugin.getLogger().warning("Error loading menu " + menuName);
-                    e.printStackTrace();
+            try {
+                File file = new File(plugin.getDataFolder() + "/menus", menuName + ".yml");
+                if (file.exists()) {
+                    try {
+                        manager.loadMenu(file);
+                        menusLoaded++;
+                    } catch (Exception e) {
+                        plugin.getLogger().warning("Error loading menu " + menuName);
+                        e.printStackTrace();
+                    }
                 }
+            } catch (Exception e) {
+                plugin.getLogger().severe("Error loading menu " + menuName);
+                e.printStackTrace();
             }
         }
         plugin.getLogger().info("Loaded " + menusLoaded + " menus");
@@ -68,7 +73,7 @@ public class MenuFileManager {
             ConfigurationSection oldSection = config.getConfigurationSection(legacyName);
             if (oldSection == null) continue;
 
-            String menuName = StringUtils.removeEnd(legacyName, "_menu");
+            String menuName = TextUtil.removeEnd(legacyName, "_menu");
             // Load new file configuration
             File newFile = new File(plugin.getDataFolder(), "menus/" + menuName + ".yml");
             if (!newFile.exists()) continue;

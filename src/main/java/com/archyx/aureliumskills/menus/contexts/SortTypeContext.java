@@ -10,7 +10,7 @@ public class SortTypeContext implements ContextProvider<SorterItem.SortType> {
 
     @Nullable
     @Override
-    public SorterItem.SortType parse(String s) {
+    public SorterItem.SortType parse(String menuName, String s) {
         return SorterItem.SortType.valueOf(s.toUpperCase(Locale.ROOT));
     }
 }

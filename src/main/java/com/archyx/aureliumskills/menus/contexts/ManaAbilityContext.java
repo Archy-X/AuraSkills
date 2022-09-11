@@ -10,7 +10,7 @@ public class ManaAbilityContext implements ContextProvider<MAbility> {
 
     @Override
     @Nullable
-    public MAbility parse(String input) {
+    public MAbility parse(String menuName, String input) {
         return MAbility.valueOf(input.toUpperCase(Locale.ROOT));
     }
 }

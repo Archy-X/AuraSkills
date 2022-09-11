@@ -148,7 +148,7 @@ public class HealingAbilities extends AbilityProvider implements Listener {
     }
 
     private double getAbsorptionAmount(Player player) {
-        if (VersionUtils.isAtLeastVersion(14)) {
+        if (VersionUtils.isAtLeastVersion(14, 4)) {
             return player.getAbsorptionAmount();
         } else {
             if (entityLivingClass == null) {

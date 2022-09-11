@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.menus.sources.SorterItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
@@ -26,7 +26,7 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "sources":

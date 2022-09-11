@@ -14,7 +14,6 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -127,7 +126,7 @@ public class Requirements extends NBTAPIUser {
                 if (oldTypeCompound != null) {
                     NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
                     for (String key : oldTypeCompound.getKeys()) {
-                        compound.setInteger(StringUtils.capitalize(key), oldTypeCompound.getInteger(key));
+                        compound.setInteger(TextUtil.capitalize(key), oldTypeCompound.getInteger(key));
                     }
                 }
             }
@@ -158,7 +157,7 @@ public class Requirements extends NBTAPIUser {
             if (lore != null) {
                 for (int i = 0; i < lore.size(); i++) {
                     String line = lore.get(i);
-                    if (line.contains("Requires") && line.contains(StringUtils.capitalize(skill.name().toLowerCase(Locale.ENGLISH)))) {
+                    if (line.contains("Requires") && line.contains(TextUtil.capitalize(skill.name().toLowerCase(Locale.ENGLISH)))) {
                         lore.remove(line);
                     }
                 }
@@ -187,7 +186,7 @@ public class Requirements extends NBTAPIUser {
     }
 
     private String getName(Skill skill) {
-        return StringUtils.capitalize(skill.name().toLowerCase(Locale.ENGLISH));
+        return TextUtil.capitalize(skill.name().toLowerCase(Locale.ENGLISH));
     }
 
 }

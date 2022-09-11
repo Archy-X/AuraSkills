@@ -98,6 +98,7 @@ public enum Option {
     CHECK_FOR_UPDATES("check-for-updates", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_ENABLED("automatic-backups.enabled", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic-backups.minimum-interval-hours", OptionType.DOUBLE),
+    SAVE_BLANK_PROFILES("save-blank-profiles", OptionType.BOOLEAN),
     // Skill options (not including source types)
     FARMING_ENABLED("farming.enabled", OptionType.BOOLEAN),
     FARMING_MAX_LEVEL("farming.max-level", OptionType.INT),
@@ -157,6 +158,7 @@ public enum Option {
     ENCHANTING_CHECK_MULTIPLIER_PERMISSIONS("enchanting.check-multiplier-permissions", OptionType.BOOLEAN),
     SORCERY_ENABLED("sorcery.enabled", OptionType.BOOLEAN),
     SORCERY_MAX_LEVEL("sorcery.max-level", OptionType.INT),
+    SORCERY_CHECK_CANCELLED("sorcery.check-cancelled", OptionType.BOOLEAN),
     SORCERY_CHECK_MULTIPLIER_PERMISSIONS("sorcery.check-multiplier-permissions", OptionType.BOOLEAN),
     HEALING_ENABLED("healing.enabled", OptionType.BOOLEAN),
     HEALING_MAX_LEVEL("healing.max-level", OptionType.INT),
@@ -167,6 +169,7 @@ public enum Option {
     FORGING_MAX_LEVEL("forging.max-level", OptionType.INT),
     FORGING_CHECK_CANCELLED("forging.check-cancelled", OptionType.BOOLEAN),
     FORGING_CHECK_MULTIPLIER_PERMISSIONS("forging.check-multiplier-permissions", OptionType.BOOLEAN),
+    FORGING_BLOCKED_GRINDSTONE_ENCHANTS("forging.blocked-grindstone-enchants", OptionType.LIST),
     // Stat options
     HEALTH_MODIFIER("health.modifier", OptionType.DOUBLE),
     HEALTH_HEALTH_SCALING("health.health-scaling", OptionType.BOOLEAN),

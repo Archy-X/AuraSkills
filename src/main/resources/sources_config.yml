@@ -24,12 +24,14 @@ sources:
     jungle_log: 4.0
     acacia_log: 4.0
     dark_oak_log: 4.0
+    mangrove_log: 4.0
     oak_leaves: 0.4
     spruce_leaves: 0.4
     birch_leaves: 0.4
     jungle_leaves: 0.4
     acacia_leaves: 0.4
     dark_oak_leaves: 0.4
+    mangrove_leaves: 0.4
     crimson_stem: 5.0
     warped_stem: 5.0
     nether_wart_block: 0.5
@@ -40,6 +42,7 @@ sources:
     flowering_azalea: 9.1
     azalea_leaves: 1.5
     flowering_azalea_leaves: 2.0
+    mangrove_roots: 2.0
   mining:
     stone: 0.2
     cobblestone: 0.2
@@ -88,6 +91,7 @@ sources:
     ice: 0.3
     packed_ice: 0.8
     blue_ice: 1.3
+    reinforced_deepslate: 125.0
   fishing:
     cod: 25.0
     salmon: 60.0
@@ -110,6 +114,8 @@ sources:
     soul_soil: 3.0
     red_sand: 0.7
     rooted_dirt: 5.6
+    mud: 0.5
+    muddy_mangrove_roots: 2.5
   archery:
     player: 50.0
     bat: 1.0
@@ -183,6 +189,10 @@ sources:
     axolotl: 3.5
     glow_squid: 2.5
     goat: 3.0
+    allay: 0.2
+    frog: 2.0
+    tadpole: 0.7
+    warden: 10000.0
   defense:
     mob_damage: 1
     player_damage: 2
@@ -259,6 +269,10 @@ sources:
     axolotl: 3.5
     glow_squid: 2.5
     goat: 3.0
+    allay: 0.2
+    frog: 2.0
+    tadpole: 1.2
+    warden: 10000.0
   endurance:
     walk_per_meter: 0.333
     sprint_per_meter: 0.1
@@ -280,6 +294,11 @@ sources:
     book_per_level: 2
   sorcery:
     mana_ability_use: 0.5
+    sculk: 1.0
+    sculk_catalyst: 12.0
+    sculk_shrieker: 27.0
+    sculk_vein: 0.5
+    sculk_sensor: 8.0
   healing:
     drink_regular: 10
     drink_extended: 15
@@ -346,4 +365,4 @@ tags:
       - '*'
     terraform_applicable:
       - '*'
-file_version: 7
+file_version: 8

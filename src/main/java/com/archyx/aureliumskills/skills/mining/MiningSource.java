@@ -57,7 +57,8 @@ public enum MiningSource implements Source, BlockSource {
     DRIPSTONE_BLOCK,
     ICE(true),
     PACKED_ICE(true),
-    BLUE_ICE(true);
+    BLUE_ICE(true),
+    REINFORCED_DEEPSLATE;
 
     private final String legacyMaterial;
     private final byte legacyData;

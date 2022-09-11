@@ -179,7 +179,7 @@ abilities:
       info: '{value}% No Hunger Loss'
     runner:
       name: Runner
-      desc: 'Earn {value} more Endurance XP.'
+      desc: 'Earn {value}% more Endurance XP.'
       info: '+{value}% XP'
     golden_heal:
       name: Golden Heal
@@ -507,6 +507,11 @@ commands:
     list: '&fGlobal XP multiplier for &6{player}&f: &b{multiplier}x / +{percent}%'
     skill_entry: '&b{skill} &fXP multiplier: &b{multiplier}x / +{percent}%'
     players_only: '&eOnly players can list their own multiplier! Specify a player!'
+  profile:
+    skills: 'Aurelium Skills profile for &6{name}:\n&7UUID: &f{uuid}\n&7Skills:{skill_entries}'
+    skill_entry: '\n  &3{skill} &7- Level: &f{level}&7, XP: &f{xp}'
+    stats: 'Aurelium Skills stats profile for &6{name}:\n&7UUID: &f{uuid}\n&7Stats:{stat_entries}'
+    stat_entry: '\n  &3{stat} &7- Total Level: &f{total_level}&7, Base Level: &f{base_level}&7, Modified Level: &f{modified_level}'
   rank:
     header: '&b&lYour Skill Rankings'
     power: '&ePower &7(All Skills): &f#{rank} of {total}'
@@ -550,7 +555,7 @@ commands:
     set: '&7Set &b{skill} &7XP for player &7{player} &7to {amount}'
     remove: '&7Removed &b{amount} {skill} &7XP from player &6{player}'
   unknown_skill: '&eUnknown skill!'
-  no_profile: '&ePlayer does not have a skills profile!'
+  no_profile: '&ePlayer does not have a skills profile. Please try rejoining the game or restarting the server.'
 leveler:
   title: '&a{skill} Level Up'
   subtitle: '&6{old} ➜ {new}'
@@ -790,7 +795,7 @@ sources:
     melon: Melon
     sugar_cane: Sugar Cane
     bamboo: Bamboo
-    cocoa: Cocao
+    cocoa: Cocoa
     cactus: Cactus
     brown_mushroom: Brown Mushroom
     red_mushroom: Red Mushroom
@@ -821,6 +826,9 @@ sources:
     flowering_azalea: Flowering Azalea
     azalea_leaves: Azalea Leaves
     flowering_azalea_leaves: Flowering Azalea Leaves
+    mangrove_log: Mangrove Log
+    mangrove_leaves: Mangrove Leaves
+    mangrove_roots: Mangrove Roots
   mining:
     stone: Stone
     cobblestone: Cobblestone
@@ -855,7 +863,7 @@ sources:
     tuff: Tuff
     calcite: Calcite
     smooth_basalt: Smooth Basalt
-    amethyst_block: Amthesyst Block
+    amethyst_block: Amethyst Block
     amethyst_cluster: Amethyst Cluster
     deepslate_coal_ore: Deepslate Coal Ore
     deepslate_iron_ore: Deepslate Iron Ore
@@ -869,6 +877,7 @@ sources:
     ice: Ice
     packed_ice: Packed Ice
     blue_ice: Blue Ice
+    reinforced_deepslate: Reinforced Deepslate
   fishing:
     cod: Cod
     salmon: Salmon
@@ -891,6 +900,8 @@ sources:
     soul_soil: Soul Soil
     red_sand: Red Sand
     rooted_dirt: Rooted Dirt
+    mud: Mud
+    muddy_mangrove_roots: Muddy Mangrove Roots
   mobs:
     player: Player
     bat: Bat
@@ -964,6 +975,10 @@ sources:
     axolotl: Axolotl
     glow_squid: Glow Squid
     goat: Goat
+    allay: Allay
+    frog: Frog
+    tadpole: Tadpole
+    warden: Warden
   defense:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players
@@ -988,6 +1003,11 @@ sources:
     book_per_level: Book
   sorcery:
     mana_ability_use: Using Mana Abilities
+    sculk: Sculk
+    sculk_vein: Sculk Vein
+    sculk_sensor: Sculk Sensor
+    sculk_catalyst: Sculk Catalyst
+    sculk_shrieker: Sculk Shrieker
   healing:
     drink_regular: Drink Regular Potion
     drink_extended: Drink Extended Duration Potion
@@ -1064,4 +1084,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 25
+file_version: 26

@@ -13,6 +13,7 @@ public enum ActionBarMessage implements MessageKey {
     BOSS_BAR_XP,
     BOSS_BAR_MAXED;
 
+    @Override
     public String getPath() {
         return "action_bar." + this.toString().toLowerCase(Locale.ENGLISH);
     }

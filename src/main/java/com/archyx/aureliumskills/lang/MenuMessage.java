@@ -134,6 +134,7 @@ public enum MenuMessage implements MessageKey {
         }
     }
 
+    @Override
     public String getPath() {
         return path;
     }

@@ -15,7 +15,7 @@ public class SkillContext implements ContextProvider<Skill> {
 
     @Nullable
     @Override
-    public Skill parse(String input) {
+    public Skill parse(String menuName, String input) {
         return plugin.getSkillRegistry().getSkill(input);
     }
 }

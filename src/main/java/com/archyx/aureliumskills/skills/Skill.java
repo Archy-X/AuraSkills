@@ -21,6 +21,7 @@ public interface Skill {
 
     String name();
 
+    @Override
     String toString();
 
     Ability getXpMultiplierAbility();

@@ -9,7 +9,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
@@ -25,7 +25,7 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, Ability ability) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderData data, Ability ability) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "name":

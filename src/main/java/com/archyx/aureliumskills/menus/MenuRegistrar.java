@@ -69,48 +69,48 @@ public class MenuRegistrar {
         leaderboardOptions.put("auto_replace_heads_on_legacy", true);
         manager.registerDefaultOptions("leaderboard", leaderboardOptions);
         // Global items
-        manager.registerSingleItem("back", new BackItem(plugin));
-        manager.registerSingleItem("close", new CloseItem(plugin));
-        manager.registerSingleItem("next_page", new NextPageItem(plugin));
-        manager.registerSingleItem("previous_page", new PreviousPageItem(plugin));
+        manager.registerSingleItem("back", () -> new BackItem(plugin));
+        manager.registerSingleItem("close", () -> new CloseItem(plugin));
+        manager.registerSingleItem("next_page", () -> new NextPageItem(plugin));
+        manager.registerSingleItem("previous_page", () -> new PreviousPageItem(plugin));
         // Keyed item provider
         manager.getGlobalProviderManager().registerKeyedItemProvider(new ItemRegistryMenuProvider(plugin.getItemRegistry()));
 
         // Register menu specific items and templates
         ProviderManager skills = manager.getProviderManager("skills");
-        skills.registerSingleItem("your_skills", new YourSkillsItem(plugin));
-        skills.registerSingleItem("stats", new StatsItem(plugin));
-        skills.registerTemplateItem("skill", new ClickableSkillItem(plugin));
+        skills.registerSingleItem("your_skills", () -> new YourSkillsItem(plugin));
+        skills.registerSingleItem("stats", () -> new StatsItem(plugin));
+        skills.registerTemplateItem("skill", Skill.class, () -> new ClickableSkillItem(plugin));
 
         ProviderManager stats = manager.getProviderManager("stats");
-        stats.registerSingleItem("skull", new SkullItem(plugin));
-        stats.registerTemplateItem("stat", new StatItem(plugin));
+        stats.registerSingleItem("skull", () -> new SkullItem(plugin));
+        stats.registerTemplateItem("stat", Stat.class, () -> new StatItem(plugin));
 
         ProviderManager levelProgression = manager.getProviderManager("level_progression");
-        levelProgression.registerSingleItem("next_page", new NextPageItem(plugin));
-        levelProgression.registerSingleItem("previous_page", new PreviousPageItem(plugin));
-        levelProgression.registerSingleItem("rank", new RankItem(plugin));
-        levelProgression.registerSingleItem("sources", new SourcesItem(plugin));
-        levelProgression.registerSingleItem("abilities", new AbilitiesItem(plugin));
-        levelProgression.registerTemplateItem("skill", new StaticSkillItem(plugin));
-        levelProgression.registerTemplateItem("unlocked", new UnlockedItem(plugin));
-        levelProgression.registerTemplateItem("in_progress", new InProgressItem(plugin));
-        levelProgression.registerTemplateItem("locked", new LockedItem(plugin));
+        levelProgression.registerSingleItem("next_page", () -> new NextPageItem(plugin));
+        levelProgression.registerSingleItem("previous_page", () -> new PreviousPageItem(plugin));
+        levelProgression.registerSingleItem("rank", () -> new RankItem(plugin));
+        levelProgression.registerSingleItem("sources", () -> new SourcesItem(plugin));
+        levelProgression.registerSingleItem("abilities", () -> new AbilitiesItem(plugin));
+        levelProgression.registerTemplateItem("skill", Skill.class, () -> new StaticSkillItem(plugin));
+        levelProgression.registerTemplateItem("unlocked", Integer.class, () -> new UnlockedItem(plugin));
+        levelProgression.registerTemplateItem("in_progress", Integer.class, () -> new InProgressItem(plugin));
+        levelProgression.registerTemplateItem("locked", Integer.class, () -> new LockedItem(plugin));
 
         ProviderManager leaderboard = manager.getProviderManager("leaderboard");
-        leaderboard.registerSingleItem("back", new BackToLevelProgressionItem(plugin));
-        leaderboard.registerTemplateItem("leaderboard_player", new LeaderboardPlayerItem(plugin));
+        leaderboard.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
+        leaderboard.registerTemplateItem("leaderboard_player", Integer.class, () -> new LeaderboardPlayerItem(plugin));
 
         ProviderManager sources = manager.getProviderManager("sources");
-        sources.registerSingleItem("sorter", new SorterItem(plugin));
-        sources.registerSingleItem("back", new BackToLevelProgressionItem(plugin));
-        sources.registerTemplateItem("source", new SourceItem(plugin));
+        sources.registerSingleItem("sorter", () -> new SorterItem(plugin));
+        sources.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
+        sources.registerTemplateItem("source", Source.class, () -> new SourceItem(plugin));
 
         ProviderManager abilities = manager.getProviderManager("abilities");
-        abilities.registerSingleItem("back", new BackToLevelProgressionItem(plugin));
-        abilities.registerTemplateItem("locked_ability", new LockedAbilityItem(plugin));
-        abilities.registerTemplateItem("locked_mana_ability", new LockedManaAbilityItem(plugin));
-        abilities.registerTemplateItem("unlocked_ability", new UnlockedAbilityItem(plugin));
-        abilities.registerTemplateItem("unlocked_mana_ability", new UnlockedManaAbilityItem(plugin));
+        abilities.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
+        abilities.registerTemplateItem("locked_ability", Ability.class, () -> new LockedAbilityItem(plugin));
+        abilities.registerTemplateItem("locked_mana_ability", MAbility.class, () -> new LockedManaAbilityItem(plugin));
+        abilities.registerTemplateItem("unlocked_ability", Ability.class, () -> new UnlockedAbilityItem(plugin));
+        abilities.registerTemplateItem("unlocked_mana_ability", MAbility.class, () -> new UnlockedManaAbilityItem(plugin));
     }
 }

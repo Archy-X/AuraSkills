@@ -5,6 +5,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
+import com.archyx.aureliumskills.data.PlayerDataState;
 import com.archyx.aureliumskills.data.PlayerManager;
 import com.archyx.aureliumskills.leaderboard.AverageSorter;
 import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
@@ -22,6 +23,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.*;
@@ -38,6 +40,11 @@ public abstract class StorageProvider {
 
     public PlayerData createNewPlayer(Player player) {
         PlayerData playerData = new PlayerData(player, plugin);
+        // Set all skills to level 1 for new players
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+            playerData.setSkillLevel(skill, 1);
+            playerData.setSkillXp(skill, 0.0);
+        }
         playerManager.addPlayerData(playerData);
         plugin.getLeveler().updatePermissions(player);
         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
@@ -146,6 +153,15 @@ public abstract class StorageProvider {
     }
 
     public abstract void load(Player player);
+
+    /**
+     * Loads a snapshot of player data for an offline player
+     *
+     * @param uuid The uuid of the player
+     * @return A PlayerDataState containing a snapshot of player data
+     */
+    @Nullable
+    public abstract PlayerDataState loadState(UUID uuid);
 
     public void save(Player player) {
         save(player, true);

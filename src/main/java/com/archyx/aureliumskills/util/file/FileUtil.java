@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.util.file;
 
-import org.apache.commons.lang.math.NumberUtils;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -22,7 +22,7 @@ public class FileUtil {
                 } else {
                     String baseName = getBaseName(resultName);
                     if (subFile.getName().startsWith(baseName + " (")) {
-                        int fileNameNumber = NumberUtils.toInt(subFile.getName().substring(baseName.length() + 2, baseName.length() + 3)) + 1;
+                        int fileNameNumber = NumberUtil.toInt(subFile.getName().substring(baseName.length() + 2, baseName.length() + 3)) + 1;
                         if (fileNameNumber > duplicates) {
                             duplicates = fileNameNumber;
                         }

@@ -12,7 +12,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import com.cryptomorin.xseries.XMaterial;
@@ -34,7 +34,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Source source) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Source source) {
         Locale locale = plugin.getLang().getLocale(player);
         switch (placeholder) {
             case "source_name":
@@ -157,7 +157,11 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
             return 1.0;
         }
         double multiplier = 1.0;
-        multiplier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
+        if (playerData.getAbilityLevel(ability) > 0) {
+            double abilityValue = plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability));
+            double addedMultiplier = abilityValue / 100;
+            multiplier += addedMultiplier;
+        }
         multiplier *= plugin.getLeveler().getMultiplier(player, skill);
         return multiplier;
     }

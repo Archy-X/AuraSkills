@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.menus.common.AbstractItem;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import fr.minuskube.inv.content.SlotPos;
@@ -25,7 +25,7 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data) {
         Locale locale = plugin.getLang().getLocale(player);
         Skill skill = (Skill) activeMenu.getProperty("skill");
         switch (placeholder) {
@@ -33,7 +33,7 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
                 return Lang.getMessage(MenuMessage.YOUR_RANKING, locale);
             case "out_of":
                 int rank = getRank(skill, player);
-                int size = getSize(skill, player);
+                int size = getSize(skill);
                 return TextUtil.replace(Lang.getMessage(MenuMessage.RANK_OUT_OF, locale),
                         "{rank}", String.valueOf(rank),
                         "{total}", String.valueOf(size));
@@ -62,7 +62,7 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
 
     private double getPercent(Skill skill, Player player) {
         int rank = getRank(skill, player);
-        int size = getSize(skill, player);
+        int size = getSize(skill);
         return (double) rank / (double) size * 100;
     }
 
@@ -70,7 +70,7 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
         return plugin.getLeaderboardManager().getSkillRank(skill, player.getUniqueId());
     }
 
-    private int getSize(Skill skill, Player player) {
+    private int getSize(Skill skill) {
         return plugin.getLeaderboardManager().getLeaderboard(skill).size();
     }
 }

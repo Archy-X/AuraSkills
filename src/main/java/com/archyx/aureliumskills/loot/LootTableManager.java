@@ -1,12 +1,11 @@
 package com.archyx.aureliumskills.loot;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.loot.parser.CommandLootParser;
-import com.archyx.aureliumskills.loot.parser.ItemLootParser;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.util.misc.DataUtil;
 import com.archyx.aureliumskills.util.misc.Parser;
-import com.cryptomorin.xseries.XMaterial;
+import com.archyx.lootmanager.LootManager;
+import com.archyx.lootmanager.loot.LootPool;
+import com.archyx.lootmanager.loot.LootTable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,20 +15,28 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class LootTableManager extends Parser {
 
-	private final Map<Skill, LootTable> lootTables;
 	private final AureliumSkills plugin;
+	private final LootManager lootManager;
+	private final Map<Skill, LootTable> lootTables;
 	
 	public LootTableManager(AureliumSkills plugin) {
 		this.plugin = plugin;
+		this.lootManager = new LootManager(plugin);
 		lootTables = new HashMap<>();
+		initLootManager();
 		loadLootTables();
+	}
+
+	public void initLootManager() {
+		lootManager.registerContextManager(new SourceContextManager(plugin));
+		lootManager.registerCustomItemParser(new ItemKeyParser(plugin));
+		lootManager.addLootOptionKeys("xp");
+		lootManager.addPoolOptionKeys("chance_per_luck", "require_open_water");
 	}
 
 	public void generateDefaultLootTables() {
@@ -77,7 +84,7 @@ public class LootTableManager extends Parser {
 			FileConfiguration config = YamlConfiguration.loadConfiguration(lootTableFile);
 			matchConfig(config, lootTableFile); // Try to update file
 			// Load corresponding loot table type
-			LootTable lootTable = loadLootTable(lootTableFile, config);
+			LootTable lootTable = lootManager.getLootLoader().loadLootTable(lootTableFile, config);
 			if (lootTable != null) {
 				lootTables.put(skill, lootTable);
 			}
@@ -94,60 +101,6 @@ public class LootTableManager extends Parser {
 			tablesLoaded++;
 		}
 		plugin.getLogger().info("Loaded " + lootLoaded + " loot entries in " + poolsLoaded + " pools and " + tablesLoaded + " tables");
-	}
-
-	private LootTable loadLootTable(File file, FileConfiguration config) {
-		ConfigurationSection poolsSection = config.getConfigurationSection("pools");
-		if (poolsSection == null) return null;
-		List<LootPool> pools = new ArrayList<>();
-		for (String poolName : poolsSection.getKeys(false)) {
-			ConfigurationSection currentPool = poolsSection.getConfigurationSection(poolName);
-			if (currentPool == null) continue;
-
-			double baseChance = currentPool.getDouble("base_chance", 1.0) / 100; // Converts from percent chance to decimal
-			double chancePerLuck = currentPool.getDouble("chance_per_luck", 0.0) / 100;
-			int selectionPriority = currentPool.getInt("selection_priority", 1);
-			boolean overrideVanillaLoot = currentPool.getBoolean("override_vanilla_loot", false);
-
-			// Parse each loot entry
-			List<Map<?,?>> lootMapList = currentPool.getMapList("loot");
-			List<Loot> lootList = new ArrayList<>();
-			int index = 0;
-			for (Map<?, ?> lootEntryMap : lootMapList) {
-				Loot loot = null;
-				try {
-					String type = DataUtil.getString(lootEntryMap, "type");
-					// Item loot
-					if (type.equalsIgnoreCase("item")) {
-						if (getBooleanOrDefault(lootEntryMap, "ignore_legacy", false) && XMaterial.getVersion() <= 12) {
-							index++;
-							continue;
-						}
-						loot = new ItemLootParser(plugin).parse(lootEntryMap);
-					}
-					// Command loot
-					else if (type.equalsIgnoreCase("command")) {
-						loot = new CommandLootParser(plugin).parse(lootEntryMap);
-					} else {
-						throw new IllegalArgumentException("Unknown loot type: " + type);
-					}
-				} catch (Exception e) {
-					plugin.getLogger().warning("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");
-					e.printStackTrace();
-				}
-				if (loot != null) {
-					lootList.add(loot);
-				}
-				index++;
-			}
-			// Create pool
-			LootPool pool = new LootPool(poolName, lootList, baseChance, chancePerLuck, selectionPriority, overrideVanillaLoot);
-			pools.add(pool);
-		}
-		// Sort pools by selection priority
-		pools.sort((pool1, pool2) -> pool2.getSelectionPriority() - pool1.getSelectionPriority());
-		// Create table
-		return new LootTable(pools);
 	}
 
 	@Nullable

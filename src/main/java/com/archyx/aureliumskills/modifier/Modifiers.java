@@ -10,7 +10,6 @@ import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -162,7 +161,7 @@ public class Modifiers extends NBTAPIUser {
     }
 
     private String getName(Stat stat) {
-        return StringUtils.capitalize(stat.name().toLowerCase(Locale.ENGLISH));
+        return TextUtil.capitalize(stat.name().toLowerCase(Locale.ENGLISH));
     }
     
 }

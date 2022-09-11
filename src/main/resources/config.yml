@@ -193,6 +193,8 @@ automatic-backups:
     enabled: true
     minimum-interval-hours: 24
 
+save-blank-profiles: false
+
 # Skill specific options
 farming:
     enabled: true
@@ -265,6 +267,7 @@ enchanting:
 sorcery:
     enabled: true
     max-level: 97
+    check-cancelled: true
     check-multiplier-permissions: true
 healing:
     enabled: true
@@ -277,6 +280,9 @@ forging:
     max-level: 97
     check-cancelled: true
     check-multiplier-permissions: true
+    blocked-grindstone-enchants:
+        - binding_curse
+        - vanishing_curse
 
 # Stat Options
 health:

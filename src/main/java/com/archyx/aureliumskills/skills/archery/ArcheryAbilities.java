@@ -10,9 +10,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -86,6 +84,14 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
     }
 
     public void piercing(EntityDamageByEntityEvent event, PlayerData playerData, Player player, Arrow arrow) {
+        // Disable if enemy is blocking with a shield
+        Entity damaged = event.getEntity();
+        if (damaged instanceof Player) {
+            Player damagedPlayer = (Player) damaged;
+            if (damagedPlayer.isBlocking()) {
+                return;
+            }
+        }
         if (r.nextDouble() < (getValue(Ability.PIERCING, playerData) / 100)) {
             arrow.setBounce(false);
             Vector velocity = arrow.getVelocity();
@@ -93,6 +99,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
             newArrow.setShooter(player);
             newArrow.setKnockbackStrength(arrow.getKnockbackStrength());
             newArrow.setFireTicks(arrow.getFireTicks());
+            newArrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
         }
     }
 

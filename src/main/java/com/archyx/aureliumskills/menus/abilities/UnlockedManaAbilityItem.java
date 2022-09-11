@@ -11,7 +11,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, MAbility mAbility) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderData data, MAbility mAbility) {
         Locale locale = plugin.getLang().getLocale(player);
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return placeholder;
@@ -89,10 +89,11 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
         int maxLevel = manager.getMaxLevel(mAbility);
         int unlock = manager.getUnlock(mAbility);
         int levelUp = manager.getLevelUp(mAbility);
-        if (maxLevel == 0) {
-            maxLevel = OptionL.getMaxLevel(mAbility.getSkill());
+        int maxAllowedBySkill = (OptionL.getMaxLevel(mAbility.getSkill()) - unlock) / levelUp + 1;
+        if (maxLevel == 0 || maxLevel > maxAllowedBySkill) {
+            maxLevel = maxAllowedBySkill;
         }
-        return (unlock + levelUp * (playerData.getManaAbilityLevel(mAbility) + 1)) <= maxLevel;
+        return playerData.getManaAbilityLevel(mAbility) < maxLevel;
     }
 
     @Override

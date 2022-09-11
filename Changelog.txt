@@ -1,3 +1,87 @@
+Version Beta 1.3.9
+  Bug Fixes:
+    - Fix NoSuchMethod MiniMessage error on some server versions
+
+Version Beta 1.3.8
+  New Features:
+    - Add MiniMessage formatting support to menus
+  Changes:
+    - Arrows created by the Piercing ability can no longer be picked up
+    - Update action bar compatibility for 1.19
+  Bug Fixes:
+    - Fix Sharp Hook logic error
+    - Fix NoSuchMethod error on versions 1.14-1.14.3
+
+Version Beta 1.3.7
+  New Features:
+    - Add cooldown_ticks option to First Strike ability
+    - Add blocked-grindstone-enchants Forging option to stop XP gain from custom curses
+    - Add aureliumskills-custom-loot WorldGuard flag to toggle custom loot table functionality
+  Bug Fixes:
+    - Fix Piercing arrows multiplying by blocking shield
+    - Fix sources menu showing multiplied XP incorrectly
+
+Version Beta 1.3.6
+  Bug Fixes:
+    - Fix missing names in sources menu for 1.19 sources
+
+Version Beta 1.3.5
+  New Features:
+    - Add 1.19 support
+    - New Sorcery XP sources:
+      - Sculk
+      - Sculk Catalyst
+      - Sculk Shrieker
+      - Sculk Vein
+      - Sculk Sensor
+    - New Foraging XP sources:
+      - Mangrove Log
+      - Mangrove Leaves
+      - Mangrove Roots
+    - New Excavation XP sources:
+      - Mud
+      - Muddy Mangrove Roots
+    - New Fighting and Archery XP sources:
+      - Allay
+      - Frog
+      - Tadpole
+      - Warden
+    - New Mining XP source:
+      - Reinforced Deepslate
+  Changes:
+    - Update French messages
+    - Add sorcery.check-cancelled option for new Sorcery block sources
+    - Update NBT API to 2.10.0-SNAPSHOT
+
+Version Beta 1.3.4
+  New Features:
+    - Add json NBT string parsing for loot and menus
+  Bug Fixes:
+    - Fix loot and menu item nbt custom model data and nesting not working
+
+Version Beta 1.3.3
+  New Features:
+    - Add ability to stack multiple stat modifiers using the same command
+      - Set the optional stack argument at the end of the /skills modifier add command to true (must also specify silent argument)
+      - This will create a new stat modifier with a numbered name in parenthesis at the end
+    - Add loot pool option require_open_water to only give fishing loot if hook is in open water (prevents AFK fishing)
+  Changes:
+    - Move loot system to new Loot Manager library
+
+Version Beta 1.3.2
+  Changes:
+    - Update Polish messages
+    - Update Spanish messages
+    - Update Chinese Simplified messages
+    - Deny skills menu from opening if player has no skills profile
+  Bug Fixes:
+    - Fix sources messages spelling errors
+
+Version Beta 1.3.1
+  Bug Fixes:
+    - Fix PlaceholderAPI not working in menus
+    - Fix abilities menu displaying as maxed incorrectly
+
 Version Beta 1.3.0
   New Features:
     - Sources menu:
@@ -14,6 +98,7 @@ Version Beta 1.3.0
       - Each item is a player head with the skin of the player and includes the player's username and level
       - Accessible by clicking the rank item (paper by default) in the level progression menu
       - Fully configurable in menus/leaderboards.yml
+      - The head will be replaced with an alternate item in versions 1.12-1.16 to due to a vanilla bug that causes lag, can be disabled using the auto_replace_heads_on_legacy option
     - Abilities menu:
       - Displays information about each ability and mana ability in a skill
       - Includes the name, description, player level, unlock status, and level up progress of the ability
@@ -21,14 +106,21 @@ Version Beta 1.3.0
       - Shows different materials and information depending on whether the ability is unlocked or not
       - Fully configurable in menus/abilities.yml
     - New item options:
-      - Add 'enchantments' field as a list of strings, formatted as 'name level', such as 'sharpness 5'
-      - The field 'potion_type' has been renamed to 'potion_data', added the 'extended' and 'upgraded' optional boolean subfields
-      - Add the 'custom_effects' field as a map list of effects with subfields 'type', 'duration', and 'amplifier'
-      - Add the 'nbt' field to add custom NBT data to the item (automatically infers types and supports nested data)
-      - Add the 'flags' field to add item flags, such as 'hide_enchants' and 'hide_potion_effects'
-      - Add the 'durability' field to set the durability of the item (0 means almost broken, goes up to the max durability to the item)
-      - Add the 'skull_meta' field with either 'uuid', 'base64', or 'url' subfields to define the skin used
-      - Add the 'key' field to use a registered item (/skills item register); 'material' and other item fields are not required if used
+      - Add 'enchantments' key as a list of strings, formatted as 'name level', such as 'sharpness 5'
+      - The key 'potion_type' has been renamed to 'potion_data', added the 'extended' and 'upgraded' optional boolean sub-keys
+      - Add the 'custom_effects' key as a map list of effects with sub-keys 'type', 'duration', and 'amplifier'
+      - Add the 'nbt' key to add custom NBT data to the item (automatically infers types and supports nested data)
+        - Use CustomModelData under nbt to add custom model data
+      - Add the 'flags' key to add item flags, such as 'hide_enchants' and 'hide_potion_effects'
+      - Add the 'durability' key to set the durability of the item (0 means almost broken, goes up to the max durability to the item)
+      - Add the 'skull_meta' key with either 'uuid', 'base64', or 'url' subfields to define the skin used
+      - Add the 'key' key to use a registered item (/skills item register); 'material' and other item keys are not required if used
+    - New options in level progression menu:
+      - Item options are accessible under the options section of a menu configuration file
+      - Add items_per_page option to control how many skill level items are shown per page
+      - Add use_level_as_amount option to match the item amount with the corresponding skill level it represents
+      - Add over_max_stack_amount option to control the amount shown if the skill level is higher than the max stack of the item (64)
+      - The position of skill items can be overridden by adding context sections named after the level number (i.e. '10') and 'pos' keys under each
     - Click actions:
       - Define custom functionality when a player clicks an item in the menu
       - Supported actions:
@@ -78,9 +170,15 @@ Version Beta 1.3.0
       - Item meta options, such as potion_data, are now separate fields under the item section (alongside material, lore) for items and in the context subsection for templates
       - Legacy material data for 1.12 is still defined in the material field, using the material:data format
     - Reduce kelp XP from 0.5 to 0.3
+    - Update NBT API version
+    - Add Czech messages
+    - Update German messages
+    - Update Polish messages
+    - Update Brazilian Portuguese messages
   Bug Fixes:
     - Fix Lucky Catch not working with custom loot tables
     - Fix incorrectly named ACF message key
+    - Fix missing percent in Runner description
 
 Version Beta 1.2.11
   Changes:

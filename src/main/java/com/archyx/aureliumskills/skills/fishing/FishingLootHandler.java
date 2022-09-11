@@ -5,15 +5,16 @@ import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.api.event.LootDropCause;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
-import com.archyx.aureliumskills.loot.Loot;
-import com.archyx.aureliumskills.loot.LootPool;
-import com.archyx.aureliumskills.loot.LootTable;
 import com.archyx.aureliumskills.loot.handler.LootHandler;
-import com.archyx.aureliumskills.loot.type.CommandLoot;
-import com.archyx.aureliumskills.loot.type.ItemLoot;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
+import com.archyx.aureliumskills.util.version.VersionUtils;
+import com.archyx.lootmanager.loot.Loot;
+import com.archyx.lootmanager.loot.LootPool;
+import com.archyx.lootmanager.loot.LootTable;
+import com.archyx.lootmanager.loot.type.CommandLoot;
+import com.archyx.lootmanager.loot.type.ItemLoot;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +46,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 return;
             }
             // Check if blocked by flags
-            else if (plugin.getWorldGuardSupport().blockedByFlag(player.getLocation(), player, WorldGuardFlags.FlagKey.XP_GAIN)) {
+            else if (plugin.getWorldGuardSupport().blockedByFlag(player.getLocation(), player, WorldGuardFlags.FlagKey.CUSTOM_LOOT)) {
                 return;
             }
         }
@@ -63,6 +64,10 @@ public class FishingLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootTableManager().getLootTable(Skills.FISHING);
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
+            // Check if in open water
+            if (pool.getOption("require_open_water", Boolean.class, false) && VersionUtils.isAtLeastVersion(16, 5)) {
+                if (!event.getHook().isInOpenWater()) continue;
+            }
             // Calculate chance for pool
             Source source;
             double chance = getCommonChance(pool, playerData);

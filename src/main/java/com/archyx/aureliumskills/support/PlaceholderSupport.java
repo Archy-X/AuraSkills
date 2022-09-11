@@ -12,7 +12,6 @@ import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -172,7 +171,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
         if (identifier.startsWith("lb_")) {
             String leaderboardType = TextUtil.replace(identifier, "lb_", "");
             if (leaderboardType.startsWith("power_")) {
-                int place = NumberUtils.toInt(TextUtil.replace(leaderboardType, "power_", ""));
+                int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", ""));
                 if (place > 0) {
                     List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(place, 1);
                     if (list.size() > 0) {
@@ -184,7 +183,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 }
                 else {
                     if (identifier.endsWith("name")) {
-                        int namePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, "power_", "", "_name", ""));
+                        int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", "", "_name", ""));
                         if (namePlace > 0) {
                             List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(namePlace, 1);
                             if (list.size() > 0) {
@@ -196,7 +195,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                         }
                     }
                     else if (identifier.endsWith("value")) {
-                        int valuePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, "power_", "", "_value", ""));
+                        int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", "", "_value", ""));
                         if (valuePlace > 0) {
                             List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(valuePlace, 1);
                             if (list.size() > 0) {
@@ -211,7 +210,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             else {
                 for (Skill skill : plugin.getSkillRegistry().getSkills()) {
                     if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
-                        int place = NumberUtils.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
+                        int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
                         if (place > 0) {
                             List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 1);
                             if (list.size() > 0) {
@@ -223,7 +222,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                         }
                         else {
                             if (identifier.endsWith("name")) {
-                                int namePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
+                                int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
                                 if (namePlace > 0) {
                                     List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, namePlace, 1);
                                     if (list.size() > 0) {
@@ -235,7 +234,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                                 }
                             }
                             else if (identifier.endsWith("value")) {
-                                int valuePlace = NumberUtils.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
+                                int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
                                 if (valuePlace > 0) {
                                     List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, valuePlace, 1);
                                     if (list.size() > 0) {

@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.util.item;
 
 import com.archyx.aureliumskills.modifier.ModifierType;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -74,7 +74,7 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getModifiersTypeCompound(NBTItem item, ModifierType type) {
-		return getCompound(getModifiersCompound(item), StringUtils.capitalize(type.name().toLowerCase(Locale.ROOT)));
+		return getCompound(getModifiersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
 	public static NBTCompound getRequirementsCompound(NBTItem item) {
@@ -82,7 +82,7 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getRequirementsTypeCompound(NBTItem item, ModifierType type) {
-		return getCompound(getRequirementsCompound(item), StringUtils.capitalize(type.name().toLowerCase(Locale.ROOT)));
+		return getCompound(getRequirementsCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
 	public static NBTCompound getMultipliersCompound(NBTItem item) {
@@ -90,7 +90,7 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getMultipliersTypeCompound(NBTItem item, ModifierType type) {
-		return getCompound(getMultipliersCompound(item), StringUtils.capitalize(type.name().toLowerCase(Locale.ROOT)));
+		return getCompound(getMultipliersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
 	public static void removeParentCompounds(NBTCompound compound) {
