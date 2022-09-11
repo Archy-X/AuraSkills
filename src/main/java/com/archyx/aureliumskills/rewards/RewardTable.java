@@ -92,6 +92,21 @@ public class RewardTable {
         }
     }
 
+    public Map<Stat, Double> applyStats(int level) {
+        Map<Stat, Double> statsMap = new HashMap<>();
+        Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
+        for (int i = 2; i <= level; i++) {
+            ImmutableList<StatReward> statRewardList = statRewardMap.get(i);
+            if (statRewardList != null) {
+                for (StatReward statReward : statRewardList) {
+                    double existing = statsMap.getOrDefault(statReward.getStat(), 0.0);
+                    statsMap.put(statReward.getStat(), existing + statReward.getValue());
+                }
+            }
+        }
+        return statsMap;
+    }
+
     public void applyPermissions(Player player, int level) {
         Map<Integer, ImmutableList<PermissionReward>> permissionRewardMap = searchRewards(PermissionReward.class);
         for (Map.Entry<Integer, ImmutableList<PermissionReward>> entry : permissionRewardMap.entrySet()) {

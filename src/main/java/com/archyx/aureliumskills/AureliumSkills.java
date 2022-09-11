@@ -4,10 +4,7 @@ import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.ability.AbilityManager;
 import com.archyx.aureliumskills.api.AureliumAPI;
-import com.archyx.aureliumskills.commands.ManaCommand;
-import com.archyx.aureliumskills.commands.SkillCommands;
-import com.archyx.aureliumskills.commands.SkillsCommand;
-import com.archyx.aureliumskills.commands.StatsCommand;
+import com.archyx.aureliumskills.commands.*;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -518,7 +515,15 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return typeNames;
 		});
-		commandManager.registerCommand(new SkillsCommand(this));
+		commandManager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");
+		commandManager.registerCommand(new SkillsRootCommand(this));
+		commandManager.registerCommand(new ArmorCommand(this));
+		commandManager.registerCommand(new BackupCommand(this));
+		commandManager.registerCommand(new ItemCommand(this));
+		commandManager.registerCommand(new ModifierCommand(this));
+		commandManager.registerCommand(new ProfileCommand(this));
+		commandManager.registerCommand(new SkillCommand(this));
+		commandManager.registerCommand(new XpCommand(this));
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {

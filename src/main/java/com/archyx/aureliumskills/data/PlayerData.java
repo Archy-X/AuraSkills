@@ -72,12 +72,20 @@ public class PlayerData {
         return skillLevels.getOrDefault(skill, 1);
     }
 
+    public Map<Skill, Integer> getSkillLevelMap() {
+        return skillLevels;
+    }
+
     public void setSkillLevel(Skill skill, int level) {
         skillLevels.put(skill, level);
     }
 
     public double getSkillXp(Skill skill) {
         return skillXp.getOrDefault(skill, 0.0);
+    }
+
+    public Map<Skill, Double> getSkillXpMap() {
+        return skillXp;
     }
 
     public void setSkillXp(Skill skill, double xp) {
@@ -306,4 +314,31 @@ public class PlayerData {
     public void removeMultiplier(String name) {
         multipliers.remove(name);
     }
+
+    /**
+     * Checks if the profile has not had any changes since creation
+     * @return True if profile has not been modified, false if player has leveled profile
+     */
+    public boolean isBlankProfile() {
+        for (int level : skillLevels.values()) {
+            if (level > 1) {
+                return false;
+            }
+        }
+        for (double xp : skillXp.values()) {
+            if (xp > 0.0) {
+                return false;
+            }
+        }
+        for (double statLevel : statLevels.values()) {
+            if (statLevel > 0.0) {
+                return false;
+            }
+        }
+        if (statModifiers.size() > 0) {
+            return false;
+        }
+        return true;
+    }
+
 }
