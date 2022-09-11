@@ -10,7 +10,6 @@ import com.archyx.aureliumskills.modifier.Modifiers;
 import com.archyx.aureliumskills.modifier.Multipliers;
 import com.archyx.aureliumskills.modifier.StatModifier;
 import com.archyx.aureliumskills.skills.Skill;
-import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.stats.Stat;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -200,7 +199,7 @@ public class AureliumAPI {
      */
     public static int getTotalLevel(Player player) {
         int totalLevel = 0;
-        for(Skill skill : Skills.values()){
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             totalLevel += getSkillLevel(player, skill);
         }
         return totalLevel;
