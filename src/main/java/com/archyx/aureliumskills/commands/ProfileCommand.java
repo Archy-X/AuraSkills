@@ -5,6 +5,7 @@ import co.aikar.commands.MessageType;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import com.archyx.aureliumskills.AureliumSkills;
@@ -40,6 +41,7 @@ public class ProfileCommand extends BaseCommand {
 
     @Subcommand("skills")
     @CommandPermission("aureliumskills.profile")
+    @CommandCompletion("@players")
     @SuppressWarnings("deprecation")
     public void onSkills(CommandSender sender, String player) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player);
@@ -78,6 +80,7 @@ public class ProfileCommand extends BaseCommand {
 
     @Subcommand("stats")
     @CommandPermission("aureliumskills.profile")
+    @CommandCompletion("@players")
     @SuppressWarnings("deprecation")
     public void onStats(CommandSender sender, String player) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player);

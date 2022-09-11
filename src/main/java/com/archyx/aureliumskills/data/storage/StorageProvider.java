@@ -43,6 +43,7 @@ public abstract class StorageProvider {
         // Set all skills to level 1 for new players
         for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             playerData.setSkillLevel(skill, 1);
+            playerData.setSkillXp(skill, 0.0);
         }
         playerManager.addPlayerData(playerData);
         plugin.getLeveler().updatePermissions(player);
