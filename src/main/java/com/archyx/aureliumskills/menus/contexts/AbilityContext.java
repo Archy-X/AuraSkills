@@ -10,7 +10,7 @@ public class AbilityContext implements ContextProvider<Ability> {
 
     @Override
     @Nullable
-    public Ability parse(String input) {
+    public Ability parse(String menuName, String input) {
         try {
             return Ability.valueOf(input.toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {

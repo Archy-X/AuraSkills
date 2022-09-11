@@ -15,7 +15,7 @@ public class StatContext implements ContextProvider<Stat> {
 
     @Nullable
     @Override
-    public Stat parse(String input) {
+    public Stat parse(String menuName, String input) {
         return plugin.getStatRegistry().getStat(input);
     }
 

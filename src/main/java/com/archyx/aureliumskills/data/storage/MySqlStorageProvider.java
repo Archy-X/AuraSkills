@@ -256,6 +256,7 @@ public class MySqlStorageProvider extends StorageProvider {
                         "ABILITY_DATA varchar(4096), " +
                         "UNCLAIMED_ITEMS varchar(4096), " +
                         "CONSTRAINT PKEY PRIMARY KEY (ID))");
+                plugin.getLogger().info("Created new SkillData table");
             }
         }
     }

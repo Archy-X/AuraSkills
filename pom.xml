@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.3.7</version>
+    <version>Beta1.3.9</version>
     <build>
         <plugins>
             <plugin>
@@ -62,7 +62,7 @@
                     </relocations>
                     <filters>
                         <filter>
-                            <artifact>com.udojava:EvalEx</artifact>
+                            <artifact>*:*</artifact>
                             <excludes>
                                 <exclude>META-INF/versions/9/module-info.class</exclude>
                             </excludes>
@@ -226,14 +226,8 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>Slate</artifactId>
-            <version>f4ca494a55</version>
+            <version>7a9fa2f588</version>
             <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.github.cryptomorin</groupId>
-                    <artifactId>XSeries</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.Archy-X</groupId>

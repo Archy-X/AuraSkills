@@ -40,6 +40,10 @@ public abstract class StorageProvider {
 
     public PlayerData createNewPlayer(Player player) {
         PlayerData playerData = new PlayerData(player, plugin);
+        // Set all skills to level 1 for new players
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+            playerData.setSkillLevel(skill, 1);
+        }
         playerManager.addPlayerData(playerData);
         plugin.getLeveler().updatePermissions(player);
         PlayerDataLoadEvent event = new PlayerDataLoadEvent(playerData);
