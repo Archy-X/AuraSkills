@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.3.8</version>
+    <version>Beta1.3.9</version>
     <build>
         <plugins>
             <plugin>
@@ -226,14 +226,8 @@
         <dependency>
             <groupId>com.github.Archy-X</groupId>
             <artifactId>Slate</artifactId>
-            <version>82959b192a</version>
+            <version>4ed646a318</version>
             <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.github.cryptomorin</groupId>
-                    <artifactId>XSeries</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.Archy-X</groupId>

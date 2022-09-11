@@ -1,3 +1,7 @@
+Version Beta 1.3.9
+  Bug Fixes:
+    - Fix NoSuchMethod MiniMessage error on some server versions
+
 Version Beta 1.3.8
   New Features:
     - Add MiniMessage formatting support to menus
