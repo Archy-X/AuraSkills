@@ -24,7 +24,7 @@ public class XpCommand extends BaseCommand {
         this.plugin = plugin;
     }
 
-    @Subcommand("xp add")
+    @Subcommand("add")
     @CommandCompletion("@players @skills")
     @CommandPermission("aureliumskills.xp.add")
     @Description("Adds skill XP to a player for a certain skill.")
@@ -40,7 +40,7 @@ public class XpCommand extends BaseCommand {
         }
     }
 
-    @Subcommand("xp set")
+    @Subcommand("set")
     @CommandCompletion("@players @skills")
     @CommandPermission("aureliumskills.xp.set")
     @Description("Sets a player's skill XP for a certain skill to an amount.")
@@ -56,7 +56,7 @@ public class XpCommand extends BaseCommand {
         }
     }
 
-    @Subcommand("xp remove")
+    @Subcommand("remove")
     @CommandCompletion("@players @skills")
     @CommandPermission("aureliumskills.xp.remove")
     @Description("Removes skill XP from a player in a certain skill.")

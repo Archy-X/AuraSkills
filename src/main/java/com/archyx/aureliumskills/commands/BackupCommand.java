@@ -28,7 +28,7 @@ public class BackupCommand extends BaseCommand {
         this.plugin = plugin;
     }
 
-    @Subcommand("backup save")
+    @Subcommand("save")
     @CommandPermission("aureliumskills.backup.save")
     public void onBackupSave(CommandSender sender) {
         BackupProvider backupProvider = plugin.getBackupProvider();
@@ -39,7 +39,7 @@ public class BackupCommand extends BaseCommand {
         }
     }
 
-    @Subcommand("backup load")
+    @Subcommand("load")
     @CommandPermission("aureliumskills.backup.load")
     public void onBackupLoad(CommandSender sender, String fileName) {
         StorageProvider storageProvider = plugin.getStorageProvider();

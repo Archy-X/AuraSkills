@@ -23,7 +23,7 @@ public class SkillCommand extends BaseCommand {
         this.plugin = plugin;
     }
 
-    @Subcommand("skill setlevel")
+    @Subcommand("setlevel")
     @CommandCompletion("@players @skills")
     @CommandPermission("aureliumskills.skill.setlevel")
     @Description("Sets a specific skill to a level for a player.")
@@ -55,7 +55,7 @@ public class SkillCommand extends BaseCommand {
         }
     }
 
-    @Subcommand("skill setall")
+    @Subcommand("setall")
     @CommandCompletion("@players")
     @CommandPermission("aureliumskills.skill.setlevel")
     @Description("Sets all of a player's skills to a level.")
@@ -86,7 +86,7 @@ public class SkillCommand extends BaseCommand {
     }
 
 
-    @Subcommand("skill reset")
+    @Subcommand("reset")
     @CommandCompletion("@players @skills")
     @CommandPermission("aureliumskills.skill.reset")
     @Description("Resets all skills or a specific skill to level 1 for a player.")
