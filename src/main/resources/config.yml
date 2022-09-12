@@ -312,6 +312,7 @@ strength:
     bow-damage: true
     display-damage-with-health-scaling: true
     use-percent: true
+    show-effective-value: false
 toughness:
     new-modifier: 0.3
 regeneration:

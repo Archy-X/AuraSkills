@@ -627,6 +627,7 @@ public class AureliumSkills extends JavaPlugin {
 
 	private void registerStats() {
 		statRegistry.register("strength", Stats.STRENGTH);
+		statRegistry.registerProvider(Stats.STRENGTH, new Strength());
 		statRegistry.register("health", Stats.HEALTH);
 		statRegistry.register("regeneration", Stats.REGENERATION);
 		statRegistry.register("luck", Stats.LUCK);

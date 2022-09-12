@@ -183,6 +183,7 @@ public enum Option {
     STRENGTH_BOW_DAMAGE("strength.bow-damage", OptionType.BOOLEAN),
     STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING("strength.display-damage-with-health-scaling", OptionType.BOOLEAN),
     STRENGTH_USE_PERCENT("strength.use-percent", OptionType.BOOLEAN),
+    STRENGTH_SHOW_EFFECTIVE_VALUE("strength.show-effective-value", OptionType.BOOLEAN),
     TOUGHNESS_NEW_MODIFIER("toughness.new-modifier", OptionType.DOUBLE),
     REGENERATION_CUSTOM_REGEN_MECHANICS("regeneration.custom-regen-mechanics", OptionType.BOOLEAN),
     REGENERATION_BASE_REGEN("regeneration.base-regen", OptionType.DOUBLE),
