@@ -20,7 +20,7 @@ items:
       - '{speed}'
   back:
     material: arrow
-    pos: 2,4
+    pos: 3,0
     display_name: '{back}'
     lore:
       - '{back_click}'
@@ -45,13 +45,13 @@ templates:
       pos: 1,7
       material: purple_stained_glass_pane
     crit_chance:
-      pos: 2,1
+      pos: 2,3
       material: light_blue_stained_glass_pane
     crit_damage:
-      pos: 2,2
+      pos: 2,4
       material: cyan_stained_glass_pane
     speed:
-      pos: 2,3
+      pos: 2,5
       material: white_stained_glass_pane
     display_name: '{color}{stat}'
     lore:
