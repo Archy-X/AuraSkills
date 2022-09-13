@@ -194,6 +194,18 @@ public class AureliumAPI {
     }
 
     /**
+     * Gets the total skill level of a player
+     * @return the total skill level of a player, will display number of skills available if player does not have a skills profile
+     */
+    public static int getTotalLevel(Player player) {
+        int totalLevel = 0;
+        for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+            totalLevel += getSkillLevel(player, skill);
+        }
+        return totalLevel;
+    }
+
+    /**
      * Gets the skill xp of a player
      * @param player The player to get from
      * @param skill The skill to get
