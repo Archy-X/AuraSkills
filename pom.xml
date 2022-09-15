@@ -59,6 +59,14 @@
                             <pattern>com.archyx.slate</pattern>
                             <shadedPattern>com.archyx.aureliumskills.slate</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>net.kyori.adventure</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.adventure</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>net.kyori.examination</pattern>
+                            <shadedPattern>com.archyx.aureliumskills.examination</shadedPattern>
+                        </relocation>
                     </relocations>
                     <filters>
                         <filter>
