@@ -100,7 +100,6 @@ import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -134,10 +133,7 @@ public class AureliumSkills extends JavaPlugin {
 	private ManaAbilityManager manaAbilityManager;
 	private RewardManager rewardManager;
 	private boolean holographicDisplaysEnabled = false;
-
-	// DecentHolograms support
 	private boolean decentHologramsEnabled = false;
-
 	private boolean worldGuardEnabled;
 	private boolean placeholderAPIEnabled;
 	private boolean vaultEnabled;

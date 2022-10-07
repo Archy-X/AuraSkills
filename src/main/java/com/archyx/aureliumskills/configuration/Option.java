@@ -16,9 +16,9 @@ public enum Option {
     TRY_DETECT_CLIENT_LANGUAGE("try-detect-client-language", OptionType.BOOLEAN),
     // Hologram Hook
     // Holographic Display hook
-    HOLOGRAPHIC_DISPLAYS_ENABLED("hooks.HolographicDisplays", OptionType.BOOLEAN),
+    HOLOGRAPHIC_DISPLAYS_ENABLED("hooks.HolographicDisplays.enable", OptionType.BOOLEAN),
     //Decent Holograms hook
-    DECENT_HOLOGRAMS_ENABLED("hooks.DecentHolograms", OptionType.BOOLEAN),
+    DECENT_HOLOGRAMS_ENABLED("hooks.DecentHolograms.enable", OptionType.BOOLEAN),
     // Action bar options
     ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),
     ACTION_BAR_IDLE("action-bar.idle", OptionType.BOOLEAN),

@@ -13,17 +13,19 @@ public class HolographicDisplaysSupport {
     public HolographicDisplaysSupport(AureliumSkills plugin) {
         this.plugin = plugin;
     }
+
     void createHologram(Location location, String text) {
-        if (plugin.isHolographicDisplaysEnabled()) {
-            Hologram hologram = HologramsAPI.createHologram(plugin, location);
-            hologram.appendTextLine(text);
-        }
+        if (!plugin.isHolographicDisplaysEnabled()) return;
+        Hologram hologram = HologramsAPI.createHologram(plugin, location);
+        hologram.appendTextLine(text);
+        deleteHologram(hologram);
     }
-    void deleteHologram(Hologram HD) {
+
+    void deleteHologram(Hologram hd) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                HD.delete();
+                hd.delete();
             }
         }.runTaskLater(plugin, 30L);
     }

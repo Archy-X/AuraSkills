@@ -19,8 +19,10 @@ mysql:
     always-load-on-join: false
     ssl: false
 hooks:
-    HolographicDisplays: true
-    DecentHolograms: false
+    HolographicDisplays:
+        enable: true
+    DecentHolograms:
+        enable: false
 default-language: en
 
 try-detect-client-language: true

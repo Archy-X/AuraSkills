@@ -128,26 +128,37 @@ public class HologramSupport implements Listener {
         StringBuilder text = new StringBuilder(ChatColor.GRAY + "");
         for (int i = 0; i < damageText.length(); i++) {
             int j = Math.abs(i - (damageText.length() - 1));
-            if (j == 0) {
-                text.append(ChatColor.GRAY).append(damageText.charAt(i));
-            } else if (j == 1) {
-                text.append(ChatColor.WHITE).append(damageText.charAt(i));
-            } else if (j == 2) {
-                text.append(ChatColor.YELLOW).append(damageText.charAt(i));
-            } else if (j == 3) {
-                text.append(ChatColor.GOLD).append(damageText.charAt(i));
-            } else if (j == 4) {
-                text.append(ChatColor.RED).append(damageText.charAt(i));
-            } else if (j == 5) {
-                text.append(ChatColor.DARK_RED).append(damageText.charAt(i));
-            } else if (j == 6) {
-                text.append(ChatColor.DARK_PURPLE).append(damageText.charAt(i));
-            } else if (j == 7) {
-                text.append(ChatColor.LIGHT_PURPLE).append(damageText.charAt(i));
-            } else if (j == 8) {
-                text.append(ChatColor.BLUE).append(damageText.charAt(i));
-            } else {
-                text.append(ChatColor.DARK_BLUE).append(damageText.charAt(i));
+            switch (j) {
+                case 0:
+                    text.append(ChatColor.GRAY).append(damageText.charAt(i));
+                    break;
+                case 1:
+                    text.append(ChatColor.WHITE).append(damageText.charAt(i));
+                    break;
+                case 2:
+                    text.append(ChatColor.YELLOW).append(damageText.charAt(i));
+                    break;
+                case 3:
+                    text.append(ChatColor.GOLD).append(damageText.charAt(i));
+                    break;
+                case 4:
+                    text.append(ChatColor.RED).append(damageText.charAt(i));
+                    break;
+                case 5:
+                    text.append(ChatColor.DARK_RED).append(damageText.charAt(i));
+                    break;
+                case 6:
+                    text.append(ChatColor.DARK_PURPLE).append(damageText.charAt(i));
+                    break;
+                case 7:
+                    text.append(ChatColor.LIGHT_PURPLE).append(damageText.charAt(i));
+                    break;
+                case 8:
+                    text.append(ChatColor.BLUE).append(damageText.charAt(i));
+                    break;
+                default:
+                    text.append(ChatColor.DARK_BLUE).append(damageText.charAt(i));
+                    break;
             }
         }
         return text.toString();
