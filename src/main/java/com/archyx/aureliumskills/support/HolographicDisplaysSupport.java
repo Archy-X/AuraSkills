@@ -14,14 +14,14 @@ public class HolographicDisplaysSupport {
         this.plugin = plugin;
     }
 
-    void createHologram(Location location, String text) {
+    public void createHologram(Location location, String text) {
         if (!plugin.isHolographicDisplaysEnabled()) return;
         Hologram hologram = HologramsAPI.createHologram(plugin, location);
         hologram.appendTextLine(text);
         deleteHologram(hologram);
     }
 
-    void deleteHologram(Hologram hd) {
+    public void deleteHologram(Hologram hd) {
         new BukkitRunnable() {
             @Override
             public void run() {
