@@ -6,11 +6,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-public class SlimefunSupport implements Listener {
+public class SlimeFunSupport implements Listener {
 
     private final AureliumSkills plugin;
 
-    public SlimefunSupport(AureliumSkills plugin) {
+    public SlimeFunSupport(AureliumSkills plugin) {
         this.plugin = plugin;
     }
 
