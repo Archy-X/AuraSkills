@@ -218,7 +218,7 @@ public class AureliumSkills extends JavaPlugin {
 		// Check for Slimefun
 		slimefunEnabled = Bukkit.getPluginManager().isPluginEnabled("Slimefun");
 		if (slimefunEnabled) {
-			getServer().getPluginManager().registerEvents(new SlimefunSupport(this), this);
+			getServer().getPluginManager().registerEvents(new SlimeFunSupport(this), this);
 			getLogger().info("Slimefun Support Enabled!");
 		}
 		// Load health
