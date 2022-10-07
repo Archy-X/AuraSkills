@@ -25,8 +25,8 @@ public class HologramSupport implements Listener {
     private final Random random = new Random();
     private final NumberFormat numberFormat;
 
-    private DecentHologramsSupport decentHologramsSupport = null;
-    private HolographicDisplaysSupport holographicDisplaysSupport = null;
+    private DecentHologramsSupport decentHologramsSupport;
+    private HolographicDisplaysSupport holographicDisplaysSupport;
 
     public HologramSupport(AureliumSkills plugin) {
         this.plugin = plugin;

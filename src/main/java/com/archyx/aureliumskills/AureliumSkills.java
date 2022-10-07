@@ -4,10 +4,7 @@ import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.ability.AbilityManager;
 import com.archyx.aureliumskills.api.AureliumAPI;
-import com.archyx.aureliumskills.commands.ManaCommand;
-import com.archyx.aureliumskills.commands.SkillCommands;
-import com.archyx.aureliumskills.commands.SkillsCommand;
-import com.archyx.aureliumskills.commands.StatsCommand;
+import com.archyx.aureliumskills.commands.*;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -133,6 +130,7 @@ public class AureliumSkills extends JavaPlugin {
 	private ManaAbilityManager manaAbilityManager;
 	private RewardManager rewardManager;
 	private boolean holographicDisplaysEnabled;
+	private boolean decentHologramsEnabled;
 	private boolean worldGuardEnabled;
 	private boolean placeholderAPIEnabled;
 	private boolean vaultEnabled;
@@ -167,6 +165,7 @@ public class AureliumSkills extends JavaPlugin {
 	private MenuFileManager menuFileManager;
 	private ForgingLeveler forgingLeveler;
 
+	@Override
 	public void onEnable() {
 		// Registries
 		statRegistry = new StatRegistry();
@@ -240,13 +239,22 @@ public class AureliumSkills extends JavaPlugin {
 		bossBar = new SkillBossBar(this);
 		bossBar.loadOptions();
 		// Checks for holographic displays
-		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays") && OptionL.getBoolean(Option.HOLOGRAPHIC_DISPLAYS_ENABLED)) {
+			decentHologramsEnabled = false;
 			holographicDisplaysEnabled = true;
-			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
 			getLogger().info("HolographicDisplays Support Enabled!");
+		}
+		else if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms") && OptionL.getBoolean(Option.DECENT_HOLOGRAMS_ENABLED)) {
+			holographicDisplaysEnabled = false;
+			decentHologramsEnabled = true;
+			getLogger().info("DecentHolograms Support Enabled!");
 		}
 		else {
 			holographicDisplaysEnabled = false;
+			decentHologramsEnabled = false;
+		}
+		if (holographicDisplaysEnabled || decentHologramsEnabled) {
+			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
 		}
 		commandManager = new PaperCommandManager(this);
 		// Load	items
@@ -343,7 +351,8 @@ public class AureliumSkills extends JavaPlugin {
 			nbtAPIEnabled = true;
 		}
 	}
-	
+
+	@Override
 	public void onDisable() {
 		for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
 			storageProvider.save(playerData.getPlayer(), false);
@@ -437,8 +446,8 @@ public class AureliumSkills extends JavaPlugin {
 				saveConfig();
 			}
 		} catch (Exception e) {
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		}
 	}
 
 	private void registerCommands() {
@@ -516,7 +525,15 @@ public class AureliumSkills extends JavaPlugin {
 			}
 			return typeNames;
 		});
-		commandManager.registerCommand(new SkillsCommand(this));
+		commandManager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");
+		commandManager.registerCommand(new SkillsRootCommand(this));
+		commandManager.registerCommand(new ArmorCommand(this));
+		commandManager.registerCommand(new BackupCommand(this));
+		commandManager.registerCommand(new ItemCommand(this));
+		commandManager.registerCommand(new ModifierCommand(this));
+		commandManager.registerCommand(new ProfileCommand(this));
+		commandManager.registerCommand(new SkillCommand(this));
+		commandManager.registerCommand(new XpCommand(this));
 		commandManager.registerCommand(new StatsCommand(this));
 		commandManager.registerCommand(new ManaCommand(this));
 		if (OptionL.getBoolean(Option.ENABLE_SKILL_COMMANDS)) {
@@ -742,6 +759,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isHolographicDisplaysEnabled() {
 		return holographicDisplaysEnabled;
+	}
+
+	public boolean isDecentHologramsEnabled() {
+		return decentHologramsEnabled;
 	}
 
 	public boolean isWorldGuardEnabled() {
