@@ -132,8 +132,7 @@ public class AureliumSkills extends JavaPlugin {
 	private ManaManager manaManager;
 	private ManaAbilityManager manaAbilityManager;
 	private RewardManager rewardManager;
-	private boolean holographicDisplaysEnabled = false;
-	private boolean decentHologramsEnabled = false;
+	private boolean holographicDisplaysEnabled;
 	private boolean worldGuardEnabled;
 	private boolean placeholderAPIEnabled;
 	private boolean vaultEnabled;
@@ -241,16 +240,13 @@ public class AureliumSkills extends JavaPlugin {
 		bossBar = new SkillBossBar(this);
 		bossBar.loadOptions();
 		// Checks for holographic displays
-		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays") && OptionL.getBoolean(Option.HOLOGRAPHIC_DISPLAYS_ENABLED)) {
+		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
 			holographicDisplaysEnabled = true;
+			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
 			getLogger().info("HolographicDisplays Support Enabled!");
 		}
-		if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms") && OptionL.getBoolean(Option.DECENT_HOLOGRAMS_ENABLED)) {
-			decentHologramsEnabled = true;
-			getLogger().info("DecentHolograms Support Enabled!");
-		}
-		if (holographicDisplaysEnabled || decentHologramsEnabled) {
-			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
+		else {
+			holographicDisplaysEnabled = false;
 		}
 		commandManager = new PaperCommandManager(this);
 		// Load	items
@@ -347,7 +343,7 @@ public class AureliumSkills extends JavaPlugin {
 			nbtAPIEnabled = true;
 		}
 	}
-
+	
 	public void onDisable() {
 		for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
 			storageProvider.save(playerData.getPlayer(), false);
@@ -441,8 +437,8 @@ public class AureliumSkills extends JavaPlugin {
 				saveConfig();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
 	}
 
 	private void registerCommands() {
@@ -746,12 +742,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isHolographicDisplaysEnabled() {
 		return holographicDisplaysEnabled;
-	}
-	/*
-	Check if DecentHologram is enabled
-	 */
-	public boolean isDecentHologramsEnabled() {
-		return decentHologramsEnabled;
 	}
 
 	public boolean isWorldGuardEnabled() {

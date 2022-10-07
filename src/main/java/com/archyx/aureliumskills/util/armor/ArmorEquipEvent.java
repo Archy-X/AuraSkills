@@ -56,6 +56,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable{
      *
      * @param cancel If this event should be cancelled.
      */
+    @Override
     public final void setCancelled(final boolean cancel){
         this.cancel = cancel;
     }
@@ -65,6 +66,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable{
      *
      * @return If this event is cancelled
      */
+    @Override
     public final boolean isCancelled(){
         return cancel;
     }

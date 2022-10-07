@@ -7,7 +7,7 @@ import com.archyx.aureliumskills.lang.MenuMessage;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
@@ -22,7 +22,7 @@ public class UnlockedItem extends SkillLevelItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType placeholderType, Integer position) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer position) {
         Locale locale = plugin.getLang().getLocale(player);
         Skill skill = (Skill) activeMenu.getProperty("skill");
         int level = getLevel(activeMenu, position);

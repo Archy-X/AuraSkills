@@ -1,3 +1,17 @@
+Version Beta 1.3.9
+  Bug Fixes:
+    - Fix NoSuchMethod MiniMessage error on some server versions
+
+Version Beta 1.3.8
+  New Features:
+    - Add MiniMessage formatting support to menus
+  Changes:
+    - Arrows created by the Piercing ability can no longer be picked up
+    - Update action bar compatibility for 1.19
+  Bug Fixes:
+    - Fix Sharp Hook logic error
+    - Fix NoSuchMethod error on versions 1.14-1.14.3
+
 Version Beta 1.3.7
   New Features:
     - Add cooldown_ticks option to First Strike ability

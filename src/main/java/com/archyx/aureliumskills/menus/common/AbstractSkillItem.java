@@ -15,6 +15,7 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
@@ -40,7 +41,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderType type, Skill skill) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Skill skill) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
         if (playerData == null) return placeholder;
         Locale locale = playerData.getLocale();
@@ -58,7 +59,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
             case "mana_ability":
                 return getManaAbility(skill, playerData);
             case "level":
-                if (type == PlaceholderType.DISPLAY_NAME) {
+                if (data.getType() == PlaceholderType.DISPLAY_NAME) {
                     return RomanNumber.toRoman(skillLevel);
                 } else {
                     return TextUtil.replace(Lang.getMessage(MenuMessage.LEVEL, locale), "{level}", RomanNumber.toRoman(skillLevel));
@@ -75,15 +76,6 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
                 return Lang.getMessage(MenuMessage.SKILL_CLICK, locale);
         }
         return placeholder;
-    }
-
-    protected int getPage(Skill skill, PlayerData playerData) {
-        int page = (playerData.getSkillLevel(skill) - 2) / 24;
-        int maxLevelPage = (OptionL.getMaxLevel(skill) - 2) / 24;
-        if (page > maxLevelPage) {
-            page = maxLevelPage;
-        }
-        return page;
     }
 
     private String getStatsLeveled(Skill skill, Locale locale) {

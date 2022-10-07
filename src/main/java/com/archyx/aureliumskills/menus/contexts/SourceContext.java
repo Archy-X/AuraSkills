@@ -15,7 +15,7 @@ public class SourceContext implements ContextProvider<Source> {
 
     @Override
     @Nullable
-    public Source parse(String input) {
+    public Source parse(String menuName, String input) {
         return plugin.getSourceRegistry().valueOf(input);
     }
 }

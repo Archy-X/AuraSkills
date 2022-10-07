@@ -10,7 +10,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
-import com.archyx.slate.item.provider.PlaceholderType;
+import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderType type, MAbility mAbility) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderData data, MAbility mAbility) {
         Locale locale = plugin.getLang().getLocale(player);
         Skill skill = (Skill) menu.getProperty("skill");
         switch (placeholder) {
