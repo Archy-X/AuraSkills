@@ -10,9 +10,9 @@ import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.source.SourceManager;
 import com.archyx.aureliumskills.source.SourceTag;
 import com.archyx.aureliumskills.support.WorldGuardFlags;
-import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -101,29 +101,17 @@ public abstract class SkillLeveler {
         return false;
     }
 
-    @SuppressWarnings("deprecation")
     public void checkCustomBlocks(Player player, Block block, Skill skill) {
         // Check custom blocks
-        Map<XMaterial, Double> customBlocks = sourceManager.getCustomBlocks(skill);
+        Map<Material, Double> customBlocks = sourceManager.getCustomBlocks(skill);
         if (customBlocks != null) {
-            for (Map.Entry<XMaterial, Double> entry : customBlocks.entrySet()) {
-                if (XMaterial.isNewVersion()) {
-                    if (entry.getKey().parseMaterial() == block.getType()) {
-                        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
-                            return;
-                        }
-                        plugin.getLeveler().addXp(player, skill, getXp(player, entry.getValue()));
-                        break;
+            for (Map.Entry<Material, Double> entry : customBlocks.entrySet()) {
+                if (entry.getKey() == block.getType()) {
+                    if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
+                        return;
                     }
-                }
-                else {
-                    if (entry.getKey().parseMaterial() == block.getType() && block.getData() == entry.getKey().getData()) {
-                        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
-                            return;
-                        }
-                        plugin.getLeveler().addXp(player, skill, getXp(player, entry.getValue()));
-                        break;
-                    }
+                    plugin.getLeveler().addXp(player, skill, getXp(player, entry.getValue()));
+                    break;
                 }
             }
         }

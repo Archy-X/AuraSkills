@@ -4,7 +4,6 @@ import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.item.ItemUtils;
-import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -27,9 +26,9 @@ public class SourceManager {
     private final AureliumSkills plugin;
     private final Map<Source, Double> sources;
     private final Map<SourceTag, List<Source>> tags;
-    private Map<Skill, Map<XMaterial, Double>> customBlocks;
+    private Map<Skill, Map<Material, Double>> customBlocks;
     private Map<Skill, Map<String, Double>> customMobs;
-    private Set<XMaterial> customBlockSet;
+    private Set<Material> customBlockSet;
     private Set<String> customMobSet;
 
     public SourceManager(AureliumSkills plugin) {
@@ -98,12 +97,11 @@ public class SourceManager {
         for (Skill skill : customBlockSkills) {
             ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase(Locale.ENGLISH) + ".custom");
             if (section != null) {
-                Map<XMaterial, Double> blockMap = new HashMap<>();
+                Map<Material, Double> blockMap = new HashMap<>();
                 for (String key : section.getKeys(false)) {
                     double value = section.getDouble(key);
-                    Optional<XMaterial> optionalMaterial = XMaterial.matchXMaterial(key.toUpperCase());
-                    if (optionalMaterial.isPresent()) {
-                        XMaterial material = optionalMaterial.get();
+                    Material material = Material.getMaterial(key.toUpperCase(Locale.ROOT));
+                    if (material != null) {
                         blockMap.put(material, value);
                         customBlockSet.add(material);
                         sourcesLoaded++;
@@ -176,11 +174,11 @@ public class SourceManager {
         return tags.getOrDefault(tag, new ArrayList<>());
     }
 
-    public Map<XMaterial, Double> getCustomBlocks(Skill skill) {
+    public Map<Material, Double> getCustomBlocks(Skill skill) {
         return customBlocks.get(skill);
     }
 
-    public Set<XMaterial> getCustomBlockSet() {
+    public Set<Material> getCustomBlockSet() {
         return customBlockSet;
     }
 
