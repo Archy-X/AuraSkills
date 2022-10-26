@@ -5,7 +5,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.skills.Skills;
-import com.cryptomorin.xseries.XMaterial;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class LightningBlade extends ReadiedManaAbility {
@@ -36,6 +37,7 @@ public class LightningBlade extends ReadiedManaAbility {
         //If player used sword
         if (!isHoldingMaterial(player)) return;
         if (!(event.getEntity() instanceof LivingEntity)) return;
+        if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) return; // Ignore sweeping attacks
         // Checks if already activated
         if (isActivated(player)) {
             return;
@@ -74,7 +76,7 @@ public class LightningBlade extends ReadiedManaAbility {
         double addedValue = plugin.getManaAbilityManager().getValue(MAbility.LIGHTNING_BLADE, playerData) / 100 * currentValue;
         attribute.addModifier(new AttributeModifier("AureliumSkills-LightningBlade", addedValue, AttributeModifier.Operation.ADD_NUMBER));
         // Play sound and send message
-        if (XMaterial.isNewVersion()) {
+        if (VersionUtils.isAtLeastVersion(13)) {
             player.playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 0.5f, 1);
         } else {
             player.playSound(player.getLocation(), "entity.illusion_illager.prepare_mirror", 0.5f, 1);
