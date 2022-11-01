@@ -611,6 +611,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ExcavationLootHandler(this), this);
 		pm.registerEvents(new MiningLootHandler(this), this);
 		pm.registerEvents(new ForagingLootHandler(this), this);
+		pm.registerEvents(bossBar, this);
 	}
 
 	private boolean setupEconomy() {
