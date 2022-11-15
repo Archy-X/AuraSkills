@@ -76,6 +76,19 @@ public class PlayerData {
         return skillLevels;
     }
 
+    public double getSkillAverage() {
+        int sum = 0;
+        int numEnabled = 0;
+        // Only add enabled skills
+        for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
+            if (OptionL.isEnabled(entry.getKey())) {
+                sum += entry.getValue();
+                numEnabled ++;
+            }
+        }
+        return sum / (double) numEnabled;
+    }
+
     public void setSkillLevel(Skill skill, int level) {
         skillLevels.put(skill, level);
     }

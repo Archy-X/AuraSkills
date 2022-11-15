@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,17 +41,17 @@ public class PlaceholderSupport extends PlaceholderExpansion {
     }
 
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "aureliumskills";
     }
 
     @Override
-    public String getAuthor() {
+    public @NotNull String getAuthor() {
         return plugin.getDescription().getAuthors().toString();
     }
 
     @Override
-    public String getVersion() {
+    public @NotNull String getVersion() {
         return plugin.getDescription().getVersion();
     }
 
@@ -65,6 +66,28 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 return String.valueOf(playerData.getPowerLevel());
+            }
+        }
+
+        // Gets skill average
+        if (identifier.equals("average")) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(playerData.getSkillAverage());
+            }
+        }
+        // Get skill average as integer
+        if (identifier.equals("average_int")) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(Math.round(playerData.getSkillAverage()));
+            }
+        }
+        // Get skill average rounded to 1 decimal
+        if (identifier.equals("average_1")) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return NumberUtil.format1(playerData.getSkillAverage());
             }
         }
 
