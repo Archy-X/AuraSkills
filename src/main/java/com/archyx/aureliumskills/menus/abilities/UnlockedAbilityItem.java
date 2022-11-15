@@ -78,13 +78,19 @@ public class UnlockedAbilityItem extends AbstractAbilityItem {
     private String getUpgradeValue(Ability ability, PlayerData playerData) {
         String currentValue = getCurrentValue(ability, playerData);
         String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability) + 1));
-        return "&7" + currentValue + "&8→" + nextValue + "&7";
+        Locale locale = playerData.getLocale();
+        return TextUtil.replace(Lang.getMessage(MenuMessage.DESC_UPGRADE_VALUE, locale),
+                "{current}", currentValue,
+                "{next}", nextValue);
     }
 
     private String getUpgradeValue2(Ability ability, PlayerData playerData) {
         String currentValue = getCurrentValue2(ability, playerData);
         String nextValue = NumberUtil.format1(plugin.getAbilityManager().getValue2(ability, playerData.getAbilityLevel(ability) + 1));
-        return "&7" + currentValue + "&8→" + nextValue + "&7";
+        Locale locale = playerData.getLocale();
+        return TextUtil.replace(Lang.getMessage(MenuMessage.DESC_UPGRADE_VALUE, locale),
+                "{current}", currentValue,
+                "{next}", nextValue);
     }
 
     private boolean isNotMaxed(PlayerData playerData, Ability ability) {

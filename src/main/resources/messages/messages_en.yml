@@ -666,6 +666,7 @@ menus:
     your_ability_level_maxed: '&fYour Level: &b{level} &6(MAXED)'
     unlocked_desc: '&fNext upgrade at &3{skill} {level}&f\n  &7{desc}'
     unlocked_desc_maxed: '&fDescription:\n  &7{desc}'
+    desc_upgrade_value: '&7{current}&8→{next}&7'
 mana_abilities:
   replenish:
     name: Replenish
@@ -1061,4 +1062,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 27
+file_version: 28
