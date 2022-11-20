@@ -2,10 +2,12 @@ package com.archyx.aureliumskills.skills.fighting;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
+import com.archyx.aureliumskills.api.event.source.EntityXpGainEvent;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skills;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -26,72 +28,79 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event) {
-		if (OptionL.isEnabled(Skills.FIGHTING)) {
-			if (OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) return;
-			LivingEntity e = event.getEntity();
-			if (e.getKiller() != null) {
-				if (e.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-					EntityDamageByEntityEvent ee = (EntityDamageByEntityEvent) e.getLastDamageCause();
-					if (ee.getDamager() instanceof Player) {
-						EntityType type = e.getType();
-						Player p = (Player) ee.getDamager();
-						if (blockXpGainLocation(e.getLocation(), p)) return;
-						if (blockXpGainPlayer(p)) return;
-						if (e.equals(p)) return;
-						double spawnerMultiplier = OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER);
-						try {
-							if (e.hasMetadata("aureliumskills_spawner_mob")) {
-								plugin.getLeveler().addXp(p, Skills.FIGHTING, spawnerMultiplier * getXp(p, FightingSource.valueOf(type.toString())));
-							} else {
-								plugin.getLeveler().addXp(p, Skills.FIGHTING, getXp(p, FightingSource.valueOf(type.toString())));
-							}
-						} catch (IllegalArgumentException exception) {
-							if (type.toString().equals("PIG_ZOMBIE")) {
-								if (e.hasMetadata("aureliumskills_spawner_mob")) {
-									plugin.getLeveler().addXp(p, Skills.FIGHTING, spawnerMultiplier * getXp(p, FightingSource.ZOMBIFIED_PIGLIN));
-								} else {
-									plugin.getLeveler().addXp(p, Skills.FIGHTING, getXp(p, FightingSource.ZOMBIFIED_PIGLIN));
-								}
-							}
-						}
-					}
-				}
-			}
+		if (!OptionL.isEnabled(Skills.FIGHTING)) return;
+		if (OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) return; // Ignore method for damage based
+
+		LivingEntity entity = event.getEntity();
+		if (entity.getKiller() == null) return;
+
+		// Check last damage done on entity was by another entity
+		if (!(entity.getLastDamageCause() instanceof EntityDamageByEntityEvent)) {
+			return;
 		}
+		// Check player killed the entity
+		EntityDamageByEntityEvent entityDamageByEntityEvent = (EntityDamageByEntityEvent) entity.getLastDamageCause();
+		if (!(entityDamageByEntityEvent.getDamager() instanceof Player)) {
+			return;
+		}
+
+		Player player = (Player) entityDamageByEntityEvent.getDamager();
+
+		if (blockXpGainLocation(entity.getLocation(), player)) return;
+		if (blockXpGainPlayer(player)) return;
+		if (entity.equals(player)) return; // Ignore self-inflicted damage
+
+		double xpToAdd = getXpToAdd(player, entity);
+		plugin.getLeveler().addXp(player, Skills.FIGHTING, getAbilityXp(player, xpToAdd)); // Add the XP
 	}
 
+	/**
+	 * Damage based listener
+	 */
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
-		// Damage based listener
-		if (OptionL.isEnabled(Skills.FIGHTING)) {
-			if (event.isCancelled()) return;
-			if (!OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) return;
-			if (event.getDamager() instanceof Player) {
-				Player player = (Player) event.getDamager();
-				if (event.getCause() != DamageCause.ENTITY_ATTACK && event.getCause() != DamageCause.ENTITY_SWEEP_ATTACK) return;
-				if (event.getEntity() instanceof LivingEntity) {
-					LivingEntity entity = (LivingEntity) event.getEntity();
-					if (blockXpGainLocation(entity.getLocation(), player)) return;
-					EntityType type = entity.getType();
-					if (blockXpGainPlayer(player)) return;
-					if (entity.equals(player)) return;
-					double health = entity.getHealth();
-					double damage = Math.min(health, event.getFinalDamage());
-					// Apply spawner multiplier
-					if (entity.hasMetadata("aureliumskills_spawner_mob")) {
-						double spawnerMultiplier = OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER);
-						damage *= spawnerMultiplier;
-					}
-					try {
-						plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getXp(player, FightingSource.valueOf(type.toString())));
-					} catch (IllegalArgumentException e) {
-						if (type.toString().equals("PIG_ZOMBIE")) {
-							plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getXp(player, FightingSource.ZOMBIFIED_PIGLIN));
-						}
-					}
-				}
-			}
+		if (!OptionL.isEnabled(Skills.FIGHTING)) return;
+		if (event.isCancelled()) return;
+		if (!OptionL.getBoolean(Option.FIGHTING_DAMAGE_BASED)) return;
+
+		if (!(event.getDamager() instanceof Player)) {
+			return;
 		}
+
+		Player player = (Player) event.getDamager();
+		if (event.getCause() != DamageCause.ENTITY_ATTACK && event.getCause() != DamageCause.ENTITY_SWEEP_ATTACK) return;
+
+		if (!(event.getEntity() instanceof LivingEntity)) {
+			return;
+		}
+
+		LivingEntity entity = (LivingEntity) event.getEntity();
+		if (blockXpGainLocation(entity.getLocation(), player)) return;
+		if (blockXpGainPlayer(player)) return;
+		if (entity.equals(player)) return;
+
+		double health = entity.getHealth();
+		double damage = Math.min(health, event.getFinalDamage());
+
+		double xpToAdd = getXpToAdd(player, entity);
+		plugin.getLeveler().addXp(player, Skills.FIGHTING, damage * getAbilityXp(player, xpToAdd)); // Add the XP
+	}
+
+	private double getXpToAdd(Player player, LivingEntity entity) {
+		FightingSource source = parseSource(entity.getType());
+
+		// Get the base XP amount for the source after event
+		EntityXpGainEvent entityXpGainEvent = new EntityXpGainEvent(player, Skills.FIGHTING, getSourceXp(source), entity);
+		Bukkit.getPluginManager().callEvent(entityXpGainEvent);
+		double xpToAdd = entityXpGainEvent.getAmount();
+
+		// Modify XP for mobs from a mob spawner
+		double spawnerMultiplier = OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER);
+		if (entity.hasMetadata("aureliumskills_spawner_mob")) {
+			xpToAdd *= spawnerMultiplier;
+		}
+
+		return xpToAdd;
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -105,6 +114,20 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 				}
 			}
 		}
+	}
+
+	private FightingSource parseSource(EntityType entityType) {
+		FightingSource source;
+		try {
+			source = FightingSource.valueOf(entityType.toString());
+		} catch (IllegalArgumentException ignored) {
+			if (entityType.toString().equals("PIG_ZOMBIE")) {
+				source = FightingSource.ZOMBIFIED_PIGLIN;
+			} else {
+				source = FightingSource.COW; // Default backup source, shouldn't be reached
+			}
+		}
+		return source;
 	}
 
 }

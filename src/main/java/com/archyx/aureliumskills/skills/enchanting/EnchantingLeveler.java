@@ -34,16 +34,16 @@ public class EnchantingLeveler extends SkillLeveler implements Listener {
 			Material mat = event.getItem().getType();
 			if (blockXpGainPlayer(p)) return;
 			if (ItemUtils.isArmor(mat)) {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.ARMOR_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getAbilityXp(p, EnchantingSource.ARMOR_PER_LEVEL));
 			}
 			else if (ItemUtils.isWeapon(mat)) {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.WEAPON_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getAbilityXp(p, EnchantingSource.WEAPON_PER_LEVEL));
 			}
 			else if (mat.equals(Material.BOOK)) {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.BOOK_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getAbilityXp(p, EnchantingSource.BOOK_PER_LEVEL));
 			}
 			else {
-				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getXp(p, EnchantingSource.TOOL_PER_LEVEL));
+				plugin.getLeveler().addXp(p, Skills.ENCHANTING, event.getExpLevelCost() * getAbilityXp(p, EnchantingSource.TOOL_PER_LEVEL));
 			}
 		}
 	}

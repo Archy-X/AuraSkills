@@ -74,17 +74,17 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 	private void addAlchemyXp(Player player, Material mat) {
 		Leveler leveler = plugin.getLeveler();
 		if (mat.equals(Material.REDSTONE)) {
-			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.EXTENDED));
+			leveler.addXp(player, Skills.ALCHEMY, getAbilityXp(player, AlchemySource.EXTENDED));
 		} else if (mat.equals(Material.GLOWSTONE_DUST)) {
-			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.UPGRADED));
+			leveler.addXp(player, Skills.ALCHEMY, getAbilityXp(player, AlchemySource.UPGRADED));
 		} else if (mat.equals(XMaterial.NETHER_WART.parseMaterial())) {
-			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.AWKWARD));
+			leveler.addXp(player, Skills.ALCHEMY, getAbilityXp(player, AlchemySource.AWKWARD));
 		} else if (mat.equals(XMaterial.GUNPOWDER.parseMaterial())) {
-			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.SPLASH));
+			leveler.addXp(player, Skills.ALCHEMY, getAbilityXp(player, AlchemySource.SPLASH));
 		} else if (mat.equals(XMaterial.DRAGON_BREATH.parseMaterial())) {
-			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.LINGERING));
+			leveler.addXp(player, Skills.ALCHEMY, getAbilityXp(player, AlchemySource.LINGERING));
 		} else {
-			leveler.addXp(player, Skills.ALCHEMY, getXp(player, AlchemySource.REGULAR));
+			leveler.addXp(player, Skills.ALCHEMY, getAbilityXp(player, AlchemySource.REGULAR));
 		}
 	}
 

@@ -39,7 +39,7 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 					Leveler leveler = plugin.getLeveler();
 					FishingSource source = FishingSource.valueOf(item);
 					if (source != null) {
-						leveler.addXp(player, Skills.FISHING, getXp(player, source));
+						leveler.addXp(player, Skills.FISHING, getAbilityXp(player, source));
 					}
 				}
 			}
