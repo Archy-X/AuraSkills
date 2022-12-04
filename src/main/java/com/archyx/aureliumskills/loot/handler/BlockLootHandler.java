@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.loot.handler;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.Ability;
 import com.archyx.aureliumskills.api.event.LootDropCause;
+import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.skills.Skill;
@@ -44,6 +45,11 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
 
         Block block = event.getBlock();
         if (getSource(block) == null) return;
+
+        // Check block replace
+        if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
+            return;
+        }
 
         Player player = event.getPlayer();
         if (blockAbility(player)) return;
