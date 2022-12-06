@@ -8,7 +8,6 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -87,7 +86,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 	}
 
 	private double getXpToAdd(Player player, LivingEntity entity) {
-		FightingSource source = parseSource(entity.getType());
+		FightingSource source = FightingSource.getSource(entity.getType());
 
 		// Get the base XP amount for the source after event
 		EntityXpGainEvent entityXpGainEvent = new EntityXpGainEvent(player, Skills.FIGHTING, getSourceXp(source), entity);
@@ -114,20 +113,6 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 				}
 			}
 		}
-	}
-
-	private FightingSource parseSource(EntityType entityType) {
-		FightingSource source;
-		try {
-			source = FightingSource.valueOf(entityType.toString());
-		} catch (IllegalArgumentException ignored) {
-			if (entityType.toString().equals("PIG_ZOMBIE")) {
-				source = FightingSource.ZOMBIFIED_PIGLIN;
-			} else {
-				source = FightingSource.COW; // Default backup source, shouldn't be reached
-			}
-		}
-		return source;
 	}
 
 }

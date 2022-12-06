@@ -6,6 +6,7 @@ import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.source.Source;
 import com.archyx.aureliumskills.source.SourceManager;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
@@ -130,4 +131,19 @@ public enum FightingSource implements Source {
     public ItemStack getMenuItem() {
        return SourceManager.getMenuItem(this);
     }
+
+    public static FightingSource getSource(EntityType entityType) {
+        FightingSource source;
+        try {
+            source = FightingSource.valueOf(entityType.toString());
+        } catch (IllegalArgumentException ignored) {
+            if (entityType.toString().equals("PIG_ZOMBIE")) {
+                source = FightingSource.ZOMBIFIED_PIGLIN;
+            } else {
+                source = FightingSource.COW; // Default backup source, shouldn't be reached
+            }
+        }
+        return source;
+    }
+
 }

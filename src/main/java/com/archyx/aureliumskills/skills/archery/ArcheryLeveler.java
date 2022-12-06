@@ -98,22 +98,8 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 		plugin.getLeveler().addXp(player, skill, damage * getAbilityXp(player, xpToAdd));
 	}
 
-	private ArcherySource parseSource(EntityType entityType) {
-		ArcherySource source;
-		try {
-			source = ArcherySource.valueOf(entityType.toString());
-		} catch (IllegalArgumentException ignored) {
-			if (entityType.toString().equals("PIG_ZOMBIE")) {
-				source = ArcherySource.ZOMBIFIED_PIGLIN;
-			} else {
-				source = ArcherySource.COW; // Default backup source, shouldn't be reached
-			}
-		}
-		return source;
-	}
-
 	private double getXpToAdd(Player player, LivingEntity entity) {
-		ArcherySource source = parseSource(entity.getType());
+		ArcherySource source = ArcherySource.getSource(entity.getType());
 
 		// Get the base XP amount for the source after event
 		EntityXpGainEvent entityXpGainEvent = new EntityXpGainEvent(player, Skills.ARCHERY, getSourceXp(source), entity);
