@@ -1,3 +1,13 @@
+Version Beta 1.3.12
+  Changes:
+    - Add support for Minecraft 1.19.3
+    - Update Simplified Chinese, Russian, and Korean messages
+  API Changes:
+    - Add EntityXpGainEvent for modifying XP of Fighting/Archery before multipliers
+  Bug Fixes:
+    - Cancel out block loot if Slimefun block
+    - Prevent re-looting the same blocks over and over
+
 Version Beta 1.3.11
   New Features:
     - Add values list option for XP requirements instead of an equation
