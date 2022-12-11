@@ -14,6 +14,7 @@ import com.archyx.lootmanager.loot.LootPool;
 import com.archyx.lootmanager.loot.LootTable;
 import com.archyx.lootmanager.loot.type.CommandLoot;
 import com.archyx.lootmanager.loot.type.ItemLoot;
+import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -60,6 +61,12 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
 
         if (plugin.isWorldGuardEnabled()) {
             if (plugin.getWorldGuardSupport().blockedByFlag(block.getLocation(), player, WorldGuardFlags.FlagKey.CUSTOM_LOOT)) {
+                return;
+            }
+        }
+
+        if (plugin.isSlimefunEnabled()) {
+            if (BlockStorage.hasBlockInfo(block.getLocation())) {
                 return;
             }
         }
