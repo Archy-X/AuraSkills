@@ -504,11 +504,6 @@ commands:
     list: '&f사용자 &6{player}&f의 경험치 배율: &b{multiplier}x / +{percent}%'
     skill_entry: '&b{skill} &fXP 배율: &b{multiplier}x / +{percent}%'
     players_only: '&e사용자만 본인의 경험치 배율을 확인 할 수 있습니다! 사용자 지정 후 재시도하십시오.'
-  profile:
-    skills: "Aurelium Skills profile for &6{name}:\n&7UUID: &f{uuid}\n&7Skills:{skill_entries}"
-    skill_entry: "\n  &3{skill} &7- Level: &f{level}&7, XP: &f{xp}"
-    stats: "Aurelium Skills stats profile for &6{name}:\n&7UUID: &f{uuid}\n&7Stats:{stat_entries}"
-    stat_entry: "\n  &3{stat} &7- Total Level: &f{total_level}&7, Base Level: &f{base_level}&7, Modified Level: &f{modified_level}"
   rank:
     header: '&b&l스킬 순위'
     power: '&ePower &7(All Skills): &f#{rank} of {total}'
@@ -820,9 +815,6 @@ sources:
     flowering_azalea: 꽃 핀 진달래
     azalea_leaves: 진달래 잎
     flowering_azalea_leaves: 꽃 핀 진달래 잎
-    mangrove_log: Mangrove Log
-    mangrove_leaves: Mangrove Leaves
-    mangrove_roots: Mangrove Roots
   mining:
     stone: 돌
     cobblestone: 조약돌
@@ -871,7 +863,6 @@ sources:
     ice: 얼음
     packed_ice: 꽁꽁 언 얼음
     blue_ice: 푸른얼음
-    reinforced_deepslate: Reinforced Deepslate
   fishing:
     cod: 대구
     salmon: 연어
@@ -894,8 +885,6 @@ sources:
     soul_soil: 영혼 흙
     red_sand: 붉은 모래
     rooted_dirt: 뿌리내린 흙
-    mud: Mud
-    muddy_mangrove_roots: Muddy Mangrove Roots
   mobs:
     player: 플레이어
     bat: 박쥐
@@ -969,10 +958,6 @@ sources:
     axolotl: 아홀로틀
     glow_squid: 발광 오징어
     goat: 염소
-    allay: Allay
-    frog: Frog
-    tadpole: Tadpole
-    warden: Warden
   defense:
     mob_damage: 몬스터에 의한 데미지
     player_damage: 다른 플레이어에게 받은 피해
@@ -997,11 +982,6 @@ sources:
     book_per_level: 책
   sorcery:
     mana_ability_use: 마나 능력 사용
-    sculk: Sculk
-    sculk_vein: Sculk Vein
-    sculk_sensor: Sculk Sensor
-    sculk_catalyst: Sculk Catalyst
-    sculk_shrieker: Sculk Shrieker
   healing:
     drink_regular: 기본 물약
     drink_extended: 연장 물약
