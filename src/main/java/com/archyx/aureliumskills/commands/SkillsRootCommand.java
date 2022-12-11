@@ -19,7 +19,8 @@ import com.archyx.aureliumskills.util.text.TextUtil;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTFile;
-import de.tr7zw.changeme.nbtapi.NBTListCompound;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBTCompoundList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @CommandAlias("%skills_alias")
 public class SkillsRootCommand extends BaseCommand {
@@ -319,60 +321,66 @@ public class SkillsRootCommand extends BaseCommand {
 							NBTFile nbtFile = new NBTFile(playerFile);
 							NBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
 							if (compoundList != null) {
-								boolean save = false;
-								for (NBTListCompound listCompound : compoundList.subList(0, compoundList.size())) {
+								final AtomicBoolean save = new AtomicBoolean(false);
+								for (ReadWriteNBT listCompound : compoundList.subList(0, compoundList.size())) {
 									switch (listCompound.getString("Name")) {
 										case "generic.maxHealth":
 										case "minecraft:generic.max_health": {
-											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											ReadWriteNBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
 											if (modifierList != null) {
-												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+												modifierList.removeIf((modifier) -> {
 													if (modifier.getString("Name").equals("skillsHealth")) {
-														modifierList.remove(modifier);
-														if (modifierList.size() == 0) {
-															listCompound.removeKey("Modifiers");
-														}
-														save = true;
+														save.set(true);
+														return true;
+													} else {
+														return false;
 													}
+												});
+												if (modifierList.size() == 0) {
+													listCompound.removeKey("Modifiers");
 												}
 											}
 											break;
 										}
 										case "generic.luck":
 										case "minecraft:generic.luck": {
-											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											ReadWriteNBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
 											if (modifierList != null) {
-												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+												modifierList.removeIf((modifier) -> {
 													if (modifier.getString("Name").equals("AureliumSkills-Luck")) {
-														modifierList.remove(modifier);
-														if (modifierList.size() == 0) {
-															listCompound.removeKey("Modifiers");
-														}
-														save = true;
+														save.set(true);
+														return true;
+													} else {
+														return false;
 													}
+												});
+												if (modifierList.size() == 0) {
+													listCompound.removeKey("Modifiers");
 												}
 											}
 											break;
 										}
 										case "generic.attackSpeed":
 										case "minecraft:generic.attack_speed": {
-											NBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
+											ReadWriteNBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
 											if (modifierList != null) {
-												for (NBTListCompound modifier : modifierList.subList(0, modifierList.size())) {
+												modifierList.removeIf((modifier) -> {
 													if (modifier.getString("Name").equals("AureliumSkills-LightningBlade")) {
-														modifierList.remove(modifier);
-														if (modifierList.size() == 0) {
-															listCompound.removeKey("Modifiers");
-														}
-														save = true;
+														save.set(true);
+														return true;
+													} else {
+														return false;
 													}
+												});
+												if (modifierList.size() == 0) {
+													listCompound.removeKey("Modifiers");
 												}
 											}
 											break;
 										}
 									}
 								}
-								if (save) {
+								if (save.get()) {
 									nbtFile.save();
 									successful++;
 								}
