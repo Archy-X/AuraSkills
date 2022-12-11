@@ -1,5 +1,5 @@
 # Aurelium Skills Russian (ru) messages
-# Translators: OstriySous-dev, _Mani__TV_
+# Translators: OstriySous-dev, _Mani__TV_, SeeOne, LYNCH2343, AngelicJumper, HELPY4, _Doctor_
 # Contribute here: https://crowdin.com/project/aureliumskills/ru#
 abilities:
   farming:
@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cОшибка: Этого мира не существует.'
     you_must_be_holding_item: '&cОшибка: Вы должны держать предмет в основной руке.'
-    player_is_vanished_confirm: "&eВнимание: &a{vanished} &eисчез. Не разрушайте их прикрытие!\n&eЧтобы подтвердить свое действие, добавьте &a:подтверждение в конце их имени .\n&eEx: {vanished}:confirm"
+    player_is_vanished_confirm: "&eВнимание: &a{vanished} &eисчез. Не разрушайте их прикрытие!\n&eЧтобы подтвердить свое действие, добавьте &a:confirm &eподтверждение в конце их имени.\n&eEx: {vanished}:confirm"
     username_too_short: '&cОшибка: Имя пользователя слишком короткое, должно содержать не менее трех символов..'
     is_not_a_valid_name: '&cОшибка: &e{name} &cне действительное имя пользователя.'
     multiple_players_match: '&cОшибка: Совпадение нескольких игроков &b{search} &e({all})&c, просьба уточнить.'
@@ -370,6 +370,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7Все модификаторы брони были удалены с вашего предмета'
+    multiplier:
+      add:
+        added: '&b{target} &7Модификатор с уровнем &b{value} &7был добавлен к вашему предмету'
+        already_exists: '&eМодификатор брони со статистикой &b{target} &eуже существует на вашей броне! Сначала удалите его с помощью модификатора брони /sk armor multiplier remove'
+        skill_lore: '&7Когда надето: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Когда надето: &b+{value}% {skill} XP'
+        global_lore: '&7Когда надето: &b+{value}% {skill} XP'
+        global_lore_subtract: '&7Когда надето: &b+{value}% {skill} XP'
+      remove:
+        does_not_exist: '&eУ вашего предмета нет &{target}&e требований к броне!'
+        removed: '&{target} &7модификатор был удален из вашего предмета'
+      list:
+        header: '&fНайдены модификаторы предметов:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7Все модификаторы предметов удалены из вашего предмета'
     requirement:
       add:
         added: '&3{skill}&7 Требование брони с уровнем &b{level}&7 было добавлено к вашему предмету'
@@ -415,6 +431,22 @@ commands:
       list:
         header: '&fНайдены модификаторы предметов:'
         entry: '  {color}{stat}&f - {value}'
+      removeall:
+        removed: '&7Все модификаторы предметов удалены из вашего предмета'
+    multiplier:
+      add:
+        added: '&b{target} &7Модификатор с уровнем &b{value} &7был добавлен к вашему предмету'
+        already_exists: '&eМодификатор предмета со статистикой {target} &eуже есть на вашей броне! Сначала удалите его с помощью /sk item modifier remove'
+        skill_lore: '&7Когда надето: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7Когда надето: &b+{value}% {skill} XP'
+        global_lore: '&7Когда надето: &b+{value}% {skill} XP'
+        global_lore_subtract: '&7Когда надето: &b+{value}% {skill} XP'
+      remove:
+        does_not_exist: '&eУ вашего предмета нет &{target}&e требований к броне!'
+        removed: '&{target} &7модификатор был удален из вашего предмета'
+      list:
+        header: '&fНайдены модификаторы предметов:'
+        entry: '  &b{target}&f - {value}'
       removeall:
         removed: '&7Все модификаторы предметов удалены из вашего предмета'
     register:
@@ -468,8 +500,15 @@ commands:
       removed_one_stat: '&7Удалены &b{num} {color}{stat} &7модификаторы от игрока &6{player}'
       players_only: '&eТолько игроки могут удалять свои собственные модификаторы! Попробуйте указать игрока'
   multiplier:
+    global: Общее
     list: '&fМножитель опыта для &6{player}&f: &b{multiplier}x / +{percent}%'
+    skill_entry: '&b множитель{skill} &fX: &b{multiplier}x / +{percent}%'
     players_only: '&eТолько игроки могут указывать свой множитель! Укажите игрока!'
+  profile:
+    skills: "Профиль навыков Aurelium для &6{name}:\n&7UID: &f{uuid}\n&7Навыки:{skill_entries}"
+    skill_entry: "\n  &3{skill} &7- Уровень: &f{level}&7, XP: &f{xp}"
+    stats: "Профиль статистики навыков Aurelium для &6{name}:\n&7UID: &f{uuid}\n&7Статистика:{stat_entries}"
+    stat_entry: "\n  &3{stat} &7- Общий уровень: &f{total_level}&7, Базовый уровень: &f{base_level}&7, Изменённый уровень: &f{modified_level}"
   rank:
     header: '&b&lВаш рейтинг навыков'
     power: '&eМощность &7(Все навыки): &f#{rank} из {total}'
@@ -513,7 +552,7 @@ commands:
     set: '&7Установить &b{skill} &7XP для игрока &7{player} &7на {amount}'
     remove: '&7Удалить &b{amount} {skill} &7XP у игрока &6{player}'
   unknown_skill: '&eНеизвестный навык!'
-  no_profile: '&eУ игрока нет профиля навыков!'
+  no_profile: '&eИгрок не имеет профиля навыков. Пожалуйста, попробуйте переподключиться к игре или перезапустить сервер.'
 leveler:
   title: '&a{skill} Уровень повышен'
   subtitle: '&6{old} ➜ {new}'
@@ -531,10 +570,10 @@ menus:
     level: '&7Уровень: &e{level}'
     progress_to_level: "&7Прогресс до уровня {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6МАКСИМАЛЬНЫЙ УРОВЕНЬ'
-    ability_levels: '&7Уровни способностей:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
+    ability_levels: "\n&7Уровни способностей:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: '\n&7Уровень статистики: {stats}\n '
+    stats_leveled: "\n&7Уровень статистики: {stats}"
     mana_ability: "\n&d&lСпособность к мане &9{mana_ability} {level}\n &7Продолжительность: &a{duration}с &7Стоимость маны: &b{mana_cost} &7Перезарядка: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Ваши навыки
@@ -544,13 +583,16 @@ menus:
     your_skills_click: '&eНажмите на навык, чтобы просмотреть прогресс уровня!'
     skill_click: '&eНажмите, чтобы просмотреть прогресс уровня!'
     skill_locked: '&cУ вас нет разрешения на просмотр этого навыка!'
+    stats: '&bСтатистики'
+    stats_desc: '&7Получайте эффекты статистики повышением уровня навыков'
+    stats_click: '&eНажмите, чтобы узнать больше или просмотреть статистику'
   level_progression_menu:
     level_progression_menu_title: '{skill} Уровни - Страница {page}'
     your_ranking: '&eРейтинг ваших навыков'
     rank_out_of: '&fВы в рейтинге &6{rank}&f из {total} игроков'
     rank_percent: '&fВы в топе &6{percent}%&f игроков'
     back: '&aВернитесь назад'
-    back_click: '&7Вернуться в меню навыков'
+    back_click: '&7Вернуться в меню {menu_name}'
     next_page: '&6Следующая Страница'
     next_page_click: '&eНажмите, чтобы перейти на следующую страницу'
     previous_page: '&6Предыдущая страница'
@@ -570,6 +612,13 @@ menus:
     mana_ability_unlock: "\n&9{mana_ability} &d&lРазблокировка мановой способности\n&7  {desc}\n "
     mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
     progress: "&7Прогресс: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: '&eНажмите, чтобы просмотреть таблицу лидеров {skill}'
+    sources: '&aXP источники'
+    sources_desc: "&7Меню источников показывает все пути как\n&7вы можете заработать XP в умении, а также как много\n&7XP дает каждый источник."
+    sources_click: '&eНажмите, чтобы просмотреть {skill} способностей'
+    abilities: '&cСпособности'
+    abilities_desc: "&bСпособности &7пассивные навыки, которые вы открываете и\n&7Улучшаете по мере повышения навыков.\n&dMana Способности &7являются особой способностью\n&7, которая требует активации и потребления маны."
+    abilities_click: '&eНажмите, чтобы просмотреть {skill} способностей'
   stats_menu:
     stats_menu_title: Ваша статистика
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -591,6 +640,34 @@ menus:
     unclaimed_items_title: 'Получить предметы'
     inventory_full: '&eУ вас недостаточно места в инвентаре, чтобы забрать этот предмет'
     click_to_claim: '&eНажмите, чтобы забрать!'
+  leaderboard:
+    leaderboard_title: '{skill} Таблица лидеров'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7Уровень &f{level}'
+  sources:
+    sources_title: 'Источники опыта {skill} ({current_page}/{total_pages})'
+    sorter: '&bСортировка XP'
+    sort_type: "&7{selected} {type_name}\n"
+    selected: '&f> '
+    descending: 'От наивысшей до низкой'
+    ascending: 'От наименьшего к высшему'
+    alphabetical: 'Название (А - Я)'
+    reverse_alphabetical: 'Имя (Я-А)'
+    sort_click: '&eНажмите, чтобы отсортировать цикл'
+    source_name: '&f{name}'
+    source_xp: '&7XP: &a{xp}'
+    source_xp_rate: '&7XP: &a{xp}/{unit}'
+    multiplied_xp: "\n\n&fумножить XP: &a{xp}"
+    multiplied_xp_rate: "\n\n&fумножить XP: &a{xp}"
+    multiplied_desc: "\n&7Это XP который вы фактически заработаете\n&7&oна на основе ваших текущих множителей XP"
+  abilities:
+    abilities_title: '{skill} Способности'
+    locked_desc: "&fОписание:\n  &7{desc}"
+    unlocked_at: '&7Разблокировано в &3{skill} {level}'
+    your_ability_level: '&fВаш уровень: {level}'
+    your_ability_level_maxed: '&fВаш уровень: &b{level} &6(MAXED)'
+    unlocked_desc: "&fСледующее обновление в &3{skill} {level}&f\n  &7{desc}"
+    unlocked_desc_maxed: "&fОписание:\n  &7{desc}"
 mana_abilities:
   replenish:
     name: Комбайнер
@@ -701,6 +778,256 @@ skills:
   forging:
     name: Ковка
     desc: "&7Объединяйте и применяйте книги на наковальне,\n&7чтобы заработать {xp_unit}"
+sources:
+  farming:
+    wheat: Пшеница
+    potato: Картофель
+    carrot: Морковь
+    beetroot: Свекла
+    nether_wart: Адский нарост
+    pumpkin: Тыква
+    melon: Арбуз
+    sugar_cane: Сахарный тростник
+    bamboo: Бамбук
+    cocoa: Какао
+    cactus: Кактус
+    brown_mushroom: Коричневый гриб
+    red_mushroom: Красный гриб
+    kelp: Ламинария
+    sea_pickle: Морской огурец
+    sweet_berry_bush: Сладкие ягоды
+    glow_berries: Светящиеся ягоды
+  foraging:
+    oak_log: Древесина дуба
+    spruce_log: Еловое бревно
+    birch_log: Берёзовое бревно
+    jungle_log: Бревно тропического дерева
+    acacia_log: Акациевое бревно
+    dark_oak_log: Бревно тёмного дуба
+    oak_leaves: Дубовые Листья
+    spruce_leaves: Листья ели
+    birch_leaves: Листва березы
+    jungle_leaves: Листва тропического дерева
+    acacia_leaves: Листва акации
+    dark_oak_leaves: Листья темного дуба
+    crimson_stem: Багровый стебель
+    warped_stem: Искажённый стебель
+    nether_wart_block: Блок нароста Нижнего мира
+    warped_wart_block: Блок искажённого нароста
+    moss_block: Блок мха
+    moss_carpet: Моховой ковёр
+    azalea: Азалия
+    flowering_azalea: Цветущая азалия
+    azalea_leaves: Листья азалии
+    flowering_azalea_leaves: Листья Цветущей Азалии
+    mangrove_log: Мангровое Бревно
+    mangrove_leaves: Мангровая Листва
+    mangrove_roots: Мангровые Корни
+  mining:
+    stone: Камень
+    cobblestone: Булыжник
+    andesite: Андезит
+    diorite: Диорит
+    granite: Гранит
+    coal_ore: Угольная руда
+    nether_quartz_ore: Незер-кварцевая руда
+    iron_ore: Железная руда
+    lapis_ore: Лазуритовая руда
+    redstone_ore: Редстоуновая руда
+    gold_ore: Золотая руда
+    diamond_ore: Алмазная руда
+    emerald_ore: Изумрудная руда
+    terracotta: Керамика
+    white_terracotta: Белая керамика
+    orange_terracotta: Оранжевая керамика
+    yellow_terracotta: Жёлтая керамика
+    light_gray_terracotta: Светло-серая керамика
+    brown_terracotta: Коричневая керамика
+    red_terracotta: Красная керамика
+    netherrack: Незерак
+    blackstone: Чернит
+    basalt: Базальт
+    magma_block: Магма
+    nether_gold_ore: Незерская золотая руда
+    ancient_debris: Древние обломки
+    end_stone: Эндерняк
+    obsidian: Обсидиан
+    deepslate: Глубинный сланец
+    copper_ore: Медная руда
+    tuff: Туф
+    calcite: Кальцит
+    smooth_basalt: Гладкий базальт
+    amethyst_block: Аметистовый блок
+    amethyst_cluster: Аметистовый кластер
+    deepslate_coal_ore: Угленосный глубинный сланец
+    deepslate_iron_ore: Железоносный глубинный сланец
+    deepslate_copper_ore: Меденосный глубинный сланец
+    deepslate_gold_ore: Золотоносный глубинный сланец
+    deepslate_redstone_ore: Редстоуноносный глубинный сланец
+    deepslate_lapis_ore: Лазуритоносный глубинный сланец
+    deepslate_emerald_ore: Изумрудоносный глубинный сланец
+    deepslate_diamond_ore: Алмазоносный глубинный сланец
+    dripstone_block: Натёчный камень
+    ice: Лёд
+    packed_ice: Плотный лёд
+    blue_ice: Синий лёд
+    reinforced_deepslate: Усиленный Глубинный Сланец
+  fishing:
+    cod: Треска
+    salmon: Лосось
+    tropical_fish: Тропическая рыба
+    pufferfish: Иглобрюх
+    treasure: Сокровища
+    junk: Хлам
+    rare: Редкий дроп
+    epic: Эпический дроп
+  excavation:
+    dirt: Земля
+    grass_block: Дёрн
+    sand: Песок
+    gravel: Гравий
+    mycelium: Мицелий
+    clay: Глина
+    soul_sand: Песок душ
+    coarse_dirt: Каменистая земля
+    podzol: Подзол
+    soul_soil: Почва душ
+    red_sand: Красный песок
+    rooted_dirt: Корнистая земля
+    mud: Грязь
+    muddy_mangrove_roots: Грязные Мангровые Корни
+  mobs:
+    player: Игрок
+    bat: Летучая мышь
+    cat: Кошка
+    chicken: Курица
+    cod: Треска
+    cow: Корова
+    donkey: Осёл
+    fox: Лисица
+    giant: Гигант
+    horse: Лошадь
+    mooshroom: Муухомор
+    mule: Мул
+    ocelot: Оцелот
+    parrot: Попугай
+    pig: Свинья
+    rabbit: Кролик
+    salmon: Лосось
+    sheep: Овца
+    skeleton_horse: Лошадь-скелет
+    snow_golem: Снеговик
+    squid: Спрут
+    strider: Лавомерка
+    tropical_fish: Тропическая рыба
+    turtle: Черепаха
+    villager: Крестьянин
+    wandering_trader: Странствующий торговец
+    bee: Пчела
+    cave_spider: Пещерный паук
+    dolphin: Дельфин
+    enderman: Эндермен
+    iron_golem: Железный голем
+    llama: Лама
+    piglin: Пиглин
+    panda: Панда
+    polar_bear: Белый медведь
+    pufferfish: Иглобрюх
+    spider: Паук
+    wolf: Волк
+    zombified_piglin: Зомбифицированный пиглин
+    blaze: Ифрит
+    creeper: Крипер
+    drowned: Утопленник
+    elder_guardian: Древний страж
+    endermite: Эндермит
+    evoker: Заклинатель
+    ghast: Гаст
+    guardian: Страж
+    hoglin: Хоглин
+    husk: Кадавр
+    illusioner: Иллюзор
+    magma_cube: Магмовый куб
+    phantom: Фантом
+    piglin_brute: Брутальный пиглин
+    pillager: Разбойник
+    ravager: Разоритель
+    shulker: Шалкер
+    silverfish: Чешуйница
+    skeleton: Скелет
+    slime: Слизень
+    stray: Зимогор
+    vex: Вредина
+    vindicator: Поборник
+    witch: Ведьма
+    wither_skeleton: Визер-скелет
+    zoglin: Зоглин
+    zombie: Зомби
+    zombie_villager: Крестьянин-зомби
+    ender_dragon: Эндер-дракон
+    wither: Визер
+    axolotl: Аксолотль
+    glow_squid: Светящийся спрут
+    goat: Коза
+    allay: Эллей
+    frog: Лягушка
+    tadpole: Головастик
+    warden: Варден
+  defense:
+    mob_damage: Урон от мобов
+    player_damage: Урон от игроков
+  endurance:
+    walk_per_meter: Ходьба
+    sprint_per_meter: Бег
+    swim_per_meter: Плавание
+  agility:
+    jump_per_100: Прыжки
+    fall_damage: Урон от падения
+  alchemy:
+    awkward: Мутное зелье
+    regular: Обычное зелье
+    extended: Зелье увеличенной длительности
+    upgraded: Улучшенное зелье
+    splash: Взрывное зелье
+    lingering: Туманное зелье
+  enchanting:
+    weapon_per_level: Оружие
+    armor_per_level: Броня
+    tool_per_level: Инструмент
+    book_per_level: Книга
+  sorcery:
+    mana_ability_use: Использование мановых способностей
+    sculk: Скалк
+    sculk_vein: Скалковая жила
+    sculk_sensor: Скалк-сенсор
+    sculk_catalyst: Скалковый катализатор
+    sculk_shrieker: Скалковый Крикун
+  healing:
+    drink_regular: Выпить обычное зелье
+    drink_extended: Выпить зелье увеличенной длительности
+    drink_upgraded: Выпить улучшенное зелье
+    splash_regular: Взорвать обычное зелье
+    splash_extended: Взорвать зелье увеличенной длительности
+    splash_upgraded: Взорвать улучшенное зелье
+    lingering_regular: Использовать обычное туманное зелье
+    lingering_extended: Использовать туманное зелье увеличенной длительности
+    lingering_upgraded: Использовать улучшенное туманное зелье
+    golden_apple: Золотое яблоко
+    enchanted_golden_apple: Зачарованное золотое яблоко
+  forging:
+    combine_books_per_level: Объединить зачарованные книги
+    combine_weapon_per_level: Объединить оружие с книгой
+    combine_armor_per_level: Объединить броню с книгой
+    combine_tool_per_level: Объединить инструмент с книгой
+    grindstone_per_level: Снять чары с помощью точило
+  units:
+    damage: Урон
+    meter: Метр
+    100_jumps: 100 прыжков
+    mana: Потребляемая мана
+    combine_level: Цена опыта наковальни
+    grindstone_level: Уровень зачарования предмета
+    enchant_level: Уровень полученного зачарования
 stats:
   strength:
     name: Сила
@@ -736,4 +1063,4 @@ units:
   mana: МАНЫ
   hp: ЖИЗНЕЙ
   xp: ОПЫТ
-file_version: 23
+file_version: 27
