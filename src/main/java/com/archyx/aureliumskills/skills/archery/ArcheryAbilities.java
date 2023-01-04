@@ -99,7 +99,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
             newArrow.setShooter(player);
             newArrow.setKnockbackStrength(arrow.getKnockbackStrength());
             newArrow.setFireTicks(arrow.getFireTicks());
-            newArrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
+            newArrow.setPickupStatus(Arrow.PickupStatus.CREATIVE_ONLY);
         }
     }
 
