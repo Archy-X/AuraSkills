@@ -8,6 +8,7 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,12 +18,16 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 public class FightingLeveler extends SkillLeveler implements Listener {
 
+	private final NamespacedKey SPAWNER_MOB_KEY;
+
 	public FightingLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.FIGHTER);
+		SPAWNER_MOB_KEY = new NamespacedKey(plugin, "is_spawner_mob");
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -95,7 +100,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 
 		// Modify XP for mobs from a mob spawner
 		double spawnerMultiplier = OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER);
-		if (entity.hasMetadata("aureliumskills_spawner_mob")) {
+		if (entity.getPersistentDataContainer().has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) {
 			xpToAdd *= spawnerMultiplier;
 		}
 
@@ -109,7 +114,8 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 			if (OptionL.isEnabled(Skills.FIGHTING) || OptionL.isEnabled(Skills.ARCHERY)) {
 				if (OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER) < 1.0 || OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER) < 1.0) {
 					LivingEntity entity = event.getEntity();
-					entity.setMetadata("aureliumskills_spawner_mob", new FixedMetadataValue(plugin, true));
+					PersistentDataContainer data = entity.getPersistentDataContainer();
+					data.set(SPAWNER_MOB_KEY, PersistentDataType.INTEGER, 1);
 				}
 			}
 		}
