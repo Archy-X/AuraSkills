@@ -30,6 +30,7 @@ public enum Option {
     BOSS_BAR_UPDATE_EVERY("boss-bar.update-every", OptionType.INT),
     BOSS_BAR_ROUND_XP("boss-bar.round-xp", OptionType.BOOLEAN),
     BOSS_BAR_DISPLAY_MAXED("boss-bar.display-maxed", OptionType.BOOLEAN),
+    BOSS_BAR_PLACEHOLDER_API("boss-bar.placeholder-api", OptionType.BOOLEAN),
     BOSS_BAR_FORMAT("boss-bar.format", OptionType.LIST),
     BASE_MANA("base-mana", OptionType.DOUBLE),
     ENABLE_ROMAN_NUMERALS("enable-roman-numerals", OptionType.BOOLEAN),

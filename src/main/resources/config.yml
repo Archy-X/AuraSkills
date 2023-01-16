@@ -59,6 +59,7 @@ boss-bar:
     update-every: 1
     round-xp: false
     display-maxed: true
+    placeholder-api: true
     format:
         - 'FARMING GREEN SOLID'
         - 'FORAGING RED SOLID'
