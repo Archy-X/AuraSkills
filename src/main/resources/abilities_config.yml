@@ -604,6 +604,7 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
+    max_blocks: 61
   charged_shot:
     enabled: true
     base_value: 0.5
@@ -645,4 +646,4 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
-file_version: 10
+file_version: 11

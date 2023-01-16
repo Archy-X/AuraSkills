@@ -28,7 +28,7 @@ public enum MAbility implements AbstractAbility {
             new String[] {"display_damage_with_scaling", "enable_sound"}, new Object[] {true, true},
             SharpHook.class),
     TERRAFORM(() -> Skills.EXCAVATION, 5.0, 4.0, 200, -5, 20, 20,
-            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass"}, new Object[] {false, true, true},
+            new String[] {"require_sneak", "check_offhand", "sneak_offhand_bypass", "max_blocks"}, new Object[] {false, true, true, 61},
             Terraform.class),
     CHARGED_SHOT(() -> Skills.ARCHERY, 0.5, 0.3, 0, 0, 5, 5,
             new String[] {"enable_message", "enable_sound"}, new Object[] {true, true},
