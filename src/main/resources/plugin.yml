@@ -202,3 +202,5 @@ permissions:
         default: true
     aureliumskills.profile:
         default: op
+    aureliumskills.transfer:
+        default: op

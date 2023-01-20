@@ -140,6 +140,8 @@ public enum CommandMessage implements MessageKey {
     TOP_AVERAGE_HEADER(Command.TOP, "average_header"),
     TOP_AVERAGE_HEADER_PAGE(Command.TOP, "average_header_page"),
     TOP_AVERAGE_ENTRY(Command.TOP, "average_entry"),
+    TRANSFER_SUCCESS(Command.TRANSFER, "success"),
+    TRANSFER_ERROR(Command.TRANSFER, "error"),
     UPDATELEADERBOARDS_ALREADY_UPDATING(Command.UPDATELEADERBOARDS, "already_updating"),
     UPDATELEADERBOARDS_UPDATED,
     VERSION,
