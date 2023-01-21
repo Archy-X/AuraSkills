@@ -372,6 +372,8 @@ public class PlayerData {
         this.statModifiers.putAll(state.getStatModifiers());
 
         this.mana = state.getMana();
+
+        plugin.getLeveler().updateStats(player);
     }
 
 }

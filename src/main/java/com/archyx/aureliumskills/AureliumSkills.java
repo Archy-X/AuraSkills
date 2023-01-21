@@ -114,6 +114,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class AureliumSkills extends JavaPlugin {
 
@@ -459,6 +460,14 @@ public class AureliumSkills extends JavaPlugin {
 				return skill;
 			} else {
 				throw new InvalidCommandArgument("Skill " + input + " not found!");
+			}
+		});
+		commandManager.getCommandContexts().registerContext(UUID.class, c -> {
+			String input = c.popFirstArg();
+			try {
+				return UUID.fromString(input);
+			} catch (IllegalArgumentException e) {
+				throw new InvalidCommandArgument(input + "is not a valid UUID!");
 			}
 		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
