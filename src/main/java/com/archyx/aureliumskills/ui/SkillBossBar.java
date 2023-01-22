@@ -117,7 +117,7 @@ public class SkillBossBar implements Listener {
         }
         // If player does not have a boss bar in that skill
         if (bossBar == null) {
-            handleNewBossBar(player, skill, currentXp, levelXp, level, maxed);
+            bossBar = handleNewBossBar(player, skill, currentXp, levelXp, level, maxed);
         }
         // Use existing one
         else {
@@ -132,7 +132,7 @@ public class SkillBossBar implements Listener {
         scheduleHide(playerId, skill, bossBar); // Schedule tasks to hide the boss bar
     }
 
-    private void handleNewBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+    private BossBar handleNewBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
         Locale locale = plugin.getLang().getLocale(player);
         BarColor color = getColor(skill);
         BarStyle style = getStyle(skill);
@@ -169,6 +169,7 @@ public class SkillBossBar implements Listener {
         } else {
             bossBars.get(player.getUniqueId()).put(skill, bossBar);
         }
+        return bossBar;
     }
 
     private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
