@@ -247,7 +247,7 @@ public class SkillBossBar implements Listener {
                         if (!mode.equals("single")) {
                             Map<Skill, Integer> multiCurrentActions = currentActions.get(playerId);
                             if (multiCurrentActions != null) {
-                                if (currentAction == multiCurrentActions.get(skill)) {
+                                if (currentAction == multiCurrentActions.getOrDefault(skill, 0)) {
                                     if (bossBar != null) {
                                         bossBar.setVisible(false);
                                     }
