@@ -102,7 +102,7 @@ public class SkillBossBar implements Listener {
         singleBossBars.clear();
     }
 
-    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         UUID playerId = player.getUniqueId();
         if (maxed && !OptionL.getBoolean(Option.BOSS_BAR_DISPLAY_MAXED)) { // display-maxed option
             return;
@@ -117,11 +117,11 @@ public class SkillBossBar implements Listener {
         }
         // If player does not have a boss bar in that skill
         if (bossBar == null) {
-            bossBar = handleNewBossBar(player, skill, currentXp, levelXp, level, maxed);
+            bossBar = handleNewBossBar(player, skill, currentXp, levelXp, xpGained, level, maxed);
         }
         // Use existing one
         else {
-            handleExistingBossBar(bossBar, player, skill, currentXp, levelXp, level, maxed);
+            handleExistingBossBar(bossBar, player, skill, currentXp, levelXp, xpGained, level, maxed);
         }
         // Increment current action
         if (mode.equals("single")) {
@@ -132,28 +132,12 @@ public class SkillBossBar implements Listener {
         scheduleHide(playerId, skill, bossBar); // Schedule tasks to hide the boss bar
     }
 
-    private BossBar handleNewBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+    private BossBar handleNewBossBar(Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         Locale locale = plugin.getLang().getLocale(player);
         BarColor color = getColor(skill);
         BarStyle style = getStyle(skill);
-        String bossBarText;
-        if (!maxed) {
-            String currentXpText;
-            if (OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
-                currentXpText = String.valueOf(Math.round(currentXp));
-            } else {
-                currentXpText = nf.format(currentXp);
-            }
-            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
-                    "{skill}", skill.getDisplayName(locale),
-                    "{level}", RomanNumber.toRoman(level),
-                    "{current_xp}", currentXpText,
-                    "{level_xp}", BigNumber.withSuffix((long) levelXp)));
-        } else {
-            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
-                    "{skill}", skill.getDisplayName(locale),
-                    "{level}", RomanNumber.toRoman(level)));
-        }
+        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, (long) xpGained, level, maxed, locale);
+
         BossBar bossBar = Bukkit.createBossBar(bossBarText, color, style);
         // Calculate xp progress
         double progress = currentXp / levelXp;
@@ -172,27 +156,10 @@ public class SkillBossBar implements Listener {
         return bossBar;
     }
 
-    private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+    private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         Locale locale = plugin.getLang().getLocale(player);
-        String bossBarText;
-        if (!maxed) {
-            String currentXpText;
-            if (OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
-                currentXpText = String.valueOf(Math.round(currentXp));
-            } else {
-                currentXpText = nf.format(currentXp);
-            }
-            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
-                    "{skill}", skill.getDisplayName(locale),
-                    "{level}", RomanNumber.toRoman(level),
-                    "{current_xp}", currentXpText,
-                    "{level_xp}", BigNumber.withSuffix((long) levelXp)));
-        }
-        else {
-            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
-                    "{level}", RomanNumber.toRoman(level),
-                    "{skill}", skill.getDisplayName(locale)));
-        }
+        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, (long) xpGained, level, maxed, locale);
+
         bossBar.setTitle(bossBarText); // Update the boss bar to the new text value
         // Calculate xp progress
         double progress = currentXp / levelXp;
@@ -202,6 +169,37 @@ public class SkillBossBar implements Listener {
             bossBar.setProgress(1.0);
         }
         bossBar.setVisible(true); // Show the boss bar to the player
+    }
+
+    private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, long xpGained, int level, boolean maxed, Locale locale) {
+        String bossBarText;
+        String currentXpText = getCurrentXpText(currentXp);
+        if (!maxed) {
+            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
+                    "{skill}", skill.getDisplayName(locale),
+                    "{level}", RomanNumber.toRoman(level),
+                    "{current_xp}", currentXpText,
+                    "{level_xp}", BigNumber.withSuffix(levelXp),
+                    "{xp_gained}", BigNumber.withSuffix(xpGained)));
+        } else {
+            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
+                    "{skill}", skill.getDisplayName(locale),
+                    "{level}", RomanNumber.toRoman(level),
+                    "{current_xp}", currentXpText,
+                    "{xp_gained}", BigNumber.withSuffix(xpGained)));
+        }
+        return bossBarText;
+    }
+
+    // Get the formatted text for the current player xp depending on rounding option
+    private String getCurrentXpText(double currentXp) {
+        String currentXpText;
+        if (OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
+            currentXpText = String.valueOf(Math.round(currentXp));
+        } else {
+            currentXpText = nf.format(currentXp);
+        }
+        return currentXpText;
     }
 
     public void incrementAction(Player player, Skill skill) {
