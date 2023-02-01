@@ -50,6 +50,7 @@ action-bar:
     update-period: 5
     round-xp: false
     placeholder-api: true
+    use-suffix: true
 
 # Boss Bar Options
 boss-bar:
@@ -60,6 +61,7 @@ boss-bar:
     round-xp: false
     display-maxed: true
     placeholder-api: true
+    use-suffix: true
     format:
         - 'FARMING GREEN SOLID'
         - 'FORAGING RED SOLID'

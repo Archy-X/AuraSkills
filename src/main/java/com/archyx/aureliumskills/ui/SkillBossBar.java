@@ -180,7 +180,7 @@ public class SkillBossBar implements Listener {
                     "{skill}", skill.getDisplayName(locale),
                     "{level}", RomanNumber.toRoman(level),
                     "{current_xp}", currentXpText,
-                    "{level_xp}", BigNumber.withSuffix(levelXp),
+                    "{level_xp}", getLevelXpText(levelXp),
                     "{xp_gained}", NumberUtil.format1(xpGained)));
         } else {
             bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
@@ -190,6 +190,14 @@ public class SkillBossBar implements Listener {
                     "{xp_gained}", NumberUtil.format1(xpGained)));
         }
         return bossBarText;
+    }
+
+    private String getLevelXpText(long levelXp) {
+        if (OptionL.getBoolean(Option.BOSS_BAR_USE_SUFFIX)) {
+            return BigNumber.withSuffix(levelXp);
+        } else {
+            return String.valueOf(levelXp);
+        }
     }
 
     // Get the formatted text for the current player xp depending on rounding option

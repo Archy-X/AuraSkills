@@ -23,6 +23,7 @@ public enum Option {
     ACTION_BAR_UPDATE_PERIOD("action-bar.update-period", OptionType.INT),
     ACTION_BAR_ROUND_XP("action-bar.round-xp", OptionType.BOOLEAN),
     ACTION_BAR_PLACEHOLDER_API("action-bar.placeholder-api", OptionType.BOOLEAN),
+    ACTION_BAR_USE_SUFFIX("action-bar.use-suffix", OptionType.BOOLEAN),
     // Boss bar options
     BOSS_BAR_ENABLED("boss-bar.enabled", OptionType.BOOLEAN),
     BOSS_BAR_MODE("boss-bar.mode", OptionType.STRING),
@@ -31,6 +32,7 @@ public enum Option {
     BOSS_BAR_ROUND_XP("boss-bar.round-xp", OptionType.BOOLEAN),
     BOSS_BAR_DISPLAY_MAXED("boss-bar.display-maxed", OptionType.BOOLEAN),
     BOSS_BAR_PLACEHOLDER_API("boss-bar.placeholder-api", OptionType.BOOLEAN),
+    BOSS_BAR_USE_SUFFIX("boss-bar.use-suffix", OptionType.BOOLEAN),
     BOSS_BAR_FORMAT("boss-bar.format", OptionType.LIST),
     BASE_MANA("base-mana", OptionType.DOUBLE),
     ENABLE_ROMAN_NUMERALS("enable-roman-numerals", OptionType.BOOLEAN),
