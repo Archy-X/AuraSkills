@@ -40,7 +40,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 			return;
 		}
 		Player player = event.getPlayer();
-		if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
+		if (blockXpGainLocation(event.getBlock().getLocation(), player, Skills.FARMING)) return;
 		Block block = event.getBlock();
 		if (blockXpGainPlayer(player)) return;
 
@@ -130,7 +130,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 	}
 
 	protected void handleRightClick(Player player, Block block) {
-		if (blockXpGainLocation(block.getLocation(), player)) return;
+		if (blockXpGainLocation(block.getLocation(), player, Skills.FARMING)) return;
 		if (blockXpGainPlayer(player)) return;
 
 		for (FarmingSource source : FarmingSource.values()) {

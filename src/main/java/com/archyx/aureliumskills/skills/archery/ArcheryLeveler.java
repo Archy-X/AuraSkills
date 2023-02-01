@@ -51,7 +51,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 			}
 		}
 
-		if (blockXpGainLocation(entity.getLocation(), player)) return;
+		if (blockXpGainLocation(entity.getLocation(), player, skill)) return;
 		if (blockXpGainPlayer(player)) return;
 		if (entity.equals(player)) return;
 
@@ -88,7 +88,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 		}
 
 		LivingEntity entity = (LivingEntity) event.getEntity();
-		if (blockXpGainLocation(entity.getLocation(), player)) return;
+		if (blockXpGainLocation(entity.getLocation(), player, skill)) return;
 		if (blockXpGainPlayer(player)) return;
 		if (entity.equals(player)) return;
 		double health = entity.getHealth();

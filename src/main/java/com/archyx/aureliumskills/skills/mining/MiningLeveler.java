@@ -38,7 +38,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 			}
 
 			Player player = event.getPlayer();
-			if (blockXpGainLocation(block.getLocation(), player)) return;
+			if (blockXpGainLocation(block.getLocation(), player, Skills.MINING)) return;
 			if (blockXpGainPlayer(player)) return;
 
 			// Search through sources until a match is found for the block broken

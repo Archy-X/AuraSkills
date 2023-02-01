@@ -30,7 +30,7 @@ public class EnchantingLeveler extends SkillLeveler implements Listener {
 				}
 			}
 			Player p = event.getEnchanter();
-			if (blockXpGainLocation(event.getEnchantBlock().getLocation(), p)) return;
+			if (blockXpGainLocation(event.getEnchantBlock().getLocation(), p, Skills.ENCHANTING)) return;
 			Material mat = event.getItem().getType();
 			if (blockXpGainPlayer(p)) return;
 			if (ItemUtils.isArmor(mat)) {

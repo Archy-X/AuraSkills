@@ -50,7 +50,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 
 		Player player = (Player) entityDamageByEntityEvent.getDamager();
 
-		if (blockXpGainLocation(entity.getLocation(), player)) return;
+		if (blockXpGainLocation(entity.getLocation(), player, Skills.FIGHTING)) return;
 		if (blockXpGainPlayer(player)) return;
 		if (entity.equals(player)) return; // Ignore self-inflicted damage
 
@@ -79,7 +79,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 		}
 
 		LivingEntity entity = (LivingEntity) event.getEntity();
-		if (blockXpGainLocation(entity.getLocation(), player)) return;
+		if (blockXpGainLocation(entity.getLocation(), player, Skills.FIGHTING)) return;
 		if (blockXpGainPlayer(player)) return;
 		if (entity.equals(player)) return;
 

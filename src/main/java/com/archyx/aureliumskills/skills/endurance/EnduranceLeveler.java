@@ -52,7 +52,7 @@ public class EnduranceLeveler extends SkillLeveler implements Listener {
 							player.setMetadata("skillsLastSwimDist", new FixedMetadataValue(plugin, player.getStatistic(Statistic.SWIM_ONE_CM)));
 						}
 						if (xpAmount > 0) {
-							if (blockXpGain(player)) {
+							if (blockXpGain(player, Skills.ENDURANCE)) {
 								return;
 							}
 							if (player.getGameMode() == GameMode.SPECTATOR) { // Disable in spectator mode

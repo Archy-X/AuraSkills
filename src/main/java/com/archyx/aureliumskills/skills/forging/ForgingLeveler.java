@@ -63,9 +63,9 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 						ItemStack addedItem = inventory.getItem(1);
 						ItemStack baseItem = inventory.getItem(0);
 						if (inventory.getLocation() != null) {
-							if (blockXpGainLocation(inventory.getLocation(), player)) return;
+							if (blockXpGainLocation(inventory.getLocation(), player, Skills.FORGING)) return;
 						} else {
-							if (blockXpGainLocation(event.getWhoClicked().getLocation(), player)) return;
+							if (blockXpGainLocation(event.getWhoClicked().getLocation(), player, Skills.FORGING)) return;
 						}
 						if (blockXpGainPlayer(player)) return;
 						Skill s = Skills.FORGING;
@@ -88,9 +88,9 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 				} else if (inventory.getType().toString().equals("GRINDSTONE")) {
 					if (event.getSlotType() != InventoryType.SlotType.RESULT) return;
 					if (inventory.getLocation() != null) {
-						if (blockXpGainLocation(inventory.getLocation(), player)) return;
+						if (blockXpGainLocation(inventory.getLocation(), player, Skills.FORGING)) return;
 					} else {
-						if (blockXpGainLocation(event.getWhoClicked().getLocation(), player)) return;
+						if (blockXpGainLocation(event.getWhoClicked().getLocation(), player, Skills.FORGING)) return;
 					}
 					if (blockXpGainPlayer(player)) return;
 					// Calculate total level
