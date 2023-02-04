@@ -106,6 +106,8 @@ public class PlayerData {
     }
 
     public void addSkillXp(Skill skill, double amount) {
+        if (!OptionL.isEnabled(skill)) return; // Ignore disabled skills
+
         skillXp.merge(skill, amount, Double::sum);
     }
 
