@@ -337,6 +337,10 @@ public class ActionBar implements Listener {
 		}.runTaskLater(plugin, ticks);
 	}
 
+	public boolean getPlayerActionbarEnableStatus(Player player) {
+		return !actionBarDisabled.contains(player.getUniqueId());
+	}
+
 	@EventHandler
 	@SuppressWarnings("deprecation")
 	public void onInteract(PlayerInteractEvent event) {

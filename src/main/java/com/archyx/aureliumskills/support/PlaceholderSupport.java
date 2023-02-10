@@ -1,12 +1,15 @@
 package com.archyx.aureliumskills.support;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.leaderboard.SkillValue;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
+import com.archyx.aureliumskills.ui.ActionBar;
+import com.archyx.aureliumskills.ui.SkillBossBar;
 import com.archyx.aureliumskills.util.math.BigNumber;
 import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
@@ -258,6 +261,15 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             Skill skill = plugin.getSkillRegistry().getSkill(skillName);
             if (skill != null) {
                 return String.valueOf(Math.round((plugin.getLeveler().getMultiplier(player, skill) - 1) * 100));
+            }
+        }
+
+        // Get Actionbar Status
+        if (identifier.startsWith("actionbar_status")) {
+            if (new ActionBar(AureliumAPI.getPlugin()).getPlayerActionbarEnableStatus(player)) {
+                return "Enable";
+            } else {
+                return "Disable";
             }
         }
 
