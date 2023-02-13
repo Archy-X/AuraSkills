@@ -39,6 +39,7 @@ languages:
     - it
     - ko
     - cs
+    - nl
 
 # Action Bar Options
 action-bar:
