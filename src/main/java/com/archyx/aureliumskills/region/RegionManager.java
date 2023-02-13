@@ -102,11 +102,11 @@ public class RegionManager {
     public void loadRegion(Region region) {
         if (region.isLoading()) return;
         region.setLoading(true);
-        RegionCoordinate regionCoordinate = new RegionCoordinate(region.getWorld(), region.getX(), region.getZ());
-        World world = regionCoordinate.getWorld();
+        RegionCoordinate regionCoordinate = new RegionCoordinate(region.getWorldName(), region.getX(), region.getZ());
+        String worldName = regionCoordinate.getWorldName();
         int regionX = regionCoordinate.getX();
         int regionZ = regionCoordinate.getZ();
-        File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
+        File file = new File(plugin.getDataFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
         if (file.exists()) {
             if (saving) {
                 region.setReload(true);
@@ -154,13 +154,13 @@ public class RegionManager {
         region.setChunkData(chunkCoordinate, chunkData);
     }
 
-    private void saveRegion(World world, int regionX, int regionZ) throws IOException {
-        RegionCoordinate regionCoordinate = new RegionCoordinate(world, regionX, regionZ);
+    private void saveRegion(String worldName, int regionX, int regionZ) throws IOException {
+        RegionCoordinate regionCoordinate = new RegionCoordinate(worldName, regionX, regionZ);
         Region region = getRegion(regionCoordinate);
         if (region == null) return;
         if (region.getChunkMap().size() == 0) return;
 
-        File file = new File(plugin.getDataFolder() + "/regiondata/" + world.getName() + "/r." + regionX + "." + regionZ + ".asrg");
+        File file = new File(plugin.getDataFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
         try {
             NBTFile nbtFile = new NBTFile(file);
 
@@ -211,11 +211,11 @@ public class RegionManager {
         saving = true;
         for (Region region : regions.values()) {
             try {
-                saveRegion(region.getWorld(), region.getX(), region.getZ());
+                saveRegion(region.getWorldName(), region.getX(), region.getZ());
                 // Clear region from memory if no chunks are loaded in it
                 if (clearUnused) {
                     if (isRegionUnused(region)) {
-                        regions.remove(new RegionCoordinate(region.getWorld(), region.getX(), region.getZ()));
+                        regions.remove(new RegionCoordinate(region.getWorldName(), region.getX(), region.getZ()));
                     }
                 }
             } catch (Exception e) {
@@ -232,7 +232,7 @@ public class RegionManager {
     private boolean isRegionUnused(Region region) {
         for (int chunkX = region.getX() * 32; chunkX < region.getX() * 32 + 32; chunkX++) {
             for (int chunkZ = region.getZ() * 32; chunkZ < region.getZ() * 32 + 32; chunkZ++) {
-                if (region.getWorld().isChunkLoaded(chunkX, chunkZ)) {
+                if (region.getWorld() == null || region.getWorld().isChunkLoaded(chunkX, chunkZ)) {
                     return false;
                 }
             }

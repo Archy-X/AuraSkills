@@ -5,18 +5,24 @@ import org.bukkit.World;
 
 public class RegionCoordinate {
 
-    private final World world;
+    private final String worldName;
     private final int x;
     private final int z;
 
     public RegionCoordinate(World world, int x, int z) {
-        this.world = world;
+        this.worldName = world.getName();
         this.x = x;
         this.z = z;
     }
 
-    public World getWorld() {
-        return world;
+    public RegionCoordinate(String worldName, int x, int z) {
+        this.worldName = worldName;
+        this.x = x;
+        this.z = z;
+    }
+
+    public String getWorldName() {
+        return worldName;
     }
 
     public int getX() {
@@ -37,18 +43,18 @@ public class RegionCoordinate {
             return false;
         } else {
             RegionCoordinate other = (RegionCoordinate) obj;
-            return this.x == other.x && this.z == other.z && this.world == other.world;
+            return this.x == other.x && this.z == other.z && this.worldName.equals(other.worldName);
         }
     }
 
     @Override
     public String toString() {
-        return world.getName() + ", " + x + ", " + z;
+        return worldName + ", " + x + ", " + z;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(world.getName(), x, z);
+        return Objects.hashCode(worldName, x, z);
     }
 
 }
