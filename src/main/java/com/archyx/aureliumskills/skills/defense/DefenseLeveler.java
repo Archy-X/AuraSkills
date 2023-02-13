@@ -34,7 +34,7 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 			if (event.getEntity() instanceof Player) {
 				if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
 					Player player = (Player) event.getEntity();
-					if (blockXpGain(player)) return;
+					if (blockXpGain(player, Skills.DEFENSE)) return;
 					if (!OptionL.getBoolean(Option.DEFENSE_ALLOW_SHIELD_BLOCKING)) { // Check for shield blocking
 						if (player.isBlocking()) {
 							return;
@@ -46,12 +46,12 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 						//Player Damage
 						if (event.getDamager() instanceof Player) {
 							if (event.getDamager().equals(player)) return;
-							if (originalDamage * getXp(DefenseSource.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
-								if (originalDamage * getXp(DefenseSource.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									plugin.getLeveler().addXp(player, skill, originalDamage * getXp(player, DefenseSource.PLAYER_DAMAGE));
+							if (originalDamage * getSourceXp(DefenseSource.PLAYER_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (originalDamage * getSourceXp(DefenseSource.PLAYER_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
+									plugin.getLeveler().addXp(player, skill, originalDamage * getAbilityXp(player, DefenseSource.PLAYER_DAMAGE));
 								}
 							} else {
-								plugin.getLeveler().addXp(player, skill, getXp(player, OptionL.getDouble(Option.DEFENSE_MAX)));
+								plugin.getLeveler().addXp(player, skill, getAbilityXp(player, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 						//Mob damage
@@ -63,12 +63,12 @@ public class DefenseLeveler extends SkillLeveler implements Listener {
 									if (projectile.getShooter().equals(player)) return;
 								}
 							}
-							if (originalDamage * getXp(DefenseSource.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
-								if (originalDamage * getXp(DefenseSource.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
-									plugin.getLeveler().addXp(player, skill, originalDamage * getXp(player, DefenseSource.MOB_DAMAGE));
+							if (originalDamage * getSourceXp(DefenseSource.MOB_DAMAGE) <= OptionL.getDouble(Option.DEFENSE_MAX)) {
+								if (originalDamage * getSourceXp(DefenseSource.MOB_DAMAGE) >= OptionL.getDouble(Option.DEFENSE_MIN)) {
+									plugin.getLeveler().addXp(player, skill, originalDamage * getAbilityXp(player, DefenseSource.MOB_DAMAGE));
 								}
 							} else {
-								plugin.getLeveler().addXp(player, skill, getXp(player, OptionL.getDouble(Option.DEFENSE_MAX)));
+								plugin.getLeveler().addXp(player, skill, getAbilityXp(player, OptionL.getDouble(Option.DEFENSE_MAX)));
 							}
 						}
 					}

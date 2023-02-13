@@ -19,7 +19,7 @@ public class SorceryLeveler extends SkillLeveler implements Listener {
     }
 
     public void level(Player player, double manaUsed) {
-        plugin.getLeveler().addXp(player, Skills.SORCERY, manaUsed * getXp(player, SorcerySource.MANA_ABILITY_USE));
+        plugin.getLeveler().addXp(player, Skills.SORCERY, manaUsed * getAbilityXp(player, SorcerySource.MANA_ABILITY_USE));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -38,7 +38,7 @@ public class SorceryLeveler extends SkillLeveler implements Listener {
         }
 
         Player player = event.getPlayer();
-        if (blockXpGainLocation(block.getLocation(), player)) return;
+        if (blockXpGainLocation(block.getLocation(), player, Skills.SORCERY)) return;
         if (blockXpGainPlayer(player)) return;
 
         // Search through sources until a match is found for the block broken
@@ -46,7 +46,7 @@ public class SorceryLeveler extends SkillLeveler implements Listener {
             // Add XP to player if matched
             if (!source.isMatch(block)) continue;
             // Check silk touch
-            plugin.getLeveler().addXp(player, Skills.SORCERY, getXp(player, source));
+            plugin.getLeveler().addXp(player, Skills.SORCERY, getAbilityXp(player, source));
             break; // Stop searching if matched
         }
     }

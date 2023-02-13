@@ -33,13 +33,13 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 			}
 			if (event.getState().equals(State.CAUGHT_FISH)) {
 				Player player = event.getPlayer();
-				if (blockXpGain(player)) return;
+				if (blockXpGain(player, Skills.FISHING)) return;
 				if (event.getCaught() instanceof Item) {
 					ItemStack item = ((Item) event.getCaught()).getItemStack();
 					Leveler leveler = plugin.getLeveler();
 					FishingSource source = FishingSource.valueOf(item);
 					if (source != null) {
-						leveler.addXp(player, Skills.FISHING, getXp(player, source));
+						leveler.addXp(player, Skills.FISHING, getAbilityXp(player, source));
 					}
 				}
 			}

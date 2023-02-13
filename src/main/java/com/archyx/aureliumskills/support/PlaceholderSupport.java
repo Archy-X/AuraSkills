@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,22 +41,27 @@ public class PlaceholderSupport extends PlaceholderExpansion {
     }
 
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "aureliumskills";
     }
 
     @Override
-    public String getAuthor() {
+    public @NotNull String getAuthor() {
         return plugin.getDescription().getAuthors().toString();
     }
 
     @Override
-    public String getVersion() {
+    public @NotNull String getVersion() {
         return plugin.getDescription().getVersion();
     }
 
     @Override
     public String onPlaceholderRequest(Player player, String identifier) {
+        // Check placeholders that don't need a player first
+        if (identifier.startsWith("lb_")) {
+            return checkLeaderboardPlaceholders(identifier);
+        }
+
         if (player == null) {
             return "";
         }
@@ -65,6 +71,28 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData != null) {
                 return String.valueOf(playerData.getPowerLevel());
+            }
+        }
+
+        // Gets skill average
+        if (identifier.equals("average")) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(playerData.getSkillAverage());
+            }
+        }
+        // Get skill average as integer
+        if (identifier.equals("average_int")) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return String.valueOf(Math.round(playerData.getSkillAverage()));
+            }
+        }
+        // Get skill average rounded to 1 decimal
+        if (identifier.equals("average_1")) {
+            PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+            if (playerData != null) {
+                return NumberUtil.format1(playerData.getSkillAverage());
             }
         }
 
@@ -168,88 +196,6 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
         }
 
-        if (identifier.startsWith("lb_")) {
-            String leaderboardType = TextUtil.replace(identifier, "lb_", "");
-            if (leaderboardType.startsWith("power_")) {
-                int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", ""));
-                if (place > 0) {
-                    List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(place, 1);
-                    if (list.size() > 0) {
-                        SkillValue skillValue = list.get(0);
-                        String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-                        return (name != null ? name : "?") + " - " + skillValue.getLevel();
-                    }
-                    else return "";
-                }
-                else {
-                    if (identifier.endsWith("name")) {
-                        int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", "", "_name", ""));
-                        if (namePlace > 0) {
-                            List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(namePlace, 1);
-                            if (list.size() > 0) {
-                                SkillValue skillValue = list.get(0);
-                                String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-                                return name != null ? name : "?";
-                            }
-                            else return "";
-                        }
-                    }
-                    else if (identifier.endsWith("value")) {
-                        int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", "", "_value", ""));
-                        if (valuePlace > 0) {
-                            List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(valuePlace, 1);
-                            if (list.size() > 0) {
-                                SkillValue playerSkill = list.get(0);
-                                return String.valueOf(playerSkill.getLevel());
-                            }
-                            else return "";
-                        }
-                    }
-                }
-            }
-            else {
-                for (Skill skill : plugin.getSkillRegistry().getSkills()) {
-                    if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
-                        int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
-                        if (place > 0) {
-                            List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 1);
-                            if (list.size() > 0) {
-                                SkillValue skillValue = list.get(0);
-                                String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-                                return (name != null ? name : "?") + " - " + skillValue.getLevel();
-                            }
-                            else return "";
-                        }
-                        else {
-                            if (identifier.endsWith("name")) {
-                                int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
-                                if (namePlace > 0) {
-                                    List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, namePlace, 1);
-                                    if (list.size() > 0) {
-                                        SkillValue skillValue = list.get(0);
-                                        String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
-                                        return name != null ? name : "?";
-                                    }
-                                    else return "";
-                                }
-                            }
-                            else if (identifier.endsWith("value")) {
-                                int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
-                                if (valuePlace > 0) {
-                                    List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, valuePlace, 1);
-                                    if (list.size() > 0) {
-                                        SkillValue skillValue = list.get(0);
-                                        return String.valueOf(skillValue.getLevel());
-                                    }
-                                    else return "";
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         if (identifier.equals("rank")) {
             return String.valueOf(plugin.getLeaderboardManager().getPowerRank(player.getUniqueId()));
         }
@@ -317,5 +263,78 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         return null;
     }
+
+    private String checkLeaderboardPlaceholders(String identifier) {
+        String leaderboardType = TextUtil.replace(identifier, "lb_", "");
+        if (leaderboardType.startsWith("power_")) {
+            int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", ""));
+            if (place > 0) {
+                List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(place, 1);
+                if (list.size() > 0) {
+                    SkillValue skillValue = list.get(0);
+                    String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                    return (name != null ? name : "?") + " - " + skillValue.getLevel();
+                } else return "";
+            } else {
+                if (identifier.endsWith("name")) {
+                    int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", "", "_name", ""));
+                    if (namePlace > 0) {
+                        List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(namePlace, 1);
+                        if (list.size() > 0) {
+                            SkillValue skillValue = list.get(0);
+                            String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                            return name != null ? name : "?";
+                        } else return "";
+                    }
+                } else if (identifier.endsWith("value")) {
+                    int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, "power_", "", "_value", ""));
+                    if (valuePlace > 0) {
+                        List<SkillValue> list = plugin.getLeaderboardManager().getPowerLeaderboard(valuePlace, 1);
+                        if (list.size() > 0) {
+                            SkillValue playerSkill = list.get(0);
+                            return String.valueOf(playerSkill.getLevel());
+                        } else return "";
+                    }
+                }
+            }
+        } else {
+            for (Skill skill : plugin.getSkillRegistry().getSkills()) {
+                if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
+                    int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
+                    if (place > 0) {
+                        List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 1);
+                        if (list.size() > 0) {
+                            SkillValue skillValue = list.get(0);
+                            String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                            return (name != null ? name : "?") + " - " + skillValue.getLevel();
+                        } else return "";
+                    } else {
+                        if (identifier.endsWith("name")) {
+                            int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
+                            if (namePlace > 0) {
+                                List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, namePlace, 1);
+                                if (list.size() > 0) {
+                                    SkillValue skillValue = list.get(0);
+                                    String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
+                                    return name != null ? name : "?";
+                                } else return "";
+                            }
+                        } else if (identifier.endsWith("value")) {
+                            int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
+                            if (valuePlace > 0) {
+                                List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, valuePlace, 1);
+                                if (list.size() > 0) {
+                                    SkillValue skillValue = list.get(0);
+                                    return String.valueOf(skillValue.getLevel());
+                                } else return "";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
 
 }

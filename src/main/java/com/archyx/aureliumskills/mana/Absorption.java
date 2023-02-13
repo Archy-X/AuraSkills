@@ -2,12 +2,14 @@ package com.archyx.aureliumskills.mana;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.particles.ParticleDisplay;
 import com.cryptomorin.xseries.particles.XParticle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -34,6 +36,16 @@ public class Absorption extends ReadiedManaAbility {
     @Override
     public void onStop(Player player, PlayerData playerData) {
         playerData.getAbilityData(MAbility.ABSORPTION).setData("activated", false);
+    }
+
+    @EventHandler
+    public void onPlayerLoad(PlayerDataLoadEvent event) {
+        PlayerData playerData = event.getPlayerData();
+        Player player = playerData.getPlayer();
+        // Remove the activated ability data if the player logged out when the ability was active
+        if (!isActivated(player)) {
+            playerData.getAbilityData(MAbility.ABSORPTION).setData("activated", false);
+        }
     }
 
     public void handleAbsorption(EntityDamageByEntityEvent event, Player player, PlayerData playerData) {

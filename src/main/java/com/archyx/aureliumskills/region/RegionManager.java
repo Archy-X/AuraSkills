@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.region;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import de.tr7zw.changeme.nbtapi.*;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
@@ -144,7 +145,7 @@ public class RegionManager {
             chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
         }
         NBTCompoundList placedBlocks = compound.getCompoundList("placed_blocks");
-        for (NBTListCompound block : placedBlocks) {
+        for (ReadWriteNBT block : placedBlocks) {
             int x = block.getInteger("x");
             int y = block.getInteger("y");
             int z = block.getInteger("z");

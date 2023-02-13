@@ -64,7 +64,7 @@ public class XpRequirements {
         // Load optional section for each skill
         for (Skill skill : plugin.getSkillRegistry().getSkills()) {
             skillXpRequirements.remove(skill); // Remove to account for deleted section
-            loadSkillSection(file, config, skill);
+            loadSkillSection(config, skill);
         }
     }
 
@@ -83,30 +83,54 @@ public class XpRequirements {
                     e.printStackTrace();
                 }
             }
-            Expression expression = getXpExpression(section);
-            // Add xp requirement for each level
             defaultXpRequirements.clear();
-            int highestMaxLevel = plugin.getOptionLoader().getHighestMaxLevel();
-            for (int i = 0; i < highestMaxLevel; i++) {
-                expression.setVariable("level", BigDecimal.valueOf(i + 2));
-                defaultXpRequirements.add((int) Math.round(expression.eval().doubleValue()));
+            if (section.contains("values")) { // Values list based
+                List<String> values = section.getStringList("values");
+                int highestMaxLevel = plugin.getOptionLoader().getHighestMaxLevel();
+                for (int i = 0; i < highestMaxLevel; i++) {
+                    if (i < values.size()) {
+                        defaultXpRequirements.add(Integer.parseInt(values.get(i)));
+                    } else {
+                        defaultXpRequirements.add(Integer.parseInt(values.get(values.size() - 1))); // Use the last defined value for the rest of the levels
+                    }
+                }
+            } else { // Expression based
+                Expression expression = getXpExpression(section);
+                // Add xp requirement for each level
+                int highestMaxLevel = plugin.getOptionLoader().getHighestMaxLevel();
+                for (int i = 0; i < highestMaxLevel; i++) {
+                    expression.setVariable("level", BigDecimal.valueOf(i + 2));
+                    defaultXpRequirements.add((int) Math.round(expression.eval().doubleValue()));
+                }
             }
         } else {
             addDefaultXpRequirements();
         }
     }
 
-    private void loadSkillSection(File file, FileConfiguration config, Skill skill) {
+    private void loadSkillSection(FileConfiguration config, Skill skill) {
         ConfigurationSection section = config.getConfigurationSection("skills." + skill.toString().toLowerCase(Locale.ROOT));
         if (section == null) return;
 
-        Expression expression = getXpExpression(section);
         int maxLevel = OptionL.getMaxLevel(skill);
-        // Add evaluated expression for each level to list
         List<Integer> xpRequirements = new ArrayList<>();
-        for (int i = 0; i < maxLevel; i++) {
-            expression.setVariable("level", BigDecimal.valueOf(i + 2));
-            xpRequirements.add((int) Math.round(expression.eval().doubleValue()));
+
+        if (section.contains("values")) { // Values list based
+            List<String> values = section.getStringList("values");
+            for (int i = 0; i < maxLevel; i++) {
+                if (i < values.size()) {
+                    xpRequirements.add(Integer.parseInt(values.get(i)));
+                } else {
+                    xpRequirements.add(Integer.parseInt(values.get(values.size() - 1))); // Use the last defined value for the rest of the levels
+                }
+            }
+        } else { // Expression based
+            Expression expression = getXpExpression(section);
+            // Add evaluated expression for each level to list
+            for (int i = 0; i < maxLevel; i++) {
+                expression.setVariable("level", BigDecimal.valueOf(i + 2));
+                xpRequirements.add((int) Math.round(expression.eval().doubleValue()));
+            }
         }
         skillXpRequirements.put(skill, xpRequirements);
     }

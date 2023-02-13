@@ -63,9 +63,9 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 						ItemStack addedItem = inventory.getItem(1);
 						ItemStack baseItem = inventory.getItem(0);
 						if (inventory.getLocation() != null) {
-							if (blockXpGainLocation(inventory.getLocation(), player)) return;
+							if (blockXpGainLocation(inventory.getLocation(), player, Skills.FORGING)) return;
 						} else {
-							if (blockXpGainLocation(event.getWhoClicked().getLocation(), player)) return;
+							if (blockXpGainLocation(event.getWhoClicked().getLocation(), player, Skills.FORGING)) return;
 						}
 						if (blockXpGainPlayer(player)) return;
 						Skill s = Skills.FORGING;
@@ -73,13 +73,13 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 						if (addedItem != null && baseItem != null) {
 							if (addedItem.getType().equals(Material.ENCHANTED_BOOK)) {
 								if (ItemUtils.isArmor(baseItem.getType())) {
-									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(player, ForgingSource.COMBINE_ARMOR_PER_LEVEL));
+									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getAbilityXp(player, ForgingSource.COMBINE_ARMOR_PER_LEVEL));
 								} else if (ItemUtils.isWeapon(baseItem.getType())) {
-									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(player, ForgingSource.COMBINE_WEAPON_PER_LEVEL));
+									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getAbilityXp(player, ForgingSource.COMBINE_WEAPON_PER_LEVEL));
 								} else if (baseItem.getType().equals(Material.ENCHANTED_BOOK)) {
-									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(player, ForgingSource.COMBINE_BOOKS_PER_LEVEL));
+									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getAbilityXp(player, ForgingSource.COMBINE_BOOKS_PER_LEVEL));
 								} else {
-									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getXp(player, ForgingSource.COMBINE_TOOL_PER_LEVEL));
+									plugin.getLeveler().addXp(player, s, anvil.getRepairCost() * getAbilityXp(player, ForgingSource.COMBINE_TOOL_PER_LEVEL));
 								}
 							}
 						}
@@ -88,9 +88,9 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 				} else if (inventory.getType().toString().equals("GRINDSTONE")) {
 					if (event.getSlotType() != InventoryType.SlotType.RESULT) return;
 					if (inventory.getLocation() != null) {
-						if (blockXpGainLocation(inventory.getLocation(), player)) return;
+						if (blockXpGainLocation(inventory.getLocation(), player, Skills.FORGING)) return;
 					} else {
-						if (blockXpGainLocation(event.getWhoClicked().getLocation(), player)) return;
+						if (blockXpGainLocation(event.getWhoClicked().getLocation(), player, Skills.FORGING)) return;
 					}
 					if (blockXpGainPlayer(player)) return;
 					// Calculate total level
@@ -99,7 +99,7 @@ public class ForgingLeveler extends SkillLeveler implements Listener {
 					totalLevel += getTotalLevel(topItem);
 					ItemStack bottomItem = inventory.getItem(1); // Get item in bottom slot
 					totalLevel += getTotalLevel(bottomItem);
-					plugin.getLeveler().addXp(player, Skills.FORGING, totalLevel * getXp(player, ForgingSource.GRINDSTONE_PER_LEVEL));
+					plugin.getLeveler().addXp(player, Skills.FORGING, totalLevel * getAbilityXp(player, ForgingSource.GRINDSTONE_PER_LEVEL));
 				}
 			}
 		}

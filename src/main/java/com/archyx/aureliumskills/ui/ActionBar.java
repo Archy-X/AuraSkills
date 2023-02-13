@@ -141,7 +141,7 @@ public class ActionBar implements Listener {
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
+																, "{level_xp}", getLevelXpText(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
@@ -152,7 +152,7 @@ public class ActionBar implements Listener {
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
+																, "{level_xp}", getLevelXpText(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
@@ -166,7 +166,7 @@ public class ActionBar implements Listener {
 																, "{xp_removed}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", NumberUtil.format1(playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
+																, "{level_xp}", getLevelXpText(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
@@ -177,7 +177,7 @@ public class ActionBar implements Listener {
 																, "{xp_gained}", NumberUtil.format1(xpAmount)
 																, "{skill}", skill.getDisplayName(locale)
 																, "{current_xp}", String.valueOf((int) playerData.getSkillXp(skill)))
-																, "{level_xp}", BigNumber.withSuffix(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
+																, "{level_xp}", getLevelXpText(plugin.getLeveler().getXpRequirements().getXpRequired(skill, playerData.getSkillLevel(skill) + 1))
 																, "{mana}", getMana(playerData)
 																, "{max_mana}", getMaxMana(playerData)));
 													}
@@ -237,6 +237,14 @@ public class ActionBar implements Listener {
 					}.runTaskLater(plugin, 41L);
 				}
 			}
+		}
+	}
+
+	private String getLevelXpText(long levelXp) {
+		if (OptionL.getBoolean(Option.ACTION_BAR_USE_SUFFIX)) {
+			return BigNumber.withSuffix(levelXp);
+		} else {
+			return String.valueOf(levelXp);
 		}
 	}
 

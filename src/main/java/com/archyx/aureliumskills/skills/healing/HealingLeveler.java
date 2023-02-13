@@ -44,7 +44,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			if (blockXpGain(event.getPlayer())) return;
+			if (blockXpGain(event.getPlayer(), Skills.HEALING)) return;
 			Player player = event.getPlayer();
 			Skill skill = Skills.HEALING;
 			Leveler leveler = plugin.getLeveler();
@@ -58,13 +58,13 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 					if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 							&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 						if (data.isExtended()) {
-							leveler.addXp(player, skill, getXp(player, HealingSource.DRINK_EXTENDED));
+							leveler.addXp(player, skill, getAbilityXp(player, HealingSource.DRINK_EXTENDED));
 						}
 						else if (data.isUpgraded()) {
-							leveler.addXp(player, skill, getXp(player, HealingSource.DRINK_UPGRADED));
+							leveler.addXp(player, skill, getAbilityXp(player, HealingSource.DRINK_UPGRADED));
 						}
 						else {
-							leveler.addXp(player, skill, getXp(player, HealingSource.DRINK_REGULAR));
+							leveler.addXp(player, skill, getAbilityXp(player, HealingSource.DRINK_REGULAR));
 						}
 					}
 
@@ -72,10 +72,10 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 			}
 			else if (XMaterial.isNewVersion()) {
 				if (event.getItem().getType().equals(Material.GOLDEN_APPLE)) {
-					leveler.addXp(player, skill, getXp(player, HealingSource.GOLDEN_APPLE));
+					leveler.addXp(player, skill, getAbilityXp(player, HealingSource.GOLDEN_APPLE));
 				}
 				else if (event.getItem().getType().equals(XMaterial.ENCHANTED_GOLDEN_APPLE.parseMaterial())) {
-					leveler.addXp(player, skill, getXp(player, HealingSource.ENCHANTED_GOLDEN_APPLE));
+					leveler.addXp(player, skill, getAbilityXp(player, HealingSource.ENCHANTED_GOLDEN_APPLE));
 				}
 			}
 			else {
@@ -83,10 +83,10 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 					MaterialData materialData = event.getItem().getData();
 					if (materialData != null) {
 						if (materialData.getData() == 0) {
-							leveler.addXp(player, skill, getXp(player, HealingSource.GOLDEN_APPLE));
+							leveler.addXp(player, skill, getAbilityXp(player, HealingSource.GOLDEN_APPLE));
 						}
 						else if (materialData.getData() == 1) {
-							leveler.addXp(player, skill, getXp(player, HealingSource.ENCHANTED_GOLDEN_APPLE));
+							leveler.addXp(player, skill, getAbilityXp(player, HealingSource.ENCHANTED_GOLDEN_APPLE));
 						}
 					}
 				}
@@ -113,17 +113,17 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 							return;
 						}
 						Skill skill = Skills.HEALING;
-						if (blockXpGain(player)) return;
+						if (blockXpGain(player, skill)) return;
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 							if (data.isExtended()) {
-								plugin.getLeveler().addXp(player, skill, getXp(player, HealingSource.SPLASH_EXTENDED));
+								plugin.getLeveler().addXp(player, skill, getAbilityXp(player, HealingSource.SPLASH_EXTENDED));
 							}
 							else if (data.isUpgraded()) {
-								plugin.getLeveler().addXp(player, skill, getXp(player, HealingSource.SPLASH_UPGRADED));
+								plugin.getLeveler().addXp(player, skill, getAbilityXp(player, HealingSource.SPLASH_UPGRADED));
 							}
 							else {
-								plugin.getLeveler().addXp(player, skill, getXp(player, HealingSource.SPLASH_REGULAR));
+								plugin.getLeveler().addXp(player, skill, getAbilityXp(player, HealingSource.SPLASH_REGULAR));
 							}
 						}
 					}
@@ -177,17 +177,17 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 		}
 
 		Skill skill = Skills.HEALING;
-		if (blockXpGain(player)) return;
+		if (blockXpGain(player, skill)) return;
 		if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 				&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 			if (data.isExtended()) {
-				plugin.getLeveler().addXp(player, skill, getXp(player, HealingSource.LINGERING_EXTENDED));
+				plugin.getLeveler().addXp(player, skill, getAbilityXp(player, HealingSource.LINGERING_EXTENDED));
 			}
 			else if (data.isUpgraded()) {
-				plugin.getLeveler().addXp(player, skill, getXp(player, HealingSource.LINGERING_UPGRADED));
+				plugin.getLeveler().addXp(player, skill, getAbilityXp(player, HealingSource.LINGERING_UPGRADED));
 			}
 			else {
-				plugin.getLeveler().addXp(player, skill, getXp(player, HealingSource.LINGERING_REGULAR));
+				plugin.getLeveler().addXp(player, skill, getAbilityXp(player, HealingSource.LINGERING_REGULAR));
 			}
 		}
 	}

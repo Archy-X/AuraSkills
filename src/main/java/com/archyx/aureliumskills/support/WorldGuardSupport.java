@@ -1,6 +1,8 @@
 package com.archyx.aureliumskills.support;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.skills.Skill;
+import com.archyx.aureliumskills.util.text.TextUtil;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
@@ -18,6 +20,7 @@ import org.bukkit.entity.Player;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class WorldGuardSupport {
 
@@ -67,7 +70,20 @@ public class WorldGuardSupport {
         WorldGuardFlags worldGuardFlags = plugin.getWorldGuardFlags();
         if (worldGuardFlags == null) return false;
 
+        StateFlag flag = worldGuardFlags.getStateFlag(flagKey.toString());
+        return queryFlagState(location, player, flag);
+    }
+
+    public boolean blockedBySkillFlag(Location location, Player player, Skill skill) {
+        WorldGuardFlags worldGuardFlags = plugin.getWorldGuardFlags();
+        if (worldGuardFlags == null) return false;
+
+        String flagKey = "xp-gain-" + TextUtil.replace(skill.toString().toLowerCase(Locale.ROOT), "_", "-");
         StateFlag flag = worldGuardFlags.getStateFlag(flagKey);
+        return queryFlagState(location, player, flag);
+    }
+
+    private boolean queryFlagState(Location location, Player player, StateFlag flag) {
         if (flag == null) return false;
 
         World world = location.getWorld();

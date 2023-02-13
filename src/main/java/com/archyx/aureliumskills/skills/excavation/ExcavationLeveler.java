@@ -36,13 +36,13 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 			return;
 		}
 		Player player = event.getPlayer();
-		if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
+		if (blockXpGainLocation(event.getBlock().getLocation(), player, Skills.EXCAVATION)) return;
 		if (blockXpGainPlayer(player)) return;
 		// Search through sources until a match is found for the block broken
 		for (ExcavationSource source : ExcavationSource.values()) {
 			// Add XP to player if matched
 			if (source.isMatch(block)) {
-				plugin.getLeveler().addXp(player, Skills.EXCAVATION, getXp(player, source));
+				plugin.getLeveler().addXp(player, Skills.EXCAVATION, getAbilityXp(player, source));
 				// Bigger scoop ability
 				if (hasTag(source, SourceTag.BIGGER_SCOOP_APPLICABLE) && event.isDropItems()) {
 					excavationAbilities.biggerScoop(source, block, player);

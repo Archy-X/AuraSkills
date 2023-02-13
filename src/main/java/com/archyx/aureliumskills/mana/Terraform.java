@@ -64,7 +64,7 @@ public class Terraform extends ReadiedManaAbility {
             terraformBreak(player, block);
             return;
         }
-        //Checks if speed mine is ready
+        // Checks if ability is ready
         if (isReady(player) && isHoldingMaterial(player) && hasEnoughMana(player)) {
             activate(player);
             terraformBreak(player, block);
@@ -77,7 +77,8 @@ public class Terraform extends ReadiedManaAbility {
         LinkedList<Block> toCheck = new LinkedList<>();
         toCheck.add(block);
         int count = 0;
-        while ((block = toCheck.poll()) != null && count < 61) {
+        int maxCount = plugin.getManaAbilityManager().getOptionAsInt(MAbility.TERRAFORM, "max_blocks", 61);
+        while ((block = toCheck.poll()) != null && count < maxCount) {
             if (block.getType() == material) {
                 block.setMetadata("AureliumSkills-Terraform", new FixedMetadataValue(plugin, true));
                 breakBlock(player, block);

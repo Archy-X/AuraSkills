@@ -40,7 +40,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 			return;
 		}
 		Player player = event.getPlayer();
-		if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
+		if (blockXpGainLocation(event.getBlock().getLocation(), player, Skills.FARMING)) return;
 		Block block = event.getBlock();
 		if (blockXpGainPlayer(player)) return;
 
@@ -99,7 +99,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 				if (!caveVinesPlant.isBerries()) return; // Only give xp if has berries
 			}
 			// Give XP
-			giveXp(player, getXp(player, source) * multiplier, source, block);
+			giveXp(player, getAbilityXp(player, source) * multiplier, source, block);
 			break;
 		}
 		// Check custom blocks
@@ -130,7 +130,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 	}
 
 	protected void handleRightClick(Player player, Block block) {
-		if (blockXpGainLocation(block.getLocation(), player)) return;
+		if (blockXpGainLocation(block.getLocation(), player, Skills.FARMING)) return;
 		if (blockXpGainPlayer(player)) return;
 
 		for (FarmingSource source : FarmingSource.values()) {
@@ -149,7 +149,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 					public void run() {
 						if (block.getType() == XMaterial.SWEET_BERRY_BUSH.parseMaterial()) {
 							if (BlockUtil.getGrowthStage(block) <= 1) {
-								giveXp(player, getXp(player, source) * multiplier, source, block);
+								giveXp(player, getAbilityXp(player, source) * multiplier, source, block);
 							}
 						}
 					}
@@ -160,7 +160,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 				if (!(block.getBlockData() instanceof CaveVinesPlant)) return;
 				CaveVinesPlant caveVinesPlant = (CaveVinesPlant) block.getBlockData();
 				if (caveVinesPlant.isBerries()) {
-					giveXp(player, getXp(player, source), source, block);
+					giveXp(player, getAbilityXp(player, source), source, block);
 				}
 			}
 			break;

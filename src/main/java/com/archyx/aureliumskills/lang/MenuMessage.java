@@ -106,7 +106,8 @@ public enum MenuMessage implements MessageKey {
     YOUR_ABILITY_LEVEL(7),
     YOUR_ABILITY_LEVEL_MAXED(7),
     UNLOCKED_DESC(7),
-    UNLOCKED_DESC_MAXED(7);
+    UNLOCKED_DESC_MAXED(7),
+    DESC_UPGRADE_VALUE(7);
 
     private String path;
     

@@ -163,6 +163,15 @@ public abstract class StorageProvider {
     @Nullable
     public abstract PlayerDataState loadState(UUID uuid);
 
+    /**
+     * Applies the given PlayerData state to storage. Will override
+     * previously saved data.
+     *
+     * @param state The state to apply, where the uuid is the same uuid the data is applied to.
+     * @return True if the operation was successful, false if otherwise.
+     */
+    public abstract boolean applyState(PlayerDataState state);
+
     public void save(Player player) {
         save(player, true);
     }

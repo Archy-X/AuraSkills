@@ -63,6 +63,9 @@ public class RankItem extends AbstractItem implements SingleItemProvider {
     private double getPercent(Skill skill, Player player) {
         int rank = getRank(skill, player);
         int size = getSize(skill);
+        if (size == 0) {
+            size = 1;
+        }
         return (double) rank / (double) size * 100;
     }
 

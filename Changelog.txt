@@ -1,5 +1,46 @@
+Version Beta 1.3.13
+  New Features:
+    - Add PlaceholderAPI support to boss bars
+    - Add Terraform max_blocks option to change the number of blocks broken
+    - Add transfer command to migrate player data between accounts
+    - Add use-suffix option for action and boss bar to toggle level xp suffix formatting
+    - Add WorldGuard flags for controlling each individual skill's XP gain
+      - Flag name is aureliumskils-xp-gain-skillname
+  Changes:
+    - No longer send ability chat messages if message string is empty
+    - Make xp_gained placeholder work in boss bar messages
+    - Remove unnecessary .0 in numbers with suffix formatting
+  Bug Fixes:
+    - Fix memory leak with spawner multiplier option
+    - Fix mana not regenerating due to Absorption activation not being removed
+    - Fix potential NPE in SkillBossBar
+    - Fix blank lines in menu for disabled abilities when using non-English languages
+
+Version Beta 1.3.12
+  Changes:
+    - Add support for Minecraft 1.19.3
+    - Update Simplified Chinese, Russian, and Korean messages
+  API Changes:
+    - Add EntityXpGainEvent for modifying XP of Fighting/Archery before multipliers
+  Bug Fixes:
+    - Cancel out block loot if Slimefun block
+    - Prevent re-looting the same blocks over and over
+
+Version Beta 1.3.11
+  New Features:
+    - Add values list option for XP requirements instead of an equation
+    - Add average placeholders to get the average skill level of a player
+      - Add %aureliumskills_average%, %aureliumskills_average_int%, and %aureliumskills_average_1% placeholders
+  Changes:
+    - Sweeping attacks are now ignored when checking for Lightning Blade activation to reduce chat spam
+    - Make upgrade description format in abilities menu configurable using 'menus.abilities.desc_upgrade_value' message
+    - Allow leaderboard placeholders to work without specifying a player
+  Bug Fixes:
+    - Fix some newer blocks not working as custom block XP sources
+    - Fix boss bar memory leak
+
 Version Beta 1.3.10
-  New Features
+  New Features:
     - Add /skills profile skills and /skills profile stats commands to view the skill and stat levels of other players, including offline players
       - Requires aureliumskills.profile permission, op by default
   API Changes:

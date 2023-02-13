@@ -1,5 +1,5 @@
 # Aurelium Skills Korean (ko) messages
-# Translators: BBB3, cocoa9548, myoung2, w91203277
+# Translators: BBB3, cocoa9548, myoung2, w91203277, acehyun, BCode, wavgado
 # Contribute here: https://crowdin.com/project/aureliumskills/it#
 abilities:
   farming:
@@ -370,6 +370,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7아이템에서 모든 방어구 효과가 제거되었습니다.'
+    multiplier:
+      add:
+        added: '&b{target} &7효과가 &b{value} &7만큼 아이템에 추가되었습니다.'
+        already_exists: '&e방어구에 {target} 이(가) 이미 존재합니다. &6/sk armor modifier remove &7명령어를 활용하여 제거 후 재시도하십시오.'
+        skill_lore: '&7착용 시: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7착용 시: &b-{value}% {skill} XP'
+        global_lore: '&7착용 시: &9+{value}% Skill XP'
+        global_lore_subtract: '&7착용 시: &9-{value}% Skill XP'
+      remove:
+        does_not_exist: '&e아이템에 &b{target} &e효과가 없습니다!'
+        removed: '&{target}& 배율이 방어구에서 제거되었습니다.'
+      list:
+        header: '&f방어구 배율 찾음:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7모든 방어구 배율이 아이템에서 제거되었습니다.'
     requirement:
       add:
         added: '&3{skill}&7 방어구 제한이 &b{level}&7레벨 만큼 아이템에 추가되었습니다.'
@@ -417,6 +433,22 @@ commands:
         entry: '  {color}{stat}&f - {value}'
       removeall:
         removed: '&7모든 효과가 아이템에서 제거되었습니다.'
+    multiplier:
+      add:
+        added: '&b{target} &7효과가 &b{value} &7만큼 아이템에 추가되었습니다.'
+        already_exists: '&e아이템에 {target} 이(가) 이미 존재합니다. &6/sk item multiplier remove &7명령어를 활용하여 제거 후 재시도하십시오.'
+        skill_lore: '&7유지 시: &b+{value}% {skill} XP'
+        skill_lore_subtract: '&7유지 시: &b-{value}% {skill} XP'
+        global_lore: '&7유지 시: &9+{value}% Skill XP'
+        global_lore_subtract: '&7유지 시: &9-{value}% Skill XP'
+      remove:
+        does_not_exist: '&e아이템에 &b{target} &e배율이 없습니다!'
+        removed: '&{target}& 배율이 아이템에서 제거되었습니다.'
+      list:
+        header: '&f아이템 효과 찾음:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7모든 배율이 아이템에서 제거되었습니다.'
     register:
       registered: '&f보유 아이템을 {key}에 등록하였습니다.'
       already_registered: '&e&f{key}&e에 아이템이 이미 등록되어있습니다.&f/skills item unregister &e명령어로 제거 후 재시도하십시오.'
@@ -468,7 +500,9 @@ commands:
       removed_one_stat: '&7사용자 &6{player} &7의 &b{color}{stat} {num} &7효과가 제거되었습니다.'
       players_only: '&e사용자만 본인의 효과를 제거 할 수 있습니다! 사용자 지정 후 재시도하십시오.'
   multiplier:
+    global: 글로벌
     list: '&f사용자 &6{player}&f의 경험치 배율: &b{multiplier}x / +{percent}%'
+    skill_entry: '&b{skill} &fXP 배율: &b{multiplier}x / +{percent}%'
     players_only: '&e사용자만 본인의 경험치 배율을 확인 할 수 있습니다! 사용자 지정 후 재시도하십시오.'
   rank:
     header: '&b&l스킬 순위'
@@ -513,7 +547,7 @@ commands:
     set: '&7사용자 &6{player} &7의 &6{skill} &7경험치가 &6{amount} &7로 설정되었습니다.'
     remove: '&7사용자 &6{player} &7의 &6{skill} {amount} &7경험치가 제거되었습니다.'
   unknown_skill: '&e알 수 없는 스킬!'
-  no_profile: '&e사용자의 스킬 정보가 없습니다!'
+  no_profile: '&ePlayer does not have a skills profile. Please try rejoining the game or restarting the server.'
 leveler:
   title: '&a{skill} 레벨 상승'
   subtitle: '&6{old} ➜ {new}'
@@ -531,10 +565,10 @@ menus:
     level: '&7레벨: &e{level}'
     progress_to_level: "&7레벨 진행도 {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6최대 레벨'
-    ability_levels: "&7능력 레벨:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "\n&7능력 레벨:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7능력치 레벨: {stats}\n "
+    stats_leveled: "\n&7능력치 레벨: {stats}"
     mana_ability: "\n&d&l마나 능력 &9{mana_ability} {level}\n &7지속시간: &a{duration}s &7마나 소모량: &b{mana_cost} &7재사용대기시간: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: 내 스킬 목록
@@ -544,13 +578,16 @@ menus:
     your_skills_click: '&e레벨 진행상황을 확인하려면 스킬을 클릭하십시오!'
     skill_click: '&e레벨 진행상황을 확인하려면 클릭하십시오!'
     skill_locked: '&c이 스킬을 확인할 수 있는 권한이 없습니다!'
+    stats: '&b정보'
+    stats_desc: '&7스킬 레벨업으로 버프를 얻어보세요'
+    stats_click: '&e정보를 자세히 보려면 클릭하세요'
   level_progression_menu:
     level_progression_menu_title: '{skill} 레벨 - {page} 장'
-    your_ranking: '&e내 스킬 순위'
+    your_ranking: '&6내 스킬 순위'
     rank_out_of: '&f{total}명의 사용자 중 &6{rank}&f등입니다.'
     rank_percent: '&f전체 사용자 중 상위 &6{percent}%&f 입니다.'
     back: '&a돌아가기'
-    back_click: '&7스킬 목록으로 돌아가기'
+    back_click: '&7{menu_name} 메뉴로 돌아가기'
     next_page: '&6다음 장'
     next_page_click: '&e클릭하여 다음 장으로'
     previous_page: '&6이전 장'
@@ -570,6 +607,13 @@ menus:
     mana_ability_unlock: "\n&9{mana_ability} &d&l마나 능력 해금\n&7  {desc}\n "
     mana_ability_level: "&9{mana_ability} {level}\n&7  {desc}"
     progress: "&7진행상황: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: '&e클릭해서 {skill} 순위 보기'
+    sources: '&aXP 획득 방법'
+    sources_desc: "&7획득 방법 메뉴에서는 스킬 XP를 얻을 수 있는\n&7모든 방법에 대한 설명과\n&7얼마나 얻는지에 대해 알려줍니다."
+    sources_click: '&e클릭해서 {skill} 획득 방법 보기'
+    abilities: '&c능력'
+    abilities_desc: "&b능력 &7은 해금하고\n&7강화할 수 있는 패시브 능력입니다.\n&d마나 능력 &7은 특별한 능력을 가졌으며\n&7활성화 이후 마나를 소모합니다."
+    abilities_click: '&e클릭해서 {skill} 능력 보기'
   stats_menu:
     stats_menu_title: 나의 능력치
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -591,6 +635,34 @@ menus:
     unclaimed_items_title: '아이템 수령'
     inventory_full: '&e인벤토리 공간이 부족하여 해당 아이템을 수령할 수 없습니다.'
     click_to_claim: '&e클릭하여 수령!'
+  leaderboard:
+    leaderboard_title: '{skill} 순위'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7레벨: &f{level}'
+  sources:
+    sources_title: '{skill} XP 획득 방법 ({current_page}/{total_pages})'
+    sorter: '&bXP 획득 방법 정렬'
+    sort_type: "&7{selected}{type_name}\n"
+    selected: '&f> '
+    descending: '내림차순'
+    ascending: '오름차순'
+    alphabetical: '이름 (A-Z)'
+    reverse_alphabetical: '이름 Z-A'
+    sort_click: '&e클릭해서 정렬 방식 변경'
+    source_name: '&f{name}'
+    source_xp: '&7XP: &a{xp}'
+    source_xp_rate: '&7XP: &a{xp}/{unit}'
+    multiplied_xp: "\n\n&f더 해진 XP: &a{xp}"
+    multiplied_xp_rate: "\n\n&f효과 XP: &a{xp}/{unit}"
+    multiplied_desc: "\n&7&oXP 배율에 따라\n&7&o얻어질 XP입니다."
+  abilities:
+    abilities_title: '{skill} 능력'
+    locked_desc: "&f설명:\n  &7{desc}"
+    unlocked_at: '&3{skill} {level}&7에 해제됨'
+    your_ability_level: '&f나의 레벨: &b{level}'
+    your_ability_level_maxed: '&f나의 레벨: &b{level} &6(최대 레벨)'
+    unlocked_desc: "&3{skill} {level}&f에 다음 강화\n  &7{desc}"
+    unlocked_desc_maxed: "&f설명:\n  &7{desc}"
 mana_abilities:
   replenish:
     name: 재보충
@@ -638,7 +710,7 @@ mana_abilities:
     enable: '&7모아쏘기 모드가 발동되었습니다.'
     disable: '&7모아쏘기 모드가 해제되었습니다.'
     shoot: '&6모아쏘기! &d+{percent}% 피해 &7(-{mana} {mana_unit})'
-    menu: "\n&d&l마나 능력 &9{mana_ability} {level}\n &7피해: &c+{value}% / 마나 &7최대 마나 소모량: &b{mana_cost}\n "
+    menu: "\n&d&l마나 능력 &9{mana_ability} {level}\n  &7피해: &c+{value}% / 마나 &7최대 마나 소모량: &b{mana_cost}\n "
   lightning_blade:
     name: 번개 검
     desc: 공격 속도가 {duration} 초 간 {value}% 상승합니다.\n&e [검 우클릭이나 몹을 공격하여 발동]
@@ -646,7 +718,7 @@ mana_abilities:
     lower: '&7검을 내려주십시오.'
     start: '&6번개 검이 발동되었습니다! &7(-{mana} {mana_unit})'
     end: '&7번개 검이 해제되었습니다.'
-    menu: "\n&d&l마나 능력 &9{mana_ability} {level}\n &7공격 속도: &c+{value}% &7지속시간: &a{duration}s\n &7마나 소모량: &b{mana_cost} &7재사용대기시간: &e{cooldown}s\n "
+    menu: "\n&d&l마나 능력 &9{mana_ability} {level}\n  &7공격 속도: &c+{value}% &7지속시간: &a{duration}s\n  &7마나 소모량: &b{mana_cost} &7재사용대기시간: &e{cooldown}s\n "
   not_ready: '&c능력이 준비되지 않았습니다! &7({cooldown}s)'
   not_enough_mana: '&e마나가 부족합니다! &7(필요량: {mana} {mana_unit}, 보유량: {current_mana}/{max_mana})'
 rewards:
@@ -701,6 +773,241 @@ skills:
   forging:
     name: 단조
     desc: '&7모루로 책이나 도구 병합, 도구 수리 시 단조 {xp_unit}를 얻을 수 있습니다.'
+sources:
+  farming:
+    wheat: 밀
+    potato: 감자
+    carrot: 당근
+    beetroot: 비트
+    nether_wart: 네더 사마귀
+    pumpkin: 호박
+    melon: 멜론
+    sugar_cane: 사탕수수
+    bamboo: 대나무
+    cocoa: 코코아
+    cactus: 선인장
+    brown_mushroom: 갈색 버섯
+    red_mushroom: 빨간색 버섯
+    kelp: 켈프
+    sea_pickle: 해삼
+    sweet_berry_bush: 달콤한 열매
+    glow_berries: 발광 열매
+  foraging:
+    oak_log: 참나무 원목
+    spruce_log: 가문비나무 원목
+    birch_log: 자작나무 원목
+    jungle_log: 정글나무 원목
+    acacia_log: 아카시아나무 원목
+    dark_oak_log: 짙은 참나무 원목
+    oak_leaves: 참나무 잎
+    spruce_leaves: 가문비나무 잎
+    birch_leaves: 자작나무 잎
+    jungle_leaves: 정글나무 잎
+    acacia_leaves: 아카시아나무 잎
+    dark_oak_leaves: 짙은 참나무 잎
+    crimson_stem: 진홍색 뿌리
+    warped_stem: 뒤틀린 뿌리
+    nether_wart_block: 네더 사마귀 블록
+    warped_wart_block: 뒤틀린 사마귀 블록
+    moss_block: 이끼 블록
+    moss_carpet: 이끼 카펫
+    azalea: 진달래
+    flowering_azalea: 꽃 핀 진달래
+    azalea_leaves: 진달래 잎
+    flowering_azalea_leaves: 꽃 핀 진달래 잎
+  mining:
+    stone: 돌
+    cobblestone: 조약돌
+    andesite: 안산암
+    diorite: 섬록암
+    granite: 화강암
+    coal_ore: 석탄 광석
+    nether_quartz_ore: 네더 석영 광석
+    iron_ore: 철 광석
+    lapis_ore: 청금석 광석
+    redstone_ore: 레드스톤 광석
+    gold_ore: 금 광석
+    diamond_ore: 다이아몬드 광석
+    emerald_ore: 에메랄드 광석
+    terracotta: 테라코타
+    white_terracotta: 흰색 테라코타
+    orange_terracotta: 주황색 테라코타
+    yellow_terracotta: 노란색 테라코타
+    light_gray_terracotta: 회백색 테라코타
+    brown_terracotta: 갈색 테라코타
+    red_terracotta: 빨간색 테라코타
+    netherrack: 네더랙
+    blackstone: 흑암
+    basalt: 현무암
+    magma_block: 마그마 블록
+    nether_gold_ore: 네더 금 광석
+    ancient_debris: 고대 잔해
+    end_stone: 엔드 돌
+    obsidian: 흑요석
+    deepslate: 심층암
+    copper_ore: 구리 광석
+    tuff: 응회암
+    calcite: 방해석
+    smooth_basalt: 매끄러운 현무암
+    amethyst_block: 자수정 블록
+    amethyst_cluster: 자수정 군집
+    deepslate_coal_ore: 심층암 석탄 광석
+    deepslate_iron_ore: 심층암 철 광석
+    deepslate_copper_ore: 심층암 구리 광석
+    deepslate_gold_ore: 심층암 금 광석
+    deepslate_redstone_ore: 심층암 레드스톤 광석
+    deepslate_lapis_ore: 심층암 청금석 광석
+    deepslate_emerald_ore: 심층암 에메랄드 광석
+    deepslate_diamond_ore: 심층암 다이아몬드 광석
+    dripstone_block: 점적석 블록
+    ice: 얼음
+    packed_ice: 꽁꽁 언 얼음
+    blue_ice: 푸른얼음
+  fishing:
+    cod: 대구
+    salmon: 연어
+    tropical_fish: 열대어
+    pufferfish: 복어
+    treasure: 보물 아이템
+    junk: 버릴 아이템
+    rare: 레어 전리품
+    epic: 에픽 전리품
+  excavation:
+    dirt: 흙
+    grass_block: 잔디 블록
+    sand: 모래
+    gravel: 자갈
+    mycelium: 균사체
+    clay: 진흙
+    soul_sand: 영혼 모래
+    coarse_dirt: 거친 흙
+    podzol: 회백토
+    soul_soil: 영혼 흙
+    red_sand: 붉은 모래
+    rooted_dirt: 뿌리내린 흙
+  mobs:
+    player: 플레이어
+    bat: 박쥐
+    cat: 고양이
+    chicken: 닭
+    cod: 대구
+    cow: 소
+    donkey: 당나귀
+    fox: 여우
+    giant: 거인
+    horse: 말
+    mooshroom: 버섯소
+    mule: 노새
+    ocelot: 오셀롯
+    parrot: 앵무새
+    pig: 돼지
+    rabbit: 토끼
+    salmon: 연어
+    sheep: 양
+    skeleton_horse: 스켈레톤 말
+    snow_golem: 눈사람
+    squid: 오징어
+    strider: 스트라이더
+    tropical_fish: 열대어
+    turtle: 거북이
+    villager: 주민
+    wandering_trader: 떠돌이 상인
+    bee: 벌
+    cave_spider: 동굴 거미
+    dolphin: 돌고래
+    enderman: 엔더맨
+    iron_golem: 철 골렘
+    llama: 라마
+    piglin: 피글린
+    panda: 판다
+    polar_bear: 북극곰
+    pufferfish: 복어
+    spider: 거미
+    wolf: 늑대
+    zombified_piglin: 좀비화 피글린
+    blaze: 블레이즈
+    creeper: 크리퍼
+    drowned: 익사
+    elder_guardian: 엘더 가디언
+    endermite: 엔더마이트
+    evoker: 소환사
+    ghast: 가스트
+    guardian: 가디언
+    hoglin: 호글린
+    husk: 허스크
+    illusioner: 환술사
+    magma_cube: 마그마 큐브
+    phantom: 팬텀
+    piglin_brute: 피글린 야수
+    pillager: 약탈자
+    ravager: 파괴수
+    shulker: 셜커
+    silverfish: 좀벌레
+    skeleton: 스켈레톤
+    slime: 슬라임
+    stray: 야생동물
+    vex: 벡스
+    vindicator: 변명자
+    witch: 마녀
+    wither_skeleton: 위더 스켈레톤
+    zoglin: 조글린
+    zombie: 좀비
+    zombie_villager: 좀비 주민
+    ender_dragon: 엔더 드래곤
+    wither: 위더
+    axolotl: 아홀로틀
+    glow_squid: 발광 오징어
+    goat: 염소
+  defense:
+    mob_damage: 몬스터에 의한 데미지
+    player_damage: 다른 플레이어에게 받은 피해
+  endurance:
+    walk_per_meter: 걷기
+    sprint_per_meter: 달리기
+    swim_per_meter: 수영
+  agility:
+    jump_per_100: 점프
+    fall_damage: 낙하 데미지
+  alchemy:
+    awkward: 어색한 물약
+    regular: 기본 물약
+    extended: 연장 물약
+    upgraded: 강화된 물약
+    splash: 투척용 물약
+    lingering: 잔류형 물약
+  enchanting:
+    weapon_per_level: 무기
+    armor_per_level: 방어구
+    tool_per_level: 도구
+    book_per_level: 책
+  sorcery:
+    mana_ability_use: 마나 능력 사용
+  healing:
+    drink_regular: 기본 물약
+    drink_extended: 연장 물약
+    drink_upgraded: 강화된 물약
+    splash_regular: 투척용 기본 물약
+    splash_extended: 투척용 연장 물약
+    splash_upgraded: 투척용 강화된 물약
+    lingering_regular: 기본 잔류형 물약 사용
+    lingering_extended: 연장 잔류형 물약 사용
+    lingering_upgraded: 강화된 잔류형 물약 사용
+    golden_apple: 황금 사과
+    enchanted_golden_apple: 마법이 부여된 황금 사과
+  forging:
+    combine_books_per_level: 마법이 부여된 책 결합
+    combine_weapon_per_level: 무기와 책 결합
+    combine_armor_per_level: 방어구와 책 결합
+    combine_tool_per_level: 도구와 책 결합
+    grindstone_per_level: 숫돌로 마법 부여 해제
+  units:
+    damage: 피해
+    meter: 미터
+    100_jumps: 100번 점프
+    mana: 마나 소모
+    combine_level: 수리 XP 비용
+    grindstone_level: 아이템 마법 부여 레벨
+    enchant_level: 마법 부여 레벨
 stats:
   strength:
     name: 힘
@@ -736,4 +1043,4 @@ units:
   mana: 마나
   hp: 체력
   xp: 경험치
-file_version: 23
+file_version: 26

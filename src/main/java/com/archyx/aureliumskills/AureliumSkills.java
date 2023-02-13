@@ -114,6 +114,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class AureliumSkills extends JavaPlugin {
 
@@ -471,6 +472,14 @@ public class AureliumSkills extends JavaPlugin {
 				throw new InvalidCommandArgument("Skill " + input + " not found!");
 			}
 		});
+		commandManager.getCommandContexts().registerContext(UUID.class, c -> {
+			String input = c.popFirstArg();
+			try {
+				return UUID.fromString(input);
+			} catch (IllegalArgumentException e) {
+				throw new InvalidCommandArgument(input + "is not a valid UUID!");
+			}
+		});
 		commandManager.getCommandCompletions().registerAsyncCompletion("skills", c -> {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : skillRegistry.getSkills()) {
@@ -621,6 +630,7 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new ExcavationLootHandler(this), this);
 		pm.registerEvents(new MiningLootHandler(this), this);
 		pm.registerEvents(new ForagingLootHandler(this), this);
+		pm.registerEvents(bossBar, this);
 	}
 
 	private boolean setupEconomy() {

@@ -122,6 +122,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
                     }
                 } else {
                     levelsMessage = TextUtil.replace(levelsMessage, "\\n  {ability_" + num + "}", ""
+                            , "\n  {ability_" + num + "}", ""
                             , "{ability_" + num + "}", "");
                 }
                 num++;

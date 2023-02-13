@@ -422,6 +422,7 @@ public class AbilityManager {
         } else {
             PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
             if (playerData == null) return;
+            if (message == null || message.equals("")) return; // Don't send empty message
             player.sendMessage(AureliumSkills.getPrefix(playerData.getLocale()) + message);
         }
     }

@@ -43,8 +43,8 @@ public class RegionBlockListener implements Listener {
         SourceManager sourceManager = plugin.getSourceManager();
         customMaterials = new Material[sourceManager.getCustomBlockSet().size()];
         int pos = 0;
-        for (XMaterial material : sourceManager.getCustomBlockSet()) {
-            customMaterials[pos] = material.parseMaterial();
+        for (Material material : sourceManager.getCustomBlockSet()) {
+            customMaterials[pos] = material;
             pos++;
         }
     }
@@ -53,8 +53,8 @@ public class RegionBlockListener implements Listener {
         SourceManager sourceManager = plugin.getSourceManager();
         customMaterials = new Material[sourceManager.getCustomBlockSet().size()];
         int pos = 0;
-        for (XMaterial material : sourceManager.getCustomBlockSet()) {
-            customMaterials[pos] = material.parseMaterial();
+        for (Material material : sourceManager.getCustomBlockSet()) {
+            customMaterials[pos] = material;
             pos++;
         }
     }
