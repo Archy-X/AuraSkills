@@ -193,21 +193,19 @@ public class FightingAbilities extends AbilityProvider implements Listener {
         event.getPlayer().removeMetadata("AureliumSkills-BleedTicks", plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void fightingListener(EntityDamageByEntityEvent event) {
         if (OptionL.isEnabled(Skills.FIGHTING)) {
-            if (!event.isCancelled()) {
-                if (event.getDamager() instanceof Player) {
-                    Player player = (Player) event.getDamager();
-                    if (blockAbility(player)) return;
-                    //If player used sword
-                    if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-                        if (playerData == null) return;
-                        if (isEnabled(Ability.BLEED)) {
-                            if (event.getEntity() instanceof LivingEntity) {
-                                bleed(event, playerData, (LivingEntity) event.getEntity());
-                            }
+            if (event.getDamager() instanceof Player) {
+                Player player = (Player) event.getDamager();
+                if (blockAbility(player)) return;
+                //If player used sword
+                if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    if (isEnabled(Ability.BLEED)) {
+                        if (event.getEntity() instanceof LivingEntity) {
+                            bleed(event, playerData, (LivingEntity) event.getEntity());
                         }
                     }
                 }
