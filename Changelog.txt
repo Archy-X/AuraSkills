@@ -1,3 +1,21 @@
+Version Beta 1.3.13
+  New Features:
+    - Add PlaceholderAPI support to boss bars
+    - Add Terraform max_blocks option to change the number of blocks broken
+    - Add transfer command to migrate player data between accounts
+    - Add use-suffix option for action and boss bar to toggle level xp suffix formatting
+    - Add WorldGuard flags for controlling each individual skill's XP gain
+      - Flag name is aureliumskils-xp-gain-skillname
+  Changes:
+    - No longer send ability chat messages if message string is empty
+    - Make xp_gained placeholder work in boss bar messages
+    - Remove unnecessary .0 in numbers with suffix formatting
+  Bug Fixes:
+    - Fix memory leak with spawner multiplier option
+    - Fix mana not regenerating due to Absorption activation not being removed
+    - Fix potential NPE in SkillBossBar
+    - Fix blank lines in menu for disabled abilities when using non-English languages
+
 Version Beta 1.3.12
   Changes:
     - Add support for Minecraft 1.19.3

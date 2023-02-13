@@ -541,6 +541,9 @@ commands:
     average_header_page: '&f--==&b&lSkill Average Leaderboard &f(Page {page})==--'
     average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUsage: &a/sk top &f<page> &7or &a/sk top &f[skill] <page>'
+  transfer:
+    success: '&aSuccessfully transferred player data from &7{from} &ato &7{to}'
+    error: '&cThere was an error transferring player data. Check console for errors.'
   updateleaderboards:
     already_updating: '&eLeaderboard is already updating!'
     updated: '&aLeaderboard updated!'
@@ -1062,4 +1065,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 28
+file_version: 29

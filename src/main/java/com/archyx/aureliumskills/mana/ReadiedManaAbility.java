@@ -6,7 +6,6 @@ import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.lang.ManaAbilityMessage;
 import com.archyx.aureliumskills.util.math.NumberUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -102,7 +101,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         }
         if (manager.getPlayerCooldown(player.getUniqueId(), mAbility) == 0) { // Ready
             manager.setReady(player.getUniqueId(), mAbility, true);
-            plugin.getAbilityManager().sendMessage(player, ChatColor.GRAY + Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_RAISE"), locale));
+            plugin.getAbilityManager().sendMessage(player, Lang.getMessage(ManaAbilityMessage.valueOf(mAbility.name() + "_RAISE"), locale));
             scheduleUnready(player, locale);
         } else { // Cannot ready, send cooldown error
             if (manager.getErrorTimer(player.getUniqueId(), mAbility) == 0) {

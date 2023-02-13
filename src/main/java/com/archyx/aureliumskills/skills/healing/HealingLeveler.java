@@ -44,7 +44,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 					return;
 				}
 			}
-			if (blockXpGain(event.getPlayer())) return;
+			if (blockXpGain(event.getPlayer(), Skills.HEALING)) return;
 			Player player = event.getPlayer();
 			Skill skill = Skills.HEALING;
 			Leveler leveler = plugin.getLeveler();
@@ -113,7 +113,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 							return;
 						}
 						Skill skill = Skills.HEALING;
-						if (blockXpGain(player)) return;
+						if (blockXpGain(player, skill)) return;
 						if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 								&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 							if (data.isExtended()) {
@@ -177,7 +177,7 @@ public class HealingLeveler extends SkillLeveler implements Listener {
 		}
 
 		Skill skill = Skills.HEALING;
-		if (blockXpGain(player)) return;
+		if (blockXpGain(player, skill)) return;
 		if (!data.getType().equals(PotionType.MUNDANE) && !data.getType().equals(PotionType.THICK)
 				&& !data.getType().equals(PotionType.WATER) && !data.getType().equals(PotionType.AWKWARD)) {
 			if (data.isExtended()) {

@@ -89,30 +89,31 @@ public class Leveler {
 	//Method for adding xp with a defined amount
 	public void addXp(Player player, Skill skill, double amount) {
 		PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-		//Checks if player has a skill profile for safety
+		// Checks if player has a skill profile for safety
 		if (playerData != null) {
-			//Checks if xp amount is not zero
+			// Checks if xp amount is not zero
 			if (amount != 0) {
-				//Gets xp amount
-				double xpAmount = amount * getMultiplier(player, skill);
-				//Calls event
-				XpGainEvent event = new XpGainEvent(player, skill, xpAmount);
+				// Gets xp amount
+				double originalAmount = amount * getMultiplier(player, skill);
+				// Calls event
+				XpGainEvent event = new XpGainEvent(player, skill, originalAmount);
 				Bukkit.getPluginManager().callEvent(event);
 				if (!event.isCancelled()) {
-					//Adds xp
+					// Adds xp
 					playerData.addSkillXp(skill, event.getAmount());
-					//Check if player leveled up
+					// Check if player leveled up
 					checkLevelUp(player, skill);
-					//Sends action bar message
-					plugin.getActionBar().sendXpActionBar(player, skill, event.getAmount());
+
+					double xpAmount = event.getAmount();
+					plugin.getActionBar().sendXpActionBar(player, skill, xpAmount); // Sends action bar message
 					// Sends boss bar if enabled
-					sendBossBar(player, skill, playerData);
+					sendBossBar(player, skill, playerData, xpAmount);
 				}
 			}
 		}
 	}
 
-	private void sendBossBar(Player player, Skill skill, PlayerData playerData) {
+	private void sendBossBar(Player player, Skill skill, PlayerData playerData, double xpAmount) {
 		if (OptionL.getBoolean(Option.BOSS_BAR_ENABLED)) {
 			// Check whether boss bar should update
 			plugin.getBossBar().incrementAction(player, skill);
@@ -120,10 +121,12 @@ public class Leveler {
 			if (currentAction != -1 && currentAction % OptionL.getInt(Option.BOSS_BAR_UPDATE_EVERY) == 0) {
 				int level = playerData.getSkillLevel(skill);
 				boolean notMaxed = xpRequirements.getListSize(skill) > playerData.getSkillLevel(skill) - 1 && level < OptionL.getMaxLevel(skill);
+				double currentXp = playerData.getSkillXp(skill);
 				if (notMaxed) {
-					plugin.getBossBar().sendBossBar(player, skill, playerData.getSkillXp(skill), xpRequirements.getXpRequired(skill, level + 1), level, false);
+					double levelXp = xpRequirements.getXpRequired(skill, level + 1);
+					plugin.getBossBar().sendBossBar(player, skill, currentXp, levelXp, xpAmount, level, false);
 				} else {
-					plugin.getBossBar().sendBossBar(player, skill, 1, 1, level, true);
+					plugin.getBossBar().sendBossBar(player, skill, currentXp, 1, xpAmount, level, true);
 				}
 			}
 		}
@@ -140,9 +143,10 @@ public class Leveler {
 			//Check if player leveled up
 			checkLevelUp(player, skill);
 			//Sends action bar message
-			plugin.getActionBar().sendXpActionBar(player, skill, amount - originalAmount);
+			double xpAmount = amount - originalAmount;
+			plugin.getActionBar().sendXpActionBar(player, skill, xpAmount);
 			// Sends boss bar if enabled
-			sendBossBar(player, skill, playerData);
+			sendBossBar(player, skill, playerData, xpAmount);
 		}
 	}
 	

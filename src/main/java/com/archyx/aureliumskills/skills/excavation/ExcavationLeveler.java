@@ -36,7 +36,7 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 			return;
 		}
 		Player player = event.getPlayer();
-		if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
+		if (blockXpGainLocation(event.getBlock().getLocation(), player, Skills.EXCAVATION)) return;
 		if (blockXpGainPlayer(player)) return;
 		// Search through sources until a match is found for the block broken
 		for (ExcavationSource source : ExcavationSource.values()) {

@@ -106,6 +106,8 @@ public class PlayerData {
     }
 
     public void addSkillXp(Skill skill, double amount) {
+        if (!OptionL.isEnabled(skill)) return; // Ignore disabled skills
+
         skillXp.merge(skill, amount, Double::sum);
     }
 
@@ -352,6 +354,28 @@ public class PlayerData {
             return false;
         }
         return true;
+    }
+
+    public PlayerDataState getState() {
+        Map<Skill, Integer> copiedLevels = new HashMap<>(skillLevels);
+        Map<Skill, Double> copiedXp = new HashMap<>(skillXp);
+        Map<String, StatModifier> copiedStatModifiers = new HashMap<>(statModifiers);
+        return new PlayerDataState(player.getUniqueId(), copiedLevels, copiedXp, copiedStatModifiers, mana);
+    }
+
+    public void applyState(PlayerDataState state) {
+        this.skillLevels.clear();
+        this.skillLevels.putAll(state.getSkillLevels());
+
+        this.skillXp.clear();
+        this.skillXp.putAll(state.getSkillXp());
+
+        this.statModifiers.clear();
+        this.statModifiers.putAll(state.getStatModifiers());
+
+        this.mana = state.getMana();
+
+        plugin.getLeveler().updateStats(player);
     }
 
 }

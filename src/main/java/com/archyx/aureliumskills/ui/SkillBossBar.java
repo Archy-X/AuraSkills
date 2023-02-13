@@ -8,8 +8,10 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
 import com.archyx.aureliumskills.util.math.BigNumber;
+import com.archyx.aureliumskills.util.math.NumberUtil;
 import com.archyx.aureliumskills.util.math.RomanNumber;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -25,15 +27,16 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class SkillBossBar implements Listener {
 
-    private final Map<Player, Map<Skill, BossBar>> bossBars;
-    private final Map<Player, Map<Skill, Integer>> currentActions;
-    private final Map<Player, Map<Skill, Integer>> checkCurrentActions;
-    private final Map<Player, BossBar> singleBossBars;
-    private final Map<Player, Integer> singleCurrentActions;
-    private final Map<Player, Integer> singleCheckCurrentActions;
+    private final Map<UUID, Map<Skill, BossBar>> bossBars;
+    private final Map<UUID, Map<Skill, Integer>> currentActions;
+    private final Map<UUID, Map<Skill, Integer>> checkCurrentActions;
+    private final Map<UUID, BossBar> singleBossBars;
+    private final Map<UUID, Integer> singleCurrentActions;
+    private final Map<UUID, Integer> singleCheckCurrentActions;
     private String mode;
     private int stayTime;
     private Map<Skill, BarColor> colors;
@@ -85,11 +88,11 @@ public class SkillBossBar implements Listener {
             colors.put(skill, color);
             styles.put(skill, style);
         }
-        for (Map.Entry<Player, BossBar> entry : singleBossBars.entrySet()) {
+        for (Map.Entry<UUID, BossBar> entry : singleBossBars.entrySet()) {
             entry.getValue().setVisible(false);
             entry.getValue().removeAll();
         }
-        for (Map.Entry<Player, Map<Skill, BossBar>> entry : bossBars.entrySet()) {
+        for (Map.Entry<UUID, Map<Skill, BossBar>> entry : bossBars.entrySet()) {
             Map<Skill, BossBar> bossBars = entry.getValue();
             for (Map.Entry<Skill, BossBar> bossBarEntry : bossBars.entrySet()) {
                 bossBarEntry.getValue().setVisible(false);
@@ -100,160 +103,164 @@ public class SkillBossBar implements Listener {
         singleBossBars.clear();
     }
 
-    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, int level, boolean maxed) {
+    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+        UUID playerId = player.getUniqueId();
         if (maxed && !OptionL.getBoolean(Option.BOSS_BAR_DISPLAY_MAXED)) { // display-maxed option
             return;
         }
-        Locale locale = plugin.getLang().getLocale(player);
-        BarColor color = getColor(skill);
-        BarStyle style = getStyle(skill);
         BossBar bossBar;
         // Single Mode
         if (mode.equals("single")) {
-            bossBar = singleBossBars.get(player);
-        }
-        else {
-            if (!bossBars.containsKey(player)) bossBars.put(player, new HashMap<>());
-            bossBar = bossBars.get(player).get(skill);
+            bossBar = singleBossBars.get(playerId);
+        } else {
+            if (!bossBars.containsKey(playerId)) bossBars.put(playerId, new HashMap<>());
+            bossBar = bossBars.get(playerId).get(skill);
         }
         // If player does not have a boss bar in that skill
         if (bossBar == null) {
-            if (!maxed) {
-                if (!OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
-                    bossBar = Bukkit.createBossBar(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
-                            "{skill}", skill.getDisplayName(locale),
-                            "{level}", RomanNumber.toRoman(level),
-                            "{current_xp}", nf.format(currentXp),
-                            "{level_xp}", BigNumber.withSuffix((long) levelXp)), color, style);
-                }
-                else {
-                    bossBar = Bukkit.createBossBar(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
-                            "{skill}", skill.getDisplayName(locale),
-                            "{level}", RomanNumber.toRoman(level),
-                            "{current_xp}", String.valueOf((int) currentXp),
-                            "{level_xp}", BigNumber.withSuffix((long) levelXp)), color, style);
-                }
-            }
-            else {
-                bossBar = Bukkit.createBossBar(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
-                        "{skill}", skill.getDisplayName(locale),
-                        "{level}", RomanNumber.toRoman(level)), color, style);
-            }
-            double progress = currentXp / levelXp;
-            if (progress <= 1 && progress >= 0) {
-                bossBar.setProgress(currentXp / levelXp);
-            }
-            else {
-                bossBar.setProgress(1.0);
-            }
-            bossBar.addPlayer(player);
-            // Add to maps
-            if (mode.equals("single")) {
-                singleBossBars.put(player, bossBar);
-            }
-            else {
-                bossBars.get(player).put(skill, bossBar);
-            }
+            bossBar = handleNewBossBar(player, skill, currentXp, levelXp, xpGained, level, maxed);
         }
         // Use existing one
         else {
-            if (!maxed) {
-                if (!OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
-                    bossBar.setTitle(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
-                            "{skill}", skill.getDisplayName(locale),
-                            "{level}", RomanNumber.toRoman(level),
-                            "{current_xp}", nf.format(currentXp),
-                            "{level_xp}", BigNumber.withSuffix((long) levelXp)));
-                }
-                else {
-                    bossBar.setTitle(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
-                            "{skill}", skill.getDisplayName(locale),
-                            "{level}", RomanNumber.toRoman(level),
-                            "{current_xp}", String.valueOf((int) currentXp),
-                            "{level_xp}", BigNumber.withSuffix((long) levelXp)));
-                }
-            }
-            else {
-                bossBar.setTitle(TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
-                        "{level}", RomanNumber.toRoman(level),
-                        "{skill}", skill.getDisplayName(locale)));
-            }
-            double progress = currentXp / levelXp;
-            if (progress <= 1 && progress >= 0) {
-                bossBar.setProgress(currentXp / levelXp);
-            }
-            else {
-                bossBar.setProgress(1.0);
-            }
-            bossBar.setVisible(true);
+            handleExistingBossBar(bossBar, player, skill, currentXp, levelXp, xpGained, level, maxed);
         }
         // Increment current action
         if (mode.equals("single")) {
-            Integer currentAction = singleCurrentActions.get(player);
-            if (currentAction != null) {
-                singleCurrentActions.put(player, currentAction + 1);
-            }
-            else {
-                singleCurrentActions.put(player, 0);
-            }
+            singleCurrentActions.compute(playerId, (id, num) -> (num == null) ? 0 : num + 1);
+        } else {
+            currentActions.computeIfAbsent(playerId, k -> new HashMap<>()).compute(skill, (sk, num) -> (num == null) ? 0 : num + 1);
         }
-        else {
-            if (!currentActions.containsKey(player)) currentActions.put(player, new HashMap<>());
-            Integer currentAction = currentActions.get(player).get(skill);
-            if (currentAction != null) {
-                currentActions.get(player).put(skill, currentAction + 1);
-            } else {
-                currentActions.get(player).put(skill, 0);
-            }
+        scheduleHide(playerId, skill, bossBar); // Schedule tasks to hide the boss bar
+    }
+
+    private BossBar handleNewBossBar(Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+        Locale locale = plugin.getLang().getLocale(player);
+        BarColor color = getColor(skill);
+        BarStyle style = getStyle(skill);
+        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, (long) xpGained, level, maxed, locale);
+
+        BossBar bossBar = Bukkit.createBossBar(bossBarText, color, style);
+        // Calculate xp progress
+        double progress = currentXp / levelXp;
+        if (progress <= 1 && progress >= 0) {
+            bossBar.setProgress(currentXp / levelXp);
+        } else {
+            bossBar.setProgress(1.0);
         }
-        scheduleHide(player, skill, bossBar);
+        bossBar.addPlayer(player);
+        // Add to maps
+        if (mode.equals("single")) {
+            singleBossBars.put(player.getUniqueId(), bossBar);
+        } else {
+            bossBars.get(player.getUniqueId()).put(skill, bossBar);
+        }
+        return bossBar;
+    }
+
+    private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+        Locale locale = plugin.getLang().getLocale(player);
+        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, locale);
+
+        bossBar.setTitle(bossBarText); // Update the boss bar to the new text value
+        // Calculate xp progress
+        double progress = currentXp / levelXp;
+        if (progress <= 1 && progress >= 0) {
+            bossBar.setProgress(currentXp / levelXp);
+        } else {
+            bossBar.setProgress(1.0);
+        }
+        bossBar.setVisible(true); // Show the boss bar to the player
+    }
+
+    private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, double xpGained, int level, boolean maxed, Locale locale) {
+        String bossBarText;
+        String currentXpText = getCurrentXpText(currentXp);
+        if (!maxed) {
+            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_XP, locale),
+                    "{skill}", skill.getDisplayName(locale),
+                    "{level}", RomanNumber.toRoman(level),
+                    "{current_xp}", currentXpText,
+                    "{level_xp}", getLevelXpText(levelXp),
+                    "{xp_gained}", NumberUtil.format1(xpGained)));
+        } else {
+            bossBarText = setPlaceholders(player, TextUtil.replace(Lang.getMessage(ActionBarMessage.BOSS_BAR_MAXED, locale),
+                    "{skill}", skill.getDisplayName(locale),
+                    "{level}", RomanNumber.toRoman(level),
+                    "{current_xp}", currentXpText,
+                    "{xp_gained}", NumberUtil.format1(xpGained)));
+        }
+        return bossBarText;
+    }
+
+    private String getLevelXpText(long levelXp) {
+        if (OptionL.getBoolean(Option.BOSS_BAR_USE_SUFFIX)) {
+            return BigNumber.withSuffix(levelXp);
+        } else {
+            return String.valueOf(levelXp);
+        }
+    }
+
+    // Get the formatted text for the current player xp depending on rounding option
+    private String getCurrentXpText(double currentXp) {
+        String currentXpText;
+        if (OptionL.getBoolean(Option.BOSS_BAR_ROUND_XP)) {
+            currentXpText = String.valueOf(Math.round(currentXp));
+        } else {
+            currentXpText = nf.format(currentXp);
+        }
+        return currentXpText;
     }
 
     public void incrementAction(Player player, Skill skill) {
-        if (!singleCheckCurrentActions.containsKey(player)) singleCheckCurrentActions.put(player, 0);
-        if (!checkCurrentActions.containsKey(player)) checkCurrentActions.put(player, new HashMap<>());
+        UUID playerId = player.getUniqueId();
+        if (!singleCheckCurrentActions.containsKey(playerId)) singleCheckCurrentActions.put(playerId, 0);
+        if (!checkCurrentActions.containsKey(playerId)) checkCurrentActions.put(playerId, new HashMap<>());
         // Increment current action
         if (mode.equals("single")) {
-            singleCheckCurrentActions.put(player, singleCheckCurrentActions.get(player) + 1);
+            singleCheckCurrentActions.put(playerId, singleCheckCurrentActions.get(playerId) + 1);
         }
         else {
-            Integer currentAction = checkCurrentActions.get(player).get(skill);
+            Integer currentAction = checkCurrentActions.get(playerId).get(skill);
             if (currentAction != null) {
-                checkCurrentActions.get(player).put(skill, currentAction + 1);
+                checkCurrentActions.get(playerId).put(skill, currentAction + 1);
             } else {
-                checkCurrentActions.get(player).put(skill, 0);
+                checkCurrentActions.get(playerId).put(skill, 0);
             }
         }
     }
 
-    private void scheduleHide(Player player, Skill skill, BossBar bossBar) {
+    private void scheduleHide(UUID playerId, Skill skill, BossBar bossBar) {
         if (mode.equals("single")) {
-            final int currentAction = singleCurrentActions.get(player);
+            final int currentAction = singleCurrentActions.get(playerId);
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (mode.equals("single")) {
-                        if (currentAction == singleCurrentActions.get(player)) {
-                            bossBar.setVisible(false);
-                            singleCheckCurrentActions.remove(player);
+                        if (currentAction == singleCurrentActions.getOrDefault(playerId, 0)) {
+                            if (bossBar != null) {
+                                bossBar.setVisible(false);
+                            }
+                            singleCheckCurrentActions.remove(playerId);
                         }
                     }
                 }
             }.runTaskLater(plugin, stayTime);
         }
         else {
-            Map<Skill, Integer> multiCurrentActions = currentActions.get(player);
+            Map<Skill, Integer> multiCurrentActions = currentActions.get(playerId);
             if (multiCurrentActions != null) {
                 final int currentAction = multiCurrentActions.get(skill);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
                         if (!mode.equals("single")) {
-                            Map<Skill, Integer> multiCurrentActions = currentActions.get(player);
+                            Map<Skill, Integer> multiCurrentActions = currentActions.get(playerId);
                             if (multiCurrentActions != null) {
-                                if (currentAction == multiCurrentActions.get(skill)) {
-                                    bossBar.setVisible(false);
-                                    checkCurrentActions.remove(player);
+                                if (currentAction == multiCurrentActions.getOrDefault(skill, 0)) {
+                                    if (bossBar != null) {
+                                        bossBar.setVisible(false);
+                                    }
+                                    checkCurrentActions.remove(playerId);
                                 }
                             }
                         }
@@ -264,23 +271,18 @@ public class SkillBossBar implements Listener {
     }
 
     private BarColor getColor(Skill skill) {
-        BarColor color = colors.get(skill);
-        if (color == null) color = BarColor.GREEN;
-        return color;
+        return colors.getOrDefault(skill, BarColor.GREEN);
     }
 
     private BarStyle getStyle(Skill skill) {
-        BarStyle style = styles.get(skill);
-        if (style == null) style = BarStyle.SOLID;
-        return style;
+        return styles.getOrDefault(skill, BarStyle.SOLID);
     }
 
     public int getCurrentAction(Player player, Skill skill) {
         if (mode.equals("single")) {
-            return singleCheckCurrentActions.get(player);
-        }
-        else {
-            Map<Skill, Integer> multiCurrentActions = checkCurrentActions.get(player);
+            return singleCheckCurrentActions.get(player.getUniqueId());
+        } else {
+            Map<Skill, Integer> multiCurrentActions = checkCurrentActions.get(player.getUniqueId());
             if (multiCurrentActions != null) {
                 return multiCurrentActions.get(skill);
             }
@@ -288,15 +290,23 @@ public class SkillBossBar implements Listener {
         return -1;
     }
 
+    private String setPlaceholders(Player player, String input) {
+        if (OptionL.getBoolean(Option.BOSS_BAR_PLACEHOLDER_API) && plugin.isPlaceholderAPIEnabled()) {
+            return PlaceholderAPI.setPlaceholders(player, input);
+        } else {
+            return input;
+        }
+    }
+
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        bossBars.remove(player);
-        currentActions.remove(player);
-        singleBossBars.remove(player);
-        singleCurrentActions.remove(player);
-        checkCurrentActions.remove(player);
-        singleCheckCurrentActions.remove(player);
+        UUID playerId = event.getPlayer().getUniqueId();
+        bossBars.remove(playerId);
+        currentActions.remove(playerId);
+        singleBossBars.remove(playerId);
+        singleCurrentActions.remove(playerId);
+        checkCurrentActions.remove(playerId);
+        singleCheckCurrentActions.remove(playerId);
     }
 
 }

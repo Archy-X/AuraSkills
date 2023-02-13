@@ -61,7 +61,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 					if (event.getContents().getIngredient() != null) {
 						Player player = offlinePlayer.getPlayer();
 						if (player != null) {
-							if (blockXpGainLocation(event.getBlock().getLocation(), player)) return;
+							if (blockXpGainLocation(event.getBlock().getLocation(), player, Skills.ALCHEMY)) return;
 							if (blockXpGainPlayer(player)) return;
 							addAlchemyXp(player, event.getContents().getIngredient().getType());
 						}
@@ -190,7 +190,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		Player player = (Player) event.getWhoClicked();
-		if (blockXpGainLocation(location, player)) return;
+		if (blockXpGainLocation(location, player, Skills.ALCHEMY)) return;
 		if (blockXpGainPlayer(player)) return;
 
 		if (!standData.isSlotBrewed(slot)) return; // Check that the slot was brewed

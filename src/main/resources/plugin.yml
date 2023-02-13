@@ -1,5 +1,5 @@
 name: AureliumSkills
-version: Beta 1.3.12
+version: Beta 1.3.13
 main: com.archyx.aureliumskills.AureliumSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
@@ -201,4 +201,6 @@ permissions:
     aureliumskills.sources:
         default: true
     aureliumskills.profile:
+        default: op
+    aureliumskills.transfer:
         default: op

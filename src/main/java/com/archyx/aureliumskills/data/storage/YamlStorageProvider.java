@@ -183,6 +183,39 @@ public class YamlStorageProvider extends StorageProvider {
     }
 
     @Override
+    public boolean applyState(PlayerDataState state) {
+        File file = new File(plugin.getDataFolder() + "/playerdata/" + state.getUuid() + ".yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        try {
+            config.set("uuid", state.getUuid());
+            // Save skill data
+            Map<Skill, Integer> skillLevels = state.getSkillLevels();
+            Map<Skill, Double> skillXp = state.getSkillXp();
+            for (Skill skill : Skills.values()) {
+                String path = "skills." + skill.toString().toLowerCase(Locale.ROOT) + ".";
+                config.set(path + "level", skillLevels.get(skill));
+                config.set(path + "xp", skillXp.get(skill));
+            }
+            config.set("stat_modifiers", null);
+            // Save stat modifiers
+            int count = 0;
+            for (StatModifier modifier : state.getStatModifiers().values()) {
+                String path = "stat_modifiers." + count + ".";
+                config.set(path + "name", modifier.getName());
+                config.set(path + "stat", modifier.getStat().toString().toLowerCase(Locale.ROOT));
+                config.set(path + "value", modifier.getValue());
+                count++;
+            }
+            config.set("mana", state.getMana());
+            config.save(file); // Save the file
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;

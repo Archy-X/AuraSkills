@@ -228,6 +228,64 @@ public class MySqlStorageProvider extends StorageProvider {
         return null;
     }
 
+    @Override
+    public boolean applyState(PlayerDataState state) {
+        try {
+            StringBuilder sqlBuilder = new StringBuilder("INSERT INTO SkillData (ID, ");
+            for (Skill skill : Skills.getOrderedValues()) {
+                sqlBuilder.append(skill.toString()).append("_LEVEL, ");
+                sqlBuilder.append(skill).append("_XP, ");
+            }
+            sqlBuilder.append("STAT_MODIFIERS, MANA) VALUES(?, ");
+            for (int i = 0; i < Skills.getOrderedValues().size(); i++) {
+                sqlBuilder.append("?, ?, ");
+            }
+            sqlBuilder.append("?, ?) ");
+            sqlBuilder.append("ON DUPLICATE KEY UPDATE ");
+            for (Skill skill : Skills.getOrderedValues()) {
+                sqlBuilder.append(skill.toString()).append("_LEVEL=?, ");
+                sqlBuilder.append(skill).append("_XP=?, ");
+            }
+            sqlBuilder.append("STAT_MODIFIERS=?, ");
+            sqlBuilder.append("MANA=?");
+            // Enter values into prepared statement
+            try (PreparedStatement statement = connection.prepareStatement(sqlBuilder.toString())) {
+                statement.setString(1, state.getUuid().toString());
+                int index = 2;
+                for (int i = 0; i < 2; i++) {
+                    for (Skill skill : Skills.getOrderedValues()) {
+                        statement.setInt(index++, state.getSkillLevels().get(skill));
+                        statement.setDouble(index++, state.getSkillXp().get(skill));
+                    }
+                    // Build stat modifiers json
+                    StringBuilder modifiersJson = new StringBuilder();
+                    if (state.getStatModifiers().size() > 0) {
+                        modifiersJson.append("[");
+                        for (StatModifier statModifier : state.getStatModifiers().values()) {
+                            modifiersJson.append("{\"name\":\"").append(statModifier.getName())
+                                    .append("\",\"stat\":\"").append(statModifier.getStat().toString().toLowerCase(Locale.ROOT))
+                                    .append("\",\"value\":").append(statModifier.getValue()).append("},");
+                        }
+                        modifiersJson.deleteCharAt(modifiersJson.length() - 1);
+                        modifiersJson.append("]");
+                    }
+                    // Add stat modifiers to prepared statement
+                    if (!modifiersJson.toString().equals("")) {
+                        statement.setString(index++, modifiersJson.toString());
+                    } else {
+                        statement.setNull(index++, Types.VARCHAR);
+                    }
+                    statement.setDouble(index++, state.getMana()); // Set mana
+                }
+                statement.executeUpdate();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private void createTable() throws SQLException {
         DatabaseMetaData dbm = connection.getMetaData();
         ResultSet tables = dbm.getTables(null, null, "SkillData", null);

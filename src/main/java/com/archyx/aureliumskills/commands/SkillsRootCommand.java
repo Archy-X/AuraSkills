@@ -3,10 +3,12 @@ package com.archyx.aureliumskills.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.Optional;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.data.PlayerDataState;
 import com.archyx.aureliumskills.item.UnclaimedItemsMenu;
 import com.archyx.aureliumskills.lang.CommandMessage;
 import com.archyx.aureliumskills.lang.Lang;
@@ -30,10 +32,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @CommandAlias("%skills_alias")
@@ -434,6 +434,73 @@ public class SkillsRootCommand extends BaseCommand {
 		}
 		properties.put("sort_type", sortType);
 		plugin.getMenuManager().openMenu(player, "sources", properties);
+	}
+
+	@Subcommand("transfer")
+	@CommandPermission("aureliumskills.transfer")
+	public void onTransfer(CommandSender sender, UUID playerFrom, UUID playerTo) {
+		OfflinePlayer offPlayerFrom = Bukkit.getOfflinePlayer(playerFrom);
+		OfflinePlayer offPlayerTo = Bukkit.getOfflinePlayer(playerTo);
+
+		Locale locale = plugin.getLang().getLocale(sender);
+
+		CompletableFuture<PlayerDataState> future = getPlayerDataState(offPlayerFrom);
+		future.thenAcceptAsync((oldState) -> {
+			if (oldState == null) {
+				Bukkit.getLogger().warning("Error transferring player data: Player data not found for player " + playerFrom);
+				sender.sendMessage(AureliumSkills.getPrefix(locale) +
+						TextUtil.replace(Lang.getMessage(CommandMessage.TRANSFER_SUCCESS, locale),
+								"{from}", playerFrom.toString(), "{to}", playerTo.toString()));
+				return;
+			}
+			// Create a new PlayerDataStat with the UUID changed to the playerTo UUID
+			PlayerDataState newState = new PlayerDataState(playerTo, oldState.getSkillLevels(), oldState.getSkillXp(), oldState.getStatModifiers(), oldState.getMana());
+
+			if (offPlayerTo.isOnline()) { // Handle online transfer
+				PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerTo);
+				if (playerData != null) {
+					playerData.applyState(newState);
+					// Successful
+					sender.sendMessage(AureliumSkills.getPrefix(locale) +
+							TextUtil.replace(Lang.getMessage(CommandMessage.TRANSFER_SUCCESS, locale),
+									"{from}", playerFrom.toString(), "{to}", playerTo.toString()));
+				} else {
+					Bukkit.getLogger().warning("Error transferring player data: Player data not found for player " + playerTo);
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.TRANSFER_ERROR, locale));
+				}
+			} else { // Handle offline transfer
+				if (plugin.getStorageProvider().applyState(newState)) {
+					// Successful
+					sender.sendMessage(AureliumSkills.getPrefix(locale) +
+							TextUtil.replace(Lang.getMessage(CommandMessage.TRANSFER_SUCCESS, locale),
+									"{from}", playerFrom.toString(), "{to}", playerTo.toString()));
+				} else {
+					// Error
+					sender.sendMessage(AureliumSkills.getPrefix(locale) + Lang.getMessage(CommandMessage.TRANSFER_ERROR, locale));
+				}
+			}
+		});
+	}
+
+	// PlayerDataState may return null
+	private CompletableFuture<PlayerDataState> getPlayerDataState(OfflinePlayer player) {
+		CompletableFuture<PlayerDataState> future = new CompletableFuture<>();
+		if (player.isOnline()) {
+			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player.getUniqueId());
+			if (playerData != null) {
+				future.complete(playerData.getState());
+			} else {
+				future.complete(null);
+			}
+		} else {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					future.complete(plugin.getStorageProvider().loadState(player.getUniqueId()));
+				}
+			}.runTaskAsynchronously(plugin);
+		}
+		return future;
 	}
 
 	@Subcommand("help")

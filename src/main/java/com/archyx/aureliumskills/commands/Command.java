@@ -47,6 +47,7 @@ public enum Command {
     SKILL_SETLEVEL,
     TOGGLE,
     TOP,
+    TRANSFER,
     CLAIMITEMS,
     UPDATELEADERBOARDS,
     XP_ADD,

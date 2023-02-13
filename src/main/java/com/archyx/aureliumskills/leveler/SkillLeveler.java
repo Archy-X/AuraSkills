@@ -117,7 +117,7 @@ public abstract class SkillLeveler {
         }
     }
 
-    public boolean blockXpGain(Player player) {
+    public boolean blockXpGain(Player player, Skill skill) {
         //Checks if in blocked world
         Location location = player.getLocation();
         if (plugin.getWorldManager().isInBlockedWorld(location)) {
@@ -137,12 +137,14 @@ public abstract class SkillLeveler {
                 return true;
             }
             // Check if blocked by flags
-            else return plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN);
+            else if (plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN)) {
+                return true;
+            } else return plugin.getWorldGuardSupport().blockedBySkillFlag(location, player, skill);
         }
         return false;
     }
 
-    public boolean blockXpGainLocation(Location location, Player player) {
+    public boolean blockXpGainLocation(Location location, Player player, Skill skill) {
         //Checks if in blocked world
         if (plugin.getWorldManager().isInBlockedWorld(location)) {
             return true;
@@ -153,7 +155,9 @@ public abstract class SkillLeveler {
                 return true;
             }
             // Check if blocked by flags
-            else return plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN);
+            else if (plugin.getWorldGuardSupport().blockedByFlag(location, player, WorldGuardFlags.FlagKey.XP_GAIN)) {
+                return true;
+            } else return plugin.getWorldGuardSupport().blockedBySkillFlag(location, player, skill);
         }
         return false;
     }
