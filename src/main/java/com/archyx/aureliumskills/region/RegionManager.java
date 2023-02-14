@@ -232,7 +232,7 @@ public class RegionManager {
     private boolean isRegionUnused(Region region) {
         for (int chunkX = region.getX() * 32; chunkX < region.getX() * 32 + 32; chunkX++) {
             for (int chunkZ = region.getZ() * 32; chunkZ < region.getZ() * 32 + 32; chunkZ++) {
-                if (region.getWorld() == null || region.getWorld().isChunkLoaded(chunkX, chunkZ)) {
+                if (region.getWorld() != null && region.getWorld().isChunkLoaded(chunkX, chunkZ)) {
                     return false;
                 }
             }
