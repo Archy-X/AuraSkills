@@ -266,10 +266,12 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         // Get Actionbar Status
         if (identifier.startsWith("actionbar_status")) {
-            if (new ActionBar(AureliumAPI.getPlugin()).getPlayerActionbarEnableStatus(player)) {
-                return "Enable";
-            } else {
-                return "Disable";
+            if (identifier.equals("actionbar_status")) {
+                if (AureliumAPI.getPlugin().getActionBar().getPlayerActionbarEnableStatus(player)) {
+                    return "true";
+                } else {
+                    return "false";
+                }
             }
         }
 
