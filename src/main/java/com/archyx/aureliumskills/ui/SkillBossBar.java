@@ -236,7 +236,7 @@ public class SkillBossBar implements Listener {
                 @Override
                 public void run() {
                     if (mode.equals("single")) {
-                        if (currentAction == singleCurrentActions.get(playerId)) {
+                        if (currentAction == singleCurrentActions.getOrDefault(playerId, 0)) {
                             if (bossBar != null) {
                                 bossBar.setVisible(false);
                             }
