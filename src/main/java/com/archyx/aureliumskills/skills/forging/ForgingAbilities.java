@@ -55,6 +55,14 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
             if (click != ClickType.LEFT && click != ClickType.RIGHT && ItemUtils.isInventoryFull(player)) return;
             if (event.getResult() != Event.Result.ALLOW) return; // Make sure the click was successful
             if (player.getItemOnCursor().getType() != Material.AIR) return; // Make sure cursor is empty
+
+            InventoryAction action = event.getAction();
+            // Only give if item was picked up
+            if (action != InventoryAction.PICKUP_ALL && action != InventoryAction.MOVE_TO_OTHER_INVENTORY
+                    && action != InventoryAction.PICKUP_HALF && action != InventoryAction.DROP_ALL_SLOT
+                    && action != InventoryAction.DROP_ONE_SLOT && action != InventoryAction.HOTBAR_SWAP) {
+                return;
+            }
             if (event.getClickedInventory().getType() == InventoryType.GRINDSTONE) {
                 if (event.getSlotType() == InventoryType.SlotType.RESULT) {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
