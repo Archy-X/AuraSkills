@@ -103,28 +103,26 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void archeryListener(EntityDamageByEntityEvent event) {
         if (OptionL.isEnabled(Skills.ARCHERY)) {
-            if (!event.isCancelled()) {
-                if (event.getDamager() instanceof Arrow) {
-                    Arrow arrow = (Arrow) event.getDamager();
-                    if (arrow.getShooter() instanceof Player) {
-                        Player player = (Player) arrow.getShooter();
-                        if (blockAbility(player)) return;
-                        // Applies abilities
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-                        if (playerData == null) return;
-                        AbilityManager options = plugin.getAbilityManager();
-                        if (options.isEnabled(Ability.STUN)) {
-                            if (event.getEntity() instanceof LivingEntity) {
-                                LivingEntity entity = (LivingEntity) event.getEntity();
-                                stun(playerData, entity);
-                            }
+            if (event.getDamager() instanceof Arrow) {
+                Arrow arrow = (Arrow) event.getDamager();
+                if (arrow.getShooter() instanceof Player) {
+                    Player player = (Player) arrow.getShooter();
+                    if (blockAbility(player)) return;
+                    // Applies abilities
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    AbilityManager options = plugin.getAbilityManager();
+                    if (options.isEnabled(Ability.STUN)) {
+                        if (event.getEntity() instanceof LivingEntity) {
+                            LivingEntity entity = (LivingEntity) event.getEntity();
+                            stun(playerData, entity);
                         }
-                        if (options.isEnabled(Ability.PIERCING)) {
-                            piercing(event, playerData, player, arrow);
-                        }
+                    }
+                    if (options.isEnabled(Ability.PIERCING)) {
+                        piercing(event, playerData, player, arrow);
                     }
                 }
             }

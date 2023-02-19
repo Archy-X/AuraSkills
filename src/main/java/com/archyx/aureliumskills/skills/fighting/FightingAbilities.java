@@ -13,6 +13,7 @@ import com.archyx.aureliumskills.skills.Skills;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -23,6 +24,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Locale;
@@ -98,9 +101,12 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     public void bleed(EntityDamageByEntityEvent event, PlayerData playerData, LivingEntity entity) {
         if (r.nextDouble() < (getValue(Ability.BLEED, playerData) / 100)) {
             if (event.getFinalDamage() < entity.getHealth()) {
-                if (!entity.hasMetadata("AureliumSkills-BleedTicks")) {
+                PersistentDataContainer container = entity.getPersistentDataContainer();
+                NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
+
+                if (!container.has(key, PersistentDataType.INTEGER)) {
                     int baseTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "base_ticks").asInt();
-                    entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, baseTicks));
+                    container.set(key, PersistentDataType.INTEGER, baseTicks);
                     // Send messages
                     if (plugin.getAbilityManager().getOptionAsBooleanElseTrue(Ability.BLEED, "enable_enemy_message")) {
                         Locale locale = playerData.getLocale();
@@ -119,12 +125,12 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     // Schedule applying bleed tick damage
                     scheduleBleedTicks(entity, playerData);
                 } else {
-                    int currentTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
+                    int currentTicks = container.getOrDefault(key, PersistentDataType.INTEGER, 0);
                     int addedTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "added_ticks").asInt();
                     int maxTicks = plugin.getAbilityManager().getOption(Ability.BLEED, "max_ticks").asInt();
                     int resultingTicks = currentTicks + addedTicks;
                     if (resultingTicks <= maxTicks) { // Check that resulting bleed ticks does not exceed maximum
-                        entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, resultingTicks));
+                        container.set(key, PersistentDataType.INTEGER, resultingTicks);
                     }
                 }
             }
@@ -140,8 +146,11 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                     cancel();
                     return;
                 }
-                if (entity.hasMetadata("AureliumSkills-BleedTicks")) {
-                    int bleedTicks = entity.getMetadata("AureliumSkills-BleedTicks").get(0).asInt();
+                PersistentDataContainer container = entity.getPersistentDataContainer();
+                NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
+
+                if (container.has(key, PersistentDataType.INTEGER)) {
+                    int bleedTicks = container.getOrDefault(key, PersistentDataType.INTEGER, 0);
                     if (bleedTicks > 0) {
                         // Apply bleed
                         double damage = plugin.getAbilityManager().getValue2(Ability.BLEED, playerData.getAbilityLevel(Ability.BLEED));
@@ -153,11 +162,13 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                         }
                         // Decrement bleed ticks
                         if (bleedTicks != 1) {
-                            entity.setMetadata("AureliumSkills-BleedTicks", new FixedMetadataValue(plugin, bleedTicks - 1));
+                            container.set(key, PersistentDataType.INTEGER, bleedTicks - 1);
                         } else {
-                            entity.removeMetadata("AureliumSkills-BleedTicks", plugin);
+                            container.remove(key);
                         }
                         return;
+                    } else {
+                        container.remove(key);
                     }
                 }
                 if (entity instanceof Player) {
@@ -190,24 +201,24 @@ public class FightingAbilities extends AbilityProvider implements Listener {
 
     @EventHandler
     public void onDeath(PlayerRespawnEvent event) {
-        event.getPlayer().removeMetadata("AureliumSkills-BleedTicks", plugin);
+        PersistentDataContainer container = event.getPlayer().getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
+        container.remove(key);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void fightingListener(EntityDamageByEntityEvent event) {
         if (OptionL.isEnabled(Skills.FIGHTING)) {
-            if (!event.isCancelled()) {
-                if (event.getDamager() instanceof Player) {
-                    Player player = (Player) event.getDamager();
-                    if (blockAbility(player)) return;
-                    //If player used sword
-                    if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
-                        PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-                        if (playerData == null) return;
-                        if (isEnabled(Ability.BLEED)) {
-                            if (event.getEntity() instanceof LivingEntity) {
-                                bleed(event, playerData, (LivingEntity) event.getEntity());
-                            }
+            if (event.getDamager() instanceof Player) {
+                Player player = (Player) event.getDamager();
+                if (blockAbility(player)) return;
+                //If player used sword
+                if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    if (isEnabled(Ability.BLEED)) {
+                        if (event.getEntity() instanceof LivingEntity) {
+                            bleed(event, playerData, (LivingEntity) event.getEntity());
                         }
                     }
                 }

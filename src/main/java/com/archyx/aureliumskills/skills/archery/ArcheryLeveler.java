@@ -83,7 +83,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 			return;
 		}
 		Player player = (Player) projectile.getShooter();
-		if (event.getEntity() instanceof LivingEntity) {
+		if (!(event.getEntity() instanceof LivingEntity)) {
 			return;
 		}
 
