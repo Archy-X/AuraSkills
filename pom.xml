@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.archy-x</groupId>
     <artifactId>AureliumSkills</artifactId>
-    <version>Beta1.3.13</version>
+    <version>Beta1.3.14</version>
     <build>
         <plugins>
             <plugin>

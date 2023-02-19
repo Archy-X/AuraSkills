@@ -1,3 +1,18 @@
+Version Beta 1.3.14
+  Changes:
+    - Add Dutch messages
+  API Changes:
+    - The addXp methods in AureliumAPI will no longer grant XP for disabled skills
+  Bug Fixes:
+    - Fix mana ability raise sending empty chat messages
+    - Fix NaN showing on rank item when leaderboard is empty
+    - Fix error when using boss bar single mode
+    - Fix region memory leak when worlds are unloaded or deleted
+    - Fix arrow duplication crash with some protected regions
+    - Fix Bleed activating when it shouldn't in some protected regions
+    - Fix error when using Archery damage-based leveler
+    - Fix Disenchanter grindstone exp exploit
+
 Version Beta 1.3.13
   New Features:
     - Add PlaceholderAPI support to boss bars
