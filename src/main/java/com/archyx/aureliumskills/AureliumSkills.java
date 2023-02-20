@@ -131,6 +131,7 @@ public class AureliumSkills extends JavaPlugin {
 	private ManaAbilityManager manaAbilityManager;
 	private RewardManager rewardManager;
 	private boolean holographicDisplaysEnabled;
+	private boolean decentHologramsEnabled;
 	private boolean worldGuardEnabled;
 	private boolean placeholderAPIEnabled;
 	private boolean vaultEnabled;
@@ -218,7 +219,7 @@ public class AureliumSkills extends JavaPlugin {
 		// Check for Slimefun
 		slimefunEnabled = Bukkit.getPluginManager().isPluginEnabled("Slimefun");
 		if (slimefunEnabled) {
-			getServer().getPluginManager().registerEvents(new SlimefunSupport(this), this);
+			getServer().getPluginManager().registerEvents(new SlimeFunSupport(this), this);
 			getLogger().info("Slimefun Support Enabled!");
 		}
 		// Load health
@@ -239,13 +240,22 @@ public class AureliumSkills extends JavaPlugin {
 		bossBar = new SkillBossBar(this);
 		bossBar.loadOptions();
 		// Checks for holographic displays
-		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+		if (Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays") && OptionL.getBoolean(Option.HOLOGRAPHIC_DISPLAYS_ENABLED)) {
+			decentHologramsEnabled = false;
 			holographicDisplaysEnabled = true;
-			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
 			getLogger().info("HolographicDisplays Support Enabled!");
+		}
+		else if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms") && OptionL.getBoolean(Option.DECENT_HOLOGRAMS_ENABLED)) {
+			holographicDisplaysEnabled = false;
+			decentHologramsEnabled = true;
+			getLogger().info("DecentHolograms Support Enabled!");
 		}
 		else {
 			holographicDisplaysEnabled = false;
+			decentHologramsEnabled = false;
+		}
+		if (holographicDisplaysEnabled || decentHologramsEnabled) {
+			getServer().getPluginManager().registerEvents(new HologramSupport(this), this);
 		}
 		commandManager = new PaperCommandManager(this);
 		// Load	items
@@ -342,7 +352,7 @@ public class AureliumSkills extends JavaPlugin {
 			nbtAPIEnabled = true;
 		}
 	}
-	
+
 	@Override
 	public void onDisable() {
 		for (PlayerData playerData : playerManager.getPlayerDataMap().values()) {
@@ -437,8 +447,8 @@ public class AureliumSkills extends JavaPlugin {
 				saveConfig();
 			}
 		} catch (Exception e) {
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		}
 	}
 
 	private void registerCommands() {
@@ -759,6 +769,10 @@ public class AureliumSkills extends JavaPlugin {
 
 	public boolean isHolographicDisplaysEnabled() {
 		return holographicDisplaysEnabled;
+	}
+
+	public boolean isDecentHologramsEnabled() {
+		return decentHologramsEnabled;
 	}
 
 	public boolean isWorldGuardEnabled() {

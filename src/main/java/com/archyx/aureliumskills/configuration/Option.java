@@ -14,6 +14,11 @@ public enum Option {
     MYSQL_ALWAYS_LOAD_ON_JOIN("mysql.always-load-on-join", OptionType.BOOLEAN),
     MYSQL_SSL("mysql.ssl", OptionType.BOOLEAN),
     TRY_DETECT_CLIENT_LANGUAGE("try-detect-client-language", OptionType.BOOLEAN),
+    // Hologram Hook
+    // Holographic Display hook
+    HOLOGRAPHIC_DISPLAYS_ENABLED("hooks.HolographicDisplays.enable", OptionType.BOOLEAN),
+    //Decent Holograms hook
+    DECENT_HOLOGRAMS_ENABLED("hooks.DecentHolograms.enable", OptionType.BOOLEAN),
     // Action bar options
     ACTION_BAR_ENABLED("action-bar.enabled", OptionType.BOOLEAN),
     ACTION_BAR_IDLE("action-bar.idle", OptionType.BOOLEAN),
