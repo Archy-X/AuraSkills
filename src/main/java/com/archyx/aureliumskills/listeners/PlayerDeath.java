@@ -3,23 +3,10 @@ package com.archyx.aureliumskills.listeners;
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
-import com.archyx.aureliumskills.data.PlayerManager;
-import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
-import com.archyx.aureliumskills.lang.Lang;
-import com.archyx.aureliumskills.util.version.ReleaseData;
-import com.archyx.aureliumskills.util.version.UpdateChecker;
-import dev.dbassett.skullcreator.SkullCreator;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDeathEvent;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerDeath implements Listener {
 
