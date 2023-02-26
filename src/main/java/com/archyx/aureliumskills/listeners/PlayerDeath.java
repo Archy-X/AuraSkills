@@ -26,9 +26,9 @@ public class PlayerDeath implements Listener {
 			Player player = event.getEntity();
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData != null){
-			for (Skill s : plugin.getSkillRegistry().getSkills()) {
-				resetPlayerSkills(player, playerData, s);
-    }
+				for (Skill s : plugin.getSkillRegistry().getSkills()) {
+					resetPlayerSkills(player, playerData, s);
+    				}
 			}
 		}
 	}
