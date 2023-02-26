@@ -7,6 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import com.archyx.aureliumskills.data.PlayerData;
+import com.archyx.aureliumskills.skills.Skill;
+
+
 
 public class PlayerDeath implements Listener {
 
