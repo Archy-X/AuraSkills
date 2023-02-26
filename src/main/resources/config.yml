@@ -131,6 +131,7 @@ disabled-worlds:
     - Example
 
 disable-in-creative-mode: false
+reset-skills-on-death: false
 
 auto-save:
     enabled: false
