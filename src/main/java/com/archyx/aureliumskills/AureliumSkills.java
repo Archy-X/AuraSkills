@@ -25,6 +25,7 @@ import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.leveler.Leveler;
 import com.archyx.aureliumskills.listeners.DamageListener;
 import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
+import com.archyx.aureliumskills.listeners.PlayerDeath;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
@@ -568,6 +569,7 @@ public class AureliumSkills extends JavaPlugin {
 		// Registers Events
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new PlayerJoinQuit(this), this);
+		pm.registerEvents(new PlayerDeath(this), this);
 		regionBlockListener = new RegionBlockListener(this);
 		pm.registerEvents(regionBlockListener, this);
 		pm.registerEvents(new FarmingLeveler(this), this);
