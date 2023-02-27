@@ -261,6 +261,17 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
         }
 
+        // Get Actionbar Status
+        if (identifier.startsWith("actionbar_status")) {
+            if (identifier.equals("actionbar_status")) {
+                if (plugin.getActionBar().getPlayerActionbarEnableStatus(player)) {
+                    return "true";
+                } else {
+                    return "false";
+                }
+            }
+        }
+
         return null;
     }
 
