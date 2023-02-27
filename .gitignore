@@ -16,6 +16,9 @@ out/
 
 target/
 
+.gradle/
+build/
+
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
