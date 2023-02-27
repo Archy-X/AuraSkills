@@ -298,7 +298,7 @@ abilities:
       info: '+{value}% Naprawy Kowadła'
     anvil_master:
       name: Mistrz Kowadła
-      desc: Zwiększa maksymalny koszt naprawy kowadła\n&7  zanim stanie się on zbyt drogi dla {value} punktów doświadczenia.
+      desc: Zwiększa maksymalny koszt napraw w kowadle\n&7  do {value} PD,  zanim stanie się on zbyt drogi.
       info: '{value} Maksymalny Koszt'
     skill_mender:
       name: Naprawiacz Umiejętności
@@ -504,6 +504,11 @@ commands:
     list: '&fGlobalny mnożnik XP dla &6{player}&f: &b{multiplier}x / +{percent}%'
     skill_entry: '&fMnożnik XP &b{skill} &f: &b{multiplier}x / +{percent}%'
     players_only: '&eTylko gracze mogą wyświetlić własny mnożnik! Określ gracza!'
+  profile:
+    skills: "Profil Aurelium Skills dla &6{name}:\n&7UUID: &f{uuid}\n&7Umiejętności:{skill_entries}"
+    skill_entry: "\n  &3{skill} &7- Poziom: &f{level}&7, XP: &f{xp}"
+    stats: "Profil statystyk Aurelium Skills dla &6{name}:\n&7UUID: &f{uuid}\n&7Statystyki:{stat_entries}"
+    stat_entry: "\n  &3{stat} &7- Całkowity poziom: &f{total_level}&7, Podstawowy poziom: &f{base_level}&7, Zmodyfikowany poziom: &f{modified_level}"
   rank:
     header: '&b&lTwój Ranking Umiejętności'
     power: '&eMoc &7(Wszystkie Umiejętności): &f#{rank} z {total}'
@@ -538,6 +543,9 @@ commands:
     average_header_page: '&f--==&b&lŚredni Ranking Umiejętności &f(Strona {page})=--'
     average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUżycie: &a/sk top &f<page> &7lub &a/sk top &f[skill] <page>'
+  transfer:
+    success: '&aPomyślnie przeniesiono dane gracza z &7{from} &ado &7{to}'
+    error: '&cWystąpił błąd podczas przenoszenia danych gracza. Sprawdź konsolę w poszukiwaniu błędów.'
   updateleaderboards:
     already_updating: '&eTablica wyników jest już aktualizowana!'
     updated: '&aTablica wyników zaktualizowana!'
@@ -547,13 +555,13 @@ commands:
     set: '&7Ustawiono XP &b{skill} &7graczowi &7{player} &7na {amount}'
     remove: '&7Usunięto &b{amount} &7XP &b{skill} &7graczowi &6{player}'
   unknown_skill: '&eNieznana umiejętność!'
-  no_profile: '&eGracz nie ma profilu umiejętności!'
+  no_profile: '&eGracz nie ma profilu umiejętności. Spróbuj dołączyć ponownie do gry lub uruchomić ponownie serwer.'
 leveler:
   title: '&aNowy Poziom {skill}'
   subtitle: '&6{old} ➜ {new}'
   level_up: "&3&m----------------------------------------\n&r &3Nowy Poziom Umiejętności! &b&l{skill} &8{old}➜&3&l{new}\n \n &bNagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  &aOdblokowano Zdolność! &7Umiejętność &6&l{ability} &7została odblokowana"
+  ability_unlock: "\n  &aOdblokowano Zdolność! &7Zdolność &6&l{ability} &7została odblokowana."
   ability_level_up: "\n  &aNowy Poziom Zdolności! &7Zdolność &6&l{ability} &7ma teraz poziom &6{level}"
   mana_ability_unlock: "\n  &dOdblokowano Zdolność Many! &7Zdolność &9&l{mana_ability} &7została odblokowana"
   mana_ability_level_up: "\n  &dNowy Poziom Zdolności Many! &7Zdolność &9&l{mana_ability} &7ma teraz poziom &6{level}"
@@ -612,7 +620,7 @@ menus:
     sources_desc: "&7Menu źródeł pokazuje wszystkie sposoby\n&7zdobywania XP w ramach umiejętności, a także\n&7ile konkretnie XP daje każde źródło."
     sources_click: '&eKliknij, aby zobaczyć źródła {skill}'
     abilities: '&cZdolności'
-    abilities_desc: "&bZdolności &7są biernymi umiejętnościami, które odblokowujesz i\n&7ulepszasz w miarę podnoszenia umiejętności.\n&dUmiejętności Many &7są specjalnym rodzajem zdolności\n&7wymagających aktywacji i zużywających manę."
+    abilities_desc: "&bZdolności &7są biernymi umiejętnościami, które odblokowujesz i\n&7ulepszasz w miarę podnoszenia umiejętności.\n&dZdolności Many &7są specjalnym rodzajem zdolności\n&7wymagających aktywacji i zużywających manę."
     abilities_click: '&eKliknij, aby zobaczyć zdolności {skill}'
   stats_menu:
     stats_menu_title: Twoje Statystyki
@@ -658,11 +666,12 @@ menus:
   abilities:
     abilities_title: 'Zdolności {skill}'
     locked_desc: "&fOpis:\n  &7{desc}"
-    unlocked_at: '&7Odblokowano w &3{skill} {level}'
+    unlocked_at: '&7Odblokowanie: &3{skill} {level}'
     your_ability_level: '&fTwój poziom: &b{level}'
     your_ability_level_maxed: '&fTwój poziom: &b{level} &6(MAXED)'
     unlocked_desc: "&fNastępne ulepszenie w &3{skill} {level}&f\n  &7{desc}"
     unlocked_desc_maxed: "&fOpis:\n  &7{desc}"
+    desc_upgrade_value: '&7{current}&8→{next}&7'
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
@@ -815,6 +824,9 @@ sources:
     flowering_azalea: Kwitnąca azalia
     azalea_leaves: Liście azalii
     flowering_azalea_leaves: Kwitnące liście azalii
+    mangrove_log: Namorzynowy pień
+    mangrove_leaves: Namorzynowe liście
+    mangrove_roots: Namorzynowe korzenie
   mining:
     stone: Kamień
     cobblestone: Bruk
@@ -863,6 +875,7 @@ sources:
     ice: Lód
     packed_ice: Zbity lód
     blue_ice: Niebieski lód lodowcowy
+    reinforced_deepslate: Zbrojony łupek
   fishing:
     cod: Dorsz
     salmon: Łosoś
@@ -885,6 +898,8 @@ sources:
     soul_soil: Gleba dusz
     red_sand: Czerwony piasek
     rooted_dirt: Zakorzeniona ziemia
+    mud: Błoto
+    muddy_mangrove_roots: Zabłocone namorzynowe korzenie
   mobs:
     player: Gracz
     bat: Nietoperz
@@ -958,6 +973,10 @@ sources:
     axolotl: Aksolotl
     glow_squid: Świecąca kałamarnica
     goat: Koza
+    allay: Otuszek
+    frog: Żaba
+    tadpole: Kijanka
+    warden: Nadzorca
   defense:
     mob_damage: Obrażenia od mobów
     player_damage: Obrażenia od graczy
@@ -971,7 +990,7 @@ sources:
   alchemy:
     awkward: Klarowna mikstura
     regular: Zwykła mikstura
-    extended: Wydłużony czas trwania mikstury
+    extended: Mikstura z wydłużonym czasem trwania
     upgraded: Ulepszona mikstura
     splash: Miotana mikstura
     lingering: Trwała mikstura
@@ -982,6 +1001,11 @@ sources:
     book_per_level: Książka
   sorcery:
     mana_ability_use: Używanie Zdolności Many
+    sculk: Sculk
+    sculk_vein: Żyły sculku
+    sculk_sensor: Sculkowy czujnik
+    sculk_catalyst: Sculkowy katalizator
+    sculk_shrieker: Sculkowe wrzeszczydło
   healing:
     drink_regular: Picie zwykłej mikstury
     drink_extended: Picie mikstury z wydłużonym czasem trwania
@@ -1043,4 +1067,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 25
+file_version: 29
