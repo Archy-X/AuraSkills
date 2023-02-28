@@ -9,69 +9,16 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri("https://github.com/deanveloper/SkullCreator/raw/mvn-repo")
-    }
-
-    maven {
-        url = uri("https://repo.aikar.co/content/groups/aikar/")
-    }
-
-    maven {
-        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    }
-
-    maven {
-        url = uri("https://maven.enginehub.org/repo/")
-    }
-
-    maven {
-        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    }
-
-    maven {
-        url = uri("https://repo.codemc.io/repository/maven-public/")
-    }
-
-    maven {
-        url = uri("https://jitpack.io")
-    }
-
-    maven {
-        url = uri("https://repo.dmulloy2.net/repository/public/")
-    }
-
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
-    }
+    mavenCentral()
 }
 
 dependencies {
-    implementation("dev.dbassett:skullcreator:3.0.1")
-    implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
-    implementation("de.tr7zw:item-nbt-api:2.11.0")
-    implementation("com.github.Archy-X:XSeries:887fe61174")
-    implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("org.jetbrains:annotations:23.0.0")
-    implementation("com.udojava:EvalEx:2.7")
-    implementation("com.github.Archy-X:Slate:7a9fa2f588")
-    implementation("com.github.Archy-X:LootManager:60d109fdde")
-    compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.2")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
-    compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9")
-    compileOnly("com.github.decentsoftware-eu:decentholograms:2.5.2")
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-    compileOnly("com.github.dmulloy2:ProtocolLib:43145bd478")
-    compileOnly("net.luckperms:api:5.4")
-    compileOnly("com.github.TownyAdvanced:Towny:0.98.3.6")
-    compileOnly("com.github.Slimefun:Slimefun4:RC-32")
+
 }
 
 allprojects {
     group = "com.archyx.aureliumskills"
-    version = "Beta1.3.14"
+    version = project.property("projectVersion") as String
     description = "Advanced skills, stats, and abilties plugin"
 }
 

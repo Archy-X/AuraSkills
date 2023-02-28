@@ -58,6 +58,9 @@ dependencies {
 }
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    val projectVersion: String by project
+    archiveFileName.set("AureliumSkills-${projectVersion}.jar")
+
     relocate("co.aikar.commands", "com.archyx.aureliumskills.acf")
     relocate("co.aikar.locales", "com.archyx.aureliumskills.locales")
     relocate("fr.minuskube.inv", "com.archyx.aureliumskills.inv")
@@ -65,5 +68,7 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     relocate("com.cryptomorin.xseries", "com.archyx.aureliumskills.xseries")
     relocate("org.bstats", "com.archyx.aureliumskills.bstats")
     relocate("com.udojava.evalex", "com.archyx.aureliumskills.evalex")
+    relocate("com.archyx.slate", "com.archyx.aureliumskills.slate")
+    relocate("net.kyori.adventure", "com.archyx.aureliumskills.adventure")
     relocate("net.kyori.examination", "com.archyx.aureliumskills.examination")
 }
