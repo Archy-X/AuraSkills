@@ -83,3 +83,9 @@ tasks.register<Copy>("copyJar") {
     from("build/libs/AureliumSkills-${projectVersion}.jar")
     into("../build/libs")
 }
+
+tasks {
+    build {
+        dependsOn(shadowJar)
+    }
+}
