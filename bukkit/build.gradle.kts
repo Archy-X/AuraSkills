@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.Copy
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     java
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -57,7 +60,7 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-32")
 }
 
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+tasks.withType<ShadowJar> {
     val projectVersion: String by project
     archiveFileName.set("AureliumSkills-${projectVersion}.jar")
 
@@ -71,4 +74,12 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     relocate("com.archyx.slate", "com.archyx.aureliumskills.slate")
     relocate("net.kyori.adventure", "com.archyx.aureliumskills.adventure")
     relocate("net.kyori.examination", "com.archyx.aureliumskills.examination")
+
+    finalizedBy("copyJar")
+}
+
+tasks.register<Copy>("copyJar") {
+    val projectVersion : String by project
+    from("build/libs/AureliumSkills-${projectVersion}.jar")
+    into("../build/libs")
 }
