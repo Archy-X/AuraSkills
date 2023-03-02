@@ -39,6 +39,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":api"))
     implementation("dev.dbassett:skullcreator:3.0.1")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.11.2")
