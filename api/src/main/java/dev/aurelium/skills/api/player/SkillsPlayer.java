@@ -2,12 +2,15 @@ package dev.aurelium.skills.api.player;
 
 import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.stat.Stat;
+import dev.aurelium.skills.api.stat.StatModifier;
 
 public interface SkillsPlayer {
 
     double getSkillXp(Skill skill);
 
     void addSkillXp(Skill skill, double amountToAdd);
+
+    void addSkillXpRaw(Skill skill, double amountToAdd);
 
     int setSkillXp(Skill skill, double amount);
 
@@ -17,6 +20,8 @@ public interface SkillsPlayer {
 
     double getStatLevel(Stat stat);
 
+    double getBaseStatLevel();
+
     void setStatLevel(Stat stat, double level);
 
     double addStatLevel(Stat stat, double level);
@@ -25,6 +30,12 @@ public interface SkillsPlayer {
 
     double getMaxMana();
 
+    void setMana(double mana);
 
+    int getPowerLevel();
+
+    boolean addStatModifier(StatModifier statModifier);
+
+    boolean removeStatModifier(String name);
 
 }
