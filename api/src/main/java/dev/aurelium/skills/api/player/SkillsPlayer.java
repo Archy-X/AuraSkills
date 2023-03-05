@@ -1,5 +1,7 @@
 package dev.aurelium.skills.api.player;
 
+import dev.aurelium.skills.api.ability.Ability;
+import dev.aurelium.skills.api.ability.ManaAbility;
 import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.stat.StatModifier;
@@ -37,5 +39,9 @@ public interface SkillsPlayer {
     boolean addStatModifier(StatModifier statModifier);
 
     boolean removeStatModifier(String name);
+
+    int getAbilityLevel(Ability ability);
+
+    int getManaAbilityLevel(ManaAbility manaAbility);
 
 }
