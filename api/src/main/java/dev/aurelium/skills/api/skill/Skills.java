@@ -1,37 +1,21 @@
 package dev.aurelium.skills.api.skill;
 
-import java.util.Locale;
+public class Skills {
 
-public enum Skills implements Skill {
+    public static final Skill FARMING = new SkillWrapper("farming");
+    public static final Skill FORAGING = new SkillWrapper("foraging");
+    public static final Skill MINING = new SkillWrapper("mining");
+    public static final Skill FISHING = new SkillWrapper("fishing");
+    public static final Skill EXCAVATION = new SkillWrapper("excavation");
+    public static final Skill ARCHERY = new SkillWrapper("archery");
+    public static final Skill FIGHTING = new SkillWrapper("fighting");
+    public static final Skill DEFENSE = new SkillWrapper("defense");
+    public static final Skill AGILITY = new SkillWrapper("agility");
+    public static final Skill ENDURANCE = new SkillWrapper("endurance");
+    public static final Skill ALCHEMY = new SkillWrapper("alchemy");
+    public static final Skill ENCHANTING = new SkillWrapper("enchanting");
+    public static final Skill SORCERY = new SkillWrapper("sorcery");
+    public static final Skill HEALING = new SkillWrapper("healing");
+    public static final Skill FORGING = new SkillWrapper("forging");
 
-    FARMING,
-    FORAGING,
-    MINING,
-    FISHING,
-    EXCAVATION,
-    ARCHERY,
-    FIGHTING,
-    DEFENSE,
-    AGILITY,
-    ENDURANCE,
-    ALCHEMY,
-    ENCHANTING,
-    SORCERY,
-    HEALING,
-    FORGING;
-
-    @Override
-    public String getId() {
-        return toString().toLowerCase(Locale.ROOT);
-    }
-
-    @Override
-    public String getDisplayName(Locale locale) {
-        return null;
-    }
-
-    @Override
-    public String getDescription(Locale locale) {
-        return null;
-    }
 }
