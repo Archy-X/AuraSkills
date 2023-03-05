@@ -2,12 +2,20 @@ package dev.aurelium.skills.api.skill;
 
 import java.util.Locale;
 
-public interface Skill {
+public abstract class Skill {
 
-    String getId();
+    private final String id;
 
-    String getDisplayName(Locale locale);
+    public Skill(String id) {
+        this.id = id.toLowerCase(Locale.ROOT);
+    }
 
-    String getDescription(Locale locale);
+    public String getId() {
+        return id;
+    }
+
+    public abstract String getDisplayName(Locale locale);
+
+    public abstract String getDescription(Locale locale);
 
 }

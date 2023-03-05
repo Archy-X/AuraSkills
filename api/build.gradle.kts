@@ -3,11 +3,11 @@ plugins {
 }
 
 repositories {
-
+    mavenCentral()
 }
 
 dependencies {
-
+    implementation("org.jetbrains:annotations:23.0.0")
 }
 
 tasks.withType<JavaCompile>() {

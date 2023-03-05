@@ -1,7 +1,9 @@
 package dev.aurelium.skills.api;
 
-public class AureliumSkillsAPI {
+import dev.aurelium.skills.api.message.MessageManager;
 
+public interface AureliumSkillsAPI {
 
+    MessageManager getMessageManager();
 
 }
