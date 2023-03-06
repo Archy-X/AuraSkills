@@ -1,23 +1,9 @@
 package dev.aurelium.skills.api.skill;
 
-import java.util.Locale;
+import dev.aurelium.skills.api.util.NamespacedId;
 
-public abstract class Skill {
+public interface Skill {
 
-    private final String id;
-
-    public Skill(String id) {
-        this.id = id.toLowerCase(Locale.ROOT);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public abstract int getMaxLevel();
-
-    public abstract String getDisplayName(Locale locale);
-
-    public abstract String getDescription(Locale locale);
+    NamespacedId getId();
 
 }
