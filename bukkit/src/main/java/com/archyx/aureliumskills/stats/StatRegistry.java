@@ -28,4 +28,8 @@ public class StatRegistry {
         return this.stats.get(key.toLowerCase(Locale.ROOT));
     }
 
+    public Stat getFromApi(dev.aurelium.skills.api.stat.Stat stat) {
+        return this.stats.get(stat.getId().getKey().toLowerCase(Locale.ROOT));
+    }
+
 }

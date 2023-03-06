@@ -72,15 +72,7 @@ public interface SkillsPlayer {
      *
      * @return The base stat level
      */
-    double getBaseStatLevel();
-
-    /**
-     * Sets the level of a stat.
-     *
-     * @param stat The stat to set the level of
-     * @param level The level to set to
-     */
-    void setStatLevel(Stat stat, double level);
+    double getBaseStatLevel(Stat stat);
 
     double getMana();
 
@@ -90,9 +82,9 @@ public interface SkillsPlayer {
 
     int getPowerLevel();
 
-    boolean addStatModifier(StatModifier statModifier);
+    void addStatModifier(StatModifier statModifier);
 
-    boolean removeStatModifier(String name);
+    void removeStatModifier(String name);
 
     int getAbilityLevel(Ability ability);
 

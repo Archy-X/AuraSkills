@@ -3,24 +3,24 @@ package dev.aurelium.skills.api.util;
 public class NamespacedId {
 
     private final String namespace;
-    private final String id;
+    private final String key;
 
-    public NamespacedId(String namespace, String id) {
+    public NamespacedId(String namespace, String key) {
         this.namespace = namespace;
-        this.id = id;
+        this.key = key;
     }
 
     public String getNamespace() {
         return namespace;
     }
 
-    public String getId() {
-        return id;
+    public String getKey() {
+        return key;
     }
 
     @Override
     public String toString() {
-        return namespace + ":" + id;
+        return namespace + ":" + key;
     }
 
     public static NamespacedId fromString(String string) {
