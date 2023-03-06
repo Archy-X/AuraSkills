@@ -14,6 +14,8 @@ public abstract class Skill {
         return id;
     }
 
+    public abstract int getMaxLevel();
+
     public abstract String getDisplayName(Locale locale);
 
     public abstract String getDescription(Locale locale);
