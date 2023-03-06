@@ -3,6 +3,8 @@ package com.archyx.aureliumskills;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.ability.AbilityManager;
+import com.archyx.aureliumskills.api.ApiAureliumSkills;
+import com.archyx.aureliumskills.api.ApiRegistrationUtil;
 import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.aureliumskills.commands.*;
 import com.archyx.aureliumskills.configuration.Option;
@@ -169,6 +171,9 @@ public class AureliumSkills extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		// Register API
+		ApiAureliumSkills api = new ApiAureliumSkills(this);
+		ApiRegistrationUtil.register(api);
 		// Registries
 		statRegistry = new StatRegistry();
 		registerStats();
@@ -376,6 +381,8 @@ public class AureliumSkills extends JavaPlugin {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			agilityAbilities.removeFleetingQuit(player);
 		}
+		// Unregister API
+		ApiRegistrationUtil.unregister();
 	}
 
 	private void backupAutomatically() {

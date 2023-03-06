@@ -132,6 +132,16 @@ public class PlayerData {
         }
     }
 
+    public double getBaseStatLevel(Stat stat) {
+        double level = getStatLevel(stat);
+        for (StatModifier modifier : statModifiers.values()) {
+            if (modifier.getStat() == stat) {
+                level -= modifier.getValue();
+            }
+        }
+        return level;
+    }
+
     public StatModifier getStatModifier(String name) {
         return statModifiers.get(name);
     }
