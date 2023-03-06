@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public interface PlayerManager {
 
-    SkillsPlayer get(UUID playerId);
+    SkillsPlayer getPlayer(UUID playerId);
 
 }
