@@ -11,6 +11,11 @@ class SkillWrapper extends Skill {
     }
 
     @Override
+    public int getMaxLevel() {
+        return AureliumSkillsProvider.getInstance().getConfigManager().getMaxLevel(this);
+    }
+
+    @Override
     public String getDisplayName(Locale locale) {
         return AureliumSkillsProvider.getInstance().getMessageManager().getSkillDisplayName(locale, this);
     }
