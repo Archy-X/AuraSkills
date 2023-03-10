@@ -23,7 +23,7 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 		this.foragingAbilities = new ForagingAbilities(plugin);
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (!OptionL.isEnabled(Skills.FORAGING)) return;
 		//Check cancelled

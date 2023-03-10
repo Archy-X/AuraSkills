@@ -20,7 +20,7 @@ public class EnchantingLeveler extends SkillLeveler implements Listener {
 		super(plugin, Ability.ENCHANTER);
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onEnchant(EnchantItemEvent event) {
 		if (OptionL.isEnabled(Skills.ENCHANTING)) {
 			//Check cancelled

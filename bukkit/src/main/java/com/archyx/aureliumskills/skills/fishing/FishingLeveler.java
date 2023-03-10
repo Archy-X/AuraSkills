@@ -22,7 +22,7 @@ public class FishingLeveler extends SkillLeveler implements Listener {
 		super(plugin, Ability.FISHER);
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onFish(PlayerFishEvent event) {
 		if (OptionL.isEnabled(Skills.FISHING)) {
 			//Check cancelled
