@@ -48,7 +48,7 @@ dependencies {
     implementation("com.udojava:EvalEx:2.7")
     implementation("com.github.Archy-X:Slate:ffa5b97922")
     implementation("com.github.Archy-X:LootManager:60d109fdde")
-    compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
     compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9")
