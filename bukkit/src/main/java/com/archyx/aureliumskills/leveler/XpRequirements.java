@@ -36,6 +36,10 @@ public class XpRequirements {
             }
         }
         // Else use default
+        return getDefaultXpRequired(level);
+    }
+
+    public int getDefaultXpRequired(int level) {
         if (defaultXpRequirements.size() > level - 2) {
             return defaultXpRequirements.get(level - 2);
         } else {

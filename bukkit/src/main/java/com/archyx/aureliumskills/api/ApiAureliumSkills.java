@@ -5,6 +5,7 @@ import dev.aurelium.skills.api.AureliumSkills;
 import dev.aurelium.skills.api.config.ConfigManager;
 import dev.aurelium.skills.api.message.MessageManager;
 import dev.aurelium.skills.api.player.PlayerManager;
+import dev.aurelium.skills.api.skill.XpRequirements;
 
 public class ApiAureliumSkills implements AureliumSkills {
 
@@ -28,6 +29,11 @@ public class ApiAureliumSkills implements AureliumSkills {
 
     @Override
     public ConfigManager getConfigManager() {
+        return null;
+    }
+
+    @Override
+    public XpRequirements getXpRequirements() {
         return null;
     }
 }
