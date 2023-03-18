@@ -3,6 +3,7 @@ package dev.aurelium.skills.api;
 import dev.aurelium.skills.api.config.ConfigManager;
 import dev.aurelium.skills.api.message.MessageManager;
 import dev.aurelium.skills.api.player.PlayerManager;
+import dev.aurelium.skills.api.skill.XpRequirements;
 
 public interface AureliumSkills {
 
@@ -11,5 +12,7 @@ public interface AureliumSkills {
     MessageManager getMessageManager();
 
     ConfigManager getConfigManager();
+
+    XpRequirements getXpRequirements();
 
 }
