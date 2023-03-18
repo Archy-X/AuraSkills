@@ -19,7 +19,7 @@ public class DecentHologramsSupport {
 
     public void createHologram(Location location, String text) {
         if (!plugin.isDecentHologramsEnabled()) return;
-        Hologram hologram = DHAPI.createHologram(UUID.randomUUID() + "_" + text, location, false, Collections.singletonList(text));
+        Hologram hologram = DHAPI.createHologram("AureliumSkills_" + UUID.randomUUID(), location, false, Collections.singletonList(text));
         deleteHologram(hologram);
     }
 
