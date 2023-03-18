@@ -80,6 +80,8 @@ tasks.withType<ShadowJar> {
     finalizedBy("copyJar")
 }
 
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
 tasks.register<Copy>("copyJar") {
     val projectVersion : String by project
     from("build/libs/AureliumSkills-${projectVersion}.jar")
