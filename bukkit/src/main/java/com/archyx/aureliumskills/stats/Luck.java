@@ -77,7 +77,7 @@ public class Luck implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	@SuppressWarnings("deprecation")
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (OptionL.getBoolean(Option.LUCK_DOUBLE_DROP_ENABLED) && !event.isCancelled()) {

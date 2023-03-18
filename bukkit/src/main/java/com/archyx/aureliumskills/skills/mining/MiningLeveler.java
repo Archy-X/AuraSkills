@@ -24,7 +24,7 @@ public class MiningLeveler extends SkillLeveler implements Listener {
 		this.miningAbilities = new MiningAbilities(plugin);
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (OptionL.isEnabled(Skills.MINING)) {
 			// Check cancelled
