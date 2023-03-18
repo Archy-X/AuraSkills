@@ -74,20 +74,63 @@ public interface SkillsPlayer {
      */
     double getBaseStatLevel(Stat stat);
 
+    /**
+     * Gets the current mana of the player.
+     *
+     * @return The current mana
+     */
     double getMana();
 
+    /**
+     * Gets the maximum mana of the player.
+     *
+     * @return The maximum mana
+     */
     double getMaxMana();
 
+    /**
+     * Sets the mana of the player.
+     *
+     * @param mana The amount of mana to set
+     */
     void setMana(double mana);
 
+    /**
+     * Gets the power level of the player. The power level is the sum of all skill levels.
+     *
+     * @return The power level
+     */
     int getPowerLevel();
 
+    /**
+     * Adds a stat modifier to the player. Stat modifiers are temporary changes to a stat
+     * that require a name to be identified and removed.
+     *
+     * @param statModifier The stat modifier to add
+     */
     void addStatModifier(StatModifier statModifier);
 
+    /**
+     * Removes a stat modifier from the player.
+     *
+     * @param name The name of the stat modifier to remove
+     */
     void removeStatModifier(String name);
 
+    /**
+     * Gets the level of an ability.
+     *
+     * @param ability The ability to get the level of
+     * @return The level of the ability
+     */
     int getAbilityLevel(Ability ability);
 
+    /**
+     * Gets the level of a mana ability.
+     *
+     * @param manaAbility The mana ability to get the level of
+     * @return The level of the mana ability
+     */
     int getManaAbilityLevel(ManaAbility manaAbility);
 
 }
