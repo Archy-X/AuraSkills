@@ -1,3 +1,8 @@
+Version Beta 1.3.17
+  Bug Fixes:
+    - Revert skill leveler event priority changes to fix placed block XP dupe
+    - Fix Speed Mine and Treecapitator activating on placed blocks
+
 Version Beta 1.3.16
   Changes:
     - Rename hooks config option from enable to enabled
