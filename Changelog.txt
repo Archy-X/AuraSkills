@@ -1,3 +1,27 @@
+Version Beta 1.3.16
+  Changes:
+    - Rename hooks config option from enable to enabled
+  Bug Fixes:
+    - Fix armor modifiers to support 1.19.4 hotbar swap feature
+    - Fix DecentHolograms name already exists error
+    - Fix plugin not loading for Java 8-16
+
+Version Beta 1.3.15
+  New Features:
+    - Add support for Minecraft 1.19.4
+    - Add DecentHolograms support
+      - Set which hologram plugin to use in the hooks section of config.yml
+    - Add placeholder %aureliumskills_actionbar_status%
+    - Add reset-skills-on-death option
+  Changes:
+    - Update Polish messages
+    - Switch to Gradle and reorganize codebase into submodule bukkit
+    - Remove commons-lang usage from menu library
+  Bug Fixes:
+    - Fix dispensers bypassing armor requirements
+    - Fix transfer command corrupting YAML playerdata
+    - Increase skill leveler event priority to fix incompatibilities
+
 Version Beta 1.3.14
   Changes:
     - Add Dutch messages

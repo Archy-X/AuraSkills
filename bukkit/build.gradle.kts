@@ -42,14 +42,16 @@ dependencies {
     implementation(project(":api"))
     implementation("dev.dbassett:skullcreator:3.0.1")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
-    implementation("de.tr7zw:item-nbt-api:2.11.0")
+    implementation("de.tr7zw:item-nbt-api:2.11.2")
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("org.jetbrains:annotations:23.0.0")
     implementation("com.udojava:EvalEx:2.7")
-    implementation("com.github.Archy-X:Slate:7a9fa2f588")
+    implementation("com.github.Archy-X:Slate:6e72d348ca") {
+        exclude("org.spigotmc", "spigot-api")
+    }
     implementation("com.github.Archy-X:LootManager:60d109fdde")
-    compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
     compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9")
@@ -78,6 +80,8 @@ tasks.withType<ShadowJar> {
 
     finalizedBy("copyJar")
 }
+
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 tasks.register<Copy>("copyJar") {
     val projectVersion : String by project

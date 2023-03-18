@@ -1,8 +1,10 @@
 package com.archyx.aureliumskills.util.armor;
 
 import com.archyx.aureliumskills.util.armor.ArmorEquipEvent.EquipMethod;
+import com.archyx.aureliumskills.util.version.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -17,6 +19,7 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,8 +175,48 @@ public class ArmorListener implements Listener{
                         e.setCancelled(true);
                         player.updateInventory();
                     }
+                    return;
+                }
+                // Check for armor swap mechanics
+                if (VersionUtils.isAtLeastVersion(19, 4)) {
+                    ArmorType type = ArmorType.matchType(e.getItem());
+                    if (type == null) return;
+                    ItemStack oldArmorPiece = getArmorInSlot(e.getPlayer(), type);
+                    if (hasCurseOfBinding(oldArmorPiece)) return; // Ignore if the old armor piece has Curse of Binding
+
+                    ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(e.getPlayer(), EquipMethod.HOTBAR, type, oldArmorPiece, e.getItem());
+                    Bukkit.getServer().getPluginManager().callEvent(armorEquipEvent);
+                    if (armorEquipEvent.isCancelled()) {
+                        e.setCancelled(true);
+                        player.updateInventory();
+                    }
                 }
             }
+        }
+    }
+
+    private boolean hasCurseOfBinding(ItemStack item) {
+        if (item == null) return false;
+        if (item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta == null) return false;
+            return meta.hasEnchant(Enchantment.BINDING_CURSE);
+        }
+        return false;
+    }
+
+    private ItemStack getArmorInSlot(Player player, ArmorType type) {
+        switch (type) {
+            case HELMET:
+                return player.getInventory().getHelmet();
+            case CHESTPLATE:
+                return player.getInventory().getChestplate();
+            case LEGGINGS:
+                return player.getInventory().getLeggings();
+            case BOOTS:
+                return player.getInventory().getBoots();
+            default:
+                return null;
         }
     }
 

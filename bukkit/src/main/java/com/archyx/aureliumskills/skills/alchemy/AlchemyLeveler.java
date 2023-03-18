@@ -43,7 +43,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 		this.brewingStands = new HashMap<>();
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBrew(BrewEvent event) {
 		if (!OptionL.isEnabled(Skills.ALCHEMY)) return;
 		// Check cancelled
@@ -119,7 +119,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 		}.runTaskLater(plugin, 1);
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onBlockPlace(BlockPlaceEvent event) {
 		if (event.getBlock().getType().equals(Material.BREWING_STAND)) {
 			if (OptionL.isEnabled(Skills.ALCHEMY)) {
@@ -128,7 +128,7 @@ public class AlchemyLeveler extends SkillLeveler implements Listener {
 		}
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (event.getBlock().getType().equals(Material.BREWING_STAND)) {
 			if (OptionL.isEnabled(Skills.ALCHEMY)) {

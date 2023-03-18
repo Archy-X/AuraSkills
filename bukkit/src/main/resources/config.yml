@@ -20,9 +20,9 @@ mysql:
     ssl: false
 hooks:
     HolographicDisplays:
-        enable: true
+        enabled: true
     DecentHolograms:
-        enable: false
+        enabled: false
 default-language: en
 
 try-detect-client-language: true

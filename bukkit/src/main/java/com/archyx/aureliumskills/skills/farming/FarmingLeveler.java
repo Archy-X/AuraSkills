@@ -32,7 +32,7 @@ public class FarmingLeveler extends SkillLeveler implements Listener {
 		this.farmingAbilities = new FarmingAbilities(plugin);
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (!OptionL.isEnabled(Skills.FARMING)) return;
 		// Check cancelled

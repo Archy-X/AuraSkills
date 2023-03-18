@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
-import java.util.Random;
+import java.util.UUID;
 
 public class DecentHologramsSupport {
 
@@ -19,7 +19,7 @@ public class DecentHologramsSupport {
 
     public void createHologram(Location location, String text) {
         if (!plugin.isDecentHologramsEnabled()) return;
-        Hologram hologram = DHAPI.createHologram(new Random().nextInt(50) + text, location, Collections.singletonList(text));
+        Hologram hologram = DHAPI.createHologram("AureliumSkills_" + UUID.randomUUID(), location, false, Collections.singletonList(text));
         deleteHologram(hologram);
     }
 

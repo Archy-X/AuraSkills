@@ -187,7 +187,7 @@ public class YamlStorageProvider extends StorageProvider {
         File file = new File(plugin.getDataFolder() + "/playerdata/" + state.getUuid() + ".yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         try {
-            config.set("uuid", state.getUuid());
+            config.set("uuid", state.getUuid().toString());
             // Save skill data
             Map<Skill, Integer> skillLevels = state.getSkillLevels();
             Map<Skill, Double> skillXp = state.getSkillXp();
