@@ -88,7 +88,9 @@ public enum ArcherySource implements Source {
     ALLAY,
     FROG,
     TADPOLE,
-    WARDEN;
+    WARDEN,
+    CAMEL,
+    SNIFFER;
 
     private String configName;
 
