@@ -28,8 +28,8 @@ public enum FarmingSource implements Source {
     SEA_PICKLE(true),
     SWEET_BERRY_BUSH(null, false, false, 2, true),
     GLOW_BERRIES(new String[] {"CAVE_VINES", "CAVE_VINES_PLANT"}, false, false, 0, true),
-    TORCHFLOWER(null, true, true),
-    PITCHER_PLANT(null, true, true);
+    TORCHFLOWER(null, true),
+    PITCHER_CROP(null, true, true);
 
     private String[] otherMaterials;
     private boolean checkBlockReplace;
