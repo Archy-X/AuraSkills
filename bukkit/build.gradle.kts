@@ -92,6 +92,9 @@ tasks {
     build {
         dependsOn(shadowJar)
     }
+    jar {
+        dependsOn(shadowJar)
+    }
 }
 
 tasks.withType<JavaCompile>() {
