@@ -113,12 +113,17 @@ public class ApiSkillsPlayer implements SkillsPlayer {
         return handle.getManaAbilityLevel(convertManaAbility(manaAbility));
     }
 
+    @Override
+    public Locale getLocale() {
+        return handle.getLocale();
+    }
+
     private com.archyx.aureliumskills.skills.Skill convertSkill(Skill skill) {
-        return plugin.getSkillRegistry().getFromApi(skill);
+        return plugin.getSkillRegistry().fromApi(skill);
     }
 
     private com.archyx.aureliumskills.stats.Stat convertStat(Stat stat) {
-        return plugin.getStatRegistry().getFromApi(stat);
+        return plugin.getStatRegistry().fromApi(stat);
     }
 
     private com.archyx.aureliumskills.modifier.StatModifier convertStatModifier(StatModifier modifier) {

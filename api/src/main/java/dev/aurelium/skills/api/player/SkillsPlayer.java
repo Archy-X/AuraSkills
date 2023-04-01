@@ -6,6 +6,8 @@ import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.stat.StatModifier;
 
+import java.util.Locale;
+
 public interface SkillsPlayer {
 
     /**
@@ -132,5 +134,13 @@ public interface SkillsPlayer {
      * @return The level of the mana ability
      */
     int getManaAbilityLevel(ManaAbility manaAbility);
+
+    /**
+     * Gets the locale of the player, or the server default locale if the
+     * player has not set a locale.
+     *
+     * @return The locale of the player
+     */
+    Locale getLocale();
 
 }
