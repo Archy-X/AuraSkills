@@ -14,7 +14,7 @@ public class ApiXpRequirements implements XpRequirements {
 
     @Override
     public int getXpRequired(Skill skill, int level) {
-        return plugin.getLeveler().getXpRequirements().getXpRequired(plugin.getSkillRegistry().getFromApi(skill), level);
+        return plugin.getLeveler().getXpRequirements().getXpRequired(plugin.getSkillRegistry().fromApi(skill), level);
     }
 
     @Override
