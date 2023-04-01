@@ -1,5 +1,6 @@
 package com.archyx.aureliumskills.api;
 
+import com.archyx.aureliumskills.api.implementation.ApiConfigManager;
 import com.archyx.aureliumskills.api.implementation.ApiMessageManager;
 import com.archyx.aureliumskills.api.implementation.ApiPlayerManager;
 import com.archyx.aureliumskills.api.implementation.ApiXpRequirements;
@@ -16,6 +17,7 @@ public class ApiAureliumSkills implements AureliumSkills {
     private final com.archyx.aureliumskills.AureliumSkills plugin;
     private final PlayerManager playerManager;
     private final MessageManager messageManager;
+    private final ConfigManager configManager;
     private final XpRequirements xpRequirements;
 
     public ApiAureliumSkills(com.archyx.aureliumskills.AureliumSkills plugin) {
@@ -23,6 +25,7 @@ public class ApiAureliumSkills implements AureliumSkills {
         this.playerManager = new ApiPlayerManager(plugin);
         this.messageManager = new ApiMessageManager(plugin);
         this.xpRequirements = new ApiXpRequirements(plugin);
+        this.configManager = new ApiConfigManager(plugin);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class ApiAureliumSkills implements AureliumSkills {
 
     @Override
     public ConfigManager getConfigManager() {
-        return null;
+        return configManager;
     }
 
     @Override
