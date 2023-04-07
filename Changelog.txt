@@ -1,3 +1,12 @@
+Version Beta 1.3.18
+  Changes:
+    - Add scale_base_chance option to Fishing and Excavation loot abilities
+      - Option added to Treasure Hunter, Epic Catch, Metal Detector, and Lucky Spades abilities
+      - If true, calculating drop chance will multiply ability value by base_chance in loot pool instead of adding
+  Bug Fixes:
+    - Fix "Plugin is creating timing - this is deprecated behavior" warning on Paper
+    - Fix command parameter names not showing in command help
+
 Version Beta 1.3.17
   Bug Fixes:
     - Revert skill leveler event priority changes to fix placed block XP dupe
