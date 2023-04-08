@@ -10,11 +10,11 @@ public interface ManaAbilityConfig {
 
     double getValuePerLevel(ManaAbility manaAbility);
 
-    int getCooldown(ManaAbility manaAbility);
+    double getBaseCooldown(ManaAbility manaAbility);
 
-    int getCooldownPerLevel(ManaAbility manaAbility);
+    double getCooldownPerLevel(ManaAbility manaAbility);
 
-    double getManaCost(ManaAbility manaAbility);
+    double getBaseManaCost(ManaAbility manaAbility);
 
     double getManaCostPerLevel(ManaAbility manaAbility);
 
