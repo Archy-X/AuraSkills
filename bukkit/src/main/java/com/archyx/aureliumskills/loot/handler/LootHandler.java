@@ -196,4 +196,14 @@ public abstract class LootHandler extends AbilityProvider {
         return pool.getBaseChance() + chancePerLuck * playerData.getStatLevel(Stats.LUCK);
     }
 
+    protected double getAbilityModifiedChance(double chance, Ability ability, PlayerData playerData) {
+        // Check option to scale base chance
+        if (plugin.getAbilityManager().getOption(ability, "scale_base_chance").asBoolean()) {
+            chance *= 1 + (getValue(ability, playerData) / 100);
+        } else { // Otherwise add to base chance
+            chance += (getValue(ability, playerData) / 100);
+        }
+        return chance;
+    }
+
 }

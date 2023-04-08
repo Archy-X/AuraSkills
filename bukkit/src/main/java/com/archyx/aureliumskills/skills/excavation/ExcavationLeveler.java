@@ -23,7 +23,7 @@ public class ExcavationLeveler extends SkillLeveler implements Listener{
 		excavationAbilities = new ExcavationAbilities(plugin);
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent event) {
 		if (!OptionL.isEnabled(Skills.EXCAVATION)) return;
 		//Check cancelled

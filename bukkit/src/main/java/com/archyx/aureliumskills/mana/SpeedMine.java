@@ -38,7 +38,7 @@ public class SpeedMine extends ReadiedManaAbility {
 
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void activationListener(BlockBreakEvent event) {
         if (event.isCancelled()) return;
         Block block = event.getBlock();

@@ -50,7 +50,7 @@ public class Treecapitator extends ReadiedManaAbility {
         return false;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBreak(BlockBreakEvent event) {
         if (event.isCancelled()) return;
         // Checks if block broken is log
