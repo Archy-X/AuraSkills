@@ -1,9 +1,6 @@
 package com.archyx.aureliumskills.api;
 
-import com.archyx.aureliumskills.api.implementation.ApiConfigManager;
-import com.archyx.aureliumskills.api.implementation.ApiMessageManager;
-import com.archyx.aureliumskills.api.implementation.ApiPlayerManager;
-import com.archyx.aureliumskills.api.implementation.ApiXpRequirements;
+import com.archyx.aureliumskills.api.implementation.*;
 import dev.aurelium.skills.api.AureliumSkills;
 import dev.aurelium.skills.api.config.AbilityConfig;
 import dev.aurelium.skills.api.config.ConfigManager;
@@ -14,18 +11,20 @@ import dev.aurelium.skills.api.skill.XpRequirements;
 
 public class ApiAureliumSkills implements AureliumSkills {
 
-    private final com.archyx.aureliumskills.AureliumSkills plugin;
     private final PlayerManager playerManager;
     private final MessageManager messageManager;
     private final ConfigManager configManager;
     private final XpRequirements xpRequirements;
+    private final AbilityConfig abilityConfig;
+    private final ManaAbilityConfig manaAbilityConfig;
 
     public ApiAureliumSkills(com.archyx.aureliumskills.AureliumSkills plugin) {
-        this.plugin = plugin;
         this.playerManager = new ApiPlayerManager(plugin);
         this.messageManager = new ApiMessageManager(plugin);
         this.xpRequirements = new ApiXpRequirements(plugin);
         this.configManager = new ApiConfigManager(plugin);
+        this.abilityConfig = new ApiAbilityConfig(plugin);
+        this.manaAbilityConfig = new ApiManaAbilityConfig(plugin);
     }
 
     @Override
@@ -50,11 +49,11 @@ public class ApiAureliumSkills implements AureliumSkills {
 
     @Override
     public AbilityConfig getAbilityConfig() {
-        return null;
+        return abilityConfig;
     }
 
     @Override
     public ManaAbilityConfig getManaAbilityConfig() {
-        return null;
+        return manaAbilityConfig;
     }
 }
