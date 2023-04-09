@@ -2,7 +2,7 @@ import org.gradle.api.tasks.Copy
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    java
+    `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":api"))
+    implementation(project(":common"))
     implementation("dev.dbassett:skullcreator:3.0.1")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.11.3")
