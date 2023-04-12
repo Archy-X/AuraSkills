@@ -1,5 +1,6 @@
 package dev.aurelium.skills.common.skill;
 
+import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.common.registry.Namespace;
 
 public class Skills {

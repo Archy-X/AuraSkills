@@ -1,6 +1,6 @@
 package com.archyx.aureliumskills.api;
 
-import dev.aurelium.skills.api.AureliumSkills;
+import dev.aurelium.skills.api.AureliumSkillsApi;
 import dev.aurelium.skills.api.AureliumSkillsProvider;
 
 import java.lang.reflect.Method;
@@ -12,7 +12,7 @@ public class ApiRegistrationUtil {
 
     static {
         try {
-            REGISTER_METHOD = AureliumSkillsProvider.class.getDeclaredMethod("register", AureliumSkills.class);
+            REGISTER_METHOD = AureliumSkillsProvider.class.getDeclaredMethod("register", AureliumSkillsApi.class);
             REGISTER_METHOD.setAccessible(true);
 
             UNREGISTER_METHOD = AureliumSkillsProvider.class.getDeclaredMethod("unregister");
@@ -22,7 +22,7 @@ public class ApiRegistrationUtil {
         }
     }
 
-    public static void register(AureliumSkills instance) {
+    public static void register(AureliumSkillsApi instance) {
         try {
             REGISTER_METHOD.invoke(null, instance);
         } catch (ReflectiveOperationException e) {
