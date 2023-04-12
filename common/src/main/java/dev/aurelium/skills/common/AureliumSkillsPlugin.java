@@ -2,8 +2,10 @@ package dev.aurelium.skills.common;
 
 import dev.aurelium.skills.common.ability.AbilityManager;
 import dev.aurelium.skills.common.config.ConfigProvider;
+import dev.aurelium.skills.common.data.PlayerManager;
 import dev.aurelium.skills.common.item.ItemRegistry;
 import dev.aurelium.skills.common.leveler.Leveler;
+import dev.aurelium.skills.common.leveler.XpRequirements;
 import dev.aurelium.skills.common.mana.ManaAbilityManager;
 import dev.aurelium.skills.common.message.MessageProvider;
 import dev.aurelium.skills.common.registry.RegistryManager;
@@ -26,5 +28,9 @@ public interface AureliumSkillsPlugin {
     ItemRegistry getItemRegistry();
 
     Leveler getLeveler();
+
+    PlayerManager getPlayerManager();
+
+    XpRequirements getXpRequirements();
 
 }

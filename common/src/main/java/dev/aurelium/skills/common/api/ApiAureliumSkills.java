@@ -1,6 +1,5 @@
-package com.archyx.aureliumskills.api;
+package dev.aurelium.skills.common.api;
 
-import com.archyx.aureliumskills.api.implementation.*;
 import dev.aurelium.skills.api.AureliumSkillsApi;
 import dev.aurelium.skills.api.config.AbilityConfig;
 import dev.aurelium.skills.api.config.ConfigManager;
@@ -8,6 +7,8 @@ import dev.aurelium.skills.api.config.ManaAbilityConfig;
 import dev.aurelium.skills.api.message.MessageManager;
 import dev.aurelium.skills.api.player.PlayerManager;
 import dev.aurelium.skills.api.skill.XpRequirements;
+import dev.aurelium.skills.common.AureliumSkillsPlugin;
+import dev.aurelium.skills.common.api.implementation.*;
 
 public class ApiAureliumSkills implements AureliumSkillsApi {
 
@@ -18,7 +19,7 @@ public class ApiAureliumSkills implements AureliumSkillsApi {
     private final AbilityConfig abilityConfig;
     private final ManaAbilityConfig manaAbilityConfig;
 
-    public ApiAureliumSkills(com.archyx.aureliumskills.AureliumSkills plugin) {
+    public ApiAureliumSkills(AureliumSkillsPlugin plugin) {
         this.playerManager = new ApiPlayerManager(plugin);
         this.messageManager = new ApiMessageManager(plugin);
         this.xpRequirements = new ApiXpRequirements(plugin);
@@ -56,4 +57,5 @@ public class ApiAureliumSkills implements AureliumSkillsApi {
     public ManaAbilityConfig getManaAbilityConfig() {
         return manaAbilityConfig;
     }
+
 }

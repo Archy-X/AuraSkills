@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.api;
+package dev.aurelium.skills.common.api;
 
 import dev.aurelium.skills.api.AureliumSkillsApi;
 import dev.aurelium.skills.api.AureliumSkillsProvider;

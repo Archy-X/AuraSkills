@@ -18,4 +18,8 @@ public interface ConfigProvider {
 
     boolean isEnabled(Skill skill);
 
+    int getMaxLevel(Skill skill);
+
+    int getHighestMaxLevel();
+
 }
