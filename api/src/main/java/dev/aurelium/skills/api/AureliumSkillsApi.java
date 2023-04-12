@@ -7,7 +7,7 @@ import dev.aurelium.skills.api.message.MessageManager;
 import dev.aurelium.skills.api.player.PlayerManager;
 import dev.aurelium.skills.api.skill.XpRequirements;
 
-public interface AureliumSkills {
+public interface AureliumSkillsApi {
 
     PlayerManager getPlayerManager();
 

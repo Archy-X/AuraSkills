@@ -72,6 +72,7 @@ public interface SkillsPlayer {
      * Gets the level of a stat without any stat modifiers. The base level is the amount
      * obtained only from the permanent rewards for leveling skills.
      *
+     * @param stat The stat to get the base level of
      * @return The base stat level
      */
     double getBaseStatLevel(Stat stat);

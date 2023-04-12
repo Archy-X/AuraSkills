@@ -6,4 +6,8 @@ public interface Skill {
 
     NamespacedId getId();
 
+    default boolean equals(Skill skill) {
+        return getId().equals(skill.getId());
+    }
+
 }

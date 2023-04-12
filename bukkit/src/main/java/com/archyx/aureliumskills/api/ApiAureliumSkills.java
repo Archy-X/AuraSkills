@@ -1,7 +1,7 @@
 package com.archyx.aureliumskills.api;
 
 import com.archyx.aureliumskills.api.implementation.*;
-import dev.aurelium.skills.api.AureliumSkills;
+import dev.aurelium.skills.api.AureliumSkillsApi;
 import dev.aurelium.skills.api.config.AbilityConfig;
 import dev.aurelium.skills.api.config.ConfigManager;
 import dev.aurelium.skills.api.config.ManaAbilityConfig;
@@ -9,7 +9,7 @@ import dev.aurelium.skills.api.message.MessageManager;
 import dev.aurelium.skills.api.player.PlayerManager;
 import dev.aurelium.skills.api.skill.XpRequirements;
 
-public class ApiAureliumSkills implements AureliumSkills {
+public class ApiAureliumSkills implements AureliumSkillsApi {
 
     private final PlayerManager playerManager;
     private final MessageManager messageManager;

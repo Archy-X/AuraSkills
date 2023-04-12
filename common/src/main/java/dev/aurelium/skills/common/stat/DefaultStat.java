@@ -1,13 +1,13 @@
-package dev.aurelium.skills.common.skill;
+package dev.aurelium.skills.common.stat;
 
+import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.util.NamespacedId;
-import dev.aurelium.skills.common.registry.Namespaced;
 
-public abstract class Skill implements Namespaced {
+public class DefaultStat implements Stat {
 
     private final NamespacedId id;
 
-    public Skill(NamespacedId id) {
+    public DefaultStat(NamespacedId id) {
         this.id = id;
     }
 
@@ -15,5 +15,4 @@ public abstract class Skill implements Namespaced {
     public NamespacedId getId() {
         return id;
     }
-
 }
