@@ -3,8 +3,6 @@ package com.archyx.aureliumskills;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.ability.AbilityManager;
-import com.archyx.aureliumskills.api.ApiAureliumSkills;
-import com.archyx.aureliumskills.api.ApiRegistrationUtil;
 import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.aureliumskills.commands.*;
 import com.archyx.aureliumskills.configuration.Option;
@@ -96,6 +94,7 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
+import dev.aurelium.skills.common.api.ApiRegistrationUtil;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -171,9 +170,7 @@ public class AureliumSkills extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		// Register API
-		ApiAureliumSkills api = new ApiAureliumSkills(this);
-		ApiRegistrationUtil.register(api);
+		// TODO Register API
 		// Registries
 		statRegistry = new StatRegistry();
 		registerStats();

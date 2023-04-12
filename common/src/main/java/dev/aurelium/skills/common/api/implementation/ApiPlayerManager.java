@@ -1,17 +1,17 @@
-package com.archyx.aureliumskills.api.implementation;
+package dev.aurelium.skills.common.api.implementation;
 
-import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.data.PlayerData;
 import dev.aurelium.skills.api.player.PlayerManager;
 import dev.aurelium.skills.api.player.SkillsPlayer;
+import dev.aurelium.skills.common.AureliumSkillsPlugin;
+import dev.aurelium.skills.common.data.PlayerData;
 
 import java.util.UUID;
 
 public class ApiPlayerManager implements PlayerManager {
 
-    private final AureliumSkills plugin;
+    private final AureliumSkillsPlugin plugin;
 
-    public ApiPlayerManager(AureliumSkills plugin) {
+    public ApiPlayerManager(AureliumSkillsPlugin plugin) {
         this.plugin = plugin;
     }
 
