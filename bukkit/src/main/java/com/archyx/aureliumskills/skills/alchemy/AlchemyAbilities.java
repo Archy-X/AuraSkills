@@ -344,7 +344,7 @@ public class AlchemyAbilities extends AbilityProvider implements Listener {
                                     }
                                 }
                             } else {
-                                playerData.removeStatModifier("AbilityModifier-WiseEffect", false);
+                                playerData.removeStatModifier("AbilityModifier-WiseEffect", true);
                             }
                         }
                     }
