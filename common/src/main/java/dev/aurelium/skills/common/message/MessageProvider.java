@@ -6,4 +6,6 @@ public interface MessageProvider {
 
     String get(MessageKey key, Locale locale);
 
+    Locale getDefaultLanguage();
+
 }

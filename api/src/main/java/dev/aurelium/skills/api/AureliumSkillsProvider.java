@@ -4,10 +4,10 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 
 public final class AureliumSkillsProvider {
 
-    private static AureliumSkills instance = null;
+    private static AureliumSkillsApi instance = null;
 
-    public static AureliumSkills getInstance() {
-        AureliumSkills instance = AureliumSkillsProvider.instance;
+    public static AureliumSkillsApi getInstance() {
+        AureliumSkillsApi instance = AureliumSkillsProvider.instance;
         if (instance == null) {
             throw new IllegalStateException("AureliumSkillsAPI is not initialized");
         }
@@ -15,7 +15,7 @@ public final class AureliumSkillsProvider {
     }
 
     @Internal
-    static void register(AureliumSkills instance) {
+    static void register(AureliumSkillsApi instance) {
         AureliumSkillsProvider.instance = instance;
     }
 
