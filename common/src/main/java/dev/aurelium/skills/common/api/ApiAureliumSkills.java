@@ -4,6 +4,7 @@ import dev.aurelium.skills.api.AureliumSkillsApi;
 import dev.aurelium.skills.api.config.AbilityConfig;
 import dev.aurelium.skills.api.config.ConfigManager;
 import dev.aurelium.skills.api.config.ManaAbilityConfig;
+import dev.aurelium.skills.api.event.EventManager;
 import dev.aurelium.skills.api.message.MessageManager;
 import dev.aurelium.skills.api.player.PlayerManager;
 import dev.aurelium.skills.api.skill.XpRequirements;
@@ -18,6 +19,7 @@ public class ApiAureliumSkills implements AureliumSkillsApi {
     private final XpRequirements xpRequirements;
     private final AbilityConfig abilityConfig;
     private final ManaAbilityConfig manaAbilityConfig;
+    private final EventManager eventManager;
 
     public ApiAureliumSkills(AureliumSkillsPlugin plugin) {
         this.playerManager = new ApiPlayerManager(plugin);
@@ -26,6 +28,7 @@ public class ApiAureliumSkills implements AureliumSkillsApi {
         this.configManager = new ApiConfigManager(plugin);
         this.abilityConfig = new ApiAbilityConfig(plugin);
         this.manaAbilityConfig = new ApiManaAbilityConfig(plugin);
+        this.eventManager = plugin.getEventManager();
     }
 
     @Override
@@ -56,6 +59,11 @@ public class ApiAureliumSkills implements AureliumSkillsApi {
     @Override
     public ManaAbilityConfig getManaAbilityConfig() {
         return manaAbilityConfig;
+    }
+
+    @Override
+    public EventManager getEventManager() {
+        return eventManager;
     }
 
 }
