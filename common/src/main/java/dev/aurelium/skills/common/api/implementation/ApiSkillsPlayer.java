@@ -11,6 +11,7 @@ import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.data.PlayerData;
 
 import java.util.Locale;
+import java.util.UUID;
 
 public class ApiSkillsPlayer implements SkillsPlayer {
 
@@ -24,6 +25,11 @@ public class ApiSkillsPlayer implements SkillsPlayer {
 
     public PlayerData getPlayerData() {
         return playerData;
+    }
+
+    @Override
+    public UUID getUuid() {
+        return playerData.getUuid();
     }
 
     @Override
