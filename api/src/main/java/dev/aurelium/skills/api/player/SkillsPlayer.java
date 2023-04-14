@@ -7,8 +7,16 @@ import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.stat.StatModifier;
 
 import java.util.Locale;
+import java.util.UUID;
 
 public interface SkillsPlayer {
+
+    /**
+     * Gets the Minecraft UUID of the player.
+     *
+     * @return The player's UUID
+     */
+    UUID getUuid();
 
     /**
      * Gets the current amount of XP in a skill. The amount ranges from 0 to the XP required
