@@ -1,5 +1,5 @@
 # Aurelium Skills Chinese, Simplified (zh-CN) messages
-# Translators: SnowCutieOwO, Qian_ai, huiqiang233
+# Translators: SnowCutieOwO, Qian_ai, huiqiang233, Kauo
 # Contribute here: https://crowdin.com/project/aureliumskills/zh-CN#
 abilities:
   farming:
@@ -543,6 +543,9 @@ commands:
     average_header_page: '&f--==&b&l技能综合排行榜&f(第 {page} 页)==--'
     average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&e提示: &a/sk top &f<page> &7 或 &a/sk top &f[skill] <page>'
+  transfer:
+    success: '&a成功将玩家数据从 &7{from} &a转移到 &7{to}'
+    error: '&c传输玩家数据时出错。请检查控制台以获取错误信息。'
   updateleaderboards:
     already_updating: '&e排行榜正在更新!'
     updated: '&a排行榜更新成功!'
@@ -668,6 +671,7 @@ menus:
     your_ability_level_maxed: '&f你的等级: &b{level} &6(MAXED)'
     unlocked_desc: "&f下次升级时 &3{skill} {level}&f\n  &7{desc}"
     unlocked_desc_maxed: "&f描述：\n  &7{desc}"
+    desc_upgrade_value: '&7{current}&8→{next}&7'
 mana_abilities:
   replenish:
     name: 自动补种
@@ -1063,4 +1067,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 27
+file_version: 29
