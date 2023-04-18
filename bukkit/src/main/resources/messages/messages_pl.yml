@@ -156,7 +156,7 @@ abilities:
       info: '+{value}% Obrażeń Krytycznych'
     fighter:
       name: Wojownik
-      desc: 'Zdobądź {value}% więcej doświadczenia walki'
+      desc: 'Zdobywaj {value}% więcej XP Walki'
       info: '+{value}% XP'
     sword_master:
       name: Mistrz Miecza
@@ -181,7 +181,7 @@ abilities:
       info: '{value}% Braku Utraty Głodu'
     runner:
       name: Biegacz
-      desc: 'Zdobywaj {value} więcej doświadczenia wytrzymałości.'
+      desc: 'Zdobywaj {value}% więcej XP Wytrzymałości.'
       info: '+{value}% XP'
     golden_heal:
       name: Złote Leczenie
@@ -226,7 +226,7 @@ abilities:
       lore: '&a(+{duration})'
     brewer:
       name: Mistrz Warzenia
-      desc: 'Zdobywaj {value}% więcej XP Alchemii.'
+      desc: 'Zdobywaj {value}% więcej XP Alchemii'
       info: '+{value}% XP'
     splasher:
       name: Miotacz
@@ -247,7 +247,7 @@ abilities:
       info: 'Jedno doświadczenie za {value} doświadczenia umiejętności'
     enchanter:
       name: Zaklinacz
-      desc: 'Zdobądź {value} procent doświadczenia zaklęć.'
+      desc: 'Zdobywaj {value}% więcej XP Zaklinania.'
       info: '+{value}% XP'
     xp_warrior:
       name: Doświadczenie Wojownika
@@ -1035,7 +1035,7 @@ sources:
 stats:
   strength:
     name: Siła
-    desc: "&7Siła zwiększa obrażenia zadawane atakowi\n&7różnymi broniami"
+    desc: "&7Siła zwiększa obrażenia od ataku\n&7różnymi broniami"
     color: '&4'
     symbol: '➽'
   health:

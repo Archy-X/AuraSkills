@@ -543,6 +543,9 @@ commands:
     average_header_page: '&f--==&b&lТаблица средних навыков &f(Страница {page})==--'
     average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eИспользуйте: &a/sk top &f<page> &7из &a/sk top &f[skill] <page>'
+  transfer:
+    success: '&aУспешно перенесенные данные игрока из  &7{from} &aв &7{to}'
+    error: '&cПроизошла ошибка при передаче данных игрока. Проверьте консоль на наличие ошибок.'
   updateleaderboards:
     already_updating: '&eТаблица лидеров уже обновляется!'
     updated: '&aТаблица лидеров обновлена!'
@@ -668,6 +671,7 @@ menus:
     your_ability_level_maxed: '&fВаш уровень: &b{level} &6(MAXED)'
     unlocked_desc: "&fСледующее обновление в &3{skill} {level}&f\n  &7{desc}"
     unlocked_desc_maxed: "&fОписание:\n  &7{desc}"
+    desc_upgrade_value: '&7{current}&8→{next}&7'
 mana_abilities:
   replenish:
     name: Комбайнер
@@ -1063,4 +1067,4 @@ units:
   mana: МАНЫ
   hp: ЖИЗНЕЙ
   xp: ОПЫТ
-file_version: 27
+file_version: 29
