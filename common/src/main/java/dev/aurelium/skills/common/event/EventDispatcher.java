@@ -4,8 +4,14 @@ import dev.aurelium.skills.api.event.AureliumSkillsEvent;
 
 public class EventDispatcher {
 
-    public void callEvent(AureliumSkillsEvent event) {
+    private final AureliumSkillsEventManager eventManager;
 
+    public EventDispatcher(AureliumSkillsEventManager eventManager) {
+        this.eventManager = eventManager;
+    }
+
+    public void callEvent(AureliumSkillsEvent event) {
+        eventManager.getEventBus().post(event);
     }
 
 }
