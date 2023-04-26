@@ -2,10 +2,20 @@ package dev.aurelium.skills.api.event;
 
 import dev.aurelium.skills.api.AureliumSkillsApi;
 
-public interface AureliumSkillsEvent {
+public class AureliumSkillsEvent {
 
-    AureliumSkillsApi getApi();
+    private final AureliumSkillsApi api;
 
-    Class<? extends AureliumSkillsEvent> getEventType();
+    public AureliumSkillsEvent(AureliumSkillsApi api) {
+        this.api = api;
+    }
+
+    public AureliumSkillsApi getApi() {
+        return api;
+    }
+
+    public Class<? extends AureliumSkillsEvent> getEventType() {
+        return getClass();
+    }
 
 }
