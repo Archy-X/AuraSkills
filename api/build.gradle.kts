@@ -1,5 +1,5 @@
 plugins {
-    java
+    `java-library`
 }
 
 repositories {
@@ -7,6 +7,7 @@ repositories {
 }
 
 dependencies {
+    api("com.google.guava:guava:31.1-jre")
     implementation("org.jetbrains:annotations:24.0.1")
 }
 

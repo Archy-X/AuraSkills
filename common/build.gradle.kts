@@ -8,8 +8,8 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    implementation("net.kyori:adventure-api:4.13.0")
     implementation("net.kyori:event-api:3.0.0")
+    implementation("net.kyori:adventure-api:4.13.0")
 }
 
 tasks.withType<JavaCompile>() {

@@ -1,26 +1,24 @@
 package dev.aurelium.skills.api.ability;
 
-import dev.aurelium.skills.api.skill.Skill;
-import dev.aurelium.skills.api.skill.Skills;
 import dev.aurelium.skills.api.util.NamespacedId;
+
+import java.util.Locale;
 
 public enum ManaAbilities implements ManaAbility {
 
-    REPLENISH("replenish", Skills.FARMING),
-    TREECAPITATOR("treecapitator", Skills.FORAGING),
-    SPEED_MINE("speed_mine", Skills.MINING),
-    SHARP_HOOK("sharp_hook", Skills.FISHING),
-    TERRAFORM("terraform", Skills.EXCAVATION),
-    CHARGED_SHOT("charged_shot", Skills.ARCHERY),
-    ABSORPTION("absorption", Skills.DEFENSE),
-    LIGHTNING_BLADE("lightning_blade", Skills.FIGHTING);
+    REPLENISH,
+    TREECAPITATOR,
+    SPEED_MINE,
+    SHARP_HOOK,
+    TERRAFORM,
+    CHARGED_SHOT,
+    ABSORPTION,
+    LIGHTNING_BLADE;
 
     private final NamespacedId id;
-    private final Skill skill;
 
-    ManaAbilities(String id, Skill skill) {
-        this.id = new NamespacedId("aureliumskills", id);
-        this.skill = skill;
+    ManaAbilities() {
+        this.id = NamespacedId.from("aureliumskills", this.name().toLowerCase(Locale.ROOT));
     }
 
     @Override
@@ -28,8 +26,4 @@ public enum ManaAbilities implements ManaAbility {
         return id;
     }
 
-    @Override
-    public Skill getSkill() {
-        return skill;
-    }
 }
