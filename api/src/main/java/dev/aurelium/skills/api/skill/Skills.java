@@ -2,28 +2,30 @@ package dev.aurelium.skills.api.skill;
 
 import dev.aurelium.skills.api.util.NamespacedId;
 
+import java.util.Locale;
+
 public enum Skills implements Skill {
 
-    FARMING("farming"),
-    FORAGING("foraging"),
-    MINING("mining"),
-    FISHING("fishing"),
-    EXCAVATION("excavation"),
-    ARCHERY("archery"),
-    FIGHTING("fighting"),
-    DEFENSE("defense"),
-    AGILITY("agility"),
-    ENDURANCE("endurance"),
-    ALCHEMY("alchemy"),
-    ENCHANTING("enchanting"),
-    SORCERY("sorcery"),
-    HEALING("healing"),
-    FORGING("forging");
+    FARMING,
+    FORAGING,
+    MINING,
+    FISHING,
+    EXCAVATION,
+    ARCHERY,
+    FIGHTING,
+    DEFENSE,
+    AGILITY,
+    ENDURANCE,
+    ALCHEMY,
+    ENCHANTING,
+    SORCERY,
+    HEALING,
+    FORGING;
 
     private final NamespacedId id;
 
-    Skills(String id) {
-        this.id = new NamespacedId("aureliumskills", id);
+    Skills() {
+        this.id = NamespacedId.from("aureliumskills", this.name().toLowerCase(Locale.ROOT));
     }
 
     @Override
