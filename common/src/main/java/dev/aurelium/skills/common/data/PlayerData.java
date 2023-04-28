@@ -5,10 +5,10 @@ import dev.aurelium.skills.api.ability.ManaAbility;
 import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.stat.StatModifier;
+import dev.aurelium.skills.api.stat.Stats;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.config.Option;
 import dev.aurelium.skills.common.modifier.Multiplier;
-import dev.aurelium.skills.common.stat.Stats;
 import dev.aurelium.skills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -162,7 +162,7 @@ public class PlayerData {
         setStatLevel(modifier.getStat(), getStatLevel(modifier.getStat()) + modifier.getValue());
         // Reloads stats
         if (reload) {
-            plugin.getStatManager().reloadStat(modifier.getStat());
+            plugin.getStatManager().reloadStat(this, modifier.getStat());
         }
     }
 
@@ -177,7 +177,7 @@ public class PlayerData {
         statModifiers.remove(name);
         // Reloads stats
         if (reload) {
-            plugin.getStatManager().reloadStat(modifier.getStat());
+            plugin.getStatManager().reloadStat(this, modifier.getStat());
         }
         return true;
     }
@@ -211,7 +211,7 @@ public class PlayerData {
     }
 
     public int getAbilityLevel(Ability ability) {
-        Skill skill = ability.getSkill();
+        Skill skill = plugin.getAbilityRegistry().getSkill(ability);
         if (getSkillLevel(skill) < plugin.getAbilityManager().getUnlock(ability)) {
             return 0;
         }
@@ -226,10 +226,11 @@ public class PlayerData {
 
     public int getManaAbilityLevel(ManaAbility mAbility) {
         // Check if unlocked
-        if (getSkillLevel(mAbility.getSkill()) < plugin.getManaAbilityManager().getUnlock(mAbility)) {
+        Skill skill = plugin.getManaAbilityRegistry().getSkill(mAbility);
+        if (getSkillLevel(skill) < plugin.getManaAbilityManager().getUnlock(mAbility)) {
             return 0;
         }
-        int level = (getSkillLevel(mAbility.getSkill()) - plugin.getManaAbilityManager().getUnlock(mAbility)) / plugin.getManaAbilityManager().getLevelUp(mAbility) + 1;
+        int level = (getSkillLevel(skill) - plugin.getManaAbilityManager().getUnlock(mAbility)) / plugin.getManaAbilityManager().getLevelUp(mAbility) + 1;
         // Check max level
         if (level <= plugin.getManaAbilityManager().getMaxLevel(mAbility) || plugin.getManaAbilityManager().getMaxLevel(mAbility) == 0) {
             return level;
