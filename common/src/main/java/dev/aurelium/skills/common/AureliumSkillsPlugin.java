@@ -3,6 +3,7 @@ package dev.aurelium.skills.common;
 import dev.aurelium.skills.api.event.EventManager;
 import dev.aurelium.skills.common.ability.AbilityManager;
 import dev.aurelium.skills.common.ability.AbilityRegistry;
+import dev.aurelium.skills.common.hooks.HookManager;
 import dev.aurelium.skills.common.mana.ManaAbilityRegistry;
 import dev.aurelium.skills.common.config.ConfigProvider;
 import dev.aurelium.skills.common.data.PlayerManager;
@@ -44,5 +45,7 @@ public interface AureliumSkillsPlugin {
     AbilityRegistry getAbilityRegistry();
 
     ManaAbilityRegistry getManaAbilityRegistry();
+
+    HookManager getHookManager();
 
 }
