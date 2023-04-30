@@ -8,6 +8,7 @@ import dev.aurelium.skills.common.data.PlayerData;
 import dev.aurelium.skills.common.data.PlayerManager;
 import dev.aurelium.skills.common.hooks.HookManager;
 import dev.aurelium.skills.common.item.ItemRegistry;
+import dev.aurelium.skills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.skills.common.leveler.Leveler;
 import dev.aurelium.skills.common.leveler.XpRequirements;
 import dev.aurelium.skills.common.mana.ManaAbilityManager;
@@ -55,13 +56,16 @@ public interface AureliumSkillsPlugin {
 
     HookManager getHookManager();
 
+    LeaderboardManager getLeaderboardManager();
+
+    // Message convenience methods
     String getMsg(MessageKey key, Locale locale);
 
     default Locale getDefaultLanguage() {
         return getMessageProvider().getDefaultLanguage();
     }
 
-    // Platform-dependent Minecraft functions
+    // Platform-dependent Minecraft methods
     void runConsoleCommand(String command);
 
     void runPlayerCommand(PlayerData playerData, String command);
