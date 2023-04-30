@@ -1,6 +1,6 @@
 package dev.aurelium.skills.api.config;
 
-import dev.aurelium.skills.api.ability.ManaAbility;
+import dev.aurelium.skills.api.mana.ManaAbility;
 
 public interface ManaAbilityConfig {
 

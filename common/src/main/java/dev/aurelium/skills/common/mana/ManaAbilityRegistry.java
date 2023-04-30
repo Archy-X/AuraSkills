@@ -1,7 +1,7 @@
-package dev.aurelium.skills.common.ability;
+package dev.aurelium.skills.common.mana;
 
-import dev.aurelium.skills.api.ability.ManaAbility;
-import dev.aurelium.skills.api.ability.ManaAbilityProperties;
+import dev.aurelium.skills.api.mana.ManaAbility;
+import dev.aurelium.skills.api.mana.ManaAbilityProperties;
 import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.skill.Skills;
 import dev.aurelium.skills.common.registry.Registry;
