@@ -79,7 +79,7 @@ public enum Abilities implements Ability {
     private final NamespacedId id;
 
     Abilities() {
-        this.id = NamespacedId.from("aureliumskills", this.name().toLowerCase());
+        this.id = NamespacedId.from(NamespacedId.AURELIUMSKILLS, this.name().toLowerCase());
     }
 
     @Override

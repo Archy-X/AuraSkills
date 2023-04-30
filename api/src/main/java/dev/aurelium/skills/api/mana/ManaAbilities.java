@@ -18,7 +18,7 @@ public enum ManaAbilities implements ManaAbility {
     private final NamespacedId id;
 
     ManaAbilities() {
-        this.id = NamespacedId.from("aureliumskills", this.name().toLowerCase(Locale.ROOT));
+        this.id = NamespacedId.from(NamespacedId.AURELIUMSKILLS, this.name().toLowerCase(Locale.ROOT));
     }
 
     @Override

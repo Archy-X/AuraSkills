@@ -14,7 +14,7 @@ public enum Stats implements Stat {
     private final NamespacedId id;
 
     Stats() {
-        this.id = NamespacedId.from("aureliumskills", this.name().toLowerCase());
+        this.id = NamespacedId.from(NamespacedId.AURELIUMSKILLS, this.name().toLowerCase());
     }
 
     @Override

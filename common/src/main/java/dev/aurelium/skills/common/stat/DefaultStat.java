@@ -1,18 +1,20 @@
 package dev.aurelium.skills.common.stat;
 
 import dev.aurelium.skills.api.stat.Stat;
-import dev.aurelium.skills.api.util.NamespacedId;
+import dev.aurelium.skills.api.stat.StatProperties;
+import org.jetbrains.annotations.NotNull;
 
-public class DefaultStat implements Stat {
+public class DefaultStat implements StatProperties {
 
-    private final NamespacedId id;
+    private final Stat stat;
 
-    public DefaultStat(NamespacedId id) {
-        this.id = id;
+    public DefaultStat(Stat stat) {
+        this.stat = stat;
     }
 
+    @NotNull
     @Override
-    public NamespacedId getId() {
-        return id;
+    public Stat getStat() {
+        return stat;
     }
 }

@@ -1,5 +1,6 @@
 package dev.aurelium.skills.common.rewards.builder;
 
+import dev.aurelium.skills.api.util.NamespacedId;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.rewards.Reward;
 import dev.aurelium.skills.common.rewards.type.ItemReward;
@@ -7,7 +8,7 @@ import dev.aurelium.skills.common.util.data.Validate;
 
 public class ItemRewardBuilder extends MessagedRewardBuilder {
 
-    private String itemKey;
+    private NamespacedId itemKey;
     private int amount;
 
     public ItemRewardBuilder(AureliumSkillsPlugin plugin) {
@@ -15,7 +16,7 @@ public class ItemRewardBuilder extends MessagedRewardBuilder {
         this.amount = -1;
     }
 
-    public ItemRewardBuilder itemKey(String itemKey) {
+    public ItemRewardBuilder itemKey(NamespacedId itemKey) {
         this.itemKey = itemKey;
         return this;
     }

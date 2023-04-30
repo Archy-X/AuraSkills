@@ -17,6 +17,7 @@ import dev.aurelium.skills.common.message.MessageProvider;
 import dev.aurelium.skills.common.message.PlatformLogger;
 import dev.aurelium.skills.common.skill.SkillRegistry;
 import dev.aurelium.skills.common.stat.StatManager;
+import dev.aurelium.skills.common.stat.StatRegistry;
 
 import java.util.Locale;
 
@@ -46,6 +47,8 @@ public interface AureliumSkillsPlugin {
 
     SkillRegistry getSkillRegistry();
 
+    StatRegistry getStatRegistry();
+
     AbilityRegistry getAbilityRegistry();
 
     ManaAbilityRegistry getManaAbilityRegistry();
@@ -53,6 +56,10 @@ public interface AureliumSkillsPlugin {
     HookManager getHookManager();
 
     String getMsg(MessageKey key, Locale locale);
+
+    default Locale getDefaultLanguage() {
+        return getMessageProvider().getDefaultLanguage();
+    }
 
     // Platform-dependent Minecraft functions
     void runConsoleCommand(String command);
