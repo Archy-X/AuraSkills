@@ -18,7 +18,7 @@ public class ManaAbilityRegistry extends Registry<ManaAbility, ManaAbilityProper
         for (Skills skills : Skills.values()) {
             ManaAbility manaAbility = SkillDefaults.getDefaultManaAbility(skills);
             if (manaAbility != null) { // Register if mana ability exists for skill
-                ManaAbilityProperties properties = new DefaultManaAbility(manaAbility, skills);
+                ManaAbilityProperties properties = new DefaultManaAbility(manaAbility, skills, SkillDefaults.getOptionKeys(manaAbility));
                 register(manaAbility.getId(), manaAbility, properties);
             }
         }

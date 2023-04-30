@@ -6,6 +6,7 @@ import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.stat.StatModifier;
 import dev.aurelium.skills.api.stat.Stats;
+import dev.aurelium.skills.api.util.NamespacedId;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.config.Option;
 import dev.aurelium.skills.common.modifier.Multiplier;
@@ -262,7 +263,7 @@ public abstract class PlayerData {
         // Find items that are not registered
         List<KeyIntPair> toRemove = new ArrayList<>();
         for (KeyIntPair unclaimedItem : unclaimedItems) {
-            if (!plugin.getItemRegistry().containsItem(unclaimedItem.getKey())) {
+            if (!plugin.getItemRegistry().containsItem(NamespacedId.fromStringOrDefault(unclaimedItem.getKey()))) {
                 toRemove.add(unclaimedItem);
             }
         }
