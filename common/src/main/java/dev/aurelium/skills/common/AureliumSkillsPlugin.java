@@ -3,7 +3,7 @@ package dev.aurelium.skills.common;
 import dev.aurelium.skills.api.event.EventManager;
 import dev.aurelium.skills.common.ability.AbilityManager;
 import dev.aurelium.skills.common.ability.AbilityRegistry;
-import dev.aurelium.skills.common.ability.ManaAbilityRegistry;
+import dev.aurelium.skills.common.mana.ManaAbilityRegistry;
 import dev.aurelium.skills.common.config.ConfigProvider;
 import dev.aurelium.skills.common.data.PlayerManager;
 import dev.aurelium.skills.common.item.ItemRegistry;

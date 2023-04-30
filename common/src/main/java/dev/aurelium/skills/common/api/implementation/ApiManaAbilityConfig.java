@@ -1,6 +1,6 @@
 package dev.aurelium.skills.common.api.implementation;
 
-import dev.aurelium.skills.api.ability.ManaAbility;
+import dev.aurelium.skills.api.mana.ManaAbility;
 import dev.aurelium.skills.api.config.ManaAbilityConfig;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.mana.ManaAbilityManager;
