@@ -68,9 +68,7 @@ public class RewardTable {
         return rewardMap;
     }
 
-    /**
-     * Searches all rewards of a certain type at a single level
-     */
+    // Searches all rewards of a certain type at a single level
     public <T extends Reward> ImmutableList<T> searchRewards(Class<T> type, int level) {
         ImmutableList<Reward> levelRewards = getRewards(level);
         List<T> rewardList = new ArrayList<>();
