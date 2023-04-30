@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class HookManager {
 
-    private final Map<Hooks, Hook> hooks;
+    private final Map<Class<? extends Hook>, Hook> hooks;
 
     public HookManager() {
         this.hooks = new HashMap<>();
@@ -17,7 +17,7 @@ public class HookManager {
      * @param type The hook type
      * @return True if the hook is registered, false if not
      */
-    public boolean isRegistered(Hooks type) {
+    public boolean isRegistered(Class<? extends Hook> type) {
         return this.hooks.containsKey(type);
     }
 
@@ -27,12 +27,12 @@ public class HookManager {
      * @param type The hook type
      * @return The hook
      */
-    public Hook getHook(Hooks type) {
+    public <T extends Hook> T getHook(Class<T> type) {
         Hook hook = this.hooks.get(type);
         if (hook == null) {
-            throw new IllegalArgumentException("No registered hook of type " + type.name() + "!");
+            throw new IllegalArgumentException("No registered hook of type " + type.getName() + "!");
         }
-        return hook;
+        return type.cast(hook);
     }
 
     /**
@@ -41,7 +41,7 @@ public class HookManager {
      * @param type The hook type
      * @param hook The hook
      */
-    public void registerHook(Hooks type, Hook hook) {
+    public void registerHook(Class<? extends Hook> type, Hook hook) {
         this.hooks.put(type, hook);
     }
 
