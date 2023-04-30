@@ -1,15 +1,16 @@
 package dev.aurelium.skills.common.rewards.type;
 
 import dev.aurelium.skills.api.skill.Skill;
+import dev.aurelium.skills.api.util.NamespacedId;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.data.PlayerData;
 
 public class ItemReward extends MessagedReward {
 
-    protected final String itemKey;
+    protected final NamespacedId itemKey;
     protected final int amount; // Amount of -1 means no amount was specified and should use amount of registered item
 
-    public ItemReward(AureliumSkillsPlugin plugin, String menuMessage, String chatMessage, String itemKey, int amount) {
+    public ItemReward(AureliumSkillsPlugin plugin, String menuMessage, String chatMessage, NamespacedId itemKey, int amount) {
         super(plugin, menuMessage, chatMessage);
         this.itemKey = itemKey;
         this.amount = amount;
