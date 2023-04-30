@@ -1,6 +1,6 @@
 package dev.aurelium.skills.common.mana;
 
-import dev.aurelium.skills.api.ability.ManaAbility;
+import dev.aurelium.skills.api.mana.ManaAbility;
 import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.config.OptionValue;

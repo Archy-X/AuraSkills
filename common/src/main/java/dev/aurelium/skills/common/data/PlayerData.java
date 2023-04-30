@@ -1,7 +1,7 @@
 package dev.aurelium.skills.common.data;
 
 import dev.aurelium.skills.api.ability.Ability;
-import dev.aurelium.skills.api.ability.ManaAbility;
+import dev.aurelium.skills.api.mana.ManaAbility;
 import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.stat.StatModifier;
