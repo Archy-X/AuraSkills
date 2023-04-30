@@ -17,7 +17,7 @@ public class AbilityRegistry extends Registry<Ability, AbilityProperties> {
     public void registerDefaults() {
         for (Skills skill : Skills.values()) { // Register default abilities for each default skill
             for (Ability ability : SkillDefaults.getDefaultAbilities(skill)) {
-                AbilityProperties properties = new DefaultAbility(ability, skill);
+                AbilityProperties properties = new DefaultAbility(ability, skill, SkillDefaults.getOptionKeys(ability));
                 register(ability.getId(), ability, properties);
             }
         }
