@@ -17,6 +17,10 @@ public interface MessageProvider {
 
     String getStatDescription(Locale locale, Stat stat);
 
+    String getStatColor(Locale locale, Stat stat);
+
+    String getStatSymbol(Locale locale, Stat stat);
+
     Locale getDefaultLanguage();
 
 }

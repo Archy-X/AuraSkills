@@ -15,8 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-
-public class PlayerData {
+public abstract class PlayerData {
 
     private final AureliumSkillsPlugin plugin;
 
@@ -62,6 +61,8 @@ public class PlayerData {
     public UUID getUuid() {
         return uuid;
     }
+
+    public abstract String getUsername();
 
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, 1);
