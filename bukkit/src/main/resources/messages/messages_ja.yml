@@ -38,7 +38,6 @@ abilities:
       name: Valor
       desc: '斧を持っている間、+{value}のStrengthを付与します'
       info: '+{value}のStrength'
-
     shredder:
       name: Shredder
       desc: '斧で攻撃時、{value}%の確率で3倍の耐久度ダメージを与えます。'
@@ -64,28 +63,26 @@ abilities:
       name: Hardened Armor
       desc: '装備の耐久度ダメージを{value}%無効化します。'
       info: '{value}%の耐久度ダメージ無効化'
-
   fishing:
     lucky_catch:
       name: Lucky Catch
       desc: '釣りで2倍のドロップを得る確率が{value}%増加します。'
-    fishing:
-      fisher:
-        name: Fisher
-        desc: '釣りで{value}%の追加経験値を得ます。'
-        info: '+{value}%の経験値'
+    fisher:
+      name: Fisher
+      desc: '釣りで{value}%の追加経験値を得ます。'
+      info: '+{value}%の経験値'
     treasure_hunter:
-        name: Treasure Hunter
-        desc: '釣りでレアなアイテムを獲得する確率が{value}%増加します。'
-        info: '+{value}%のレアなアイテム'
+      name: Treasure Hunter
+      desc: '釣りでレアなアイテムを獲得する確率が{value}%増加します。'
+      info: '+{value}%のレアなアイテム'
     grappler:
-        name: Grappler
-        desc: '鉤縄でエンティティを{value}%速く引き寄せます。'
-        info: '+{value}%の鉤縄速度'
+      name: Grappler
+      desc: '鉤縄でエンティティを{value}%速く引き寄せます。'
+      info: '+{value}%の鉤縄速度'
     epic_catch:
-        name: Epic Catch
-        desc: '釣りでエピックなアイテムを獲得する確率が{value}%増加します。'
-        info: '+{value}%のエピックなアイテム'
+      name: Epic Catch
+      desc: '釣りでエピックなアイテムを獲得する確率が{value}%増加します。'
+      info: '+{value}%のエピックなアイテム'
   excavation:
     metal_detector:
       name: メタルディテクター
@@ -261,28 +258,28 @@ abilities:
       name: ラッキーテーブル
       desc: 'エンチャントテーブルを使用してエンチャントをする場合、\n&7最大レベルではない場合、{value}%の確率で\n&7エンチャントレベルが1つ上昇します。'
       info: '{value}% エンチャント上昇確率'
-healing:
-  life_essence:
-    name: 生命のエッセンス
-    desc: インスタントヘルスのポーション効果が{value}%強化されます。
-    info: '+{value}% インスタントヘルス'
-  healer:
-    name: ヒーラー
-    desc: ヒーリングスキルの経験値が{value}%増加します。
-    info: '+{value}% 経験値'
-  life_steal:
-    name: ライフスティール
-    desc: 倒したホストileモブやプレイヤーの最大HPの{value}%を回復します。
-    info: '{value}% HPスティール'
-  golden_heart:
-    name: 黄金の心臓
-    desc: 吸収ハートに受けるダメージが{value}%軽減されます。
-    info: '-{value}% 吸収ダメージ'
-  revival:
-    name: 復活
-    desc: リスポーン後、30秒間、&c+{value}ヘルス&7と&6+{value_2}再生効果&7を獲得します。
-    info: '+{value} ヘルス, +{value_2} 再生効果'
-    message: '&f復活ボーナスを30秒間獲得しました！ &f(&c+{value}ヘルス, &6+{value_2}再生効果&f)'
+  healing:
+    life_essence:
+      name: 生命のエッセンス
+      desc: インスタントヘルスのポーション効果が{value}%強化されます。
+      info: '+{value}% インスタントヘルス'
+    healer:
+      name: ヒーラー
+      desc: ヒーリングスキルの経験値が{value}%増加します。
+      info: '+{value}% 経験値'
+    life_steal:
+      name: ライフスティール
+      desc: 倒したホストileモブやプレイヤーの最大HPの{value}%を回復します。
+      info: '{value}% HPスティール'
+    golden_heart:
+      name: 黄金の心臓
+      desc: 吸収ハートに受けるダメージが{value}%軽減されます。
+      info: '-{value}% 吸収ダメージ'
+    revival:
+      name: 復活
+      desc: リスポーン後、30秒間、&c+{value}ヘルス&7と&6+{value_2}再生効果&7を獲得します。
+      info: '+{value} ヘルス, +{value_2} 再生効果'
+      message: '&f復活ボーナスを30秒間獲得しました！ &f(&c+{value}ヘルス, &6+{value_2}再生効果&f)'
   forging:
     disenchanter:
       name: Disenchanter
@@ -344,7 +341,7 @@ acf:
     location_please_specify_world: '&cエラー：ワールドを指定してください。例：&eworld:x,y,z。'
     location_please_specify_xyz: '&cエラー：座標x、y、zを指定してください。例：&eworld:x,y,z。'
     location_console_not_relative: '&cエラー：コンソールは、座標を相対的に使用できません。'
-aaction_bar:
+action_bar:
   idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
   xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
   xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
@@ -371,36 +368,36 @@ commands:
       removeall:
         removed: '&7アイテムから全てのアーマーモディファイヤーが削除されました'
     multiplier:
-    add:
-      added: '&b{target} &7の値が &b{value} &7のマルチプライヤーがアイテムに追加されました'
-      already_exists: '&eすでに &b{target} &eのアーマーマルチプライヤーがアイテムに存在します！ /sk armor multiplier remove コマンドで先に削除してください'
-      skill_lore: '&7装備時：&b+{value}% {skill} 経験値'
-      skill_lore_subtract: '&7装備時：&b-{value}% {skill} 経験値'
-      global_lore: '&7装備時：&9+{value}% 全スキル経験値'
-      global_lore_subtract: '&7装備時：&9-{value}% 全スキル経験値'
-    remove:
-      does_not_exist: '&eアイテムに &b{target} &eのアーマーマルチプライヤーが存在しません！'
-      removed: '&b{target} &7のアーマーマルチプライヤーがアイテムから削除されました'
-    list:
-      header: '&f以下のアーマーマルチプライヤーが見つかりました：'
-      entry: '  &b{target}&f - {value}'
-    removeall:
-      removed: '&7すべてのアーマーマルチプライヤーがアイテムから削除されました'
-  requirement:
-    add:
-      added: '&3{skill}&7のアーマー要件がレベル &b{level} &7でアイテムに追加されました'
-      already_exists: '&eアイテムにすでに &3{skill}&e のアーマー要件が存在します！&6/sk armor requirement remove &ecommandで先に削除してください'
-      lore: '&c要件：&3{skill} {level}'
-    remove:
-      does_not_exist: '&eアイテムに &3{skill}&e のアーマー要件が存在しません！'
-      removed: '&3{skill}&7のアーマー要件がアイテムから削除されました'
-    list:
-      header: '&f以下のアーマー要件が見つかりました：'
-      entry: '  &3{skill} &f- &b{level}'
-    removeall:
-      removed: '&7すべてのアーマー要件がアイテムから削除されました'
-    equip: '&eこのアイテムを装備するための要件を満たしていません：{requirements}'
-    entry: '&b{skill} {level}&7, '
+      add:
+        added: '&b{target} &7の値が &b{value} &7のマルチプライヤーがアイテムに追加されました'
+        already_exists: '&eすでに &b{target} &eのアーマーマルチプライヤーがアイテムに存在します！ /sk armor multiplier remove コマンドで先に削除してください'
+        skill_lore: '&7装備時：&b+{value}% {skill} 経験値'
+        skill_lore_subtract: '&7装備時：&b-{value}% {skill} 経験値'
+        global_lore: '&7装備時：&9+{value}% 全スキル経験値'
+        global_lore_subtract: '&7装備時：&9-{value}% 全スキル経験値'
+      remove:
+        does_not_exist: '&eアイテムに &b{target} &eのアーマーマルチプライヤーが存在しません！'
+        removed: '&b{target} &7のアーマーマルチプライヤーがアイテムから削除されました'
+      list:
+        header: '&f以下のアーマーマルチプライヤーが見つかりました：'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7すべてのアーマーマルチプライヤーがアイテムから削除されました'
+    requirement:
+      add:
+        added: '&3{skill}&7のアーマー要件がレベル &b{level} &7でアイテムに追加されました'
+        already_exists: '&eアイテムにすでに &3{skill}&e のアーマー要件が存在します！&6/sk armor requirement remove &ecommandで先に削除してください'
+        lore: '&c要件：&3{skill} {level}'
+      remove:
+        does_not_exist: '&eアイテムに &3{skill}&e のアーマー要件が存在しません！'
+        removed: '&3{skill}&7のアーマー要件がアイテムから削除されました'
+      list:
+        header: '&f以下のアーマー要件が見つかりました：'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7すべてのアーマー要件がアイテムから削除されました'
+      equip: '&eこのアイテムを装備するための要件を満たしていません：{requirements}'
+      entry: '&b{skill} {level}&7, '
   backup:
     load:
       confirm: '&cバックアップを読み込むと、プレイヤーのすべてのスキルデータが元に戻ります。この操作は元に戻すことができません。バックアップを読み込む前にバックアップを保存することをお勧めします。このアクションを確認するには、もう一度コマンドを入力してください'
@@ -639,7 +636,7 @@ menus:
     anvil_cost_reduction: '&9金床コスト削減: {value}%'
     max_mana: '&9最大マナ: {value}'
     incoming_damage: '&5-{value}% 受けるダメージ'
-    unclaimed_items:
+  unclaimed_items:
     unclaimed_items_title: 'アイテムの受け取り'
     inventory_full: '&eインベントリに十分なスペースがありません'
     click_to_claim: '&e受け取るにはクリック！'
