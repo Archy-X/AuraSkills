@@ -95,6 +95,11 @@ tasks {
     jar {
         dependsOn(shadowJar)
     }
+    javadoc {
+        options {
+            (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
+        }
+    }
 }
 
 tasks.withType<JavaCompile>() {
