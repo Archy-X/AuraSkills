@@ -17,5 +17,5 @@ tasks.withType<JavaCompile>() {
 
 java {
     withJavadocJar()
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
 }

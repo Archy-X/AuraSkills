@@ -17,7 +17,7 @@ allprojects {
     description = "Advanced skills, stats, and abilties plugin"
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications.create<MavenPublication>("maven") {
