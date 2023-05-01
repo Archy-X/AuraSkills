@@ -37,7 +37,7 @@ public class LevelProgressionOpener {
     }
 
     protected int getPage(Skill skill, PlayerData playerData) {
-        int page = (playerData.getSkillLevel(skill) - 2) / 24;
+        int page = (playerData.getSkillLevel(skill) - 1) / 24;
         int maxLevelPage = (OptionL.getMaxLevel(skill) - 2) / 24;
         if (page > maxLevelPage) {
             page = maxLevelPage;
