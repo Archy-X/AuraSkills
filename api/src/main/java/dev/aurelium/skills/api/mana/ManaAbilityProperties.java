@@ -8,10 +8,10 @@ import java.util.Set;
 public interface ManaAbilityProperties {
 
     @NotNull
-    ManaAbility getManaAbility();
+    ManaAbility manaAbility();
 
-    Skill getSkill();
+    Skill skill();
 
-    Set<String> getOptionKeys();
+    Set<String> optionKeys();
 
 }

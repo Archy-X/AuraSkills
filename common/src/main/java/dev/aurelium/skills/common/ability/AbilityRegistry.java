@@ -32,7 +32,7 @@ public class AbilityRegistry extends Registry<Ability, AbilityProperties> {
     public Skill getSkill(Ability ability) {
         AbilityProperties prop = getProperties(ability);
         if (prop != null) {
-            return prop.getSkill();
+            return prop.skill();
         } else {
             throw new IllegalArgumentException("Ability " + ability.getId() + " is not registered!");
         }

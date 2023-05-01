@@ -8,10 +8,10 @@ import java.util.Set;
 public interface AbilityProperties {
 
     @NotNull
-    Ability getAbility();
+    Ability ability();
 
-    Skill getSkill();
+    Skill skill();
 
-    Set<String> getOptionKeys();
+    Set<String> optionKeys();
 
 }
