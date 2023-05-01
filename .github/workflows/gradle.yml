@@ -22,7 +22,7 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.4.2
         with:
           arguments: build
       - uses: actions/upload-artifact@v3
