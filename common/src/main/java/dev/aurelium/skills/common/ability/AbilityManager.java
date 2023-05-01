@@ -31,43 +31,43 @@ public class AbilityManager {
     }
 
     public Skill getSkill(Ability ability) {
-        return getConfig(ability).getSkill();
+        return getConfig(ability).skill();
     }
 
     public boolean isEnabled(Ability ability) {
-        return getConfig(ability).isEnabled();
+        return getConfig(ability).enabled();
     }
 
     public double getBaseValue(Ability ability) {
-        return getConfig(ability).getBaseValue();
+        return getConfig(ability).baseValue();
     }
 
     public double getValuePerLevel(Ability ability) {
-        return getConfig(ability).getValuePerLevel();
+        return getConfig(ability).valuePerLevel();
     }
 
     public double getSecondaryBaseValue(Ability ability) {
-        return getConfig(ability).getSecondaryBaseValue();
+        return getConfig(ability).secondaryBaseValue();
     }
 
     public double getSecondaryValuePerLevel(Ability ability) {
-        return getConfig(ability).getSecondaryValuePerLevel();
+        return getConfig(ability).secondaryValuePerLevel();
     }
 
     public int getUnlock(Ability ability) {
-        return getConfig(ability).getUnlock();
+        return getConfig(ability).unlock();
     }
 
     public int getLevelUp(Ability ability) {
-        return getConfig(ability).getLevelUp();
+        return getConfig(ability).levelUp();
     }
 
     public int getMaxLevel(Ability ability) {
-        return getConfig(ability).getMaxLevel();
+        return getConfig(ability).maxLevel();
     }
 
     public Map<String, OptionValue> getOptions(Ability ability) {
-        return getConfig(ability).getOptions();
+        return getConfig(ability).options();
     }
 
 }

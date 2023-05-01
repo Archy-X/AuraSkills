@@ -31,51 +31,51 @@ public class ManaAbilityManager {
     }
 
     public Skill getSkill(ManaAbility ability) {
-        return getConfig(ability).getSkill();
+        return getConfig(ability).skill();
     }
 
     public boolean isEnabled(ManaAbility ability) {
-        return getConfig(ability).isEnabled();
+        return getConfig(ability).enabled();
     }
 
     public double getBaseValue(ManaAbility ability) {
-        return getConfig(ability).getBaseValue();
+        return getConfig(ability).baseValue();
     }
 
     public double getValuePerLevel(ManaAbility ability) {
-        return getConfig(ability).getValuePerLevel();
+        return getConfig(ability).valuePerLevel();
     }
 
     public double getBaseCooldown(ManaAbility ability) {
-        return getConfig(ability).getBaseCooldown();
+        return getConfig(ability).baseCooldown();
     }
 
     public double getCooldownPerLevel(ManaAbility ability) {
-        return getConfig(ability).getCooldownPerLevel();
+        return getConfig(ability).cooldownPerLevel();
     }
 
     public double getBaseManaCost(ManaAbility ability) {
-        return getConfig(ability).getBaseManaCost();
+        return getConfig(ability).baseManaCost();
     }
 
     public double getManaCostPerLevel(ManaAbility ability) {
-        return getConfig(ability).getManaCostPerLevel();
+        return getConfig(ability).manaCostPerLevel();
     }
 
     public int getUnlock(ManaAbility ability) {
-        return getConfig(ability).getUnlock();
+        return getConfig(ability).unlock();
     }
 
     public int getLevelUp(ManaAbility ability) {
-        return getConfig(ability).getLevelUp();
+        return getConfig(ability).levelUp();
     }
 
     public int getMaxLevel(ManaAbility ability) {
-        return getConfig(ability).getMaxLevel();
+        return getConfig(ability).maxLevel();
     }
 
     public Map<String, OptionValue> getOptions(ManaAbility ability) {
-        return getConfig(ability).getOptions();
+        return getConfig(ability).options();
     }
 
 }

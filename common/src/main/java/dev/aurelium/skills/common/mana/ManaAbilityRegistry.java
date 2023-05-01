@@ -33,7 +33,7 @@ public class ManaAbilityRegistry extends Registry<ManaAbility, ManaAbilityProper
     public Skill getSkill(ManaAbility manaAbility) {
         ManaAbilityProperties prop = getProperties(manaAbility);
         if (prop != null) {
-            return prop.getSkill();
+            return prop.skill();
         } else {
             throw new IllegalArgumentException("Mana ability " + manaAbility.getId() + " is not registered!");
         }
