@@ -3,17 +3,7 @@ package dev.aurelium.skills.common.config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OptionValue {
-
-    private final Object value;
-
-    public OptionValue(Object value) {
-        this.value = value;
-    }
-
-    public Object getValue() {
-        return value;
-    }
+public record OptionValue(Object value) {
 
     public int asInt() {
         return (int) value;
@@ -22,8 +12,7 @@ public class OptionValue {
     public double asDouble() {
         if (!(value instanceof Integer)) {
             return (double) value;
-        }
-        else {
+        } else {
             return ((Integer) value).doubleValue();
         }
     }
@@ -35,8 +24,7 @@ public class OptionValue {
     public String asString() {
         if (value instanceof String) {
             return (String) value;
-        }
-        else {
+        } else {
             return String.valueOf(value);
         }
     }
