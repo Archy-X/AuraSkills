@@ -132,8 +132,8 @@ public abstract class PlayerData {
     public double getBaseStatLevel(Stat stat) {
         double level = getStatLevel(stat);
         for (StatModifier modifier : statModifiers.values()) {
-            if (modifier.getStat() == stat) {
-                level -= modifier.getValue();
+            if (modifier.stat() == stat) {
+                level -= modifier.value();
             }
         }
         return level;
@@ -153,18 +153,18 @@ public abstract class PlayerData {
 
     public void addStatModifier(StatModifier modifier, boolean reload) {
         // Removes if already existing
-        if (statModifiers.containsKey(modifier.getName())) {
-            StatModifier oldModifier = statModifiers.get(modifier.getName());
-            if (oldModifier.getStat() == modifier.getStat() && oldModifier.getValue() == modifier.getValue()) {
+        if (statModifiers.containsKey(modifier.name())) {
+            StatModifier oldModifier = statModifiers.get(modifier.name());
+            if (oldModifier.stat() == modifier.stat() && oldModifier.value() == modifier.value()) {
                 return;
             }
-            removeStatModifier(modifier.getName());
+            removeStatModifier(modifier.name());
         }
-        statModifiers.put(modifier.getName(), modifier);
-        setStatLevel(modifier.getStat(), getStatLevel(modifier.getStat()) + modifier.getValue());
+        statModifiers.put(modifier.name(), modifier);
+        setStatLevel(modifier.stat(), getStatLevel(modifier.stat()) + modifier.value());
         // Reloads stats
         if (reload) {
-            plugin.getStatManager().reloadStat(this, modifier.getStat());
+            plugin.getStatManager().reloadStat(this, modifier.stat());
         }
     }
 
@@ -175,11 +175,11 @@ public abstract class PlayerData {
     public boolean removeStatModifier(String name, boolean reload) {
         StatModifier modifier = statModifiers.get(name);
         if (modifier == null) return false;
-        setStatLevel(modifier.getStat(), statLevels.get(modifier.getStat()) - modifier.getValue());
+        setStatLevel(modifier.stat(), statLevels.get(modifier.stat()) - modifier.value());
         statModifiers.remove(name);
         // Reloads stats
         if (reload) {
-            plugin.getStatManager().reloadStat(this, modifier.getStat());
+            plugin.getStatManager().reloadStat(this, modifier.stat());
         }
         return true;
     }
