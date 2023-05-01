@@ -297,9 +297,9 @@ public abstract class PlayerData {
         double totalMultiplier = 0.0;
         for (Multiplier multiplier : getMultipliers().values()) {
             if (multiplier.isGlobal()) {
-                totalMultiplier += multiplier.getValue();
-            } else if (multiplier.getSkill() != null && multiplier.getSkill().equals(skill)) {
-                totalMultiplier += multiplier.getValue();
+                totalMultiplier += multiplier.value();
+            } else if (multiplier.skill() != null && multiplier.skill().equals(skill)) {
+                totalMultiplier += multiplier.value();
             }
         }
         return totalMultiplier;
@@ -310,7 +310,7 @@ public abstract class PlayerData {
     }
 
     public void addMultiplier(Multiplier multiplier) {
-        multipliers.put(multiplier.getName(), multiplier);
+        multipliers.put(multiplier.name(), multiplier);
     }
 
     public void removeMultiplier(String name) {
@@ -352,15 +352,15 @@ public abstract class PlayerData {
 
     public void applyState(PlayerDataState state) {
         this.skillLevels.clear();
-        this.skillLevels.putAll(state.getSkillLevels());
+        this.skillLevels.putAll(state.skillLevels());
 
         this.skillXp.clear();
-        this.skillXp.putAll(state.getSkillXp());
+        this.skillXp.putAll(state.skillXp());
 
         this.statModifiers.clear();
-        this.statModifiers.putAll(state.getStatModifiers());
+        this.statModifiers.putAll(state.statModifiers());
 
-        this.mana = state.getMana();
+        this.mana = state.mana();
 
         plugin.getLeveler().updateStats(this);
     }

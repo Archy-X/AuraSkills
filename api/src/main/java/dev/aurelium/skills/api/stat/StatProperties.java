@@ -5,6 +5,6 @@ import org.jetbrains.annotations.NotNull;
 public interface StatProperties {
 
     @NotNull
-    Stat getStat();
+    Stat stat();
 
 }
