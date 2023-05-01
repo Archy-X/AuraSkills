@@ -63,7 +63,7 @@ public class LeaderboardManager {
     public int getSkillRank(Skill skill, UUID id) {
         List<SkillValue> leaderboard = skillLeaderboards.get(skill);
         for (SkillValue skillValue : leaderboard) {
-            if (skillValue.getId().equals(id)) {
+            if (skillValue.id().equals(id)) {
                 return leaderboard.indexOf(skillValue) + 1;
             }
         }
@@ -72,7 +72,7 @@ public class LeaderboardManager {
 
     public int getPowerRank(UUID id) {
         for (SkillValue skillValue : powerLeaderboard) {
-            if (skillValue.getId().equals(id)) {
+            if (skillValue.id().equals(id)) {
                 return powerLeaderboard.indexOf(skillValue) + 1;
             }
         }
@@ -81,7 +81,7 @@ public class LeaderboardManager {
 
     public int getAverageRank(UUID id) {
         for (SkillValue skillValue : averageLeaderboard) {
-            if (skillValue.getId().equals(id)) {
+            if (skillValue.id().equals(id)) {
                 return averageLeaderboard.indexOf(skillValue) + 1;
             }
         }

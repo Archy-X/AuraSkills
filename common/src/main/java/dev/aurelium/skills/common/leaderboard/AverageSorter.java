@@ -6,6 +6,6 @@ public class AverageSorter implements Comparator<SkillValue> {
 
     @Override
     public int compare(SkillValue a, SkillValue b) {
-        return (int) (b.getXp() * 100) - (int) (a.getXp() * 100);
+        return (int) (b.xp() * 100) - (int) (a.xp() * 100);
     }
 }

@@ -9,13 +9,13 @@ import org.jetbrains.annotations.Nullable;
 public interface SkillProperties {
 
     @NotNull
-    Skill getSkill();
+    Skill skill();
 
     @NotNull
-    ImmutableList<Ability> getAbilities();
+    ImmutableList<Ability> abilities();
 
     @Nullable
-    default ManaAbility getManaAbility() {
+    default ManaAbility manaAbility() {
         return null;
     }
 
