@@ -80,7 +80,7 @@ tasks.withType<ShadowJar> {
     finalizedBy("copyJar")
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.register<Copy>("copyJar") {
     val projectVersion : String by project
