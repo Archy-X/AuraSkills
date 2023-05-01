@@ -50,6 +50,7 @@ dependencies {
         exclude("org.spigotmc", "spigot-api")
     }
     implementation("com.github.Archy-X:LootManager:60d109fdde")
+    implementation("org.jetbrains:annotations:24.0.1")
     compileOnly("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
