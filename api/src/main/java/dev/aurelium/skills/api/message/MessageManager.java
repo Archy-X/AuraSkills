@@ -7,12 +7,12 @@ import java.util.Locale;
 
 public interface MessageManager {
 
-    String getSkillDisplayName(Locale locale, Skill skill);
+    String getSkillDisplayName(Skill skill, Locale locale);
 
-    String getSkillDescription(Locale locale, Skill skill);
+    String getSkillDescription(Skill skill, Locale locale);
 
-    String getStatDisplayName(Locale locale, Stat stat);
+    String getStatDisplayName(Stat stat, Locale locale);
 
-    String getStatDescription(Locale locale, Stat stat);
+    String getStatDescription(Stat stat, Locale locale);
 
 }

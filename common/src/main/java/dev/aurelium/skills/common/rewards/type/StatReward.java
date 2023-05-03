@@ -4,7 +4,6 @@ import dev.aurelium.skills.api.skill.Skill;
 import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.data.PlayerData;
-import dev.aurelium.skills.common.message.MessageProvider;
 import dev.aurelium.skills.common.message.type.LevelerMessage;
 import dev.aurelium.skills.common.message.type.MenuMessage;
 import dev.aurelium.skills.common.rewards.Reward;
@@ -40,22 +39,20 @@ public class StatReward extends Reward {
 
     @Override
     public String getMenuMessage(PlayerData player, Locale locale, Skill skill, int level) {
-        MessageProvider prov = plugin.getMessageProvider();
         return TextUtil.replace(plugin.getMsg(MenuMessage.REWARDS_ENTRY, locale),
-                "{color}", prov.getStatColor(locale, stat),
+                "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
-                "{symbol}", prov.getStatSymbol(locale, stat),
-                "{stat}", prov.getStatDisplayName(locale, stat));
+                "{symbol}", stat.getSymbol(locale),
+                "{stat}", stat.getDisplayName(locale));
     }
 
     @Override
     public String getChatMessage(PlayerData player, Locale locale, Skill skill, int level) {
-        MessageProvider prov = plugin.getMessageProvider();
         return TextUtil.replace(plugin.getMsg(LevelerMessage.STAT_LEVEL, locale),
-                "{color}", prov.getStatColor(locale, stat),
+                "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
-                "{symbol}", prov.getStatSymbol(locale, stat),
-                "{stat}", prov.getStatDisplayName(locale, stat));
+                "{symbol}", stat.getSymbol(locale),
+                "{stat}", stat.getDisplayName(locale));
     }
 
 }
