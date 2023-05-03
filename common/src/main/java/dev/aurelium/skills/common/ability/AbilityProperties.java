@@ -1,5 +1,6 @@
-package dev.aurelium.skills.api.ability;
+package dev.aurelium.skills.common.ability;
 
+import dev.aurelium.skills.api.ability.Ability;
 import dev.aurelium.skills.api.skill.Skill;
 import org.jetbrains.annotations.NotNull;
 
