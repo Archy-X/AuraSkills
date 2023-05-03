@@ -44,6 +44,7 @@ languages:
     - ko
     - cs
     - nl
+    - ja
 
 # Action Bar Options
 action-bar:
