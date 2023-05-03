@@ -1,9 +1,11 @@
-# Aurelium Skills message file
+# Aurelium Skills Japanese (ja) messages
+# Translators: RamuneRemonedo
+# Contribute here: https://crowdin.com/project/aureliumskills/ja#
 abilities:
   farming:
     bountiful_harvest:
       name: 豊穣の収穫
-      desc: '{value}%の確率で作物から\n&7  2倍のドロップを得る。'
+      desc: "{value}%の確率で作物から\n&7  2倍のドロップを得る。"
       info: '{value}% 2倍ドロップ'
     farmer:
       name: 農夫
@@ -15,16 +17,16 @@ abilities:
       info: '+{value}% クワダメージ'
     geneticist:
       name: 遺伝子学者
-      desc: '植物ベースの食品から得られる\n&7  満腹度を{value}増やす。'
+      desc: "植物ベースの食品から得られる\n&7  満腹度を{value}増やす。"
       info: '+{value} 満腹度'
     triple_harvest:
       name: 三倍の収穫
-      desc: '{value}%の確率で作物から\n&7  3倍のドロップを得る。'
+      desc: "{value}%の確率で作物から\n&7  3倍のドロップを得る。"
       info: '{value}% 3倍ドロップ'
   foraging:
     lumberjack:
       name: 伐採工
-      desc: '{value}%の確率で木材から\n&7  2倍のドロップを得る。'
+      desc: "{value}%の確率で木材から\n&7  2倍のドロップを得る。"
       info: '{value}% 2倍ドロップ'
     forager:
       name: 採集家
@@ -67,6 +69,7 @@ abilities:
     lucky_catch:
       name: Lucky Catch
       desc: '釣りで2倍のドロップを得る確率が{value}%増加します。'
+      info: '{value}% 2倍ドロップ'
     fisher:
       name: Fisher
       desc: '釣りで{value}%の追加経験値を得ます。'
@@ -166,7 +169,7 @@ abilities:
       dealt: '&c最初の攻撃が命中！'
     bleed:
       name: Bleed
-      desc: '{value}%の確率で、敵に出血を起こし、\n&7  3回出血し、1回あたり{value_2}のダメージを与える。'
+      desc: "{value}%の確率で、敵に出血を起こし、\n&7  3回出血し、1回あたり{value_2}のダメージを与える。"
       info: '{value}% 確率, {value_2} ダメージ'
       enemy_bleeding: '&c敵が出血しています！'
       self_bleeding: '&cあなたが出血しています！'
@@ -227,11 +230,11 @@ abilities:
       info: '+{value}% XP'
     splasher:
       name: スプラッシャー
-      desc: 'スプラッシュポーションは、影響を受けるプレイヤーごとに\n&7{value}%効果時間が長くなります。'
+      desc: "スプラッシュポーションは、影響を受けるプレイヤーごとに\n&7{value}%効果時間が長くなります。"
       info: '+{value}%/プレイヤー 効果時間'
     lingering:
       name: リンガリング
-      desc: 'リンガリングポーションの腐敗が{value}%遅くなり、\n&7影響を受けるエンティティごとに{value_2}%減少します。'
+      desc: "リンガリングポーションの腐敗が{value}%遅くなり、\n&7影響を受けるエンティティごとに{value_2}%減少します。"
       info: '-{value}% 自然腐敗, -{value_2}% エンティティ腐敗'
     wise_effect:
       name: ワイズエフェクト
@@ -252,11 +255,11 @@ abilities:
       info: '{value}% 2倍のMob XP'
     enchanted_strength:
       name: エンチャント強化
-      desc: '所持しているアイテムの一意のエンチャントごとに\n&7{value}の力を獲得します。'
+      desc: "所持しているアイテムの一意のエンチャントごとに\n&7{value}の力を獲得します。"
       info: '{value}/エンチャント 強さ'
     lucky_table:
       name: ラッキーテーブル
-      desc: 'エンチャントテーブルを使用してエンチャントをする場合、\n&7最大レベルではない場合、{value}%の確率で\n&7エンチャントレベルが1つ上昇します。'
+      desc: "エンチャントテーブルを使用してエンチャントをする場合、\n&7最大レベルではない場合、{value}%の確率で\n&7エンチャントレベルが1つ上昇します。"
       info: '{value}% エンチャント上昇確率'
   healing:
     life_essence:
@@ -283,23 +286,23 @@ abilities:
   forging:
     disenchanter:
       name: Disenchanter
-      desc: '砥石を使ってアイテムを解体すると\n&7  {value}% もの経験値を獲得できます。'
+      desc: "砥石を使ってアイテムを解体すると\n&7  {value}% もの経験値を獲得できます。"
       info: '+{value}% 砥石経験値'
     forger:
       name: Forger
-      desc: '鍛冶のスキル経験値を\n&7  {value}% も獲得できます。'
+      desc: "鍛冶のスキル経験値を\n&7  {value}% も獲得できます。"
       info: '+{value}% 経験値'
     repairing:
       name: Repairing
-      desc: 'アイテムを金床で修復する際に\n&7  元の素材を使うと {value}% \n&7  耐久力が回復します。'
+      desc: "アイテムを金床で修復する際に\n&7  元の素材を使うと {value}% \n&7  耐久力が回復します。"
       info: '+{value}% 金床修復'
     anvil_master:
       name: Anvil Master
-      desc: '修復に必要な経験値が\n&7  {value} 以上になる前に\n&7  使える金床の上限が増えます。'
+      desc: "修復に必要な経験値が\n&7  {value} 以上になる前に\n&7  使える金床の上限が増えます。"
       info: '最大{value}コスト'
     skill_mender:
       name: Skill Mender
-      desc: 'スキルの経験値を獲得する際に\n&7  {value}% の確率で、持ち物の\n&7  「修繕」エンチャントを持ったアイテムを\n&7  修復できます。(1スキルXPにつき\n&7  耐久力が1回復)'
+      desc: "スキルの経験値を獲得する際に\n&7  {value}% の確率で、持ち物の\n&7  「修繕」エンチャントを持ったアイテムを\n&7  修復できます。(1スキルXPにつき\n&7  耐久力が1回復)"
       info: '{value}% 修復確率'
 acf:
   core:
@@ -331,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cエラー：そのワールドは存在しません。'
     you_must_be_holding_item: '&cエラー：メインハンドにアイテムを持っている必要があります。'
-    player_is_vanished_confirm: '&e警告：&a{vanished} &eは姿を隠しています。そのことを知られないようにしてください！\n&e確認する場合は、彼らの名前の最後に&a:confirm &eを追加してください。\n&e例：{vanished}:confirm'
+    player_is_vanished_confirm: "&e警告：&a{vanished} &eは姿を隠しています。そのことを知られないようにしてください！\n&e確認する場合は、彼らの名前の最後に&a:confirm &eを追加してください。\n&e例：{vanished}:confirm"
     username_too_short: '&cエラー：ユーザー名が短すぎます。最低でも3文字必要です。'
     is_not_a_valid_name: '&cエラー：&e{name} &cは有効なユーザー名ではありません。'
     multiple_players_match: '&cエラー：&b{search} &e({all})&c に複数のプレイヤーが該当しました。より具体的に指定してください。'
@@ -502,10 +505,10 @@ commands:
     skill_entry: '&b{skill} &fXP乗数: &b{multiplier}x / +{percent}%'
     players_only: '&eプレイヤーのみ自分の乗数を表示できます。プレイヤー名を指定してください！'
   profile:
-    skills: 'Aurelium Skillsのプロフィール: &6{name}:\n&7UUID: &f{uuid}\n&7スキル:{skill_entries}'
-    skill_entry: '\n  &3{skill} &7- レベル: &f{level}&7, XP: &f{xp}'
-    stats: 'Aurelium Skillsの統計プロフィール: &6{name}:\n&7UUID: &f{uuid}\n&7統計情報:{stat_entries}'
-    stat_entry: '\n  &3{stat} &7- 総レベル: &f{total_level}&7, 基本レベル: &f{base_level}&7, 変更されたレベル: &f{modified_level}'
+    skills: "Aurelium Skillsのプロフィール: &6{name}:\n&7UUID: &f{uuid}\n&7スキル:{skill_entries}"
+    skill_entry: "\n  &3{skill} &7- レベル: &f{level}&7, XP: &f{xp}"
+    stats: "Aurelium Skillsの統計プロフィール: &6{name}:\n&7UUID: &f{uuid}\n&7統計情報:{stat_entries}"
+    stat_entry: "\n  &3{stat} &7- 総レベル: &f{total_level}&7, 基本レベル: &f{base_level}&7, 変更されたレベル: &f{modified_level}"
   rank:
     header: '&b&lあなたのスキルランキング'
     power: '&eパワー &7(全スキル): &f#{rank} / {total}'
@@ -556,29 +559,29 @@ commands:
 leveler:
   title: '&a{skill} レベルアップ'
   subtitle: '&6{old} ➜ {new}'
-  level_up: '&3&m----------------------------------------\n&r &3スキルレベルアップ！ &b&l{skill} &8{old}➜&3&l{new}\n \n &b報酬:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------'
-  stat_level: '\n  {color}+{num}{symbol} {stat}'
-  ability_unlock: '\n  &aアビリティアンロック！ &6&l{ability} &7がアンロックされました'
-  ability_level_up: '\n  &aアビリティレベルアップ！ &6&l{ability} &7のレベルが &6{level} &7になりました'
-  mana_ability_unlock: '\n  &dマナアビリティアンロック！ &9&l{mana_ability} &7がアンロックされました'
-  mana_ability_level_up: '\n  &dマナアビリティレベルアップ！ &9&l{mana_ability} &7のレベルが &6{level} &7になりました'
-  money_reward: '\n  &a${amount}'
+  level_up: "&3&m----------------------------------------\n&r &3スキルレベルアップ！ &b&l{skill} &8{old}➜&3&l{new}\n \n &b報酬:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: "\n  {color}+{num}{symbol} {stat}"
+  ability_unlock: "\n  &aアビリティアンロック！ &6&l{ability} &7がアンロックされました"
+  ability_level_up: "\n  &aアビリティレベルアップ！ &6&l{ability} &7のレベルが &6{level} &7になりました"
+  mana_ability_unlock: "\n  &dマナアビリティアンロック！ &9&l{mana_ability} &7がアンロックされました"
+  mana_ability_level_up: "\n  &dマナアビリティレベルアップ！ &9&l{mana_ability} &7のレベルが &6{level} &7になりました"
+  money_reward: "\n  &a${amount}"
   unclaimed_item: '&cインベントリがいっぱいで未受領のアイテムがあります。&e/skills claimitems &cを使用して受領してください'
 menus:
   common:
     close: '&c閉じる'
     level: '&7レベル: &e{level}'
-    progress_to_level: '&7レベル {level} までの進捗: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
+    progress_to_level: "&7レベル {level} までの進捗: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6MAX レベル'
-    ability_levels: '\n&7アビリティレベル:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n '
+    ability_levels: "\n&7アビリティレベル:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: '\n&7レベルアップしたステータス: {stats}'
-    mana_ability: '\n&d&lマナアビリティ &9{mana_ability} {level}\n  &7効果時間: &a{duration}s &7消費マナ: &b{mana_cost} &7クールダウン: &e{cooldown}s\n '
+    stats_leveled: "\n&7レベルアップしたステータス: {stats}"
+    mana_ability: "\n&d&lマナアビリティ &9{mana_ability} {level}\n  &7効果時間: &a{duration}s &7消費マナ: &b{mana_cost} &7クールダウン: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: スキルメニュー
     your_skills: '&bあなたのスキル - &6{player}'
-    your_skills_desc: '&7様々なタスクをこなしてスキルをレベルアップし、\n&7有用なステータスブーストやアビリティなどを\n&7アンロックしましょう！'
+    your_skills_desc: "&7様々なタスクをこなしてスキルをレベルアップし、\n&7有用なステータスブーストやアビリティなどを\n&7アンロックしましょう！"
     your_skills_hover: '&eスキルをホバーすると詳細が表示されます！'
     your_skills_click: '&eスキルをクリックするとレベル進行状況を表示できます！'
     skill_click: '&eレベル進行状況を表示するにはクリックしてください！'
@@ -605,24 +608,24 @@ menus:
     in_progress: '&e進行中'
     locked: '&cロックされています'
     rewards: '&7報酬:{rewards}'
-    rewards_entry: '\n  {color}+{num} {symbol} {stat}'
-    money_reward: '\n  &a${amount}'
-    ability_unlock: '\n&6{ability} &a&lアビリティアンロック\n&7  {desc}\n '
-    ability_level: '\n&6{ability} {level}\n&7  {desc}\n '
-    mana_ability_unlock: '\n&9{mana_ability} &d&lマナアビリティアンロック\n&7  {desc}\n '
-    mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
-    progress: '&7進捗: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
+    rewards_entry: "\n  {color}+{num} {symbol} {stat}"
+    money_reward: "\n  &a${amount}"
+    ability_unlock: "\n&6{ability} &a&lアビリティアンロック\n&7  {desc}\n "
+    ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
+    mana_ability_unlock: "\n&9{mana_ability} &d&lマナアビリティアンロック\n&7  {desc}\n "
+    mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
+    progress: "&7進捗: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: '&e{skill}リーダーボードを表示するにはクリック'
     sources: '&aXPソース'
-    sources_desc: '&7ソースメニューでは、スキルでXPを\n&7獲得する方法すべて、および各ソースが\n&7どれだけのXPを与えるかが表示されます。'
+    sources_desc: "&7ソースメニューでは、スキルでXPを\n&7獲得する方法すべて、および各ソースが\n&7どれだけのXPを与えるかが表示されます。"
     sources_click: '&e{skill}のソースを表示するにはクリック'
     abilities: '&cアビリティ'
-    abilities_desc: '&bアビリティは、スキルをレベルアップすると\n&7アンロックおよびアップグレードされるパッシブな\n&7特典です。&dマナアビリティ&7は、起動を必要とし、\n&7マナを消費する特別な種類のアビリティです。'
+    abilities_desc: "&bアビリティは、スキルをレベルアップすると\n&7アンロックおよびアップグレードされるパッシブな\n&7特典です。&dマナアビリティ&7は、起動を必要とし、\n&7マナを消費する特別な種類のアビリティです。"
     abilities_click: '&e{skill}のアビリティを表示するにはクリック'
   stats_menu:
-    stats_menu_title: 'あなたのステータス'
+    stats_menu_title: あなたのステータス
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    skills: '\n&7スキル: &f{skills}'
+    skills: "\n&7スキル: &f{skills}"
     your_level: '&7あなたのレベル: {color}{level}'
     attack_damage: '&4+{value}% 攻撃力'
     hp: '&c+{value} ❤'
@@ -647,7 +650,7 @@ menus:
   sources:
     sources_title: '{skill}のXPソース ({current_page}/{total_pages})'
     sorter: '&bXPソースを並び替える'
-    sort_type: '&7{selected}{type_name}\n'
+    sort_type: "&7{selected}{type_name}\n"
     selected: '&f> '
     descending: '高い順'
     ascending: '低い順'
@@ -657,82 +660,82 @@ menus:
     source_name: '&f{name}'
     source_xp: '&7XP: &a{xp}'
     source_xp_rate: '&7XP: &a{xp}/{unit}'
-    multiplied_xp: '\n\n&f掛け算されたXP: &a{xp}'
-    multiplied_xp_rate: '\n\n&f掛け算されたXP: &a{xp}/{unit}'
-    multiplied_desc: '\n&7&o現在のXP倍率に基づく、実際に獲得できるXPです。'
+    multiplied_xp: "\n\n&f掛け算されたXP: &a{xp}"
+    multiplied_xp_rate: "\n\n&f掛け算されたXP: &a{xp}/{unit}"
+    multiplied_desc: "\n&7&o現在のXP倍率に基づく、実際に獲得できるXPです。"
   abilities:
     abilities_title: '{skill}のアビリティ'
-    locked_desc: '&f説明:\n  &7{desc}'
+    locked_desc: "&f説明:\n  &7{desc}"
     unlocked_at: '&7{skill} {level}でアンロックされます'
     your_ability_level: '&fあなたのレベル: &b{level}'
     your_ability_level_maxed: '&fあなたのレベル: &b{level} &6(最大)'
-    unlocked_desc: '&f次のアップグレードは{skill} {level}でアンロックされます\n  &7{desc}'
-    unlocked_desc_maxed: '&f説明:\n  &7{desc}'
+    unlocked_desc: "&f次のアップグレードは{skill} {level}でアンロックされます\n  &7{desc}"
+    unlocked_desc_maxed: "&f説明:\n  &7{desc}"
     desc_upgrade_value: '&7{current}&8→{next}&7'
 mana_abilities:
   replenish:
     name: 再生
-    desc: '&7{value} 秒間、作物を自動的に再植します。&e[クワを右クリックして、\n&e  作物を壊すとアクティブになります]'
+    desc: "&7{value} 秒間、作物を自動的に再植します。&e[クワを右クリックして、\n&e  作物を壊すとアクティブになります]"
     raise: '&7クワを持ち上げます'
     lower: '&7クワを下げます'
     start: '&6再生をアクティブにしました！&7(-{mana} {mana_unit})'
     end: '&7再生が切れました'
   treecapitator:
     name: トゥリーキャピテーター
-    desc: '&7{value} 秒間、木を一瞬で壊します。&e[斧を右クリックして、\n&e  原木を壊すとアクティブになります]'
+    desc: "&7{value} 秒間、木を一瞬で壊します。&e[斧を右クリックして、\n&e  原木を壊すとアクティブになります]"
     raise: '&7斧を持ち上げます'
     lower: '&7斧を下げます'
     start: '&6トゥリーキャピテーターをアクティブにしました！&7(-{mana} {mana_unit})'
     end: '&7トゥリーキャピテーターが切れました'
   speed_mine:
     name: スピードマイン
-    desc: '&7{value} 秒間、採掘速度がHaste {haste_level}に上昇します。&e[ツルハシを右クリックして、\n&e  ブロックを壊すとアクティブになります]'
+    desc: "&7{value} 秒間、採掘速度がHaste {haste_level}に上昇します。&e[ツルハシを右クリックして、\n&e  ブロックを壊すとアクティブになります]"
     raise: '&7ツルハシを持ち上げます'
     lower: '&7ツルハシを下げます'
     start: '&6スピードマインをアクティブにしました！&7(-{mana} {mana_unit})'
     end: '&7スピードマインが切れました'
   absorption:
     name: アブソープション
-    desc: '&7{value} 秒間、受けるダメージが、Minecraftのダメージの2倍分、\n&7  体力ではなくマナを減少させます。アブソープションがアクティブの間は、\n&7  マナは回復しません。&e[盾を左クリックして、ダメージを受けるとアクティブになります]'
+    desc: "&7{value} 秒間、受けるダメージが、Minecraftのダメージの2倍分、\n&7  体力ではなくマナを減少させます。アブソープションがアクティブの間は、\n&7  マナは回復しません。&e[盾を左クリックして、ダメージを受けるとアクティブになります]"
     raise: '&7盾を持ち上げます'
     lower: '&7盾を下げます'
     start: '&6アブソープションをアクティブにしました！&7(-{mana} {mana_unit})'
     end: '&7アブソープションが切れました'
   terraform:
     name: Terraform
-    desc: 'シャベルを使用して{value}秒間掘ると、同じ高さの4ブロックの範囲内を\n&7同じ種類のブロックで繋がったまま破壊できます。\n&7[シャベルを右クリックしてブロックを掘ることでアクティブ化]'
+    desc: "シャベルを使用して{value}秒間掘ると、同じ高さの4ブロックの範囲内を\n&7同じ種類のブロックで繋がったまま破壊できます。\n&7[シャベルを右クリックしてブロックを掘ることでアクティブ化]"
     raise: '&7シャベルを上げました'
     lower: '&7シャベルを下げました'
     start: '&6テラフォームをアクティブ化しました！ &7(-{mana} {mana_unit})'
     end: '&7テラフォームが終了しました'
   sharp_hook:
     name: Sharp Hook
-    desc: '釣竿を左クリックすると、フックされたエンティティに\n&7{value}ダメージを与えます。'
+    desc: "釣竿を左クリックすると、フックされたエンティティに\n&7{value}ダメージを与えます。"
     use: '&6シャープフックを使用しました！ &7(-{mana} {mana_unit})'
-    menu: '\n&d&lマナアビリティ &9{mana_ability} {level}\n  &7ダメージ: &c{value} &7マナコスト: &b{mana_cost} &7クールダウン: &e{cooldown}s\n '
+    menu: "\n&d&lマナアビリティ &9{mana_ability} {level}\n  &7ダメージ: &c{value} &7マナコスト: &b{mana_cost} &7クールダウン: &e{cooldown}s\n "
   charged_shot:
     name: Charged Shot
-    desc: '弓を引くと、消費したマナに応じて\n&7矢のダメージが{value}%増加します。\n&e[弓を左クリックしてチャージドショットモードを切り替えます]'
+    desc: "弓を引くと、消費したマナに応じて\n&7矢のダメージが{value}%増加します。\n&e[弓を左クリックしてチャージドショットモードを切り替えます]"
     enable: '&7チャージドショットモードを有効にしました'
     disable: '&7チャージドショットモードを無効にしました'
     shoot: '&6チャージドショットを使用しました！ &d+{percent}% DMG &7(-{mana} {mana_unit})'
-    menu: '\n&d&lマナアビリティ &9{mana_ability} {level}\n  &7ダメージ: &c+{value}% / マナ &7最大マナコスト: &b{mana_cost}\n '
+    menu: "\n&d&lマナアビリティ &9{mana_ability} {level}\n  &7ダメージ: &c+{value}% / マナ &7最大マナコスト: &b{mana_cost}\n "
   lightning_blade:
     name: Lightning Blade
-    desc: '攻撃速度が{value}%増加し、{duration}秒間持続します。\n&e[剣を右クリックしてモブを攻撃することでアクティブ化]'
+    desc: "攻撃速度が{value}%増加し、{duration}秒間持続します。\n&e[剣を右クリックしてモブを攻撃することでアクティブ化]"
     raise: '&7剣を構えました'
     lower: '&7剣を下げました'
     start: '&6ライトニングブレードをアクティブ化しました！ &7(-{mana} {mana_unit})'
     end: '&7ライトニングブレードが終了しました'
-    menu: '\n&d&lマナ能力 &9{mana_ability} {level}\n  &7攻撃速度: &c+{value}% &7効果時間: &a{duration}s\n  &7マナコスト: &b{mana_cost} &7クールダウン: &e{cooldown}s\n '
+    menu: "\n&d&lマナ能力 &9{mana_ability} {level}\n  &7攻撃速度: &c+{value}% &7効果時間: &a{duration}s\n  &7マナコスト: &b{mana_cost} &7クールダウン: &e{cooldown}s\n "
   not_ready: '&c能力はまだ使用できません！ &7({cooldown}s)'
   not_enough_mana: '&eマナが足りません！ &7({mana} {mana_unit} 必要です、現在のマナ: {current_mana}/{max_mana})'
 rewards:
   item:
-    default_menu_message: '\n  {display_name}'
-    default_menu_message_multiple: '\n  {display_name} {amount}個'
-    default_chat_message: '\n  {display_name}'
-    default_chat_message_multiple: '\n  {display_name} {amount}個'
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}個"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}個"
 skills:
   farming:
     name: 農耕
@@ -763,22 +766,22 @@ skills:
     desc: '&7歩いたり走ったりしてスタミナ {xp_unit} を獲得します'
   agility:
     name: 敏捷性
-    desc: '&7ジャンプしたり落下ダメージを受けたりして\n&7敏捷性 {xp_unit} を獲得します'
+    desc: "&7ジャンプしたり落下ダメージを受けたりして\n&7敏捷性 {xp_unit} を獲得します"
   alchemy:
     name: 錬金術
     desc: '&7ポーションを醸造して錬金術 {xp_unit} を獲得します'
   enchanting:
     name: エンチャント
-    desc: '&7アイテムや本にエンチャントを施して\n&7エンチャント {xp_unit} を獲得しよう'
+    desc: "&7アイテムや本にエンチャントを施して\n&7エンチャント {xp_unit} を獲得しよう"
   sorcery:
     name: ソーサリー
-    desc: '&7マナアビリティを使用して\n&7ソーサリー {xp_unit} を獲得しよう'
+    desc: "&7マナアビリティを使用して\n&7ソーサリー {xp_unit} を獲得しよう"
   healing:
     name: ヒーリング
-    desc: '&7ポーションを飲んだり、投げたりして\n&7ヒーリング {xp_unit} を獲得しよう'
+    desc: "&7ポーションを飲んだり、投げたりして\n&7ヒーリング {xp_unit} を獲得しよう"
   forging:
     name: フォージング
-    desc: '&7本やアイテムを合成して、金床での作業で\n&7フォージング {xp_unit} を獲得しよう'
+    desc: "&7本やアイテムを合成して、金床での作業で\n&7フォージング {xp_unit} を獲得しよう"
 sources:
   farming:
     wheat: 小麦
@@ -868,6 +871,11 @@ sources:
     deepslate_lapis_ore: ディープスレートラピスラズリ鉱石
     deepslate_emerald_ore: ディープスレートエメラルド鉱石
     deepslate_diamond_ore: ディープスレートダイヤモン
+    dripstone_block: ドリップストーン ブロック
+    ice: 氷
+    packed_ice: 氷塊
+    blue_ice: 青氷
+    reinforced_deepslate: 強化された深層岩
   fishing:
     cod: 鱈魚
     salmon: 鮭魚
@@ -1027,32 +1035,32 @@ sources:
 stats:
   strength:
     name: 強さ
-    desc: '&7強さは、様々な武器での攻撃力を\n&7向上させます'
+    desc: "&7強さは、様々な武器での攻撃力を\n&7向上させます"
     color: '&4'
     symbol: '➽'
   health:
     name: 体力
-    desc: '&7体力は、{hp_unit}の量を増やし、\n&7戦闘中に長持ちできます'
+    desc: "&7体力は、{hp_unit}の量を増やし、\n&7戦闘中に長持ちできます"
     color: '&c'
     symbol: '❤'
   regeneration:
     name: 回復力
-    desc: '&7回復力は、体力とマナの回復速度を\n&7上げます'
+    desc: "&7回復力は、体力とマナの回復速度を\n&7上げます"
     color: '&6'
     symbol: '❥'
   luck:
     name: 幸運
-    desc: '&7幸運は、モブや釣りなどで\n&7レアなアイテムを得る確率を上げます'
+    desc: "&7幸運は、モブや釣りなどで\n&7レアなアイテムを得る確率を上げます"
     color: '&2'
     symbol: '☘'
   wisdom:
     name: 知恵
-    desc: '&7知恵は、最大マナを増やし、\n&7経験値の獲得を増やし、\n&7金床で必要な経験値を減らします'
+    desc: "&7知恵は、最大マナを増やし、\n&7経験値の獲得を増やし、\n&7金床で必要な経験値を減らします"
     color: '&9'
     symbol: '✿'
   toughness:
     name: 耐久力
-    desc: '&7耐久力は、敵の攻撃から受けるダメージを\n&7減らします'
+    desc: "&7耐久力は、敵の攻撃から受けるダメージを\n&7減らします"
     color: '&5'
     symbol: '✦'
 units:
