@@ -44,29 +44,29 @@ public enum Skills implements Skill {
 
     @Override
     public @NotNull ImmutableList<Ability> getAbilities() {
-        validate(provider);
+        validate();
         return provider.getAbilities(this);
     }
 
     @Override
     public @Nullable ManaAbility getManaAbility() {
-        validate(provider);
+        validate();
         return provider.getManaAbility(this);
     }
 
     @Override
     public String getDisplayName(Locale locale) {
-        validate(provider);
+        validate();
         return provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        validate(provider);
+        validate();
         return provider.getDescription(this, locale);
     }
 
-    private void validate(SkillProvider provider) {
+    private void validate() {
         if (provider == null) {
             throw new IllegalStateException("Attempting to access skill provider before it has been injected!");
         }
