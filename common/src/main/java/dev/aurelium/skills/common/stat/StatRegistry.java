@@ -1,13 +1,11 @@
 package dev.aurelium.skills.common.stat;
 
-import dev.aurelium.skills.api.annotation.Inject;
 import dev.aurelium.skills.api.stat.Stat;
 import dev.aurelium.skills.api.stat.StatProvider;
 import dev.aurelium.skills.api.stat.Stats;
 import dev.aurelium.skills.common.AureliumSkillsPlugin;
 import dev.aurelium.skills.common.registry.Registry;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 public class StatRegistry extends Registry<Stat, StatProperties> implements StatProvider {
@@ -25,21 +23,7 @@ public class StatRegistry extends Registry<Stat, StatProperties> implements Stat
             StatProperties properties = new DefaultStat(stat);
             register(stat.getId(), stat, properties);
             // Inject StatProvider
-            injectStatProvider(stat);
-        }
-    }
-
-    private void injectStatProvider(Stats stat) {
-        for (Field field : stat.getClass().getDeclaredFields()) {
-            if (!field.isAnnotationPresent(Inject.class)) continue; // Ignore fields without @Inject
-            if (field.getType().equals(StatProvider.class)) {
-                field.setAccessible(true);
-                try {
-                    field.set(stat, this); // Inject this StatProvider
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
+            injectSelf(stat, StatProvider.class);
         }
     }
 

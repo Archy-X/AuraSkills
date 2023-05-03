@@ -1,7 +1,6 @@
 package dev.aurelium.skills.common.mana;
 
 import dev.aurelium.skills.api.mana.ManaAbility;
-import dev.aurelium.skills.api.mana.ManaAbilityProperties;
 import dev.aurelium.skills.api.skill.Skill;
 
 import java.util.Set;
