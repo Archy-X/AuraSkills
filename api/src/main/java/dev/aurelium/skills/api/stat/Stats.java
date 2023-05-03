@@ -1,6 +1,9 @@
 package dev.aurelium.skills.api.stat;
 
+import dev.aurelium.skills.api.annotation.Inject;
 import dev.aurelium.skills.api.util.NamespacedId;
+
+import java.util.Locale;
 
 public enum Stats implements Stat {
 
@@ -11,6 +14,9 @@ public enum Stats implements Stat {
     WISDOM,
     TOUGHNESS;
 
+    @Inject
+    private StatProvider provider;
+
     private final NamespacedId id;
 
     Stats() {
@@ -20,6 +26,36 @@ public enum Stats implements Stat {
     @Override
     public NamespacedId getId() {
         return id;
+    }
+
+    @Override
+    public String getDisplayName(Locale locale) {
+        validate(provider);
+        return provider.getDisplayName(this, locale);
+    }
+
+    @Override
+    public String getDescription(Locale locale) {
+        validate(provider);
+        return provider.getDescription(this, locale);
+    }
+
+    @Override
+    public String getColor(Locale locale) {
+        validate(provider);
+        return provider.getColor(this, locale);
+    }
+
+    @Override
+    public String getSymbol(Locale locale) {
+        validate(provider);
+        return provider.getSymbol(this, locale);
+    }
+
+    private void validate(StatProvider provider) {
+        if (provider == null) {
+            throw new IllegalStateException("Attempting to access stat provider before it has been injected!");
+        }
     }
 
 }

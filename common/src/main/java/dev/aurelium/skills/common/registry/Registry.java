@@ -1,6 +1,7 @@
 package dev.aurelium.skills.common.registry;
 
 import dev.aurelium.skills.api.util.NamespacedId;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,19 +29,29 @@ public abstract class Registry<T, P> {
         return propertyType;
     }
 
+    @NotNull
     public T get(NamespacedId id) {
-        return registryMap.get(id);
+        T type = registryMap.get(id);
+        if (type == null) {
+            throw new IllegalArgumentException("Id " + id + " is not registered in registry " + this.getClass().getSimpleName());
+        }
+        return type;
     }
 
+    @NotNull
     public P getProperties(T value) {
-        return propertyMap.get(value);
+        P prop = propertyMap.get(value);
+        if (prop == null) {
+            throw new IllegalArgumentException("Value " + value + " is not registered in registry " + this.getClass().getSimpleName());
+        }
+        return prop;
     }
 
     public Collection<T> getValues() {
         return registryMap.values();
     }
 
-    public void register(NamespacedId id, T value, P properties) {
+    public void register(@NotNull NamespacedId id, @NotNull T value, @NotNull P properties) {
         registryMap.put(id, value);
         propertyMap.put(value, properties);
     }
