@@ -1,6 +1,12 @@
 package dev.aurelium.skills.api.skill;
 
+import com.google.common.collect.ImmutableList;
+import dev.aurelium.skills.api.ability.Ability;
+import dev.aurelium.skills.api.annotation.Inject;
+import dev.aurelium.skills.api.mana.ManaAbility;
 import dev.aurelium.skills.api.util.NamespacedId;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -22,6 +28,9 @@ public enum Skills implements Skill {
     HEALING,
     FORGING;
 
+    @Inject
+    private SkillProvider provider;
+
     private final NamespacedId id;
 
     Skills() {
@@ -31,6 +40,36 @@ public enum Skills implements Skill {
     @Override
     public NamespacedId getId() {
         return id;
+    }
+
+    @Override
+    public @NotNull ImmutableList<Ability> getAbilities() {
+        validate(provider);
+        return provider.getAbilities(this);
+    }
+
+    @Override
+    public @Nullable ManaAbility getManaAbility() {
+        validate(provider);
+        return provider.getManaAbility(this);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale) {
+        validate(provider);
+        return provider.getDisplayName(this, locale);
+    }
+
+    @Override
+    public String getDescription(Locale locale) {
+        validate(provider);
+        return provider.getDescription(this, locale);
+    }
+
+    private void validate(SkillProvider provider) {
+        if (provider == null) {
+            throw new IllegalStateException("Attempting to access skill provider before it has been injected!");
+        }
     }
 
 }

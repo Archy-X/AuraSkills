@@ -16,23 +16,23 @@ public class ApiMessageManager implements MessageManager {
     }
 
     @Override
-    public String getSkillDisplayName(Locale locale, Skill skill) {
-        return plugin.getMessageProvider().getSkillDisplayName(locale, skill);
+    public String getSkillDisplayName(Skill skill, Locale locale) {
+        return plugin.getMessageProvider().getSkillDisplayName(skill, locale);
     }
 
     @Override
-    public String getSkillDescription(Locale locale, Skill skill) {
-        return plugin.getMessageProvider().getSkillDescription(locale, skill);
+    public String getSkillDescription(Skill skill, Locale locale) {
+        return plugin.getMessageProvider().getSkillDescription(skill, locale);
     }
 
     @Override
-    public String getStatDisplayName(Locale locale, Stat stat) {
-        return plugin.getMessageProvider().getStatDisplayName(locale, stat);
+    public String getStatDisplayName(Stat stat, Locale locale) {
+        return plugin.getMessageProvider().getStatDisplayName(stat, locale);
     }
 
     @Override
-    public String getStatDescription(Locale locale, Stat stat) {
-        return plugin.getMessageProvider().getStatDescription(locale, stat);
+    public String getStatDescription(Stat stat, Locale locale) {
+        return plugin.getMessageProvider().getStatDescription(stat, locale);
     }
 
 }

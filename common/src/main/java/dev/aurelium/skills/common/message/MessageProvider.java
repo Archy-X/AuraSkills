@@ -9,17 +9,17 @@ public interface MessageProvider {
 
     String get(MessageKey key, Locale locale);
 
-    String getSkillDisplayName(Locale locale, Skill skill);
+    String getSkillDisplayName(Skill skill, Locale locale);
 
-    String getSkillDescription(Locale locale, Skill skill);
+    String getSkillDescription(Skill skill, Locale locale);
 
-    String getStatDisplayName(Locale locale, Stat stat);
+    String getStatDisplayName(Stat stat, Locale locale);
 
-    String getStatDescription(Locale locale, Stat stat);
+    String getStatDescription(Stat stat, Locale locale);
 
-    String getStatColor(Locale locale, Stat stat);
+    String getStatColor(Stat stat, Locale locale);
 
-    String getStatSymbol(Locale locale, Stat stat);
+    String getStatSymbol(Stat stat, Locale locale);
 
     Locale getDefaultLanguage();
 
