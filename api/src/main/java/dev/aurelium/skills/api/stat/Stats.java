@@ -30,29 +30,29 @@ public enum Stats implements Stat {
 
     @Override
     public String getDisplayName(Locale locale) {
-        validate(provider);
+        validate();
         return provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        validate(provider);
+        validate();
         return provider.getDescription(this, locale);
     }
 
     @Override
     public String getColor(Locale locale) {
-        validate(provider);
+        validate();
         return provider.getColor(this, locale);
     }
 
     @Override
     public String getSymbol(Locale locale) {
-        validate(provider);
+        validate();
         return provider.getSymbol(this, locale);
     }
 
-    private void validate(StatProvider provider) {
+    private void validate() {
         if (provider == null) {
             throw new IllegalStateException("Attempting to access stat provider before it has been injected!");
         }
