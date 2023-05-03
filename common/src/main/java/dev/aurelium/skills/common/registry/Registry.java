@@ -1,8 +1,10 @@
 package dev.aurelium.skills.common.registry;
 
+import dev.aurelium.skills.api.annotation.Inject;
 import dev.aurelium.skills.api.util.NamespacedId;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,8 @@ public abstract class Registry<T, P> {
         this.registryMap = new HashMap<>();
         this.propertyMap = new HashMap<>();
     }
+
+    public abstract void registerDefaults();
 
     public Class<T> getType() {
         return type;
@@ -61,6 +65,18 @@ public abstract class Registry<T, P> {
         registryMap.remove(id);
     }
 
-    public abstract void registerDefaults();
+    protected void injectSelf(Object obj, Class<?> type) {
+        for (Field field : obj.getClass().getDeclaredFields()) {
+            if (!field.isAnnotationPresent(Inject.class)) continue; // Ignore fields without @Inject
+            if (field.getType().equals(type)) {
+                field.setAccessible(true);
+                try {
+                    field.set(obj, this); // Inject instance of this class
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }
