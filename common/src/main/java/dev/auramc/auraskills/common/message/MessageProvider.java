@@ -7,6 +7,9 @@ import dev.auramc.auraskills.api.stat.Stat;
 
 import java.util.Locale;
 
+/**
+ * Interface that provides messages for the plugin.
+ */
 public interface MessageProvider {
 
     String get(MessageKey key, Locale locale);

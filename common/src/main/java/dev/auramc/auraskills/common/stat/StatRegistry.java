@@ -8,6 +8,9 @@ import dev.auramc.auraskills.common.registry.Registry;
 
 import java.util.Locale;
 
+/**
+ * Registry for storing stats and their properties.
+ */
 public class StatRegistry extends Registry<Stat, StatProperties> implements StatProvider {
 
     private final AuraSkillsPlugin plugin;

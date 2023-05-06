@@ -8,6 +8,10 @@ import dev.auramc.auraskills.common.config.OptionValue;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manager for storing and retrieving mana ability configs. Does not handle
+ * loading configs from file.
+ */
 public class ManaAbilityManager {
 
     private final AuraSkillsPlugin plugin;

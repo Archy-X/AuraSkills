@@ -3,6 +3,9 @@ package dev.auramc.auraskills.common.data;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Interface with methods to manage player data.
+ */
 public interface PlayerManager {
 
     PlayerData getPlayerData(UUID uuid);

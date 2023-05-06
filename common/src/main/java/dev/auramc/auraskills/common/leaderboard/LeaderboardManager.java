@@ -4,6 +4,9 @@ import dev.auramc.auraskills.api.skill.Skill;
 
 import java.util.*;
 
+/**
+ * Class to manage leaderboards.
+ */
 public class LeaderboardManager {
 
     private final Map<Skill, List<SkillValue>> skillLeaderboards;

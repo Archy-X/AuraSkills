@@ -13,6 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
+/**
+ * Registry for skills and their properties.
+ */
 public class SkillRegistry extends Registry<Skill, SkillProperties> implements SkillProvider {
 
     private final AuraSkillsPlugin plugin;
