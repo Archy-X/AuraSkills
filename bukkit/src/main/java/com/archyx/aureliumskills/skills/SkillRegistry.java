@@ -28,7 +28,7 @@ public class SkillRegistry {
         return this.skills.get(key.toLowerCase(Locale.ROOT));
     }
 
-    public Skill fromApi(dev.aurelium.skills.api.skill.Skill skill) {
+    public Skill fromApi(dev.auramc.auraskills.api.skill.Skill skill) {
         return this.skills.get(skill.getId().getKey().toLowerCase(Locale.ROOT));
     }
 
