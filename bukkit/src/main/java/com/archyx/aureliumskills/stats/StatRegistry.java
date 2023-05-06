@@ -28,7 +28,7 @@ public class StatRegistry {
         return this.stats.get(key.toLowerCase(Locale.ROOT));
     }
 
-    public Stat fromApi(dev.aurelium.skills.api.stat.Stat stat) {
+    public Stat fromApi(dev.auramc.auraskills.api.stat.Stat stat) {
         return this.stats.get(stat.getId().getKey().toLowerCase(Locale.ROOT));
     }
 
