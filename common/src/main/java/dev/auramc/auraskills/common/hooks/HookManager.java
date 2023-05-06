@@ -3,6 +3,9 @@ package dev.auramc.auraskills.common.hooks;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages hooks into external plugins.
+ */
 public class HookManager {
 
     private final Map<Class<? extends Hook>, Hook> hooks;

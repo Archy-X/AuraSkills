@@ -8,6 +8,10 @@ import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manager for storing and retrieving ability configs. Does not handle
+ * loading configs from file.
+ */
 public class AbilityManager {
 
     private final AuraSkillsPlugin plugin;

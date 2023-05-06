@@ -11,6 +11,9 @@ import dev.auramc.auraskills.common.skill.SkillDefaults;
 
 import java.util.Locale;
 
+/**
+ * Registry for storing abilities and their properties.
+ */
 public class AbilityRegistry extends Registry<Ability, AbilityProperties> implements AbilityProvider {
 
     private final AuraSkillsPlugin plugin;

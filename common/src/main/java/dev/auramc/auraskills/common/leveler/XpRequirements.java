@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manager for storing and retrieving xp requirements for each level.
+ * Does not handle loading requirements from file.
+ */
 public class XpRequirements {
 
     private final AuraSkillsPlugin plugin;

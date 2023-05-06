@@ -11,6 +11,9 @@ import dev.auramc.auraskills.common.skill.SkillDefaults;
 
 import java.util.Locale;
 
+/**
+ * Registry for storing mana abilities and their properties.
+ */
 public class ManaAbilityRegistry extends Registry<ManaAbility, ManaAbilityProperties> implements ManaAbilityProvider {
 
     private final AuraSkillsPlugin plugin;
