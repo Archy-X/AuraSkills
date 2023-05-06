@@ -3,9 +3,6 @@ package dev.auramc.auraskills.common.rewards;
 import dev.auramc.auraskills.common.rewards.builder.*;
 import dev.auramc.auraskills.common.rewards.parser.*;
 import dev.auramc.auraskills.common.rewards.type.*;
-import dev.aurelium.skills.common.rewards.builder.*;
-import dev.aurelium.skills.common.rewards.parser.*;
-import dev.aurelium.skills.common.rewards.type.*;
 
 public enum RewardType {
 
