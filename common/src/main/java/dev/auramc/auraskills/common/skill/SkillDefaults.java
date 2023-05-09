@@ -108,7 +108,6 @@ public class SkillDefaults {
                     Sets.newHashSet("enable_particles");
             case LIGHTNING_BLADE ->
                     Sets.newHashSet("base_duration", "duration_per_level");
-            default -> new HashSet<>();
         };
     }
 
