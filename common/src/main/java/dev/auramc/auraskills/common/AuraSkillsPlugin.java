@@ -3,6 +3,7 @@ package dev.auramc.auraskills.common;
 import dev.auramc.auraskills.common.ability.AbilityManager;
 import dev.auramc.auraskills.common.ability.AbilityRegistry;
 import dev.auramc.auraskills.common.config.ConfigProvider;
+import dev.auramc.auraskills.common.config.Option;
 import dev.auramc.auraskills.common.data.PlayerData;
 import dev.auramc.auraskills.common.data.PlayerManager;
 import dev.auramc.auraskills.common.event.AuraSkillsEventManager;
@@ -70,12 +71,42 @@ public interface AuraSkillsPlugin {
     String getMsg(MessageKey key, Locale locale);
 
     /**
+     * Gets the plugin prefix for chat messages
+     *
+     * @param locale The language to get the prefix in
+     * @return The prefix
+     */
+    String getPrefix(Locale locale);
+
+    /**
      * Gets the default language of the plugin as set by the server's configuration.
      *
      * @return The default language
      */
     default Locale getDefaultLanguage() {
         return getMessageProvider().getDefaultLanguage();
+    }
+
+    // Config convenience methods
+
+    default boolean configBoolean(Option option) {
+        return getConfigProvider().getBoolean(option);
+    }
+
+    default int configInt(Option option) {
+        return getConfigProvider().getInt(option);
+    }
+
+    default double configDouble(Option option) {
+        return getConfigProvider().getDouble(option);
+    }
+
+    default String configString(Option option) {
+        return getConfigProvider().getString(option);
+    }
+
+    default String[] configStringList(Option option) {
+        return getConfigProvider().getStringList(option);
     }
 
     // Platform-dependent Minecraft methods
