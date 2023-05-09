@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class NamespacedId {
 
-    public static final String AURELIUMSKILLS = "aureliumskills";
+    public static final String AURASKILLS = "auraskills";
     private final String namespace;
     private final String key;
 
@@ -42,7 +42,7 @@ public class NamespacedId {
     public static NamespacedId fromStringOrDefault(String string) {
         String[] split = string.split(":");
         if (split.length == 1) {
-            return new NamespacedId(NamespacedId.AURELIUMSKILLS, split[0]); // Use default namespace if not specified
+            return new NamespacedId(NamespacedId.AURASKILLS, split[0]); // Use default namespace if not specified
         } else if (split.length != 2) {
             throw new IllegalArgumentException("Invalid NamespacedId: " + string);
         }

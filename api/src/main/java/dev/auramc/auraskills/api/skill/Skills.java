@@ -34,7 +34,7 @@ public enum Skills implements Skill {
     private final NamespacedId id;
 
     Skills() {
-        this.id = NamespacedId.from(NamespacedId.AURELIUMSKILLS, this.name().toLowerCase(Locale.ROOT));
+        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
     }
 
     @Override
