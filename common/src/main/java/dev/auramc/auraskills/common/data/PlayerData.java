@@ -1,6 +1,7 @@
 package dev.auramc.auraskills.common.data;
 
 import dev.auramc.auraskills.api.ability.Ability;
+import dev.auramc.auraskills.api.ability.AbstractAbility;
 import dev.auramc.auraskills.api.mana.ManaAbility;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.stat.Stat;
@@ -8,6 +9,7 @@ import dev.auramc.auraskills.api.stat.StatModifier;
 import dev.auramc.auraskills.api.stat.Stats;
 import dev.auramc.auraskills.api.util.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
+import dev.auramc.auraskills.common.ability.AbilityData;
 import dev.auramc.auraskills.common.config.Option;
 import dev.auramc.auraskills.common.modifier.Multiplier;
 import dev.auramc.auraskills.common.util.data.KeyIntPair;
@@ -32,6 +34,7 @@ public abstract class PlayerData {
     private double mana;
     private Locale locale;
 
+    private final Map<AbstractAbility, AbilityData> abilityData;
     private final Map<String, Object> metadata;
     private List<KeyIntPair> unclaimedItems;
 
@@ -48,6 +51,7 @@ public abstract class PlayerData {
         this.skillXp = new HashMap<>();
         this.statLevels = new HashMap<>();
         this.statModifiers = new HashMap<>();
+        this.abilityData = new HashMap<>();
         this.metadata = new HashMap<>();
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
@@ -213,6 +217,23 @@ public abstract class PlayerData {
 
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    public AbilityData getAbilityData(AbstractAbility ability) {
+        AbilityData data = abilityData.get(ability);
+        if (data == null) {
+            data = new AbilityData(ability);
+            abilityData.put(ability, data);
+        }
+        return data;
+    }
+
+    public boolean containsAbilityData(AbstractAbility ability) {
+        return abilityData.containsKey(ability);
+    }
+
+    public Map<AbstractAbility, AbilityData> getAbilityDataMap() {
+        return abilityData;
     }
 
     public int getAbilityLevel(Ability ability) {
