@@ -4,12 +4,15 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://repo.aikar.co/content/groups/aikar/")
 }
 
 dependencies {
     api(project(":api"))
     implementation("net.kyori:event-api:3.0.0")
     implementation("net.kyori:adventure-api:4.13.0")
+    implementation("co.aikar:acf-core:0.5.1-SNAPSHOT")
+    implementation("net.kyori:adventure-text-serializer-legacy:4.13.1")
     compileOnly("net.luckperms:api:5.4")
 }
 

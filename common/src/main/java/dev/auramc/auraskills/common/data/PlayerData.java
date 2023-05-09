@@ -11,6 +11,7 @@ import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.config.Option;
 import dev.auramc.auraskills.common.modifier.Multiplier;
 import dev.auramc.auraskills.common.util.data.KeyIntPair;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,6 +65,8 @@ public abstract class PlayerData {
     }
 
     public abstract String getUsername();
+
+    public abstract void sendMessage(Component component);
 
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, 1);
