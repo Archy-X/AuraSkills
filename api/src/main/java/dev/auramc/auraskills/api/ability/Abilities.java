@@ -91,7 +91,7 @@ public enum Abilities implements Ability {
     }
 
     Abilities(boolean hasSecondaryValue) {
-        this.id = NamespacedId.from(NamespacedId.AURELIUMSKILLS, this.name().toLowerCase());
+        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase());
         this.hasSecondaryValue = hasSecondaryValue;
     }
 
