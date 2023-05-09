@@ -1,0 +1,1070 @@
+# Aurelium Skills Chinese, Simplified (zh-CN) messages
+# Translators: SnowCutieOwO, Qian_ai, huiqiang233, Kauo
+# Contribute here: https://crowdin.com/project/aureliumskills/zh-CN#
+abilities:
+  farming:
+    bountiful_harvest:
+      name: 收获满满
+      desc: '{value}% 的几率收获双倍农作物'
+      info: '{value}% 双倍 掉落物'
+    farmer:
+      name: 耕作专精
+      desc: '获得额外的 {value}% 耕作熟练度.'
+      info: '+{value}% 熟练度'
+    scythe_master:
+      name: 镰刀专精
+      desc: '提升 {value}% 的锄头伤害'
+      info: '+{value}% 任意 锄头 伤害'
+    geneticist:
+      name: 素食主义者
+      desc: '额外增加 {value} 点植物食物回复的饥饿度'
+      info: '+{value}% 回复的饱食度'
+    triple_harvest:
+      name: 超级丰收
+      desc: '{value}% 的几率收获三倍掉落物'
+      info: '{value}% 三倍 掉落物'
+  foraging:
+    lumberjack:
+      name: 精准伐木
+      desc: '{value}% 的几率在伐木时获得双倍的木头'
+      info: '{value}% 双倍 掉落物'
+    forager:
+      name: 伐木专精
+      desc: '获得额外的 {value}% 伐木熟练度'
+      info: '+{value}% 熟练度'
+    axe_master:
+      name: 弄斧大师
+      desc: '提升 {value}% 的斧子伤害'
+      info: '+{value}% 任意 斧 伤害'
+    valor:
+      name: 怒气狂涌
+      desc: '持有 任意 斧头 时 +{value} 力量'
+      info: '+{value} 力量'
+    shredder:
+      name: 猛力一击
+      desc: '{value}% 的几率消耗三倍耐久造成更高的伤害'
+      info: '{value}% 三倍耐久损耗'
+  mining:
+    lucky_miner:
+      name: 幸运挖掘者
+      desc: '{value}% 的几率在挖矿时掉落双倍矿物'
+      info: '{value}% 双倍矿物掉落'
+    miner:
+      name: 矿工专精
+      desc: '获得额外的 {value}% 挖矿熟练度'
+      info: '+{value}% 熟练度'
+    pick_master:
+      name: 镐击大师
+      desc: '提升 {value}% 的镐子伤害'
+      info: '+{value}% 任意 镐 伤害'
+    stamina:
+      name: 矿工耐力
+      desc: '持有 任意 镐 时获得 + {value} 韧性'
+      info: '+{value} 韧性'
+    hardened_armor:
+      name: 硬化盔甲
+      desc: '{value}% 的几率受伤不消耗盔甲耐久'
+      info: '{value}% 盔甲耐久损耗减免'
+  fishing:
+    lucky_catch:
+      name: 幸运一竿
+      desc: '{value}% 的几率钓上双倍物品'
+      info: '{value}% 双倍 掉落物'
+    fisher:
+      name: 捕鱼专精
+      desc: '获得额外的 {value}% 的钓鱼熟练度'
+      info: '+{value}% 熟练度'
+    treasure_hunter:
+      name: 宝藏猎人
+      desc: '{value}% 的几率钓上稀有掉落物'
+      info: '+{value}% 稀有 掉落物获得率'
+    grappler:
+      name: 钩爪钓竿
+      desc: '用钓竿勾住并拉过来实体的速度增加 {value}%'
+      info: '+{value}% 抓住实体速度'
+    epic_catch:
+      name: 史诗一竿
+      desc: '{value}% 的几率钓上史诗掉落物'
+      info: '+{value}% 史诗 掉落物获得率'
+  excavation:
+    metal_detector:
+      name: 金属探测者
+      desc: '{value}% 的几率在挖掘时掉落稀有掉落物'
+      info: '+{value}% 稀有 掉落物获得率'
+    excavator:
+      name: 掘土专精
+      desc: '获得额外的 {value}% 挖掘熟练度'
+      info: '+{value}% 熟练度'
+    spade_master:
+      name: 舞铲阶级
+      desc: '提升 {value}% 的铲子伤害'
+      info: '+{value}% 任意 铲 伤害'
+    bigger_scoop:
+      name: 加倍掉落
+      desc: '{value}% 的几率在挖掘时掉落三倍掉落物'
+      info: '{value}% 三倍 掉落物'
+    lucky_spades:
+      name: 捡漏之王
+      desc: '{value}% 的几率在挖掘时掉落史诗掉落物'
+      info: '+{value}% 史诗 掉落物获得率'
+  archery:
+    crit_chance:
+      name: 猛力一击
+      desc: '+{value}% 的几率造成一次暴击伤害'
+      info: '+{value}% 暴击几率'
+    archer:
+      name: 弓箭专精
+      desc: '获得额外的 {value}% 弓箭熟练度'
+      info: '+{value}% 熟练度'
+    bow_master:
+      name: 弓箭大师
+      desc: '提升 {value}% 的弓伤害'
+      info: '+{value}% 任意 弓 伤害'
+    piercing:
+      name: 穿透之箭
+      desc: '{value}% 的几率可以使弓穿过多个生物并造成伤害'
+      info: '{value}% 射出穿透箭几率'
+    stun:
+      name: 眩晕打击
+      desc: '{value}% 的几率可以使敌人移动速度降低 20%, 持续2秒'
+      info: '{value}% 晕眩攻击几率'
+  defense:
+    shielding:
+      name: 捂头蹲防
+      desc: '蹲下时减少 {value}% 的伤害'
+      info: '-{value}% 蹲下时受到的伤害'
+    defender:
+      name: 防御专精
+      desc: '获得额外的 {value}% 防御熟练度'
+      info: '+{value}% 熟练度'
+    mob_master:
+      name: 知己知彼
+      desc: '减少 {value}% 来自于任意生物的伤害'
+      info: '-{value}% 任意 生物伤害'
+    immunity:
+      name: 敏捷躲闪
+      desc: '{value}% 的几率无视一次敌对生物的攻击'
+      info: '{value}% 无视几率'
+    no_debuff:
+      name: 负面效果清除
+      desc: '{value}% 的几率清除获得的负面药水效果'
+      info: '{value}% 清除负面效果几率'
+  fighting:
+    crit_damage:
+      name: 暴击伤害
+      desc: '增加 {value}% 的暴击伤害'
+      info: '增加 {value}% 的暴击伤害'
+    fighter:
+      name: 战斗专精
+      desc: '获得额外的 {value}% 战斗熟练度'
+      info: '+{value}% 熟练度'
+    sword_master:
+      name: 剑之大师
+      desc: '提升 {value}% 的剑伤害'
+      info: '+{value}% 任意 剑 伤害'
+    first_strike:
+      name: 先出之刃
+      desc: '首次攻击生物的时候造成 {value}% 的额外伤害'
+      info: '+{value}% 首次攻击伤害'
+      dealt: '&c先出之刃!'
+    bleed:
+      name: 流血
+      desc: '{value}% 的几率使敌人流血失血3次, 每次流血伤害 {value_2} 点'
+      info: '{value}% 几率, {value_2} 伤害/次'
+      enemy_bleeding: '&c敌人正在流血!'
+      self_bleeding: '&c你正在流血!'
+      stop: '&f流血已停止...'
+  endurance:
+    anti_hunger:
+      name: 横扫饥饿
+      desc: '{value}% 的几率使饥饿度停止损失'
+      info: '{value}% 无饥饿几率'
+    runner:
+      name: 探索专精
+      desc: '获得额外 {value}% 的探索熟练度'
+      info: '+{value}% 熟练度'
+    golden_heal:
+      name: 黄金体质
+      desc: '额外提升{value}% 的生命治疗恢复效果'
+      info: '+{value}% 效果增强'
+    recovery:
+      name: 自愈增强
+      desc: '当血量低于 {value}% 时增加回血速度'
+      info: '+{value}% 低血量自愈'
+    meal_steal:
+      name: 饥饿偷取
+      desc: '{value}% 从别的玩家身上偷取 2 点饥饿值'
+      info: '{value}% 饥饿偷取几率'
+  agility:
+    light_fall:
+      name: 轻盈降落
+      desc: '减少 {value}% 的摔落伤害'
+      info: '-{value}% 摔落伤害'
+    jumper:
+      name: 杂技专精
+      desc: '获得额外的 {value}% 杂技熟练度'
+      info: '+{value}% 熟练度'
+    sugar_rush:
+      name: 药力增强
+      desc: '跳跃提升与速度药水的持续时间增加 {value}%'
+      info: '{value}% 持续时间延长'
+    fleeting:
+      name: 残血飞奔
+      desc: '低于 20% 生命值时获得 +{value}% 的速度'
+      info: '+{value}% 速度'
+      start: '&f你获得了残血速度提升! &7(+{value}% 速度)'
+      end: '&7残血速度提升已被关闭'
+    thunder_fall:
+      name: 落地震击
+      desc: '当按住Shift在空中掉落时有 {value}% 的几率能对半径3格内的生物造成 {value_2}% 的伤害'
+      info: '{value}% 震击几率, {value_2}% 伤害'
+  alchemy:
+    alchemist:
+      name: 炼金术士
+      desc: '制作的药水持续时间延长 {value}%'
+      info: '+{value}% 药水持续时间'
+      lore: '&a(+{duration})'
+    brewer:
+      name: 酿造专精
+      desc: '获得额外的 {value}% 酿造熟练度'
+      info: '+{value}% 熟练度'
+    splasher:
+      name: 高效喷溅
+      desc: '喷溅型药水产生的效果时间延长 {value}%'
+      info: '+{value}% 时长'
+    lingering:
+      name: 滞留增强
+      desc: '滞留型药水持续时间增加 {value}% &7, 并减少 {value_2}% 受影响实体的效果.'
+      info: '-{value}% 自然持续时间, -{value_2}% 实体效果减退'
+    wise_effect:
+      name: 智慧专精
+      desc: '每一个药水效果能额外获得 {value} 智慧熟练度'
+      info: '+{value} 每个药水效果获得的智慧熟练度'
+  enchanting:
+    xp_convert:
+      name: 经验转化
+      desc: "每获得 {value} 点技能经验可以额外获得 1 \n&7  点原版的经验值."
+      info: '1 经验值/{value} 技能经验'
+    enchanter:
+      name: 附魔专精
+      desc: '获得额外的 {value}% 附魔熟练度.'
+      info: '+{value}% 熟练度'
+    xp_warrior:
+      name: 经验战士
+      desc: "你杀死的生物有 {value}% 的几率\n&7  掉落双倍的经验."
+      info: '{value}% 2x 经验值'
+    enchanted_strength:
+      name: 附魔之力
+      desc: '手持物品上的附魔能额外让你获得 +{value}&7 点/种 的力量'
+      info: '{value} 力量/单个附魔'
+    lucky_table:
+      name: 幸运附魔台
+      desc: "正在使用的物品如果携带有从附魔台得到的附魔, \n&7  则会在它到达最高级之前有 {value}% &7的几\n&7  率再增加 1 级"
+      info: '{value}% 附魔升级几率'
+  healing:
+    life_essence:
+      name: 生命源质
+      desc: "瞬间恢复(喷溅或滞留等均可) 药水能额外回复 \n&7  {value}% 生命值"
+      info: '+{value}% 额外回复生命'
+    healer:
+      name: 治疗专精
+      desc: 获得额外的 {value}% 治疗熟练度
+      info: '+{value}% 熟练度'
+    life_steal:
+      name: 生命窃取
+      desc: 每个击杀的生物或玩家\n&7可以为你回复 {value}% 的血量.
+      info: '偷取 {value}% 的血量'
+    golden_heart:
+      name: 黄金体质
+      desc: 有伤害吸收效果的金心时\n&7金心受到的伤害减少 {value}%
+      info: '-{value}% 金心受到的伤害'
+    revival:
+      name: 重生光环
+      desc: 复活的 30 秒内获得 &c+{value} &7点的生命\n与 &6+{value_2} 级生命恢复效果
+      info: '+{value} 点生命值, +{value_2} 级生命回复效果'
+      message: '&f重生之后, 你获得了 30 秒的庇护! &f(&c+{value} &7生命值, &6+{value_2} &7生命回复效果)'
+  forging:
+    disenchanter:
+      name: 祛魔转化
+      desc: 使用磨石时每个去掉的附魔\n&7能额外获得 {value}% 的经验
+      info: '+{value}% 磨石额外经验值'
+    forger:
+      name: 锻造专精
+      desc: 获得额外的 {value}% 锻造熟练度
+      info: '+{value}% 熟练度'
+    repairing:
+      name: 高效修复
+      desc: 使用原材料而非\n&7工具合并修复的物品\n&7可以额外回复 {value}% &7的耐久度.
+      info: '+{value}% 铁砧修复度'
+    anvil_master:
+      name: 铁砧大师
+      desc: 在物品过于昂贵而无法修复之前\n&7降低修复物品时可能出现的最大消耗经验值至 {value} 级
+      info: '{value} 最大消耗'
+    skill_mender:
+      name: 技能结合者
+      desc: 手上物品拥有经验修补的物品时\n&7可以在每次获得 2 点技能经验时有 {value}% 的几率\n&7额外为此工具回复 1 点耐久
+      info: '{value}% 修复几率'
+acf:
+  core:
+    permission_denied: '&c你没有执行此命令的权限'
+    permission_denied_parameter: '&c你没有执行此命令的权限'
+    error_generic_logged: '&7发生未知错误. 问题已被记录, 抱歉给您带来不便！'
+    unknown_command: '&c未知指令, 请输入 &e/sk help 获取帮助'
+    invalid_syntax: '&e指令用法: &e{command} &a{syntax}'
+    error_prefix: '&c错误: {message}'
+    error_performing_command: "&c抱歉, 执行命令时出现错误。"
+    info_message: '{message}'
+    please_specify_one_of: '&c错误: 请指定一个 (&e{valid}&c)'
+    must_be_a_number: '&c错误: {num} 必须是一个数字。'
+    must_be_min_length: '&c错误: 字符长度至少为 {min} 。'
+    must_be_max_length: '&c错误: 字符长度至多为 {max} 。'
+    please_specify_at_most: '&c错误: 请指定一个不大于 {max} 的数值.'
+    please_specify_at_least: '&c错误: 请指定一个不小于 {min} 的数值.'
+    not_allowed_on_console: '&c错误: 控制台不能执行此命令。'
+    could_not_find_player: '&c错误: 无法找到玩家: &e{search}'
+    no_command_matched_search: '&c没有叫做 &e{search} &c的命令'
+    help_page_information: '&b - 当前为第 &a{page}&b/&a{totalpages} &b页 (&b找到 &e{results} &b个结果)'
+    help_no_results: '&b错误: 没有更多结果。'
+    help_header: '&e=== &a{commandprefix}{command} &b的有关帮助列表 &e==='
+    help_format: '&b{commandprefix}{command} &a{parameters} &e{separator} {description}'
+    help_detailed_header: '&e=== &a{commandprefix}{command} &b的有关详细帮助列表 &e==='
+    help_detailed_command_format: '&b{command} &a{parameters} &e{separator} {description}'
+    help_detailed_parameter_format: '&a{syntaxorname}: &e{description}'
+    help_search_header: '&e=== &a{commandprefix}{command} {search} &b搜索结果&e ==='
+  minecraft:
+    invalid_world: '&c错误: 不存在所指定的世界。'
+    you_must_be_holding_item: '&c错误: 必须在主手中持有一个物品。'
+    player_is_vanished_confirm: "&e警告：&a{vanished} &eis 已经消失。 不要炸毁他们的封面！\n&eTo 确认您的动作，添加 &a:确认 &eto 他们名字的结尾。\n&eEx: {vanished}:确认"
+    username_too_short: '&c错误: 玩家名称太短了, 必须至少是三个字符'
+    is_not_a_valid_name: '&c错误: &e{name} &c无效'
+    multiple_players_match: '&c错误: 多个玩家符合条件 &b{search} &e(共 {all} 个)&c, 请输入更具体的搜索条件'
+    no_player_found_server: '&c没有符合搜索条件 &e{search} &c的玩家连接至此服务器'
+    no_player_found_offline: '&c未找到符合 &e{search}&c 的玩家'
+    no_player_found: '&c未找到符合 &e{search}&c 的玩家'
+    location_please_specify_world: '&c错误: 请指定世界名称. 示例: &eworld:x,y,z'
+    location_please_specify_xyz: '&c错误: 请指定一个坐标。示例: &eworld:x,y,z'
+    location_console_not_relative: '&c错误: 控制台不能使用相对坐标来确定位置。'
+action_bar:
+  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
+  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
+  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
+  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(满级)  &b{mana}/{max_mana} {mana_unit}'
+  ability: '{message}'
+  boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
+  boss_bar_maxed: '&6{skill} {level} &7(满级)'
+commands:
+  prefix: '&8[&b技能插件&8] '
+  armor:
+    modifier:
+      add:
+        added: '&7属性 {color}{stat} &7的 &b{value} &7增强属性已添加至你的物品'
+        already_exists: '&e属性 {color}{stat} &e已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!'
+        lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
+      remove:
+        does_not_exist: '&e你的物品没有属性 {color}{stat}!'
+        removed: '&7属性 {color}{stat} &7已从你的物品中移除'
+      list:
+        header: '&f已有的属性列表:'
+        entry: '  {color}{stat}&f - {value}'
+      removeall:
+        removed: '&7成功清除了物品上的所有属性'
+    multiplier:
+      add:
+        added: '&7装备时属性增强&b {target} &7, 值为 &b{value} &7已添加至你的物品'
+        already_exists: '&e装备时属性增强 {target} &e已存在于你的盔甲上! 请先使用指令 /sk armor modifier remove 删除它!'
+        skill_lore: '&7当装备时: &b+{value}% {skill} 经验值'
+        skill_lore_subtract: '&7当装备时: &b-{value}% {skill} 经验值'
+        global_lore: '&7当装备时: &b+{value}% 所有技能 经验值获取'
+        global_lore_subtract: '&7当装备时: &b-{value}% 所有技能 经验值获取'
+      remove:
+        does_not_exist: '&e你的盔甲没有属性增强 &b{target}!'
+        removed: '&7装备时属性增强 {target} &7已从你的物品中移除'
+      list:
+        header: '&f已有的装备时生效属性列表:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7成功清除了物品上的所有装备时生效属性'
+    requirement:
+      add:
+        added: '&7等级限制为 &b{level} &7的技能 &3{skill} &7已经添加到你的物品'
+        already_exists: '&e属性 &3{skill} &e已存在条件限制! 请先使用指令 /sk armor requirement remove 删除它!'
+        lore: '&c需要 &3{level} &c级 &3{skill}'
+      remove:
+        does_not_exist: '&e你的物品没有技能 &3{skill}&e 的条件限制!'
+        removed: '&3{skill}&7 条件限制已从你的物品上移除'
+      list:
+        header: '&f已存在的条件限制:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7所有条件限制已从你的物品上移除'
+      equip: '&e你没有达到使用此物品的要求: {requirements}'
+      entry: '&b{skill} {level}&7, '
+  backup:
+    load:
+      confirm: '&c加载备份将还原当前所有玩家的所有技能数据. 此操作一经确认无法撤消. 你可以在加载新备份前保存当前数据为备份. 再次输入命令以确认此操作'
+      loading: '&f正在加载备份...'
+      loaded: '&a成功加载了备份.'
+      error: '&c加载备份出现错误: {error}'
+      must_be_yaml: '&e所选中文档需为 .yml 格式!'
+      file_not_found: '&e备份文件夹内不存在符合此名称的备份文件!'
+    save:
+      saving: '&f保存备份中...'
+      saved: '&f已将 {file} 数据备份为 {type}'
+      error: '&c备份 {type} 数据时出现异常! 请查看控制台/下方堆栈报错以了解详情'
+  claimitems:
+    no_items: '&e你没有需要领取的物品'
+  item:
+    give:
+      sender: '&f已将 &b{amount}x {key} &f给予了 {player}'
+      receiver: '&f你被给予了 &b{amount}x {key}'
+    modifier:
+      add:
+        added: '&b{value} &7级的 {color}{stat} &7属性已添加至你的物品'
+        already_exists: '&e属性 {color}{stat} &e已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!'
+        lore: '&7{stat}: {color}+{value}'
+        lore_subtract: '&7{stat}: {color}-{value}'
+      remove:
+        does_not_exist: '&e你的物品没有属性 {color}{stat} &e!'
+        removed: '&7属性 {color}{stat} &7已从你的物品中移除'
+      list:
+        header: '&f已添加的物品属性:'
+        entry: '  {color}{stat}&f - {value}'
+      removeall:
+        removed: '&7成功清除了物品上的所有属性'
+    multiplier:
+      add:
+        added: '&b装备时属性增强 &b{target} &7, 值为 &b{value} &7已添加至你的物品'
+        already_exists: '&e手持时属性翻倍 {target} &e已存在于你的物品上! 请先使用指令 /sk item multiplier remove 删除它!'
+        skill_lore: '&7当持有时: &b+{value}% {skill} 经验值'
+        skill_lore_subtract: '&7当持有时: &b-{value}% {skill} 经验值'
+        global_lore: '&7当持有时: &9+{value}% 所有技能 经验值获取'
+        global_lore_subtract: '&7当持有时: &9-{value}% 所有技能 经验值获取'
+      remove:
+        does_not_exist: '&e你的物品没有名为 &b{target} &e的属性翻倍!'
+        removed: '&b{target} &7物品翻倍已从你的物品上移除'
+      list:
+        header: '&f已添加的物品翻倍属性:'
+        entry: '  &b{target}&f - {value}'
+      removeall:
+        removed: '&7成功清除了物品上的所有持有时生效属性'
+    register:
+      registered: '&f已将手上物品注册至id: {key}'
+      already_registered: '&e已有相同id &f{key} &e注册, 请输入 &f/skills item unregister &e以解除对该物品的注册'
+      no_spaces: '&eid 不可包含空格'
+    requirement:
+      add:
+        added: '&7等级限制为 &b{level} &7的技能 &3{skill} &7已经添加到你的物品'
+        already_exists: '&e属性 &3{skill} &e已存在条件限制! 请先使用指令 /sk armor requirement remove 删除它!'
+        lore: '&c需要 &3{level} &c级 &3{skill}'
+      remove:
+        does_not_exist: '&e你的物品没有技能 &3{skill}&e 的条件限制!'
+        removed: '&3{skill}&7 条件限制已从你的物品上移除'
+      list:
+        header: '&f已存在的条件限制:'
+        entry: '  &3{skill} &f- &b{level}'
+      removeall:
+        removed: '&7所有条件限制已从你的物品上移除'
+      use: '&e你没有达到使用此物品的要求: {requirements}'
+      entry: '&b{skill} {level}&7, '
+    unregister:
+      unregistered: '&fid 为 {key} 的物品未被注册'
+      not_registered: '&e 没有注册为 id {key} 的物品'
+  lang:
+    set: '&7语言已设置为 &b{lang}'
+    not_found: '&e语言不存在!'
+  mana:
+    display: '&f当前 {mana_unit}: &b{current}/{max}'
+    display_other: '&f玩家 {player} 当前 {mana_unit}: &b{current}/{max}'
+    add: '&7添加了 &b{amount} {mana_unit} &7至玩家 &6{player}'
+    remove: '&7移除了 &b{amount} {mana_unit} &7从玩家 &6{player}'
+    set: '&7将玩家 &6{player} &7的 {mana_unit} 设置为了 &b{amount}'
+    at_least_zero: '&e{mana_unit} 必须至少大于零!'
+    console_specify_player: '&e后台执行此命令需指定一名玩家!'
+  modifier:
+    add:
+      added: '&7技能 {color}{stat} &7已将属性 &f{name} &7的获取倍数改为 &b{value} &7并成功应用于玩家 &6{player}'
+      already_exists: '&e属性 &f{name} &e已存在于玩家 &6{player}&e 身上! 请使用/sk modifier remove {player} {name} 以移除'
+    remove:
+      not_found: '&e属性 &7{name} &e在玩家 &6{player} &e身上不存在'
+      removed: '&7成功从玩家 &6{player} &7身上移走了属性 &f{name}'
+    list:
+      all_stats_header: '&6{player} &7的属性:'
+      all_stats_entry: '  &f{name} - {color}{stat} &f等级 &6{value}'
+      one_stat_header: '&6{player} &f的属性修改 ({color}{stat}&f)'
+      one_stat_entry: '  &f{name} - {color}{stat} &f等级 &6{value}'
+      players_only: '&e仅玩家可以列出属于他们的属性修改! 尝试指定一名玩家!'
+    removeall:
+      removed_all_stats: '&7删除了玩家 &6{player} &7的 &b{num} &7属性修改'
+      removed_one_stat: '&7删除了玩家 &6{player} &7的 &b{num} {color}{stat} &7属性修改'
+      players_only: '&e仅玩家可以列出属于他们的属性修改! 尝试指定一名玩家!'
+  multiplier:
+    global: 全局
+    list: '&f玩家 &6{player} &f的全局经验翻倍倍数为: &b{multiplier}x / +{percent}%'
+    skill_entry: '&b{skill} &f经验值 翻倍倍数: &b{multiplier}x / +{percent}%'
+    players_only: '&e仅玩家可以列出属于他们的经验翻倍器! 尝试指定一名玩家!'
+  profile:
+    skills: "玩家 &6{name} &7的 Aurelium Skills 详细描述:\n&7玩家 UUID: &f{uuid}\n&7技能: {skill_entries}"
+    skill_entry: "\n&3{skill} &7- 等级: &f{level}&7, 经验值: &f{xp}"
+    stats: "玩家 &6{name} &7的 Aurelium Skills 详细描述:\n&7玩家 UUID: &f{uuid}\n&7属性: {stat_entries}"
+    stat_entry: "\n  &3{stat} &7- 总等级: &f{total_level}&7, 基础等级: &f{base_level}&7, 翻倍等级: &f{modified_level}"
+  rank:
+    header: '&b&l技能排名'
+    power: '&e战力 &7(技能综合): &f#{rank}, 总第 {total} 名'
+    entry: '&b{skill}&7: &f#{rank} of {total}'
+  reload: '&a配置已重新加载!'
+  save:
+    already_saving: '&e数据已正在保存!'
+    mysql_not_enabled: '&e数据库保存在服务器开启时未开启, 已将存储方式改为本地存储!'
+    saved: '&a技能数据保存成功!'
+  skill:
+    reset:
+      reset_all: '&7玩家 &6{player} &7的所有技能等级已重置为 &b1!'
+      reset_skill: '&7玩家 &6{player} &7的技能 &b{skill} &7的等级已设置为 &b1'
+    setall:
+      at_least_one: '&e等级最小需为 1!'
+      set: '&7玩家 &6{player} &7的所有技能等级已设置为 &b{level}!'
+    setlevel:
+      at_least_one: '&e等级最小需为 1!'
+      set: '&7玩家 &6{player} &7的技能 &b{skill} &7的等级已设置为 &b{level}'
+  toggle:
+    enabled: '&a技能状态显示栏已打开'
+    disabled: '&c技能状态显示栏已关闭'
+    not_enabled: '&e此服务器未启用技能状态栏!'
+  top:
+    power_entry: '&f{rank}. &b{player} &f- {level}'
+    power_header: '&f--==&b&l技能综合排行榜&f==--'
+    power_header_page: '&f--==&b&l技能综合排行榜 &f(第 {page} 页)==--'
+    skill_header: '&f--==&b&l技能 {skill} 排行榜&f==--'
+    skill_header_page: '&f--==&b&l技能 {skill} 排行榜&f(第 {page} 页)==--'
+    skill_entry: '&f{rank}. &b{player} &f- {level}'
+    average_header: '&f--==&b&l技能综合排行榜&f==--'
+    average_header_page: '&f--==&b&l技能综合排行榜&f(第 {page} 页)==--'
+    average_entry: '&f{rank}. &b{player} &f- {level}'
+    usage: '&e提示: &a/sk top &f<page> &7 或 &a/sk top &f[skill] <page>'
+  transfer:
+    success: '&a成功将玩家数据从 &7{from} &a转移到 &7{to}'
+    error: '&c传输玩家数据时出错。请检查控制台以获取错误信息。'
+  updateleaderboards:
+    already_updating: '&e排行榜正在更新!'
+    updated: '&a排行榜更新成功!'
+  version: '您正在使用 Aurelium Skills版本 &b{current_version}&f. 最新版本是 &b{latest_version}'
+  xp:
+    add: '&7成功为玩家 &6{player} &7添加了技能 &b{skill} &7的 &b{amount} &7点熟练度'
+    set: '&7将玩家 &6{player} &7的技能 &b{skill} &7熟练度设置为了 &b{amount}'
+    remove: '&7成功为玩家 &6{player} &7取走了技能 &b{skill} &7的 &b{amount} &7点熟练度'
+  unknown_skill: '&e未知技能!'
+  no_profile: '&e玩家尚未获得自己的技能存档文件。请重新加入游戏或重启服务器。'
+leveler:
+  title: '&a{skill} 等级提升'
+  subtitle: '&6{old} ➜ {new}'
+  level_up: "&3&m----------------------------------------\n&r &3技能成功升级! &b&l{skill} &8{old}➜&3&l{new}\n \n &b升级奖励:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  stat_level: "\n  {color}+{num} {symbol} {stat}"
+  ability_unlock: "\n  &a技能解锁! &6&l{ability} &7已被解锁"
+  ability_level_up: "\n  &a技能升级! &6&l{ability} &7现在等级为 &6{level} &7级"
+  mana_ability_unlock: "\n  &d魔法技能解锁! &9&l{mana_ability} &7已被解锁"
+  mana_ability_level_up: "\n  &d魔法技能升级! &9&l{mana_ability} &7现在等级为l &6{level} &7级"
+  money_reward: "\n  &a${amount}"
+  unclaimed_item: '&c因为背包已满, 部分无法存储在物品栏的物品已被转移至临时存储区. 请输入 &e/skills claimitems &c及时领取这些物品.'
+menus:
+  common:
+    close: '&c关闭'
+    level: '&7等级: &e{level}'
+    progress_to_level: "&7到达等级 {level}: 进度为&e {percent}%\n &7{current_xp}/{level_xp} {xp_unit}"
+    max_level: '&6最大等级'
+    ability_levels: "\n&7技能等级:\n {ability_1}\n {ability_2}\n {ability_3}\n {ability_4}\n {ability_5} "
+    ability_level_entry: '&6{ability} {level} &8({info})'
+    ability_level_entry_locked: '&8&m{ability}'
+    stats_leveled: "\n&7属性已升级了 {stats} 级"
+    mana_ability: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7持续时间: &a{duration}s &7魔法值耗费: &b{mana_cost} &7冷却时长: &e{cooldown}s "
+  skills_menu:
+    skills_menu_title: 你的技能
+    your_skills: '&b你的技能 - &6{player}'
+    your_skills_desc: '&7做各种各样的事情得到有趣的属性增强, 技能和更多!'
+    your_skills_hover: '&e悬停在技能图标上可以了解更多!'
+    your_skills_click: '&e点击技能图标以了解技能掌握进度!'
+    skill_click: '&e点击查看技能掌握进度!'
+    skill_locked: '&c你没有权限浏览此技能!'
+    stats: '状态'
+    stats_desc: '&7通过升级技能获得状态增益'
+    stats_click: '&e点击了解更多或查看您的统计数据'
+  level_progression_menu:
+    level_progression_menu_title: '{skill} 等级 - 第 {page} 页'
+    your_ranking: '&6你的技能排名'
+    rank_out_of: '&f你现在在全部的 {total} 名玩家中处于第 &6{rank}&f 名'
+    rank_percent: '&f你超过了 &6{percent}% &f的玩家'
+    back: '&a返回'
+    back_click: '&7返回 {menu_name} 菜单'
+    next_page: '&6下一页'
+    next_page_click: '&e点击进入下一页'
+    previous_page: '&6上一页'
+    previous_page_click: '&e点击返回上一页'
+    level_unlocked: '&a等级 {level}'
+    level_in_progress: '&e等级 {level}'
+    level_locked: '&c等级 {level}'
+    level_number: '&7等级 &f{level}'
+    unlocked: '&a已解锁'
+    in_progress: '&e正在进行'
+    locked: '&c已锁定'
+    rewards: '&7奖励: {rewards}'
+    rewards_entry: "\n  {color}+{num} {symbol} {stat}"
+    money_reward: "\n  &a${amount}"
+    ability_unlock: "\n&6{ability} &a&l技能解锁\n&7  {desc}\n "
+    ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
+    mana_ability_unlock: "\n&9{mana_ability} &d&l魔法技能解锁\n&7  {desc}\n "
+    mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
+    progress: "&7进度: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: '&e点击查看 {skill} 排行榜'
+    sources: '&a经验来源'
+    sources_desc: "&7来源菜单显示了你可以在技能中\n&7获得经验值的所有方式，以及\n&7每个来源提供的经验值。"
+    sources_click: '&e点击查看 {skill} 来源'
+    abilities: '&c技能'
+    abilities_desc: "&b技能&7是被动技能，随着技能的升级，\n&7你可以解锁和升级。\n&d魔法技能&7是一种特殊类型的能力，\n&7需要激活并消耗魔法值。"
+    abilities_click: '&e点击查看 {skill} 技能'
+  stats_menu:
+    stats_menu_title: 你的属性
+    player_stat_entry: ' {color}{symbol} {stat} &f{level}'
+    skills: "\n&7技能: &f{skills}"
+    your_level: '&7你的等级: {color}{level}'
+    attack_damage: '&4+{value}% 攻击伤害'
+    hp: '&c+{value} ❤'
+    saturated_regen: '&6+{value} 饱和度'
+    full_hunger_regen: '&6+{value} 完全饥饿恢复'
+    almost_full_hunger_regen: '&6+{value} 近完全饥饿恢复'
+    mana_regen: '&b+{value} 每秒魔法值恢复'
+    luck: '&2+{value} 幸运'
+    double_drop_chance: '&2双倍掉落: {value}%'
+    xp_gain: '&9+{value}% {xp_unit} 经验翻倍'
+    anvil_cost_reduction: '&9铁砧修复减少: {value}%'
+    max_mana: '&9最大魔力值: {value}'
+    incoming_damage: '&5-{value}% 将受到的伤害'
+  unclaimed_items:
+    unclaimed_items_title: '领取物品'
+    inventory_full: '&e你的物品栏没有足够的空间'
+    click_to_claim: '&e点击领取!'
+  leaderboard:
+    leaderboard_title: '{skill} 排行榜'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7等级 &f{level}'
+  sources:
+    sources_title: '{skill} 经验来源 ({current_page}/{total_pages})'
+    sorter: '&b对经验来源进行排序'
+    sort_type: '&7{selected}{type_name}'
+    selected: '&f> '
+    descending: '从最高到最低'
+    ascending: '从最低到最高'
+    alphabetical: '名称 （A-Z）'
+    reverse_alphabetical: '名称 (Z - A)'
+    sort_click: '&e点击以循环排序类型'
+    source_name: '&f{name}'
+    source_xp: '&7经验值: &a{xp}'
+    source_xp_rate: '&7经验值: &a{xp}/{unit}'
+    multiplied_xp: "\n\n&f经验倍率: &a{xp}"
+    multiplied_xp_rate: "\n\n&f经验倍率: &a{xp}/{unit}"
+    multiplied_desc: "\n&7&o这是乘以当前的经验值\n&7&o得出所获得的经验值"
+  abilities:
+    abilities_title: '{skill} 技能'
+    locked_desc: "&f描述：\n  &7{desc}"
+    unlocked_at: '&7在 &3{skill} {level} 解锁。'
+    your_ability_level: '&f你的等级: &b{level}'
+    your_ability_level_maxed: '&f你的等级: &b{level} &6(MAXED)'
+    unlocked_desc: "&f下次升级时 &3{skill} {level}&f\n  &7{desc}"
+    unlocked_desc_maxed: "&f描述：\n  &7{desc}"
+    desc_upgrade_value: '&7{current}&8→{next}&7'
+mana_abilities:
+  replenish:
+    name: 自动补种
+    desc: "&7自动补种耕地上的作物, 持续 {value} 秒.\n&e  [右键锄头并破坏农作物以激活]"
+    raise: '&7你拿起了你的锄头'
+    lower: '&7你放下了你的锄头'
+    start: '&6自动补种已激活! &7(-{mana} {mana_unit})'
+    end: '&6自动补种已结束'
+  treecapitator:
+    name: 伐树者
+    desc: "&7在技能激活的 {value} 秒内, 瞬间砍倒一棵树. \n&e  [右键斧子并破坏原木方块以激活]"
+    raise: '&7你拿起了你的斧头'
+    lower: '&7你放下了你的斧头'
+    start: '&6伐树者已激活! &7(-{mana} {mana_unit})'
+    end: '&6伐树者技能已结束'
+  speed_mine:
+    name: 超级碎石机
+    desc: "&7在技能激活的 {value} 秒内获得急迫 {haste_level}\n&e  [右键镐子挖掘以激活]"
+    raise: '&7你拿起了你的镐子'
+    lower: '&7你放下了你的镐子'
+    start: '&6超级碎石机已激活! &7(-{mana} {mana_unit})'
+    end: '&7超级碎石机已关闭'
+  absorption:
+    name: 超级吸收
+    desc: "在技能触发的 {value} 秒内\n&7  你受到的伤害将会会被吸收\n&7  同时减少 伤害 x2 的魔法值\n&7  此技能触发时魔法值无法回复.\n  &e[左键盾牌后受到伤害自动触发]"
+    raise: '&7你握紧了你的盾牌'
+    lower: '&7你放下了你的盾牌'
+    start: '&6超级吸收已激活! &7(-{mana} {mana_unit})'
+    end: '&6超级吸收已关闭'
+  terraform:
+    name: 平整挖掘
+    desc: "在技能触发的 {value} 内破坏以你为中心\n&7  半径为 4 个方块内的所有方块\n&7  手中必须持有铲子, 并且被破坏的方块\n&7  只能是同一个种类并且相邻\n&7  &e[右键铲子并挖掘方块以触发]"
+    raise: '&7你拿起了你的铲子'
+    lower: '&7你放下了你的铲子'
+    start: '&6平整挖掘已激活! &7(-{mana} {mana_unit})'
+    end: '&7平整挖掘已关闭'
+  sharp_hook:
+    name: 锋利鱼钩
+    desc: '持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害'
+    use: '&6使用了锋利鱼钩! &7(-{mana} {mana_unit})'
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n  &7伤害: &c{value} &7魔法消耗: &b{mana_cost} &7冷却时间: &e{cooldown}s\n "
+  charged_shot:
+    name: 聚能穿射
+    desc: "你射出的箭将会额外造成伤害\n&7  此伤害取决于箭落地后与你的距离\n&7  并且此过程消耗魔法值. 每点魔法值的消耗\n&7  能为每支箭增加 {value}% 的伤害\n&e  [左键弓可触发聚能穿射]"
+    enable: '&7聚能穿射已启用'
+    disable: '&7聚能穿射已禁用'
+    shoot: '&6聚能穿射已启用! &d+{percent}% 伤害 &7(-{mana} {mana_unit})'
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7伤害: &c+{value}% / 魔法值 &7最大魔法值消耗: &b{mana_cost}\n "
+  lightning_blade:
+    name: 狂战之刃
+    desc: 在 {duration} 秒内增加 {value}% 的攻击速度.\n&e [持剑右键后攻击敌人以激活]
+    raise: '&7你握紧了你的剑'
+    lower: '&7你放下了你的剑'
+    start: '&6狂战之刃已激活! &7(-{mana} {mana_unit})'
+    end: '&7狂战之刃已经已经结束'
+    menu: "\n&d&l魔法技能 &9{mana_ability} {level}\n &7攻击速度: &c+{value}% &7持续时间: &a{duration}s\n &7魔力耗费: &b{mana_cost} &7冷却时间: &e{cooldown}s\n "
+  not_ready: '&c&o技能还没有准备好! &7({cooldown}s)'
+  not_enough_mana: '&法力不足! &7({mana} {mana_unit} 需要, 但是你只有 {current_mana}/{max_mana})'
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
+skills:
+  farming:
+    name: 草药学
+    desc: '&7收获农作物以获取草药学 {xp_unit}'
+  foraging:
+    name: 伐树
+    desc: '&7砍倒树木以获得伐树 {xp_unit}'
+  mining:
+    name: 采掘
+    desc: '&7挖掘石头和矿物以获得采掘 {xp_unit}'
+  fishing:
+    name: 钓鱼
+    desc: '&7在水边垂钓以获得钓鱼 {xp_unit}'
+  excavation:
+    name: 挖掘
+    desc: '&7用铲子挖砂砾和沙子一类的方块以获得挖掘 {xp_unit}'
+  archery:
+    name: 弓箭手
+    desc: '&7使用弓箭射中生物或玩家以获得弓箭手 {xp_unit}'
+  defense:
+    name: 防御
+    desc: '&7被实体攻击以获得防御 {xp_unit}'
+  fighting:
+    name: 战士
+    desc: '&7使用近战武器对实体造成伤害以获得战士 {xp_unit}'
+  endurance:
+    name: 耐力
+    desc: '&7跑跑跳跳就可以获得耐力 {xp_unit}'
+  agility:
+    name: 敏捷
+    desc: '&7摔伤可以获得敏捷 {xp_unit}'
+  alchemy:
+    name: 炼金
+    desc: '&7酿造药水以获得炼金 {xp_unit}'
+  enchanting:
+    name: 附魔
+    desc: '&7附魔物品或书籍以获得附魔 {xp_unit}'
+  sorcery:
+    name: 法术
+    desc: '&7使用魔法技能以获得法术 {xp_unit}'
+  healing:
+    name: 药水学
+    desc: '&7饮用和扔出喷溅型药水以获得药水学 {xp_unit}'
+  forging:
+    name: 锻造
+    desc: '&7使用铁砧合并附魔书或修理装备以获得锻造 {xp_unit}'
+sources:
+  farming:
+    wheat: 小麦
+    potato: 马铃薯
+    carrot: 胡萝卜
+    beetroot: 甜菜根
+    nether_wart: 下界疣
+    pumpkin: 南瓜
+    melon: 瓜
+    sugar_cane: 甘蔗
+    bamboo: 竹子
+    cocoa: 可可豆
+    cactus: 仙人掌
+    brown_mushroom: 棕色蘑菇
+    red_mushroom: 红色蘑菇
+    kelp: 海带
+    sea_pickle: 海泡菜
+    sweet_berry_bush: 甜浆果
+    glow_berries: 发光浆果
+  foraging:
+    oak_log: 橡木原木
+    spruce_log: 云杉木原木
+    birch_log: 白桦原木
+    jungle_log: 丛林原木
+    acacia_log: 金合欢原木
+    dark_oak_log: 深色橡木原木
+    oak_leaves: 橡树树叶
+    spruce_leaves: 云杉树叶
+    birch_leaves: 白桦树叶
+    jungle_leaves: 丛林树叶
+    acacia_leaves: 金合欢树叶
+    dark_oak_leaves: 深色橡树树叶
+    crimson_stem: 绯红菌柄
+    warped_stem: 诡异菌柄
+    nether_wart_block: 下界疣块
+    warped_wart_block: 诡异疣块
+    moss_block: 苔藓块
+    moss_carpet: 苔藓地毯
+    azalea: 杜鹃花丛
+    flowering_azalea: 盛开的杜鹃花丛
+    azalea_leaves: 杜鹃树叶
+    flowering_azalea_leaves: 盛开的杜鹃树叶
+    mangrove_log: 红树原木
+    mangrove_leaves: 红树树叶
+    mangrove_roots: 红树根
+  mining:
+    stone: 石头
+    cobblestone: 圆石
+    andesite: 安山岩
+    diorite: 闪长岩
+    granite: 花岗岩
+    coal_ore: 煤矿石
+    nether_quartz_ore: 下界石英矿石
+    iron_ore: 铁矿石
+    lapis_ore: 青金石矿石
+    redstone_ore: 红石矿石
+    gold_ore: 金矿石
+    diamond_ore: 钻石矿石
+    emerald_ore: 绿宝石矿石
+    terracotta: 陶瓦
+    white_terracotta: 白色陶瓦
+    orange_terracotta: 橙色陶瓦
+    yellow_terracotta: 黄色陶瓦
+    light_gray_terracotta: 淡灰色陶瓦
+    brown_terracotta: 棕色陶瓦
+    red_terracotta: 红色陶瓦
+    netherrack: 下界岩
+    blackstone: 黑石
+    basalt: 玄武岩
+    magma_block: 岩浆块
+    nether_gold_ore: 下界金矿石
+    ancient_debris: 远古残骸
+    end_stone: 末地石
+    obsidian: 黑曜石
+    deepslate: 深板岩
+    copper_ore: 铜矿石
+    tuff: 凝灰岩
+    calcite: 方解石
+    smooth_basalt: 平滑玄武岩
+    amethyst_block: 紫晶方块
+    amethyst_cluster: 紫水晶簇
+    deepslate_coal_ore: 深板岩煤矿
+    deepslate_iron_ore: 深板岩铁矿
+    deepslate_copper_ore: 深板岩铜矿石
+    deepslate_gold_ore: 深板岩金矿石
+    deepslate_redstone_ore: 深板岩红矿石
+    deepslate_lapis_ore: 深板岩青金石矿石
+    deepslate_emerald_ore: 深板岩绿宝石矿石
+    deepslate_diamond_ore: 深板岩钻石矿石
+    dripstone_block: 深板岩
+    ice: 冰
+    packed_ice: 浮冰
+    blue_ice: 蓝冰
+    reinforced_deepslate: 强化深板岩
+  fishing:
+    cod: 鳕鱼
+    salmon: 鲑鱼
+    tropical_fish: 热带鱼
+    pufferfish: 河豚
+    treasure: 宝藏物品
+    junk: 垃圾
+    rare: 稀有战利品
+    epic: 史诗级战利品
+  excavation:
+    dirt: 泥土
+    grass_block: 草方块
+    sand: 沙子
+    gravel: 砂砾
+    mycelium: 菌丝
+    clay: 黏土块
+    soul_sand: 灵魂沙
+    coarse_dirt: 砂土
+    podzol: 灰化土
+    soul_soil: 灵魂土
+    red_sand: 红沙
+    rooted_dirt: 缠根泥土
+    mud: 泥巴
+    muddy_mangrove_roots: 沾泥的红树根
+  mobs:
+    player: 玩家
+    bat: 蝙蝠
+    cat: 猫
+    chicken: 鸡
+    cod: 鳕鱼
+    cow: 牛
+    donkey: 驴
+    fox: 狐狸
+    giant: 巨人
+    horse: 马
+    mooshroom: 眸菇
+    mule: 骡子
+    ocelot: 豹猫
+    parrot: 鹦鹉
+    pig: 猪
+    rabbit: 兔子
+    salmon: 鲑鱼
+    sheep: 羊
+    skeleton_horse: 骷髅马
+    snow_golem: 雪傀儡
+    squid: 鱿鱼
+    strider: 炽足兽
+    tropical_fish: 热带鱼
+    turtle: 海龟
+    villager: 村民
+    wandering_trader: 流浪商人
+    bee: 蜜蜂
+    cave_spider: 洞穴蜘蛛
+    dolphin: 海豚
+    enderman: 末影人
+    iron_golem: 铁傀儡
+    llama: 羊驼
+    piglin: 猪灵
+    panda: 熊猫
+    polar_bear: 北极熊
+    pufferfish: 河豚
+    spider: 蜘蛛
+    wolf: 狼
+    zombified_piglin: 僵尸猪灵
+    blaze: 烈焰人
+    creeper: 苦力怕
+    drowned: 溺尸
+    elder_guardian: 远古守卫者
+    endermite: 末影螨
+    evoker: 唤魔者
+    ghast: 恶魂
+    guardian: 守卫者
+    hoglin: 疣猪兽
+    husk: 尸壳
+    illusioner: 幻术师
+    magma_cube: 岩浆怪
+    phantom: 幻翼
+    piglin_brute: 猪灵蛮兵
+    pillager: 掠夺者
+    ravager: 劫掠兽
+    shulker: 潜影贝
+    silverfish: 蠹虫
+    skeleton: 骷髅
+    slime: 史莱姆
+    stray: 流浪者
+    vex: 恼鬼
+    vindicator: 卫道士
+    witch: 女巫
+    wither_skeleton: 凋灵骷髅
+    zoglin: 僵尸疣猪兽
+    zombie: 僵尸
+    zombie_villager: 僵尸村民
+    ender_dragon: 末影龙
+    wither: 凋灵骷髅
+    axolotl: 美西螈
+    glow_squid: 发光鱿鱼
+    goat: 山羊
+    allay: 悦灵
+    frog: 青蛙
+    tadpole: 蝌蚪
+    warden: 监守者
+  defense:
+    mob_damage: 来自生物的伤害
+    player_damage: 来自玩家的伤害
+  endurance:
+    walk_per_meter: 行走
+    sprint_per_meter: 疾跑
+    swim_per_meter: 游泳
+  agility:
+    jump_per_100: 跳跃
+    fall_damage: 承受跌落伤害
+  alchemy:
+    awkward: 粗制的药水
+    regular: 普通药水
+    extended: 延长药水时效
+    upgraded: 升级药水等级
+    splash: 喷溅型药水
+    lingering: 滞留药水
+  enchanting:
+    weapon_per_level: 武器
+    armor_per_level: 护甲
+    tool_per_level: 工具
+    book_per_level: 附魔书
+  sorcery:
+    mana_ability_use: 使用魔法技能
+    sculk: 幽匿块
+    sculk_vein: 幽匿脉络
+    sculk_sensor: 幽匿感测体
+    sculk_catalyst: 幽匿催发体
+    sculk_shrieker: 幽匿尖啸体
+  healing:
+    drink_regular: 饮用普通药水
+    drink_extended: 饮用延长时长的药水
+    drink_upgraded: 饮用已升级的药剂
+    splash_regular: 喷洒喷溅型药水
+    splash_extended: 喷洒喷溅型延长时长的药水
+    splash_upgraded: 喷洒喷溅型已升级的药水
+    lingering_regular: 使用普通滞留型药水
+    lingering_extended: 使用滞留型延长时长的药水
+    lingering_upgraded: 使用已升级的滞留型药水
+    golden_apple: 金苹果
+    enchanted_golden_apple: 附魔金苹果
+  forging:
+    combine_books_per_level: 合并附魔书
+    combine_weapon_per_level: 合并武器和附魔书
+    combine_armor_per_level: 合并护甲和附魔书
+    combine_tool_per_level: 合并工具和附魔书
+    grindstone_per_level: 用砂轮祛魔
+  units:
+    damage: 伤害
+    meter: 米
+    100_jumps: 跳一百次
+    mana: 已消耗的魔法值
+    combine_level: 铁砧消耗的经验值
+    grindstone_level: 物品的附魔等级
+    enchant_level: 获得的附魔等级
+stats:
+  strength:
+    name: 力量
+    desc: '&7力量能使你在使用各种不同的武器时提升伤害'
+    color: '&4'
+    symbol: '➽'
+  health:
+    name: 生命值
+    desc: '&7生命能够提升你的最大 {hp_unit}, 也允许你在战斗中能够活得更久'
+    color: '&c'
+    symbol: '❤'
+  regeneration:
+    name: 再生
+    desc: '&7再生增加你的生命和魔法值恢复速度'
+    color: '&6'
+    symbol: '❥'
+  luck:
+    name: 幸运
+    desc: '&7幸运能够提升掉落物的掉落几率, 以及获得稀有掉落物的几率'
+    color: '&2'
+    symbol: '☘'
+  wisdom:
+    name: 智慧
+    desc: '&7智慧能够增加魔法值上限, 增加经验值获取以及减少铁砧的经验值耗费'
+    color: '&9'
+    symbol: '✿'
+  toughness:
+    name: 韧性
+    desc: '&7韧性能减少敌人对你造成的伤害'
+    color: '&5'
+    symbol: '✦'
+units:
+  mana: 魔法值
+  hp: 血量
+  xp: 经验
+file_version: 29

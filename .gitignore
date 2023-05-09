@@ -13,8 +13,12 @@ out/
 
 # Package Files #
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 
 target/
+
+.gradle/
+build/
 
 pom.xml.tag
 pom.xml.releaseBackup

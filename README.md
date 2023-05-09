@@ -52,11 +52,3 @@ There are also a few events, including ManaRegenerateEvent, SkillLevelUpEvent, X
 
 ## Contributing
 Contributions are welcome! Open a pull request, and I will review it.
-
-<h1 align="center">
-  <br>
-    <a href="https://dedimc.promo/Archy" target="_blank">
-      <img src="https://i.imgur.com/x3IWw7h.png" alt="dedicatedmc banner">
-    </a>
-  <br>
-</h1>
