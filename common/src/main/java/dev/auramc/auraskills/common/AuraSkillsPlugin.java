@@ -45,7 +45,7 @@ public interface AuraSkillsPlugin {
 
     AuraSkillsEventManager getEventManager();
 
-    PlatformLogger getLogger();
+    PlatformLogger logger();
 
     SkillRegistry getSkillRegistry();
 
