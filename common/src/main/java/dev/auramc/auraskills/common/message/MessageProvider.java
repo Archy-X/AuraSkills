@@ -3,6 +3,7 @@ package dev.auramc.auraskills.common.message;
 import dev.auramc.auraskills.api.ability.Ability;
 import dev.auramc.auraskills.api.mana.ManaAbility;
 import dev.auramc.auraskills.api.skill.Skill;
+import dev.auramc.auraskills.api.source.Source;
 import dev.auramc.auraskills.api.stat.Stat;
 
 import java.util.Locale;
@@ -37,6 +38,8 @@ public interface MessageProvider {
     String getManaAbilityDescription(ManaAbility ability, Locale locale);
 
     String getManaAbilityInfo(ManaAbility ability, Locale locale);
+
+    String getSourceDisplayName(Source source, Locale locale);
 
     Locale getDefaultLanguage();
 
