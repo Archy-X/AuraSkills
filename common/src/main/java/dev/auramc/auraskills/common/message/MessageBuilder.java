@@ -154,4 +154,9 @@ public class MessageBuilder {
         return LegacyComponentSerializer.legacySection().deserialize(text);
     }
 
+    @Override
+    public String toString() {
+        return LegacyComponentSerializer.legacySection().serialize(component);
+    }
+
 }

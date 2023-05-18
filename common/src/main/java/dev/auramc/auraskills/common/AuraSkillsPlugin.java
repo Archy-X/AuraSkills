@@ -1,5 +1,6 @@
 package dev.auramc.auraskills.common;
 
+import dev.auramc.auraskills.api.AuraSkillsApi;
 import dev.auramc.auraskills.common.ability.AbilityManager;
 import dev.auramc.auraskills.common.ability.AbilityRegistry;
 import dev.auramc.auraskills.common.config.ConfigProvider;
@@ -17,13 +18,18 @@ import dev.auramc.auraskills.common.mana.ManaAbilityRegistry;
 import dev.auramc.auraskills.common.message.MessageKey;
 import dev.auramc.auraskills.common.message.MessageProvider;
 import dev.auramc.auraskills.common.message.PlatformLogger;
+import dev.auramc.auraskills.common.modifier.ModifierManager;
+import dev.auramc.auraskills.common.rewards.RewardManager;
 import dev.auramc.auraskills.common.skill.SkillRegistry;
 import dev.auramc.auraskills.common.stat.StatManager;
 import dev.auramc.auraskills.common.stat.StatRegistry;
+import dev.auramc.auraskills.common.ui.UiProvider;
 
 import java.util.Locale;
 
 public interface AuraSkillsPlugin {
+
+    AuraSkillsApi getApi();
 
     MessageProvider getMessageProvider();
 
@@ -58,6 +64,12 @@ public interface AuraSkillsPlugin {
     HookManager getHookManager();
 
     LeaderboardManager getLeaderboardManager();
+
+    UiProvider getUiProvider();
+
+    RewardManager getRewardManager();
+
+    ModifierManager getModifierManager();
 
     // Message convenience methods
 

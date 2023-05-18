@@ -56,7 +56,7 @@ public abstract class RewardManager {
                 }
                 patternsLoaded++;
             } catch (IllegalArgumentException e) {
-                plugin.getLogger().warn("Error while loading rewards file " + rewardsFile.getName() + " at path patterns.[" + index + "]: " + e.getMessage());
+                plugin.logger().warn("Error while loading rewards file " + rewardsFile.getName() + " at path patterns.[" + index + "]: " + e.getMessage());
             }
         }
         return patternsLoaded;

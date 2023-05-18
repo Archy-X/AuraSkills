@@ -53,7 +53,7 @@ public class EventSubscription<T extends AuraSkillsEvent> implements RegisteredE
         try {
             handler.accept(event);
         } catch (Throwable t) {
-            this.eventBus.getPlugin().getLogger().warn("Error passing event " + event.getEventType().getSimpleName() + " to handler " + this.handler.getClass().getName(), t);
+            this.eventBus.getPlugin().logger().warn("Error passing event " + event.getEventType().getSimpleName() + " to handler " + this.handler.getClass().getName(), t);
         }
     }
 
