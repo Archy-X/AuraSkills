@@ -3,6 +3,7 @@ package dev.auramc.auraskills.common.data;
 import dev.auramc.auraskills.api.ability.Ability;
 import dev.auramc.auraskills.api.ability.AbstractAbility;
 import dev.auramc.auraskills.api.mana.ManaAbility;
+import dev.auramc.auraskills.api.player.SkillsPlayer;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.stat.Stat;
 import dev.auramc.auraskills.api.stat.StatModifier;
@@ -10,6 +11,7 @@ import dev.auramc.auraskills.api.stat.Stats;
 import dev.auramc.auraskills.api.util.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.ability.AbilityData;
+import dev.auramc.auraskills.common.api.implementation.ApiSkillsPlayer;
 import dev.auramc.auraskills.common.config.Option;
 import dev.auramc.auraskills.common.modifier.Multiplier;
 import dev.auramc.auraskills.common.util.data.KeyIntPair;
@@ -68,9 +70,12 @@ public abstract class PlayerData {
         return uuid;
     }
 
+    // Abstract methods to be implemented by the platform-specific PlayerData class
     public abstract String getUsername();
 
     public abstract void sendMessage(Component component);
+
+    public abstract double getPermissionMultiplier(Skill skill);
 
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, 1);
@@ -322,7 +327,7 @@ public abstract class PlayerData {
         for (Multiplier multiplier : getMultipliers().values()) {
             if (multiplier.isGlobal()) {
                 totalMultiplier += multiplier.value();
-            } else if (multiplier.skill() != null && multiplier.skill().equals(skill)) {
+            } else if (multiplier.skill() != null && skill != null && multiplier.skill().equals(skill)) {
                 totalMultiplier += multiplier.value();
             }
         }
@@ -387,6 +392,10 @@ public abstract class PlayerData {
         this.mana = state.mana();
 
         plugin.getLeveler().updateStats(this);
+    }
+
+    public SkillsPlayer toApi() {
+        return new ApiSkillsPlayer(this);
     }
 
 }

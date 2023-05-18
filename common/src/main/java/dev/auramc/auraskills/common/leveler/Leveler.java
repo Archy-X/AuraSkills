@@ -1,17 +1,169 @@
 package dev.auramc.auraskills.common.leveler;
 
+import dev.auramc.auraskills.api.event.skill.SkillLevelUpEvent;
+import dev.auramc.auraskills.api.event.skill.XpGainEvent;
 import dev.auramc.auraskills.api.skill.Skill;
+import dev.auramc.auraskills.common.AuraSkillsPlugin;
+import dev.auramc.auraskills.common.config.Option;
 import dev.auramc.auraskills.common.data.PlayerData;
+import dev.auramc.auraskills.common.hooks.EconomyHook;
+import dev.auramc.auraskills.common.message.MessageBuilder;
+import dev.auramc.auraskills.common.message.type.LevelerMessage;
+import dev.auramc.auraskills.common.rewards.Reward;
+import dev.auramc.auraskills.common.util.math.RomanNumber;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Interface with methods to add xp and level up players.
  */
-public interface Leveler {
+public abstract class Leveler {
 
-    void addXp(PlayerData playerData, Skill skill, double amount);
+    private final AuraSkillsPlugin plugin;
+    private final XpRequirements xpRequirements;
 
-    void checkLevelUp(PlayerData playerData, Skill skill);
+    public Leveler(AuraSkillsPlugin plugin) {
+        this.plugin = plugin;
+        this.xpRequirements = plugin.getXpRequirements();
+    }
 
-    void updateStats(PlayerData playerData);
+    /**
+     * Gets the total multiplier from a player's permissions. Divides by 100 but does not add 1.
+     *
+     * @param playerData The player to get the multiplier from
+     * @param skill The skill to get the multiplier from
+     * @return The total permission multiplier
+     */
+    public abstract double getPermissionMultiplier(@NotNull PlayerData playerData, Skill skill);
+
+    public abstract void playLevelUpSound(@NotNull PlayerData playerData);
+
+    public void addXp(PlayerData playerData, Skill skill, double amount) {
+        if (amount == 0) return; // Ignore if source amount is 0
+
+        double amountToAdd = amount * calculateMultiplier(playerData, skill);
+
+        // Call event
+        XpGainEvent event = new XpGainEvent(plugin.getApi(), playerData.toApi(), skill, amountToAdd);
+        plugin.getEventManager().callEvent(event);
+        if (event.isCancelled()) return;
+
+        // Add XP to player
+        amountToAdd = event.getAmount();
+        playerData.addSkillXp(skill, amountToAdd);
+
+        checkLevelUp(playerData, skill);
+
+        // Send action bar and boss bar
+        sendXpUi(playerData, skill, amountToAdd);
+    }
+
+    private void sendXpUi(PlayerData playerData, Skill skill, double xpGained) {
+        double currentXp = playerData.getSkillXp(skill);
+        int level = playerData.getSkillLevel(skill);
+        double levelXp = xpRequirements.getXpRequired(skill, level + 1);
+        boolean maxed = xpRequirements.getListSize(skill) <= playerData.getSkillLevel(skill) - 1 || level >= plugin.getConfigProvider().getMaxLevel(skill);
+
+        if (plugin.configBoolean(Option.ACTION_BAR_XP)) {
+            plugin.getUiProvider().sendXpActionBar(playerData, currentXp, levelXp, xpGained, level, maxed);
+        }
+        if (plugin.configBoolean(Option.BOSS_BAR_ENABLED)) {
+            plugin.getUiProvider().sendXpBossBar(playerData, skill, currentXp, levelXp, xpGained, level, maxed);
+        }
+    }
+
+    public void checkLevelUp(PlayerData playerData, Skill skill) {
+        int currentLevel = playerData.getSkillLevel(skill);
+        double currentXp = playerData.getSkillXp(skill);
+
+        if (currentLevel >= plugin.getConfigProvider().getMaxLevel(skill)) return; // Check max level options
+        if (xpRequirements.getListSize(skill) <= currentLevel - 1) return; // Check if skill is maxed
+
+        if (currentXp >= xpRequirements.getXpRequired(skill, currentLevel + 1)) {
+            levelUpSkill(playerData, skill);
+        }
+    }
+
+    private void levelUpSkill(PlayerData playerData, Skill skill) {
+        Locale locale = playerData.getLocale();
+
+        double currentXp = playerData.getSkillXp(skill);
+        int level = playerData.getSkillLevel(skill) + 1;
+
+        playerData.setSkillXp(skill, currentXp - xpRequirements.getXpRequired(skill, level));
+        playerData.setSkillLevel(skill, level);
+        // Give custom rewards
+        List<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
+        for (Reward reward : rewards) {
+            reward.giveReward(playerData, skill, level);
+        }
+        giveLegacyMoneyRewards(playerData, level);
+
+        // Reload items and armor to check for newly met requirements
+        plugin.getModifierManager().reloadPlayer(playerData);
+        // Calls event
+        SkillLevelUpEvent event = new SkillLevelUpEvent(plugin.getApi(), playerData.toApi(), skill, level);
+        plugin.getEventManager().callEvent(event);
+        // Sends messages
+        if (plugin.configBoolean(Option.LEVELER_TITLE_ENABLED)) {
+            sendTitle(playerData, locale, skill, level);
+        }
+        if (plugin.configBoolean(Option.LEVELER_SOUND_ENABLED)) {
+            playLevelUpSound(playerData);
+        }
+        sendLevelUpMessage(playerData, skill, level, locale, rewards);
+
+        // TODO Schedule checking level up again by a delay of LEVELER_DOUBLE_CHECK_DELAY
+    }
+
+    private void sendLevelUpMessage(PlayerData playerData, Skill skill, int level, Locale locale, List<Reward> rewards) {
+        // TODO Implement level up message
+    }
+
+    private void sendTitle(PlayerData playerData, Locale locale, Skill skill, int level) {
+        String title = MessageBuilder.create(plugin).locale(locale)
+                .message(LevelerMessage.TITLE,
+                        "skill", skill.getDisplayName(locale),
+                        "old", RomanNumber.toRoman(level - 1, plugin),
+                        "new", RomanNumber.toRoman(level, plugin))
+                .toString();
+        String subtitle = MessageBuilder.create(plugin).locale(locale)
+                .message(LevelerMessage.SUBTITLE,
+                        "skill", skill.getDisplayName(locale),
+                        "old", RomanNumber.toRoman(level - 1, plugin),
+                        "new", RomanNumber.toRoman(level, plugin))
+                .toString();
+        plugin.getUiProvider().sendTitle(playerData, title, subtitle, plugin.configInt(Option.LEVELER_TITLE_FADE_IN), plugin.configInt(Option.LEVELER_TITLE_STAY), plugin.configInt(Option.LEVELER_TITLE_FADE_OUT));
+    }
+
+    private void giveLegacyMoneyRewards(PlayerData playerData, int level) {
+        // Adds money rewards if enabled
+        if (plugin.getHookManager().isRegistered(EconomyHook.class)) {
+            if (plugin.configBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
+                double base = plugin.configDouble(Option.SKILL_MONEY_REWARDS_BASE);
+                double multiplier = plugin.configDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
+                double moneyToAdd = base + (multiplier * level * level);
+
+                plugin.getHookManager().getHook(EconomyHook.class).deposit(playerData, moneyToAdd);
+            }
+        }
+    }
+
+    public void updateStats(PlayerData playerData) {
+
+    }
+
+    private double calculateMultiplier(@NotNull PlayerData playerData, Skill skill) {
+        double multiplier = 1.0;
+        multiplier += getItemMultiplier(playerData, skill);
+        multiplier += getPermissionMultiplier(playerData, skill);
+        return multiplier;
+    }
+
+    private double getItemMultiplier(@NotNull PlayerData playerData, Skill skill) {
+        return playerData.getTotalMultiplier(skill) / 100;
+    }
 
 }
