@@ -20,6 +20,7 @@ import dev.auramc.auraskills.common.message.MessageProvider;
 import dev.auramc.auraskills.common.message.PlatformLogger;
 import dev.auramc.auraskills.common.modifier.ModifierManager;
 import dev.auramc.auraskills.common.rewards.RewardManager;
+import dev.auramc.auraskills.common.scheduler.Scheduler;
 import dev.auramc.auraskills.common.skill.SkillRegistry;
 import dev.auramc.auraskills.common.stat.StatManager;
 import dev.auramc.auraskills.common.stat.StatRegistry;
@@ -70,6 +71,8 @@ public interface AuraSkillsPlugin {
     RewardManager getRewardManager();
 
     ModifierManager getModifierManager();
+
+    Scheduler getScheduler();
 
     // Message convenience methods
 
