@@ -7,14 +7,13 @@ import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.config.Option;
 import dev.auramc.auraskills.common.data.PlayerData;
 import dev.auramc.auraskills.common.hooks.EconomyHook;
-import dev.auramc.auraskills.common.message.MessageBuilder;
-import dev.auramc.auraskills.common.message.type.LevelerMessage;
 import dev.auramc.auraskills.common.rewards.Reward;
-import dev.auramc.auraskills.common.util.math.RomanNumber;
+import dev.auramc.auraskills.common.scheduler.Tick;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Interface with methods to add xp and level up players.
@@ -106,36 +105,19 @@ public abstract class Leveler {
         // Calls event
         SkillLevelUpEvent event = new SkillLevelUpEvent(plugin.getApi(), playerData.toApi(), skill, level);
         plugin.getEventManager().callEvent(event);
+
         // Sends messages
+        LevelUpMessenger messenger = new LevelUpMessenger(plugin, playerData, locale, skill, level, rewards);
         if (plugin.configBoolean(Option.LEVELER_TITLE_ENABLED)) {
-            sendTitle(playerData, locale, skill, level);
+            messenger.sendTitle();
         }
         if (plugin.configBoolean(Option.LEVELER_SOUND_ENABLED)) {
             playLevelUpSound(playerData);
         }
-        sendLevelUpMessage(playerData, skill, level, locale, rewards);
+        messenger.sendChatMessage();
 
-        // TODO Schedule checking level up again by a delay of LEVELER_DOUBLE_CHECK_DELAY
-    }
-
-    private void sendLevelUpMessage(PlayerData playerData, Skill skill, int level, Locale locale, List<Reward> rewards) {
-        // TODO Implement level up message
-    }
-
-    private void sendTitle(PlayerData playerData, Locale locale, Skill skill, int level) {
-        String title = MessageBuilder.create(plugin).locale(locale)
-                .message(LevelerMessage.TITLE,
-                        "skill", skill.getDisplayName(locale),
-                        "old", RomanNumber.toRoman(level - 1, plugin),
-                        "new", RomanNumber.toRoman(level, plugin))
-                .toString();
-        String subtitle = MessageBuilder.create(plugin).locale(locale)
-                .message(LevelerMessage.SUBTITLE,
-                        "skill", skill.getDisplayName(locale),
-                        "old", RomanNumber.toRoman(level - 1, plugin),
-                        "new", RomanNumber.toRoman(level, plugin))
-                .toString();
-        plugin.getUiProvider().sendTitle(playerData, title, subtitle, plugin.configInt(Option.LEVELER_TITLE_FADE_IN), plugin.configInt(Option.LEVELER_TITLE_STAY), plugin.configInt(Option.LEVELER_TITLE_FADE_OUT));
+        // Check for multiple level ups in a row after a delay
+        plugin.getScheduler().scheduleSync(() -> checkLevelUp(playerData, skill), Tick.MS * plugin.configInt(Option.LEVELER_DOUBLE_CHECK_DELAY), TimeUnit.MILLISECONDS);
     }
 
     private void giveLegacyMoneyRewards(PlayerData playerData, int level) {
@@ -149,10 +131,6 @@ public abstract class Leveler {
                 plugin.getHookManager().getHook(EconomyHook.class).deposit(playerData, moneyToAdd);
             }
         }
-    }
-
-    public void updateStats(PlayerData playerData) {
-
     }
 
     private double calculateMultiplier(@NotNull PlayerData playerData, Skill skill) {

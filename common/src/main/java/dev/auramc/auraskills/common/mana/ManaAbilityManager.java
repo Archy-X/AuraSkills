@@ -4,6 +4,7 @@ import dev.auramc.auraskills.api.mana.ManaAbility;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.config.OptionValue;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +81,24 @@ public class ManaAbilityManager {
 
     public Map<String, OptionValue> getOptions(ManaAbility ability) {
         return getConfig(ability).options();
+    }
+
+    /**
+     * Gets the mana ability unlocked or leveled up at a certain level
+     *
+     * @param skill The skill
+     * @param level The skill level
+     * @return The mana ability unlocked or leveled up, or null
+     */
+    @Nullable
+    public ManaAbility getManaAbility(Skill skill, int level) {
+        ManaAbility mAbility = skill.getManaAbility();
+        if (mAbility != null) {
+            if (level >= getUnlock(mAbility) && (level - getUnlock(mAbility)) % getLevelUp(mAbility) == 0) {
+                return mAbility;
+            }
+        }
+        return null;
     }
 
 }

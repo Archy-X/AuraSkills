@@ -1,11 +1,14 @@
 package dev.auramc.auraskills.common.ability;
 
+import com.google.common.collect.ImmutableList;
 import dev.auramc.auraskills.api.ability.Ability;
 import dev.auramc.auraskills.api.skill.Skill;
-import dev.auramc.auraskills.common.config.OptionValue;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
+import dev.auramc.auraskills.common.config.OptionValue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,6 +75,26 @@ public class AbilityManager {
 
     public Map<String, OptionValue> getOptions(Ability ability) {
         return getConfig(ability).options();
+    }
+
+    /**
+     * Gets a list of abilities unlocked or leveled up at a certain level
+     *
+     * @param skill The skill
+     * @param level The skill level
+     * @return A list of abilities
+     */
+    public List<Ability> getAbilities(Skill skill, int level) {
+        ImmutableList<Ability> skillAbilities = skill.getAbilities();
+        List<Ability> abilities = new ArrayList<>();
+        if (skillAbilities.size() == 5) {
+            for (Ability ability : skillAbilities) {
+                if (level >= getUnlock(ability) && (level - getUnlock(ability)) % getLevelUp(ability) == 0) {
+                    abilities.add(ability);
+                }
+            }
+        }
+        return abilities;
     }
 
 }

@@ -2,14 +2,18 @@ package dev.auramc.auraskills.common.rewards;
 
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.stat.Stat;
-import dev.auramc.auraskills.common.util.data.DataUtil;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
+import dev.auramc.auraskills.common.data.PlayerData;
 import dev.auramc.auraskills.common.rewards.parser.RewardParser;
+import dev.auramc.auraskills.common.util.data.DataUtil;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class RewardManager {
 
@@ -36,10 +40,9 @@ public abstract class RewardManager {
                 Reward reward = parseReward(rewardMap);
                 // Load pattern info
                 Object patternObj = DataUtil.getElement(rewardMap, "pattern");
-                if (!(patternObj instanceof Map<?, ?>)) {
+                if (!(patternObj instanceof Map<?, ?> patternMap)) {
                     throw new IllegalArgumentException("Pattern must be a section");
                 }
-                Map<?, ?> patternMap = (Map<?, ?>) patternObj;
                 int start = DataUtil.getInt(patternMap, "start");
                 int interval = DataUtil.getInt(patternMap, "interval");
                 // Get stop interval and check it is not above max skill level
@@ -95,6 +98,18 @@ public abstract class RewardManager {
             }
         }
         return skillsLeveledBy;
+    }
+
+    /**
+     * Updates the permissions of a player based on the rewards applicable to their current skill levels.
+     *
+     * @param playerData The player to update permissions for
+     */
+    public void updatePermissions(PlayerData playerData) {
+        if (playerData == null) return;
+        for (Skill skill : plugin.getSkillRegistry().getValues()) {
+            plugin.getRewardManager().getRewardTable(skill).applyPermissions(playerData, playerData.getSkillLevel(skill));
+        }
     }
 
 }
