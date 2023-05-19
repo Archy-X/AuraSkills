@@ -31,29 +31,29 @@ public class ManaCommand extends BaseCommand {
             if (issuerPlayerData == null) return;
             Locale locale = issuerPlayerData.getLocale();
 
-            MessageBuilder.create(plugin).to(issuer).locale(locale)
+            MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_DISPLAY,
                             "current", NumberUtil.format1(issuerPlayerData.getMana()),
                             "max", NumberUtil.format1(issuerPlayerData.getMaxMana()))
-                    .send();
+                    .send(issuer);
         } else if (playerData != null) { // Get target player's mana
             Locale locale = playerData.getLocale();
 
-            MessageBuilder.create(plugin).to(issuer).locale(locale)
+            MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_DISPLAY_OTHER,
                             "player", playerData.getUsername(),
                             "current", NumberUtil.format1(playerData.getMana()),
                             "max", NumberUtil.format1(playerData.getMaxMana()))
-                    .send();
+                    .send(issuer);
         } else { // Player not specified
             Locale defLocale = plugin.getDefaultLanguage();
 
-            MessageBuilder.create(plugin).to(issuer).locale(defLocale)
+            MessageBuilder.create(plugin).locale(defLocale)
                     .prefix()
                     .message(CommandMessage.MANA_CONSOLE_SPECIFY_PLAYER)
-                    .send();
+                    .send(issuer);
         }
     }
 
@@ -80,12 +80,12 @@ public class ManaCommand extends BaseCommand {
             playerData.setMana(playerData.getMana() + manaToAdd);
         }
         if (!silent) { // Send message
-            MessageBuilder.create(plugin).to(issuer).locale(locale)
+            MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_ADD,
                             "amount", NumberUtil.format2(manaToAdd),
                             "player", playerData.getUsername())
-                    .send();
+                    .send(issuer);
         }
     }
 
@@ -97,10 +97,10 @@ public class ManaCommand extends BaseCommand {
         Locale locale = playerData.getLocale();
         if (amount < 0) { // Validate amount
             if (!silent) {
-                MessageBuilder.create(plugin).to(issuer).locale(locale)
+                MessageBuilder.create(plugin).locale(locale)
                         .prefix()
                         .message(CommandMessage.MANA_AT_LEAST_ZERO)
-                        .send();
+                        .send(issuer);
             }
             return;
         }
@@ -111,12 +111,12 @@ public class ManaCommand extends BaseCommand {
         playerData.setMana(playerData.getMana() - manaToRemove); // Remove mana
 
         if (!silent) { // Send message
-            MessageBuilder.create(plugin).to(issuer).locale(locale)
+            MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_REMOVE,
                             "amount", NumberUtil.format2(manaToRemove),
                             "player", playerData.getUsername())
-                    .send();
+                    .send(issuer);
         }
     }
 
@@ -129,10 +129,10 @@ public class ManaCommand extends BaseCommand {
         Locale locale = playerData.getLocale();
         if (amount < 0) { // Validate amount
             if (!silent) {
-                MessageBuilder.create(plugin).to(issuer).locale(locale)
+                MessageBuilder.create(plugin).locale(locale)
                         .prefix()
                         .message(CommandMessage.MANA_AT_LEAST_ZERO)
-                        .send();
+                        .send(issuer);
             }
         }
         double manaToSet = amount;
@@ -144,12 +144,12 @@ public class ManaCommand extends BaseCommand {
         playerData.setMana(manaToSet); // Set mana
         // Send message
         if (!silent) {
-            MessageBuilder.create(plugin).to(issuer).locale(locale)
+            MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_SET,
                             "amount", NumberUtil.format2(manaToSet),
                             "player", playerData.getUsername())
-                    .send();
+                    .send(issuer);
         }
     }
 

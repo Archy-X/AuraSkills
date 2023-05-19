@@ -9,6 +9,7 @@ import dev.auramc.auraskills.common.message.recipient.Recipient;
 import dev.auramc.auraskills.common.util.text.TextUtil;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -17,7 +18,6 @@ public class MessageBuilder {
     private final AuraSkillsPlugin plugin;
 
     private Locale locale;
-    private Recipient recipient;
     private TextComponent component;
 
     private MessageBuilder(AuraSkillsPlugin plugin) {
@@ -35,13 +35,33 @@ public class MessageBuilder {
     }
 
     /**
-     * Sends the message to the recipient
+     * Sends the message to a recipient
+     *
+     * @param recipient The recipient
      */
-    public void send() {
-        if (recipient == null || component == null) {
-            throw new IllegalStateException("Recipient or text is null");
-        }
+    public void send(@NotNull Recipient recipient) {
+        validateComponent();
         recipient.sendMessage(component);
+    }
+
+    /**
+     * Sends the message to a PlayerData recipient
+     *
+     * @param playerData The PlayerData recipient
+     */
+    public void send(PlayerData playerData) {
+        validateComponent();
+        new PlayerDataRecipient(playerData).sendMessage(component);
+    }
+
+    /**
+     * Sends the message to a CommandIssuer recipient
+     *
+     * @param issuer The CommandIssuer recipient
+     */
+    public void send(CommandIssuer issuer) {
+        validateComponent();
+        new CommandIssuerRecipient(plugin, issuer).sendMessage(component);
     }
 
     /**
@@ -52,39 +72,6 @@ public class MessageBuilder {
      */
     public MessageBuilder locale(Locale locale) {
         this.locale = locale;
-        return this;
-    }
-
-    /**
-     * Sets the recipient of the message
-     *
-     * @param recipient The recipient
-     * @return The MessageBuilder
-     */
-    public MessageBuilder to(Recipient recipient) {
-        this.recipient = recipient;
-        return this;
-    }
-
-    /**
-     * Sets the recipient of the message using a CommandIssuer
-     *
-     * @param issuer The CommandIssuer
-     * @return The MessageBuilder
-     */
-    public MessageBuilder to(CommandIssuer issuer) {
-        this.recipient = new CommandIssuerRecipient(plugin, issuer);
-        return this;
-    }
-
-    /**
-     * Sets the recipient of the message using a PlayerData
-     *
-     * @param playerData The PlayerData
-     * @return The MessageBuilder
-     */
-    public MessageBuilder to(PlayerData playerData) {
-        this.recipient = new PlayerDataRecipient(playerData);
         return this;
     }
 
@@ -157,6 +144,12 @@ public class MessageBuilder {
     @Override
     public String toString() {
         return LegacyComponentSerializer.legacySection().serialize(component);
+    }
+
+    private void validateComponent() {
+        if (component == null) {
+            throw new IllegalStateException("Cannot send message because text component is null");
+        }
     }
 
 }
