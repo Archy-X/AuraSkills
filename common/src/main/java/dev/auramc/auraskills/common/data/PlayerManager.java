@@ -18,4 +18,6 @@ public interface PlayerManager {
 
     Map<UUID, PlayerData> getPlayerDataMap();
 
+    PlayerData createNewPlayer(UUID uuid);
+
 }

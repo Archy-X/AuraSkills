@@ -12,6 +12,7 @@ public class Scheduler {
 
     private final AuraSkillsPlugin plugin;
 
+    private final ExecutorService syncExecutor = Executors.newSingleThreadExecutor((r) -> Thread.currentThread());
     private final ExecutorService asyncExecutor = Executors.newCachedThreadPool(
             new ThreadFactoryBuilder().setNameFormat("auraskills-async-task-%d").build());
     private final ScheduledExecutorService syncScheduler = Executors.newSingleThreadScheduledExecutor((r) -> Thread.currentThread());
@@ -20,6 +21,10 @@ public class Scheduler {
 
     public Scheduler(final AuraSkillsPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    public Task executeSync(final Runnable runnable) {
+        return new SubmittedTask(syncExecutor.submit(runnable));
     }
 
     public Task executeAsync(final Runnable runnable) {
@@ -36,16 +41,18 @@ public class Scheduler {
 
     // Should be run by the implementation when server is shutdown
     public void shutdown() {
+        syncScheduler.shutdown();
         asyncExecutor.shutdown();
         syncScheduler.shutdown();
         asyncScheduler.shutdown();
 
         try {
+            boolean syncExecutorDone = syncExecutor.awaitTermination(2, TimeUnit.SECONDS);
             boolean asyncExecutorDone = asyncExecutor.awaitTermination(2, TimeUnit.SECONDS);
             boolean syncSchedulerDone = syncScheduler.awaitTermination(2, TimeUnit.SECONDS);
             boolean asyncSchedulerDone = asyncScheduler.awaitTermination(2, TimeUnit.SECONDS);
 
-            if (!asyncExecutorDone || !syncSchedulerDone || !asyncSchedulerDone) {
+            if (!syncExecutorDone || !asyncExecutorDone || !syncSchedulerDone || !asyncSchedulerDone) {
                 plugin.logger().warn("Scheduler had incomplete tasks when shutting down");
             }
         } catch (final InterruptedException e) {

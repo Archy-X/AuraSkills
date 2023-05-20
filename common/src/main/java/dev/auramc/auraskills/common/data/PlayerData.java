@@ -391,7 +391,7 @@ public abstract class PlayerData {
 
         this.mana = state.mana();
 
-        plugin.getLeveler().updateStats(this);
+        plugin.getStatManager().updateStats(this);
     }
 
     public SkillsPlayer toApi() {

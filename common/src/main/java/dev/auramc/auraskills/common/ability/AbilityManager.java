@@ -2,7 +2,9 @@ package dev.auramc.auraskills.common.ability;
 
 import com.google.common.collect.ImmutableList;
 import dev.auramc.auraskills.api.ability.Ability;
+import dev.auramc.auraskills.api.ability.AbstractAbility;
 import dev.auramc.auraskills.api.skill.Skill;
+import dev.auramc.auraskills.api.util.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.config.OptionValue;
 
@@ -95,6 +97,15 @@ public class AbilityManager {
             }
         }
         return abilities;
+    }
+
+    public AbstractAbility getAbstractAbility(NamespacedId id) {
+        // Look for the ability in the ability registry, then the mana ability registry
+        try {
+            return plugin.getAbilityRegistry().get(id);
+        } catch (IllegalArgumentException e) {
+            return plugin.getManaAbilityRegistry().get(id);
+        }
     }
 
 }

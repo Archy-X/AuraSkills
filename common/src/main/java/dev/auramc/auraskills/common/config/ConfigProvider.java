@@ -25,4 +25,6 @@ public interface ConfigProvider {
 
     int getHighestMaxLevel();
 
+    int getStartLevel();
+
 }
