@@ -13,6 +13,8 @@ dependencies {
     implementation("net.kyori:adventure-api:4.13.0")
     implementation("co.aikar:acf-core:0.5.1-SNAPSHOT")
     implementation("net.kyori:adventure-text-serializer-legacy:4.13.1")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.zaxxer:HikariCP:5.0.1")
     compileOnly("net.luckperms:api:5.4")
 }
 
