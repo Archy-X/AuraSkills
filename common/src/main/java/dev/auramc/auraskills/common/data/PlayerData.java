@@ -78,7 +78,7 @@ public abstract class PlayerData {
     public abstract double getPermissionMultiplier(Skill skill);
 
     public int getSkillLevel(Skill skill) {
-        return skillLevels.getOrDefault(skill, 1);
+        return skillLevels.getOrDefault(skill, plugin.getConfigProvider().getStartLevel());
     }
 
     public Map<Skill, Integer> getSkillLevelMap() {

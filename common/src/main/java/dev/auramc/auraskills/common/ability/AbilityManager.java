@@ -7,6 +7,7 @@ import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.util.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.config.OptionValue;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,12 +100,17 @@ public class AbilityManager {
         return abilities;
     }
 
+    @Nullable
     public AbstractAbility getAbstractAbility(NamespacedId id) {
         // Look for the ability in the ability registry, then the mana ability registry
         try {
             return plugin.getAbilityRegistry().get(id);
         } catch (IllegalArgumentException e) {
-            return plugin.getManaAbilityRegistry().get(id);
+            try {
+                return plugin.getManaAbilityRegistry().get(id);
+            } catch (IllegalArgumentException f) {
+                return null; // Return null if the ability is not found in either registry
+            }
         }
     }
 

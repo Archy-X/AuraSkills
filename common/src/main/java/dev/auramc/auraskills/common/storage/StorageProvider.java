@@ -4,7 +4,7 @@ import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.data.PlayerData;
 import dev.auramc.auraskills.common.data.PlayerDataState;
 import dev.auramc.auraskills.common.data.PlayerManager;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public abstract class StorageProvider {
         this.plugin = plugin;
     }
 
-    public abstract void load(UUID uuid);
+    public abstract PlayerData load(UUID uuid) throws Exception;
 
     /**
      * Loads a snapshot of player data for an offline player
@@ -27,8 +27,8 @@ public abstract class StorageProvider {
      * @param uuid The uuid of the player
      * @return A PlayerDataState containing a snapshot of player data
      */
-    @Nullable
-    public abstract PlayerDataState loadState(UUID uuid);
+    @NotNull
+    public abstract PlayerDataState loadState(UUID uuid) throws Exception;
 
     /**
      * Applies the given PlayerData state to storage. Will override
