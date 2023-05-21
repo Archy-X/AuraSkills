@@ -24,6 +24,7 @@ import dev.auramc.auraskills.common.scheduler.Scheduler;
 import dev.auramc.auraskills.common.skill.SkillRegistry;
 import dev.auramc.auraskills.common.stat.StatManager;
 import dev.auramc.auraskills.common.stat.StatRegistry;
+import dev.auramc.auraskills.common.storage.StorageProvider;
 import dev.auramc.auraskills.common.ui.UiProvider;
 
 import java.util.Locale;
@@ -73,6 +74,8 @@ public interface AuraSkillsPlugin {
     ModifierManager getModifierManager();
 
     Scheduler getScheduler();
+
+    StorageProvider getStorageProvider();
 
     // Message convenience methods
 

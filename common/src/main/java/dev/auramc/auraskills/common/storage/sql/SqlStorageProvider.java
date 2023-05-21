@@ -17,11 +17,13 @@ import dev.auramc.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.auramc.auraskills.common.util.data.KeyIntPair;
 import dev.auramc.auraskills.common.util.math.NumberUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.*;
 
 public class SqlStorageProvider extends StorageProvider {
@@ -226,8 +228,75 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public boolean applyState(PlayerDataState state) {
-        return false;
+    public void applyState(PlayerDataState state) throws Exception {
+        // Insert into users database
+        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, stat_modifiers, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE stat_modifiers=?, mana=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
+            statement.setString(1, state.uuid().toString());
+            String statModifiersJson = getStatModifiersJson(state.statModifiers());
+            if (statModifiersJson != null) {
+                statement.setString(2, statModifiersJson);
+                statement.setString(4, statModifiersJson);
+            } else {
+                statement.setNull(2, Types.VARCHAR);
+                statement.setNull(4, Types.VARCHAR);
+            }
+            statement.setDouble(3, state.mana());
+            statement.setDouble(5, state.mana());
+            statement.executeUpdate();
+        }
+        // Insert into skill_levels database
+        int userId = getUserId(state.uuid());
+        String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(skillLevelsQuery)) {
+            statement.setInt(1, userId);
+            for (Map.Entry<Skill, Integer> entry : state.skillLevels().entrySet()) {
+                String skillName = entry.getKey().getId().toString();
+                int level = entry.getValue();
+                double xp = state.skillXp().get(entry.getKey());
+                statement.setString(2, skillName);
+                statement.setInt(3, level);
+                statement.setDouble(4, xp);
+                statement.setInt(5, level);
+                statement.setDouble(6, xp);
+                statement.executeUpdate();
+            }
+        }
+    }
+
+    @Nullable
+    private String getStatModifiersJson(Map<String, StatModifier> statModifiers) {
+        StringBuilder modifiersJson = new StringBuilder();
+        if (statModifiers.size() > 0) {
+            modifiersJson.append("[");
+            for (StatModifier statModifier : statModifiers.values()) {
+                modifiersJson.append("{\"name\":\"").append(statModifier.name())
+                        .append("\",\"stat\":\"").append(statModifier.stat().getId().toString())
+                        .append("\",\"value\":").append(statModifier.value()).append("},");
+            }
+            modifiersJson.deleteCharAt(modifiersJson.length() - 1);
+            modifiersJson.append("]");
+        }
+        if (!modifiersJson.toString().equals("")) {
+            return modifiersJson.toString();
+        } else {
+            return null;
+        }
+    }
+
+    private int getUserId(UUID uuid) throws Exception {
+        // Get user_id from users database
+        String query = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setString(1, uuid.toString());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("user_id");
+                } else {
+                    throw new RuntimeException("Failed to get user_id for player " + uuid);
+                }
+            }
+        }
     }
 
     @Override
