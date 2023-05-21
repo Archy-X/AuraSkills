@@ -23,12 +23,12 @@ public class FileStorageProvider extends StorageProvider {
     @Override
     @NotNull
     public PlayerDataState loadState(UUID uuid) {
-        return null;
+        return PlayerDataState.createEmpty(uuid, plugin);
     }
 
     @Override
-    public boolean applyState(PlayerDataState state) {
-        return false;
+    public void applyState(PlayerDataState state) throws Exception {
+
     }
 
     @Override

@@ -35,9 +35,8 @@ public abstract class StorageProvider {
      * previously saved data.
      *
      * @param state The state to apply, where the uuid is the same uuid the data is applied to.
-     * @return True if the operation was successful, false if otherwise.
      */
-    public abstract boolean applyState(PlayerDataState state);
+    public abstract void applyState(PlayerDataState state) throws Exception;
 
     public void save(PlayerData player) {
         save(player, true);
