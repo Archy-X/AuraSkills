@@ -4,7 +4,7 @@ import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.data.PlayerData;
 import dev.auramc.auraskills.common.data.PlayerDataState;
 import dev.auramc.auraskills.common.storage.StorageProvider;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -16,12 +16,13 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void load(UUID uuid) {
-
+    public PlayerData load(UUID uuid) throws Exception {
+        return null;
     }
 
     @Override
-    public @Nullable PlayerDataState loadState(UUID uuid) {
+    @NotNull
+    public PlayerDataState loadState(UUID uuid) {
         return null;
     }
 
