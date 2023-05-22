@@ -6,7 +6,6 @@ import dev.auramc.auraskills.common.data.PlayerDataState;
 import dev.auramc.auraskills.common.data.PlayerManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.UUID;
 
 public abstract class StorageProvider {
@@ -38,14 +37,8 @@ public abstract class StorageProvider {
      */
     public abstract void applyState(PlayerDataState state) throws Exception;
 
-    public void save(PlayerData player) {
-        save(player, true);
-    }
+    public abstract void save(@NotNull PlayerData playerData) throws Exception;
 
-    public abstract void save(PlayerData player, boolean removeFromMemory);
-
-    public abstract void updateLeaderboards();
-
-    public abstract void delete(UUID uuid) throws IOException;
+    public abstract void delete(UUID uuid) throws Exception;
 
 }

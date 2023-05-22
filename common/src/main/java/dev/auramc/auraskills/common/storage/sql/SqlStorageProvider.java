@@ -19,11 +19,9 @@ import dev.auramc.auraskills.common.util.math.NumberUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.*;
 
 public class SqlStorageProvider extends StorageProvider {
@@ -33,14 +31,6 @@ public class SqlStorageProvider extends StorageProvider {
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
-        DatabaseCredentials credentials = new DatabaseCredentials(
-                plugin.configString(Option.MYSQL_HOST),
-                plugin.configInt(Option.MYSQL_PORT),
-                plugin.configString(Option.MYSQL_DATABASE),
-                plugin.configString(Option.MYSQL_USERNAME),
-                plugin.configString(Option.MYSQL_PASSWORD),
-                plugin.configBoolean(Option.MYSQL_SSL)
-        );
         this.pool = pool;
     }
 
@@ -234,13 +224,8 @@ public class SqlStorageProvider extends StorageProvider {
         try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
             statement.setString(1, state.uuid().toString());
             String statModifiersJson = getStatModifiersJson(state.statModifiers());
-            if (statModifiersJson != null) {
-                statement.setString(2, statModifiersJson);
-                statement.setString(4, statModifiersJson);
-            } else {
-                statement.setNull(2, Types.VARCHAR);
-                statement.setNull(4, Types.VARCHAR);
-            }
+            statement.setString(2, statModifiersJson);
+            statement.setString(4, statModifiersJson);
             statement.setDouble(3, state.mana());
             statement.setDouble(5, state.mana());
             statement.executeUpdate();
@@ -284,7 +269,7 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
-    private int getUserId(UUID uuid) throws Exception {
+    private int getUserId(UUID uuid) throws SQLException {
         // Get user_id from users database
         String query = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
@@ -300,18 +285,123 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(PlayerData player, boolean removeFromMemory) {
+    public void save(@NotNull PlayerData playerData) throws Exception {
+        if (playerData.shouldNotSave()) return;
 
+        // Don't save blank profiles if the option is disabled
+        if (!plugin.configBoolean(Option.SAVE_BLANK_PROFILES) && playerData.isBlankProfile()) {
+            return;
+        }
+
+        saveUsersTable(playerData);
+        saveSkillLevelsTable(playerData);
+    }
+
+    private void saveUsersTable(PlayerData playerData) throws SQLException {
+        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, mana, stat_modifiers, ability_data, unclaimed_items) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE mana=?, stat_modifiers=?, ability_data=?, unclaimed_items=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
+            statement.setString(1, playerData.getUuid().toString());
+            int curr = 2; // Current index to set
+            String statModifiers = getStatModifiersJson(playerData.getStatModifiers());
+            String abilityData = getAbilityDataJson(playerData.getAbilityDataMap());
+            String unclaimedItems = getUnclaimedItemsJson(playerData.getUnclaimedItems());
+            for (int i = 0; i < 2; i++) { // Repeat twice to set duplicate values
+                statement.setDouble(curr++, playerData.getMana());
+                statement.setString(curr++, statModifiers);
+                statement.setString(curr++, abilityData);
+                statement.setString(curr++, unclaimedItems);
+            }
+            statement.executeUpdate();
+        }
+    }
+
+    private void saveSkillLevelsTable(PlayerData playerData) throws SQLException {
+        int userId = getUserId(playerData.getUuid());
+        String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(skillLevelsQuery)) {
+            statement.setInt(1, userId);
+            for (Map.Entry<Skill, Integer> entry : playerData.getSkillLevelMap().entrySet()) {
+                String skillName = entry.getKey().getId().toString();
+                int level = entry.getValue();
+                double xp = playerData.getSkillXpMap().get(entry.getKey());
+                statement.setString(2, skillName);
+                statement.setInt(3, level);
+                statement.setDouble(4, xp);
+                statement.setInt(5, level);
+                statement.setDouble(6, xp);
+                statement.executeUpdate();
+            }
+        }
+    }
+
+    @Nullable
+    private String getAbilityDataJson(Map<AbstractAbility, AbilityData> map) {
+        if (map.size() == 0) {
+            return null;
+        }
+        StringBuilder abilityJson = new StringBuilder();
+        abilityJson.append("{");
+        for (AbilityData abilityData : map.values()) {
+            String abilityName = abilityData.getAbility().getId().toString().toLowerCase(Locale.ROOT);
+            // Continue if size of map is 0
+            if (abilityData.getDataMap().size() == 0) {
+                continue;
+            }
+
+            abilityJson.append("\"").append(abilityName).append("\"").append(":{");
+            for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
+                String value = String.valueOf(dataEntry.getValue());
+                if (dataEntry.getValue() instanceof String) {
+                    value = "\"" + dataEntry.getValue() + "\"";
+                }
+                abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
+            }
+            abilityJson.deleteCharAt(abilityJson.length() - 1);
+            abilityJson.append("},");
+        }
+        if (abilityJson.length() > 1) {
+            abilityJson.deleteCharAt(abilityJson.length() - 1);
+        }
+        abilityJson.append("}");
+        // If the abilityJson is just "{}", return null
+        if (!abilityJson.toString().equals("{}")) {
+            return abilityJson.toString();
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    private String getUnclaimedItemsJson(List<KeyIntPair> unclaimedItems) {
+        StringBuilder builder = new StringBuilder();
+        for (KeyIntPair unclaimedItem : unclaimedItems) {
+            builder.append(unclaimedItem.getKey()).append(" ").append(unclaimedItem.getValue()).append(",");
+        }
+        if (builder.length() > 0) {
+            builder.deleteCharAt(builder.length() - 1);
+        }
+        if (!builder.toString().equals("")) {
+            return builder.toString();
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public void updateLeaderboards() {
+    public void delete(UUID uuid) throws Exception {
+        int userId = getUserId(uuid);
 
-    }
+        String usersQuery = "DELETE FROM " + tablePrefix + "users WHERE user_id=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        }
 
-    @Override
-    public void delete(UUID uuid) throws IOException {
-
+        String skillLevelsQuery = "DELETE FROM " + tablePrefix + "skill_levels WHERE user_id=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(skillLevelsQuery)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        }
     }
 
 }

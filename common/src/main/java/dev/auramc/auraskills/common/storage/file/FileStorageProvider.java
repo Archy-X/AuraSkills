@@ -6,7 +6,6 @@ import dev.auramc.auraskills.common.data.PlayerDataState;
 import dev.auramc.auraskills.common.storage.StorageProvider;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.UUID;
 
 public class FileStorageProvider extends StorageProvider {
@@ -32,17 +31,12 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(PlayerData player, boolean removeFromMemory) {
+    public void save(@NotNull PlayerData playerData) throws Exception {
 
     }
 
     @Override
-    public void updateLeaderboards() {
-
-    }
-
-    @Override
-    public void delete(UUID uuid) throws IOException {
+    public void delete(UUID uuid) throws Exception {
 
     }
 }

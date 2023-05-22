@@ -35,7 +35,7 @@ public interface AuraSkillsPlugin {
 
     MessageProvider getMessageProvider();
 
-    ConfigProvider getConfigProvider();
+    ConfigProvider config();
 
     AbilityManager getAbilityManager();
 
@@ -108,23 +108,23 @@ public interface AuraSkillsPlugin {
     // Config convenience methods
 
     default boolean configBoolean(Option option) {
-        return getConfigProvider().getBoolean(option);
+        return config().getBoolean(option);
     }
 
     default int configInt(Option option) {
-        return getConfigProvider().getInt(option);
+        return config().getInt(option);
     }
 
     default double configDouble(Option option) {
-        return getConfigProvider().getDouble(option);
+        return config().getDouble(option);
     }
 
     default String configString(Option option) {
-        return getConfigProvider().getString(option);
+        return config().getString(option);
     }
 
     default String[] configStringList(Option option) {
-        return getConfigProvider().getStringList(option);
+        return config().getStringList(option);
     }
 
     // Platform-dependent Minecraft methods

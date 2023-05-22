@@ -9,11 +9,16 @@ import java.sql.SQLException;
 
 public abstract class ConnectionPool {
 
+    private final DatabaseCredentials credentials;
     private HikariDataSource dataSource;
+
+    public ConnectionPool(DatabaseCredentials credentials) {
+        this.credentials = credentials;
+    }
 
     public abstract void configure(HikariConfig config, DatabaseCredentials credentials);
 
-    public void enable(DatabaseCredentials credentials) {
+    public void enable() {
         HikariConfig config = new HikariConfig();
 
         config.setPoolName("auraskills-hikari");

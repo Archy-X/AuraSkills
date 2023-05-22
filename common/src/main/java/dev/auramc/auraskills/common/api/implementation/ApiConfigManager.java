@@ -14,7 +14,7 @@ public class ApiConfigManager implements ConfigManager {
 
     @Override
     public int getMaxLevel(Skill skill) {
-        return plugin.getConfigProvider().getMaxLevel(skill);
+        return plugin.config().getMaxLevel(skill);
     }
 
 }
