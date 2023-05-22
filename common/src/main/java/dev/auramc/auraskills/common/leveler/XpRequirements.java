@@ -61,7 +61,7 @@ public class XpRequirements {
 
     private void addDefaultXpRequirements() {
         defaultXpRequirements.clear();
-        int highestMaxLevel = plugin.getConfigProvider().getHighestMaxLevel();
+        int highestMaxLevel = plugin.config().getHighestMaxLevel();
         for (int i = 0; i < highestMaxLevel - 1; i++) {
             defaultXpRequirements.add(100 * i * i + 100);
         }

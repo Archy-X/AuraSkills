@@ -16,7 +16,7 @@ public record PlayerDataState(UUID uuid, Map<Skill, Integer> skillLevels, Map<Sk
         Map<Skill, Integer> levels = new HashMap<>();
         Map<Skill, Double> xp = new HashMap<>();
         for (Skill skill : plugin.getSkillRegistry().getValues()) {
-            levels.put(skill, plugin.getConfigProvider().getStartLevel());
+            levels.put(skill, plugin.config().getStartLevel());
             xp.put(skill, 0.0);
         }
         return new PlayerDataState(uuid, levels, xp, new HashMap<>(), 0.0);

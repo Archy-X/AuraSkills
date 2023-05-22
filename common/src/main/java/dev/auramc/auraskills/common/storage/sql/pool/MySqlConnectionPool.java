@@ -5,6 +5,10 @@ import dev.auramc.auraskills.common.storage.sql.DatabaseCredentials;
 
 public class MySqlConnectionPool extends ConnectionPool {
 
+    public MySqlConnectionPool(DatabaseCredentials credentials) {
+        super(credentials);
+    }
+
     @Override
     public void configure(HikariConfig config, DatabaseCredentials credentials) {
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");

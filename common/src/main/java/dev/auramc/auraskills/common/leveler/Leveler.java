@@ -63,7 +63,7 @@ public abstract class Leveler {
         double currentXp = playerData.getSkillXp(skill);
         int level = playerData.getSkillLevel(skill);
         double levelXp = xpRequirements.getXpRequired(skill, level + 1);
-        boolean maxed = xpRequirements.getListSize(skill) <= playerData.getSkillLevel(skill) - 1 || level >= plugin.getConfigProvider().getMaxLevel(skill);
+        boolean maxed = xpRequirements.getListSize(skill) <= playerData.getSkillLevel(skill) - 1 || level >= plugin.config().getMaxLevel(skill);
 
         if (plugin.configBoolean(Option.ACTION_BAR_XP)) {
             plugin.getUiProvider().sendXpActionBar(playerData, currentXp, levelXp, xpGained, level, maxed);
@@ -77,7 +77,7 @@ public abstract class Leveler {
         int currentLevel = playerData.getSkillLevel(skill);
         double currentXp = playerData.getSkillXp(skill);
 
-        if (currentLevel >= plugin.getConfigProvider().getMaxLevel(skill)) return; // Check max level options
+        if (currentLevel >= plugin.config().getMaxLevel(skill)) return; // Check max level options
         if (xpRequirements.getListSize(skill) <= currentLevel - 1) return; // Check if skill is maxed
 
         if (currentXp >= xpRequirements.getXpRequired(skill, currentLevel + 1)) {

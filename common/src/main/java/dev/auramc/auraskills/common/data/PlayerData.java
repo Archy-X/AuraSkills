@@ -42,6 +42,7 @@ public abstract class PlayerData {
 
     private boolean saving;
     private boolean shouldSave;
+    private boolean blank = true;
 
     // Not persistent data
     private final Map<String, Multiplier> multipliers;
@@ -58,7 +59,7 @@ public abstract class PlayerData {
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
-        this.mana = plugin.getConfigProvider().getDouble(Option.BASE_MANA);
+        this.mana = plugin.config().getDouble(Option.BASE_MANA);
         this.multipliers = new HashMap<>();
     }
 
@@ -78,7 +79,7 @@ public abstract class PlayerData {
     public abstract double getPermissionMultiplier(Skill skill);
 
     public int getSkillLevel(Skill skill) {
-        return skillLevels.getOrDefault(skill, plugin.getConfigProvider().getStartLevel());
+        return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
     }
 
     public Map<Skill, Integer> getSkillLevelMap() {
@@ -90,7 +91,7 @@ public abstract class PlayerData {
         int numEnabled = 0;
         // Only add enabled skills
         for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
-            if (plugin.getConfigProvider().isEnabled(entry.getKey())) {
+            if (plugin.config().isEnabled(entry.getKey())) {
                 sum += entry.getValue();
                 numEnabled ++;
             }
@@ -100,6 +101,9 @@ public abstract class PlayerData {
 
     public void setSkillLevel(Skill skill, int level) {
         skillLevels.put(skill, level);
+        if (level > plugin.config().getStartLevel()) { // Mark as modified
+            blank = false;
+        }
     }
 
     public double getSkillXp(Skill skill) {
@@ -112,12 +116,18 @@ public abstract class PlayerData {
 
     public void setSkillXp(Skill skill, double xp) {
         skillXp.put(skill, xp);
+        if (xp > 0.0) { // Mark as modified
+            blank = false;
+        }
     }
 
     public void addSkillXp(Skill skill, double amount) {
-        if (!plugin.getConfigProvider().isEnabled(skill)) return; // Ignore disabled skills
+        if (!plugin.config().isEnabled(skill)) return; // Ignore disabled skills
 
         skillXp.merge(skill, amount, Double::sum);
+        if (amount > 0.0) { // Mark as modified
+            blank = false;
+        }
     }
 
     public double getStatLevel(Stat stat) {
@@ -126,18 +136,15 @@ public abstract class PlayerData {
 
     public void setStatLevel(Stat stat, double level) {
         statLevels.put(stat, level);
+        if (level > 0.0) { // Mark as modified
+            blank = false;
+        }
     }
 
     public void addStatLevel(Stat stat, double level) {
         statLevels.merge(stat, level, Double::sum);
-    }
-
-    public void addStatLevel(Stat stat, int level) {
-        Double currentLevel = statLevels.get(stat);
-        if (currentLevel != null) {
-            statLevels.put(stat, currentLevel + level);
-        } else {
-            statLevels.put(stat, (double) level);
+        if (level > 0.0) { // Mark as modified
+            blank = false;
         }
     }
 
@@ -178,6 +185,7 @@ public abstract class PlayerData {
         if (reload) {
             plugin.getStatManager().reloadStat(this, modifier.stat());
         }
+        blank = false; // Mark as modified
     }
 
     public boolean removeStatModifier(String name) {
@@ -201,14 +209,14 @@ public abstract class PlayerData {
     }
 
     public double getMaxMana() {
-        double baseMana = plugin.getConfigProvider().getDouble(Option.BASE_MANA);
-        double maxManaPerWisdom = plugin.getConfigProvider().getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM);
+        double baseMana = plugin.config().getDouble(Option.BASE_MANA);
+        double maxManaPerWisdom = plugin.config().getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM);
         return baseMana + (maxManaPerWisdom * getStatLevel(Stats.WISDOM));
     }
 
     public double getManaRegen() {
-        double baseManaRegen = plugin.getConfigProvider().getDouble(Option.REGENERATION_BASE_REGEN);
-        double manaModifier = plugin.getConfigProvider().getDouble(Option.REGENERATION_MANA_MODIFIER);
+        double baseManaRegen = plugin.config().getDouble(Option.REGENERATION_BASE_REGEN);
+        double manaModifier = plugin.config().getDouble(Option.REGENERATION_MANA_MODIFIER);
         return baseManaRegen + getStatLevel(Stats.REGENERATION) * manaModifier;
     }
 
@@ -273,7 +281,7 @@ public abstract class PlayerData {
     public int getPowerLevel() {
         int power = 0;
         for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
-            if (plugin.getConfigProvider().isEnabled(entry.getKey())) {
+            if (plugin.config().isEnabled(entry.getKey())) {
                 power += entry.getValue();
             }
         }
@@ -351,6 +359,9 @@ public abstract class PlayerData {
      * @return True if profile has not been modified, false if player has leveled profile
      */
     public boolean isBlankProfile() {
+        if (blank) {
+            return true;
+        }
         for (int level : skillLevels.values()) {
             if (level > 1) {
                 return false;
