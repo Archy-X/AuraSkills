@@ -15,6 +15,7 @@ dependencies {
     implementation("net.kyori:adventure-text-serializer-legacy:4.13.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("org.spongepowered:configurate-yaml:4.1.2")
     compileOnly("net.luckperms:api:5.4")
 }
 
