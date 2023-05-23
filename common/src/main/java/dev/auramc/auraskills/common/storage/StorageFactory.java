@@ -7,7 +7,7 @@ import dev.auramc.auraskills.common.storage.sql.DatabaseCredentials;
 import dev.auramc.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.auramc.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 
-public class StorageFactory {
+public abstract class StorageFactory {
 
     private final AuraSkillsPlugin plugin;
 
@@ -21,11 +21,13 @@ public class StorageFactory {
                 return new SqlStorageProvider(plugin,
                     new MySqlConnectionPool(getCredentials()));
             case YAML:
-                new FileStorageProvider(plugin);
+                new FileStorageProvider(plugin, getDataDirectory());
             default:
                 throw new IllegalArgumentException("Unknown storage type: " + type);
         }
     }
+
+    public abstract String getDataDirectory();
 
     private DatabaseCredentials getCredentials() {
         return new DatabaseCredentials(
