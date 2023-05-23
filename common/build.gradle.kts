@@ -17,6 +17,8 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.spongepowered:configurate-yaml:4.1.2")
     compileOnly("net.luckperms:api:5.4")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform("org.junit:junit-bom:5.9.3"))
 }
 
 tasks.withType<JavaCompile>() {
@@ -28,6 +30,9 @@ tasks {
         options {
             (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
         }
+    }
+    test {
+        useJUnitPlatform()
     }
 }
 
