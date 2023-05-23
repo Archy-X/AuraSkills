@@ -27,6 +27,7 @@ import dev.auramc.auraskills.common.stat.StatRegistry;
 import dev.auramc.auraskills.common.storage.StorageProvider;
 import dev.auramc.auraskills.common.ui.UiProvider;
 
+import java.util.List;
 import java.util.Locale;
 
 public interface AuraSkillsPlugin {
@@ -123,7 +124,7 @@ public interface AuraSkillsPlugin {
         return config().getString(option);
     }
 
-    default String[] configStringList(Option option) {
+    default List<String> configStringList(Option option) {
         return config().getStringList(option);
     }
 
