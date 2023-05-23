@@ -1,6 +1,6 @@
 package dev.auramc.auraskills.common.rewards.builder;
 
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.rewards.Reward;
 import dev.auramc.auraskills.common.rewards.type.ItemReward;

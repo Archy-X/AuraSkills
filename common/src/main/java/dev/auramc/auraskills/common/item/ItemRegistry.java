@@ -1,6 +1,6 @@
 package dev.auramc.auraskills.common.item;
 
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import org.jetbrains.annotations.Nullable;
 
 /**

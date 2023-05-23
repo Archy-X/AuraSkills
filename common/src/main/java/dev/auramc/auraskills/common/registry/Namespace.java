@@ -1,6 +1,6 @@
 package dev.auramc.auraskills.common.registry;
 
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 
 public class Namespace {
 

@@ -1,4 +1,4 @@
-package dev.auramc.auraskills.api.util;
+package dev.auramc.auraskills.api.registry;
 
 import java.util.Locale;
 import java.util.Objects;

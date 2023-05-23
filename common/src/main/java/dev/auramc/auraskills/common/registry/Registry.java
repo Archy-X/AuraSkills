@@ -1,7 +1,7 @@
 package dev.auramc.auraskills.common.registry;
 
 import dev.auramc.auraskills.api.annotation.Inject;
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;

@@ -2,7 +2,7 @@ package dev.auramc.auraskills.api.mana;
 
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.annotation.Inject;
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 
 import java.util.Locale;
 

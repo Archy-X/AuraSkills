@@ -1,6 +1,6 @@
 package dev.auramc.auraskills.api.source;
 
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 
 import java.util.Locale;
 
