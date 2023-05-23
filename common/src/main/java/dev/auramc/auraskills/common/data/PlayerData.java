@@ -228,6 +228,10 @@ public abstract class PlayerData {
         return locale != null ? locale : plugin.getMessageProvider().getDefaultLanguage();
     }
 
+    public boolean hasLocale() {
+        return locale != null;
+    }
+
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
