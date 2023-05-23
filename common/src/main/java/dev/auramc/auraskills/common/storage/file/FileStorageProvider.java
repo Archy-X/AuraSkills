@@ -4,7 +4,7 @@ import dev.auramc.auraskills.api.ability.AbstractAbility;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.stat.Stat;
 import dev.auramc.auraskills.api.stat.StatModifier;
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.data.PlayerData;
 import dev.auramc.auraskills.common.data.PlayerDataState;

@@ -1,6 +1,6 @@
 package dev.auramc.auraskills;
 
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import org.junit.jupiter.api.Test;
 
 public class NamespacedIdTest {

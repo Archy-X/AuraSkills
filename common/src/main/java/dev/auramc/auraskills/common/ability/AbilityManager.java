@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import dev.auramc.auraskills.api.ability.Ability;
 import dev.auramc.auraskills.api.ability.AbstractAbility;
 import dev.auramc.auraskills.api.skill.Skill;
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.config.OptionValue;
 import org.jetbrains.annotations.Nullable;

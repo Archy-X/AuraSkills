@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import dev.auramc.auraskills.api.ability.Ability;
 import dev.auramc.auraskills.api.annotation.Inject;
 import dev.auramc.auraskills.api.mana.ManaAbility;
-import dev.auramc.auraskills.api.util.NamespacedId;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
