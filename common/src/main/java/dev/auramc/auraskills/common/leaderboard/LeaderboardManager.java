@@ -1,23 +1,53 @@
 package dev.auramc.auraskills.common.leaderboard;
 
 import dev.auramc.auraskills.api.skill.Skill;
+import dev.auramc.auraskills.api.skill.Skills;
+import dev.auramc.auraskills.common.AuraSkillsPlugin;
+import dev.auramc.auraskills.common.data.PlayerData;
+import dev.auramc.auraskills.common.data.PlayerDataState;
 
 import java.util.*;
 
-/**
- * Class to manage leaderboards.
- */
 public class LeaderboardManager {
 
+    private final AuraSkillsPlugin plugin;
     private final Map<Skill, List<SkillValue>> skillLeaderboards;
     private List<SkillValue> powerLeaderboard;
     private List<SkillValue> averageLeaderboard;
     private volatile boolean sorting = false;
 
-    public LeaderboardManager() {
+    public LeaderboardManager(AuraSkillsPlugin plugin) {
+        this.plugin = plugin;
         this.skillLeaderboards = new HashMap<>();
         this.powerLeaderboard = new ArrayList<>();
         this.averageLeaderboard = new ArrayList<>();
+    }
+
+    public void updateLeaderboards() {
+        plugin.getScheduler().executeAsync(() -> {
+            try {
+                setSorting(true);
+                // Initialize lists
+                Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
+                for (Skill skill : plugin.getSkillRegistry().getValues()) {
+                    skillLeaderboards.put(skill, new ArrayList<>());
+                }
+                List<SkillValue> powerLeaderboard = new ArrayList<>();
+                List<SkillValue> averageLeaderboard = new ArrayList<>();
+                // Add players already in memory
+                addLoadedPlayersToLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+                // Add offline players
+                addOfflinePlayers(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+                // Sort leaderboards and set as current
+                sortLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+
+                setSorting(false);
+            } catch (Exception e) {
+                plugin.logger().warn("Error updating leaderboards: " + e.getMessage());
+                e.printStackTrace();
+                setSorting(false);
+            }
+        });
     }
 
     public List<SkillValue> getLeaderboard(Skill skill) {
@@ -97,6 +127,79 @@ public class LeaderboardManager {
 
     public void setSorting(boolean sorting) {
         this.sorting = sorting;
+    }
+
+    private void addLoadedPlayersToLeaderboards(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) {
+        for (PlayerData playerData : plugin.getPlayerManager().getPlayerDataMap().values()) {
+            UUID id = playerData.getUuid();
+            int powerLevel = 0;
+            double powerXp = 0;
+            int numEnabled = 0;
+            for (Skill skill : Skills.values()) {
+                int level = playerData.getSkillLevel(skill);
+                double xp = playerData.getSkillXp(skill);
+                // Add to lists
+                SkillValue skillLevel = new SkillValue(id, level, xp);
+                skillLb.get(skill).add(skillLevel);
+
+                if (plugin.config().isEnabled(skill)) {
+                    powerLevel += level;
+                    powerXp += xp;
+                    numEnabled++;
+                }
+            }
+            // Add power and average
+            SkillValue powerValue = new SkillValue(id, powerLevel, powerXp);
+            powerLb.add(powerValue);
+            double averageLevel = (double) powerLevel / numEnabled;
+            SkillValue averageValue = new SkillValue(id, 0, averageLevel);
+            averageLb.add(averageValue);
+        }
+    }
+
+    private void addOfflinePlayers(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) throws Exception {
+        List<PlayerDataState> offlineStates = plugin.getStorageProvider().loadOfflineStates();
+        for (PlayerDataState state : offlineStates) {
+            int powerLevel = 0;
+            double powerXp = 0.0;
+            int numEnabled = 0;
+            for (Skill skill : state.skillLevels().keySet()) {
+                int level = state.skillLevels().get(skill);
+                double xp = state.skillXp().get(skill);
+
+                // Add to skill leaderboard
+                SkillValue skillValue = new SkillValue(state.uuid(), level, xp);
+                skillLb.get(skill).add(skillValue);
+
+                if (plugin.config().isEnabled(skill)) {
+                    powerLevel += level;
+                    powerXp += xp;
+                    numEnabled++;
+                }
+            }
+            // Add to power and average leaderboards
+            powerLb.add(new SkillValue(state.uuid(), powerLevel, powerXp));
+
+            double averageLevel = (double) powerLevel / numEnabled;
+            averageLb.add(new SkillValue(state.uuid(), 0, averageLevel));
+        }
+    }
+
+    private void sortLeaderboards(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) {
+        LeaderboardSorter sorter = new LeaderboardSorter();
+        for (Skill skill : Skills.values()) {
+            skillLb.get(skill).sort(sorter);
+        }
+        powerLb.sort(sorter);
+        AverageSorter averageSorter = new AverageSorter();
+        averageLb.sort(averageSorter);
+
+        // Add skill leaderboards to map
+        for (Skill skill : Skills.values()) {
+            setLeaderboard(skill, skillLb.get(skill));
+        }
+        setPowerLeaderboard(powerLb);
+        setAverageLeaderboard(averageLb);
     }
 
 }

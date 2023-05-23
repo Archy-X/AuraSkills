@@ -1,10 +1,10 @@
 package dev.auramc.auraskills.common.storage.file;
 
 import dev.auramc.auraskills.api.ability.AbstractAbility;
+import dev.auramc.auraskills.api.registry.NamespacedId;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.stat.Stat;
 import dev.auramc.auraskills.api.stat.StatModifier;
-import dev.auramc.auraskills.api.registry.NamespacedId;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.data.PlayerData;
 import dev.auramc.auraskills.common.data.PlayerDataState;
@@ -17,6 +17,7 @@ import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -267,5 +268,34 @@ public class FileStorageProvider extends StorageProvider {
     public void delete(UUID uuid) throws Exception {
         Path path = Path.of(dataDirectory, uuid.toString() + ".yml");
         Files.deleteIfExists(path);
+    }
+
+    @Override
+    public List<PlayerDataState> loadOfflineStates() {
+        List<PlayerDataState> states = new ArrayList<>();
+        // Get all files in data directory
+        File[] files = new File(dataDirectory).listFiles();
+        if (files == null) {
+            return states;
+        }
+        // Loop through files and get UUID from file name
+        for (File file : files) {
+            String fileName = file.getName();
+            if (fileName.endsWith(".yml")) {
+                String uuidString = fileName.substring(0, fileName.length() - 4);
+                try {
+                    UUID uuid = UUID.fromString(uuidString);
+
+                    if (playerManager.hasPlayerData(uuid)) {
+                        continue; // Skip if player is online
+                    }
+
+                    states.add(loadState(uuid)); // Load state from file
+                } catch (Exception e) {
+                    plugin.logger().warn("Invalid player data file name: " + fileName);
+                }
+            }
+        }
+        return states;
     }
 }

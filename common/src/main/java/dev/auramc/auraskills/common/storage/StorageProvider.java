@@ -6,6 +6,7 @@ import dev.auramc.auraskills.common.data.PlayerDataState;
 import dev.auramc.auraskills.common.data.PlayerManager;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
 public abstract class StorageProvider {
@@ -40,5 +41,7 @@ public abstract class StorageProvider {
     public abstract void save(@NotNull PlayerData playerData) throws Exception;
 
     public abstract void delete(UUID uuid) throws Exception;
+
+    public abstract List<PlayerDataState> loadOfflineStates() throws Exception;
 
 }

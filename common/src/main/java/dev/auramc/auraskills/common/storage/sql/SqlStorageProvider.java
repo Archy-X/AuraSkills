@@ -404,4 +404,56 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
+    @Override
+    public List<PlayerDataState> loadOfflineStates() throws Exception {
+        List<PlayerDataState> states = new ArrayList<>();
+
+        Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new HashMap<>();
+        Map<Integer, Map<Skill, Double>> loadedSkillXp = new HashMap<>();
+
+        String skillLevelsQuery = "SELECT (user_id, skill_name, skill_level, skill_xp) FROM " + tablePrefix + "skill_levels;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(skillLevelsQuery)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int userId = resultSet.getInt("user_id");
+                    String skillName = resultSet.getString("skill_name");
+                    Skill skill = plugin.getSkillRegistry().get(NamespacedId.fromString(skillName));
+
+                    int level = resultSet.getInt("skill_level");
+                    double xp = resultSet.getDouble("skill_xp");
+
+                    loadedSkillLevels.computeIfAbsent(userId, k -> new HashMap<>()).put(skill, level);
+                    loadedSkillXp.computeIfAbsent(userId, k -> new HashMap<>()).put(skill, xp);
+                }
+            }
+        }
+
+        String usersQuery = "SELECT (user_id, player_uuid, mana, stat_modifiers) FROM " + tablePrefix + "users;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int userId = resultSet.getInt("user_id");
+                    UUID uuid = UUID.fromString(resultSet.getString("player_uuid"));
+
+                    if (playerManager.hasPlayerData(uuid)) {
+                        continue; // Skip if player is online
+                    }
+
+                    double mana = resultSet.getDouble("mana");
+                    String statModifiersJson = resultSet.getString("stat_modifiers");
+
+                    Map<String, StatModifier> statModifiers = loadStatModifiers(uuid, statModifiersJson);
+
+                    Map<Skill, Integer> skillLevelMap = loadedSkillLevels.get(userId);
+                    Map<Skill, Double> skillXpMap = loadedSkillXp.get(userId);
+
+                    PlayerDataState state = new PlayerDataState(uuid, skillLevelMap, skillXpMap, statModifiers, mana);
+                    states.add(state);
+                }
+            }
+        }
+
+        return states;
+    }
+
 }
