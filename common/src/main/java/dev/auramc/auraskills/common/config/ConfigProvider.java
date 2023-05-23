@@ -2,6 +2,8 @@ package dev.auramc.auraskills.common.config;
 
 import dev.auramc.auraskills.api.skill.Skill;
 
+import java.util.List;
+
 /**
  * Represents a provider for the plugin's main configuration.
  */
@@ -15,9 +17,7 @@ public interface ConfigProvider {
 
     String getString(Option option);
 
-    String[] getStringList(Option option);
-
-    String getColor(Option option);
+    List<String> getStringList(Option option);
 
     boolean isEnabled(Skill skill);
 
