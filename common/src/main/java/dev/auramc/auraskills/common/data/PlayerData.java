@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class PlayerData {
 
@@ -50,12 +51,12 @@ public abstract class PlayerData {
     public PlayerData(UUID uuid, AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.skillLevels = new HashMap<>();
-        this.skillXp = new HashMap<>();
-        this.statLevels = new HashMap<>();
-        this.statModifiers = new HashMap<>();
-        this.abilityData = new HashMap<>();
-        this.metadata = new HashMap<>();
+        this.skillLevels = new ConcurrentHashMap<>();
+        this.skillXp = new ConcurrentHashMap<>();
+        this.statLevels = new ConcurrentHashMap<>();
+        this.statModifiers = new ConcurrentHashMap<>();
+        this.abilityData = new ConcurrentHashMap<>();
+        this.metadata = new ConcurrentHashMap<>();
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
