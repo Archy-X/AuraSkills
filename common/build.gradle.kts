@@ -5,6 +5,7 @@ plugins {
 repositories {
     mavenCentral()
     maven("https://repo.aikar.co/content/groups/aikar/")
+    maven("https://www.jitpack.io")
 }
 
 dependencies {
@@ -16,6 +17,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.spongepowered:configurate-yaml:4.1.2")
+    implementation("com.github.Archy-X:Polyglot:1.1.1")
     compileOnly("net.luckperms:api:5.4")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(platform("org.junit:junit-bom:5.9.3"))

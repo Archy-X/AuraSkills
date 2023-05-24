@@ -27,6 +27,8 @@ import dev.auramc.auraskills.common.stat.StatRegistry;
 import dev.auramc.auraskills.common.storage.StorageProvider;
 import dev.auramc.auraskills.common.ui.UiProvider;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -144,5 +146,11 @@ public interface AuraSkillsPlugin {
      * @param command The command to execute
      */
     void runPlayerCommand(PlayerData playerData, String command);
+
+    InputStream getResource(String path);
+
+    void saveResource(String path, boolean replace);
+
+    File getDataFolder();
 
 }

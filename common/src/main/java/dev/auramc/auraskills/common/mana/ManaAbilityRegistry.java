@@ -52,11 +52,6 @@ public class ManaAbilityRegistry extends Registry<ManaAbility, ManaAbilityProper
     }
 
     @Override
-    public String getInfo(ManaAbility manaAbility, Locale locale) {
-        return plugin.getMessageProvider().getManaAbilityInfo(manaAbility, locale);
-    }
-
-    @Override
     public double getBaseValue(ManaAbility manaAbility) {
         return plugin.getManaAbilityManager().getBaseValue(manaAbility);
     }
