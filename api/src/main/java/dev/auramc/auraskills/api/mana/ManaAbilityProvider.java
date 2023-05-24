@@ -12,8 +12,6 @@ public interface ManaAbilityProvider {
 
     String getDescription(ManaAbility manaAbility, Locale locale);
 
-    String getInfo(ManaAbility manaAbility, Locale locale);
-
     double getBaseValue(ManaAbility manaAbility);
 
     double getValuePerLevel(ManaAbility manaAbility);

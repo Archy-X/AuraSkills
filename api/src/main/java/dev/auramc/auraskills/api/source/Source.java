@@ -10,4 +10,8 @@ public interface Source {
 
     String getDisplayName(Locale locale);
 
+    String name();
+
+    String getMessageSection();
+
 }

@@ -10,7 +10,7 @@ public interface ManaAbility extends AbstractAbility {
 
     String getDescription(Locale locale);
 
-    String getInfo(Locale locale);
+    String name();
 
     double getBaseValue();
 

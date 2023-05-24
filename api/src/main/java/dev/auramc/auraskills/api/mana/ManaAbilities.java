@@ -50,12 +50,6 @@ public enum ManaAbilities implements ManaAbility {
     }
 
     @Override
-    public String getInfo(Locale locale) {
-        validate();
-        return provider.getInfo(this, locale);
-    }
-
-    @Override
     public double getBaseValue() {
         validate();
         return provider.getBaseValue(this);

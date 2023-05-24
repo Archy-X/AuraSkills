@@ -10,6 +10,8 @@ public interface Ability extends AbstractAbility {
 
     String getInfo(Locale locale);
 
+    String name();
+
     boolean hasSecondaryValue();
 
     double getBaseValue();
