@@ -32,7 +32,7 @@ public class SkillRegistry extends Registry<Skill, SkillProperties> implements S
             ImmutableList<Ability> abilities = SkillDefaults.getDefaultAbilities(skill)
                     .stream().map(a -> (Ability) a).collect(ImmutableList.toImmutableList()); // Cast ImmutableList<Abilities> to ImmutableList<Ability>
             ManaAbility manaAbility = SkillDefaults.getDefaultManaAbility(skill);
-            SkillProperties skillProperties = new DefaultSkill(skill, abilities, manaAbility, ImmutableList.of());
+            SkillProperties skillProperties = new DefaultSkill(skill, abilities, manaAbility);
             // Register
             register(skill.getId(), skill, skillProperties);
             // Inject skill provider
