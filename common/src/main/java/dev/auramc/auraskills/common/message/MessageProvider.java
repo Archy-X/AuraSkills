@@ -11,7 +11,6 @@ import dev.auramc.auraskills.api.mana.ManaAbilities;
 import dev.auramc.auraskills.api.mana.ManaAbility;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.skill.Skills;
-import dev.auramc.auraskills.api.source.Source;
 import dev.auramc.auraskills.api.stat.Stat;
 import dev.auramc.auraskills.api.stat.Stats;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
@@ -139,11 +138,6 @@ public class MessageProvider implements PolyglotProvider {
         } else {
             return manager.get(locale, convertKey("mana_abilities." + ability.getId().toString() + ".desc"));
         }
-    }
-
-    public String getSourceDisplayName(Source source, Locale locale) {
-        String messagePath = "sources." + source.getMessageSection() + "." + source.name().toLowerCase(Locale.ROOT);
-        return manager.get(locale, convertKey(messagePath));
     }
 
     public Locale getDefaultLanguage() {
