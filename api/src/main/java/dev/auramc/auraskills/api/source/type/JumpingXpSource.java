@@ -1,4 +1,6 @@
-package dev.auramc.auraskills.api.source;
+package dev.auramc.auraskills.api.source.type;
+
+import dev.auramc.auraskills.api.source.XpSource;
 
 public interface JumpingXpSource extends XpSource {
 
