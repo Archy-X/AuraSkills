@@ -29,23 +29,12 @@ public interface XpSource {
      * @return The name in all caps
      */
     String name();
-
-    /**
-     * Gets the config section used to get the message of the source.
-     * This is usually the name of the default skill the source is in,
-     * but fighting and archery sources share the 'mobs' section.
-     * Custom sources will use the 'custom' section.
-     *
-     * @return The config section
-     */
-    String getMessageSection();
-
     /**
      * Gets the amount of xp the source gives.
      * The value is the base amount before any multipliers are applied.
      *
      * @return The base xp of the source
      */
-    int getXp();
+    double getXp();
 
 }

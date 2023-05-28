@@ -1,11 +1,10 @@
-package dev.auramc.auraskills.api.source;
+package dev.auramc.auraskills.api.source.type;
 
 import dev.auramc.auraskills.api.item.ItemFilter;
+import dev.auramc.auraskills.api.source.XpSource;
 import org.jetbrains.annotations.NotNull;
 
-import javax.xml.transform.Source;
-
-public interface BrewingXpSource extends Source {
+public interface BrewingXpSource extends XpSource {
 
     /**
      * Gets the valid ingredients of the source.
