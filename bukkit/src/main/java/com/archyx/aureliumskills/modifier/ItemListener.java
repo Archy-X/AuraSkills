@@ -52,7 +52,7 @@ public class ItemListener implements Listener {
     public void onJoin(PlayerDataLoadEvent event) {
         Player player = event.getPlayerData().getPlayer();
         ItemStack held = player.getInventory().getItemInMainHand();
-        heldItems.put(player.getUniqueId(), held);
+        heldItems.put(player.getUniqueId(), held.clone());
         PlayerData playerData = event.getPlayerData();
         if (!held.getType().equals(Material.AIR)) {
             if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
@@ -70,7 +70,7 @@ public class ItemListener implements Listener {
         }
         if (OptionL.getBoolean(Option.MODIFIER_ITEM_ENABLE_OFF_HAND)) {
             ItemStack offHandItem = player.getInventory().getItemInOffHand();
-            offHandItems.put(player.getUniqueId(), offHandItem);
+            offHandItems.put(player.getUniqueId(), offHandItem.clone());
             if (!offHandItem.getType().equals(Material.AIR)) {
                 if (OptionL.getBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
                     offHandItem = requirements.convertFromLegacy(modifiers.convertFromLegacy(offHandItem));
