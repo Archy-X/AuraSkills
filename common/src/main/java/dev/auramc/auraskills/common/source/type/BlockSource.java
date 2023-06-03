@@ -8,15 +8,17 @@ import dev.auramc.auraskills.api.source.type.BlockXpSource;
 import dev.auramc.auraskills.common.source.Source;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
 public class BlockSource extends Source implements BlockXpSource {
 
     private final String[] blocks;
     private final BlockTriggers[] triggers;
     private final boolean checkReplace;
-    private final BlockSourceState[] states;
+    private final BlockXpSourceState[] states;
     private final String stateMultiplier;
 
-    public BlockSource(NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockSourceState[] states, String stateMultiplier) {
+    public BlockSource(NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, String stateMultiplier) {
         super(id, xp);
         this.blocks = blocks;
         this.triggers = triggers;
@@ -46,7 +48,7 @@ public class BlockSource extends Source implements BlockXpSource {
     }
 
     @Override
-    public @Nullable BlockSourceState[] getStates() {
+    public @Nullable BlockXpSourceState[] getStates() {
         return states;
     }
 
@@ -62,4 +64,43 @@ public class BlockSource extends Source implements BlockXpSource {
             return 1;
         }
     }
+
+    public static class BlockSourceState implements BlockXpSourceState {
+
+        private final Map<String, Object> stateMap;
+
+        public BlockSourceState(Map<String, Object> stateMap) {
+            this.stateMap = stateMap;
+        }
+
+        @Override
+        public int getInt(String key) {
+            return (int) stateMap.getOrDefault(key, 0);
+        }
+
+        @Override
+        public double getDouble(String key) {
+            return (double) stateMap.getOrDefault(key, 0.0);
+        }
+
+        @Override
+        public String getString(String key) {
+            return (String) stateMap.getOrDefault(key, "");
+        }
+
+        @Override
+        public boolean getBoolean(String key) {
+            return (boolean) stateMap.getOrDefault(key, false);
+        }
+
+        @Override
+        public boolean containsKey(String key, Class<?> type) {
+            Object obj = stateMap.get(key);
+            if (obj == null) {
+                return false;
+            }
+            return type.isInstance(obj);
+        }
+    }
+
 }

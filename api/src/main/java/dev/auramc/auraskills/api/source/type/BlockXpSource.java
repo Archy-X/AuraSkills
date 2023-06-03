@@ -40,7 +40,7 @@ public interface BlockXpSource extends XpSource {
      * @return The valid block states. If there are no block states set (all block state valid), it will return null.
      */
     @Nullable
-    BlockSourceState[] getStates();
+    BlockXpSourceState[] getStates();
 
     /**
      * Gets the multiplier for the xp of the source based on the block state.
@@ -52,7 +52,7 @@ public interface BlockXpSource extends XpSource {
      */
     double getStateMultiplier(String stateKey, Object stateValue);
 
-    interface BlockSourceState {
+    interface BlockXpSourceState {
 
         int getInt(String key);
 
@@ -61,6 +61,8 @@ public interface BlockXpSource extends XpSource {
         String getString(String key);
 
         boolean getBoolean(String key);
+
+        boolean containsKey(String key, Class<?> type);
 
     }
 
