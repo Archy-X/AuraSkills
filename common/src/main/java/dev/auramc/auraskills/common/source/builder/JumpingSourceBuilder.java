@@ -20,6 +20,6 @@ public class JumpingSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new JumpingSource(id, displayName, xp, interval);
+        return new JumpingSource(id, xp, interval);
     }
 }

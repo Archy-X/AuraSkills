@@ -34,6 +34,6 @@ public class EntitySourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new EntitySource(id, displayName, xp, entity, triggers, damagers);
+        return new EntitySource(id, xp, entity, triggers, damagers);
     }
 }

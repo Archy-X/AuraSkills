@@ -21,6 +21,6 @@ public class ManaAbilityUseSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new ManaAbilityUseSource(id, displayName, xp, manaAbilities);
+        return new ManaAbilityUseSource(id, xp, manaAbilities);
     }
 }

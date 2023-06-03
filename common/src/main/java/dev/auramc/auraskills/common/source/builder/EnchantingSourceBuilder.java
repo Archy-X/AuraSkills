@@ -22,6 +22,6 @@ public class EnchantingSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new EnchantingSource(id, displayName, xp, item);
+        return new EnchantingSource(id, xp, item);
     }
 }

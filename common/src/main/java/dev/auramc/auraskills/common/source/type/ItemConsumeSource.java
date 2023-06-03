@@ -10,8 +10,8 @@ public class ItemConsumeSource extends Source implements ItemConsumeXpSource {
 
     private final ItemFilter item;
 
-    public ItemConsumeSource(NamespacedId id, String displayName, double xp, ItemFilter item) {
-        super(id, displayName, xp);
+    public ItemConsumeSource(NamespacedId id, double xp, ItemFilter item) {
+        super(id, xp);
         this.item = item;
     }
 

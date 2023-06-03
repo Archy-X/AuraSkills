@@ -13,8 +13,8 @@ public class DamageSource extends Source implements DamageXpSource {
     private final boolean mustSurvive;
     private final boolean useOriginalDamage;
 
-    public DamageSource(NamespacedId id, String displayName, double xp, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage) {
-        super(id, displayName, xp);
+    public DamageSource(NamespacedId id, double xp, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage) {
+        super(id, xp);
         this.causes = causes;
         this.excludedCauses = excludedCauses;
         this.damager = damager;

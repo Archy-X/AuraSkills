@@ -11,8 +11,8 @@ public class AnvilSource extends Source implements AnvilXpSource {
     private final ItemFilter rightItem;
     private final String multiplier;
 
-    public AnvilSource(NamespacedId id, String displayName, double xp, ItemFilter leftItem, ItemFilter rightItem, String multiplier) {
-        super(id, displayName, xp);
+    public AnvilSource(NamespacedId id, double xp, ItemFilter leftItem, ItemFilter rightItem, String multiplier) {
+        super(id, xp);
         this.leftItem = leftItem;
         this.rightItem = rightItem;
         this.multiplier = multiplier;

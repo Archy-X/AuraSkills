@@ -16,8 +16,8 @@ public class BlockSource extends Source implements BlockXpSource {
     private final BlockSourceState[] states;
     private final String stateMultiplier;
 
-    public BlockSource(NamespacedId id, String displayName, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockSourceState[] states, String stateMultiplier) {
-        super(id, displayName, xp);
+    public BlockSource(NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockSourceState[] states, String stateMultiplier) {
+        super(id, xp);
         this.blocks = blocks;
         this.triggers = triggers;
         this.checkReplace = checkReplace;

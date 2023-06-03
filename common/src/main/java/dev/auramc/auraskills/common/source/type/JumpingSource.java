@@ -8,8 +8,8 @@ public class JumpingSource extends Source implements JumpingXpSource {
 
     private final int interval;
 
-    public JumpingSource(NamespacedId id, String displayName, double xp, int interval) {
-        super(id, displayName, xp);
+    public JumpingSource(NamespacedId id, double xp, int interval) {
+        super(id, xp);
         this.interval = interval;
     }
 

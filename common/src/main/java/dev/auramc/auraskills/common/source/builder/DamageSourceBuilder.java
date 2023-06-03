@@ -45,6 +45,6 @@ public class DamageSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new DamageSource(id, displayName, xp, causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
+        return new DamageSource(id, xp, causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
     }
 }

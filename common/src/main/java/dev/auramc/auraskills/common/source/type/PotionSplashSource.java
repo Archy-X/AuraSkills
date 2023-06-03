@@ -10,8 +10,8 @@ public class PotionSplashSource extends Source implements PotionSplashXpSource {
 
     private final ItemFilter item;
 
-    public PotionSplashSource(NamespacedId id, String displayName, double xp, ItemFilter item) {
-        super(id, displayName, xp);
+    public PotionSplashSource(NamespacedId id, double xp, ItemFilter item) {
+        super(id, xp);
         this.item = item;
     }
 

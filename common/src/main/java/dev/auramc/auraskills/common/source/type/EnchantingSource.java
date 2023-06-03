@@ -10,8 +10,8 @@ public class EnchantingSource extends Source implements EnchantingXpSource {
 
     private final ItemFilter item;
 
-    public EnchantingSource(NamespacedId id, String displayName, double xp, ItemFilter item) {
-        super(id, displayName, xp);
+    public EnchantingSource(NamespacedId id, double xp, ItemFilter item) {
+        super(id, xp);
         this.item = item;
     }
 

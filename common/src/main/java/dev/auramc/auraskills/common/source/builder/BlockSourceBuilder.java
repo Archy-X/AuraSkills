@@ -46,6 +46,6 @@ public class BlockSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new BlockSource(id, displayName, xp, blocks, triggers, checkReplace, states, stateMultiplier);
+        return new BlockSource(id, xp, blocks, triggers, checkReplace, states, stateMultiplier);
     }
 }

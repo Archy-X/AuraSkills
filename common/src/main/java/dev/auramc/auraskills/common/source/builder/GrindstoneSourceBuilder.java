@@ -20,6 +20,6 @@ public class GrindstoneSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new GrindstoneSource(id, displayName, xp, multiplier);
+        return new GrindstoneSource(id, xp, multiplier);
     }
 }

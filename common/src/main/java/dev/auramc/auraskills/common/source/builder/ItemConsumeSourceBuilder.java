@@ -22,6 +22,6 @@ public class ItemConsumeSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new ItemConsumeSource(id, displayName, xp, item);
+        return new ItemConsumeSource(id, xp, item);
     }
 }
