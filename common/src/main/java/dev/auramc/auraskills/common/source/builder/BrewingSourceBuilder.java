@@ -29,6 +29,6 @@ public class BrewingSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new BrewingSource(id, displayName, xp, ingredients, triggers);
+        return new BrewingSource(id, xp, ingredients, triggers);
     }
 }

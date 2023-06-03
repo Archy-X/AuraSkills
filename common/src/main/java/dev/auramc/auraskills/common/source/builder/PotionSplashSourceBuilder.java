@@ -22,6 +22,6 @@ public class PotionSplashSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new PotionSplashSource(id, displayName, xp, item);
+        return new PotionSplashSource(id, xp, item);
     }
 }

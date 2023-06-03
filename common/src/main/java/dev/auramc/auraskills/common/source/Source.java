@@ -8,23 +8,16 @@ import java.util.Locale;
 public class Source implements XpSource {
 
     private final NamespacedId id;
-    private final String displayName;
     private final double xp;
 
-    public Source(NamespacedId id, String displayName, double xp) {
+    public Source(NamespacedId id, double xp) {
         this.id = id;
-        this.displayName = displayName;
         this.xp = xp;
     }
 
     @Override
     public NamespacedId getId() {
         return id;
-    }
-
-    @Override
-    public String getDisplayName(Locale locale) {
-        return displayName;
     }
 
     @Override

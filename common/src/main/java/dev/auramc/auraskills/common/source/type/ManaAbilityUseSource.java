@@ -10,8 +10,8 @@ public class ManaAbilityUseSource extends Source implements ManaAbilityUseXpSour
 
     private final ManaAbility[] manaAbilities;
 
-    public ManaAbilityUseSource(NamespacedId id, String displayName, double xp, ManaAbility[] manaAbilities) {
-        super(id, displayName, xp);
+    public ManaAbilityUseSource(NamespacedId id, double xp, ManaAbility[] manaAbilities) {
+        super(id, xp);
         this.manaAbilities = manaAbilities;
     }
 

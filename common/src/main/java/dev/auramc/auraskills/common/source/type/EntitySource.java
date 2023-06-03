@@ -11,8 +11,8 @@ public class EntitySource extends Source implements EntityXpSource {
     private final EntityTriggers[] triggers;
     private final EntityDamagers[] damagers;
 
-    public EntitySource(NamespacedId id, String displayName, double xp, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers) {
-        super(id, displayName, xp);
+    public EntitySource(NamespacedId id, double xp, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers) {
+        super(id, xp);
         this.entity = entity;
         this.triggers = triggers;
         this.damagers = damagers;

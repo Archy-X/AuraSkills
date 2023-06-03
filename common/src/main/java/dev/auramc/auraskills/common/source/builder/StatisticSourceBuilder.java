@@ -27,6 +27,6 @@ public class StatisticSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new StatisticSource(id, displayName, xp, statistic, multiplier);
+        return new StatisticSource(id, xp, statistic, multiplier);
     }
 }

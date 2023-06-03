@@ -34,6 +34,6 @@ public class AnvilSourceBuilder extends SourceBuilder {
     @Override
     public Source build() {
         validate(this);
-        return new AnvilSource(id, displayName, xp, leftItem, rightItem, multiplier);
+        return new AnvilSource(id, xp, leftItem, rightItem, multiplier);
     }
 }

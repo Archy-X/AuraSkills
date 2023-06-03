@@ -9,16 +9,10 @@ import java.lang.reflect.Field;
 public abstract class SourceBuilder {
 
     protected final NamespacedId id;
-    protected @Required String displayName;
     protected double xp;
 
     public SourceBuilder(NamespacedId id) {
         this.id = id;
-    }
-
-    public SourceBuilder displayName(String displayName) {
-        this.displayName = displayName;
-        return this;
     }
 
     public SourceBuilder xp(double xp) {

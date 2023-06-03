@@ -11,8 +11,8 @@ public class BrewingSource extends Source implements BrewingXpSource {
     private final ItemFilter ingredients;
     private final BrewTriggers[] triggers;
 
-    public BrewingSource(NamespacedId id, String displayName, double xp, ItemFilter ingredients, BrewTriggers[] triggers) {
-        super(id, displayName, xp);
+    public BrewingSource(NamespacedId id, double xp, ItemFilter ingredients, BrewTriggers[] triggers) {
+        super(id, xp);
         this.ingredients = ingredients;
         this.triggers = triggers;
     }
