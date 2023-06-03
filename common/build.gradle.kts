@@ -19,6 +19,7 @@ dependencies {
     implementation("org.spongepowered:configurate-yaml:4.1.2")
     implementation("com.github.Archy-X:Polyglot:1.1.1")
     implementation("com.ezylang:EvalEx:3.0.4")
+    implementation("org.atteo:evo-inflector:1.3")
     compileOnly("net.luckperms:api:5.4")
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(platform("org.junit:junit-bom:5.9.3"))

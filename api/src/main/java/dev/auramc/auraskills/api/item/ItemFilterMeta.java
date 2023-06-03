@@ -2,9 +2,17 @@ package dev.auramc.auraskills.api.item;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public interface ItemFilterMeta {
 
     @Nullable
-    PotionData getPotionData();
+    String displayName();
+
+    @Nullable
+    List<String> lore();
+
+    @Nullable
+    PotionData potionData();
 
 }

@@ -6,15 +6,15 @@ import org.jetbrains.annotations.Nullable;
 public interface ItemFilter {
 
     @Nullable
-    String[] getMaterials();
+    String[] materials();
 
     @Nullable
-    String[] getExcludedMaterials();
+    String[] excludedMaterials();
 
     @Nullable
-    ItemCategory getCategory();
+    ItemCategory category();
 
     @NotNull
-    ItemFilterMeta getMeta();
+    ItemFilterMeta meta();
 
 }

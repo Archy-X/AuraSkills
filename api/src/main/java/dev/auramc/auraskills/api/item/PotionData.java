@@ -2,9 +2,9 @@ package dev.auramc.auraskills.api.item;
 
 public interface PotionData {
 
-    String[] getTypes();
+    String[] types();
 
-    String[] getExcludedTypes();
+    String[] excludedTypes();
 
     boolean extended();
 
