@@ -1,7 +1,8 @@
-package dev.auramc.auraskills.common.source.serializer;
+package dev.auramc.auraskills.common.source.serializer.util;
 
 import dev.auramc.auraskills.api.item.PotionData;
 import dev.auramc.auraskills.common.item.SourcePotionData;
+import dev.auramc.auraskills.common.source.serializer.SourceSerializer;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
