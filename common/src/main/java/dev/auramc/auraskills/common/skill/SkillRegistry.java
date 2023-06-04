@@ -8,9 +8,12 @@ import dev.auramc.auraskills.api.skill.SkillProvider;
 import dev.auramc.auraskills.api.skill.Skills;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.registry.Registry;
+import dev.auramc.auraskills.common.source.Source;
+import dev.auramc.auraskills.common.source.SourceLoader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -27,12 +30,14 @@ public class SkillRegistry extends Registry<Skill, SkillProperties> implements S
 
     @Override
     public void registerDefaults() {
+        SourceLoader sourceLoader = new SourceLoader(plugin);
         for (Skills skill : Skills.values()) { // Register each default skill
             // Construct registered skill
             ImmutableList<Ability> abilities = SkillDefaults.getDefaultAbilities(skill)
                     .stream().map(a -> (Ability) a).collect(ImmutableList.toImmutableList()); // Cast ImmutableList<Abilities> to ImmutableList<Ability>
             ManaAbility manaAbility = SkillDefaults.getDefaultManaAbility(skill);
-            SkillProperties skillProperties = new DefaultSkill(skill, abilities, manaAbility);
+            List<Source> sources = sourceLoader.loadSources(skill); // Load sources from files
+            SkillProperties skillProperties = new DefaultSkill(skill, abilities, manaAbility, sources.stream().collect(ImmutableList.toImmutableList()));
             // Register
             register(skill.getId(), skill, skillProperties);
             // Inject skill provider
