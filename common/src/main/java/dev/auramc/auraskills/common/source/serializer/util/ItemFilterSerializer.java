@@ -1,9 +1,10 @@
-package dev.auramc.auraskills.common.source.serializer;
+package dev.auramc.auraskills.common.source.serializer.util;
 
 import dev.auramc.auraskills.api.item.ItemCategory;
 import dev.auramc.auraskills.api.item.ItemFilter;
 import dev.auramc.auraskills.api.item.ItemFilterMeta;
 import dev.auramc.auraskills.common.item.SourceItem;
+import dev.auramc.auraskills.common.source.serializer.SourceSerializer;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
