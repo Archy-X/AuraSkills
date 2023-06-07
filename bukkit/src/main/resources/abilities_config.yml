@@ -134,6 +134,7 @@ abilities:
       unlock: 4
       level_up: 5
       max_level: 0
+      scale_base_chance: false
     grappler:
       enabled: true
       base: 50.0
@@ -148,6 +149,7 @@ abilities:
       unlock: 6
       level_up: 5
       max_level: 0
+      scale_base_chance: false
   excavation:
     metal_detector:
       enabled: true
@@ -156,6 +158,7 @@ abilities:
       unlock: 2
       level_up: 5
       max_level: 0
+      scale_base_chance: false
     excavator:
       enabled: true
       base: 10.0
@@ -184,6 +187,7 @@ abilities:
       unlock: 6
       level_up: 5
       max_level: 0
+      scale_base_chance: false
   archery:
     crit_chance:
       enabled: true
@@ -646,4 +650,4 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
-file_version: 11
+file_version: 12

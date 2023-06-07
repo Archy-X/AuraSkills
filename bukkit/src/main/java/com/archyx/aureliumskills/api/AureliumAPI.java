@@ -408,7 +408,7 @@ public class AureliumAPI {
      */
     public static ItemStack addArmorMultiplier(ItemStack item, Skill skill, double value, boolean lore) {
         Multipliers multipliers = new Multipliers(plugin);
-        ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ITEM, item, skill, value);
+        ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ARMOR, item, skill, value);
         if (lore) {
             multipliers.addLore(ModifierType.ARMOR, modifiedItem, skill, value, Lang.getDefaultLanguage());
         }

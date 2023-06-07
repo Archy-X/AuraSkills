@@ -73,11 +73,11 @@ public class FishingLootHandler extends LootHandler implements Listener {
             double chance = getCommonChance(pool, playerData);
             LootDropCause cause = LootDropCause.FISHING_OTHER_LOOT;
             if (pool.getName().equals("rare") && plugin.getAbilityManager().isEnabled(Ability.TREASURE_HUNTER)) {
-                chance += (getValue(Ability.TREASURE_HUNTER, playerData) / 100);
+                chance = getAbilityModifiedChance(chance, Ability.TREASURE_HUNTER, playerData);
                 source = FishingSource.RARE;
                 cause = LootDropCause.TREASURE_HUNTER;
             } else if (pool.getName().equals("epic") && plugin.getAbilityManager().isEnabled(Ability.EPIC_CATCH)) {
-                chance += (getValue(Ability.EPIC_CATCH, playerData) / 100);
+                chance = getAbilityModifiedChance(chance, Ability.EPIC_CATCH, playerData);
                 source = FishingSource.EPIC;
                 cause = LootDropCause.EPIC_CATCH;
             } else {
