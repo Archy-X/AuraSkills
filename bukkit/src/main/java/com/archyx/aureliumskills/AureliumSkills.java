@@ -85,7 +85,6 @@ import com.archyx.aureliumskills.ui.ActionBar;
 import com.archyx.aureliumskills.ui.ActionBarCompatHandler;
 import com.archyx.aureliumskills.ui.SkillBossBar;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
-import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
@@ -165,6 +164,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Slate slate;
 	private MenuFileManager menuFileManager;
 	private ForgingLeveler forgingLeveler;
+	private final int resourceId = 81069;
 
 	@Override
 	public void onEnable() {
@@ -340,9 +340,7 @@ public class AureliumSkills extends JavaPlugin {
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
 		getLogger().info("Aurelium Skills has been enabled");
-		if (System.currentTimeMillis() > ReleaseData.RELEASE_TIME + 21600000L) {
-			checkUpdates();
-		}
+		checkUpdates();
 		MinecraftVersion.disableUpdateCheck();
 		// Check if NBT API is supported for the version
 		if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
@@ -413,18 +411,13 @@ public class AureliumSkills extends JavaPlugin {
 	public void checkUpdates() {
 		// Check for updates
 		if (!OptionL.getBoolean(Option.CHECK_FOR_UPDATES)) return;
-		new UpdateChecker(this, 81069).getVersion(version -> {
-			if (!this.getDescription().getVersion().contains("Pre-Release") && !this.getDescription().getVersion().contains("Build")) {
-				if (!this.getDescription().getVersion().equalsIgnoreCase(version)) {
-					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
-							version);
-					getLogger().info("Download it on Spigot:");
-					getLogger().info("https://spigotmc.org/resources/81069");
-				}
-			}
-			else {
-				getLogger().info("You are on an in development version of the plugin, plugin may be buggy or unstable!");
-				getLogger().info("Report any bugs to the support discord server or submit an issue here: https://github.com/Archy-X/AureliumSkills/issues");
+		UpdateChecker updateChecker = new UpdateChecker(this, 81069);
+		updateChecker.getVersion(version -> {
+			if (updateChecker.isOutdated(this.getDescription().getVersion(), version)) {
+				getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
+						version);
+				getLogger().info("Download it on Spigot:");
+				getLogger().info("https://spigotmc.org/resources/" + resourceId);
 			}
 		});
 	}
@@ -882,5 +875,9 @@ public class AureliumSkills extends JavaPlugin {
 
 	public ForgingLeveler getForgingLeveler() {
 		return forgingLeveler;
+	}
+
+	public int getResourceId() {
+		return resourceId;
 	}
 }
