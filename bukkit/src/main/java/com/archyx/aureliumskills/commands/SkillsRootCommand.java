@@ -416,7 +416,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.version")
 	public void onVersion(CommandSender sender) {
 		Locale locale = plugin.getLang().getLocale(sender);
-		new UpdateChecker(plugin, 81069).getVersion(latestVersion -> sender.sendMessage(AureliumSkills.getPrefix(locale) +
+		new UpdateChecker(plugin, plugin.getResourceId()).getVersion(latestVersion -> sender.sendMessage(AureliumSkills.getPrefix(locale) +
 				TextUtil.replace(Lang.getMessage(CommandMessage.VERSION, locale),
 				"{current_version}", plugin.getDescription().getVersion(),
 				"{latest_version}", latestVersion)));

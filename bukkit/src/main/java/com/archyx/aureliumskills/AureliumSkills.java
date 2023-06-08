@@ -24,8 +24,8 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.leveler.Leveler;
 import com.archyx.aureliumskills.listeners.DamageListener;
-import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.listeners.PlayerDeath;
+import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
@@ -61,7 +61,6 @@ import com.archyx.aureliumskills.skills.excavation.ExcavationLootHandler;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
 import com.archyx.aureliumskills.skills.farming.FarmingHarvestLeveler;
 import com.archyx.aureliumskills.skills.farming.FarmingInteractLeveler;
-import com.archyx.aureliumskills.skills.farming.FarmingLeveler;
 import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
 import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
 import com.archyx.aureliumskills.skills.fishing.FishingAbilities;
@@ -86,7 +85,6 @@ import com.archyx.aureliumskills.ui.ActionBar;
 import com.archyx.aureliumskills.ui.ActionBarCompatHandler;
 import com.archyx.aureliumskills.ui.SkillBossBar;
 import com.archyx.aureliumskills.util.armor.ArmorListener;
-import com.archyx.aureliumskills.util.version.ReleaseData;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
 import com.archyx.aureliumskills.util.version.VersionUtils;
 import com.archyx.aureliumskills.util.world.WorldManager;
@@ -166,6 +164,7 @@ public class AureliumSkills extends JavaPlugin {
 	private Slate slate;
 	private MenuFileManager menuFileManager;
 	private ForgingLeveler forgingLeveler;
+	private final int resourceId = 81069;
 
 	@Override
 	public void onEnable() {
@@ -341,9 +340,7 @@ public class AureliumSkills extends JavaPlugin {
 		int pluginId = 8629;
 		new Metrics(this, pluginId);
 		getLogger().info("Aurelium Skills has been enabled");
-		if (System.currentTimeMillis() > ReleaseData.RELEASE_TIME + 21600000L) {
-			checkUpdates();
-		}
+		checkUpdates();
 		MinecraftVersion.disableUpdateCheck();
 		// Check if NBT API is supported for the version
 		if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
@@ -414,18 +411,13 @@ public class AureliumSkills extends JavaPlugin {
 	public void checkUpdates() {
 		// Check for updates
 		if (!OptionL.getBoolean(Option.CHECK_FOR_UPDATES)) return;
-		new UpdateChecker(this, 81069).getVersion(version -> {
-			if (!this.getDescription().getVersion().contains("Pre-Release") && !this.getDescription().getVersion().contains("Build")) {
-				if (!this.getDescription().getVersion().equalsIgnoreCase(version)) {
-					getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
-							version);
-					getLogger().info("Download it on Spigot:");
-					getLogger().info("https://spigotmc.org/resources/81069");
-				}
-			}
-			else {
-				getLogger().info("You are on an in development version of the plugin, plugin may be buggy or unstable!");
-				getLogger().info("Report any bugs to the support discord server or submit an issue here: https://github.com/Archy-X/AureliumSkills/issues");
+		UpdateChecker updateChecker = new UpdateChecker(this, 81069);
+		updateChecker.getVersion(version -> {
+			if (updateChecker.isOutdated(this.getDescription().getVersion(), version)) {
+				getLogger().info("New update available! You are on version " + this.getDescription().getVersion() + ", latest version is " +
+						version);
+				getLogger().info("Download it on Spigot:");
+				getLogger().info("https://spigotmc.org/resources/" + resourceId);
 			}
 		});
 	}
@@ -572,7 +564,6 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new PlayerDeath(this), this);
 		regionBlockListener = new RegionBlockListener(this);
 		pm.registerEvents(regionBlockListener, this);
-		pm.registerEvents(new FarmingLeveler(this), this);
 		if (VersionUtils.isAtLeastVersion(16)) {
 			pm.registerEvents(new FarmingHarvestLeveler(this), this);
 		} else {
@@ -884,5 +875,9 @@ public class AureliumSkills extends JavaPlugin {
 
 	public ForgingLeveler getForgingLeveler() {
 		return forgingLeveler;
+	}
+
+	public int getResourceId() {
+		return resourceId;
 	}
 }

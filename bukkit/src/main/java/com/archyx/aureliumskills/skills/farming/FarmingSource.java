@@ -27,7 +27,9 @@ public enum FarmingSource implements Source {
     KELP(new String[] {"KELP_PLANT"}, true),
     SEA_PICKLE(true),
     SWEET_BERRY_BUSH(null, false, false, 2, true),
-    GLOW_BERRIES(new String[] {"CAVE_VINES", "CAVE_VINES_PLANT"}, false, false, 0, true);
+    GLOW_BERRIES(new String[] {"CAVE_VINES", "CAVE_VINES_PLANT"}, false, false, 0, true),
+    TORCHFLOWER(null, true),
+    PITCHER_PLANT(new String[] {"PITCHER_CROP"}, false, true);
 
     private String[] otherMaterials;
     private boolean checkBlockReplace;

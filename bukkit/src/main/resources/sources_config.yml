@@ -17,6 +17,8 @@ sources:
     sea_pickle: 4.0
     sweet_berry_bush: 2.5
     glow_berries: 4.5
+    torchflower: 9.0
+    pitcher_plant: 10.0
   foraging:
     oak_log: 4.0
     spruce_log: 4.0
@@ -25,6 +27,7 @@ sources:
     acacia_log: 4.0
     dark_oak_log: 4.0
     mangrove_log: 4.0
+    cherry_log: 4.0
     oak_leaves: 0.4
     spruce_leaves: 0.4
     birch_leaves: 0.4
@@ -32,6 +35,7 @@ sources:
     acacia_leaves: 0.4
     dark_oak_leaves: 0.4
     mangrove_leaves: 0.4
+    cherry_leaves: 0.4
     crimson_stem: 5.0
     warped_stem: 5.0
     nether_wart_block: 0.5
@@ -43,6 +47,7 @@ sources:
     azalea_leaves: 1.5
     flowering_azalea_leaves: 2.0
     mangrove_roots: 2.0
+    pink_petals: 0.2
   mining:
     stone: 0.2
     cobblestone: 0.2
@@ -193,6 +198,8 @@ sources:
     frog: 2.0
     tadpole: 0.7
     warden: 10000.0
+    camel: 3.0
+    sniffer: 3.0
   defense:
     mob_damage: 1
     player_damage: 2
@@ -273,6 +280,8 @@ sources:
     frog: 2.0
     tadpole: 1.2
     warden: 10000.0
+    camel: 3.0
+    sniffer: 3.0
   endurance:
     walk_per_meter: 0.333
     sprint_per_meter: 0.1
@@ -365,4 +374,4 @@ tags:
       - '*'
     terraform_applicable:
       - '*'
-file_version: 8
+file_version: 9
