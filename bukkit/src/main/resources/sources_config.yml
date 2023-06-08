@@ -47,6 +47,7 @@ sources:
     azalea_leaves: 1.5
     flowering_azalea_leaves: 2.0
     mangrove_roots: 2.0
+    pink_petals: 0.2
   mining:
     stone: 0.2
     cobblestone: 0.2

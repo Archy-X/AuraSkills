@@ -38,7 +38,8 @@ public enum ForagingSource implements Source {
     FLOWERING_AZALEA(true),
     AZALEA_LEAVES(false, true),
     FLOWERING_AZALEA_LEAVES(false, true),
-    MANGROVE_ROOTS(false, true);
+    MANGROVE_ROOTS(false, true),
+    PINK_PETALS(true, false);
 
     private String[] alternateMaterials;
     private String legacyMaterial;
