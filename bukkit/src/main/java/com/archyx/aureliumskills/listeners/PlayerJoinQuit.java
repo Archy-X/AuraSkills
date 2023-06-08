@@ -7,18 +7,13 @@ import com.archyx.aureliumskills.data.PlayerManager;
 import com.archyx.aureliumskills.data.storage.MySqlStorageProvider;
 import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.util.version.UpdateChecker;
-import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoinQuit implements Listener {
@@ -53,15 +48,6 @@ public class PlayerJoinQuit implements Listener {
 			if (playerManager.getPlayerData(player) == null) {
 				loadPlayerDataAsync(player);
 			}
-		}
-		// Load player skull
-		Location playerLoc = player.getLocation();
-		Location loc = new Location(playerLoc.getWorld(), playerLoc.getX(), 0, playerLoc.getZ());
-		Block b = loc.getBlock();
-		if (!(b.getState() instanceof InventoryHolder)) {
-			BlockState state = b.getState();
-			SkullCreator.blockWithUuid(b, player.getUniqueId());
-			state.update(true);
 		}
 		sendUpdateMessage(player); // Attempt to send update message
 	}
