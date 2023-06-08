@@ -114,8 +114,13 @@ public class SharpHook extends ManaAbilityProvider {
             double healthBefore = caught.getHealth();
             caught.damage(damage, player);
             double healthAfter = caught.getHealth();
-            if (healthBefore != healthAfter) { // Only activate if the entity got damaged
+
+            if (plugin.getManaAbilityManager().getOptionAsBooleanElseFalse(MAbility.SHARP_HOOK, "disable_health_check")) {
                 activate(player);
+            } else {
+                if (healthBefore != healthAfter) { // Only activate if the entity got damaged
+                    activate(player);
+                }
             }
         }
     }

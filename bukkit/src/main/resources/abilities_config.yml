@@ -594,6 +594,7 @@ mana_abilities:
     max_level: 0
     display_damage_with_scaling: true
     enable_sound: true
+    disable_health_check: false
   terraform:
     enabled: true
     base_value: 5.0
@@ -650,4 +651,4 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
-file_version: 12
+file_version: 13
