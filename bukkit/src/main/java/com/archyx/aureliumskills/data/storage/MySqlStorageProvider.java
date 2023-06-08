@@ -323,9 +323,7 @@ public class MySqlStorageProvider extends StorageProvider {
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
-        if (playerData.shouldNotSave()) return;
-        // Don't save if blank profile
-        if (!OptionL.getBoolean(Option.SAVE_BLANK_PROFILES) && playerData.isBlankProfile()) {
+        if (isInvalid(playerData, player, removeFromMemory)) {
             return;
         }
         try {

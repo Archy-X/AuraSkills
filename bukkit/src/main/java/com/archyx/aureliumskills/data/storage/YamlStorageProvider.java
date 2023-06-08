@@ -2,7 +2,6 @@ package com.archyx.aureliumskills.data.storage;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import com.archyx.aureliumskills.ability.AbstractAbility;
-import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.AbilityData;
 import com.archyx.aureliumskills.data.PlayerData;
@@ -219,9 +218,7 @@ public class YamlStorageProvider extends StorageProvider {
     public void save(Player player, boolean removeFromMemory) {
         PlayerData playerData = playerManager.getPlayerData(player);
         if (playerData == null) return;
-        if (playerData.shouldNotSave()) return;
-        // Don't save if blank profile
-        if (!OptionL.getBoolean(Option.SAVE_BLANK_PROFILES) && playerData.isBlankProfile()) {
+        if (isInvalid(playerData, player, removeFromMemory)) {
             return;
         }
         // Save lock

@@ -2,6 +2,7 @@ package com.archyx.aureliumskills.data.storage;
 
 
 import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.data.PlayerData;
 import com.archyx.aureliumskills.data.PlayerDataLoadEvent;
@@ -23,6 +24,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -150,6 +152,24 @@ public abstract class StorageProvider {
         manager.setPowerLeaderboard(powerLeaderboard);
         manager.setAverageLeaderboard(averageLeaderboard);
         manager.setSorting(false);
+    }
+
+    // Validates and removes invalid player data from memory
+    protected boolean isInvalid(@NotNull PlayerData playerData, Player player, boolean removeFromMemory) {
+        if (playerData.shouldNotSave()) {
+            if (removeFromMemory) {
+                playerManager.removePlayerData(player.getUniqueId());
+            }
+            return true;
+        }
+        // Don't save if blank profile
+        if (!OptionL.getBoolean(Option.SAVE_BLANK_PROFILES) && playerData.isBlankProfile()) {
+            if (removeFromMemory) {
+                playerManager.removePlayerData(player.getUniqueId());
+            }
+            return true;
+        }
+        return false;
     }
 
     public abstract void load(Player player);
