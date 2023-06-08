@@ -799,6 +799,8 @@ sources:
     sea_pickle: Sea Pickles
     sweet_berry_bush: Sweet Berries
     glow_berries: Glow Berries
+    torchflower: Torchflower
+    pitcher_plant: Pitcher Plant
   foraging:
     oak_log: Oak Log
     spruce_log: Spruce Log
@@ -825,6 +827,9 @@ sources:
     mangrove_log: Mangrove Log
     mangrove_leaves: Mangrove Leaves
     mangrove_roots: Mangrove Roots
+    cherry_log: Cherry Log
+    cherry_leaves: Cherry Leaves
+    pink_petals: Pink Petals
   mining:
     stone: Stone
     cobblestone: Cobblestone
@@ -975,6 +980,8 @@ sources:
     frog: Frog
     tadpole: Tadpole
     warden: Warden
+    camel: Camel
+    sniffer: Sniffer
   defense:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players
@@ -1065,4 +1072,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 29
+file_version: 30
