@@ -24,8 +24,8 @@ import com.archyx.aureliumskills.lang.Lang;
 import com.archyx.aureliumskills.leaderboard.LeaderboardManager;
 import com.archyx.aureliumskills.leveler.Leveler;
 import com.archyx.aureliumskills.listeners.DamageListener;
-import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.listeners.PlayerDeath;
+import com.archyx.aureliumskills.listeners.PlayerJoinQuit;
 import com.archyx.aureliumskills.loot.LootTableManager;
 import com.archyx.aureliumskills.mana.ManaAbilityManager;
 import com.archyx.aureliumskills.mana.ManaManager;
@@ -61,7 +61,6 @@ import com.archyx.aureliumskills.skills.excavation.ExcavationLootHandler;
 import com.archyx.aureliumskills.skills.farming.FarmingAbilities;
 import com.archyx.aureliumskills.skills.farming.FarmingHarvestLeveler;
 import com.archyx.aureliumskills.skills.farming.FarmingInteractLeveler;
-import com.archyx.aureliumskills.skills.farming.FarmingLeveler;
 import com.archyx.aureliumskills.skills.fighting.FightingAbilities;
 import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
 import com.archyx.aureliumskills.skills.fishing.FishingAbilities;
@@ -572,7 +571,6 @@ public class AureliumSkills extends JavaPlugin {
 		pm.registerEvents(new PlayerDeath(this), this);
 		regionBlockListener = new RegionBlockListener(this);
 		pm.registerEvents(regionBlockListener, this);
-		pm.registerEvents(new FarmingLeveler(this), this);
 		if (VersionUtils.isAtLeastVersion(16)) {
 			pm.registerEvents(new FarmingHarvestLeveler(this), this);
 		} else {
