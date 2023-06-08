@@ -87,6 +87,11 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 			return;
 		}
 
+		// Exclude armor stands from giving XP
+		if (event.getEntity() instanceof ArmorStand) {
+			return;
+		}
+
 		LivingEntity entity = (LivingEntity) event.getEntity();
 		if (blockXpGainLocation(entity.getLocation(), player, skill)) return;
 		if (blockXpGainPlayer(player)) return;

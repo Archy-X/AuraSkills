@@ -9,6 +9,7 @@ import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,6 +76,11 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 		if (event.getCause() != DamageCause.ENTITY_ATTACK && event.getCause() != DamageCause.ENTITY_SWEEP_ATTACK) return;
 
 		if (!(event.getEntity() instanceof LivingEntity)) {
+			return;
+		}
+
+		// Exclude armor stands from giving XP
+		if (event.getEntity() instanceof ArmorStand) {
 			return;
 		}
 
