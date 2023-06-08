@@ -76,13 +76,17 @@ public class UnlockedManaAbilityItem extends AbstractManaAbilityItem implements 
     private String getUpgradeValue(MAbility mAbility, PlayerData playerData) {
         String currentValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility)));
         String nextValue = NumberUtil.format1(manager.getDisplayValue(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
-        return "&7" + currentValue + "&8→" + nextValue + "&7";
+        return TextUtil.replace(Lang.getMessage(MenuMessage.DESC_UPGRADE_VALUE, playerData.getLocale()),
+                "{current}", currentValue,
+                "{next}", nextValue);
     }
 
     private String getUpgradeDuration(MAbility mAbility, PlayerData playerData) {
         String currentDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility)));
         String nextDuration = NumberUtil.format1(getDuration(mAbility, playerData.getManaAbilityLevel(mAbility) + 1));
-        return "&7" + currentDuration + "&8→" + nextDuration + "&7";
+        return TextUtil.replace(Lang.getMessage(MenuMessage.DESC_UPGRADE_VALUE, playerData.getLocale()),
+                "{current}", currentDuration,
+                "{next}", nextDuration);
     }
 
     private boolean isNotMaxed(PlayerData playerData, MAbility mAbility) {
