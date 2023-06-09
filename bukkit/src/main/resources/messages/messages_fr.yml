@@ -1,6 +1,6 @@
 # Aurelium Skills French (fr) messages
-# Translators: superhize, Kilian Simon, HamtaBot TV
-# Contribute here: https://crowdin.com/project/aureliumskills/fr#
+# Translators: superhize, Kilian Simon, HamtaBot TV, TigreDuBengale, Thibault Savenkoff
+# Contribute here: https://crowdin.com/project/aureliumskills/fr
 abilities:
   farming:
     bountiful_harvest:
@@ -504,6 +504,11 @@ commands:
     list: '&fMultiplicateur d''XP de &6{player}&f: &b{multiplier}x / +{percent}%'
     skill_entry: '&b{skill} Multiplicateur d''XP : &b{multiplier}x / +{percent}%'
     players_only: '&eSeuls les joueurs peuvent lister leur propre multiplicateur! Spécifiez un joueur!'
+  profile:
+    skills: "Profil de compétences Aurelium pour &6{name}:\n&7UUID : &f{uuid}\n&7Compétences :{skill_entries}"
+    skill_entry: "\n  &3{skill} &7- Niveau : &f{level}&7, XP : &f{xp}"
+    stats: "Profil de compétences Aurelium pour &6{name}:\n&7UUID : &f{uuid}\n&7Compétences :{stat_entries}"
+    stat_entry: "\n  &3{stat} &7- Niveau Total : &f{total_level}&7, Ancien Niveau : &f{base_level}&7, Nouveau Niveau : &f{modified_level}"
   rank:
     header: '&b&lVos classements de compétences'
     power: '&ePuissance &7(Toutes les compétences): &f#{rank} of {total}'
@@ -538,6 +543,9 @@ commands:
     average_header_page: '&f--==&b&lClassement de toutes les compétences &f(Page {page})==--'
     average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUtilisation: &a/sk top &f<page> &7ou &a/sk top &f[skill] <page>'
+  transfer:
+    success: '&aTransfert réussi des données du joueur de &7{from} &aà &7{to}'
+    error: '&cIl y avait une erreur de transfert de données du joueur. Vérifiez la console pour les erreurs.'
   updateleaderboards:
     already_updating: '&eLe classement est déjà en train d''etre mis à jour!'
     updated: '&aClassement mis à jour!'
@@ -547,7 +555,7 @@ commands:
     set: '&7XP de &b{skill} &7pour le joueur {player} &7défini sur {amount}'
     remove: '&b{amount} &7XP de &b{skill} &7ont été supprimé du joueur &6{player}'
   unknown_skill: '&eCompétence inconnue!'
-  no_profile: '&Le joueur n''a pas un profile de compétences!'
+  no_profile: '&eLe joueur n’a pas de profil de compétences. Veuillez essayer de rejoindre le jeu ou de redémarrer le serveur.'
 leveler:
   title: '&a{skill} Niveau supérieur'
   subtitle: '&6{old} ➜ {new}'
@@ -555,7 +563,7 @@ leveler:
   stat_level: "\n  {color}+{num}{symbol} {stat}"
   ability_unlock: "\n  &aCompétence débloquée! &6&l{ability} &7a été débloquée"
   ability_level_up: "\n  &aNiveau de compétence supérieur! &6&l{ability} &7est maintenant niveau &6{level}"
-  mana_ability_unlock: "\n&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloqueée"
+  mana_ability_unlock: "\n&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloquée"
   mana_ability_level_up: "\n  &dNiveau de compétence de mana supérieur! &9&l{mana_ability} &7est maintenant niveau &6{level}"
   money_reward: "\n  &a${amount}"
   unclaimed_item: '&cVous avez des objets non réclamés parce que votre inventaire était plein, utilisez &e/skills claimitems &cpour les réclamer'
@@ -663,6 +671,7 @@ menus:
     your_ability_level_maxed: '&fVotre Niveau : &b{level} &6(MAX)'
     unlocked_desc: "&fProchaine amélioration à &3{skill} {level}&f\n  &7{desc}"
     unlocked_desc_maxed: "&fDescription :\n  &7{desc}"
+    desc_upgrade_value: '&7{current}&8→{next}&7'
 mana_abilities:
   replenish:
     name: Replante
@@ -792,6 +801,8 @@ sources:
     sea_pickle: Cornichon de mer
     sweet_berry_bush: Baies sucrées
     glow_berries: Baies luisantes
+    torchflower: Fleur de flambeau
+    pitcher_plant: Plante carnivore
   foraging:
     oak_log: Bûche de Chêne
     spruce_log: Bûche de Sapin
@@ -815,6 +826,12 @@ sources:
     flowering_azalea: Azalée en fleurs
     azalea_leaves: Feuilles d'azalée
     flowering_azalea_leaves: Feuilles d'azalée fleuries
+    mangrove_log: Bûche de Mangrove
+    mangrove_leaves: Feuilles de Mangrove
+    mangrove_roots: Racines de Mangrove
+    cherry_log: Bûche de cerisier
+    cherry_leaves: Feuilles de cerisier
+    pink_petals: Pétales Roses
   mining:
     stone: Pierre
     cobblestone: Cobblestone
@@ -863,6 +880,7 @@ sources:
     ice: Glace
     packed_ice: Glace Compactée
     blue_ice: Glace bleue
+    reinforced_deepslate: Ardoise des Abîmes Renforcée
   fishing:
     cod: Morue
     salmon: Saumon
@@ -885,6 +903,8 @@ sources:
     soul_soil: Terre des âmes
     red_sand: Sable rouge
     rooted_dirt: Terre avec racines
+    mud: Boue
+    muddy_mangrove_roots: Racines de Mangrove Boueuses
   mobs:
     player: Joueur
     bat: Chauve souris
@@ -958,6 +978,12 @@ sources:
     axolotl: Axolotl
     glow_squid: Poulpe luisant
     goat: Chèvre
+    allay: Allay
+    frog: Grenouille
+    tadpole: Têtard
+    warden: Warden
+    camel: Chameau
+    sniffer: Sniffeur
   defense:
     mob_damage: Dégâts causés par les monstres
     player_damage: Dégâts infligés par un joueur
@@ -982,6 +1008,11 @@ sources:
     book_per_level: Livre
   sorcery:
     mana_ability_use: Utiliser des aptitudes de mana
+    sculk: Sculk
+    sculk_vein: Veines de Sculk
+    sculk_sensor: Capteur Sculk
+    sculk_catalyst: Catalyseur de Sculk
+    sculk_shrieker: Hurleur Sculk
   healing:
     drink_regular: Buvez une potion normale
     drink_extended: Boire Potion de durée prolongée
@@ -1043,4 +1074,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 25
+file_version: 30
