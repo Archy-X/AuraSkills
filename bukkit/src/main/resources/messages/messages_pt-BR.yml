@@ -1,5 +1,5 @@
 # Aurelium Skills Portuguese, Brazilian (pt-BR) messages
-# Translators: LordLucas_, Khovovo, N1kyZ
+# Translators: LordLucas_, Khovovo, N1kyZ, Modehz, Ronaldo Winchester
 # Contribute here: https://crowdin.com/project/aureliumskills/pt-BR#
 abilities:
   farming:
@@ -334,7 +334,7 @@ acf:
   minecraft:
     invalid_world: '&cErro: Esse mundo não existe.'
     you_must_be_holding_item: '&cErro: Você deve estar segurando um item em sua mão principal.'
-    player_is_vanished_confirm: "&eAviso: &um{vanished} &eis desapareceu. Não sopre a capa deles!\n&ePara confirmar a sua ação adicione &a:confirm &eao final do nome.\n&eEx: {vanished}:confirm"
+    player_is_vanished_confirm: "&eAviso: &a{vanished} &e desapareceu. Não sopre a capa dele!\n&ePara confirmar a sua ação adicione &a:confirm &e ao final do nome dela.\n&eEx: {vanished}:confirm"
     username_too_short: '&cErro: Nome de usuário muito pequeno, deve ter pelo menos três caracteres.'
     is_not_a_valid_name: '&cErro: &e{name} &cé um nome de usuário inválido.'
     multiple_players_match: '&cErro: Múltiplos jogadores encontrados &b{search} &e({all})&c, por favor, seja mais específico.'
@@ -504,6 +504,11 @@ commands:
     list: '&fMultiplicador de XP global para &6{player}&f: &b{multiplier}x / +{percent}%'
     skill_entry: '&b Multiplicador de &fXP [{skill}]: &b{multiplier}x / +{percent}%'
     players_only: '&eSomente jogadores podem listar seu próprio multiplicador! Especifique um jogador!'
+  profile:
+    skills: "Perfil de Habilidades Aurelius para &6{name}:\n&7UUID: &f{uuid}\n&7Habilidades:{skill_entries}"
+    skill_entry: "\n  &3{skill} &7- Nível: &f{level}&7, XP: &f{xp}"
+    stats: "Perfil de Habilidades Aurelium para &6{name}:\n&7UUID: &f{uuid}\n&7Habilidades:{stat_entries}"
+    stat_entry: "\n  &3{stat} &7- Nível total: &f{total_level}&7, Nível Base: &f{base_level}&7, Nível modificado: &f{modified_level}"
   rank:
     header: '&b&lSua Classificação de Habilidade'
     power: '&ePoder &7(Todas as Habilidades): &f#{rank} de {total}'
@@ -538,6 +543,9 @@ commands:
     average_header_page: '&f--==&b&lPlacar de Líderes &f(Página {page})==--'
     average_entry: '&f{rank}. &b{player} &f- {level}'
     usage: '&eUso: &a/sk top &f<page> &7ou &a/sk top &f[skill] <page>'
+  transfer:
+    success: '&aDados transferidos do jogador&7{from} &a para o jogador &7{to}. Com sucesso'
+    error: '&cHouve um erro na transferência de dados de jogadores. Favor verificar o console em busca de erros.'
   updateleaderboards:
     already_updating: '&eO Placar de Liderança está atualizando!'
     updated: '&aClassificação atualizada!'
@@ -547,7 +555,7 @@ commands:
     set: '&7Definido &b{skill} &7XP do jogador &7{player} &7para {amount}'
     remove: '&7Removido &b{amount} {skill} &7XP do jogador &6{player}'
   unknown_skill: '&eHabilidade desconhecida!'
-  no_profile: '&eJogador não tem um perfil de habilidade!'
+  no_profile: '&eJogador não tem um perfil de habilidades. Por favor, tente reentrar no jogo ou reiniciar o servidor.'
 leveler:
   title: '&a{skill} Melhorada'
   subtitle: '&6{old} ➜ {new}'
@@ -565,11 +573,11 @@ menus:
     level: '&7Nível: &e{level}'
     progress_to_level: "&7Progresso para o nível {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
     max_level: '&6NÍVEL MÁXIMO'
-    ability_levels: "&7Níveis de Habilidade:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
+    ability_levels: "\n&7Níveis de Habilidade:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
     ability_level_entry: '&6{ability} {level} &8({info})'
     ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7Estatísticas de Nível: {stats}\n "
-    mana_ability: "\n&d&lHabilidade de Mana &9{mana_ability} {level}\n &7Duração: &a{duration}s &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+    stats_leveled: "\n&7Estatísticas Nívelada: {stats}"
+    mana_ability: "\n&d&lHabilidade de Mana &9{mana_ability} {level}\n &7Duração: &a{duration}s &7Custo de Mana: &b{mana_cost} &7Resfriamento: &e{cooldown}s\n "
   skills_menu:
     skills_menu_title: Suas Habilidades
     your_skills: '&bSuas Habilidades - &6{player}'
@@ -578,13 +586,16 @@ menus:
     your_skills_click: '&eClique em uma Habilidade para ver o progresso do nível!'
     skill_click: '&eClique para visualizar a Progressão de Nível!'
     skill_locked: '&cVocê não tem permissão para visualizar esta habilidade!'
+    stats: '&bStatus'
+    stats_desc: '&7Ganhe bônus de atributo ao evoluir habilidades'
+    stats_click: '&eClique para saber mais ou ver suas estatísticas'
   level_progression_menu:
     level_progression_menu_title: '{skill} Níveis - Página {page}'
-    your_ranking: '&eSua Classificação de Habilidade'
+    your_ranking: '&6Sua Classificação de Habilidade'
     rank_out_of: '&fVocê está classificado como &6{rank}&f de {total} jogadores'
     rank_percent: '&fVocê está no top &6{percent}%&f dos jogadores'
     back: '&aVoltar'
-    back_click: '&7Voltar ao Menu de Habilidades'
+    back_click: '&7Voltar para o Menu {menu_name}'
     next_page: '&6Próxima página'
     next_page_click: '&eClique para ir para a próxima página'
     previous_page: '&6Página Anterior'
@@ -604,6 +615,13 @@ menus:
     mana_ability_unlock: "\n&9{mana_ability} &d&DDesbloqueio de Habilidade de Mana\n&7  {desc}\n "
     mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
     progress: "&7Progresso: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: '&eClique para ver a tabela de classificação {skill}'
+    sources: '&aFontes de Xp'
+    sources_desc: "&7O menu de fontes mostra todas as maneiras que você\n&7pode ganhar XP em uma habilidade, bem como quanto\n&7XP cada fonte oferece."
+    sources_click: '&eClique para ver as fontes de {skill}'
+    abilities: '&cHabilidades'
+    abilities_desc: "&bHabilidades &7são habilidades passivas que você desbloqueia e\n& 7melhora conforme você aumenta o nível das habilidades.\n&dHabilidades de mana &7são um tipo especial de habilidade\n&7que requer ativação e consumo de mana."
+    abilities_click: '&eClique para ver habilidades {skill}'
   stats_menu:
     stats_menu_title: Suas Estatísticas
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -625,6 +643,35 @@ menus:
     unclaimed_items_title: 'Reivindicar item'
     inventory_full: '&eVocê não tem espaço suficiente no seu inventário para reivindicar esse item'
     click_to_claim: '&eClique para coletar!'
+  leaderboard:
+    leaderboard_title: 'Classificação de {skill}'
+    player_entry: '&e{place}. &6{player}'
+    skill_level: '&7Level: &f{level}'
+  sources:
+    sources_title: '{skill} Fontes de XP ({current_page}/{total_pages})'
+    sorter: '&bClassificar Fontes de XP'
+    sort_type: "&7{selected}{type_name}\n"
+    selected: '&f> '
+    descending: 'Maior para o menor'
+    ascending: 'Menor para maior'
+    alphabetical: 'Name (A-Z)'
+    reverse_alphabetical: 'Name (Z-A)'
+    sort_click: '&eClique para alternar o tipo de classificação'
+    source_name: '&f{name}'
+    source_xp: '&7XP: &a{xp}'
+    source_xp_rate: '&7XP: &a{xp}/{unit}'
+    multiplied_xp: "\n\n&fMultiplicação de XP: &a{xp}"
+    multiplied_xp_rate: "\n\n&fMultiplicado XP: &a{xp}/{unit}"
+    multiplied_desc: "\n&7&oEsse é o XP que você vai realmente ganhar\n&7&obBaseado em seus multiplicadores de XP atuais"
+  abilities:
+    abilities_title: '{skill} Habilidades'
+    locked_desc: "&fDescrição:\n  &7{desc}"
+    unlocked_at: '&7Desbloqueado no &3{skill} {level}'
+    your_ability_level: '&fSeu Nível: &b{level}'
+    your_ability_level_maxed: '&fSeu Nível: &b{level} &6(MAXED)'
+    unlocked_desc: "&fPróxima atualização em &3{skill} {level}&f\n  &7{desc}"
+    unlocked_desc_maxed: "&fDescrição:\n  &7{desc}"
+    desc_upgrade_value: '&7{current}&8→{next}&7'
 mana_abilities:
   replenish:
     name: Reabastecer
@@ -665,14 +712,14 @@ mana_abilities:
     name: Gancho Afiado
     desc: "Cause {value} de dano a uma entidade vinculada\n&7  quando clicar com uma vara de pesca"
     use: '&6Gancho Afiado Usado! &7(-{mana} {mana_unit})'
-    menu: "\n&d&lHabilidade de Mana &9{mana_ability} {level}\n &7Dano: &c{value} &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+    menu: "\n&d&Habilidade da Mana &9{mana_ability} {level}\n  &7Dano: &c{value} &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
   charged_shot:
     name: Tiro Carregado
     desc: "Flechas que você atirar causarão mais dano\n&7  baseado no quão longe o arco foi puxado para trás,\n&7  consumindo mana no processo. {value}% mais\n&7  de dano por mana consumida. &e[Botão esquerdo com\n&e  um arco para altivar o modo de tiro carregado]"
     enable: '&7Modo de disparo carregado agora está ativo'
     disable: '&7Modo de disparo carregado desativado'
     shoot: '&6Tiro carregado Utilizado! &d+{percent}% Dano &7(-{mana} {mana_unit})'
-    menu: "\n&d&Habilidade de Mana &9{mana_ability} {level}\n &7Dano: &c+{value}% / Mana &7Custo de Mana Máxima: &b{mana_cost}\n "
+    menu: "\n&d&Habilidade da Mana &9{mana_ability} {level}\n  &7Dano: &c+{value}% / Mana &7Custo de Mana Máxima: &b{mana_cost}\n "
   lightning_blade:
     name: Lâmina Relâmpago
     desc: Aumenta a velocidade de ataque em {value}% durante {duration} segundos.\n&e [Clique direito da espada e ataque monstros para ativar]
@@ -680,7 +727,7 @@ mana_abilities:
     lower: '&7Você abaixa seu escudo'
     start: '&6Lâmina Relâmpago ativada! &7(-{mana} {mana_unit})'
     end: '&7A Lâmina de Relâmpago acabou'
-    menu: "\n&d&lHabilidade de Mana &9{mana_ability} {level}\n &7Velocidade de ataque: &c+{value}% &7Duração: &a{duration}s\n &7Custo de Mana: &b{mana_cost} &7Cooldown: &e{cooldown}s\n\n "
+    menu: "\n&d&Habilidade da Mana &9{mana_ability} {level}\n  &7Velocidade de Ataque: &c+{value}% &7Duração: &a{duration}s\n  &7Custo de Mana: &b{mana_cost} &7Reuso: &e{cooldown}s\n "
   not_ready: '&cHabilidade não está pronta! &7({cooldown}s)'
   not_enough_mana: '&eMana Insuficiente! &7({mana} {mana_unit} necessária, você tem {current_mana}/{max_mana})'
 rewards:
@@ -735,6 +782,263 @@ skills:
   forging:
     name: Forjar
     desc: "&7Combine e aplique livros na bigorna para\n&7ganhar Forja {xp_unit}"
+sources:
+  farming:
+    wheat: Trigo
+    potato: Batata
+    carrot: Cenoura
+    beetroot: Beterraba
+    nether_wart: Fungo do Nether
+    pumpkin: Abóbora
+    melon: Melancia
+    sugar_cane: Cana de açúcar
+    bamboo: Bambu
+    cocoa: Cacau
+    cactus: Cacto
+    brown_mushroom: Cogumelo Marrom
+    red_mushroom: Cogumelo Vermelho
+    kelp: Alga
+    sea_pickle: Pepino-do-mar
+    sweet_berry_bush: Bagas doces
+    glow_berries: Bagas brilhantes
+    torchflower: Plantocha
+    pitcher_plant: Planta Ancestral
+  foraging:
+    oak_log: Tronco de carvalho
+    spruce_log: Tronco de pinheiro
+    birch_log: Tronco de eucalipto
+    jungle_log: Tronco de madeira da selva
+    acacia_log: Tronco de acácia
+    dark_oak_log: Tronco de carvalho escuro
+    oak_leaves: Folhas de Carvalho
+    spruce_leaves: Folhas de Abeto
+    birch_leaves: Folhas de Bétula
+    jungle_leaves: Folhas da Selva
+    acacia_leaves: Folhas de Acácia
+    dark_oak_leaves: Folhas de Carvalho Escuro
+    crimson_stem: Caule Carmesim
+    warped_stem: Caule Distorcido
+    nether_wart_block: Bloco de Fungo do Nether
+    warped_wart_block: Fungo Deformado
+    moss_block: Bloco de Musgo
+    moss_carpet: Carpete de Musgo
+    azalea: Azaleia
+    flowering_azalea: Azaleia Florida
+    azalea_leaves: Folhas de Azaleia
+    flowering_azalea_leaves: Folhas de Azaleia Florida
+    mangrove_log: Tronco de Mangrove
+    mangrove_leaves: Folhas de Mangrove
+    mangrove_roots: Raiz de Mangrove
+    cherry_log: Tronco de cerejeira
+    cherry_leaves: Folhas de cerejeira
+    pink_petals: Pétalas rosas
+  mining:
+    stone: Pedra
+    cobblestone: Pedregulho
+    andesite: Andesito
+    diorite: Diorito
+    granite: Granito
+    coal_ore: Minério de Carvão
+    nether_quartz_ore: Minério de Quartzo do Nether
+    iron_ore: Minério de ferro
+    lapis_ore: Nível de Lápis
+    redstone_ore: Minério de Redstone
+    gold_ore: Minério de Ouro
+    diamond_ore: Minério de Diamante
+    emerald_ore: Minério de Esmeralda
+    terracotta: Terracota
+    white_terracotta: Terracota Branca
+    orange_terracotta: Terracota Laranja
+    yellow_terracotta: Terracota Amarela
+    light_gray_terracotta: Terrcotta Cinza Claro
+    brown_terracotta: Terrcotta Marrom
+    red_terracotta: Terracota Vermelha
+    netherrack: Rocha do Nether
+    blackstone: Pedra Negra
+    basalt: Basalto
+    magma_block: Bloco de Magma
+    nether_gold_ore: Minério de Ouro do Nether
+    ancient_debris: Detritos Ancestrais
+    end_stone: Pedra do End
+    obsidian: Obsidiana
+    deepslate: De ardósia
+    copper_ore: Minério de Cobre
+    tuff: Tufo
+    calcite: Calcita
+    smooth_basalt: Basalto Liso
+    amethyst_block: Bloco de Ametista
+    amethyst_cluster: Aglomerado de Ametista
+    deepslate_coal_ore: Minério de carvão de ardósia
+    deepslate_iron_ore: Minério de ferro de ardósia
+    deepslate_copper_ore: Minério de cobre de ardósia
+    deepslate_gold_ore: Minério de ouro de ardósia
+    deepslate_redstone_ore: Minério de redstone de ardósia
+    deepslate_lapis_ore: Minério de lápis-lazúli de ardósia
+    deepslate_emerald_ore: Minério de esmeralda de ardósia
+    deepslate_diamond_ore: Minério de diamante de ardósia
+    dripstone_block: Bloco de espeleotema
+    ice: Gelo
+    packed_ice: Gelo compactado
+    blue_ice: Gelo Azul
+    reinforced_deepslate: Ardósia reforçada
+  fishing:
+    cod: Bacalhau
+    salmon: Salmão
+    tropical_fish: Peixe Tropical
+    pufferfish: Baiacu
+    treasure: Itens de Tesouro
+    junk: Itens Inúteis
+    rare: Drop Raro
+    epic: Drop Épico
+  excavation:
+    dirt: Terra
+    grass_block: Bloco de grama
+    sand: Areia
+    gravel: Cascalho
+    mycelium: Micélio
+    clay: Argila
+    soul_sand: Areia das Almas
+    coarse_dirt: Terra Grossa
+    podzol: Podzol
+    soul_soil: Terra da Alma
+    red_sand: Areia Vermelha
+    rooted_dirt: Terra enraizada
+    mud: Barro
+    muddy_mangrove_roots: Raízes barrentas de mangue
+  mobs:
+    player: Jogador
+    bat: Morcego
+    cat: Gato
+    chicken: Galinha
+    cod: Bacalhau
+    cow: Vaca
+    donkey: Burro
+    fox: Raposa
+    giant: Giant
+    horse: Cavalo
+    mooshroom: Coguvaca
+    mule: Mula
+    ocelot: Jaguatirica
+    parrot: Papagaio
+    pig: Porco
+    rabbit: Coelho
+    salmon: Salmão
+    sheep: Ovelha
+    skeleton_horse: Cavalo Esqueleto
+    snow_golem: Golem de Neve
+    squid: Lula
+    strider: Strider
+    tropical_fish: Peixe Tropical
+    turtle: Tartaruga
+    villager: Aldeão
+    wandering_trader: Comerciante Nômade
+    bee: Abelha
+    cave_spider: Aranha das Cavernas
+    dolphin: Golfinho
+    enderman: Enderman
+    iron_golem: Golem de Ferro
+    llama: Lhama
+    piglin: Piglin
+    panda: Panda
+    polar_bear: Urso polar
+    pufferfish: Baiacu
+    spider: Aranha
+    wolf: Lobo
+    zombified_piglin: Piglin Zumbificado
+    blaze: Blaze
+    creeper: Creeper
+    drowned: Afogado
+    elder_guardian: Guardião Ancião
+    endermite: Endermite
+    evoker: Evoker
+    ghast: Ghast
+    guardian: Guardião
+    hoglin: Hoglin
+    husk: Husk
+    illusioner: Ilusionista
+    magma_cube: Cubo de Magma
+    phantom: Phantom
+    piglin_brute: Piglin Bruto
+    pillager: Saqueador
+    ravager: Devastador
+    shulker: Shulker
+    silverfish: Traça
+    skeleton: Esqueleto
+    slime: Slime
+    stray: Esqueleto Errante
+    vex: Vex
+    vindicator: Vingador
+    witch: Bruxa
+    wither_skeleton: Esqueleto Wither
+    zoglin: Zoglin
+    zombie: Zumbi
+    zombie_villager: Aldeão Zumbi
+    ender_dragon: Dragão Do Fim
+    wither: Wither
+    axolotl: Axolote
+    glow_squid: Lula Brilhante
+    goat: Cabra
+    allay: Allay
+    frog: Sapo
+    tadpole: Girino
+    warden: Defensor
+    camel: Camelo
+    sniffer: Farejador
+  defense:
+    mob_damage: Dano de Mobs
+    player_damage: Dano por Jogadores
+  endurance:
+    walk_per_meter: Caminhando
+    sprint_per_meter: Correndo
+    swim_per_meter: Natação
+  agility:
+    jump_per_100: Saltando
+    fall_damage: Dano de Queda
+  alchemy:
+    awkward: Poção Estranha
+    regular: Poção Normal
+    extended: Poção de Duração Estendida
+    upgraded: Poção Melhorada
+    splash: Poção arremessável
+    lingering: Poção Prolongada
+  enchanting:
+    weapon_per_level: Arma
+    armor_per_level: Armadura
+    tool_per_level: Ferramenta
+    book_per_level: Livro
+  sorcery:
+    mana_ability_use: Usar Habilidades de Mana
+    sculk: Sculk
+    sculk_vein: Veio de sculk
+    sculk_sensor: Sensor de Sculk
+    sculk_catalyst: Catalisador de Sculk
+    sculk_shrieker: Emissor de Sculk
+  healing:
+    drink_regular: Beba uma Poção Normal
+    drink_extended: Beber Poção de Duração Estendida
+    drink_upgraded: Beber Poção Melhorada
+    splash_regular: Poção arremessável Normal
+    splash_extended: Poção arremessável de Duração Estendida
+    splash_upgraded: Poção arremessável de Melhoria
+    lingering_regular: Usar poção prolongada comum
+    lingering_extended: Usar poção prolongada com duração extendida
+    lingering_upgraded: Usar poção prolongada com nível aumentado
+    golden_apple: Maçã dourada
+    enchanted_golden_apple: Maçã dourada encantada
+  forging:
+    combine_books_per_level: Combinar Livros Encantados
+    combine_weapon_per_level: Combinar Arma com Livro
+    combine_armor_per_level: Combinar Armadura com Livro
+    combine_tool_per_level: Combinar Ferramenta com Livro
+    grindstone_per_level: Desencantar o Item com Pedra de Amolar
+  units:
+    damage: Dano
+    meter: Medidor
+    100_jumps: 100 Pulos
+    mana: Mana consumida
+    combine_level: Custo de XP da Bigorn
+    grindstone_level: Nível de Encantamento no item
+    enchant_level: Nível de Encantamento Recebido
 stats:
   strength:
     name: Força
@@ -770,4 +1074,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 24
+file_version: 30
