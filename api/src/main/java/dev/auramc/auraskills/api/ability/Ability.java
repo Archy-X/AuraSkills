@@ -14,6 +14,8 @@ public interface Ability extends AbstractAbility {
 
     boolean hasSecondaryValue();
 
+    boolean isEnabled();
+
     double getBaseValue();
 
     double getSecondaryBaseValue();

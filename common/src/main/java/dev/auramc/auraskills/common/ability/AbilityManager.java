@@ -2,82 +2,99 @@ package dev.auramc.auraskills.common.ability;
 
 import com.google.common.collect.ImmutableList;
 import dev.auramc.auraskills.api.ability.Ability;
+import dev.auramc.auraskills.api.ability.AbilityProvider;
 import dev.auramc.auraskills.api.ability.AbstractAbility;
-import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.registry.NamespacedId;
+import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
-import dev.auramc.auraskills.common.config.OptionValue;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Manager for storing and retrieving ability configs. Does not handle
  * loading configs from file.
  */
-public class AbilityManager {
+public class AbilityManager implements AbilityProvider {
 
     private final AuraSkillsPlugin plugin;
-    private final Map<Ability, AbilityConfig> configMap;
+    private final Map<Ability, LoadedAbility> abilityMap;
 
     public AbilityManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        configMap = new HashMap<>();
+        abilityMap = new HashMap<>();
     }
 
-    public AbilityConfig getConfig(Ability ability) {
-        AbilityConfig config = configMap.get(ability);
-        if (config == null) {
-            throw new IllegalArgumentException("Ability " + ability + " does not have a config!");
+    public void register(Ability ability, LoadedAbility loadedAbility) {
+        abilityMap.put(ability, loadedAbility);
+    }
+
+    public LoadedAbility getAbility(Ability ability) {
+        LoadedAbility loadedAbility = abilityMap.get(ability);
+        if (loadedAbility == null) {
+            throw new IllegalArgumentException("Ability " + ability + " is not loaded!");
         }
-        return config;
+        return loadedAbility;
     }
 
-    public void addConfig(Ability ability, AbilityConfig config) {
-        configMap.put(ability, config);
-    }
-
+    @Override
     public Skill getSkill(Ability ability) {
-        return getConfig(ability).skill();
+        return getAbility(ability).skill();
     }
 
+    @Override
+    public String getDisplayName(Ability ability, Locale locale) {
+        return plugin.getMessageProvider().getAbilityDisplayName(ability, locale);
+    }
+
+    @Override
+    public String getDescription(Ability ability, Locale locale) {
+        return plugin.getMessageProvider().getAbilityDescription(ability, locale);
+    }
+
+    @Override
+    public String getInfo(Ability ability, Locale locale) {
+        return plugin.getMessageProvider().getAbilityInfo(ability, locale);
+    }
+
+    @Override
     public boolean isEnabled(Ability ability) {
-        return getConfig(ability).enabled();
+        return getAbility(ability).config().enabled();
     }
 
+    @Override
     public double getBaseValue(Ability ability) {
-        return getConfig(ability).baseValue();
+        return getAbility(ability).config().baseValue();
     }
 
-    public double getValuePerLevel(Ability ability) {
-        return getConfig(ability).valuePerLevel();
-    }
-
+    @Override
     public double getSecondaryBaseValue(Ability ability) {
-        return getConfig(ability).secondaryBaseValue();
+        return getAbility(ability).config().secondaryBaseValue();
     }
 
+    @Override
+    public double getValuePerLevel(Ability ability) {
+        return getAbility(ability).config().valuePerLevel();
+    }
+
+    @Override
     public double getSecondaryValuePerLevel(Ability ability) {
-        return getConfig(ability).secondaryValuePerLevel();
+        return getAbility(ability).config().secondaryValuePerLevel();
     }
 
+    @Override
     public int getUnlock(Ability ability) {
-        return getConfig(ability).unlock();
+        return getAbility(ability).config().unlock();
     }
 
+    @Override
     public int getLevelUp(Ability ability) {
-        return getConfig(ability).levelUp();
+        return getAbility(ability).config().levelUp();
     }
 
+    @Override
     public int getMaxLevel(Ability ability) {
-        return getConfig(ability).maxLevel();
-    }
-
-    public Map<String, OptionValue> getOptions(Ability ability) {
-        return getConfig(ability).options();
+        return getAbility(ability).config().maxLevel();
     }
 
     /**

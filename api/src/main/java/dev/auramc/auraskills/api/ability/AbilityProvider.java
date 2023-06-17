@@ -14,6 +14,8 @@ public interface AbilityProvider {
 
     String getInfo(Ability ability, Locale locale);
 
+    boolean isEnabled(Ability ability);
+
     double getBaseValue(Ability ability);
 
     double getSecondaryBaseValue(Ability ability);

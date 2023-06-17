@@ -3,19 +3,50 @@ package dev.auramc.auraskills.common.stat;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.api.stat.Stat;
 import dev.auramc.auraskills.api.stat.StatModifier;
+import dev.auramc.auraskills.api.stat.StatProvider;
 import dev.auramc.auraskills.api.stat.Stats;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
 import dev.auramc.auraskills.common.data.PlayerData;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Interface with methods to manage player stats.
  */
-public abstract class StatManager {
+public abstract class StatManager implements StatProvider {
 
     private final AuraSkillsPlugin plugin;
+    private final Map<Stat, LoadedStat> statMap;
 
     public StatManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
+        this.statMap = new HashMap<>();
+    }
+
+    public void register(Stat stat, LoadedStat loadedStat) {
+        statMap.put(stat, loadedStat);
+    }
+
+    @Override
+    public String getDisplayName(Stat stat, Locale locale) {
+        return plugin.getMessageProvider().getStatDisplayName(stat, locale);
+    }
+
+    @Override
+    public String getDescription(Stat stat, Locale locale) {
+        return plugin.getMessageProvider().getStatDescription(stat, locale);
+    }
+
+    @Override
+    public String getColor(Stat stat, Locale locale) {
+        return plugin.getMessageProvider().getStatColor(stat, locale);
+    }
+
+    @Override
+    public String getSymbol(Stat stat, Locale locale) {
+        return plugin.getMessageProvider().getStatSymbol(stat, locale);
     }
 
     public abstract void reloadStat(PlayerData playerData, Stat stat);

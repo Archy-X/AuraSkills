@@ -1,86 +1,104 @@
 package dev.auramc.auraskills.common.mana;
 
 import dev.auramc.auraskills.api.mana.ManaAbility;
+import dev.auramc.auraskills.api.mana.ManaAbilityProvider;
 import dev.auramc.auraskills.api.skill.Skill;
 import dev.auramc.auraskills.common.AuraSkillsPlugin;
-import dev.auramc.auraskills.common.config.OptionValue;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * Manager for storing and retrieving mana ability configs. Does not handle
  * loading configs from file.
  */
-public class ManaAbilityManager {
+public class ManaAbilityManager implements ManaAbilityProvider {
 
     private final AuraSkillsPlugin plugin;
-    private final Map<ManaAbility, ManaAbilityConfig> configMap;
+    private final Map<ManaAbility, LoadedManaAbility> manaAbilityMap;
 
     public ManaAbilityManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        configMap = new HashMap<>();
+        manaAbilityMap = new HashMap<>();
     }
 
-    public ManaAbilityConfig getConfig(ManaAbility ability) {
-        ManaAbilityConfig config = configMap.get(ability);
-        if (config == null) {
-            throw new IllegalArgumentException("Mana Ability " + ability + " does not have a config!");
+    public void register(ManaAbility manaAbility, LoadedManaAbility loadedManaAbility) {
+        manaAbilityMap.put(manaAbility, loadedManaAbility);
+    }
+
+    public LoadedManaAbility getManaAbility(ManaAbility manaAbility) {
+        LoadedManaAbility loadedMana = manaAbilityMap.get(manaAbility);
+        if (loadedMana == null) {
+            throw new IllegalArgumentException("Mana ability " + manaAbility + " is not loaded!");
         }
-        return config;
+        return loadedMana;
     }
 
-    public void addConfig(ManaAbility ability, ManaAbilityConfig config) {
-        configMap.put(ability, config);
+    @Override
+    public Skill getSkill(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).skill();
     }
 
-    public Skill getSkill(ManaAbility ability) {
-        return getConfig(ability).skill();
+    @Override
+    public String getDisplayName(ManaAbility manaAbility, Locale locale) {
+        return plugin.getMessageProvider().getManaAbilityDisplayName(manaAbility, locale);
     }
 
-    public boolean isEnabled(ManaAbility ability) {
-        return getConfig(ability).enabled();
+    @Override
+    public String getDescription(ManaAbility manaAbility, Locale locale) {
+        return plugin.getMessageProvider().getManaAbilityDescription(manaAbility, locale);
     }
 
-    public double getBaseValue(ManaAbility ability) {
-        return getConfig(ability).baseValue();
+    @Override
+    public boolean isEnabled(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().enabled();
     }
 
-    public double getValuePerLevel(ManaAbility ability) {
-        return getConfig(ability).valuePerLevel();
+    @Override
+    public double getBaseValue(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().baseValue();
     }
 
-    public double getBaseCooldown(ManaAbility ability) {
-        return getConfig(ability).baseCooldown();
+    @Override
+    public double getValuePerLevel(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().valuePerLevel();
     }
 
-    public double getCooldownPerLevel(ManaAbility ability) {
-        return getConfig(ability).cooldownPerLevel();
+    @Override
+    public double getBaseCooldown(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().baseCooldown();
     }
 
-    public double getBaseManaCost(ManaAbility ability) {
-        return getConfig(ability).baseManaCost();
+    @Override
+    public double getCooldownPerLevel(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().cooldownPerLevel();
     }
 
-    public double getManaCostPerLevel(ManaAbility ability) {
-        return getConfig(ability).manaCostPerLevel();
+    @Override
+    public double getBaseManaCost(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().baseManaCost();
     }
 
-    public int getUnlock(ManaAbility ability) {
-        return getConfig(ability).unlock();
+    @Override
+    public double getManaCostPerLevel(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().manaCostPerLevel();
     }
 
-    public int getLevelUp(ManaAbility ability) {
-        return getConfig(ability).levelUp();
+    @Override
+    public int getUnlock(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().unlock();
     }
 
-    public int getMaxLevel(ManaAbility ability) {
-        return getConfig(ability).maxLevel();
+    @Override
+    public int getLevelUp(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().levelUp();
     }
 
-    public Map<String, OptionValue> getOptions(ManaAbility ability) {
-        return getConfig(ability).options();
+    @Override
+    public int getMaxLevel(ManaAbility manaAbility) {
+        return getManaAbility(manaAbility).config().maxLevel();
     }
 
     /**
@@ -91,7 +109,7 @@ public class ManaAbilityManager {
      * @return The mana ability unlocked or leveled up, or null
      */
     @Nullable
-    public ManaAbility getManaAbility(Skill skill, int level) {
+    public ManaAbility getManaAbilityAtLevel(Skill skill, int level) {
         ManaAbility mAbility = skill.getManaAbility();
         if (mAbility != null) {
             if (level >= getUnlock(mAbility) && (level - getUnlock(mAbility)) % getLevelUp(mAbility) == 0) {

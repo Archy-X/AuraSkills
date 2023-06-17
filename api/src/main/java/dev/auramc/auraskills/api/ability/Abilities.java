@@ -131,6 +131,12 @@ public enum Abilities implements Ability {
     }
 
     @Override
+    public boolean isEnabled() {
+        validate();
+        return provider.isEnabled(this);
+    }
+
+    @Override
     public double getBaseValue() {
         validate();
         return provider.getBaseValue(this);

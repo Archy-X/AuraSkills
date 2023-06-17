@@ -9,28 +9,18 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Registry<T, P> {
+public abstract class Registry<T> {
 
     private final Class<T> type;
-    private final Class<P> propertyType;
     private final Map<NamespacedId, T> registryMap;
-    private final Map<T, P> propertyMap;
 
-    public Registry(Class<T> type, Class<P> propertyType) {
+    public Registry(Class<T> type) {
         this.type = type;
-        this.propertyType = propertyType;
         this.registryMap = new HashMap<>();
-        this.propertyMap = new HashMap<>();
     }
-
-    public abstract void registerDefaults();
 
     public Class<T> getType() {
         return type;
-    }
-
-    public Class<P> getPropertyType() {
-        return propertyType;
     }
 
     @NotNull
@@ -42,26 +32,15 @@ public abstract class Registry<T, P> {
         return type;
     }
 
-    @NotNull
-    public P getProperties(T value) {
-        P prop = propertyMap.get(value);
-        if (prop == null) {
-            throw new IllegalArgumentException("Value " + value + " is not registered in registry " + this.getClass().getSimpleName());
-        }
-        return prop;
-    }
-
     public Collection<T> getValues() {
         return registryMap.values();
     }
 
-    public void register(@NotNull NamespacedId id, @NotNull T value, @NotNull P properties) {
+    public void register(@NotNull NamespacedId id, @NotNull T value) {
         registryMap.put(id, value);
-        propertyMap.put(value, properties);
     }
 
     public void unregister(NamespacedId id) {
-        propertyMap.remove(get(id));
         registryMap.remove(id);
     }
 

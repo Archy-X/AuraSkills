@@ -50,6 +50,12 @@ public enum ManaAbilities implements ManaAbility {
     }
 
     @Override
+    public boolean isEnabled() {
+        validate();
+        return provider.isEnabled(this);
+    }
+
+    @Override
     public double getBaseValue() {
         validate();
         return provider.getBaseValue(this);

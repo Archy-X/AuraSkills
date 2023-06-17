@@ -12,6 +12,8 @@ public interface ManaAbilityProvider {
 
     String getDescription(ManaAbility manaAbility, Locale locale);
 
+    boolean isEnabled(ManaAbility manaAbility);
+
     double getBaseValue(ManaAbility manaAbility);
 
     double getValuePerLevel(ManaAbility manaAbility);

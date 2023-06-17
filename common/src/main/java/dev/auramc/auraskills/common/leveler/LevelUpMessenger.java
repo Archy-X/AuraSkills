@@ -76,10 +76,10 @@ public class LevelUpMessenger {
     private String getAbilityUnlockMessage() {
         MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
         for (Ability ability : plugin.getAbilityManager().getAbilities(skill, level)) {
-            if (!plugin.getAbilityManager().isEnabled(ability)) {
+            if (!ability.isEnabled()) {
                 continue;
             }
-            if (plugin.getAbilityManager().getUnlock(ability) == level) { // If ability is unlocked at this level
+            if (ability.getUnlock() == level) { // If ability is unlocked at this level
                 builder.message(LevelerMessage.ABILITY_UNLOCK,
                         "ability", ability.getDisplayName(locale));
             }
@@ -90,10 +90,10 @@ public class LevelUpMessenger {
     private String getAbilityLevelUpMessage() {
         MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
         for (Ability ability : plugin.getAbilityManager().getAbilities(skill, level)) {
-            if (!plugin.getAbilityManager().isEnabled(ability)) {
+            if (!ability.isEnabled()) {
                 continue;
             }
-            if (plugin.getAbilityManager().getUnlock(ability) != level) { // If ability is unlocked at this level
+            if (ability.getUnlock() != level) { // If ability is unlocked at this level
                 builder.message(LevelerMessage.ABILITY_LEVEL_UP,
                         "ability", ability.getDisplayName(locale),
                         "level", RomanNumber.toRoman(playerData.getAbilityLevel(ability), plugin));
@@ -104,13 +104,13 @@ public class LevelUpMessenger {
 
     private String getManaAbilityUnlockMessage() {
         MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
-        ManaAbility manaAbility = plugin.getManaAbilityManager().getManaAbility(skill, level);
+        ManaAbility manaAbility = plugin.getManaAbilityManager().getManaAbilityAtLevel(skill, level);
 
         if (manaAbility == null) return "";
-        if (!plugin.getManaAbilityManager().isEnabled(manaAbility)) return "";
+        if (!manaAbility.isEnabled()) return "";
 
         // If mana ability is unlocked at this level
-        if (plugin.getManaAbilityManager().getUnlock(manaAbility) == level) {
+        if (manaAbility.getUnlock() == level) {
             builder.message(LevelerMessage.MANA_ABILITY_UNLOCK,
                     "mana_ability", manaAbility.getDisplayName(locale));
         }
@@ -119,13 +119,13 @@ public class LevelUpMessenger {
 
     private String getManaAbilityLevelUpMessage() {
         MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
-        ManaAbility manaAbility = plugin.getManaAbilityManager().getManaAbility(skill, level);
+        ManaAbility manaAbility = plugin.getManaAbilityManager().getManaAbilityAtLevel(skill, level);
 
         if (manaAbility == null) return "";
-        if (!plugin.getManaAbilityManager().isEnabled(manaAbility)) return "";
+        if (!manaAbility.isEnabled()) return "";
 
         // If mana ability is unlocked at this level
-        if (plugin.getManaAbilityManager().getUnlock(manaAbility) != level) {
+        if (manaAbility.getUnlock() != level) {
             builder.message(LevelerMessage.MANA_ABILITY_LEVEL_UP,
                     "mana_ability", manaAbility.getDisplayName(locale),
                     "level", RomanNumber.toRoman(playerData.getManaAbilityLevel(manaAbility), plugin));

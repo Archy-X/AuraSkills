@@ -12,6 +12,8 @@ public interface ManaAbility extends AbstractAbility {
 
     String name();
 
+    boolean isEnabled();
+
     double getBaseValue();
 
     double getValuePerLevel();

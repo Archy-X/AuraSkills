@@ -255,31 +255,31 @@ public abstract class PlayerData {
     }
 
     public int getAbilityLevel(Ability ability) {
-        Skill skill = plugin.getAbilityRegistry().getSkill(ability);
-        if (getSkillLevel(skill) < plugin.getAbilityManager().getUnlock(ability)) {
+        Skill skill = ability.getSkill();
+        if (getSkillLevel(skill) < ability.getUnlock()) {
             return 0;
         }
-        int level = (getSkillLevel(skill) - plugin.getAbilityManager().getUnlock(ability)) / plugin.getAbilityManager().getLevelUp(ability) + 1;
+        int level = (getSkillLevel(skill) - ability.getUnlock()) / ability.getLevelUp() + 1;
         // Check max level
-        if (level <= plugin.getAbilityManager().getMaxLevel(ability) || plugin.getAbilityManager().getMaxLevel(ability) == 0) {
+        if (level <= ability.getMaxLevel() || ability.getMaxLevel() == 0) {
             return level;
         } else {
-            return plugin.getAbilityManager().getMaxLevel(ability);
+            return ability.getMaxLevel();
         }
     }
 
     public int getManaAbilityLevel(ManaAbility mAbility) {
         // Check if unlocked
-        Skill skill = plugin.getManaAbilityRegistry().getSkill(mAbility);
-        if (getSkillLevel(skill) < plugin.getManaAbilityManager().getUnlock(mAbility)) {
+        Skill skill = mAbility.getSkill();
+        if (getSkillLevel(skill) < mAbility.getUnlock()) {
             return 0;
         }
-        int level = (getSkillLevel(skill) - plugin.getManaAbilityManager().getUnlock(mAbility)) / plugin.getManaAbilityManager().getLevelUp(mAbility) + 1;
+        int level = (getSkillLevel(skill) - mAbility.getUnlock()) / mAbility.getLevelUp() + 1;
         // Check max level
-        if (level <= plugin.getManaAbilityManager().getMaxLevel(mAbility) || plugin.getManaAbilityManager().getMaxLevel(mAbility) == 0) {
+        if (level <= mAbility.getMaxLevel() || mAbility.getMaxLevel() == 0) {
             return level;
         } else {
-            return plugin.getManaAbilityManager().getMaxLevel(mAbility);
+            return mAbility.getMaxLevel();
         }
     }
 
