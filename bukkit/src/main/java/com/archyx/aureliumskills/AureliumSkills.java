@@ -92,7 +92,6 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
-import dev.auramc.auraskills.common.api.ApiRegistrationUtil;
 import fr.minuskube.inv.InventoryManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -375,8 +374,6 @@ public class AureliumSkills extends JavaPlugin {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			agilityAbilities.removeFleetingQuit(player);
 		}
-		// Unregister API
-		ApiRegistrationUtil.unregister();
 	}
 
 	private void backupAutomatically() {
