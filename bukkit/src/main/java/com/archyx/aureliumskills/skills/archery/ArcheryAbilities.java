@@ -10,7 +10,10 @@ import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -18,7 +21,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -100,6 +102,7 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
     }
 
     public void pierceInit(PlayerData playerData, Player player, Arrow arrow) {
+        if (blockAbility(player)) return;
         if (r.nextDouble() < (getValue(Ability.PIERCING, playerData) / 100)) {
             // Adds 1 pierce to the initial shot otherwise it doesn't pierce on non-lethal damage.
             arrow.setPierceLevel(arrow.getPierceLevel() + 1);
