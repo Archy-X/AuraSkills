@@ -10,14 +10,17 @@ import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -94,12 +97,15 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
         }
         if (r.nextDouble() < (getValue(Ability.PIERCING, playerData) / 100)) {
             arrow.setBounce(false);
-            Vector velocity = arrow.getVelocity();
-            Arrow newArrow = event.getEntity().getWorld().spawnArrow(arrow.getLocation(), velocity, (float) velocity.length(), 0.0f);
-            newArrow.setShooter(player);
-            newArrow.setKnockbackStrength(arrow.getKnockbackStrength());
-            newArrow.setFireTicks(arrow.getFireTicks());
-            newArrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
+            arrow.setPierceLevel(arrow.getPierceLevel() + 1);
+        }
+    }
+
+    public void pierceInit(PlayerData playerData, Player player, Arrow arrow) {
+        if (blockAbility(player)) return;
+        if (r.nextDouble() < (getValue(Ability.PIERCING, playerData) / 100)) {
+            // Adds 1 pierce to the initial shot otherwise it doesn't pierce on non-lethal damage.
+            arrow.setPierceLevel(arrow.getPierceLevel() + 1);
         }
     }
 
@@ -123,6 +129,24 @@ public class ArcheryAbilities extends AbilityProvider implements Listener {
                     }
                     if (options.isEnabled(Ability.PIERCING)) {
                         piercing(event, playerData, player, arrow);
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void pierceListener(EntityShootBowEvent event) {
+        if (OptionL.isEnabled(Skills.ARCHERY)) {
+            if (event.getProjectile() instanceof Arrow) {
+                Arrow arrow = (Arrow) event.getProjectile();
+                if (arrow.getShooter() instanceof Player) {
+                    Player player = (Player) arrow.getShooter();
+                    PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
+                    if (playerData == null) return;
+                    AbilityManager options = plugin.getAbilityManager();
+                    if (options.isEnabled(Ability.PIERCING)) {
+                        pierceInit(playerData, player, arrow);
                     }
                 }
             }
