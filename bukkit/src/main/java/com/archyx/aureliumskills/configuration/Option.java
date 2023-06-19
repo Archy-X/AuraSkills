@@ -62,6 +62,7 @@ public enum Option {
     CHECK_BLOCK_REPLACE("check-block-replace", OptionType.BOOLEAN),
     DISABLE_IN_CREATIVE_MODE("disable-in-creative-mode", OptionType.BOOLEAN),
     RESET_SKILLS_ON_DEATH("reset-skills-on-death", OptionType.BOOLEAN),
+    RESET_XP_ON_DEATH("reset-xp-on-death", OptionType.BOOLEAN),
     AUTO_SAVE_ENABLED("auto-save.enabled", OptionType.BOOLEAN),
     AUTO_SAVE_INTERVAL_TICKS("auto-save.interval-ticks", OptionType.INT),
     SKILL_MONEY_REWARDS_ENABLED("skill-money-rewards.enabled", OptionType.BOOLEAN),

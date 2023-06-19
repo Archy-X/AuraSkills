@@ -22,13 +22,17 @@ public class PlayerDeath implements Listener {
 
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
-		if (OptionL.getBoolean(Option.RESET_SKILLS_ON_DEATH)) {
+		if (OptionL.getBoolean(Option.RESET_SKILLS_ON_DEATH) || OptionL.getBoolean(Option.RESET_XP_ON_DEATH)) {
 			Player player = event.getEntity();
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData != null){
 				for (Skill s : plugin.getSkillRegistry().getSkills()) {
-					resetPlayerSkills(player, playerData, s);
-    				}
+					if (OptionL.getBoolean(Option.RESET_SKILLS_ON_DEATH)) {
+						resetPlayerSkills(player, playerData, s);
+					} else if (OptionL.getBoolean(Option.RESET_XP_ON_DEATH)) {
+						resetPlayerXp(playerData, s);
+					}
+    			}
 			}
 		}
 	}
@@ -42,4 +46,7 @@ public class PlayerDeath implements Listener {
 		plugin.getLeveler().applyRevertCommands(player, skill, oldLevel, 1);
 	}
 
+	private void resetPlayerXp(PlayerData playerData, Skill skill) {
+		playerData.setSkillXp(skill, 0);
+	}
 }
