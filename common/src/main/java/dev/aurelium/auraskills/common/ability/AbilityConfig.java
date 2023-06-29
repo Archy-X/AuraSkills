@@ -1,11 +1,45 @@
 package dev.aurelium.auraskills.common.ability;
 
-import dev.aurelium.auraskills.common.config.OptionValue;
+import dev.aurelium.auraskills.common.util.data.OptionProvider;
 
 import java.util.Map;
 
-public record AbilityConfig(boolean enabled, double baseValue, double valuePerLevel,
-                            double secondaryBaseValue, double secondaryValuePerLevel, int unlock, int levelUp,
-                            int maxLevel, Map<String, OptionValue> options) {
+public class AbilityConfig extends OptionProvider {
+
+    public AbilityConfig(Map<String, Object> optionMap) {
+        super(optionMap);
+    }
+
+    public boolean enabled() {
+        return getBoolean("enabled");
+    }
+
+    public double baseValue() {
+        return getDouble("base_value");
+    }
+
+    public double valuePerLevel() {
+        return getDouble("value_per_level");
+    }
+
+    public double secondaryBaseValue() {
+        return getDouble("secondary_base_value");
+    }
+
+    public double secondaryValuePerLevel() {
+        return getDouble("secondary_value_per_level");
+    }
+
+    public int unlock() {
+        return getInt("unlock");
+    }
+
+    public int levelUp() {
+        return getInt("level_up");
+    }
+
+    public int maxLevel() {
+        return getInt("max_level");
+    }
 
 }
