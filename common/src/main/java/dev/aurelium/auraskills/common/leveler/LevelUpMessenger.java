@@ -9,8 +9,8 @@ import dev.aurelium.auraskills.common.data.PlayerData;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.type.MoneyReward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 
 import java.text.DecimalFormat;
@@ -25,9 +25,9 @@ public class LevelUpMessenger {
     private final Locale locale;
     private final Skill skill;
     private final int level;
-    private final List<Reward> rewards;
+    private final List<SkillReward> rewards;
 
-    public LevelUpMessenger(AuraSkillsPlugin plugin, PlayerData playerData, Locale locale, Skill skill, int level, List<Reward> rewards) {
+    public LevelUpMessenger(AuraSkillsPlugin plugin, PlayerData playerData, Locale locale, Skill skill, int level, List<SkillReward> rewards) {
         this.plugin = plugin;
         this.playerData = playerData;
         this.locale = locale;
@@ -67,7 +67,7 @@ public class LevelUpMessenger {
 
     private String getRewardMessage() {
         StringBuilder rewardMessage = new StringBuilder();
-        for (Reward reward : rewards) {
+        for (SkillReward reward : rewards) {
             rewardMessage.append(reward.getChatMessage(playerData, locale, skill, level));
         }
         return rewardMessage.toString();

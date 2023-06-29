@@ -1,11 +1,11 @@
-package dev.aurelium.auraskills.common.rewards.parser;
+package dev.aurelium.auraskills.common.reward.parser;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.type.RewardMessage;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import dev.aurelium.auraskills.common.rewards.builder.ItemRewardBuilder;
+import dev.aurelium.auraskills.common.reward.builder.ItemRewardBuilder;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class ItemRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(Map<?, ?> map) {
+    public SkillReward parse(Map<?, ?> map) {
         String key = getString(map, "key");
         NamespacedId itemKey = NamespacedId.fromStringOrDefault(key);
         ItemRewardBuilder builder = new ItemRewardBuilder(plugin).itemKey(itemKey);

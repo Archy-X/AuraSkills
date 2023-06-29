@@ -1,14 +1,14 @@
-package dev.aurelium.auraskills.common.rewards.type;
+package dev.aurelium.auraskills.common.reward.type;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.data.PlayerData;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 
 import java.util.Locale;
 
-public class MoneyReward extends Reward {
+public class MoneyReward extends SkillReward {
 
     private final double amount;
 

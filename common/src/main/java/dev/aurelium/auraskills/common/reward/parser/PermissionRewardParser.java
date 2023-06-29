@@ -1,8 +1,8 @@
-package dev.aurelium.auraskills.common.rewards.parser;
+package dev.aurelium.auraskills.common.reward.parser;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.builder.PermissionRewardBuilder;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.builder.PermissionRewardBuilder;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public class PermissionRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(Map<?, ?> map) {
+    public SkillReward parse(Map<?, ?> map) {
         PermissionRewardBuilder builder = new PermissionRewardBuilder(plugin);
 
         builder.permission(getString(map, "permission"));

@@ -1,7 +1,7 @@
-package dev.aurelium.auraskills.common.rewards.parser;
+package dev.aurelium.auraskills.common.reward.parser;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.data.Parser;
 
 import java.util.Map;
@@ -14,6 +14,6 @@ public abstract class RewardParser extends Parser {
         this.plugin = plugin;
     }
 
-    public abstract Reward parse(Map<?, ?> map);
+    public abstract SkillReward parse(Map<?, ?> map);
 
 }

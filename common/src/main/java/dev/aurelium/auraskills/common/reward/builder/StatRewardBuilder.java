@@ -1,10 +1,10 @@
-package dev.aurelium.auraskills.common.rewards.builder;
+package dev.aurelium.auraskills.common.reward.builder;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.data.Validate;
-import dev.aurelium.auraskills.common.rewards.type.StatReward;
+import dev.aurelium.auraskills.common.reward.type.StatReward;
 
 public class StatRewardBuilder extends RewardBuilder {
 
@@ -27,7 +27,7 @@ public class StatRewardBuilder extends RewardBuilder {
     }
 
     @Override
-    public Reward build() {
+    public SkillReward build() {
         Validate.notNull(stat, "You must specify a stat");
         return new StatReward(plugin, stat, value);
     }

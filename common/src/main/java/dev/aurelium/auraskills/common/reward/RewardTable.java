@@ -1,12 +1,12 @@
-package dev.aurelium.auraskills.common.rewards;
+package dev.aurelium.auraskills.common.reward;
 
 import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.hooks.PermissionsHook;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.data.PlayerData;
-import dev.aurelium.auraskills.common.rewards.type.PermissionReward;
-import dev.aurelium.auraskills.common.rewards.type.StatReward;
+import dev.aurelium.auraskills.common.reward.type.PermissionReward;
+import dev.aurelium.auraskills.common.reward.type.StatReward;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class RewardTable {
 
     private final AuraSkillsPlugin plugin;
     private final List<Stat> statsLeveled;
-    private final Map<Integer, List<Reward>> rewards;
+    private final Map<Integer, List<SkillReward>> rewards;
 
     public RewardTable(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -25,16 +25,16 @@ public class RewardTable {
         this.statsLeveled = new ArrayList<>();
     }
 
-    public ImmutableList<Reward> getRewards(int level) {
+    public ImmutableList<SkillReward> getRewards(int level) {
         return ImmutableList.copyOf(rewards.getOrDefault(level, new ArrayList<>()));
     }
 
-    public Map<Integer, List<Reward>> getRewardsMap() {
+    public Map<Integer, List<SkillReward>> getRewardsMap() {
         return rewards;
     }
 
-    public void addReward(Reward reward, int level) {
-        List<Reward> rewards = this.rewards.computeIfAbsent(level, k -> new ArrayList<>());
+    public void addReward(SkillReward reward, int level) {
+        List<SkillReward> rewards = this.rewards.computeIfAbsent(level, k -> new ArrayList<>());
         rewards.add(reward);
         if (reward instanceof StatReward) {
             StatReward statReward = (StatReward) reward;
@@ -54,11 +54,11 @@ public class RewardTable {
      * @param <T> The reward type
      * @return A map of each level to a list of rewards of that type
      */
-    public <T extends Reward> Map<Integer, ImmutableList<T>> searchRewards(Class<T> type) {
+    public <T extends SkillReward> Map<Integer, ImmutableList<T>> searchRewards(Class<T> type) {
         Map<Integer, ImmutableList<T>> rewardMap = new HashMap<>();
-        for (Map.Entry<Integer, List<Reward>> entry : rewards.entrySet()) {
+        for (Map.Entry<Integer, List<SkillReward>> entry : rewards.entrySet()) {
             List<T> rewardList = new ArrayList<>();
-            for (Reward reward : entry.getValue()) {
+            for (SkillReward reward : entry.getValue()) {
                 if (type.isInstance(reward)) {
                     rewardList.add(type.cast(reward));
                 }
@@ -69,10 +69,10 @@ public class RewardTable {
     }
 
     // Searches all rewards of a certain type at a single level
-    public <T extends Reward> ImmutableList<T> searchRewards(Class<T> type, int level) {
-        ImmutableList<Reward> levelRewards = getRewards(level);
+    public <T extends SkillReward> ImmutableList<T> searchRewards(Class<T> type, int level) {
+        ImmutableList<SkillReward> levelRewards = getRewards(level);
         List<T> rewardList = new ArrayList<>();
-        for (Reward reward : levelRewards) {
+        for (SkillReward reward : levelRewards) {
             if (type.isInstance(reward)) {
                 rewardList.add(type.cast(reward));
             }

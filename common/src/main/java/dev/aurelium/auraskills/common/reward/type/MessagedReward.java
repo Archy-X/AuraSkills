@@ -1,16 +1,16 @@
-package dev.aurelium.auraskills.common.rewards.type;
+package dev.aurelium.auraskills.common.reward.type;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.data.PlayerData;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageKey;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.util.Locale;
 
-public abstract class MessagedReward extends Reward {
+public abstract class MessagedReward extends SkillReward {
 
     protected final String menuMessage;
     protected final String chatMessage;

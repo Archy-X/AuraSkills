@@ -1,9 +1,9 @@
-package dev.aurelium.auraskills.common.rewards.builder;
+package dev.aurelium.auraskills.common.reward.builder;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.data.Validate;
-import dev.aurelium.auraskills.common.rewards.type.PermissionReward;
+import dev.aurelium.auraskills.common.reward.type.PermissionReward;
 
 public class PermissionRewardBuilder extends MessagedRewardBuilder {
 
@@ -26,7 +26,7 @@ public class PermissionRewardBuilder extends MessagedRewardBuilder {
     }
 
     @Override
-    public Reward build() {
+    public SkillReward build() {
         Validate.notNull(permission, "You must specify a permission");
         return new PermissionReward(plugin, menuMessage, chatMessage, permission, value);
     }

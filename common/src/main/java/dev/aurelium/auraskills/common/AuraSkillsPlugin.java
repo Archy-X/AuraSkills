@@ -19,7 +19,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.modifier.ModifierManager;
-import dev.aurelium.auraskills.common.rewards.RewardManager;
+import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillManager;
 import dev.aurelium.auraskills.common.skill.SkillRegistry;

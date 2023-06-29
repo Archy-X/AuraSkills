@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.rewards.type;
+package dev.aurelium.auraskills.common.reward.type;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -6,13 +6,13 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.data.PlayerData;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.util.Locale;
 
-public class StatReward extends Reward {
+public class StatReward extends SkillReward {
 
     private final Stat stat;
     private final double value;

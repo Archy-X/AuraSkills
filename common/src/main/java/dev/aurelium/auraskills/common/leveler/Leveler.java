@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.data.PlayerData;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.scheduler.Tick;
 import org.jetbrains.annotations.NotNull;
 
@@ -94,8 +94,8 @@ public abstract class Leveler {
         playerData.setSkillXp(skill, currentXp - xpRequirements.getXpRequired(skill, level));
         playerData.setSkillLevel(skill, level);
         // Give custom rewards
-        List<Reward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
-        for (Reward reward : rewards) {
+        List<SkillReward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
+        for (SkillReward reward : rewards) {
             reward.giveReward(playerData, skill, level);
         }
         giveLegacyMoneyRewards(playerData, level);

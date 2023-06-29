@@ -1,10 +1,10 @@
-package dev.aurelium.auraskills.common.rewards.parser;
+package dev.aurelium.auraskills.common.reward.parser;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.builder.StatRewardBuilder;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.builder.StatRewardBuilder;
 
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public class StatRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(Map<?, ?> map) {
+    public SkillReward parse(Map<?, ?> map) {
         StatRewardBuilder builder = new StatRewardBuilder(plugin);
 
         String statName = getString(map, "stat");

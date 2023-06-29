@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.rewards;
+package dev.aurelium.auraskills.common.reward;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.hooks.HookManager;
@@ -7,12 +7,12 @@ import dev.aurelium.auraskills.common.data.PlayerData;
 
 import java.util.Locale;
 
-public abstract class Reward {
+public abstract class SkillReward {
 
     protected final AuraSkillsPlugin plugin;
     protected final HookManager hooks;
 
-    public Reward(AuraSkillsPlugin plugin) {
+    public SkillReward(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.hooks = plugin.getHookManager();
     }

@@ -1,7 +1,7 @@
-package dev.aurelium.auraskills.common.rewards.builder;
+package dev.aurelium.auraskills.common.reward.builder;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
 
 public abstract class RewardBuilder {
 
@@ -11,6 +11,6 @@ public abstract class RewardBuilder {
         this.plugin = plugin;
     }
 
-    public abstract Reward build();
+    public abstract SkillReward build();
 
 }

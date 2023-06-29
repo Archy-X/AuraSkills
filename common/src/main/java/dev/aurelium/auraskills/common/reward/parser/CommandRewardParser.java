@@ -1,9 +1,9 @@
-package dev.aurelium.auraskills.common.rewards.parser;
+package dev.aurelium.auraskills.common.reward.parser;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.builder.CommandRewardBuilder;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.builder.CommandRewardBuilder;
 
 import java.util.Locale;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class CommandRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(Map<?, ?> map) {
+    public SkillReward parse(Map<?, ?> map) {
         CommandRewardBuilder builder = new CommandRewardBuilder(plugin);
 
         CommandExecutor executor;

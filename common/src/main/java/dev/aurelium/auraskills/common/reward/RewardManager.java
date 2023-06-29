@@ -1,10 +1,10 @@
-package dev.aurelium.auraskills.common.rewards;
+package dev.aurelium.auraskills.common.reward;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.data.PlayerData;
-import dev.aurelium.auraskills.common.rewards.parser.RewardParser;
+import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public abstract class RewardManager {
         for (int index = 0; index < patterns.size(); index++) {
             Map<?, ?> rewardMap = patterns.get(index);
             try {
-                Reward reward = parseReward(rewardMap);
+                SkillReward reward = parseReward(rewardMap);
                 // Load pattern info
                 Object patternObj = DataUtil.getElement(rewardMap, "pattern");
                 if (!(patternObj instanceof Map<?, ?> patternMap)) {
@@ -65,7 +65,7 @@ public abstract class RewardManager {
         return patternsLoaded;
     }
 
-    protected Reward parseReward(Map<?, ?> map) {
+    protected SkillReward parseReward(Map<?, ?> map) {
         // Get type of reward
         String type = DataUtil.getString(map, "type");
         // Parse the type

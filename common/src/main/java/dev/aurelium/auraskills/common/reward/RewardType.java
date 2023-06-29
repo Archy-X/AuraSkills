@@ -1,8 +1,8 @@
-package dev.aurelium.auraskills.common.rewards;
+package dev.aurelium.auraskills.common.reward;
 
-import dev.aurelium.auraskills.common.rewards.builder.*;
-import dev.aurelium.auraskills.common.rewards.parser.*;
-import dev.aurelium.auraskills.common.rewards.type.*;
+import dev.aurelium.auraskills.common.reward.builder.*;
+import dev.aurelium.auraskills.common.reward.parser.*;
+import dev.aurelium.auraskills.common.reward.type.*;
 
 public enum RewardType {
 
@@ -13,11 +13,11 @@ public enum RewardType {
     ITEM("item", ItemReward.class, ItemRewardParser.class, ItemRewardBuilder.class);
 
     private final String key;
-    private final Class<? extends Reward> provider;
+    private final Class<? extends SkillReward> provider;
     private final Class<? extends RewardParser> parser;
     private final Class<? extends RewardBuilder> builder;
 
-    RewardType(String key, Class<? extends Reward> provider, Class<? extends RewardParser> parser, Class<? extends RewardBuilder> builder) {
+    RewardType(String key, Class<? extends SkillReward> provider, Class<? extends RewardParser> parser, Class<? extends RewardBuilder> builder) {
         this.key = key;
         this.provider = provider;
         this.parser = parser;
@@ -28,7 +28,7 @@ public enum RewardType {
         return key;
     }
 
-    public Class<? extends Reward> getProvider() {
+    public Class<? extends SkillReward> getProvider() {
         return provider;
     }
 

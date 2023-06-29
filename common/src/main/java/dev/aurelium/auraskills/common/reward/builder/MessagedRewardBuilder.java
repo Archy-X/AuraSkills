@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.rewards.builder;
+package dev.aurelium.auraskills.common.reward.builder;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 

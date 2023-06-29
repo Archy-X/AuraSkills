@@ -1,8 +1,8 @@
-package dev.aurelium.auraskills.common.rewards.builder;
+package dev.aurelium.auraskills.common.reward.builder;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.type.MoneyReward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 
 public class MoneyRewardBuilder extends RewardBuilder {
 
@@ -18,7 +18,7 @@ public class MoneyRewardBuilder extends RewardBuilder {
     }
 
     @Override
-    public Reward build() {
+    public SkillReward build() {
         return new MoneyReward(plugin, amount);
     }
 }

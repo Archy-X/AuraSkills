@@ -1,9 +1,9 @@
-package dev.aurelium.auraskills.common.rewards.builder;
+package dev.aurelium.auraskills.common.reward.builder;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.type.CommandReward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.type.CommandReward;
 import dev.aurelium.auraskills.common.util.data.Validate;
 
 public class CommandRewardBuilder extends MessagedRewardBuilder {
@@ -39,7 +39,7 @@ public class CommandRewardBuilder extends MessagedRewardBuilder {
     }
 
     @Override
-    public Reward build() {
+    public SkillReward build() {
         Validate.notNull(command, "You must specify a command");
         return new CommandReward(plugin, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);
     }

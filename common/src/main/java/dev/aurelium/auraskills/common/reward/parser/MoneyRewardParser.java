@@ -1,8 +1,8 @@
-package dev.aurelium.auraskills.common.rewards.parser;
+package dev.aurelium.auraskills.common.reward.parser;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.builder.MoneyRewardBuilder;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.builder.MoneyRewardBuilder;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public class MoneyRewardParser extends RewardParser {
     }
 
     @Override
-    public Reward parse(Map<?, ?> map) {
+    public SkillReward parse(Map<?, ?> map) {
         return new MoneyRewardBuilder(plugin).amount(getDouble(map, "amount")).build();
     }
 }

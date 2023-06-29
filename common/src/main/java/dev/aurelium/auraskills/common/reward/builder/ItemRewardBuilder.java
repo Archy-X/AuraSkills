@@ -1,9 +1,9 @@
-package dev.aurelium.auraskills.common.rewards.builder;
+package dev.aurelium.auraskills.common.reward.builder;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.rewards.Reward;
-import dev.aurelium.auraskills.common.rewards.type.ItemReward;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.reward.type.ItemReward;
 import dev.aurelium.auraskills.common.util.data.Validate;
 
 public class ItemRewardBuilder extends MessagedRewardBuilder {
@@ -27,7 +27,7 @@ public class ItemRewardBuilder extends MessagedRewardBuilder {
     }
 
     @Override
-    public Reward build() {
+    public SkillReward build() {
         Validate.notNull(itemKey, "You must specify an item key");
         return new ItemReward(plugin, menuMessage, chatMessage, itemKey, amount);
     }
