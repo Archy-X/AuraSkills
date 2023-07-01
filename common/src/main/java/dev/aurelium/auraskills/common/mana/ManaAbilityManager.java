@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbilityProvider;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class ManaAbilityManager implements ManaAbilityProvider {
         manaAbilityMap.put(manaAbility, loadedManaAbility);
     }
 
+    @NotNull
     public LoadedManaAbility getManaAbility(ManaAbility manaAbility) {
         LoadedManaAbility loadedMana = manaAbilityMap.get(manaAbility);
         if (loadedMana == null) {

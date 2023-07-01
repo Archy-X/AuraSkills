@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -29,6 +30,7 @@ public class AbilityManager implements AbilityProvider {
         abilityMap.put(ability, loadedAbility);
     }
 
+    @NotNull
     public LoadedAbility getAbility(Ability ability) {
         LoadedAbility loadedAbility = abilityMap.get(ability);
         if (loadedAbility == null) {

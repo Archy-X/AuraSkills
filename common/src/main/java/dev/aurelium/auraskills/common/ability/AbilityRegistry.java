@@ -1,6 +1,9 @@
 package dev.aurelium.auraskills.common.ability;
 
+import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.ability.AbilityProvider;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.registry.Registry;
 
 /**
@@ -8,8 +11,15 @@ import dev.aurelium.auraskills.common.registry.Registry;
  */
 public class AbilityRegistry extends Registry<Ability> {
 
-    public AbilityRegistry() {
-        super(Ability.class);
+    public AbilityRegistry(AuraSkillsPlugin plugin) {
+        super(plugin, Ability.class);
     }
 
+    @Override
+    public void registerDefaults() {
+        for (Ability ability : Abilities.values()) {
+            injectProvider(ability, AbilityProvider.class, plugin.getAbilityManager()); // Inject the AbilityProvider instance
+            this.register(ability.getId(), ability);
+        }
+    }
 }

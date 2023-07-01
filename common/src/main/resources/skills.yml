@@ -1,5 +1,5 @@
-auraskills:
-  farming:
+skills:
+  'auraskills:farming':
     abilities:
       - 'auraskills:bountiful_harvest'
       - 'auraskills:farmer'
@@ -12,7 +12,7 @@ auraskills:
       max_level: 97
       check_cancelled: true
       check_multiplier_permissions: true
-  foraging:
+  'auraskills:foraging':
     abilities:
       - 'auraskills:lumberjack'
       - 'auraskills:forager'
@@ -25,7 +25,7 @@ auraskills:
       max_level: 97
       check_cancelled: true
       check_multiplier_permissions: true
-  mining:
+  'auraskills:mining':
     abilities:
       - 'auraskills:lucky_miner'
       - 'auraskills:miner'
@@ -38,7 +38,7 @@ auraskills:
       max_level: 97
       check_cancelled: true
       check_multiplier_permissions: true
-  fishing:
+  'auraskills:fishing':
     abilities:
       - 'auraskills:lucky_catch'
       - 'auraskills:fisher'
@@ -51,7 +51,7 @@ auraskills:
       max_level: 97
       check_cancelled: true
       check_multiplier_permissions: true
-  excavation:
+  'auraskills:excavation':
     abilities:
       - 'auraskills:metal_detector'
       - 'auraskills:excavator'

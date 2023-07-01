@@ -1,6 +1,9 @@
 package dev.aurelium.auraskills.common.mana;
 
+import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.mana.ManaAbilityProvider;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.registry.Registry;
 
 /**
@@ -8,8 +11,15 @@ import dev.aurelium.auraskills.common.registry.Registry;
  */
 public class ManaAbilityRegistry extends Registry<ManaAbility> {
 
-    public ManaAbilityRegistry() {
-        super(ManaAbility.class);
+    public ManaAbilityRegistry(AuraSkillsPlugin plugin) {
+        super(plugin, ManaAbility.class);
     }
 
+    @Override
+    public void registerDefaults() {
+        for (ManaAbility manaAbility : ManaAbilities.values()) {
+            injectProvider(manaAbility, ManaAbilityProvider.class, plugin.getManaAbilityManager()); // Inject the ManaAbilityProvider instance
+            this.register(manaAbility.getId(), manaAbility);
+        }
+    }
 }

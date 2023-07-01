@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.stat.StatProvider;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.data.PlayerData;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -23,6 +24,15 @@ public abstract class StatManager implements StatProvider {
     public StatManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.statMap = new HashMap<>();
+    }
+
+    @NotNull
+    public LoadedStat getStat(Stat stat) {
+        LoadedStat loadedStat = statMap.get(stat);
+        if (loadedStat == null) {
+            throw new IllegalArgumentException("Stat " + stat + " is not loaded!");
+        }
+        return loadedStat;
     }
 
     public void register(Stat stat, LoadedStat loadedStat) {

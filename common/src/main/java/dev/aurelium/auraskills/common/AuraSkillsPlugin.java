@@ -26,6 +26,8 @@ import dev.aurelium.auraskills.common.skill.SkillRegistry;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.stat.StatRegistry;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
+import dev.aurelium.auraskills.common.trait.TraitManager;
+import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 
 import java.io.File;
@@ -64,6 +66,10 @@ public interface AuraSkillsPlugin {
     SkillRegistry getSkillRegistry();
 
     StatRegistry getStatRegistry();
+
+    TraitRegistry getTraitRegistry();
+
+    TraitManager getTraitManager();
 
     AbilityRegistry getAbilityRegistry();
 
