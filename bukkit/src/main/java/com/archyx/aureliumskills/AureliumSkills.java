@@ -477,7 +477,7 @@ public class AureliumSkills extends JavaPlugin {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
-					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
+					values.add(skill.toString().toLowerCase(Locale.ROOT));
 				}
 			}
 			return values;
@@ -487,7 +487,7 @@ public class AureliumSkills extends JavaPlugin {
 			values.add("global");
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
-					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
+					values.add(skill.toString().toLowerCase(Locale.ROOT));
 				}
 			}
 			return values;
@@ -496,7 +496,7 @@ public class AureliumSkills extends JavaPlugin {
 			List<String> values = new ArrayList<>();
 			for (Skill skill : skillRegistry.getSkills()) {
 				if (OptionL.isEnabled(skill)) {
-					values.add(skill.toString().toLowerCase(Locale.ENGLISH));
+					values.add(skill.toString().toLowerCase(Locale.ROOT));
 				}
 			}
 			values.add("average");
@@ -505,7 +505,7 @@ public class AureliumSkills extends JavaPlugin {
 		commandManager.getCommandCompletions().registerAsyncCompletion("stats", c -> {
 			List<String> values = new ArrayList<>();
 			for (Stat stat : statRegistry.getStats()) {
-				values.add(stat.toString().toLowerCase(Locale.ENGLISH));
+				values.add(stat.toString().toLowerCase(Locale.ROOT));
 			}
 			return values;
 		});

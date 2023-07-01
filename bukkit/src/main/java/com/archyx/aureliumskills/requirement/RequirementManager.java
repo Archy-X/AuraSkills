@@ -29,10 +29,10 @@ public class RequirementManager implements Listener {
         FileConfiguration config = plugin.getConfig();
         this.globalRequirements = new HashSet<>();
         for (ModifierType type : ModifierType.values()) {
-            List<String> list = config.getStringList("requirement." + type.name().toLowerCase(Locale.ENGLISH) + ".global");
+            List<String> list = config.getStringList("requirement." + type.name().toLowerCase(Locale.ROOT) + ".global");
             for (String text : list) {
                 String[] splitText = text.split(" ");
-                Optional<XMaterial> potentialMaterial = XMaterial.matchXMaterial(splitText[0].toUpperCase());
+                Optional<XMaterial> potentialMaterial = XMaterial.matchXMaterial(splitText[0].toUpperCase(Locale.ROOT));
                 if (potentialMaterial.isPresent()) {
                     XMaterial material = potentialMaterial.get();
                     Map<Skill, Integer> requirements = new HashMap<>();
@@ -45,13 +45,13 @@ public class RequirementManager implements Listener {
                                 requirements.put(skill, level);
                             }
                         } catch (Exception e) {
-                            Bukkit.getLogger().warning("[AureliumSkills] Error parsing global skill " + type.name().toLowerCase(Locale.ENGLISH) + " requirement skill level pair with text " + requirementText);
+                            Bukkit.getLogger().warning("[AureliumSkills] Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement skill level pair with text " + requirementText);
                         }
                     }
                     GlobalRequirement globalRequirement = new GlobalRequirement(type, material, requirements);
                     globalRequirements.add(globalRequirement);
                 } else {
-                    Bukkit.getLogger().warning("[AureliumSkills] Error parsing global skill " + type.name().toLowerCase(Locale.ENGLISH) + " requirement material with text " + splitText[0]);
+                    Bukkit.getLogger().warning("[AureliumSkills] Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement material with text " + splitText[0]);
                 }
             }
         }

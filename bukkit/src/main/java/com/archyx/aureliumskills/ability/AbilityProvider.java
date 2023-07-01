@@ -22,7 +22,7 @@ public abstract class AbilityProvider {
     public AbilityProvider(AureliumSkills plugin, Skill skill) {
         this.plugin = plugin;
         this.skill = skill;
-        this.skillName = skill.toString().toLowerCase(Locale.ENGLISH);
+        this.skillName = skill.toString().toLowerCase(Locale.ROOT);
     }
 
     public boolean blockAbility(Player player) {

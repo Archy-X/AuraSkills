@@ -86,7 +86,7 @@ public class ForgingAbilities extends AbilityProvider implements Listener {
                     try {
                         int sum = 0;
                         for (EnchantmentValue value : enchants) {
-                            String enchantName = value.getEnchantment().getKey().getKey().toUpperCase(Locale.ENGLISH);
+                            String enchantName = value.getEnchantment().getKey().getKey().toUpperCase(Locale.ROOT);
                             if (containsEnchant(enchantName)) {
                                 sum += GrindstoneEnchant.valueOf(enchantName).getLevel(value.getLevel());
                             }

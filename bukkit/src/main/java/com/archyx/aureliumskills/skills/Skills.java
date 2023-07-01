@@ -65,7 +65,7 @@ public enum Skills implements Skill {
 
 	@Override
 	public String getDisplayName(Locale locale) {
-		return Lang.getMessage(SkillMessage.valueOf(this.name().toUpperCase() + "_NAME"), locale);
+		return Lang.getMessage(SkillMessage.valueOf(this.name().toUpperCase(Locale.ROOT) + "_NAME"), locale);
 	}
 
 	@Override

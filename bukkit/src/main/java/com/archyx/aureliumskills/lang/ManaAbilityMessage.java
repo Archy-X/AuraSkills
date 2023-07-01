@@ -60,7 +60,7 @@ public enum ManaAbilityMessage implements MessageKey {
 
     ManaAbilityMessage() {
         MAbility manaAbility = MAbility.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-        this.path = "mana_abilities." + manaAbility.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
+        this.path = "mana_abilities." + manaAbility.name().toLowerCase(Locale.ROOT) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ROOT);
     }
 
     ManaAbilityMessage(String path) {

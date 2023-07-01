@@ -50,21 +50,21 @@ public class AbilityManager {
         ConfigurationSection abilities = config.getConfigurationSection("abilities");
         if (abilities != null) {
             for (Skill skill : plugin.getSkillRegistry().getSkills()) {
-                String skillName = skill.name().toLowerCase(Locale.ENGLISH);
+                String skillName = skill.name().toLowerCase(Locale.ROOT);
                 ConfigurationSection skillAbilities = abilities.getConfigurationSection(skillName);
                 if (skillAbilities != null) {
                     for (String abilityName : skillAbilities.getKeys(false)) {
                         // Check if ability is valid
                         boolean hasKey = false;
                         for (Ability ability : Ability.values()) {
-                            if (abilityName.toUpperCase().equals(ability.name())) {
+                            if (abilityName.toUpperCase(Locale.ROOT).equals(ability.name())) {
                                 hasKey = true;
                                 break;
                             }
                         }
                         if (hasKey) {
                             String path = "abilities." + skillName + "." + abilityName + ".";
-                            Ability ability = Ability.valueOf(abilityName.toUpperCase());
+                            Ability ability = Ability.valueOf(abilityName.toUpperCase(Locale.ROOT));
                             boolean enabled = config.getBoolean(path + "enabled", true);
                             if (!enabled) {
                                 amountDisabled++;
@@ -124,13 +124,13 @@ public class AbilityManager {
             for (String manaAbilityName : manaAbilities.getKeys(false)){
                 boolean hasKey = false;
                 for (MAbility manaAbility : MAbility.values()) {
-                    if (manaAbilityName.toUpperCase().equals(manaAbility.name())) {
+                    if (manaAbilityName.toUpperCase(Locale.ROOT).equals(manaAbility.name())) {
                         hasKey = true;
                         break;
                     }
                 }
                 if (hasKey) {
-                    MAbility mAbility = MAbility.valueOf(manaAbilityName.toUpperCase());
+                    MAbility mAbility = MAbility.valueOf(manaAbilityName.toUpperCase(Locale.ROOT));
                     String path = "mana_abilities." + manaAbilityName + ".";
                     boolean enabled = config.getBoolean(path + "enabled", true);
                     if (!enabled) {
@@ -213,13 +213,13 @@ public class AbilityManager {
         if (abilities == null) return;
         try {
             for (String abilityName : abilities.getKeys(false)) {
-                String newKey = TextUtil.replace(abilityName, "-", "_").toUpperCase();
+                String newKey = TextUtil.replace(abilityName, "-", "_").toUpperCase(Locale.ROOT);
                 if (isAbility(newKey)) {
                     Ability ability = Ability.valueOf(newKey);
                     boolean enabled = abilities.getBoolean(abilityName + ".enabled", true);
                     double base = abilities.getDouble(abilityName + ".base", ability.getDefaultBaseValue());
                     double per_level = abilities.getDouble(abilityName + ".per-level", ability.getDefaultValuePerLevel());
-                    String path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ENGLISH) + "." + newKey.toLowerCase(Locale.ENGLISH) + ".";
+                    String path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ROOT) + "." + newKey.toLowerCase(Locale.ROOT) + ".";
                     abilitiesConfig.set(path + "enabled", enabled);
                     abilitiesConfig.set(path + "base", base);
                     abilitiesConfig.set(path + "per_level", per_level);
@@ -235,7 +235,7 @@ public class AbilityManager {
             ConfigurationSection manaAbilities = config.getConfigurationSection("mana-abilities");
             if (manaAbilities != null) {
                 for (String manaAbilityName : manaAbilities.getKeys(false)) {
-                    String newKey = TextUtil.replace(manaAbilityName, "-", "_").toUpperCase();
+                    String newKey = TextUtil.replace(manaAbilityName, "-", "_").toUpperCase(Locale.ROOT);
                     if (isManaAbility(newKey)) {
                         MAbility mAbility = MAbility.valueOf(newKey);
                         boolean enabled = manaAbilities.getBoolean(manaAbilityName + ".enabled", true);
@@ -245,7 +245,7 @@ public class AbilityManager {
                         double cooldown_per_level = manaAbilities.getDouble(manaAbilityName + ".cooldown-per-level", mAbility.getDefaultCooldownPerLevel());
                         double mana_cost = manaAbilities.getDouble(manaAbilityName + ".mana-cost", mAbility.getDefaultBaseManaCost());
                         double mana_cost_per_level = manaAbilities.getDouble(manaAbilityName + ".mana-cost-per-level", mAbility.getDefaultManaCostPerLevel());
-                        String path = "mana_abilities." + newKey.toLowerCase(Locale.ENGLISH) + ".";
+                        String path = "mana_abilities." + newKey.toLowerCase(Locale.ROOT) + ".";
                         abilitiesConfig.set(path + "enabled", enabled);
                         abilitiesConfig.set(path + "base_value", base);
                         abilitiesConfig.set(path + "value_per_level", per_level);

@@ -153,11 +153,11 @@ public enum CommandMessage implements MessageKey {
     private final String path;
 
     CommandMessage() {
-        this.path = "commands." + this.name().toLowerCase(Locale.ENGLISH).replace("_", ".");
+        this.path = "commands." + this.name().toLowerCase(Locale.ROOT).replace("_", ".");
     }
     
     CommandMessage(Command command, String path) {
-        this.path = "commands." + command.name().toLowerCase(Locale.ENGLISH).replace("_", ".") + "." + path;
+        this.path = "commands." + command.name().toLowerCase(Locale.ROOT).replace("_", ".") + "." + path;
     }
 
     CommandMessage(String path) {

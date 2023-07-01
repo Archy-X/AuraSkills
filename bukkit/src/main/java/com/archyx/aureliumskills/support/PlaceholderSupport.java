@@ -167,7 +167,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets stat values
         for (Stat stat : plugin.getStatRegistry().getStats()) {
-            if (identifier.equals(stat.name().toLowerCase(Locale.ENGLISH))) {
+            if (identifier.equals(stat.name().toLowerCase(Locale.ROOT))) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
                     return String.valueOf(playerData.getStatLevel(stat));
@@ -182,13 +182,13 @@ public class PlaceholderSupport extends PlaceholderExpansion {
 
         //Gets skill levels
         for (Skill skill : plugin.getSkillRegistry().getSkills()) {
-            if (identifier.equals(skill.name().toLowerCase(Locale.ENGLISH))) {
+            if (identifier.equals(skill.name().toLowerCase(Locale.ROOT))) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
                     return String.valueOf(playerData.getSkillLevel(skill));
                 }
             }
-            else if (identifier.equals(skill.name().toLowerCase(Locale.ENGLISH) + "_roman")) {
+            else if (identifier.equals(skill.name().toLowerCase(Locale.ROOT) + "_roman")) {
                 PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                 if (playerData != null) {
                     return RomanNumber.toRoman(playerData.getSkillLevel(skill));
@@ -310,8 +310,8 @@ public class PlaceholderSupport extends PlaceholderExpansion {
             }
         } else {
             for (Skill skill : plugin.getSkillRegistry().getSkills()) {
-                if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ENGLISH) + "_")) {
-                    int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", ""));
+                if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ROOT) + "_")) {
+                    int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ROOT) + "_", ""));
                     if (place > 0) {
                         List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 1);
                         if (list.size() > 0) {
@@ -321,7 +321,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                         } else return "";
                     } else {
                         if (identifier.endsWith("name")) {
-                            int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_name", ""));
+                            int namePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ROOT) + "_", "", "_name", ""));
                             if (namePlace > 0) {
                                 List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, namePlace, 1);
                                 if (list.size() > 0) {
@@ -331,7 +331,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                                 } else return "";
                             }
                         } else if (identifier.endsWith("value")) {
-                            int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ENGLISH) + "_", "", "_value", ""));
+                            int valuePlace = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ROOT) + "_", "", "_value", ""));
                             if (valuePlace > 0) {
                                 List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, valuePlace, 1);
                                 if (list.size() > 0) {

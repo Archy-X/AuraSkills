@@ -39,7 +39,7 @@ public enum SkillMessage implements MessageKey {
     FORGING_DESC;
 
     private final Skill skill = Skills.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-    private final String path = "skills." + skill.name().toLowerCase(Locale.ENGLISH) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
+    private final String path = "skills." + skill.name().toLowerCase(Locale.ROOT) + "." + this.name().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ROOT);
 
     @Override
     public String getPath() {

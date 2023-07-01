@@ -33,7 +33,7 @@ public enum StatMessage implements MessageKey {
     TOUGHNESS_SYMBOL;
     
     private final Stat stat = Stats.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-    private final String path = "stats." + stat.toString().toLowerCase(Locale.ENGLISH) + "." + this.toString().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ENGLISH);
+    private final String path = "stats." + stat.toString().toLowerCase(Locale.ROOT) + "." + this.toString().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ROOT);
     
     @Override
     public String getPath() {

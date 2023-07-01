@@ -249,7 +249,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.lang")
 	@Description("Changes your player language")
 	public void onLanguage(Player player, String language) {
-		Locale locale = new Locale(language.toLowerCase(Locale.ENGLISH));
+		Locale locale = new Locale(language.toLowerCase(Locale.ROOT));
 		if (Lang.hasLocale(locale)) {
 			PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
 			if (playerData == null) return;

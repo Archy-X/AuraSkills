@@ -16,29 +16,29 @@ import java.util.*;
 public class ItemUtils {
 
 	public static boolean isArmor(Material material) {
-		String materialName = material.name().toLowerCase(Locale.ENGLISH);
+		String materialName = material.name().toLowerCase(Locale.ROOT);
 		return materialName.contains("helmet") || materialName.contains("chestplate") || materialName.contains("leggings") || materialName.contains("boots") || materialName.equals("elytra");
 	}
 
 	public static boolean isWeapon(Material material) {
-		String materialName = material.name().toLowerCase(Locale.ENGLISH);
+		String materialName = material.name().toLowerCase(Locale.ROOT);
 		return materialName.contains("sword") || materialName.equals("bow") || materialName.equals("trident") || materialName.equals("crossbow");
 	}
 
 	public static boolean isTool(Material material) {
-		String materialName = material.name().toLowerCase(Locale.ENGLISH);
+		String materialName = material.name().toLowerCase(Locale.ROOT);
 		return materialName.contains("pickaxe") || materialName.contains("axe") || materialName.contains("hoe") || materialName.contains("shovel") || materialName.contains("spade")
 				|| materialName.equals("shears") || materialName.equals("fishing_rod") || materialName.equals("flint_and_steel") || materialName.equals("shield")
 				|| materialName.contains("on_a_stick");
 	}
 
 	public static boolean isAxe(Material material) {
-		String materialName = material.name().toLowerCase(Locale.ENGLISH);
+		String materialName = material.name().toLowerCase(Locale.ROOT);
 		return materialName.contains("_axe");
 	}
 
 	public static boolean isPickaxe(Material material) {
-		return material.name().toLowerCase(Locale.ENGLISH).contains("pickaxe");
+		return material.name().toLowerCase(Locale.ROOT).contains("pickaxe");
 	}
 
 	public static boolean isDurable(Material material) {

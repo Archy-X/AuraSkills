@@ -122,7 +122,7 @@ public class Requirements extends NBTAPIUser {
         NBTCompound oldRequirementsCompound = nbtItem.getCompound("skillRequirements");
         if (oldRequirementsCompound != null) {
             for (ModifierType type : ModifierType.values()) {
-                NBTCompound oldTypeCompound = oldRequirementsCompound.getCompound(type.toString().toLowerCase(Locale.ENGLISH));
+                NBTCompound oldTypeCompound = oldRequirementsCompound.getCompound(type.toString().toLowerCase(Locale.ROOT));
                 if (oldTypeCompound != null) {
                     NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
                     for (String key : oldTypeCompound.getKeys()) {
@@ -157,7 +157,7 @@ public class Requirements extends NBTAPIUser {
             if (lore != null) {
                 for (int i = 0; i < lore.size(); i++) {
                     String line = lore.get(i);
-                    if (line.contains("Requires") && line.contains(TextUtil.capitalize(skill.name().toLowerCase(Locale.ENGLISH)))) {
+                    if (line.contains("Requires") && line.contains(TextUtil.capitalize(skill.name().toLowerCase(Locale.ROOT)))) {
                         lore.remove(line);
                     }
                 }
@@ -186,7 +186,7 @@ public class Requirements extends NBTAPIUser {
     }
 
     private String getName(Skill skill) {
-        return TextUtil.capitalize(skill.name().toLowerCase(Locale.ENGLISH));
+        return TextUtil.capitalize(skill.name().toLowerCase(Locale.ROOT));
     }
 
 }
