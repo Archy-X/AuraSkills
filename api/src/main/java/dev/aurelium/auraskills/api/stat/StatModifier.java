@@ -1,28 +1,15 @@
 package dev.aurelium.auraskills.api.stat;
 
-public class StatModifier {
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 
-    private final String name;
-    private final Stat stat;
-    private final double value;
+public class StatModifier extends AuraSkillsModifier<Stat> {
 
     public StatModifier(String name, Stat stat, double value) {
-        this.name = name;
-        this.stat = stat;
-        this.value = value;
-    }
-
-    public String name() {
-        return name;
+        super(name, stat, value);
     }
 
     public Stat stat() {
-        return stat;
+        return type;
     }
-
-    public double value() {
-        return value;
-    }
-
 
 }

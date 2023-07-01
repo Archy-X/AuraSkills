@@ -59,6 +59,8 @@ public abstract class StatManager implements StatProvider {
         return plugin.getMessageProvider().getStatSymbol(stat, locale);
     }
 
+    public abstract <T> void reload(PlayerData playerData, T type);
+
     public abstract void reloadStat(PlayerData playerData, Stat stat);
 
     public void updateStats(PlayerData playerData) {

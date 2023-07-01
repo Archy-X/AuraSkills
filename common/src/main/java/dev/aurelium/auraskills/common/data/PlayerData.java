@@ -9,6 +9,9 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsPlayer;
@@ -34,6 +37,9 @@ public abstract class PlayerData {
     private final Map<Stat, Double> statLevels;
     private final Map<String, StatModifier> statModifiers;
 
+    private final Map<Trait, Double> traitLevels;
+    private final Map<String, TraitModifier> traitModifiers;
+
     private double mana;
     private Locale locale;
 
@@ -55,6 +61,8 @@ public abstract class PlayerData {
         this.skillXp = new ConcurrentHashMap<>();
         this.statLevels = new ConcurrentHashMap<>();
         this.statModifiers = new ConcurrentHashMap<>();
+        this.traitLevels = new ConcurrentHashMap<>();
+        this.traitModifiers = new ConcurrentHashMap<>();
         this.abilityData = new ConcurrentHashMap<>();
         this.metadata = new ConcurrentHashMap<>();
         this.unclaimedItems = new LinkedList<>();
@@ -172,21 +180,7 @@ public abstract class PlayerData {
     }
 
     public void addStatModifier(StatModifier modifier, boolean reload) {
-        // Removes if already existing
-        if (statModifiers.containsKey(modifier.name())) {
-            StatModifier oldModifier = statModifiers.get(modifier.name());
-            if (oldModifier.stat() == modifier.stat() && oldModifier.value() == modifier.value()) {
-                return;
-            }
-            removeStatModifier(modifier.name());
-        }
-        statModifiers.put(modifier.name(), modifier);
-        setStatLevel(modifier.stat(), getStatLevel(modifier.stat()) + modifier.value());
-        // Reloads stats
-        if (reload) {
-            plugin.getStatManager().reloadStat(this, modifier.stat());
-        }
-        blank = false; // Mark as modified
+        addModifier(modifier, reload, statModifiers, statLevels);
     }
 
     public boolean removeStatModifier(String name) {
@@ -194,13 +188,86 @@ public abstract class PlayerData {
     }
 
     public boolean removeStatModifier(String name, boolean reload) {
-        StatModifier modifier = statModifiers.get(name);
-        if (modifier == null) return false;
-        setStatLevel(modifier.stat(), statLevels.get(modifier.stat()) - modifier.value());
-        statModifiers.remove(name);
-        // Reloads stats
+        return removeModifier(name, reload, statModifiers, statLevels);
+    }
+
+    public double getTraitLevel(Trait trait) {
+        return traitLevels.getOrDefault(trait, 0.0);
+    }
+
+    public void setTraitLevel(Trait trait, double level) {
+        traitLevels.put(trait, level);
+        if (level > 0.0) { // Mark as modified
+            blank = false;
+        }
+    }
+
+    public void addTraitLevel(Trait trait, double level) {
+        traitLevels.merge(trait, level, Double::sum);
+        if (level > 0.0) { // Mark as modified
+            blank = false;
+        }
+    }
+
+    public double getBaseTraitLevel(Trait trait) {
+        double level = getTraitLevel(trait);
+        for (TraitModifier modifier : traitModifiers.values()) {
+            if (modifier.trait() == trait) {
+                level -= modifier.value();
+            }
+        }
+        return level;
+    }
+
+    public TraitModifier getTraitModifier(String name) {
+        return traitModifiers.get(name);
+    }
+
+    public Map<String, TraitModifier> getTraitModifiers() {
+        return traitModifiers;
+    }
+
+    public void addTraitModifier(TraitModifier modifier) {
+        addTraitModifier(modifier, true);
+    }
+
+    public void addTraitModifier(TraitModifier modifier, boolean reload) {
+        addModifier(modifier, reload, traitModifiers, traitLevels);
+    }
+
+    public boolean removeTraitModifier(String name) {
+        return removeTraitModifier(name, true);
+    }
+
+    public boolean removeTraitModifier(String name, boolean reload) {
+        return removeModifier(name, reload, traitModifiers, traitLevels);
+    }
+
+    private <T extends AuraSkillsModifier<V>, V> void addModifier(T modifier, boolean reload, Map<String, T> map, Map<V, Double> levels) {
+        if (map.containsKey(modifier.name())) {
+            AuraSkillsModifier<V> oldModifier = map.get(modifier.name());
+            if (oldModifier.type() == modifier.type() && oldModifier.value() == modifier.value()) {
+                return;
+            }
+            removeModifier(modifier.name(), reload, map, levels);
+        }
+        map.put(modifier.name(), modifier);
+        levels.put(modifier.type(), levels.get(modifier.type()) + modifier.value());
+        // Reloads modifier type
         if (reload) {
-            plugin.getStatManager().reloadStat(this, modifier.stat());
+            plugin.getStatManager().reload(this, modifier.type());
+        }
+        blank = false;
+    }
+
+    private <T extends AuraSkillsModifier<V>, V> boolean removeModifier(String name, boolean reload, Map<String, T> map, Map<V, Double> levels) {
+        AuraSkillsModifier<V> modifier = map.get(name);
+        if (modifier == null) return false;
+        levels.put(modifier.type(), levels.get(modifier.type()) - modifier.value());
+        statModifiers.remove(name);
+        // Reloads modifier type
+        if (reload) {
+            plugin.getStatManager().reload(this, modifier.type());
         }
         return true;
     }
