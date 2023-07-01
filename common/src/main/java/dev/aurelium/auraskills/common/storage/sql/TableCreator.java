@@ -30,6 +30,7 @@ public class TableCreator {
                     "locale varchar(10) null, " +
                     "mana double not null, " +
                     "stat_modifiers varchar(4096) null, " +
+                    "trait_modifiers varchar(4096) null, " +
                     "ability_data varchar(4096) null, " +
                     "unclaimed_items varchar(4096) null, " +
                     "constraint UUID unique (player_uuid));");

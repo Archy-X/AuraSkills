@@ -459,7 +459,8 @@ public abstract class PlayerData {
         Map<Skill, Integer> copiedLevels = new HashMap<>(skillLevels);
         Map<Skill, Double> copiedXp = new HashMap<>(skillXp);
         Map<String, StatModifier> copiedStatModifiers = new HashMap<>(statModifiers);
-        return new PlayerDataState(uuid, copiedLevels, copiedXp, copiedStatModifiers, mana);
+        Map<String, TraitModifier> copiedTraitModifiers = new HashMap<>(traitModifiers);
+        return new PlayerDataState(uuid, copiedLevels, copiedXp, copiedStatModifiers, copiedTraitModifiers, mana);
     }
 
     public void applyState(PlayerDataState state) {
@@ -471,6 +472,9 @@ public abstract class PlayerData {
 
         this.statModifiers.clear();
         this.statModifiers.putAll(state.statModifiers());
+
+        this.traitModifiers.clear();
+        this.traitModifiers.putAll(state.traitModifiers());
 
         this.mana = state.mana();
 

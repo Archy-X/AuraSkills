@@ -5,6 +5,8 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.data.PlayerData;
 import dev.aurelium.auraskills.common.data.PlayerDataState;
@@ -67,6 +69,9 @@ public class FileStorageProvider extends StorageProvider {
         // Load stat modifiers
         loadStatModifiers(root.node("stat_modifiers")).forEach((name, modifier) -> playerData.addStatModifier(modifier));
 
+        // Load trait modifiers
+        loadTraitModifiers(root.node("trait_modifiers")).forEach((name, modifier) -> playerData.addTraitModifier(modifier));
+
         // Load ability data
         loadAbilityData(root.node("ability_data"), playerData);
 
@@ -111,6 +116,24 @@ public class FileStorageProvider extends StorageProvider {
             }
         });
         return statModifiers;
+    }
+
+    private Map<String, TraitModifier> loadTraitModifiers(ConfigurationNode node) {
+        Map<String, TraitModifier> traitModifiers = new HashMap<>();
+        node.childrenMap().forEach((index, modifierNode) -> {
+            String name = modifierNode.node("name").getString();
+            String traitName = modifierNode.node("trait").getString();
+            double value = modifierNode.node("value").getDouble();
+
+            if (name != null && traitName != null) {
+                NamespacedId traitId = NamespacedId.fromString(traitName);
+                Trait trait = plugin.getTraitRegistry().get(traitId);
+
+                TraitModifier traitModifier = new TraitModifier(name, trait, value);
+                traitModifiers.put(name, traitModifier);
+            }
+        });
+        return traitModifiers;
     }
 
     private void loadAbilityData(ConfigurationNode node, PlayerData playerData) {
@@ -174,7 +197,10 @@ public class FileStorageProvider extends StorageProvider {
         // Load stat modifiers
         Map<String, StatModifier> statModifiers = loadStatModifiers(root.node("stat_modifiers"));
 
-        return new PlayerDataState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, mana);
+        // Load trait modifiers
+        Map<String, TraitModifier> traitModifiers = loadTraitModifiers(root.node("trait_modifiers"));
+
+        return new PlayerDataState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, traitModifiers, mana);
     }
 
     @Override
@@ -197,6 +223,10 @@ public class FileStorageProvider extends StorageProvider {
         // Apply stat modifiers
         ConfigurationNode statModifiersNode = root.node("stat_modifiers");
         applyStatModifiers(statModifiersNode, state.statModifiers());
+
+        // Apply trait modifiers
+        ConfigurationNode traitModifiersNode = root.node("trait_modifiers");
+        applyTraitModifiers(traitModifiersNode, state.traitModifiers());
 
         saveYamlFile(root, state.uuid());
     }
@@ -226,6 +256,10 @@ public class FileStorageProvider extends StorageProvider {
         // Apply stat modifiers
         ConfigurationNode statModifiersNode = root.node("stat_modifiers");
         applyStatModifiers(statModifiersNode, playerData.getStatModifiers());
+
+        // Apply trait modifiers
+        ConfigurationNode traitModifiersNode = root.node("trait_modifiers");
+        applyTraitModifiers(traitModifiersNode, playerData.getTraitModifiers());
 
         // Apply ability data
         ConfigurationNode abilityDataNode = root.node("ability_data");
@@ -260,6 +294,16 @@ public class FileStorageProvider extends StorageProvider {
             ConfigurationNode modifierNode = node.node(String.valueOf(index));
             modifierNode.node("name").set(modifier.name());
             modifierNode.node("stat").set(modifier.stat().getId().toString());
+            modifierNode.node("value").set(modifier.value());
+        }
+    }
+
+    private void applyTraitModifiers(ConfigurationNode node, Map<String, TraitModifier> modifiers) throws Exception {
+        int index = 0;
+        for (TraitModifier modifier : modifiers.values()) {
+            ConfigurationNode modifierNode = node.node(String.valueOf(index));
+            modifierNode.node("name").set(modifier.name());
+            modifierNode.node("trait").set(modifier.trait().getId().toString());
             modifierNode.node("value").set(modifier.value());
         }
     }

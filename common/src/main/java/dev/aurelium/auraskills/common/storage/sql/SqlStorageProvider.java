@@ -1,11 +1,12 @@
 package dev.aurelium.auraskills.common.storage.sql;
 
-import com.google.gson.*;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.config.Option;
@@ -17,17 +18,22 @@ import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.*;
 
 public class SqlStorageProvider extends StorageProvider {
 
     private final ConnectionPool pool;
     private final String tablePrefix = "auraskills_";
+
+    private final int STAT_MODIFIER_ID = 1;
+    private final int TRAIT_MODIFIER_ID = 2;
+    private final int ABILITY_DATA_ID = 3;
+    private final int UNCLAIMED_ITEMS_ID = 4;
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
@@ -63,23 +69,14 @@ public class SqlStorageProvider extends StorageProvider {
                 double mana = resultSet.getDouble("mana");
                 playerData.setMana(mana);
                 // Load stat modifiers
-                String statModifiersString = resultSet.getString("stat_modifiers");
-                if (statModifiersString != null) {
-                    Map<String, StatModifier> modifiers = loadStatModifiers(uuid, statModifiersString);
-                    for (StatModifier modifier : modifiers.values()) {
-                        playerData.addStatModifier(modifier);
-                    }
-                }
+                loadStatModifiers(uuid, userId).values().forEach(playerData::addStatModifier);
+                // Load trait modifiers
+                loadTraitModifiers(uuid, userId).values().forEach(playerData::addTraitModifier);
                 // Load ability data
-                String abilityDataString = resultSet.getString("ability_data");
-                if (abilityDataString != null) {
-                    loadAbilityData(playerData, abilityDataString);
-                }
+                loadAbilityData(playerData, userId);
                 // Load unclaimed items
-                String unclaimedItemsString = resultSet.getString("unclaimed_items");
-                if (unclaimedItemsString != null) {
-                    loadUnclaimedItems(playerData, unclaimedItemsString);
-                }
+                playerData.setUnclaimedItems(loadUnclaimedItems(userId));
+                playerData.clearInvalidItems();
                 return playerData;
             }
         }
@@ -113,82 +110,93 @@ public class SqlStorageProvider extends StorageProvider {
         return new SkillLevelMaps(levelsMap, xpMap);
     }
 
-    private Map<String, StatModifier> loadStatModifiers(UUID uuid, String statModifiers) {
+    private Map<String, StatModifier> loadStatModifiers(UUID uuid, int userId) throws SQLException {
         Map<String, StatModifier> modifiers = new HashMap<>();
+        String query = "SELECT (category_id, key_name, value) FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, STAT_MODIFIER_ID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String categoryId = resultSet.getString("category_id");
+                    try {
+                        Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(categoryId));
+                        String keyName = resultSet.getString("key_name");
+                        double value = resultSet.getDouble("value");
 
-        JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
-        for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
-            JsonObject modifierObject = modifierElement.getAsJsonObject();
-            String name = modifierObject.get("name").getAsString();
-            String statName = modifierObject.get("stat").getAsString();
-            double value = modifierObject.get("value").getAsDouble();
-
-            if (name != null && statName != null) {
-                try {
-                    Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(statName));
-                    StatModifier modifier = new StatModifier(name, stat, value);
-                    modifiers.put(name, modifier);
-                } catch (IllegalArgumentException e) { // If Stat not found in registry
-                    plugin.logger().warn("Failed to load stat modifier '" + name + "' for player " + uuid + " because " + statName + " is not a registered stat");
+                        StatModifier modifier = new StatModifier(keyName, stat, value);
+                        modifiers.put(keyName, modifier);
+                    } catch (IllegalArgumentException e) {
+                        plugin.logger().warn("Failed to load stat modifier for player " + uuid + " because " + categoryId + " is not a registered stat");
+                    }
                 }
             }
         }
         return modifiers;
     }
 
-    private void loadAbilityData(PlayerData playerData, String abilityData) {
-        JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
-        for (Map.Entry<String, JsonElement> abilityEntry : jsonAbilityData.entrySet()) {
-            String abilityName = abilityEntry.getKey();
-            AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(NamespacedId.fromString(abilityName));
-            if (ability == null) {
-                plugin.logger().warn("Failed to load ability data for player " + playerData.getUuid() + " because " + abilityName + " is not a registered ability or mana ability");
-                continue;
-            }
-            AbilityData data = playerData.getAbilityData(ability);
-            JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
-            for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
-                String key = dataEntry.getKey();
-                JsonElement element = dataEntry.getValue();
-                if (element.isJsonPrimitive()) {
-                    Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
-                    if (value != null) {
-                        data.setData(key, value);
+    private Map<String, TraitModifier> loadTraitModifiers(UUID uuid, int userId) throws SQLException {
+        Map<String, TraitModifier> modifiers = new HashMap<>();
+        String query = "SELECT (category_id, key_name, value) FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, TRAIT_MODIFIER_ID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String categoryId = resultSet.getString("category_id");
+                    try {
+                        Trait trait = plugin.getTraitRegistry().get(NamespacedId.fromString(categoryId));
+                        String keyName = resultSet.getString("key_name");
+                        double value = resultSet.getDouble("value");
+
+                        TraitModifier modifier = new TraitModifier(keyName, trait, value);
+                        modifiers.put(keyName, modifier);
+                    } catch (IllegalArgumentException e) {
+                        plugin.logger().warn("Failed to load trait modifier for player " + uuid + " because " + categoryId + " is not a registered trait");
                     }
+                }
+            }
+        }
+        return modifiers;
+    }
+
+    private void loadAbilityData(PlayerData playerData, int userId) throws SQLException {
+        String query = "SELECT (category_id, key_name, value) FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, ABILITY_DATA_ID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String categoryId = resultSet.getString("category_id");
+                    AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(NamespacedId.fromString(categoryId));
+                    if (ability == null) {
+                        plugin.logger().warn("Failed to load ability data for player " + playerData.getUuid() + " because " + categoryId + " is not a registered ability");
+                        continue;
+                    }
+                    String keyName = resultSet.getString("key_name");
+                    String value = resultSet.getString("value");
+
+                    playerData.getAbilityData(ability).setData(keyName, value);
                 }
             }
         }
     }
 
-    private void loadUnclaimedItems(PlayerData playerData, String unclaimedItemsString) {
+    private List<KeyIntPair> loadUnclaimedItems(int userId) throws SQLException {
         List<KeyIntPair> unclaimedItems = new ArrayList<>();
-        String[] splitString = unclaimedItemsString.split(",");
-        for (String entry : splitString) {
-            String[] splitEntry = entry.split(" ");
-            String itemKey = splitEntry[0];
-            int amount = 1;
-            if (splitEntry.length >= 2) {
-                amount = NumberUtil.toInt(splitEntry[1], 1);
-            }
-            unclaimedItems.add(new KeyIntPair(itemKey, amount));
-        }
-        playerData.setUnclaimedItems(unclaimedItems);
-        playerData.clearInvalidItems();
-    }
-
-    private Object parsePrimitive(JsonPrimitive primitive) {
-        if (primitive.isBoolean()) {
-            return primitive.getAsBoolean();
-        } else if (primitive.isString()) {
-            return primitive.getAsString();
-        } else if (primitive.isNumber()) {
-            if (primitive.getAsDouble() % 1 != 0) {
-                return primitive.getAsDouble();
-            } else {
-                return primitive.getAsInt();
+        String query = "SELECT (key_name, value) FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, UNCLAIMED_ITEMS_ID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String keyName = resultSet.getString("key_name");
+                    String value = resultSet.getString("value");
+                    unclaimedItems.add(new KeyIntPair(keyName, NumberUtil.toInt(value, 1)));
+                }
             }
         }
-        return null;
+        return unclaimedItems;
     }
 
     @Override
@@ -204,15 +212,13 @@ public class SqlStorageProvider extends StorageProvider {
                 // Load skill levels and xp
                 SkillLevelMaps skillLevelMaps = loadSkillLevels(uuid, userId);
                 // Load stat modifiers
-                Map<String, StatModifier> statModifiers = new HashMap<>();
-                String statModifiersString = resultSet.getString("stat_modifiers");
-                if (statModifiersString != null) {
-                    statModifiers = loadStatModifiers(uuid, statModifiersString);
-                }
+                Map<String, StatModifier> statModifiers = loadStatModifiers(uuid, userId);
+                // Load trait modifiers
+                Map<String, TraitModifier> traitModifiers = loadTraitModifiers(uuid, userId);
                 // Load mana
                 double mana = resultSet.getDouble("mana");
 
-                return new PlayerDataState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, mana);
+                return new PlayerDataState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, traitModifiers, mana);
             }
         }
     }
@@ -220,14 +226,11 @@ public class SqlStorageProvider extends StorageProvider {
     @Override
     public void applyState(PlayerDataState state) throws Exception {
         // Insert into users database
-        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, stat_modifiers, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE stat_modifiers=?, mana=?;";
+        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
             statement.setString(1, state.uuid().toString());
-            String statModifiersJson = getStatModifiersJson(state.statModifiers());
-            statement.setString(2, statModifiersJson);
-            statement.setString(4, statModifiersJson);
+            statement.setDouble(2, state.mana());
             statement.setDouble(3, state.mana());
-            statement.setDouble(5, state.mana());
             statement.executeUpdate();
         }
         // Insert into skill_levels database
@@ -247,26 +250,10 @@ public class SqlStorageProvider extends StorageProvider {
                 statement.executeUpdate();
             }
         }
-    }
-
-    @Nullable
-    private String getStatModifiersJson(Map<String, StatModifier> statModifiers) {
-        StringBuilder modifiersJson = new StringBuilder();
-        if (statModifiers.size() > 0) {
-            modifiersJson.append("[");
-            for (StatModifier statModifier : statModifiers.values()) {
-                modifiersJson.append("{\"name\":\"").append(statModifier.name())
-                        .append("\",\"stat\":\"").append(statModifier.stat().getId().toString())
-                        .append("\",\"value\":").append(statModifier.value()).append("},");
-            }
-            modifiersJson.deleteCharAt(modifiersJson.length() - 1);
-            modifiersJson.append("]");
-        }
-        if (!modifiersJson.toString().equals("")) {
-            return modifiersJson.toString();
-        } else {
-            return null;
-        }
+        // Save stat modifiers
+        saveStatModifiers(userId, state.statModifiers());
+        // Save trait modifiers
+        saveTraitModifiers(userId, state.traitModifiers());
     }
 
     private int getUserId(UUID uuid) throws SQLException {
@@ -295,21 +282,17 @@ public class SqlStorageProvider extends StorageProvider {
 
         saveUsersTable(playerData);
         saveSkillLevelsTable(playerData);
+        saveKeyValuesTable(playerData);
     }
 
     private void saveUsersTable(PlayerData playerData) throws SQLException {
-        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, mana, stat_modifiers, ability_data, unclaimed_items) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE mana=?, stat_modifiers=?, ability_data=?, unclaimed_items=?;";
+        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale=?, mana=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
             statement.setString(1, playerData.getUuid().toString());
             int curr = 2; // Current index to set
-            String statModifiers = getStatModifiersJson(playerData.getStatModifiers());
-            String abilityData = getAbilityDataJson(playerData.getAbilityDataMap());
-            String unclaimedItems = getUnclaimedItemsJson(playerData.getUnclaimedItems());
             for (int i = 0; i < 2; i++) { // Repeat twice to set duplicate values
+                statement.setString(curr++, playerData.getLocale().toLanguageTag());
                 statement.setDouble(curr++, playerData.getMana());
-                statement.setString(curr++, statModifiers);
-                statement.setString(curr++, abilityData);
-                statement.setString(curr++, unclaimedItems);
             }
             statement.executeUpdate();
         }
@@ -334,56 +317,77 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
-    @Nullable
-    private String getAbilityDataJson(Map<AbstractAbility, AbilityData> map) {
-        if (map.size() == 0) {
-            return null;
-        }
-        StringBuilder abilityJson = new StringBuilder();
-        abilityJson.append("{");
-        for (AbilityData abilityData : map.values()) {
-            String abilityName = abilityData.getAbility().getId().toString().toLowerCase(Locale.ROOT);
-            // Continue if size of map is 0
-            if (abilityData.getDataMap().size() == 0) {
-                continue;
-            }
+    private void saveKeyValuesTable(PlayerData playerData) throws SQLException {
+        int userId = getUserId(playerData.getUuid());
+        // Save stat modifiers
+        saveStatModifiers(userId, playerData.getStatModifiers());
+        saveTraitModifiers(userId, playerData.getTraitModifiers());
+        saveAbilityData(userId, playerData.getAbilityDataMap());
+        saveUnclaimedItems(userId, playerData.getUnclaimedItems());
+    }
 
-            abilityJson.append("\"").append(abilityName).append("\"").append(":{");
-            for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
-                String value = String.valueOf(dataEntry.getValue());
-                if (dataEntry.getValue() instanceof String) {
-                    value = "\"" + dataEntry.getValue() + "\"";
-                }
-                abilityJson.append("\"").append(dataEntry.getKey()).append("\":").append(value).append(",");
+    private void saveStatModifiers(int userId, Map<String, StatModifier> modifiers) throws SQLException {
+        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, STAT_MODIFIER_ID);
+            for (StatModifier modifier : modifiers.values()) {
+                String categoryId = modifier.stat().getId().toString();
+                statement.setString(3, categoryId);
+                statement.setString(4, modifier.name());
+                statement.setString(5, String.valueOf(modifier.value()));
+                statement.setString(6, String.valueOf(modifier.value()));
+                statement.executeUpdate();
             }
-            abilityJson.deleteCharAt(abilityJson.length() - 1);
-            abilityJson.append("},");
-        }
-        if (abilityJson.length() > 1) {
-            abilityJson.deleteCharAt(abilityJson.length() - 1);
-        }
-        abilityJson.append("}");
-        // If the abilityJson is just "{}", return null
-        if (!abilityJson.toString().equals("{}")) {
-            return abilityJson.toString();
-        } else {
-            return null;
         }
     }
 
-    @Nullable
-    private String getUnclaimedItemsJson(List<KeyIntPair> unclaimedItems) {
-        StringBuilder builder = new StringBuilder();
-        for (KeyIntPair unclaimedItem : unclaimedItems) {
-            builder.append(unclaimedItem.getKey()).append(" ").append(unclaimedItem.getValue()).append(",");
+    private void saveTraitModifiers(int userId, Map<String, TraitModifier> modifiers) throws SQLException {
+        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, TRAIT_MODIFIER_ID);
+            for (TraitModifier modifier : modifiers.values()) {
+                String categoryId = modifier.trait().getId().toString();
+                statement.setString(3, categoryId);
+                statement.setString(4, modifier.name());
+                statement.setString(5, String.valueOf(modifier.value()));
+                statement.setString(6, String.valueOf(modifier.value()));
+                statement.executeUpdate();
+            }
         }
-        if (builder.length() > 0) {
-            builder.deleteCharAt(builder.length() - 1);
+    }
+
+    private void saveAbilityData(int userId, Map<AbstractAbility, AbilityData> abilityDataMap) throws SQLException {
+        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, ABILITY_DATA_ID);
+            for (AbilityData abilityData : abilityDataMap.values()) {
+                String categoryId = abilityData.getAbility().getId().toString();
+                statement.setString(3, categoryId);
+                for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
+                    statement.setString(4, dataEntry.getKey());
+                    statement.setString(5, String.valueOf(dataEntry.getValue()));
+                    statement.setString(6, String.valueOf(dataEntry.getValue()));
+                    statement.executeUpdate();
+                }
+            }
         }
-        if (!builder.toString().equals("")) {
-            return builder.toString();
-        } else {
-            return null;
+    }
+
+    private void saveUnclaimedItems(int userId, List<KeyIntPair> unclaimedItems) throws SQLException {
+        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
+        try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, UNCLAIMED_ITEMS_ID);
+            for (KeyIntPair unclaimedItem : unclaimedItems) {
+                statement.setNull(3, Types.NULL);
+                statement.setString(4, unclaimedItem.getKey());
+                statement.setString(5, String.valueOf(unclaimedItem.getValue()));
+                statement.setString(6, String.valueOf(unclaimedItem.getValue()));
+                statement.executeUpdate();
+            }
         }
     }
 
@@ -428,7 +432,7 @@ public class SqlStorageProvider extends StorageProvider {
             }
         }
 
-        String usersQuery = "SELECT (user_id, player_uuid, mana, stat_modifiers) FROM " + tablePrefix + "users;";
+        String usersQuery = "SELECT (user_id, player_uuid, mana) FROM " + tablePrefix + "users;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -440,14 +444,14 @@ public class SqlStorageProvider extends StorageProvider {
                     }
 
                     double mana = resultSet.getDouble("mana");
-                    String statModifiersJson = resultSet.getString("stat_modifiers");
 
-                    Map<String, StatModifier> statModifiers = loadStatModifiers(uuid, statModifiersJson);
+                    Map<String, StatModifier> statModifiers = loadStatModifiers(uuid, userId);
+                    Map<String, TraitModifier> traitModifiers = loadTraitModifiers(uuid, userId);
 
                     Map<Skill, Integer> skillLevelMap = loadedSkillLevels.get(userId);
                     Map<Skill, Double> skillXpMap = loadedSkillXp.get(userId);
 
-                    PlayerDataState state = new PlayerDataState(uuid, skillLevelMap, skillXpMap, statModifiers, mana);
+                    PlayerDataState state = new PlayerDataState(uuid, skillLevelMap, skillXpMap, statModifiers, traitModifiers, mana);
                     states.add(state);
                 }
             }
