@@ -13,10 +13,13 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.common.message.type.SkillMessage;
 import dev.aurelium.auraskills.common.message.type.StatMessage;
+import dev.aurelium.auraskills.common.message.type.TraitMessage;
 
 import java.io.File;
 import java.io.InputStream;
@@ -137,6 +140,14 @@ public class MessageProvider implements PolyglotProvider {
             return manager.get(locale, convertKey(AbilityMessage.valueOf(ability.name() + "_DESC")));
         } else {
             return manager.get(locale, convertKey("mana_abilities." + ability.getId().toString() + ".desc"));
+        }
+    }
+
+    public String getTraitDisplayName(Trait trait, Locale locale) {
+        if (trait instanceof Traits) {
+            return manager.get(locale, convertKey(TraitMessage.valueOf(trait.name() + "_NAME")));
+        } else {
+            return manager.get(locale, convertKey("traits." + trait.getId().toString() + ".name"));
         }
     }
 
