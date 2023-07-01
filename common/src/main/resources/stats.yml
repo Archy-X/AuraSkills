@@ -1,0 +1,39 @@
+stats:
+  'auraskills:strength':
+    enabled: true
+    traits:
+      'auraskills:attack_damage':
+        modifier: 0.5
+  'auraskills:health':
+    enabled: true
+    traits:
+      'auraskills:hp':
+        modifier: 0.4
+  'auraskills:regeneration':
+    enabled: true
+    traits:
+      'auraskills:saturation_regeneration':
+        modifier: 0.007
+      'auraskills:hunger_regeneration':
+        modifier: 0.006
+  'auraskills:luck':
+    enabled: true
+    traits:
+      'auraskills:luck':
+        modifier: 0.1
+      'auraskills:double_drop_chance':
+        modifier: 0.05
+  'auraskills:wisdom':
+    enabled: true
+    traits:
+      'auraskills:experience_gain':
+        modifier: 0.01
+      'auraskills:anvil_cost_reduction':
+        modifier: 0.25
+      'auraskills:max_mana':
+        modifier: 2.0
+  'auraskills:toughness':
+    enabled: true
+    traits:
+      'auraskills:incoming_damage_reduction':
+        modifier: 0.3
