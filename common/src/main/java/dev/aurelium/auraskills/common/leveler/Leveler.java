@@ -28,14 +28,9 @@ public abstract class Leveler {
         this.xpRequirements = plugin.getXpRequirements();
     }
 
-    /**
-     * Gets the total multiplier from a player's permissions. Divides by 100 but does not add 1.
-     *
-     * @param playerData The player to get the multiplier from
-     * @param skill The skill to get the multiplier from
-     * @return The total permission multiplier
-     */
-    public abstract double getPermissionMultiplier(@NotNull PlayerData playerData, Skill skill);
+    public double getPermissionMultiplier(@NotNull PlayerData playerData, Skill skill) {
+        return playerData.getPermissionMultiplier(skill);
+    }
 
     public abstract void playLevelUpSound(@NotNull PlayerData playerData);
 
@@ -101,7 +96,7 @@ public abstract class Leveler {
         giveLegacyMoneyRewards(playerData, level);
 
         // Reload items and armor to check for newly met requirements
-        plugin.getModifierManager().reloadPlayer(playerData);
+        plugin.getStatManager().reloadPlayer(playerData);
         // Calls event
         SkillLevelUpEvent event = new SkillLevelUpEvent(plugin.getApi(), playerData.toApi(), skill, level);
         plugin.getEventManager().callEvent(event);

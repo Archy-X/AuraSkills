@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class PlayerData {
 
-    private final AuraSkillsPlugin plugin;
+    protected final AuraSkillsPlugin plugin;
 
     private final UUID uuid;
 

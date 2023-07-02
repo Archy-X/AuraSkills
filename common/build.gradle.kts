@@ -10,14 +10,14 @@ repositories {
 
 dependencies {
     api(project(":api"))
+    api("net.kyori:adventure-api:4.13.0")
+    api("co.aikar:acf-core:0.5.1-SNAPSHOT")
+    api("net.kyori:adventure-text-serializer-legacy:4.13.1")
+    api("com.github.Archy-X:Polyglot:1.1.1")
     implementation("net.kyori:event-api:3.0.0")
-    implementation("net.kyori:adventure-api:4.13.0")
-    implementation("co.aikar:acf-core:0.5.1-SNAPSHOT")
-    implementation("net.kyori:adventure-text-serializer-legacy:4.13.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.spongepowered:configurate-yaml:4.1.2")
-    implementation("com.github.Archy-X:Polyglot:1.1.1")
     implementation("com.ezylang:EvalEx:3.0.4")
     implementation("org.atteo:evo-inflector:1.3")
     compileOnly("net.luckperms:api:5.4")

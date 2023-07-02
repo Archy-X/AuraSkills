@@ -40,6 +40,10 @@ public class SqlStorageProvider extends StorageProvider {
         this.pool = pool;
     }
 
+    public ConnectionPool getPool() {
+        return pool;
+    }
+
     @Override
     protected PlayerData loadRaw(UUID uuid) throws Exception {
         String loadQuery = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?;";
