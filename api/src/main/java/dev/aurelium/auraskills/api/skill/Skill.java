@@ -13,6 +13,8 @@ public interface Skill {
 
     NamespacedId getId();
 
+    boolean isEnabled();
+
     @NotNull
     ImmutableList<Ability> getAbilities();
 

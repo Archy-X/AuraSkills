@@ -10,6 +10,8 @@ import java.util.Locale;
 
 public interface SkillProvider {
 
+    boolean isEnabled(Skill skill);
+
     @NotNull
     ImmutableList<Ability> getAbilities(Skill skill);
 

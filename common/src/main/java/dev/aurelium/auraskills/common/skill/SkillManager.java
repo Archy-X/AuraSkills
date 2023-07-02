@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -34,6 +35,19 @@ public class SkillManager implements SkillProvider {
             throw new IllegalArgumentException("Skill " + skill + " is not loaded!");
         }
         return loadedSkill;
+    }
+
+    public Collection<LoadedSkill> getSkills() {
+        return skillMap.values();
+    }
+
+    @Override
+    public boolean isEnabled(Skill skill) {
+        if (!skillMap.containsKey(skill)) {
+            return false;
+        }
+        LoadedSkill loadedSkill = skillMap.get(skill);
+        return loadedSkill.options().enabled();
     }
 
     @Override

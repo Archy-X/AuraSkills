@@ -43,6 +43,11 @@ public enum Skills implements Skill {
     }
 
     @Override
+    public boolean isEnabled() {
+        return provider.isEnabled(this);
+    }
+
+    @Override
     public @NotNull ImmutableList<Ability> getAbilities() {
         validate();
         return provider.getAbilities(this);

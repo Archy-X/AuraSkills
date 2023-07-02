@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.data.BukkitPlayer;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -52,7 +53,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private final BukkitAudiences audiences;
 
     private AuraSkillsApi api;
-    private ConfigProvider configProvider;
+    private BukkitConfigProvider configProvider;
     private MessageProvider messageProvider;
     private SkillManager skillManager;
     private AbilityManager abilityManager;
@@ -84,7 +85,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public void onEnable() {
         registerApi();
-        // TODO ConfigProvider impl
+        // Load config.yml file
+        configProvider = new BukkitConfigProvider(this);
+        configProvider.loadOptions();
         // Loads messages
         messageProvider = new MessageProvider(this);
 
