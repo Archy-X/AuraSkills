@@ -19,7 +19,15 @@ public abstract class StorageProvider {
         this.plugin = plugin;
     }
 
-    public abstract PlayerData load(UUID uuid) throws Exception;
+    public PlayerData load(UUID uuid) throws Exception {
+        PlayerData playerData = loadRaw(uuid);
+        // Update stats and permissions
+        plugin.getStatManager().updateStats(playerData);
+        plugin.getRewardManager().updatePermissions(playerData);
+        return playerData;
+    }
+
+    protected abstract PlayerData loadRaw(UUID uuid) throws Exception;
 
     /**
      * Loads a snapshot of player data for an offline player

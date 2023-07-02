@@ -41,7 +41,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public PlayerData load(UUID uuid) throws Exception {
+    protected PlayerData loadRaw(UUID uuid) throws Exception {
         String loadQuery = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(loadQuery)) {
             statement.setString(1, uuid.toString());

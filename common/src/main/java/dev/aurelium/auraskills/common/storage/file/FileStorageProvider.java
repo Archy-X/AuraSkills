@@ -34,7 +34,7 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    public PlayerData load(UUID uuid) throws Exception {
+    protected PlayerData loadRaw(UUID uuid) throws Exception {
         CommentedConfigurationNode root = loadYamlFile(uuid);
         PlayerData playerData = playerManager.createNewPlayer(uuid);
         
