@@ -160,6 +160,6 @@ public interface AuraSkillsPlugin {
 
     void saveResource(String path, boolean replace);
 
-    File getDataFolder();
+    File getPluginFolder();
 
 }

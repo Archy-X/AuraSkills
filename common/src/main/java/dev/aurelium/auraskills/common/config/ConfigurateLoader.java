@@ -58,7 +58,7 @@ public class ConfigurateLoader {
      * @throws ConfigurateException If an error occurs while loading the file
      */
     public ConfigurationNode loadUserFile(String path) throws ConfigurateException {
-        File file = new File(plugin.getDataFolder(), path);
+        File file = new File(plugin.getPluginFolder(), path);
 
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .path(file.toPath())

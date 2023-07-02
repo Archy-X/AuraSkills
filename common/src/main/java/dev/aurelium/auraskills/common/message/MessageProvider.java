@@ -175,7 +175,7 @@ public class MessageProvider implements PolyglotProvider {
 
     @Override
     public File getDataFolder() {
-        return plugin.getDataFolder();
+        return plugin.getPluginFolder();
     }
 
     @Override
