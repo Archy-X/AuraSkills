@@ -107,7 +107,7 @@ public abstract class RewardManager {
      */
     public void updatePermissions(User user) {
         if (user == null) return;
-        for (Skill skill : plugin.getSkillRegistry().getValues()) {
+        for (Skill skill : plugin.getSkillManager().getSkillValues()) {
             plugin.getRewardManager().getRewardTable(skill).applyPermissions(user, user.getSkillLevel(skill));
         }
     }

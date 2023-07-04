@@ -1,16 +1,19 @@
 package dev.aurelium.auraskills.bukkit;
 
+import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.bukkit.commands.SkillsRootCommand;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
+import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
-import dev.aurelium.auraskills.bukkit.player.BukkitUser;
-import dev.aurelium.auraskills.bukkit.player.BukkitUserManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
@@ -47,6 +50,7 @@ import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,8 +59,6 @@ import java.io.InputStream;
 import java.util.Locale;
 
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
-
-    private final BukkitAudiences audiences;
 
     private AuraSkillsApi api;
     private BukkitConfigProvider configProvider;
@@ -85,14 +87,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private StorageProvider storageProvider;
     private Slate slate;
     private MenuFileManager menuFileManager;
-
-    public AuraSkills() {
-        this.audiences = BukkitAudiences.create(this);
-    }
+    private PaperCommandManager commandManager;
+    private BukkitAudiences audiences;
 
     @Override
     public void onEnable() {
         registerApi();
+        logger = new BukkitLogger(this);
+        audiences = BukkitAudiences.create(this);
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
@@ -118,7 +120,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         userManager = new BukkitUserManager(this);
         xpRequirements = new XpRequirements(this);
         eventManager = new AuraSkillsEventManager(this);
-        logger = new BukkitLogger(this);
         hookManager = new HookManager();
         leaderboardManager = new LeaderboardManager(this);
         // TODO UiProvider impl
@@ -130,6 +131,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // TODO Scheduler impl
         initStorageProvider();
 
+        registerEvents();
+        registerCommands();
         registerAndLoadMenus();
     }
 
@@ -173,6 +176,19 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         }
     }
 
+    private void registerCommands() {
+        commandManager = new PaperCommandManager(this);
+        commandManager.enableUnstableAPI("help");
+        commandManager.usePerIssuerLocale(true, false);
+        commandManager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");
+        commandManager.registerCommand(new SkillsRootCommand(this));
+    }
+
+    private void registerEvents() {
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new PlayerJoinQuit(this), this);
+    }
+
     public BukkitAudiences getAudiences() {
         return audiences;
     }
@@ -187,6 +203,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public MenuManager getMenuManager() {
         return slate.getMenuManager();
+    }
+
+    public PaperCommandManager getCommandManager() {
+        return commandManager;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.player;
+package dev.aurelium.auraskills.bukkit.user;
 
 import com.archyx.aureliumskills.util.text.TextUtil;
 import dev.aurelium.auraskills.api.skill.Skill;

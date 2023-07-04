@@ -22,7 +22,7 @@ public abstract class StorageProvider {
     public User load(UUID uuid) throws Exception {
         User user = loadRaw(uuid);
         // Update stats and permissions
-        plugin.getStatManager().updateStats(user);
+        // plugin.getStatManager().updateStats(user);
         plugin.getRewardManager().updatePermissions(user);
         return user;
     }

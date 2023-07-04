@@ -1,6 +1,6 @@
 name: AureliumSkills
 version: Beta 1.3.21
-main: com.archyx.aureliumskills.AureliumSkills
+main: dev.aurelium.auraskills.bukkit.AuraSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/

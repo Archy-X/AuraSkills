@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.player;
+package dev.aurelium.auraskills.bukkit.user;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.player.User;
