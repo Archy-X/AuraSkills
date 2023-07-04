@@ -4,9 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SkillManager {
 
@@ -37,6 +35,14 @@ public class SkillManager {
 
     public Collection<LoadedSkill> getSkills() {
         return skillMap.values();
+    }
+
+    public Set<Skill> getSkillValues() {
+        Set<Skill> skills = new HashSet<>();
+        for (LoadedSkill loaded : skillMap.values()) {
+            skills.add(loaded.skill());
+        }
+        return skills;
     }
 
 }
