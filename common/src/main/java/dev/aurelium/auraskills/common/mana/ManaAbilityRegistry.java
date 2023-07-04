@@ -13,6 +13,7 @@ public class ManaAbilityRegistry extends Registry<ManaAbility> {
 
     public ManaAbilityRegistry(AuraSkillsPlugin plugin) {
         super(plugin, ManaAbility.class);
+        registerDefaults();
     }
 
     @Override

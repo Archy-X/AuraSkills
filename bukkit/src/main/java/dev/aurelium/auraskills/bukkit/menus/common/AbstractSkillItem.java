@@ -98,7 +98,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
             String levelsMessage = plugin.getMsg(MenuMessage.ABILITY_LEVELS, locale);
             int num = 1;
             List<Ability> abilities = new ArrayList<>(skill.getAbilities());
-            abilities.sort(Comparator.comparingInt(a -> a.getUnlock()));
+            abilities.sort(Comparator.comparingInt(Ability::getUnlock));
             for (Ability ability : abilities) {
                 if (ability.isEnabled()) {
                     if (user.getAbilityLevel(ability) > 0) {

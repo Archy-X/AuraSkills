@@ -10,6 +10,7 @@ public class TraitRegistry extends Registry<Trait> {
 
     public TraitRegistry(AuraSkillsPlugin plugin) {
         super(plugin, Trait.class);
+        registerDefaults();
     }
 
     @Override

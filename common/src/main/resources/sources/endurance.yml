@@ -1,0 +1,13 @@
+default:
+  type: statistic
+  multiplier: 0.01
+sources:
+  walk_per_meter:
+    statistic: walk_one_cm
+    xp: 0.333
+  sprint_per_meter:
+    statistic: sprint_one_cm
+    xp: 0.1
+  swim_per_meter:
+    statistic: swim_one_cm
+    xp: 1

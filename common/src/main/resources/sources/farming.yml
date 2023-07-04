@@ -1,0 +1,97 @@
+default:
+  type: block
+  trigger: break
+sources:
+  wheat:
+    block: wheat
+    xp: 2.0
+    check_replace: false
+    state:
+      age: 7
+  potato:
+    block: potatoes
+    xp: 2.5
+    check_replace: false
+    state:
+      age: 7
+  carrot:
+    block: carrots
+    xp: 2.7
+    check_replace: false
+    state:
+      age: 7
+  beetroot:
+    block: beetroots
+    xp: 3.0
+    check_replace: false
+    state:
+      age: 3
+  nether_wart:
+    block: nether_warts
+    xp: 3.0
+    check_replace: false
+    state:
+      age: 3
+  pumpkin:
+    block: pumpkin
+    xp: 3.4
+    check_replace: true
+  melon:
+    block: melon
+    xp: 3.4
+    check_replace: true
+  sugar_cane:
+    block: sugar_cane
+    xp: 1.7
+    triggers: [break, break_indirect]
+    check_replace: true
+  bamboo:
+    block: bamboo
+    xp: 0.25
+    triggers: [break, break_indirect]
+    check_replace: true
+  cocoa:
+    block: cocoa
+    xp: 4.0
+    check_replace: false
+    state:
+      age: 3
+  cactus:
+    block: cactus
+    xp: 6.0
+    triggers: [break, break_indirect]
+    check_replace: false
+  brown_mushroom:
+    block: cactus
+    xp: 7.0
+    check_replace: true
+  red_mushroom:
+    block: red_mushroom
+    xp: 7.0
+    check_replace: true
+  kelp:
+    block: kelp
+    xp: 0.3
+    triggers: [break, break_indirect]
+    check_replace: true
+  sea_pickle:
+    block: sea_pickle
+    xp: 4.0
+    check_replace: true
+    state_multiplier: pickles
+  sweet_berry_bush:
+    block: sweet_berry_bush
+    xp: 2.5
+    triggers: [break, interact]
+    check_replace: false
+    states:
+      - age: 2
+      - age: 3
+    state_multiplier: age-1
+  glow_berries:
+    blocks: [cave_vines, cave_vines_plant]
+    xp: 4.5
+    triggers: [break, interact]
+    check_replace: false
+    state:
+      berries: true

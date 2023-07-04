@@ -1,0 +1,75 @@
+sources:
+  drink_regular:
+    type: item_consume
+    item: potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      extended: false
+      upgraded: false
+    xp: 10
+  drink_extended:
+    type: item_consume
+    item: potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      extended: true
+    xp: 15
+  drink_upgraded:
+    type: item_consume
+    item: potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      upgraded: true
+    xp: 15
+  splash_regular:
+    type: potion_splash
+    item: splash_potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      extended: false
+      upgraded: false
+    xp: 20
+  splash_extended:
+    type: potion_splash
+    item: splash_potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      extended: true
+    xp: 25
+  splash_upgraded:
+    type: potion_splash
+    item: splash_potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      upgraded: true
+    xp: 25
+  lingering_regular:
+    type: potion_splash
+    item: lingering_potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      extended: false
+      upgraded: false
+    xp: 30
+  lingering_extended:
+    type: potion_splash
+    item: lingering_potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      extended: true
+    xp: 35
+  lingering_upgraded:
+    type: potion_splash
+    item: lingering_potion
+    potion_data:
+      excluded_types: [ mundane, thick, water, awkward ]
+      upgraded: true
+    xp: 35
+  golden_apple:
+    type: item_consume
+    item: golden_apple
+    xp: 5
+  enchanted_golden_apple:
+    type: item_consume
+    item: enchanted_golden_apple
+    xp: 50

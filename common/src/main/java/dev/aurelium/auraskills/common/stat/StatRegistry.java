@@ -10,6 +10,7 @@ public class StatRegistry extends Registry<Stat> {
 
     public StatRegistry(AuraSkillsPlugin plugin) {
         super(plugin, Stat.class);
+        registerDefaults();
     }
 
     @Override

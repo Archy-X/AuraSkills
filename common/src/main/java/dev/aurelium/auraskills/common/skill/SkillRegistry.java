@@ -13,6 +13,7 @@ public class SkillRegistry extends Registry<Skill> {
 
     public SkillRegistry(AuraSkillsPlugin plugin) {
         super(plugin, Skill.class);
+        registerDefaults();
     }
 
     public void registerDefaults() {

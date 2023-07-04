@@ -1,0 +1,23 @@
+default:
+  type: brewing
+  trigger: takeout
+sources:
+  awkward:
+    ingredient: nether_wart
+    xp: 10
+  regular:
+    ingredient:
+      excluded_materials: [redstone, glowstone_dust, nether_wart, gunpowder, dragon_breath]
+    xp: 15
+  extended:
+    ingredient: redstone
+    xp: 25
+  upgraded:
+    ingredient: glowstone_dust
+    xp: 25
+  splash:
+    ingredient: gunpowder
+    xp: 35
+  lingering:
+    ingredient: dragon_breath
+    xp: 50

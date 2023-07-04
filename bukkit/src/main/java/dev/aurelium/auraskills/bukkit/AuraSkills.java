@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
+import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -35,6 +36,7 @@ import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
+import dev.aurelium.auraskills.common.skill.SkillLoader;
 import dev.aurelium.auraskills.common.skill.SkillManager;
 import dev.aurelium.auraskills.common.skill.SkillRegistry;
 import dev.aurelium.auraskills.common.stat.StatManager;
@@ -105,7 +107,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         skillManager = new SkillManager(this);
         abilityManager = new AbilityManager(this);
         manaAbilityManager = new ManaAbilityManager(this);
-        // TODO StatManager impl
+        statManager = new BukkitStatManager(this);
         traitManager = new TraitManager(this);
 
         // Init registries
@@ -115,6 +117,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         abilityRegistry = new AbilityRegistry(this);
         manaAbilityRegistry = new ManaAbilityRegistry(this);
         itemRegistry = new BukkitItemRegistry(this);
+
+        // Load skills
+        loadSkills();
 
         // TODO Leveler impl
         userManager = new BukkitUserManager(this);
@@ -142,6 +147,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         if (storageProvider instanceof SqlStorageProvider sqlStorageProvider) {
             sqlStorageProvider.getPool().disable();
         }
+    }
+
+    private void loadSkills() {
+        SkillLoader loader = new SkillLoader(this);
+        loader.loadSkills();
     }
 
     private void registerApi() {

@@ -1,0 +1,18 @@
+default:
+  type: enchanting
+sources:
+  weapon_per_level:
+    item:
+      category: weapon
+    xp: 2
+  armor_per_level:
+    item:
+      category: armor
+    xp: 2
+  tool_per_level:
+    item:
+      category: tool
+    xp: 2
+  book_per_level:
+    item: book
+    xp: 2

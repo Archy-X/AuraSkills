@@ -13,6 +13,7 @@ public class AbilityRegistry extends Registry<Ability> {
 
     public AbilityRegistry(AuraSkillsPlugin plugin) {
         super(plugin, Ability.class);
+        registerDefaults();
     }
 
     @Override

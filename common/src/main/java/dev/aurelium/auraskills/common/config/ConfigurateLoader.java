@@ -8,10 +8,14 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ConfigurateLoader {
@@ -22,7 +26,7 @@ public class ConfigurateLoader {
 
     public ConfigurateLoader(AuraSkillsPlugin plugin, TypeSerializerCollection serializers) {
         this.plugin = plugin;
-        this.classLoader = this.getClass().getClassLoader();
+        this.classLoader = plugin.getClass().getClassLoader();
         this.serializers = serializers;
     }
 
@@ -33,21 +37,26 @@ public class ConfigurateLoader {
      * @return The loaded configuration node
      * @throws ConfigurateException If an error occurs while loading the file
      */
-    public ConfigurationNode loadEmbeddedFile(String fileName) throws ConfigurateException {
+    public ConfigurationNode loadEmbeddedFile(String fileName) throws IOException {
         URI uri = getEmbeddedURI(fileName);
 
         if (uri == null) {
             throw new IllegalArgumentException("File " + fileName + " does not exist");
         }
 
-        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .path(Path.of(uri))
-                .defaultOptions(opts ->
-                        opts.serializers(build -> build.registerAll(serializers))
-                )
-                .build();
+        Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
+        try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
 
-        return loader.load();
+            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                    .path(Path.of(uri))
+                    .defaultOptions(opts ->
+                            opts.serializers(build -> build.registerAll(serializers))
+                    )
+                    .build();
+
+            return loader.load();
+        }
     }
 
     /**
@@ -59,6 +68,11 @@ public class ConfigurateLoader {
      */
     public ConfigurationNode loadUserFile(String path) throws ConfigurateException {
         File file = new File(plugin.getPluginFolder(), path);
+
+        // Generate file if missing
+        if (!file.exists()) {
+            plugin.saveResource(path, false);
+        }
 
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .path(file.toPath())

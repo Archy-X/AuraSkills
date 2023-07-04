@@ -6,7 +6,6 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractSkillItem;
 import dev.aurelium.auraskills.bukkit.menus.levelprogression.LevelProgressionOpener;
 import dev.aurelium.auraskills.common.player.User;
-import dev.aurelium.auraskills.common.skill.LoadedSkill;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -33,7 +32,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
 
     @Override
     public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        return new HashSet<>(plugin.getSkillManager().getSkills().stream().map(LoadedSkill::skill).toList());
+        return new HashSet<>(plugin.getSkillManager().getSkillValues());
     }
 
     @Override
