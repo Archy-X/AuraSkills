@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.common.ability;
 
 import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Ability;
-import dev.aurelium.auraskills.api.ability.AbilityProvider;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -10,20 +9,30 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Manager for storing and retrieving ability configs. Does not handle
  * loading configs from file.
  */
-public class AbilityManager implements AbilityProvider {
+public class AbilityManager {
 
     private final AuraSkillsPlugin plugin;
     private final Map<Ability, LoadedAbility> abilityMap;
+    private final AbilitySupplier supplier;
 
     public AbilityManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        abilityMap = new HashMap<>();
+        this.abilityMap = new HashMap<>();
+        this.supplier = new AbilitySupplier(this, plugin.getMessageProvider());
+    }
+
+    // Supplier to be injected into Ability instances
+    public AbilitySupplier getSupplier() {
+        return supplier;
     }
 
     public void register(Ability ability, LoadedAbility loadedAbility) {
@@ -39,66 +48,6 @@ public class AbilityManager implements AbilityProvider {
         return loadedAbility;
     }
 
-    @Override
-    public Skill getSkill(Ability ability) {
-        return getAbility(ability).skill();
-    }
-
-    @Override
-    public String getDisplayName(Ability ability, Locale locale) {
-        return plugin.getMessageProvider().getAbilityDisplayName(ability, locale);
-    }
-
-    @Override
-    public String getDescription(Ability ability, Locale locale) {
-        return plugin.getMessageProvider().getAbilityDescription(ability, locale);
-    }
-
-    @Override
-    public String getInfo(Ability ability, Locale locale) {
-        return plugin.getMessageProvider().getAbilityInfo(ability, locale);
-    }
-
-    @Override
-    public boolean isEnabled(Ability ability) {
-        return getAbility(ability).config().enabled();
-    }
-
-    @Override
-    public double getBaseValue(Ability ability) {
-        return getAbility(ability).config().baseValue();
-    }
-
-    @Override
-    public double getSecondaryBaseValue(Ability ability) {
-        return getAbility(ability).config().secondaryBaseValue();
-    }
-
-    @Override
-    public double getValuePerLevel(Ability ability) {
-        return getAbility(ability).config().valuePerLevel();
-    }
-
-    @Override
-    public double getSecondaryValuePerLevel(Ability ability) {
-        return getAbility(ability).config().secondaryValuePerLevel();
-    }
-
-    @Override
-    public int getUnlock(Ability ability) {
-        return getAbility(ability).config().unlock();
-    }
-
-    @Override
-    public int getLevelUp(Ability ability) {
-        return getAbility(ability).config().levelUp();
-    }
-
-    @Override
-    public int getMaxLevel(Ability ability) {
-        return getAbility(ability).config().maxLevel();
-    }
-
     /**
      * Gets a list of abilities unlocked or leveled up at a certain level
      *
@@ -111,7 +60,7 @@ public class AbilityManager implements AbilityProvider {
         List<Ability> abilities = new ArrayList<>();
         if (skillAbilities.size() == 5) {
             for (Ability ability : skillAbilities) {
-                if (level >= getUnlock(ability) && (level - getUnlock(ability)) % getLevelUp(ability) == 0) {
+                if (level >= ability.getUnlock() && (level - ability.getUnlock()) % ability.getLevelUp() == 0) {
                     abilities.add(ability);
                 }
             }

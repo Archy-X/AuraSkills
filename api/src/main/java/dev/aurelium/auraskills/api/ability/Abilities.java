@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 
+import java.util.List;
 import java.util.Locale;
 
 public enum Abilities implements Ability {
@@ -102,85 +103,121 @@ public enum Abilities implements Ability {
 
     @Override
     public Skill getSkill() {
-        validate();
         return provider.getSkill(this);
     }
 
     @Override
     public String getDisplayName(Locale locale) {
-        validate();
         return provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        validate();
         return provider.getDescription(this, locale);
     }
 
     @Override
     public String getInfo(Locale locale) {
-        validate();
         return provider.getInfo(this, locale);
     }
 
     @Override
     public boolean hasSecondaryValue() {
-        validate();
         return hasSecondaryValue;
     }
 
     @Override
     public boolean isEnabled() {
-        validate();
         return provider.isEnabled(this);
     }
 
     @Override
     public double getBaseValue() {
-        validate();
         return provider.getBaseValue(this);
     }
 
     @Override
     public double getSecondaryBaseValue() {
-        validate();
         return provider.getSecondaryBaseValue(this);
     }
 
     @Override
+    public double getValue(int level) {
+        return provider.getValue(this, level);
+    }
+
+    @Override
     public double getValuePerLevel() {
-        validate();
         return provider.getValuePerLevel(this);
     }
 
     @Override
     public double getSecondaryValuePerLevel() {
-        validate();
         return provider.getSecondaryValuePerLevel(this);
     }
 
     @Override
+    public double getSecondaryValue(int level) {
+        return provider.getSecondaryValue(this, level);
+    }
+
+    @Override
     public int getUnlock() {
-        validate();
         return provider.getUnlock(this);
     }
 
     @Override
     public int getLevelUp() {
-        validate();
         return provider.getLevelUp(this);
     }
 
     @Override
     public int getMaxLevel() {
-        validate();
         return provider.getMaxLevel(this);
     }
 
-    private void validate() {
-        if (provider == null) {
-            throw new IllegalStateException("Attempting to access ability provider before it has been injected!");
-        }
+    @Override
+    public boolean optionBoolean(String key) {
+        return provider.optionBoolean(this, key);
+    }
+
+    @Override
+    public boolean optionBoolean(String key, boolean def) {
+        return provider.optionBoolean(this, key, def);
+    }
+
+    @Override
+    public int optionInt(String key) {
+        return provider.optionInt(this, key);
+    }
+
+    @Override
+    public int optionInt(String key, int def) {
+        return provider.optionInt(this, key, def);
+    }
+
+    @Override
+    public double optionDouble(String key) {
+        return provider.optionDouble(this, key);
+    }
+
+    @Override
+    public double optionDouble(String key, double def) {
+        return provider.optionDouble(this, key, def);
+    }
+
+    @Override
+    public String optionString(String key) {
+        return provider.optionString(this, key);
+    }
+
+    @Override
+    public String optionString(String key, String def) {
+        return provider.optionString(this, key, def);
+    }
+
+    @Override
+    public List<String> optionStringList(String key) {
+        return provider.optionStringList(this, key);
     }
 }

@@ -1,6 +1,9 @@
 package dev.aurelium.auraskills.api.source;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
 
 public interface XpSource {
 
@@ -11,6 +14,18 @@ public interface XpSource {
      * @return The id
      */
     NamespacedId getId();
+
+    /**
+     * Gets the display name of the source.
+     * Different sources may return the same name.
+     *
+     * @param locale The locale to get the name in
+     * @return The display name
+     */
+    String getDisplayName(Locale locale);
+
+    @Nullable
+    String getUnitName(Locale locale);
 
     /**
      * Gets the name of the source in all caps without a namespace.

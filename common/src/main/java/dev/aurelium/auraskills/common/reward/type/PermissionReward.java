@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.reward.type;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.hooks.PermissionsHook;
 
 public class PermissionReward extends MessagedReward {
@@ -18,9 +18,9 @@ public class PermissionReward extends MessagedReward {
     }
 
     @Override
-    public void giveReward(PlayerData playerData, Skill skill, int level) {
+    public void giveReward(User user, Skill skill, int level) {
         if (hooks.isRegistered(PermissionsHook.class)) {
-            hooks.getHook(PermissionsHook.class).setPermission(playerData, permission, value);
+            hooks.getHook(PermissionsHook.class).setPermission(user, permission, value);
         }
     }
 

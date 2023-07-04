@@ -1,10 +1,11 @@
 package dev.aurelium.auraskills.api.ability;
 
+import dev.aurelium.auraskills.api.option.OptionedProvider;
 import dev.aurelium.auraskills.api.skill.Skill;
 
 import java.util.Locale;
 
-public interface AbilityProvider {
+public interface AbilityProvider extends OptionedProvider<Ability> {
 
     Skill getSkill(Ability ability);
 
@@ -20,9 +21,13 @@ public interface AbilityProvider {
 
     double getSecondaryBaseValue(Ability ability);
 
+    double getValue(Ability ability, int level);
+
     double getValuePerLevel(Ability ability);
 
     double getSecondaryValuePerLevel(Ability ability);
+
+    double getSecondaryValue(Ability ability, int level);
 
     int getUnlock(Ability ability);
 

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.hooks.PermissionsHook;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.reward.type.PermissionReward;
 import dev.aurelium.auraskills.common.reward.type.StatReward;
 
@@ -80,13 +80,13 @@ public class RewardTable {
         return ImmutableList.copyOf(rewardList);
     }
 
-    public void applyStats(PlayerData playerData, int level) {
+    public void applyStats(User user, int level) {
         Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
         for (int i = 2; i <= level; i++) {
             ImmutableList<StatReward> statRewardList = statRewardMap.get(i);
             if (statRewardList != null) {
                 for (StatReward statReward : statRewardList) {
-                    playerData.addStatLevel(statReward.getStat(), statReward.getValue());
+                    user.addStatLevel(statReward.getStat(), statReward.getValue());
                 }
             }
         }
@@ -107,7 +107,7 @@ public class RewardTable {
         return statsMap;
     }
 
-    public void applyPermissions(PlayerData player, int level) {
+    public void applyPermissions(User player, int level) {
         Map<Integer, ImmutableList<PermissionReward>> permissionRewardMap = searchRewards(PermissionReward.class);
         for (Map.Entry<Integer, ImmutableList<PermissionReward>> entry : permissionRewardMap.entrySet()) {
             int entryLevel = entry.getKey();

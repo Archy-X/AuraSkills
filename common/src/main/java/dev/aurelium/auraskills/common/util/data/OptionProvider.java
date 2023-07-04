@@ -20,16 +20,32 @@ public class OptionProvider {
         return (boolean) optionMap.get(key);
     }
 
+    public boolean getBoolean(String key, boolean def) {
+        return (boolean) optionMap.getOrDefault(key, def);
+    }
+
     public int getInt(String key) {
         return (int) optionMap.get(key);
+    }
+
+    public int getInt(String key, int def) {
+        return (int) optionMap.getOrDefault(key, def);
     }
 
     public double getDouble(String key) {
         return (double) optionMap.get(key);
     }
 
+    public double getDouble(String key, double def) {
+        return (double) optionMap.getOrDefault(key, def);
+    }
+
     public String getString(String key) {
         return (String) optionMap.get(key);
+    }
+
+    public String getString(String key, String def) {
+        return (String) optionMap.getOrDefault(key, def);
     }
 
     public List<String> getStringList(String key) {

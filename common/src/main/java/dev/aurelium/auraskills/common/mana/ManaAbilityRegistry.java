@@ -18,7 +18,7 @@ public class ManaAbilityRegistry extends Registry<ManaAbility> {
     @Override
     public void registerDefaults() {
         for (ManaAbility manaAbility : ManaAbilities.values()) {
-            injectProvider(manaAbility, ManaAbilityProvider.class, plugin.getManaAbilityManager()); // Inject the ManaAbilityProvider instance
+            injectProvider(manaAbility, ManaAbilityProvider.class, plugin.getManaAbilityManager().getSupplier()); // Inject the ManaAbilityProvider instance
             this.register(manaAbility.getId(), manaAbility);
         }
     }

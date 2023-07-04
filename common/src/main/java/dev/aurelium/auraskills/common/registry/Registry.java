@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -37,6 +38,11 @@ public abstract class Registry<T> {
         return type;
     }
 
+    @Nullable
+    public T getOrNull(NamespacedId id) {
+        return registryMap.getOrDefault(id, null);
+    }
+
     public Collection<T> getValues() {
         return registryMap.values();
     }
@@ -49,7 +55,7 @@ public abstract class Registry<T> {
         registryMap.remove(id);
     }
 
-    protected void injectProvider(Object obj, Class<?> type, Object provider) {
+    protected <P> void injectProvider(Object obj, Class<P> type, P provider) {
         for (Field field : obj.getClass().getDeclaredFields()) {
             if (!field.isAnnotationPresent(Inject.class)) continue; // Ignore fields without @Inject
             if (field.getType().equals(type)) {

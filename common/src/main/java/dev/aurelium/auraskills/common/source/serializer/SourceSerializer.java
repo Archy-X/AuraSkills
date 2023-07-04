@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.source.serializer;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.atteo.evo.inflector.English;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -13,6 +14,12 @@ import java.util.List;
 import java.util.Locale;
 
 public abstract class SourceSerializer<T> implements TypeSerializer<T> {
+
+    protected final AuraSkillsPlugin plugin;
+
+    public SourceSerializer(AuraSkillsPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     protected NamespacedId getId(ConfigurationNode source) {
         String name = source.getString();

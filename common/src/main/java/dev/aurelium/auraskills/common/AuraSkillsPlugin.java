@@ -5,8 +5,8 @@ import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.data.PlayerData;
-import dev.aurelium.auraskills.common.data.PlayerManager;
+import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.player.UserManager;
 import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
@@ -52,7 +52,7 @@ public interface AuraSkillsPlugin {
 
     Leveler getLeveler();
 
-    PlayerManager getPlayerManager();
+    UserManager getUserManager();
 
     XpRequirements getXpRequirements();
 
@@ -148,10 +148,10 @@ public interface AuraSkillsPlugin {
     /**
      * Executes a command as a player
      *
-     * @param playerData The player to execute the command as
+     * @param user The player to execute the command as
      * @param command The command to execute
      */
-    void runPlayerCommand(PlayerData playerData, String command);
+    void runPlayerCommand(User user, String command);
 
     InputStream getResource(String path);
 

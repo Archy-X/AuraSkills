@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.common.message;
 
 import co.aikar.commands.CommandIssuer;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.message.recipient.CommandIssuerRecipient;
 import dev.aurelium.auraskills.common.message.recipient.PlayerDataRecipient;
 import dev.aurelium.auraskills.common.message.recipient.Recipient;
@@ -47,11 +47,11 @@ public class MessageBuilder {
     /**
      * Sends the message to a PlayerData recipient
      *
-     * @param playerData The PlayerData recipient
+     * @param user The PlayerData recipient
      */
-    public void send(PlayerData playerData) {
+    public void send(User user) {
         validateComponent();
-        new PlayerDataRecipient(playerData).sendMessage(component);
+        new PlayerDataRecipient(user).sendMessage(component);
     }
 
     /**

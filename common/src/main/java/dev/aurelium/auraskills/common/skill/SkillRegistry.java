@@ -17,7 +17,7 @@ public class SkillRegistry extends Registry<Skill> {
 
     public void registerDefaults() {
         for (Skill skill : Skills.values()) {
-            injectProvider(skill, SkillProvider.class, plugin.getSkillManager()); // Inject the SkillProvider instance
+            injectProvider(skill, SkillProvider.class, plugin.getSkillManager().getSupplier()); // Inject the SkillProvider instance
             this.register(skill.getId(), skill);
         }
     }

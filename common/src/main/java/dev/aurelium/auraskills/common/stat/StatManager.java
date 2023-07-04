@@ -3,27 +3,31 @@ package dev.aurelium.auraskills.common.stat;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
-import dev.aurelium.auraskills.api.stat.StatProvider;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
  * Interface with methods to manage player stats.
  */
-public abstract class StatManager implements StatProvider {
+public abstract class StatManager {
 
     private final AuraSkillsPlugin plugin;
     private final Map<Stat, LoadedStat> statMap;
+    private final StatSupplier supplier;
 
     public StatManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.statMap = new HashMap<>();
+        this.supplier = new StatSupplier(this, plugin.getMessageProvider());
+    }
+
+    public StatSupplier getSupplier() {
+        return supplier;
     }
 
     @NotNull
@@ -39,47 +43,27 @@ public abstract class StatManager implements StatProvider {
         statMap.put(stat, loadedStat);
     }
 
-    @Override
-    public String getDisplayName(Stat stat, Locale locale) {
-        return plugin.getMessageProvider().getStatDisplayName(stat, locale);
-    }
+    public abstract void reloadPlayer(User user);
 
-    @Override
-    public String getDescription(Stat stat, Locale locale) {
-        return plugin.getMessageProvider().getStatDescription(stat, locale);
-    }
+    public abstract <T> void reload(User user, T type);
 
-    @Override
-    public String getColor(Stat stat, Locale locale) {
-        return plugin.getMessageProvider().getStatColor(stat, locale);
-    }
+    public abstract void reloadStat(User user, Stat stat);
 
-    @Override
-    public String getSymbol(Stat stat, Locale locale) {
-        return plugin.getMessageProvider().getStatSymbol(stat, locale);
-    }
-
-    public abstract void reloadPlayer(PlayerData playerData);
-
-    public abstract <T> void reload(PlayerData playerData, T type);
-
-    public abstract void reloadStat(PlayerData playerData, Stat stat);
-
-    public void updateStats(PlayerData playerData) {
-        if (playerData == null) return;
+    public void updateStats(User user) {
+        if (user == null) return;
         for (Stat stat : plugin.getStatRegistry().getValues()) {
-            playerData.setStatLevel(stat, 0);
+            user.setStatLevel(stat, 0);
         }
         for (Skill skill : plugin.getSkillRegistry().getValues()) {
-            plugin.getRewardManager().getRewardTable(skill).applyStats(playerData, playerData.getSkillLevel(skill));
+            plugin.getRewardManager().getRewardTable(skill).applyStats(user, user.getSkillLevel(skill));
         }
         // Reloads modifiers
-        for (String key : playerData.getStatModifiers().keySet()) {
-            StatModifier modifier = playerData.getStatModifiers().get(key);
-            playerData.addStatLevel(modifier.stat(), modifier.value());
+        for (String key : user.getStatModifiers().keySet()) {
+            StatModifier modifier = user.getStatModifiers().get(key);
+            user.addStatLevel(modifier.stat(), modifier.value());
         }
-        reloadStat(playerData, Stats.HEALTH);
-        reloadStat(playerData, Stats.WISDOM);
+        reloadStat(user, Stats.HEALTH);
+        reloadStat(user, Stats.WISDOM);
     }
 
 }

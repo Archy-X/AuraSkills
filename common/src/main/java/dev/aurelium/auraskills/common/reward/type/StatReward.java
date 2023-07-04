@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.reward.type;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.reward.SkillReward;
@@ -24,9 +24,9 @@ public class StatReward extends SkillReward {
     }
 
     @Override
-    public void giveReward(PlayerData playerData, Skill skill, int level) {
-        playerData.addStatLevel(stat, value);
-        plugin.getStatManager().reloadStat(playerData, stat);
+    public void giveReward(User user, Skill skill, int level) {
+        user.addStatLevel(stat, value);
+        plugin.getStatManager().reloadStat(user, stat);
     }
 
     public Stat getStat() {
@@ -38,7 +38,7 @@ public class StatReward extends SkillReward {
     }
 
     @Override
-    public String getMenuMessage(PlayerData player, Locale locale, Skill skill, int level) {
+    public String getMenuMessage(User player, Locale locale, Skill skill, int level) {
         return TextUtil.replace(plugin.getMsg(MenuMessage.REWARDS_ENTRY, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
@@ -47,7 +47,7 @@ public class StatReward extends SkillReward {
     }
 
     @Override
-    public String getChatMessage(PlayerData player, Locale locale, Skill skill, int level) {
+    public String getChatMessage(User player, Locale locale, Skill skill, int level) {
         return TextUtil.replace(plugin.getMsg(LevelerMessage.STAT_LEVEL, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),

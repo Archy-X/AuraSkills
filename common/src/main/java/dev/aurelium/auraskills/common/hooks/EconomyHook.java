@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.hooks;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 
 public abstract class EconomyHook extends Hook {
 
@@ -9,6 +9,6 @@ public abstract class EconomyHook extends Hook {
         super(plugin);
     }
 
-    public abstract void deposit(PlayerData playerData, double amount);
+    public abstract void deposit(User user, double amount);
 
 }

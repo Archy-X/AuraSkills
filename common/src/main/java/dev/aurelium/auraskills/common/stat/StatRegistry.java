@@ -15,7 +15,7 @@ public class StatRegistry extends Registry<Stat> {
     @Override
     public void registerDefaults() {
         for (Stat stat : Stats.values()) {
-            injectProvider(stat, StatProvider.class, plugin.getStatManager());
+            injectProvider(stat, StatProvider.class, plugin.getStatManager().getSupplier());
             this.register(stat.getId(), stat);
         }
     }

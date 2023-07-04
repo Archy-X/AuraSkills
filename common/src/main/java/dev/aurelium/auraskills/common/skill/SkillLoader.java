@@ -6,13 +6,13 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityLoader;
 import dev.aurelium.auraskills.common.ability.LoadedAbility;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.mana.LoadedManaAbility;
 import dev.aurelium.auraskills.common.mana.ManaAbilityLoader;
-import dev.aurelium.auraskills.common.source.Source;
 import dev.aurelium.auraskills.common.source.SourceLoader;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -125,7 +125,7 @@ public class SkillLoader {
         }
     }
 
-    private ImmutableList<Source> loadSources(Skill skill) {
+    private ImmutableList<XpSource> loadSources(Skill skill) {
         if (skill instanceof Skills auraSkill) {
             // Load sources from file for included skill
             return ImmutableList.copyOf(sourceLoader.loadSources(auraSkill));

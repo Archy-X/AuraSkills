@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.source.serializer;
 
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -11,6 +12,10 @@ import java.util.Map;
 
 public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
 
+    public BlockSourceSerializer(AuraSkillsPlugin plugin) {
+        super(plugin);
+    }
+
     @Override
     public BlockSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         String[] blocks = requiredPluralizedArray("block", source, String.class);
@@ -19,10 +24,14 @@ public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
         BlockXpSource.BlockXpSourceState[] states = pluralizedArray("state", source, BlockXpSource.BlockXpSourceState.class);
         String stateMultiplier = source.node("state_multiplier").getString();
 
-        return new BlockSource(getId(source), getXp(source), blocks, triggers, checkReplace, states, stateMultiplier);
+        return new BlockSource(plugin, getId(source), getXp(source), blocks, triggers, checkReplace, states, stateMultiplier);
     }
 
     public static class BlockSourceStateSerializer extends SourceSerializer<BlockXpSource.BlockXpSourceState> {
+
+        public BlockSourceStateSerializer(AuraSkillsPlugin plugin) {
+            super(plugin);
+        }
 
         @Override
         public BlockXpSource.BlockXpSourceState deserialize(Type type, ConfigurationNode source) {

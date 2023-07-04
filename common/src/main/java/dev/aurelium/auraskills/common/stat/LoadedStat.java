@@ -6,5 +6,5 @@ import dev.aurelium.auraskills.api.trait.Trait;
 
 import java.util.Map;
 
-public record LoadedStat(Stat stat, ImmutableList<Trait> traits, Map<Trait, StatTraitConfig> traitConfigs) {
+public record LoadedStat(Stat stat, ImmutableList<Trait> traits, Map<Trait, StatTraitConfig> traitConfigs, StatOptions options) {
 }

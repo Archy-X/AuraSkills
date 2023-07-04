@@ -18,7 +18,7 @@ public class AbilityRegistry extends Registry<Ability> {
     @Override
     public void registerDefaults() {
         for (Ability ability : Abilities.values()) {
-            injectProvider(ability, AbilityProvider.class, plugin.getAbilityManager()); // Inject the AbilityProvider instance
+            injectProvider(ability, AbilityProvider.class, plugin.getAbilityManager().getSupplier()); // Inject the AbilityProvider instance
             this.register(ability.getId(), ability);
         }
     }

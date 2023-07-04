@@ -3,8 +3,8 @@ package dev.aurelium.auraskills.common.leaderboard;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
-import dev.aurelium.auraskills.common.data.PlayerDataState;
+import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.player.UserState;
 
 import java.util.*;
 
@@ -130,14 +130,14 @@ public class LeaderboardManager {
     }
 
     private void addLoadedPlayersToLeaderboards(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) {
-        for (PlayerData playerData : plugin.getPlayerManager().getPlayerDataMap().values()) {
-            UUID id = playerData.getUuid();
+        for (User user : plugin.getUserManager().getUserMap().values()) {
+            UUID id = user.getUuid();
             int powerLevel = 0;
             double powerXp = 0;
             int numEnabled = 0;
             for (Skill skill : Skills.values()) {
-                int level = playerData.getSkillLevel(skill);
-                double xp = playerData.getSkillXp(skill);
+                int level = user.getSkillLevel(skill);
+                double xp = user.getSkillXp(skill);
                 // Add to lists
                 SkillValue skillLevel = new SkillValue(id, level, xp);
                 skillLb.get(skill).add(skillLevel);
@@ -158,8 +158,8 @@ public class LeaderboardManager {
     }
 
     private void addOfflinePlayers(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) throws Exception {
-        List<PlayerDataState> offlineStates = plugin.getStorageProvider().loadOfflineStates();
-        for (PlayerDataState state : offlineStates) {
+        List<UserState> offlineStates = plugin.getStorageProvider().loadOfflineStates();
+        for (UserState state : offlineStates) {
             int powerLevel = 0;
             double powerXp = 0.0;
             int numEnabled = 0;

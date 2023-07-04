@@ -10,9 +10,9 @@ import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.data.PlayerData;
-import dev.aurelium.auraskills.common.data.PlayerDataState;
-import dev.aurelium.auraskills.common.data.SkillLevelMaps;
+import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.player.UserState;
+import dev.aurelium.auraskills.common.player.SkillLevelMaps;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
@@ -45,43 +45,43 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    protected PlayerData loadRaw(UUID uuid) throws Exception {
+    protected User loadRaw(UUID uuid) throws Exception {
         String loadQuery = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(loadQuery)) {
             statement.setString(1, uuid.toString());
             try (ResultSet resultSet = statement.executeQuery()) {
-                PlayerData playerData = playerManager.createNewPlayer(uuid);
+                User user = userManager.createNewUser(uuid);
                 if (!resultSet.next()) { // If the player doesn't exist in the database
-                    return playerData;
+                    return user;
                 }
                 int userId = resultSet.getInt("user_id");
                 // Load skill levels and xp
                 SkillLevelMaps skillLevelMaps = loadSkillLevels(uuid, userId);
                 // Apply skill levels and xp from maps
                 for (Map.Entry<Skill, Integer> entry : skillLevelMaps.levels().entrySet()) {
-                    playerData.setSkillLevel(entry.getKey(), entry.getValue());
+                    user.setSkillLevel(entry.getKey(), entry.getValue());
                 }
                 for (Map.Entry<Skill, Double> entry : skillLevelMaps.xp().entrySet()) {
-                    playerData.setSkillXp(entry.getKey(), entry.getValue());
+                    user.setSkillXp(entry.getKey(), entry.getValue());
                 }
                 // Load locale
                 String localeString = resultSet.getString("locale");
                 if (localeString != null) {
-                    playerData.setLocale(new Locale(localeString));
+                    user.setLocale(new Locale(localeString));
                 }
                 // Load mana
                 double mana = resultSet.getDouble("mana");
-                playerData.setMana(mana);
+                user.setMana(mana);
                 // Load stat modifiers
-                loadStatModifiers(uuid, userId).values().forEach(playerData::addStatModifier);
+                loadStatModifiers(uuid, userId).values().forEach(user::addStatModifier);
                 // Load trait modifiers
-                loadTraitModifiers(uuid, userId).values().forEach(playerData::addTraitModifier);
+                loadTraitModifiers(uuid, userId).values().forEach(user::addTraitModifier);
                 // Load ability data
-                loadAbilityData(playerData, userId);
+                loadAbilityData(user, userId);
                 // Load unclaimed items
-                playerData.setUnclaimedItems(loadUnclaimedItems(userId));
-                playerData.clearInvalidItems();
-                return playerData;
+                user.setUnclaimedItems(loadUnclaimedItems(userId));
+                user.clearInvalidItems();
+                return user;
             }
         }
     }
@@ -164,7 +164,7 @@ public class SqlStorageProvider extends StorageProvider {
         return modifiers;
     }
 
-    private void loadAbilityData(PlayerData playerData, int userId) throws SQLException {
+    private void loadAbilityData(User user, int userId) throws SQLException {
         String query = "SELECT (category_id, key_name, value) FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
             statement.setInt(1, userId);
@@ -174,13 +174,13 @@ public class SqlStorageProvider extends StorageProvider {
                     String categoryId = resultSet.getString("category_id");
                     AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(NamespacedId.fromString(categoryId));
                     if (ability == null) {
-                        plugin.logger().warn("Failed to load ability data for player " + playerData.getUuid() + " because " + categoryId + " is not a registered ability");
+                        plugin.logger().warn("Failed to load ability data for player " + user.getUuid() + " because " + categoryId + " is not a registered ability");
                         continue;
                     }
                     String keyName = resultSet.getString("key_name");
                     String value = resultSet.getString("value");
 
-                    playerData.getAbilityData(ability).setData(keyName, value);
+                    user.getAbilityData(ability).setData(keyName, value);
                 }
             }
         }
@@ -204,13 +204,13 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public @NotNull PlayerDataState loadState(UUID uuid) throws Exception {
+    public @NotNull UserState loadState(UUID uuid) throws Exception {
         String query = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
             statement.setString(1, uuid.toString());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (!resultSet.next()) { // If the player doesn't exist in the database
-                    return PlayerDataState.createEmpty(uuid, plugin);
+                    return UserState.createEmpty(uuid, plugin);
                 }
                 int userId = resultSet.getInt("user_id");
                 // Load skill levels and xp
@@ -222,13 +222,13 @@ public class SqlStorageProvider extends StorageProvider {
                 // Load mana
                 double mana = resultSet.getDouble("mana");
 
-                return new PlayerDataState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, traitModifiers, mana);
+                return new UserState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, traitModifiers, mana);
             }
         }
     }
 
     @Override
-    public void applyState(PlayerDataState state) throws Exception {
+    public void applyState(UserState state) throws Exception {
         // Insert into users database
         String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
@@ -276,41 +276,41 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(@NotNull PlayerData playerData) throws Exception {
-        if (playerData.shouldNotSave()) return;
+    public void save(@NotNull User user) throws Exception {
+        if (user.shouldNotSave()) return;
 
         // Don't save blank profiles if the option is disabled
-        if (!plugin.configBoolean(Option.SAVE_BLANK_PROFILES) && playerData.isBlankProfile()) {
+        if (!plugin.configBoolean(Option.SAVE_BLANK_PROFILES) && user.isBlankProfile()) {
             return;
         }
 
-        saveUsersTable(playerData);
-        saveSkillLevelsTable(playerData);
-        saveKeyValuesTable(playerData);
+        saveUsersTable(user);
+        saveSkillLevelsTable(user);
+        saveKeyValuesTable(user);
     }
 
-    private void saveUsersTable(PlayerData playerData) throws SQLException {
+    private void saveUsersTable(User user) throws SQLException {
         String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale=?, mana=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(usersQuery)) {
-            statement.setString(1, playerData.getUuid().toString());
+            statement.setString(1, user.getUuid().toString());
             int curr = 2; // Current index to set
             for (int i = 0; i < 2; i++) { // Repeat twice to set duplicate values
-                statement.setString(curr++, playerData.getLocale().toLanguageTag());
-                statement.setDouble(curr++, playerData.getMana());
+                statement.setString(curr++, user.getLocale().toLanguageTag());
+                statement.setDouble(curr++, user.getMana());
             }
             statement.executeUpdate();
         }
     }
 
-    private void saveSkillLevelsTable(PlayerData playerData) throws SQLException {
-        int userId = getUserId(playerData.getUuid());
+    private void saveSkillLevelsTable(User user) throws SQLException {
+        int userId = getUserId(user.getUuid());
         String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?;";
         try (PreparedStatement statement = pool.getConnection().prepareStatement(skillLevelsQuery)) {
             statement.setInt(1, userId);
-            for (Map.Entry<Skill, Integer> entry : playerData.getSkillLevelMap().entrySet()) {
+            for (Map.Entry<Skill, Integer> entry : user.getSkillLevelMap().entrySet()) {
                 String skillName = entry.getKey().getId().toString();
                 int level = entry.getValue();
-                double xp = playerData.getSkillXpMap().get(entry.getKey());
+                double xp = user.getSkillXpMap().get(entry.getKey());
                 statement.setString(2, skillName);
                 statement.setInt(3, level);
                 statement.setDouble(4, xp);
@@ -321,13 +321,13 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
-    private void saveKeyValuesTable(PlayerData playerData) throws SQLException {
-        int userId = getUserId(playerData.getUuid());
+    private void saveKeyValuesTable(User user) throws SQLException {
+        int userId = getUserId(user.getUuid());
         // Save stat modifiers
-        saveStatModifiers(userId, playerData.getStatModifiers());
-        saveTraitModifiers(userId, playerData.getTraitModifiers());
-        saveAbilityData(userId, playerData.getAbilityDataMap());
-        saveUnclaimedItems(userId, playerData.getUnclaimedItems());
+        saveStatModifiers(userId, user.getStatModifiers());
+        saveTraitModifiers(userId, user.getTraitModifiers());
+        saveAbilityData(userId, user.getAbilityDataMap());
+        saveUnclaimedItems(userId, user.getUnclaimedItems());
     }
 
     private void saveStatModifiers(int userId, Map<String, StatModifier> modifiers) throws SQLException {
@@ -413,8 +413,8 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<PlayerDataState> loadOfflineStates() throws Exception {
-        List<PlayerDataState> states = new ArrayList<>();
+    public List<UserState> loadOfflineStates() throws Exception {
+        List<UserState> states = new ArrayList<>();
 
         Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new HashMap<>();
         Map<Integer, Map<Skill, Double>> loadedSkillXp = new HashMap<>();
@@ -443,7 +443,7 @@ public class SqlStorageProvider extends StorageProvider {
                     int userId = resultSet.getInt("user_id");
                     UUID uuid = UUID.fromString(resultSet.getString("player_uuid"));
 
-                    if (playerManager.hasPlayerData(uuid)) {
+                    if (userManager.hasUser(uuid)) {
                         continue; // Skip if player is online
                     }
 
@@ -455,7 +455,7 @@ public class SqlStorageProvider extends StorageProvider {
                     Map<Skill, Integer> skillLevelMap = loadedSkillLevels.get(userId);
                     Map<Skill, Double> skillXpMap = loadedSkillXp.get(userId);
 
-                    PlayerDataState state = new PlayerDataState(uuid, skillLevelMap, skillXpMap, statModifiers, traitModifiers, mana);
+                    UserState state = new UserState(uuid, skillLevelMap, skillXpMap, statModifiers, traitModifiers, mana);
                     states.add(state);
                 }
             }

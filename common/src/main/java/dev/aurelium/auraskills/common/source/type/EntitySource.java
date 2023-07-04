@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.source.type;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,8 +12,8 @@ public class EntitySource extends Source implements EntityXpSource {
     private final EntityTriggers[] triggers;
     private final EntityDamagers[] damagers;
 
-    public EntitySource(NamespacedId id, double xp, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers) {
-        super(id, xp);
+    public EntitySource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers) {
+        super(plugin, id, xp);
         this.entity = entity;
         this.triggers = triggers;
         this.damagers = damagers;

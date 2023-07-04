@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.item.ItemFilterMeta;
 import dev.aurelium.auraskills.api.item.PotionData;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.source.serializer.SourceSerializer;
@@ -27,14 +28,14 @@ public class SourceLoader {
         this.plugin = plugin;
         // Register utility serializers
         TypeSerializerCollection sourceSerializers = TypeSerializerCollection.builder()
-                .register(ItemFilterMeta.class, new ItemFilterMetaSerializer())
-                .register(ItemFilter.class, new ItemFilterSerializer())
-                .register(PotionData.class, new PotionDataSerializer())
+                .register(ItemFilterMeta.class, new ItemFilterMetaSerializer(plugin))
+                .register(ItemFilter.class, new ItemFilterSerializer(plugin))
+                .register(PotionData.class, new PotionDataSerializer(plugin))
                 .build();
         this.configurateLoader = new ConfigurateLoader(plugin, sourceSerializers);
     }
 
-    public List<Source> loadSources(Skills skill) {
+    public List<XpSource> loadSources(Skills skill) {
         String fileName = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
         try {
             ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(fileName);
@@ -71,7 +72,7 @@ public class SourceLoader {
             }
 
             // Deserialize each source
-            List<Source> deserializedSources = new ArrayList<>();
+            List<XpSource> deserializedSources = new ArrayList<>();
             for (Map.Entry<String, ConfigurationNode> entry : sources.entrySet()) {
                 String sourceName = entry.getKey();
                 ConfigurationNode sourceNode = entry.getValue();
@@ -80,7 +81,7 @@ public class SourceLoader {
 
                 String type = sourceNode.node("type").getString();
                 if (type == null) {
-                    throw new IllegalArgumentException("Source " + sourceName + " must specify a type");
+                    throw new IllegalArgumentException("Source " + id + " must specify a type");
                 }
                 Source source = parseSourceFromType(type, sourceNode);
                 deserializedSources.add(source);
@@ -99,7 +100,7 @@ public class SourceLoader {
         Class<?> serializerClass = sourceType.getSerializerClass();
         // Create new instance of serializer
         try {
-            SourceSerializer<?> sourceSerializer = (SourceSerializer<?>) serializerClass.getConstructors()[0].newInstance();
+            SourceSerializer<?> sourceSerializer = (SourceSerializer<?>) serializerClass.getConstructors()[0].newInstance(plugin);
 
             return (Source) sourceSerializer.deserialize(sourceType.getSourceClass(), sourceNode);
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {

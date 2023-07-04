@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.reward;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 
@@ -103,12 +103,12 @@ public abstract class RewardManager {
     /**
      * Updates the permissions of a player based on the rewards applicable to their current skill levels.
      *
-     * @param playerData The player to update permissions for
+     * @param user The player to update permissions for
      */
-    public void updatePermissions(PlayerData playerData) {
-        if (playerData == null) return;
+    public void updatePermissions(User user) {
+        if (user == null) return;
         for (Skill skill : plugin.getSkillRegistry().getValues()) {
-            plugin.getRewardManager().getRewardTable(skill).applyPermissions(playerData, playerData.getSkillLevel(skill));
+            plugin.getRewardManager().getRewardTable(skill).applyPermissions(user, user.getSkillLevel(skill));
         }
     }
 

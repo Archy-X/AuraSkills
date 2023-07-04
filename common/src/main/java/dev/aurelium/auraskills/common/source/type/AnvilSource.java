@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common.source.type;
 import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
 
 public class AnvilSource extends Source implements AnvilXpSource {
@@ -11,8 +12,8 @@ public class AnvilSource extends Source implements AnvilXpSource {
     private final ItemFilter rightItem;
     private final String multiplier;
 
-    public AnvilSource(NamespacedId id, double xp, ItemFilter leftItem, ItemFilter rightItem, String multiplier) {
-        super(id, xp);
+    public AnvilSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter leftItem, ItemFilter rightItem, String multiplier) {
+        super(plugin, id, xp);
         this.leftItem = leftItem;
         this.rightItem = rightItem;
         this.multiplier = multiplier;

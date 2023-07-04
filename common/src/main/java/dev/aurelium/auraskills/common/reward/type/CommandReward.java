@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.reward.type;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 
@@ -25,29 +25,29 @@ public class CommandReward extends MessagedReward {
     }
 
     @Override
-    public void giveReward(PlayerData playerData, Skill skill, int level) {
-        executeCommand(executor, command, playerData, skill, level);
+    public void giveReward(User user, Skill skill, int level) {
+        executeCommand(executor, command, user, skill, level);
     }
 
-    public void executeRevert(PlayerData playerData, Skill skill, int level) {
+    public void executeRevert(User user, Skill skill, int level) {
         if (revertCommand != null) {
-            executeCommand(revertExecutor != null ? revertExecutor : CommandExecutor.CONSOLE, command, playerData, skill, level);
+            executeCommand(revertExecutor != null ? revertExecutor : CommandExecutor.CONSOLE, command, user, skill, level);
         }
     }
 
-    private void executeCommand(CommandExecutor executor, String command, PlayerData playerData, Skill skill, int level) {
-        String executedCommand = TextUtil.replace(command, "{player}", playerData.getUsername(),
+    private void executeCommand(CommandExecutor executor, String command, User user, Skill skill, int level) {
+        String executedCommand = TextUtil.replace(command, "{player}", user.getUsername(),
                 "{skill}", skill.toString().toLowerCase(Locale.ROOT),
                 "{level}", String.valueOf(level));
         if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
-            executedCommand = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(playerData, executedCommand);
+            executedCommand = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, executedCommand);
         }
         executedCommand = TextUtil.replaceNonEscaped(executedCommand, "&", "§");
         // Executes the commands
         if (executor == CommandExecutor.CONSOLE) {
             plugin.runConsoleCommand(executedCommand);
         } else {
-            plugin.runPlayerCommand(playerData, executedCommand);
+            plugin.runPlayerCommand(user, executedCommand);
         }
     }
 

@@ -1,18 +1,18 @@
 package dev.aurelium.auraskills.common.message.recipient;
 
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import net.kyori.adventure.text.Component;
 
 public class PlayerDataRecipient implements Recipient {
 
-    private final PlayerData playerData;
+    private final User user;
 
-    public PlayerDataRecipient(PlayerData playerData) {
-        this.playerData = playerData;
+    public PlayerDataRecipient(User user) {
+        this.user = user;
     }
 
     @Override
     public void sendMessage(Component component) {
-        playerData.sendMessage(component);
+        user.sendMessage(component);
     }
 }

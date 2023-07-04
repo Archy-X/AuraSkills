@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.source;
 
 import dev.aurelium.auraskills.common.source.serializer.*;
 import dev.aurelium.auraskills.common.source.type.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -38,6 +39,16 @@ public enum SourceType {
 
     public Class<? extends SourceSerializer<?>> getSerializerClass() {
         return serializerClass;
+    }
+
+    @Nullable
+    public static SourceType getFromSource(Source source) {
+        for (SourceType sourceType : values()) {
+            if (sourceType.getSourceClass().equals(source.getClass())) {
+                return sourceType;
+            }
+        }
+        return null;
     }
 
 }

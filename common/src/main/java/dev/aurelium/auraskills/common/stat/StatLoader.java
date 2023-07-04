@@ -62,7 +62,12 @@ public class StatLoader {
         // Create immutable list of traits from keys of traitConfigs
         ImmutableList<Trait> traits = ImmutableList.copyOf(traitConfigs.keySet());
 
-        return new LoadedStat(stat, traits, traitConfigs);
+        Map<String, Object> configMap = new HashMap<>();
+        for (Object key : config.childrenMap().keySet()) {
+            configMap.put((String) key, config.node(key).raw());
+        }
+
+        return new LoadedStat(stat, traits, traitConfigs, new StatOptions(configMap));
     }
 
     private Map<Trait, StatTraitConfig> loadTraits(Stat stat, ConfigurationNode config) {

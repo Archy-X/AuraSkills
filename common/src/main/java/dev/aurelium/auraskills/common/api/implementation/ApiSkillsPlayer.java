@@ -8,115 +8,115 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 
 import java.util.Locale;
 import java.util.UUID;
 
 public class ApiSkillsPlayer implements SkillsPlayer {
 
-    private final PlayerData playerData;
+    private final User user;
     private final AuraSkillsPlugin plugin;
 
-    public ApiSkillsPlayer(PlayerData playerData) {
-        this.playerData = playerData;
-        this.plugin = playerData.getPlugin();
+    public ApiSkillsPlayer(User user) {
+        this.user = user;
+        this.plugin = user.getPlugin();
     }
 
-    public PlayerData getPlayerData() {
-        return playerData;
+    public User getPlayerData() {
+        return user;
     }
 
     @Override
     public UUID getUuid() {
-        return playerData.getUuid();
+        return user.getUuid();
     }
 
     @Override
     public double getSkillXp(Skill skill) {
-        return playerData.getSkillXp(skill);
+        return user.getSkillXp(skill);
     }
 
     @Override
     public void addSkillXp(Skill skill, double amountToAdd) {
-        plugin.getLeveler().addXp(playerData, skill, amountToAdd);
+        plugin.getLeveler().addXp(user, skill, amountToAdd);
     }
 
     @Override
     public void addSkillXpRaw(Skill skill, double amountToAdd) {
-        playerData.addSkillXp(skill, amountToAdd);
-        plugin.getLeveler().checkLevelUp(playerData, skill);
+        user.addSkillXp(skill, amountToAdd);
+        plugin.getLeveler().checkLevelUp(user, skill);
     }
 
     @Override
     public void setSkillXp(Skill skill, double amount) {
-        playerData.setSkillXp(skill, amount);
-        plugin.getLeveler().checkLevelUp(playerData, skill);
+        user.setSkillXp(skill, amount);
+        plugin.getLeveler().checkLevelUp(user, skill);
     }
 
     @Override
     public int getSkillLevel(Skill skill) {
-        return playerData.getSkillLevel(skill);
+        return user.getSkillLevel(skill);
     }
 
     @Override
     public void setSkillLevel(Skill skill, int level) {
-        playerData.setSkillLevel(skill, level);
+        user.setSkillLevel(skill, level);
     }
 
     @Override
     public double getStatLevel(Stat stat) {
-        return playerData.getStatLevel(stat);
+        return user.getStatLevel(stat);
     }
 
     @Override
     public double getBaseStatLevel(Stat stat) {
-        return playerData.getBaseStatLevel(stat);
+        return user.getBaseStatLevel(stat);
     }
 
     @Override
     public double getMana() {
-        return playerData.getMana();
+        return user.getMana();
     }
 
     @Override
     public double getMaxMana() {
-        return playerData.getMaxMana();
+        return user.getMaxMana();
     }
 
     @Override
     public void setMana(double mana) {
-        playerData.setMana(mana);
+        user.setMana(mana);
     }
 
     @Override
     public int getPowerLevel() {
-        return playerData.getPowerLevel();
+        return user.getPowerLevel();
     }
 
     @Override
     public void addStatModifier(StatModifier statModifier) {
-        playerData.addStatModifier(statModifier);
+        user.addStatModifier(statModifier);
     }
 
     @Override
     public void removeStatModifier(String name) {
-        playerData.removeStatModifier(name);
+        user.removeStatModifier(name);
     }
 
     @Override
     public int getAbilityLevel(Ability ability) {
-        return playerData.getAbilityLevel(ability);
+        return user.getAbilityLevel(ability);
     }
 
     @Override
     public int getManaAbilityLevel(ManaAbility manaAbility) {
-        return playerData.getManaAbilityLevel(manaAbility);
+        return user.getManaAbilityLevel(manaAbility);
     }
 
     @Override
     public Locale getLocale() {
-        return playerData.getLocale();
+        return user.getLocale();
     }
 
 }

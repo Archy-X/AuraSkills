@@ -1,8 +1,10 @@
 package dev.aurelium.auraskills.api.ability;
 
+import dev.aurelium.auraskills.api.option.Optioned;
+
 import java.util.Locale;
 
-public interface Ability extends AbstractAbility {
+public interface Ability extends AbstractAbility, Optioned {
 
     String getDisplayName(Locale locale);
 
@@ -20,9 +22,13 @@ public interface Ability extends AbstractAbility {
 
     double getSecondaryBaseValue();
 
+    double getValue(int level);
+
     double getValuePerLevel();
 
     double getSecondaryValuePerLevel();
+
+    double getSecondaryValue(int level);
 
     int getUnlock();
 

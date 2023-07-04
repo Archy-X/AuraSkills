@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.api.implementation;
 import dev.aurelium.auraskills.api.player.PlayerManager;
 import dev.aurelium.auraskills.api.player.SkillsPlayer;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 
 import java.util.UUID;
 
@@ -17,9 +17,9 @@ public class ApiPlayerManager implements PlayerManager {
 
     @Override
     public SkillsPlayer getPlayer(UUID playerId) {
-        PlayerData playerData = plugin.getPlayerManager().getPlayerData(playerId);
-        if (playerData != null) {
-            return new ApiSkillsPlayer(playerData);
+        User user = plugin.getUserManager().getUser(playerId);
+        if (user != null) {
+            return new ApiSkillsPlayer(user);
         }
         return null;
     }

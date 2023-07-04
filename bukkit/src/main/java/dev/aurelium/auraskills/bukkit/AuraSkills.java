@@ -1,9 +1,15 @@
 package dev.aurelium.auraskills.bukkit;
 
+import com.archyx.slate.Slate;
+import com.archyx.slate.menu.MenuManager;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
-import dev.aurelium.auraskills.bukkit.data.BukkitPlayer;
+import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
+import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
+import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
+import dev.aurelium.auraskills.bukkit.player.BukkitUser;
+import dev.aurelium.auraskills.bukkit.player.BukkitUserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
@@ -11,11 +17,8 @@ import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.api.ApiRegistrationUtil;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.data.PlayerData;
-import dev.aurelium.auraskills.common.data.PlayerManager;
 import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
 import dev.aurelium.auraskills.common.hooks.HookManager;
-import dev.aurelium.auraskills.common.item.ItemRegistry;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.leveler.Leveler;
 import dev.aurelium.auraskills.common.leveler.XpRequirements;
@@ -25,6 +28,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillManager;
@@ -41,6 +45,7 @@ import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -65,9 +70,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private TraitRegistry traitRegistry;
     private AbilityRegistry abilityRegistry;
     private ManaAbilityRegistry manaAbilityRegistry;
-    private ItemRegistry itemRegistry;
+    private BukkitItemRegistry itemRegistry;
     private Leveler leveler;
-    private PlayerManager playerManager;
+    private BukkitUserManager userManager;
     private XpRequirements xpRequirements;
     private AuraSkillsEventManager eventManager;
     private PlatformLogger logger;
@@ -77,6 +82,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private RewardManager rewardManager;
     private Scheduler scheduler;
     private StorageProvider storageProvider;
+    private Slate slate;
+    private MenuFileManager menuFileManager;
 
     public AuraSkills() {
         this.audiences = BukkitAudiences.create(this);
@@ -104,10 +111,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         traitRegistry = new TraitRegistry(this);
         abilityRegistry = new AbilityRegistry(this);
         manaAbilityRegistry = new ManaAbilityRegistry(this);
-        // TODO ItemRegistry impl
+        itemRegistry = new BukkitItemRegistry(this);
 
         // TODO Leveler impl
-        // TODO PlayerManager impl
+        // TODO UserManager impl
         xpRequirements = new XpRequirements(this);
         eventManager = new AuraSkillsEventManager(this);
         logger = new BukkitLogger(this);
@@ -117,6 +124,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // TODO RewardManager impl
         // TODO Scheduler impl
         initStorageProvider();
+
+        registerAndLoadMenus();
     }
 
     @Override
@@ -130,6 +139,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private void registerApi() {
         this.api = new ApiAuraSkills(this);
         ApiRegistrationUtil.register(api);
+    }
+
+    private void registerAndLoadMenus() {
+        slate = new Slate(this);
+        new MenuRegistrar(this).register();
+        menuFileManager = new MenuFileManager(this);
+        menuFileManager.generateDefaultFiles();
+        menuFileManager.loadMenus();
     }
 
     private void initStorageProvider() {
@@ -147,12 +164,24 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             connectionPool.enable();
             storageProvider = new SqlStorageProvider(this, connectionPool);
         } else { // File storage
-            storageProvider = new FileStorageProvider(this, getDataFolder().getPath() + "/playerdata");
+            storageProvider = new FileStorageProvider(this, getDataFolder().getPath() + "/userdata");
         }
     }
 
     public BukkitAudiences getAudiences() {
         return audiences;
+    }
+
+    public Slate getSlate() {
+        return slate;
+    }
+
+    public MenuFileManager getMenuFileManager() {
+        return menuFileManager;
+    }
+
+    public MenuManager getMenuManager() {
+        return slate.getMenuManager();
     }
 
     @Override
@@ -186,7 +215,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public ItemRegistry getItemRegistry() {
+    public BukkitItemRegistry getItemRegistry() {
         return itemRegistry;
     }
 
@@ -196,8 +225,13 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public PlayerManager getPlayerManager() {
-        return playerManager;
+    public BukkitUserManager getUserManager() {
+        return userManager;
+    }
+
+    @NotNull
+    public User getUser(Player player) {
+        return userManager.getUser(player);
     }
 
     @Override
@@ -296,8 +330,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public void runPlayerCommand(PlayerData playerData, String command) {
-        getServer().dispatchCommand(((BukkitPlayer) playerData).getPlayer(), command);
+    public void runPlayerCommand(User user, String command) {
+        getServer().dispatchCommand(((BukkitUser) user).getPlayer(), command);
     }
 
     @Override

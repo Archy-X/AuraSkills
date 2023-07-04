@@ -5,7 +5,7 @@ import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.annotation.*;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
@@ -24,28 +24,28 @@ public class ManaCommand extends BaseCommand {
     @Default
     @CommandPermission("aureliumskills.mana")
     @Description("Display your or another player's current and max mana")
-    public void onMana(CommandIssuer issuer, @Flags("other") @CommandPermission("aureliumskills.mana.other") @Optional PlayerData playerData) {
+    public void onMana(CommandIssuer issuer, @Flags("other") @CommandPermission("aureliumskills.mana.other") @Optional User user) {
         if (issuer.isPlayer()) { // Get issuer's own mana
             // Get the PlayerData of the issuer
-            PlayerData issuerPlayerData = plugin.getPlayerManager().getPlayerData(issuer.getUniqueId());
-            if (issuerPlayerData == null) return;
-            Locale locale = issuerPlayerData.getLocale();
+            User issuerUser = plugin.getUserManager().getUser(issuer.getUniqueId());
+            if (issuerUser == null) return;
+            Locale locale = issuerUser.getLocale();
 
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_DISPLAY,
-                            "current", NumberUtil.format1(issuerPlayerData.getMana()),
-                            "max", NumberUtil.format1(issuerPlayerData.getMaxMana()))
+                            "current", NumberUtil.format1(issuerUser.getMana()),
+                            "max", NumberUtil.format1(issuerUser.getMaxMana()))
                     .send(issuer);
-        } else if (playerData != null) { // Get target player's mana
-            Locale locale = playerData.getLocale();
+        } else if (user != null) { // Get target player's mana
+            Locale locale = user.getLocale();
 
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_DISPLAY_OTHER,
-                            "player", playerData.getUsername(),
-                            "current", NumberUtil.format1(playerData.getMana()),
-                            "max", NumberUtil.format1(playerData.getMaxMana()))
+                            "player", user.getUsername(),
+                            "current", NumberUtil.format1(user.getMana()),
+                            "max", NumberUtil.format1(user.getMaxMana()))
                     .send(issuer);
         } else { // Player not specified
             Locale defLocale = plugin.getDefaultLanguage();
@@ -61,8 +61,8 @@ public class ManaCommand extends BaseCommand {
     @CommandPermission("aureliumskills.mana.add")
     @CommandCompletion("@players @nothing false|true")
     @Description("Adds mana to a player")
-    public void onManaAdd(CommandIssuer issuer, @Flags("other") PlayerData playerData, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
-        Locale locale = playerData.getLocale();
+    public void onManaAdd(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
+        Locale locale = user.getLocale();
         if (amount < 0) { // Validate amount
             if (!silent) {
                 issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.MANA_AT_LEAST_ZERO, locale));
@@ -71,20 +71,20 @@ public class ManaCommand extends BaseCommand {
         }
         // Calculate how much mana to add
         double manaToAdd = amount;
-        if (playerData.getMaxMana() + manaToAdd > playerData.getMaxMana()) { // If adding mana will go over max mana
+        if (user.getMaxMana() + manaToAdd > user.getMaxMana()) { // If adding mana will go over max mana
             if (!allowOverMax || !plugin.configBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) { // Should not go over max mana
-                manaToAdd = playerData.getMaxMana() - playerData.getMana(); // Set mana to add to difference between max and current
+                manaToAdd = user.getMaxMana() - user.getMana(); // Set mana to add to difference between max and current
             }
         }
         if (manaToAdd > 0) { // Add mana
-            playerData.setMana(playerData.getMana() + manaToAdd);
+            user.setMana(user.getMana() + manaToAdd);
         }
         if (!silent) { // Send message
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_ADD,
                             "amount", NumberUtil.format2(manaToAdd),
-                            "player", playerData.getUsername())
+                            "player", user.getUsername())
                     .send(issuer);
         }
     }
@@ -93,8 +93,8 @@ public class ManaCommand extends BaseCommand {
     @CommandPermission("aureliumskills.mana.remove")
     @CommandCompletion("@players")
     @Description("Removes mana from a player")
-    public void onManaRemove(CommandIssuer issuer, @Flags("other") PlayerData playerData, double amount, @Default("false") boolean silent) {
-        Locale locale = playerData.getLocale();
+    public void onManaRemove(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("false") boolean silent) {
+        Locale locale = user.getLocale();
         if (amount < 0) { // Validate amount
             if (!silent) {
                 MessageBuilder.create(plugin).locale(locale)
@@ -105,17 +105,17 @@ public class ManaCommand extends BaseCommand {
             return;
         }
         double manaToRemove = amount;
-        if (playerData.getMana() - manaToRemove < 0) { // If removing mana will go below 0
-            manaToRemove = playerData.getMana(); // Set mana to remove to all current mana
+        if (user.getMana() - manaToRemove < 0) { // If removing mana will go below 0
+            manaToRemove = user.getMana(); // Set mana to remove to all current mana
         }
-        playerData.setMana(playerData.getMana() - manaToRemove); // Remove mana
+        user.setMana(user.getMana() - manaToRemove); // Remove mana
 
         if (!silent) { // Send message
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_REMOVE,
                             "amount", NumberUtil.format2(manaToRemove),
-                            "player", playerData.getUsername())
+                            "player", user.getUsername())
                     .send(issuer);
         }
     }
@@ -124,9 +124,9 @@ public class ManaCommand extends BaseCommand {
     @CommandPermission("aureliumskills.mana.set")
     @CommandCompletion("@players @nothing false|true")
     @Description("Sets the mana of player")
-    public void onManaSet(CommandIssuer issuer, @Flags("other") PlayerData playerData, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
-        if (playerData == null) return;
-        Locale locale = playerData.getLocale();
+    public void onManaSet(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
+        if (user == null) return;
+        Locale locale = user.getLocale();
         if (amount < 0) { // Validate amount
             if (!silent) {
                 MessageBuilder.create(plugin).locale(locale)
@@ -136,19 +136,19 @@ public class ManaCommand extends BaseCommand {
             }
         }
         double manaToSet = amount;
-        if (manaToSet > playerData.getMaxMana()) { // If setting mana will go over max mana
+        if (manaToSet > user.getMaxMana()) { // If setting mana will go over max mana
             if (!allowOverMax || !plugin.configBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) { // Should not go over max mana
-                manaToSet = playerData.getMaxMana(); // Set mana to set to max mana
+                manaToSet = user.getMaxMana(); // Set mana to set to max mana
             }
         }
-        playerData.setMana(manaToSet); // Set mana
+        user.setMana(manaToSet); // Set mana
         // Send message
         if (!silent) {
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
                     .message(CommandMessage.MANA_SET,
                             "amount", NumberUtil.format2(manaToSet),
-                            "player", playerData.getUsername())
+                            "player", user.getUsername())
                     .send(issuer);
         }
     }

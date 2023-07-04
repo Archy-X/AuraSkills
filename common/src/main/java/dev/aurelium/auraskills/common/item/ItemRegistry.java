@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.item;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.common.player.User;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -21,10 +22,11 @@ public interface ItemRegistry {
      * the item to the player's inventory if possible, otherwise
      * adds it to the player's unclaimed items.
      *
+     * @param user The user to give to
      * @param key The item key
      * @param amount The amount of the item, -1 to use the amount of the registered item
      */
-    void giveItem(NamespacedId key, int amount);
+    void giveItem(User user, NamespacedId key, int amount);
 
     /**
      * Gets the amount of an item in the item registry.

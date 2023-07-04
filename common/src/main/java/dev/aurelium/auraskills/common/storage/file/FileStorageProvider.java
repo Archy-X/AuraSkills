@@ -8,9 +8,9 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.data.PlayerData;
-import dev.aurelium.auraskills.common.data.PlayerDataState;
-import dev.aurelium.auraskills.common.data.SkillLevelMaps;
+import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.player.UserState;
+import dev.aurelium.auraskills.common.player.SkillLevelMaps;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
@@ -34,12 +34,12 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    protected PlayerData loadRaw(UUID uuid) throws Exception {
+    protected User loadRaw(UUID uuid) throws Exception {
         CommentedConfigurationNode root = loadYamlFile(uuid);
-        PlayerData playerData = playerManager.createNewPlayer(uuid);
+        User user = userManager.createNewUser(uuid);
         
         if (root.empty()) {
-            return playerData;
+            return user;
         }
 
         UUID loadedUuid = UUID.fromString(root.node("uuid").getString(uuid.toString()));
@@ -51,34 +51,34 @@ public class FileStorageProvider extends StorageProvider {
         SkillLevelMaps skillLevelMaps = loadSkills(root.node("skills"));
         for (Map.Entry<Skill, Integer> entry : skillLevelMaps.levels().entrySet()) {
             Skill skill = entry.getKey();
-            playerData.setSkillLevel(skill, entry.getValue());
-            playerData.setSkillXp(skill, skillLevelMaps.xp().get(skill));
+            user.setSkillLevel(skill, entry.getValue());
+            user.setSkillXp(skill, skillLevelMaps.xp().get(skill));
         }
 
         // Load locale
         String localeString = root.node("locale").getString();
         if (localeString != null) {
             Locale locale = new Locale(localeString);
-            playerData.setLocale(locale);
+            user.setLocale(locale);
         }
 
         // Load mana
         double mana = root.node("mana").getDouble();
-        playerData.setMana(mana);
+        user.setMana(mana);
 
         // Load stat modifiers
-        loadStatModifiers(root.node("stat_modifiers")).forEach((name, modifier) -> playerData.addStatModifier(modifier));
+        loadStatModifiers(root.node("stat_modifiers")).forEach((name, modifier) -> user.addStatModifier(modifier));
 
         // Load trait modifiers
-        loadTraitModifiers(root.node("trait_modifiers")).forEach((name, modifier) -> playerData.addTraitModifier(modifier));
+        loadTraitModifiers(root.node("trait_modifiers")).forEach((name, modifier) -> user.addTraitModifier(modifier));
 
         // Load ability data
-        loadAbilityData(root.node("ability_data"), playerData);
+        loadAbilityData(root.node("ability_data"), user);
 
         // Load unclaimed items
-        loadUnclaimedItems(root.node("unclaimed_items"), playerData);
+        loadUnclaimedItems(root.node("unclaimed_items"), user);
 
-        return playerData;
+        return user;
     }
 
     private SkillLevelMaps loadSkills(ConfigurationNode node) {
@@ -136,17 +136,17 @@ public class FileStorageProvider extends StorageProvider {
         return traitModifiers;
     }
 
-    private void loadAbilityData(ConfigurationNode node, PlayerData playerData) {
+    private void loadAbilityData(ConfigurationNode node, User user) {
         node.childrenMap().forEach((abilityName, abilityNode) -> {
             NamespacedId abilityId = NamespacedId.fromString(abilityName.toString());
             AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(abilityId);
 
             abilityNode.childrenMap().forEach((key, value) ->
-                    playerData.getAbilityData(ability).setData((String) key, value));
+                    user.getAbilityData(ability).setData((String) key, value));
         });
     }
 
-    private void loadUnclaimedItems(ConfigurationNode node, PlayerData playerData) {
+    private void loadUnclaimedItems(ConfigurationNode node, User user) {
         List<KeyIntPair> itemList = new ArrayList<>();
         node.childrenList().forEach((itemNode) -> {
             String itemString = itemNode.getString();
@@ -159,7 +159,7 @@ public class FileStorageProvider extends StorageProvider {
                 itemList.add(new KeyIntPair(itemName, amount));
             }
         });
-        playerData.setUnclaimedItems(itemList);
+        user.setUnclaimedItems(itemList);
     }
 
     @NotNull
@@ -176,11 +176,11 @@ public class FileStorageProvider extends StorageProvider {
 
     @Override
     @NotNull
-    public PlayerDataState loadState(UUID uuid) throws Exception {
+    public UserState loadState(UUID uuid) throws Exception {
         CommentedConfigurationNode root = loadYamlFile(uuid);
 
         if (root.empty()) { // Return empty state if player data file doesn't exist
-            return PlayerDataState.createEmpty(uuid, plugin);
+            return UserState.createEmpty(uuid, plugin);
         }
 
         UUID loadedUuid = UUID.fromString(root.node("uuid").getString(uuid.toString()));
@@ -200,11 +200,11 @@ public class FileStorageProvider extends StorageProvider {
         // Load trait modifiers
         Map<String, TraitModifier> traitModifiers = loadTraitModifiers(root.node("trait_modifiers"));
 
-        return new PlayerDataState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, traitModifiers, mana);
+        return new UserState(uuid, skillLevelMaps.levels(), skillLevelMaps.xp(), statModifiers, traitModifiers, mana);
     }
 
     @Override
-    public void applyState(PlayerDataState state) throws Exception {
+    public void applyState(UserState state) throws Exception {
         CommentedConfigurationNode root = loadYamlFile(state.uuid());
 
         root.node("uuid").set(state.uuid().toString());
@@ -232,51 +232,51 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    public void save(@NotNull PlayerData playerData) throws Exception {
-        CommentedConfigurationNode root = loadYamlFile(playerData.getUuid());
+    public void save(@NotNull User user) throws Exception {
+        CommentedConfigurationNode root = loadYamlFile(user.getUuid());
 
-        root.node("uuid").set(playerData.getUuid().toString());
+        root.node("uuid").set(user.getUuid().toString());
 
         // Apply skill levels and xp
         ConfigurationNode skillsNode = root.node("skills");
-        for (Skill skill : playerData.getSkillLevelMap().keySet()) {
+        for (Skill skill : user.getSkillLevelMap().keySet()) {
             ConfigurationNode skillNode = skillsNode.node(skill.getId().toString());
-            skillNode.node("level").set(playerData.getSkillLevel(skill));
-            skillNode.node("xp").set(playerData.getSkillXp(skill));
+            skillNode.node("level").set(user.getSkillLevel(skill));
+            skillNode.node("xp").set(user.getSkillXp(skill));
         }
 
         // Apply locale
-        if (playerData.hasLocale()) {
-            root.node("locale").set(playerData.getLocale().toString());
+        if (user.hasLocale()) {
+            root.node("locale").set(user.getLocale().toString());
         }
 
         // Apply mana
-        root.node("mana").set(playerData.getMana());
+        root.node("mana").set(user.getMana());
 
         // Apply stat modifiers
         ConfigurationNode statModifiersNode = root.node("stat_modifiers");
-        applyStatModifiers(statModifiersNode, playerData.getStatModifiers());
+        applyStatModifiers(statModifiersNode, user.getStatModifiers());
 
         // Apply trait modifiers
         ConfigurationNode traitModifiersNode = root.node("trait_modifiers");
-        applyTraitModifiers(traitModifiersNode, playerData.getTraitModifiers());
+        applyTraitModifiers(traitModifiersNode, user.getTraitModifiers());
 
         // Apply ability data
         ConfigurationNode abilityDataNode = root.node("ability_data");
-        for (AbstractAbility ability : playerData.getAbilityDataMap().keySet()) {
+        for (AbstractAbility ability : user.getAbilityDataMap().keySet()) {
             ConfigurationNode abilityNode = abilityDataNode.node(ability.getId().toString());
-            for (Map.Entry<String, Object> entry : playerData.getAbilityData(ability).getDataMap().entrySet()) {
+            for (Map.Entry<String, Object> entry : user.getAbilityData(ability).getDataMap().entrySet()) {
                 abilityNode.node(entry.getKey()).set(entry.getValue());
             }
         }
 
         // Apply unclaimed items
         ConfigurationNode unclaimedItemsNode = root.node("unclaimed_items");
-        for (KeyIntPair item : playerData.getUnclaimedItems()) {
+        for (KeyIntPair item : user.getUnclaimedItems()) {
             unclaimedItemsNode.appendListNode().set(item.getKey() + " " + item.getValue());
         }
 
-        saveYamlFile(root, playerData.getUuid());
+        saveYamlFile(root, user.getUuid());
     }
 
     private void saveYamlFile(CommentedConfigurationNode root, UUID uuid) throws ConfigurateException {
@@ -315,8 +315,8 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<PlayerDataState> loadOfflineStates() {
-        List<PlayerDataState> states = new ArrayList<>();
+    public List<UserState> loadOfflineStates() {
+        List<UserState> states = new ArrayList<>();
         // Get all files in data directory
         File[] files = new File(dataDirectory).listFiles();
         if (files == null) {
@@ -330,7 +330,7 @@ public class FileStorageProvider extends StorageProvider {
                 try {
                     UUID uuid = UUID.fromString(uuidString);
 
-                    if (playerManager.hasPlayerData(uuid)) {
+                    if (userManager.hasUser(uuid)) {
                         continue; // Skip if player is online
                     }
 

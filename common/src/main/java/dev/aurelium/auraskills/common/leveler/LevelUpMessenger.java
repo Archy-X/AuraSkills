@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.data.PlayerData;
+import dev.aurelium.auraskills.common.player.User;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
@@ -21,15 +21,15 @@ import java.util.Locale;
 public class LevelUpMessenger {
 
     private final AuraSkillsPlugin plugin;
-    private final PlayerData playerData;
+    private final User user;
     private final Locale locale;
     private final Skill skill;
     private final int level;
     private final List<SkillReward> rewards;
 
-    public LevelUpMessenger(AuraSkillsPlugin plugin, PlayerData playerData, Locale locale, Skill skill, int level, List<SkillReward> rewards) {
+    public LevelUpMessenger(AuraSkillsPlugin plugin, User user, Locale locale, Skill skill, int level, List<SkillReward> rewards) {
         this.plugin = plugin;
-        this.playerData = playerData;
+        this.user = user;
         this.locale = locale;
         this.skill = skill;
         this.level = level;
@@ -62,13 +62,13 @@ public class LevelUpMessenger {
                         "old", RomanNumber.toRoman(level - 1, plugin),
                         "new", RomanNumber.toRoman(level, plugin))
                 .toString();
-        plugin.getUiProvider().sendTitle(playerData, title, subtitle, plugin.configInt(Option.LEVELER_TITLE_FADE_IN), plugin.configInt(Option.LEVELER_TITLE_STAY), plugin.configInt(Option.LEVELER_TITLE_FADE_OUT));
+        plugin.getUiProvider().sendTitle(user, title, subtitle, plugin.configInt(Option.LEVELER_TITLE_FADE_IN), plugin.configInt(Option.LEVELER_TITLE_STAY), plugin.configInt(Option.LEVELER_TITLE_FADE_OUT));
     }
 
     private String getRewardMessage() {
         StringBuilder rewardMessage = new StringBuilder();
         for (SkillReward reward : rewards) {
-            rewardMessage.append(reward.getChatMessage(playerData, locale, skill, level));
+            rewardMessage.append(reward.getChatMessage(user, locale, skill, level));
         }
         return rewardMessage.toString();
     }
@@ -96,7 +96,7 @@ public class LevelUpMessenger {
             if (ability.getUnlock() != level) { // If ability is unlocked at this level
                 builder.message(LevelerMessage.ABILITY_LEVEL_UP,
                         "ability", ability.getDisplayName(locale),
-                        "level", RomanNumber.toRoman(playerData.getAbilityLevel(ability), plugin));
+                        "level", RomanNumber.toRoman(user.getAbilityLevel(ability), plugin));
             }
         }
         return builder.toString();
@@ -128,7 +128,7 @@ public class LevelUpMessenger {
         if (manaAbility.getUnlock() != level) {
             builder.message(LevelerMessage.MANA_ABILITY_LEVEL_UP,
                     "mana_ability", manaAbility.getDisplayName(locale),
-                    "level", RomanNumber.toRoman(playerData.getManaAbilityLevel(manaAbility), plugin));
+                    "level", RomanNumber.toRoman(user.getManaAbilityLevel(manaAbility), plugin));
         }
         return builder.toString();
     }

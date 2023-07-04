@@ -1,0 +1,23 @@
+package dev.aurelium.auraskills.bukkit.menus.contexts;
+
+import com.archyx.slate.context.ContextProvider;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.stat.Stat;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
+import org.jetbrains.annotations.Nullable;
+
+public class StatContext implements ContextProvider<Stat> {
+
+    private final AuraSkills plugin;
+
+    public StatContext(AuraSkills plugin) {
+        this.plugin = plugin;
+    }
+
+    @Nullable
+    @Override
+    public Stat parse(String menuName, String input) {
+        return plugin.getStatRegistry().getOrNull(NamespacedId.fromStringOrDefault(input));
+    }
+
+}
