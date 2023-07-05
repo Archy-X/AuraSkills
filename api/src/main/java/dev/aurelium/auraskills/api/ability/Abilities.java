@@ -102,6 +102,11 @@ public enum Abilities implements Ability {
     }
 
     @Override
+    public String toString() {
+        return getId().toString();
+    }
+
+    @Override
     public Skill getSkill() {
         return provider.getSkill(this);
     }

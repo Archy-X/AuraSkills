@@ -32,6 +32,11 @@ public enum Stats implements Stat {
     }
 
     @Override
+    public String toString() {
+        return getId().toString();
+    }
+
+    @Override
     public boolean isEnabled() {
         return provider.isEnabled(this);
     }

@@ -33,6 +33,11 @@ public enum ManaAbilities implements ManaAbility {
     }
 
     @Override
+    public String toString() {
+        return getId().toString();
+    }
+
+    @Override
     public Skill getSkill() {
         return provider.getSkill(this);
     }

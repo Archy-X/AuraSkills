@@ -28,9 +28,9 @@ public class BukkitRewardManager extends RewardManager {
         int patternsLoaded = 0;
         int levelsLoaded = 0;
         for (Skill skill : plugin.getSkillManager().getSkillValues()) {
-            File rewardsFile = new File(rewardsDirectory + "/" + skill.toString().toLowerCase(Locale.ROOT) + ".yml");
+            File rewardsFile = new File(rewardsDirectory + "/" + skill.name().toLowerCase(Locale.ROOT) + ".yml");
             if (!rewardsFile.exists()) {
-                plugin.saveResource("rewards/" + skill.toString().toLowerCase(Locale.ROOT) + ".yml", false);
+                plugin.saveResource("rewards/" + skill.name().toLowerCase(Locale.ROOT) + ".yml", false);
             }
             FileConfiguration rewardsConfig = YamlConfiguration.loadConfiguration(rewardsFile);
             RewardTable rewardTable = new RewardTable(plugin);

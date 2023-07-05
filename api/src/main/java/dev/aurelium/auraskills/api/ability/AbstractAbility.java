@@ -8,4 +8,5 @@ public interface AbstractAbility {
     Skill getSkill();
 
     NamespacedId getId();
+
 }

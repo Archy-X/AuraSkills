@@ -441,6 +441,13 @@ abilities:
     unlock: 6
     level_up: 5
     max_level: 0
+  'auraskills:sorcerer':
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: 3
+    level_up: 5
+    max_level: 0
   'auraskills:life_essence':
     enabled: true
     base_value: 10.0

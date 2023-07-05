@@ -48,6 +48,11 @@ public enum Skills implements Skill {
     }
 
     @Override
+    public String toString() {
+        return getId().toString();
+    }
+
+    @Override
     public boolean isEnabled() {
         return provider.isEnabled(this);
     }
