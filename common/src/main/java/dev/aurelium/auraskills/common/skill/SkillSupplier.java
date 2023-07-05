@@ -29,6 +29,9 @@ public class SkillSupplier implements SkillProvider {
 
     @Override
     public boolean isEnabled(Skill skill) {
+        if (!skillManager.isLoaded(skill)) {
+            return false;
+        }
         return get(skill).options().enabled();
     }
 

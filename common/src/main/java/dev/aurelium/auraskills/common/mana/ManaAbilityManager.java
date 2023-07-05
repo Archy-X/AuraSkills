@@ -20,7 +20,7 @@ public class ManaAbilityManager {
 
     public ManaAbilityManager(AuraSkillsPlugin plugin) {
         this.manaAbilityMap = new HashMap<>();
-        this.supplier = new ManaAbilitySupplier(plugin);
+        this.supplier = new ManaAbilitySupplier(plugin, this);
     }
 
     // Supplier to be injected into ManaAbility instances
@@ -57,6 +57,10 @@ public class ManaAbilityManager {
             }
         }
         return null;
+    }
+
+    public boolean isLoaded(ManaAbility manaAbility) {
+        return manaAbilityMap.containsKey(manaAbility);
     }
 
 }

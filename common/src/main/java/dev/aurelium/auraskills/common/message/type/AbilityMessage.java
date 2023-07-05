@@ -251,6 +251,10 @@ public enum AbilityMessage implements MessageKey {
         catch (IllegalArgumentException e) {
             ability = Abilities.valueOf(this.name().substring(0, this.name().indexOf("_")));
         }
+        if (!ability.isEnabled()) {
+            path = "abilities.invalid";
+            return;
+        }
         path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ROOT) + "." + ability.name().toLowerCase(Locale.ROOT) + "." + this.name().substring(ability.name().length() + 1).toLowerCase(Locale.ROOT);
     }
 

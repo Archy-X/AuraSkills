@@ -8,10 +8,12 @@ import java.util.*;
 
 public class SkillManager {
 
+    private final AuraSkillsPlugin plugin;
     private final Map<Skill, LoadedSkill> skillMap;
     private final SkillSupplier supplier;
 
     public SkillManager(AuraSkillsPlugin plugin) {
+        this.plugin = plugin;
         this.skillMap = new HashMap<>();
         this.supplier = new SkillSupplier(this, plugin.getMessageProvider());
     }
@@ -43,6 +45,10 @@ public class SkillManager {
             skills.add(loaded.skill());
         }
         return skills;
+    }
+
+    public boolean isLoaded(Skill skill) {
+        return skillMap.containsKey(skill);
     }
 
 }

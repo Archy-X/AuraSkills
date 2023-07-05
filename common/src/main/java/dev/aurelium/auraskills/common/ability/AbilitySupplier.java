@@ -44,6 +44,9 @@ public class AbilitySupplier implements AbilityProvider {
 
     @Override
     public boolean isEnabled(Ability ability) {
+        if (!abilityManager.isLoaded(ability)) {
+            return false;
+        }
         return get(ability).config().enabled();
     }
 

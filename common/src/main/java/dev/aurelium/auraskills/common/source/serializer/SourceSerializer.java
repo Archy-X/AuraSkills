@@ -22,11 +22,11 @@ public abstract class SourceSerializer<T> implements TypeSerializer<T> {
     }
 
     protected NamespacedId getId(ConfigurationNode source) {
-        String name = source.getString();
-        if (name == null) {
+        Object name = source.key();
+        if (!(name instanceof String nameString)) {
             throw new IllegalArgumentException("Source section name not found");
         }
-        return NamespacedId.from(NamespacedId.AURASKILLS, name.toLowerCase(Locale.ROOT));
+        return NamespacedId.from(NamespacedId.AURASKILLS, nameString.toLowerCase(Locale.ROOT));
     }
 
     protected double getXp(ConfigurationNode source) {

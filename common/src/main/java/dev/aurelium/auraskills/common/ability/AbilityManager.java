@@ -82,4 +82,8 @@ public class AbilityManager {
         }
     }
 
+    public boolean isLoaded(Ability ability) {
+        return abilityMap.containsKey(ability);
+    }
+
 }

@@ -58,7 +58,7 @@ skills:
       - 'auraskills:spade_master'
       - 'auraskills:bigger_scoop'
       - 'auraskills:lucky_spades'
-    mana_ability: 'auraskills:treasure_hunter'
+    mana_ability: 'auraskills:terraform'
     options:
       enabled: true
       max_level: 97

@@ -25,6 +25,9 @@ public class StatSupplier implements StatProvider {
 
     @Override
     public boolean isEnabled(Stat stat) {
+        if (!statManager.isLoaded(stat)) {
+            return false;
+        }
         return get(stat).options().enabled();
     }
 

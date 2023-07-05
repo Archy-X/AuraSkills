@@ -57,6 +57,13 @@ public class SkillLoader {
                 ConfigurationNode skillNode = skillsNode.node(skillName); // Get the node for the individual skill
                 LoadedSkill loadedSkill = loadSkill(skill, skillNode);
 
+                plugin.logger().info("Loaded skill " + loadedSkill.skill().getId());
+                StringBuilder abSb = new StringBuilder();
+                for (Ability ability : loadedSkill.abilities()) {
+                    abSb.append(ability.getId()).append(", ");
+                }
+                plugin.logger().info("Loaded abilities " + abSb);
+
                 plugin.getSkillManager().register(skill, loadedSkill);
             }
         } catch (ConfigurateException e) {

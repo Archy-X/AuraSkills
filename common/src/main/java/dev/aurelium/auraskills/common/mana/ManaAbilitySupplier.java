@@ -17,9 +17,9 @@ public class ManaAbilitySupplier implements ManaAbilityProvider {
     private final ManaAbilityManager manaAbilityManager;
     private final MessageProvider messageProvider;
 
-    public ManaAbilitySupplier(AuraSkillsPlugin plugin) {
+    public ManaAbilitySupplier(AuraSkillsPlugin plugin, ManaAbilityManager manaAbilityManager) {
         this.plugin = plugin;
-        this.manaAbilityManager = plugin.getManaAbilityManager();
+        this.manaAbilityManager = manaAbilityManager;
         this.messageProvider = plugin.getMessageProvider();
     }
 
@@ -44,6 +44,9 @@ public class ManaAbilitySupplier implements ManaAbilityProvider {
 
     @Override
     public boolean isEnabled(ManaAbility manaAbility) {
+        if (!manaAbilityManager.isLoaded(manaAbility)) {
+            return false;
+        }
         return get(manaAbility).config().enabled();
     }
 

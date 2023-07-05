@@ -66,4 +66,8 @@ public abstract class StatManager {
         reloadStat(user, Stats.WISDOM);
     }
 
+    public boolean isLoaded(Stat stat) {
+        return statMap.containsKey(stat);
+    }
+
 }
