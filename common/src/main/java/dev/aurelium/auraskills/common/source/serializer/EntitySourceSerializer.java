@@ -10,8 +10,8 @@ import java.lang.reflect.Type;
 
 public class EntitySourceSerializer extends SourceSerializer<EntitySource> {
 
-    public EntitySourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public EntitySourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class EntitySourceSerializer extends SourceSerializer<EntitySource> {
         EntityXpSource.EntityTriggers[] triggers = requiredPluralizedArray("trigger", node, EntityXpSource.EntityTriggers.class);
         EntityXpSource.EntityDamagers[] damagers = pluralizedArray("damager", node, EntityXpSource.EntityDamagers.class);
 
-        return new EntitySource(plugin, getId(node), getXp(node), entity, triggers, damagers);
+        return new EntitySource(plugin, getId(), getXp(node), entity, triggers, damagers);
     }
 
 }

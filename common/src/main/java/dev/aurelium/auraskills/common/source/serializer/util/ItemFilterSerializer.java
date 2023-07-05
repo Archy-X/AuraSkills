@@ -13,8 +13,8 @@ import java.lang.reflect.Type;
 
 public class ItemFilterSerializer extends SourceSerializer<ItemFilter> {
 
-    public ItemFilterSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public ItemFilterSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ItemFilterSerializer extends SourceSerializer<ItemFilter> {
         String[] materials = pluralizedArray("material", source, String.class);
         String[] excludedMaterials = pluralizedArray("excluded_material", source, String.class);
         ItemCategory category = source.node("category").get(ItemCategory.class);
-        ItemFilterMeta meta = new ItemFilterMetaSerializer(plugin).deserialize(ItemFilterMeta.class, source);
+        ItemFilterMeta meta = new ItemFilterMetaSerializer(plugin, sourceName).deserialize(ItemFilterMeta.class, source);
 
         return new SourceItem(materials, excludedMaterials, category, meta);
     }

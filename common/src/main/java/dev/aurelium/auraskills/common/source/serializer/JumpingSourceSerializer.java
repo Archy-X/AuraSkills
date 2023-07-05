@@ -9,14 +9,14 @@ import java.lang.reflect.Type;
 
 public class JumpingSourceSerializer extends SourceSerializer<JumpingSource> {
 
-    public JumpingSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public JumpingSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
     public JumpingSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         int interval = source.node("interval").getInt(100);
 
-        return new JumpingSource(plugin, getId(source), getXp(source), interval);
+        return new JumpingSource(plugin, getId(), getXp(source), interval);
     }
 }

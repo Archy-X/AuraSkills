@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 
 public class PotionDataSerializer extends SourceSerializer<PotionData> {
 
-    public PotionDataSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public PotionDataSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override

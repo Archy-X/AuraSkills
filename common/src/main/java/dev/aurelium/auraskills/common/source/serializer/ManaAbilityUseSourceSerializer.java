@@ -10,14 +10,14 @@ import java.lang.reflect.Type;
 
 public class ManaAbilityUseSourceSerializer extends SourceSerializer<ManaAbilityUseSource> {
 
-    public ManaAbilityUseSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public ManaAbilityUseSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
     public ManaAbilityUseSource deserialize(Type type, ConfigurationNode node) throws SerializationException {
         ManaAbility[] manaAbilities = pluralizedArray("mana_ability", node, ManaAbility.class);
 
-        return new ManaAbilityUseSource(plugin, getId(node), getXp(node), manaAbilities);
+        return new ManaAbilityUseSource(plugin, getId(), getXp(node), manaAbilities);
     }
 }

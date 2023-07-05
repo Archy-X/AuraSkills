@@ -9,14 +9,14 @@ import java.lang.reflect.Type;
 
 public class GrindstoneSourceSerializer extends SourceSerializer<GrindstoneSource> {
 
-    public GrindstoneSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public GrindstoneSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
     public GrindstoneSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         String multiplier = source.node("multiplier").getString();
 
-        return new GrindstoneSource(plugin, getId(source), getXp(source), multiplier);
+        return new GrindstoneSource(plugin, getId(), getXp(source), multiplier);
     }
 }

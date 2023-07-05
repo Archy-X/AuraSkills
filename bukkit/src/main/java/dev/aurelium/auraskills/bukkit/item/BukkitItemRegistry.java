@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
@@ -21,10 +20,11 @@ public class BukkitItemRegistry implements ItemRegistry {
 
     private final AuraSkills plugin;
     private final Map<NamespacedId, ItemStack> items = new HashMap<>();
-    private final Map<NamespacedId, ItemStack> sourceMenuItems = new HashMap<>();
+    private final BukkitSourceMenuItems sourceMenuItems;
 
     public BukkitItemRegistry(AuraSkills plugin) {
         this.plugin = plugin;
+        this.sourceMenuItems = new BukkitSourceMenuItems(plugin);
     }
 
     public void register(NamespacedId key, ItemStack item) {
@@ -33,14 +33,6 @@ public class BukkitItemRegistry implements ItemRegistry {
 
     public void unregister(NamespacedId key) {
         items.remove(key);
-    }
-
-    public void registerSource(XpSource xpSource, ItemStack item) {
-        sourceMenuItems.put(xpSource.getId(), item.clone());
-    }
-
-    public void unregisterSource(XpSource xpSource) {
-        sourceMenuItems.remove(xpSource.getId());
     }
 
     @Nullable
@@ -100,9 +92,7 @@ public class BukkitItemRegistry implements ItemRegistry {
         return null;
     }
 
-    @Nullable
-    public ItemStack getSourceMenuitem(XpSource xpSource) {
-        return sourceMenuItems.get(xpSource.getId());
+    public BukkitSourceMenuItems getSourceMenuItems() {
+        return sourceMenuItems;
     }
-
 }

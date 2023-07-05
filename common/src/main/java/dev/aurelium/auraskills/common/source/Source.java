@@ -31,7 +31,7 @@ public class Source implements XpSource {
         if (sourceType == null) {
             return id.getKey();
         }
-        String messagePath = "sources." + sourceType.toString().toLowerCase(Locale.ROOT) + "." + toString().toLowerCase(Locale.ROOT);
+        String messagePath = "sources." + sourceType.toString().toLowerCase(Locale.ROOT) + "." + getId().getKey().toLowerCase(Locale.ROOT);
         return plugin.getMsg(MessageKey.of(messagePath), locale);
     }
 

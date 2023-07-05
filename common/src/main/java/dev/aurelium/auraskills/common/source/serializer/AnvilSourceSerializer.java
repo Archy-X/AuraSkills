@@ -10,8 +10,8 @@ import java.lang.reflect.Type;
 
 public class AnvilSourceSerializer extends SourceSerializer<AnvilSource> {
 
-    public AnvilSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public AnvilSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -20,6 +20,6 @@ public class AnvilSourceSerializer extends SourceSerializer<AnvilSource> {
         ItemFilter rightItem = required(source, "right_item").get(ItemFilter.class);
         String multiplier = source.node("multiplier").getString();
 
-        return new AnvilSource(plugin, getId(source), getXp(source), leftItem, rightItem, multiplier);
+        return new AnvilSource(plugin, getId(), getXp(source), leftItem, rightItem, multiplier);
     }
 }

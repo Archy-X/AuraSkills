@@ -10,14 +10,14 @@ import java.lang.reflect.Type;
 
 public class PotionSplashSourceSerializer extends SourceSerializer<PotionSplashSource> {
 
-    public PotionSplashSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public PotionSplashSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
     public PotionSplashSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         ItemFilter item = required(source, "item").get(ItemFilter.class);
 
-        return new PotionSplashSource(plugin, getId(source), getXp(source), item);
+        return new PotionSplashSource(plugin, getId(), getXp(source), item);
     }
 }

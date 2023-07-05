@@ -10,14 +10,14 @@ import java.lang.reflect.Type;
 
 public class ItemConsumeSourceSerializer extends SourceSerializer<ItemConsumeSource> {
 
-    public ItemConsumeSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public ItemConsumeSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
     public ItemConsumeSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         ItemFilter item = required(source, "item").get(ItemFilter.class);
 
-        return new ItemConsumeSource(plugin, getId(source), getXp(source), item);
+        return new ItemConsumeSource(plugin, getId(), getXp(source), item);
     }
 }

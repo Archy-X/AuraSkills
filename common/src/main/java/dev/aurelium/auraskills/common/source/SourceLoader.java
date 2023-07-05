@@ -6,8 +6,10 @@ import dev.aurelium.auraskills.api.item.PotionData;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
+import dev.aurelium.auraskills.common.source.serializer.BlockSourceSerializer;
 import dev.aurelium.auraskills.common.source.serializer.SourceSerializer;
 import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterMetaSerializer;
 import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterSerializer;
@@ -28,9 +30,10 @@ public class SourceLoader {
         this.plugin = plugin;
         // Register utility serializers
         TypeSerializerCollection sourceSerializers = TypeSerializerCollection.builder()
-                .register(ItemFilterMeta.class, new ItemFilterMetaSerializer(plugin))
-                .register(ItemFilter.class, new ItemFilterSerializer(plugin))
-                .register(PotionData.class, new PotionDataSerializer(plugin))
+                .register(ItemFilterMeta.class, new ItemFilterMetaSerializer(plugin, ""))
+                .register(ItemFilter.class, new ItemFilterSerializer(plugin, ""))
+                .register(PotionData.class, new PotionDataSerializer(plugin, ""))
+                .register(BlockXpSource.BlockXpSourceState.class, new BlockSourceSerializer.BlockSourceStateSerializer(plugin, ""))
                 .build();
         this.configurateLoader = new ConfigurateLoader(plugin, sourceSerializers);
     }
@@ -83,8 +86,9 @@ public class SourceLoader {
                 if (type == null) {
                     throw new IllegalArgumentException("Source " + id + " must specify a type");
                 }
-                Source source = parseSourceFromType(type, sourceNode);
+                Source source = parseSourceFromType(type, sourceNode, sourceName);
                 deserializedSources.add(source);
+                registerMenuItem(source, sourceNode);
             }
             return deserializedSources;
         } catch (Exception e) {
@@ -94,13 +98,13 @@ public class SourceLoader {
         }
     }
 
-    private Source parseSourceFromType(String type, ConfigurationNode sourceNode) {
+    private Source parseSourceFromType(String type, ConfigurationNode sourceNode, String sourceName) {
         SourceType sourceType = SourceType.valueOf(type.toUpperCase(Locale.ROOT));
 
         Class<?> serializerClass = sourceType.getSerializerClass();
         // Create new instance of serializer
         try {
-            SourceSerializer<?> sourceSerializer = (SourceSerializer<?>) serializerClass.getConstructors()[0].newInstance(plugin);
+            SourceSerializer<?> sourceSerializer = (SourceSerializer<?>) serializerClass.getConstructors()[0].newInstance(plugin, sourceName);
 
             return (Source) sourceSerializer.deserialize(sourceType.getSourceClass(), sourceNode);
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
@@ -108,6 +112,60 @@ public class SourceLoader {
         } catch (SerializationException e) {
             throw new IllegalArgumentException("Error deserializing source of type " + type);
         }
+    }
+
+    private void registerMenuItem(Source source, ConfigurationNode sourceNode) throws SerializationException {
+        ConfigurationNode node = sourceNode.node("menu_item");
+        if (!node.virtual()) {
+            applyNodeReplacements(node, sourceNode);
+            plugin.getItemRegistry().getSourceMenuItems().parseAndRegisterMenuItem(source, node);
+        }
+    }
+
+    /**
+     * Searches baseNode for any String values with placeholders marked between curly braces
+     * and replaces them with the corresponding value from parentNode where the key of the parentNode is the placeholder value
+     *
+     * @param baseNode The baseNode to search for placeholders and modify
+     * @param parentNode The parentNode to get the replacement values from
+     */
+    private void applyNodeReplacements(ConfigurationNode baseNode, ConfigurationNode parentNode) throws SerializationException {
+        for (ConfigurationNode child : baseNode.childrenMap().values()) {
+            String text = child.getString();
+            if (text != null) {
+                // Get all placeholders between curly braces in text
+                List<String> placeholders = getPlaceholders(text);
+                for (String placeholder : placeholders) {
+                    // Get replacement value from parentNode
+                    String replacement = parentNode.node(placeholder).getString();
+                    if (replacement != null) {
+                        // Replace placeholder with replacement value
+                        child.set(text.replace("{" + placeholder + "}", replacement));
+                    }
+                }
+            } else {
+                applyNodeReplacements(child, parentNode); // Recursively search for placeholders
+            }
+        }
+    }
+
+    private List<String> getPlaceholders(String text) {
+        List<String> placeholders = new ArrayList<>();
+        int index = 0;
+        while (index < text.length()) {
+            int openIndex = text.indexOf('{', index);
+            if (openIndex == -1) {
+                break;
+            }
+            int closeIndex = text.indexOf('}', openIndex);
+            if (closeIndex == -1) {
+                break;
+            }
+            String placeholder = text.substring(openIndex + 1, closeIndex);
+            placeholders.add(placeholder);
+            index = closeIndex + 1;
+        }
+        return placeholders;
     }
 
 }

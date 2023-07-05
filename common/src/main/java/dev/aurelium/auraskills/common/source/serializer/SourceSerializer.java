@@ -16,17 +16,15 @@ import java.util.Locale;
 public abstract class SourceSerializer<T> implements TypeSerializer<T> {
 
     protected final AuraSkillsPlugin plugin;
+    protected final String sourceName;
 
-    public SourceSerializer(AuraSkillsPlugin plugin) {
+    public SourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
         this.plugin = plugin;
+        this.sourceName = sourceName;
     }
 
-    protected NamespacedId getId(ConfigurationNode source) {
-        Object name = source.key();
-        if (!(name instanceof String nameString)) {
-            throw new IllegalArgumentException("Source section name not found");
-        }
-        return NamespacedId.from(NamespacedId.AURASKILLS, nameString.toLowerCase(Locale.ROOT));
+    protected NamespacedId getId() {
+        return NamespacedId.from(NamespacedId.AURASKILLS, sourceName.toLowerCase(Locale.ROOT));
     }
 
     protected double getXp(ConfigurationNode source) {

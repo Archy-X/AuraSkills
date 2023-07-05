@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
 
-    public BlockSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public BlockSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -24,13 +24,13 @@ public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
         BlockXpSource.BlockXpSourceState[] states = pluralizedArray("state", source, BlockXpSource.BlockXpSourceState.class);
         String stateMultiplier = source.node("state_multiplier").getString();
 
-        return new BlockSource(plugin, getId(source), getXp(source), blocks, triggers, checkReplace, states, stateMultiplier);
+        return new BlockSource(plugin, getId(), getXp(source), blocks, triggers, checkReplace, states, stateMultiplier);
     }
 
     public static class BlockSourceStateSerializer extends SourceSerializer<BlockXpSource.BlockXpSourceState> {
 
-        public BlockSourceStateSerializer(AuraSkillsPlugin plugin) {
-            super(plugin);
+        public BlockSourceStateSerializer(AuraSkillsPlugin plugin, String sourceName) {
+            super(plugin, sourceName);
         }
 
         @Override

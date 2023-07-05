@@ -781,7 +781,7 @@ skills:
     name: Forging
     desc: '&7Combine and apply books in an anvil to\n&7earn Forging {xp_unit}'
 sources:
-  farming:
+  block:
     wheat: Wheat
     potato: Potato
     carrot: Carrot
@@ -801,7 +801,6 @@ sources:
     glow_berries: Glow Berries
     torchflower: Torchflower
     pitcher_plant: Pitcher Plant
-  foraging:
     oak_log: Oak Log
     spruce_log: Spruce Log
     birch_log: Birch Log
@@ -830,7 +829,6 @@ sources:
     cherry_log: Cherry Log
     cherry_leaves: Cherry Leaves
     pink_petals: Pink Petals
-  mining:
     stone: Stone
     cobblestone: Cobblestone
     andesite: Andesite
@@ -879,16 +877,6 @@ sources:
     packed_ice: Packed Ice
     blue_ice: Blue Ice
     reinforced_deepslate: Reinforced Deepslate
-  fishing:
-    cod: Cod
-    salmon: Salmon
-    tropical_fish: Tropical Fish
-    pufferfish: Pufferfish
-    treasure: Treasure Items
-    junk: Junk Items
-    rare: Rare Loot
-    epic: Epic Loot
-  excavation:
     dirt: Dirt
     grass_block: Grass Block
     sand: Sand
@@ -903,6 +891,15 @@ sources:
     rooted_dirt: Rooted Dirt
     mud: Mud
     muddy_mangrove_roots: Muddy Mangrove Roots
+  fishing:
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
   mobs:
     player: Player
     bat: Bat

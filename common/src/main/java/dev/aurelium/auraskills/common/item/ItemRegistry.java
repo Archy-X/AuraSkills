@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.item;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.source.SourceMenuItems;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -45,5 +46,7 @@ public interface ItemRegistry {
      */
     @Nullable
     String getEffectiveItemName(NamespacedId key);
+
+    SourceMenuItems<?> getSourceMenuItems();
 
 }

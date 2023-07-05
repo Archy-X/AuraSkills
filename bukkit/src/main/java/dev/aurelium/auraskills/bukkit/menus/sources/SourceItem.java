@@ -90,7 +90,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<XpS
             if (source.getXp() == 0.0) {
                 continue;
             }
-            if (plugin.getItemRegistry().getSourceMenuitem(source) == null) {
+            if (plugin.getItemRegistry().getSourceMenuItems().getMenuItem(source) == null) {
                 continue;
             }
             filteredSources.add(source);
@@ -125,7 +125,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<XpS
         if (baseItem.getType() != XMaterial.GRAY_DYE.parseMaterial()) {
             return baseItem;
         }
-        ItemStack item = plugin.getItemRegistry().getSourceMenuitem(source);
+        ItemStack item = plugin.getItemRegistry().getSourceMenuItems().getMenuItem(source);
         if (item == null) {
             plugin.getLogger().warning("Item of source " + source.getId() + " not found");
         }

@@ -10,8 +10,8 @@ import java.lang.reflect.Type;
 
 public class DamageSourceSerializer extends SourceSerializer<DamageSource> {
 
-    public DamageSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public DamageSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -22,6 +22,6 @@ public class DamageSourceSerializer extends SourceSerializer<DamageSource> {
         boolean mustSurvive = source.node("must_survive").getBoolean(true);
         boolean useOriginalDamage = source.node("use_original_damage").getBoolean(true);
 
-        return new DamageSource(plugin, getId(source), getXp(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
+        return new DamageSource(plugin, getId(), getXp(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
     }
 }

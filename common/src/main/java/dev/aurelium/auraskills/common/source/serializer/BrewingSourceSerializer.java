@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 
 public class BrewingSourceSerializer extends SourceSerializer<BrewingSource> {
 
-    public BrewingSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public BrewingSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -20,6 +20,6 @@ public class BrewingSourceSerializer extends SourceSerializer<BrewingSource> {
         ItemFilter ingredients = required(source, "ingredient").get(ItemFilter.class);
         BrewingXpSource.BrewTriggers[] triggers = requiredPluralizedArray("trigger", source, BrewingXpSource.BrewTriggers.class);
 
-        return new BrewingSource(plugin, getId(source), getXp(source), ingredients, triggers);
+        return new BrewingSource(plugin, getId(), getXp(source), ingredients, triggers);
     }
 }

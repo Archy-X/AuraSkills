@@ -9,8 +9,8 @@ import java.lang.reflect.Type;
 
 public class StatisticSourceSerializer extends SourceSerializer<StatisticSource> {
 
-    public StatisticSourceSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public StatisticSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -18,6 +18,6 @@ public class StatisticSourceSerializer extends SourceSerializer<StatisticSource>
         String statistic = required(source, "statistic").getString();
         double multiplier = source.node("multiplier").getDouble(1.0);
 
-        return new StatisticSource(plugin, getId(source), getXp(source), statistic, multiplier);
+        return new StatisticSource(plugin, getId(), getXp(source), statistic, multiplier);
     }
 }

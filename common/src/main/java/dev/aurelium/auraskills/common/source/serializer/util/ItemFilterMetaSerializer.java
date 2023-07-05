@@ -13,8 +13,8 @@ import java.util.List;
 
 public class ItemFilterMetaSerializer extends SourceSerializer<ItemFilterMeta> {
 
-    public ItemFilterMetaSerializer(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public ItemFilterMetaSerializer(AuraSkillsPlugin plugin, String sourceName) {
+        super(plugin, sourceName);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ItemFilterMetaSerializer extends SourceSerializer<ItemFilterMeta> {
         String displayName = source.node("display_name").getString();
         List<String> lore = source.node("lore").getList(String.class);
         // Deserialize PotionData
-        PotionData potionData = new PotionDataSerializer(plugin).deserialize(PotionData.class, source.node("potion_data"));
+        PotionData potionData = new PotionDataSerializer(plugin, sourceName).deserialize(PotionData.class, source.node("potion_data"));
 
         return new SourceItemMeta(displayName, lore, potionData);
     }
