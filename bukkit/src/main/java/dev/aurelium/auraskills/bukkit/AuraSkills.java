@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
+import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
@@ -127,18 +128,21 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         eventManager = new AuraSkillsEventManager(this);
         hookManager = new HookManager();
         leaderboardManager = new LeaderboardManager(this);
+        scheduler = new BukkitScheduler(this);
         // TODO UiProvider impl
 
         // Load rewards
         rewardManager = new BukkitRewardManager(this);
         rewardManager.loadRewards();
 
-        // TODO Scheduler impl
         initStorageProvider();
 
         registerEvents();
         registerCommands();
         registerAndLoadMenus();
+
+        // Update leaderboards
+        leaderboardManager.updateLeaderboards();
     }
 
     @Override

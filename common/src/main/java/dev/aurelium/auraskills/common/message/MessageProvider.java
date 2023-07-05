@@ -136,7 +136,7 @@ public class MessageProvider implements PolyglotProvider {
 
     public String getManaAbilityDisplayName(ManaAbility ability, Locale locale) {
         if (ability instanceof ManaAbilities) {
-            return manager.get(locale, convertKey(AbilityMessage.valueOf(ability.name() + "_NAME")));
+            return manager.get(locale, convertKey(ManaAbilityMessage.valueOf(ability.name() + "_NAME")));
         } else {
             return manager.get(locale, convertKey("mana_abilities." + ability.getId().toString() + ".name"));
         }
@@ -144,7 +144,7 @@ public class MessageProvider implements PolyglotProvider {
 
     public String getManaAbilityDescription(ManaAbility ability, Locale locale) {
         if (ability instanceof ManaAbilities) {
-            return manager.get(locale, convertKey(AbilityMessage.valueOf(ability.name() + "_DESC")));
+            return manager.get(locale, convertKey(ManaAbilityMessage.valueOf(ability.name() + "_DESC")));
         } else {
             return manager.get(locale, convertKey("mana_abilities." + ability.getId().toString() + ".desc"));
         }

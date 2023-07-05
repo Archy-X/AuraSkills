@@ -23,11 +23,11 @@ public class AbilityConfig extends OptionProvider {
     }
 
     public double secondaryBaseValue() {
-        return getDouble("secondary_base_value");
+        return getDouble("secondary_base_value", 0.0);
     }
 
     public double secondaryValuePerLevel() {
-        return getDouble("secondary_value_per_level");
+        return getDouble("secondary_value_per_level", 0.0);
     }
 
     public int unlock() {
