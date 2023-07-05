@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.message;
 
 import com.archyx.polyglot.Polyglot;
 import com.archyx.polyglot.PolyglotProvider;
+import com.archyx.polyglot.config.MessageReplacements;
 import com.archyx.polyglot.config.PolyglotConfig;
 import com.archyx.polyglot.config.PolyglotConfigBuilder;
 import com.archyx.polyglot.lang.MessageManager;
@@ -16,14 +17,13 @@ import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.message.type.AbilityMessage;
-import dev.aurelium.auraskills.common.message.type.SkillMessage;
-import dev.aurelium.auraskills.common.message.type.StatMessage;
-import dev.aurelium.auraskills.common.message.type.TraitMessage;
+import dev.aurelium.auraskills.common.message.type.*;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Interface that provides messages for the plugin.
@@ -36,10 +36,17 @@ public class MessageProvider implements PolyglotProvider {
 
     public MessageProvider(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
+        // Create replacement map for units
+        Map<String, String> replace = new HashMap<>();
+        replace.put("{mana_unit}", UnitMessage.MANA.getPath());
+        replace.put("{xp_unit}", UnitMessage.XP.getPath());
+        replace.put("{hp_unit}", UnitMessage.HP.getPath());
+
         PolyglotConfig config = new PolyglotConfigBuilder()
                 .messageDirectory("messages")
                 .messageFileName("messages_{language}.yml")
                 .defaultLanguage("en")
+                .messageReplacements(new MessageReplacements(replace))
                 .build();
         this.polyglot = new Polyglot(this, config);
         this.manager = this.polyglot.getMessageManager();
