@@ -69,7 +69,8 @@ public class Health implements Listener {
 					setHealth(player);
 					if (plugin.getWorldManager().isDisabledWorld(event.getFrom()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 						if (worldChangeHealth.containsKey(player.getUniqueId())) {
-							player.setHealth(worldChangeHealth.get(player.getUniqueId()));
+							double health = worldChangeHealth.get(player.getUniqueId());
+							player.setHealth(Math.min(health, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
 							worldChangeHealth.remove(player.getUniqueId());
 						}
 					}
@@ -79,7 +80,8 @@ public class Health implements Listener {
 			setHealth(player);
 			if (plugin.getWorldManager().isDisabledWorld(event.getFrom()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
 				if (worldChangeHealth.containsKey(player.getUniqueId())) {
-					player.setHealth(worldChangeHealth.get(player.getUniqueId()));
+					double health = worldChangeHealth.get(player.getUniqueId());
+					player.setHealth(Math.min(health, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
 					worldChangeHealth.remove(player.getUniqueId());
 				}
 			}
