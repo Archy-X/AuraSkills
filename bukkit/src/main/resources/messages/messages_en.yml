@@ -891,6 +891,11 @@ sources:
     rooted_dirt: Rooted Dirt
     mud: Mud
     muddy_mangrove_roots: Muddy Mangrove Roots
+    sculk: Sculk
+    sculk_vein: Sculk Vein
+    sculk_sensor: Sculk Sensor
+    sculk_catalyst: Sculk Catalyst
+    sculk_shrieker: Sculk Shrieker
   fishing:
     cod: Cod
     salmon: Salmon
@@ -900,7 +905,7 @@ sources:
     junk: Junk Items
     rare: Rare Loot
     epic: Epic Loot
-  mobs:
+  entity:
     player: Player
     bat: Bat
     cat: Cat
@@ -979,17 +984,17 @@ sources:
     warden: Warden
     camel: Camel
     sniffer: Sniffer
-  defense:
+  damage:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players
-  endurance:
+    fall_damage: Taking Fall Damage
+  statistic:
     walk_per_meter: Walking
     sprint_per_meter: Sprinting
     swim_per_meter: Swimming
-  agility:
+  jumping:
     jump_per_100: Jumping
-    fall_damage: Taking Fall Damage
-  alchemy:
+  brewing:
     awkward: Awkward Potion
     regular: Regular Potion
     extended: Extended Duration Potion
@@ -1001,30 +1006,27 @@ sources:
     armor_per_level: Armor
     tool_per_level: Tool
     book_per_level: Book
-  sorcery:
+  mana_ability_use:
     mana_ability_use: Using Mana Abilities
-    sculk: Sculk
-    sculk_vein: Sculk Vein
-    sculk_sensor: Sculk Sensor
-    sculk_catalyst: Sculk Catalyst
-    sculk_shrieker: Sculk Shrieker
-  healing:
+  item_consume:
     drink_regular: Drink Regular Potion
     drink_extended: Drink Extended Duration Potion
     drink_upgraded: Drink Upgraded Potion
+    golden_apple: Golden Apple
+    enchanted_golden_apple: Enchanted Golden Apple
+  potion_splash:
     splash_regular: Splash Regular Potion
     splash_extended: Splash Extended Duration Potion
     splash_upgraded: Splash Upgraded Potion
     lingering_regular: Use Regular Lingering Potion
     lingering_extended: Use Extended Duration Lingering Potion
     lingering_upgraded: Use Upgraded Lingering Potion
-    golden_apple: Golden Apple
-    enchanted_golden_apple: Enchanted Golden Apple
-  forging:
+  anvil:
     combine_books_per_level: Combine Enchanted Books
     combine_weapon_per_level: Combine Weapon with Book
     combine_armor_per_level: Combine Armor with Book
     combine_tool_per_level: Combine Tool with Book
+  grindstone:
     grindstone_per_level: Disenchant Item with Grindstone
   units:
     damage: Damage

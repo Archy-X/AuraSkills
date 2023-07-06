@@ -1,7 +1,12 @@
+default:
+  menu_item:
+    material: '{block}'
 sources:
   mana_ability_use:
     type: mana_ability_use
     xp: 0.5
+    menu_item:
+      material: light_blue_dye
   sculk:
     type: block
     block: sculk

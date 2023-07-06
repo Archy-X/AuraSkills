@@ -7,6 +7,10 @@ sources:
   mob_damage:
     damager: mob
     xp: 1
+    menu_item:
+      material: zombie_head
   player_damage:
     damager: player
     xp: 2
+    menu_item:
+      material: player_head

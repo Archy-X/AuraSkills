@@ -4,8 +4,13 @@ default:
   xp: '{value}'
   trigger: death
   damager: player
+  menu_item:
+    material: '{key}_spawn_egg'
 sources:
-  player: 50.0
+  player:
+    xp: 50
+    menu_item:
+      material: player_head
   bat: 1.0
   cat: 1.0
   chicken: 1.0
@@ -13,7 +18,10 @@ sources:
   cow: 2.0
   donkey: 2.0
   fox: 3.0
-  giant: 10.0
+  giant:
+    xp: 10.0
+    menu_item:
+      material: zombie_spawn_egg
   horse: 2.0
   mooshroom: 2.0
   mule: 2.0
@@ -54,7 +62,10 @@ sources:
   guardian: 15.0
   hoglin: 12.0
   husk: 7.0
-  illusioner: 17.0
+  illusioner:
+    xp: 17.0
+    menu_item:
+      material: evoker_spawn_egg
   magma_cube: 12.0
   phantom: 10.0
   piglin_brute: 35.0

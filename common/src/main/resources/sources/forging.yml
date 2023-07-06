@@ -5,6 +5,8 @@ sources:
     right_item: enchanted_book
     multiplier: '{repair_cost}'
     xp: 10
+    menu_item:
+      material: enchanted_book
   combine_weapon_per_level:
     type: anvil
     left_item:
@@ -12,6 +14,10 @@ sources:
     right_item: enchanted_book
     multiplier: '{repair_cost}'
     xp: 15
+    menu_item:
+      material: iron_sword
+      flags:
+        - hide_attributes
   combine_armor_per_level:
     type: anvil
     left_item:
@@ -19,6 +25,10 @@ sources:
     right_item: enchanted_book
     multiplier: '{repair_cost}'
     xp: 20
+    menu_item:
+      material: iron_leggings
+      flags:
+        - hide_attributes
   combine_tool_per_level:
     type: anvil
     left_item:
@@ -26,7 +36,13 @@ sources:
     right_item: enchanted_book
     multiplier: '{repair_cost}'
     xp: 25
+    menu_item:
+      material: iron_shovel
+      flags:
+        - hide_attributes
   grindstone_per_level:
     type: grindstone
     multiplier: '{total_level}'
     xp: 30
+    menu_item:
+      material: grindstone

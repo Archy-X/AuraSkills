@@ -51,20 +51,13 @@ public class SourceLoader {
 
             // Load each embedded source
             Map<String, ConfigurationNode> embeddedSources = new HashMap<>();
-            embedded.node("sources").childrenMap().forEach((key, sourceNode) -> {
-                String sourceName = key.toString();
-                embeddedSources.put(sourceName, sourceNode);
-            });
+            addToMap(embedded, embeddedSources);
 
             // Load each user source file
-            Map<String, ConfigurationNode> userSources = new HashMap<>();
-
             ConfigurationNode user = configurateLoader.loadUserFile(fileName);
 
-            user.node("sources").childrenMap().forEach((key, sourceNode) -> {
-                String sourceName = key.toString();
-                userSources.put(sourceName, sourceNode);
-            });
+            Map<String, ConfigurationNode> userSources = new HashMap<>();
+            addToMap(user, userSources);
 
             // Merge embedded and user sources
             Map<String, ConfigurationNode> sources = new HashMap<>();
@@ -89,6 +82,7 @@ public class SourceLoader {
                 if (type == null) {
                     throw new IllegalArgumentException("Source " + id + " must specify a type");
                 }
+                applyNodeReplacements(sourceNode, sourceNode, sourceName);
                 Source source = parseSourceFromType(type, sourceNode, sourceName);
                 deserializedSources.add(source);
                 registerMenuItem(source, sourceNode);
@@ -99,6 +93,20 @@ public class SourceLoader {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    private void addToMap(ConfigurationNode root, Map<String, ConfigurationNode> sourcesMap) {
+        root.node("sources").childrenMap().forEach((key, sourceNode) -> {
+            String sourceName = key.toString();
+            if (!sourceNode.isMap()) { // Replace leaf node to a child node with key _value
+                try {
+                    sourceNode.node("_value").set(sourceNode.raw());
+                } catch (SerializationException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            sourcesMap.put(sourceName, sourceNode);
+        });
     }
 
     private Source parseSourceFromType(String type, ConfigurationNode sourceNode, String sourceName) {
@@ -121,7 +129,6 @@ public class SourceLoader {
         plugin.logger().info("Source node for source " + source.getId() + ": " + sourceNode.raw());
         ConfigurationNode node = sourceNode.node("menu_item");
         if (!node.virtual()) {
-            applyNodeReplacements(node, sourceNode);
             plugin.getItemRegistry().getSourceMenuItems().parseAndRegisterMenuItem(source, node);
         }
     }
@@ -133,13 +140,20 @@ public class SourceLoader {
      * @param baseNode The baseNode to search for placeholders and modify
      * @param parentNode The parentNode to get the replacement values from
      */
-    private void applyNodeReplacements(ConfigurationNode baseNode, ConfigurationNode parentNode) throws SerializationException {
+    private void applyNodeReplacements(ConfigurationNode baseNode, ConfigurationNode parentNode, String sourceName) throws SerializationException {
         for (ConfigurationNode child : baseNode.childrenMap().values()) {
             String text = child.getString();
             if (text != null) {
                 // Get all placeholders between curly braces in text
                 List<String> placeholders = getPlaceholders(text);
                 for (String placeholder : placeholders) {
+                    if (placeholder.equals("key")) { // Replace key with source name
+                        child.set(text.replace("{key}", sourceName));
+                        continue;
+                    }
+                    if (placeholder.equals("value")) {
+                        child.set(text.replace("{value}", String.valueOf(parentNode.node("_value").raw())));
+                    }
                     // Get replacement value from parentNode
                     String[] path = placeholder.split("\\."); // Split placeholder into path by periods
                     String replacement = parentNode.node((Object[]) path).getString();
@@ -149,7 +163,7 @@ public class SourceLoader {
                     }
                 }
             } else {
-                applyNodeReplacements(child, parentNode); // Recursively search for placeholders
+                applyNodeReplacements(child, parentNode, sourceName); // Recursively search for placeholders
             }
         }
     }

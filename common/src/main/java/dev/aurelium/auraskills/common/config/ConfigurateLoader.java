@@ -103,13 +103,21 @@ public class ConfigurateLoader {
 
             if (node == null) continue;
 
-            // Override merged node with specified values of children
-            for (Map.Entry<Object, ? extends ConfigurationNode> entry : node.childrenMap().entrySet()) {
-                merged.node(entry.getKey()).set(entry.getValue().raw());
-            }
+            // Override merged node with specified values of children recursively
+            mergeRec(merged, node);
         }
 
         return merged;
+    }
+
+    private void mergeRec(ConfigurationNode base, ConfigurationNode source) throws SerializationException {
+        for (ConfigurationNode child : source.childrenMap().values()) {
+            if (child.isMap()) {
+                mergeRec(base.node(child.key()), child);
+            } else {
+                base.node(child.key()).set(child.raw());
+            }
+        }
     }
 
     private URI getEmbeddedURI(String fileName) {
