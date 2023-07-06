@@ -8,8 +8,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.player.User;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Interface with methods to manage player stats.
@@ -37,6 +36,18 @@ public abstract class StatManager {
             throw new IllegalArgumentException("Stat " + stat + " is not loaded!");
         }
         return loadedStat;
+    }
+    
+    public Collection<LoadedStat> getStats() {
+        return statMap.values();
+    }
+    
+    public Set<Stat> getStatValues() {
+        Set<Stat> stats = new HashSet<>();
+        for (LoadedStat loaded : statMap.values()) {
+            stats.add(loaded.stat());
+        }
+        return stats;
     }
 
     public void register(Stat stat, LoadedStat loadedStat) {

@@ -47,6 +47,11 @@ public class StatLoader {
                 ConfigurationNode statNode = statsNode.node(statName); // Get the node for the individual skill
                 LoadedStat loadedStat = loadStat(stat, statNode);
 
+                StringBuilder traitsSb = new StringBuilder();
+                loadedStat.traits().forEach(trait -> traitsSb.append(trait.getId()).append(", "));
+                traitsSb.delete(traitsSb.length() - 2, traitsSb.length());
+                plugin.logger().info("Loaded stat " + stat.getId() + " with traits=[" + traitsSb + "]");
+
                 plugin.getStatManager().register(stat, loadedStat);
             }
         } catch (ConfigurateException e) {

@@ -41,6 +41,7 @@ import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
 import dev.aurelium.auraskills.common.skill.SkillManager;
 import dev.aurelium.auraskills.common.skill.SkillRegistry;
+import dev.aurelium.auraskills.common.stat.StatLoader;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.stat.StatRegistry;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
@@ -120,7 +121,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         manaAbilityRegistry = new ManaAbilityRegistry(this);
         itemRegistry = new BukkitItemRegistry(this);
 
-        // Load skills
+        // Load skills, stats
         loadSkills();
 
         leveler = new BukkitLeveler(this);
@@ -155,8 +156,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     private void loadSkills() {
-        SkillLoader loader = new SkillLoader(this);
-        loader.loadSkills();
+        SkillLoader skillLoader = new SkillLoader(this);
+        skillLoader.loadSkills();
+        StatLoader statLoader = new StatLoader(this);
+        statLoader.loadStats();
     }
 
     private void registerApi() {

@@ -126,7 +126,6 @@ public class SourceLoader {
     }
 
     private void registerMenuItem(Source source, ConfigurationNode sourceNode) throws SerializationException {
-        plugin.logger().info("Source node for source " + source.getId() + ": " + sourceNode.raw());
         ConfigurationNode node = sourceNode.node("menu_item");
         if (!node.virtual()) {
             plugin.getItemRegistry().getSourceMenuItems().parseAndRegisterMenuItem(source, node);
