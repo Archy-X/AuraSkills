@@ -4,6 +4,8 @@ public enum ItemCategory {
 
     WEAPON,
     ARMOR,
-    TOOL
+    TOOL,
+    FISHING_JUNK,
+    FISHING_TREASURE
 
 }

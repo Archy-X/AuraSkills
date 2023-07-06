@@ -224,27 +224,15 @@ public class ConfigurateItemParser {
     @SuppressWarnings("deprecation")
     private ItemStack parseMaterialString(String materialString) {
         ItemStack item;
-        if (!materialString.contains(":")) { // No legacy data
-            String materialName = materialString.toUpperCase(Locale.ROOT);
-            Material material = parseMaterial(materialName);
-            if (material == null) {
-                throw new IllegalArgumentException("Unknown material " + materialString);
-            }
-            item = new ItemStack(material);
-        } else { // With legacy data
-            String[] splitMaterial = materialString.split(":");
-            if (splitMaterial.length == 2) {
-                String materialName = splitMaterial[0].toUpperCase(Locale.ROOT);
-                Material material = parseMaterial(materialName);
-                if (material == null) {
-                    throw new IllegalArgumentException("Unknown material " + materialName);
-                }
-                short data = NumberUtil.toShort(splitMaterial[1]);
-                item = new ItemStack(material, 1, data);
-            } else {
-                throw new IllegalArgumentException("Material with data value can only have one :");
-            }
+        String materialName = materialString.toUpperCase(Locale.ROOT);
+        Material material = parseMaterial(materialName);
+        if (material == null) {
+            throw new IllegalArgumentException("Unknown material " + materialString);
         }
+        if (!material.isItem()) { // Return fallback item if material isn't an item
+            return new ItemStack(Material.GRAY_DYE);
+        }
+        item = new ItemStack(material);
         return item;
     }
 

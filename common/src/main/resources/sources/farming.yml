@@ -1,6 +1,8 @@
 default:
   type: block
   trigger: break
+  menu_item:
+    material: '{block}'
 sources:
   wheat:
     block: wheat
@@ -14,18 +16,24 @@ sources:
     check_replace: false
     state:
       age: 7
+    menu_item:
+      material: potato
   carrot:
     block: carrots
     xp: 2.7
     check_replace: false
     state:
       age: 7
+    menu_item:
+      material: carrot
   beetroot:
     block: beetroots
     xp: 3.0
     check_replace: false
     state:
       age: 3
+    menu_item:
+      material: beetroot
   nether_wart:
     block: nether_warts
     xp: 3.0
@@ -56,13 +64,15 @@ sources:
     check_replace: false
     state:
       age: 3
+    menu_item:
+      material: cocoa_beans
   cactus:
     block: cactus
     xp: 6.0
     triggers: [break, break_indirect]
     check_replace: false
   brown_mushroom:
-    block: cactus
+    block: brown_mushroom
     xp: 7.0
     check_replace: true
   red_mushroom:
@@ -88,6 +98,8 @@ sources:
       - age: 2
       - age: 3
     state_multiplier: age-1
+    menu_item:
+      material: sweet_berries
   glow_berries:
     blocks: [cave_vines, cave_vines_plant]
     xp: 4.5
@@ -95,3 +107,5 @@ sources:
     check_replace: false
     state:
       berries: true
+    menu_item:
+      material: glow_berries

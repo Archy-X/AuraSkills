@@ -2,6 +2,8 @@ default:
   type: block
   trigger: break
   check_replace: true
+  menu_item:
+    material: '{block}'
 sources:
   dirt:
     block: dirt

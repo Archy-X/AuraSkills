@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.source;
 
 import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.item.ItemFilterMeta;
+import dev.aurelium.auraskills.api.item.LootItemFilter;
 import dev.aurelium.auraskills.api.item.PotionData;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -13,6 +14,7 @@ import dev.aurelium.auraskills.common.source.serializer.BlockSourceSerializer;
 import dev.aurelium.auraskills.common.source.serializer.SourceSerializer;
 import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterMetaSerializer;
 import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterSerializer;
+import dev.aurelium.auraskills.common.source.serializer.util.LootItemFilterSerializer;
 import dev.aurelium.auraskills.common.source.serializer.util.PotionDataSerializer;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -32,6 +34,7 @@ public class SourceLoader {
         TypeSerializerCollection sourceSerializers = TypeSerializerCollection.builder()
                 .register(ItemFilterMeta.class, new ItemFilterMetaSerializer(plugin, ""))
                 .register(ItemFilter.class, new ItemFilterSerializer(plugin, ""))
+                .register(LootItemFilter.class, new LootItemFilterSerializer(plugin, ""))
                 .register(PotionData.class, new PotionDataSerializer(plugin, ""))
                 .register(BlockXpSource.BlockXpSourceState.class, new BlockSourceSerializer.BlockSourceStateSerializer(plugin, ""))
                 .build();
@@ -115,6 +118,7 @@ public class SourceLoader {
     }
 
     private void registerMenuItem(Source source, ConfigurationNode sourceNode) throws SerializationException {
+        plugin.logger().info("Source node for source " + source.getId() + ": " + sourceNode.raw());
         ConfigurationNode node = sourceNode.node("menu_item");
         if (!node.virtual()) {
             applyNodeReplacements(node, sourceNode);
@@ -137,7 +141,8 @@ public class SourceLoader {
                 List<String> placeholders = getPlaceholders(text);
                 for (String placeholder : placeholders) {
                     // Get replacement value from parentNode
-                    String replacement = parentNode.node(placeholder).getString();
+                    String[] path = placeholder.split("\\."); // Split placeholder into path by periods
+                    String replacement = parentNode.node((Object[]) path).getString();
                     if (replacement != null) {
                         // Replace placeholder with replacement value
                         child.set(text.replace("{" + placeholder + "}", replacement));

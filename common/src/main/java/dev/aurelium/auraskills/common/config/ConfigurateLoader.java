@@ -96,7 +96,7 @@ public class ConfigurateLoader {
             throw new IllegalArgumentException("Must provide at least one node");
         }
 
-        ConfigurationNode merged = nodes[0];
+        ConfigurationNode merged = nodes[0].copy();
 
         for (int i = 1; i < nodes.length; i++) {
             ConfigurationNode node = nodes[i];

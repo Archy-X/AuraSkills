@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.bukkit.commands.SkillsRootCommand;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
+import dev.aurelium.auraskills.bukkit.leveler.BukkitLeveler;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
@@ -122,7 +123,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load skills
         loadSkills();
 
-        // TODO Leveler impl
+        leveler = new BukkitLeveler(this);
         userManager = new BukkitUserManager(this);
         xpRequirements = new XpRequirements(this);
         eventManager = new AuraSkillsEventManager(this);

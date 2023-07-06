@@ -107,8 +107,8 @@ sources:
   amethyst_block:
     block: amethyst_block
     xp: 4.0
-  amethyst_culster:
-    block: amethyst_culster
+  amethyst_cluster:
+    block: amethyst_cluster
     xp: 6.0
   deepslate_coal_ore:
     block: deepslate_coal_ore

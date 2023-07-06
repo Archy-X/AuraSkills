@@ -14,6 +14,7 @@ public enum SourceType {
     DAMAGE(DamageSource.class, DamageSourceSerializer.class),
     ENCHANTING(EnchantingSource.class, EnchantingSourceSerializer.class),
     ENTITY(EntitySource.class, EntitySourceSerializer.class),
+    FISHING(FishingSource.class, FishingSourceSerializer.class),
     GRINDSTONE(GrindstoneSource.class, GrindstoneSourceSerializer.class),
     ITEM_CONSUME(ItemConsumeSource.class, ItemConsumeSourceSerializer.class),
     JUMPING(JumpingSource.class, JumpingSourceSerializer.class),
