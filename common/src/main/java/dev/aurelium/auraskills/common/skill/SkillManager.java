@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.skill;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,8 +48,31 @@ public class SkillManager {
         return skills;
     }
 
+    public Set<Skill> getEnabledSkills() {
+        Set<Skill> skills = new HashSet<>();
+        for (LoadedSkill loaded : skillMap.values()) {
+            if (loaded.skill().isEnabled()) {
+                skills.add(loaded.skill());
+            }
+        }
+        return skills;
+    }
+
     public boolean isLoaded(Skill skill) {
         return skillMap.containsKey(skill);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends XpSource> Map<T, Skill> getSourcesOfType(Class<T> typeClass) {
+        Map<T, Skill> map = new HashMap<>();
+        for (Skill skill : getEnabledSkills()) {
+            for (XpSource source : skill.getSources()) {
+                if (typeClass.isAssignableFrom(source.getClass())) {
+                    map.put((T) source, skill);
+                }
+            }
+        }
+        return map;
     }
 
 }

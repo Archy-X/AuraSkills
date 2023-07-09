@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.eclipse.jgit.lib.ObjectChecker.type
+
 plugins {
     java
     `maven-publish`

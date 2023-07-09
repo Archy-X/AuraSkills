@@ -3,6 +3,8 @@ package dev.aurelium.auraskills.api.source.type;
 import dev.aurelium.auraskills.api.source.XpSource;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
 public interface BlockXpSource extends XpSource {
 
     /**
@@ -53,6 +55,8 @@ public interface BlockXpSource extends XpSource {
     double getStateMultiplier(String stateKey, Object stateValue);
 
     interface BlockXpSourceState {
+
+        Map<String, Object> getStateMap();
 
         int getInt(String key);
 

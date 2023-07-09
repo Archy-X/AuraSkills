@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common.source.type;
 import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.parser.ParseException;
+import com.google.common.collect.ImmutableMap;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -70,8 +71,13 @@ public class BlockSource extends Source implements BlockXpSource {
 
         private final Map<String, Object> stateMap;
 
-        public BlockSourceState(Map<String, Object> stateMap) {
+        public BlockSourceState(ImmutableMap<String, Object> stateMap) {
             this.stateMap = stateMap;
+        }
+
+        @Override
+        public Map<String, Object> getStateMap() {
+            return stateMap;
         }
 
         @Override

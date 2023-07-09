@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.source.serializer;
 
+import com.google.common.collect.ImmutableMap;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
@@ -42,7 +43,7 @@ public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
                 Object value = entry.getValue().raw();
                 stateMap.put(key, value);
             }
-            return new BlockSource.BlockSourceState(stateMap);
+            return new BlockSource.BlockSourceState(ImmutableMap.copyOf(stateMap));
         }
     }
 
