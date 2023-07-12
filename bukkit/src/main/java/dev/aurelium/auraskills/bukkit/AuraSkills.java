@@ -17,6 +17,7 @@ import dev.aurelium.auraskills.bukkit.region.WorldManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
+import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -54,6 +55,7 @@ import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
+import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -62,6 +64,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
@@ -109,6 +112,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Loads messages
         messageProvider = new MessageProvider(this);
         worldManager = new WorldManager(this);
+        worldManager.loadWorlds(new OptionProvider(new HashMap<>()));
 
         // Init managers
         skillManager = new SkillManager(this);
@@ -129,14 +133,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load skills, stats
         loadSkills();
 
-        levelManager = new BukkitLevelManager(this);
-        userManager = new BukkitUserManager(this);
         xpRequirements = new XpRequirements(this);
+        userManager = new BukkitUserManager(this);
         eventManager = new AuraSkillsEventManager(this);
         hookManager = new HookManager();
+        levelManager = new BukkitLevelManager(this);
         leaderboardManager = new LeaderboardManager(this);
         scheduler = new BukkitScheduler(this);
-        // TODO UiProvider impl
+        uiProvider = new BukkitUiProvider();
 
         // Load rewards
         rewardManager = new BukkitRewardManager(this);
@@ -144,6 +148,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
         initStorageProvider();
 
+        levelManager.registerLevelers(); // Register levelers for skills
         registerEvents();
         registerCommands();
         registerAndLoadMenus();

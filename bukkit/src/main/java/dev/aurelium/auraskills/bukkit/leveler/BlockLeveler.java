@@ -11,7 +11,6 @@ import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlockLeveler extends AbstractLeveler implements Listener {
+public class BlockLeveler extends AbstractLeveler {
 
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceType.BLOCK);
@@ -38,21 +37,30 @@ public class BlockLeveler extends AbstractLeveler implements Listener {
         BlockXpSource source = sourcePair.getFirst();
         Skill skill = sourcePair.getSecond();
 
-        if (skill.optionBoolean("check_cancelled", true) && event.isCancelled()) {
-            return;
-        }
-
-        // TODO Change permission to auraskills.skill.<skill>
-        if (!player.hasPermission("auraskills." + skill.name())) {
-            return;
-        }
+        if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
 
         plugin.getLevelManager().addXp(user, skill, source.getXp());
     }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        User user = plugin.getUser(player);
 
+        Block block = event.getClickedBlock();
+        if (block == null) return;
+
+        Pair<BlockXpSource, Skill> sourcePair = getSource(block, BlockXpSource.BlockTriggers.INTERACT);
+        if (sourcePair == null) {
+            return;
+        }
+
+        BlockXpSource source = sourcePair.getFirst();
+        Skill skill = sourcePair.getSecond();
+
+        if (failsChecks(event, player, block.getLocation(), skill)) return;
+
+        plugin.getLevelManager().addXp(user, skill, source.getXp());
     }
 
     public boolean matchesSource(Block block, BlockXpSource source, BlockXpSource.BlockTriggers trigger) {

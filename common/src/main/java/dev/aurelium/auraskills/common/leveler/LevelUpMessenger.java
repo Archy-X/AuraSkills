@@ -46,7 +46,8 @@ public class LevelUpMessenger {
                 "ability_level_up", getAbilityLevelUpMessage(),
                 "mana_ability_unlock", getManaAbilityUnlockMessage(),
                 "mana_ability_level_up", getManaAbilityLevelUpMessage(),
-                "money_reward", getMoneyRewardMessage());
+                "money_reward", getMoneyRewardMessage())
+                .send(user);
     }
 
     public void sendTitle() {

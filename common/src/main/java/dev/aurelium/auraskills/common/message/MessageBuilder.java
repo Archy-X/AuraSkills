@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.message.recipient.CommandIssuerRecipient;
 import dev.aurelium.auraskills.common.message.recipient.PlayerDataRecipient;
 import dev.aurelium.auraskills.common.message.recipient.Recipient;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +23,7 @@ public class MessageBuilder {
 
     private MessageBuilder(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
+        this.component = Component.empty();
     }
 
     /**
@@ -131,7 +133,7 @@ public class MessageBuilder {
         }
         // Replace replacements
         for (int i = 0; i < rep.length; i+=2) {
-            message = TextUtil.replace(message, "{" + i + "}", rep[i+1]);
+            message = TextUtil.replace(message, "{" + rep[i] + "}", rep[i+1]);
         }
         component = component.append(toComponent(message));
         return this;

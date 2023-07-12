@@ -83,8 +83,7 @@ public interface BlockXpSource extends XpSource {
 
         BREAK,
         BREAK_INDIRECT,
-        INTERACT,
-        PLACE
+        INTERACT
 
     }
 
