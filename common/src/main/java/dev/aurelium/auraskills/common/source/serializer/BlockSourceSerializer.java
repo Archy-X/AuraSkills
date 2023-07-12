@@ -24,8 +24,9 @@ public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
         boolean checkReplace = source.node("check_replace").getBoolean(true);
         BlockXpSource.BlockXpSourceState[] states = pluralizedArray("state", source, BlockXpSource.BlockXpSourceState.class);
         String stateMultiplier = source.node("state_multiplier").getString();
+        BlockXpSource.SupportBlockType supportBlockType = source.node("support_block").get(BlockXpSource.SupportBlockType.class, BlockXpSource.SupportBlockType.NONE);
 
-        return new BlockSource(plugin, getId(), getXp(source), blocks, triggers, checkReplace, states, stateMultiplier);
+        return new BlockSource(plugin, getId(), getXp(source), blocks, triggers, checkReplace, states, stateMultiplier, supportBlockType);
     }
 
     public static class BlockSourceStateSerializer extends SourceSerializer<BlockXpSource.BlockXpSourceState> {

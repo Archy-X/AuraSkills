@@ -110,6 +110,7 @@ sources:
   amethyst_cluster:
     block: amethyst_cluster
     xp: 6.0
+    support_block: side
   deepslate_coal_ore:
     block: deepslate_coal_ore
     xp: 1.2

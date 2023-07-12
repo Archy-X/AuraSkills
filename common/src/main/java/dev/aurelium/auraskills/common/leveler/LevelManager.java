@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit;
 /**
  * Interface with methods to add xp and level up players.
  */
-public abstract class Leveler {
+public abstract class LevelManager {
 
     private final AuraSkillsPlugin plugin;
     private final XpRequirements xpRequirements;
 
-    public Leveler(AuraSkillsPlugin plugin) {
+    public LevelManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.xpRequirements = plugin.getXpRequirements();
     }

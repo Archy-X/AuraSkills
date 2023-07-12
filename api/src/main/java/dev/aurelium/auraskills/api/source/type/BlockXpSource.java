@@ -54,6 +54,15 @@ public interface BlockXpSource extends XpSource {
      */
     double getStateMultiplier(String stateKey, Object stateValue);
 
+    /**
+     * Gets whether the source requires a support block.
+     * If this is true, the source will only give xp if the block below it is a valid support block.
+     *
+     * @param direction The direction of the support block
+     * @return Whether the source requires a support block
+     */
+    boolean requiresSupportBlock(SupportBlockType direction);
+
     interface BlockXpSourceState {
 
         Map<String, Object> getStateMap();
@@ -76,6 +85,15 @@ public interface BlockXpSource extends XpSource {
         BREAK_INDIRECT,
         INTERACT,
         PLACE
+
+    }
+
+    enum SupportBlockType {
+
+        ABOVE,
+        BELOW,
+        SIDE,
+        NONE
 
     }
 

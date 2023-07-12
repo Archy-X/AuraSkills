@@ -19,14 +19,16 @@ public class BlockSource extends Source implements BlockXpSource {
     private final boolean checkReplace;
     private final BlockXpSourceState[] states;
     private final String stateMultiplier;
+    private final SupportBlockType supportBlockType;
 
-    public BlockSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, String stateMultiplier) {
+    public BlockSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, String stateMultiplier, SupportBlockType supportBlockType) {
         super(plugin, id, xp);
         this.blocks = blocks;
         this.triggers = triggers;
         this.checkReplace = checkReplace;
         this.states = states;
         this.stateMultiplier = stateMultiplier;
+        this.supportBlockType = supportBlockType;
     }
 
     @Override
@@ -65,6 +67,11 @@ public class BlockSource extends Source implements BlockXpSource {
             e.printStackTrace();
             return 1;
         }
+    }
+
+    @Override
+    public boolean requiresSupportBlock(SupportBlockType direction) {
+        return supportBlockType == direction;
     }
 
     public static class BlockSourceState implements BlockXpSourceState {

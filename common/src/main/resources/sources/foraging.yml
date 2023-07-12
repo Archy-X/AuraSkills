@@ -71,12 +71,15 @@ sources:
   moss_carpet:
     block: moss_carpet
     xp: 0.2
+    support_block: below
   azalea:
     block: azalea
     xp: 7.0
+    support_block: below
   flowering_azalea:
     block: flowering_azalea
     xp: 9.1
+    support_block: below
   azalea_leaves:
     block: azalea_leaves
     xp: 1.5
@@ -89,3 +92,4 @@ sources:
   pink_petals:
     block: pink_petals
     xp: 0.2
+    support_block: below

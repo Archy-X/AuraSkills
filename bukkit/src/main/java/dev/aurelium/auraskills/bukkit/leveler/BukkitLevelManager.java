@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.leveler.Leveler;
+import dev.aurelium.auraskills.common.leveler.LevelManager;
 import dev.aurelium.auraskills.common.player.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -12,10 +12,31 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class BukkitLeveler extends Leveler {
+import java.util.HashSet;
+import java.util.Set;
 
-    public BukkitLeveler(AuraSkillsPlugin plugin) {
+public class BukkitLevelManager extends LevelManager {
+
+    private final Set<AbstractLeveler> levelers;
+
+    public BukkitLevelManager(AuraSkillsPlugin plugin) {
         super(plugin);
+        this.levelers = new HashSet<>();
+    }
+
+    public void registerLeveler(AbstractLeveler leveler) {
+        this.levelers.add(leveler);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractLeveler> T getLeveler(Class<T> levelerClass) {
+        for (AbstractLeveler leveler : levelers) {
+            if (levelerClass.isInstance(leveler)) {
+                return (T) leveler;
+            }
+        }
+        // No leveler found
+        throw new IllegalArgumentException("Leveler " + levelerClass.getSimpleName() + " is not registered!");
     }
 
     @Override

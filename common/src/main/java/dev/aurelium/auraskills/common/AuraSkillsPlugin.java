@@ -9,7 +9,7 @@ import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
-import dev.aurelium.auraskills.common.leveler.Leveler;
+import dev.aurelium.auraskills.common.leveler.LevelManager;
 import dev.aurelium.auraskills.common.leveler.XpRequirements;
 import dev.aurelium.auraskills.common.mana.ManaAbilityManager;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
@@ -50,7 +50,7 @@ public interface AuraSkillsPlugin {
 
     ItemRegistry getItemRegistry();
 
-    Leveler getLeveler();
+    LevelManager getLevelManager();
 
     UserManager getUserManager();
 

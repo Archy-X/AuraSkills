@@ -7,11 +7,13 @@ import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.bukkit.commands.SkillsRootCommand;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
-import dev.aurelium.auraskills.bukkit.leveler.BukkitLeveler;
+import dev.aurelium.auraskills.bukkit.leveler.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
+import dev.aurelium.auraskills.bukkit.region.RegionManager;
+import dev.aurelium.auraskills.bukkit.region.WorldManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
@@ -27,7 +29,6 @@ import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
-import dev.aurelium.auraskills.common.leveler.Leveler;
 import dev.aurelium.auraskills.common.leveler.XpRequirements;
 import dev.aurelium.auraskills.common.mana.ManaAbilityManager;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
@@ -79,7 +80,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private AbilityRegistry abilityRegistry;
     private ManaAbilityRegistry manaAbilityRegistry;
     private BukkitItemRegistry itemRegistry;
-    private Leveler leveler;
+    private BukkitLevelManager levelManager;
     private BukkitUserManager userManager;
     private XpRequirements xpRequirements;
     private AuraSkillsEventManager eventManager;
@@ -94,6 +95,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private MenuFileManager menuFileManager;
     private PaperCommandManager commandManager;
     private BukkitAudiences audiences;
+    private RegionManager regionManager;
+    private WorldManager worldManager;
 
     @Override
     public void onEnable() {
@@ -105,6 +108,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         configProvider.loadOptions();
         // Loads messages
         messageProvider = new MessageProvider(this);
+        worldManager = new WorldManager(this);
 
         // Init managers
         skillManager = new SkillManager(this);
@@ -112,6 +116,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         manaAbilityManager = new ManaAbilityManager(this);
         statManager = new BukkitStatManager(this);
         traitManager = new TraitManager(this);
+        regionManager = new RegionManager(this);
 
         // Init registries
         skillRegistry = new SkillRegistry(this);
@@ -124,7 +129,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load skills, stats
         loadSkills();
 
-        leveler = new BukkitLeveler(this);
+        levelManager = new BukkitLevelManager(this);
         userManager = new BukkitUserManager(this);
         xpRequirements = new XpRequirements(this);
         eventManager = new AuraSkillsEventManager(this);
@@ -227,6 +232,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return commandManager;
     }
 
+    public RegionManager getRegionManager() {
+        return regionManager;
+    }
+
+    public WorldManager getWorldManager() {
+        return worldManager;
+    }
+
     @Override
     public AuraSkillsApi getApi() {
         return api;
@@ -263,8 +276,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public Leveler getLeveler() {
-        return leveler;
+    public BukkitLevelManager getLevelManager() {
+        return levelManager;
     }
 
     @Override

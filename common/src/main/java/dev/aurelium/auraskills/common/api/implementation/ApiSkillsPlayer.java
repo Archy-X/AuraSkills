@@ -39,19 +39,19 @@ public class ApiSkillsPlayer implements SkillsPlayer {
 
     @Override
     public void addSkillXp(Skill skill, double amountToAdd) {
-        plugin.getLeveler().addXp(user, skill, amountToAdd);
+        plugin.getLevelManager().addXp(user, skill, amountToAdd);
     }
 
     @Override
     public void addSkillXpRaw(Skill skill, double amountToAdd) {
         user.addSkillXp(skill, amountToAdd);
-        plugin.getLeveler().checkLevelUp(user, skill);
+        plugin.getLevelManager().checkLevelUp(user, skill);
     }
 
     @Override
     public void setSkillXp(Skill skill, double amount) {
         user.setSkillXp(skill, amount);
-        plugin.getLeveler().checkLevelUp(user, skill);
+        plugin.getLevelManager().checkLevelUp(user, skill);
     }
 
     @Override

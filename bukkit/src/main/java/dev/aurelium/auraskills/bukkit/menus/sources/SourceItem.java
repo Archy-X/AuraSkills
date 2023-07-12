@@ -155,7 +155,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<XpS
             double addedMultiplier = abilityValue / 100;
             multiplier += addedMultiplier;
         }
-        multiplier *= plugin.getLeveler().getPermissionMultiplier(user, skill);
+        multiplier *= plugin.getLevelManager().getPermissionMultiplier(user, skill);
         return multiplier;
     }
 
