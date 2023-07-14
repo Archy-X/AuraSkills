@@ -15,15 +15,22 @@ public class BukkitUiProvider implements UiProvider {
 
     private final AuraSkills plugin;
     private final ActionBarManager actionBarManager;
+    private final BossBarManager bossBarManager;
 
     public BukkitUiProvider(AuraSkills plugin) {
         this.plugin = plugin;
         this.actionBarManager = new BukkitActionBarManager(plugin, this);
+        this.bossBarManager = new BossBarManager(plugin);
+        bossBarManager.loadOptions();
     }
 
     @Override
     public ActionBarManager getActionBarManager() {
         return actionBarManager;
+    }
+
+    public BossBarManager getBossBarManager() {
+        return bossBarManager;
     }
 
     @Override
@@ -40,7 +47,7 @@ public class BukkitUiProvider implements UiProvider {
     @Override
     public void sendXpBossBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         Player player = ((BukkitUser) user).getPlayer();
-        player.sendMessage("You gained " + xpGained + " " + skill.toString() + " XP");
+        bossBarManager.sendBossBar(player, skill, currentXp, levelXp, xpGained, level, maxed);
     }
 
     @Override
