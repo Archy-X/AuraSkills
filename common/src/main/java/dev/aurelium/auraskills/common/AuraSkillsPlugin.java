@@ -16,8 +16,6 @@ import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
-import dev.aurelium.auraskills.common.player.User;
-import dev.aurelium.auraskills.common.player.UserManager;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillManager;
@@ -28,6 +26,8 @@ import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
+import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.user.UserManager;
 
 import java.io.File;
 import java.io.InputStream;

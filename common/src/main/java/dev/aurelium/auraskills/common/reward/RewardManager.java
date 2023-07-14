@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.reward;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.hooks.PermissionsHook;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.reward.type.PermissionReward;
 import dev.aurelium.auraskills.common.reward.type.StatReward;
 

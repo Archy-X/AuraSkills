@@ -3,8 +3,8 @@ package dev.aurelium.auraskills.common.leaderboard;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
-import dev.aurelium.auraskills.common.player.UserState;
+import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.user.UserState;
 
 import java.util.*;
 

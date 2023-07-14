@@ -6,7 +6,7 @@ import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

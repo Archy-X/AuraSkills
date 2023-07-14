@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.common.storage;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
-import dev.aurelium.auraskills.common.player.UserState;
-import dev.aurelium.auraskills.common.player.UserManager;
+import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.user.UserState;
+import dev.aurelium.auraskills.common.user.UserManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

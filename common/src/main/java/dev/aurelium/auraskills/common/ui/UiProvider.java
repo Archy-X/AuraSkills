@@ -1,11 +1,13 @@
 package dev.aurelium.auraskills.common.ui;
 
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 
 public interface UiProvider {
 
-    void sendXpActionBar(User user, double currentXp, double levelXp, double xpGained, int level, boolean maxed);
+    ActionBarManager getActionBarManager();
+
+    void sendActionBar(User user, String message);
 
     void sendXpBossBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed);
 

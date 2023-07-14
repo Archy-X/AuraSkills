@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.common.message.recipient;
 
 import co.aikar.commands.CommandIssuer;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 

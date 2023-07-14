@@ -1,14 +1,17 @@
 package dev.aurelium.auraskills.bukkit.user;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.player.User;
-import dev.aurelium.auraskills.common.player.UserManager;
+import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.user.UserManager;
 import dev.aurelium.auraskills.common.skill.LoadedSkill;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -70,5 +73,14 @@ public class BukkitUserManager implements UserManager {
             user.setSkillXp(loadedSkill.skill(), 0.0);
         }
         return user;
+    }
+
+    @Override
+    public Set<UUID> getOnlineUuids() {
+        Set<UUID> uuids = new HashSet<>();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            uuids.add(player.getUniqueId());
+        }
+        return uuids;
     }
 }

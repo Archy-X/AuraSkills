@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.reward;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 
 import java.util.Locale;
 

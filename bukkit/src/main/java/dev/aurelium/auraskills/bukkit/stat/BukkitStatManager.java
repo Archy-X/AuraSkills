@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.bukkit.stat;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.stat.StatManager;
 
 public class BukkitStatManager extends StatManager {

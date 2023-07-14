@@ -1,16 +1,40 @@
 package dev.aurelium.auraskills.bukkit.ui;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.ProtocolLibHook;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.ui.ActionBarManager;
 import dev.aurelium.auraskills.common.ui.UiProvider;
+import dev.aurelium.auraskills.common.user.User;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 public class BukkitUiProvider implements UiProvider {
 
-    @Override
-    public void sendXpActionBar(User user, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+    private final AuraSkills plugin;
+    private final ActionBarManager actionBarManager;
 
+    public BukkitUiProvider(AuraSkills plugin) {
+        this.plugin = plugin;
+        this.actionBarManager = new BukkitActionBarManager(plugin);
+    }
+
+    @Override
+    public ActionBarManager getActionBarManager() {
+        return actionBarManager;
+    }
+
+    @Override
+    public void sendActionBar(User user, String message) {
+        Player player = ((BukkitUser) user).getPlayer();
+        if (plugin.getHookManager().isRegistered(ProtocolLibHook.class)) {
+            ProtocolLibHook hook = plugin.getHookManager().getHook(ProtocolLibHook.class);
+            hook.sendActionBar(player, message);
+        } else {
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+        }
     }
 
     @Override

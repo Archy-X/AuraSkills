@@ -32,6 +32,19 @@ public class TextUtil {
         return source;
     }
 
+    public static String replace(String source, String... rep) {
+        if (source == null) {
+            return null;
+        }
+        if (rep.length % 2 != 0) {
+            throw new IllegalArgumentException("The number of arguments must be even!");
+        }
+        for (int i = 0; i < rep.length; i += 2) {
+            source = replace(source, rep[i], rep[i + 1]);
+        }
+        return source;
+    }
+
     public static String replace(String source, String os1, String ns1, String os2, String ns2) {
         return replace(replace(source, os1, ns1), os2, ns2);
     }

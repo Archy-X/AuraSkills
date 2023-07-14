@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.block.Block;

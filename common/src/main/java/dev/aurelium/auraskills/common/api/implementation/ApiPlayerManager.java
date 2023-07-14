@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.api.implementation;
 import dev.aurelium.auraskills.api.player.PlayerManager;
 import dev.aurelium.auraskills.api.player.SkillsPlayer;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 
 import java.util.UUID;
 

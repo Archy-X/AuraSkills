@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.scheduler;
 
 import dev.aurelium.auraskills.common.scheduler.Task;
 import dev.aurelium.auraskills.common.scheduler.TaskStatus;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
 public class BukkitTaskWrapper implements Task {
@@ -23,6 +24,6 @@ public class BukkitTaskWrapper implements Task {
 
     @Override
     public void cancel() {
-        bukkitTask.cancel();
+        Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
     }
 }

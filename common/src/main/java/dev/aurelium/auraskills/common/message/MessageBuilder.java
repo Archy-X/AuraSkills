@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.common.message;
 
 import co.aikar.commands.CommandIssuer;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.message.recipient.CommandIssuerRecipient;
 import dev.aurelium.auraskills.common.message.recipient.PlayerDataRecipient;
 import dev.aurelium.auraskills.common.message.recipient.Recipient;

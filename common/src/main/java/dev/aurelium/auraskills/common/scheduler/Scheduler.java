@@ -33,6 +33,10 @@ public abstract class Scheduler {
         return new ScheduledTask(asyncScheduler.schedule(runnable, delay, timeUnit));
     }
 
+    public abstract Task timerSync(final TaskRunnable runnable, final long delay, final long period, final TimeUnit timeUnit);
+
+    public abstract Task timerAsync(final TaskRunnable runnable, final long delay, final long period, final TimeUnit timeUnit);
+
     // Should be run by the implementation when server is shutdown
     public void shutdown() {
         asyncExecutor.shutdown();

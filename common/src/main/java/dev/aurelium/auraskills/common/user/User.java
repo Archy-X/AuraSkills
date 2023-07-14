@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.player;
+package dev.aurelium.auraskills.common.user;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
@@ -17,6 +17,7 @@ import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsPlayer;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +47,7 @@ public abstract class User {
     private final Map<AbstractAbility, AbilityData> abilityData;
     private final Map<String, Object> metadata;
     private List<KeyIntPair> unclaimedItems;
+    private final Map<ActionBarType, Boolean> actionBarSettings;
 
     private boolean saving;
     private boolean shouldSave;
@@ -65,6 +67,7 @@ public abstract class User {
         this.traitModifiers = new ConcurrentHashMap<>();
         this.abilityData = new ConcurrentHashMap<>();
         this.metadata = new ConcurrentHashMap<>();
+        this.actionBarSettings = new ConcurrentHashMap<>();
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
@@ -424,6 +427,10 @@ public abstract class User {
 
     public void removeMultiplier(String name) {
         multipliers.remove(name);
+    }
+
+    public boolean isActionBarEnabled(ActionBarType type) {
+        return actionBarSettings.getOrDefault(type, true);
     }
 
     /**

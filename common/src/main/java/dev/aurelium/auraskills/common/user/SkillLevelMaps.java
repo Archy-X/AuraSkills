@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.player;
+package dev.aurelium.auraskills.common.user;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 

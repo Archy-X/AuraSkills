@@ -1,6 +1,7 @@
-package dev.aurelium.auraskills.common.player;
+package dev.aurelium.auraskills.common.user;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -19,5 +20,7 @@ public interface UserManager {
     Map<UUID, User> getUserMap();
 
     User createNewUser(UUID uuid);
+
+    Set<UUID> getOnlineUuids();
 
 }

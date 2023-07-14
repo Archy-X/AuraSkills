@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.listeners;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

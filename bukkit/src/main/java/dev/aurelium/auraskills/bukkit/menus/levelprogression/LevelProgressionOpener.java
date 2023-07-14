@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.menus.levelprogression;
 import com.archyx.slate.menu.ConfigurableMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

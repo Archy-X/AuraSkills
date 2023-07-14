@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.common.message.recipient;
 
-import dev.aurelium.auraskills.common.player.User;
+import dev.aurelium.auraskills.common.user.User;
 import net.kyori.adventure.text.Component;
 
 public class PlayerDataRecipient implements Recipient {
