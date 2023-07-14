@@ -18,9 +18,6 @@ public class LevelProgressionOpener {
     }
 
     public void open(Player player, User user, Skill skill) {
-        int page = getPage(skill, user);
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("skill", skill);
         // Get items per page from options, default to 24
         int itemsPerPage = 24;
         ConfigurableMenu levelProgressionMenu = plugin.getSlate().getMenuManager().getMenu("level_progression");
@@ -30,14 +27,17 @@ public class LevelProgressionOpener {
                 itemsPerPage = (int) itemsPerPageObj;
             }
         }
+        int page = getPage(skill, user, itemsPerPage);
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("skill", skill);
         properties.put("items_per_page", itemsPerPage);
         properties.put("previous_menu", "skills");
         plugin.getMenuManager().openMenu(player, "level_progression", properties, page);
     }
 
-    protected int getPage(Skill skill, User playerData) {
-        int page = (playerData.getSkillLevel(skill) - 1) / 24;
-        int maxLevelPage = (skill.getMaxLevel() - 2) / 24;
+    protected int getPage(Skill skill, User playerData, int itemsPerPage) {
+        int page = (playerData.getSkillLevel(skill) - 1) / itemsPerPage;
+        int maxLevelPage = (skill.getMaxLevel() - 2) / itemsPerPage;
         if (page > maxLevelPage) {
             page = maxLevelPage;
         }
