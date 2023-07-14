@@ -213,7 +213,7 @@ public class FightingAbilities extends AbilityProvider implements Listener {
                 Player player = (Player) event.getDamager();
                 if (blockAbility(player)) return;
                 //If player used sword
-                if (player.getInventory().getItemInMainHand().getType().name().toUpperCase().contains("SWORD")) {
+                if (player.getInventory().getItemInMainHand().getType().name().toUpperCase(Locale.ROOT).contains("SWORD")) {
                     PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
                     if (playerData == null) return;
                     if (isEnabled(Ability.BLEED)) {

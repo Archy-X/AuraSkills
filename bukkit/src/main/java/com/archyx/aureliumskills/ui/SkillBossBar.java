@@ -64,21 +64,21 @@ public class SkillBossBar implements Listener {
             Skill skill;
             BarColor color = BarColor.GREEN;
             BarStyle style = BarStyle.SOLID;
-            skill = plugin.getSkillRegistry().getSkill(splitEntry[0].toUpperCase());
+            skill = plugin.getSkillRegistry().getSkill(splitEntry[0].toUpperCase(Locale.ROOT));
             if (skill == null) {
                 plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid Skill");
                 skill = Skills.FARMING;
             }
             if (splitEntry.length > 1) {
                 try {
-                    color = BarColor.valueOf(splitEntry[1].toUpperCase());
+                    color = BarColor.valueOf(splitEntry[1].toUpperCase(Locale.ROOT));
                 }
                 catch (IllegalArgumentException e) {
                     plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid BarColor");
                 }
                 if (splitEntry.length > 2) {
                     try {
-                        style = BarStyle.valueOf(splitEntry[2].toUpperCase());
+                        style = BarStyle.valueOf(splitEntry[2].toUpperCase(Locale.ROOT));
                     }
                     catch (IllegalArgumentException e) {
                         plugin.getLogger().warning("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid BarStyle");

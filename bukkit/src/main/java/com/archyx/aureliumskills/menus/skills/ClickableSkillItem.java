@@ -29,7 +29,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
             return;
         }
 
-        if (player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ENGLISH))) {
+        if (player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ROOT))) {
             new LevelProgressionOpener(plugin).open(player, playerData, skill);
         }
     }

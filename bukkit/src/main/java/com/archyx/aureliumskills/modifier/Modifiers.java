@@ -43,7 +43,7 @@ public class Modifiers extends NBTAPIUser {
                     compound.setDouble(getName(modifier.getStat()), modifier.getValue());
                 }
                 for (String key : nbtItem.getKeys()) {
-                    if (key.startsWith("skillsmodifier-" + type.name().toLowerCase(Locale.ENGLISH) + "-")) {
+                    if (key.startsWith("skillsmodifier-" + type.name().toLowerCase(Locale.ROOT) + "-")) {
                         nbtItem.removeKey(key);
                     }
                 }
@@ -76,7 +76,7 @@ public class Modifiers extends NBTAPIUser {
         if (isNBTDisabled()) return new ArrayList<>();
         List<StatModifier> modifiers = new ArrayList<>();
         for (String key : nbtItem.getKeys()) {
-            if (key.contains("skillsmodifier-" + type.name().toLowerCase(Locale.ENGLISH) + "-")) {
+            if (key.contains("skillsmodifier-" + type.name().toLowerCase(Locale.ROOT) + "-")) {
                 String[] keySplit = key.split("-");
                 if (keySplit.length == 3) {
                     Stat stat = plugin.getStatRegistry().getStat(key.split("-")[2]);
@@ -161,7 +161,7 @@ public class Modifiers extends NBTAPIUser {
     }
 
     private String getName(Stat stat) {
-        return TextUtil.capitalize(stat.name().toLowerCase(Locale.ENGLISH));
+        return TextUtil.capitalize(stat.name().toLowerCase(Locale.ROOT));
     }
     
 }

@@ -95,7 +95,7 @@ public class SourceManager {
         customBlockSet = new HashSet<>();
         Skill[] customBlockSkills = new Skill[] {Skills.FARMING, Skills.FORAGING, Skills.MINING, Skills.EXCAVATION};
         for (Skill skill : customBlockSkills) {
-            ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase(Locale.ENGLISH) + ".custom");
+            ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase(Locale.ROOT) + ".custom");
             if (section != null) {
                 Map<Material, Double> blockMap = new HashMap<>();
                 for (String key : section.getKeys(false)) {
@@ -118,7 +118,7 @@ public class SourceManager {
         customMobSet = new HashSet<>();
         Skill[] customMobSkills = new Skill[] {Skills.FIGHTING, Skills.ARCHERY};
         for (Skill skill : customMobSkills) {
-            ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase(Locale.ENGLISH) + ".custom");
+            ConfigurationSection section = config.getConfigurationSection("sources." + skill.toString().toLowerCase(Locale.ROOT) + ".custom");
             if (section != null) {
                 Map<String, Double> mobMap = new HashMap<>();
                 for (String key : section.getKeys(false)) {

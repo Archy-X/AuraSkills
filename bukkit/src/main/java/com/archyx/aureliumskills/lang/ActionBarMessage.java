@@ -15,7 +15,7 @@ public enum ActionBarMessage implements MessageKey {
 
     @Override
     public String getPath() {
-        return "action_bar." + this.toString().toLowerCase(Locale.ENGLISH);
+        return "action_bar." + this.toString().toLowerCase(Locale.ROOT);
     }
 
 }

@@ -30,7 +30,7 @@ public enum ACFCoreMessage {
     HELP_DETAILED_PARAMETER_FORMAT,
     HELP_SEARCH_HEADER;
 
-    private final String path = "acf.core." + this.name().toLowerCase(Locale.ENGLISH);
+    private final String path = "acf.core." + this.name().toLowerCase(Locale.ROOT);
 
     public String getPath() {
         return path;

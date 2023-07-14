@@ -112,7 +112,7 @@ public enum MenuMessage implements MessageKey {
     private String path;
     
     MenuMessage(int section) {
-        String key = this.name().toLowerCase(Locale.ENGLISH);
+        String key = this.name().toLowerCase(Locale.ROOT);
         if (section == 0) {
             this.path = "menus.common." + key;
         } else if (section == 1) {

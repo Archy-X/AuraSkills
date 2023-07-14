@@ -21,10 +21,7 @@ import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Arnah
@@ -153,11 +150,11 @@ public class ArmorListener implements Listener{
                         }
                         if (checked.startsWith("*")) {
                             //Check material
-                            if (mat.name().endsWith(checked.replace("*", "").toUpperCase()) && isIncluded(mat, excluded)) {
+                            if (mat.name().endsWith(checked.replace("*", "").toUpperCase(Locale.ROOT)) && isIncluded(mat, excluded)) {
                                 return;
                             }
                         } else if (checked.startsWith("?")) {
-                            if (mat.name().contains(s.replace("?", "").toUpperCase()) && isIncluded(mat, excluded)) {
+                            if (mat.name().contains(s.replace("?", "").toUpperCase(Locale.ROOT)) && isIncluded(mat, excluded)) {
                                 return;
                             }
                         } else if (mat.name().equalsIgnoreCase(s) && isIncluded(mat, excluded)) return;
@@ -225,12 +222,12 @@ public class ArmorListener implements Listener{
         // Check exclusions
         for (String exclusion : excluded) {
             if (exclusion.startsWith("*")) {
-                if (mat.name().endsWith(exclusion.replace("*", "").toUpperCase())) {
+                if (mat.name().endsWith(exclusion.replace("*", "").toUpperCase(Locale.ROOT))) {
                     isExcluded = true;
                     break;
                 }
             } else if (exclusion.startsWith("?")) {
-                if (mat.name().contains(exclusion.replace("?", "").toUpperCase())) {
+                if (mat.name().contains(exclusion.replace("?", "").toUpperCase(Locale.ROOT))) {
                     isExcluded = true;
                     break;
                 }

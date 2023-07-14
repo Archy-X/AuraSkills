@@ -328,7 +328,7 @@ public class Lang implements Listener {
 		if (playerData.getLocale() == null) {
 			if (OptionL.getBoolean(Option.TRY_DETECT_CLIENT_LANGUAGE)) {
 				try {
-					Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase(Locale.ENGLISH));
+					Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase(Locale.ROOT));
 					if (messages.containsKey(locale)) {
 						playerData.setLocale(locale);
 					} else {

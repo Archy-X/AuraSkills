@@ -128,11 +128,11 @@ public enum MAbility implements AbstractAbility {
     }
 
     public String getDisplayName(Locale locale) {
-        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_NAME"), locale);
+        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase(Locale.ROOT) + "_NAME"), locale);
     }
 
     public String getDescription(Locale locale) {
-        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase() + "_DESC"), locale);
+        return Lang.getMessage(ManaAbilityMessage.valueOf(this.name().toUpperCase(Locale.ROOT) + "_DESC"), locale);
     }
 
     public Map<String, OptionValue> getDefaultOptions() {

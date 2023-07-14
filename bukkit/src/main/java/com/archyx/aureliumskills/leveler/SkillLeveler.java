@@ -29,14 +29,14 @@ public abstract class SkillLeveler {
 
     public SkillLeveler(AureliumSkills plugin, Skill skill) {
         this.plugin = plugin;
-        this.skillName = skill.toString().toLowerCase(Locale.ENGLISH);
+        this.skillName = skill.toString().toLowerCase(Locale.ROOT);
         this.sourceManager = plugin.getSourceManager();
     }
 
     public SkillLeveler(AureliumSkills plugin, Ability ability) {
         this.plugin = plugin;
         this.ability = ability;
-        this.skillName = ability.getSkill().toString().toLowerCase(Locale.ENGLISH);
+        this.skillName = ability.getSkill().toString().toLowerCase(Locale.ROOT);
         this.sourceManager = plugin.getSourceManager();
     }
 
