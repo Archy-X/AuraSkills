@@ -21,6 +21,6 @@ public interface UserManager {
 
     User createNewUser(UUID uuid);
 
-    Set<UUID> getOnlineUuids();
+    Set<User> getOnlineUsers();
 
 }

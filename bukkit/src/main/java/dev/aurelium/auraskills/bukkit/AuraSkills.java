@@ -13,7 +13,7 @@ import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.region.RegionManager;
-import dev.aurelium.auraskills.bukkit.region.WorldManager;
+import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
@@ -99,7 +99,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private PaperCommandManager commandManager;
     private BukkitAudiences audiences;
     private RegionManager regionManager;
-    private WorldManager worldManager;
+    private BukkitWorldManager worldManager;
 
     @Override
     public void onEnable() {
@@ -111,7 +111,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         configProvider.loadOptions();
         // Loads messages
         messageProvider = new MessageProvider(this);
-        worldManager = new WorldManager(this);
+        worldManager = new BukkitWorldManager(this);
         worldManager.loadWorlds(new OptionProvider(new HashMap<>()));
 
         // Init managers
@@ -239,10 +239,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public RegionManager getRegionManager() {
         return regionManager;
-    }
-
-    public WorldManager getWorldManager() {
-        return worldManager;
     }
 
     @Override
@@ -373,6 +369,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public StorageProvider getStorageProvider() {
         return storageProvider;
+    }
+
+    @Override
+    public BukkitWorldManager getWorldManager() {
+        return worldManager;
     }
 
     @Override

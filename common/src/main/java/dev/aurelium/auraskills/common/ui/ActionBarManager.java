@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ActionBarManager {
 
-    private final AuraSkillsPlugin plugin;
+    protected final AuraSkillsPlugin plugin;
     private final UiProvider uiProvider;
 
     private final HashSet<UUID> isPaused = new HashSet<>();
@@ -26,32 +27,71 @@ public abstract class ActionBarManager {
     private final HashMap<UUID, Integer> timer = new HashMap<>();
     private final HashMap<UUID, Integer> currentAction = new HashMap<>();
 
-    public ActionBarManager(AuraSkillsPlugin plugin) {
+    public ActionBarManager(AuraSkillsPlugin plugin, UiProvider uiProvider) {
         this.plugin = plugin;
-        this.uiProvider = plugin.getUiProvider();
+        this.uiProvider = uiProvider;
+        startTimerCountdown();
+        startUpdatingIdleActionBar();
     }
 
-    public void scheduleTimerCountdown() {
-        plugin.getScheduler().timerSync(
-            new TaskRunnable() {
-                @Override
-                public void run() {
-                    if (plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
-                        return;
-                    }
-
-                    for (UUID uuid : plugin.getUserManager().getOnlineUuids()) {
-                        Integer time = timer.get(uuid);
-                        if (time != null) {
-                            if (time > 0) {
-                                timer.put(uuid, time - 1);
-                            }
-                        } else {
-                            timer.put(uuid, 0);
+    public void startTimerCountdown() {
+        var task = new TaskRunnable() {
+            @Override
+            public void run() {
+                if (plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
+                    return;
+                }
+    
+                for (User user : plugin.getUserManager().getOnlineUsers()) {
+                    UUID uuid = user.getUuid();
+                    Integer time = timer.get(uuid);
+                    if (time != null) {
+                        if (time > 0) {
+                            timer.put(uuid, time - 1);
                         }
+                    } else {
+                        timer.put(uuid, 0);
                     }
                 }
-            }, 0, 2, TimeUnit.MILLISECONDS);
+            }
+        };
+        plugin.getScheduler().timerSync(task, 0, 2, TimeUnit.MILLISECONDS);
+    }
+    
+    public void startUpdatingIdleActionBar() {
+        var task = new TaskRunnable() {
+            @Override
+            public void run() {
+                for (User user : plugin.getUserManager().getOnlineUsers()) {
+                    UUID uuid = user.getUuid();
+                    // Check player setting
+                    if (!user.isActionBarEnabled(ActionBarType.IDLE)) {
+                        continue;
+                    }
+                    // Check disabled worlds
+                    if (plugin.getWorldManager().isDisabledWorld(getWorldName(user))) {
+                        continue;
+                    }
+
+                    if (!currentAction.containsKey(uuid)) {
+                        currentAction.put(uuid, 0);
+                    }
+                    if (isGainingXp.contains(uuid) || isPaused.contains(uuid)) {
+                        continue;
+                    }
+
+                    String message = TextUtil.replace(plugin.getMsg(ActionBarMessage.IDLE, user.getLocale())
+                            , "{hp}", getHp(user)
+                            , "{max_hp}", getMaxHp(user)
+                            , "{mana}", getMana(user)
+                            , "{max_mana}", getMaxMana(user));
+                    message = replacePlaceholderApi(user, message);
+
+                    uiProvider.sendActionBar(user, message);
+                }
+            }
+        };
+        plugin.getScheduler().timerSync(task, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD), TimeUnit.MILLISECONDS);
     }
 
     public void sendXpActionBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
@@ -168,16 +208,19 @@ public abstract class ActionBarManager {
                 "{mana}", getMana(user),
                 "{max_mana}", getMaxMana(user));
         // Replace PlaceholderAPI placeholders
-        if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
-            message = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
-        }
+        message = replacePlaceholderApi(user, message);
 
         return message;
     }
 
+    @NotNull
     public abstract String getHp(User user);
 
+    @NotNull
     public abstract String getMaxHp(User user);
+
+    @NotNull
+    public abstract String getWorldName(User user);
 
     private String getMana(User user) {
         return String.valueOf(Math.round(user.getMana()));
@@ -185,6 +228,13 @@ public abstract class ActionBarManager {
 
     private String getMaxMana(User user) {
         return String.valueOf(Math.round(user.getMaxMana()));
+    }
+
+    private String replacePlaceholderApi(User user, String message) {
+        if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
+            return plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
+        }
+        return message;
     }
 
 }

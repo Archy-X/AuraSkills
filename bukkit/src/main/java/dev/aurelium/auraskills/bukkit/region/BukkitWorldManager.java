@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.region;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.region.WorldManager;
 import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -8,14 +9,14 @@ import org.bukkit.World;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WorldManager {
+public class BukkitWorldManager implements WorldManager {
 
     private List<String> blockedWorlds;
     private List<String> disabledWorlds;
     private List<String> blockedCheckBlockReplaceWorlds;
     private final AuraSkills plugin;
 
-    public WorldManager(AuraSkills plugin) {
+    public BukkitWorldManager(AuraSkills plugin) {
         this.plugin = plugin;
     }
 
@@ -63,7 +64,13 @@ public class WorldManager {
         return blockedCheckBlockReplaceWorlds.contains(world.getName());
     }
 
-    public boolean isDisabledWorld(World world) {
-        return disabledWorlds.contains(world.getName());
+    @Override
+    public boolean isBlockedWorld(String worldName) {
+        return blockedWorlds.contains(worldName);
+    }
+
+    @Override
+    public boolean isDisabledWorld(String worldName) {
+        return disabledWorlds.contains(worldName);
     }
 }

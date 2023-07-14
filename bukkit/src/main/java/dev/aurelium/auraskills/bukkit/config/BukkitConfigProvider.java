@@ -29,6 +29,9 @@ public class BukkitConfigProvider implements ConfigProvider {
 
     public void loadOptions() {
         Logger logger = plugin.getLogger();
+        // Save the config to file if not exist
+        plugin.getConfig().options().copyDefaults(true);
+        plugin.saveDefaultConfig();
         // Load the default options
         loadDefaultOptions();
         // Load the FileConfiguration

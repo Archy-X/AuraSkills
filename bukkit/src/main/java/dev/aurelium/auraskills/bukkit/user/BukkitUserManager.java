@@ -1,18 +1,15 @@
 package dev.aurelium.auraskills.bukkit.user;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.skill.LoadedSkill;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
-import dev.aurelium.auraskills.common.skill.LoadedSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BukkitUserManager implements UserManager {
@@ -76,11 +73,13 @@ public class BukkitUserManager implements UserManager {
     }
 
     @Override
-    public Set<UUID> getOnlineUuids() {
-        Set<UUID> uuids = new HashSet<>();
+    public Set<User> getOnlineUsers() {
+        Set<User> online = new HashSet<>();
         for (Player player : Bukkit.getOnlinePlayers()) {
-            uuids.add(player.getUniqueId());
+            if (playerDataMap.containsKey(player.getUniqueId())) {
+                online.add(playerDataMap.get(player.getUniqueId()));
+            }
         }
-        return uuids;
+        return online;
     }
 }

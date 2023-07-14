@@ -18,7 +18,7 @@ public class BukkitUiProvider implements UiProvider {
 
     public BukkitUiProvider(AuraSkills plugin) {
         this.plugin = plugin;
-        this.actionBarManager = new BukkitActionBarManager(plugin);
+        this.actionBarManager = new BukkitActionBarManager(plugin, this);
     }
 
     @Override
