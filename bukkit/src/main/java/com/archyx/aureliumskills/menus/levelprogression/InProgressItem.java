@@ -65,9 +65,9 @@ public class InProgressItem extends SkillLevelItem {
                 Set<Integer> levels = new HashSet<>();
                 int position = (level + 1) % itemsPerPage; // Calculate the first-page equivalent next level
                 if (position == 0) { // Account for next skill level 24
-                    position = 24;
+                    position = itemsPerPage;
                 } else if (position == 1) { // Account for next skill level 25
-                    position = 25;
+                    position = itemsPerPage + 1;
                 }
                 levels.add(position);
                 return levels;
