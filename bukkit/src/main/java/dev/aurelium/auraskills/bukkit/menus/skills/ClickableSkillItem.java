@@ -25,7 +25,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu, Skill skill) {
         User user = plugin.getUser(player);
 
-        if (player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ENGLISH))) {
+        if (player.hasPermission("aureliumskills." + skill.toString().toLowerCase(Locale.ROOT))) {
             new LevelProgressionOpener(plugin).open(player, user, skill);
         }
     }

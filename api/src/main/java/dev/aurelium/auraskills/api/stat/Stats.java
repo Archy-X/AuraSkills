@@ -23,7 +23,7 @@ public enum Stats implements Stat {
     private final NamespacedId id;
 
     Stats() {
-        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase());
+        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
     }
 
     @Override
