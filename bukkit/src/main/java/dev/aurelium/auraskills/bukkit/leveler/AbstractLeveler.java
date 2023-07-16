@@ -26,7 +26,15 @@ public abstract class AbstractLeveler implements Listener {
     }
 
     protected boolean failsChecks(Cancellable event, Player player, Location location, Skill skill) {
-        return isCancelled(event, skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
+        return isDisabled(skill) || isCancelled(event, skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
+    }
+
+    protected boolean failsChecks(Player player, Location location, Skill skill) {
+        return isDisabled(skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
+    }
+
+    protected boolean isDisabled(Skill skill) {
+        return !skill.isEnabled();
     }
 
     protected boolean isCancelled(Cancellable event, Skill skill) {
