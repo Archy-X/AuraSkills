@@ -211,5 +211,16 @@ public class TextUtil {
         return capitalizeWord(str, null);
     }
 
+    public static boolean contains(String[] source, String target) {
+        boolean matches = false;
+        for (String str : source) {
+            if (str.equalsIgnoreCase(target)) {
+                matches = true;
+                break;
+            }
+        }
+        return matches;
+    }
+
 
 }

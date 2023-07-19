@@ -12,4 +12,6 @@ public interface PlatformLogger {
 
     void severe(String message, Throwable throwable);
 
+    void debug(String message);
+
 }

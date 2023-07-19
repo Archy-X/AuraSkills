@@ -22,7 +22,12 @@ public class ItemFilterMetaSerializer extends SourceSerializer<ItemFilterMeta> {
         String displayName = source.node("display_name").getString();
         List<String> lore = source.node("lore").getList(String.class);
         // Deserialize PotionData
-        PotionData potionData = new PotionDataSerializer(plugin, sourceName).deserialize(PotionData.class, source.node("potion_data"));
+        PotionData potionData;
+        if (!source.node("potion_data").virtual()) {
+            potionData = new PotionDataSerializer(plugin, sourceName).deserialize(PotionData.class, source.node("potion_data"));
+        } else {
+            potionData = null;
+        }
 
         return new SourceItemMeta(displayName, lore, potionData);
     }

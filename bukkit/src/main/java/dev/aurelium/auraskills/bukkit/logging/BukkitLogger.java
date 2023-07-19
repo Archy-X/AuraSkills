@@ -37,4 +37,9 @@ public class BukkitLogger implements PlatformLogger {
         plugin.getLogger().severe(message);
         throwable.printStackTrace();
     }
+
+    @Override
+    public void debug(String message) {
+        plugin.getLogger().info("[DEBUG] " + message);
+    }
 }

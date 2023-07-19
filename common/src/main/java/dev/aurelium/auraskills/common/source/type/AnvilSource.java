@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
+import org.jetbrains.annotations.NotNull;
 
 public class AnvilSource extends Source implements AnvilXpSource {
 
@@ -20,12 +21,12 @@ public class AnvilSource extends Source implements AnvilXpSource {
     }
 
     @Override
-    public ItemFilter getLeftItem() {
+    public @NotNull ItemFilter getLeftItem() {
         return leftItem;
     }
 
     @Override
-    public ItemFilter getRightItem() {
+    public @NotNull ItemFilter getRightItem() {
         return rightItem;
     }
 
