@@ -6,16 +6,16 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class EntityLeveler extends AbstractLeveler {
@@ -39,10 +39,18 @@ public class EntityLeveler extends AbstractLeveler {
         Player player = entity.getKiller();
         User user = plugin.getUser(player);
 
-        Pair<EntityXpSource, Skill> sourcePair = getSource(entity, damageEvent, EntityXpSource.EntityTriggers.DEATH);
-        if (sourcePair == null) {
+        // Resolve damager from EntityDamageByEntityEvent
+        EntityXpSource.EntityDamagers damager;
+        if (damageEvent.getDamager() instanceof Player) {
+            damager = EntityXpSource.EntityDamagers.PLAYER;
+        } else if (damageEvent.getDamager() instanceof Projectile) {
+            damager = EntityXpSource.EntityDamagers.PROJECTILE;
+        } else {
             return;
         }
+
+        Pair<EntityXpSource, Skill> sourcePair = getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
+        if (sourcePair == null) return;
 
         EntityXpSource source = sourcePair.getFirst();
         Skill skill = sourcePair.getSecond();
@@ -52,8 +60,50 @@ public class EntityLeveler extends AbstractLeveler {
         plugin.getLevelManager().addXp(user, skill, source.getXp());
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof LivingEntity entity) || event.getEntity() instanceof ArmorStand) {
+            return;
+        }
+        // Get the player who damaged the entity and the damager type
+        Pair<Player, EntityXpSource.EntityDamagers> damagerPair = resolveDamager(event.getDamager(), event.getCause());
+        if (damagerPair == null) return;
+
+        Player player = damagerPair.getFirst();
+        User user = plugin.getUser(player);
+        EntityXpSource.EntityDamagers damager = damagerPair.getSecond();
+
+        // Get matching source with damage trigger
+        Pair<EntityXpSource, Skill> sourcePair = getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
+        if (sourcePair == null) return;
+
+        EntityXpSource source = sourcePair.getFirst();
+        Skill skill = sourcePair.getSecond();
+
+        if (failsChecks(event, player, entity.getLocation(), skill)) return;
+
+        plugin.getLevelManager().addXp(user, skill, source.getXp());
+    }
+
     @Nullable
-    private Pair<EntityXpSource, Skill> getSource(LivingEntity entity, EntityDamageByEntityEvent event, EntityXpSource.EntityTriggers trigger) {
+    private Pair<Player, EntityXpSource.EntityDamagers> resolveDamager(Entity damager, EntityDamageEvent.DamageCause cause) {
+        if (damager instanceof Player player) { // Player damager
+            if (cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+                return null;
+            }
+            return new Pair<>(player, EntityXpSource.EntityDamagers.PLAYER);
+        } else if (damager instanceof Projectile projectile) { // Projectile damager
+            // TODO Implement ALCHEMY_GIVE_XP_ON_POTION_COMBAT
+            if (!(projectile.getShooter() instanceof Player player)) { // Make sure shooter is a player
+                return null;
+            }
+            return new Pair<>(player, EntityXpSource.EntityDamagers.PROJECTILE);
+        }
+        return null;
+    }
+
+    @Nullable
+    private Pair<EntityXpSource, Skill> getSource(LivingEntity entity, EntityXpSource.EntityDamagers eventDamager, EntityXpSource.EntityTriggers trigger) {
         Map<EntityXpSource, Skill> sources = plugin.getSkillManager().getSourcesOfType(EntityXpSource.class);
         sources = filterByTrigger(sources, trigger);
 
@@ -62,20 +112,14 @@ public class EntityLeveler extends AbstractLeveler {
             Skill skill = entry.getValue();
 
             // Discard if entity type does not match
-            if (!source.getEntity().equals(entity.getType().toString())) {
+            if (!source.getEntity().toUpperCase(Locale.ROOT).equals(entity.getType().toString())) {
                 continue;
             }
 
             // Return if damager matches
-            for (EntityXpSource.EntityDamagers damager : source.getDamagers()) {
-                if (damager == EntityXpSource.EntityDamagers.PLAYER) {
-                    if (event.getDamager() instanceof Player) {
-                        return new Pair<>(source, skill);
-                    }
-                } else if (damager == EntityXpSource.EntityDamagers.PROJECTILE) {
-                    if (event.getDamager() instanceof Projectile) {
-                        return new Pair<>(source, skill);
-                    }
+            for (EntityXpSource.EntityDamagers sourceDamager : source.getDamagers()) {
+                if (sourceDamager == eventDamager) {
+                    return new Pair<>(source, skill);
                 }
             }
         }
