@@ -18,8 +18,8 @@ public class BrewingSourceSerializer extends SourceSerializer<BrewingSource> {
     @Override
     public BrewingSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         ItemFilter ingredients = required(source, "ingredient").get(ItemFilter.class);
-        BrewingXpSource.BrewTriggers[] triggers = requiredPluralizedArray("trigger", source, BrewingXpSource.BrewTriggers.class);
+        BrewingXpSource.BrewTriggers trigger = required(source, "trigger").get(BrewingXpSource.BrewTriggers.class);
 
-        return new BrewingSource(plugin, getId(), getXp(source), ingredients, triggers);
+        return new BrewingSource(plugin, getId(), getXp(source), ingredients, trigger);
     }
 }

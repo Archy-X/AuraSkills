@@ -56,6 +56,8 @@ public class SourceLoader {
             // Load each user source file
             ConfigurationNode user = configurateLoader.loadUserFile(fileName);
 
+            ConfigurationNode userDefault = user.node("default");
+
             Map<String, ConfigurationNode> userSources = new HashMap<>();
             addToMap(user, userSources);
 
@@ -66,7 +68,7 @@ public class SourceLoader {
                 ConfigurationNode embeddedNode = embeddedSources.get(sourceName);
                 ConfigurationNode userNode = userSources.get(sourceName);
 
-                ConfigurationNode merged = configurateLoader.mergeNodes(fileDefault, embeddedNode, userNode);
+                ConfigurationNode merged = configurateLoader.mergeNodes(fileDefault, embeddedNode, userDefault, userNode);
                 sources.put(sourceName, merged);
             }
 

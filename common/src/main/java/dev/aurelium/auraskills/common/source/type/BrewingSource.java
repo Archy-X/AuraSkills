@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class BrewingSource extends Source implements BrewingXpSource {
 
     private final ItemFilter ingredients;
-    private final BrewTriggers[] triggers;
+    private final BrewTriggers trigger;
 
-    public BrewingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter ingredients, BrewTriggers[] triggers) {
+    public BrewingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter ingredients, BrewTriggers trigger) {
         super(plugin, id, xp);
         this.ingredients = ingredients;
-        this.triggers = triggers;
+        this.trigger = trigger;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class BrewingSource extends Source implements BrewingXpSource {
     }
 
     @Override
-    public BrewTriggers[] getTriggers() {
-        return triggers;
+    public @NotNull BrewTriggers getTrigger() {
+        return trigger;
     }
 }

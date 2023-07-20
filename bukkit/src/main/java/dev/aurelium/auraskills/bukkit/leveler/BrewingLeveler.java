@@ -1,0 +1,229 @@
+package dev.aurelium.auraskills.bukkit.leveler;
+
+import com.archyx.aureliumskills.region.BlockPosition;
+import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.type.BrewingXpSource;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.data.Pair;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.BrewingStand;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.BrewerInventory;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+public class BrewingLeveler extends AbstractLeveler {
+
+    private final Map<BlockPosition, BrewingStandData> brewingStands;
+
+    public BrewingLeveler(AuraSkills plugin) {
+        super(plugin, SourceType.BREWING);
+        this.brewingStands = new HashMap<>();
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBrew(BrewEvent event) {
+        ItemStack ingredient = event.getContents().getIngredient();
+        if (ingredient == null) return;
+
+        Pair<BrewingXpSource, Skill> sourcePair = getSource(ingredient);
+        if (sourcePair == null) return;
+
+        BrewingXpSource source = sourcePair.getFirst();
+        Skill skill = sourcePair.getSecond();
+
+        if (source.getTrigger() == BrewingXpSource.BrewTriggers.TAKEOUT) {
+            checkBrewedSlots(event);
+        } else if (source.getTrigger() == BrewingXpSource.BrewTriggers.BREW) {
+            if (!event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
+                return;
+            }
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
+            if (!offlinePlayer.isOnline()) {
+                return;
+            }
+
+            Player player = offlinePlayer.getPlayer();
+            if (player == null) return;
+
+            User user = plugin.getUserManager().getUser(player);
+
+            if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
+
+            plugin.getLevelManager().addXp(user, skill, source.getXp());
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onTakePotionOut(InventoryClickEvent event) {
+        Inventory inventory = event.getClickedInventory();
+        if (inventory == null) return;
+        if (inventory.getType() != InventoryType.BREWING && !(inventory instanceof BrewerInventory)) return;
+
+        int slot = event.getSlot();
+        if (slot > 2) return; // Slots 0-2 are result slots
+
+        InventoryAction action = event.getAction();
+        // Filter out other actions
+        if (action != InventoryAction.PICKUP_ALL && action != InventoryAction.PICKUP_HALF && action != InventoryAction.PICKUP_SOME
+                && action != InventoryAction.PICKUP_ONE && action != InventoryAction.MOVE_TO_OTHER_INVENTORY && action != InventoryAction.HOTBAR_SWAP
+                && action != InventoryAction.HOTBAR_MOVE_AND_READD) {
+            return;
+        }
+        ItemStack item = event.getCurrentItem();
+        if (item == null) return;
+        // Get the brewing stand data
+        Location location = inventory.getLocation();
+        if (location == null) return;
+        BrewingStandData standData = brewingStands.get(BlockPosition.fromBlock(location.getBlock()));
+        if (standData == null) return;
+
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+
+        if (!standData.isSlotBrewed(slot)) return; // Check that the slot was brewed
+
+        ItemStack ingredient = standData.getIngredient();
+        if (ingredient == null) return;
+        if (ingredient.getType() == Material.AIR) return;
+
+        var sourcePair = getSource(ingredient);
+        if (sourcePair == null) return;
+
+        BrewingXpSource source = sourcePair.getFirst();
+
+        Skill skill = sourcePair.getSecond();
+
+        if (failsChecks(event, player, location, skill)) return;
+
+        User user = plugin.getUser(player);
+
+        plugin.getLevelManager().addXp(user, skill, source.getXp()); // Add XP
+        standData.setSlotBrewed(slot, false); // Set data to false
+    }
+
+    private void checkBrewedSlots(BrewEvent event) {
+        BrewerInventory before = event.getContents();
+        ItemStack ingredient = before.getIngredient();
+        if (ingredient == null) return;
+        ItemStack clonedIngredient = ingredient.clone();
+        ItemStack[] beforeItems = Arrays.copyOf(before.getContents(), 3); // Items in result slots before
+        plugin.getScheduler().scheduleSync(() -> {
+            BlockState blockState = event.getBlock().getState();
+            if (blockState instanceof BrewingStand brewingStand) {
+                BrewerInventory after = brewingStand.getInventory();
+                ItemStack[] afterItems = Arrays.copyOf(after.getContents(), 3); // Items in result slots after
+                BrewingStandData standData = new BrewingStandData(clonedIngredient);
+                // Set the items that changed as brewed
+                for (int i = 0; i < 3; i++) {
+                    ItemStack beforeItem = beforeItems[i];
+                    ItemStack afterItem = afterItems[i];
+                    if (beforeItem != null && beforeItem.getType() != Material.AIR && afterItem != null && afterItem.getType() != Material.AIR) {
+                        if (!beforeItem.equals(afterItem)) {
+                            standData.setSlotBrewed(i, true);
+                        }
+                    }
+                }
+                brewingStands.put(BlockPosition.fromBlock(event.getBlock()), standData); // Register the stand data
+            }
+        }, 50, TimeUnit.MILLISECONDS);
+    }
+
+    // Marks brewing stand as owned by player when placed
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onBrewingStandPlace(BlockPlaceEvent event) {
+        Block block = event.getBlock();
+        if (block.getType() != Material.BREWING_STAND) {
+            return;
+        }
+        block.setMetadata("skillsBrewingStandOwner", new FixedMetadataValue(plugin, event.getPlayer().getUniqueId()));
+    }
+
+    // Un-marks brewing stand as owned by player when broken
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onBrewingStandBreak(BlockBreakEvent event) {
+        Block block = event.getBlock();
+        if (block.getType().equals(Material.BREWING_STAND)) {
+            return;
+        }
+        if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
+            event.getBlock().removeMetadata("skillsBrewingStandOwner", plugin);
+        }
+        brewingStands.remove(BlockPosition.fromBlock(event.getBlock()));
+    }
+
+    // Marks brewing stand as owned by player when opened if unclaimed
+    @EventHandler
+    public void onInventoryOpen(InventoryOpenEvent event) {
+        Inventory inventory = event.getInventory();
+        if (!inventory.getType().equals(InventoryType.BREWING)) {
+            return;
+        }
+        if (inventory.getHolder() == null) {
+            return;
+        }
+        if (inventory.getLocation() == null) {
+            return;
+        }
+        Block block = inventory.getLocation().getBlock();
+        if (!block.hasMetadata("skillsBrewingStandOwner")) {
+            block.setMetadata("skillsBrewingStandOwner", new FixedMetadataValue(plugin, event.getPlayer().getUniqueId()));
+        }
+    }
+
+    @Nullable
+    private Pair<BrewingXpSource, Skill> getSource(ItemStack item) {
+        var sources = plugin.getSkillManager().getSourcesOfType(BrewingXpSource.class);
+        for (Map.Entry<BrewingXpSource, Skill> entry : sources.entrySet()) {
+            BrewingXpSource source = entry.getKey();
+            if (plugin.getItemRegistry().passesFilter(item, source.getIngredients())) {
+                return new Pair<>(source, entry.getValue());
+            }
+        }
+        return null;
+    }
+
+    public static class BrewingStandData {
+
+        private final Map<Integer, Boolean> potionSlots;
+        private final ItemStack ingredient;
+
+        public BrewingStandData(ItemStack ingredient) {
+            this.potionSlots = new HashMap<>();
+            this.ingredient = ingredient;
+        }
+
+        public boolean isSlotBrewed(int slot) {
+            return potionSlots.getOrDefault(slot, false);
+        }
+
+        public void setSlotBrewed(int slot, boolean isSlotBrewed) {
+            potionSlots.put(slot, isSlotBrewed);
+        }
+
+        public ItemStack getIngredient() {
+            return ingredient;
+        }
+
+    }
+
+}

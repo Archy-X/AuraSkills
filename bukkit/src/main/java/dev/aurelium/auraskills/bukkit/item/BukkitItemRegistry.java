@@ -133,6 +133,9 @@ public class BukkitItemRegistry implements ItemRegistry {
 
     private boolean passesItemMetaFilter(ItemStack item, ItemFilter filter) {
         ItemFilterMeta filterMeta = filter.meta();
+        if (filterMeta == null) {
+            return true;
+        }
         ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta == null) {
             return true;

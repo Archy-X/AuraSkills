@@ -19,6 +19,13 @@ public class ItemFilterSerializer extends SourceSerializer<ItemFilter> {
 
     @Override
     public ItemFilter deserialize(Type type, ConfigurationNode source) throws SerializationException {
+        if (!source.isMap() && !source.isList()) {
+            String material = source.getString();
+            if (material == null) {
+                throw new SerializationException("Invalid direct String value item filter for source " + sourceName);
+            }
+            return new SourceItem(new String[]{material}, null, null, null);
+        }
         String[] materials = pluralizedArray("material", source, String.class);
         String[] excludedMaterials = pluralizedArray("excluded_material", source, String.class);
         ItemCategory category = source.node("category").get(ItemCategory.class);

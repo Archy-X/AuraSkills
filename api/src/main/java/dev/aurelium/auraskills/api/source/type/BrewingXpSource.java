@@ -20,7 +20,7 @@ public interface BrewingXpSource extends XpSource {
      * @return The triggers
      */
     @NotNull
-    BrewTriggers[] getTriggers();
+    BrewTriggers getTrigger();
 
     enum BrewTriggers {
 
