@@ -32,6 +32,7 @@ public class AnvilLeveler extends AbstractLeveler {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onForge(InventoryClickEvent event) {
+        if (disabled()) return;
         Inventory inventory = event.getClickedInventory();
         if (inventory == null) return;
 

@@ -26,6 +26,7 @@ public class BlockLeveler extends AbstractLeveler {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
+        if (disabled()) return;
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
 
@@ -44,6 +45,7 @@ public class BlockLeveler extends AbstractLeveler {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+        if (disabled()) return;
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
 

@@ -26,6 +26,7 @@ public class EntityLeveler extends AbstractLeveler {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeath(EntityDeathEvent event) {
+        if (disabled()) return;
         LivingEntity entity = event.getEntity();
         // Ensure that the entity has a killer
         if (entity.getKiller() == null) {
@@ -62,6 +63,7 @@ public class EntityLeveler extends AbstractLeveler {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (disabled()) return;
         if (!(event.getEntity() instanceof LivingEntity entity) || event.getEntity() instanceof ArmorStand) {
             return;
         }

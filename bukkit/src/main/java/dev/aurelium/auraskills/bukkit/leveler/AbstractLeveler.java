@@ -25,6 +25,10 @@ public abstract class AbstractLeveler implements Listener {
         return sourceType;
     }
 
+    protected boolean disabled() {
+        return !plugin.getSkillManager().isSourceEnabled(sourceType);
+    }
+
     protected boolean failsChecks(Cancellable event, Player player, Location location, Skill skill) {
         return isDisabled(skill) || isCancelled(event, skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
     }

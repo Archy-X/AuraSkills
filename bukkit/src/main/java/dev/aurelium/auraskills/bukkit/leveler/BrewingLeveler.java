@@ -43,6 +43,7 @@ public class BrewingLeveler extends AbstractLeveler {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBrew(BrewEvent event) {
+        if (disabled()) return;
         ItemStack ingredient = event.getContents().getIngredient();
         if (ingredient == null) return;
 
@@ -76,6 +77,7 @@ public class BrewingLeveler extends AbstractLeveler {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTakePotionOut(InventoryClickEvent event) {
+        if (disabled()) return;
         Inventory inventory = event.getClickedInventory();
         if (inventory == null) return;
         if (inventory.getType() != InventoryType.BREWING && !(inventory instanceof BrewerInventory)) return;
@@ -151,6 +153,7 @@ public class BrewingLeveler extends AbstractLeveler {
     // Marks brewing stand as owned by player when placed
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBrewingStandPlace(BlockPlaceEvent event) {
+        if (disabled()) return;
         Block block = event.getBlock();
         if (block.getType() != Material.BREWING_STAND) {
             return;
@@ -161,6 +164,7 @@ public class BrewingLeveler extends AbstractLeveler {
     // Un-marks brewing stand as owned by player when broken
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBrewingStandBreak(BlockBreakEvent event) {
+        if (disabled()) return;
         Block block = event.getBlock();
         if (block.getType().equals(Material.BREWING_STAND)) {
             return;
@@ -174,6 +178,7 @@ public class BrewingLeveler extends AbstractLeveler {
     // Marks brewing stand as owned by player when opened if unclaimed
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
+        if (disabled()) return;
         Inventory inventory = event.getInventory();
         if (!inventory.getType().equals(InventoryType.BREWING)) {
             return;

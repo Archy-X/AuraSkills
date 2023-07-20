@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common.skill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.source.SourceType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -73,6 +74,23 @@ public class SkillManager {
             }
         }
         return map;
+    }
+
+    /**
+     * Gets whether there is at least one registered source in an enabled skill of a given type
+     *
+     * @param sourceType The type of source
+     * @return Whether the source is enabled
+     */
+    public boolean isSourceEnabled(SourceType sourceType) {
+        for (Skill skill : getEnabledSkills()) {
+            for (XpSource source : skill.getSources()) {
+                if (sourceType.getSourceClass().isInstance(source)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
