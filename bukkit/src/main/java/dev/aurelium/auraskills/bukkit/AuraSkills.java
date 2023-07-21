@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
+import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.region.RegionManager;
@@ -100,6 +101,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitAudiences audiences;
     private RegionManager regionManager;
     private BukkitWorldManager worldManager;
+    private LootTableManager lootTableManager;
 
     @Override
     public void onEnable() {
@@ -145,6 +147,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load rewards
         rewardManager = new BukkitRewardManager(this);
         rewardManager.loadRewards();
+
+        // Loads loot
+        lootTableManager = new LootTableManager(this);
 
         initStorageProvider();
 
@@ -239,6 +244,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public RegionManager getRegionManager() {
         return regionManager;
+    }
+
+    public LootTableManager getLootTableManager() {
+        return lootTableManager;
     }
 
     @Override

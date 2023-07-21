@@ -16,6 +16,7 @@ import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterMetaSeria
 import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterSerializer;
 import dev.aurelium.auraskills.common.source.serializer.util.LootItemFilterSerializer;
 import dev.aurelium.auraskills.common.source.serializer.util.PotionDataSerializer;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -128,9 +129,15 @@ public class SourceLoader {
     }
 
     private void registerMenuItem(Source source, ConfigurationNode sourceNode) throws SerializationException {
-        ConfigurationNode node = sourceNode.node("menu_item");
-        if (!node.virtual()) {
-            plugin.getItemRegistry().getSourceMenuItems().parseAndRegisterMenuItem(source, node);
+        // Parse menu item if present
+        ConfigurationNode menuNode = sourceNode.node("menu_item");
+        if (!menuNode.virtual()) {
+            plugin.getItemRegistry().getSourceMenuItems().parseAndRegisterMenuItem(source, menuNode);
+        }
+        // Parse unit name if present
+        ConfigurationNode unitNode = sourceNode.node("unit");
+        if (!unitNode.virtual()) {
+            plugin.getItemRegistry().getSourceMenuItems().registerSourceUnit(source, unitNode.getString());
         }
     }
 
@@ -146,7 +153,7 @@ public class SourceLoader {
             String text = child.getString();
             if (text != null) {
                 // Get all placeholders between curly braces in text
-                List<String> placeholders = getPlaceholders(text);
+                List<String> placeholders = TextUtil.getPlaceholders(text);
                 for (String placeholder : placeholders) {
                     if (placeholder.equals("key")) { // Replace key with source name
                         child.set(text.replace("{key}", sourceName));
@@ -168,24 +175,4 @@ public class SourceLoader {
             }
         }
     }
-
-    private List<String> getPlaceholders(String text) {
-        List<String> placeholders = new ArrayList<>();
-        int index = 0;
-        while (index < text.length()) {
-            int openIndex = text.indexOf('{', index);
-            if (openIndex == -1) {
-                break;
-            }
-            int closeIndex = text.indexOf('}', openIndex);
-            if (closeIndex == -1) {
-                break;
-            }
-            String placeholder = text.substring(openIndex + 1, closeIndex);
-            placeholders.add(placeholder);
-            index = closeIndex + 1;
-        }
-        return placeholders;
-    }
-
 }

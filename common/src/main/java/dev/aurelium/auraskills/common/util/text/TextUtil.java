@@ -1,8 +1,6 @@
 package dev.aurelium.auraskills.common.util.text;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class TextUtil {
 
@@ -183,5 +181,29 @@ public class TextUtil {
         return matches;
     }
 
+    /**
+     * Gets a list of all substrings between pairs of curly braces.
+     *
+     * @param text The text to get placeholders from
+     * @return A list of each placeholder, not including curly braces
+     */
+    public static List<String> getPlaceholders(String text) {
+        List<String> placeholders = new ArrayList<>();
+        int index = 0;
+        while (index < text.length()) {
+            int openIndex = text.indexOf('{', index);
+            if (openIndex == -1) {
+                break;
+            }
+            int closeIndex = text.indexOf('}', openIndex);
+            if (closeIndex == -1) {
+                break;
+            }
+            String placeholder = text.substring(openIndex + 1, closeIndex);
+            placeholders.add(placeholder);
+            index = closeIndex + 1;
+        }
+        return placeholders;
+    }
 
 }

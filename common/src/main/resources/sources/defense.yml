@@ -9,8 +9,10 @@ sources:
     xp: 1
     menu_item:
       material: zombie_head
+    unit: '{sources.units.damage}'
   player_damage:
     damager: player
     xp: 2
     menu_item:
       material: player_head
+    unit: '{sources.units.damage}'

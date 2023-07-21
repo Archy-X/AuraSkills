@@ -7,6 +7,7 @@ sources:
     xp: 10
     menu_item:
       material: enchanted_book
+    unit: '{sources.units.combine_level}'
   combine_weapon_per_level:
     type: anvil
     left_item:
@@ -18,6 +19,7 @@ sources:
       material: iron_sword
       flags:
         - hide_attributes
+    unit: '{sources.units.combine_level}'
   combine_armor_per_level:
     type: anvil
     left_item:
@@ -29,6 +31,7 @@ sources:
       material: iron_leggings
       flags:
         - hide_attributes
+    unit: '{sources.units.combine_level}'
   combine_tool_per_level:
     type: anvil
     left_item:
@@ -40,9 +43,11 @@ sources:
       material: iron_shovel
       flags:
         - hide_attributes
+    unit: '{sources.units.combine_level}'
   grindstone_per_level:
     type: grindstone
     multiplier: '{total_level}'
     xp: 30
     menu_item:
       material: grindstone
+    unit: '{sources.units.grindstone_level}'

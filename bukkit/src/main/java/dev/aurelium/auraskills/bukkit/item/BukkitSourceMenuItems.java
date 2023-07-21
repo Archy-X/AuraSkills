@@ -12,6 +12,7 @@ public class BukkitSourceMenuItems extends SourceMenuItems<ItemStack> {
     private final AuraSkills plugin;
 
     public BukkitSourceMenuItems(AuraSkills plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -21,7 +22,7 @@ public class BukkitSourceMenuItems extends SourceMenuItems<ItemStack> {
         try {
             ItemStack itemStack = parser.parseItem(config);
 
-            register(source, itemStack);
+            registerMenuItem(source, itemStack);
         } catch (Exception e) {
             plugin.logger().info("Error parsing source menu item for source " + source.getId());
             e.printStackTrace();

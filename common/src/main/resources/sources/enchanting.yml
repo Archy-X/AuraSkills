@@ -10,20 +10,24 @@ sources:
     xp: 2
     menu_item:
       material: diamond_sword
+    unit: '{sources.units.enchant_level}'
   armor_per_level:
     item:
       category: armor
     xp: 2
     menu_item:
       material: diamond_chestplate
+    unit: '{sources.units.enchant_level}'
   tool_per_level:
     item:
       category: tool
     xp: 2
     menu_item:
       material: diamond_pickaxe
+    unit: '{sources.units.enchant_level}'
   book_per_level:
     item: book
     xp: 2
     menu_item:
       material: enchanted_book
+    unit: '{sources.units.enchant_level}'

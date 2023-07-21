@@ -1,14 +1,17 @@
 package dev.aurelium.auraskills.bukkit.item;
 
-import dev.aurelium.auraskills.api.item.ItemCategory;
-import dev.aurelium.auraskills.api.item.ItemFilter;
-import dev.aurelium.auraskills.api.item.ItemFilterMeta;
-import dev.aurelium.auraskills.api.item.PotionData;
+import com.archyx.lootmanager.loot.Loot;
+import com.archyx.lootmanager.loot.LootPool;
+import com.archyx.lootmanager.loot.LootTable;
+import com.archyx.lootmanager.loot.type.ItemLoot;
+import dev.aurelium.auraskills.api.item.*;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
+import dev.aurelium.auraskills.common.item.SourceItem;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
@@ -101,6 +104,32 @@ public class BukkitItemRegistry implements ItemRegistry {
 
     public BukkitSourceMenuItems getSourceMenuItems() {
         return sourceMenuItems;
+    }
+
+    public boolean passesFilter(ItemStack item, LootItemFilter filter, Skill skill) {
+        String lootTableName = filter.lootTable();
+        if (lootTableName != null) {
+            LootTable lootTable = plugin.getLootTableManager().getLootTable(skill);
+            if (lootTable == null) {
+                return false;
+            }
+            LootPool pool = lootTable.getPool(lootTableName);
+            if (pool == null) {
+                return false;
+            }
+            // Search each loot in pool and check if items match
+            for (Loot loot : pool.getLoot()) {
+                if (!(loot instanceof ItemLoot itemLoot)) {
+                    continue;
+                }
+                if (item.equals(itemLoot.getItem())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        ItemFilter itemFilter = new SourceItem(filter.materials(), filter.excludedMaterials(), filter.category(), filter.meta());
+        return passesFilter(item, itemFilter);
     }
 
     public boolean passesFilter(ItemStack item, ItemFilter filter) {

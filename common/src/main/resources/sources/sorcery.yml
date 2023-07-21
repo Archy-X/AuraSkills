@@ -7,6 +7,7 @@ sources:
     xp: 0.5
     menu_item:
       material: light_blue_dye
+    unit: '{sources.units.mana}'
   sculk:
     type: block
     block: sculk
