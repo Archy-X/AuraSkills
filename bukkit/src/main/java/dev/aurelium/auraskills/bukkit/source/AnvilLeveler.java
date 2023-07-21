@@ -3,19 +3,14 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
@@ -31,25 +26,15 @@ public class AnvilLeveler extends SourceLeveler {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onForge(InventoryClickEvent event) {
+    public void onAnvilCombine(InventoryClickEvent event) {
         if (disabled()) return;
         Inventory inventory = event.getClickedInventory();
         if (inventory == null) return;
 
         if (!(event.getWhoClicked() instanceof Player player)) return;
 
-        ClickType click = event.getClick();
-        // Only allow right and left clicks if inventory full
-        if (click != ClickType.LEFT && click != ClickType.RIGHT && ItemUtils.isInventoryFull(player)) return;
-        if (event.getResult() != Event.Result.ALLOW) return; // Make sure the click was successful
-        if (player.getItemOnCursor().getType() != Material.AIR) return; // Make sure cursor is empty
-        InventoryAction action = event.getAction();
-        // Only give if item was picked up
-        if (action != InventoryAction.PICKUP_ALL && action != InventoryAction.MOVE_TO_OTHER_INVENTORY
-                && action != InventoryAction.PICKUP_HALF && action != InventoryAction.DROP_ALL_SLOT
-                && action != InventoryAction.DROP_ONE_SLOT && action != InventoryAction.HOTBAR_SWAP) {
-            return;
-        }
+        if (failsClickChecks(event)) return;
+
         if (!inventory.getType().equals(InventoryType.ANVIL)) {
             return;
         }

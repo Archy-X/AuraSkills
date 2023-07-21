@@ -91,7 +91,7 @@ sources:
       extended: true
     xp: 35
     menu_item:
-      material: splash_potion
+      material: lingering_potion
       potion_data:
         type: night_vision
   lingering_upgraded:
@@ -102,7 +102,7 @@ sources:
       upgraded: true
     xp: 35
     menu_item:
-      material: splash_potion
+      material: lingering_potion
       potion_data:
         type: strength
   golden_apple:
