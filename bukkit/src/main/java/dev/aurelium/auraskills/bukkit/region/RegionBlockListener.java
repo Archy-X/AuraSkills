@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
-import dev.aurelium.auraskills.bukkit.leveler.BlockLeveler;
+import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Material;

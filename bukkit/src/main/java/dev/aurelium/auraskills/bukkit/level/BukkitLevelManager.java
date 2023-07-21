@@ -1,9 +1,10 @@
-package dev.aurelium.auraskills.bukkit.leveler;
+package dev.aurelium.auraskills.bukkit.level;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.source.*;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.leveler.LevelManager;
+import dev.aurelium.auraskills.common.level.LevelManager;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -17,7 +18,7 @@ import java.util.Set;
 public class BukkitLevelManager extends LevelManager {
 
     private final AuraSkills plugin;
-    private final Set<AbstractLeveler> levelers;
+    private final Set<SourceLeveler> levelers;
 
     public BukkitLevelManager(AuraSkills plugin) {
         super(plugin);
@@ -33,14 +34,14 @@ public class BukkitLevelManager extends LevelManager {
         registerLeveler(new DamageLeveler(plugin));
     }
 
-    private void registerLeveler(AbstractLeveler leveler) {
+    private void registerLeveler(SourceLeveler leveler) {
         this.levelers.add(leveler);
         Bukkit.getPluginManager().registerEvents(leveler, plugin);
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends AbstractLeveler> T getLeveler(Class<T> levelerClass) {
-        for (AbstractLeveler leveler : levelers) {
+    public <T extends SourceLeveler> T getLeveler(Class<T> levelerClass) {
+        for (SourceLeveler leveler : levelers) {
             if (levelerClass.isInstance(leveler)) {
                 return (T) leveler;
             }

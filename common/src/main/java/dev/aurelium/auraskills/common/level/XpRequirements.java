@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.leveler;
+package dev.aurelium.auraskills.common.level;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;

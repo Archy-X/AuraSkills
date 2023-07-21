@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.leveler;
+package dev.aurelium.auraskills.common.level;
 
 import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
 import dev.aurelium.auraskills.api.event.skill.XpGainEvent;

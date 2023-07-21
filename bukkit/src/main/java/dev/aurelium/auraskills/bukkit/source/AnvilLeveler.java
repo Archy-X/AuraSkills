@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.leveler;
+package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
@@ -24,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 
-public class AnvilLeveler extends AbstractLeveler {
+public class AnvilLeveler extends SourceLeveler {
 
     public AnvilLeveler(AuraSkills plugin) {
         super(plugin, SourceType.ANVIL);

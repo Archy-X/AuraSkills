@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.leveler;
+package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class EntityLeveler extends AbstractLeveler {
+public class EntityLeveler extends SourceLeveler {
 
     public EntityLeveler(AuraSkills plugin) {
         super(plugin, SourceType.ENTITY);

@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.leveler;
+package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -19,7 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Map;
 
-public class DamageLeveler extends AbstractLeveler {
+public class DamageLeveler extends SourceLeveler {
 
     public DamageLeveler(AuraSkills plugin) {
         super(plugin, SourceType.DAMAGE);

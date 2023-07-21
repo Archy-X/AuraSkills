@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.leveler;
+package dev.aurelium.auraskills.bukkit.source;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlockLeveler extends AbstractLeveler {
+public class BlockLeveler extends SourceLeveler {
 
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceType.BLOCK);

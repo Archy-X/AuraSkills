@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.leveler;
+package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Listener;
 
-public abstract class AbstractLeveler implements Listener {
+public abstract class SourceLeveler implements Listener {
 
     protected final AuraSkills plugin;
     private final SourceType sourceType;
 
-    public AbstractLeveler(AuraSkills plugin, SourceType sourceType) {
+    public SourceLeveler(AuraSkills plugin, SourceType sourceType) {
         this.plugin = plugin;
         this.sourceType = sourceType;
     }

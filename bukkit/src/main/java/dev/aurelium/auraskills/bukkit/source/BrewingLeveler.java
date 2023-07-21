@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.leveler;
+package dev.aurelium.auraskills.bukkit.source;
 
 import com.archyx.aureliumskills.region.BlockPosition;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class BrewingLeveler extends AbstractLeveler {
+public class BrewingLeveler extends SourceLeveler {
 
     private final Map<BlockPosition, BrewingStandData> brewingStands;
 
