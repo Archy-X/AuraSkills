@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.level;
 
+import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.source.*;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -36,11 +37,16 @@ public class BukkitLevelManager extends LevelManager {
         registerLeveler(new FishingLeveler(plugin));
         registerLeveler(new GrindstoneLeveler(plugin));
         registerLeveler(new ItemConsumeLeveler(plugin));
+        registerLeveler(new JumpingLeveler(plugin));
+        registerLeveler(new ManaAbilityUseLeveler(plugin));
     }
 
     private void registerLeveler(SourceLeveler leveler) {
         this.levelers.add(leveler);
         Bukkit.getPluginManager().registerEvents(leveler, plugin);
+        if (leveler instanceof AuraSkillsListener listener) {
+            plugin.getEventManager().registerEvents(plugin, listener);
+        }
     }
 
     @SuppressWarnings("unchecked")

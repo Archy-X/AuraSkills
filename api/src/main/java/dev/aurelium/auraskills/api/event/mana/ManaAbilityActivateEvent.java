@@ -12,8 +12,9 @@ public class ManaAbilityActivateEvent extends AuraSkillsEvent implements Cancell
     private final ManaAbility manaAbility;
     private int duration;
     private boolean cancelled = false;
+    private double manaUsed;
 
-    public ManaAbilityActivateEvent(AuraSkillsApi api, SkillsPlayer skillsPlayer, ManaAbility manaAbility, int duration) {
+    public ManaAbilityActivateEvent(AuraSkillsApi api, SkillsPlayer skillsPlayer, ManaAbility manaAbility, int duration, double manaUsed) {
         super(api);
         this.skillsPlayer = skillsPlayer;
         this.manaAbility = manaAbility;
@@ -34,6 +35,14 @@ public class ManaAbilityActivateEvent extends AuraSkillsEvent implements Cancell
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public double getManaUsed() {
+        return manaUsed;
+    }
+
+    public void setManaUsed(double manaUsed) {
+        this.manaUsed = manaUsed;
     }
 
     @Override

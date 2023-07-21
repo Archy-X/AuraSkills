@@ -61,7 +61,7 @@ public class RegionBlockListener implements Listener {
             return;
         }
 
-        BlockXpSource source = sourcePair.getFirst();
+        BlockXpSource source = sourcePair.first();
 
         if (!source.checkReplace()) { // Check source option
             return;
@@ -152,7 +152,7 @@ public class RegionBlockListener implements Listener {
         // Check if the block above requires support
         Block above = block.getRelative(BlockFace.UP);
         Pair<BlockXpSource, Skill> sourcePair = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
-        BlockXpSource source = sourcePair == null ? null : sourcePair.getFirst();
+        BlockXpSource source = sourcePair == null ? null : sourcePair.first();
         if (source != null && source.requiresSupportBlock(BlockXpSource.SupportBlockType.BELOW) && regionManager.isPlacedBlock(above)) {
             new BukkitRunnable() {
                 @Override
@@ -171,7 +171,7 @@ public class RegionBlockListener implements Listener {
         for (BlockFace face : BlockFaceUtil.getBlockSides()) {
             Block checkedBlock = block.getRelative(face);
             Pair<BlockXpSource, Skill> sourcePair = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
-            BlockXpSource source = sourcePair == null ? null : sourcePair.getFirst();
+            BlockXpSource source = sourcePair == null ? null : sourcePair.first();
             if (source != null && source.requiresSupportBlock(BlockXpSource.SupportBlockType.SIDE) && regionManager.isPlacedBlock(checkedBlock)) {
                 new BukkitRunnable() {
                     @Override

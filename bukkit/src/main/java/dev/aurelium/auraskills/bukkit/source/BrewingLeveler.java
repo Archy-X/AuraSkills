@@ -50,8 +50,8 @@ public class BrewingLeveler extends SourceLeveler {
         Pair<BrewingXpSource, Skill> sourcePair = getSource(ingredient);
         if (sourcePair == null) return;
 
-        BrewingXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        BrewingXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (source.getTrigger() == BrewingXpSource.BrewTriggers.TAKEOUT) {
             checkBrewedSlots(event);
@@ -111,9 +111,9 @@ public class BrewingLeveler extends SourceLeveler {
         var sourcePair = getSource(ingredient);
         if (sourcePair == null) return;
 
-        BrewingXpSource source = sourcePair.getFirst();
+        BrewingXpSource source = sourcePair.first();
 
-        Skill skill = sourcePair.getSecond();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(event, player, location, skill)) return;
 
@@ -201,7 +201,7 @@ public class BrewingLeveler extends SourceLeveler {
         for (Map.Entry<BrewingXpSource, Skill> entry : sources.entrySet()) {
             BrewingXpSource source = entry.getKey();
             if (plugin.getItemRegistry().passesFilter(item, source.getIngredients())) {
-                return new Pair<>(source, entry.getValue());
+                return Pair.fromEntry(entry);
             }
         }
         return null;

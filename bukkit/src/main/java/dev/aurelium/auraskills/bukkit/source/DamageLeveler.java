@@ -36,8 +36,8 @@ public class DamageLeveler extends SourceLeveler {
         var sourcePair = getSource(event);
         if (sourcePair == null) return;
 
-        DamageXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        DamageXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         // Disregard self inflected damage
         if (event instanceof EntityDamageByEntityEvent entityEvent) {
@@ -125,7 +125,7 @@ public class DamageLeveler extends SourceLeveler {
                     continue;
                 }
             }
-            return new Pair<>(source, entry.getValue());
+            return Pair.fromEntry(entry);
         }
         return null;
     }

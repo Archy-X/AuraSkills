@@ -36,8 +36,8 @@ public class FishingLeveler extends SourceLeveler {
         var sourcePair = getSource(item);
         if (sourcePair == null) return;
 
-        FishingXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        FishingXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(event, player, itemEntity.getLocation(), skill)) return;
 
@@ -48,7 +48,7 @@ public class FishingLeveler extends SourceLeveler {
     private Pair<FishingXpSource, Skill> getSource(ItemStack item) {
         for (Map.Entry<FishingXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(FishingXpSource.class).entrySet()) {
             if (plugin.getItemRegistry().passesFilter(item, entry.getKey().getItem(), entry.getValue())) { // Return source that passes item filter
-                return new Pair<>(entry.getKey(), entry.getValue());
+                return Pair.fromEntry(entry);
             }
         }
         return null;

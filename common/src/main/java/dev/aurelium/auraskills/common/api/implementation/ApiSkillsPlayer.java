@@ -23,7 +23,7 @@ public class ApiSkillsPlayer implements SkillsPlayer {
         this.plugin = user.getPlugin();
     }
 
-    public User getPlayerData() {
+    public User getUser() {
         return user;
     }
 

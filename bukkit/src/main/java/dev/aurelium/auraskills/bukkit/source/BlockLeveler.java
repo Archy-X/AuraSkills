@@ -35,8 +35,8 @@ public class BlockLeveler extends SourceLeveler {
             return;
         }
 
-        BlockXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        BlockXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
 
@@ -57,8 +57,8 @@ public class BlockLeveler extends SourceLeveler {
             return;
         }
 
-        BlockXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        BlockXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(event, player, block.getLocation(), skill)) return;
 
@@ -70,7 +70,7 @@ public class BlockLeveler extends SourceLeveler {
         if (sourcePair == null) {
             return false;
         }
-        return sourcePair.getFirst().equals(source);
+        return sourcePair.first().equals(source);
     }
 
     @Nullable
@@ -79,7 +79,6 @@ public class BlockLeveler extends SourceLeveler {
         sources = filterByTrigger(sources, trigger);
         for (Map.Entry<BlockXpSource, Skill> entry : sources.entrySet()) {
             BlockXpSource source = entry.getKey();
-            Skill skill = entry.getValue();
 
             // Check block type (material)
             boolean blockMatches = false;
@@ -129,7 +128,7 @@ public class BlockLeveler extends SourceLeveler {
                 continue;
             }
 
-            return new Pair<>(source, skill);
+            return Pair.fromEntry(entry);
         }
         return null;
     }

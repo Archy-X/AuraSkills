@@ -39,6 +39,10 @@ public abstract class SourceLeveler implements Listener {
         return isDisabled(skill) || isCancelled(event, skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
     }
 
+    protected boolean failsChecks(dev.aurelium.auraskills.api.event.Cancellable event, Player player, Location location, Skill skill) {
+        return isDisabled(skill) || isCancelled(event, skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
+    }
+
     protected boolean failsChecks(Player player, Location location, Skill skill) {
         return isDisabled(skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
     }
@@ -48,6 +52,10 @@ public abstract class SourceLeveler implements Listener {
     }
 
     protected boolean isCancelled(Cancellable event, Skill skill) {
+        return skill.optionBoolean("check_cancelled", true) && event.isCancelled();
+    }
+
+    protected boolean isCancelled(dev.aurelium.auraskills.api.event.Cancellable event, Skill skill) {
         return skill.optionBoolean("check_cancelled", true) && event.isCancelled();
     }
 

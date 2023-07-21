@@ -5,7 +5,6 @@ import dev.aurelium.auraskills.api.source.type.GrindstoneXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.source.SourceType;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
@@ -16,7 +15,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -43,11 +41,11 @@ public class GrindstoneLeveler extends SourceLeveler {
 
         if (event.getSlotType() != InventoryType.SlotType.RESULT) return;
 
-        var sourcePair = getSource();
+        var sourcePair = plugin.getSkillManager().getSingleSourceOfType(GrindstoneXpSource.class);
         if (sourcePair == null) return;
 
-        GrindstoneXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        GrindstoneXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         Location location = inventory.getLocation() != null ? inventory.getLocation() : player.getLocation();
 
@@ -56,14 +54,6 @@ public class GrindstoneLeveler extends SourceLeveler {
         double multiplier = getTotalLevelMultiplier(source, inventory, skill);
 
         plugin.getLevelManager().addXp(plugin.getUser(player), skill, multiplier * source.getXp());
-    }
-
-    @Nullable
-    private Pair<GrindstoneXpSource, Skill> getSource() {
-        // Get the first source matching type since there are no filters in the source type itself
-        var sources = plugin.getSkillManager().getSourcesOfType(GrindstoneXpSource.class);
-        var opt = sources.entrySet().stream().findFirst();
-        return opt.map(entry -> new Pair<>(entry.getKey(), entry.getValue())).orElse(null);
     }
 
     private double getTotalLevelMultiplier(GrindstoneXpSource source, Inventory inventory, Skill skill) {

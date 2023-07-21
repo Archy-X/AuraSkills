@@ -1,10 +1,9 @@
 package dev.aurelium.auraskills.common.event;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsEvent;
-import dev.aurelium.auraskills.api.event.EventManager;
-import dev.aurelium.auraskills.api.event.RegisteredEvent;
+import dev.aurelium.auraskills.api.event.*;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 
+import java.lang.reflect.Method;
 import java.util.function.Consumer;
 
 public class AuraSkillsEventManager implements EventManager {
@@ -29,6 +28,33 @@ public class AuraSkillsEventManager implements EventManager {
     @Override
     public <T extends AuraSkillsEvent> RegisteredEvent<T> registerHandler(Object plugin, Class<T> eventClass, Consumer<? super T> handler) {
         return subscribe(plugin, eventClass, handler);
+    }
+
+    public void registerEvents(Object plugin, AuraSkillsListener listener) {
+        for (Method method : listener.getClass().getDeclaredMethods()) {
+            if (!method.isAnnotationPresent(AuraSkillsEventHandler.class)) {
+                return;
+            }
+
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            if (parameterTypes.length != 1) {
+                return;
+            }
+
+            Class<?> eventType = parameterTypes[0];
+            if (!AuraSkillsEvent.class.isAssignableFrom(eventType)) {
+                return;
+            }
+            Class<? extends AuraSkillsEvent> casted = eventType.asSubclass(AuraSkillsEvent.class);
+
+            subscribe(plugin, casted, event -> {
+                try {
+                    method.invoke(listener, event);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
     }
 
     public AuraSkillsEventBus getEventBus() {

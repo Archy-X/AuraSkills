@@ -53,8 +53,8 @@ public class EntityLeveler extends SourceLeveler {
         Pair<EntityXpSource, Skill> sourcePair = getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
         if (sourcePair == null) return;
 
-        EntityXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        EntityXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(player, entity.getLocation(), skill)) return;
 
@@ -71,16 +71,16 @@ public class EntityLeveler extends SourceLeveler {
         Pair<Player, EntityXpSource.EntityDamagers> damagerPair = resolveDamager(event.getDamager(), event.getCause());
         if (damagerPair == null) return;
 
-        Player player = damagerPair.getFirst();
+        Player player = damagerPair.first();
         User user = plugin.getUser(player);
-        EntityXpSource.EntityDamagers damager = damagerPair.getSecond();
+        EntityXpSource.EntityDamagers damager = damagerPair.second();
 
         // Get matching source with damage trigger
         Pair<EntityXpSource, Skill> sourcePair = getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
         if (sourcePair == null) return;
 
-        EntityXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        EntityXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(event, player, entity.getLocation(), skill)) return;
 

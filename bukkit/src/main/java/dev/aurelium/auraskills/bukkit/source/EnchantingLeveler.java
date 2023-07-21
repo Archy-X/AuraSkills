@@ -30,8 +30,8 @@ public class EnchantingLeveler extends SourceLeveler {
         var sourcePair = getSource(event.getItem());
         if (sourcePair == null) return;
 
-        EnchantingXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        EnchantingXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(event, player, event.getEnchantBlock().getLocation(), skill)) return;
 
@@ -44,7 +44,7 @@ public class EnchantingLeveler extends SourceLeveler {
     private Pair<EnchantingXpSource, Skill> getSource(ItemStack item) {
         for (Map.Entry<EnchantingXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(EnchantingXpSource.class).entrySet()) {
             if (plugin.getItemRegistry().passesFilter(item, entry.getKey().getItem())) { // Return source that passes item filter
-                return new Pair<>(entry.getKey(), entry.getValue());
+                return Pair.fromEntry(entry);
             }
         }
         return null;

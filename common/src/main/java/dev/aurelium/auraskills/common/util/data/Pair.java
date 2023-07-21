@@ -1,21 +1,11 @@
 package dev.aurelium.auraskills.common.util.data;
 
-public class Pair<T, V> {
+import java.util.Map;
 
-    private final T first;
-    private final V second;
+public record Pair<T, V>(T first, V second) {
 
-    public Pair(T first, V second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    public T getFirst() {
-        return first;
-    }
-
-    public V getSecond() {
-        return second;
+    public static <T, V> Pair<T, V> fromEntry(Map.Entry<T, V> entry) {
+        return new Pair<>(entry.getKey(), entry.getValue());
     }
 
 }

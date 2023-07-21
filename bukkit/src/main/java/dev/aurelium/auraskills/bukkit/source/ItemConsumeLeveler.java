@@ -26,8 +26,8 @@ public class ItemConsumeLeveler extends SourceLeveler {
         var sourcePair = getSource(event.getItem());
         if (sourcePair == null) return;
 
-        ItemConsumeXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        ItemConsumeXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         if (failsChecks(event, player, player.getLocation(), skill)) return;
 
@@ -37,7 +37,7 @@ public class ItemConsumeLeveler extends SourceLeveler {
     private Pair<ItemConsumeXpSource, Skill> getSource(ItemStack item) {
         for (Map.Entry<ItemConsumeXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(ItemConsumeXpSource.class).entrySet()) {
             if (plugin.getItemRegistry().passesFilter(item, entry.getKey().getItem())) { // Return source that passes item filter
-                return new Pair<>(entry.getKey(), entry.getValue());
+                return Pair.fromEntry(entry);
             }
         }
         return null;

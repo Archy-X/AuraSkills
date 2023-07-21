@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.util.data.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -105,6 +106,13 @@ public class SkillManager {
             }
         }
         return null;
+    }
+
+    @Nullable
+    public <T extends XpSource> Pair<T, Skill> getSingleSourceOfType(Class<T> typeClass) {
+        var sources = plugin.getSkillManager().getSourcesOfType(typeClass);
+        var opt = sources.entrySet().stream().findFirst();
+        return opt.map(entry -> new Pair<>(entry.getKey(), entry.getValue())).orElse(null);
     }
 
 }

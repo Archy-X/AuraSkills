@@ -71,8 +71,8 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
 
         var originalSource = getSource(block);
 
-        BlockXpSource source = originalSource.getFirst();
-        Skill skill = originalSource.getSecond();
+        BlockXpSource source = originalSource.first();
+        Skill skill = originalSource.second();
 
         LootTable table = plugin.getLootTableManager().getLootTable(skill);
         if (table == null) return;

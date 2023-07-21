@@ -50,8 +50,8 @@ public class AnvilLeveler extends SourceLeveler {
         Pair<AnvilXpSource, Skill> sourcePair = getSource(leftItem, rightItem);
         if (sourcePair == null) return;
 
-        AnvilXpSource source = sourcePair.getFirst();
-        Skill skill = sourcePair.getSecond();
+        AnvilXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
 
         Location location = inventory.getLocation() != null ? inventory.getLocation() : player.getLocation();
 
@@ -86,7 +86,7 @@ public class AnvilLeveler extends SourceLeveler {
         for (Map.Entry<AnvilXpSource, Skill> entry : sources.entrySet()) {
             AnvilXpSource source = entry.getKey();
             if (plugin.getItemRegistry().passesFilter(leftItem, source.getLeftItem()) && plugin.getItemRegistry().passesFilter(rightItem, source.getRightItem())) {
-                return new Pair<>(source, entry.getValue());
+                return Pair.fromEntry(entry);
             }
         }
         return null;
