@@ -38,7 +38,6 @@ public abstract class User {
     private final Map<Stat, Double> statLevels;
     private final Map<String, StatModifier> statModifiers;
 
-    private final Map<Trait, Double> traitLevels;
     private final Map<String, TraitModifier> traitModifiers;
 
     private double mana;
@@ -63,7 +62,6 @@ public abstract class User {
         this.skillXp = new ConcurrentHashMap<>();
         this.statLevels = new ConcurrentHashMap<>();
         this.statModifiers = new ConcurrentHashMap<>();
-        this.traitLevels = new ConcurrentHashMap<>();
         this.traitModifiers = new ConcurrentHashMap<>();
         this.abilityData = new ConcurrentHashMap<>();
         this.metadata = new ConcurrentHashMap<>();
@@ -195,28 +193,15 @@ public abstract class User {
     }
 
     public double getTraitLevel(Trait trait) {
-        return traitLevels.getOrDefault(trait, 0.0);
-    }
-
-    public void setTraitLevel(Trait trait, double level) {
-        traitLevels.put(trait, level);
-        if (level > 0.0) { // Mark as modified
-            blank = false;
+        // Calculate base level from stats
+        double level = 0.0;
+        for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
+            level += getStatLevel(stat) * stat.getTraitModifier(trait);
         }
-    }
-
-    public void addTraitLevel(Trait trait, double level) {
-        traitLevels.merge(trait, level, Double::sum);
-        if (level > 0.0) { // Mark as modified
-            blank = false;
-        }
-    }
-
-    public double getBaseTraitLevel(Trait trait) {
-        double level = getTraitLevel(trait);
+        // Add modifiers
         for (TraitModifier modifier : traitModifiers.values()) {
-            if (modifier.trait() == trait) {
-                level -= modifier.value();
+            if (modifier.trait().equals(trait)) {
+                level += modifier.value();
             }
         }
         return level;
@@ -235,7 +220,7 @@ public abstract class User {
     }
 
     public void addTraitModifier(TraitModifier modifier, boolean reload) {
-        addModifier(modifier, reload, traitModifiers, traitLevels);
+        addModifier(modifier, reload, traitModifiers, null);
     }
 
     public boolean removeTraitModifier(String name) {
@@ -243,10 +228,10 @@ public abstract class User {
     }
 
     public boolean removeTraitModifier(String name, boolean reload) {
-        return removeModifier(name, reload, traitModifiers, traitLevels);
+        return removeModifier(name, reload, traitModifiers, null);
     }
 
-    private <T extends AuraSkillsModifier<V>, V> void addModifier(T modifier, boolean reload, Map<String, T> map, Map<V, Double> levels) {
+    private <T extends AuraSkillsModifier<V>, V> void addModifier(T modifier, boolean reload, Map<String, T> map, @Nullable Map<V, Double> levels) {
         if (map.containsKey(modifier.name())) {
             AuraSkillsModifier<V> oldModifier = map.get(modifier.name());
             if (oldModifier.type() == modifier.type() && oldModifier.value() == modifier.value()) {
@@ -255,7 +240,9 @@ public abstract class User {
             removeModifier(modifier.name(), reload, map, levels);
         }
         map.put(modifier.name(), modifier);
-        levels.put(modifier.type(), levels.get(modifier.type()) + modifier.value());
+        if (levels != null) {
+            levels.put(modifier.type(), levels.get(modifier.type()) + modifier.value());
+        }
         // Reloads modifier type
         if (reload) {
             plugin.getStatManager().reload(this, modifier.type());
@@ -263,11 +250,13 @@ public abstract class User {
         blank = false;
     }
 
-    private <T extends AuraSkillsModifier<V>, V> boolean removeModifier(String name, boolean reload, Map<String, T> map, Map<V, Double> levels) {
+    private <T extends AuraSkillsModifier<V>, V> boolean removeModifier(String name, boolean reload, Map<String, T> map, @Nullable Map<V, Double> levels) {
         AuraSkillsModifier<V> modifier = map.get(name);
         if (modifier == null) return false;
-        levels.put(modifier.type(), levels.get(modifier.type()) - modifier.value());
-        statModifiers.remove(name);
+        if (levels != null) {
+            levels.put(modifier.type(), levels.get(modifier.type()) - modifier.value());
+        }
+        map.remove(name);
         // Reloads modifier type
         if (reload) {
             plugin.getStatManager().reload(this, modifier.type());

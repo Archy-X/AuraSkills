@@ -1,13 +1,12 @@
 package dev.aurelium.auraskills.common.trait;
 
+import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitProvider;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class TraitManager implements TraitProvider {
 
@@ -36,4 +35,15 @@ public class TraitManager implements TraitProvider {
     public String getDisplayName(Trait trait, Locale locale) {
         return plugin.getMessageProvider().getTraitDisplayName(trait, locale);
     }
+
+    public Set<Stat> getLinkedStats(Trait trait) {
+        Set<Stat> set = new HashSet<>();
+        for (Stat stat : plugin.getStatManager().getStatValues()) {
+            if (stat.getTraits().contains(trait)) {
+                set.add(stat);
+            }
+        }
+        return set;
+    }
+
 }

@@ -45,6 +45,7 @@ public abstract class StatManager {
     public Set<Stat> getStatValues() {
         Set<Stat> stats = new HashSet<>();
         for (LoadedStat loaded : statMap.values()) {
+            if (!loaded.options().enabled()) continue;
             stats.add(loaded.stat());
         }
         return stats;
