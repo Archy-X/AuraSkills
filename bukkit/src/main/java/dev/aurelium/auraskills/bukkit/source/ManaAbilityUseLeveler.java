@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.bukkit.source;
 
+import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
+import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -14,12 +16,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class ManaAbilityUseLeveler extends SourceLeveler {
+public class ManaAbilityUseLeveler extends SourceLeveler implements AuraSkillsListener {
 
     public ManaAbilityUseLeveler(AuraSkills plugin) {
         super(plugin, SourceType.MANA_ABILITY_USE);
     }
 
+    @AuraSkillsEventHandler
     public void onManaAbilityActivate(ManaAbilityActivateEvent event) {
         Player player = ((BukkitUser) ((ApiSkillsPlayer) event.getSkillsPlayer()).getUser()).getPlayer();
 

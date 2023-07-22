@@ -39,6 +39,7 @@ public class BukkitLevelManager extends LevelManager {
         registerLeveler(new ItemConsumeLeveler(plugin));
         registerLeveler(new JumpingLeveler(plugin));
         registerLeveler(new ManaAbilityUseLeveler(plugin));
+        registerLeveler(new PotionSplashLeveler(plugin));
     }
 
     private void registerLeveler(SourceLeveler leveler) {

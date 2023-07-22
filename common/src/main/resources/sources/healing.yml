@@ -5,11 +5,12 @@ default:
 sources:
   drink_regular:
     type: item_consume
-    item: potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      extended: false
-      upgraded: false
+    item:
+      material: potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        extended: false
+        upgraded: false
     xp: 10
     menu_item:
       material: potion
@@ -17,10 +18,11 @@ sources:
         type: speed
   drink_extended:
     type: item_consume
-    item: potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      extended: true
+    item:
+      material: potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        extended: true
     xp: 15
     menu_item:
       material: potion
@@ -28,10 +30,11 @@ sources:
         type: night_vision
   drink_upgraded:
     type: item_consume
-    item: potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      upgraded: true
+    item:
+      material: potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        upgraded: true
     xp: 15
     menu_item:
       material: potion
@@ -39,11 +42,12 @@ sources:
         type: strength
   splash_regular:
     type: potion_splash
-    item: splash_potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      extended: false
-      upgraded: false
+    item:
+      material: splash_potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        extended: false
+        upgraded: false
     xp: 20
     menu_item:
       material: splash_potion
@@ -51,10 +55,11 @@ sources:
         type: speed
   splash_extended:
     type: potion_splash
-    item: splash_potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      extended: true
+    item:
+      material: splash_potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        extended: true
     xp: 25
     menu_item:
       material: splash_potion
@@ -62,10 +67,11 @@ sources:
         type: night_vision
   splash_upgraded:
     type: potion_splash
-    item: splash_potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      upgraded: true
+    item:
+      material: splash_potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        upgraded: true
     xp: 25
     menu_item:
       material: splash_potion
@@ -73,11 +79,12 @@ sources:
         type: strength
   lingering_regular:
     type: potion_splash
-    item: lingering_potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      extended: false
-      upgraded: false
+    item:
+      material: lingering_potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        extended: false
+        upgraded: false
     xp: 30
     menu_item:
       material: lingering_potion
@@ -85,10 +92,11 @@ sources:
         type: speed
   lingering_extended:
     type: potion_splash
-    item: lingering_potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      extended: true
+    item:
+      material: lingering_potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        extended: true
     xp: 35
     menu_item:
       material: lingering_potion
@@ -96,10 +104,11 @@ sources:
         type: night_vision
   lingering_upgraded:
     type: potion_splash
-    item: lingering_potion
-    potion_data:
-      excluded_types: [ mundane, thick, water, awkward ]
-      upgraded: true
+    item:
+      material: lingering_potion
+      potion_data:
+        excluded_types: [ mundane, thick, water, awkward ]
+        upgraded: true
     xp: 35
     menu_item:
       material: lingering_potion
