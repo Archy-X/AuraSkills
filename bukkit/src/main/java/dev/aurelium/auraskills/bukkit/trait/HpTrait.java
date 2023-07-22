@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -92,7 +93,8 @@ public class HpTrait extends TraitImpl {
     }
 
     private void setHealth(Player player) {
-        double modifier = getTraitLevel(player, Traits.HP);
+        User user = plugin.getUser(player);
+        double modifier = user.getBonusTraitLevel(Traits.HP);
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
         double originalMaxHealth = attribute.getValue();

@@ -192,9 +192,13 @@ public abstract class User {
         return removeModifier(name, reload, statModifiers, statLevels);
     }
 
-    public double getTraitLevel(Trait trait) {
-        double level = plugin.getTraitManager().getBaseLevel(this, trait);
-        // Calculate level from stats
+    public double getEffectiveTraitLevel(Trait trait) {
+        double base = plugin.getTraitManager().getBaseLevel(this, trait);
+        return base + getBonusTraitLevel(trait);
+    }
+
+    public double getBonusTraitLevel(Trait trait) {
+        double level = 0.0;
         for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
             level += getStatLevel(stat) * stat.getTraitModifier(trait);
         }
@@ -269,8 +273,7 @@ public abstract class User {
     }
 
     public double getMaxMana() {
-        double baseMana = plugin.config().getDouble(Option.BASE_MANA);
-        return baseMana + getTraitLevel(Traits.MAX_MANA);
+        return getEffectiveTraitLevel(Traits.MAX_MANA);
     }
 
     public void setMana(double mana) {

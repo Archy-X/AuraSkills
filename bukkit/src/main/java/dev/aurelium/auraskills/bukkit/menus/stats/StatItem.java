@@ -112,7 +112,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         double saturatedRegen = regenLevel * plugin.configDouble(Option.REGENERATION_SATURATED_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double hungerFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double almostFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        double manaRegen = user.getTraitLevel(Traits.MANA_REGENERATION);
+        double manaRegen = user.getEffectiveTraitLevel(Traits.MANA_REGENERATION);
         return TextUtil.replace(plugin.getMsg(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
                 + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(hungerFullRegen))
                 + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))

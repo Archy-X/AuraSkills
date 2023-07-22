@@ -32,7 +32,7 @@ public class ManaRegenerationTrait extends TraitImpl {
                     double maxMana = user.getMaxMana();
                     if (originalMana < maxMana) {
                         if (!user.getAbilityData(ManaAbilities.ABSORPTION).getBoolean("activated")) {
-                            double regen = user.getTraitLevel(Traits.MANA_REGENERATION);
+                            double regen = user.getEffectiveTraitLevel(Traits.MANA_REGENERATION);
                             double finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
                             ManaRegenerateEvent event = new ManaRegenerateEvent(player, finalRegen);
                             Bukkit.getPluginManager().callEvent(event);
