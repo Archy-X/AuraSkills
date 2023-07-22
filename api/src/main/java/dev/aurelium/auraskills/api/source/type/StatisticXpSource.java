@@ -20,4 +20,13 @@ public interface StatisticXpSource extends XpSource {
      */
     double getMultiplier();
 
+    /**
+     * Gets the minimum value the statistic must increase by for the source to give xp.
+     * If the statistic increases by less than this value, it will still be accounted for in
+     * the next time XP is given.
+     *
+     * @return The minimum increase
+     */
+    int getMinimumIncrease();
+
 }

@@ -17,7 +17,8 @@ public class StatisticSourceSerializer extends SourceSerializer<StatisticSource>
     public StatisticSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         String statistic = required(source, "statistic").getString();
         double multiplier = source.node("multiplier").getDouble(1.0);
+        int minimumIncrease = source.node("minimum_increase").getInt(1);
 
-        return new StatisticSource(plugin, getId(), getXp(source), statistic, multiplier);
+        return new StatisticSource(plugin, getId(), getXp(source), statistic, multiplier, minimumIncrease);
     }
 }

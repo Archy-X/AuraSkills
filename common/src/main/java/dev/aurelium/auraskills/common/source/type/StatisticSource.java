@@ -9,11 +9,13 @@ public class StatisticSource extends Source implements StatisticXpSource {
 
     private final String statistic;
     private final double multiplier;
+    private final int minimumIncrease;
 
-    public StatisticSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String statistic, double multiplier) {
+    public StatisticSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String statistic, double multiplier, int minimumIncrease) {
         super(plugin, id, xp);
         this.statistic = statistic;
         this.multiplier = multiplier;
+        this.minimumIncrease = minimumIncrease;
     }
 
     @Override
@@ -24,5 +26,10 @@ public class StatisticSource extends Source implements StatisticXpSource {
     @Override
     public double getMultiplier() {
         return multiplier;
+    }
+
+    @Override
+    public int getMinimumIncrease() {
+        return minimumIncrease;
     }
 }

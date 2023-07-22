@@ -5,18 +5,21 @@ sources:
   walk_per_meter:
     statistic: walk_one_cm
     xp: 0.333
+    minimum_increase: 1000
     menu_item:
       material: iron_boots
     unit: '{sources.units.meter}'
   sprint_per_meter:
     statistic: sprint_one_cm
     xp: 0.1
+    minimum_increase: 1000
     menu_item:
       material: leather_boots
     unit: '{sources.units.meter}'
   swim_per_meter:
     statistic: swim_one_cm
     xp: 1
+    minimum_increase: 1000
     menu_item:
       material: water_bucket
     unit: '{sources.units.meter}'
