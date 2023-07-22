@@ -13,11 +13,12 @@ import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
-import dev.aurelium.auraskills.bukkit.region.RegionManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
+import dev.aurelium.auraskills.bukkit.region.RegionManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
+import dev.aurelium.auraskills.bukkit.trait.BukkitTraitManager;
 import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
@@ -38,7 +39,6 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
@@ -53,9 +53,9 @@ import dev.aurelium.auraskills.common.storage.sql.DatabaseCredentials;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
-import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.entity.Player;
@@ -77,7 +77,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private AbilityManager abilityManager;
     private ManaAbilityManager manaAbilityManager;
     private StatManager statManager;
-    private TraitManager traitManager;
+    private BukkitTraitManager traitManager;
     private SkillRegistry skillRegistry;
     private StatRegistry statRegistry;
     private TraitRegistry traitRegistry;
@@ -121,7 +121,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         abilityManager = new AbilityManager(this);
         manaAbilityManager = new ManaAbilityManager(this);
         statManager = new BukkitStatManager(this);
-        traitManager = new TraitManager(this);
+        traitManager = new BukkitTraitManager(this);
         regionManager = new RegionManager(this);
 
         // Init registries
@@ -336,7 +336,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public TraitManager getTraitManager() {
+    public BukkitTraitManager getTraitManager() {
         return traitManager;
     }
 

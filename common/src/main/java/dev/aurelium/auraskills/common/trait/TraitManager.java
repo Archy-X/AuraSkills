@@ -4,11 +4,12 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitProvider;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class TraitManager implements TraitProvider {
+public abstract class TraitManager implements TraitProvider {
 
     private final AuraSkillsPlugin plugin;
     private final Map<Trait, LoadedTrait> traitMap;
@@ -17,6 +18,8 @@ public class TraitManager implements TraitProvider {
         this.plugin = plugin;
         this.traitMap = new HashMap<>();
     }
+
+    public abstract double getBaseLevel(User user, Trait trait);
 
     @NotNull
     public LoadedTrait getTrait(Trait trait) {

@@ -4,13 +4,13 @@ import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.player.SkillsPlayer;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
-import dev.aurelium.auraskills.api.stat.Stats;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
@@ -193,8 +193,8 @@ public abstract class User {
     }
 
     public double getTraitLevel(Trait trait) {
-        // Calculate base level from stats
-        double level = 0.0;
+        double level = plugin.getTraitManager().getBaseLevel(this, trait);
+        // Calculate level from stats
         for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
             level += getStatLevel(stat) * stat.getTraitModifier(trait);
         }
@@ -270,14 +270,7 @@ public abstract class User {
 
     public double getMaxMana() {
         double baseMana = plugin.config().getDouble(Option.BASE_MANA);
-        double maxManaPerWisdom = plugin.config().getDouble(Option.WISDOM_MAX_MANA_PER_WISDOM);
-        return baseMana + (maxManaPerWisdom * getStatLevel(Stats.WISDOM));
-    }
-
-    public double getManaRegen() {
-        double baseManaRegen = plugin.config().getDouble(Option.REGENERATION_BASE_REGEN);
-        double manaModifier = plugin.config().getDouble(Option.REGENERATION_MANA_MODIFIER);
-        return baseManaRegen + getStatLevel(Stats.REGENERATION) * manaModifier;
+        return baseMana + getTraitLevel(Traits.MAX_MANA);
     }
 
     public void setMana(double mana) {

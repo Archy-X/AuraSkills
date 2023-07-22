@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
 import dev.aurelium.auraskills.api.event.data.PlayerDataLoadEvent;
+import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -22,14 +23,28 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class HpTrait extends TraitProvider {
+public class HpTrait extends TraitImpl {
 
     private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
     private final Map<Integer, Double> hearts = new HashMap<>();
     private static final double threshold = 0.1;
 
     HpTrait(AuraSkills plugin) {
-        super(plugin, Traits.HP);
+        super(plugin);
+    }
+
+    @Override
+    public double getBaseLevel(Player player, Trait trait) {
+        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (attribute == null) return 0.0;
+        double current = attribute.getValue();
+        // Subtract skills attribute value
+        for (AttributeModifier am : attribute.getModifiers()) {
+            if (am.getName().equals("skillsHealth")) {
+                current -= am.getAmount();
+            }
+        }
+        return current;
     }
 
     @EventHandler
@@ -77,7 +92,7 @@ public class HpTrait extends TraitProvider {
     }
 
     private void setHealth(Player player) {
-        double modifier = getTraitLevel(player);
+        double modifier = getTraitLevel(player, Traits.HP);
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
         double originalMaxHealth = attribute.getValue();

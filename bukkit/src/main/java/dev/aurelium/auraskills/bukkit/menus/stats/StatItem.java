@@ -6,6 +6,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.common.config.Option;
@@ -111,7 +112,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         double saturatedRegen = regenLevel * plugin.configDouble(Option.REGENERATION_SATURATED_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double hungerFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double almostFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        double manaRegen = user.getManaRegen();
+        double manaRegen = user.getTraitLevel(Traits.MANA_REGENERATION);
         return TextUtil.replace(plugin.getMsg(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
                 + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(hungerFullRegen))
                 + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))
