@@ -20,6 +20,7 @@ public class BukkitTraitManager extends TraitManager {
     public BukkitTraitManager(AuraSkills plugin) {
         super(plugin);
         this.plugin = plugin;
+        registerTraitImplementations();
     }
 
     public void registerTraitImplementations() {
@@ -28,6 +29,7 @@ public class BukkitTraitManager extends TraitManager {
         registerTraitImpl(Traits.SATURATION_REGENERATION, regen);
         registerTraitImpl(Traits.HUNGER_REGENERATION, regen);
         registerTraitImpl(Traits.MANA_REGENERATION, new ManaRegenerationTrait(plugin));
+        registerTraitImpl(Traits.LUCK, new LuckTrait(plugin));
     }
 
     public void registerTraitImpl(Trait trait, TraitImpl traitImpl) {
