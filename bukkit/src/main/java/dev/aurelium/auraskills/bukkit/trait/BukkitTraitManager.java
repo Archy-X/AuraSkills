@@ -27,6 +27,7 @@ public class BukkitTraitManager extends TraitManager {
         RegenerationTrait regen = new RegenerationTrait(plugin);
         registerTraitImpl(Traits.SATURATION_REGENERATION, regen);
         registerTraitImpl(Traits.HUNGER_REGENERATION, regen);
+        registerTraitImpl(Traits.MANA_REGENERATION, new ManaRegenerationTrait(plugin));
     }
 
     public void registerTraitImpl(Trait trait, TraitImpl traitImpl) {

@@ -11,10 +11,13 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.concurrent.TimeUnit;
+
 public class ManaRegenerationTrait extends TraitImpl {
 
     ManaRegenerationTrait(AuraSkills plugin) {
         super(plugin);
+        startRegen();
     }
 
     @Override
@@ -44,7 +47,7 @@ public class ManaRegenerationTrait extends TraitImpl {
                 }
             }
         };
-
+        plugin.getScheduler().timerSync(task, 0, 1, TimeUnit.SECONDS);
     }
 
 }
