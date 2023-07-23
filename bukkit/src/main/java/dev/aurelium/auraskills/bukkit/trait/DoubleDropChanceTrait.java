@@ -1,0 +1,96 @@
+package dev.aurelium.auraskills.bukkit.trait;
+
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
+import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Random;
+
+public class DoubleDropChanceTrait extends TraitImpl {
+
+    private final Random r = new Random();
+
+    DoubleDropChanceTrait(AuraSkills plugin) {
+        super(plugin);
+    }
+
+    @Override
+    public double getBaseLevel(Player player, Trait trait) {
+        return 0;
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (!Traits.DOUBLE_DROP_CHANCE.isEnabled()) return;
+        if (event.isCancelled()) {
+            return;
+        }
+
+        Player player = event.getPlayer();
+        Block block = event.getBlock();
+        //Checks if in blocked or disabled world
+        if (plugin.getWorldManager().isInBlockedWorld(block.getLocation())) {
+            return;
+        }
+        //Checks if in blocked region
+        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
+            WorldGuardHook worldGuard = plugin.getHookManager().getHook(WorldGuardHook.class);
+            if (worldGuard.isInBlockedRegion(block.getLocation())) {
+                return;
+            }
+            // Check if blocked by flags
+            else if (worldGuard.blockedByFlag(block.getLocation(), player, WorldGuardHook.FlagKey.XP_GAIN)) {
+                return;
+            }
+        }
+        if (!event.isDropItems()) {
+            return;
+        }
+        if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
+            return;
+        }
+        if (plugin.getRegionManager().isPlacedBlock(block)) return;
+        User user = plugin.getUser(player);
+        Material mat = block.getType();
+        if (mat.equals(Material.STONE) || mat.equals(Material.COBBLESTONE) || mat.equals(Material.SAND) || mat.equals(Material.GRAVEL)
+                || mat.equals(Material.DIRT) || mat.equals(Material.GRASS_BLOCK) || mat.equals(Material.ANDESITE)
+                || mat.equals(Material.DIORITE) || mat.equals(Material.GRANITE)) {
+            //Calculate chance
+            double chance = user.getEffectiveTraitLevel(Traits.DOUBLE_DROP_CHANCE);
+            // TODO Implement max option
+            if (r.nextDouble() < chance) {
+                ItemStack tool = player.getInventory().getItemInMainHand();
+                Location location = block.getLocation().add(0.5, 0.5, 0.5);
+                for (ItemStack item : block.getDrops(tool)) {
+                    // If silk touch
+                    ItemStack itemToDrop;
+                    if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
+                        if (mat.equals(Material.STONE)) {
+                            itemToDrop = new ItemStack(Material.STONE);
+                        } else if (mat.equals(Material.GRASS_BLOCK)) {
+                            itemToDrop = new ItemStack(Material.GRASS_BLOCK);
+                        } else {
+                            itemToDrop = item.clone();
+                        }
+                    } else {
+                        itemToDrop = item.clone();
+                    }
+                    // TODO Implement loot drop event
+                    block.getWorld().dropItem(location, itemToDrop);
+                }
+            }
+        }
+    }
+}

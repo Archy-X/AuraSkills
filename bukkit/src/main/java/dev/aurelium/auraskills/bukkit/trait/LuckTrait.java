@@ -53,6 +53,7 @@ public class LuckTrait extends TraitImpl {
     }
 
     private void setLuck(Player player) {
+        if (!Traits.LUCK.isEnabled()) return;
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_LUCK);
         if (attribute == null) {
             return;

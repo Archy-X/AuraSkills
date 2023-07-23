@@ -4,9 +4,9 @@ import dev.aurelium.auraskills.common.util.data.OptionProvider;
 
 import java.util.Map;
 
-public class TraitConfig extends OptionProvider {
+public class TraitOptions extends OptionProvider {
 
-    public TraitConfig(Map<String, Object> optionMap) {
+    public TraitOptions(Map<String, Object> optionMap) {
         super(optionMap);
     }
 

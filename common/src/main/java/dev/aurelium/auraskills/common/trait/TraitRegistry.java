@@ -16,7 +16,7 @@ public class TraitRegistry extends Registry<Trait> {
     @Override
     public void registerDefaults() {
         for (Trait trait : Traits.values()) {
-            injectProvider(trait, TraitProvider.class, plugin.getTraitManager());
+            injectProvider(trait, TraitProvider.class, plugin.getTraitManager().getSupplier());
             this.register(trait.getId(), trait);
         }
     }

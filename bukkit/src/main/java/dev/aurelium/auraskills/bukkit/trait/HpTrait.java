@@ -67,6 +67,7 @@ public class HpTrait extends TraitImpl {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void worldChange(PlayerChangedWorldEvent event) {
+        if (!Traits.HP.isEnabled()) return;
         Player player = event.getPlayer();
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) && !plugin.getWorldManager().isDisabledWorld(event.getFrom().getName())) {
             worldChangeHealth.put(player.getUniqueId(), player.getHealth());
@@ -93,6 +94,7 @@ public class HpTrait extends TraitImpl {
     }
 
     private void setHealth(Player player) {
+        if (!Traits.HP.isEnabled()) return;
         User user = plugin.getUser(player);
         double modifier = user.getBonusTraitLevel(Traits.HP);
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -145,6 +147,7 @@ public class HpTrait extends TraitImpl {
     }
 
     private void applyScaling(Player player) {
+        if (!Traits.HP.isEnabled()) return;
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
 

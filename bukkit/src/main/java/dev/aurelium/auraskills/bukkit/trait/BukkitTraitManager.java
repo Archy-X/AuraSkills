@@ -30,6 +30,7 @@ public class BukkitTraitManager extends TraitManager {
         registerTraitImpl(Traits.HUNGER_REGENERATION, regen);
         registerTraitImpl(Traits.MANA_REGENERATION, new ManaRegenerationTrait(plugin));
         registerTraitImpl(Traits.LUCK, new LuckTrait(plugin));
+        registerTraitImpl(Traits.DOUBLE_DROP_CHANCE, new DoubleDropChanceTrait(plugin));
     }
 
     public void registerTraitImpl(Trait trait, TraitImpl traitImpl) {

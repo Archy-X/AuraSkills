@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.api.trait;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 
+import java.util.List;
 import java.util.Locale;
 
 public enum Traits implements Trait {
@@ -34,6 +35,11 @@ public enum Traits implements Trait {
     }
 
     @Override
+    public boolean isEnabled() {
+        return provider.isEnabled(this);
+    }
+
+    @Override
     public String getDisplayName(Locale locale) {
         validate();
         return provider.getDisplayName(this, locale);
@@ -45,4 +51,48 @@ public enum Traits implements Trait {
         }
     }
 
+    @Override
+    public boolean optionBoolean(String key) {
+        return provider.optionBoolean(this, key);
+    }
+
+    @Override
+    public boolean optionBoolean(String key, boolean def) {
+        return provider.optionBoolean(this, key, def);
+    }
+
+    @Override
+    public int optionInt(String key) {
+        return provider.optionInt(this, key);
+    }
+
+    @Override
+    public int optionInt(String key, int def) {
+        return provider.optionInt(this, key, def);
+    }
+
+    @Override
+    public double optionDouble(String key) {
+        return provider.optionDouble(this, key);
+    }
+
+    @Override
+    public double optionDouble(String key, double def) {
+        return provider.optionDouble(this, key, def);
+    }
+
+    @Override
+    public String optionString(String key) {
+        return provider.optionString(this, key);
+    }
+
+    @Override
+    public String optionString(String key, String def) {
+        return provider.optionString(this, key, def);
+    }
+
+    @Override
+    public List<String> optionStringList(String key) {
+        return provider.optionStringList(this, key);
+    }
 }

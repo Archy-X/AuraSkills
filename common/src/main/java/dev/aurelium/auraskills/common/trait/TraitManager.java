@@ -2,21 +2,29 @@ package dev.aurelium.auraskills.common.trait;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
-import dev.aurelium.auraskills.api.trait.TraitProvider;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public abstract class TraitManager implements TraitProvider {
+public abstract class TraitManager {
 
     private final AuraSkillsPlugin plugin;
     private final Map<Trait, LoadedTrait> traitMap;
+    private final TraitSupplier supplier;
 
     public TraitManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.traitMap = new HashMap<>();
+        this.supplier = new TraitSupplier(this, plugin.getMessageProvider());
+    }
+
+    public TraitSupplier getSupplier() {
+        return supplier;
     }
 
     public abstract double getBaseLevel(User user, Trait trait);
@@ -34,11 +42,6 @@ public abstract class TraitManager implements TraitProvider {
         traitMap.put(trait, loadedTrait);
     }
 
-    @Override
-    public String getDisplayName(Trait trait, Locale locale) {
-        return plugin.getMessageProvider().getTraitDisplayName(trait, locale);
-    }
-
     public Set<Stat> getLinkedStats(Trait trait) {
         Set<Stat> set = new HashSet<>();
         for (Stat stat : plugin.getStatManager().getStatValues()) {
@@ -49,4 +52,7 @@ public abstract class TraitManager implements TraitProvider {
         return set;
     }
 
+    public boolean isLoaded(Trait trait) {
+        return traitMap.containsKey(trait);
+    }
 }

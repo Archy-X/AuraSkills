@@ -47,8 +47,8 @@ public class TraitLoader {
             configMap.put((String) key, traitNode.node(key).raw());
         }
 
-        TraitConfig traitConfig = new TraitConfig(configMap);
-        return new LoadedTrait(trait, traitConfig);
+        TraitOptions traitOptions = new TraitOptions(configMap);
+        return new LoadedTrait(trait, traitOptions);
     }
 
 }

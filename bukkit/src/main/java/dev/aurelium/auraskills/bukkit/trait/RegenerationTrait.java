@@ -40,8 +40,10 @@ public class RegenerationTrait extends TraitImpl {
         }
         User user = plugin.getUser(player);
         if (player.getSaturation() > 0) {
+            if (!Traits.SATURATION_REGENERATION.isEnabled()) return;
             event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.SATURATION_REGENERATION));
         } else if (player.getFoodLevel() >= 14) {
+            if (!Traits.HUNGER_REGENERATION.isEnabled()) return;
             event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.HUNGER_REGENERATION));
         }
     }

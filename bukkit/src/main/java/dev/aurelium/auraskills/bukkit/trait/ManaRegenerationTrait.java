@@ -29,6 +29,7 @@ public class ManaRegenerationTrait extends TraitImpl {
         var task = new TaskRunnable() {
             @Override
             public void run() {
+                if (!Traits.MANA_REGENERATION.isEnabled()) return;
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     User user = plugin.getUser(player);
                     double originalMana = user.getMana();
