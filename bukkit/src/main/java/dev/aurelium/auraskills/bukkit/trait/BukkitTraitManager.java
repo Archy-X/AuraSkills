@@ -32,6 +32,8 @@ public class BukkitTraitManager extends TraitManager {
         registerTraitImpl(Traits.LUCK, new LuckTrait(plugin));
         registerTraitImpl(Traits.DOUBLE_DROP_CHANCE, new DoubleDropChanceTrait(plugin));
         registerTraitImpl(Traits.ATTACK_DAMAGE, new AttackDamageTrait(plugin));
+        registerTraitImpl(Traits.EXPERIENCE_GAIN, new ExperienceGainTrait(plugin));
+        registerTraitImpl(Traits.ANVIL_COST_REDUCTION, new AnvilCostReductionTrait(plugin));
     }
 
     public void registerTraitImpl(Trait trait, TraitImpl traitImpl) {
