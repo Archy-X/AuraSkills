@@ -49,5 +49,6 @@ traits:
   'auraskills:max_mana':
     enabled: true
     allow_overflow: true
+    base: 20
   'auraskills:incoming_damage_reduction':
     enabled: true

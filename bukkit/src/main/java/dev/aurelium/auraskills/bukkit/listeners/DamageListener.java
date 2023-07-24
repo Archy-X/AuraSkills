@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.listeners;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.trait.AttackDamageTrait;
+import dev.aurelium.auraskills.bukkit.trait.IncomingDamageReductionTrait;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.mechanics.DamageType;
 import org.bukkit.Material;
@@ -29,7 +30,12 @@ public class DamageListener implements Listener {
 
         // Gets the player who dealt damage
         Player player = getDamager(event.getDamager());
-        if (player == null) return;
+        if (player == null) {
+            if (event.getEntity() instanceof Player) {
+                onDamaged(event, (Player) event.getEntity());
+            }
+            return;
+        }
 
         // Check disabled world
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
@@ -40,9 +46,23 @@ public class DamageListener implements Listener {
 
         DamageType damageType = getDamageType(event, player);
 
-        //Applies strength
+        // Applies attack damage trait
         if (plugin.getTraitManager().getTraitImpl(Traits.ATTACK_DAMAGE) instanceof AttackDamageTrait attackDamage) {
             attackDamage.strength(event, user, damageType);
+        }
+    }
+
+    private void onDamaged(EntityDamageByEntityEvent event, Player player) {
+        // Check disabled world
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+            return;
+        }
+        if (event.isCancelled()) return;
+        User user = plugin.getUser(player);
+
+        // Handles incoming damage reduction trait
+        if (plugin.getTraitManager().getTraitImpl(Traits.INCOMING_DAMAGE_REDUCTION) instanceof IncomingDamageReductionTrait damageReduction) {
+            damageReduction.onDamage(event, user);
         }
     }
 
