@@ -42,6 +42,16 @@ public abstract class TraitManager {
         traitMap.put(trait, loadedTrait);
     }
 
+    public Set<Trait> getEnabledTraits() {
+        Set<Trait> skills = new HashSet<>();
+        for (LoadedTrait loaded : traitMap.values()) {
+            if (loaded.trait().isEnabled()) {
+                skills.add(loaded.trait());
+            }
+        }
+        return skills;
+    }
+
     public Set<Stat> getLinkedStats(Trait trait) {
         Set<Stat> set = new HashSet<>();
         for (Stat stat : plugin.getStatManager().getStatValues()) {

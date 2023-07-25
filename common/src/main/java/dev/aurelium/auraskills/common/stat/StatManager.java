@@ -15,7 +15,7 @@ import java.util.*;
  */
 public abstract class StatManager {
 
-    private final AuraSkillsPlugin plugin;
+    protected final AuraSkillsPlugin plugin;
     private final Map<Stat, LoadedStat> statMap;
     private final StatSupplier supplier;
 

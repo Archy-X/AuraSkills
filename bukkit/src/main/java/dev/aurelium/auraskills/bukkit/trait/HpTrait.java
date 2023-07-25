@@ -58,11 +58,10 @@ public class HpTrait extends TraitImpl {
         setHealth(BukkitUser.getPlayer(event.getPlayer()));
     }
 
-    public void reload(Player player) {
-        if (player != null) {
-            setHealth(player);
-            // TODO Remove Fleeting
-        }
+    @Override
+    public void reload(Player player, Trait trait) {
+        setHealth(player);
+        // TODO Remove Fleeting
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

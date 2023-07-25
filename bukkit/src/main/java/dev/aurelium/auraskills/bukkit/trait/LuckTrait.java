@@ -41,10 +41,9 @@ public class LuckTrait extends TraitImpl {
         setLuck(BukkitUser.getPlayer(event.getPlayer()));
     }
 
-    public void reload(Player player) {
-        if (player != null) {
-            setLuck(player);
-        }
+    @Override
+    public void reload(Player player, Trait trait) {
+        setLuck(player);
     }
 
     @EventHandler
