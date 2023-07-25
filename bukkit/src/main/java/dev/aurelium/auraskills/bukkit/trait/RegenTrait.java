@@ -11,9 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
-public class RegenerationTrait extends TraitImpl {
+public class RegenTrait extends TraitImpl {
 
-    public RegenerationTrait(AuraSkills plugin) {
+    public RegenTrait(AuraSkills plugin) {
         super(plugin);
     }
 
@@ -40,11 +40,11 @@ public class RegenerationTrait extends TraitImpl {
         }
         User user = plugin.getUser(player);
         if (player.getSaturation() > 0) {
-            if (!Traits.SATURATION_REGENERATION.isEnabled()) return;
-            event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.SATURATION_REGENERATION));
+            if (!Traits.SATURATION_REGEN.isEnabled()) return;
+            event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.SATURATION_REGEN));
         } else if (player.getFoodLevel() >= 14) {
-            if (!Traits.HUNGER_REGENERATION.isEnabled()) return;
-            event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.HUNGER_REGENERATION));
+            if (!Traits.HUNGER_REGEN.isEnabled()) return;
+            event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.HUNGER_REGEN));
         }
     }
 

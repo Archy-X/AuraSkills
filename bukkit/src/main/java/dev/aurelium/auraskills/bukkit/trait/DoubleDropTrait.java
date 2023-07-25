@@ -18,11 +18,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class DoubleDropChanceTrait extends TraitImpl {
+public class DoubleDropTrait extends TraitImpl {
 
     private final Random r = new Random();
 
-    DoubleDropChanceTrait(AuraSkills plugin) {
+    DoubleDropTrait(AuraSkills plugin) {
         super(plugin);
     }
 
@@ -33,7 +33,7 @@ public class DoubleDropChanceTrait extends TraitImpl {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!Traits.DOUBLE_DROP_CHANCE.isEnabled()) return;
+        if (!Traits.DOUBLE_DROP.isEnabled()) return;
         if (event.isCancelled()) {
             return;
         }
@@ -68,7 +68,7 @@ public class DoubleDropChanceTrait extends TraitImpl {
                 || mat.equals(Material.DIRT) || mat.equals(Material.GRASS_BLOCK) || mat.equals(Material.ANDESITE)
                 || mat.equals(Material.DIORITE) || mat.equals(Material.GRANITE)) {
             //Calculate chance
-            double chance = user.getEffectiveTraitLevel(Traits.DOUBLE_DROP_CHANCE);
+            double chance = user.getEffectiveTraitLevel(Traits.DOUBLE_DROP);
             // TODO Implement max option
             if (r.nextDouble() < chance) {
                 ItemStack tool = player.getInventory().getItemInMainHand();

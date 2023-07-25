@@ -13,9 +13,9 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
 
-public class ManaRegenerationTrait extends TraitImpl {
+public class ManaRegenTrait extends TraitImpl {
 
-    ManaRegenerationTrait(AuraSkills plugin) {
+    ManaRegenTrait(AuraSkills plugin) {
         super(plugin);
         startRegen();
     }
@@ -29,14 +29,14 @@ public class ManaRegenerationTrait extends TraitImpl {
         var task = new TaskRunnable() {
             @Override
             public void run() {
-                if (!Traits.MANA_REGENERATION.isEnabled()) return;
+                if (!Traits.MANA_REGEN.isEnabled()) return;
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     User user = plugin.getUser(player);
                     double originalMana = user.getMana();
                     double maxMana = user.getMaxMana();
                     if (originalMana < maxMana) {
                         if (!user.getAbilityData(ManaAbilities.ABSORPTION).getBoolean("activated")) {
-                            double regen = user.getEffectiveTraitLevel(Traits.MANA_REGENERATION);
+                            double regen = user.getEffectiveTraitLevel(Traits.MANA_REGEN);
                             double finalRegen = Math.min(originalMana + regen, maxMana) - originalMana;
                             ManaRegenerateEvent event = new ManaRegenerateEvent(player, finalRegen);
                             Bukkit.getPluginManager().callEvent(event);

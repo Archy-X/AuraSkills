@@ -9,9 +9,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 
-public class ExperienceGainTrait extends TraitImpl {
+public class ExperienceBonusTrait extends TraitImpl {
 
-    ExperienceGainTrait(AuraSkills plugin) {
+    ExperienceBonusTrait(AuraSkills plugin) {
         super(plugin);
     }
 
@@ -28,7 +28,7 @@ public class ExperienceGainTrait extends TraitImpl {
             return;
         }
         User user = plugin.getUser(player);
-        event.setAmount((int) (event.getAmount() * (1 + user.getEffectiveTraitLevel(Traits.EXPERIENCE_GAIN))));
+        event.setAmount((int) (event.getAmount() * (1 + user.getEffectiveTraitLevel(Traits.EXPERIENCE_BONUS))));
     }
 
 }

@@ -24,7 +24,7 @@ public class NamespacedId {
 
     @Override
     public String toString() {
-        return namespace + ":" + key;
+        return namespace + "/" + key;
     }
 
     public static NamespacedId from(String namespace, String key) {
@@ -32,7 +32,7 @@ public class NamespacedId {
     }
 
     public static NamespacedId fromString(String string) {
-        String[] split = string.split(":");
+        String[] split = string.split("/");
         if (split.length != 2) {
             throw new IllegalArgumentException("Invalid NamespacedId: " + string);
         }
@@ -40,7 +40,7 @@ public class NamespacedId {
     }
 
     public static NamespacedId fromStringOrDefault(String string) {
-        String[] split = string.split(":");
+        String[] split = string.split("/");
         if (split.length == 1) {
             return new NamespacedId(NamespacedId.AURASKILLS, split[0]); // Use default namespace if not specified
         } else if (split.length != 2) {

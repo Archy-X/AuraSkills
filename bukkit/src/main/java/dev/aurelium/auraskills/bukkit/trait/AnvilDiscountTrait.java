@@ -11,9 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 
-public class AnvilCostReductionTrait extends TraitImpl {
+public class AnvilDiscountTrait extends TraitImpl {
 
-    AnvilCostReductionTrait(AuraSkills plugin) {
+    AnvilDiscountTrait(AuraSkills plugin) {
         super(plugin);
     }
 
@@ -42,7 +42,7 @@ public class AnvilCostReductionTrait extends TraitImpl {
         }
         if (user != null) {
             AnvilInventory anvil = event.getInventory();
-            double wisdom = user.getEffectiveTraitLevel(Traits.ANVIL_COST_REDUCTION);
+            double wisdom = user.getEffectiveTraitLevel(Traits.ANVIL_DISCOUNT);
             int cost = (int) Math.round(anvil.getRepairCost() * (1 - (-1.0 * Math.pow(1.025, -1.0 * wisdom) + 1)));
             if (cost > 0) {
                 anvil.setRepairCost(cost);

@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.listeners;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.trait.AttackDamageTrait;
-import dev.aurelium.auraskills.bukkit.trait.IncomingDamageReductionTrait;
+import dev.aurelium.auraskills.bukkit.trait.DefenseTrait;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.mechanics.DamageType;
 import org.bukkit.Material;
@@ -61,8 +61,8 @@ public class DamageListener implements Listener {
         User user = plugin.getUser(player);
 
         // Handles incoming damage reduction trait
-        if (plugin.getTraitManager().getTraitImpl(Traits.INCOMING_DAMAGE_REDUCTION) instanceof IncomingDamageReductionTrait damageReduction) {
-            damageReduction.onDamage(event, user);
+        if (plugin.getTraitManager().getTraitImpl(Traits.DEFENSE) instanceof DefenseTrait defense) {
+            defense.onDamage(event, user);
         }
     }
 

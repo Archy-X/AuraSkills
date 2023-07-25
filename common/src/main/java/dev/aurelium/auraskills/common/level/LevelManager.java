@@ -94,7 +94,7 @@ public abstract class LevelManager {
         giveLegacyMoneyRewards(user, level);
 
         // Reload items and armor to check for newly met requirements
-        plugin.getStatManager().reloadPlayer(user);
+        // TODO Reload items and armor
         // Calls event
         SkillLevelUpEvent event = new SkillLevelUpEvent(plugin.getApi(), user.toApi(), skill, level);
         plugin.getEventManager().callEvent(event);

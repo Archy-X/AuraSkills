@@ -7,9 +7,9 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class IncomingDamageReductionTrait extends TraitImpl {
+public class DefenseTrait extends TraitImpl {
 
-    IncomingDamageReductionTrait(AuraSkills plugin) {
+    DefenseTrait(AuraSkills plugin) {
         super(plugin);
     }
 
@@ -19,7 +19,7 @@ public class IncomingDamageReductionTrait extends TraitImpl {
     }
 
     public void onDamage(EntityDamageByEntityEvent event, User user) {
-        double reduction = user.getBonusTraitLevel(Traits.INCOMING_DAMAGE_REDUCTION);
+        double reduction = user.getBonusTraitLevel(Traits.DEFENSE);
         event.setDamage(event.getDamage() * (1 - (-1.0 * Math.pow(1.01, -1.0 * reduction) + 1)));
     }
 }

@@ -6,6 +6,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
@@ -55,22 +56,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
                         "{color}", stat.getColor(locale),
                         "{level}", NumberUtil.format1(user.getStatLevel(stat)));
             case "descriptors":
-                switch (stat.name().toLowerCase(Locale.ROOT)) {
-                    case "strength":
-                        return getStrengthDescriptors(user, locale);
-                    case "health":
-                        return getHealthDescriptors(user, locale);
-                    case "regeneration":
-                        return getRegenerationDescriptors(user, locale);
-                    case "luck":
-                        return getLuckDescriptors(user, locale);
-                    case "wisdom":
-                        return getWisdomDescriptors(user, locale);
-                    case "toughness":
-                        return getToughnessDescriptors(user, locale);
-                    default:
-                        return "";
-                }
+                return getTraitDescriptors(stat, user, locale);
         }
         return placeholder;
     }
@@ -90,6 +76,21 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         } else {
             return "";
         }
+    }
+
+    public String getTraitDescriptors(Stat stat, User user, Locale locale) {
+        StringBuilder sb = new StringBuilder();
+        for (Trait trait : stat.getTraits()) {
+            sb.append(stat.getColor(locale))
+                    .append(trait.getDisplayName(locale))
+                    .append(": ")
+                    .append(NumberUtil.format1(user.getEffectiveTraitLevel(trait)))
+                    .append("\n");
+        }
+        if (!sb.isEmpty()) {
+            sb.delete(sb.length() - 1, sb.length());
+        }
+        return sb.toString();
     }
 
     private String getStrengthDescriptors(User user, Locale locale) {
@@ -112,7 +113,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         double saturatedRegen = regenLevel * plugin.configDouble(Option.REGENERATION_SATURATED_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double hungerFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
         double almostFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        double manaRegen = user.getEffectiveTraitLevel(Traits.MANA_REGENERATION);
+        double manaRegen = user.getEffectiveTraitLevel(Traits.MANA_REGEN);
         return TextUtil.replace(plugin.getMsg(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
                 + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(hungerFullRegen))
                 + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))

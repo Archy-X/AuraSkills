@@ -32,6 +32,12 @@ public class BukkitStatManager extends StatManager {
 
     @Override
     public void reloadStat(User user, Stat stat) {
+        // Reload traits
+        for (Trait trait : stat.getTraits()) {
+            TraitImpl traitImpl = ((BukkitTraitManager) plugin.getTraitManager()).getTraitImpl(trait);
+            if (traitImpl == null) continue;
 
+            traitImpl.reload(user, trait);
+        }
     }
 }

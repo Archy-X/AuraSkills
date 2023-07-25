@@ -25,17 +25,17 @@ public class BukkitTraitManager extends TraitManager {
 
     public void registerTraitImplementations() {
         registerTraitImpl(Traits.HP, new HpTrait(plugin));
-        RegenerationTrait regen = new RegenerationTrait(plugin);
-        registerTraitImpl(Traits.SATURATION_REGENERATION, regen);
-        registerTraitImpl(Traits.HUNGER_REGENERATION, regen);
-        registerTraitImpl(Traits.MANA_REGENERATION, new ManaRegenerationTrait(plugin));
+        RegenTrait regen = new RegenTrait(plugin);
+        registerTraitImpl(Traits.SATURATION_REGEN, regen);
+        registerTraitImpl(Traits.HUNGER_REGEN, regen);
+        registerTraitImpl(Traits.MANA_REGEN, new ManaRegenTrait(plugin));
         registerTraitImpl(Traits.LUCK, new LuckTrait(plugin));
-        registerTraitImpl(Traits.DOUBLE_DROP_CHANCE, new DoubleDropChanceTrait(plugin));
+        registerTraitImpl(Traits.DOUBLE_DROP, new DoubleDropTrait(plugin));
         registerTraitImpl(Traits.ATTACK_DAMAGE, new AttackDamageTrait(plugin));
-        registerTraitImpl(Traits.EXPERIENCE_GAIN, new ExperienceGainTrait(plugin));
-        registerTraitImpl(Traits.ANVIL_COST_REDUCTION, new AnvilCostReductionTrait(plugin));
+        registerTraitImpl(Traits.EXPERIENCE_BONUS, new ExperienceBonusTrait(plugin));
+        registerTraitImpl(Traits.ANVIL_DISCOUNT, new AnvilDiscountTrait(plugin));
         registerTraitImpl(Traits.MAX_MANA, new MaxManaTrait(plugin));
-        registerTraitImpl(Traits.INCOMING_DAMAGE_REDUCTION, new IncomingDamageReductionTrait(plugin));
+        registerTraitImpl(Traits.DEFENSE, new DefenseTrait(plugin));
     }
 
     public void registerTraitImpl(Trait trait, TraitImpl traitImpl) {

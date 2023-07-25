@@ -1067,6 +1067,29 @@ stats:
     desc: '&7Toughness increases the amount of\n&7damage reduced from enemy attacks'
     color: '&5'
     symbol: '✦'
+traits:
+  attack_damage:
+    name: Attack Damage
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturation Regen
+  hunger_regen:
+    name: Hunger Regen
+  mana_regen:
+    name: Mana Regen
+  luck:
+    name: Luck
+  double_drop:
+    name: Double Drop
+  experience_bonus:
+    name: Experience Bonus
+  anvil_discount:
+    name: Anvil Discount
+  max_mana:
+    name: Max Mana
+  defense:
+    name: Defense
 units:
   mana: Mana
   hp: HP
