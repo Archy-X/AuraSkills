@@ -116,6 +116,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         messageProvider = new MessageProvider(this);
         worldManager = new BukkitWorldManager(this);
         worldManager.loadWorlds(new OptionProvider(new HashMap<>()));
+        // Creates scheduler
+        scheduler = new BukkitScheduler(this);
 
         // Init managers
         skillManager = new SkillManager(this);
@@ -142,7 +144,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         hookManager = new HookManager();
         levelManager = new BukkitLevelManager(this);
         leaderboardManager = new LeaderboardManager(this);
-        scheduler = new BukkitScheduler(this);
         uiProvider = new BukkitUiProvider(this);
 
         // Load rewards

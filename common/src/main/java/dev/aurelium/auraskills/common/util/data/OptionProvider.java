@@ -33,11 +33,19 @@ public class OptionProvider {
     }
 
     public double getDouble(String key) {
-        return (double) optionMap.get(key);
+        Object o = optionMap.get(key);
+        if (o instanceof Integer i) {
+            return i.doubleValue();
+        }
+        return (double) o;
     }
 
     public double getDouble(String key, double def) {
-        return (double) optionMap.getOrDefault(key, def);
+        Object o = optionMap.getOrDefault(key, def);
+        if (o instanceof Integer i) {
+            return i.doubleValue();
+        }
+        return (double) o;
     }
 
     public String getString(String key) {
