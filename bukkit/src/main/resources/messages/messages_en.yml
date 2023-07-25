@@ -576,8 +576,8 @@ menus:
     ability_level_entry_locked: '&8&m{ability}'
     stats_leveled: '\n&7Stats Leveled: {stats}'
     mana_ability: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Duration: &a{duration}s &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
-  skills_menu:
-    skills_menu_title: Your Skills
+  skills:
+    skills_title: Your Skills
     your_skills: '&bYour Skills - &6{player}'
     your_skills_desc: '&7Upgrade Skills by doing various tasks\n&7to unlock valuable stat boosts,\n&7abilities, and more!'
     your_skills_hover: '&eHover over a Skill for more information!'
@@ -587,8 +587,8 @@ menus:
     stats: '&bStats'
     stats_desc: '&7Earn stat buffs by leveling up skills'
     stats_click: '&eClick to learn more or view your stats'
-  level_progression_menu:
-    level_progression_menu_title: '{skill} Levels - Page {page}'
+  level_progression:
+    level_progression_title: '{skill} Levels - Page {page}'
     your_ranking: '&6Your Skill Ranking'
     rank_out_of: '&fYou are ranked &6{rank}&f out of {total} players'
     rank_percent: '&fYou are in the top &6{percent}%&f of players'
@@ -620,8 +620,8 @@ menus:
     abilities: '&cAbilities'
     abilities_desc: '&bAbilities &7are passive perks you unlock and\n&7upgrade as you level up skills.\n&dMana Abilities &7are a special type of ability\n&7that requires activation and consumes mana.'
     abilities_click: '&eClick to view {skill} abilities'
-  stats_menu:
-    stats_menu_title: Your Stats
+  stats:
+    stats_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
     skills: '\n&7Skills: &f{skills}'
     your_level: '&7Your Level: {color}{level}'

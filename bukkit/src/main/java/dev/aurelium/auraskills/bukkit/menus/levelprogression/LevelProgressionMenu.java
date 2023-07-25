@@ -23,7 +23,7 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
         Locale locale = plugin.getUser(player).getLocale();
         Skill skill = getSkill(activeMenu);
         if (placeholder.equals("level_progression_menu_title")) {
-            return TextUtil.replace(plugin.getMsg(MenuMessage.LEVEL_PROGRESSION_MENU_TITLE, locale),
+            return TextUtil.replace(plugin.getMsg(MenuMessage.LEVEL_PROGRESSION_TITLE, locale),
                     "{skill}", skill.getDisplayName(locale),
                     "{page}", String.valueOf(activeMenu.getCurrentPage() + 1));
         }

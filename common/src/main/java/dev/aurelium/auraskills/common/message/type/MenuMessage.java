@@ -17,7 +17,7 @@ public enum MenuMessage implements MessageKey {
     STATS_LEVELED(0),
     MANA_ABILITY(0),
     //Skills Menu
-    SKILLS_MENU_TITLE(1),
+    SKILLS_TITLE(1),
     YOUR_SKILLS(1),
     YOUR_SKILLS_DESC(1),
     YOUR_SKILLS_HOVER(1),
@@ -28,7 +28,7 @@ public enum MenuMessage implements MessageKey {
     STATS_DESC(1),
     STATS_CLICK(1),
     //Level Progression Menu
-    LEVEL_PROGRESSION_MENU_TITLE(2),
+    LEVEL_PROGRESSION_TITLE(2),
     YOUR_RANKING(2),
     RANK_OUT_OF(2),
     RANK_PERCENT(2),
@@ -61,7 +61,7 @@ public enum MenuMessage implements MessageKey {
     ABILITIES_DESC(2),
     ABILITIES_CLICK(2),
     //Stats Menu
-    STATS_MENU_TITLE(3),
+    STATS_TITLE(3),
     PLAYER_STAT_ENTRY(3),
     SKILLS(3),
     YOUR_LEVEL(3),
@@ -118,11 +118,11 @@ public enum MenuMessage implements MessageKey {
         if (section == 0) {
             this.path = "menus.common." + key;
         } else if (section == 1) {
-            this.path = "menus.skills_menu." + key;
+            this.path = "menus.skills." + key;
         } else if (section == 2) {
-            this.path = "menus.level_progression_menu." + key;
+            this.path = "menus.level_progression." + key;
         } else if (section == 3) {
-            this.path = "menus.stats_menu." + key;
+            this.path = "menus.stats." + key;
         } else if (section == 4) {
             this.path = "menus.unclaimed_items." + key;
         } else if (section == 5) {
