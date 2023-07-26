@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class StatisticLeveler extends SourceLeveler {
 
-    private final Map<UUID, Integer> tracker = new HashMap<>();
+    private final Map<UUID, Map<StatisticXpSource, Integer>> tracker = new HashMap<>();
 
     public StatisticLeveler(AuraSkills plugin) {
         super(plugin, SourceType.STATISTIC);
@@ -52,8 +52,8 @@ public class StatisticLeveler extends SourceLeveler {
             try {
                 Statistic statistic = Statistic.valueOf(source.getStatistic().toUpperCase(Locale.ROOT));
 
-                // Get the last tracked statistic value
-                int lastValue = tracker.computeIfAbsent(player.getUniqueId(), uuid -> player.getStatistic(statistic));
+                // Get the last tracked statistic value and add current value if missing
+                int lastValue = tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>()).computeIfAbsent(source, s -> player.getStatistic(statistic));
 
                 int change = player.getStatistic(statistic) - lastValue;
 
@@ -65,7 +65,7 @@ public class StatisticLeveler extends SourceLeveler {
 
                 plugin.getLevelManager().addXp(user, entry.getValue(), xpToAdd);
                 // Update tracker with current value
-                tracker.put(player.getUniqueId(), player.getStatistic(statistic));
+                tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>()).put(source, player.getStatistic(statistic));
             } catch (IllegalArgumentException ignored) {}
         }
     }
