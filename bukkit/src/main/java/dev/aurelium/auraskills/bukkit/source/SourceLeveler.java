@@ -17,6 +17,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import java.util.Locale;
+
 public abstract class SourceLeveler implements Listener {
 
     protected final AuraSkills plugin;
@@ -79,7 +81,7 @@ public abstract class SourceLeveler implements Listener {
     }
 
     protected boolean blockPlayer(Player player, Skill skill) {
-        if (!player.hasPermission("auraskills.skill" + skill.name())) {
+        if (!player.hasPermission("auraskills.skill" + skill.name().toLowerCase(Locale.ROOT))) {
             return true;
         }
         // Check creative mode disable

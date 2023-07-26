@@ -5,12 +5,9 @@ import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
-import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Trait;
-import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
@@ -56,7 +53,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
                         "{color}", stat.getColor(locale),
                         "{level}", NumberUtil.format1(user.getStatLevel(stat)));
             case "descriptors":
-                return getTraitDescriptors(stat, user, locale);
+                return getStatDescriptors(stat, user, locale);
         }
         return placeholder;
     }
@@ -78,7 +75,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         }
     }
 
-    public String getTraitDescriptors(Stat stat, User user, Locale locale) {
+    public String getStatDescriptors(Stat stat, User user, Locale locale) {
         StringBuilder sb = new StringBuilder();
         for (Trait trait : stat.getTraits()) {
             sb.append(stat.getColor(locale))
@@ -91,60 +88,6 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
             sb.delete(sb.length() - 1, sb.length());
         }
         return sb.toString();
-    }
-
-    private String getStrengthDescriptors(User user, Locale locale) {
-        double strengthLevel = user.getStatLevel(Stats.STRENGTH);
-        double attackDamage = strengthLevel * plugin.configDouble(Option.STRENGTH_MODIFIER);
-        if (plugin.configBoolean(Option.STRENGTH_DISPLAY_DAMAGE_WITH_HEALTH_SCALING) && !plugin.configBoolean(Option.STRENGTH_USE_PERCENT)) {
-            attackDamage *= plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        }
-        return TextUtil.replace(plugin.getMsg(MenuMessage.ATTACK_DAMAGE, locale),"{value}", NumberUtil.format2(attackDamage));
-    }
-
-    private String getHealthDescriptors(User user, Locale locale) {
-        double modifier = user.getStatLevel(Stats.HEALTH) * plugin.configDouble(Option.HEALTH_MODIFIER);
-        double scaledHealth = modifier * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        return TextUtil.replace(plugin.getMsg(MenuMessage.HP, locale),"{value}", NumberUtil.format2(scaledHealth));
-    }
-
-    private String getRegenerationDescriptors(User user, Locale locale) {
-        double regenLevel = user.getStatLevel(Stats.REGENERATION);
-        double saturatedRegen = regenLevel * plugin.configDouble(Option.REGENERATION_SATURATED_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        double hungerFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        double almostFullRegen = regenLevel *  plugin.configDouble(Option.REGENERATION_HUNGER_ALMOST_FULL_MODIFIER) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
-        double manaRegen = user.getEffectiveTraitLevel(Traits.MANA_REGEN);
-        return TextUtil.replace(plugin.getMsg(MenuMessage.SATURATED_REGEN, locale),"{value}", NumberUtil.format2(saturatedRegen))
-                + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(hungerFullRegen))
-                + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.ALMOST_FULL_HUNGER_REGEN, locale),"{value}", NumberUtil.format2(almostFullRegen))
-                + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.MANA_REGEN, locale),"{value}", String.valueOf(Math.round(manaRegen)));
-    }
-
-    private String getLuckDescriptors(User user, Locale locale) {
-        double luckLevel = user.getStatLevel(Stats.LUCK);
-        double luck = luckLevel * plugin.configDouble(Option.LUCK_MODIFIER);
-        double doubleDropChance = luckLevel * plugin.configDouble(Option.LUCK_DOUBLE_DROP_MODIFIER) * 100;
-        if (doubleDropChance > plugin.configDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX)) {
-            doubleDropChance = plugin.configDouble(Option.LUCK_DOUBLE_DROP_PERCENT_MAX);
-        }
-        return TextUtil.replace(plugin.getMsg(MenuMessage.LUCK, locale),"{value}", NumberUtil.format2(luck))
-                + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.DOUBLE_DROP_CHANCE, locale),"{value}", NumberUtil.format2(doubleDropChance));
-    }
-
-    private String getWisdomDescriptors(User user, Locale locale) {
-        double wisdomLevel = user.getStatLevel(Stats.WISDOM);
-        double xpModifier = wisdomLevel * plugin.configDouble(Option.WISDOM_EXPERIENCE_MODIFIER) * 100;
-        double anvilCostReduction = (-1.0 * Math.pow(1.025, -1.0 * wisdomLevel * plugin.configDouble(Option.WISDOM_ANVIL_COST_MODIFIER)) + 1) * 100;
-        double maxMana = user.getMaxMana();
-        return TextUtil.replace(plugin.getMsg(MenuMessage.XP_GAIN, locale),"{value}", NumberUtil.format2(xpModifier))
-                + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.ANVIL_COST_REDUCTION, locale),"{value}", NumberUtil.format1(anvilCostReduction)) + " "
-                + "\n" + TextUtil.replace(plugin.getMsg(MenuMessage.MAX_MANA, locale), "{value}", NumberUtil.format1(maxMana));
-    }
-
-    private String getToughnessDescriptors(User user, Locale locale) {
-        double toughness = user.getStatLevel(Stats.TOUGHNESS) * plugin.configDouble(Option.TOUGHNESS_NEW_MODIFIER);
-        double damageReduction = (-1.0 * Math.pow(1.01, -1.0 * toughness) + 1) * 100;
-        return TextUtil.replace(plugin.getMsg(MenuMessage.INCOMING_DAMAGE, locale),"{value}", NumberUtil.format2(damageReduction));
     }
 
 }
