@@ -8,15 +8,16 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.storage.StorageProvider;
+import dev.aurelium.auraskills.common.user.SkillLevelMaps;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
-import dev.aurelium.auraskills.common.user.SkillLevelMaps;
-import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
@@ -283,6 +284,8 @@ public class FileStorageProvider extends StorageProvider {
         // Create a Yaml loader
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .path(Path.of(dataDirectory, uuid.toString() + ".yml"))
+                .nodeStyle(NodeStyle.BLOCK)
+                .indent(2)
                 .build();
 
         loader.save(root);
