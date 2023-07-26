@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.bukkit.commands;
 
+import co.aikar.commands.InvalidCommandArgument;
+import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -7,6 +9,8 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +39,15 @@ public class CommandRegistrar {
 
     private void registerContexts(PaperCommandManager manager) {
         var contexts = manager.getCommandContexts();
-        contexts.registerContext(User.class, c -> plugin.getUser(c.getPlayer()));
+        contexts.registerContext(User.class, c -> {
+            String username = c.popFirstArg();
+            Player player = Bukkit.getPlayerExact(username);
+            if (player != null) {
+                return plugin.getUser(player);
+            } else {
+                throw new InvalidCommandArgument(MinecraftMessageKeys.NO_PLAYER_FOUND_SERVER, "{search}", username);
+            }
+        });
         contexts.registerContext(Skill.class, c -> {
             String arg = c.popFirstArg();
             Skill skill = plugin.getSkillRegistry().get(NamespacedId.fromStringOrDefault(arg));
