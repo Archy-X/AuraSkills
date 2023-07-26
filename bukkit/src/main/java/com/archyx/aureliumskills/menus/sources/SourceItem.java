@@ -157,7 +157,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
             return 1.0;
         }
         double multiplier = 1.0;
-        if (playerData.getAbilityLevel(ability) > 0) {
+        if (playerData.getAbilityLevel(ability) > 0 && plugin.getAbilityManager().isEnabled(ability)) {
             double abilityValue = plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability));
             double addedMultiplier = abilityValue / 100;
             multiplier += addedMultiplier;
