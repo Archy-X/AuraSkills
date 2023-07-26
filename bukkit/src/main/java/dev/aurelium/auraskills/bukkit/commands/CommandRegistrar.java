@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
+import dev.aurelium.auraskills.common.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class CommandRegistrar {
 
     private void registerContexts(PaperCommandManager manager) {
         var contexts = manager.getCommandContexts();
+        contexts.registerContext(User.class, c -> plugin.getUser(c.getPlayer()));
         contexts.registerContext(Skill.class, c -> {
             String arg = c.popFirstArg();
             Skill skill = plugin.getSkillRegistry().get(NamespacedId.fromStringOrDefault(arg));

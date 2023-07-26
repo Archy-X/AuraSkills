@@ -12,7 +12,7 @@ dependencies {
 }
 
 allprojects {
-    group = "com.archyx.aureliumskills"
+    group = "dev.aurelium.auraskills"
     version = project.property("projectVersion") as String
     description = "Advanced skills, stats, and abilties plugin"
 }

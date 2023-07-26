@@ -1,4 +1,4 @@
-name: AureliumSkills
+name: AuraSkills
 version: Beta 1.3.21
 main: dev.aurelium.auraskills.bukkit.AuraSkills
 description: Feature-Packed Skills Plugin
@@ -6,7 +6,7 @@ author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
 softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, DecentHolograms, Vault, ProtocolLib, LuckPerms, Slimefun, Towny]
 api-version: '1.13'
-prefix: AureliumSkills
+prefix: AuraSkills
 
 permissions:
     auraskills.command.skill.setlevel:

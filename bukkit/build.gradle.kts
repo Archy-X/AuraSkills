@@ -66,7 +66,7 @@ dependencies {
 
 tasks.withType<ShadowJar> {
     val projectVersion: String by project
-    archiveFileName.set("AureliumSkills-${projectVersion}.jar")
+    archiveFileName.set("AuraSkills-${projectVersion}.jar")
 
     relocate("co.aikar.commands", "com.archyx.aureliumskills.acf")
     relocate("co.aikar.locales", "com.archyx.aureliumskills.locales")
@@ -86,7 +86,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.register<Copy>("copyJar") {
     val projectVersion : String by project
-    from("build/libs/AureliumSkills-${projectVersion}.jar")
+    from("build/libs/AuraSkills-${projectVersion}.jar")
     into("../build/libs")
 }
 
