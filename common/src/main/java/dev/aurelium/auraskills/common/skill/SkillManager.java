@@ -19,7 +19,7 @@ public class SkillManager {
 
     public SkillManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.skillMap = new HashMap<>();
+        this.skillMap = new LinkedHashMap<>();
         this.supplier = new SkillSupplier(this, plugin.getMessageProvider());
     }
 
@@ -53,7 +53,7 @@ public class SkillManager {
     }
 
     public Set<Skill> getEnabledSkills() {
-        Set<Skill> skills = new HashSet<>();
+        Set<Skill> skills = new LinkedHashSet<>();
         for (LoadedSkill loaded : skillMap.values()) {
             if (loaded.skill().isEnabled()) {
                 skills.add(loaded.skill());

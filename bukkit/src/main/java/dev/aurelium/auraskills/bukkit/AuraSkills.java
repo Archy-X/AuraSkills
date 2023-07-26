@@ -4,7 +4,7 @@ import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
-import dev.aurelium.auraskills.bukkit.commands.SkillsRootCommand;
+import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
@@ -14,6 +14,7 @@ import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
+import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.region.RegionManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
@@ -59,6 +60,7 @@ import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -103,6 +105,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private RegionManager regionManager;
     private BukkitWorldManager worldManager;
     private LootTableManager lootTableManager;
+    private ModifierManager modifierManager;
 
     @Override
     public void onEnable() {
@@ -126,6 +129,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         statManager = new BukkitStatManager(this);
         traitManager = new BukkitTraitManager(this);
         regionManager = new RegionManager(this);
+        modifierManager = new ModifierManager(this);
 
         // Init registries
         skillRegistry = new SkillRegistry(this);
@@ -157,7 +161,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
         levelManager.registerLevelers(); // Register levelers for skills
         registerEvents();
-        registerCommands();
+        commandManager = new CommandRegistrar(this).registerCommands();
         registerAndLoadMenus();
 
         // Update leaderboards
@@ -211,14 +215,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         }
     }
 
-    private void registerCommands() {
-        commandManager = new PaperCommandManager(this);
-        commandManager.enableUnstableAPI("help");
-        commandManager.usePerIssuerLocale(true, false);
-        commandManager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");
-        commandManager.registerCommand(new SkillsRootCommand(this));
-    }
-
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerJoinQuit(this), this);
@@ -251,6 +247,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public LootTableManager getLootTableManager() {
         return lootTableManager;
+    }
+
+    public ModifierManager getModifierManager() {
+        return modifierManager;
     }
 
     @Override
@@ -422,4 +422,13 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     public File getPluginFolder() {
         return this.getDataFolder();
     }
+
+    public Locale getLocale(CommandSender sender) {
+        if (sender instanceof Player player) {
+            return getUser(player).getLocale();
+        } else {
+            return messageProvider.getDefaultLanguage();
+        }
+    }
+
 }

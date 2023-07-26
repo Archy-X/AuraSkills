@@ -3,8 +3,9 @@ package dev.aurelium.auraskills.common.reward;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
+import dev.aurelium.auraskills.common.reward.type.CommandReward;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 
 import java.io.File;
@@ -109,6 +110,26 @@ public abstract class RewardManager {
         if (user == null) return;
         for (Skill skill : plugin.getSkillManager().getSkillValues()) {
             plugin.getRewardManager().getRewardTable(skill).applyPermissions(user, user.getSkillLevel(skill));
+        }
+    }
+
+    public void applyLevelUpCommands(User user, Skill skill, int oldLevel, int newLevel) {
+        if (newLevel > oldLevel) {
+            for (int i = oldLevel + 1; i <= newLevel; i++) {
+                for (CommandReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(CommandReward.class, i)) {
+                    reward.giveReward(user, skill, i);
+                }
+            }
+        }
+    }
+
+    public void applyRevertCommands(User user, Skill skill, int oldLevel, int newLevel) {
+        if (newLevel < oldLevel) {
+            for (int i = oldLevel; i > newLevel; i--) {
+                for (CommandReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(CommandReward.class, i)) {
+                    reward.executeRevert(user, skill, i);
+                }
+            }
         }
     }
 

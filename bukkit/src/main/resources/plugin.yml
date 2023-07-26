@@ -9,52 +9,9 @@ api-version: '1.13'
 prefix: AureliumSkills
 
 permissions:
-    aureliumskills.*:
-        description: Gives access to all Aurelium Skills commands
-        children:
-            aureliumskills.skill.setlevel: true
-            aureliumskills.ability.setlevel: true
-            aureliumskills.reload: true
-            aureliumskills.lang: true
-            aureliumskills.xp.add: true
-            aureliumskills.top: true
-            aureliumskills.skill.reset: true
-            aureliumskills.xp.set: true
-            aureliumskills.xp.remove: true
-            aureliumskills.modifier.add: true
-            aureliumskills.modifier.remove: true
-            aureliumskills.modifier.list: true
-            aureliumskills.modifier.removeall: true
-            aureliumskills.item.modifier.add: true
-            aureliumskills.item.modifier.remove: true
-            aureliumskills.item.modifier.list: true
-            aureliumskills.item.modifier.removeall: true
-            aureliumskills.armor.modifier.add: true
-            aureliumskills.armor.modifier.remove: true
-            aureliumskills.armor.modifier.list: true
-            aureliumskills.armor.modifier.removeall: true
-            aureliumskills.help: true
-            aureliumskills.abtoggle: true
-            aureliumskills.save: true
-            aureliumskills.updateleaderboards: true
-            aureliumskills.rank: true
-            aureliumskills.item.requirement.add: true
-            aureliumskills.item.requirement.remove: true
-            aureliumskills.item.requirement.removeall: true
-            aureliumskills.armor.requirement.add: true
-            aureliumskills.armor.requirement.remove: true
-            aureliumskills.armor.requirement.removeall: true
-            aureliumskills.mana.add: true
-            aureliumskills.mana.remove: true
-            aureliumskills.mana.set: true
-            aureliumskills.mana.other: true
-            aureliumskills.backup.save: true
-            aureliumskills.backup.load: true
-            aureliumskills.checkupdates: true
-            aureliumskills.item.register: true
-            aureliumskills.item.give: true
-            aureliumskills.profile: true
-    aureliumskills.skill.setlevel:
+    auraskills.command.skill.setlevel:
+        default: op
+    auraskills.command.skill.reset:
         default: op
     aureliumskills.reload:
         default: op
@@ -68,8 +25,6 @@ permissions:
         default: op
     aureliumskills.top:
         default: true
-    aureliumskills.skill.reset:
-        default: op
     aureliumskills.mana:
         default: true
     aureliumskills.mana.add:
