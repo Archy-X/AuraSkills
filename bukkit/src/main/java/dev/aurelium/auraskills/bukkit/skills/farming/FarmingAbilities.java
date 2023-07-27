@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.bukkit.skills.farming;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
-import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
@@ -22,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 public class FarmingAbilities extends AbilityImpl {
 
     public FarmingAbilities(AuraSkills plugin) {
-        super(plugin, Skills.FARMING);
+        super(plugin, Abilities.BOUNTIFUL_HARVEST, Abilities.TRIPLE_HARVEST, Abilities.GENETICIST, Abilities.SCYTHE_MASTER);
     }
 
     public void bountifulHarvest(Player player, User user, Block block) {
@@ -91,7 +90,7 @@ public class FarmingAbilities extends AbilityImpl {
         if (isDisabled(ability)) return;
 
         Player player = event.getPlayer();
-        if (failsChecks(player)) return;
+        if (failsChecks(player, ability)) return;
 
         Material mat = event.getItem().getType();
         if (isPlantBased(mat)) { // Only allow plant based foods

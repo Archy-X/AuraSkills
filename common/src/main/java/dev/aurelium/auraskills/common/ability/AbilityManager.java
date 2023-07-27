@@ -18,7 +18,7 @@ import java.util.Map;
  * Manager for storing and retrieving ability configs. Does not handle
  * loading configs from file.
  */
-public class AbilityManager {
+public abstract class AbilityManager {
 
     private final AuraSkillsPlugin plugin;
     private final Map<Ability, LoadedAbility> abilityMap;

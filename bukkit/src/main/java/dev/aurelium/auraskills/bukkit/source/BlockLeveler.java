@@ -2,11 +2,13 @@ package dev.aurelium.auraskills.bukkit.source;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -63,6 +65,17 @@ public class BlockLeveler extends SourceLeveler {
         if (failsChecks(event, player, block.getLocation(), skill)) return;
 
         plugin.getLevelManager().addXp(user, skill, source.getXp());
+        applyAbilities(skill, player, user, block);
+    }
+
+    private void applyAbilities(Skill skill, Player player, User user, Block block) {
+        var manager = plugin.getAbilityManager();
+        if (skill.getAbilities().contains(Abilities.BOUNTIFUL_HARVEST)) {
+            manager.getAbilityImpl(FarmingAbilities.class).bountifulHarvest(player, user, block);
+        }
+        if (skill.getAbilities().contains(Abilities.TRIPLE_HARVEST)) {
+            manager.getAbilityImpl(FarmingAbilities.class).tripleHarvest(player, user, block);
+        }
     }
 
     public boolean matchesSource(Block block, BlockXpSource source, BlockXpSource.BlockTriggers trigger) {

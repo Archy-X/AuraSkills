@@ -4,6 +4,7 @@ import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
@@ -25,7 +26,6 @@ import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.api.ApiRegistrationUtil;
@@ -77,7 +77,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitConfigProvider configProvider;
     private MessageProvider messageProvider;
     private SkillManager skillManager;
-    private AbilityManager abilityManager;
+    private BukkitAbilityManager abilityManager;
     private ManaAbilityManager manaAbilityManager;
     private StatManager statManager;
     private BukkitTraitManager traitManager;
@@ -124,7 +124,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
         // Init managers
         skillManager = new SkillManager(this);
-        abilityManager = new AbilityManager(this);
+        abilityManager = new BukkitAbilityManager(this);
         manaAbilityManager = new ManaAbilityManager(this);
         statManager = new BukkitStatManager(this);
         traitManager = new BukkitTraitManager(this);
@@ -269,7 +269,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public AbilityManager getAbilityManager() {
+    public BukkitAbilityManager getAbilityManager() {
         return abilityManager;
     }
 
