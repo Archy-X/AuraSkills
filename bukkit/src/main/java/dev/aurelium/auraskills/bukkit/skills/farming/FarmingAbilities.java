@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 public class FarmingAbilities extends AbilityImpl {
 
     public FarmingAbilities(AuraSkills plugin) {
-        super(plugin, Abilities.BOUNTIFUL_HARVEST, Abilities.TRIPLE_HARVEST, Abilities.GENETICIST, Abilities.SCYTHE_MASTER);
+        super(plugin, Abilities.BOUNTIFUL_HARVEST, Abilities.FARMER, Abilities.TRIPLE_HARVEST, Abilities.GENETICIST, Abilities.SCYTHE_MASTER);
     }
 
     public void bountifulHarvest(Player player, User user, Block block) {
