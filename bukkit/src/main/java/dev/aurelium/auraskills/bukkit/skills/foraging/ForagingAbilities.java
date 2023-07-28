@@ -1,0 +1,116 @@
+package dev.aurelium.auraskills.bukkit.skills.foraging;
+
+import com.archyx.aureliumskills.data.PlayerData;
+import com.cryptomorin.xseries.XMaterial;
+import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
+import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
+import dev.aurelium.auraskills.bukkit.util.ItemUtils;
+import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.inventory.ItemStack;
+
+public class ForagingAbilities extends AbilityImpl {
+
+    public ForagingAbilities(AuraSkills plugin) {
+        super(plugin, Abilities.LUMBERJACK, Abilities.FORAGER, Abilities.AXE_MASTER, Abilities.SHREDDER, Abilities.VALOR);
+    }
+
+    public void lumberjack(Player player, User user, Block block) {
+        var ability = Abilities.LUMBERJACK;
+
+        if (isDisabled(ability)) return;
+
+        if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
+
+        if (failsChecks(player, ability)) return;
+
+        if (user.getAbilityLevel(ability) == 0) return;
+
+        if (rand.nextDouble() < (getValue(ability, user) / 100)) {
+            for (ItemStack item : block.getDrops(player.getInventory().getItemInMainHand())) {
+                var itemHolder = new BukkitItemHolder(item.clone());
+                var locHolder = new BukkitLocationHolder(block.getLocation().add(0.5, 0.5, 0.5));
+                LootDropEvent event = new LootDropEvent(plugin.getApi(), user.toApi(), itemHolder, locHolder, LootDropEvent.Cause.LUMBERJACK);
+                plugin.getEventManager().callEvent(event);
+                if (!event.isCancelled()) {
+                    block.getWorld().dropItem(event.getLocation().get(Location.class), event.getItem().get(ItemStack.class));
+                }
+            }
+        }
+    }
+
+    public void axeMaster(EntityDamageByEntityEvent event, Player player, User user) {
+        var ability = Abilities.AXE_MASTER;
+
+        if (isDisabled(ability)) return;
+
+        if (failsChecks(player, ability)) return;
+
+        if (user.getAbilityLevel(ability) == 0) return;
+
+        event.setDamage(event.getDamage() * (1 + (getValue(ability, user) / 100)));
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void shredder(PlayerItemDamageEvent event) {
+        var ability = Abilities.SHREDDER;
+
+        if (isDisabled(ability)) return;
+
+        if (event.isCancelled()) return;
+
+        // If is item taking durabilty damage is armor
+        if (!ItemUtils.isArmor(event.getItem().getType())) {
+            return;
+        }
+        // If last damage was from entity
+        if (!(event.getPlayer().getLastDamageCause() instanceof EntityDamageByEntityEvent e)) return;
+        // If last damage was from player
+        if (!(e.getDamager() instanceof Player player)) return;
+
+        if (failsChecks(player, ability)) return;
+        // If damage was an attack
+        if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) return;
+        // If item used was an axe
+        Material mat = player.getInventory().getItemInMainHand().getType();
+        if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
+                || mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
+            User user = plugin.getUser(player);
+            //Checks if shredder is used
+            if (user.getAbilityLevel(ability) == 0) return;
+
+            if (rand.nextDouble() < (getValue(ability, user)) / 100) {
+                event.setDamage(event.getDamage() * 3);
+            }
+        }
+    }
+
+    public void applyValor(User user) {
+        var ability = Abilities.VALOR;
+        if (isDisabled(ability)) return;
+
+        if (user.getAbilityLevel(ability) == 0) return;
+
+        user.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(ability, user)));
+    }
+
+    public void removeValor(PlayerData playerData) {
+        playerData.removeStatModifier("foraging-valor");
+    }
+
+}

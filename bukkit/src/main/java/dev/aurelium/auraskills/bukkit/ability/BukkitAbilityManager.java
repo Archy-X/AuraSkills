@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.ability;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
+import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
 import org.bukkit.Bukkit;
 
@@ -21,6 +22,7 @@ public class BukkitAbilityManager extends AbilityManager {
 
     private void registerAbilityImplementations() {
         registerAbilityImpl(new FarmingAbilities(plugin));
+        registerAbilityImpl(new ForagingAbilities(plugin));
     }
 
     public void registerAbilityImpl(AbilityImpl abilityImpl) {

@@ -31,6 +31,8 @@ public class FarmingAbilities extends AbilityImpl {
 
         if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
 
+        if (failsChecks(player, ability)) return;
+
         if (user.getAbilityLevel(ability) == 0) return;
 
         if (rand.nextDouble() < getValue(ability, user) / 100) {

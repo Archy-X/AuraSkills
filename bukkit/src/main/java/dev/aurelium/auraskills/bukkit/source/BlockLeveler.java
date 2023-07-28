@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
+import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
@@ -75,6 +76,9 @@ public class BlockLeveler extends SourceLeveler {
         }
         if (skill.getAbilities().contains(Abilities.TRIPLE_HARVEST)) {
             manager.getAbilityImpl(FarmingAbilities.class).tripleHarvest(player, user, block);
+        }
+        if (skill.getAbilities().contains(Abilities.LUMBERJACK)) {
+            manager.getAbilityImpl(ForagingAbilities.class).lumberjack(player, user, block);
         }
     }
 
