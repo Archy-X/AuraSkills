@@ -4,7 +4,6 @@ import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import com.cryptomorin.xseries.XMaterial;
-import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -54,10 +53,10 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<XpS
                     String unit = source.getUnitName(locale);
                     if (unit == null) {
                         return TextUtil.replace(plugin.getMsg(MenuMessage.MULTIPLIED_XP, locale),
-                                "{xp}", NumberUtil.format1(source.getXp() * multiplier));
+                                "{xp}", NumberUtil.format2(source.getXp() * multiplier));
                     } else {
                         return TextUtil.replace(plugin.getMsg(MenuMessage.MULTIPLIED_XP_RATE, locale),
-                                "{xp}", NumberUtil.format1(source.getXp() * multiplier),
+                                "{xp}", NumberUtil.format2(source.getXp() * multiplier),
                                 "{unit}", unit);
                     }
                 } else {
@@ -147,16 +146,9 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<XpS
     }
 
     private double getMultiplier(Player player, Skill skill) {
-        Ability ability = skill.getXpMultiplierAbility();
         User user = plugin.getUser(player);
-        double multiplier = 1.0;
-        if (user.getAbilityLevel(ability) > 0) {
-            double abilityValue = ability.getValue(user.getAbilityLevel(ability));
-            double addedMultiplier = abilityValue / 100;
-            multiplier += addedMultiplier;
-        }
-        multiplier *= plugin.getLevelManager().getPermissionMultiplier(user, skill);
-        return multiplier;
+        double permissionMultiplier = 1 + plugin.getLevelManager().getPermissionMultiplier(user, skill);
+        return plugin.getLevelManager().getAbilityMultiplier(user, skill) * permissionMultiplier;
     }
 
 }

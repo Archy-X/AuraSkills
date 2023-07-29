@@ -63,7 +63,7 @@ public class SkillLoader {
                 }
                 // Remove last two characters
                 abSb.delete(abSb.length() - 2, abSb.length());
-                plugin.logger().info("Loaded skill " + loadedSkill.skill().getId() + " with abilities=[" + abSb + "], manaAbility= " + loadedSkill.manaAbility() + ", and numSources=" + loadedSkill.sources().size());
+                plugin.logger().info("Loaded skill " + loadedSkill.skill().getId() + " with abilities=[" + abSb + "], manaAbility=" + loadedSkill.manaAbility() + ", and numSources=" + loadedSkill.sources().size());
 
                 plugin.getSkillManager().register(skill, loadedSkill);
             }

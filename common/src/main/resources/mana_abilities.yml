@@ -3,7 +3,7 @@ mana_abilities:
     enabled: true
     base_value: 5.0
     value_per_level: 5.0
-    cooldown: 200
+    base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
     mana_cost_per_level: 20
@@ -20,7 +20,7 @@ mana_abilities:
     enabled: true
     base_value: 5.0
     value_per_level: 5.0
-    cooldown: 200
+    base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
     mana_cost_per_level: 20
@@ -35,7 +35,7 @@ mana_abilities:
     enabled: true
     base_value: 5.0
     value_per_level: 5.0
-    cooldown: 200
+    base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
     mana_cost_per_level: 20
@@ -50,7 +50,7 @@ mana_abilities:
     enabled: true
     base_value: 0.5
     value_per_level: 0.5
-    cooldown: 2
+    base_cooldown: 2
     cooldown_per_level: -0.1
     base_mana_cost: 5
     mana_cost_per_level: 2
@@ -64,7 +64,7 @@ mana_abilities:
     enabled: true
     base_value: 5.0
     value_per_level: 4.0
-    cooldown: 200
+    base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
     mana_cost_per_level: 20
@@ -79,7 +79,7 @@ mana_abilities:
     enabled: true
     base_value: 0.5
     value_per_level: 0.3
-    cooldown: 0
+    base_cooldown: 0
     cooldown_per_level: 0
     base_mana_cost: 5
     mana_cost_per_level: 5
@@ -92,7 +92,7 @@ mana_abilities:
     enabled: true
     base_value: 2.0
     value_per_level: 3.0
-    cooldown: 200
+    base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 10
     mana_cost_per_level: 10
@@ -104,7 +104,7 @@ mana_abilities:
     enabled: true
     base_value: 5.0
     value_per_level: 5.0
-    cooldown: 200
+    base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
     mana_cost_per_level: 20

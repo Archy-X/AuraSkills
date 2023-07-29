@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.level;
 
+import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
 import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -30,6 +31,17 @@ public abstract class LevelManager {
 
     public double getPermissionMultiplier(@NotNull User user, Skill skill) {
         return user.getPermissionMultiplier(skill);
+    }
+
+    public double getAbilityMultiplier(User user, Skill skill) {
+        Ability ability = skill.getXpMultiplierAbility();
+        double multiplier = 1.0;
+        if (user.getAbilityLevel(ability) > 0) {
+            double abilityValue = ability.getValue(user.getAbilityLevel(ability));
+            double addedMultiplier = abilityValue / 100;
+            multiplier += addedMultiplier;
+        }
+        return multiplier;
     }
 
     public abstract void playLevelUpSound(@NotNull User user);
@@ -130,7 +142,7 @@ public abstract class LevelManager {
         double multiplier = 1.0;
         multiplier += getItemMultiplier(user, skill);
         multiplier += getPermissionMultiplier(user, skill);
-        return multiplier;
+        return getAbilityMultiplier(user, skill) * multiplier;
     }
 
     private double getItemMultiplier(@NotNull User user, Skill skill) {

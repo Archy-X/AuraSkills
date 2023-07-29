@@ -187,6 +187,19 @@ public abstract class ActionBarManager {
         }, time, timeUnit);
     }
 
+    public void sendAbilityActionBar(User user, String message) {
+        if (!user.isActionBarEnabled(ActionBarType.ABILITY)) return;
+
+        String actionBarText = TextUtil.replace(plugin.getMsg(ActionBarMessage.ABILITY, user.getLocale()),
+                "{hp}", getHp(user),
+                "{max_hp}", getMaxHp(user),
+                "{mana}", getMana(user),
+                "{max_mana}", getMaxMana(user),
+                "{message}", message);
+        plugin.getUiProvider().sendActionBar(user, actionBarText);
+        setPaused(user, 40 * 50, TimeUnit.MILLISECONDS);
+    }
+
     private String getXpActionBarMessage(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         ActionBarMessage messageKey = maxed ? ActionBarMessage.MAXED : ActionBarMessage.XP;
         if (xpGained < 0) {

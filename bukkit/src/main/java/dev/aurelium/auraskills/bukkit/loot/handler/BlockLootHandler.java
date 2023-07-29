@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public abstract class BlockLootHandler extends LootHandler implements Listener {
+public class BlockLootHandler extends LootHandler implements Listener {
 
     private final Random random = new Random();
     private final Map<Skill, SkillLootProvider> lootProviders = new HashMap<>();
