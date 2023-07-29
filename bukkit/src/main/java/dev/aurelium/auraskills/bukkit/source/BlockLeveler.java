@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
@@ -83,6 +84,9 @@ public class BlockLeveler extends SourceLeveler {
         }
         if (skill.getAbilities().contains(Abilities.LUCKY_MINER)) {
             manager.getAbilityImpl(MiningAbilities.class).luckyMiner(player, user, block);
+        }
+        if (skill.getAbilities().contains(Abilities.BIGGER_SCOOP)) {
+            manager.getAbilityImpl(ExcavationAbilities.class).biggerScoop(player, user, block);
         }
     }
 

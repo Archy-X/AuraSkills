@@ -75,7 +75,8 @@ public class LootDropEvent extends AuraSkillsEvent implements Cancellable {
         FISHING_OTHER_LOOT,
         EXCAVATION_OTHER_LOOT,
         MINING_OTHER_LOOT,
-        FORAGING_OTHER_LOOT
+        FORAGING_OTHER_LOOT,
+        UNKNOWN
 
     }
 

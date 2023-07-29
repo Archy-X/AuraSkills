@@ -2,6 +2,10 @@ package dev.aurelium.auraskills.bukkit.listeners;
 
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
+import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
+import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
+import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.bukkit.trait.AttackDamageTrait;
 import dev.aurelium.auraskills.bukkit.trait.DefenseTrait;
 import dev.aurelium.auraskills.common.user.User;
@@ -49,6 +53,19 @@ public class DamageListener implements Listener {
         // Applies attack damage trait
         if (plugin.getTraitManager().getTraitImpl(Traits.ATTACK_DAMAGE) instanceof AttackDamageTrait attackDamage) {
             attackDamage.strength(event, user, damageType);
+        }
+
+        // Apply master abilities
+        var abManager = plugin.getAbilityManager();
+        switch (damageType) {
+            case HOE ->
+                abManager.getAbilityImpl(FarmingAbilities.class).scytheMaster(event, player, user);
+            case AXE ->
+                abManager.getAbilityImpl(ForagingAbilities.class).axeMaster(event, player, user);
+            case PICKAXE ->
+                abManager.getAbilityImpl(MiningAbilities.class).pickMaster(event, player, user);
+            case SHOVEL ->
+                abManager.getAbilityImpl(ExcavationAbilities.class).spadeMaster(event, player, user);
         }
     }
 

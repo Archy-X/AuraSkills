@@ -110,10 +110,12 @@ public class FarmingAbilities extends AbilityImpl {
                 || mat.equals(Material.POISONOUS_POTATO);
     }
 
-    public void scytheMaster(EntityDamageByEntityEvent event, User user) {
+    public void scytheMaster(EntityDamageByEntityEvent event, Player player, User user) {
         var ability = Abilities.SCYTHE_MASTER;
 
         if (isDisabled(ability)) return;
+
+        if (failsChecks(player, ability)) return;
 
         if (user.getAbilityLevel(ability) > 0) {
             event.setDamage(event.getDamage() * (1 + (getValue(ability, user) / 100)));

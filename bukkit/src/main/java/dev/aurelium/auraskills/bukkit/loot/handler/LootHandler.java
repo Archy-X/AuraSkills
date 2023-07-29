@@ -7,11 +7,14 @@ import com.archyx.lootmanager.loot.type.CommandLoot;
 import com.archyx.lootmanager.loot.type.ItemLoot;
 import com.archyx.lootmanager.util.CommandExecutor;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
 import dev.aurelium.auraskills.bukkit.loot.SourceContextWrapper;
+import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.user.User;
@@ -55,13 +58,21 @@ public abstract class LootHandler {
         giveXp(player, loot, source, skill);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent event, @Nullable XpSource source, Skill skill) {
-        Block block = event.getBlock();
+    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause) {
+        Block block = breakEvent.getBlock();
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
-        // TODO Add PlayerLootDropEvent
-        block.getWorld().dropItem(location, drop);
+
+        var itemHolder = new BukkitItemHolder(drop);
+        var locHolder = new BukkitLocationHolder(location);
+
+        LootDropEvent dropEvent = new LootDropEvent(plugin.getApi(), plugin.getUser(player).toApi(), itemHolder, locHolder, cause);
+        plugin.getEventManager().callEvent(dropEvent);
+
+        if (dropEvent.isCancelled()) return;
+
+        block.getWorld().dropItem(dropEvent.getLocation().get(Location.class), dropEvent.getItem().get(ItemStack.class));
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
     }
@@ -152,12 +163,12 @@ public abstract class LootHandler {
         player.sendMessage(finalMessage);
     }
 
-    protected double getCommonChance(LootPool pool, User user) {
+    public double getCommonChance(LootPool pool, User user) {
         double chancePerLuck = pool.getOption("chance_per_luck", Double.class, 0.0) / 100;
         return pool.getBaseChance() + chancePerLuck * user.getStatLevel(Stats.LUCK);
     }
 
-    protected double getAbilityModifiedChance(double chance, Ability ability, User user) {
+    public double getAbilityModifiedChance(double chance, Ability ability, User user) {
         // Check option to scale base chance
         if (ability.optionBoolean("scale_base_chance", false)) {
             chance *= 1 + (ability.getValue(user.getAbilityLevel(ability)) / 100);

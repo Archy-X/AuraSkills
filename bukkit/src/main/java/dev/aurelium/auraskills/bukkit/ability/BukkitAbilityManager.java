@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.ability;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
+import dev.aurelium.auraskills.bukkit.skills.fishing.FishingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
@@ -25,6 +26,7 @@ public class BukkitAbilityManager extends AbilityManager {
         registerAbilityImpl(new FarmingAbilities(plugin));
         registerAbilityImpl(new ForagingAbilities(plugin));
         registerAbilityImpl(new MiningAbilities(plugin));
+        registerAbilityImpl(new FishingAbilities(plugin));
     }
 
     public void registerAbilityImpl(AbilityImpl abilityImpl) {
