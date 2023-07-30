@@ -1,10 +1,9 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
-import com.archyx.aureliumskills.configuration.Option;
-import com.archyx.aureliumskills.configuration.OptionL;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
+import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,8 +23,8 @@ public class PlayerJoinQuit implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (plugin.getStorageProvider() instanceof SqlStorageProvider) { // Handles MySQL storage
-            if (OptionL.getBoolean(Option.MYSQL_ALWAYS_LOAD_ON_JOIN) || !plugin.getUserManager().hasUser(player.getUniqueId())) {
-                int loadDelay = OptionL.getInt(Option.MYSQL_LOAD_DELAY);
+            if (plugin.configBoolean(Option.MYSQL_ALWAYS_LOAD_ON_JOIN) || !plugin.getUserManager().hasUser(player.getUniqueId())) {
+                int loadDelay = plugin.configInt(Option.MYSQL_LOAD_DELAY);
                 if (loadDelay == 0) {
                     // Load immediately
                     loadPlayerDataAsync(player);

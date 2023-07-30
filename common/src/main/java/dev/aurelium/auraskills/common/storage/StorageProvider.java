@@ -1,9 +1,10 @@
 package dev.aurelium.auraskills.common.storage;
 
+import dev.aurelium.auraskills.api.event.data.PlayerDataLoadEvent;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.user.UserState;
 import dev.aurelium.auraskills.common.user.UserManager;
+import dev.aurelium.auraskills.common.user.UserState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,8 +22,15 @@ public abstract class StorageProvider {
 
     public User load(UUID uuid) throws Exception {
         User user = loadRaw(uuid);
-        // Update stats and permissions
-        // plugin.getStatManager().updateStats(user);
+
+        // Update stats
+        plugin.getStatManager().updateStats(user);
+
+        // Call event
+        PlayerDataLoadEvent event = new PlayerDataLoadEvent(plugin.getApi(), user.toApi());
+        plugin.getScheduler().executeSync(() -> plugin.getEventManager().callEvent(event));
+
+        // Update permissions
         plugin.getRewardManager().updatePermissions(user);
         return user;
     }

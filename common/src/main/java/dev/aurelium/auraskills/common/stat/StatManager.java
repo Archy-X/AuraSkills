@@ -74,6 +74,11 @@ public abstract class StatManager {
             StatModifier modifier = user.getStatModifiers().get(key);
             user.addStatLevel(modifier.stat(), modifier.value());
         }
+        reloadStats(user);
+    }
+
+
+    private void reloadStats(User user) {
         reloadStat(user, Stats.HEALTH);
         reloadStat(user, Stats.WISDOM);
     }

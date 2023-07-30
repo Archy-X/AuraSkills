@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
+import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.event.data.PlayerDataLoadEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
@@ -24,7 +25,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class HpTrait extends TraitImpl {
+public class HpTrait extends TraitImpl implements AuraSkillsListener {
 
     private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
     private final Map<Integer, Double> hearts = new HashMap<>();
@@ -55,12 +56,12 @@ public class HpTrait extends TraitImpl {
 
     @AuraSkillsEventHandler
     public void onLoad(PlayerDataLoadEvent event) {
-        setHealth(BukkitUser.getPlayer(event.getPlayer()));
+        setHealth(BukkitUser.getPlayer(event.getPlayer()), BukkitUser.getUser(event.getPlayer()));
     }
 
     @Override
     public void reload(Player player, Trait trait) {
-        setHealth(player);
+        setHealth(player, plugin.getUser(player));
         // TODO Remove Fleeting
     }
 
@@ -71,30 +72,29 @@ public class HpTrait extends TraitImpl {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) && !plugin.getWorldManager().isDisabledWorld(event.getFrom().getName())) {
             worldChangeHealth.put(player.getUniqueId(), player.getHealth());
         }
+        User user = plugin.getUser(player);
         if (plugin.configInt(Option.HEALTH_UPDATE_DELAY) > 0) {
             plugin.getScheduler().scheduleSync(() -> {
-                setHealth(player);
-                if (plugin.getWorldManager().isDisabledWorld(event.getFrom().getName()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-                    if (worldChangeHealth.containsKey(player.getUniqueId())) {
-                        player.setHealth(worldChangeHealth.get(player.getUniqueId()));
-                        worldChangeHealth.remove(player.getUniqueId());
-                    }
-                }
+                setWorldChange(event, player, user);
             }, plugin.configInt(Option.HEALTH_UPDATE_DELAY) * 50L, TimeUnit.MILLISECONDS);
         } else {
-            setHealth(player);
-            if (plugin.getWorldManager().isDisabledWorld(event.getFrom().getName()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-                if (worldChangeHealth.containsKey(player.getUniqueId())) {
-                    player.setHealth(worldChangeHealth.get(player.getUniqueId()));
-                    worldChangeHealth.remove(player.getUniqueId());
-                }
+            setWorldChange(event, player, user);
+        }
+    }
+
+    private void setWorldChange(PlayerChangedWorldEvent event, Player player, User user) {
+        setHealth(player, user);
+        if (plugin.getWorldManager().isDisabledWorld(event.getFrom().getName()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+            if (worldChangeHealth.containsKey(player.getUniqueId())) {
+                player.setHealth(worldChangeHealth.get(player.getUniqueId()));
+                worldChangeHealth.remove(player.getUniqueId());
             }
         }
     }
 
-    private void setHealth(Player player) {
+    private void setHealth(Player player, User user) {
         if (!Traits.HP.isEnabled()) return;
-        User user = plugin.getUser(player);
+
         double modifier = user.getBonusTraitLevel(Traits.HP);
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;

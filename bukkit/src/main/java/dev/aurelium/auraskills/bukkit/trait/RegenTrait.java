@@ -1,10 +1,9 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
-import com.archyx.aureliumskills.configuration.Option;
-import com.archyx.aureliumskills.configuration.OptionL;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +33,7 @@ public class RegenTrait extends TraitImpl {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
         }
-        if (OptionL.getBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
+        if (plugin.configBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
             event.setCancelled(true);
             return;
         }

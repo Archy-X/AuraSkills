@@ -8,10 +8,12 @@ import java.util.function.Consumer;
 
 public class AuraSkillsEventManager implements EventManager {
 
+    private final AuraSkillsPlugin plugin;
     private final AuraSkillsEventBus eventBus;
     private final EventDispatcher eventDispatcher;
 
     public AuraSkillsEventManager(AuraSkillsPlugin plugin) {
+        this.plugin = plugin;
         this.eventBus = new AuraSkillsEventBus(plugin);
         this.eventDispatcher = new EventDispatcher(this);
     }
@@ -30,24 +32,24 @@ public class AuraSkillsEventManager implements EventManager {
         return subscribe(plugin, eventClass, handler);
     }
 
-    public void registerEvents(Object plugin, AuraSkillsListener listener) {
+    public void registerEvents(Object pluginObj, AuraSkillsListener listener) {
         for (Method method : listener.getClass().getDeclaredMethods()) {
             if (!method.isAnnotationPresent(AuraSkillsEventHandler.class)) {
-                return;
+                continue;
             }
 
             Class<?>[] parameterTypes = method.getParameterTypes();
             if (parameterTypes.length != 1) {
-                return;
+                continue;
             }
 
             Class<?> eventType = parameterTypes[0];
             if (!AuraSkillsEvent.class.isAssignableFrom(eventType)) {
-                return;
+                continue;
             }
             Class<? extends AuraSkillsEvent> casted = eventType.asSubclass(AuraSkillsEvent.class);
 
-            subscribe(plugin, casted, event -> {
+            subscribe(pluginObj, casted, event -> {
                 try {
                     method.invoke(listener, event);
                 } catch (Exception e) {
