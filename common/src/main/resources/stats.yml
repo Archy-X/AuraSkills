@@ -37,5 +37,5 @@ stats:
   auraskills/toughness:
     enabled: true
     traits:
-      auraskills/defense:
+      auraskills/damage_reduction:
         modifier: 0.3

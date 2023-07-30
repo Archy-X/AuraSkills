@@ -36,7 +36,7 @@ public class BukkitTraitManager extends TraitManager {
         registerTraitImpl(Traits.EXPERIENCE_BONUS, new ExperienceBonusTrait(plugin));
         registerTraitImpl(Traits.ANVIL_DISCOUNT, new AnvilDiscountTrait(plugin));
         registerTraitImpl(Traits.MAX_MANA, new MaxManaTrait(plugin));
-        registerTraitImpl(Traits.DEFENSE, new DefenseTrait(plugin));
+        registerTraitImpl(Traits.DAMAGE_REDUCTION, new DamageReductionTrait(plugin));
     }
 
     public void registerTraitImpl(Trait trait, TraitImpl traitImpl) {

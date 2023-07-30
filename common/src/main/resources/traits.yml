@@ -50,5 +50,5 @@ traits:
     enabled: true
     allow_overflow: true
     base: 20
-  auraskills/defense:
+  auraskills/damage_reduction:
     enabled: true
