@@ -47,11 +47,7 @@ public class DoubleDropTrait extends TraitImpl {
         //Checks if in blocked region
         if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
             WorldGuardHook worldGuard = plugin.getHookManager().getHook(WorldGuardHook.class);
-            if (worldGuard.isInBlockedRegion(block.getLocation())) {
-                return;
-            }
-            // Check if blocked by flags
-            else if (worldGuard.blockedByFlag(block.getLocation(), player, WorldGuardHook.FlagKey.XP_GAIN)) {
+            if (worldGuard.isBlocked(block.getLocation(), player, WorldGuardHook.FlagKey.XP_GAIN)) {
                 return;
             }
         }

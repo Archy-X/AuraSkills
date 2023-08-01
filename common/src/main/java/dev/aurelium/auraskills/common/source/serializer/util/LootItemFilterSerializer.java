@@ -22,9 +22,9 @@ public class LootItemFilterSerializer extends SourceSerializer<LootItemFilter> {
         String[] materials = pluralizedArray("material", source, String.class);
         String[] excludedMaterials = pluralizedArray("excluded_material", source, String.class);
         ItemCategory category = source.node("category").get(ItemCategory.class);
-        String lootTable = source.node("loot_table").getString();
+        String lootPool = source.node("loot_pool").getString();
         ItemFilterMeta meta = new ItemFilterMetaSerializer(plugin, sourceName).deserialize(ItemFilterMeta.class, source);
 
-        return new LootSourceItem(materials, excludedMaterials, category, meta, lootTable);
+        return new LootSourceItem(materials, excludedMaterials, category, meta, lootPool);
     }
 }

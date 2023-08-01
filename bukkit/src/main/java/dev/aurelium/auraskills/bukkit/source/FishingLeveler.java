@@ -45,7 +45,7 @@ public class FishingLeveler extends SourceLeveler {
     }
 
     @Nullable
-    private Pair<FishingXpSource, Skill> getSource(ItemStack item) {
+    public Pair<FishingXpSource, Skill> getSource(ItemStack item) {
         for (Map.Entry<FishingXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(FishingXpSource.class).entrySet()) {
             if (plugin.getItemRegistry().passesFilter(item, entry.getKey().getItem(), entry.getValue())) { // Return source that passes item filter
                 return Pair.fromEntry(entry);

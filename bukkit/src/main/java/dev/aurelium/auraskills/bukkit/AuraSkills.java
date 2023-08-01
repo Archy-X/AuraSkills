@@ -14,6 +14,7 @@ import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
 import dev.aurelium.auraskills.bukkit.loot.handler.BlockLootHandler;
+import dev.aurelium.auraskills.bukkit.loot.handler.FishingLootHandler;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
@@ -221,6 +222,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new PlayerJoinQuit(this), this);
         pm.registerEvents(new DamageListener(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
+        pm.registerEvents(new FishingLootHandler(this), this);
     }
 
     public BukkitAudiences getAudiences() {

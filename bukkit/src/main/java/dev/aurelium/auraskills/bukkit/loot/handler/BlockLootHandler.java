@@ -67,7 +67,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
         }
 
         if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
-            if (plugin.getHookManager().getHook(WorldGuardHook.class).blockedByFlag(block.getLocation(), player, WorldGuardHook.FlagKey.CUSTOM_LOOT)) {
+            if (plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(block.getLocation(), player, WorldGuardHook.FlagKey.CUSTOM_LOOT)) {
                 return;
             }
         }

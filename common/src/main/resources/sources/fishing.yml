@@ -33,13 +33,13 @@ sources:
       material: stick
   rare:
     item:
-      loot_table: rare
+      loot_pool: rare
     xp: 2000
     menu_item:
       material: orange_dye
   epic:
     item:
-      loot_table: epic
+      loot_pool: epic
     xp: 5000
     menu_item:
       material: purple_dye

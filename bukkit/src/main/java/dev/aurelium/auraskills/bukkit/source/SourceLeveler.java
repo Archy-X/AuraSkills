@@ -69,13 +69,7 @@ public abstract class SourceLeveler implements Listener {
         // Checks if in blocked region
         if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
             WorldGuardHook worldGuard = plugin.getHookManager().getHook(WorldGuardHook.class);
-            if (worldGuard.isInBlockedRegion(location)) {
-                return true;
-            }
-            // Check if blocked by flags
-            else if (worldGuard.blockedByFlag(location, player, WorldGuardHook.FlagKey.XP_GAIN)) {
-                return true;
-            } else return worldGuard.blockedBySkillFlag(location, player, skill);
+            return worldGuard.isBlocked(location, player, skill);
         }
         return false;
     }

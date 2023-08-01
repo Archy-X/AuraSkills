@@ -50,7 +50,24 @@ public class WorldGuardHook extends Hook {
         }
     }
 
-    public boolean isInBlockedRegion(Location location) {
+    public boolean isBlocked(Location location, Player player, FlagKey flagKey) {
+        if (isInBlockedRegion(location)) {
+            return true;
+        }
+        return blockedByFlag(location, player, flagKey);
+    }
+
+    public boolean isBlocked(Location location, Player player, Skill skill) {
+        if (isInBlockedRegion(location)) {
+            return true;
+        }
+        if (blockedByFlag(location, player, FlagKey.XP_GAIN)) {
+            return true;
+        }
+        return blockedBySkillFlag(location, player, skill);
+    }
+
+    private boolean isInBlockedRegion(Location location) {
         if (location.getWorld() == null) {
             return false;
         }
@@ -67,12 +84,12 @@ public class WorldGuardHook extends Hook {
         return false;
     }
 
-    public boolean blockedByFlag(Location location, Player player, FlagKey flagKey) {
+    private boolean blockedByFlag(Location location, Player player, FlagKey flagKey) {
         StateFlag flag = getStateFlag(flagKey.toString());
         return queryFlagState(location, player, flag);
     }
 
-    public boolean blockedBySkillFlag(Location location, Player player, Skill skill) {
+    private boolean blockedBySkillFlag(Location location, Player player, Skill skill) {
         String flagKey = "xp-gain-" + TextUtil.replace(skill.name().toLowerCase(Locale.ROOT), "_", "-");
         StateFlag flag = getStateFlag(flagKey);
         return queryFlagState(location, player, flag);

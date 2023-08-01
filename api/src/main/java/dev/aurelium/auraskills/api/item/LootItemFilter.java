@@ -18,6 +18,6 @@ public interface LootItemFilter {
     ItemFilterMeta meta();
 
     @Nullable
-    String lootTable();
+    String lootPool();
 
 }

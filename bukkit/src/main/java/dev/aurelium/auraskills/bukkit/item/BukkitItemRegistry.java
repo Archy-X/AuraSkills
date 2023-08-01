@@ -107,7 +107,7 @@ public class BukkitItemRegistry implements ItemRegistry {
     }
 
     public boolean passesFilter(ItemStack item, LootItemFilter filter, Skill skill) {
-        String lootTableName = filter.lootTable();
+        String lootTableName = filter.lootPool();
         if (lootTableName != null) {
             LootTable lootTable = plugin.getLootTableManager().getLootTable(skill);
             if (lootTable == null) {

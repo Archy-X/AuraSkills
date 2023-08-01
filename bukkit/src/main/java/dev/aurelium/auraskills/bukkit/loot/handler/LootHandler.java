@@ -77,7 +77,7 @@ public abstract class LootHandler {
         giveXp(player, loot, source, skill);
     }
 
-    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill) {
+    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause) {
         if (!(event.getCaught() instanceof Item itemEntity)) return;
 
         int amount = generateAmount(loot.getMinAmount(), loot.getMaxAmount());
@@ -85,8 +85,15 @@ public abstract class LootHandler {
 
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(amount);
-        // TODO Add PlayerLootDropEvent
-        itemEntity.setItemStack(drop);
+
+        var itemHolder = new BukkitItemHolder(drop);
+        var locHolder = new BukkitLocationHolder(event.getHook().getLocation());
+
+        LootDropEvent dropEvent = new LootDropEvent(plugin.getApi(), plugin.getUser(player).toApi(), itemHolder, locHolder, cause);
+
+        if (dropEvent.isCancelled()) return;
+
+        itemEntity.setItemStack(dropEvent.getItem().get(ItemStack.class));
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
     }
