@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.listeners;
 
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.archery.ArcheryAbilities;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
@@ -59,16 +60,12 @@ public class DamageListener implements Listener {
         // Apply master abilities
         var abManager = plugin.getAbilityManager();
         switch (damageType) {
-            case SWORD ->
-                abManager.getAbilityImpl(FightingAbilities.class).swordMaster(event, player, user);
-            case HOE ->
-                abManager.getAbilityImpl(FarmingAbilities.class).scytheMaster(event, player, user);
-            case AXE ->
-                abManager.getAbilityImpl(ForagingAbilities.class).axeMaster(event, player, user);
-            case PICKAXE ->
-                abManager.getAbilityImpl(MiningAbilities.class).pickMaster(event, player, user);
-            case SHOVEL ->
-                abManager.getAbilityImpl(ExcavationAbilities.class).spadeMaster(event, player, user);
+            case SWORD -> abManager.getAbilityImpl(FightingAbilities.class).swordMaster(event, player, user);
+            case BOW -> abManager.getAbilityImpl(ArcheryAbilities.class).bowMaster(event, player, user);
+            case HOE -> abManager.getAbilityImpl(FarmingAbilities.class).scytheMaster(event, player, user);
+            case AXE -> abManager.getAbilityImpl(ForagingAbilities.class).axeMaster(event, player, user);
+            case PICKAXE -> abManager.getAbilityImpl(MiningAbilities.class).pickMaster(event, player, user);
+            case SHOVEL -> abManager.getAbilityImpl(ExcavationAbilities.class).spadeMaster(event, player, user);
         }
 
         // Apply First Strike

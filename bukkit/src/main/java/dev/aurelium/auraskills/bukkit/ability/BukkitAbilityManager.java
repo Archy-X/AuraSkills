@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.ability;
 
 import com.archyx.aureliumskills.AureliumSkills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.archery.ArcheryAbilities;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
@@ -34,6 +35,7 @@ public class BukkitAbilityManager extends AbilityManager {
         registerAbilityImpl(new MiningAbilities(plugin));
         registerAbilityImpl(new FishingAbilities(plugin));
         registerAbilityImpl(new ExcavationAbilities(plugin));
+        registerAbilityImpl(new ArcheryAbilities(plugin));
         registerAbilityImpl(new FightingAbilities(plugin));
     }
 
