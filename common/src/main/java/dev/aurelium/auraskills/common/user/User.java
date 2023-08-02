@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.user;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
-import dev.aurelium.auraskills.api.player.SkillsPlayer;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -14,7 +14,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
-import dev.aurelium.auraskills.common.api.implementation.ApiSkillsPlayer;
+import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.modifier.Multiplier;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
@@ -473,8 +473,8 @@ public abstract class User {
         plugin.getStatManager().updateStats(this);
     }
 
-    public SkillsPlayer toApi() {
-        return new ApiSkillsPlayer(this);
+    public SkillsUser toApi() {
+        return new ApiSkillsUser(this);
     }
 
 }

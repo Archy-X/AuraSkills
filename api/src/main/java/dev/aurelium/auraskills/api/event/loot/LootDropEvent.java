@@ -4,27 +4,27 @@ import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.event.AuraSkillsEvent;
 import dev.aurelium.auraskills.api.event.Cancellable;
 import dev.aurelium.auraskills.api.item.ItemHolder;
-import dev.aurelium.auraskills.api.player.SkillsPlayer;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.util.LocationHolder;
 
 public class LootDropEvent extends AuraSkillsEvent implements Cancellable {
 
-    private final SkillsPlayer skillsPlayer;
+    private final SkillsUser skillsUser;
     private ItemHolder item;
     private LocationHolder location;
     private final Cause cause;
     private boolean cancelled = false;
 
-    public LootDropEvent(AuraSkillsApi api, SkillsPlayer skillsPlayer, ItemHolder item, LocationHolder location, Cause cause) {
+    public LootDropEvent(AuraSkillsApi api, SkillsUser skillsUser, ItemHolder item, LocationHolder location, Cause cause) {
         super(api);
-        this.skillsPlayer = skillsPlayer;
+        this.skillsUser = skillsUser;
         this.item = item;
         this.location = location;
         this.cause = cause;
     }
 
-    public SkillsPlayer getSkillsPlayer() {
-        return skillsPlayer;
+    public SkillsUser getUser() {
+        return skillsUser;
     }
 
     public ItemHolder getItem() {

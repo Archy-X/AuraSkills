@@ -1,23 +1,23 @@
 package dev.aurelium.auraskills.api.event.mana;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsEvent;
-import dev.aurelium.auraskills.api.player.SkillsPlayer;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 
 public class ManaAbilityRefreshEvent extends AuraSkillsEvent {
 
-    private final SkillsPlayer skillsPlayer;
+    private final SkillsUser skillsUser;
     private final ManaAbility manaAbility;
 
-    public ManaAbilityRefreshEvent(AuraSkillsApi api, SkillsPlayer skillsPlayer, ManaAbility manaAbility) {
+    public ManaAbilityRefreshEvent(AuraSkillsApi api, SkillsUser skillsUser, ManaAbility manaAbility) {
         super(api);
-        this.skillsPlayer = skillsPlayer;
+        this.skillsUser = skillsUser;
         this.manaAbility = manaAbility;
     }
 
-    public SkillsPlayer getSkillsPlayer() {
-        return skillsPlayer;
+    public SkillsUser getUser() {
+        return skillsUser;
     }
 
     public ManaAbility getManaAbility() {

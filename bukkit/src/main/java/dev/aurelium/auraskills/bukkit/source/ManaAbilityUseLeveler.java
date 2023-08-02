@@ -8,7 +8,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.ManaAbilityUseXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
-import dev.aurelium.auraskills.common.api.implementation.ApiSkillsPlayer;
+import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ public class ManaAbilityUseLeveler extends SourceLeveler implements AuraSkillsLi
 
     @AuraSkillsEventHandler
     public void onManaAbilityActivate(ManaAbilityActivateEvent event) {
-        Player player = ((BukkitUser) ((ApiSkillsPlayer) event.getSkillsPlayer()).getUser()).getPlayer();
+        Player player = ((BukkitUser) ((ApiSkillsUser) event.getUser()).getUser()).getPlayer();
 
         var sourcePair = getSource(event.getManaAbility());
         if (sourcePair == null) return;

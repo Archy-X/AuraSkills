@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.api.player;
+package dev.aurelium.auraskills.api.user;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
@@ -9,7 +9,7 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import java.util.Locale;
 import java.util.UUID;
 
-public interface SkillsPlayer {
+public interface SkillsUser {
 
     /**
      * Gets the Minecraft UUID of the player.

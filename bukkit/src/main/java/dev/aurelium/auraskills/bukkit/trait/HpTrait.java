@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
 import dev.aurelium.auraskills.api.event.AuraSkillsListener;
-import dev.aurelium.auraskills.api.event.data.PlayerDataLoadEvent;
+import dev.aurelium.auraskills.api.event.data.UserLoadEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -55,8 +55,8 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
     }
 
     @AuraSkillsEventHandler
-    public void onLoad(PlayerDataLoadEvent event) {
-        setHealth(BukkitUser.getPlayer(event.getPlayer()), BukkitUser.getUser(event.getPlayer()));
+    public void onLoad(UserLoadEvent event) {
+        setHealth(BukkitUser.getPlayer(event.getUser()), BukkitUser.getUser(event.getUser()));
     }
 
     @Override

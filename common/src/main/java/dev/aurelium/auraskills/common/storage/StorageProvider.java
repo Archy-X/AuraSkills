@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.common.storage;
 
-import dev.aurelium.auraskills.api.event.data.PlayerDataLoadEvent;
+import dev.aurelium.auraskills.api.event.data.UserLoadEvent;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
@@ -27,7 +27,7 @@ public abstract class StorageProvider {
         plugin.getStatManager().updateStats(user);
 
         // Call event
-        PlayerDataLoadEvent event = new PlayerDataLoadEvent(plugin.getApi(), user.toApi());
+        UserLoadEvent event = new UserLoadEvent(plugin.getApi(), user.toApi());
         plugin.getScheduler().executeSync(() -> plugin.getEventManager().callEvent(event));
 
         // Update permissions

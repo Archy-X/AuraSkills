@@ -1,24 +1,24 @@
 package dev.aurelium.auraskills.api.event.mana;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsEvent;
-import dev.aurelium.auraskills.api.player.SkillsPlayer;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.event.Cancellable;
 
 public class ManaRegenerateEvent extends AuraSkillsEvent implements Cancellable {
 
-    private final SkillsPlayer skillsPlayer;
+    private final SkillsUser skillsUser;
     private double amount;
     private boolean cancelled = false;
 
-    public ManaRegenerateEvent(AuraSkillsApi api, SkillsPlayer skillsPlayer, double amount) {
+    public ManaRegenerateEvent(AuraSkillsApi api, SkillsUser skillsUser, double amount) {
         super(api);
-        this.skillsPlayer = skillsPlayer;
+        this.skillsUser = skillsUser;
         this.amount = amount;
     }
 
-    public SkillsPlayer getSkillsPlayer() {
-        return skillsPlayer;
+    public SkillsUser getUser() {
+        return skillsUser;
     }
 
     public double getAmount() {

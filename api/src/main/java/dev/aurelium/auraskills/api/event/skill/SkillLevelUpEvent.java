@@ -2,24 +2,24 @@ package dev.aurelium.auraskills.api.event.skill;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.event.AuraSkillsEvent;
-import dev.aurelium.auraskills.api.player.SkillsPlayer;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.skill.Skill;
 
 public class SkillLevelUpEvent extends AuraSkillsEvent {
 
-    private final SkillsPlayer skillsPlayer;
+    private final SkillsUser skillsUser;
     private final Skill skill;
     private final int level;
 
-    public SkillLevelUpEvent(AuraSkillsApi api, SkillsPlayer skillsPlayer, Skill skill, int level) {
+    public SkillLevelUpEvent(AuraSkillsApi api, SkillsUser skillsUser, Skill skill, int level) {
         super(api);
-        this.skillsPlayer = skillsPlayer;
+        this.skillsUser = skillsUser;
         this.skill = skill;
         this.level = level;
     }
 
-    public SkillsPlayer getSkillsPlayer() {
-        return skillsPlayer;
+    public SkillsUser getUser() {
+        return skillsUser;
     }
 
     public Skill getSkill() {

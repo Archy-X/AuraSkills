@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.common.api.implementation;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
-import dev.aurelium.auraskills.api.player.SkillsPlayer;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
@@ -13,12 +13,12 @@ import dev.aurelium.auraskills.common.user.User;
 import java.util.Locale;
 import java.util.UUID;
 
-public class ApiSkillsPlayer implements SkillsPlayer {
+public class ApiSkillsUser implements SkillsUser {
 
     private final User user;
     private final AuraSkillsPlugin plugin;
 
-    public ApiSkillsPlayer(User user) {
+    public ApiSkillsUser(User user) {
         this.user = user;
         this.plugin = user.getPlugin();
     }
