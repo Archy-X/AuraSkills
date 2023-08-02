@@ -2,21 +2,21 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.trait.Trait;
-import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BukkitTraitManager extends TraitManager {
 
     private final AuraSkills plugin;
-    private final Map<Trait, TraitImpl> traitImpls = new HashMap<>();
+    private final Set<TraitImpl> traitImpls = new HashSet<>();
 
     public BukkitTraitManager(AuraSkills plugin) {
         super(plugin);
@@ -25,39 +25,49 @@ public class BukkitTraitManager extends TraitManager {
     }
 
     public void registerTraitImplementations() {
-        registerTraitImpl(Traits.HP, new HpTrait(plugin));
-        RegenTrait regen = new RegenTrait(plugin);
-        registerTraitImpl(Traits.SATURATION_REGEN, regen);
-        registerTraitImpl(Traits.HUNGER_REGEN, regen);
-        registerTraitImpl(Traits.MANA_REGEN, new ManaRegenTrait(plugin));
-        registerTraitImpl(Traits.LUCK, new LuckTrait(plugin));
-        registerTraitImpl(Traits.DOUBLE_DROP, new DoubleDropTrait(plugin));
-        registerTraitImpl(Traits.ATTACK_DAMAGE, new AttackDamageTrait(plugin));
-        registerTraitImpl(Traits.EXPERIENCE_BONUS, new ExperienceBonusTrait(plugin));
-        registerTraitImpl(Traits.ANVIL_DISCOUNT, new AnvilDiscountTrait(plugin));
-        registerTraitImpl(Traits.MAX_MANA, new MaxManaTrait(plugin));
-        registerTraitImpl(Traits.DAMAGE_REDUCTION, new DamageReductionTrait(plugin));
+        registerTraitImpl(new HpTrait(plugin));
+        registerTraitImpl(new RegenTrait(plugin));
+        registerTraitImpl(new ManaRegenTrait(plugin));
+        registerTraitImpl(new LuckTrait(plugin));
+        registerTraitImpl(new DoubleDropTrait(plugin));
+        registerTraitImpl(new AttackDamageTrait(plugin));
+        registerTraitImpl(new ExperienceBonusTrait(plugin));
+        registerTraitImpl(new AnvilDiscountTrait(plugin));
+        registerTraitImpl(new MaxManaTrait(plugin));
+        registerTraitImpl(new DamageReductionTrait(plugin));
     }
 
-    public void registerTraitImpl(Trait trait, TraitImpl traitImpl) {
-        // Only register events if implementation isn't already registered for a different trait
-        if (!traitImpls.containsValue(traitImpl)) {
-            Bukkit.getPluginManager().registerEvents(traitImpl, plugin);
-            if (traitImpl instanceof AuraSkillsListener listener) {
-                plugin.getEventManager().registerEvents(plugin, listener);
+    public void registerTraitImpl(TraitImpl traitImpl) {
+        traitImpls.add(traitImpl);
+        Bukkit.getPluginManager().registerEvents(traitImpl, plugin);
+        if (traitImpl instanceof AuraSkillsListener listener) {
+            plugin.getEventManager().registerEvents(plugin, listener);
+        }
+    }
+
+    public <T extends TraitImpl> T getTraitImpl(Class<T> clazz) {
+        for (TraitImpl traitImpl : traitImpls) {
+            if (traitImpl.getClass().equals(clazz)) {
+                return clazz.cast(traitImpl);
             }
         }
-        traitImpls.put(trait, traitImpl);
+        throw new IllegalArgumentException("Trait implementation of type " + clazz.getSimpleName() + " not found!");
     }
 
+    @Nullable
     public TraitImpl getTraitImpl(Trait trait) {
-        return traitImpls.get(trait);
+        for (TraitImpl traitImpl : traitImpls) {
+            if (traitImpl.getTraits().contains(trait)) {
+                return traitImpl;
+            }
+        }
+        return null;
     }
 
     @Override
     public double getBaseLevel(User user, Trait trait) {
         Player player = ((BukkitUser) user).getPlayer();
-        TraitImpl traitImpl = traitImpls.get(trait);
+        TraitImpl traitImpl = getTraitImpl(trait);
         if (traitImpl != null) {
             return traitImpl.getBaseLevel(player, trait);
         } else {

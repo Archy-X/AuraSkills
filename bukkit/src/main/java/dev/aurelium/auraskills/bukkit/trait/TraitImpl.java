@@ -7,12 +7,20 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import java.util.Set;
+
 public abstract class TraitImpl implements Listener {
 
     protected final AuraSkills plugin;
+    private final Set<Trait> traits;
 
-    TraitImpl(AuraSkills plugin) {
+    TraitImpl(AuraSkills plugin, Trait... traits) {
         this.plugin = plugin;
+        this.traits = Set.of(traits);
+    }
+
+    public Set<Trait> getTraits() {
+        return traits;
     }
 
     public abstract double getBaseLevel(Player player, Trait trait);
