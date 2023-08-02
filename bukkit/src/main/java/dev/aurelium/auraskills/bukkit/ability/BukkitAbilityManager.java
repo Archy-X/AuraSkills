@@ -1,8 +1,11 @@
 package dev.aurelium.auraskills.bukkit.ability;
 
 import com.archyx.aureliumskills.AureliumSkills;
+import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.skills.archery.ArcheryAbilities;
+import dev.aurelium.auraskills.bukkit.skills.defense.DefenseAbilities;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
@@ -36,12 +39,17 @@ public class BukkitAbilityManager extends AbilityManager {
         registerAbilityImpl(new FishingAbilities(plugin));
         registerAbilityImpl(new ExcavationAbilities(plugin));
         registerAbilityImpl(new ArcheryAbilities(plugin));
+        registerAbilityImpl(new DefenseAbilities(plugin));
         registerAbilityImpl(new FightingAbilities(plugin));
+        registerAbilityImpl(new AgilityAbilities(plugin));
     }
 
     public void registerAbilityImpl(AbilityImpl abilityImpl) {
         abilityImpls.add(abilityImpl);
         Bukkit.getPluginManager().registerEvents(abilityImpl, plugin);
+        if (abilityImpl instanceof AuraSkillsListener listener) {
+            plugin.getEventManager().registerEvents(plugin, listener);
+        }
     }
 
     public <T extends AbilityImpl> T getAbilityImpl(Class<T> clazz) {

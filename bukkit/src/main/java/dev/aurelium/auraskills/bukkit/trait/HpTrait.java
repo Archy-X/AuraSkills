@@ -6,19 +6,20 @@ import dev.aurelium.auraskills.api.event.data.UserLoadEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,8 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
     @Override
     public void reload(Player player, Trait trait) {
         setHealth(player, plugin.getUser(player));
-        // TODO Remove Fleeting
+
+        plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -74,9 +76,8 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
         }
         User user = plugin.getUser(player);
         if (plugin.configInt(Option.HEALTH_UPDATE_DELAY) > 0) {
-            plugin.getScheduler().scheduleSync(() -> {
-                setWorldChange(event, player, user);
-            }, plugin.configInt(Option.HEALTH_UPDATE_DELAY) * 50L, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleSync(() -> setWorldChange(event, player, user),
+                    plugin.configInt(Option.HEALTH_UPDATE_DELAY) * 50L, TimeUnit.MILLISECONDS);
         } else {
             setWorldChange(event, player, user);
         }
@@ -171,7 +172,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
         }
     }
 
-    public void loadHearts(ConfigurationNode config) {
+    public void loadHearts(FileConfiguration config) {
         // Load default hearts
         this.hearts.clear();
         this.hearts.put(10, 0.0);
@@ -186,18 +187,19 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
         this.hearts.put(19, 393.0);
         this.hearts.put(20, 626.0);
         // Load hearts from config
-        try {
-            for (Object keyObj : config.childrenMap().keySet()) {
-                if (!(keyObj instanceof String key)) continue;
+        ConfigurationSection heartsSection = config.getConfigurationSection("health.hearts");
+        if (heartsSection == null) return;
 
+        try {
+            for (String key : heartsSection.getKeys(false)) {
                 int heartsNum = Integer.parseInt(key);
-                double healthNum = config.node(keyObj).getDouble(-1.0);
+                double healthNum = heartsSection.getDouble(key, -1.0);
                 if (healthNum != -1.0) {
                     this.hearts.put(heartsNum, healthNum);
                 }
             }
         } catch (Exception e) {
-            Bukkit.getLogger().warning("[AureliumSkills] There was an error loading health.hearts data! Check to make sure the keys are only integers and the values are only numbers.");
+            plugin.logger().warn("There was an error loading health.hearts data! Check to make sure the keys are only integers and the values are only numbers.");
         }
     }
 

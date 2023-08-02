@@ -36,7 +36,14 @@ public class AbilityImpl implements Listener {
         return ability.getValue(user.getAbilityLevel(ability));
     }
 
+    protected double getSecondaryValue(Ability ability, User user) {
+        return ability.getSecondaryValue(user.getAbilityLevel(ability));
+    }
+
     protected boolean failsChecks(Player player, Ability ability) {
+        if (plugin.getUser(player).getAbilityLevel(ability) <= 0) {
+            return true;
+        }
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return true;
         }

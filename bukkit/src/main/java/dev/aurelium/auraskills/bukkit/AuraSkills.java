@@ -22,6 +22,7 @@ import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.region.RegionManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
+import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
 import dev.aurelium.auraskills.bukkit.trait.BukkitTraitManager;
 import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
@@ -62,6 +63,7 @@ import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -172,9 +174,24 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void onDisable() {
+        // Save users
+        for (User user : userManager.getUserMap().values()) {
+            try {
+                storageProvider.save(user);
+            } catch (Exception e) {
+                logger().warn("Failed to save user " + user.getUsername());
+                e.printStackTrace();
+            }
+        }
+        userManager.getUserMap().clear();
         // Shut down connection pool
         if (storageProvider instanceof SqlStorageProvider sqlStorageProvider) {
             sqlStorageProvider.getPool().disable();
+        }
+        // Remove fleeting
+        var agilityAbilities = getAbilityManager().getAbilityImpl(AgilityAbilities.class);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            agilityAbilities.removeFleetingQuit(player);
         }
     }
 
