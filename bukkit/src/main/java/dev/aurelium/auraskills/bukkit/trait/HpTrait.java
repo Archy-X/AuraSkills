@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
 import dev.aurelium.auraskills.api.event.AuraSkillsListener;
-import dev.aurelium.auraskills.api.event.data.UserLoadEvent;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;

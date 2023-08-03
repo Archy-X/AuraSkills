@@ -4,7 +4,7 @@ import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
 import dev.aurelium.auraskills.api.event.AuraSkillsListener;
-import dev.aurelium.auraskills.api.event.data.UserLoadEvent;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;

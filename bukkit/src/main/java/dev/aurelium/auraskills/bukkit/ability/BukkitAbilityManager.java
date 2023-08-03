@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.skills.archery.ArcheryAbilities;
 import dev.aurelium.auraskills.bukkit.skills.defense.DefenseAbilities;
+import dev.aurelium.auraskills.bukkit.skills.endurance.EnduranceAbilities;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
@@ -41,6 +42,7 @@ public class BukkitAbilityManager extends AbilityManager {
         registerAbilityImpl(new ArcheryAbilities(plugin));
         registerAbilityImpl(new DefenseAbilities(plugin));
         registerAbilityImpl(new FightingAbilities(plugin));
+        registerAbilityImpl(new EnduranceAbilities(plugin));
         registerAbilityImpl(new AgilityAbilities(plugin));
     }
 

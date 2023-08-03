@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.api.event.data;
+package dev.aurelium.auraskills.api.event.user;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.event.AuraSkillsEvent;

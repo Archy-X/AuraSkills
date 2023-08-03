@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.common.storage;
 
-import dev.aurelium.auraskills.api.event.data.UserLoadEvent;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
