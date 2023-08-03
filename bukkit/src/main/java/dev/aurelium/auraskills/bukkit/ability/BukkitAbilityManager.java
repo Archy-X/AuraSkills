@@ -4,6 +4,7 @@ import com.archyx.aureliumskills.AureliumSkills;
 import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
+import dev.aurelium.auraskills.bukkit.skills.alchemy.AlchemyAbilities;
 import dev.aurelium.auraskills.bukkit.skills.archery.ArcheryAbilities;
 import dev.aurelium.auraskills.bukkit.skills.defense.DefenseAbilities;
 import dev.aurelium.auraskills.bukkit.skills.endurance.EnduranceAbilities;
@@ -44,6 +45,7 @@ public class BukkitAbilityManager extends AbilityManager {
         registerAbilityImpl(new FightingAbilities(plugin));
         registerAbilityImpl(new EnduranceAbilities(plugin));
         registerAbilityImpl(new AgilityAbilities(plugin));
+        registerAbilityImpl(new AlchemyAbilities(plugin));
     }
 
     public void registerAbilityImpl(AbilityImpl abilityImpl) {

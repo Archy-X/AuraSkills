@@ -89,6 +89,8 @@ public class AgilityAbilities extends AbilityImpl implements AuraSkillsListener 
 
         if (isDisabled(ability)) return 1.0;
 
+        if (failsChecks(player, ability)) return 1.0;
+
         if (player.hasPermission("aureliumskills.agility")) {
             User user = plugin.getUser(player);
             if (user.getAbilityLevel(ability) > 0) {
