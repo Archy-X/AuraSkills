@@ -81,19 +81,13 @@ public enum GrindstoneEnchant {
     }
 
     public int getLevel(int level) {
-        switch (level) {
-            case 1:
-                return level1;
-            case 2:
-                return level2;
-            case 3:
-                return level3;
-            case 4:
-                return level4;
-            case 5:
-                return level5;
-        }
-        return level1;
+        return switch (level) {
+            case 2 -> level2;
+            case 3 -> level3;
+            case 4 -> level4;
+            case 5 -> level5;
+            default -> level1;
+        };
     }
 
 
