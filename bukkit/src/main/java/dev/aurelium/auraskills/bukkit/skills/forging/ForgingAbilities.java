@@ -1,7 +1,5 @@
 package dev.aurelium.auraskills.bukkit.skills.forging;
 
-import com.archyx.aureliumskills.util.mechanics.EnchantmentValue;
-import com.archyx.aureliumskills.util.mechanics.GrindstoneEnchant;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
 import dev.aurelium.auraskills.api.event.AuraSkillsListener;
@@ -11,6 +9,8 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.source.GrindstoneLeveler;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.util.EnchantmentValue;
+import dev.aurelium.auraskills.bukkit.util.GrindstoneEnchant;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Location;
