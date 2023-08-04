@@ -7,19 +7,19 @@ import dev.aurelium.auraskills.api.skill.Skill;
 
 public class SkillLevelUpEvent extends AuraSkillsEvent {
 
-    private final SkillsUser skillsUser;
+    private final SkillsUser user;
     private final Skill skill;
     private final int level;
 
-    public SkillLevelUpEvent(AuraSkillsApi api, SkillsUser skillsUser, Skill skill, int level) {
+    public SkillLevelUpEvent(AuraSkillsApi api, SkillsUser user, Skill skill, int level) {
         super(api);
-        this.skillsUser = skillsUser;
+        this.user = user;
         this.skill = skill;
         this.level = level;
     }
 
     public SkillsUser getUser() {
-        return skillsUser;
+        return user;
     }
 
     public Skill getSkill() {

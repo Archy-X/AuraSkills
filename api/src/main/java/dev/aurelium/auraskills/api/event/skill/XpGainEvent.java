@@ -8,20 +8,20 @@ import dev.aurelium.auraskills.api.skill.Skill;
 
 public class XpGainEvent extends AuraSkillsEvent implements Cancellable {
 
-    private final SkillsUser player;
+    private final SkillsUser user;
     private final Skill skill;
     private double amount;
     private boolean cancelled = false;
 
-    public XpGainEvent(AuraSkillsApi api, SkillsUser player, Skill skill, double amount) {
+    public XpGainEvent(AuraSkillsApi api, SkillsUser user, Skill skill, double amount) {
         super(api);
-        this.player = player;
+        this.user = user;
         this.skill = skill;
         this.amount = amount;
     }
 
-    public SkillsUser getPlayer() {
-        return player;
+    public SkillsUser getUser() {
+        return user;
     }
 
     public Skill getSkill() {
