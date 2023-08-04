@@ -34,7 +34,7 @@ public class ManaAbilityUseLeveler extends SourceLeveler implements AuraSkillsLi
 
         if (failsChecks(event, player, player.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source.getXp());
+        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source.getXp() * event.getManaUsed());
     }
 
     @Nullable

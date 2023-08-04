@@ -16,6 +16,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.modifier.Multiplier;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
@@ -44,6 +45,7 @@ public abstract class User {
     private Locale locale;
 
     private final Map<AbstractAbility, AbilityData> abilityData;
+    private final Map<ManaAbility, ManaAbilityData> manaAbilityData;
     private final Map<String, Object> metadata;
     private List<KeyIntPair> unclaimedItems;
     private final Map<ActionBarType, Boolean> actionBarSettings;
@@ -64,6 +66,7 @@ public abstract class User {
         this.statModifiers = new ConcurrentHashMap<>();
         this.traitModifiers = new ConcurrentHashMap<>();
         this.abilityData = new ConcurrentHashMap<>();
+        this.manaAbilityData = new ConcurrentHashMap<>();
         this.metadata = new ConcurrentHashMap<>();
         this.actionBarSettings = new ConcurrentHashMap<>();
         this.unclaimedItems = new LinkedList<>();
@@ -293,20 +296,19 @@ public abstract class User {
     }
 
     public AbilityData getAbilityData(AbstractAbility ability) {
-        AbilityData data = abilityData.get(ability);
-        if (data == null) {
-            data = new AbilityData(ability);
-            abilityData.put(ability, data);
-        }
-        return data;
-    }
-
-    public boolean containsAbilityData(AbstractAbility ability) {
-        return abilityData.containsKey(ability);
+        return abilityData.computeIfAbsent(ability, AbilityData::new);
     }
 
     public Map<AbstractAbility, AbilityData> getAbilityDataMap() {
         return abilityData;
+    }
+
+    public ManaAbilityData getManaAbilityData(ManaAbility manaAbility) {
+        return manaAbilityData.computeIfAbsent(manaAbility, ManaAbilityData::new);
+    }
+
+    public Map<ManaAbility, ManaAbilityData> getManaAbilityDataMap() {
+        return manaAbilityData;
     }
 
     public int getAbilityLevel(Ability ability) {
@@ -416,6 +418,10 @@ public abstract class User {
 
     public boolean isActionBarEnabled(ActionBarType type) {
         return actionBarSettings.getOrDefault(type, true);
+    }
+
+    public void setActionBarSetting(ActionBarType type, boolean enabled) {
+        this.actionBarSettings.put(type, enabled);
     }
 
     /**
