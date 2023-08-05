@@ -14,6 +14,7 @@ import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.mana.LoadedManaAbility;
 import dev.aurelium.auraskills.common.mana.ManaAbilityLoader;
 import dev.aurelium.auraskills.common.source.SourceLoader;
+import dev.aurelium.auraskills.common.source.SourceTag;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -57,6 +58,7 @@ public class SkillLoader {
                 ConfigurationNode skillNode = skillsNode.node(skillName); // Get the node for the individual skill
                 LoadedSkill loadedSkill = loadSkill(skill, skillNode);
 
+                // Temporary debug
                 StringBuilder abSb = new StringBuilder();
                 for (Ability ability : loadedSkill.abilities()) {
                     abSb.append(ability.getId()).append(", ");
@@ -67,6 +69,8 @@ public class SkillLoader {
 
                 plugin.getSkillManager().register(skill, loadedSkill);
             }
+
+            loadSourceTags();
         } catch (ConfigurateException e) {
             plugin.logger().severe("Error loading skills.yml file: " + e.getMessage());
             e.printStackTrace();
@@ -154,5 +158,16 @@ public class SkillLoader {
         return new SkillOptions(optionMap);
     }
 
+    private void loadSourceTags() {
+        for (Skills skill : Skills.values()) {
+            if (!skill.isEnabled()) continue;
+
+            Map<SourceTag, List<XpSource>> tagMap = sourceLoader.loadTags(skill);
+
+            for (Map.Entry<SourceTag, List<XpSource>> entry : tagMap.entrySet()) {
+                plugin.getSkillManager().registerSourceTag(entry.getKey(), entry.getValue());
+            }
+        }
+    }
 
 }

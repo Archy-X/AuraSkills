@@ -98,6 +98,39 @@ public class SourceLoader {
         }
     }
 
+    public Map<SourceTag, List<XpSource>> loadTags(Skills skill) {
+        String fileName = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
+        try {
+            Map<SourceTag, List<XpSource>> tagMap = new HashMap<>();
+
+            ConfigurationNode user = configurateLoader.loadUserFile(fileName);
+
+            for (SourceTag tag : SourceTag.ofSkill(skill)) {
+                ConfigurationNode tagNode = user.node("tags").node(tag.name().toLowerCase(Locale.ROOT));
+
+                // Parse sources from string list
+                List<XpSource> sources = tagNode.getList(String.class, new ArrayList<>()).stream()
+                        .map(NamespacedId::fromStringOrDefault)
+                        .map(id -> plugin.getSkillManager().getSourceById(id))
+                        .filter(Objects::nonNull)
+                        .toList();
+
+                tagMap.put(tag, sources);
+            }
+
+            return tagMap;
+        } catch (Exception e) {
+            plugin.logger().warn("Error loading tags in sources file " + fileName + ": " + e.getMessage());
+            e.printStackTrace();
+            // Return map with empty lists for each tag
+            Map<SourceTag, List<XpSource>> fallback = new HashMap<>();
+            for (SourceTag tag : SourceTag.ofSkill(skill)) {
+                fallback.put(tag, new ArrayList<>());
+            }
+            return fallback;
+        }
+    }
+
     private void addToMap(ConfigurationNode root, Map<String, ConfigurationNode> sourcesMap) {
         root.node("sources").childrenMap().forEach((key, sourceNode) -> {
             String sourceName = key.toString();

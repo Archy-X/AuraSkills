@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
 import dev.aurelium.auraskills.bukkit.loot.handler.BlockLootHandler;
 import dev.aurelium.auraskills.bukkit.loot.handler.FishingLootHandler;
+import dev.aurelium.auraskills.bukkit.mana.BukkitManaAbilityManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
@@ -38,7 +39,6 @@ import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.level.XpRequirements;
-import dev.aurelium.auraskills.common.mana.ManaAbilityManager;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
@@ -82,7 +82,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private MessageProvider messageProvider;
     private SkillManager skillManager;
     private BukkitAbilityManager abilityManager;
-    private ManaAbilityManager manaAbilityManager;
+    private BukkitManaAbilityManager manaAbilityManager;
     private StatManager statManager;
     private BukkitTraitManager traitManager;
     private SkillRegistry skillRegistry;
@@ -130,7 +130,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Init managers
         skillManager = new SkillManager(this);
         abilityManager = new BukkitAbilityManager(this);
-        manaAbilityManager = new ManaAbilityManager(this);
+        manaAbilityManager = new BukkitManaAbilityManager(this);
         statManager = new BukkitStatManager(this);
         traitManager = new BukkitTraitManager(this);
         regionManager = new RegionManager(this);
@@ -295,7 +295,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public ManaAbilityManager getManaAbilityManager() {
+    public BukkitManaAbilityManager getManaAbilityManager() {
         return manaAbilityManager;
     }
 

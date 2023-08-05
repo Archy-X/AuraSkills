@@ -2,22 +2,25 @@ package dev.aurelium.auraskills.bukkit.mana;
 
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
+import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public abstract class ManaAbilityProvider {
+public abstract class ManaAbilityProvider implements Listener {
 
-    private final AuraSkills plugin;
-    private final ManaAbility manaAbility;
+    protected final AuraSkills plugin;
+    protected final ManaAbility manaAbility;
     private final ManaAbilityMessage activateMessage;
     @Nullable
     private final ManaAbilityMessage stopMessage;
@@ -27,6 +30,10 @@ public abstract class ManaAbilityProvider {
         this.manaAbility = manaAbility;
         this.activateMessage = activateMessage;
         this.stopMessage = stopMessage;
+    }
+
+    public ManaAbility getManaAbility() {
+        return manaAbility;
     }
 
     public abstract void onActivate(Player player, User user);
@@ -39,7 +46,7 @@ public abstract class ManaAbilityProvider {
         ManaAbilityData data = user.getManaAbilityData(manaAbility);
 
         // Return if not ready or already activated
-        if (!isReady(data) || data.isActivated()) {
+        if (!isReady(user) || data.isActivated()) {
             return;
         }
 
@@ -83,8 +90,24 @@ public abstract class ManaAbilityProvider {
         }
     }
 
-    protected boolean isReady(ManaAbilityData data) {
+    protected boolean isDisabled() {
+        return !manaAbility.getSkill().isEnabled() || !manaAbility.isEnabled();
+    }
+
+    protected boolean isReady(User user) {
         return true;
+    }
+
+    protected boolean isActivated(User user) {
+        return user.getManaAbilityData(manaAbility).isActivated();
+    }
+
+    protected double getValue(User user) {
+        return manaAbility.getValue(user.getManaAbilityLevel(manaAbility));
+    }
+
+    protected boolean hasTag(XpSource source, SourceTag tag) {
+        return plugin.getSkillManager().getSourcesWithTag(tag).contains(source);
     }
 
     private int getDuration(User user) {

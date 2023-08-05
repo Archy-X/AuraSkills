@@ -13,7 +13,7 @@ import java.util.Map;
  * Manager for storing and retrieving mana ability configs. Does not handle
  * loading configs from file.
  */
-public class ManaAbilityManager {
+public abstract class ManaAbilityManager {
 
     private final Map<ManaAbility, LoadedManaAbility> manaAbilityMap;
     private final ManaAbilitySupplier supplier;

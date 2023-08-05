@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -15,11 +16,13 @@ public class SkillManager {
 
     private final AuraSkillsPlugin plugin;
     private final Map<Skill, LoadedSkill> skillMap;
+    private final Map<SourceTag, List<XpSource>> sourceTagMap;
     private final SkillSupplier supplier;
 
     public SkillManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.skillMap = new LinkedHashMap<>();
+        this.sourceTagMap = new HashMap<>();
         this.supplier = new SkillSupplier(this, plugin.getMessageProvider());
     }
 
@@ -113,6 +116,15 @@ public class SkillManager {
         var sources = plugin.getSkillManager().getSourcesOfType(typeClass);
         var opt = sources.entrySet().stream().findFirst();
         return opt.map(entry -> new Pair<>(entry.getKey(), entry.getValue())).orElse(null);
+    }
+
+    public void registerSourceTag(SourceTag tag, List<XpSource> sources) {
+        sourceTagMap.put(tag, sources);
+    }
+
+    @NotNull
+    public List<XpSource> getSourcesWithTag(SourceTag tag) {
+        return sourceTagMap.getOrDefault(tag, new ArrayList<>());
     }
 
 }
