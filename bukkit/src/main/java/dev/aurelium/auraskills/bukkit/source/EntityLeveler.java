@@ -1,17 +1,22 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -20,8 +25,11 @@ import java.util.Map;
 
 public class EntityLeveler extends SourceLeveler {
 
+    private final NamespacedKey SPAWNER_MOB_KEY;
+
     public EntityLeveler(AuraSkills plugin) {
         super(plugin, SourceType.ENTITY);
+        this.SPAWNER_MOB_KEY = new NamespacedKey(plugin, "is_spawner_mob");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -58,7 +66,7 @@ public class EntityLeveler extends SourceLeveler {
 
         if (failsChecks(player, entity.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(user, skill, source.getXp());
+        plugin.getLevelManager().addXp(user, skill, getSpawnerMultiplier(entity, skill) * source.getXp());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -84,7 +92,7 @@ public class EntityLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, entity.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(user, skill, source.getXp());
+        plugin.getLevelManager().addXp(user, skill, getSpawnerMultiplier(entity, skill) * source.getXp());
     }
 
     @Nullable
@@ -142,6 +150,32 @@ public class EntityLeveler extends SourceLeveler {
             }
         }
         return filtered;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onMobSpawn(CreatureSpawnEvent event) {
+        if (event.isCancelled()) return;
+        if (event.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER) {
+            return;
+        }
+        if (!Skills.FIGHTING.isEnabled() && !Skills.ARCHERY.isEnabled()) {
+            return;
+        }
+        // Don't mark if multiplier is default
+        if (Skills.FIGHTING.optionDouble("spawner_multiplier", 1) == 1.0 && Skills.ARCHERY.optionDouble("spawner_multiplier", 1) == 1.0) {
+            return;
+        }
+        LivingEntity entity = event.getEntity();
+        PersistentDataContainer data = entity.getPersistentDataContainer();
+        data.set(SPAWNER_MOB_KEY, PersistentDataType.INTEGER, 1);
+    }
+
+    private double getSpawnerMultiplier(Entity entity, Skill skill) {
+        if (entity.getPersistentDataContainer().has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) { // Is spawner mob
+            return skill.optionDouble("spawner_multiplier", 1.0);
+        } else {
+            return 1.0;
+        }
     }
 
 }
