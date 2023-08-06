@@ -24,11 +24,10 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class FightingLeveler extends SkillLeveler implements Listener {
 
-	private final NamespacedKey SPAWNER_MOB_KEY;
+	public static final String SPAWNER_MOB_KEY = "is_spawner_mob";
 
 	public FightingLeveler(AureliumSkills plugin) {
 		super(plugin, Ability.FIGHTER);
-		SPAWNER_MOB_KEY = new NamespacedKey(plugin, "is_spawner_mob");
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -106,7 +105,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 
 		// Modify XP for mobs from a mob spawner
 		double spawnerMultiplier = OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER);
-		if (entity.getPersistentDataContainer().has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) {
+		if (entity.getPersistentDataContainer().has(new NamespacedKey(plugin, SPAWNER_MOB_KEY), PersistentDataType.INTEGER)) {
 			xpToAdd *= spawnerMultiplier;
 		}
 
@@ -121,7 +120,7 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 				if (OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER) < 1.0 || OptionL.getDouble(Option.FIGHTING_SPAWNER_MULTIPLIER) < 1.0) {
 					LivingEntity entity = event.getEntity();
 					PersistentDataContainer data = entity.getPersistentDataContainer();
-					data.set(SPAWNER_MOB_KEY, PersistentDataType.INTEGER, 1);
+					data.set(new NamespacedKey(plugin, SPAWNER_MOB_KEY), PersistentDataType.INTEGER, 1);
 				}
 			}
 		}

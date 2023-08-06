@@ -8,13 +8,16 @@ import com.archyx.aureliumskills.configuration.OptionL;
 import com.archyx.aureliumskills.leveler.SkillLeveler;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.skills.Skills;
+import com.archyx.aureliumskills.skills.fighting.FightingLeveler;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.persistence.PersistentDataType;
 
 public class ArcheryLeveler extends SkillLeveler implements Listener {
 
@@ -113,7 +116,7 @@ public class ArcheryLeveler extends SkillLeveler implements Listener {
 
 		// Modify XP for mobs from a mob spawner
 		double spawnerMultiplier = OptionL.getDouble(Option.ARCHERY_SPAWNER_MULTIPLIER);
-		if (entity.hasMetadata("aureliumskills_spawner_mob")) {
+		if (entity.getPersistentDataContainer().has(new NamespacedKey(plugin, FightingLeveler.SPAWNER_MOB_KEY), PersistentDataType.INTEGER)) {
 			xpToAdd *= spawnerMultiplier;
 		}
 
