@@ -10,15 +10,14 @@ import com.archyx.aureliumskills.skills.Skills;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -123,6 +122,20 @@ public class FightingLeveler extends SkillLeveler implements Listener {
 					data.set(new NamespacedKey(plugin, SPAWNER_MOB_KEY), PersistentDataType.INTEGER, 1);
 				}
 			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onMobSplit(EntityTransformEvent event) {
+		if (event.getTransformReason() != EntityTransformEvent.TransformReason.SPLIT) return;
+
+		Entity original = event.getEntity();
+		// Ignore entities that aren't spawner mobs
+		if (!original.getPersistentDataContainer().has(new NamespacedKey(plugin, SPAWNER_MOB_KEY), PersistentDataType.INTEGER)) return;
+
+		// Apply key to split entities
+		for (Entity entity : event.getTransformedEntities()) {
+			entity.getPersistentDataContainer().set(new NamespacedKey(plugin, SPAWNER_MOB_KEY), PersistentDataType.INTEGER, 1);
 		}
 	}
 
