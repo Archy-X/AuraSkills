@@ -57,10 +57,10 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                     String unit = source.getUnitName();
                     if (unit == null) {
                         return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP, locale),
-                                "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier));
+                                "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source) * multiplier));
                     } else {
                         return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP_RATE, locale),
-                                "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier),
+                                "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source) * multiplier),
                                 "{unit}", getCustomMessage("sources.units." + unit, locale));
                     }
                 } else {
