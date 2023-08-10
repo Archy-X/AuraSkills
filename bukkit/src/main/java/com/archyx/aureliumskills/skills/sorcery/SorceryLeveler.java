@@ -19,6 +19,10 @@ public class SorceryLeveler extends SkillLeveler implements Listener {
     }
 
     public void level(Player player, double manaUsed) {
+        if (!OptionL.isEnabled(Skills.SORCERY)) return;
+        if (blockXpGainLocation(player.getLocation(), player, Skills.SORCERY)) return;
+        if (blockXpGainPlayer(player)) return;
+
         plugin.getLeveler().addXp(player, Skills.SORCERY, manaUsed * getAbilityXp(player, SorcerySource.MANA_ABILITY_USE));
     }
 
