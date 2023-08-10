@@ -49,7 +49,7 @@ public abstract class SkillLeveler {
         if (playerData != null) {
             double output = getSourceXp(source);
             if (ability != null) {
-                if (plugin.getAbilityManager().isEnabled(ability)) {
+                if (plugin.getAbilityManager().isEnabled(ability) && playerData.getAbilityLevel(ability) > 0) {
                     double modifier = 1;
                     modifier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
                     output *= modifier;
@@ -65,7 +65,7 @@ public abstract class SkillLeveler {
         if (playerData != null) {
             double output = input;
             if (ability != null) {
-                if (plugin.getAbilityManager().isEnabled(ability)) {
+                if (plugin.getAbilityManager().isEnabled(ability) && playerData.getAbilityLevel(ability) > 0) {
                     double modifier = 1;
                     modifier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
                     output *= modifier;
@@ -81,7 +81,7 @@ public abstract class SkillLeveler {
         if (playerData != null) {
             double output = input;
             if (ability != null) {
-                if (plugin.getAbilityManager().isEnabled(ability)) {
+                if (plugin.getAbilityManager().isEnabled(ability) && playerData.getAbilityLevel(ability) > 0) {
                     double modifier = 1;
                     modifier += plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability)) / 100;
                     output *= modifier;
