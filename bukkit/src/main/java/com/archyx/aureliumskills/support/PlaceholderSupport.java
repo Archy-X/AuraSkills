@@ -313,7 +313,7 @@ public class PlaceholderSupport extends PlaceholderExpansion {
                 if (leaderboardType.startsWith(skill.name().toLowerCase(Locale.ROOT) + "_")) {
                     int place = NumberUtil.toInt(TextUtil.replace(leaderboardType, skill.name().toLowerCase(Locale.ROOT) + "_", ""));
                     if (place > 0) {
-                        List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 1);
+                        List<SkillValue> list = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1);
                         if (list.size() > 0) {
                             SkillValue skillValue = list.get(0);
                             String name = Bukkit.getOfflinePlayer(skillValue.getId()).getName();
