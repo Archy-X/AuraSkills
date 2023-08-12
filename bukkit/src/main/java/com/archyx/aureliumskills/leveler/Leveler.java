@@ -58,6 +58,7 @@ public class Leveler {
 		}
 		// Add permission multipliers
 		for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
+			if (!info.getValue()) continue; // Ignore permissions that are set to false
 			String permission = info.getPermission().toLowerCase(Locale.ROOT);
 			if (permission.startsWith("aureliumskills.multiplier.")) {
 				permission = TextUtil.replace(permission, "aureliumskills.multiplier.", "");

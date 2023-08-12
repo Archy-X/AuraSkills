@@ -57,10 +57,10 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
                     String unit = source.getUnitName();
                     if (unit == null) {
                         return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP, locale),
-                                "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier));
+                                "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source) * multiplier));
                     } else {
                         return TextUtil.replace(Lang.getMessage(MenuMessage.MULTIPLIED_XP_RATE, locale),
-                                "{xp}", NumberUtil.format1(plugin.getSourceManager().getXp(source) * multiplier),
+                                "{xp}", NumberUtil.format2(plugin.getSourceManager().getXp(source) * multiplier),
                                 "{unit}", getCustomMessage("sources.units." + unit, locale));
                     }
                 } else {
@@ -157,7 +157,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<Sou
             return 1.0;
         }
         double multiplier = 1.0;
-        if (playerData.getAbilityLevel(ability) > 0) {
+        if (playerData.getAbilityLevel(ability) > 0 && plugin.getAbilityManager().isEnabled(ability)) {
             double abilityValue = plugin.getAbilityManager().getValue(ability, playerData.getAbilityLevel(ability));
             double addedMultiplier = abilityValue / 100;
             multiplier += addedMultiplier;

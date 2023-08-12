@@ -37,6 +37,12 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         int itemsPerPage = (Integer) activeMenu.getProperty("items_per_page");
         Source[] sources = plugin.getSourceRegistry().values(skill);
-        return (sources.length - 1) / itemsPerPage + 1;
+        int nonZero = 0;
+        for (Source source : sources) {
+            if (plugin.getSourceManager().getXp(source) > 0) {
+                nonZero++;
+            }
+        }
+        return (nonZero - 1) / itemsPerPage + 1;
     }
 }

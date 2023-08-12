@@ -99,6 +99,8 @@ public class FightingAbilities extends AbilityProvider implements Listener {
     }
 
     public void bleed(EntityDamageByEntityEvent event, PlayerData playerData, LivingEntity entity) {
+        if (playerData.getAbilityLevel(Ability.BLEED) == 0) return;
+
         if (r.nextDouble() < (getValue(Ability.BLEED, playerData) / 100)) {
             if (event.getFinalDamage() < entity.getHealth()) {
                 PersistentDataContainer container = entity.getPersistentDataContainer();
