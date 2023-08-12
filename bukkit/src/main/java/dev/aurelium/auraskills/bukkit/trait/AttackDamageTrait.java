@@ -12,7 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class AttackDamageTrait extends TraitImpl {
 
     AttackDamageTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.ATTACK_DAMAGE);
     }
 
     @Override

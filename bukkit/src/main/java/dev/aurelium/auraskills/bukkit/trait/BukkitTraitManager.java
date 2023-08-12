@@ -25,7 +25,7 @@ public class BukkitTraitManager extends TraitManager {
 
     public void registerTraitImplementations() {
         registerTraitImpl(new HpTrait(plugin));
-        registerTraitImpl(new RegenTrait(plugin));
+        registerTraitImpl(new HealthRegenTrait(plugin));
         registerTraitImpl(new ManaRegenTrait(plugin));
         registerTraitImpl(new LuckTrait(plugin));
         registerTraitImpl(new DoubleDropTrait(plugin));

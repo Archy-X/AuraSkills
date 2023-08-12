@@ -2,11 +2,9 @@ package dev.aurelium.auraskills.bukkit.mana;
 
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
-import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
-import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -105,10 +103,6 @@ public abstract class ManaAbilityProvider implements Listener {
 
     protected double getValue(User user) {
         return manaAbility.getValue(user.getManaAbilityLevel(manaAbility));
-    }
-
-    protected boolean hasTag(XpSource source, SourceTag tag) {
-        return plugin.getSkillManager().getSourcesWithTag(tag).contains(source);
     }
 
     private int getDuration(User user) {

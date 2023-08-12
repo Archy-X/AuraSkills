@@ -47,3 +47,12 @@ sources:
   muddy_mangrove_roots:
     block: muddy_mangrove_roots
     xp: 2.5
+tags:
+  bigger_scoop_applicable:
+    - '*'
+  metal_detector_applicable:
+    - '*'
+  lucky_spades_applicable:
+    - '*'
+  terraform_applicable:
+    - '*'

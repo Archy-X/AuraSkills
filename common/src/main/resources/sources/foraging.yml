@@ -93,3 +93,6 @@ sources:
     block: pink_petals
     xp: 0.2
     support_block: below
+tags:
+  lumberjack_applicable:
+    - '*'

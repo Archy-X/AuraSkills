@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 public class LuckTrait extends TraitImpl {
 
     LuckTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.LUCK);
     }
 
     @Override

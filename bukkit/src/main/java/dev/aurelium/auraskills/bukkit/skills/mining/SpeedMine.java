@@ -54,7 +54,7 @@ public class SpeedMine extends ReadiedManaAbility {
         BlockXpSource source = sourcePair.first();
         if (source == null) return;
 
-        if (hasTag(source, SourceTag.SPEED_MINE_APPLICABLE) && isHoldingMaterial(player)) {
+        if (plugin.getSkillManager().hasTag(source, SourceTag.SPEED_MINE_APPLICABLE) && isHoldingMaterial(player)) {
             checkActivation(player);
         }
     }

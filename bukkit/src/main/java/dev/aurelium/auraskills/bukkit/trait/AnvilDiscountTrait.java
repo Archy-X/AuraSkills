@@ -14,7 +14,7 @@ import org.bukkit.inventory.AnvilInventory;
 public class AnvilDiscountTrait extends TraitImpl {
 
     AnvilDiscountTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.ANVIL_DISCOUNT);
     }
 
     @Override

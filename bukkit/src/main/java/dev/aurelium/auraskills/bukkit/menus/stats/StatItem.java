@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
+import dev.aurelium.auraskills.bukkit.trait.TraitImpl;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
@@ -78,10 +79,13 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
     public String getStatDescriptors(Stat stat, User user, Locale locale) {
         StringBuilder sb = new StringBuilder();
         for (Trait trait : stat.getTraits()) {
+            TraitImpl impl = plugin.getTraitManager().getTraitImpl(trait);
+            if (impl == null) continue;
+
             sb.append(stat.getColor(locale))
                     .append(trait.getDisplayName(locale))
                     .append(": ")
-                    .append(NumberUtil.format1(user.getEffectiveTraitLevel(trait)))
+                    .append(impl.getMenuDisplay(user.getEffectiveTraitLevel(trait), trait))
                     .append("\n");
         }
         if (!sb.isEmpty()) {

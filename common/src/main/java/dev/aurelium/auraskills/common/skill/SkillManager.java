@@ -127,4 +127,8 @@ public class SkillManager {
         return sourceTagMap.getOrDefault(tag, new ArrayList<>());
     }
 
+    public boolean hasTag(XpSource source, SourceTag tag) {
+        return sourceTagMap.getOrDefault(tag, new ArrayList<>()).contains(source);
+    }
+
 }

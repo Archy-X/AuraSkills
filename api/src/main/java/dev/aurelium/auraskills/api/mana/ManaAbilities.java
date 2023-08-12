@@ -129,41 +129,41 @@ public enum ManaAbilities implements ManaAbility {
 
     @Override
     public boolean optionBoolean(String key, boolean def) {
-        return false;
+        return provider.optionBoolean(this, key, def);
     }
 
     @Override
     public int optionInt(String key) {
-        return 0;
+        return provider.optionInt(this, key);
     }
 
     @Override
     public int optionInt(String key, int def) {
-        return 0;
+        return provider.optionInt(this, key, def);
     }
 
     @Override
     public double optionDouble(String key) {
-        return 0;
+        return provider.optionDouble(this, key);
     }
 
     @Override
     public double optionDouble(String key, double def) {
-        return 0;
+        return provider.optionDouble(this, key, def);
     }
 
     @Override
     public String optionString(String key) {
-        return null;
+        return provider.optionString(this, key);
     }
 
     @Override
     public String optionString(String key, String def) {
-        return null;
+        return provider.optionString(this, key, def);
     }
 
     @Override
     public List<String> optionStringList(String key) {
-        return null;
+        return provider.optionStringList(this, key);
     }
 }

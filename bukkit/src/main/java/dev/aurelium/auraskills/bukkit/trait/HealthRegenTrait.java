@@ -17,10 +17,10 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import java.util.concurrent.TimeUnit;
 
-public class RegenTrait extends TraitImpl {
+public class HealthRegenTrait extends TraitImpl {
 
-    public RegenTrait(AuraSkills plugin) {
-        super(plugin);
+    public HealthRegenTrait(AuraSkills plugin) {
+        super(plugin, Traits.HUNGER_REGEN, Traits.SATURATION_REGEN);
         startHungerRegen();
         startSaturationRegen();
     }

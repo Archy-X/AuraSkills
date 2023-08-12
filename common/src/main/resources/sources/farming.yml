@@ -109,3 +109,8 @@ sources:
       berries: true
     menu_item:
       material: glow_berries
+tags:
+  bountiful_harvest_applicable:
+    - '*'
+  triple_harvest_applicable:
+    - '*'

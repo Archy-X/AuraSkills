@@ -3,9 +3,11 @@ package dev.aurelium.auraskills.bukkit.skills.excavation;
 import com.archyx.lootmanager.loot.LootPool;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.handler.BlockLootHandler;
 import dev.aurelium.auraskills.bukkit.loot.provider.SkillLootProvider;
+import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
 
 public class ExcavationLootProvider extends SkillLootProvider {
@@ -36,5 +38,12 @@ public class ExcavationLootProvider extends SkillLootProvider {
             cause = LootDropEvent.Cause.EXCAVATION_OTHER_LOOT;
         }
         return cause;
+    }
+
+    @Override
+    public boolean isApplicable(LootPool pool, XpSource source) {
+        if (pool.getName().equals("rare") && !plugin.getSkillManager().hasTag(source, SourceTag.METAL_DETECTOR_APPLICABLE)) {
+            return false;
+        } else return !pool.getName().equals("epic") || plugin.getSkillManager().hasTag(source, SourceTag.LUCKY_SPADES_APPLICABLE);
     }
 }

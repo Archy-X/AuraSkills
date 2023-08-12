@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
+import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
@@ -66,25 +67,26 @@ public class BlockLeveler extends SourceLeveler {
         if (failsChecks(event, player, block.getLocation(), skill)) return;
 
         plugin.getLevelManager().addXp(user, skill, source.getXp());
-        applyAbilities(skill, player, user, block);
+        applyAbilities(skill, player, user, block, source);
     }
 
-    private void applyAbilities(Skill skill, Player player, User user, Block block) {
-        var manager = plugin.getAbilityManager();
-        if (skill.getAbilities().contains(Abilities.BOUNTIFUL_HARVEST)) {
-            manager.getAbilityImpl(FarmingAbilities.class).bountifulHarvest(player, user, block);
+    private void applyAbilities(Skill skill, Player player, User user, Block block, BlockXpSource source) {
+        var abilities = plugin.getAbilityManager();
+        var tags = plugin.getSkillManager();
+        if (skill.getAbilities().contains(Abilities.BOUNTIFUL_HARVEST) && tags.hasTag(source, SourceTag.BOUNTIFUL_HARVEST_APPLICABLE)) {
+            abilities.getAbilityImpl(FarmingAbilities.class).bountifulHarvest(player, user, block);
         }
-        if (skill.getAbilities().contains(Abilities.TRIPLE_HARVEST)) {
-            manager.getAbilityImpl(FarmingAbilities.class).tripleHarvest(player, user, block);
+        if (skill.getAbilities().contains(Abilities.TRIPLE_HARVEST) && tags.hasTag(source, SourceTag.TRIPLE_HARVEST_APPLICABLE)) {
+            abilities.getAbilityImpl(FarmingAbilities.class).tripleHarvest(player, user, block);
         }
-        if (skill.getAbilities().contains(Abilities.LUMBERJACK)) {
-            manager.getAbilityImpl(ForagingAbilities.class).lumberjack(player, user, block);
+        if (skill.getAbilities().contains(Abilities.LUMBERJACK) && tags.hasTag(source, SourceTag.LUMBERJACK_APPLICABLE)) {
+            abilities.getAbilityImpl(ForagingAbilities.class).lumberjack(player, user, block);
         }
-        if (skill.getAbilities().contains(Abilities.LUCKY_MINER)) {
-            manager.getAbilityImpl(MiningAbilities.class).luckyMiner(player, user, block);
+        if (skill.getAbilities().contains(Abilities.LUCKY_MINER) && tags.hasTag(source, SourceTag.LUCKY_MINER_APPLICABLE)) {
+            abilities.getAbilityImpl(MiningAbilities.class).luckyMiner(player, user, block);
         }
-        if (skill.getAbilities().contains(Abilities.BIGGER_SCOOP)) {
-            manager.getAbilityImpl(ExcavationAbilities.class).biggerScoop(player, user, block);
+        if (skill.getAbilities().contains(Abilities.BIGGER_SCOOP) && tags.hasTag(source, SourceTag.BIGGER_SCOOP_APPLICABLE)) {
+            abilities.getAbilityImpl(ExcavationAbilities.class).biggerScoop(player, user, block);
         }
     }
 

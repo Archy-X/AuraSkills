@@ -109,13 +109,25 @@ public class SourceLoader {
                 ConfigurationNode tagNode = user.node("tags").node(tag.name().toLowerCase(Locale.ROOT));
 
                 // Parse sources from string list
-                List<XpSource> sources = tagNode.getList(String.class, new ArrayList<>()).stream()
-                        .map(NamespacedId::fromStringOrDefault)
-                        .map(id -> plugin.getSkillManager().getSourceById(id))
-                        .filter(Objects::nonNull)
-                        .toList();
+                List<XpSource> sourceList = new ArrayList<>();
+                for (String sourceString : tagNode.getList(String.class, new ArrayList<>())) {
+                    if (sourceString.equals("*")) { // Add all sources in skill
+                        sourceList.addAll(skill.getSources());
+                    } else if (sourceString.startsWith("!")) { // Remove source if starts with !
+                        NamespacedId id = NamespacedId.fromStringOrDefault(sourceString.substring(1));
+                        XpSource source = plugin.getSkillManager().getSourceById(id);
+                        if (source != null) {
+                            sourceList.remove(source);
+                        }
+                    } else { // Add raw source name
+                        XpSource source = plugin.getSkillManager().getSourceById(NamespacedId.fromStringOrDefault(sourceString));
+                        if (source != null) {
+                            sourceList.add(source);
+                        }
+                    }
+                }
 
-                tagMap.put(tag, sources);
+                tagMap.put(tag, sourceList);
             }
 
             return tagMap;

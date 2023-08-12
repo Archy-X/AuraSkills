@@ -33,7 +33,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
     private static final double threshold = 0.1;
 
     HpTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.HP);
         loadHearts(plugin.getConfig());
     }
 

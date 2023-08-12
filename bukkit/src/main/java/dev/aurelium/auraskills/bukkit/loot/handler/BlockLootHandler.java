@@ -87,6 +87,10 @@ public class BlockLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootTableManager().getLootTable(skill);
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
+            // Ignore non-applicable sources
+            if (provider != null && !provider.isApplicable(pool, source)) {
+                continue;
+            }
             // Calculate chance for pool
             double chance;
             if (provider != null) {

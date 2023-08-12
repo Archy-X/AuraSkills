@@ -26,7 +26,6 @@ public class CommandRegistrar {
 
     public PaperCommandManager registerCommands() {
         var manager = new PaperCommandManager(plugin);
-        manager = new PaperCommandManager(plugin);
         manager.enableUnstableAPI("help");
         manager.usePerIssuerLocale(true, false);
         manager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");

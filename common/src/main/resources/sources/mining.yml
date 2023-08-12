@@ -150,4 +150,26 @@ sources:
   reinforced_deepslate:
     block: reinforced_deepslate
     xp: 125.0
-
+tags:
+  lucky_miner_applicable:
+    - coal_ore
+    - nether_quartz_ore
+    - iron_ore
+    - redstone_ore
+    - lapis_ore
+    - gold_ore
+    - diamond_ore
+    - emerald_ore
+    - nether_gold_ore
+    - ancient_debris
+    - copper_ore
+    - deepslate_coal_ore
+    - deepslate_iron_ore
+    - deepslate_copper_ore
+    - deepslate_gold_ore
+    - deepslate_redstone_ore
+    - deepslate_lapis_ore
+    - deepslate_emerald_ore
+    - deepslate_diamond_ore
+  speed_mine_applicable:
+    - '*'

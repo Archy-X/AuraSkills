@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 public class ExperienceBonusTrait extends TraitImpl {
 
     ExperienceBonusTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.EXPERIENCE_BONUS);
     }
 
     @Override

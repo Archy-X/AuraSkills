@@ -1076,8 +1076,8 @@ traits:
     name: Anvil Discount
   max_mana:
     name: Max Mana
-  defense:
-    name: Defense
+  damage_reduction:
+    name: Damage Reduction
 units:
   mana: Mana
   hp: HP

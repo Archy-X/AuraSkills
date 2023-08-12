@@ -8,12 +8,12 @@ import org.bukkit.entity.Player;
 public class MaxManaTrait extends TraitImpl {
 
     MaxManaTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.MAX_MANA);
     }
 
     @Override
     public double getBaseLevel(Player player, Trait trait) {
-        return Traits.MAX_MANA.optionDouble("base");
+        return 20;
     }
 
 }

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class ManaRegenTrait extends TraitImpl {
 
     ManaRegenTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.MANA_REGEN);
         startRegen();
     }
 

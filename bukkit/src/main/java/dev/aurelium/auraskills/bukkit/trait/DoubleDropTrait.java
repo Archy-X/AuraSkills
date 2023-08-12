@@ -23,7 +23,7 @@ public class DoubleDropTrait extends TraitImpl {
     private final Random r = new Random();
 
     DoubleDropTrait(AuraSkills plugin) {
-        super(plugin);
+        super(plugin, Traits.DOUBLE_DROP);
     }
 
     @Override
