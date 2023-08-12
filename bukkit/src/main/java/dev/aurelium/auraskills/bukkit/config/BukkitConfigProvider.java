@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.bukkit.config;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.trait.HpTrait;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.config.OptionType;
@@ -72,7 +71,6 @@ public class BukkitConfigProvider implements ConfigProvider {
                 logger.warning("Missing value in config.yml: Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
             }
         }
-        plugin.getTraitManager().getTraitImpl(HpTrait.class).loadHearts(config);
 
         long end = System.currentTimeMillis();
         logger.info("Loaded " + loaded + " config options in " + (end - start) + " ms");

@@ -40,14 +40,14 @@ public abstract class ManaAbilityProvider implements Listener {
 
     public abstract void onStop(Player player, User user);
 
-    protected void checkActivation(Player player) {
+    protected boolean checkActivation(Player player) {
         User user = plugin.getUser(player);
 
         ManaAbilityData data = user.getManaAbilityData(manaAbility);
 
         // Return if not ready or already activated
         if (!isReady(user) || data.isActivated()) {
-            return;
+            return false;
         }
 
         int duration = getDuration(user);
@@ -55,12 +55,12 @@ public abstract class ManaAbilityProvider implements Listener {
 
         // Check that player has enough mana
         if (!hasEnoughMana(player, user, manaCost)) {
-            return;
+            return false;
         }
 
         ManaAbilityActivateEvent event = new ManaAbilityActivateEvent(plugin.getApi(), user.toApi(), manaAbility, duration, manaCost);
         plugin.getEventManager().callEvent(event);
-        if (event.isCancelled()) return;
+        if (event.isCancelled()) return false;
 
         data.setActivated(true);
 
@@ -75,6 +75,7 @@ public abstract class ManaAbilityProvider implements Listener {
         } else {
             stop(player, user, data);
         }
+        return true;
     }
 
     protected void stop(Player player, User user, ManaAbilityData data) {

@@ -34,6 +34,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
 
     HpTrait(AuraSkills plugin) {
         super(plugin);
+        loadHearts(plugin.getConfig());
     }
 
     @Override

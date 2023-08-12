@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.mana;
 
 import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.farming.Replenish;
 import dev.aurelium.auraskills.bukkit.skills.mining.SpeedMine;
 import dev.aurelium.auraskills.common.mana.ManaAbilityManager;
 import org.bukkit.Bukkit;
@@ -25,6 +26,7 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
 
     private void registerProviders() {
         registerProvider(new SpeedMine(plugin));
+        registerProvider(new Replenish(plugin));
     }
 
     private void registerProvider(ManaAbilityProvider provider) {
