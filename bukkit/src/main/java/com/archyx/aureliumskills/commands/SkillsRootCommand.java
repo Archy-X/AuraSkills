@@ -28,6 +28,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -307,7 +308,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@CommandPermission("aureliumskills.*")
 	@Description("Removes all attribute modifiers by Aurelium Skills for easy uninstalling. This only works on offline players.")
 	public void onResetHealth(CommandSender sender) {
-		if (sender instanceof ConsoleCommandSender) {
+		if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) {
 			File playerDataFolder = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "playerdata");
 			int successful = 0;
 			int error = 0;
