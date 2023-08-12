@@ -35,7 +35,7 @@ sources:
     menu_item:
       material: beetroot
   nether_wart:
-    block: nether_warts
+    block: nether_wart
     xp: 3.0
     check_replace: false
     state:

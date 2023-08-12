@@ -63,7 +63,7 @@ public class Replenish extends ReadiedManaAbility {
     }
 
     private boolean canBeReplenished(Material mat) {
-        return mat == Material.WHEAT || mat == Material.CARROT || mat == Material.POTATO || mat == Material.BEETROOT || mat == Material.NETHER_WART;
+        return mat == Material.WHEAT || mat == Material.CARROTS || mat == Material.POTATOES || mat == Material.BEETROOTS || mat == Material.NETHER_WART;
     }
 
     private boolean isFullyGrown(Block block) {

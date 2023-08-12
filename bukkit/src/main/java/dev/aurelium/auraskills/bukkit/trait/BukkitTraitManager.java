@@ -21,7 +21,6 @@ public class BukkitTraitManager extends TraitManager {
     public BukkitTraitManager(AuraSkills plugin) {
         super(plugin);
         this.plugin = plugin;
-        registerTraitImplementations();
     }
 
     public void registerTraitImplementations() {

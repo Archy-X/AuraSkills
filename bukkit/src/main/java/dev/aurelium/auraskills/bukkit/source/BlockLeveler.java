@@ -1,7 +1,5 @@
 package dev.aurelium.auraskills.bukkit.source;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
@@ -123,8 +121,7 @@ public class BlockLeveler extends SourceLeveler {
                 anyStateMatches = false;
                 // Convert block data to json
                 String blockDataString = block.getBlockData().getAsString(true);
-                Gson gson = new Gson();
-                JsonObject jsonObject = gson.fromJson(blockDataString, JsonObject.class);
+                Map<String, Object> blockDataMap = parseFromBlockData(blockDataString);
                 // Check if block data matches defined states
                 for (BlockXpSource.BlockXpSourceState state : source.getStates()) {
                     if (state == null) continue;
@@ -132,11 +129,11 @@ public class BlockLeveler extends SourceLeveler {
                     for (Map.Entry<String, Object> stateEntry : state.getStateMap().entrySet()) {
                         String key = stateEntry.getKey();
                         Object value = stateEntry.getValue();
-                        if (!jsonObject.has(key)) {
+                        if (!blockDataMap.containsKey(key)) {
                             stateMatches = false;
                             break;
                         }
-                        if (!jsonObject.get(key).getAsString().equals(String.valueOf(value))) {
+                        if (!blockDataMap.get(key).equals(value)) {
                             stateMatches = false;
                             break;
                         }
@@ -172,6 +169,82 @@ public class BlockLeveler extends SourceLeveler {
             }
         }
         return filtered;
+    }
+
+    private Map<String, Object> parseFromBlockData(String input) {
+        Map<String, Object> result = new HashMap<>();
+        // Check if the input is valid
+        if (input == null || input.isEmpty()) {
+            return result;
+        }
+        // Find the index of the first bracket
+        int bracketIndex = input.indexOf("[");
+        // Check if the bracket exists
+        if (bracketIndex == -1) {
+            return result;
+        }
+        // Get the part of the input after the bracket and remove the closing bracket
+        String data = input.substring(bracketIndex + 1).replace("]", "");
+        // Find the index of the first comma
+        int commaIndex = data.indexOf(",");
+        // Loop until there are no more commas
+        while (commaIndex != -1) {
+            // Get the pair before the comma
+            String pair = data.substring(0, commaIndex);
+            // Find the index of the equal sign
+            int equalIndex = pair.indexOf("=");
+            // Check if the equal sign exists
+            if (equalIndex != -1) {
+                // Get the key and value and trim any whitespace
+                String key = pair.substring(0, equalIndex).trim();
+                String value = pair.substring(equalIndex + 1).trim();
+                // Parse the value and put it in the result map with the key
+                result.put(key, parseValue(value));
+            }
+            // Remove the pair and the comma from the data
+            data = data.substring(commaIndex + 1);
+            // Find the next comma index
+            commaIndex = data.indexOf(",");
+        }
+        // Check if there is any remaining data
+        if (!data.isEmpty()) {
+            // Find the index of the equal sign
+            int equalIndex = data.indexOf("=");
+            // Check if the equal sign exists
+            if (equalIndex != -1) {
+                // Get the key and value and trim any whitespace
+                String key = data.substring(0, equalIndex).trim();
+                String value = data.substring(equalIndex + 1).trim();
+                // Parse the value and put it in the result map with the key
+                result.put(key, parseValue(value));
+            }
+        }
+        // Return the result map
+        return result;
+    }
+
+    private Object parseValue(String value) {
+        // Try to parse as an int
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException ignored) {
+            // Ignore and continue
+        }
+        // Try to parse as a double
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException ignored) {
+            // Ignore and continue
+        }
+        // Try to parse as a boolean
+        if (value.equals("true")) {
+            return true;
+        }
+        if (value.equals("false")) {
+            return false;
+        }
+        // Return as a String otherwise
+        return value;
     }
 
 }

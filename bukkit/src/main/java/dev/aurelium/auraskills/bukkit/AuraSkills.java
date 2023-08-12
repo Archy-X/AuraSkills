@@ -147,6 +147,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load skills, stats
         loadSkills();
 
+        // Register default traits
+        traitManager.registerTraitImplementations();
+
         xpRequirements = new XpRequirements(this);
         userManager = new BukkitUserManager(this);
         hookManager = new HookManager();
