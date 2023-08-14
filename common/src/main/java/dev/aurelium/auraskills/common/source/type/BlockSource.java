@@ -20,8 +20,10 @@ public class BlockSource extends Source implements BlockXpSource {
     private final BlockXpSourceState[] states;
     private final String stateMultiplier;
     private final SupportBlockType supportBlockType;
+    private final boolean trunk;
+    private final boolean leaf;
 
-    public BlockSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, String stateMultiplier, SupportBlockType supportBlockType) {
+    public BlockSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
         super(plugin, id, xp);
         this.blocks = blocks;
         this.triggers = triggers;
@@ -29,6 +31,8 @@ public class BlockSource extends Source implements BlockXpSource {
         this.states = states;
         this.stateMultiplier = stateMultiplier;
         this.supportBlockType = supportBlockType;
+        this.trunk = trunk;
+        this.leaf = leaf;
     }
 
     @Override
@@ -72,6 +76,16 @@ public class BlockSource extends Source implements BlockXpSource {
     @Override
     public boolean requiresSupportBlock(SupportBlockType direction) {
         return supportBlockType == direction;
+    }
+
+    @Override
+    public boolean isTrunk() {
+        return trunk;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return leaf;
     }
 
     public static class BlockSourceState implements BlockXpSourceState {

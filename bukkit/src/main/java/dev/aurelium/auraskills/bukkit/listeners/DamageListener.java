@@ -2,6 +2,8 @@ package dev.aurelium.auraskills.bukkit.listeners;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.archery.ArcheryAbilities;
+import dev.aurelium.auraskills.bukkit.skills.archery.ChargedShot;
+import dev.aurelium.auraskills.bukkit.skills.defense.Absorption;
 import dev.aurelium.auraskills.bukkit.skills.defense.DefenseAbilities;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
 import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
@@ -10,6 +12,7 @@ import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.bukkit.trait.AttackDamageTrait;
 import dev.aurelium.auraskills.bukkit.trait.DamageReductionTrait;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.mechanics.DamageType;
 import org.bukkit.Material;
@@ -22,9 +25,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class DamageListener implements Listener {
 
     private final AuraSkills plugin;
+    private final CriticalHandler criticalHandler;
 
     public DamageListener(AuraSkills plugin) {
         this.plugin = plugin;
+        this.criticalHandler = new CriticalHandler(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -71,6 +76,16 @@ public class DamageListener implements Listener {
         if (damageType == DamageType.SWORD) {
             abManager.getAbilityImpl(FightingAbilities.class).firstStrike(event, user, player);
         }
+
+        // Apply critical
+        if (plugin.configBoolean(Option.valueOf("CRITICAL_ENABLED_" + damageType.name()))) {
+            criticalHandler.applyCrit(event, player, user);
+        }
+
+        // Charged shot
+        if (damageType == DamageType.BOW) {
+            plugin.getManaAbilityManager().getProvider(ChargedShot.class).applyChargedShot(event);
+        }
     }
 
     private void onDamaged(EntityDamageByEntityEvent event, Player player) {
@@ -81,7 +96,11 @@ public class DamageListener implements Listener {
         if (event.isCancelled()) return;
         User user = plugin.getUser(player);
 
-        // Handles incoming damage reduction trait
+        // Handles absorption
+        plugin.getManaAbilityManager().getProvider(Absorption.class).handleAbsorption(event, player, user);
+        if (event.isCancelled()) return;
+
+        // Handles damage reduction trait
         var damageReduction = plugin.getTraitManager().getTraitImpl(DamageReductionTrait.class);
         damageReduction.onDamage(event, user);
 

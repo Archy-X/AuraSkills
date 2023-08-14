@@ -52,6 +52,10 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         return false;
     }
 
+    public String[] getMaterials() {
+        return materials;
+    }
+
     @EventHandler
     public void onReady(PlayerInteractEvent event) {
         if (isDisabled()) return;

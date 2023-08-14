@@ -3,11 +3,13 @@ package dev.aurelium.auraskills.bukkit.mana;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +25,7 @@ public abstract class ManaAbilityProvider implements Listener {
     @Nullable
     private final ManaAbilityMessage stopMessage;
 
-    ManaAbilityProvider(AuraSkills plugin, ManaAbility manaAbility, ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage) {
+    public ManaAbilityProvider(AuraSkills plugin, ManaAbility manaAbility, ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage) {
         this.plugin = plugin;
         this.manaAbility = manaAbility;
         this.activateMessage = activateMessage;
@@ -32,6 +34,10 @@ public abstract class ManaAbilityProvider implements Listener {
 
     public ManaAbility getManaAbility() {
         return manaAbility;
+    }
+
+    public ManaAbilityMessage getActivateMessage() {
+        return activateMessage;
     }
 
     public abstract void onActivate(Player player, User user);
@@ -67,9 +73,7 @@ public abstract class ManaAbilityProvider implements Listener {
 
         if (duration != 0) {
             //Schedules stop
-            plugin.getScheduler().scheduleSync(() -> {
-                stop(player, user, data);
-            }, duration * 50L, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleSync(() -> stop(player, user, data), duration * 50L, TimeUnit.MILLISECONDS);
         } else {
             stop(player, user, data);
         }
@@ -93,6 +97,22 @@ public abstract class ManaAbilityProvider implements Listener {
         return !manaAbility.getSkill().isEnabled() || !manaAbility.isEnabled();
     }
 
+    protected boolean failsChecks(Player player) {
+        if (plugin.getUser(player).getManaAbilityLevel(manaAbility) <= 0) {
+            return true;
+        }
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+            return true;
+        }
+        if (!player.hasPermission("auraskills.skill." + manaAbility.getSkill().name().toLowerCase(Locale.ROOT))) {
+            return true;
+        }
+        if (plugin.configBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
+            return player.getGameMode().equals(GameMode.CREATIVE);
+        }
+        return false;
+    }
+
     protected boolean isReady(User user) {
         return true;
     }
@@ -105,11 +125,11 @@ public abstract class ManaAbilityProvider implements Listener {
         return manaAbility.getValue(user.getManaAbilityLevel(manaAbility));
     }
 
-    private int getDuration(User user) {
+    protected int getDuration(User user) {
         return (int) Math.round(manaAbility.getValue(user.getManaAbilityLevel(manaAbility)) * 20);
     }
 
-    private void consumeMana(Player player, User user, double manaConsumed) {
+    protected void consumeMana(Player player, User user, double manaConsumed) {
         user.setMana(user.getMana() - manaConsumed);
 
         plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(activateMessage, user.getLocale())

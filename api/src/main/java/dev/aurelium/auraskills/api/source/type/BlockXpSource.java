@@ -63,6 +63,10 @@ public interface BlockXpSource extends XpSource {
      */
     boolean requiresSupportBlock(SupportBlockType direction);
 
+    boolean isTrunk();
+
+    boolean isLeaf();
+
     interface BlockXpSourceState {
 
         Map<String, Object> getStateMap();

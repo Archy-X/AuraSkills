@@ -42,12 +42,17 @@ public class SpeedMine extends ReadiedManaAbility {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void activationListener(BlockBreakEvent event) {
+        if (isDisabled()) return;
         if (event.isCancelled()) return;
+
         Block block = event.getBlock();
         if (plugin.configBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
             return;
         }
         Player player = event.getPlayer();
+
+        if (failsChecks(player)) return;
+
         var sourcePair = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
         if (sourcePair == null) return;
 
