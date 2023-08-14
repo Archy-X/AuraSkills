@@ -23,7 +23,7 @@ public class ItemKeyParser implements CustomItemParser {
 
     @Override
     public ItemStack parseCustomItem(Map<?, ?> map) {
-        NamespacedId itemKey = NamespacedId.fromStringOrDefault(DataUtil.getString(map, "key"));
+        NamespacedId itemKey = NamespacedId.fromDefault(DataUtil.getString(map, "key"));
         ItemStack item = plugin.getItemRegistry().getItem(itemKey);
         if (item != null) {
             return item;

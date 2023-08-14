@@ -88,7 +88,7 @@ public class SkillLoader {
     private ImmutableList<Ability> loadAbilities(Skill skill, ConfigurationNode config) throws SerializationException {
         List<String> abilitiesStr = config.node("abilities").getList(String.class, new ArrayList<>());
         // Parse ability names to ability instances in registry
-        return abilitiesStr.stream().map(NamespacedId::fromStringOrDefault)
+        return abilitiesStr.stream().map(NamespacedId::fromDefault)
                 .map(id -> {
                     try {
                         Ability ability = plugin.getAbilityRegistry().get(id);
@@ -117,7 +117,7 @@ public class SkillLoader {
         ManaAbility manaAbility = null;
         if (manaAbilityStr != null) {
             try {
-                manaAbility = plugin.getManaAbilityRegistry().get(NamespacedId.fromStringOrDefault(manaAbilityStr));
+                manaAbility = plugin.getManaAbilityRegistry().get(NamespacedId.fromDefault(manaAbilityStr));
                 createLoadedManaAbility(manaAbility, skill);
             } catch (IllegalArgumentException e) {
                 plugin.logger().severe("Could not find mana ability " + manaAbilityStr + " while loading " + skill.getId());

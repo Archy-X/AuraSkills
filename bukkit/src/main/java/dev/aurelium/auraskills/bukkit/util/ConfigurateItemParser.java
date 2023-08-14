@@ -118,7 +118,7 @@ public class ConfigurateItemParser {
 
     @Nullable
     private ItemStack parseItemKey(String key) {
-        return plugin.getItemRegistry().getItem(NamespacedId.fromStringOrDefault(key));
+        return plugin.getItemRegistry().getItem(NamespacedId.fromDefault(key));
     }
 
     @SuppressWarnings("deprecation")

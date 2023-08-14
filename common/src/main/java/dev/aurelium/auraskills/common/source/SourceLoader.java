@@ -114,13 +114,13 @@ public class SourceLoader {
                     if (sourceString.equals("*")) { // Add all sources in skill
                         sourceList.addAll(skill.getSources());
                     } else if (sourceString.startsWith("!")) { // Remove source if starts with !
-                        NamespacedId id = NamespacedId.fromStringOrDefault(sourceString.substring(1));
+                        NamespacedId id = NamespacedId.fromDefault(sourceString.substring(1));
                         XpSource source = plugin.getSkillManager().getSourceById(id);
                         if (source != null) {
                             sourceList.remove(source);
                         }
                     } else { // Add raw source name
-                        XpSource source = plugin.getSkillManager().getSourceById(NamespacedId.fromStringOrDefault(sourceString));
+                        XpSource source = plugin.getSkillManager().getSourceById(NamespacedId.fromDefault(sourceString));
                         if (source != null) {
                             sourceList.add(source);
                         }

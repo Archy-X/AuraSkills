@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
+import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
@@ -18,9 +19,13 @@ import dev.aurelium.auraskills.bukkit.loot.handler.FishingLootHandler;
 import dev.aurelium.auraskills.bukkit.mana.BukkitManaAbilityManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
+import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
+import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
 import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.region.RegionManager;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementListener;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
@@ -29,6 +34,7 @@ import dev.aurelium.auraskills.bukkit.trait.BukkitTraitManager;
 import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
+import dev.aurelium.auraskills.bukkit.util.armor.ArmorListener;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
@@ -110,6 +116,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitWorldManager worldManager;
     private LootTableManager lootTableManager;
     private ModifierManager modifierManager;
+    private RequirementManager requirementManager;
+    private boolean nbtApiEnabled;
 
     @Override
     public void onEnable() {
@@ -135,6 +143,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         traitManager = new BukkitTraitManager(this);
         regionManager = new RegionManager(this);
         modifierManager = new ModifierManager(this);
+        requirementManager = new RequirementManager(this);
 
         // Init registries
         skillRegistry = new SkillRegistry(this);
@@ -173,6 +182,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
         // Update leaderboards
         leaderboardManager.updateLeaderboards();
+
+        // Check if NBT API is supported for the version
+        if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
+            getLogger().warning("NBT API is not yet supported for your Minecraft version, item modifier, requirement, and some other functionality is disabled!");
+            nbtApiEnabled = false;
+        } else {
+            nbtApiEnabled = true;
+        }
     }
 
     @Override
@@ -243,6 +260,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new DamageListener(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
         pm.registerEvents(new FishingLootHandler(this), this);
+        pm.registerEvents(new RequirementListener(this), this);
+        pm.registerEvents(new ItemListener(this), this);
+        pm.registerEvents(new ArmorListener(configStringList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
+        pm.registerEvents(new ArmorModifierListener(this), this);
     }
 
     public BukkitAudiences getAudiences() {
@@ -275,6 +296,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public ModifierManager getModifierManager() {
         return modifierManager;
+    }
+
+    public RequirementManager getRequirementManager() {
+        return requirementManager;
     }
 
     @Override
@@ -455,4 +480,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         }
     }
 
+    public boolean isNbtApiEnabled() {
+        return nbtApiEnabled;
+    }
 }

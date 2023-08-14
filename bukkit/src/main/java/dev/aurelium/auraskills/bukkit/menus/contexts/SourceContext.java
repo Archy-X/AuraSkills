@@ -20,12 +20,12 @@ public class SourceContext implements ContextProvider<XpSource> {
     public XpSource parse(String menuName, String input) {
         String[] split = input.split(" ");
         // Parse Skill from first part of input
-        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromStringOrDefault(split[0]));
+        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(split[0]));
         if (skill == null || !skill.isEnabled()) {
             return null;
         }
         // Parse Source from second part of input
-        NamespacedId sourceId = NamespacedId.fromStringOrDefault(split[1]);
+        NamespacedId sourceId = NamespacedId.fromDefault(split[1]);
         // Find source from skill that matches id
         return skill.getSources().stream().filter(source -> source.getId().equals(sourceId)).findFirst().orElse(null);
     }

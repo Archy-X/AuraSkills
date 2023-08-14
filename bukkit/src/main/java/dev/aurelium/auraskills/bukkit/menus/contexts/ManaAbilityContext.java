@@ -17,7 +17,7 @@ public class ManaAbilityContext implements ContextProvider<ManaAbility> {
     @Override
     @Nullable
     public ManaAbility parse(String menuName, String input) {
-        ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(NamespacedId.fromStringOrDefault(input));
+        ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(NamespacedId.fromDefault(input));
         if (manaAbility != null && manaAbility.isEnabled()) {
             return manaAbility;
         } else {

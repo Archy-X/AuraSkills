@@ -69,7 +69,7 @@ public class LootTableManager {
 			}
 			// Parse skill from file name
 			String skillName = lootTableFile.getName().replace(".yml", "");
-			Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromStringOrDefault(skillName));
+			Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(skillName));
 			if (skill == null) return;
 
 			FileConfiguration config = YamlConfiguration.loadConfiguration(lootTableFile);

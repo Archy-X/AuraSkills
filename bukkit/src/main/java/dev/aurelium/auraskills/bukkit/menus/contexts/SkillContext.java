@@ -17,7 +17,7 @@ public class SkillContext implements ContextProvider<Skill> {
     @Nullable
     @Override
     public Skill parse(String menuName, String input) {
-        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromStringOrDefault(input));
+        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(input));
         if (skill != null && skill.isEnabled()) {
             return skill;
         } else {

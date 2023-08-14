@@ -362,7 +362,7 @@ public abstract class User {
         // Find items that are not registered
         List<KeyIntPair> toRemove = new ArrayList<>();
         for (KeyIntPair unclaimedItem : unclaimedItems) {
-            if (!plugin.getItemRegistry().containsItem(NamespacedId.fromStringOrDefault(unclaimedItem.getKey()))) {
+            if (!plugin.getItemRegistry().containsItem(NamespacedId.fromDefault(unclaimedItem.getKey()))) {
                 toRemove.add(unclaimedItem);
             }
         }

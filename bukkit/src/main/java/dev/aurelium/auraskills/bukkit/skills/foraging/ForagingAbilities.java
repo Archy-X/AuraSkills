@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
-import com.archyx.aureliumskills.data.PlayerData;
 import com.cryptomorin.xseries.XMaterial;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
@@ -109,8 +108,8 @@ public class ForagingAbilities extends AbilityImpl {
         user.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(ability, user)));
     }
 
-    public void removeValor(PlayerData playerData) {
-        playerData.removeStatModifier("foraging-valor");
+    public void removeValor(User user) {
+        user.removeStatModifier("foraging-valor");
     }
 
 }

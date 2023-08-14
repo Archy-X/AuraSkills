@@ -29,7 +29,7 @@ public class SourceContextManager extends ContextManager {
         if (parentMap.containsKey("sources")) {
             List<String> sourcesList = DataUtil.getStringList(parentMap, "sources");
             for (String name : sourcesList) {
-                NamespacedId sourceId = NamespacedId.fromStringOrDefault(name);
+                NamespacedId sourceId = NamespacedId.fromDefault(name);
                 XpSource source = plugin.getSkillManager().getSourceById(sourceId);
                 if (source != null) {
                     contexts.add(new SourceContextWrapper(source));

@@ -65,7 +65,7 @@ public class BossBarManager {
             BossBarColor color = BossBarColor.GREEN;
             BossBarStyle style = BossBarStyle.SOLID;
             try {
-                skill = plugin.getSkillRegistry().get(NamespacedId.fromStringOrDefault(splitEntry[0].toUpperCase(Locale.ROOT)));
+                skill = plugin.getSkillRegistry().get(NamespacedId.fromDefault(splitEntry[0].toUpperCase(Locale.ROOT)));
             } catch (IllegalArgumentException e) {
                 plugin.logger().warn("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid Skill");
                 skill = Skills.FARMING;

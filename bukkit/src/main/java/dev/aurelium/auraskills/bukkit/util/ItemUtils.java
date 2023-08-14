@@ -1,10 +1,10 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import com.archyx.aureliumskills.modifier.ModifierType;
-import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.aurelium.auraskills.bukkit.modifier.ModifierType;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -62,6 +62,14 @@ public class ItemUtils {
 	}
 
 	public static NBTCompound getRootCompound(NBTItem item) {
+		NBTCompound compound = item.getCompound("AuraSkills");
+		if (compound == null) {
+			compound = item.addCompound("AuraSkills");
+		}
+		return compound;
+	}
+
+	public static NBTCompound getLegacyRootCompound(NBTItem item) {
 		NBTCompound compound = item.getCompound("AureliumSkills");
 		if (compound == null) {
 			compound = item.addCompound("AureliumSkills");
@@ -73,8 +81,16 @@ public class ItemUtils {
 		return getCompound(getRootCompound(item), "Modifiers");
 	}
 
+	public static NBTCompound getLegacyModifiersCompound(NBTItem item) {
+		return getCompound(getLegacyRootCompound(item), "Modifiers");
+	}
+
 	public static NBTCompound getModifiersTypeCompound(NBTItem item, ModifierType type) {
 		return getCompound(getModifiersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
+	}
+
+	public static NBTCompound getLegacyModifiersTypeCompound(NBTItem item, ModifierType type) {
+		return getCompound(getLegacyModifiersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
 	public static NBTCompound getRequirementsCompound(NBTItem item) {
@@ -85,6 +101,15 @@ public class ItemUtils {
 		return getCompound(getRequirementsCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
+	public static NBTCompound getLegacyRequirementsCompound(NBTItem item) {
+		return getCompound(getLegacyRootCompound(item), "Requirements");
+	}
+
+
+	public static NBTCompound getLegacyRequirementsTypeCompound(NBTItem item, ModifierType type) {
+		return getCompound(getLegacyRequirementsCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
+	}
+
 	public static NBTCompound getMultipliersCompound(NBTItem item) {
 		return getCompound(getRootCompound(item), "Multipliers");
 	}
@@ -93,13 +118,21 @@ public class ItemUtils {
 		return getCompound(getMultipliersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
+	public static NBTCompound getLegacyMultipliersCompound(NBTItem item) {
+		return getCompound(getLegacyRootCompound(item), "Multipliers");
+	}
+
+	public static NBTCompound getLegacyMultipliersTypeCompound(NBTItem item, ModifierType type) {
+		return getCompound(getLegacyMultipliersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
+	}
+
 	public static void removeParentCompounds(NBTCompound compound) {
-		if (compound.getKeys().size() == 0) {
+		if (compound.getKeys().isEmpty()) {
 			NBTCompound parent = compound.getParent();
 			parent.removeKey(compound.getName());
-			if (parent.getKeys().size() == 0) {
+			if (parent.getKeys().isEmpty()) {
 				parent.getParent().removeKey(parent.getName());
-				if (parent.getParent().getKeys().size() == 0) {
+				if (parent.getParent().getKeys().isEmpty()) {
 					parent.getParent().getParent().removeKey(parent.getParent().getName());
 				}
 			}

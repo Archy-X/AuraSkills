@@ -180,9 +180,9 @@ public class Treecapitator extends ReadiedManaAbility {
                 for (String woodName : woodNames) {
                     if (matName.contains(woodName)) {
                         if (woodName.equals("CRIMSON") || woodName.equals("WARPED")) {
-                            source = plugin.getSkillManager().getSourceById(NamespacedId.fromStringOrDefault(woodName.toLowerCase(Locale.ROOT) + "_stem"));
+                            source = plugin.getSkillManager().getSourceById(NamespacedId.fromDefault(woodName.toLowerCase(Locale.ROOT) + "_stem"));
                         } else {
-                            source = plugin.getSkillManager().getSourceById(NamespacedId.fromStringOrDefault(woodName.toLowerCase(Locale.ROOT) + "_log"));
+                            source = plugin.getSkillManager().getSourceById(NamespacedId.fromDefault(woodName.toLowerCase(Locale.ROOT) + "_log"));
                         }
                         break;
                     }

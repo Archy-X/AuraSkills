@@ -39,7 +39,7 @@ public class NamespacedId {
         return new NamespacedId(split[0], split[1]);
     }
 
-    public static NamespacedId fromStringOrDefault(String string) {
+    public static NamespacedId fromDefault(String string) {
         String[] split = string.split("/");
         if (split.length == 1) {
             return new NamespacedId(NamespacedId.AURASKILLS, split[0]); // Use default namespace if not specified

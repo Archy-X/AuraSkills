@@ -49,7 +49,7 @@ public class CommandRegistrar {
         });
         contexts.registerContext(Skill.class, c -> {
             String arg = c.popFirstArg();
-            Skill skill = plugin.getSkillRegistry().get(NamespacedId.fromStringOrDefault(arg));
+            Skill skill = plugin.getSkillRegistry().get(NamespacedId.fromDefault(arg));
             if (!skill.isEnabled()) {
                 Locale locale = plugin.getLocale(c.getSender());
                 c.getIssuer().sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UNKNOWN_SKILL, locale));

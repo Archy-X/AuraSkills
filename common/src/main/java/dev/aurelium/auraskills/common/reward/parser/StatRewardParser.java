@@ -19,7 +19,7 @@ public class StatRewardParser extends RewardParser {
         StatRewardBuilder builder = new StatRewardBuilder(plugin);
 
         String statName = getString(map, "stat");
-        Stat stat = plugin.getStatRegistry().get(NamespacedId.fromStringOrDefault(statName));
+        Stat stat = plugin.getStatRegistry().get(NamespacedId.fromDefault(statName));
         if (stat == null) {
             throw new IllegalArgumentException("Unknown stat with name: " + statName);
         }

@@ -18,7 +18,7 @@ public class ItemRewardParser extends RewardParser {
     @Override
     public SkillReward parse(Map<?, ?> map) {
         String key = getString(map, "key");
-        NamespacedId itemKey = NamespacedId.fromStringOrDefault(key);
+        NamespacedId itemKey = NamespacedId.fromDefault(key);
         ItemRewardBuilder builder = new ItemRewardBuilder(plugin).itemKey(itemKey);
 
         int amount = 1;

@@ -32,7 +32,7 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
         }
         User user = plugin.getUser(player);
         // Handle each stat entry
-        Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromStringOrDefault(placeholder));
+        Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(placeholder));
         if (stat != null) {
             return TextUtil.replace(plugin.getMsg(MenuMessage.PLAYER_STAT_ENTRY, locale),
                     "{color}", stat.getColor(locale),
