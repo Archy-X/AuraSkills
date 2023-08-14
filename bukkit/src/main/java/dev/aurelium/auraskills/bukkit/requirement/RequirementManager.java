@@ -23,6 +23,7 @@ public class RequirementManager implements Listener {
     public RequirementManager(AuraSkills plugin) {
         errorMessageTimer = new HashMap<>();
         this.plugin = plugin;
+        load();
         tickTimer();
     }
 
@@ -38,7 +39,7 @@ public class RequirementManager implements Listener {
                 for (int i = 1; i < splitText.length; i++) {
                     String requirementText = splitText[i];
                     try {
-                        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementText.split(":")[0]));
+                        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementText.split(":")[0].toLowerCase(Locale.ROOT)));
                         if (skill != null) {
                             int level = Integer.parseInt(requirementText.split(":")[1]);
                             requirements.put(skill, level);

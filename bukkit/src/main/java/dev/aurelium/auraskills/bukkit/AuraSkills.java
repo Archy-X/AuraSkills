@@ -142,8 +142,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         statManager = new BukkitStatManager(this);
         traitManager = new BukkitTraitManager(this);
         regionManager = new RegionManager(this);
-        modifierManager = new ModifierManager(this);
-        requirementManager = new RequirementManager(this);
 
         // Init registries
         skillRegistry = new SkillRegistry(this);
@@ -165,6 +163,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         levelManager = new BukkitLevelManager(this);
         leaderboardManager = new LeaderboardManager(this);
         uiProvider = new BukkitUiProvider(this);
+        modifierManager = new ModifierManager(this);
+        requirementManager = new RequirementManager(this);
 
         // Load rewards
         rewardManager = new BukkitRewardManager(this);
