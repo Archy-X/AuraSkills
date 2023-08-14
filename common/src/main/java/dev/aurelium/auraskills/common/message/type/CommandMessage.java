@@ -150,7 +150,8 @@ public enum CommandMessage implements MessageKey {
     XP_ADD,
     XP_SET,
     XP_REMOVE,
-    UNKNOWN_SKILL("unknown_skill");
+    UNKNOWN_SKILL("unknown_skill"),
+    UNKNOWN_STAT("unknown_stat");
 
     private final String path;
 

@@ -27,7 +27,9 @@ public class BukkitStatManager extends StatManager {
 
     @Override
     public <T> void reload(User user, T type) {
-
+        if (type instanceof Stat stat) {
+            reloadStat(user, stat);
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
@@ -49,12 +50,21 @@ public class CommandRegistrar {
         });
         contexts.registerContext(Skill.class, c -> {
             String arg = c.popFirstArg();
-            Skill skill = plugin.getSkillRegistry().get(NamespacedId.fromDefault(arg));
-            if (!skill.isEnabled()) {
+            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(arg));
+            if (skill == null || !skill.isEnabled()) {
                 Locale locale = plugin.getLocale(c.getSender());
-                c.getIssuer().sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UNKNOWN_SKILL, locale));
+                throw new InvalidCommandArgument(plugin.getMsg(CommandMessage.UNKNOWN_SKILL, locale));
             }
             return skill;
+        });
+        contexts.registerContext(Stat.class, c -> {
+            String arg = c.popFirstArg();
+            Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(arg));
+            if (stat == null || !stat.isEnabled()) {
+                Locale locale = plugin.getLocale(c.getSender());
+                throw new InvalidCommandArgument(plugin.getMsg(CommandMessage.UNKNOWN_STAT, locale));
+            }
+            return stat;
         });
     }
 
@@ -67,12 +77,36 @@ public class CommandRegistrar {
             }
             return skills;
         });
+        completions.registerAsyncCompletion("skills_global", c -> {
+            List<String> skills = new ArrayList<>();
+            skills.add("global");
+            for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
+                skills.add(skill.getId().toString());
+            }
+            return skills;
+        });
+        completions.registerAsyncCompletion("stats", c -> {
+            List<String> stats = new ArrayList<>();
+            for (Stat stat : plugin.getStatManager().getStatValues()) {
+                stats.add(stat.getId().toString());
+            }
+            return stats;
+        });
+        completions.registerAsyncCompletion("modifiers", c -> {
+            Player player = c.getPlayer();
+            User user = plugin.getUser(player);
+
+            return user.getStatModifiers().keySet();
+        });
     }
 
     private void registerBaseCommands(PaperCommandManager manager) {
         manager.registerCommand(new SkillsRootCommand(plugin));
         manager.registerCommand(new SkillCommand(plugin));
         manager.registerCommand(new ManaCommand(plugin));
+        manager.registerCommand(new ModifierCommand(plugin));
+        manager.registerCommand(new ItemCommand(plugin));
+        manager.registerCommand(new ArmorCommand(plugin));
     }
 
 }

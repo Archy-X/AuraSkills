@@ -39,7 +39,6 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.api.ApiRegistrationUtil;
-import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
 import dev.aurelium.auraskills.common.hooks.HookManager;
@@ -65,9 +64,7 @@ import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
-import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -78,7 +75,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Locale;
 
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
@@ -104,7 +100,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private PlatformLogger logger;
     private HookManager hookManager;
     private LeaderboardManager leaderboardManager;
-    private UiProvider uiProvider;
+    private BukkitUiProvider uiProvider;
     private RewardManager rewardManager;
     private Scheduler scheduler;
     private StorageProvider storageProvider;
@@ -128,11 +124,13 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
-        // Loads messages
+        // Load messages
         messageProvider = new MessageProvider(this);
+        messageProvider.loadMessages();
+        // Load blocked/disabled worlds lists
         worldManager = new BukkitWorldManager(this);
-        worldManager.loadWorlds(new OptionProvider(new HashMap<>()));
-        // Creates scheduler
+        worldManager.loadWorlds(getConfig());
+        // Create scheduler
         scheduler = new BukkitScheduler(this);
 
         // Init managers
@@ -163,6 +161,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         levelManager = new BukkitLevelManager(this);
         leaderboardManager = new LeaderboardManager(this);
         uiProvider = new BukkitUiProvider(this);
+        uiProvider.getBossBarManager().loadOptions();
         modifierManager = new ModifierManager(this);
         requirementManager = new RequirementManager(this);
 
@@ -172,6 +171,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
         // Loads loot
         lootTableManager = new LootTableManager(this);
+        lootTableManager.loadLootTables();
 
         initStorageProvider();
 
@@ -215,7 +215,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         }
     }
 
-    private void loadSkills() {
+    public void loadSkills() {
         SkillLoader skillLoader = new SkillLoader(this);
         skillLoader.loadSkills();
         StatLoader statLoader = new StatLoader(this);
@@ -313,7 +313,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public ConfigProvider config() {
+    public BukkitConfigProvider config() {
         return configProvider;
     }
 
@@ -413,7 +413,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public UiProvider getUiProvider() {
+    public BukkitUiProvider getUiProvider() {
         return uiProvider;
     }
 

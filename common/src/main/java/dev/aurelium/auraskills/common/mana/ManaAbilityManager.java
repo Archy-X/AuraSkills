@@ -32,6 +32,10 @@ public abstract class ManaAbilityManager {
         manaAbilityMap.put(manaAbility, loadedManaAbility);
     }
 
+    public void unregisterAll() {
+        manaAbilityMap.clear();
+    }
+
     @NotNull
     public LoadedManaAbility getManaAbility(ManaAbility manaAbility) {
         LoadedManaAbility loadedMana = manaAbilityMap.get(manaAbility);

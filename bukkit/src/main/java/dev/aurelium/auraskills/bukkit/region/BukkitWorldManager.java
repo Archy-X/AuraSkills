@@ -2,9 +2,9 @@ package dev.aurelium.auraskills.bukkit.region;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.region.WorldManager;
-import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,20 +20,20 @@ public class BukkitWorldManager implements WorldManager {
         this.plugin = plugin;
     }
 
-    public void loadWorlds(OptionProvider options) {
+    public void loadWorlds(FileConfiguration config) {
         int blockedWorldsLoaded = 0;
         blockedWorlds = new LinkedList<>();
         disabledWorlds = new LinkedList<>();
         blockedCheckBlockReplaceWorlds = new LinkedList<>();
-        for (String blockedWorld : options.getStringList("blocked_worlds")) {
+        for (String blockedWorld : config.getStringList("blocked_worlds")) {
             blockedWorlds.add(blockedWorld);
             blockedWorldsLoaded++;
         }
-        for (String blockedWorld : options.getStringList("disabled_worlds")) {
+        for (String blockedWorld : config.getStringList("disabled_worlds")) {
             disabledWorlds.add(blockedWorld);
             blockedWorldsLoaded++;
         }
-        for (String blockedWorld : options.getStringList("blocked_check_block_replace_worlds")) {
+        for (String blockedWorld : config.getStringList("blocked_check_block_replace_worlds")) {
             blockedCheckBlockReplaceWorlds.add(blockedWorld);
             blockedWorldsLoaded++;
         }

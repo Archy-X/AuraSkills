@@ -72,7 +72,7 @@ public abstract class User {
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
-        this.mana = plugin.config().getDouble(Option.BASE_MANA);
+        this.mana = plugin.configDouble(Option.BASE_MANA);
         this.multipliers = new HashMap<>();
     }
 
@@ -104,7 +104,7 @@ public abstract class User {
         int numEnabled = 0;
         // Only add enabled skills
         for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
-            if (plugin.config().isEnabled(entry.getKey())) {
+            if (entry.getKey().isEnabled()) {
                 sum += entry.getValue();
                 numEnabled ++;
             }
@@ -135,7 +135,7 @@ public abstract class User {
     }
 
     public void addSkillXp(Skill skill, double amount) {
-        if (!plugin.config().isEnabled(skill)) return; // Ignore disabled skills
+        if (!skill.isEnabled()) return; // Ignore disabled skills
 
         skillXp.merge(skill, amount, Double::sum);
         if (amount > 0.0) { // Mark as modified
@@ -248,7 +248,7 @@ public abstract class User {
         }
         map.put(modifier.name(), modifier);
         if (levels != null) {
-            levels.put(modifier.type(), levels.get(modifier.type()) + modifier.value());
+            levels.put(modifier.type(), levels.getOrDefault(modifier.type(), 0.0) + modifier.value());
         }
         // Reloads modifier type
         if (reload) {
@@ -343,7 +343,7 @@ public abstract class User {
     public int getPowerLevel() {
         int power = 0;
         for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
-            if (plugin.config().isEnabled(entry.getKey())) {
+            if (entry.getKey().isEnabled()) {
                 power += entry.getValue();
             }
         }

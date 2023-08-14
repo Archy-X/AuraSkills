@@ -24,6 +24,7 @@ public class BukkitTraitManager extends TraitManager {
     }
 
     public void registerTraitImplementations() {
+        traitImpls.clear();
         registerTraitImpl(new HpTrait(plugin));
         registerTraitImpl(new HealthRegenTrait(plugin));
         registerTraitImpl(new ManaRegenTrait(plugin));

@@ -55,6 +55,10 @@ public abstract class StatManager {
         statMap.put(stat, loadedStat);
     }
 
+    public void unregisterAll() {
+        statMap.clear();
+    }
+
     public abstract void reloadPlayer(User user);
 
     public abstract <T> void reload(User user, T type);

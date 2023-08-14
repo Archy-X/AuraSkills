@@ -34,7 +34,7 @@ public class RequirementListener implements Listener {
         this.requirements = new Requirements(plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEquip(ArmorEquipEvent event) {
         if (event.isCancelled()) return;
         Player player = event.getPlayer();

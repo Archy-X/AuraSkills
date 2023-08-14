@@ -70,7 +70,7 @@ public abstract class LevelManager {
         double currentXp = user.getSkillXp(skill);
         int level = user.getSkillLevel(skill);
         double levelXp = xpRequirements.getXpRequired(skill, level + 1);
-        boolean maxed = xpRequirements.getListSize(skill) <= user.getSkillLevel(skill) - 1 || level >= plugin.config().getMaxLevel(skill);
+        boolean maxed = xpRequirements.getListSize(skill) <= user.getSkillLevel(skill) - 1 || level >= skill.getMaxLevel();
 
         plugin.getUiProvider().getActionBarManager().sendXpActionBar(user, skill, currentXp, levelXp, xpGained, level, maxed);
         if (plugin.configBoolean(Option.BOSS_BAR_ENABLED)) {
@@ -82,7 +82,7 @@ public abstract class LevelManager {
         int currentLevel = user.getSkillLevel(skill);
         double currentXp = user.getSkillXp(skill);
 
-        if (currentLevel >= plugin.config().getMaxLevel(skill)) return; // Check max level options
+        if (currentLevel >= skill.getMaxLevel()) return; // Check max level options
         if (xpRequirements.getListSize(skill) <= currentLevel - 1) return; // Check if skill is maxed
 
         if (currentXp >= xpRequirements.getXpRequired(skill, currentLevel + 1)) {

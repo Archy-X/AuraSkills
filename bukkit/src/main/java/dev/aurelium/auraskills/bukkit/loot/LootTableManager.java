@@ -28,7 +28,6 @@ public class LootTableManager {
 		this.lootManager = new LootManager(plugin);
 		lootTables = new HashMap<>();
 		initLootManager();
-		loadLootTables();
 	}
 
 	public void initLootManager() {

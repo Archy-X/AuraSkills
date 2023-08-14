@@ -42,6 +42,10 @@ public abstract class TraitManager {
         traitMap.put(trait, loadedTrait);
     }
 
+    public void unregisterAll() {
+        traitMap.clear();
+    }
+
     public Set<Trait> getEnabledTraits() {
         Set<Trait> skills = new HashSet<>();
         for (LoadedTrait loaded : traitMap.values()) {

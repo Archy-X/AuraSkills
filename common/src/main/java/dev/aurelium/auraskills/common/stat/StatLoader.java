@@ -33,6 +33,10 @@ public class StatLoader {
 
     public void loadStats() {
         try {
+            // Unregister existing stats and traits
+            plugin.getStatManager().unregisterAll();
+            plugin.getTraitManager().unregisterAll();
+
             ConfigurationNode root = configurateLoader.loadUserFile(FILE_NAME);
 
             ConfigurationNode statsNode = root.node("stats");

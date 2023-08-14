@@ -39,6 +39,10 @@ public abstract class AbilityManager {
         abilityMap.put(ability, loadedAbility);
     }
 
+    public void unregisterAll() {
+        abilityMap.clear();
+    }
+
     @NotNull
     public LoadedAbility getAbility(Ability ability) {
         LoadedAbility loadedAbility = abilityMap.get(ability);

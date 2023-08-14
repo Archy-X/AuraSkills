@@ -29,6 +29,13 @@ public class SkillsRootCommand extends BaseCommand {
 		}
 	}
 
+	@Subcommand("reload")
+	@CommandPermission("aureliumskills.reload")
+	@Description("Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.")
+	public void reload(CommandSender sender) {
+		new ReloadExecutor(plugin).reload(sender);
+	}
+
 	@Subcommand("help")
 	@CommandPermission("aureliumskills.help")
 	public void onHelp(CommandSender sender, CommandHelp help) {

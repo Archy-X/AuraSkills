@@ -44,6 +44,12 @@ public class SkillLoader {
      */
     public void loadSkills() {
         try {
+            // Unregister existing skills
+            plugin.getSkillManager().unregisterAll();
+            // Unregister existing abilities
+            plugin.getAbilityManager().unregisterAll();
+            plugin.getManaAbilityManager().unregisterAll();
+
             ConfigurationNode root = configurateLoader.loadUserFile("skills.yml");
 
             ConfigurationNode skillsNode = root.node("skills");

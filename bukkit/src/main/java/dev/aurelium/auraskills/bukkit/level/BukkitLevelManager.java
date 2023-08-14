@@ -28,6 +28,7 @@ public class BukkitLevelManager extends LevelManager {
     }
 
     public void registerLevelers() {
+        levelers.clear();
         registerLeveler(new AnvilLeveler(plugin));
         registerLeveler(new BlockLeveler(plugin));
         registerLeveler(new BrewingLeveler(plugin));

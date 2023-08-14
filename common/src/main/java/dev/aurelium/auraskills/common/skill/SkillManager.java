@@ -34,6 +34,10 @@ public class SkillManager {
         skillMap.put(skill, loadedSkill);
     }
 
+    public void unregisterAll() {
+        skillMap.clear();
+    }
+
     @NotNull
     public LoadedSkill getSkill(Skill skill) {
         LoadedSkill loadedSkill = skillMap.get(skill);

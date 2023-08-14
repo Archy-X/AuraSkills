@@ -87,7 +87,7 @@ public abstract class RewardManager {
     public List<Skill> getSkillsLeveledBy(Stat stat) {
         List<Skill> skillsLeveledBy = new ArrayList<>();
         for (Skill skill : plugin.getSkillRegistry().getValues()) {
-            if (!plugin.config().isEnabled(skill)) continue; // Skip disabled skills
+            if (!skill.isEnabled()) continue; // Skip disabled skills
             RewardTable table = rewardTables.get(skill);
             if (table != null) {
                 for (Stat statLeveled : table.getStatsLeveled()) {

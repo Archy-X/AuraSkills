@@ -142,7 +142,7 @@ public class LeaderboardManager {
                 SkillValue skillLevel = new SkillValue(id, level, xp);
                 skillLb.get(skill).add(skillLevel);
 
-                if (plugin.config().isEnabled(skill)) {
+                if (skill.isEnabled()) {
                     powerLevel += level;
                     powerXp += xp;
                     numEnabled++;
@@ -171,7 +171,7 @@ public class LeaderboardManager {
                 SkillValue skillValue = new SkillValue(state.uuid(), level, xp);
                 skillLb.get(skill).add(skillValue);
 
-                if (plugin.config().isEnabled(skill)) {
+                if (skill.isEnabled()) {
                     powerLevel += level;
                     powerXp += xp;
                     numEnabled++;

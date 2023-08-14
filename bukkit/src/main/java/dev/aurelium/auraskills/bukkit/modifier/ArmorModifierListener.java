@@ -73,6 +73,7 @@ public class ArmorModifierListener implements Listener {
 
     @EventHandler
     public void onEquip(ArmorEquipEvent event) {
+        if (event.isCancelled()) return;
         if (plugin.configBoolean(Option.MODIFIER_ARMOR_TIMER_ENABLED)) return; // Don't use if timer is enabled
         Player player = event.getPlayer();
         User user = plugin.getUser(player);

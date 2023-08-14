@@ -50,10 +50,9 @@ public class MessageProvider implements PolyglotProvider {
                 .build();
         this.polyglot = new Polyglot(this, config);
         this.manager = this.polyglot.getMessageManager();
-        init();
     }
 
-    private void init() {
+    public void loadMessages() {
         polyglot.getMessageManager().loadMessages();
     }
 
