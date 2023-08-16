@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Interface that provides messages for the plugin.
@@ -182,6 +183,14 @@ public class MessageProvider implements PolyglotProvider {
     @Override
     public File getDataFolder() {
         return plugin.getPluginFolder();
+    }
+
+    public boolean hasLocale(Locale locale) {
+        return manager.getLoadedLanguages().contains(locale);
+    }
+
+    public Set<Locale> getLoadedLanguages() {
+        return manager.getLoadedLanguages();
     }
 
     @Override

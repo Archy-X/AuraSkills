@@ -13,10 +13,32 @@ permissions:
         default: true
     auraskills.command.stats:
         default: true
+    auraskills.command.sources:
+        default: true
     auraskills.command.help:
         default: true
     auraskills.command.mana:
         default: true
+    auraskills.command.top:
+        default: true
+    auraskills.command.rank:
+        default: true
+    auraskills.command.lang:
+        default: true
+    auraskills.command.abtoggle:
+        default: true
+    auraskills.command.save:
+        default: true
+    auraskills.command.claimitems:
+        default: true
+    auraskills.command.version:
+        default: op
+    auraskills.command.multiplier:
+        default: op
+    auraskills.command.updateleaderboards:
+        default: op
+    auraskills.command.transfer:
+        default: op
     auraskills.command.mana.add:
         default: op
     auraskills.command.mana.remove:
@@ -103,22 +125,8 @@ permissions:
         default: op
     auraskills.command.item.multiplier.removeall:
         default: op
-    aureliumskills.lang:
-        default: true
-    aureliumskills.top:
-        default: true
-    aureliumskills.multipliercommand:
-        default: op
     aureliumskills.multiplier:
         default: false
-    aureliumskills.abtoggle:
-        default: true
-    aureliumskills.updateleaderboards:
-        default: op
-    aureliumskills.save:
-        default: op
-    aureliumskills.rank:
-        default: true
     auraskills.skill.farming:
         default: true
     auraskills.skill.foraging:
@@ -150,12 +158,4 @@ permissions:
     auraskills.skill.forging:
         default: true
     aureliumskills.checkupdates:
-        default: op
-    aureliumskills.claimitems:
-        default: true
-    aureliumskills.version:
-        default: op
-    aureliumskills.sources:
-        default: true
-    aureliumskills.transfer:
         default: op

@@ -45,6 +45,10 @@ public class BukkitItemRegistry implements ItemRegistry {
         items.remove(key);
     }
 
+    public Set<NamespacedId> getIds() {
+        return items.keySet();
+    }
+
     @Nullable
     public ItemStack getItem(NamespacedId key) {
         ItemStack item = items.get(key);

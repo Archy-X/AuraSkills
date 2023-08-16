@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
@@ -18,6 +19,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class CommandRegistrar {
 
@@ -68,6 +70,14 @@ public class CommandRegistrar {
             }
             return stat;
         });
+        contexts.registerContext(UUID.class, c -> {
+            String input = c.popFirstArg();
+            try {
+                return UUID.fromString(input);
+            } catch (IllegalArgumentException e) {
+                throw new InvalidCommandArgument(input + "is not a valid UUID!");
+            }
+        });
     }
 
     private void registerCompletions(PaperCommandManager manager) {
@@ -75,7 +85,7 @@ public class CommandRegistrar {
         completions.registerAsyncCompletion("skills", c -> {
             List<String> skills = new ArrayList<>();
             for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
-                skills.add(skill.getId().toString());
+                skills.add(skill.name().toLowerCase(Locale.ROOT));
             }
             return skills;
         });
@@ -83,14 +93,14 @@ public class CommandRegistrar {
             List<String> skills = new ArrayList<>();
             skills.add("global");
             for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
-                skills.add(skill.getId().toString());
+                skills.add(skill.name().toLowerCase(Locale.ROOT));
             }
             return skills;
         });
         completions.registerAsyncCompletion("stats", c -> {
             List<String> stats = new ArrayList<>();
             for (Stat stat : plugin.getStatManager().getStatValues()) {
-                stats.add(stat.getId().toString());
+                stats.add(stat.name().toLowerCase(Locale.ROOT));
             }
             return stats;
         });
@@ -99,6 +109,24 @@ public class CommandRegistrar {
             User user = plugin.getUser(player);
 
             return user.getStatModifiers().keySet();
+        });
+        completions.registerAsyncCompletion("skill_top", c -> {
+            List<String> values = new ArrayList<>();
+            for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
+                values.add(skill.name().toLowerCase(Locale.ROOT));
+            }
+            values.add("average");
+            return values;
+        });
+        completions.registerAsyncCompletion("lang", c -> plugin.getMessageProvider().getLoadedLanguages().stream().map(Locale::toLanguageTag).toList());
+        completions.registerAsyncCompletion("item_keys", c -> plugin.getItemRegistry().getIds().stream().map(NamespacedId::toString).toList());
+        completions.registerAsyncCompletion("sort_types", c -> {
+            SorterItem.SortType[] sortTypes = SorterItem.SortType.values();
+            List<String> typeNames = new ArrayList<>();
+            for (SorterItem.SortType sortType : sortTypes) {
+                typeNames.add(sortType.toString().toLowerCase(Locale.ROOT));
+            }
+            return typeNames;
         });
     }
 

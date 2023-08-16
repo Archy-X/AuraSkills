@@ -67,6 +67,7 @@ import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.user.User;
+import fr.minuskube.inv.InventoryManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -116,7 +117,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private ModifierManager modifierManager;
     private RequirementManager requirementManager;
     private BackupProvider backupProvider;
+    private InventoryManager inventoryManager;
     private boolean nbtApiEnabled;
+    private final int resourceId = 81069;
 
     @Override
     public void onEnable() {
@@ -168,6 +171,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         uiProvider.getBossBarManager().loadOptions();
         modifierManager = new ModifierManager(this);
         requirementManager = new RequirementManager(this);
+        inventoryManager = new InventoryManager(this);
+        inventoryManager.init();
 
         // Load rewards
         rewardManager = new BukkitRewardManager(this);
@@ -304,6 +309,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public RequirementManager getRequirementManager() {
         return requirementManager;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
+    }
+
+    public int getResourceId() {
+        return resourceId;
     }
 
     @Override

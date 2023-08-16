@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.scheduler.Tick;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -29,7 +30,7 @@ public abstract class LevelManager {
         this.xpRequirements = plugin.getXpRequirements();
     }
 
-    public double getPermissionMultiplier(@NotNull User user, Skill skill) {
+    public double getPermissionMultiplier(@NotNull User user, @Nullable Skill skill) {
         return user.getPermissionMultiplier(skill);
     }
 

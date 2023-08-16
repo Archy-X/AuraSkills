@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.common.user.User;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -44,7 +45,7 @@ public class BukkitUser extends User {
     }
 
     @Override
-    public double getPermissionMultiplier(Skill skill) {
+    public double getPermissionMultiplier(@Nullable Skill skill) {
         double multiplier = 0.0;
         for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
             String permission = info.getPermission().toLowerCase(Locale.ROOT);
