@@ -40,7 +40,7 @@ public class ItemCommand extends BaseCommand {
 
     @Subcommand("modifier add")
     @CommandCompletion("@stats @nothing false|true")
-    @CommandPermission("aureliumskills.item.modifier.add")
+    @CommandPermission("auraskills.command.item.modifier.add")
     @Description("Adds an item stat modifier to the item held, along with lore by default.")
     public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -62,7 +62,7 @@ public class ItemCommand extends BaseCommand {
 
     @Subcommand("modifier remove")
     @CommandCompletion("@stats false|true")
-    @CommandPermission("aureliumskills.item.modifier.remove")
+    @CommandPermission("auraskills.command.item.modifier.remove")
     @Description("Removes an item stat modifier from the item held, and the lore associated with it by default.")
     public void onItemModifierRemove(@Flags("itemheld") Player player, Stat stat, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -89,7 +89,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("modifier list")
-    @CommandPermission("aureliumskills.item.modifier.list")
+    @CommandPermission("auraskills.command.item.modifier.list")
     @Description("Lists all item stat modifiers on the item held.")
     public void onItemModifierList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -103,7 +103,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("modifier removeall")
-    @CommandPermission("aureliumskills.item.modifier.removall")
+    @CommandPermission("auraskills.command.item.modifier.removall")
     @Description("Removes all item stat modifiers from the item held.")
     public void onItemModifierRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -114,7 +114,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("requirement add")
-    @CommandPermission("aureliumskills.item.requirement.add")
+    @CommandPermission("auraskills.command.item.requirement.add")
     @CommandCompletion("@skills @nothing false|true")
     @Description("Adds an item requirement to the item held, along with lore by default.")
     public void onItemRequirementAdd(@Flags("itemheld") Player player, Skill skill, int level, @Default("true") boolean lore) {
@@ -136,7 +136,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("requirement remove")
-    @CommandPermission("aureliumskills.item.requirement.remove")
+    @CommandPermission("auraskills.command.item.requirement.remove")
     @CommandCompletion("@skills false|true")
     @Description("Removes an item requirement from the item held, and the lore associated with it by default.")
     public void onItemRequirementRemove(@Flags("itemheld") Player player, Skill skill, @Default("true") boolean lore) {
@@ -159,7 +159,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("requirement list")
-    @CommandPermission("aureliumskills.item.requirement.list")
+    @CommandPermission("auraskills.command.item.requirement.list")
     @Description("Lists the item requirements on the item held.")
     public void onItemRequirementList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -173,7 +173,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("requirement removeall")
-    @CommandPermission("aureliumskills.item.requirement.removeall")
+    @CommandPermission("auraskills.command.item.requirement.removeall")
     @Description("Removes all item requirements from the item held.")
     public void onItemRequirementRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -184,7 +184,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("register")
-    @CommandPermission("aureliumskills.item.register")
+    @CommandPermission("auraskills.command.item.register")
     public void onItemRegister(@Flags("itemheld") Player player, String key) {
         Locale locale = plugin.getUser(player).getLocale();
         if (key.contains(" ")) { // Disallow spaces in key name
@@ -201,7 +201,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("unregister")
-    @CommandPermission("aureliumskills.item.register")
+    @CommandPermission("auraskills.command.item.register")
     @CommandCompletion("@item_keys")
     public void onItemUnregister(Player player, String key) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -214,7 +214,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("give")
-    @CommandPermission("aureliumskills.item.give")
+    @CommandPermission("auraskills.command.item.give")
     @CommandCompletion("@players @item_keys")
     public void onItemGive(CommandSender sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
         ItemStack item = plugin.getItemRegistry().getItem(NamespacedId.fromDefault(key));
@@ -243,7 +243,7 @@ public class ItemCommand extends BaseCommand {
 
     @Subcommand("multiplier add")
     @CommandCompletion("@skills_global @nothing true|false")
-    @CommandPermission("aureliumskills.item.multiplier.add")
+    @CommandPermission("auraskills.command.item.multiplier.add")
     @Description("Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.")
     public void onItemMultiplierAdd(@Flags("itemheld") Player player, String target, double value, @Default("true") boolean lore) {
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -289,7 +289,7 @@ public class ItemCommand extends BaseCommand {
 
     @Subcommand("multiplier remove")
     @CommandCompletion("@skills_global")
-    @CommandPermission("aureliumskills.item.multiplier.remove")
+    @CommandPermission("auraskills.command.item.multiplier.remove")
     @Description("Removes an item multiplier of a the specified skill or global from the held item.")
     public void onItemMultiplierRemove(@Flags("itemheld") Player player, String target) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -325,7 +325,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("multiplier list")
-    @CommandPermission("aureliumskills.item.multiplier.list")
+    @CommandPermission("auraskills.command.item.multiplier.list")
     @Description("Lists all item multipliers on the held item.")
     public void onItemMultiplierList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
@@ -346,7 +346,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("multiplier removeall")
-    @CommandPermission("aureliumskills.item.multiplier.removeall")
+    @CommandPermission("auraskills.command.item.multiplier.removeall")
     @Description("Removes all item multipliers from the item held.")
     public void onItemMultiplierRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();

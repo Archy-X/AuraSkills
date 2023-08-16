@@ -5,9 +5,11 @@ import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -102,11 +104,32 @@ public class CommandRegistrar {
 
     private void registerBaseCommands(PaperCommandManager manager) {
         manager.registerCommand(new SkillsRootCommand(plugin));
+        manager.registerCommand(new StatsCommand(plugin));
         manager.registerCommand(new SkillCommand(plugin));
         manager.registerCommand(new ManaCommand(plugin));
         manager.registerCommand(new ModifierCommand(plugin));
         manager.registerCommand(new ItemCommand(plugin));
         manager.registerCommand(new ArmorCommand(plugin));
+        manager.registerCommand(new ProfileCommand(plugin));
+        manager.registerCommand(new BackupCommand(plugin));
+        manager.registerCommand(new XpCommand(plugin));
+        if (plugin.configBoolean(Option.ENABLE_SKILL_COMMANDS)) {
+            if (Skills.FARMING.isEnabled()) { manager.registerCommand(new SkillCommands.FarmingCommand(plugin)); }
+            if (Skills.FORAGING.isEnabled()) { manager.registerCommand(new SkillCommands.ForagingCommand(plugin)); }
+            if (Skills.MINING.isEnabled()) { manager.registerCommand(new SkillCommands.MiningCommand(plugin)); }
+            if (Skills.FISHING.isEnabled()) { manager.registerCommand(new SkillCommands.FishingCommand(plugin)); }
+            if (Skills.EXCAVATION.isEnabled()) { manager.registerCommand(new SkillCommands.ExcavationCommand(plugin)); }
+            if (Skills.ARCHERY.isEnabled()) { manager.registerCommand(new SkillCommands.ArcheryCommand(plugin)); }
+            if (Skills.DEFENSE.isEnabled()) { manager.registerCommand(new SkillCommands.DefenseCommand(plugin)); }
+            if (Skills.FIGHTING.isEnabled()) { manager.registerCommand(new SkillCommands.FightingCommand(plugin)); }
+            if (Skills.ENDURANCE.isEnabled()) { manager.registerCommand(new SkillCommands.EnduranceCommand(plugin)); }
+            if (Skills.AGILITY.isEnabled()) { manager.registerCommand(new SkillCommands.AgilityCommand(plugin)); }
+            if (Skills.ALCHEMY.isEnabled()) { manager.registerCommand(new SkillCommands.AlchemyCommand(plugin)); }
+            if (Skills.ENCHANTING.isEnabled()) { manager.registerCommand(new SkillCommands.EnchantingCommand(plugin)); }
+            if (Skills.SORCERY.isEnabled()) { manager.registerCommand(new SkillCommands.SorceryCommand(plugin)); }
+            if (Skills.HEALING.isEnabled()) { manager.registerCommand(new SkillCommands.HealingCommand(plugin)); }
+            if (Skills.FORGING.isEnabled()) { manager.registerCommand(new SkillCommands.ForgingCommand(plugin)); }
+        }
     }
 
 }

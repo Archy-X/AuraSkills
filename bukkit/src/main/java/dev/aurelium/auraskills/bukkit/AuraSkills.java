@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit;
 
+import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
@@ -58,6 +59,7 @@ import dev.aurelium.auraskills.common.stat.StatLoader;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.stat.StatRegistry;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
+import dev.aurelium.auraskills.common.storage.backup.BackupProvider;
 import dev.aurelium.auraskills.common.storage.file.FileStorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.DatabaseCredentials;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
@@ -113,6 +115,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private LootTableManager lootTableManager;
     private ModifierManager modifierManager;
     private RequirementManager requirementManager;
+    private BackupProvider backupProvider;
     private boolean nbtApiEnabled;
 
     @Override
@@ -157,6 +160,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
         xpRequirements = new XpRequirements(this);
         userManager = new BukkitUserManager(this);
+        backupProvider = new BackupProvider(this);
         hookManager = new HookManager();
         levelManager = new BukkitLevelManager(this);
         leaderboardManager = new LeaderboardManager(this);
@@ -433,6 +437,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
+    public BackupProvider getBackupProvider() {
+        return backupProvider;
+    }
+
+    @Override
     public BukkitWorldManager getWorldManager() {
         return worldManager;
     }
@@ -475,6 +484,15 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     public Locale getLocale(CommandSender sender) {
         if (sender instanceof Player player) {
             return getUser(player).getLocale();
+        } else {
+            return messageProvider.getDefaultLanguage();
+        }
+    }
+
+    public Locale getLocale(CommandIssuer issuer) {
+        if (issuer.isPlayer()) {
+            User user = userManager.getUser(issuer.getUniqueId());
+            return user != null ? user.getLocale() : messageProvider.getDefaultLanguage();
         } else {
             return messageProvider.getDefaultLanguage();
         }

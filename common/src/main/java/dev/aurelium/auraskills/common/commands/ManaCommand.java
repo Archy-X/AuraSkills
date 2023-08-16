@@ -22,9 +22,9 @@ public class ManaCommand extends BaseCommand {
     }
 
     @Default
-    @CommandPermission("aureliumskills.mana")
+    @CommandPermission("auraskills.command.mana")
     @Description("Display your or another player's current and max mana")
-    public void onMana(CommandIssuer issuer, @Flags("other") @CommandPermission("aureliumskills.mana.other") @Optional User user) {
+    public void onMana(CommandIssuer issuer, @Flags("other") @CommandPermission("auraskills.command.mana.other") @Optional User user) {
         if (issuer.isPlayer()) { // Get issuer's own mana
             // Get the PlayerData of the issuer
             User issuerUser = plugin.getUserManager().getUser(issuer.getUniqueId());
@@ -58,7 +58,7 @@ public class ManaCommand extends BaseCommand {
     }
 
     @Subcommand("add")
-    @CommandPermission("aureliumskills.mana.add")
+    @CommandPermission("auraskills.command.mana.add")
     @CommandCompletion("@players @nothing false|true")
     @Description("Adds mana to a player")
     public void onManaAdd(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
@@ -90,7 +90,7 @@ public class ManaCommand extends BaseCommand {
     }
 
     @Subcommand("remove")
-    @CommandPermission("aureliumskills.mana.remove")
+    @CommandPermission("auraskills.command.mana.remove")
     @CommandCompletion("@players")
     @Description("Removes mana from a player")
     public void onManaRemove(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("false") boolean silent) {
@@ -121,7 +121,7 @@ public class ManaCommand extends BaseCommand {
     }
 
     @Subcommand("set")
-    @CommandPermission("aureliumskills.mana.set")
+    @CommandPermission("auraskills.command.mana.set")
     @CommandCompletion("@players @nothing false|true")
     @Description("Sets the mana of player")
     public void onManaSet(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {

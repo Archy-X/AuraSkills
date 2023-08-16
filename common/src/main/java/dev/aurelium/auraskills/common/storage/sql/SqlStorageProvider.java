@@ -413,7 +413,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<UserState> loadOfflineStates() throws Exception {
+    public List<UserState> loadStates(boolean ignoreOnline) throws Exception {
         List<UserState> states = new ArrayList<>();
 
         Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new HashMap<>();
@@ -443,7 +443,7 @@ public class SqlStorageProvider extends StorageProvider {
                     int userId = resultSet.getInt("user_id");
                     UUID uuid = UUID.fromString(resultSet.getString("player_uuid"));
 
-                    if (userManager.hasUser(uuid)) {
+                    if (ignoreOnline && userManager.hasUser(uuid)) {
                         continue; // Skip if player is online
                     }
 

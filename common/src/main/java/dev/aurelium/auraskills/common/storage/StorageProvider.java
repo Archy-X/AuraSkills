@@ -58,6 +58,6 @@ public abstract class StorageProvider {
 
     public abstract void delete(UUID uuid) throws Exception;
 
-    public abstract List<UserState> loadOfflineStates() throws Exception;
+    public abstract List<UserState> loadStates(boolean ignoreOnline) throws Exception;
 
 }

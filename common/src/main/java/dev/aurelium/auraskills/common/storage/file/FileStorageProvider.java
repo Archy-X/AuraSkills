@@ -318,7 +318,7 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<UserState> loadOfflineStates() {
+    public List<UserState> loadStates(boolean ignoreOnline) {
         List<UserState> states = new ArrayList<>();
         // Get all files in data directory
         File[] files = new File(dataDirectory).listFiles();
@@ -333,7 +333,7 @@ public class FileStorageProvider extends StorageProvider {
                 try {
                     UUID uuid = UUID.fromString(uuidString);
 
-                    if (userManager.hasUser(uuid)) {
+                    if (ignoreOnline && userManager.hasUser(uuid)) {
                         continue; // Skip if player is online
                     }
 

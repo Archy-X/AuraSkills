@@ -24,6 +24,7 @@ import dev.aurelium.auraskills.common.skill.SkillRegistry;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.stat.StatRegistry;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
+import dev.aurelium.auraskills.common.storage.backup.BackupProvider;
 import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
@@ -86,6 +87,8 @@ public interface AuraSkillsPlugin {
     Scheduler getScheduler();
 
     StorageProvider getStorageProvider();
+
+    BackupProvider getBackupProvider();
 
     WorldManager getWorldManager();
 

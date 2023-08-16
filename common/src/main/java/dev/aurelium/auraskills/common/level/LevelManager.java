@@ -66,6 +66,18 @@ public abstract class LevelManager {
         sendXpUi(user, skill, amountToAdd);
     }
 
+    public void setXp(User user, Skill skill, double amount) {
+        double originalAmount = user.getSkillXp(skill);
+        // Sets Xp
+        user.setSkillXp(skill, amount);
+        // Check if player leveled up
+        checkLevelUp(user, skill);
+        // Sends action bar message
+        double xpAmount = amount - originalAmount;
+
+        sendXpUi(user, skill, xpAmount);
+    }
+
     private void sendXpUi(User user, Skill skill, double xpGained) {
         double currentXp = user.getSkillXp(skill);
         int level = user.getSkillLevel(skill);

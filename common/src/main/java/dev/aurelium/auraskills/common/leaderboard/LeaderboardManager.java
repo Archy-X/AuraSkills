@@ -158,7 +158,7 @@ public class LeaderboardManager {
     }
 
     private void addOfflinePlayers(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) throws Exception {
-        List<UserState> offlineStates = plugin.getStorageProvider().loadOfflineStates();
+        List<UserState> offlineStates = plugin.getStorageProvider().loadStates(true);
         for (UserState state : offlineStates) {
             int powerLevel = 0;
             double powerXp = 0.0;
