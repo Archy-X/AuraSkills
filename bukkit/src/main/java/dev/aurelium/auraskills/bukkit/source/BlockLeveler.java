@@ -31,6 +31,7 @@ public class BlockLeveler extends SourceLeveler {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         if (disabled()) return;
+
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
 
@@ -41,6 +42,11 @@ public class BlockLeveler extends SourceLeveler {
 
         BlockXpSource source = sourcePair.first();
         Skill skill = sourcePair.second();
+
+        // Check for player placed blocks
+        if (source.checkReplace() && plugin.getRegionManager().isPlacedBlock(event.getBlock())) {
+            return;
+        }
 
         if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
 
