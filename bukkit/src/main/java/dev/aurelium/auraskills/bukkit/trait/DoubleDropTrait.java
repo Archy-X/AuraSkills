@@ -1,9 +1,12 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
+import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
+import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -65,7 +68,11 @@ public class DoubleDropTrait extends TraitImpl {
                 || mat.equals(Material.DIORITE) || mat.equals(Material.GRANITE)) {
             //Calculate chance
             double chance = user.getEffectiveTraitLevel(Traits.DOUBLE_DROP);
-            // TODO Implement max option
+            // Apply max_percent option
+            double maxPercent = Traits.DOUBLE_DROP.optionDouble("max_percent");
+            if (chance * 100 > maxPercent) {
+                chance = maxPercent;
+            }
             if (r.nextDouble() < chance) {
                 ItemStack tool = player.getInventory().getItemInMainHand();
                 Location location = block.getLocation().add(0.5, 0.5, 0.5);
@@ -83,8 +90,17 @@ public class DoubleDropTrait extends TraitImpl {
                     } else {
                         itemToDrop = item.clone();
                     }
-                    // TODO Implement loot drop event
-                    block.getWorld().dropItem(location, itemToDrop);
+
+                    BukkitItemHolder itemHolder = new BukkitItemHolder(itemToDrop);
+                    BukkitLocationHolder locationHolder = new BukkitLocationHolder(location);
+
+                    LootDropEvent lootDropEvent = new LootDropEvent(plugin.getApi(), user.toApi(), itemHolder, locationHolder, LootDropEvent.Cause.LUCK_DOUBLE_DROP);
+                    plugin.getEventManager().callEvent(lootDropEvent);
+
+                    if (lootDropEvent.isCancelled()) {
+                        continue;
+                    }
+                    block.getWorld().dropItem(lootDropEvent.getLocation().get(Location.class), lootDropEvent.getItem().get(ItemStack.class));
                 }
             }
         }

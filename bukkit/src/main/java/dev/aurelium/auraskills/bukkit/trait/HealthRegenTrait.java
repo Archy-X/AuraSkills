@@ -89,7 +89,6 @@ public class HealthRegenTrait extends TraitImpl {
                 }
             }
         };
-        // TODO Fix optionInt not working due to trait loading order issues
         plugin.getScheduler().timerSync(task, 0, Traits.HUNGER_REGEN.optionInt("delay") * 50L, TimeUnit.MILLISECONDS);
     }
 

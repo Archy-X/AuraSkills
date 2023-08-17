@@ -168,7 +168,6 @@ public class AureliumSkills extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		// TODO Register API
 		// Registries
 		statRegistry = new StatRegistry();
 		registerStats();

@@ -103,9 +103,14 @@ public class EntityLeveler extends SourceLeveler {
             }
             return new Pair<>(player, EntityXpSource.EntityDamagers.PLAYER);
         } else if (damager instanceof Projectile projectile) { // Projectile damager
-            // TODO Implement ALCHEMY_GIVE_XP_ON_POTION_COMBAT
             if (!(projectile.getShooter() instanceof Player player)) { // Make sure shooter is a player
                 return null;
+            }
+            if (damager instanceof ThrownPotion) {
+                // Mark as thrown potion if
+                if (Skills.ALCHEMY.isEnabled() && Skills.ALCHEMY.optionBoolean("give_xp_on_potion_combat")) {
+                    return new Pair<>(player, EntityXpSource.EntityDamagers.THROWN_POTION);
+                }
             }
             return new Pair<>(player, EntityXpSource.EntityDamagers.PROJECTILE);
         }
@@ -124,6 +129,11 @@ public class EntityLeveler extends SourceLeveler {
             // Discard if entity type does not match
             if (!source.getEntity().toUpperCase(Locale.ROOT).equals(entity.getType().toString())) {
                 continue;
+            }
+
+            // Give Alchemy XP if potion is thrown with option give_xp_on_potion_combat
+            if (eventDamager == EntityXpSource.EntityDamagers.THROWN_POTION) {
+                return new Pair<>(source, Skills.ALCHEMY);
             }
 
             // Return if damager matches

@@ -71,8 +71,13 @@ public class BukkitLevelManager extends LevelManager {
                     , SoundCategory.valueOf(plugin.configString(Option.LEVELER_SOUND_CATEGORY))
                     , (float) plugin.configDouble(Option.LEVELER_SOUND_VOLUME), (float) plugin.configDouble(Option.LEVELER_SOUND_PITCH));
         } catch (Exception e) {
-            Bukkit.getLogger().warning("[AureliumSkills] Error playing level up sound (Check config) Played the default sound instead");
+            plugin.logger().warn("Error playing level up sound (Check config) Played the default sound instead");
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1f, 0.5f);
         }
+    }
+
+    @Override
+    public void reloadModifiers(User user) {
+        plugin.getModifierManager().reloadPlayer(((BukkitUser) user).getPlayer());
     }
 }

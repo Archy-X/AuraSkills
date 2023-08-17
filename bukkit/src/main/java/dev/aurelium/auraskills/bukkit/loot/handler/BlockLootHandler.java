@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.SlimeFunHook;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.provider.SkillLootProvider;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationLootProvider;
@@ -72,7 +73,11 @@ public class BlockLootHandler extends LootHandler implements Listener {
             }
         }
 
-        // TODO Reimplement SlimeFun hook
+        if (plugin.getHookManager().isRegistered(SlimeFunHook.class)) {
+            if (plugin.getHookManager().getHook(SlimeFunHook.class).hasBlockInfo(block.getLocation())) {
+                return;
+            }
+        }
 
         User user = plugin.getUser(player);
 

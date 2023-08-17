@@ -31,7 +31,8 @@ public interface EntityXpSource extends XpSource {
     enum EntityDamagers {
 
         PLAYER,
-        PROJECTILE
+        PROJECTILE,
+        THROWN_POTION
 
     }
 

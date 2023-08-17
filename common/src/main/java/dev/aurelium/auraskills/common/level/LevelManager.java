@@ -47,6 +47,8 @@ public abstract class LevelManager {
 
     public abstract void playLevelUpSound(@NotNull User user);
 
+    public abstract void reloadModifiers(User user);
+
     public void addXp(User user, Skill skill, double amount) {
         if (amount == 0) return; // Ignore if source amount is 0
 
@@ -119,7 +121,7 @@ public abstract class LevelManager {
         giveLegacyMoneyRewards(user, level);
 
         // Reload items and armor to check for newly met requirements
-        // TODO Reload items and armor
+        reloadModifiers(user);
         // Calls event
         SkillLevelUpEvent event = new SkillLevelUpEvent(plugin.getApi(), user.toApi(), skill, level);
         plugin.getEventManager().callEvent(event);
