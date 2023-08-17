@@ -4,12 +4,13 @@ import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbilityProvider;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ManaAbilitySupplier implements ManaAbilityProvider {
 
@@ -68,7 +69,7 @@ public class ManaAbilitySupplier implements ManaAbilityProvider {
     @Override
     public double getDisplayValue(ManaAbility manaAbility, int level) {
         if (manaAbility == ManaAbilities.SHARP_HOOK && manaAbility.optionBoolean("display_damage_with_scaling", true)) {
-            return getValue(manaAbility, level) * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING);
+            return getValue(manaAbility, level) * Traits.HP.optionDouble("action_bar_scaling", 1);
         } else {
             return getValue(manaAbility, level);
         }
@@ -163,5 +164,10 @@ public class ManaAbilitySupplier implements ManaAbilityProvider {
     @Override
     public List<String> optionStringList(ManaAbility type, String key) {
         return get(type).config().getStringList(key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(ManaAbility type, String key) {
+        return get(type).config().getMap(key);
     }
 }

@@ -192,6 +192,6 @@ skills:
       max_level: 97
       check_cancelled: true
       check_multiplier_permissions: true
-      blocked-grindstone-enchants:
+      blocked_grindstone_enchants:
         - binding_curse
         - vanishing_curse

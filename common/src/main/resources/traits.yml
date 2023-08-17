@@ -48,7 +48,7 @@ traits:
     enabled: true
   auraskills/max_mana:
     enabled: true
-    allow_overflow: true
+    allow_overflow: false
     base: 20
   auraskills/damage_reduction:
     enabled: true

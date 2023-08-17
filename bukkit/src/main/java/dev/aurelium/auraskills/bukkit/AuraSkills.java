@@ -265,7 +265,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new PlayerJoinQuit(this), this);
+
+        PlayerJoinQuit joinQuit = new PlayerJoinQuit(this);
+        pm.registerEvents(joinQuit, this);
+        eventManager.registerEvents(this, joinQuit);
+
         pm.registerEvents(new DamageListener(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
         pm.registerEvents(new FishingLootHandler(this), this);

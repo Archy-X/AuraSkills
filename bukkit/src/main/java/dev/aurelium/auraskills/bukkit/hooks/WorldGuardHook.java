@@ -13,41 +13,45 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.hooks.Hook;
-import dev.aurelium.auraskills.common.util.data.OptionProvider;
+import dev.aurelium.auraskills.common.hooks.HookRegistrationException;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
 
 public class WorldGuardHook extends Hook {
 
+    private final AuraSkills plugin;
     private RegionContainer container;
     private List<String> blockedRegions;
     private List<String> blockedCheckBlockReplaceRegions;
     private final Map<String, StateFlag> stateFlags;
 
-    public WorldGuardHook(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public WorldGuardHook(AuraSkills plugin, ConfigurationNode config) {
+        super(plugin, config);
+        this.plugin = plugin;
         this.stateFlags = new HashMap<>();
+        try {
+            loadRegions(config);
+        } catch (SerializationException e) {
+            throw new HookRegistrationException("Error serializing config list");
+        }
     }
 
-    public void loadRegions(OptionProvider options) {
-        try {
-            container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            blockedRegions = new LinkedList<>();
-            blockedRegions.addAll(options.getStringList("blocked_regions"));
-            blockedCheckBlockReplaceRegions = new LinkedList<>();
-            blockedCheckBlockReplaceRegions.addAll(options.getStringList("blocked_check_block_replace_regions"));
-            Bukkit.getLogger().info("[AureliumSkills] WorldGuard Support Enabled!");
-        } catch (Exception e) {
-            Bukkit.getLogger().warning("[AureliumSkills] WorldGuard support failed to load, disabling World Guard support!");
-        }
+    public void loadRegions(ConfigurationNode config) throws SerializationException {
+        container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        blockedRegions = new LinkedList<>();
+        blockedRegions.addAll(config.node("blocked_regions").getList(String.class, new ArrayList<>()));
+        blockedCheckBlockReplaceRegions = new LinkedList<>();
+        blockedCheckBlockReplaceRegions.addAll(config.node("blocked_check_replace_regions").getList(String.class, new ArrayList<>()));
     }
 
     public boolean isBlocked(Location location, Player player, FlagKey flagKey) {
@@ -178,6 +182,11 @@ public class WorldGuardHook extends Hook {
                 }
             }
         }
+    }
+
+    @Override
+    public Class<? extends Hook> getTypeClass() {
+        return WorldGuardHook.class;
     }
 
     public enum FlagKey {

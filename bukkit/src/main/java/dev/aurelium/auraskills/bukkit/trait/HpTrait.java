@@ -8,13 +8,11 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.data.DataUtil;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,7 +32,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
 
     HpTrait(AuraSkills plugin) {
         super(plugin, Traits.HP);
-        loadHearts(plugin.getConfig());
+        loadHearts();
     }
 
     @Override
@@ -76,9 +74,9 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
             worldChangeHealth.put(player.getUniqueId(), player.getHealth());
         }
         User user = plugin.getUser(player);
-        if (plugin.configInt(Option.HEALTH_UPDATE_DELAY) > 0) {
+        if (Traits.HP.optionInt("update_delay") > 0) {
             plugin.getScheduler().scheduleSync(() -> setWorldChange(event, player, user),
-                    plugin.configInt(Option.HEALTH_UPDATE_DELAY) * 50L, TimeUnit.MILLISECONDS);
+                    Traits.HP.optionInt("update_delay") * 50L, TimeUnit.MILLISECONDS);
         } else {
             setWorldChange(event, player, user);
         }
@@ -95,9 +93,10 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
     }
 
     private void setHealth(Player player, User user) {
-        if (!Traits.HP.isEnabled()) return;
+        Trait trait = Traits.HP;
+        if (!trait.isEnabled()) return;
 
-        double modifier = user.getBonusTraitLevel(Traits.HP);
+        double modifier = user.getBonusTraitLevel(trait);
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
         double originalMaxHealth = attribute.getValue();
@@ -126,7 +125,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
             return;
         }
         // Force base health if enabled
-        if (plugin.configBoolean(Option.HEALTH_FORCE_BASE_HEALTH)) {
+        if (trait.optionBoolean("force_base_health")) {
             attribute.setBaseValue(20.0);
         }
         // Return if no change
@@ -137,7 +136,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
             if (player.getHealth() > attribute.getValue()) {
                 player.setHealth(attribute.getValue());
             }
-            if (plugin.configBoolean(Option.HEALTH_KEEP_FULL_ON_INCREASE) && attribute.getValue() > originalMaxHealth) {
+            if (trait.optionBoolean("keep_full_on_increase") && attribute.getValue() > originalMaxHealth) {
                 // Heals player to full health if had full health before modifier
                 if (player.getHealth() >= originalMaxHealth) {
                     player.setHealth(attribute.getValue());
@@ -152,7 +151,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
 
-        if (plugin.configBoolean(Option.HEALTH_HEALTH_SCALING)) {
+        if (Traits.HP.optionBoolean("health_scaling")) {
             double health = attribute.getValue();
             player.setHealthScaled(true);
             int scaledHearts = 0;
@@ -173,7 +172,7 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
         }
     }
 
-    public void loadHearts(FileConfiguration config) {
+    public void loadHearts() {
         // Load default hearts
         this.hearts.clear();
         this.hearts.put(10, 0.0);
@@ -187,14 +186,12 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
         this.hearts.put(18, 249.0);
         this.hearts.put(19, 393.0);
         this.hearts.put(20, 626.0);
-        // Load hearts from config
-        ConfigurationSection heartsSection = config.getConfigurationSection("health.hearts");
-        if (heartsSection == null) return;
-
+        // Load hearts from trait options
+        Map<String, Object> map = Traits.HP.optionMap("hearts");
         try {
-            for (String key : heartsSection.getKeys(false)) {
+            for (String key : map.keySet()) {
                 int heartsNum = Integer.parseInt(key);
-                double healthNum = heartsSection.getDouble(key, -1.0);
+                double healthNum = DataUtil.getDouble(map, key);
                 if (healthNum != -1.0) {
                     this.hearts.put(heartsNum, healthNum);
                 }

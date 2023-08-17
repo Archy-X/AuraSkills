@@ -1,6 +1,10 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
+import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
+import dev.aurelium.auraskills.api.event.AuraSkillsListener;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.user.User;
@@ -9,9 +13,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
-public class PlayerJoinQuit implements Listener {
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+public class PlayerJoinQuit implements Listener, AuraSkillsListener {
 
     private final AuraSkills plugin;
 
@@ -27,20 +33,15 @@ public class PlayerJoinQuit implements Listener {
                 int loadDelay = plugin.configInt(Option.MYSQL_LOAD_DELAY);
                 if (loadDelay == 0) {
                     // Load immediately
-                    loadPlayerDataAsync(player);
+                    loadUserAsync(player);
                 } else {
                     // Delay loading
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            loadPlayerDataAsync(player);
-                        }
-                    }.runTaskLater(plugin, loadDelay);
+                    plugin.getScheduler().scheduleSync(() -> loadUserAsync(player), loadDelay * 50L, TimeUnit.MILLISECONDS);
                 }
             }
         } else { // Yaml storage
             if (!plugin.getUserManager().hasUser(player.getUniqueId())) {
-                loadPlayerDataAsync(player);
+                loadUserAsync(player);
             }
         }
     }
@@ -49,32 +50,44 @@ public class PlayerJoinQuit implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    plugin.getStorageProvider().save(user);
-                    plugin.getUserManager().removeUser(player.getUniqueId());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+        plugin.getScheduler().executeAsync(() -> {
+            try {
+                plugin.getStorageProvider().save(user);
+                plugin.getUserManager().removeUser(player.getUniqueId());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }.runTaskAsynchronously(plugin);
+        });
     }
 
-    private void loadPlayerDataAsync(Player player) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    User user = plugin.getStorageProvider().load(player.getUniqueId());
-                    plugin.getUserManager().addUser(user);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    private void loadUserAsync(Player player) {
+        plugin.getScheduler().executeAsync(() -> {
+            try {
+                User user = plugin.getStorageProvider().load(player.getUniqueId());
+                plugin.getUserManager().addUser(user);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }.runTaskAsynchronously(plugin);
+        });
     }
 
+    @AuraSkillsEventHandler
+    public void onUserLoad(UserLoadEvent event) {
+        detectUserLanguage(BukkitUser.getUser(event.getUser()), BukkitUser.getPlayer(event.getUser()));
+    }
+
+    private void detectUserLanguage(User user, Player player) {
+        if (user.getLocale() != null || !plugin.configBoolean(Option.TRY_DETECT_CLIENT_LANGUAGE)) {
+            return;
+        }
+
+        try {
+            Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase(Locale.ROOT));
+            if (plugin.getMessageProvider().getLoadedLanguages().contains(locale)) {
+                user.setLocale(locale);
+            }
+        } catch (Exception ignored) {}
+    }
 
 }

@@ -6,11 +6,12 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public class TownyHook extends Hook {
 
-    public TownyHook(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public TownyHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
+        super(plugin, config);
     }
 
     public boolean canBreak(Player player, Block block) {
@@ -20,4 +21,8 @@ public class TownyHook extends Hook {
         return true;
     }
 
+    @Override
+    public Class<? extends Hook> getTypeClass() {
+        return TownyHook.class;
+    }
 }

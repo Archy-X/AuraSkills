@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.message.MessageProvider;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class AbilitySupplier implements AbilityProvider {
 
@@ -138,5 +139,10 @@ public class AbilitySupplier implements AbilityProvider {
     @Override
     public List<String> optionStringList(Ability type, String key) {
         return get(type).config().getStringList(key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(Ability type, String key) {
+        return get(type).config().getMap(key);
     }
 }

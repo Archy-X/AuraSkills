@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api.option;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Optioned {
 
@@ -21,5 +22,7 @@ public interface Optioned {
     String optionString(String key, String def);
 
     List<String> optionStringList(String key);
+
+    Map<String, Object> optionMap(String key);
 
 }

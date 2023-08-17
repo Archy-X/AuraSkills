@@ -4,7 +4,6 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
@@ -47,7 +46,7 @@ public class DamageLeveler extends SourceLeveler {
         if (failsChecks(event, player, player.getLocation(), skill)) return;
 
         // Check shield blocking option
-        if (skill.equals(Skills.DEFENSE) && !plugin.configBoolean(Option.DEFENSE_ALLOW_SHIELD_BLOCKING) && player.isBlocking()) {
+        if (skill.equals(Skills.DEFENSE) && !Skills.DEFENSE.optionBoolean("allow_shield_blocking") && player.isBlocking()) {
             return;
         }
 
@@ -67,8 +66,8 @@ public class DamageLeveler extends SourceLeveler {
 
         // Adjust to max and min for defense
         if (skill.equals(Skills.DEFENSE)) {
-            xp = Math.min(xp, plugin.configDouble(Option.DEFENSE_MAX));
-            xp = Math.max(xp, plugin.configDouble(Option.DEFENSE_MIN));
+            xp = Math.min(xp, Skills.DEFENSE.optionDouble("max"));
+            xp = Math.max(xp, Skills.DEFENSE.optionDouble("min"));
         }
 
         User user = plugin.getUser(player);

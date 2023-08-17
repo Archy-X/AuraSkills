@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class SkillSupplier implements SkillProvider {
 
@@ -108,5 +109,10 @@ public class SkillSupplier implements SkillProvider {
     @Override
     public List<String> optionStringList(Skill type, String key) {
         return get(type).options().getStringList(key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(Skill type, String key) {
+        return get(type).options().getMap(key);
     }
 }

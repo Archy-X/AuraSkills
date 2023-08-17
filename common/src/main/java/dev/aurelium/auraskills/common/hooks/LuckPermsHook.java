@@ -5,13 +5,14 @@ import dev.aurelium.auraskills.common.user.User;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.Node;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public class LuckPermsHook extends PermissionsHook {
 
     private final LuckPerms luckPerms;
 
-    public LuckPermsHook(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public LuckPermsHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
+        super(plugin, config);
         this.luckPerms = LuckPermsProvider.get();
     }
 
@@ -27,5 +28,8 @@ public class LuckPermsHook extends PermissionsHook {
                 user.data().remove(Node.builder(permission).value(value).build()));
     }
 
-
+    @Override
+    public Class<? extends Hook> getTypeClass() {
+        return PermissionsHook.class;
+    }
 }

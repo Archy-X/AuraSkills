@@ -3,11 +3,11 @@ package dev.aurelium.auraskills.common.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.annotation.*;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 
 import java.util.Locale;
@@ -72,7 +72,7 @@ public class ManaCommand extends BaseCommand {
         // Calculate how much mana to add
         double manaToAdd = amount;
         if (user.getMaxMana() + manaToAdd > user.getMaxMana()) { // If adding mana will go over max mana
-            if (!allowOverMax || !plugin.configBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) { // Should not go over max mana
+            if (!allowOverMax || !Traits.MAX_MANA.optionBoolean("allow_overflow")) { // Should not go over max mana
                 manaToAdd = user.getMaxMana() - user.getMana(); // Set mana to add to difference between max and current
             }
         }
@@ -137,7 +137,7 @@ public class ManaCommand extends BaseCommand {
         }
         double manaToSet = amount;
         if (manaToSet > user.getMaxMana()) { // If setting mana will go over max mana
-            if (!allowOverMax || !plugin.configBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) { // Should not go over max mana
+            if (!allowOverMax || !Traits.MAX_MANA.optionBoolean("allow_overflow")) { // Should not go over max mana
                 manaToSet = user.getMaxMana(); // Set mana to set to max mana
             }
         }

@@ -10,13 +10,14 @@ import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import org.bukkit.entity.Player;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public class ProtocolLibHook extends Hook {
 
     private final ProtocolManager protocolManager;
 
-    public ProtocolLibHook(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public ProtocolLibHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
+        super(plugin, config);
         this.protocolManager = ProtocolLibrary.getProtocolManager();
     }
 
@@ -44,4 +45,8 @@ public class ProtocolLibHook extends Hook {
         protocolManager.sendServerPacket(player, packet);
     }
 
+    @Override
+    public Class<? extends Hook> getTypeClass() {
+        return ProtocolLibHook.class;
+    }
 }

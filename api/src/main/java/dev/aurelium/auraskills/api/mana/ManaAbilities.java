@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public enum ManaAbilities implements ManaAbility {
 
@@ -165,5 +166,10 @@ public enum ManaAbilities implements ManaAbility {
     @Override
     public List<String> optionStringList(String key) {
         return provider.optionStringList(this, key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(String key) {
+        return provider.optionMap(this, key);
     }
 }

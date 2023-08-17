@@ -26,6 +26,7 @@ public class XpRequirements {
     }
 
     public void addSkillXpRequirements(Skill skill, List<Integer> xpRequirements) {
+        // TODO Load xp_requirements.yml
         skillXpRequirements.put(skill, xpRequirements);
     }
 

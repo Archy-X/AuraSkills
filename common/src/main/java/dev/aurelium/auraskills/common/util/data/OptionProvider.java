@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.util.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +68,17 @@ public class OptionProvider {
             }
         }
         return list;
+    }
+
+    public Map<String, Object> getMap(String key) {
+        Map<String, Object> map = new HashMap<>();
+        Object o = optionMap.get(key);
+        if (o instanceof Map<?, ?>) {
+            for (Map.Entry<?, ?> entry : ((Map<?, ?>) o).entrySet()) {
+                map.put((String) entry.getKey(), entry.getValue());
+            }
+        }
+        return map;
     }
 
 }

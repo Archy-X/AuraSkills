@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.common.message.MessageProvider;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class TraitSupplier implements TraitProvider {
 
@@ -77,6 +78,11 @@ public class TraitSupplier implements TraitProvider {
     @Override
     public List<String> optionStringList(Trait type, String key) {
         return get(type).options().getStringList(key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(Trait type, String key) {
+        return get(type).options().getMap(key);
     }
 
 }

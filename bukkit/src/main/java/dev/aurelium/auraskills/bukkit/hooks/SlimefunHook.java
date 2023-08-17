@@ -8,13 +8,14 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.spongepowered.configurate.ConfigurationNode;
 
-public class SlimeFunHook extends Hook implements Listener {
+public class SlimefunHook extends Hook implements Listener {
 
     private final AuraSkills plugin;
 
-    public SlimeFunHook(AuraSkills plugin) {
-        super(plugin);
+    public SlimefunHook(AuraSkills plugin, ConfigurationNode config) {
+        super(plugin, config);
         this.plugin = plugin;
     }
 
@@ -29,4 +30,8 @@ public class SlimeFunHook extends Hook implements Listener {
         return BlockStorage.hasBlockInfo(location);
     }
 
+    @Override
+    public Class<? extends Hook> getTypeClass() {
+        return SlimefunHook.class;
+    }
 }

@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.ui;
 
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.ui.ActionBarManager;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
@@ -21,7 +21,7 @@ public class BukkitActionBarManager extends ActionBarManager {
     @NotNull
     public String getHp(User user) {
         Player player = ((BukkitUser) user).getPlayer();
-        return String.valueOf(Math.round(player.getHealth() * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+        return String.valueOf(Math.round(player.getHealth() * Traits.HP.optionDouble("action_bar_scaling", 1)));
     }
 
     @Override
@@ -30,7 +30,7 @@ public class BukkitActionBarManager extends ActionBarManager {
         Player player = ((BukkitUser) user).getPlayer();
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute != null) {
-            return String.valueOf(Math.round(attribute.getValue() * plugin.configDouble(Option.HEALTH_HP_INDICATOR_SCALING)));
+            return String.valueOf(Math.round(attribute.getValue() * Traits.HP.optionDouble("action_bar_scaling", 1)));
         }
         return "";
     }

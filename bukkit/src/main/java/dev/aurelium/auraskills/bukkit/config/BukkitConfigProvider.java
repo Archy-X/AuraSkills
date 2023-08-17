@@ -2,21 +2,24 @@ package dev.aurelium.auraskills.bukkit.config;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.config.ConfigProvider;
-import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.config.OptionType;
-import dev.aurelium.auraskills.common.config.OptionValue;
+import dev.aurelium.auraskills.bukkit.hooks.HookRegistrar;
+import dev.aurelium.auraskills.common.config.*;
+import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.skill.LoadedSkill;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.NodePath;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
+import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+import java.util.Stack;
 
 public class BukkitConfigProvider implements ConfigProvider {
 
@@ -28,22 +31,34 @@ public class BukkitConfigProvider implements ConfigProvider {
     }
 
     public void loadOptions() {
-        Logger logger = plugin.getLogger();
+        PlatformLogger logger = plugin.logger();
+        ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
         // Save the config to file if not exist
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveDefaultConfig();
-        // Load the default options
-        loadDefaultOptions();
-        // Load the FileConfiguration
-        FileConfiguration config = plugin.getConfig();
-        // For every option
-        int loaded = 0;
-        long start = System.currentTimeMillis();
-        for (Option option : Option.values()) {
-            // Get the value from config
-            Object value = config.get(option.getPath());
-            // Check if value exists
-            if (value != null) {
+        try {
+            loader.generateUserFile("config.yml");
+        } catch (IOException e) {
+            plugin.logger().severe("Failed to save default config.yml file");
+            e.printStackTrace();
+        }
+        try {
+            // Load embedded file
+            ConfigurationNode embedded = loader.loadEmbeddedFile("config.yml");
+            // Load user file
+            ConfigurationNode user = loader.loadUserFile("config.yml");
+            // Merge embedded and user nodes to ensure config has all options
+            ConfigurationNode config = loader.mergeNodes(embedded, user);
+
+            // Load regular options
+            int loaded = 0;
+            long start = System.currentTimeMillis();
+            for (Option option : Option.values()) {
+                // Get the value from config
+                Object value = config.node(toPath(option.getPath())).raw();
+                // Check if value exists
+                if (value == null) {
+                    logger.warn("Missing value in config.yml: Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
+                    continue;
+                }
                 // Add if supposed to be int and value is int
                 if ((value instanceof Integer || value instanceof Double) && option.getType() == OptionType.INT) {
                     options.put(option, new OptionValue(value));
@@ -64,32 +79,58 @@ public class BukkitConfigProvider implements ConfigProvider {
                     options.put(option, new OptionValue(ChatColor.valueOf(String.valueOf(value))));
                     loaded++;
                 } else {
-                    logger.warning("Incorrect type in config.yml: Option " + option.name() + " with path " + option.getPath() + " should be of type " + option.getType().name() + ", using default value instead!");
+                    logger.warn("Incorrect type in config.yml: Option " + option.name() + " with path " + option.getPath() + " should be of type " + option.getType().name() + ", using default value instead!");
                 }
             }
-            else {
-                logger.warning("Missing value in config.yml: Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
-            }
-        }
+            // Load hooks
+            HookRegistrar hookRegistrar = new HookRegistrar(plugin, plugin.getHookManager());
+            hookRegistrar.registerHooks(config.node("hooks"));
 
-        long end = System.currentTimeMillis();
-        logger.info("Loaded " + loaded + " config options in " + (end - start) + " ms");
+            saveConfigIfUpdated(embedded, user, config);
+
+            long end = System.currentTimeMillis();
+            logger.info("Loaded " + loaded + " config options in " + (end - start) + " ms");
+        } catch (IOException e) {
+            plugin.logger().severe("Failed to load config.yml: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    private void loadDefaultOptions() {
-        InputStream inputStream = plugin.getResource("config.yml");
-        if (inputStream != null) {
-            FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(inputStream));
-            for (Option option : Option.values()) {
-                if (option.getType() == OptionType.INT) {
-                    options.put(option, new OptionValue(config.getInt(option.getPath())));
-                } else if (option.getType() == OptionType.DOUBLE) {
-                    options.put(option, new OptionValue(config.getDouble(option.getPath())));
-                } else if (option.getType() == OptionType.BOOLEAN) {
-                    options.put(option, new OptionValue(config.getBoolean(option.getPath())));
-                }
+    private void saveConfigIfUpdated(ConfigurationNode embedded, ConfigurationNode user, ConfigurationNode merged) throws ConfigurateException {
+        File file = new File(plugin.getPluginFolder(), "config.yml");
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .path(file.toPath())
+                .nodeStyle(NodeStyle.BLOCK)
+                .indent(2)
+                .build();
+
+        // Save if the number of config values in embedded is greater than user file
+        int embeddedCount = countChildren(embedded);
+        int userCount = countChildren(user);
+        if (countChildren(embedded) > countChildren(user)) {
+            loader.save(merged);
+            plugin.logger().info("Updated config.yml with " + (embeddedCount - userCount) + " new keys");
+        }
+    }
+
+    private int countChildren(ConfigurationNode root) {
+        int count = 0;
+        Stack<ConfigurationNode> stack = new Stack<>();
+        stack.addAll(root.childrenMap().values());
+        while (!stack.isEmpty()) {
+            ConfigurationNode node = stack.pop();
+            if (node.isMap()) { // A section node, push children to search
+                stack.addAll(node.childrenMap().values());
+            } else {
+                count++;
             }
         }
+        return count;
+    }
+
+    private NodePath toPath(String path) {
+        String[] split = path.split("\\.");
+        return NodePath.of(split);
     }
 
     @Override

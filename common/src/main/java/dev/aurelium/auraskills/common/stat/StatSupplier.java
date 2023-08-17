@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.common.message.MessageProvider;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class StatSupplier implements StatProvider {
 
@@ -104,5 +105,10 @@ public class StatSupplier implements StatProvider {
     @Override
     public List<String> optionStringList(Stat type, String key) {
         return get(type).options().getStringList(key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(Stat type, String key) {
+        return get(type).options().getMap(key);
     }
 }

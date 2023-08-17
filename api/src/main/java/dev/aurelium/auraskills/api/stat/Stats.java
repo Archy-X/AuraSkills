@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.trait.Trait;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public enum Stats implements Stat {
 
@@ -114,5 +115,10 @@ public enum Stats implements Stat {
     @Override
     public List<String> optionStringList(String key) {
         return provider.optionStringList(this, key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(String key) {
+        return provider.optionMap(this, key);
     }
 }

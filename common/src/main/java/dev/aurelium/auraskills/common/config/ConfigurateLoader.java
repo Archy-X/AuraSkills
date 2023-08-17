@@ -7,7 +7,9 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -82,6 +84,32 @@ public class ConfigurateLoader {
                 .build();
 
         return loader.load();
+    }
+
+    public void generateUserFile(String fileName) throws IOException {
+        URI uri = getEmbeddedURI(fileName);
+
+        if (uri == null) {
+            throw new IllegalArgumentException("File " + fileName + " does not exist");
+        }
+
+        Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
+        try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
+            File file = new File(plugin.getPluginFolder(), fileName);
+
+            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                    .path(Path.of(uri))
+                    .sink(() -> new BufferedWriter(new FileWriter(fileName)))
+                    .indent(2)
+                    .defaultOptions(opts ->
+                            opts.serializers(build -> build.registerAll(serializers))
+                    )
+                    .build();
+
+            ConfigurationNode config = loader.load();
+            loader.save(config);
+        }
     }
 
     /**

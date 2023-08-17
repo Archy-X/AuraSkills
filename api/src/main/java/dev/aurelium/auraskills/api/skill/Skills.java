@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public enum Skills implements Skill {
 
@@ -135,5 +136,10 @@ public enum Skills implements Skill {
     @Override
     public List<String> optionStringList(String key) {
         return provider.optionStringList(this, key);
+    }
+
+    @Override
+    public Map<String, Object> optionMap(String key) {
+        return provider.optionMap(this, key);
     }
 }

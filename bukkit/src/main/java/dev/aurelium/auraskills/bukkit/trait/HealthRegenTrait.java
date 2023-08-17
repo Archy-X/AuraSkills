@@ -4,7 +4,6 @@ import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -42,16 +41,24 @@ public class HealthRegenTrait extends TraitImpl {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
         }
-        if (plugin.configBoolean(Option.REGENERATION_CUSTOM_REGEN_MECHANICS)) {
-            event.setCancelled(true);
-            return;
-        }
         User user = plugin.getUser(player);
         if (player.getSaturation() > 0) {
             if (!Traits.SATURATION_REGEN.isEnabled()) return;
+
+            if (Traits.SATURATION_REGEN.optionBoolean("use_custom_delay", false)) {
+                event.setCancelled(true);
+                return;
+            }
+
             event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.SATURATION_REGEN));
         } else if (player.getFoodLevel() >= 14) {
             if (!Traits.HUNGER_REGEN.isEnabled()) return;
+
+            if (Traits.HUNGER_REGEN.optionBoolean("use_custom_delay", false)) {
+                event.setCancelled(true);
+                return;
+            }
+
             event.setAmount(event.getAmount() + user.getBonusTraitLevel(Traits.HUNGER_REGEN));
         }
     }
