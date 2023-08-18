@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.hooks.HookRegistrationException;
+import org.bukkit.event.Listener;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.lang.reflect.Constructor;
@@ -33,7 +34,13 @@ public class HookRegistrar {
                     continue;
                 }
                 Hook hook = createHook(hookType, hookConfig);
+                // Register events in hook
+                if (hook instanceof Listener) {
+                    plugin.getServer().getPluginManager().registerEvents((Listener) hook, plugin);
+                }
+
                 manager.registerHook(hook.getClass(), hook);
+
                 plugin.logger().info("Successfully registered hook " + hookType.getPluginName());
             } catch (HookRegistrationException e) {
                 plugin.logger().warn("Failed to register hook " + hookType.getPluginName() + ": " + e.getMessage());
