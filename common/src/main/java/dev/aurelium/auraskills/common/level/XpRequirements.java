@@ -25,9 +25,17 @@ public class XpRequirements {
         addDefaultXpRequirements();
     }
 
-    public void addSkillXpRequirements(Skill skill, List<Integer> xpRequirements) {
-        // TODO Load xp_requirements.yml
+    public void setSkillXpRequirements(Skill skill, List<Integer> xpRequirements) {
         skillXpRequirements.put(skill, xpRequirements);
+    }
+
+    public void removeSkillXpRequirements(Skill skill) {
+        skillXpRequirements.remove(skill);
+    }
+
+    public void setDefaultXpRequirements(List<Integer> xpRequirements) {
+        defaultXpRequirements.clear();
+        defaultXpRequirements.addAll(xpRequirements);
     }
 
     public int getXpRequired(Skill skill, int level) {

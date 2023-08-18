@@ -56,6 +56,9 @@ public class SkillLoader {
 
             abilityLoader.init(); // Load abilities.yml file in memory
             manaAbilityLoader.init(); // Load mana_abilities.yml file in memory
+
+            int skillsLoaded = 0;
+
             for (Object key : skillsNode.childrenMap().keySet()) {
                 String skillName = (String) key;
                 // Parse Skill from registry
@@ -64,17 +67,11 @@ public class SkillLoader {
                 ConfigurationNode skillNode = skillsNode.node(skillName); // Get the node for the individual skill
                 LoadedSkill loadedSkill = loadSkill(skill, skillNode);
 
-                // Temporary debug
-                StringBuilder abSb = new StringBuilder();
-                for (Ability ability : loadedSkill.abilities()) {
-                    abSb.append(ability.getId()).append(", ");
-                }
-                // Remove last two characters
-                abSb.delete(abSb.length() - 2, abSb.length());
-                plugin.logger().info("Loaded skill " + loadedSkill.skill().getId() + " with abilities=[" + abSb + "], manaAbility=" + loadedSkill.manaAbility() + ", and numSources=" + loadedSkill.sources().size());
-
                 plugin.getSkillManager().register(skill, loadedSkill);
+
+                skillsLoaded++;
             }
+            plugin.logger().info("Loaded " + skillsLoaded + " skills: " + Arrays.toString(plugin.getSkillManager().getSkills().stream().map(loaded -> loaded.skill().getId()).toArray()));
 
             loadSourceTags();
         } catch (ConfigurateException e) {

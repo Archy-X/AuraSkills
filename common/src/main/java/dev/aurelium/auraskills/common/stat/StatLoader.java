@@ -13,6 +13,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,6 +44,8 @@ public class StatLoader {
 
             traitLoader.init();
 
+            int statsLoaded = 0;
+
             for (Object key : statsNode.childrenMap().keySet()) {
                 String statName = (String) key;
                 // Parse Skill from registry
@@ -51,13 +54,11 @@ public class StatLoader {
                 ConfigurationNode statNode = statsNode.node(statName); // Get the node for the individual skill
                 LoadedStat loadedStat = loadStat(stat, statNode);
 
-                StringBuilder traitsSb = new StringBuilder();
-                loadedStat.traits().forEach(trait -> traitsSb.append(trait.getId()).append(", "));
-                traitsSb.delete(traitsSb.length() - 2, traitsSb.length());
-                plugin.logger().info("Loaded stat " + stat.getId() + " with traits=[" + traitsSb + "]");
-
                 plugin.getStatManager().register(stat, loadedStat);
+                statsLoaded++;
             }
+
+            plugin.logger().info("Loaded " + statsLoaded + " stats: " + Arrays.toString(plugin.getStatManager().getStats().stream().map(loaded -> loaded.stat().getId()).toArray()));
         } catch (ConfigurateException e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();

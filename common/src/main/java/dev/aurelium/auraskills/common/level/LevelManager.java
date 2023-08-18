@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class LevelManager {
 
     private final AuraSkillsPlugin plugin;
-    private final XpRequirements xpRequirements;
+    protected final XpRequirements xpRequirements;
 
     public LevelManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;

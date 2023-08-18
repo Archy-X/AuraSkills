@@ -25,6 +25,12 @@ public class BukkitLevelManager extends LevelManager {
         super(plugin);
         this.plugin = plugin;
         this.levelers = new HashSet<>();
+        loadXpRequirements();
+    }
+
+    private void loadXpRequirements() {
+        XpRequirementsLoader loader = new XpRequirementsLoader(plugin, xpRequirements);
+        loader.load();
     }
 
     public void registerLevelers() {
