@@ -18,10 +18,7 @@ import dev.aurelium.auraskills.bukkit.menus.contexts.*;
 import dev.aurelium.auraskills.bukkit.menus.leaderboard.LeaderboardMenu;
 import dev.aurelium.auraskills.bukkit.menus.leaderboard.LeaderboardPlayerItem;
 import dev.aurelium.auraskills.bukkit.menus.levelprogression.*;
-import dev.aurelium.auraskills.bukkit.menus.skills.ClickableSkillItem;
-import dev.aurelium.auraskills.bukkit.menus.skills.SkillsMenu;
-import dev.aurelium.auraskills.bukkit.menus.skills.StatsItem;
-import dev.aurelium.auraskills.bukkit.menus.skills.YourSkillsItem;
+import dev.aurelium.auraskills.bukkit.menus.skills.*;
 import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
 import dev.aurelium.auraskills.bukkit.menus.sources.SourceItem;
 import dev.aurelium.auraskills.bukkit.menus.sources.SourcesMenu;
@@ -83,6 +80,11 @@ public class MenuRegistrar {
         skills.registerSingleItem("your_skills", () -> new YourSkillsItem(plugin));
         skills.registerSingleItem("stats", () -> new StatsItem(plugin));
         skills.registerTemplateItem("skill", Skill.class, () -> new ClickableSkillItem(plugin));
+        skills.registerComponent("stats_leveled", () -> new SkillComponents.StatsLeveled(plugin));
+        skills.registerComponent("ability_levels", () -> new SkillComponents.AbilityLevels(plugin));
+        skills.registerComponent("mana_ability_info", () -> new SkillComponents.ManaAbilityInfo(plugin));
+        skills.registerComponent("progress", () -> new SkillComponents.Progress(plugin));
+        skills.registerComponent("max_level", () -> new SkillComponents.MaxLevel(plugin));
 
         ProviderManager stats = manager.getProviderManager("stats");
         stats.registerSingleItem("skull", () -> new SkullItem(plugin));

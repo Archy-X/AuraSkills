@@ -32,7 +32,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
 
     @Override
     public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        return new HashSet<>(plugin.getSkillManager().getSkillValues());
+        return new HashSet<>(plugin.getSkillManager().getEnabledSkills());
     }
 
     @Override

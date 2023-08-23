@@ -4,7 +4,6 @@ import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,10 +17,7 @@ public class CloseItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data) {
-        if (placeholder.equals("close")) {
-            return plugin.getMsg(MenuMessage.CLOSE, plugin.getUser(player).getLocale());
-        }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, activeMenu);
     }
 
     @Override

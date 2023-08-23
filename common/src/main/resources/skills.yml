@@ -161,7 +161,7 @@ skills:
       check_multiplier_permissions: true
   auraskills/sorcery:
     abilities:
-      - auraskills/sorcerer
+      - ''
     options:
       enabled: true
       max_level: 97

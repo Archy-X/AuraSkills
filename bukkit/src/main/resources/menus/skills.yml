@@ -1,4 +1,4 @@
-title: '{skills_menu_title}'
+title: '{{skills_title}}'
 size: 5
 fill:
   enabled: true
@@ -8,90 +8,111 @@ items:
     pos: 0,0
     material: diamond_axe
     flags: [hide_attributes]
-    display_name: '{your_skills}'
+    display_name: '<aqua>{{your_skills}} - <gold>{player}'
     lore:
-      - '{desc}'
+      - type: text
+        wrap: true
+        style: '<gray>'
+        text: '{{your_skills_desc}}'
       - ' '
-      - '{hover}'
-      - '{click}'
+      - '<yellow>{{your_skills_hover}}'
+      - '<yellow>{{your_skills_click}}'
   close:
     pos: 4,8
     material: barrier
-    display_name: '{close}'
+    display_name: '<red>{{close}}'
   stats:
     pos: 0,8
     material: player_head
-    display_name: '{stats}'
+    display_name: '<aqua>{{stats}}'
     lore:
-      - '{stats_desc}'
+      - '<gray>{{stats_desc}}'
       - ' '
-      - '{stats_click}'
+      - '<yellow>{{stats_click}}'
 templates:
   skill:
-    farming:
-      pos: 1,2
-      material: diamond_hoe
-      flags: [hide_attributes]
-    foraging:
-      pos: 1,3
-      material: stone_axe
-      flags: [hide_attributes]
-    mining:
-      pos: 1,4
-      material: iron_pickaxe
-      flags: [hide_attributes]
-    fishing:
-      pos: 1,5
-      material: fishing_rod
-    excavation:
-      pos: 1,6
-      material: golden_shovel
-      flags: [hide_attributes]
-    archery:
-      pos: 2,2
-      material: bow
-    defense:
-      pos: 2,3
-      material: chainmail_chestplate
-      flags: [hide_attributes]
-    fighting:
-      pos: 2,4
-      material: diamond_sword
-      flags: [hide_attributes]
-    endurance:
-      pos: 2,5
-      material: golden_apple
-    agility:
-      pos: 2,6
-      material: feather
-    alchemy:
-      pos: 3,2
-      material: potion
-      potion_data:
-        type: instant_heal
-      flags: [hide_potion_effects]
-    enchanting:
-      pos: 3,3
-      material: enchanting_table
-    sorcery:
-      pos: 3,4
-      material: blaze_rod
-    healing:
-      pos: 3,5
-      material: splash_potion
-      potion_data:
-        type: instant_heal
-      flags: [hide_potion_effects]
-    forging:
-      pos: 3,6
-      material: anvil
-    display_name: '&b{skill} &3{level}'
+    contexts:
+      farming: {group: first_row, order: 1, material: diamond_hoe, flags: [hide_attributes]}
+      foraging: {group: first_row, order: 2, material: stone_axe, flags: [hide_attributes]}
+      mining: {group: first_row, order: 3, material: iron_pickaxe, flags: [hide_attributes]}
+      fishing: {group: first_row, order: 4, material: fishing_rod}
+      excavation: {group: first_row, order: 5, material: golden_shovel, flags: [hide_attributes]}
+      archery: {group: second_row, order: 1, material: bow}
+      defense: {group: second_row, order: 2, material: chainmail_chestplate, flags: [hide_attributes]}
+      fighting: {group: second_row, order: 3, material: diamond_sword, flags: [hide_attributes]}
+      endurance: {group: second_row, order: 4, material: golden_apple}
+      agility: {group: second_row, order: 5, material: feather}
+      alchemy: {group: third_row, order: 1, material: potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
+      enchanting: {group: third_row, order: 2, material: enchanting_table}
+      sorcery: {group: third_row, order: 3, material: blaze_rod}
+      healing: {group: third_row, order: 4, material: splash_potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
+      forging: {group: third_row, order: 5, material: anvil}
+    groups:
+      first_row:
+        start: 1,0
+        end: 1,8
+        align: center
+      second_row:
+        start: 2,0
+        end: 2,8
+        align: center
+      third_row:
+        start: 3,0
+        end: 3,8
+        align: center
+    display_name: '<aqua>{skill} <dark_aqua>{level}'
     lore:
-      - '{skill_desc}'
-      - '{stats_leveled}'
-      - '{ability_levels}{mana_ability}'
-      - '{level}'
+      - type: text
+        wrap: true
+        style: '<gray>'
+        text: '{desc}'
+      - type: component
+        component: stats_leveled
+      - type: component
+        component: ability_levels
+      - type: component
+        component: mana_ability_info
       - ' '
-      - '{progress_to_level}{max_level}'
+      - '<gray>{{level}}: <yellow>{level}'
       - ' '
-      - '{skill_click}'
+      - type: component
+        components: [progress, max_level]
+      - ' '
+      - '<yellow>{{skill_click}}'
+components:
+  stats_leveled:
+    context: Skill
+    lore:
+      - ' '
+      - '<gray>{{stats_leveled}}: {entries[,]}'
+  ability_levels:
+    context: Skill
+    lore:
+      - ' '
+      - '<gray>{{ability_levels}}: {entries[]}'
+  mana_ability_info:
+    context: Skill
+    lore:
+      - ' '
+      - '<light_purple><bold>{{mana_ability}} <blue>{name} {level}'
+      - '  {entries[]}'
+  progress:
+    context: Skill
+    lore:
+      - '<gray>{{progress_to_level}} {next_level}: <yellow>{percent}%'
+      - '  <gray>{current_xp}/{level_xp} {xp_unit}'
+  max_level:
+    context: Skill
+    lore:
+      - '<gold>{{max_level}}'
+formats:
+  stat_leveled_entry: '{color}{stat}<gray>'
+  unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'
+  locked_ability_entry: '\n  <dark_gray><strikethrough>{name}'
+  duration_entry: '<gray>{{duration}}: <green>{duration}s '
+  mana_cost_entry: '<gray>{{mana_cost}}: <aqua>{mana_cost} '
+  cooldown_entry: '<gray>{{cooldown}}: <yellow>{cooldown}s '
+  damage_entry: '<gray>{{damage}}: <red>{value} '
+  damage_per_mana_entry: '<gray>{{damage}}: <red>+{value}% / Mana '
+  max_mana_cost_entry: '<gray>{{max_mana_cost}}: <aqua>{mana_cost} '
+  attack_speed_entry: '<gray>{{attack_speed}}: <red>+{value}% '
