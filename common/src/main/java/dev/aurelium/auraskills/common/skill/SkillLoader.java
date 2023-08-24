@@ -91,7 +91,8 @@ public class SkillLoader {
     private ImmutableList<Ability> loadAbilities(Skill skill, ConfigurationNode config) throws SerializationException {
         List<String> abilitiesStr = config.node("abilities").getList(String.class, new ArrayList<>());
         // Parse ability names to ability instances in registry
-        return abilitiesStr.stream().map(NamespacedId::fromDefault)
+        return abilitiesStr.stream().filter(s -> !s.isEmpty())
+                .map(NamespacedId::fromDefault)
                 .map(id -> {
                     try {
                         Ability ability = plugin.getAbilityRegistry().get(id);

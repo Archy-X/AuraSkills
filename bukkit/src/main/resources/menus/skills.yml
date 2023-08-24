@@ -84,7 +84,7 @@ components:
     context: Skill
     lore:
       - ' '
-      - '<gray>{{stats_leveled}}: {entries[,]}'
+      - '<gray>{{stats_leveled}}: {entries[, ]}'
   ability_levels:
     context: Skill
     lore:
