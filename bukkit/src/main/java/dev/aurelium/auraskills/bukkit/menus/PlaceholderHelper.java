@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.menus;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageKey;
+import dev.aurelium.auraskills.common.message.type.UnitMessage;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 
@@ -17,10 +18,23 @@ public class PlaceholderHelper {
     }
 
     public String replaceMenuMessage(String placeholder, Player player, ActiveMenu activeMenu, String... replacements) {
-        if (!placeholder.startsWith("{") || !placeholder.endsWith("}")) {
-            return placeholder;
-        }
+        return replaceMenuMessage(placeholder, placeholder, player, activeMenu, replacements);
+    }
+
+    public String replaceMenuMessage(String placeholder, String def, Player player, ActiveMenu activeMenu, String... replacements) {
         Locale locale = plugin.getUser(player).getLocale();
+        // Replace units
+        if (placeholder.endsWith("_unit")) {
+            for (UnitMessage unitMessage : UnitMessage.values()) {
+                if (placeholder.endsWith(unitMessage.toString().toLowerCase(Locale.ROOT) + "_unit")) {
+                    return plugin.getMessageProvider().get(unitMessage, locale);
+                }
+            }
+        }
+        // Replace menu messages
+        if (!placeholder.startsWith("{") || !placeholder.endsWith("}")) {
+            return def;
+        }
         String stripped = TextUtil.replace(placeholder, "{", "", "}", ""); // Remove curly braces
 
         MessageKey key = MessageKey.of("menus." + activeMenu.getName().toLowerCase(Locale.ROOT) + "." + stripped);
@@ -39,7 +53,12 @@ public class PlaceholderHelper {
         if (placeholders == null) return source;
 
         for (String placeholder : placeholders) {
-            source = replaceMenuMessage(placeholder, player, activeMenu, replacements);
+            String replaced = replaceMenuMessage(placeholder, null, player, activeMenu, replacements);
+            // Ignore unplaced placeholders
+            if (replaced == null) {
+                continue;
+            }
+            source = TextUtil.replace(source, "{" + placeholder + "}", replaced);
         }
         return source;
     }

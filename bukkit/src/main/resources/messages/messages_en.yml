@@ -578,6 +578,9 @@ menus:
     duration: 'Duration'
     mana_cost: 'Mana Cost'
     cooldown: 'Cooldown'
+    damage: 'Damage'
+    max_mana_cost: 'Max Mana Cost'
+    attack_speed: 'Attack Speed'
   skills:
     skills_title: 'Your Skills'
     your_skills: 'Your Skills'
@@ -726,49 +729,49 @@ rewards:
 skills:
   farming:
     name: Farming
-    desc: '&7Harvest crops to earn Farming {xp_unit}'
+    desc: 'Harvest crops to earn Farming {xp_unit}'
   foraging:
     name: Foraging
-    desc: '&7Cut trees to earn Foraging {xp_unit}'
+    desc: 'Cut trees to earn Foraging {xp_unit}'
   mining:
     name: Mining
-    desc: '&7Mine stone and ores to earn Mining {xp_unit}'
+    desc: 'Mine stone and ores to earn Mining {xp_unit}'
   fishing:
     name: Fishing
-    desc: '&7Catch fish to earn Fishing {xp_unit}'
+    desc: 'Catch fish to earn Fishing {xp_unit}'
   excavation:
     name: Excavation
-    desc: '&7Dig with a shovel to earn Excavation {xp_unit}'
+    desc: 'Dig with a shovel to earn Excavation {xp_unit}'
   archery:
     name: Archery
-    desc: '&7Shoot mobs and players with a bow to\n&7earn Archery {xp_unit}'
+    desc: 'Shoot mobs and players with a bow to earn Archery {xp_unit}'
   defense:
     name: Defense
-    desc: '&7Take damage from entities to earn Defense {xp_unit}'
+    desc: 'Take damage from entities to earn Defense {xp_unit}'
   fighting:
     name: Fighting
-    desc: '&7Fight mobs with melee weapons to earn\n&7Fighting {xp_unit}'
+    desc: 'Fight mobs with melee weapons to earn Fighting {xp_unit}'
   endurance:
     name: Endurance
-    desc: '&7Walk and run to earn Endurance {xp_unit}'
+    desc: 'Walk and run to earn Endurance {xp_unit}'
   agility:
     name: Agility
-    desc: '&7Jump and take fall damage to earn\n&7Agility {xp_unit}'
+    desc: 'Jump and take fall damage to earn Agility {xp_unit}'
   alchemy:
     name: Alchemy
-    desc: '&7Brew potions to earn Alchemy {xp_unit}'
+    desc: 'Brew potions to earn Alchemy {xp_unit}'
   enchanting:
     name: Enchanting
-    desc: '&7Enchant items and books to earn\n&7Enchanting {xp_unit}'
+    desc: 'Enchant items and books to earn Enchanting {xp_unit}'
   sorcery:
     name: Sorcery
-    desc: '&7Use mana abilities to earn Sorcery {xp_unit}'
+    desc: 'Use mana abilities to earn Sorcery {xp_unit}'
   healing:
     name: Healing
-    desc: '&7Drink and splash potions to earn\n&7Healing {xp_unit}'
+    desc: 'Drink and splash potions to earn Healing {xp_unit}'
   forging:
     name: Forging
-    desc: '&7Combine and apply books in an anvil to\n&7earn Forging {xp_unit}'
+    desc: 'Combine and apply books in an anvil to earn Forging {xp_unit}'
 sources:
   block:
     wheat: Wheat

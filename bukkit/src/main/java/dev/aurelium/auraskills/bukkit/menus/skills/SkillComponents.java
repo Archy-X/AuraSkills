@@ -32,7 +32,7 @@ public class SkillComponents {
         public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, T context) {
             if (placeholder.equals("entries")) {
                 String entry = activeMenu.getFormat("stat_leveled_entry");
-                ListBuilder builder = new ListBuilder(data.getListInsertion());
+                ListBuilder builder = new ListBuilder(data.getListData());
                 Skill skill = (Skill) context;
                 Locale locale = plugin.getUser(player).getLocale();
 
@@ -60,7 +60,7 @@ public class SkillComponents {
         @Override
         public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, T context) {
             if (placeholder.equals("entries")) {
-                ListBuilder builder = new ListBuilder(data.getListInsertion());
+                ListBuilder builder = new ListBuilder(data.getListData());
                 Skill skill = (Skill) context;
 
                 User user = plugin.getUser(player);
@@ -76,7 +76,7 @@ public class SkillComponents {
                     } else {
                         entry = activeMenu.getFormat("locked_ability_entry");
                     }
-                    builder.append(entry, "{name}", ability.getDisplayName(locale), "{info}", TextUtil.replace(ability.getInfo(locale),
+                    builder.append(entry, "{name}", ability.getDisplayName(locale), "{level}", RomanNumber.toRoman(level, plugin), "{info}", TextUtil.replace(ability.getInfo(locale),
                             "{value}", NumberUtil.format2(ability.getValue(level)), "{value_2}", NumberUtil.format2(ability.getSecondaryValue(level))));
                 }
 
@@ -110,29 +110,34 @@ public class SkillComponents {
             } else if (placeholder.equals("level")) {
                 return RomanNumber.toRoman(user.getManaAbilityLevel(manaAbility), plugin);
             } else if (placeholder.equals("entries")) {
-                ListBuilder builder = new ListBuilder(data.getListInsertion());
+                ListBuilder builder = new ListBuilder(data.getListData());
                 int level = user.getManaAbilityLevel(manaAbility);
                 for (String format : getFormatEntries(manaAbility)) {
-                    String message = activeMenu.getFormat(format);
+                    String message = replaceMenuMessages(activeMenu.getFormat(format), player, activeMenu);
                     switch (format) {
-                        case "duration_entry" ->
-                                builder.append(message, "{duration}", NumberUtil.format1(getDuration(manaAbility, level)));
-                        case "mana_cost_entry", "max_mana_cost_entry" ->
-                                builder.append(message, "{mana_cost}", NumberUtil.format1(manaAbility.getManaCost(level)));
-                        case "cooldown_entry" ->
-                                builder.append(message, "{cooldown}", NumberUtil.format1(manaAbility.getCooldown(level)));
-                        case "damage_entry", "damage_per_mana_entry", "attack_speed_entry" ->
-                                builder.append(message, "{value}", NumberUtil.format1(manaAbility.getValue(level)));
+                        case "duration_entry":
+                            builder.append(message, "{duration}", NumberUtil.format1(getDuration(manaAbility, level)));
+                            break;
+                        case "mana_cost_entry", "max_mana_cost_entry":
+                            builder.append(message, "{mana_cost}", NumberUtil.format1(manaAbility.getManaCost(level)));
+                            break;
+                        case "cooldown_entry":
+                            builder.append(message, "{cooldown}", NumberUtil.format1(manaAbility.getCooldown(level)));
+                            break;
+                        case "damage_entry", "damage_per_mana_entry", "attack_speed_entry":
+                            builder.append(message, "{value}", NumberUtil.format1(manaAbility.getValue(level)));
+                            break;
                     }
                 }
-                return replaceMenuMessages(builder.build(), player, activeMenu);
+                return builder.build();
             }
             return replaceMenuMessage(placeholder, player, activeMenu);
         }
 
         @Override
         public <T> boolean shouldShow(Player player, ActiveMenu activeMenu, T context) {
-            return ((Skill) context).getManaAbility() != null;
+            ManaAbility manaAbility = ((Skill) context).getManaAbility();
+            return manaAbility != null && plugin.getUser(player).getManaAbilityLevel(manaAbility) > 0;
         }
 
         private double getDuration(ManaAbility manaAbility, int level) {

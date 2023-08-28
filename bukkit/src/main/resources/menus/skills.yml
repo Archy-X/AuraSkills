@@ -76,7 +76,9 @@ templates:
       - '<gray>{{level}}: <yellow>{level}'
       - ' '
       - type: component
-        components: [progress, max_level]
+        component: progress
+      - type: component
+        component: max_level
       - ' '
       - '<yellow>{{skill_click}}'
 components:
@@ -84,7 +86,7 @@ components:
     context: Skill
     lore:
       - ' '
-      - '<gray>{{stats_leveled}}: {entries[, ]}'
+      - '<gray>{{stats_leveled}}: {entries[<gray>, ]}'
   ability_levels:
     context: Skill
     lore:
@@ -95,7 +97,7 @@ components:
     lore:
       - ' '
       - '<light_purple><bold>{{mana_ability}} <blue>{name} {level}'
-      - '  {entries[]}'
+      - '  {entries[\n  ](3)}'
   progress:
     context: Skill
     lore:

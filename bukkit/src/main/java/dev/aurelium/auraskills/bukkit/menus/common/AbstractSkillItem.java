@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.menus.common;
 
 import com.archyx.slate.item.provider.PlaceholderData;
-import com.archyx.slate.item.provider.PlaceholderType;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -9,7 +8,6 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -39,11 +37,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
                 return skill.getDescription(locale);
             }
             case "level" -> {
-                if (data.getType() == PlaceholderType.DISPLAY_NAME) {
-                    return RomanNumber.toRoman(skillLevel, plugin);
-                } else {
-                    return TextUtil.replace(plugin.getMsg(MenuMessage.LEVEL, locale), "{level}", RomanNumber.toRoman(skillLevel, plugin));
-                }
+                return RomanNumber.toRoman(skillLevel, plugin);
             }
             case "skill_click" -> {
                 return plugin.getMsg(MenuMessage.SKILL_CLICK, locale);
@@ -51,5 +45,4 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         }
         return replaceMenuMessage(placeholder, player, activeMenu);
     }
-
 }
