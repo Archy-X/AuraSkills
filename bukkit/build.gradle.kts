@@ -46,7 +46,7 @@ dependencies {
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("com.udojava:EvalEx:2.7")
-    implementation("com.github.Archy-X:Slate:6bf14c2a60") {
+    implementation("com.github.Archy-X:Slate:171646b652") {
         exclude("org.spigotmc", "spigot-api")
     }
     implementation("com.github.Archy-X:LootManager:60d109fdde")

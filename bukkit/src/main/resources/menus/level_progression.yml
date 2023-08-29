@@ -61,18 +61,12 @@ items:
     lore:
       - type: text
         wrap: true
-        wrap_style: 2
+        wrap_style: 1
         styles:
-          1: '<aqua>'
-          2: '<gray>'
-        text: '{{abilities_desc}}'
-      - type: text
-        wrap: true
-        wrap_style: 2
-        styles:
-          1: '<light_purple>'
-          2: '<gray>'
-        text: '{{mana_abilities_desc}}'
+          1: '<gray>'
+          2: '<aqua>'
+          3: '<light_purple>'
+        text: '{{abilities_desc}} {{mana_abilities_desc}}'
       - ' '
       - '<yellow>{{abilities_click}}'
 templates:
@@ -197,7 +191,8 @@ components:
       - '<gold>{name} <green><bold>{{ability_unlock}}'
       - type: text
         wrap: true
-        style: '<gray>  '
+        wrap_indent: '  '
+        style: '<gray>'
         text: '{desc}'
   ability_level:
     context: Integer
@@ -206,7 +201,8 @@ components:
       - '<gold>{name} {level}'
       - type: text
         wrap: true
-        style: '<gray>  '
+        wrap_indent: '  '
+        style: '<gray>'
         text: '{desc}'
   mana_ability_unlock:
     context: Integer
@@ -215,15 +211,22 @@ components:
       - '<blue>{name} <light_purple><bold>{{mana_ability_unlock}}'
       - type: text
         wrap: true
-        style: '<gray>  '
+        wrap_indent: '  '
+        styles:
+          0: '<gray>'
+          1: '<yellow>'
         text: '{desc}'
   mana_ability_level:
     context: Integer
     lore:
+      - ' '
       - '<blue>{name} {level}'
       - type: text
         wrap: true
-        style: '<gray>  '
+        wrap_indent: '  '
+        styles:
+          0: '<gray>'
+          1: '<yellow>'
         text: '{desc}'
 formats:
   stat_leveled_entry: '{color}{stat}<gray>'

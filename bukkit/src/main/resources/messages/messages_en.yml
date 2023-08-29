@@ -614,8 +614,8 @@ menus:
     sources_desc: 'The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives.'
     sources_click: 'Click to view {skill} sources'
     abilities: 'Abilities'
-    abilities_desc: '<1>Abilities</1> <2>are passive perks you unlock and upgrade as you level up skills.</2>'
-    mana_abilities_desc: '<1>Mana Abilities</1> <2>are a special type of ability that requires activation and consumes mana.</2>'
+    abilities_desc: '<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>'
+    mana_abilities_desc: '<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>'
     abilities_click: 'Click to view {skill} abilities'
   stats:
     stats_title: Your Stats
@@ -658,35 +658,35 @@ menus:
 mana_abilities:
   replenish:
     name: Replenish
-    desc: 'Replants crops automatically for {value} seconds. &e[Right click hoe and break crop to activate]'
+    desc: 'Replants crops automatically for {value} seconds. <1>[Right click hoe and break crop to activate]'
     raise: '&7You raise your hoe'
     lower: '&7You lower your hoe'
     start: '&6Replenish Activated! &7(-{mana} {mana_unit})'
     end: '&7Replenish has worn off'
   treecapitator:
     name: Treecapitator
-    desc: 'Breaks entire trees instantly for {value} seconds. &e[Right click axe and break log to activate]'
+    desc: 'Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]'
     raise: '&7You raise your axe'
     lower: '&7You lower your axe'
     start: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
     end: '&7Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
-    desc: 'Gives Haste {haste_level} for {value} seconds. &e[Right click pickaxe and mine block to activate]'
+    desc: 'Gives Haste {haste_level} for {value} seconds. <1>[Right click pickaxe and mine block to activate]'
     raise: '&7You raise your pickaxe'
     lower: '&7You lower your pickaxe'
     start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
     end: '&7Speed Mine has worn off'
   absorption:
     name: Absorption
-    desc: 'Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. &e[Left click shield and take damage to activate]'
+    desc: 'Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]'
     raise: '&7You raise your shield'
     lower: '&7You lower your shield'
     start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
     end: '&7Absorption has worn off'
   terraform:
     name: Terraform
-    desc: 'Break blocks instantly in a 4 block radius in the same layer when digging for {value} seconds. You must use a shovel and extra blocks broken must be the same type and in a single connected vein. &e[Right click shovel and dig block to activate]'
+    desc: 'Break blocks instantly in a 4 block radius in the same layer when digging for {value} seconds. You must use a shovel and extra blocks broken must be the same type and in a single connected vein. <1>[Right click shovel and dig block to activate]'
     raise: '&7You raise your shovel'
     lower: '&7You lower your shovel'
     start: '&6Terraform Activated! &7(-{mana} {mana_unit})'
@@ -697,13 +697,13 @@ mana_abilities:
     use: '&6Used Sharp Hook! &7(-{mana} {mana_unit})'
   charged_shot:
     name: Charged Shot
-    desc: 'Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. [Left click a bow to toggle charged shot mode]'
+    desc: 'Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]'
     enable: '&7Charged shot mode is now enabled'
     disable: '&7Charged shot mode is now disabled'
     shoot: '&6Used Charged Shot! &d+{percent}% DMG &7(-{mana} {mana_unit})'
   lightning_blade:
     name: Lightning Blade
-    desc: Increases attack speed by {value}% for {duration} seconds. [Right click sword and attack mob to activate]
+    desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
     raise: '&7You ready your sword'
     lower: '&7You lower your sword'
     start: '&6Lightning Blade Activated! &7(-{mana} {mana_unit})'
