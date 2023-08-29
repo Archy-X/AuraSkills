@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.common.level.LevelManager;
 import dev.aurelium.auraskills.common.level.XpRequirements;
 import dev.aurelium.auraskills.common.mana.ManaAbilityManager;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
+import dev.aurelium.auraskills.common.menu.MenuHelper;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
@@ -91,6 +92,8 @@ public interface AuraSkillsPlugin {
     BackupProvider getBackupProvider();
 
     WorldManager getWorldManager();
+
+    MenuHelper getMenuHelper();
 
     // Message convenience methods
 

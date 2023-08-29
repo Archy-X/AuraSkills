@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.menus;
 
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import org.bukkit.entity.Player;
 
 public abstract class AbstractMenu {
@@ -14,8 +15,12 @@ public abstract class AbstractMenu {
         this.helper = new PlaceholderHelper(plugin);
     }
 
-    protected String replaceMenuMessage(String placeholder, Player player, ActiveMenu activeMenu, String... replacements) {
-        return helper.replaceMenuMessage(placeholder, player, activeMenu, replacements);
+    protected String replaceMenuMessage(String placeholder, Player player, ActiveMenu activeMenu) {
+        return helper.replaceMenuMessage(placeholder, player, activeMenu, new Replacer());
+    }
+
+    protected String replaceMenuMessage(String placeholder, Player player, ActiveMenu activeMenu, Replacer replacer) {
+        return helper.replaceMenuMessage(placeholder, player, activeMenu, replacer);
     }
 
 }

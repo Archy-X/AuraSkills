@@ -4,6 +4,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.type.UnitMessage;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 
@@ -17,11 +18,11 @@ public class PlaceholderHelper {
         this.plugin = plugin;
     }
 
-    public String replaceMenuMessage(String placeholder, Player player, ActiveMenu activeMenu, String... replacements) {
+    public String replaceMenuMessage(String placeholder, Player player, ActiveMenu activeMenu, Replacer replacements) {
         return replaceMenuMessage(placeholder, placeholder, player, activeMenu, replacements);
     }
 
-    public String replaceMenuMessage(String placeholder, String def, Player player, ActiveMenu activeMenu, String... replacements) {
+    public String replaceMenuMessage(String placeholder, String def, Player player, ActiveMenu activeMenu, Replacer replacer) {
         Locale locale = plugin.getUser(player).getLocale();
         // Replace units
         if (placeholder.endsWith("_unit")) {
@@ -44,16 +45,16 @@ public class PlaceholderHelper {
             message = plugin.getMsg(MessageKey.of("menus.common." + stripped), locale);
         }
         // Replace placeholders
-        message = TextUtil.replace(message, replacements);
+        message = TextUtil.replace(message, replacer);
         return message;
     }
 
-    public String replaceMenuMessages(String source, Player player, ActiveMenu activeMenu, String... replacements) {
+    public String replaceMenuMessages(String source, Player player, ActiveMenu activeMenu, Replacer replacer) {
         String[] placeholders = com.archyx.slate.util.TextUtil.substringsBetween(source, "{", "}");
         if (placeholders == null) return source;
 
         for (String placeholder : placeholders) {
-            String replaced = replaceMenuMessage(placeholder, null, player, activeMenu, replacements);
+            String replaced = replaceMenuMessage(placeholder, null, player, activeMenu, replacer);
             // Ignore unplaced placeholders
             if (replaced == null) {
                 continue;

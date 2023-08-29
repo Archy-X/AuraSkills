@@ -20,6 +20,7 @@ import dev.aurelium.auraskills.bukkit.loot.handler.FishingLootHandler;
 import dev.aurelium.auraskills.bukkit.mana.BukkitManaAbilityManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
+import dev.aurelium.auraskills.bukkit.menus.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
 import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
 import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
@@ -46,6 +47,7 @@ import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.level.XpRequirements;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
+import dev.aurelium.auraskills.common.menu.MenuHelper;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
@@ -118,6 +120,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private RequirementManager requirementManager;
     private BackupProvider backupProvider;
     private InventoryManager inventoryManager;
+    private MenuHelper menuHelper;
     private boolean nbtApiEnabled;
     private final int resourceId = 81069;
 
@@ -238,6 +241,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private void registerAndLoadMenus() {
         slate = new Slate(this);
+        menuHelper = new SlateMenuHelper(slate);
         new MenuRegistrar(this).register();
         menuFileManager = new MenuFileManager(this);
         menuFileManager.generateDefaultFiles();
@@ -461,6 +465,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public BukkitWorldManager getWorldManager() {
         return worldManager;
+    }
+
+    @Override
+    public MenuHelper getMenuHelper() {
+        return menuHelper;
     }
 
     @Override

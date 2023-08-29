@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.menus.skills;
 
+import com.archyx.slate.component.ComponentData;
 import com.archyx.slate.component.ComponentProvider;
 import com.archyx.slate.item.provider.ListBuilder;
 import com.archyx.slate.item.provider.PlaceholderData;
@@ -29,7 +30,7 @@ public class SkillComponents {
         }
 
         @Override
-        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, T context) {
+        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, ComponentData componentData, T context) {
             if (placeholder.equals("entries")) {
                 String entry = activeMenu.getFormat("stat_leveled_entry");
                 ListBuilder builder = new ListBuilder(data.getListData());
@@ -58,7 +59,7 @@ public class SkillComponents {
         }
 
         @Override
-        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, T context) {
+        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, ComponentData componentData, T context) {
             if (placeholder.equals("entries")) {
                 ListBuilder builder = new ListBuilder(data.getListData());
                 Skill skill = (Skill) context;
@@ -98,38 +99,38 @@ public class SkillComponents {
         }
 
         @Override
-        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, T context) {
+        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data,ComponentData componentData, T context) {
             ManaAbility manaAbility = ((Skill) context).getManaAbility();
             if (manaAbility == null) return placeholder;
 
             User user = plugin.getUser(player);
             Locale locale = user.getLocale();
 
-            if (placeholder.equals("name")) {
-                return manaAbility.getDisplayName(locale);
-            } else if (placeholder.equals("level")) {
-                return RomanNumber.toRoman(user.getManaAbilityLevel(manaAbility), plugin);
-            } else if (placeholder.equals("entries")) {
-                ListBuilder builder = new ListBuilder(data.getListData());
-                int level = user.getManaAbilityLevel(manaAbility);
-                for (String format : getFormatEntries(manaAbility)) {
-                    String message = replaceMenuMessages(activeMenu.getFormat(format), player, activeMenu);
-                    switch (format) {
-                        case "duration_entry":
-                            builder.append(message, "{duration}", NumberUtil.format1(getDuration(manaAbility, level)));
-                            break;
-                        case "mana_cost_entry", "max_mana_cost_entry":
-                            builder.append(message, "{mana_cost}", NumberUtil.format1(manaAbility.getManaCost(level)));
-                            break;
-                        case "cooldown_entry":
-                            builder.append(message, "{cooldown}", NumberUtil.format1(manaAbility.getCooldown(level)));
-                            break;
-                        case "damage_entry", "damage_per_mana_entry", "attack_speed_entry":
-                            builder.append(message, "{value}", NumberUtil.format1(manaAbility.getValue(level)));
-                            break;
-                    }
+            switch (placeholder) {
+                case "name" -> {
+                    return manaAbility.getDisplayName(locale);
                 }
-                return builder.build();
+                case "level" -> {
+                    return RomanNumber.toRoman(user.getManaAbilityLevel(manaAbility), plugin);
+                }
+                case "entries" -> {
+                    ListBuilder builder = new ListBuilder(data.getListData());
+                    int level = user.getManaAbilityLevel(manaAbility);
+                    for (String format : getFormatEntries(manaAbility)) {
+                        String message = replaceMenuMessages(activeMenu.getFormat(format), player, activeMenu);
+                        switch (format) {
+                            case "duration_entry" ->
+                                    builder.append(message, "{duration}", NumberUtil.format1(getDuration(manaAbility, level)));
+                            case "mana_cost_entry", "max_mana_cost_entry" ->
+                                    builder.append(message, "{mana_cost}", NumberUtil.format1(manaAbility.getManaCost(level)));
+                            case "cooldown_entry" ->
+                                    builder.append(message, "{cooldown}", NumberUtil.format1(manaAbility.getCooldown(level)));
+                            case "damage_entry", "damage_per_mana_entry", "attack_speed_entry" ->
+                                    builder.append(message, "{value}", NumberUtil.format1(manaAbility.getValue(level)));
+                        }
+                    }
+                    return builder.build();
+                }
             }
             return replaceMenuMessage(placeholder, player, activeMenu);
         }
@@ -171,7 +172,7 @@ public class SkillComponents {
         }
 
         @Override
-        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, T context) {
+        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, ComponentData componentData, T context) {
             Skill skill = (Skill) context;
             User user = plugin.getUser(player);
             int skillLevel = user.getSkillLevel(skill);
@@ -200,7 +201,7 @@ public class SkillComponents {
         }
 
         @Override
-        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, T context) {
+        public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, ComponentData componentData, T context) {
             return replaceMenuMessage(placeholder, player, activeMenu);
         }
 

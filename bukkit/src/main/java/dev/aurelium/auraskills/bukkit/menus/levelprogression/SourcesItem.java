@@ -7,8 +7,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -27,17 +26,9 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data) {
         Locale locale = plugin.getUser(player).getLocale();
-        switch (placeholder) {
-            case "sources":
-                return plugin.getMsg(MenuMessage.SOURCES, locale);
-            case "sources_desc":
-                return plugin.getMsg(MenuMessage.SOURCES_DESC, locale);
-            case "sources_click":
-                Skill skill = (Skill) activeMenu.getProperty("skill");
-                return TextUtil.replace(plugin.getMsg(MenuMessage.SOURCES_CLICK, locale),
-                        "{skill}", skill.getDisplayName(locale));
-        }
-        return placeholder;
+        Skill skill = (Skill) activeMenu.getProperty("skill");
+        return replaceMenuMessage(placeholder, player, activeMenu, new Replacer()
+                .map("{skill}", () -> skill.getDisplayName(locale)));
     }
 
     @Override

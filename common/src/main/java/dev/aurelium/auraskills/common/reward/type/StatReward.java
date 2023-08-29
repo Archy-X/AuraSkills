@@ -3,10 +3,9 @@ package dev.aurelium.auraskills.common.reward.type;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 
@@ -39,7 +38,8 @@ public class StatReward extends SkillReward {
 
     @Override
     public String getMenuMessage(User player, Locale locale, Skill skill, int level) {
-        return TextUtil.replace(plugin.getMsg(MenuMessage.REWARDS_ENTRY, locale),
+        String format = plugin.getMenuHelper().getFormat("level_progression", "stat_reward_entry");
+        return TextUtil.replace(format,
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
                 "{symbol}", stat.getSymbol(locale),

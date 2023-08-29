@@ -4,10 +4,7 @@ import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.math.RomanNumber;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -26,20 +23,12 @@ public class UnlockedItem extends SkillLevelItem {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         int level = getLevel(activeMenu, position);
         switch (placeholder) {
-            case "level_unlocked":
-                return TextUtil.replace(plugin.getMsg(MenuMessage.LEVEL_UNLOCKED, locale),"{level}", RomanNumber.toRoman(level, plugin));
-            case "level_number":
-                return TextUtil.replace(plugin.getMsg(MenuMessage.LEVEL_NUMBER, locale), "{level}", String.valueOf(level));
-            case "rewards":
-                return getRewardsLore(skill, level, player, locale);
-            case "ability":
-                return getAbilityLore(skill, level, locale);
-            case "mana_ability":
-                return getManaAbilityLore(skill, level, locale);
-            case "unlocked":
-                return plugin.getMsg(MenuMessage.UNLOCKED, locale);
+            case "level":
+                return String.valueOf(level);
+            case "entries":
+                return getRewardEntries(skill, level, player, locale, activeMenu);
         }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, activeMenu);
     }
 
     @Override

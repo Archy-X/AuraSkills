@@ -6,8 +6,7 @@ import com.archyx.slate.menu.MenuProvider;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.AbstractMenu;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -22,12 +21,9 @@ public class LevelProgressionMenu extends AbstractMenu implements MenuProvider {
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu) {
         Locale locale = plugin.getUser(player).getLocale();
         Skill skill = getSkill(activeMenu);
-        if (placeholder.equals("level_progression_menu_title")) {
-            return TextUtil.replace(plugin.getMsg(MenuMessage.LEVEL_PROGRESSION_TITLE, locale),
-                    "{skill}", skill.getDisplayName(locale),
-                    "{page}", String.valueOf(activeMenu.getCurrentPage() + 1));
-        }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, activeMenu, new Replacer()
+                .map("{skill}", () -> skill.getDisplayName(locale))
+                .map("{page}", () -> String.valueOf(activeMenu.getCurrentPage() + 1)));
     }
 
     @Override

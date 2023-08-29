@@ -4,13 +4,10 @@ import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Locale;
 
 public class NextPageItem extends AbstractItem implements SingleItemProvider {
 
@@ -20,14 +17,7 @@ public class NextPageItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data) {
-        Locale locale = plugin.getUser(player).getLocale();
-        switch (placeholder) {
-            case "next_page":
-                return plugin.getMsg(MenuMessage.NEXT_PAGE, locale);
-            case "next_page_click":
-                return plugin.getMsg(MenuMessage.NEXT_PAGE_CLICK, locale);
-        }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, activeMenu);
     }
 
     @Override

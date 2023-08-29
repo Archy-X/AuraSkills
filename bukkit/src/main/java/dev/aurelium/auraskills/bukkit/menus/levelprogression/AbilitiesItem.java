@@ -8,8 +8,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -28,16 +27,8 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderData data) {
         Locale locale = plugin.getUser(player).getLocale();
-        switch (placeholder) {
-            case "abilities":
-                return plugin.getMsg(MenuMessage.ABILITIES, locale);
-            case "abilities_desc":
-                return plugin.getMsg(MenuMessage.ABILITIES_DESC, locale);
-            case "abilities_click":
-                Skill skill = (Skill) menu.getProperty("skill");
-                return TextUtil.replace(plugin.getMsg(MenuMessage.ABILITIES_CLICK, locale), "{skill}", skill.getDisplayName(locale));
-        }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, menu, new Replacer()
+                .map("{skill}", () -> ((Skill) menu.getProperty("skill")).getDisplayName(locale)));
     }
 
     @Override

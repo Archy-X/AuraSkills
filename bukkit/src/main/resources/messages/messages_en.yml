@@ -3,7 +3,7 @@ abilities:
   farming:
     bountiful_harvest:
       name: Bountiful Harvest
-      desc: '{value}% chance to get double drops\n&7  from crops.'
+      desc: '{value}% chance to get double drops from crops.'
       info: '{value}% 2x Drops'
     farmer:
       name: Farmer
@@ -15,16 +15,16 @@ abilities:
       info: '+{value}% Hoe Damage'
     geneticist:
       name: Geneticist
-      desc: 'Increases saturation gain from\n&7  plant-based foods by {value}.'
+      desc: 'Increases saturation gain from plant-based foods by {value}.'
       info: '+{value} Saturation'
     triple_harvest:
       name: Triple Harvest
-      desc: '{value}% chance to get triple drops from\n&7  crops.'
+      desc: '{value}% chance to get triple drops from crops.'
       info: '{value}% 3x Drops'
   foraging:
     lumberjack:
       name: Lumberjack
-      desc: '{value}% chance to get double drops\n&7  from logs.'
+      desc: '{value}% chance to get double drops from logs.'
       info: '{value}% 2x Drops'
     forager:
       name: Forager
@@ -36,16 +36,16 @@ abilities:
       info: '+{value}% Axe Damage'
     valor:
       name: Valor
-      desc: 'Grants +{value} Strength while holding\n&7  an axe'
+      desc: 'Grants +{value} Strength while holding an axe'
       info: '+{value} Strength'
     shredder:
       name: Shredder
-      desc: '{value}% chance to deal triple durability\n&7  damage with axes.'
+      desc: '{value}% chance to deal triple durability damage with axes.'
       info: '{value}% 3x Durability Damage'
   mining:
     lucky_miner:
       name: Lucky Miner
-      desc: '{value}% chance to get double drops\n&7  from ores.'
+      desc: '{value}% chance to get double drops from ores.'
       info: '{value}% 2x Drops'
     miner:
       name: Miner
@@ -57,16 +57,16 @@ abilities:
       info: '+{value}% Pickaxe Damage'
     stamina:
       name: Stamina
-      desc: 'Grants +{value} Toughness while\n&7  holding a pickaxe'
+      desc: 'Grants +{value} Toughness while holding a pickaxe'
       info: '+{value} Toughness'
     hardened_armor:
       name: Hardened Armor
-      desc: '{value}% chance to negate durability\n&7  damage on armor.'
+      desc: '{value}% chance to negate durability damage on armor.'
       info: '{value}% No Durability Loss'
   fishing:
     lucky_catch:
       name: Lucky Catch
-      desc: '{value}% added chance to get double drops\n&7  from fishing.'
+      desc: '{value}% added chance to get double drops from fishing.'
       info: '{value}% 2x Drops'
     fisher:
       name: Fisher
@@ -82,7 +82,7 @@ abilities:
       info: '+{value}% Hook Speed'
     epic_catch:
       name: Epic Catch
-      desc: '{value}% added chance to get epic loot\n&7  from fishing.'
+      desc: '{value}% added chance to get epic loot from fishing.'
       info: '+{value}% Epic Loot'
   excavation:
     metal_detector:
@@ -120,16 +120,16 @@ abilities:
       info: '+{value}% Bow Damage'
     piercing:
       name: Piercing
-      desc: '{value}% chance for arrows to\n&7  pierce through mobs.'
+      desc: '{value}% chance for arrows to pierce through mobs.'
       info: '{value}% Pierce Chance'
     stun:
       name: Stun
-      desc: '{value}% chance to decreases enemy\n&7  movement speed by 20% for 2 seconds.'
+      desc: '{value}% chance to decreases enemy movement speed by 20% for 2 seconds.'
       info: '{value}% Stun Chance'
   defense:
     shielding:
       name: Shielding
-      desc: 'Reduce incoming damage by {value}%\n&7  while sneaking.'
+      desc: 'Reduce incoming damage by {value}% while sneaking.'
       info: '-{value}% Incoming Dmg Sneaking'
     defender:
       name: Defender
@@ -141,11 +141,11 @@ abilities:
       info: '-{value}% Mob Dmg'
     immunity:
       name: Immunity
-      desc: '{value}% chance to completely negate\n&7  an enemy attack.'
+      desc: '{value}% chance to completely negate an enemy attack.'
       info: '{value}% Immune'
     no_debuff:
       name: No Debuff
-      desc: '{value}% chance to negate a harmful\n&7  potion effect from being applied.'
+      desc: '{value}% chance to negate a harmful potion effect from being applied.'
       info: '{value}% No Debuff'
   fighting:
     crit_damage:
@@ -167,7 +167,7 @@ abilities:
       dealt: '&cFirst Strike Dealt!'
     bleed:
       name: Bleed
-      desc: '{value}% chance to make the enemy bleed for\n&7  3 bleed ticks, dealing {value_2} damage per tick.'
+      desc: '{value}% chance to make the enemy bleed for 3 bleed ticks, dealing {value_2} damage per tick.'
       info: '{value}% Chance, {value_2} Damage'
       enemy_bleeding: '&cEnemy Bleeding!'
       self_bleeding: '&cYou are bleeding!'
@@ -183,15 +183,15 @@ abilities:
       info: '+{value}% XP'
     golden_heal:
       name: Golden Heal
-      desc: 'Increases regeneration effect\n&7  health gain by {value}%'
+      desc: 'Increases regeneration effect health gain by {value}%'
       info: '+{value}% Effect Regen'
     recovery:
       name: Recovery
-      desc: 'Increases natural regeneration when\n&7  at less than half health by {value}%'
+      desc: 'Increases natural regeneration when at less than half health by {value}%'
       info: '+{value}% Low HP Regen'
     meal_steal:
       name: Meal Steal
-      desc: '{value}% chance to steal 1 hunger point\n&7  when attacking a player.'
+      desc: '{value}% chance to steal 1 hunger point when attacking a player.'
       info: '{value}% Hunger Steal'
   agility:
     light_fall:
@@ -204,7 +204,7 @@ abilities:
       info: '+{value}% XP'
     sugar_rush:
       name: Sugar Rush
-      desc: 'Consumed and splashed speed and jump boost\n&7  potions last {value}% longer.'
+      desc: 'Consumed and splashed speed and jump boost potions last {value}% longer.'
       info: '{value}% Longer Speed'
     fleeting:
       name: Fleeting
@@ -214,12 +214,12 @@ abilities:
       end: '&7Fleeting speed boost has worn off'
     thunder_fall:
       name: Thunder Fall
-      desc: 'When sneaking during a fall, you have a {value}% chance\n&7  to deal {value_2}% of the fall damage expected to mobs\n&7  in a 3 block radius'
+      desc: 'When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius'
       info: '{value}% Chance, {value_2}% Damage'
   alchemy:
     alchemist:
       name: Alchemist
-      desc: 'Potions you brew have a {value}% longer\n&7  duration.'
+      desc: 'Potions you brew have a {value}% longer duration.'
       info: '+{value}% Potion Duration'
       lore: '&a(+{duration})'
     brewer:
@@ -228,20 +228,20 @@ abilities:
       info: '+{value}% XP'
     splasher:
       name: Splasher
-      desc: 'Potions you splash gain {value}% longer\n&7  duration for each player affected.'
+      desc: 'Potions you splash gain {value}% longer duration for each player affected.'
       info: '+{value}% Duration/Player'
     lingering:
       name: Lingering
-      desc: 'Lingering potions naturally decay {value}%\n&7  slower and decay {value_2}% less per affected entity.'
+      desc: 'Lingering potions naturally decay {value}% slower and decay {value_2}% less per affected entity.'
       info: '-{value}% Natural, -{value_2}% Entity Decay'
     wise_effect:
       name: Wise Effect
-      desc: 'Gain {value} Wisdom for every unique active\n&7  potion effect.'
+      desc: 'Gain {value} Wisdom for every unique active potion effect.'
       info: '+{value} Wisdom/Effect'
   enchanting:
     xp_convert:
       name: XP Convert
-      desc: 'Earn 1 Minecraft experience for every {value}\n&7  skill XP you gain.'
+      desc: 'Earn 1 Minecraft experience for every {value} skill XP you gain.'
       info: '1 EXP/{value} Skill XP'
     enchanter:
       name: Enchanter
@@ -249,15 +249,15 @@ abilities:
       info: '+{value}% XP'
     xp_warrior:
       name: XP Warrior
-      desc: 'Mobs you kill have a {value}% chance of\n&7  dropping double experience.'
+      desc: 'Mobs you kill have a {value}% chance of dropping double experience.'
       info: '{value}% 2x Mob XP'
     enchanted_strength:
       name: Enchanted Strength
-      desc: 'Gain {value} Strength for every unique\n&7  enchantment on the item held.'
+      desc: 'Gain {value} Strength for every unique enchantment on the item held.'
       info: '{value} Strength/Enchant'
     lucky_table:
       name: Lucky Table
-      desc: 'Items you enchant using the enchantment\n&7  table have a {value}% chance of upgrading the enchantment\n&7  level by 1 if not max level'
+      desc: 'Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level'
       info: '{value}% Enchant Upgrade Chance'
   healing:
     life_essence:
@@ -270,21 +270,21 @@ abilities:
       info: '+{value}% XP'
     life_steal:
       name: Life Steal
-      desc: Heal {value}% of the max HP of hostile mobs\n&7  and players you kill.
+      desc: Heal {value}% of the max HP of hostile mobs and players you kill.
       info: 'Steal {value}% HP'
     golden_heart:
       name: Golden Heart
-      desc: Damage done to your absorption hearts is\n&7  reduced by {value}%
+      desc: Damage done to your absorption hearts is reduced by {value}%
       info: '-{value}% Absorption Dmg'
     revival:
       name: Revival
-      desc: Gain &c+{value} Health &7and &6+{value_2} Regeneration\n&7  for 30 seconds after respawning.
+      desc: Gain &c+{value} Health &7and &6+{value_2} Regeneration for 30 seconds after respawning.
       info: '+{value} Health, +{value_2} Regen'
       message: '&fYou gained a revival bonus for 30 seconds! &f(&c+{value} Health, &6+{value_2} Regeneration&f)'
   forging:
     disenchanter:
       name: Disenchanter
-      desc: Gain {value}% more experience when disenchanting\n&7  items using a grindstone.
+      desc: Gain {value}% more experience when disenchanting items using a grindstone.
       info: '+{value}% Grindstone EXP'
     forger:
       name: Forger
@@ -292,15 +292,15 @@ abilities:
       info: '+{value}% XP'
     repairing:
       name: Repairing
-      desc: Repairing items in an anvil using the raw\n&7  material the item was made from repairs\n&7  {value}% more durability.
+      desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
       info: '+{value}% Anvil Repair'
     anvil_master:
       name: Anvil Master
-      desc: Increases the maximum repair cost of an anvil\n&7  before it is too expensive to {value} experience.
+      desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
       info: '{value} Max Cost'
     skill_mender:
       name: Skill Mender
-      desc: Gaining skill XP has a {value}% chance to repair\n&7  a held item or worn armor piece with the Mending\n&7  enchantment by 1 durability per 2 skill XP.
+      desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
       info: '{value}% Mend Chance'
 acf:
   core:
@@ -593,37 +593,30 @@ menus:
     stats_click: 'Click to learn more or view your stats'
   level_progression:
     level_progression_title: '{skill} Levels - Page {page}'
-    your_ranking: '&6Your Skill Ranking'
-    rank_out_of: '&fYou are ranked &6{rank}&f out of {total} players'
-    rank_percent: '&fYou are in the top &6{percent}%&f of players'
-    back: '&aGo Back'
-    back_click: '&7Back to {menu_name} Menu'
-    next_page: '&6Next Page'
-    next_page_click: '&eClick to go to next page'
-    previous_page: '&6Previous Page'
-    previous_page_click: '&eClick to go to previous page'
-    level_unlocked: '&aLevel {level}'
-    level_in_progress: '&eLevel {level}'
-    level_locked: '&cLevel {level}'
-    level_number: '&7Level &f{level}'
-    unlocked: '&aUNLOCKED'
-    in_progress: '&eIN PROGRESS'
-    locked: '&cLOCKED'
-    rewards: '&7Rewards:{rewards}'
-    rewards_entry: '\n  {color}+{num} {symbol} {stat}'
-    money_reward: '\n  &a${amount}'
-    ability_unlock: '\n&6{ability} &a&lAbility Unlock\n&7  {desc}\n '
-    ability_level: '\n&6{ability} {level}\n&7  {desc}\n '
-    mana_ability_unlock: '\n&9{mana_ability} &d&lMana Ability Unlock\n&7  {desc}\n '
-    mana_ability_level: '\n&9{mana_ability} {level}\n&7  {desc}\n '
-    progress: '&7Progress: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}'
-    leaderboard_click: '&eClick to view the {skill} leaderboard'
-    sources: '&aXP Sources'
-    sources_desc: '&7The sources menu shows all the ways you\n&7can earn XP in a skill, as well as how much\n&7XP each source gives.'
-    sources_click: '&eClick to view {skill} sources'
-    abilities: '&cAbilities'
-    abilities_desc: '&bAbilities &7are passive perks you unlock and\n&7upgrade as you level up skills.\n&dMana Abilities &7are a special type of ability\n&7that requires activation and consumes mana.'
-    abilities_click: '&eClick to view {skill} abilities'
+    your_ranking: 'Your Skill Ranking'
+    rank_out_of: '<1>You are ranked <2>{rank}</2> out of {total} players</1>'
+    rank_percent: '<1>You are in the top <2>{percent}%</2> of players</1>'
+    back: 'Go Back'
+    back_click: 'Back to {menu_name} Menu'
+    next_page: 'Next Page'
+    next_page_click: 'Click to go to next page'
+    previous_page: 'Previous Page'
+    previous_page_click: 'Click to go to previous page'
+    unlocked: 'UNLOCKED'
+    in_progress: 'IN PROGRESS'
+    locked: 'LOCKED'
+    rewards: 'Rewards'
+    ability_unlock: 'Ability Unlock'
+    mana_ability_unlock: 'Mana Ability Unlock'
+    progress: 'Progress'
+    leaderboard_click: 'Click to view the {skill} leaderboard'
+    sources: 'XP Sources'
+    sources_desc: 'The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives.'
+    sources_click: 'Click to view {skill} sources'
+    abilities: 'Abilities'
+    abilities_desc: '<1>Abilities</1> <2>are passive perks you unlock and upgrade as you level up skills.</2>'
+    mana_abilities_desc: '<1>Mana Abilities</1> <2>are a special type of ability that requires activation and consumes mana.</2>'
+    abilities_click: 'Click to view {skill} abilities'
   stats:
     stats_title: Your Stats
     player_stat_entry: ' {color}{symbol} {stat} &f{level}'
@@ -665,59 +658,56 @@ menus:
 mana_abilities:
   replenish:
     name: Replenish
-    desc: '&7Replants crops automatically for \n&7  {value} seconds. &e[Right click hoe and\n&e  break crop to activate]'
+    desc: 'Replants crops automatically for {value} seconds. &e[Right click hoe and break crop to activate]'
     raise: '&7You raise your hoe'
     lower: '&7You lower your hoe'
     start: '&6Replenish Activated! &7(-{mana} {mana_unit})'
     end: '&7Replenish has worn off'
   treecapitator:
     name: Treecapitator
-    desc: '&7Breaks entire trees instantly for \n&7  {value} seconds. &e[Right click axe and\n&e  break log to activate]'
+    desc: 'Breaks entire trees instantly for {value} seconds. &e[Right click axe and break log to activate]'
     raise: '&7You raise your axe'
     lower: '&7You lower your axe'
     start: '&6Treecapitator Activated! &7(-{mana} {mana_unit})'
     end: '&7Treecapitator has worn off'
   speed_mine:
     name: Speed Mine
-    desc: '&7Gives Haste {haste_level} for {value} seconds.\n&e  [Right click pickaxe and mine\n&e  block to activate]'
+    desc: 'Gives Haste {haste_level} for {value} seconds. &e[Right click pickaxe and mine block to activate]'
     raise: '&7You raise your pickaxe'
     lower: '&7You lower your pickaxe'
     start: '&6Speed Mine Activated! &7(-{mana} {mana_unit})'
     end: '&7Speed Mine has worn off'
   absorption:
     name: Absorption
-    desc: 'Incoming damage will decrease mana\n&7  by 2x Minecraft damage instead of your\n&7  health for {value} seconds. Mana will not\n&7  regenerate while Absorption is active.\n  &e[Left click shield and take damage to activate]'
+    desc: 'Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. &e[Left click shield and take damage to activate]'
     raise: '&7You raise your shield'
     lower: '&7You lower your shield'
     start: '&6Absorption Activated! &7(-{mana} {mana_unit})'
     end: '&7Absorption has worn off'
   terraform:
     name: Terraform
-    desc: 'Break blocks instantly in a 4 block radius\n&7  in the same layer when digging for {value} seconds. You\n&7  must use a shovel and extra blocks broken must be\n&7  the same type and in a single connected vein.\n&7  &e[Right click shovel and dig block to activate]'
+    desc: 'Break blocks instantly in a 4 block radius in the same layer when digging for {value} seconds. You must use a shovel and extra blocks broken must be the same type and in a single connected vein. &e[Right click shovel and dig block to activate]'
     raise: '&7You raise your shovel'
     lower: '&7You lower your shovel'
     start: '&6Terraform Activated! &7(-{mana} {mana_unit})'
     end: '&7Terraform has worn off'
   sharp_hook:
     name: Sharp Hook
-    desc: 'Deal {value} damage to a hooked entity\n&7  when left clicking with a fishing rod'
+    desc: 'Deal {value} damage to a hooked entity when left clicking with a fishing rod'
     use: '&6Used Sharp Hook! &7(-{mana} {mana_unit})'
-    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Damage: &c{value} &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   charged_shot:
     name: Charged Shot
-    desc: 'Arrows you shoot will deal more damage\n&7  based on how far the bow was pulled back,\n&7  consuming mana in the process. Does {value}% more\n&7  damage per mana consumed. &e[Left click\n&e  a bow to toggle charged shot mode]'
+    desc: 'Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. [Left click a bow to toggle charged shot mode]'
     enable: '&7Charged shot mode is now enabled'
     disable: '&7Charged shot mode is now disabled'
     shoot: '&6Used Charged Shot! &d+{percent}% DMG &7(-{mana} {mana_unit})'
-    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Damage: &c+{value}% / Mana &7Max Mana Cost: &b{mana_cost}\n '
   lightning_blade:
     name: Lightning Blade
-    desc: Increases attack speed by {value}% for {duration} seconds.\n&e  [Right click sword and attack mob to activate]
+    desc: Increases attack speed by {value}% for {duration} seconds. [Right click sword and attack mob to activate]
     raise: '&7You ready your sword'
     lower: '&7You lower your sword'
     start: '&6Lightning Blade Activated! &7(-{mana} {mana_unit})'
     end: '&7Lightning Blade has worn off'
-    menu: '\n&d&lMana Ability &9{mana_ability} {level}\n  &7Attack Speed: &c+{value}% &7Duration: &a{duration}s\n  &7Mana Cost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n '
   not_ready: '&cAbility not ready! &7({cooldown}s)'
   not_enough_mana: '&eNot enough mana! &7({mana} {mana_unit} required, you have {current_mana}/{max_mana})'
 rewards:

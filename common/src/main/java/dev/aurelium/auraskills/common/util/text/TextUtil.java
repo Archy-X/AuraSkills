@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.util.text;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class TextUtil {
 
@@ -13,17 +14,17 @@ public class TextUtil {
             char[] sourceArray = source.toCharArray();
             char[] nsArray = ns.toCharArray();
             int oLength = os.length();
-            StringBuilder buf = new StringBuilder (sourceArray.length);
-            buf.append (sourceArray, 0, i).append(nsArray);
+            StringBuilder buf = new StringBuilder(sourceArray.length);
+            buf.append(sourceArray, 0, i).append(nsArray);
             i += oLength;
             int j = i;
             // Replace all remaining instances of oldString with newString.
             while ((i = source.indexOf(os, i)) > 0) {
-                buf.append (sourceArray, j, i - j).append(nsArray);
+                buf.append(sourceArray, j, i - j).append(nsArray);
                 i += oLength;
                 j = i;
             }
-            buf.append (sourceArray, j, sourceArray.length - j);
+            buf.append(sourceArray, j, sourceArray.length - j);
             source = buf.toString();
             buf.setLength(0);
         }
@@ -61,6 +62,38 @@ public class TextUtil {
 
     public static String replace(String source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4, String os5, String ns5, String os6, String ns6) {
         return replace(replace(replace(replace(replace(replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4), os5, ns5), os6, ns6);
+    }
+
+    public static String replace(String source, Replacer rep) {
+        if (source == null) {
+            return null;
+        }
+        for (Map.Entry<String, Supplier<String>> entry : rep.getReplacements().entrySet()) {
+            source = replace(source, entry.getKey(), entry.getValue());
+        }
+        return source;
+    }
+
+    public static String replace(String input, String target, Supplier<String> replacement) {
+        if (input == null || target == null || replacement == null) {
+            throw new IllegalArgumentException("Input, target or replacement cannot be null");
+        }
+        if (target.isEmpty()) {
+            return input;
+        }
+        StringBuilder result = new StringBuilder();
+        int index = 0;
+        while (index < input.length()) {
+            int next = input.indexOf(target, index);
+            if (next == -1) {
+                result.append(input.substring(index));
+                break;
+            }
+            result.append(input, index, next);
+            result.append(replacement.get());
+            index = next + target.length();
+        }
+        return result.toString();
     }
 
     public static String replaceNonEscaped(String source, String os, String ns) {

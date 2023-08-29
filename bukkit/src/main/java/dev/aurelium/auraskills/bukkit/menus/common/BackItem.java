@@ -4,14 +4,12 @@ import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Locale;
 
 public class BackItem extends AbstractItem implements SingleItemProvider {
 
@@ -21,17 +19,11 @@ public class BackItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data) {
-        Locale locale = plugin.getUser(player).getLocale();
-        switch (placeholder) {
-            case "back":
-                return plugin.getMsg(MenuMessage.BACK, locale);
-            case "back_click":
-                String previousMenu = (String) activeMenu.getProperty("previous_menu");
-                String formattedPreviousMenu = TextUtil.capitalizeWord(TextUtil.replace(previousMenu, "_", " "));
-                return TextUtil.replace(plugin.getMsg(MenuMessage.BACK_CLICK, locale),
-                        "{menu_name}", formattedPreviousMenu);
-        }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, activeMenu, new Replacer()
+                .map("{menu_name}", () -> {
+                    String previousMenu = (String) activeMenu.getProperty("previous_menu");
+                    return TextUtil.capitalizeWord(TextUtil.replace(previousMenu, "_", " "));
+                }));
     }
 
     @Override

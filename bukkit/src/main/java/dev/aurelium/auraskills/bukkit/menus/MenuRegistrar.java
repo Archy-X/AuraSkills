@@ -80,11 +80,6 @@ public class MenuRegistrar {
         skills.registerSingleItem("your_skills", () -> new YourSkillsItem(plugin));
         skills.registerSingleItem("stats", () -> new StatsItem(plugin));
         skills.registerTemplateItem("skill", Skill.class, () -> new ClickableSkillItem(plugin));
-        skills.registerComponent("stats_leveled", () -> new SkillComponents.StatsLeveled(plugin));
-        skills.registerComponent("ability_levels", () -> new SkillComponents.AbilityLevels(plugin));
-        skills.registerComponent("mana_ability_info", () -> new SkillComponents.ManaAbilityInfo(plugin));
-        skills.registerComponent("progress", () -> new SkillComponents.Progress(plugin));
-        skills.registerComponent("max_level", () -> new SkillComponents.MaxLevel(plugin));
 
         ProviderManager stats = manager.getProviderManager("stats");
         stats.registerSingleItem("skull", () -> new SkullItem(plugin));
@@ -100,6 +95,19 @@ public class MenuRegistrar {
         levelProgression.registerTemplateItem("unlocked", Integer.class, () -> new UnlockedItem(plugin));
         levelProgression.registerTemplateItem("in_progress", Integer.class, () -> new InProgressItem(plugin));
         levelProgression.registerTemplateItem("locked", Integer.class, () -> new LockedItem(plugin));
+        levelProgression.registerComponent("ability_unlock", () -> new LevelProgressionComponents.AbilityUnlock(plugin));
+        levelProgression.registerComponent("ability_level", () -> new LevelProgressionComponents.AbilityLevel(plugin));
+        levelProgression.registerComponent("mana_ability_unlock", () -> new LevelProgressionComponents.ManaAbilityUnlock(plugin));
+        levelProgression.registerComponent("mana_ability_level", () -> new LevelProgressionComponents.ManaAbilityLevel(plugin));
+
+        // Register components for the skill item in skills and level progression menu
+        for (ProviderManager providerManager : new ProviderManager[] {skills, levelProgression}) {
+            providerManager.registerComponent("stats_leveled", () -> new SkillComponents.StatsLeveled(plugin));
+            providerManager.registerComponent("ability_levels", () -> new SkillComponents.AbilityLevels(plugin));
+            providerManager.registerComponent("mana_ability_info", () -> new SkillComponents.ManaAbilityInfo(plugin));
+            providerManager.registerComponent("progress", () -> new SkillComponents.Progress(plugin));
+            providerManager.registerComponent("max_level", () -> new SkillComponents.MaxLevel(plugin));
+        }
 
         ProviderManager leaderboard = manager.getProviderManager("leaderboard");
         leaderboard.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
