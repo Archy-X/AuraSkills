@@ -138,7 +138,7 @@ public class ProfileCommand extends BaseCommand {
         }
 
         Map<Stat, Double> totalStats = new HashMap<>();
-        for (Stat stat : plugin.getStatManager().getStatValues()) {
+        for (Stat stat : plugin.getStatManager().getEnabledStats()) {
             double base = baseStats.getOrDefault(stat, 0.0);
             double modified = modifiedStats.getOrDefault(stat, 0.0);
             totalStats.put(stat, base + modified);

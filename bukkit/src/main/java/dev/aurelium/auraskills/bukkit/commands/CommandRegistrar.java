@@ -99,7 +99,7 @@ public class CommandRegistrar {
         });
         completions.registerAsyncCompletion("stats", c -> {
             List<String> stats = new ArrayList<>();
-            for (Stat stat : plugin.getStatManager().getStatValues()) {
+            for (Stat stat : plugin.getStatManager().getEnabledStats()) {
                 stats.add(stat.name().toLowerCase(Locale.ROOT));
             }
             return stats;

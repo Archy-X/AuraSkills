@@ -24,6 +24,7 @@ import dev.aurelium.auraskills.bukkit.menus.sources.SourceItem;
 import dev.aurelium.auraskills.bukkit.menus.sources.SourcesMenu;
 import dev.aurelium.auraskills.bukkit.menus.stats.SkullItem;
 import dev.aurelium.auraskills.bukkit.menus.stats.StatItem;
+import dev.aurelium.auraskills.bukkit.menus.stats.StatsComponents;
 import dev.aurelium.auraskills.bukkit.menus.stats.StatsMenu;
 import dev.aurelium.auraskills.common.source.Source;
 
@@ -84,6 +85,7 @@ public class MenuRegistrar {
         ProviderManager stats = manager.getProviderManager("stats");
         stats.registerSingleItem("skull", () -> new SkullItem(plugin));
         stats.registerTemplateItem("stat", Stat.class, () -> new StatItem(plugin));
+        stats.registerComponent("leveled_by", () -> new StatsComponents.LeveledBy(plugin));
 
         ProviderManager levelProgression = manager.getProviderManager("level_progression");
         levelProgression.registerSingleItem("next_page", () -> new NextPageItem(plugin));

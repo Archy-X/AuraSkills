@@ -58,7 +58,7 @@ public abstract class TraitManager {
 
     public Set<Stat> getLinkedStats(Trait trait) {
         Set<Stat> set = new HashSet<>();
-        for (Stat stat : plugin.getStatManager().getStatValues()) {
+        for (Stat stat : plugin.getStatManager().getEnabledStats()) {
             if (stat.getTraits().contains(trait)) {
                 set.add(stat);
             }

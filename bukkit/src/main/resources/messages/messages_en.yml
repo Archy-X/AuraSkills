@@ -581,6 +581,8 @@ menus:
     damage: 'Damage'
     max_mana_cost: 'Max Mana Cost'
     attack_speed: 'Attack Speed'
+    back: 'Go Back'
+    back_click: 'Back to {menu_name} Menu'
   skills:
     skills_title: 'Your Skills'
     your_skills: 'Your Skills'
@@ -596,8 +598,6 @@ menus:
     your_ranking: 'Your Skill Ranking'
     rank_out_of: '<1>You are ranked <2>{rank}</2> out of {total} players</1>'
     rank_percent: '<1>You are in the top <2>{percent}%</2> of players</1>'
-    back: 'Go Back'
-    back_click: 'Back to {menu_name} Menu'
     next_page: 'Next Page'
     next_page_click: 'Click to go to next page'
     previous_page: 'Previous Page'
@@ -619,9 +619,8 @@ menus:
     abilities_click: 'Click to view {skill} abilities'
   stats:
     stats_title: Your Stats
-    player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    skills: '\n&7Skills: &f{skills}'
-    your_level: '&7Your Level: {color}{level}'
+    skills: 'Skills'
+    your_level: 'Your Level'
   unclaimed_items:
     unclaimed_items_title: 'Claim Items'
     inventory_full: '&eYou do not have enough space in your inventory to claim that item'
@@ -1021,32 +1020,32 @@ sources:
 stats:
   strength:
     name: Strength
-    desc: '&7Strength increases your attack damage\n&7with various different weapons'
+    desc: 'Strength increases your attack damage with various different weapons'
     color: '&4'
     symbol: '➽'
   health:
     name: Health
-    desc: '&7Health increases the amount of {hp_unit} you\n&7have, allowing you to last longer in\n&7fights'
+    desc: 'Health increases the amount of {hp_unit} you have, allowing you to last longer in fights'
     color: '&c'
     symbol: '❤'
   regeneration:
     name: Regeneration
-    desc: '&7Regeneration increases how fast you\n&7recover both health and mana'
+    desc: 'Regeneration increases how fast you recover both health and mana'
     color: '&6'
     symbol: '❥'
   luck:
     name: Luck
-    desc: '&7Luck increases your chances of getting\n&7rare loot from mobs, fishing, and more'
+    desc: 'Luck increases your chances of getting rare loot from mobs, fishing, and more'
     color: '&2'
     symbol: '☘'
   wisdom:
     name: Wisdom
-    desc: '&7Wisdom increases your max mana, increases\n&7experience gain, and decreases anvil costs'
+    desc: 'Wisdom increases your max mana, increases experience gain, and decreases anvil costs'
     color: '&9'
     symbol: '✿'
   toughness:
     name: Toughness
-    desc: '&7Toughness increases the amount of\n&7damage reduced from enemy attacks'
+    desc: 'Toughness increases the amount of damage reduced from enemy attacks'
     color: '&5'
     symbol: '✦'
 traits:

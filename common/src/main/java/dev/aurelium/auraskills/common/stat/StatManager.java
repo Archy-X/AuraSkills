@@ -21,7 +21,7 @@ public abstract class StatManager {
 
     public StatManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.statMap = new HashMap<>();
+        this.statMap = new LinkedHashMap<>();
         this.supplier = new StatSupplier(this, plugin.getMessageProvider());
     }
 
@@ -42,8 +42,8 @@ public abstract class StatManager {
         return statMap.values();
     }
     
-    public Set<Stat> getStatValues() {
-        Set<Stat> stats = new HashSet<>();
+    public Set<Stat> getEnabledStats() {
+        Set<Stat> stats = new LinkedHashSet<>();
         for (LoadedStat loaded : statMap.values()) {
             if (!loaded.options().enabled()) continue;
             stats.add(loaded.stat());

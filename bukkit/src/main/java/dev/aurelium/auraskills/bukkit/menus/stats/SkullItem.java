@@ -1,13 +1,12 @@
 package dev.aurelium.auraskills.bukkit.menus.stats;
 
+import com.archyx.slate.item.provider.ListBuilder;
 import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -29,18 +28,24 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
         Locale locale = plugin.getUser(player).getLocale();
         if (placeholder.equals("player")) {
             return player.getName();
+        } else if (placeholder.equals("entries")) {
+            User user = plugin.getUser(player);
+            // Handle each stat entry
+            ListBuilder builder = new ListBuilder(data.getListData());
+
+            for (Stat stat : plugin.getStatManager().getEnabledStats()) {
+                String entry = activeMenu.getFormat("player_stat_entry");
+                entry = TextUtil.replace(entry,
+                        "{color}", stat.getColor(locale),
+                        "{symbol}", stat.getSymbol(locale),
+                        "{stat}", stat.getDisplayName(locale),
+                        "{level}", NumberUtil.format1(user.getStatLevel(stat)));
+                builder.append(entry);
+            }
+
+            return builder.build();
         }
-        User user = plugin.getUser(player);
-        // Handle each stat entry
-        Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(placeholder));
-        if (stat != null) {
-            return TextUtil.replace(plugin.getMsg(MenuMessage.PLAYER_STAT_ENTRY, locale),
-                    "{color}", stat.getColor(locale),
-                    "{symbol}", stat.getSymbol(locale),
-                    "{stat}", stat.getDisplayName(locale),
-                    "{level}", NumberUtil.format1(user.getStatLevel(stat)));
-        }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, activeMenu);
     }
 
     @Override
