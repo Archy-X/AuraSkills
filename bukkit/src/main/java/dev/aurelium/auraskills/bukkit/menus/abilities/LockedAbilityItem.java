@@ -5,10 +5,10 @@ import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 
@@ -23,25 +23,20 @@ public class LockedAbilityItem extends AbstractAbilityItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderData data, Ability ability) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Ability ability) {
         Locale locale = plugin.getUser(player).getLocale();
-        switch (placeholder) {
-            case "name":
-                return ability.getDisplayName(locale);
-            case "locked_desc":
-                return TextUtil.replace(plugin.getMsg(MenuMessage.LOCKED_DESC, locale),
-                        "{desc}", TextUtil.replace(ability.getDescription(locale),
-                                "{value}", NumberUtil.format1(ability.getValue(1)),
-                                "{value_2}", NumberUtil.format1(ability.getSecondaryValue(1))));
-            case "unlocked_at":
-                Skill skill = (Skill) menu.getProperty("skill");
-                return TextUtil.replace(plugin.getMsg(MenuMessage.UNLOCKED_AT, locale),
-                        "{skill}", skill.getDisplayName(locale),
-                        "{level}", RomanNumber.toRoman(ability.getUnlock(), plugin));
-            case "locked":
-                return plugin.getMsg(MenuMessage.LOCKED, locale);
-        }
-        return placeholder;
+        return switch (placeholder) {
+            case "name" -> ability.getDisplayName(locale);
+            case "desc" -> TextUtil.replace(ability.getDescription(locale),
+                    "{value}", NumberUtil.format1(ability.getValue(1)),
+                    "{value_2}", NumberUtil.format1(ability.getSecondaryValue(1)));
+            default -> replaceMenuMessage(placeholder, player, activeMenu, new Replacer()
+                    .map("{skill}", () -> {
+                        Skill skill = ((Skill) activeMenu.getProperty("skill"));
+                        return skill.getDisplayName(locale);
+                    })
+                    .map("{level}", () -> RomanNumber.toRoman(ability.getUnlock(), plugin)));
+        };
     }
 
     @Override

@@ -10,10 +10,9 @@ items:
     flags: [hide_attributes]
     display_name: '<aqua>{{your_skills}} - <gold>{player}'
     lore:
-      - type: text
+      - text: '{{your_skills_desc}}'
         wrap: true
         style: '<gray>'
-        text: '{{your_skills_desc}}'
       - ' '
       - '<yellow>{{your_skills_hover}}'
       - '<yellow>{{your_skills_click}}'
@@ -62,23 +61,17 @@ templates:
         align: center
     display_name: '<aqua>{skill} <dark_aqua>{level}'
     lore:
-      - type: text
+      - text: '{desc}'
         wrap: true
         style: '<gray>'
-        text: '{desc}'
-      - type: component
-        component: stats_leveled
-      - type: component
-        component: ability_levels
-      - type: component
-        component: mana_ability_info
+      - component: stats_leveled
+      - component: ability_levels
+      - component: mana_ability_info
       - ' '
       - '<gray>{{level}}: <yellow>{level}'
       - ' '
-      - type: component
-        component: progress
-      - type: component
-        component: max_level
+      - component: progress
+      - component: max_level
       - ' '
       - '<yellow>{{skill_click}}'
 components:

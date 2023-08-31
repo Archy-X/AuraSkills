@@ -9,4 +9,10 @@ public interface AbstractAbility {
 
     NamespacedId getId();
 
+    int getMaxLevel();
+
+    int getUnlock();
+
+    int getLevelUp();
+
 }

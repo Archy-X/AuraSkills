@@ -126,5 +126,9 @@ public class MenuRegistrar {
         abilities.registerTemplateItem("locked_mana_ability", MAbility.class, () -> new LockedManaAbilityItem(plugin));
         abilities.registerTemplateItem("unlocked_ability", Ability.class, () -> new UnlockedAbilityItem(plugin));
         abilities.registerTemplateItem("unlocked_mana_ability", MAbility.class, () -> new UnlockedManaAbilityItem(plugin));
+        abilities.registerComponent("your_level", () -> new AbilitiesComponents.YourLevel(plugin));
+        abilities.registerComponent("your_level_maxed", () -> new AbilitiesComponents.YourLevelMaxed(plugin));
+        abilities.registerComponent("unlocked_desc", () -> new AbilitiesComponents.UnlockedDesc(plugin));
+        abilities.registerComponent("unlocked_desc_maxed", () -> new AbilitiesComponents.UnlockedDescMaxed(plugin));
     }
 }

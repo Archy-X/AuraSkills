@@ -9,16 +9,14 @@ items:
     material: paper
     display_name: '<gold>{{your_ranking}}'
     lore:
-      - type: text
+      - text: '{{rank_out_of}}'
         styles:
           1: '<white>'
           2: '<gold>'
-        text: '{{rank_out_of}}'
-      - type: text
+      - text: '{{rank_percent}}'
         styles:
           1: '<white>'
           2: '<gold>'
-        text: '{{rank_percent}}'
       - ' '
       - '<yellow>{{leaderboard_click}}'
   back:
@@ -48,10 +46,9 @@ items:
     material: experience_bottle
     display_name: '<green>{{sources}}'
     lore:
-      - type: text
+      - text: '{{sources_desc}}'
         wrap: true
         style: '<gray>'
-        text: '{{sources_desc}}'
       - ' '
       - '<yellow>{{sources_click}}'
   abilities:
@@ -59,14 +56,13 @@ items:
     material: light_blue_dye
     display_name: '<red>{{abilities}}'
     lore:
-      - type: text
+      - text: '{{abilities_desc}} {{mana_abilities_desc}}'
         wrap: true
         wrap_style: 1
         styles:
           1: '<gray>'
           2: '<aqua>'
           3: '<light_purple>'
-        text: '{{abilities_desc}} {{mana_abilities_desc}}'
       - ' '
       - '<yellow>{{abilities_click}}'
 templates:
@@ -90,37 +86,27 @@ templates:
       forging: {material: anvil}
     display_name: '<aqua>{skill} <dark_aqua>{level}'
     lore:
-      - type: text
+      - text: '{desc}'
         wrap: true
         style: '<gray>'
-        text: '{desc}'
-      - type: component
-        component: stats_leveled
-      - type: component
-        component: ability_levels
-      - type: component
-        component: mana_ability_info
+      - component: stats_leveled
+      - component: ability_levels
+      - component: mana_ability_info
       - ' '
       - '<gray>{{level}}: <yellow>{level}'
       - ' '
-      - type: component
-        component: progress
-      - type: component
-        component: max_level
+      - component: progress
+      - component: max_level
   unlocked:
     material: lime_stained_glass_pane
     display_name: '<green>{{level}} {level}'
     lore:
       - '<gray>{{level}} <white>{level}'
       - '<gray>{{rewards}}: {entries[]}'
-      - type: component
-        component: ability_unlock
-      - type: component
-        component: ability_level
-      - type: component
-        component: mana_ability_unlock
-      - type: component
-        component: mana_ability_level
+      - component: ability_unlock
+      - component: ability_level
+      - component: mana_ability_unlock
+      - component: mana_ability_level
       - ' '
       - '<green>{{unlocked}}'
   in_progress:
@@ -129,14 +115,10 @@ templates:
     lore:
       - '<gray>{{level}} <white>{level}'
       - '<gray>{{rewards}}: {entries[]}'
-      - type: component
-        component: ability_unlock
-      - type: component
-        component: ability_level
-      - type: component
-        component: mana_ability_unlock
-      - type: component
-        component: mana_ability_level
+      - component: ability_unlock
+      - component: ability_level
+      - component: mana_ability_unlock
+      - component: mana_ability_level
       - ' '
       - '<gray>{{progress}}: <yellow>{percent}'
       - '  <gray>{current_xp}/{level_xp} {xp_unit}'
@@ -148,14 +130,10 @@ templates:
     lore:
       - '<gray>{{level}} <white>{level}'
       - '<gray>{{rewards}}: {entries[]}'
-      - type: component
-        component: ability_unlock
-      - type: component
-        component: ability_level
-      - type: component
-        component: mana_ability_unlock
-      - type: component
-        component: mana_ability_level
+      - component: ability_unlock
+      - component: ability_level
+      - component: mana_ability_unlock
+      - component: mana_ability_level
       - ' '
       - '<red>{{locked}}'
 components:
@@ -189,45 +167,41 @@ components:
     lore:
       - ' '
       - '<gold>{name} <green><bold>{{ability_unlock}}'
-      - type: text
+      - text: '{desc}'
         wrap: true
         wrap_indent: '  '
         style: '<gray>'
-        text: '{desc}'
   ability_level:
     context: Integer
     lore:
       - ' '
       - '<gold>{name} {level}'
-      - type: text
+      - text: '{desc}'
         wrap: true
         wrap_indent: '  '
         style: '<gray>'
-        text: '{desc}'
   mana_ability_unlock:
     context: Integer
     lore:
       - ' '
       - '<blue>{name} <light_purple><bold>{{mana_ability_unlock}}'
-      - type: text
+      - text: '{desc}'
         wrap: true
         wrap_indent: '  '
         styles:
           0: '<gray>'
           1: '<yellow>'
-        text: '{desc}'
   mana_ability_level:
     context: Integer
     lore:
       - ' '
       - '<blue>{name} {level}'
-      - type: text
+      - text: '{desc}'
         wrap: true
         wrap_indent: '  '
         styles:
           0: '<gray>'
           1: '<yellow>'
-        text: '{desc}'
 formats:
   stat_leveled_entry: '{color}{stat}<gray>'
   unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'

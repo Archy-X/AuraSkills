@@ -39,12 +39,10 @@ templates:
         material: purple_stained_glass_pane
     display_name: '{color}{stat}'
     lore:
-      - type: text
+      - text: '{stat_desc}'
         wrap: true
         style: '<gray>'
-        text: '{stat_desc}'
-      - type: component
-        component: leveled_by
+      - component: leveled_by
       - ' '
       - '<gray>{{your_level}}: {color}{level}'
       - ' '
@@ -54,12 +52,11 @@ components:
     context: Stat
     lore:
       - ' '
-      - type: text
+      - text: '<1>{{skills}}: <2>{skills[, ]}'
         wrap: true
         styles:
           1: '<gray>'
           2: '<white>'
-        text: '<1>{{skills}}: <2>{skills[, ]}'
 formats:
   player_stat_entry: '{color}{symbol} {stat} <white>{level}'
   trait_entry: '<gray>{trait}: {color}{level}'

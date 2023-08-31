@@ -7,10 +7,10 @@ import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 
@@ -25,26 +25,21 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu menu, PlaceholderData data, ManaAbility manaAbility) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, ManaAbility manaAbility) {
         Locale locale = plugin.getUser(player).getLocale();
-        Skill skill = (Skill) menu.getProperty("skill");
-        switch (placeholder) {
-            case "name":
-                return manaAbility.getDisplayName(locale);
-            case "locked_desc":
-                return TextUtil.replace(plugin.getMsg(MenuMessage.LOCKED_DESC, locale),
-                        "{desc}", TextUtil.replace(manaAbility.getDescription(locale),
-                            "{value}", NumberUtil.format1(manaAbility.getDisplayValue(1)),
-                            "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
-                            "{duration}", NumberUtil.format1(getDuration(manaAbility))));
-            case "unlocked_at":
-                return TextUtil.replace(plugin.getMsg(MenuMessage.UNLOCKED_AT, locale),
-                        "{skill}", skill.getDisplayName(locale),
-                        "{level}", RomanNumber.toRoman(manaAbility.getUnlock(), plugin));
-            case "locked":
-                return plugin.getMsg(MenuMessage.LOCKED, locale);
-        }
-        return placeholder;
+        return switch (placeholder) {
+            case "name" -> manaAbility.getDisplayName(locale);
+            case "desc" -> TextUtil.replace(manaAbility.getDescription(locale),
+                    "{value}", NumberUtil.format1(manaAbility.getDisplayValue(1)),
+                    "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
+                    "{duration}", NumberUtil.format1(getDuration(manaAbility)));
+            default -> replaceMenuMessage(placeholder, player, activeMenu, new Replacer()
+                    .map("{skill}", () -> {
+                        Skill skill = ((Skill) activeMenu.getProperty("skill"));
+                        return skill.getDisplayName(locale);
+                    })
+                    .map("{level}", () -> RomanNumber.toRoman(manaAbility.getUnlock(), plugin)));
+        };
     }
 
     @Override

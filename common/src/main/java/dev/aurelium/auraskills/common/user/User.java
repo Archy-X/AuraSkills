@@ -325,6 +325,15 @@ public abstract class User {
         }
     }
 
+    public int getAbstractAbilityLevel(AbstractAbility abstractAbility) {
+        if (abstractAbility instanceof Ability ability) {
+            return getAbilityLevel(ability);
+        } else if (abstractAbility instanceof ManaAbility manaAbility) {
+            return getManaAbilityLevel(manaAbility);
+        }
+        return 0;
+    }
+
     public int getManaAbilityLevel(ManaAbility mAbility) {
         // Check if unlocked
         Skill skill = mAbility.getSkill();

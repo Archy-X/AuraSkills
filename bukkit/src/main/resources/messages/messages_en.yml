@@ -583,6 +583,10 @@ menus:
     attack_speed: 'Attack Speed'
     back: 'Go Back'
     back_click: 'Back to {menu_name} Menu'
+    unlocked: 'UNLOCKED'
+    in_progress: 'IN PROGRESS'
+    locked: 'LOCKED'
+    your_level: 'Your Level'
   skills:
     skills_title: 'Your Skills'
     your_skills: 'Your Skills'
@@ -602,9 +606,6 @@ menus:
     next_page_click: 'Click to go to next page'
     previous_page: 'Previous Page'
     previous_page_click: 'Click to go to previous page'
-    unlocked: 'UNLOCKED'
-    in_progress: 'IN PROGRESS'
-    locked: 'LOCKED'
     rewards: 'Rewards'
     ability_unlock: 'Ability Unlock'
     mana_ability_unlock: 'Mana Ability Unlock'
@@ -620,7 +621,6 @@ menus:
   stats:
     stats_title: Your Stats
     skills: 'Skills'
-    your_level: 'Your Level'
   unclaimed_items:
     unclaimed_items_title: 'Claim Items'
     inventory_full: '&eYou do not have enough space in your inventory to claim that item'
@@ -647,13 +647,9 @@ menus:
     multiplied_desc: '\n&7&oThis is the XP you will actually earn\n&7&obased on your current XP multipliers'
   abilities:
     abilities_title: '{skill} Abilities'
-    locked_desc: '&fDescription:\n  &7{desc}'
-    unlocked_at: '&7Unlocked at &3{skill} {level}'
-    your_ability_level: '&fYour Level: &b{level}'
-    your_ability_level_maxed: '&fYour Level: &b{level} &6(MAXED)'
-    unlocked_desc: '&fNext upgrade at &3{skill} {level}&f\n  &7{desc}'
-    unlocked_desc_maxed: '&fDescription:\n  &7{desc}'
-    desc_upgrade_value: '&7{current}&8→{next}&7'
+    description: 'Description'
+    unlocked_at: '<1>Unlocked at <2>{skill} {level}'
+    next_upgrade_at: '<1>Next upgrade at <2>{skill} {level}'
 mana_abilities:
   replenish:
     name: Replenish
