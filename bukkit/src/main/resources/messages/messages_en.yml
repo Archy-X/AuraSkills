@@ -1009,32 +1009,32 @@ stats:
   strength:
     name: Strength
     desc: 'Strength increases your attack damage with various different weapons'
-    color: '&4'
+    color: '<dark_red>'
     symbol: '➽'
   health:
     name: Health
     desc: 'Health increases the amount of {hp_unit} you have, allowing you to last longer in fights'
-    color: '&c'
+    color: '<red>'
     symbol: '❤'
   regeneration:
     name: Regeneration
     desc: 'Regeneration increases how fast you recover both health and mana'
-    color: '&6'
+    color: '<gold>'
     symbol: '❥'
   luck:
     name: Luck
     desc: 'Luck increases your chances of getting rare loot from mobs, fishing, and more'
-    color: '&2'
+    color: '<dark_green>'
     symbol: '☘'
   wisdom:
     name: Wisdom
     desc: 'Wisdom increases your max mana, increases experience gain, and decreases anvil costs'
-    color: '&9'
+    color: '<blue>'
     symbol: '✿'
   toughness:
     name: Toughness
     desc: 'Toughness increases the amount of damage reduced from enemy attacks'
-    color: '&5'
+    color: '<dark_purple>'
     symbol: '✦'
 traits:
   attack_damage:

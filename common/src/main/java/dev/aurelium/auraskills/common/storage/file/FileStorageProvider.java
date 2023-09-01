@@ -223,10 +223,12 @@ public class FileStorageProvider extends StorageProvider {
 
         // Apply stat modifiers
         ConfigurationNode statModifiersNode = root.node("stat_modifiers");
+        statModifiersNode.set(null);
         applyStatModifiers(statModifiersNode, state.statModifiers());
 
         // Apply trait modifiers
         ConfigurationNode traitModifiersNode = root.node("trait_modifiers");
+        traitModifiersNode.set(null);
         applyTraitModifiers(traitModifiersNode, state.traitModifiers());
 
         saveYamlFile(root, state.uuid());
@@ -256,14 +258,17 @@ public class FileStorageProvider extends StorageProvider {
 
         // Apply stat modifiers
         ConfigurationNode statModifiersNode = root.node("stat_modifiers");
+        statModifiersNode.set(null);
         applyStatModifiers(statModifiersNode, user.getStatModifiers());
 
         // Apply trait modifiers
         ConfigurationNode traitModifiersNode = root.node("trait_modifiers");
+        traitModifiersNode.set(null);
         applyTraitModifiers(traitModifiersNode, user.getTraitModifiers());
 
         // Apply ability data
         ConfigurationNode abilityDataNode = root.node("ability_data");
+        abilityDataNode.set(null);
         for (AbstractAbility ability : user.getAbilityDataMap().keySet()) {
             ConfigurationNode abilityNode = abilityDataNode.node(ability.getId().toString());
             for (Map.Entry<String, Object> entry : user.getAbilityData(ability).getDataMap().entrySet()) {
@@ -273,6 +278,7 @@ public class FileStorageProvider extends StorageProvider {
 
         // Apply unclaimed items
         ConfigurationNode unclaimedItemsNode = root.node("unclaimed_items");
+        unclaimedItemsNode.set(null);
         for (KeyIntPair item : user.getUnclaimedItems()) {
             unclaimedItemsNode.appendListNode().set(item.getKey() + " " + item.getValue());
         }

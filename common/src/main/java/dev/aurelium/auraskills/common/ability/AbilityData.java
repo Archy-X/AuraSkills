@@ -33,6 +33,10 @@ public class AbilityData {
         this.data.put(key, value);
     }
 
+    public void remove(String key) {
+        this.data.remove(key);
+    }
+
     /**
      * Gets an ability data value as an int
      * @param key The key of the data to look up

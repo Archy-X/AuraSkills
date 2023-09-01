@@ -209,6 +209,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Save users
         for (User user : userManager.getUserMap().values()) {
             try {
+                logger().info("Saving user " + user.getUsername());
                 storageProvider.save(user);
             } catch (Exception e) {
                 logger().warn("Failed to save user " + user.getUsername());

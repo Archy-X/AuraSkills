@@ -132,10 +132,10 @@ public class Modifiers {
             } else {
                 message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
             }
-            lore.add(0, TextUtil.replace(plugin.getMsg(message, locale),
+            lore.add(0, com.archyx.polyglot.util.TextUtil.applyColor(TextUtil.replace(plugin.getMsg(message, locale),
                     "{stat}", stat.getDisplayName(locale),
                     "{value}", NumberUtil.format1(Math.abs(value)),
-                    "{color}", stat.getColor(locale)));
+                    "{color}", stat.getColor(locale))));
             meta.setLore(lore);
         }
         item.setItemMeta(meta);

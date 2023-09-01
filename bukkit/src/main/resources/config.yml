@@ -12,7 +12,7 @@ mysql:
   enabled: false
   host: localhost
   port: 3306
-  database: aureliumskills
+  database: auraskills
   username: root
   password: pass
   load_delay: 0
@@ -45,7 +45,7 @@ hooks:
 
 default_language: en
 
-try_detect_client_language: true
+try_detect_client_language: false
 
 languages:
   - en

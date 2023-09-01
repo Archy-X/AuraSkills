@@ -48,11 +48,11 @@ public class StatReward extends SkillReward {
 
     @Override
     public String getChatMessage(User player, Locale locale, Skill skill, int level) {
-        return TextUtil.replace(plugin.getMsg(LevelerMessage.STAT_LEVEL, locale),
+        return com.archyx.polyglot.util.TextUtil.applyColor(TextUtil.replace(plugin.getMsg(LevelerMessage.STAT_LEVEL, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
                 "{symbol}", stat.getSymbol(locale),
-                "{stat}", stat.getDisplayName(locale));
+                "{stat}", stat.getDisplayName(locale)));
     }
 
 }

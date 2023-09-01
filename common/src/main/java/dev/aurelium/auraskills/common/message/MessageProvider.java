@@ -21,10 +21,7 @@ import dev.aurelium.auraskills.common.message.type.*;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Interface that provides messages for the plugin.
@@ -48,6 +45,7 @@ public class MessageProvider implements PolyglotProvider {
                 .messageFileName("messages_{language}.yml")
                 .defaultLanguage("en")
                 .messageReplacements(new MessageReplacements(replace))
+                .processExcluded(List.of("color"))
                 .build();
         this.polyglot = new Polyglot(this, config);
         this.manager = this.polyglot.getMessageManager();

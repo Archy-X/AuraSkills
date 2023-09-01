@@ -22,6 +22,7 @@ public abstract class ConnectionPool {
         HikariConfig config = new HikariConfig();
 
         config.setPoolName("auraskills-hikari");
+        config.setConnectionTimeout(5000);
 
         configure(config, credentials); // Let each implementation configure the HikariConfig
 

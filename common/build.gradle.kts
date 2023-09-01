@@ -14,7 +14,7 @@ dependencies {
     api("co.aikar:acf-core:0.5.1-SNAPSHOT")
     api("net.kyori:adventure-text-serializer-legacy:4.13.1")
     api("net.kyori:adventure-text-serializer-gson:4.13.1")
-    api("com.github.Archy-X:Polyglot:1.1.6")
+    api("com.github.Archy-X:Polyglot:1.1.9")
     api("org.spongepowered:configurate-yaml:4.1.2")
     implementation("net.kyori:event-api:3.0.0")
     implementation("com.google.code.gson:gson:2.10.1")

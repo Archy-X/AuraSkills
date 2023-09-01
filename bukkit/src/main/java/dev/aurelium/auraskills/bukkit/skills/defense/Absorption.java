@@ -42,7 +42,7 @@ public class Absorption extends ReadiedManaAbility implements AuraSkillsListener
         User user = BukkitUser.getUser(event.getUser());
         // Remove the activated ability data if the player logged out when the ability was active
         if (!isActivated(user)) {
-            user.getAbilityData(manaAbility).setData("activated", false);
+            user.getAbilityData(manaAbility).remove("activated");
         }
     }
 
