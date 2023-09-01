@@ -21,6 +21,7 @@ import dev.aurelium.auraskills.bukkit.menus.levelprogression.*;
 import dev.aurelium.auraskills.bukkit.menus.skills.*;
 import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
 import dev.aurelium.auraskills.bukkit.menus.sources.SourceItem;
+import dev.aurelium.auraskills.bukkit.menus.sources.SourcesComponents;
 import dev.aurelium.auraskills.bukkit.menus.sources.SourcesMenu;
 import dev.aurelium.auraskills.bukkit.menus.stats.SkullItem;
 import dev.aurelium.auraskills.bukkit.menus.stats.StatItem;
@@ -119,6 +120,7 @@ public class MenuRegistrar {
         sources.registerSingleItem("sorter", () -> new SorterItem(plugin));
         sources.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
         sources.registerTemplateItem("source", Source.class, () -> new SourceItem(plugin));
+        sources.registerComponent("multiplied_xp", () -> new SourcesComponents.MultipliedXp(plugin));
 
         ProviderManager abilities = manager.getProviderManager("abilities");
         abilities.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));

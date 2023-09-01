@@ -7,8 +7,6 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
-import dev.aurelium.auraskills.common.message.type.MenuMessage;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,21 +27,18 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
 
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer place) {
-        Locale locale = plugin.getUser(player).getLocale();
         Skill skill = (Skill) activeMenu.getProperty("skill");
         SkillValue value = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1).get(0);
-        switch (placeholder) {
-            case "player_entry":
+        return switch (placeholder) {
+            case "place" -> String.valueOf(place);
+            case "player" -> {
                 UUID id = value.id();
                 String name = Bukkit.getOfflinePlayer(id).getName();
-                return TextUtil.replace(plugin.getMsg(MenuMessage.PLAYER_ENTRY, locale),
-                        "{place}", String.valueOf(place),
-                        "{player}", name != null ? name : "?");
-            case "skill_level":
-                return TextUtil.replace(plugin.getMsg(MenuMessage.SKILL_LEVEL, locale),
-                        "{level}", String.valueOf(value.level()));
-        }
-        return placeholder;
+                yield name != null ? name : "?";
+            }
+            case "level" -> String.valueOf(value.level());
+            default -> replaceMenuMessage(placeholder, player, activeMenu);
+        };
     }
 
     @Override
@@ -59,7 +54,7 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer place) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         List<SkillValue> values = plugin.getLeaderboardManager().getLeaderboard(skill, place, 1);
-        if (values.size() == 0) {
+        if (values.isEmpty()) {
             return null;
         }
         SkillValue skillValue = values.get(0);

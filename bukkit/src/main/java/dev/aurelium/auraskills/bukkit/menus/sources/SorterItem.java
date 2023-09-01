@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.bukkit.menus.sources;
 
-import com.archyx.aureliumskills.AureliumSkills;
+import com.archyx.slate.item.provider.ListBuilder;
 import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
@@ -24,15 +24,10 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data) {
         Locale locale = plugin.getUser(player).getLocale();
-        switch (placeholder) {
-            case "sorter":
-                return plugin.getMsg(MenuMessage.SORTER, locale);
-            case "sorted_types":
-                return getSortedTypesLore(locale, activeMenu);
-            case "sort_click":
-                return plugin.getMsg(MenuMessage.SORT_CLICK, locale);
+        if (placeholder.equals("sort_types")) {
+            return getSortedTypesLore(locale, activeMenu, data);
         }
-        return placeholder;
+        return replaceMenuMessage(placeholder, player, activeMenu);
     }
 
     @Override
@@ -60,20 +55,22 @@ public class SorterItem extends AbstractItem implements SingleItemProvider {
         activeMenu.setCooldown("sorter", 5);
     }
 
-    private String getSortedTypesLore(Locale locale, ActiveMenu activeMenu) {
-        StringBuilder builder = new StringBuilder();
-        SortType selectedSort = (SortType) activeMenu.getProperty("sort_type");
+    private String getSortedTypesLore(Locale locale, ActiveMenu activeMenu, PlaceholderData data) {
+        ListBuilder builder = new ListBuilder(data.getListData());
+
+        SortType selected = (SortType) activeMenu.getProperty("sort_type");
         for (SortType sortType : SortType.values()) {
-            String typeString = TextUtil.replace(plugin.getMsg(MenuMessage.SORT_TYPE, locale)
-                    , "{type_name}", plugin.getMsg(MenuMessage.valueOf(sortType.toString()), locale));
-            if (selectedSort == sortType) {
-                typeString = TextUtil.replace(typeString, "{selected}", plugin.getMsg(MenuMessage.SELECTED, locale));
+            String typeString = TextUtil.replace(activeMenu.getFormat("sort_type_entry"), "{type_name}",
+                    plugin.getMsg(MenuMessage.valueOf(sortType.toString()), locale));
+            if (selected == sortType) {
+                typeString = TextUtil.replace(typeString, "{selected}", activeMenu.getFormat("selected"));
             } else {
                 typeString = TextUtil.replace(typeString, "{selected}", "");
             }
             builder.append(typeString);
         }
-        return builder.toString();
+
+        return builder.build();
     }
 
     public enum SortType {
