@@ -623,8 +623,8 @@ menus:
     skills: 'Skills'
   unclaimed_items:
     unclaimed_items_title: 'Claim Items'
-    inventory_full: '&eYou do not have enough space in your inventory to claim that item'
-    click_to_claim: '&eClick to claim!'
+    inventory_full: 'You do not have enough space in your inventory to claim that item'
+    click_to_claim: 'Click to claim!'
   leaderboard:
     leaderboard_title: '{skill} Leaderboard'
   sources:

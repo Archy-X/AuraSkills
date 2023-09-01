@@ -10,6 +10,7 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +61,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                         keyIntPair.setValue(leftoverItem.getAmount());
                         init(player, contents);
                     } else { // All items could not fit
-                        player.sendMessage(plugin.getMsg(MenuMessage.INVENTORY_FULL, user.getLocale()));
+                        player.sendMessage(ChatColor.YELLOW + plugin.getMsg(MenuMessage.INVENTORY_FULL, user.getLocale()));
                         player.closeInventory();
                     }
                 }));
@@ -87,7 +88,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
             } else {
                 lore.add(" ");
             }
-            lore.add(plugin.getMsg(MenuMessage.CLICK_TO_CLAIM, user.getLocale()));
+            lore.add(ChatColor.YELLOW + plugin.getMsg(MenuMessage.CLICK_TO_CLAIM, user.getLocale()));
             meta.setLore(lore);
         }
         displayItem.setItemMeta(meta);
