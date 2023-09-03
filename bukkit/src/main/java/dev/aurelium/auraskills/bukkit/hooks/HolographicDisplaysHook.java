@@ -4,7 +4,6 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import dev.aurelium.auraskills.api.util.LocationHolder;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.hooks.HologramsHook;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import org.bukkit.Location;
 import org.spongepowered.configurate.ConfigurationNode;

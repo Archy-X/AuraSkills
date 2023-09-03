@@ -16,10 +16,7 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class BukkitConfigProvider implements ConfigProvider {
 
@@ -76,7 +73,7 @@ public class BukkitConfigProvider implements ConfigProvider {
                     options.put(option, new OptionValue(value));
                     loaded++;
                 } else if (value instanceof String && option.getType() == OptionType.COLOR) {
-                    options.put(option, new OptionValue(ChatColor.valueOf(String.valueOf(value))));
+                    options.put(option, new OptionValue(ChatColor.valueOf(String.valueOf(value).toUpperCase(Locale.ROOT))));
                     loaded++;
                 } else {
                     logger.warn("Incorrect type in config.yml: Option " + option.name() + " with path " + option.getPath() + " should be of type " + option.getType().name() + ", using default value instead!");

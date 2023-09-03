@@ -186,7 +186,22 @@ public class SqlStorageProvider extends StorageProvider {
                     String keyName = resultSet.getString("key_name");
                     String value = resultSet.getString("value");
 
-                    user.getAbilityData(ability).setData(keyName, value);
+                    Object parsed = value;
+                    if (value.equals("true")) {
+                        parsed = true;
+                    } else if (value.equals("false")) {
+                        parsed = false;
+                    } else {
+                        try {
+                            parsed = Integer.parseInt(value);
+                        } catch (NumberFormatException e) {
+                            try {
+                                parsed = Double.parseDouble(value);
+                            } catch (NumberFormatException ignored) {}
+                        }
+                    }
+
+                    user.getAbilityData(ability).setData(keyName, parsed);
                 }
             }
         }

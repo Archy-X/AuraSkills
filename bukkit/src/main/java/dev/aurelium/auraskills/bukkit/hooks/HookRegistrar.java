@@ -53,10 +53,14 @@ public class HookRegistrar {
         Class<? extends Hook> hookClass = type.getHookClass();
 
         Constructor<?> constructor = hookClass.getDeclaredConstructors()[0];
+        if (constructor == null) {
+            throw new HookRegistrationException("Hook does not have a declared constructor");
+        }
         try {
             return (Hook) constructor.newInstance(plugin, config);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new HookRegistrationException("Failed to construct hook using reflection");
+            e.printStackTrace();
+            throw new HookRegistrationException("Failed to construct hook using reflection: " + e.getMessage());
         }
     }
 

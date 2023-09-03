@@ -130,6 +130,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         logger = new BukkitLogger(this);
         audiences = BukkitAudiences.create(this);
         eventManager = new AuraSkillsEventManager(this);
+        hookManager = new HookManager();
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
@@ -167,7 +168,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         xpRequirements = new XpRequirements(this);
         userManager = new BukkitUserManager(this);
         backupProvider = new BackupProvider(this);
-        hookManager = new HookManager();
         levelManager = new BukkitLevelManager(this);
         leaderboardManager = new LeaderboardManager(this);
         uiProvider = new BukkitUiProvider(this);

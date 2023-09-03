@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.bukkit.hooks;
 
 import dev.aurelium.auraskills.api.util.LocationHolder;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.hooks.HologramsHook;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;

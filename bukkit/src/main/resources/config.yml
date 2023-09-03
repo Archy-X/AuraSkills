@@ -21,9 +21,9 @@ mysql:
 
 hooks:
   HolographicDisplays:
-    enabled: true
-  DecentHolograms:
     enabled: false
+  DecentHolograms:
+    enabled: true
   LuckPerms:
     enabled: true
   PlaceholderAPI:
@@ -111,23 +111,28 @@ base_mana: 20
 # Whether certain numbers should show up as roman numerals:
 enable_roman_numerals: true
 
-damage_holograms: true
-damage_holograms_scaling: true
-damage_holograms_decimal:
-  display_when_less_than: 1
-  decimal_max_amount: 1
-damage_holograms_offset:
-  x: 0
-  y: 0
-  z: 0
-  random:
-    enabled: false
-    x_min: -0.5
-    x_max: 0.5
-    y_min: 0
-    y_max: 0
-    z_min: -0.5
-    z_max: 0.5
+damage_holograms:
+  enabled: true
+  scaling: true
+  decimal:
+    display_when_less_than: 1
+    max_amount: 1
+  offset:
+    x: 0
+    y: 0
+    z: 0
+    random:
+      enabled: false
+      x_min: -0.5
+      x_max: 0.5
+      y_min: 0
+      y_max: 0
+      z_min: -0.5
+      z_max: 0.5
+  colors:
+    default: gray
+    critical:
+      digits: [gray, white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
 
 leaderboards:
   update_period: 6000

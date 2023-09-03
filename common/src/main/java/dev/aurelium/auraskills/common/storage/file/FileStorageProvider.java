@@ -143,7 +143,7 @@ public class FileStorageProvider extends StorageProvider {
             AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(abilityId);
 
             abilityNode.childrenMap().forEach((key, value) ->
-                    user.getAbilityData(ability).setData((String) key, value));
+                    user.getAbilityData(ability).setData((String) key, value.raw()));
         });
     }
 

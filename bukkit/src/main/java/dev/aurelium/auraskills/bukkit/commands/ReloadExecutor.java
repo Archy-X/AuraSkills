@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.commands;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.HologramsHook;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import org.bukkit.command.CommandSender;
 
@@ -38,6 +39,10 @@ public class ReloadExecutor {
         plugin.getMenuFileManager().loadMenus();
 
         plugin.getUiProvider().getActionBarManager().resetActionBars();
+
+        if (plugin.getHookManager().isRegistered(HologramsHook.class)) {
+            plugin.getHookManager().getHook(HologramsHook.class).loadColors();
+        }
 
         sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.RELOAD, locale));
     }

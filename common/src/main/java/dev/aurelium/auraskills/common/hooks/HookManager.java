@@ -21,7 +21,17 @@ public class HookManager {
      * @return True if the hook is registered, false if not
      */
     public boolean isRegistered(Class<? extends Hook> type) {
-        return this.hooks.containsKey(type);
+        if (this.hooks.containsKey(type)) {
+            return true;
+        } else {
+            // Try to find hook class from super class
+            for (Class<? extends Hook> clazz : hooks.keySet()) {
+                if (type.isAssignableFrom(clazz)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     /**
@@ -33,7 +43,15 @@ public class HookManager {
     public <T extends Hook> T getHook(Class<T> type) {
         Hook hook = this.hooks.get(type);
         if (hook == null) {
-            throw new IllegalArgumentException("No registered hook of type " + type.getName() + "!");
+            // Try to find hook class from super class
+            for (Class<? extends Hook> clazz : hooks.keySet()) {
+                if (type.isAssignableFrom(clazz)) {
+                    hook = hooks.get(clazz);
+                }
+            }
+            if (hook == null) {
+                throw new IllegalArgumentException("No registered hook of type " + type.getName() + "!");
+            }
         }
         return type.cast(hook);
     }
