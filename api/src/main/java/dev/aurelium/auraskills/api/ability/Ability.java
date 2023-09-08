@@ -30,10 +30,4 @@ public interface Ability extends AbstractAbility, Optioned {
 
     double getSecondaryValue(int level);
 
-    int getUnlock();
-
-    int getLevelUp();
-
-    int getMaxLevel();
-
 }

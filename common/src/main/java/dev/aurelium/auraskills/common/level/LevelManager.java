@@ -37,7 +37,7 @@ public abstract class LevelManager {
     public double getAbilityMultiplier(User user, Skill skill) {
         Ability ability = skill.getXpMultiplierAbility();
         double multiplier = 1.0;
-        if (user.getAbilityLevel(ability) > 0) {
+        if (ability != null && user.getAbilityLevel(ability) > 0) {
             double abilityValue = ability.getValue(user.getAbilityLevel(ability));
             double addedMultiplier = abilityValue / 100;
             multiplier += addedMultiplier;

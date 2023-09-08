@@ -20,6 +20,7 @@ public interface Skill extends Optioned {
     @NotNull
     ImmutableList<Ability> getAbilities();
 
+    @Nullable
     Ability getXpMultiplierAbility();
 
     @Nullable

@@ -35,10 +35,4 @@ public interface ManaAbility extends AbstractAbility, Optioned {
 
     double getManaCost(int level);
 
-    int getUnlock();
-
-    int getLevelUp();
-
-    int getMaxLevel();
-
 }
