@@ -52,19 +52,19 @@ public class BukkitUser extends User {
             if (permission.startsWith("auraskills.multiplier.")) {
                 permission = TextUtil.replace(permission, "auraskills.multiplier.", "");
                 if (pattern.matcher(permission).matches()) { // Parse all skills multiplier
-                    multiplier += Double.parseDouble(permission) / 100;
+                    multiplier += Double.parseDouble(permission) / 100.0;
                 } else if (skill != null) { // Skill specific multiplier
                     String skillName = skill.toString().toLowerCase(Locale.ROOT);
                     if (permission.startsWith(skillName)) {
                         permission = TextUtil.replace(permission, skillName + ".", "");
                         if (pattern.matcher(permission).matches()) {
-                            multiplier += Double.parseDouble(permission) / 100;
+                            multiplier += Double.parseDouble(permission) / 100.0;
                         }
                     }
                 }
             }
         }
-        return multiplier / 100.0;
+        return multiplier;
     }
 
     @Override
