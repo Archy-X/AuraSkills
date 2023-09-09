@@ -1,3 +1,23 @@
+Version Beta 1.3.22
+  Bug Fixes:
+    - Ensure all String case calls use ROOT locale to fix config bugs
+    - Fix level progression menu bugs with non-default items_per_page
+    - Fix multiplier permissions set to false being functional
+    - Fix excessive health stat error
+    - Fix disabled XP multiplier abilities applying in sources menu
+    - Fix Archery spawner-multiplier option not working
+    - Fix split slimes and magma cubes not applying spawner-multiplier
+    - Fix Bleed applying when not unlocked
+    - Fix XP multiplier abilities apply sometimes when not unlocked
+    - Fix combined skill leaderboard placeholder not working
+    - Fix empty sources menu pages with many disabled sources
+    - Make source item base XP and multiplied XP rounding consistent
+    - Fix Sorcery giving XP when blocked or disabled
+    - Fix resethealth command not working with RCON
+    - Fix MiniMessage hex color support in menus
+    - Remove automatic loot file updating
+    - Fix Wise Effect overflow mana when allow-over-max-mana is false
+
 Version Beta 1.3.21
   New Features:
     - Add reset-xp-on-death option to reset skill xp when a player dies

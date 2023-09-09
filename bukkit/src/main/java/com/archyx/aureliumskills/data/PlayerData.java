@@ -210,6 +210,11 @@ public class PlayerData {
                 plugin.getHealth().reload(player);
             } else if (modifier.getStat() == Stats.LUCK) {
                 new Luck(plugin).reload(player);
+            } else if (modifier.getStat() == Stats.WISDOM) {
+                // Remove overflow mana if disallowed by config
+                if (!OptionL.getBoolean(Option.WISDOM_ALLOW_OVER_MAX_MANA)) {
+                    setMana(getMaxMana());
+                }
             }
         }
         return true;
