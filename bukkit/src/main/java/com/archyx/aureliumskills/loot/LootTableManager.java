@@ -6,15 +6,12 @@ import com.archyx.aureliumskills.util.misc.Parser;
 import com.archyx.lootmanager.LootManager;
 import com.archyx.lootmanager.loot.LootPool;
 import com.archyx.lootmanager.loot.LootTable;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +79,6 @@ public class LootTableManager extends Parser {
 			if (skill == null) return;
 
 			FileConfiguration config = YamlConfiguration.loadConfiguration(lootTableFile);
-			matchConfig(config, lootTableFile); // Try to update file
 			// Load corresponding loot table type
 			LootTable lootTable = lootManager.getLootLoader().loadLootTable(lootTableFile, config);
 			if (lootTable != null) {
@@ -106,33 +102,6 @@ public class LootTableManager extends Parser {
 	@Nullable
 	public LootTable getLootTable(Skill skill) {
 		return lootTables.get(skill);
-	}
-	
-	public void matchConfig(FileConfiguration config, File file) {
-		config.options().copyDefaults(true);
-		try {
-			boolean changesMade = false;
-			InputStream is = plugin.getResource("loot/" + file.getName());
-			if (is != null) {
-				YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(is));
-				ConfigurationSection configurationSection = defConfig.getConfigurationSection("");
-				if (configurationSection != null) {
-					for (String key : configurationSection.getKeys(true)) {
-						if (!config.contains(key)) {
-							config.set(key, defConfig.get(key));
-							if (!changesMade) {
-								changesMade = true;
-							}
-						}
-					}
-					if (changesMade) {
-						config.save(file);
-					}
-				}
-			}
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
 	}
 
 }
