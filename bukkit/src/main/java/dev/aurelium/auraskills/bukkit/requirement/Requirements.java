@@ -101,17 +101,20 @@ public class Requirements {
     public ItemStack convertFromLegacy(ItemStack item) {
         if (!plugin.isNbtApiEnabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
+        boolean modified = false;
         for (ModifierType type : ModifierType.values()) {
-            NBTCompound legacyCompound = ItemUtils.getLegacyModifiersTypeCompound(nbtItem, type);
+            NBTCompound legacyCompound = ItemUtils.getLegacyRequirementsTypeCompound(nbtItem, type);
             NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
             for (String key : legacyCompound.getKeys()) {
                 compound.setInteger(key, legacyCompound.getInteger(key));
+                modified = true;
             }
         }
-        if (nbtItem.hasTag("AureliumSkills")) {
-            nbtItem.removeKey("AureliumSkills");
+        if (modified) {
+            return nbtItem.getItem();
+        } else {
+            return item;
         }
-        return nbtItem.getItem();
     }
 
     public void addLore(ModifierType type, ItemStack item, Skill skill, int level, Locale locale) {

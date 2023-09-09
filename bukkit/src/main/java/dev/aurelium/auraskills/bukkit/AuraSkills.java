@@ -25,6 +25,7 @@ import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
 import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
 import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
+import dev.aurelium.auraskills.bukkit.region.RegionBlockListener;
 import dev.aurelium.auraskills.bukkit.region.RegionManager;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
@@ -282,6 +283,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new ItemListener(this), this);
         pm.registerEvents(new ArmorListener(configStringList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
         pm.registerEvents(new ArmorModifierListener(this), this);
+        pm.registerEvents(new RegionBlockListener(this), this);
     }
 
     public BukkitAudiences getAudiences() {

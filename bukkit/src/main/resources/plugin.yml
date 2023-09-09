@@ -28,7 +28,7 @@ permissions:
     auraskills.command.abtoggle:
         default: true
     auraskills.command.save:
-        default: true
+        default: op
     auraskills.command.claimitems:
         default: true
     auraskills.command.version:

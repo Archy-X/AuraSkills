@@ -61,17 +61,20 @@ public class Multipliers {
     public ItemStack convertFromLegacy(ItemStack item) {
         if (!plugin.isNbtApiEnabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
+        boolean modified = false;
         for (ModifierType type : ModifierType.values()) {
             NBTCompound legacyCompound = ItemUtils.getLegacyMultipliersTypeCompound(nbtItem, type);
             NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
             for (String key : legacyCompound.getKeys()) {
                 compound.setInteger(key, legacyCompound.getInteger(key));
+                modified = true;
             }
         }
-        if (nbtItem.hasTag("AureliumSkills")) {
-            nbtItem.removeKey("AureliumSkills");
+        if (modified) {
+            return nbtItem.getItem();
+        } else {
+            return item;
         }
-        return nbtItem.getItem();
     }
 
     public ItemStack addMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill, double value) {

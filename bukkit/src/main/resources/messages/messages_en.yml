@@ -558,12 +558,12 @@ commands:
 leveler:
   title: '<green>{skill} Level Up'
   subtitle: '<gold>{old} ➜ {new}'
-  level_up: '<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Skill Level Up! <aqua><bold>{skill} <dark_gray>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Rewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------'
+  level_up: '<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Skill Level Up! <aqua><bold>{skill}</bold> <dark_gray>{old}➜<dark_aqua><bold>{new}</bold>\n \n <aqua>Rewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------'
   stat_level: '\n  {color}+{num}{symbol} {stat}'
-  ability_unlock: '\n  <green>Ability Unlock! <gold><bold>{ability} <gray>has been unlocked'
-  ability_level_up: '\n  <green>Ability Level Up! <gold><bold>{ability} <gray>is now level <gold>{level}'
-  mana_ability_unlock: '\n  <light_purple>Mana Ability Unlock! <blue><bold>{mana_ability} <gray>has been unlocked'
-  mana_ability_level_up: '\n  <light_purple>Mana Ability Level Up! <blue><bold>{mana_ability} <gray>is now level <gold>{level}'
+  ability_unlock: '\n  <green>Ability Unlock! <gold><bold>{ability}</bold> <gray>has been unlocked'
+  ability_level_up: '\n  <green>Ability Level Up! <gold><bold>{ability}</bold> <gray>is now level <gold>{level}'
+  mana_ability_unlock: '\n  <light_purple>Mana Ability Unlock! <blue><bold>{mana_ability}</bold> <gray>has been unlocked'
+  mana_ability_level_up: '\n  <light_purple>Mana Ability Level Up! <blue><bold>{mana_ability}</bold> <gray>is now level <gold>{level}'
   money_reward: '\n  <green>${amount}'
   unclaimed_item: '<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them'
 menus:

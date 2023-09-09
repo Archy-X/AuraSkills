@@ -80,7 +80,7 @@ sources:
     xp: 7.0
     check_replace: true
   kelp:
-    block: kelp
+    blocks: [kelp, kelp_plant]
     xp: 0.3
     triggers: [break, break_indirect]
     check_replace: true

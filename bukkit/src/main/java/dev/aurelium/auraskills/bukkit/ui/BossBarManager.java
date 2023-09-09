@@ -110,6 +110,13 @@ public class BossBarManager {
         if (maxed && !plugin.configBoolean(Option.BOSS_BAR_DISPLAY_MAXED)) { // display-maxed option
             return;
         }
+
+        incrementAction(player, skill);
+        int currentAction = getCurrentAction(player, skill);
+        if (currentAction == -1 || currentAction % plugin.configInt(Option.BOSS_BAR_UPDATE_EVERY) != 0) {
+            return;
+        }
+
         BossBar bossBar;
         // Single Mode
         if (mode.equals("single")) {

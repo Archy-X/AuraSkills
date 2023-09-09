@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.bukkit.modifier;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.NBTType;
 import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -63,7 +65,7 @@ public class ItemListener implements Listener {
       
         if (!held.getType().equals(Material.AIR)) {
             if (plugin.configBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
-                held = requirements.convertFromLegacy(modifiers.convertFromLegacy(held));
+                held = convertLegacyItem(held);
                 if (!held.equals(player.getInventory().getItemInMainHand())) {
                     player.getInventory().setItemInMainHand(held);
                 }
@@ -80,7 +82,7 @@ public class ItemListener implements Listener {
             offHandItems.put(player.getUniqueId(), offHandItem.clone());
             if (!offHandItem.getType().equals(Material.AIR)) {
                 if (plugin.configBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
-                    offHandItem = requirements.convertFromLegacy(modifiers.convertFromLegacy(offHandItem));
+                    offHandItem = convertLegacyItem(offHandItem);
                     if (!offHandItem.equals(player.getInventory().getItemInOffHand())) {
                         player.getInventory().setItemInOffHand(offHandItem);
                     }
@@ -96,6 +98,20 @@ public class ItemListener implements Listener {
             }
         }
 
+    }
+
+    private ItemStack convertLegacyItem(ItemStack item) {
+        item = modifiers.convertFromLegacy(item);
+        item = requirements.convertFromLegacy(item);
+        item = multipliers.convertFromLegacy(item);
+
+        NBTItem nbtItem = new NBTItem(item);
+        if (nbtItem.hasTag("AureliumSkills", NBTType.NBTTagCompound)) {
+            nbtItem.removeKey("AureliumSkills");
+            item = nbtItem.getItem();
+        }
+
+        return item;
     }
 
     @EventHandler
@@ -142,7 +158,7 @@ public class ItemListener implements Listener {
                     // Add modifiers from held item
                     if (!held.getType().equals(Material.AIR)) {
                         if (plugin.configBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
-                            held = requirements.convertFromLegacy(modifiers.convertFromLegacy(held));
+                            held = convertLegacyItem(held);
                             if (!held.equals(player.getInventory().getItemInMainHand())) {
                                 player.getInventory().setItemInMainHand(held);
                             }

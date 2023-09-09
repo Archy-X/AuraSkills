@@ -136,7 +136,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             return false;
         }
         // Check permission
-        return player.hasPermission("aureliumskills.skill." + manaAbility.getSkill().name().toLowerCase(Locale.ROOT));
+        return player.hasPermission("auraskills.skill." + manaAbility.getSkill().name().toLowerCase(Locale.ROOT));
     }
 
     private boolean isBlockPlace(PlayerInteractEvent event, Player player, ManaAbility manaAbility) {

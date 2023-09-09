@@ -75,7 +75,7 @@ public abstract class SourceLeveler implements Listener {
     }
 
     protected boolean blockPlayer(Player player, Skill skill) {
-        if (!player.hasPermission("auraskills.skill" + skill.name().toLowerCase(Locale.ROOT))) {
+        if (!player.hasPermission("auraskills.skill." + skill.name().toLowerCase(Locale.ROOT))) {
             return true;
         }
         // Check creative mode disable

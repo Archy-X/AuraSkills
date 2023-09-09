@@ -4,8 +4,8 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.mechanics.DamageType;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -17,9 +17,7 @@ public class AttackDamageTrait extends TraitImpl {
 
     @Override
     public double getBaseLevel(Player player, Trait trait) {
-        var attribute = player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
-        if (attribute == null) return 0;
-        return attribute.getValue();
+        return 0;
     }
 
     public void strength(EntityDamageByEntityEvent event, User user, DamageType damageType) {
@@ -31,6 +29,15 @@ public class AttackDamageTrait extends TraitImpl {
             applyStrength(event, user);
         } else {
             applyStrength(event, user);
+        }
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Trait trait) {
+        if (Traits.ATTACK_DAMAGE.optionBoolean("use_percent")) {
+            return "+" + NumberUtil.format1(value) + "%";
+        } else {
+            return "+" + NumberUtil.format1(value);
         }
     }
 

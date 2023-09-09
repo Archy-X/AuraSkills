@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.bukkit.modifier;
 
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import de.tr7zw.changeme.nbtapi.NBTType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
@@ -38,19 +37,22 @@ public class Modifiers {
     public ItemStack convertFromLegacy(ItemStack item) {
         if (!plugin.isNbtApiEnabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
+        boolean modified = false;
         for (ModifierType type : ModifierType.values()) {
             List<StatModifier> legacyModifiers = getLegacyModifiers(type, nbtItem);
             if (!legacyModifiers.isEmpty()) {
                 NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
                 for (StatModifier modifier : legacyModifiers) {
                     compound.setDouble(getName(modifier.stat()), modifier.value());
+                    modified = true;
                 }
             }
         }
-        if (nbtItem.hasTag("AureliumSkills", NBTType.NBTTagCompound)) {
-            nbtItem.removeKey("AureliumSkills");
+        if (modified) {
+            return nbtItem.getItem();
+        } else {
+            return item;
         }
-        return nbtItem.getItem();
     }
 
     public ItemStack removeModifier(ModifierType type, ItemStack item, Stat stat) {
