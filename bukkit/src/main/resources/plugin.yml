@@ -125,7 +125,7 @@ permissions:
         default: op
     auraskills.command.item.multiplier.removeall:
         default: op
-    aureliumskills.multiplier:
+    auraskills.multiplier:
         default: false
     auraskills.skill.farming:
         default: true
@@ -157,5 +157,5 @@ permissions:
         default: true
     auraskills.skill.forging:
         default: true
-    aureliumskills.checkupdates:
+    auraskills.checkupdates:
         default: op

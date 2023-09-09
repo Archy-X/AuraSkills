@@ -5,9 +5,11 @@ import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.util.UpdateChecker;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,6 +46,7 @@ public class PlayerJoinQuit implements Listener, AuraSkillsListener {
                 loadUserAsync(player);
             }
         }
+        sendUpdateMessage(player);
     }
 
     @EventHandler
@@ -88,6 +91,26 @@ public class PlayerJoinQuit implements Listener, AuraSkillsListener {
                 user.setLocale(locale);
             }
         } catch (Exception ignored) {}
+    }
+
+    private void sendUpdateMessage(Player player) {
+        // Use a delayed task to give time for permission plugins to load data
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            if (!plugin.configBoolean(Option.CHECK_FOR_UPDATES)) {
+                return;
+            }
+            if (!player.hasPermission("auraskills.checkupdates")) { // Ensure player has checkupdates permission
+                return;
+            }
+            // Check for updates
+            UpdateChecker updateChecker = new UpdateChecker(plugin, plugin.getResourceId());
+            updateChecker.getVersion(version -> {
+                if (updateChecker.isOutdated(plugin.getDescription().getVersion(), version)) {
+                    player.sendMessage(plugin.getPrefix(plugin.getDefaultLanguage()) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
+                    player.sendMessage(plugin.getPrefix(plugin.getDefaultLanguage()) + ChatColor.WHITE + "Download it on Spigot: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "https://spigotmc.org/resources/" + plugin.getResourceId());
+                }
+            });
+        }, 40L);
     }
 
 }
