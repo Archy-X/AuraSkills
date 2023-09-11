@@ -21,6 +21,7 @@ public class BukkitUiProvider implements UiProvider {
         this.plugin = plugin;
         this.actionBarManager = new BukkitActionBarManager(plugin, this);
         this.bossBarManager = new BossBarManager(plugin);
+        plugin.getServer().getPluginManager().registerEvents(bossBarManager, plugin);
     }
 
     @Override

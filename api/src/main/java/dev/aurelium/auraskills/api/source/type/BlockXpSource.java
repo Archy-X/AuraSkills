@@ -54,6 +54,8 @@ public interface BlockXpSource extends XpSource {
      */
     double getStateMultiplier(String stateKey, Object stateValue);
 
+    boolean hasStateMultiplier();
+
     /**
      * Gets whether the source requires a support block.
      * If this is true, the source will only give xp if the block below it is a valid support block.

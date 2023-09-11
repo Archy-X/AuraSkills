@@ -349,8 +349,8 @@ action_bar:
   maxed: '<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}'
   maxed_removed: '<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}'
   ability: '{message}'
-  boss_bar_xp: '<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})'
-  boss_bar_maxed: '<gold>{skill} {level} <gray>(MAXED)'
+  boss_bar_xp: '<gold>+{xp_gained} {skill} XP <gray>({percent}%)'
+  boss_bar_maxed: '<gold>+{xp_gained} {skill} XP <gray>(MAXED)'
 commands:
   prefix: '<dark_gray>[<aqua>Skills<dark_gray>]<reset> '
   armor:

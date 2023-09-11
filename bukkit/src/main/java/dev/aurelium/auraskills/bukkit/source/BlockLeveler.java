@@ -24,8 +24,11 @@ import java.util.Map;
 
 public class BlockLeveler extends SourceLeveler {
 
+    private final BlockLevelerHelper helper;
+
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceType.BLOCK);
+        this.helper = new BlockLevelerHelper(plugin);
     }
 
     @EventHandler
@@ -50,7 +53,10 @@ public class BlockLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(user, skill, source.getXp());
+        double multiplier = helper.getBlocksBroken(event.getBlock(), source);
+        multiplier *= helper.getStateMultiplier(event.getBlock(), source);
+
+        plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
     }
 
     @EventHandler
@@ -72,7 +78,10 @@ public class BlockLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, block.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(user, skill, source.getXp());
+        double multiplier = helper.getBlocksBroken(block, source);
+        multiplier *= helper.getStateMultiplier(block, source);
+
+        plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
         applyAbilities(skill, player, user, block, source);
     }
 
@@ -96,12 +105,12 @@ public class BlockLeveler extends SourceLeveler {
         }
     }
 
-    public boolean matchesSource(Block block, BlockXpSource source, BlockXpSource.BlockTriggers trigger) {
+    public boolean isDifferentSource(Block block, BlockXpSource source, BlockXpSource.BlockTriggers trigger) {
         var sourcePair = getSource(block, trigger);
         if (sourcePair == null) {
-            return false;
+            return true;
         }
-        return sourcePair.first().equals(source);
+        return !sourcePair.first().equals(source);
     }
 
     @Nullable

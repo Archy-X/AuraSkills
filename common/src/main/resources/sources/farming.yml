@@ -84,6 +84,8 @@ sources:
     xp: 0.3
     triggers: [break, break_indirect]
     check_replace: true
+    menu_item:
+      material: kelp
   sea_pickle:
     block: sea_pickle
     xp: 4.0
@@ -109,6 +111,18 @@ sources:
       berries: true
     menu_item:
       material: glow_berries
+  torchflower:
+    block: torchflower
+    xp: 9.0
+    check_replace: true
+  pitcher_plant:
+    block: pitcher_crop
+    xp: 1.0
+    check_replace: false
+    state:
+      age: 4
+    menu_item:
+      material: pitcher_plant
 tags:
   bountiful_harvest_applicable:
     - '*'

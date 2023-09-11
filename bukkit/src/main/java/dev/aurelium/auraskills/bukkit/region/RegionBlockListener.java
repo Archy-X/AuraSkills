@@ -158,7 +158,7 @@ public class RegionBlockListener implements Listener {
                 @Override
                 public void run() {
                     // Remove if block was destroyed
-                    if (!blockLeveler.matchesSource(block, source, BlockXpSource.BlockTriggers.BREAK)) {
+                    if (blockLeveler.isDifferentSource(block, source, BlockXpSource.BlockTriggers.BREAK)) {
                         regionManager.removePlacedBlock(above);
                     }
                 }
@@ -177,7 +177,7 @@ public class RegionBlockListener implements Listener {
                     @Override
                     public void run() {
                         // Remove if block was destroyed
-                        if (!blockLeveler.matchesSource(block, source, BlockXpSource.BlockTriggers.BREAK)) {
+                        if (blockLeveler.isDifferentSource(block, source, BlockXpSource.BlockTriggers.BREAK)) {
                             regionManager.removePlacedBlock(block);
                         }
                     }

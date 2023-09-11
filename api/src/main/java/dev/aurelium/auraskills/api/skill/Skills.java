@@ -65,7 +65,7 @@ public enum Skills implements Skill {
 
     @Override
     public Ability getXpMultiplierAbility() {
-        return xpMultiplierAbility;
+        return xpMultiplierAbility.isEnabled() ? xpMultiplierAbility : null;
     }
 
     @Override
