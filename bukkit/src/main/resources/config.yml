@@ -150,9 +150,6 @@ blocked_check_block_replace_regions:
 blocked_worlds:
   - Example
 
-blocked_regions:
-  - spawn
-
 disabled_worlds:
   - Example
 

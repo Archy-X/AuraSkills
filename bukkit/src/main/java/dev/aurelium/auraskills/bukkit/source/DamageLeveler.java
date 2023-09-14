@@ -67,7 +67,10 @@ public class DamageLeveler extends SourceLeveler {
         // Adjust to max and min for defense
         if (skill.equals(Skills.DEFENSE)) {
             xp = Math.min(xp, Skills.DEFENSE.optionDouble("max"));
-            xp = Math.max(xp, Skills.DEFENSE.optionDouble("min"));
+            // Returns if xp is less than the min
+            if (xp < Skills.DEFENSE.optionDouble("min")) {
+                return;
+            }
         }
 
         User user = plugin.getUser(player);
