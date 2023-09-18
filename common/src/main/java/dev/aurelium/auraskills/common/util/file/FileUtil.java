@@ -2,8 +2,12 @@ package dev.aurelium.auraskills.common.util.file;
 
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
+import java.io.IOException;
 
 public class FileUtil {
 
@@ -57,6 +61,22 @@ public class FileUtil {
             e.printStackTrace();
             return fileName;
         }
+    }
+
+    public static ConfigurationNode loadYamlFile(File file) throws IOException {
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .file(file)
+                .nodeStyle(NodeStyle.BLOCK)
+                .build();
+        return loader.load();
+    }
+
+    public static void saveYamlFile(File file, ConfigurationNode config) throws IOException {
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .file(file)
+                .nodeStyle(NodeStyle.BLOCK)
+                .build();
+        loader.save(config);
     }
 
 }

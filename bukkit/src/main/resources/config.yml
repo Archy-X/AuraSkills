@@ -228,3 +228,5 @@ automatic_backups:
   minimum_interval_hours: 24
 
 save_blank_profiles: false
+
+migration_completed: false

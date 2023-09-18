@@ -286,7 +286,7 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
-    private int getUserId(Connection connection, UUID uuid) throws SQLException {
+    public int getUserId(Connection connection, UUID uuid) throws SQLException {
         // Get user_id from users database
         String query = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
