@@ -27,10 +27,10 @@ public class SqlStorageProvider extends StorageProvider {
     private final ConnectionPool pool;
     private final String tablePrefix = "auraskills_";
 
-    private final int STAT_MODIFIER_ID = 1;
-    private final int TRAIT_MODIFIER_ID = 2;
-    private final int ABILITY_DATA_ID = 3;
-    private final int UNCLAIMED_ITEMS_ID = 4;
+    public final int STAT_MODIFIER_ID = 1;
+    public final int TRAIT_MODIFIER_ID = 2;
+    public final int ABILITY_DATA_ID = 3;
+    public final int UNCLAIMED_ITEMS_ID = 4;
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);

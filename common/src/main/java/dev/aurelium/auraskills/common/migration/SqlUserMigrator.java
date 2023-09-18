@@ -1,19 +1,25 @@
 package dev.aurelium.auraskills.common.migration;
 
+import com.google.gson.*;
+import dev.aurelium.auraskills.api.ability.AbstractAbility;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.stat.Stat;
+import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
+import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.data.Pair;
+import dev.aurelium.auraskills.common.util.math.NumberUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SqlUserMigrator {
 
@@ -76,8 +82,24 @@ public class SqlUserMigrator {
             }
         }
 
-        // TODO Insert into key values table
+        // Insert into key values table
+        String statModifiersStr = rs.getString("STAT_MODIFIERS");
+        List<StatModifier> modifiers = parseStatModifiers(statModifiersStr);
+        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, storageProvider.STAT_MODIFIER_ID);
+            for (StatModifier modifier : modifiers) {
+                String categoryId = modifier.stat().getId().toString();
+                statement.setString(3, categoryId);
+                statement.setString(4, modifier.name());
+                statement.setString(5, String.valueOf(modifier.value()));
+                statement.executeUpdate();
+            }
+        }
 
+        String abilityDataStr = rs.getString("ABILITY_DATA");
+        String unclaimedItemsStr = rs.getString("UNCLAIMED_ITEMS");
     }
 
     private Map<Skill, Pair<Integer, Double>> getOldSkillLevelsAndXp(ResultSet rs) throws SQLException {
@@ -99,6 +121,92 @@ public class SqlUserMigrator {
         map.put(Skills.SORCERY, new Pair<>(rs.getInt("SORCERY_LEVEL"), rs.getDouble("SORCERY_XP")));
 
         return map;
+    }
+
+    private List<StatModifier> parseStatModifiers(String statModifiers) {
+        List<StatModifier> list = new ArrayList<>();
+        if (statModifiers == null) {
+            return list;
+        }
+        JsonArray jsonModifiers = new Gson().fromJson(statModifiers, JsonArray.class);
+        for (JsonElement modifierElement : jsonModifiers.getAsJsonArray()) {
+            JsonObject modifierObject = modifierElement.getAsJsonObject();
+            String name = modifierObject.get("name").getAsString();
+            String statName = modifierObject.get("stat").getAsString();
+            double value = modifierObject.get("value").getAsDouble();
+            if (name != null && statName != null) {
+                Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(statName.toLowerCase(Locale.ROOT)));
+                if (stat != null) {
+                    StatModifier modifier = new StatModifier(name, stat, value);
+                    list.add(modifier);
+                }
+            }
+        }
+        return list;
+    }
+
+    private Map<AbstractAbility, AbilityData> parseAbilityData(String abilityData) {
+        Map<AbstractAbility, AbilityData> map = new HashMap<>();
+        if (abilityData == null) {
+            return map;
+        }
+        JsonObject jsonAbilityData = new Gson().fromJson(abilityData, JsonObject.class);
+        for (Map.Entry<String, JsonElement> abilityEntry : jsonAbilityData.entrySet()) {
+            String abilityName = abilityEntry.getKey();
+            AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(NamespacedId.fromDefault(abilityName.toLowerCase(Locale.ROOT)));
+            if (ability == null) {
+                continue;
+            }
+            AbilityData data = new AbilityData(ability);
+            JsonObject dataObject = abilityEntry.getValue().getAsJsonObject();
+            for (Map.Entry<String, JsonElement> dataEntry : dataObject.entrySet()) {
+                String key = dataEntry.getKey();
+                JsonElement element = dataEntry.getValue();
+                if (element.isJsonPrimitive()) {
+                    Object value = parsePrimitive(dataEntry.getValue().getAsJsonPrimitive());
+                    if (value != null) {
+                        data.setData(key, value);
+                    }
+                }
+            }
+            if (!data.getDataMap().isEmpty()) {
+                map.put(ability, data);
+            }
+        }
+        return map;
+    }
+
+    private List<KeyIntPair> parseUnclaimedItems(String input) {
+        if (input == null) {
+            return new ArrayList<>();
+        }
+        List<KeyIntPair> unclaimedItems = new ArrayList<>();
+        String[] splitString = input.split(",");
+        for (String entry : splitString) {
+            String[] splitEntry = entry.split(" ");
+            String itemKey = splitEntry[0];
+            int amount = 1;
+            if (splitEntry.length >= 2) {
+                amount = NumberUtil.toInt(splitEntry[1], 1);
+            }
+            unclaimedItems.add(new KeyIntPair(itemKey, amount));
+        }
+        return unclaimedItems;
+    }
+
+    private Object parsePrimitive(JsonPrimitive primitive) {
+        if (primitive.isBoolean()) {
+            return primitive.getAsBoolean();
+        } else if (primitive.isString()) {
+            return primitive.getAsString();
+        } else if (primitive.isNumber()) {
+            if (primitive.getAsDouble() % 1 != 0) {
+                return primitive.getAsDouble();
+            } else {
+                return primitive.getAsInt();
+            }
+        }
+        return null;
     }
 
 }
