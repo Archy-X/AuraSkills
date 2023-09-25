@@ -10,7 +10,6 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
-import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
@@ -29,20 +28,44 @@ public class SqlUserMigrator {
         this.storageProvider = storageProvider;
     }
 
-    public void migrate(ConnectionPool pool) {
-        try (Connection connection = pool.getConnection()) {
+    public void migrate() {
+        try (Connection connection = storageProvider.getPool().getConnection()) {
+            // Only migrate if SkillData table exists
+            if (!shouldMigrate(connection)) return;
+
+            int rowsMigrated = 0;
+
             String skillDataQuery = "SELECT * FROM SkillData;";
             try (PreparedStatement statement = connection.prepareStatement(skillDataQuery)) {
                 ResultSet resultSet = statement.executeQuery();
 
                 while (resultSet.next()) {
-                    migrateRow(resultSet, connection);
+                    try {
+                        migrateRow(resultSet, connection);
+                        rowsMigrated++;
+                    } catch (SQLException e) {
+                        plugin.logger().severe("[Migrator] Failed to migrate row with ID=" + resultSet.getString("ID"));
+                    }
                 }
             }
+            plugin.logger().warn("[Migrator] Migrated " + rowsMigrated + " rows from the table SkillData to the tables  " + tablePrefix + "users, " + tablePrefix + "skill_levels, " + tablePrefix + "key_values");
         } catch (SQLException e) {
             plugin.logger().severe("[Migrator] Error migrating SQL SkillData table to new tables");
             e.printStackTrace();
         }
+    }
+
+    private boolean shouldMigrate(Connection connection) {
+        try {
+            DatabaseMetaData dbm = connection.getMetaData();
+            try (ResultSet tables = dbm.getTables(null, null, "SkillData", null)) {
+                return !tables.next();
+            }
+        } catch (SQLException e) {
+            plugin.logger().warn("[Migrator] Failed to check SQL migration status");
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void migrateRow(ResultSet rs, Connection connection) throws SQLException {

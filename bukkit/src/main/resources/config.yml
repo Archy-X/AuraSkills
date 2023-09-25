@@ -229,4 +229,7 @@ automatic_backups:
 
 save_blank_profiles: false
 
-migration_completed: false
+metadata:
+  config_migration_complete: false
+  file_user_migration_complete: false
+  sql_user_migration_complete: false
