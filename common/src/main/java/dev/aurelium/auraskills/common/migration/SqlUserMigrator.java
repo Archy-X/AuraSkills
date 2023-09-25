@@ -15,22 +15,18 @@ import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 public class SqlUserMigrator {
 
     private final AuraSkillsPlugin plugin;
     private final SqlStorageProvider storageProvider;
-    private final String tablePrefix;
+    private final String tablePrefix = "auraskills_";
 
-    public SqlUserMigrator(AuraSkillsPlugin plugin, SqlStorageProvider storageProvider, String tablePrefix) {
+    public SqlUserMigrator(AuraSkillsPlugin plugin, SqlStorageProvider storageProvider) {
         this.plugin = plugin;
         this.storageProvider = storageProvider;
-        this.tablePrefix = tablePrefix;
     }
 
     public void migrate(ConnectionPool pool) {
@@ -40,7 +36,7 @@ public class SqlUserMigrator {
                 ResultSet resultSet = statement.executeQuery();
 
                 while (resultSet.next()) {
-
+                    migrateRow(resultSet, connection);
                 }
             }
         } catch (SQLException e) {
@@ -81,11 +77,17 @@ public class SqlUserMigrator {
                 statement.executeUpdate();
             }
         }
+        // Insert into key_values table
+        migrateStatModifiers(connection, rs, userId);
+        migrateAbilityData(connection, rs, userId);
+        migrateUnclaimedItems(connection, rs, userId);
+    }
 
+    private void migrateStatModifiers(Connection connection, ResultSet rs, int userId) throws SQLException {
         // Insert into key values table
         String statModifiersStr = rs.getString("STAT_MODIFIERS");
         List<StatModifier> modifiers = parseStatModifiers(statModifiersStr);
-        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.setInt(2, storageProvider.STAT_MODIFIER_ID);
@@ -97,9 +99,41 @@ public class SqlUserMigrator {
                 statement.executeUpdate();
             }
         }
+    }
 
+    private void migrateAbilityData(Connection connection, ResultSet rs, int userId) throws SQLException {
         String abilityDataStr = rs.getString("ABILITY_DATA");
+        Map<AbstractAbility, AbilityData> abilityData = parseAbilityData(abilityDataStr);
+        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, storageProvider.ABILITY_DATA_ID);
+            for (AbilityData data : abilityData.values()) {
+                String categoryId = data.getAbility().getId().toString();
+                statement.setString(3, categoryId);
+                for (Map.Entry<String, Object> entry : data.getDataMap().entrySet()) {
+                    statement.setString(4, entry.getKey());
+                    statement.setString(5, String.valueOf(entry.getValue()));
+                    statement.executeUpdate();
+                }
+            }
+        }
+    }
+
+    private void migrateUnclaimedItems(Connection connection, ResultSet rs, int userId) throws SQLException {
         String unclaimedItemsStr = rs.getString("UNCLAIMED_ITEMS");
+        List<KeyIntPair> unclaimedItems = parseUnclaimedItems(unclaimedItemsStr);
+        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, storageProvider.UNCLAIMED_ITEMS_ID);
+            for (KeyIntPair unclaimedItem : unclaimedItems) {
+                statement.setNull(3, Types.NULL);
+                statement.setString(4, unclaimedItem.getKey());
+                statement.setString(5, String.valueOf(unclaimedItem.getValue()));
+                statement.executeUpdate();
+            }
+        }
     }
 
     private Map<Skill, Pair<Integer, Double>> getOldSkillLevelsAndXp(ResultSet rs) throws SQLException {
