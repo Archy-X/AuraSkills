@@ -10,7 +10,6 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.bukkit.trait.TraitImpl;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -41,7 +40,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
             case "color" -> stat.getColor(locale);
             case "stat" -> stat.getDisplayName(locale);
             case "stat_desc" -> stat.getDescription(locale);
-            case "level" -> NumberUtil.format1(user.getStatLevel(stat));
+            case "level" -> new StatDisplayHelper(plugin).getDisplayLevel(stat, user);
             case "traits" -> getTraitEntries(stat, user, locale, activeMenu, data);
             default -> replaceMenuMessage(placeholder, player, activeMenu);
         };

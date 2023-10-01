@@ -8,7 +8,6 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,7 +38,7 @@ public class SkullItem extends AbstractItem implements SingleItemProvider {
                         "{color}", stat.getColor(locale),
                         "{symbol}", stat.getSymbol(locale),
                         "{stat}", stat.getDisplayName(locale),
-                        "{level}", NumberUtil.format1(user.getStatLevel(stat)));
+                        "{level}", new StatDisplayHelper(plugin).getDisplayLevel(stat, user));
                 builder.append(entry);
             }
 

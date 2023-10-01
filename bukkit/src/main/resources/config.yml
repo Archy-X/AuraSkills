@@ -219,6 +219,8 @@ critical:
 
 menus:
   placeholder_api: true
+  stats:
+    show_trait_values_directly: true
 
 check_for_updates: true
 

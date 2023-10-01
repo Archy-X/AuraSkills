@@ -101,6 +101,7 @@ public enum Option {
     CRITICAL_ENABLED_OTHER("critical.enabled.other", OptionType.BOOLEAN),
     // Menu options
     MENUS_PLACEHOLDER_API("menus.placeholder_api", OptionType.BOOLEAN),
+    MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY("menus.stats.show_trait_values_directly", OptionType.BOOLEAN),
     CHECK_FOR_UPDATES("check_for_updates", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_ENABLED("automatic_backups.enabled", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic_backups.minimum_interval_hours", OptionType.DOUBLE),

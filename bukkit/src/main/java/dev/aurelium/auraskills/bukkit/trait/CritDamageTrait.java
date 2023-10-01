@@ -21,7 +21,7 @@ public class CritDamageTrait extends TraitImpl {
 
     @Override
     public String getMenuDisplay(double value, Trait trait) {
-        return "+" + NumberUtil.format1(value) + "%";
+        return NumberUtil.format1(value) + "%";
     }
 
     @Override
