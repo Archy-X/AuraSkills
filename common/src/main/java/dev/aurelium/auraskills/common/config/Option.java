@@ -91,7 +91,6 @@ public enum Option {
     REQUIREMENT_ITEM_PREVENT_INTERACT("requirement.item.prevent_interact", OptionType.BOOLEAN),
     REQUIREMENT_ARMOR_PREVENT_ARMOR_EQUIP("requirement.armor.prevent_armor_equip", OptionType.BOOLEAN),
     // Critical options
-    CRITICAL_BASE_MULTIPLIER("critical.base_multiplier", OptionType.DOUBLE),
     CRITICAL_ENABLED_SWORD("critical.enabled.sword", OptionType.BOOLEAN),
     CRITICAL_ENABLED_BOW("critical.enabled.bow", OptionType.BOOLEAN),
     CRITICAL_ENABLED_AXE("critical.enabled.axe", OptionType.BOOLEAN),

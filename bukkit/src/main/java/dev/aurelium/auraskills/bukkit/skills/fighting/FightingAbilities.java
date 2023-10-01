@@ -2,6 +2,8 @@ package dev.aurelium.auraskills.bukkit.skills.fighting;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.common.ability.AbilityData;
@@ -29,6 +31,18 @@ public class FightingAbilities extends AbilityImpl {
 
     public FightingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.CRIT_DAMAGE, Abilities.FIGHTER, Abilities.SWORD_MASTER, Abilities.FIRST_STRIKE, Abilities.BLEED);
+    }
+
+    public void reloadCritDamage(Player player, User user) {
+        Ability ability = Abilities.CRIT_DAMAGE;
+        String modifierName = "fighting_ability";
+        user.removeTraitModifier(modifierName, false);
+
+        if (isDisabled(ability)) return;
+        if (failsChecks(player, ability)) return;
+
+        double value = getValue(ability, user);
+        user.addTraitModifier(new TraitModifier(modifierName, Traits.CRIT_DAMAGE, value), false);
     }
 
     public void swordMaster(EntityDamageByEntityEvent event, Player player, User user) {

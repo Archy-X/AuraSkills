@@ -2,7 +2,8 @@ package dev.aurelium.auraskills.bukkit.listeners;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.bukkit.trait.CritChanceTrait;
+import dev.aurelium.auraskills.bukkit.trait.CritDamageTrait;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -33,15 +34,11 @@ public class CriticalHandler {
     }
 
     private boolean isCrit(User user) {
-        return rand.nextDouble() < (Abilities.CRIT_CHANCE.getValue(user.getAbilityLevel(Abilities.CRIT_CHANCE)) / 100);
+        return plugin.getTraitManager().getTraitImpl(CritChanceTrait.class).isCrit(user);
     }
 
     private double getCritMultiplier(User user) {
-        if (Abilities.CRIT_DAMAGE.isEnabled()) {
-            double multiplier = Abilities.CRIT_DAMAGE.getValue(user.getAbilityLevel(Abilities.CRIT_DAMAGE)) / 100;
-            return plugin.configDouble(Option.CRITICAL_BASE_MULTIPLIER) * (1 + multiplier);
-        }
-        return plugin.configDouble(Option.CRITICAL_BASE_MULTIPLIER);
+        return plugin.getTraitManager().getTraitImpl(CritDamageTrait.class).getCritMultiplier(user);
     }
 
 }

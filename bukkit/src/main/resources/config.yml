@@ -207,7 +207,6 @@ requirement:
     global:
 
 critical:
-  base_multiplier: 1.5
   enabled:
     sword: true
     bow: true

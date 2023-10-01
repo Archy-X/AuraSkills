@@ -35,6 +35,8 @@ public class BukkitTraitManager extends TraitManager {
         registerTraitImpl(new AnvilDiscountTrait(plugin));
         registerTraitImpl(new MaxManaTrait(plugin));
         registerTraitImpl(new DamageReductionTrait(plugin));
+        registerTraitImpl(new CritChanceTrait(plugin));
+        registerTraitImpl(new CritDamageTrait(plugin));
     }
 
     public void registerTraitImpl(TraitImpl traitImpl) {

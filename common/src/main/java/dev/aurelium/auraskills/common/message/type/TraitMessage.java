@@ -18,7 +18,9 @@ public enum TraitMessage implements MessageKey {
     EXPERIENCE_BONUS_NAME,
     ANVIL_DISCOUNT_NAME,
     MAX_MANA_NAME,
-    DAMAGE_REDUCTION_NAME;
+    DAMAGE_REDUCTION_NAME,
+    CRIT_CHANCE_NAME,
+    CRIT_DAMAGE_NAME;
 
     private final String path;
 

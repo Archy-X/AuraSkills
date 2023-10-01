@@ -108,7 +108,7 @@ abilities:
   archery:
     crit_chance:
       name: Crit Chance
-      desc: "+{value}% chance to deal a critical hit."
+      desc: "Grants +{value}% Crit Chance"
       info: "+{value}% Crit Chance"
     archer:
       name: Archer
@@ -150,7 +150,7 @@ abilities:
   fighting:
     crit_damage:
       name: Crit Damage
-      desc: "Increases critical hit damage by {value}%"
+      desc: "Grants +{value}% Crit Damage"
       info: "+{value}% Crit Damage"
     fighter:
       name: Fighter
@@ -1036,6 +1036,16 @@ stats:
     desc: "Toughness increases the amount of damage reduced from enemy attacks"
     color: "<dark_purple>"
     symbol: "✦"
+  crit_chance:
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit"
+    color: "<green>"
+    symbol: "⌘"
+  crit_damage:
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    color: "<dark_aqua>"
+    symbol: "★"
 traits:
   attack_damage:
     name: Attack Damage
@@ -1059,6 +1069,10 @@ traits:
     name: Max Mana
   damage_reduction:
     name: Damage Reduction
+  crit_chance:
+    name: Crit Chance
+  crit_damage:
+    name: Crit Damage
 units:
   mana: Mana
   hp: HP

@@ -52,3 +52,9 @@ traits:
     base: 20
   auraskills/damage_reduction:
     enabled: true
+  auraskills/crit_chance:
+    enabled: true
+    base: 0
+  auraskills/crit_damage:
+    enabled: true
+    base: 50

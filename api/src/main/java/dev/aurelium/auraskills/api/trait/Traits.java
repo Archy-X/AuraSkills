@@ -19,7 +19,9 @@ public enum Traits implements Trait {
     EXPERIENCE_BONUS,
     ANVIL_DISCOUNT,
     MAX_MANA,
-    DAMAGE_REDUCTION;
+    DAMAGE_REDUCTION,
+    CRIT_CHANCE,
+    CRIT_DAMAGE;
 
     @Inject
     private TraitProvider provider;

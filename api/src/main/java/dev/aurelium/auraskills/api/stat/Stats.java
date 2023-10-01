@@ -16,7 +16,9 @@ public enum Stats implements Stat {
     REGENERATION,
     LUCK,
     WISDOM,
-    TOUGHNESS;
+    TOUGHNESS,
+    CRIT_CHANCE,
+    CRIT_DAMAGE;
 
     @Inject
     private StatProvider provider;
