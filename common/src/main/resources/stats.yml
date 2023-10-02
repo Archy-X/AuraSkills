@@ -8,7 +8,7 @@ stats:
     enabled: true
     traits:
       auraskills/hp:
-        modifier: 0.4
+        modifier: 1
   auraskills/regeneration:
     enabled: true
     traits:
