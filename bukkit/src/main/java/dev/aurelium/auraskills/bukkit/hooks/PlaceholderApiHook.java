@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
+import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
-import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.user.User;
@@ -10,8 +10,10 @@ import org.spongepowered.configurate.ConfigurationNode;
 
 public class PlaceholderApiHook extends PlaceholderHook {
 
-    public PlaceholderApiHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
+    public PlaceholderApiHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
+        new PlaceholderApiProvider(plugin, "auraskills").register();
+        new PlaceholderApiProvider(plugin, "aureliumskills").register();
     }
 
     @Override

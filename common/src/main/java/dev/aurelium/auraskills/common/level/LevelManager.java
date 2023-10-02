@@ -153,14 +153,21 @@ public abstract class LevelManager {
         }
     }
 
-    private double calculateMultiplier(@NotNull User user, Skill skill) {
+    public double calculateMultiplier(@NotNull User user, Skill skill) {
         double multiplier = 1.0;
         multiplier += getItemMultiplier(user, skill);
         multiplier += getPermissionMultiplier(user, skill);
         return getAbilityMultiplier(user, skill) * multiplier;
     }
 
-    private double getItemMultiplier(@NotNull User user, Skill skill) {
+    public double getGenericMultiplier(User user) {
+        double multiplier = 1.0;
+        multiplier += getItemMultiplier(user, null);
+        multiplier += getPermissionMultiplier(user, null);
+        return multiplier;
+    }
+
+    public double getItemMultiplier(@NotNull User user, Skill skill) {
         return user.getTotalMultiplier(skill) / 100;
     }
 
