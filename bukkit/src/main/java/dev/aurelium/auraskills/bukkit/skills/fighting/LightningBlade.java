@@ -1,6 +1,8 @@
 package dev.aurelium.auraskills.bukkit.skills.fighting;
 
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
@@ -27,33 +29,14 @@ public class LightningBlade extends ReadiedManaAbility {
 
     @Override
     public void onActivate(Player player, User user) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-        if (attribute == null) return;
-
-        // Remove existing modifier if exists
-        for (AttributeModifier modifier : attribute.getModifiers()) {
-            if (modifier.getName().equals("AureliumSkills-LightningBlade")) {
-                attribute.removeModifier(modifier);
-            }
-        }
-        // Increase attack speed attribute
-        double currentValue = attribute.getValue();
-        double addedValue = getValue(user) / 100 * currentValue;
-        attribute.addModifier(new AttributeModifier("AureliumSkills-LightningBlade", addedValue, AttributeModifier.Operation.ADD_NUMBER));
+        user.addTraitModifier(new TraitModifier("lightning_blade", Traits.ATTACK_SPEED, getValue(user)));
         // Play sound and send message
         player.playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 0.5f, 1);
     }
 
     @Override
     public void onStop(Player player, User user) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
-        if (attribute == null) return;
-        // Remove modifier if exists
-        for (AttributeModifier modifier : attribute.getModifiers()) {
-            if (modifier.getName().equals("AureliumSkills-LightningBlade")) {
-                attribute.removeModifier(modifier);
-            }
-        }
+        user.removeTraitModifier("lightning_blade");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

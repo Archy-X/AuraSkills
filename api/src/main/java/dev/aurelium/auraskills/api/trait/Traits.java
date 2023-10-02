@@ -21,7 +21,8 @@ public enum Traits implements Trait {
     MAX_MANA,
     DAMAGE_REDUCTION,
     CRIT_CHANCE,
-    CRIT_DAMAGE;
+    CRIT_DAMAGE,
+    ATTACK_SPEED;
 
     @Inject
     private TraitProvider provider;

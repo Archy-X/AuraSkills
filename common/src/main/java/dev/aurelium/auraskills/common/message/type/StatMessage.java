@@ -39,7 +39,11 @@ public enum StatMessage implements MessageKey {
     CRIT_DAMAGE_NAME,
     CRIT_DAMAGE_DESC,
     CRIT_DAMAGE_COLOR,
-    CRIT_DAMAGE_SYMBOL;
+    CRIT_DAMAGE_SYMBOL,
+    ATTACK_SPEED_NAME,
+    ATTACK_SPEED_DESC,
+    ATTACK_SPEED_COLOR,
+    ATTACK_SPEED_SYMBOL;
     
     private final Stat stat = Stats.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
     private final String path = "stats." + stat.name().toLowerCase(Locale.ROOT) + "." + this.toString().substring(this.name().lastIndexOf("_") + 1).toLowerCase(Locale.ROOT);

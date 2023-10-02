@@ -58,3 +58,5 @@ traits:
   auraskills/crit_damage:
     enabled: true
     base: 50
+  auraskills/attack_speed:
+    enabled: true

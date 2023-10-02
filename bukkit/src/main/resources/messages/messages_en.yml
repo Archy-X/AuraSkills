@@ -1046,6 +1046,9 @@ stats:
     desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
     color: "<dark_aqua>"
     symbol: "★"
+  attack_speed:
+    name: Attack Speed
+    desc: "Attack Speed decreases the cooldown between attacks, allowing faster hits"
 traits:
   attack_damage:
     name: Attack Damage
@@ -1073,6 +1076,8 @@ traits:
     name: Crit Chance
   crit_damage:
     name: Crit Damage
+  attack_speed:
+    name: Attack Speed
 units:
   mana: Mana
   hp: HP

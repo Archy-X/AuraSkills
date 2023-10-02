@@ -20,7 +20,8 @@ public enum TraitMessage implements MessageKey {
     MAX_MANA_NAME,
     DAMAGE_REDUCTION_NAME,
     CRIT_CHANCE_NAME,
-    CRIT_DAMAGE_NAME;
+    CRIT_DAMAGE_NAME,
+    ATTACK_SPEED_NAME;
 
     private final String path;
 
