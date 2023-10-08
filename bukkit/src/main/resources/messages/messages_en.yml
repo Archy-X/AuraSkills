@@ -532,13 +532,13 @@ commands:
     not_enabled: "<yellow>Skills action bar is not enabled on this server!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>All Skills Leaderboard<white>==--"
-    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard <white>(Page {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard <white>(Page {page})==--"
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard <white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
@@ -1049,6 +1049,8 @@ stats:
   attack_speed:
     name: Attack Speed
     desc: "Attack Speed decreases the cooldown between attacks, allowing faster hits"
+    color: "<light_purple>"
+    symbol: "⚔"
 traits:
   attack_damage:
     name: Attack Damage

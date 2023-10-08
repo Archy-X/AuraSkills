@@ -5,731 +5,699 @@ abilities:
   farming:
     bountiful_harvest:
       name: Récolte abondante
-      desc: "{value}% de chance d'obtenir deux fois plus\n&7  de récoltes."
-      info: '{value}% de double drops'
+      desc: "{value}% de chance d'obtenir deux fois plus de récoltes."
+      info: "{value}% de double drops"
     farmer:
       name: Fermier
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     scythe_master:
       name: Maître de la houe
-      desc: 'Augmente les dégâts des houes de {value}%'
-      info: '+{value}% dégâts à la houe'
+      desc: "Augmente les dégâts des houes de {value}%"
+      info: "+{value}% dégâts à la houe"
     geneticist:
       name: Généticien
-      desc: "Augmente le gain de saturation des\n&7  aliments à base de plantes de {value}."
-      info: ' +{value} de Saturation'
+      desc: "Augmente le gain de saturation des aliments à base de plantes de {value}."
+      info: "+{value} de Saturation"
     triple_harvest:
       name: Triple récolte
-      desc: "{value}% de chance d'obtenir un triple drops à partir des\n&7  cultures."
-      info: '{value}% de chance de triple drop'
+      desc: "{value}% de chance d'obtenir un triple drops à partir des cultures."
+      info: "{value}% de chance de triple drop"
   foraging:
     lumberjack:
       name: Bûcheron
-      desc: "{value}% de chance d'obtenir un double drops\n&7  de bûche."
-      info: '{value}% de chance de double drop'
+      desc: "{value}% de chance d'obtenir un double drops de bûche."
+      info: "{value}% de chance de double drop"
     forager:
       name: Butineuse
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     axe_master:
       name: Maître de la hache
-      desc: 'Augmente les dégats des haches de {value}%'
-      info: '+{value}% Dégâts à la hache'
+      desc: "Augmente les dégats des haches de {value}%"
+      info: "+{value}% Dégâts à la hache"
     valor:
       name: Bravoure
-      desc: "Confère +{value} Force quand vous tenez une hâche\n&7  en main"
-      info: '+{value} Force'
+      desc: "Confère +{value} Force quand vous tenez une hâche en main"
+      info: "+{value} Force"
     shredder:
       name: Déchiqueteuse
-      desc: "{value}% de chance d'infliger le triple de dégâts de durabilité\n&7  avec une hâche."
-      info: '{value}% 3x Dégâts de durabilité'
+      desc: "{value}% de chance d'infliger le triple de dégâts de durabilité avec une hâche."
+      info: "{value}% 3x Dégâts de durabilité"
   mining:
     lucky_miner:
       name: Mineur chanceux
-      desc: "{value}% de chance d'obtenir un double drops\n&7  de minerai."
-      info: '{value}% de chance de double drop'
+      desc: "{value}% de chance d'obtenir un double drops de minerai."
+      info: "{value}% de chance de double drop"
     miner:
       name: Mineur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     pick_master:
       name: Maître de la pioche
-      desc: 'Infligez {value}% de dégâts supplémentaire avec une pioche.'
-      info: '+{value}% Dégâts à la pioche'
+      desc: "Infligez {value}% de dégâts supplémentaire avec une pioche."
+      info: "+{value}% Dégâts à la pioche"
     stamina:
       name: Endurance
-      desc: "Confère +{value} de robustesse\n&7  en tenant une pioche"
-      info: '+{value} Robustesse'
+      desc: "Confère +{value} de robustesse en tenant une pioche"
+      info: "+{value} Robustesse"
     hardened_armor:
       name: Armure renforcé
-      desc: "{value}% de chance d'annuler les dégâts de durabilité\n&7  sur l'armure."
-      info: '{value}% Aucune perte de durabilité'
+      desc: "{value}% de chance d'annuler les dégâts de durabilité sur l'armure."
+      info: "{value}% Aucune perte de durabilité"
   fishing:
     lucky_catch:
       name: Prise chanceuse
-      desc: "{value}% de chance d'obtenir un double drop\n&7  en pêchant."
-      info: '{value}% de chance de double drop'
+      desc: "{value}% de chance d'obtenir un double drop en pêchant."
+      info: "{value}% de chance de double drop"
     fisher:
       name: Pêcheur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     treasure_hunter:
       name: Chasseur de trésor
-      desc: '{value}% de chance d''obtenir un butin rare en pêchant.'
-      info: '+{value}% Butin rare'
+      desc: "{value}% de chance d'obtenir un butin rare en pêchant."
+      info: "+{value}% Butin rare"
     grappler:
       name: Grappeur
-      desc: 'Pêchez {value}% plus rapidement.'
-      info: '+{value}% Vitesse de pêche'
+      desc: "Pêchez {value}% plus rapidement."
+      info: "+{value}% Vitesse de pêche"
     epic_catch:
       name: Capture épique
-      desc: "{value}% de chance d'obtenir un butin épique\n&7 en pêchant."
-      info: '+{value}% Butin épique'
+      desc: "{value}% de chance d'obtenir un butin épique en pêchant."
+      info: "+{value}% Butin épique"
   excavation:
     metal_detector:
       name: Détecteur de métaux
-      desc: '{value}% de chance d''obtenir un butin rare en creusant.'
-      info: '+{value}% Butin rare'
+      desc: "{value}% de chance d'obtenir un butin rare en creusant."
+      info: "+{value}% Butin rare"
     excavator:
       name: Excavateur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     spade_master:
       name: Maitre de la pelle
-      desc: 'Infligez {value}% de dégâts supplémentaire avec une pelle.'
-      info: '+{value}% dégâts avec la pelle'
+      desc: "Infligez {value}% de dégâts supplémentaire avec une pelle."
+      info: "+{value}% dégâts avec la pelle"
     bigger_scoop:
       name: Plus grande pelle
-      desc: '{value}% de chance d''obtenir un triple drops en creusant.'
-      info: '{value}% de chance de triple drop'
+      desc: "{value}% de chance d'obtenir un triple drops en creusant."
+      info: "{value}% de chance de triple drop"
     lucky_spades:
       name: Pelles chanceuse
-      desc: '{value}% de chance d''obtenir un butin rare en creusant.'
-      info: '+{value}% Butin épique'
+      desc: "{value}% de chance d'obtenir un butin rare en creusant."
+      info: "+{value}% Butin épique"
   archery:
     crit_chance:
       name: Coup critique
-      desc: '+{value}% de chance d''infliger un coup critique.'
-      info: '+{value}% Coup critique'
+      desc: "+{value}% de chance d'infliger un coup critique."
+      info: "+{value}% Coup critique"
     archer:
       name: Archer
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     bow_master:
       name: Maitre de l'arc
-      desc: 'Infligez {value}% de dégâts supplémentaire avec les arcs.'
-      info: '+{value}% Dégâts à l''arc'
+      desc: "Infligez {value}% de dégâts supplémentaire avec les arcs."
+      info: "+{value}% Dégâts à l'arc"
     piercing:
       name: Perçant
-      desc: "{value}% de chance que les flèches\n&7  transpèrce les mobs."
-      info: '{value}% Chance perçante'
+      desc: "{value}% de chance que les flèches transpèrce les mobs."
+      info: "{value}% Chance perçante"
     stun:
       name: Étourdissement
-      desc: "{value}% de chance de diminuer la vitesse de déplacement\n&7  des énnemi de 20% pendant 2 secondes."
-      info: '{value}% Chance d''étourdissement'
+      desc: "{value}% de chance de diminuer la vitesse de déplacement des énnemi de 20% pendant 2 secondes."
+      info: "{value}% Chance d'étourdissement"
   defense:
     shielding:
       name: Blindage
-      desc: "Réduit les dégâts reçu de {value}%\n&7  en étant en sneak."
-      info: '-{value}% Dégâts reçu en sneak'
+      desc: "Réduit les dégâts reçu de {value}% en étant en sneak."
+      info: "-{value}% Dégâts reçu en sneak"
     defender:
       name: Défenseur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     mob_master:
       name: Maître des créatures
-      desc: 'Réduit les dégâts reçu par les mobs de {value}%'
-      info: '-{value}% Dégâts de mobs'
+      desc: "Réduit les dégâts reçu par les mobs de {value}%"
+      info: "-{value}% Dégâts de mobs"
     immunity:
       name: Immunité
-      desc: "{value}% de chance de complètement annuler\n&7  l'attaque d'un ennemi."
-      info: '{value}% Immunité'
+      desc: "{value}% de chance de complètement annuler l'attaque d'un ennemi."
+      info: "{value}% Immunité"
     no_debuff:
       name: Pas de malus
-      desc: "{value}% de chance d'empêcher un effet de potion\n&7  négative d'être appliqué."
-      info: '{value}% Pas de malus'
+      desc: "{value}% de chance d'empêcher un effet de potion négative d'être appliqué."
+      info: "{value}% Pas de malus"
   fighting:
     crit_damage:
       name: Dégâts critique
-      desc: 'Augmente les dégats d''un coup critique de {value}%'
-      info: '+{value}% Dégâts critique'
+      desc: "Augmente les dégats d'un coup critique de {value}%"
+      info: "+{value}% Dégâts critique"
     fighter:
       name: Combattant
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     sword_master:
       name: Maître des lames
-      desc: 'Infligez {value}% de dégâts supplémentaire avec des épées.'
-      info: '+{value}% dégâts d''épée'
+      desc: "Infligez {value}% de dégâts supplémentaire avec des épées."
+      info: "+{value}% dégâts d'épée"
     first_strike:
       name: Premier coup
-      desc: 'Ingliez {value}% de dégâts supplémentaire au premier coup.'
-      info: '+{value}% de dégâts au premier coup'
-      dealt: '&cPremier coup infligé!'
+      desc: "Ingliez {value}% de dégâts supplémentaire au premier coup."
+      info: "+{value}% de dégâts au premier coup"
+      dealt: "<red>Premier coup infligé!"
     bleed:
       name: Hémorragie
-      desc: "{value}% de chance de faire saigner l'ennemi pour\n&7  3 ticks de saignement, infligent {value_2} dégâts par tick."
-      info: '{value}% de Chance, {value_2} dégâts'
-      enemy_bleeding: '&cL''ennemi saigne!'
-      self_bleeding: '&cVous saignez!'
-      stop: '&fLe saignement s''est arrêté'
+      desc: "{value}% de chance de faire saigner l'ennemi pour 3 ticks de saignement, infligent {value_2} dégâts par tick."
+      info: "{value}% de Chance, {value_2} dégâts"
+      enemy_bleeding: "<red>L'ennemi saigne!"
+      self_bleeding: "<red>Vous saignez!"
+      stop: "<white>Le saignement s'est arrêté"
   endurance:
     anti_hunger:
       name: Lutter contre la Faim
-      desc: "{value}% de chance de ne pas consommer votre barre de\n&7  nourriture."
-      info: '{value}% de saturation'
+      desc: "{value}% de chance de ne pas consommer votre barre de nourriture."
+      info: "{value}% de saturation"
     runner:
       name: Coureur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     golden_heal:
       name: Guérison en or
-      desc: "Augmente l'effet de régénération \n&7  de la vie de {value}%"
-      info: '+{value}% Guérison'
+      desc: "Augmente l'effet de régénération de la vie de {value}%"
+      info: "+{value}% Guérison"
     recovery:
       name: Récupération
-      desc: "Augmente la régénération naturelle lorsque\n&7  vous avez moins de la moitier de votre vie de {value}%"
-      info: '+{value}% Effet de régénération'
+      desc: "Augmente la régénération naturelle lorsque vous avez moins de la moitier de votre vie de {value}%"
+      info: "+{value}% Effet de régénération"
     meal_steal:
       name: Vol de repas
-      desc: "{value}% de chance de voler 1 point de faim\n&7  en attaquant un joueur."
-      info: '{value}% Vol de faim'
+      desc: "{value}% de chance de voler 1 point de faim en attaquant un joueur."
+      info: "{value}% Vol de faim"
   agility:
     light_fall:
       name: Chute légère
-      desc: 'Réduit les dégâts de chute de {value}%'
-      info: '-{value}% de dégâts de chute'
+      desc: "Réduit les dégâts de chute de {value}%"
+      info: "-{value}% de dégâts de chute"
     jumper:
       name: Sauteur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     sugar_rush:
       name: Ruée vers le sucre
-      desc: "Les potions de vitesse et de saut amélioré\n&7  durent {value}% plus longtemps."
-      info: '{value}% Potions de vitesse et saut plus longue'
+      desc: "Les potions de vitesse et de saut amélioré durent {value}% plus longtemps."
+      info: "{value}% Potions de vitesse et saut plus longue"
     fleeting:
       name: Fugace
-      desc: "Gagnez +{value}% de vitesse de déplacement lorsque\n&7  vous êtes à moins de 20% de votre vie"
-      info: '+{value}% De vitesse'
-      start: '&fVous avez gagné un boost de vitesse de déplacement! &7(+{value}% de vitesse)'
-      end: '&7Le gain de vitesse s''est dissipé.'
+      desc: "Gagnez +{value}% de vitesse de déplacement lorsque vous êtes à moins de 20% de votre vie"
+      info: "+{value}% De vitesse"
+      start: "<white>Vous avez gagné un boost de vitesse de déplacement! &7(+{value}% de vitesse)"
+      end: "<gray>Le gain de vitesse s'est dissipé."
     thunder_fall:
       name: Chute du tonnerre
-      desc: "Si vous vous accroupissez pendant une chute,\n&7  Vous avez {value}% de chance d'infliger {value_2}% des dégâts\n&7  attendu au mobs dans un rayon de 3 blocs"
-      info: '{value}% de Chance, {value_2}% de dégâts'
+      desc: "Si vous vous accroupissez pendant une chute, Vous avez {value}% de chance d'infliger {value_2}% des dégâts attendu au mobs dans un rayon de 3 blocs"
+      info: "{value}% de Chance, {value_2}% de dégâts"
   alchemy:
     alchemist:
       name: Alchimiste
-      desc: "Les potions que vous brassez ont une durée\n&7  de {value}% plus longue."
-      info: '+{value}% de durée de potion'
-      lore: '&a(+{duration})'
+      desc: "Les potions que vous brassez ont une durée de {value}% plus longue."
+      info: "+{value}% de durée de potion"
+      lore: "<green>(+{duration})"
     brewer:
       name: Brasseur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     splasher:
       name: Éclaboussure
-      desc: "Les potions que vous lancez gagnent {value}% plus de durée\n&7 pour chaque joueur affecté."
-      info: '+{value}% Durée par joueur éclaboussé'
+      desc: "Les potions que vous lancez gagnent {value}% plus de durée pour chaque joueur affecté."
+      info: "+{value}% Durée par joueur éclaboussé"
     lingering:
       name: Persistant
-      desc: "Les potions persistantes se dégradent naturellement {value}%\n&7  plus lentement et décroîssent {value_2}% de moins par entité affectée."
-      info: '-{value}% Naturel, -{value_2}% Décomposition d''Entités'
+      desc: "Les potions persistantes se dégradent naturellement {value}% plus lentement et décroîssent {value_2}% de moins par entité affectée."
+      info: "-{value}% Naturel, -{value_2}% Décomposition d'Entités"
     wise_effect:
       name: Sagesse
-      desc: "Gagnez {value} de sagesse pour chaque effet de potion\n&7  unique active."
-      info: '+{value} Sagesse/Effet'
+      desc: "Gagnez {value} de sagesse pour chaque effet de potion unique active."
+      info: "+{value} Sagesse/Effet"
   enchanting:
     xp_convert:
       name: Conversion d'XP
-      desc: "Gagnez 1 expérience Minecraft chaque {value} d'XP de compétence\n&7  que vous gagnez."
-      info: '1 EXP/{value} XP de Compétence'
+      desc: "Gagnez 1 expérience Minecraft chaque {value} d'XP de compétence que vous gagnez."
+      info: "1 EXP/{value} XP de Compétence"
     enchanter:
       name: Enchanteur
-      desc: 'Gagnez {value}% d''xp en plus dans ce skill.'
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     xp_warrior:
       name: XP de Guerrier
-      desc: "Les monstres que vous tuez ont {value}% de chances de \n&7  drop le double d'Xp."
-      info: '{value}% de 2x Exp de Mob'
+      desc: "Les monstres que vous tuez ont {value}% de chances de drop le double d'Xp."
+      info: "{value}% de 2x Exp de Mob"
     enchanted_strength:
       name: Enchantement Force
-      desc: "Gagnez {value} de force pour chaque enchantement unique\n&7  enchantement sur l'objet retenu."
-      info: '{value} Force/Enchantement'
+      desc: "Gagnez {value} de force pour chaque enchantement unique enchantement sur l'objet retenu."
+      info: "{value} Force/Enchantement"
     lucky_table:
       name: Table de Chance
-      desc: "Les objets que vous enchantez en utilisant la table\n&7  d'enchantement ont {value}% de chance d'améliorer le niveau l'enchantement\n&7  de l'enchantement de 1 s'il n'est pas au max"
-      info: 'Chance d''amélioration d''Enchantement de {value}%'
+      desc: "Les objets que vous enchantez en utilisant la table d'enchantement ont {value}% de chance d'améliorer le niveau l'enchantement de l'enchantement de 1 s'il n'est pas au max"
+      info: "Chance d'amélioration d'Enchantement de {value}%"
   healing:
     life_essence:
       name: Essence de vie
-      desc: Les potions de santé instantanées soignent {value}% de plus.
-      info: '+{value}% de vie instantanée'
+      desc: "Les potions de santé instantanées soignent {value}% de plus"
+      info: "+{value}% de vie instantanée"
     healer:
       name: Guérisseur
-      desc: Gagnez {value}% d'XP en plus dans ce skill.
-      info: '+{value}% XP'
+      desc: "Gagnez {value}% d'XP en plus dans ce skill"
+      info: "+{value}% XP"
     life_steal:
       name: Vol de vie
-      desc: Soigne {value}% des PV max des créatures hostiles\n&7 et des joueurs que vous tuez.
-      info: 'Vol de {value}% PV'
+      desc: "Soigne {value}% des PV max des créatures hostiles et des joueurs que vous tuez."
+      info: "Vol de {value}% PV"
     golden_heart:
       name: Coeurs en Or
-      desc: Les dégâts infligés à vos cœur d’absorption sont\n&7  réduits de {value}%
-      info: '-{value}% Dmg d''absorption'
+      desc: "Les dégâts infligés à vos cœur d'absorption sont réduits de {value}%"
+      info: "-{value}% Dmg d'absorption"
     revival:
       name: Résurrection
-      desc: Gagnez &c+{value} points de vie &7et &6+{value_2} Régénération\n&7  pendant 30 secondes après réapparition.
+      desc: "Gagnez <red>+{value} points de vie</red> <gray>et <gold>+{value_2} Régénération</gold> pendant 30 secondes après réapparition."
       info: '+{value} points de vie, +{value_2} régénération'
-      message: '&fVous avez gagné un bonus de renaissance pendant 30 secondes ! &f(&c+{value} points de vie, &6+{value_2} régénération&f)'
+      message: '<white>Vous avez gagné un bonus de renaissance pendant 30 secondes ! <white>(<red>+{value} points de vie, <gold>+{value_2} régénération<white>)'
   forging:
     disenchanter:
       name: Désenchanteur
-      desc: Gagnez {value}% d'expérience en plus lorsque vous désenchantez\n&7  un objets en utilisant une meule.
-      info: '+{value}% Meule EXP'
+      desc: "Gagnez {value}% d'expérience en plus lorsque vous désenchantez un objets en utilisant une meule."
+      info: "+{value}% Meule EXP"
     forger:
       name: Forgeron
-      desc: Gagnez {value}% d'xp en plus dans ce skill.
-      info: '+{value}% d''XP'
+      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      info: "+{value}% d'XP"
     repairing:
       name: Réparation
-      desc: Réparation d'objets dans une enclume en utilisant la matière brute\n&7  que l'objet a été fabriqué à partir de réparations\n&7  {value}% plus de durabilité.
-      info: '+{value}% réparation d''enclume'
+      desc: "Réparation d'objets dans une enclume en utilisant la matière brute que l'objet a été fabriqué à partir de réparations {value}% plus de durabilité."
+      info: "+{value}% réparation d'enclume"
     anvil_master:
       name: Maître de l'enclume
-      desc: Diminue le coût de réparation maximal d'une enclume\n&7  avant qu'il ne soit trop cher pour {value} expérience.
-      info: 'Coût Max {value}'
+      desc: "Diminue le coût de réparation maximal d'une enclume avant qu'il ne soit trop cher pour {value} expérience."
+      info: "Coût Max {value}"
     skill_mender:
       name: Réparateur de compétences
-      desc: Gagner de l'expérience de compétence avec  {value}% de chance de réparer\n&7  un objet tenu ou une pièce d'armure avec l'enchantement mending\n&7  de 1 de durabilitée pour 2 xp de skill.
-      info: '{value}% Chance de réparer'
+      desc: "Gagner de l'expérience de compétence avec {value}% de chance de réparer un objet tenu ou une pièce d'armure avec l'enchantement mending de 1 de durabilitée pour 2 xp de skill."
+      info: "{value}% Chance de réparer"
 acf:
   core:
-    permission_denied: '&cJe suis désolé, mais vous n''avez pas la permission d''effectuer cette commande.'
-    permission_denied_parameter: '&cJe suis désolé, mais vous n''avez pas la permission d''effectuer cette commande.'
-    error_generic_logged: '&cUne erreur est survenue. Ce problème a été enregistré. Désolé pour le dérangement.'
-    unknown_command: '&cCommande inconnue, veuillez taper &e/sk help'
-    invalid_syntax: '&eUtilisation: &e{command} &a{syntax}'
-    error_prefix: '&cErreur: {message}'
-    error_performing_command: "&cJe suis désolée, mais une erreur s'est produite lors de l'exécution de cette commande."
-    info_message: '{message}'
-    please_specify_one_of: '&cErreur: Veuillez spécifier une de (&e{valid}&c)'
-    must_be_a_number: '&cErreur : {num} doit être un nombre.'
-    must_be_min_length: '&cErreur: Doit comporter au moins {min} caractères.'
-    must_be_max_length: '&cErreur: Doit comporter au maximum {max} caractères.'
-    please_specify_at_most: '&cErreur: Veuillez spécifier une valeur au plus {max}.'
-    please_specify_at_least: '&cErreur: Veuillez spécifier une valeur au moins {min}.'
-    not_allowed_on_console: '&cErreur : La console ne peut pas exécuter cette commande.'
-    could_not_find_player: '&cErreur: Impossible de trouver un joueur avec le nom: &e{search}'
-    no_command_matched_search: '&cAucune commande ne correspond à &e{search}.'
-    help_page_information: '&b - Affichage de la page &a{page} &bd''un &a{totalpages} &b(&e{results}&b résultats).'
-    help_no_results: '&bErreur: Plus de résultats.'
-    help_header: '&e=== &bAffichage de l''aide pour &a{commandprefix}{command}&e ==='
-    help_format: '&b{commandprefix}{command} &a{parameters} &e{separator} {description}'
-    help_detailed_header: '&e=== &bAffichage de l''aide détailé pour &a{commandprefix}{command}&e ==='
-    help_detailed_command_format: '&b{command}{parameters} &a{separator} &e{description}'
-    help_detailed_parameter_format: '&a{syntaxorname}: &e{description}'
-    help_search_header: '&e=== &bRésultats de recherche pour &a{commandprefix}{command} {search}&e ==='
+    permission_denied: "<red>Je suis désolé, mais vous n'avez pas la permission d'effectuer cette commande."
+    permission_denied_parameter: "<red>Je suis désolé, mais vous n'avez pas la permission d'effectuer cette commande."
+    error_generic_logged: "<red>Une erreur est survenue. Ce problème a été enregistré. Désolé pour le dérangement."
+    unknown_command: "<red>Commande inconnue, veuillez taper <yellow>/sk help"
+    invalid_syntax: "<yellow>Utilisation: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Erreur: {message}"
+    error_performing_command: "<red>Je suis désolée, mais une erreur s"est produite lors de l"exécution de cette commande."
+    info_message: "{message}"
+    please_specify_one_of: "<red>Erreur: Veuillez spécifier une de (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Erreur : {num} doit être un nombre."
+    must_be_min_length: "<red>Erreur: Doit comporter au moins {min} caractères."
+    must_be_max_length: "<red>Erreur: Doit comporter au maximum {max} caractères."
+    please_specify_at_most: "<red>Erreur: Veuillez spécifier une valeur au plus {max}."
+    please_specify_at_least: "<red>Erreur: Veuillez spécifier une valeur au moins {min}."
+    not_allowed_on_console: "<red>Erreur : La console ne peut pas exécuter cette commande."
+    could_not_find_player: "<red>Erreur: Impossible de trouver un joueur avec le nom: <yellow>{search}"
+    no_command_matched_search: "<red>Aucune commande ne correspond à <yellow>{search}."
+    help_page_information: "<aqua> - Affichage de la page <green>{page} <aqua>d'un <green>{totalpages} <aqua>(<yellow>{results}<aqua> résultats)."
+    help_no_results: "<aqua>Erreur: Plus de résultats."
+    help_header: "<yellow>=== <aqua>Affichage de l'aide pour <green>{commandprefix}{command}<yellow> ==="
+    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_header: "<yellow>=== <aqua>Affichage de l'aide détailé pour <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_command_format: "<aqua>{command}{parameters} <green>{separator} <yellow>{description}"
+    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
+    help_search_header: "<yellow>=== <aqua>Résultats de recherche pour <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: '&cErreur: Ce monde n''existe pas.'
-    you_must_be_holding_item: '&cErreur: Vous devez tenir un élément dans votre main principale.'
-    player_is_vanished_confirm: "&eAttention: &a{vanished} &eest invisible. Ne grillez pas sa couverture !\n&ePour confirmer votre action, ajoutez &a:confirm &eà la fin de son nom.\n&eEx: {vanished}:confirm"
-    username_too_short: '&cErreur : Le nom d''utilisateur est trop court, il doit comporter au moins trois caractères.'
-    is_not_a_valid_name: '&cErreur: &e{name} &cn''est pas un nom d''utilisateur valide.'
-    multiple_players_match: '&cErreur: Plusieurs joueurs correspondent à &b{search} &e({all})&c, veuillez être plus précis.'
-    no_player_found_server: '&cAucun joueur correspondant à &e{search} &cest connecté à ce serveur.'
-    no_player_found_offline: '&cAucun joueur correspondant &e{search}&c n''a été trouvé.'
-    no_player_found: '&cAucun joueur correspondant &e{search}&c n''a été trouvé.'
-    location_please_specify_world: '&cErreur: Veuillez spécifier le monde. Exemple: &eworld:x,y,z.'
-    location_please_specify_xyz: '&cErreur: Veuillez spécifier les coordonnées x, y et z. Exemple: &eworld:x,y,z.'
-    location_console_not_relative: '&cErreur: La console ne peut pas utiliser de coordonnées relatives pour l''emplacement.'
+    invalid_world: "<red>Erreur: Ce monde n'existe pas."
+    you_must_be_holding_item: "<red>Erreur: Vous devez tenir un élément dans votre main principale."
+    player_is_vanished_confirm: "<yellow>Attention: <green>{vanished} <yellow>est invisible. Ne grillez pas sa couverture !\n<yellow>Pour confirmer votre action, ajoutez <green>:confirm <yellow>à la fin de son nom.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>Erreur : Le nom d'utilisateur est trop court, il doit comporter au moins trois caractères."
+    is_not_a_valid_name: "<red>Erreur: <yellow>{name} <red>n'est pas un nom d'utilisateur valide."
+    multiple_players_match: "<red>Erreur: Plusieurs joueurs correspondent à <aqua>{search} <yellow>({all})<red>, veuillez être plus précis."
+    no_player_found_server: "<red>Aucun joueur correspondant à <yellow>{search} <red>est connecté à ce serveur."
+    no_player_found_offline: "<red>Aucun joueur correspondant <yellow>{search}<red> n'a été trouvé."
+    no_player_found: "<red>Aucun joueur correspondant <yellow>{search}<red> n'a été trouvé."
+    location_please_specify_world: "<red>Erreur: Veuillez spécifier le monde. Exemple: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Erreur: Veuillez spécifier les coordonnées x, y et z. Exemple: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Erreur: La console ne peut pas utiliser de coordonnées relatives pour l'emplacement."
 action_bar:
-  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(MAX)  &b{mana}/{max_mana} {mana_unit}'
-  ability: '{message}'
-  boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
-  boss_bar_maxed: '&6{skill} {level} &7(MAX)'
+  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
+  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
+  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
+  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAX)  <aqua>{mana}/{max_mana} {mana_unit}"
+  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAX)  <aqua>{mana}/{max_mana} {mana_unit}"
+  ability: "{message}"
+  boss_bar_xp: "<gold>+{xp_gained} {skill} XP <gray>({percent}%)"
+  boss_bar_maxed: "<gold>+{xp_gained} {skill} XP <gray>(MAX)"
 commands:
-  prefix: '&8[&bCompétences&8] '
+  prefix: "<dark_gray>[<aqua>Compétences<dark_gray>] "
   armor:
     modifier:
       add:
-        added: '&7Le modificateur de {color}{stat} &7avec le niveau &b{value} &7a été ajouté à votre objet'
-        already_exists: '&eUn modificateur d''armure avec la stat {color}{stat} &eexiste déjà sur votre armure ! Supprimez-le d''abord avec /sk armor modifier remove'
-        lore: '&7{stat}: {color}+{value}'
-        lore_subtract: '&7{stat}: {color}-{value}'
+        added: "<gray>Le modificateur de {color}{stat} <gray>avec le niveau <aqua>{value} <gray>a été ajouté à votre objet"
+        already_exists: "<yellow>Un modificateur d'armure avec la stat {color}{stat} <yellow>existe déjà sur votre armure ! Supprimez-le d'abord avec /sk armor modifier remove"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
-        does_not_exist: '&eVotre objet n''a pas de modificateur de {color}{stat}!'
-        removed: '&7Le modificateur de {color}{stat} &7a été retiré de votre objet'
+        does_not_exist: "<yellow>Votre objet n'a pas de modificateur de {color}{stat}!"
+        removed: "<gray>Le modificateur de {color}{stat} <gray>a été retiré de votre objet"
       list:
-        header: '&fLes modificateurs d''armure suivant ont été trouvés :'
-        entry: '  {color}{stat}&f - {value}'
+        header: "<white>Les modificateurs d'armure suivant ont été trouvés :"
+        entry: "  {color}{stat}<white> - {value}"
       removeall:
-        removed: '&7Tous les modificateurs d''armure ont été supprimés de votre objet'
+        removed: "<gray>Tous les modificateurs d'armure ont été supprimés de votre objet"
     multiplier:
       add:
-        added: '&b{target} &7multiplicateur avec la valeur &b{value} &7a été ajouté à votre article'
-        already_exists: '&eUn multiplicateur avec la cible &b{target} &eéxiste déja sur votre armure! supprimez le d''abord avec /sk armor multiplier remove'
-        skill_lore: '&7Quand porté : &b+{value}% {skill} XP'
-        skill_lore_subtract: '&7Quand porté : &b-{value}% {skill} XP'
-        global_lore: '&7Quand porté : &9+{value}% XP de skill'
-        global_lore_subtract: '&7Quand porté : &9-{value}% XP de skill'
+        added: "<aqua>{target} <gray>multiplicateur avec la valeur <aqua>{value} <gray>a été ajouté à votre article"
+        already_exists: "<yellow>Un multiplicateur avec la cible <aqua>{target} <yellow>éxiste déja sur votre armure! supprimez le d'abord avec /sk armor multiplier remove"
+        skill_lore: "<gray>Quand porté : <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Quand porté : <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Quand porté : <blue>+{value}% XP de skill"
+        global_lore_subtract: "<gray>Quand porté : <blue>-{value}% XP de skill"
       remove:
-        does_not_exist: '&eVotre objet n''a pas de modificateur de &b{target} &ed''armure!'
-        removed: '&b{target} &7Les modifications apportées à l''item viennent d''être supprimé'
+        does_not_exist: "<yellow>Votre objet n'a pas de modificateur de <aqua>{target} <yellow>d'armure!"
+        removed: "<aqua>{target} <gray>Les modifications apportées à l'item viennent d'être supprimé"
       list:
-        header: '&fLes modificateurs d''armure suivant ont été trouvés :'
-        entry: '  &b{target}&f - {value}'
+        header: "<white>Les modificateurs d'armure suivant ont été trouvés :"
+        entry: "  <aqua>{target}<white> - {value}"
       removeall:
-        removed: '&7Les modifications apportées à l''item viennent toutes d''être supprimées'
+        removed: "<gray>Les modifications apportées à l'item viennent toutes d'être supprimées"
     requirement:
       add:
-        added: 'L''exigence d''armure &3{skill}&7 niveau &b{level}&7 a été ajouté à votre item'
-        already_exists: '&eL''item a déjà une exigence d''armure &3{skill}&e! Supprimez-le d''abord avec &6/sk armor requirement remove'
-        lore: '&cExige &3{skill} {level}'
+        added: "L'exigence d'armure <dark_aqua>{skill}<gray> niveau <aqua>{level}<gray> a été ajouté à votre item"
+        already_exists: "<yellow>L'item a déjà une exigence d'armure <dark_aqua>{skill}<yellow>! Supprimez-le d'abord avec <gold>/sk armor requirement remove"
+        lore: "<red>Exige <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: '&eVotre item n''a pas d''exigence d''armure &3{skill}!'
-        removed: '&7L''exigence d''armure &3{skill} &7a été supprimé de votre item'
+        does_not_exist: "<yellow>Votre item n'a pas d'exigence d'armure <dark_aqua>{skill}!"
+        removed: "<gray>L'exigence d'armure <dark_aqua>{skill} <gray>a été supprimé de votre item"
       list:
-        header: '&fExigence d''armure trouvé:'
-        entry: '  &3{skill} &f- &b{level}'
+        header: "<white>Exigence d'armure trouvé:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
-        removed: '&7Toutes les exigences d''armure ont été supprimé de votre item'
-      equip: '&eVous ne remplissez pas les conditions pour équiper cette item: {requirements}'
-      entry: '&b{skill} {level}&7, '
+        removed: "<gray>Toutes les exigences d'armure ont été supprimé de votre item"
+      equip: "<yellow>Vous ne remplissez pas les conditions pour équiper cette item: {requirements}"
+      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
-      confirm: '&cLe chargement d''une sauvegarde annulera toutes les données de compétence des joueurs. Cette action est permanente et ne peut pas être annulée. Vous pouvez enregistrer une sauvegarde avant d''en charger une. Tapez la commande à nouveau pour confirmer cette action'
-      loading: '&fChargement de la sauvegarde...'
-      loaded: '&aSauvegarde chargée avec succès'
-      error: '&cErreur lors du chargement de la sauvegarde : {error}'
-      must_be_yaml: '&eLe fichier doit être un fichier .yml !'
-      file_not_found: '&eUne sauvegarde de ce nom de fichier n''existe pas dans le dossier de sauvegarde!'
+      confirm: "<red>Le chargement d'une sauvegarde annulera toutes les données de compétence des joueurs. Cette action est permanente et ne peut pas être annulée. Vous pouvez enregistrer une sauvegarde avant d'en charger une. Tapez la commande à nouveau pour confirmer cette action"
+      loading: "<white>Chargement de la sauvegarde..."
+      loaded: "<green>Sauvegarde chargée avec succès"
+      error: "<red>Erreur lors du chargement de la sauvegarde : {error}"
+      must_be_yaml: "<yellow>Le fichier doit être un fichier .yml !"
+      file_not_found: "<yellow>Une sauvegarde de ce nom de fichier n'existe pas dans le dossier de sauvegarde!"
     save:
-      saving: 'Préparation de la sauvegarde...'
-      saved: '&fSauvegarde des données {type} en tant que {file}'
-      error: '&cErreur de sauvegarde des données {type} ! Voir l''erreur dans la console/ci-dessous pour plus de détails'
+      saving: "Préparation de la sauvegarde..."
+      saved: "<white>Sauvegarde des données {type} en tant que {file}"
+      error: "<red>Erreur de sauvegarde des données {type} ! Voir l'erreur dans la console/ci-dessous pour plus de détails"
   claimitems:
-    no_items: '&eVous n''avez aucun objet à réclamer'
+    no_items: "<yellow>Vous n'avez aucun objet à réclamer"
   item:
     give:
-      sender: '&f donné &b{amount}x {key} &fà {player}'
-      receiver: '&fVous avez reçu &b{amount}x {key}'
+      sender: "<white> donné <aqua>{amount}x {key} <white>à {player}"
+      receiver: "<white>Vous avez reçu <aqua>{amount}x {key}"
     modifier:
       add:
-        added: '&7Le modificateur de {color}{stat} &7avec le niveau &b{value} &7a été ajouté à votre objet'
-        already_exists: '&eUn modificateur d''item avec la stat {color}{stat} &eexiste déjà sur votre item ! Supprimez-le d''abord avec /sk item modifier remove'
-        lore: '&7{stat}: {color}+{value}'
-        lore_subtract: '&7{stat}: {color}-{value}'
+        added: "<gray>Le modificateur de {color}{stat} <gray>avec le niveau <aqua>{value} <gray>a été ajouté à votre objet"
+        already_exists: "<yellow>Un modificateur d'item avec la stat {color}{stat} <yellow>existe déjà sur votre item ! Supprimez-le d'abord avec /sk item modifier remove"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
-        does_not_exist: '&eVotre objet n''a pas de modificateur de {color}{stat}!'
-        removed: '&7Le modificateur de {color}{stat} &7a été retiré de votre objet'
+        does_not_exist: "<yellow>Votre objet n'a pas de modificateur de {color}{stat}!"
+        removed: "<gray>Le modificateur de {color}{stat} <gray>a été retiré de votre objet"
       list:
-        header: '&fModificateur d''objet trouvé:'
-        entry: '  {color}{stat}&f - {value}'
+        header: "<white>Modificateur d'objet trouvé:"
+        entry: "  {color}{stat}<white> - {value}"
       removeall:
-        removed: '&7Tout les modificateurs ont été supprimés de votre objet'
+        removed: "<gray>Tout les modificateurs ont été supprimés de votre objet"
     multiplier:
       add:
-        added: '&b{target} &7multiplicateur avec la valeur &b{value} &7a été ajouté à votre article'
-        already_exists: '&eUn multiplicateur avec la cible &b{target} &eéxiste déja sur votre item! supprimez le d''abord avec /sk item multiplier remove'
-        skill_lore: '&7Quand porté : &b+{value}% {skill} XP'
-        skill_lore_subtract: '&7Quand porté : &b-{value}% {skill} XP'
-        global_lore: '&7Quand porté : &9+{value}% XP de skill'
-        global_lore_subtract: '&7Quand porté : &9-{value}% XP de skill'
+        added: "<aqua>{target} <gray>multiplicateur avec la valeur <aqua>{value} <gray>a été ajouté à votre article"
+        already_exists: "<yellow>Un multiplicateur avec la cible <aqua>{target} <yellow>éxiste déja sur votre item! supprimez le d'abord avec /sk item multiplier remove"
+        skill_lore: "<gray>Quand porté : <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Quand porté : <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Quand porté : <blue>+{value}% XP de skill"
+        global_lore_subtract: "<gray>Quand porté : <blue>-{value}% XP de skill"
       remove:
-        does_not_exist: '&eVotre objet n''a pas de modificateur de &b{target}!'
-        removed: '&b{target} &7Les modifications apportées à l''item viennent d''être supprimé'
+        does_not_exist: "<yellow>Votre objet n'a pas de modificateur de <aqua>{target}!"
+        removed: "<aqua>{target} <gray>Les modifications apportées à l'item viennent d'être supprimé"
       list:
-        header: '&fModificateur d''item trouvé:'
-        entry: '  &b{target}&f - {value}'
+        header: "<white>Modificateur d'item trouvé:"
+        entry: "  <aqua>{target}<white> - {value}"
       removeall:
-        removed: '&7Les modifications apportées à l''item viennent toutes d''être supprimées'
+        removed: "<gray>Les modifications apportées à l'item viennent toutes d'être supprimées"
     register:
-      registered: '&fEnregistré l''élément à la clé {key}'
-      already_registered: '&eIl y a déjà un élément enregistré à la clé &f{key}&e, utilisez &f/skill item unregister &epour le désinscrire en premier'
-      no_spaces: '&eLa clé d''objet ne peut pas contenir d''espaces !'
+      registered: "<white>Enregistré l'élément à la clé {key}"
+      already_registered: "<yellow>Il y a déjà un élément enregistré à la clé <white>{key}<yellow>, utilisez <white>/skill item unregister <yellow>pour le désinscrire en premier"
+      no_spaces: "<yellow>La clé d'objet ne peut pas contenir d'espaces !"
     requirement:
       add:
-        added: 'L''exigence d''item &3{skill}&7 niveau &b{level}&7 a été ajouté à votre objet'
-        already_exists: '&eL''objet a déjà une exigence d''item &3{skill}&e! Supprimez-le d''abord avec &6/sk item requirement remove'
-        lore: '&cExige &3{skill} {level}'
+        added: "L'exigence d'item <dark_aqua>{skill}<gray> niveau <aqua>{level}<gray> a été ajouté à votre objet"
+        already_exists: "<yellow>L'objet a déjà une exigence d'item <dark_aqua>{skill}<yellow>! Supprimez-le d'abord avec <gold>/sk item requirement remove"
+        lore: "<red>Exige <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: '&eVotre objet n''a pas d''exigence d''item &3{skill}&e!'
-        removed: '&7L''exigence d''item &3{skill} &7a été supprimé de votre objet'
+        does_not_exist: "<yellow>Votre objet n'a pas d'exigence d'item <dark_aqua>{skill}<yellow>!"
+        removed: "<gray>L'exigence d'item <dark_aqua>{skill} <gray>a été supprimé de votre objet"
       list:
-        header: '&fExigences d''objet trouvé:'
-        entry: '  &3{skill} &f- &b{level}'
+        header: "<white>Exigences d'objet trouvé:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
-        removed: '&7Toutes les exigences d''item ont été supprimé de votre objet'
-      use: '&eVous ne remplissez pas les conditions pour utiliser cette item: {requirements}'
-      entry: '&b{skill} {level}&7, '
+        removed: "<gray>Toutes les exigences d'item ont été supprimé de votre objet"
+      use: "<yellow>Vous ne remplissez pas les conditions pour utiliser cette item: {requirements}"
+      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
-      unregistered: '&fÉlément non enregistré avec la clé {key}'
-      not_registered: '&eIl n''y a aucun élément enregistré avec la clé {key}'
+      unregistered: "<white>Élément non enregistré avec la clé {key}"
+      not_registered: "<yellow>Il n'y a aucun élément enregistré avec la clé {key}"
   lang:
-    set: '&7Langue définie sur &b{lang}'
-    not_found: '&eLLangue introuvable!'
+    set: "<gray>Langue définie sur <aqua>{lang}"
+    not_found: "<yellow>LLangue introuvable!"
   mana:
-    display: '&fVotre {mana_unit}: &b{current}/{max}'
-    display_other: '&f{mana_unit} de {player}: &b{current}/{max}'
-    add: '&7Ajouté &b{amount} {mana_unit} &7au joueur &6{player}'
-    remove: '&7Suppression &b{amount} {mana_unit} &7du joueur &6{player}'
-    set: '&7défini le joueur &6{player} &7a &b{amount} {mana_unit}'
-    at_least_zero: '&e{mana_unit} doit être au moins zéro !'
-    console_specify_player: '&eLa console doit spécifier un joueur !'
+    display: "<white>Votre {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} de {player}: <aqua>{current}/{max}"
+    add: "<gray>Ajouté <aqua>{amount} {mana_unit} <gray>au joueur <gold>{player}"
+    remove: "<gray>Suppression <aqua>{amount} {mana_unit} <gray>du joueur <gold>{player}"
+    set: "<gray>défini le joueur <gold>{player} <gray>a <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} doit être au moins zéro !"
+    console_specify_player: "<yellow>La console doit spécifier un joueur !"
   modifier:
     add:
-      added: '&7Le modificateur {color}{stat} niveau &b{value} &7avec comme nom &f{name} &7a été ajouté au joueur &6{player}'
-      already_exists: '&eLe Modificateur avec comme nom {name} existe déjà pour &6{player}&e! Supprimez-le d''abord avec &6/sk modifier remove {player} {name}'
+      added: "<gray>Le modificateur {color}{stat} niveau <aqua>{value} <gray>avec comme nom <white>{name} <gray>a été ajouté au joueur <gold>{player}"
+      already_exists: "<yellow>Le Modificateur avec comme nom {name} existe déjà pour <gold>{player}<yellow>! Supprimez-le d'abord avec <gold>/sk modifier remove {player} {name}"
     remove:
-      not_found: '&eLe modificateur {name} n''a pas été trouvé pour le joueur &6{player}'
-      removed: '&7Le modificateur avec comme nom &f{name} &7a été supprimé du joueur &6{player}'
+      not_found: "<yellow>Le modificateur {name} n'a pas été trouvé pour le joueur <gold>{player}"
+      removed: "<gray>Le modificateur avec comme nom <white>{name} <gray>a été supprimé du joueur <gold>{player}"
     list:
-      all_stats_header: '&7Modificateurs de statistiques pour &6{player}:'
-      all_stats_entry: '  &f{name} - {color}{stat} &fNiveau &6{value}'
-      one_stat_header: '&7Modificateurs de statistiques ({color}{stat}&7) pour le joueur &6{player}:'
-      one_stat_entry: '  &f{name} - {color}{stat} &fNiveau &6{value}'
-      players_only: '&eSeulement un joueur peut lister ses propre modificateur! Essayez de spécifier un joueur'
+      all_stats_header: "<gray>Modificateurs de statistiques pour <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Niveau <gold>{value}"
+      one_stat_header: "<gray>Modificateurs de statistiques ({color}{stat}<gray>) pour le joueur <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Niveau <gold>{value}"
+      players_only: "<yellow>Seulement un joueur peut lister ses propre modificateur! Essayez de spécifier un joueur"
     removeall:
-      removed_all_stats: '&b{num} &7modificateurs de statistiques ont été supprimé du joueur &6{player}'
-      removed_one_stat: '&b{num} &7modificateurs de {color}{stat} &7ont été supprimé du jiueur &6{player}'
-      players_only: '&eSeul un joueur peut supprimer ses propre modificateurs! Essayez de spécifier un joueur.'
+      removed_all_stats: "<aqua>{num} <gray>modificateurs de statistiques ont été supprimé du joueur <gold>{player}"
+      removed_one_stat: "<aqua>{num} <gray>modificateurs de {color}{stat} <gray>ont été supprimé du jiueur <gold>{player}"
+      players_only: "<yellow>Seul un joueur peut supprimer ses propre modificateurs! Essayez de spécifier un joueur."
   multiplier:
     global: Globale
-    list: '&fMultiplicateur d''XP de &6{player}&f: &b{multiplier}x / +{percent}%'
-    skill_entry: '&b{skill} Multiplicateur d''XP : &b{multiplier}x / +{percent}%'
-    players_only: '&eSeuls les joueurs peuvent lister leur propre multiplicateur! Spécifiez un joueur!'
+    list: "<white>Multiplicateur d'XP de <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} Multiplicateur d'XP : <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Seuls les joueurs peuvent lister leur propre multiplicateur! Spécifiez un joueur!"
   profile:
-    skills: "Profil de compétences Aurelium pour &6{name}:\n&7UUID : &f{uuid}\n&7Compétences :{skill_entries}"
-    skill_entry: "\n  &3{skill} &7- Niveau : &f{level}&7, XP : &f{xp}"
-    stats: "Profil de compétences Aurelium pour &6{name}:\n&7UUID : &f{uuid}\n&7Compétences :{stat_entries}"
-    stat_entry: "\n  &3{stat} &7- Niveau Total : &f{total_level}&7, Ancien Niveau : &f{base_level}&7, Nouveau Niveau : &f{modified_level}"
+    skills: "Profil de compétences Aurelium pour <gold>{name}:\n<gray>UUID : <white>{uuid}\n<gray>Compétences :{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Niveau : <white>{level}<gray>, XP : <white>{xp}"
+    stats: "Profil de compétences Aurelium pour <gold>{name}:\n<gray>UUID : <white>{uuid}\n<gray>Compétences :{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Niveau Total : <white>{total_level}<gray>, Ancien Niveau : <white>{base_level}<gray>, Nouveau Niveau : <white>{modified_level}"
   rank:
-    header: '&b&lVos classements de compétences'
-    power: '&ePuissance &7(Toutes les compétences): &f#{rank} of {total}'
-    entry: '&b{skill}&7: &f#{rank} sur {total}'
-  reload: '&aConfiguration rechargée!'
+    header: "<aqua><bold>Vos classements de compétences"
+    power: "<yellow>Puissance <gray>(Toutes les compétences): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} sur {total}"
+  reload: "<green>Configuration rechargée!"
   save:
-    already_saving: '&eLes données sont déjà en train d''être enregistrées!!'
-    mysql_not_enabled: '&eMySQL n''a pas été activé au démarrage du serveur, enregistrement dans un fichier à la place!'
-    saved: '&aLes données des compétences ont été enregistrées!'
+    already_saving: "<yellow>Les données sont déjà en train d'être enregistrées!!"
+    mysql_not_enabled: "<yellow>MySQL n'a pas été activé au démarrage du serveur, enregistrement dans un fichier à la place!"
+    saved: "<green>Les données des compétences ont été enregistrées!"
   skill:
     reset:
-      reset_all: '&7Toutes les compétences ont été mise au niveau &b1 &7pour le joueur &6{player}'
-      reset_skill: '&7La compétence &b{skill} &7a été mise au niveau &b1 &7pour le joueur &6{player}'
+      reset_all: "<gray>Toutes les compétences ont été mise au niveau <aqua>1 <gray>pour le joueur <gold>{player}"
+      reset_skill: "<gray>La compétence <aqua>{skill} <gray>a été mise au niveau <aqua>1 <gray>pour le joueur <gold>{player}"
     setall:
-      at_least_one: '&eLe niveau doit être au moins 1!'
-      set: '&7Toutes les compétences ont été mise au niveau &b{level} &7pour le joueur &6{player}'
+      at_least_one: "<yellow>Le niveau doit être au moins 1!"
+      set: "<gray>Toutes les compétences ont été mise au niveau <aqua>{level} <gray>pour le joueur <gold>{player}"
     setlevel:
-      at_least_one: '&eLe niveau doit être au moins 1!'
-      set: '&7La compétence &b{skill} &7sa été mise au niveau &b{level} &7pour le joueur &6{player}'
+      at_least_one: "<yellow>Le niveau doit être au moins 1!"
+      set: "<gray>La compétence <aqua>{skill} <gray>sa été mise au niveau <aqua>{level} <gray>pour le joueur <gold>{player}"
   toggle:
-    enabled: '&aLa barre d''action de vos compétences à été activé'
-    disabled: '&cLa barre d''action de vos compétences à été désactivé'
-    not_enabled: '&eLa barre d''action de compétences n''est pas activé sur ce serveur!'
+    enabled: "<green>La barre d'action de vos compétences à été activé"
+    disabled: "<red>La barre d'action de vos compétences à été désactivé"
+    not_enabled: "<yellow>La barre d'action de compétences n'est pas activé sur ce serveur!"
   top:
-    power_entry: '&f{rank}. &b{player} &f- {level}'
-    power_header: '&f--==&b&lClassement de toutes les compétences&f==--'
-    power_header_page: '&f--==&b&lClassement de toutes les compétences &f(Page {page})==--'
-    skill_header: '&f--==&b&lClassement {skill}&f==--'
-    skill_header_page: '&f--==&b&lClassement {skill} &f(Page {page})==--'
-    skill_entry: '&f{rank}. &b{player} &f- {level}'
-    average_header: '&f--==&b&lClassement de toutes les compétences&f==--'
-    average_header_page: '&f--==&b&lClassement de toutes les compétences &f(Page {page})==--'
-    average_entry: '&f{rank}. &b{player} &f- {level}'
-    usage: '&eUtilisation: &a/sk top &f<page> &7ou &a/sk top &f[skill] <page>'
+    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    power_header: "<white>--==<aqua><bold>Classement de toutes les compétences</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Classement de toutes les compétences</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>Classement {skill}</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>Classement {skill}</bold><white>(Page {page})==--"
+    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    average_header: "<white>--==<aqua><bold>Classement de toutes les compétences<bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Classement de toutes les compétences</bold><white>(Page {page})==--"
+    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    usage: "<yellow>Utilisation: <green>/sk top <white><page> <gray>ou <green>/sk top <white>[skill] <page>"
   transfer:
-    success: '&aTransfert réussi des données du joueur de &7{from} &aà &7{to}'
-    error: '&cIl y avait une erreur de transfert de données du joueur. Vérifiez la console pour les erreurs.'
+    success: "<green>Transfert réussi des données du joueur de <gray>{from} <green>à <gray>{to}"
+    error: "<red>Il y avait une erreur de transfert de données du joueur. Vérifiez la console pour les erreurs."
   updateleaderboards:
-    already_updating: '&eLe classement est déjà en train d''etre mis à jour!'
-    updated: '&aClassement mis à jour!'
-  version: '&fVous êtes sur la version &b{current_version}&f d''Aurelium Skills. La dernière version est &b{latest_version}'
+    already_updating: "<yellow>Le classement est déjà en train d'etre mis à jour!"
+    updated: "<green>Classement mis à jour!"
+  version: "<white>Vous êtes sur la version <aqua>{current_version}<white> d'Aurelium Skills. La dernière version est <aqua>{latest_version}"
   xp:
-    add: '&b{amount} &7XP de &b{skill} ont été ajoutée au joueur {player}'
-    set: '&7XP de &b{skill} &7pour le joueur {player} &7défini sur {amount}'
-    remove: '&b{amount} &7XP de &b{skill} &7ont été supprimé du joueur &6{player}'
-  unknown_skill: '&eCompétence inconnue!'
-  no_profile: '&eLe joueur n’a pas de profil de compétences. Veuillez essayer de rejoindre le jeu ou de redémarrer le serveur.'
+    add: "<aqua>{amount} <gray>XP de <aqua>{skill} ont été ajoutée au joueur {player}"
+    set: "<gray>XP de <aqua>{skill} <gray>pour le joueur {player} <gray>défini sur {amount}"
+    remove: "<aqua>{amount} <gray>XP de <aqua>{skill} <gray>ont été supprimé du joueur <gold>{player}"
+  unknown_skill: "<yellow>Compétence inconnue!"
+  no_profile: "<yellow>Le joueur n’a pas de profil de compétences. Veuillez essayer de rejoindre le jeu ou de redémarrer le serveur."
 leveler:
-  title: '&a{skill} Niveau supérieur'
-  subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Niveau supérieur! &b&l{skill} &8{old}➜&3&l{new} \n \n &bRécompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  title: "<green>{skill} Niveau supérieur"
+  subtitle: "<gold>{old} ➜ {new}"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Niveau supérieur! <aqua><bold>{skill}</bold> <dark_gray>{old}➜<dark_aqua><bold>{new}</bold> \n \n <aqua>Récompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  &aCompétence débloquée! &6&l{ability} &7a été débloquée"
-  ability_level_up: "\n  &aNiveau de compétence supérieur! &6&l{ability} &7est maintenant niveau &6{level}"
-  mana_ability_unlock: "\n&dCapacité de mana débloquée! &9&l{mana_ability} &7a été débloquée"
-  mana_ability_level_up: "\n  &dNiveau de compétence de mana supérieur! &9&l{mana_ability} &7est maintenant niveau &6{level}"
-  money_reward: "\n  &a${amount}"
-  unclaimed_item: '&cVous avez des objets non réclamés parce que votre inventaire était plein, utilisez &e/skills claimitems &cpour les réclamer'
+  ability_unlock: "\n  <green>Compétence débloquée! <gold><bold>{ability}</bold> <gray>a été débloquée"
+  ability_level_up: "\n  <green>Niveau de compétence supérieur! <gold><bold>{ability}</bold> <gray>est maintenant niveau <gold>{level}"
+  mana_ability_unlock: "\n<light_purple>Capacité de mana débloquée! <blue><bold>{mana_ability}</bold> <gray>a été débloquée"
+  mana_ability_level_up: "\n  <light_purple>Niveau de compétence de mana supérieur! <blue><bold>{mana_ability}</bold> <gray>est maintenant niveau <gold>{level}"
+  money_reward: "\n  <green>${amount}"
+  unclaimed_item: "<red>Vous avez des objets non réclamés parce que votre inventaire était plein, utilisez <yellow>/skills claimitems <red>pour les réclamer"
 menus:
   common:
-    close: '&cFermer'
-    level: '&7Niveau: &e{level}'
-    progress_to_level: "&7Progression vers le niveau {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
-    max_level: '&6NIVEAU MAXIMUM'
-    ability_levels: "\n&7Niveaux de compétence:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
-    ability_level_entry: '&6{ability} {level} &8({info})'
-    ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7Stats Niveau : {stats}"
-    mana_ability: "\n&d&lCompétence de mana &9{mana_ability} {level}\n &7Durée: &a{duration}s &7Cout en mana: &b{mana_cost} &7Rechargement: &e{cooldown}s\n "
-  skills_menu:
-    skills_menu_title: Vos compétences
-    your_skills: '&bVos compétences - &6{player}'
-    your_skills_desc: "&7Améliorez vos compétences en effectuant diverses tâches\n&7pour débloquer des améliorations de statistiques,\n&7des capacités et plus encore"
-    your_skills_hover: '&eSurvolez une compétence pour plus d''informations!'
-    your_skills_click: '&eCliquez sur une compétence pour voir la progression du niveau!'
-    skill_click: '&eCliquez pour voir la progression des niveaux!'
-    skill_locked: '&cVous n''êtes pas autorisé à afficher cette compétence!'
-    stats: '&bStats'
-    stats_desc: '&7Gagnez des buffs de stats en augmentant le niveau de compétences'
-    stats_click: '&eCliquez pour en savoir plus ou voir vos statistiques'
-  level_progression_menu:
-    level_progression_menu_title: 'Niveau {skill} - Page {page}'
-    your_ranking: '&eVotre classement de compétences'
-    rank_out_of: '&fVous êtes classé &6{rank}&f sur un total de {total} joueurs'
-    rank_percent: '&fVous êtes dans le top &6{percent}%&f des joueurs'
-    back: '&aRetour en arrière'
-    back_click: '&7Revenir au menu {menu_name}'
-    next_page: '&6Page suivante'
-    next_page_click: '&eCliquez pour aller à la page suivante'
-    previous_page: '&6Page précedente'
-    previous_page_click: '&eCliquez pour aller à la page précédente'
-    level_unlocked: '&aNiveau {level}'
-    level_in_progress: '&eNiveau {level}'
-    level_locked: '&cNiveau {level}'
-    level_number: '&7Niveau &f{level}'
-    unlocked: '&aDÉBLOQUÉ'
-    in_progress: '&eEN COURS'
-    locked: '&cBLOQUÉ'
-    rewards: '&7Récompenses:{rewards}'
-    rewards_entry: "\n  {color}+1{symbol} {stat}"
-    money_reward: "\n  &a${amount}"
-    ability_unlock: "\n&6{ability} &a&lDébloquage de compétence\n&7  {desc}\n "
-    ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
-    mana_ability_unlock: "\n&9{mana_ability} &d&lDébloquage de compétence de mana\n&7  {desc}\n "
-    mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
-    progress: "&7Progrès: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
-    leaderboard_click: '&eCliquez pour voir le classement de {skill}'
+    close: "Fermer"
+    level: "Niveau"
+    progress_to_level: "Progression vers le niveau"
+    max_level: "NIVEAU MAXIMUM"
+    ability_levels: "Niveaux de compétence"
+    stats_leveled: "Stats Niveau"
+    mana_ability: "Compétence de mana"
+    duration: "Durée"
+    mana_cost: "Cout en mana"
+    cooldown: "Rechargement"
+    damage: "Dommages"
+    max_mana_cost: "Coût de Mana Max"
+    attack_speed: "Vitesse d'attaque"
+    back: "Retour en arrière"
+    back_click: "Revenir au menu {menu_name}"
+    unlocked: "DÉBLOQUÉ"
+    in_progress: "EN COURS"
+    locked: "BLOQUÉ"
+    your_level: "Votre niveau"
+  skills:
+    skills_title: "Vos compétences"
+    your_skills: "Vos compétences"
+    your_skills_desc: "Améliorez vos compétences en effectuant diverses tâches pour débloquer des améliorations de statistiques, des capacités et plus encore"
+    your_skills_hover: "Survolez une compétence pour plus d'informations!"
+    your_skills_click: "Cliquez sur une compétence pour voir la progression du niveau!"
+    skill_click: 'Cliquez pour voir la progression des niveaux!'
+    stats: 'Stats'
+    stats_desc: 'Gagnez des buffs de stats en augmentant le niveau de compétences'
+    stats_click: 'Cliquez pour en savoir plus ou voir vos statistiques'
+  level_progression:
+    level_progression_title: 'Niveau {skill} - Page {page}'
+    your_ranking: 'Votre classement de compétences'
+    rank_out_of: '<1>Vous êtes classé <2>{rank}</2> sur un total de {total} joueurs</1>'
+    rank_percent: '<1>Vous êtes dans le top <2>{percent}%</2> des joueurs</1>'
+    next_page: 'Page suivante'
+    next_page_click: 'Cliquez pour aller à la page suivante'
+    previous_page: 'Page précedente'
+    previous_page_click: 'Cliquez pour aller à la page précédente'
+    rewards: 'Récompenses'
+    ability_unlock: "Débloquage de compétence"
+    mana_ability_unlock: "Débloquage de compétence de mana"
+    progress: "Progrès"
+    leaderboard_click: 'Cliquez pour voir le classement de {skill}'
     sources: 'Sources d''Xp'
-    sources_desc: "&7Le menu sources montre toutes les façons dont vous\n&7pouvez gagner de l'XP dans une compétence, ainsi que combien\n&7XP chaque source donne."
-    sources_click: '&eCliquez pour afficher les sources de {skill}'
-    abilities: '&cCompétences'
-    abilities_desc: "&bLes aptitudes &7sont des compétences passives que vous débloquez et\n&7améliorez au fur et à mesure que vous améliorez vos compétences.\n&dLes capacités de mana &7sont un type spécial de capacité\n&7qui nécessite l'activation et consomme de la mana."
-    abilities_click: '&eCliquez pour voir les capacités de {skill}'
-  stats_menu:
+    sources_desc: "Le menu sources montre toutes les façons dont vous pouvez gagner de l'XP dans une compétence, ainsi que combien XP chaque source donne."
+    sources_click: 'Cliquez pour afficher les sources de {skill}'
+    abilities: 'Compétences'
+    abilities_desc: "<2>Les aptitudes</2> <1>sont des compétences passives que vous débloquez et améliorez au fur et à mesure que vous améliorez vos compétences.</1>"
+    mana_abilities_desc: "<3>Les capacités de mana</3> <1>sont un type spécial de capacité qui nécessite l'activation et consomme de la mana.</1>"
+    abilities_click: 'Cliquez pour voir les capacités de {skill}'
+  stats:
     stats_menu_title: Vos statistiques
-    player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    skills: "\n&7Compétences: &f{skills}"
-    your_level: '&7Votre niveau: {color}{level}'
-    attack_damage: '&4+{value}% dégâts d''attaque'
-    hp: '&c+{value} ❤'
-    saturated_regen: '&6+{value} Régénération saturé'
-    full_hunger_regen: '&6+{value} Régénération complète de la faim'
-    almost_full_hunger_regen: '&6+{value} Régénération de la faim presque complète'
-    mana_regen: '&b+{value} Régénération de mana'
-    luck: '&2+{value} Chance'
-    double_drop_chance: '&2Chance de double drop: {value}%'
-    xp_gain: '&9+{value}% gain d''{xp_unit}'
-    anvil_cost_reduction: '&9Réduction des coûts d''enclume: {value}%'
-    max_mana: '&9Mana max: {value}'
-    incoming_damage: '&5-{value}% Dégâts reçu'
+    skills: "7Compétences"
   unclaimed_items:
     unclaimed_items_title: 'Réclamer les articles'
-    inventory_full: '&eVous n''avez pas assez de place dans votre inventaire pour récupérer ceci'
-    click_to_claim: '&eCliquez pour réclamer!'
+    inventory_full: 'Vous n''avez pas assez de place dans votre inventaire pour récupérer ceci'
+    click_to_claim: 'Cliquez pour réclamer!'
   leaderboard:
     leaderboard_title: 'Classement de {skill}'
-    player_entry: '&e{place}. &6{player}'
-    skill_level: '&7Niveau &f{level}'
   sources:
-    sources_title: 'Sources d''XP de {skill} ({current_page}/{total_pages})'
-    sorter: '&bTrier les Sources XP'
-    sort_type: "&7{selected}{type_name}\n"
-    selected: '&f> '
+    sources_title: 'Sources d''XP de {skill}'
+    sorter: 'Trier les Sources XP'
     descending: 'Du plus haut au plus bas'
     ascending: 'Du plus bas au plus haut'
     alphabetical: 'Nom (A-Z)'
     reverse_alphabetical: 'Nom (Z-A)'
-    sort_click: '&eCliquez pour choisir le type de tri'
-    source_name: '&f{name}'
-    source_xp: '&7XP: &a{xp}'
-    source_xp_rate: '&7XP: &a{xp}/{unit}'
-    multiplied_xp: "\n\nXP &fMultiplié : &a{xp}"
-    multiplied_xp_rate: "\n\n&fXP Multiplié : &a{xp}/{unit}"
-    multiplied_desc: "\n&7&oC'est l'XP que vous allez réellement gagner\n&7&obasé sur vos multiplicateurs d'XP actuels"
+    sort_click: 'Cliquez pour choisir le type de tri'
+    multiplied_xp: "{xp_unit} Multiplié"
+    multiplied_desc: "C'est l'XP que vous allez réellement gagner basé sur vos multiplicateurs d'XP actuels"
   abilities:
     abilities_title: 'Capacités de {skill}'
-    locked_desc: "&fDescription :\n  &7{desc}"
-    unlocked_at: '&7Déverrouillé à &3{skill} {level}'
-    your_ability_level: '&fVotre niveau: &b{level}'
-    your_ability_level_maxed: '&fVotre Niveau : &b{level} &6(MAX)'
-    unlocked_desc: "&fProchaine amélioration à &3{skill} {level}&f\n  &7{desc}"
-    unlocked_desc_maxed: "&fDescription :\n  &7{desc}"
-    desc_upgrade_value: '&7{current}&8→{next}&7'
+    description: "Description"
+    unlocked_at: "<1>Déverrouillé à <2>{skill} {level}"
+    next_upgrade_at: "<1>Prochaine amélioration à <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: Replante
-    desc: "&7Replante automatiquement les cultures pendant\n&7  {value} secondes.\n&e  [Clique droit pour activer]"
-    raise: '&7Vous levez votre houe'
-    lower: '&7Vous baissez votre houe'
-    start: '&6Replante activée! &7(-{mana} {mana_unit})'
-    end: '&6La replante a été désactivée'
+    desc: "Replante automatiquement les cultures pendant {value} secondes. <1>[Clique droit pour activer]"
+    raise: "<gray>Vous levez votre houe"
+    lower: "<gray>Vous baissez votre houe"
+    start: "<gold>Replante activée! <gray>(-{mana} {mana_unit})"
+    end: "<gray>La replante a été désactivée"
   treecapitator:
-    name: Découpeur d'arbre
-    desc: "&7Casser les arbres instantanément pendant\n&7  {value} secondes.\n&e  [Clique droit pour activer]"
-    raise: '&7Vous levez votre hache'
-    lower: '&7Vous baissez votre hache'
-    start: '&6Découpeur d''arbre activée! &7(-{mana} {mana_unit})'
-    end: '&7Découpeur d''arbre a été désactivé'
+    name: Découpeur d"arbre
+    desc: "Casser les arbres instantanément pendant {value} secondes. <1>[Clique droit pour activer]"
+    raise: "<gray>Vous levez votre hache"
+    lower: "<gray>Vous baissez votre hache"
+    start: "<gold>Découpeur d'arbre activée! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Découpeur d'arbre a été désactivé"
   speed_mine:
-    name: Mineur de l'extrème
-    desc: "&7Donne Céléritée {haste_level} pendant {value} secondes.\n&e  [clic droit avec une pioche et mine\n&e  un block pour activer]"
-    raise: '&7Vous levez votre pioche'
-    lower: '&7Vous baissez votre pioche'
-    start: '&6Mineur de l''extrème activée! &7(-{mana} {mana_unit})'
-    end: '&7Mineur de l''extrème a été désactivée'
+    name: Mineur de l"extrème
+    desc: "Donne Céléritée {haste_level} pendant {value} secondes. <1>[Clic droit avec une pioche et mine un block pour activer]"
+    raise: "<gray>Vous levez votre pioche"
+    lower: "<gray>Vous baissez votre pioche"
+    start: "<gold>Mineur de l'extrème activée! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Mineur de l'extrème a été désactivée"
   absorption:
     name: Absorption
-    desc: "Les dégâts reçus réduiront le mana\n&7  de 2x au lieu de vos points de vie Minecraft\n&7  pendant {value} secondes. Le mana ne se régénérera pas\n&7  lorsque l'Absorption est active.\n  &e[Clic gauche avec un bouclier et subit des dégâts pour l'activer]"
-    raise: '&7Vous levez votre bouclier'
-    lower: '&7Vous baissez votre bouclier'
-    start: '&6Absorption activé! &7(-{mana} {mana_unit})'
-    end: '&7L''Absorption s''est dissipée'
+    desc: "Les dégâts reçus réduiront le mana de 2x au lieu de vos points de vie Minecraft pendant {value} secondes. Le mana ne se régénérera pas lorsque l"Absorption est active. <1>[Clic gauche avec un bouclier et subit des dégâts pour l"activer]"
+    raise: "<gray>Vous levez votre bouclier"
+    lower: "<gray>Vous baissez votre bouclier"
+    start: "<gold>Absorption activé! <gray>(-{mana} {mana_unit})"
+    end: "<gray>L'Absorption s'est dissipée"
   terraform:
     name: Terraforme
-    desc: "Brisez instantanément des blocs dans un rayon de 4 blocs\n&7  dans la même couche lorsque vous creusez pendant {value} secondes. Vous\n&7  devez utiliser une pelle et les blocs supplémentaires cassés doivent être\n&7  du même type et dans une seule veine connectée.\n&7  &e[Clic droit sur la pelle et creuse le bloc pour activer]"
-    raise: '&7Vous levez votre pelle'
-    lower: '&7Vous baissez votre pelle'
-    start: '&6Terraforme Activé! &7(-{mana} {mana_unit})'
-    end: '&7Terraforme s''est épuisé'
+    desc: "Brisez instantanément des blocs dans un rayon de 4 blocs dans la même couche lorsque vous creusez pendant {value} secondes. Vous devez utiliser une pelle et les blocs supplémentaires cassés doivent être du même type et dans une seule veine connectée. <yellow>[Clic droit sur la pelle et creuse le bloc pour activer]"
+    raise: "<gray>Vous levez votre pelle"
+    lower: "<gray>Vous baissez votre pelle"
+    start: "<gold>Terraforme Activé! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraforme s'est épuisé"
   sharp_hook:
     name: Crochet pointu
-    desc: "Inflige {value} dégats à une entité accrochée\n&7  clic gauche avec une canne à pêche"
-    use: '&6Crochet pointu utilisé &7(-{mana} {mana_unit})'
-    menu: "\n&d&lCapacité de mana &9{mana_ability} {level}\n &7Dégats: &c{value} &7Coût en mana: &b{mana_cost} &7Rechargement: &e{cooldown}s\n "
+    desc: "Inflige {value} dégats à une entité accrochée clic gauche avec une canne à pêche"
+    use: "<gold>Crochet pointu utilisé <gray>(-{mana} {mana_unit})"
   charged_shot:
     name: Coup chargé
-    desc: "Les flèches que vous tirez infligeront plus de dégâts\n&7  en fonction de la distance à laquelle l'arc a été bandé,\n&7  le processus consomme du mana. fait  {value}% de dégâts en plus\n&7  par mana consommé. &e[Clic gauche\n&e  avec un arc pour activer/désactiver le mode de tir chargé]"
-    enable: '&7Le mode de tir chargé est maintenant activé'
-    disable: '&7Le mode de tir chargé est maintenant désactivé'
-    shoot: '&6Tir chargé utilisé ! &d+{percent}% DMG &7(-{mana} {mana_unit})'
-    menu: "\n&d&lMana Capacité &9{mana_ability} {level}\n &7Dommages : &c+{value}% / Mana &7Coût de Mana Max : &b{mana_cost}\n "
+    desc: "Les flèches que vous tirez infligeront plus de dégâts en fonction de la distance à laquelle l"arc a été bandé, le processus consomme du mana. Fait {value}% de dégâts en plus par mana consommé. <1>[Clic gauche avec un arc pour activer/désactiver le mode de tir chargé]"
+    enable: "<gray>Le mode de tir chargé est maintenant activé"
+    disable: "<gray>Le mode de tir chargé est maintenant désactivé"
+    shoot: "<gold>Tir chargé utilisé ! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
   lightning_blade:
     name: Lame de foudre
-    desc: Augmente la vitesse d'attaque de {value}% pendant {duration} secondes.\n&e [clic droit avec une épée et attaquez une créature pour l'activer]
-    raise: '&7Vous préparez votre épée'
-    lower: '&7Vous abaissez votre épée'
-    start: '&6Lame de foudre activée ! &7(-{mana} {mana_unit})'
-    end: '&7Lame de Foudre s''est épuisée'
-    menu: "\n&d&lCapacité de Mana &9{mana_ability} {level}\n &7Vitesse d'attaque : &c+{value}% &7Durée : &a{duration}s\n &7Coût de mana : &b{mana_cost} &7Cooldown : &e{cooldown}s\n "
-  not_ready: '&cCompétence non chargée! &7({cooldown}s)'
-  not_enough_mana: '&eMana insuffisante! &7({mana} {mana_unit} requis, vous avez {current_mana}/{max_mana})'
+    desc: Augmente la vitesse d"attaque de {value}% pendant {duration} secondes. <1>[Clic droit avec une épée et attaquez une créature pour l"activer]
+    raise: "<gray>Vous préparez votre épée"
+    lower: "<gray>Vous abaissez votre épée"
+    start: "<gold>Lame de foudre activée ! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Lame de Foudre s'est épuisée"
+  not_ready: "<red>Compétence non chargée! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Mana insuffisante! <gray>({mana} {mana_unit} requis, vous avez {current_mana}/{max_mana})"
 rewards:
   item:
     default_menu_message: "\n  {display_name}"
@@ -739,49 +707,49 @@ rewards:
 skills:
   farming:
     name: Fermier
-    desc: '&7Récoltez les récoltes pour gagner de  l''{xp_unit} Fermier'
+    desc: "Récoltez les récoltes pour gagner de  l'{xp_unit} Fermier"
   foraging:
     name: Bûcheron
-    desc: '&7Coupez du bois pour gagner de l''{xp_unit} Bûcheron'
+    desc: "Coupez du bois pour gagner de l'{xp_unit} Bûcheron"
   mining:
     name: Mineur
-    desc: "&7Miner de la pierre ou des minerais pour gagner\n&7de l'{xp_unit} Mineur"
+    desc: "Miner de la pierre ou des minerais pour gagner de l'{xp_unit} Mineur"
   fishing:
     name: Pêcheur
-    desc: '&7Pêcher du poisson pour gagner de l''{xp_unit} Pecheur'
+    desc: "Pêcher du poisson pour gagner de l'{xp_unit} Pecheur"
   excavation:
     name: Fouilleur
-    desc: '&7Creuser avec une pelle pour gagnez de l''{xp_unit}'
+    desc: "Creuser avec une pelle pour gagnez de l'{xp_unit}"
   archery:
     name: Archer
-    desc: "&7Tirez sur les mobs et les joueurs avec un arc pour\n&7gagnez de l'{xp_unit} Archer"
+    desc: "Tirez sur les mobs et les joueurs avec un arc pour gagnez de l'{xp_unit} Archer"
   defense:
     name: Defenseur
-    desc: "&7Subissez des dégâts d'un joueur ou d'un mobs\n&7pour gagnez de l'{xp_unit} Defenseur"
+    desc: "Subissez des dégâts d"un joueur ou d"un mobs pour gagnez de l'{xp_unit} Defenseur"
   fighting:
     name: Combatant
-    desc: "&7Combattez les mobs avec une arme de corps à corps\n&7pour gagnez de l'{xp_unit} Combatant"
+    desc: "Combattez les mobs avec une arme de corps à corps pour gagnez de l'{xp_unit} Combatant"
   endurance:
     name: Endurance
-    desc: '&7Marchez et courez pour gagnez de l''{xp_unit} Endurance'
+    desc: "Marchez et courez pour gagnez de l'{xp_unit} Endurance"
   agility:
     name: Agilité
-    desc: "&7Sautez et subissez des dégats de chute pour gagnez\n&7de l'{xp_unit} en Agilité"
+    desc: "Sautez et subissez des dégats de chute pour gagnez de l'{xp_unit} en Agilité"
   alchemy:
     name: Alchimie
-    desc: '&7Préparez des potions pour gagner de l''{xp_unit} en Alchimie'
+    desc: "Préparez des potions pour gagner de l'{xp_unit} en Alchimie"
   enchanting:
     name: Enchanteur
-    desc: "&7Enchantez des objets ou des livres pour\n&7gagner de l'{xp_unit} Enchanteur"
+    desc: "Enchantez des objets ou des livres pour gagner de l'{xp_unit} Enchanteur"
   sorcery:
     name: Sorcier
-    desc: "&7Utilisez des compétences à mana pour gagner\n&7de l'{xp_unit} Sorcier"
+    desc: "Utilisez des compétences à mana pour gagner de l'{xp_unit} Sorcier"
   healing:
     name: Guérison
-    desc: "&7Buvez et lancez des potions pour gagner\n&7de l'{xp_unit} en Guérison"
+    desc: "Buvez et lancez des potions pour gagner de l'{xp_unit} en Guérison"
   forging:
     name: Forgeron
-    desc: "&7Combinez et appliquez un livre dans une enclume pour\n&7gagner de l'{xp_unit} Forgeron"
+    desc: "Combinez et appliquez un livre dans une enclume pour gagner de l'{xp_unit} Forgeron"
 sources:
   farming:
     wheat: Blé
@@ -1042,34 +1010,78 @@ sources:
 stats:
   strength:
     name: Force
-    desc: "&7La force augmente vos dégâts d'attaque\n&7avec différentes armes"
-    color: '&4'
-    symbol: '➽'
+    desc: "La force augmente vos dégâts d'attaque avec différentes armes"
+    color: "<dark_red>"
+    symbol: ""➽"
   health:
     name: Santé
-    desc: "&7La santé augmente le nombre d'{hp_unit} que vous\n&7avez, vous permettant de durer plus longtemps\n&7en combat"
-    color: '&c'
-    symbol: '❤'
+    desc: "La santé augmente le nombre d'{hp_unit} que vous avez, vous permettant de durer plus longtemps en combat"
+    color: "<red>"
+    symbol: "❤"
   regeneration:
     name: Régénération
-    desc: "&7La régénération augmente la vitess à laquelle\n&7vous récupérez à la fois de la vie et du mana"
-    color: '&6'
-    symbol: '❥'
+    desc: "La régénération augmente la vitess à laquelle vous récupérez à la fois de la vie et du mana"
+    color: "<gold>"
+    symbol: "❥"
   luck:
     name: Chance
-    desc: "&7Augmente vos chance d'obtenir\n&7des butins épique depuis les mobs, la pêche, et plus"
-    color: '&2'
-    symbol: '☘'
+    desc: "Augmente vos chance d'obtenir des butins épique depuis les mobs, la pêche, et plus"
+    color: "<dark_green>"
+    symbol: "☘"
   wisdom:
     name: Sagesse
-    desc: "&7La sagesse augmente votre mana maximum, augmente\n&7votre gain d'éxpérience, et réduit les coup de l'enclume"
-    color: '&9'
-    symbol: '✿'
+    desc: "La sagesse augmente votre mana maximum, augmente votre gain d"éxpérience, et réduit les coup de l'enclume"
+    color: "<blue>"
+    symbol: "✿"
   toughness:
     name: Ténacité
-    desc: "&7La Ténacité augmente les dégats\n&7réduit par les attaques ennemies"
-    color: '&5'
-    symbol: '✦'
+    desc: "La Ténacité augmente les dégats réduit par les attaques ennemies"
+    color: "<dark_purple>"
+    symbol: "✦"
+  crit_chance:
+    name: ""
+    desc: ""
+    color: "<green>"
+    symbol: "⌘"
+  crit_damage:
+    name: ""
+    desc: ""
+    color: "<dark_aqua>"
+    symbol: "★"
+  attack_speed:
+    name: ""
+    desc: ""
+    color: "<light_purple>"
+    symbol: "⚔"
+traits:
+  attack_damage:
+    name: ""
+  hp:
+    name: ""
+  saturation_regen:
+    name: ""
+  hunger_regen:
+    name: ""
+  mana_regen:
+    name: ""
+  luck:
+    name: ""
+  double_drop:
+    name: ""
+  experience_bonus:
+    name: ""
+  anvil_discount:
+    name: ""
+  max_mana:
+    name: ""
+  damage_reduction:
+    name: ""
+  crit_chance:
+    name: ""
+  crit_damage:
+    name: ""
+  attack_speed:
+    name: ""
 units:
   mana: Mana
   hp: PV
