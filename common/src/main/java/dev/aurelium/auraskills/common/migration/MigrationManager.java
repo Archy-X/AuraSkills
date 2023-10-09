@@ -4,9 +4,9 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.io.File;
-import java.io.IOException;
 
 public class MigrationManager {
 
@@ -18,9 +18,10 @@ public class MigrationManager {
 
     public void attemptMigration() {
         try {
-            boolean migrateConfig = shouldMigrate("config_migration_complete");
-            boolean migrateFileUser = shouldMigrate("file_user_migration_complete");
-            boolean migrateSqlUser = shouldMigrate("sql_user_migration_complete");
+            ConfigurationNode config = FileUtil.loadYamlFile(new File(plugin.getPluginFolder(), "config.yml"));
+            boolean migrateConfig = shouldMigrate("config_migration_complete", config);
+            boolean migrateFileUser = shouldMigrate("file_user_migration_complete", config);
+            boolean migrateSqlUser = shouldMigrate("sql_user_migration_complete", config);
 
             if (migrateConfig || migrateFileUser || migrateSqlUser) {
                 plugin.logger().warn("[Migrator] As part of the 2.0 update, the plugin has been renamed from AureliumSkills to AuraSkills and config files have had format changes");
@@ -31,25 +32,33 @@ public class MigrationManager {
             if (migrateFileUser) {
                 FileUserMigrator fileUserMigrator = new FileUserMigrator(plugin);
                 fileUserMigrator.migrate();
-
+                setMigrated("file_user_migration_complete", config);
             }
             if (migrateSqlUser && plugin.getStorageProvider() instanceof SqlStorageProvider storageProvider) {
                 SqlUserMigrator sqlUserMigrator = new SqlUserMigrator(plugin, storageProvider);
                 sqlUserMigrator.migrate();
+                setMigrated("sql_user_migration_complete", config);
+            }
+            if (migrateConfig) {
+                ConfigMigrator configMigrator = new ConfigMigrator(plugin);
+                configMigrator.migrate();
+                setMigrated("config_migration_complete", config);
             }
         } catch (Exception e) {
-
+            plugin.logger().severe("[Migrator] Error while migrating, please report this to the plugin Discord!");
+            e.printStackTrace();
         }
     }
 
-    public boolean shouldMigrate(String key) throws IOException {
+    public boolean shouldMigrate(String key, ConfigurationNode config) {
         File aureliumDir = new File(plugin.getPluginFolder().getParentFile(), "AureliumSkills");
-        File auraDir = plugin.getPluginFolder();
-
-        ConfigurationNode config = FileUtil.loadYamlFile(new File(auraDir, "config.yml"));
         boolean migrationCompleted = config.node("metadata", key).getBoolean(true);
 
         return aureliumDir.exists() && !migrationCompleted;
+    }
+
+    public void setMigrated(String key, ConfigurationNode config) throws SerializationException {
+        config.node("metadata", key).set(true);
     }
 
 }

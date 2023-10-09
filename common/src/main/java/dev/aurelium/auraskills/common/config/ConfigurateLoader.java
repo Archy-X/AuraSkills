@@ -1,15 +1,14 @@
 package dev.aurelium.auraskills.common.config;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,7 +28,11 @@ public class ConfigurateLoader {
     public ConfigurateLoader(AuraSkillsPlugin plugin, TypeSerializerCollection serializers) {
         this.plugin = plugin;
         this.classLoader = plugin.getClass().getClassLoader();
-        this.serializers = serializers;
+        if (serializers == null) {
+            this.serializers = TypeSerializerCollection.builder().build();
+        } else {
+            this.serializers = serializers;
+        }
     }
 
     /**
@@ -68,12 +71,12 @@ public class ConfigurateLoader {
      * @return The loaded configuration node
      * @throws ConfigurateException If an error occurs while loading the file
      */
-    public ConfigurationNode loadUserFile(String path) throws ConfigurateException {
+    public ConfigurationNode loadUserFile(String path) throws IOException {
         File file = new File(plugin.getPluginFolder(), path);
 
         // Generate file if missing
         if (!file.exists()) {
-            plugin.saveResource(path, false);
+            throw new RuntimeException("File does not exist!");
         }
 
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
@@ -86,29 +89,13 @@ public class ConfigurateLoader {
         return loader.load();
     }
 
-    public void generateUserFile(String fileName) throws IOException {
-        URI uri = getEmbeddedURI(fileName);
-
-        if (uri == null) {
-            throw new IllegalArgumentException("File " + fileName + " does not exist");
-        }
-
-        Map<String, String> env = new HashMap<>();
-        env.put("create", "true");
-        try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
-            File file = new File(plugin.getPluginFolder(), fileName);
-
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .path(Path.of(uri))
-                    .sink(() -> new BufferedWriter(new FileWriter(fileName)))
-                    .indent(2)
-                    .defaultOptions(opts ->
-                            opts.serializers(build -> build.registerAll(serializers))
-                    )
-                    .build();
-
-            ConfigurationNode config = loader.load();
-            loader.save(config);
+    public void generateUserFile(String path) {
+        try {
+            ConfigurationNode config = loadEmbeddedFile(path);
+            File file = new File(plugin.getPluginFolder(), path);
+            FileUtil.saveYamlFile(file, config);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -8,11 +8,11 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.trait.LoadedTrait;
 import dev.aurelium.auraskills.common.trait.TraitLoader;
-import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -59,7 +59,7 @@ public class StatLoader {
             }
 
             plugin.logger().info("Loaded " + statsLoaded + " stats: " + Arrays.toString(plugin.getStatManager().getStats().stream().map(loaded -> loaded.stat().getId()).toArray()));
-        } catch (ConfigurateException e) {
+        } catch (IOException e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();
         }

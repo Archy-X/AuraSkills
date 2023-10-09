@@ -48,7 +48,7 @@ public class SqlUserMigrator {
                     }
                 }
             }
-            plugin.logger().warn("[Migrator] Migrated " + rowsMigrated + " rows from the table SkillData to the tables  " + tablePrefix + "users, " + tablePrefix + "skill_levels, " + tablePrefix + "key_values");
+            plugin.logger().info("[Migrator] Migrated " + rowsMigrated + " rows from the table SkillData to the tables  " + tablePrefix + "users, " + tablePrefix + "skill_levels, " + tablePrefix + "key_values");
         } catch (SQLException e) {
             plugin.logger().severe("[Migrator] Error migrating SQL SkillData table to new tables");
             e.printStackTrace();

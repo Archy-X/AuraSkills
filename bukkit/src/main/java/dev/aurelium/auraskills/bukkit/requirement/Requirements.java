@@ -28,7 +28,7 @@ public class Requirements {
     }
 
     public Map<Skill, Integer> getRequirements(ModifierType type, ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return new HashMap<>();
+        if (plugin.isNbtApiDisabled()) return new HashMap<>();
         NBTItem nbtItem = new NBTItem(item);
         Map<Skill, Integer> requirements = new HashMap<>();
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
@@ -57,7 +57,7 @@ public class Requirements {
 
 
     public ItemStack addRequirement(ModifierType type, ItemStack item, Skill skill, int level) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         compound.setInteger(getName(skill), level);
@@ -65,7 +65,7 @@ public class Requirements {
     }
 
     public ItemStack removeRequirement(ModifierType type, ItemStack item, Skill skill) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
@@ -78,7 +78,7 @@ public class Requirements {
     }
 
     public ItemStack removeAllRequirements(ModifierType type, ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         compound.getKeys().forEach(compound::removeKey);
@@ -87,7 +87,7 @@ public class Requirements {
     }
 
     public boolean hasRequirement(ModifierType type, ItemStack item, Skill skill) {
-        if (!plugin.isNbtApiEnabled()) return false;
+        if (plugin.isNbtApiDisabled()) return false;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getRequirementsTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
@@ -99,7 +99,7 @@ public class Requirements {
     }
 
     public ItemStack convertFromLegacy(ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         boolean modified = false;
         for (ModifierType type : ModifierType.values()) {

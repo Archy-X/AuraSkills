@@ -6,6 +6,8 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
@@ -42,6 +44,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.api.ApiRegistrationUtil;
+import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
 import dev.aurelium.auraskills.common.hooks.HookManager;
@@ -53,6 +56,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
+import dev.aurelium.auraskills.common.migration.MigrationManager;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
@@ -123,7 +127,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private InventoryManager inventoryManager;
     private MenuHelper menuHelper;
     private boolean nbtApiEnabled;
-    private final int resourceId = 81069;
 
     @Override
     public void onEnable() {
@@ -132,6 +135,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         audiences = BukkitAudiences.create(this);
         eventManager = new AuraSkillsEventManager(this);
         hookManager = new HookManager();
+        generateConfigs(); // Generate default config files if missing
+        // Handle migration
+        MigrationManager migrationManager = new MigrationManager(this);
+        migrationManager.attemptMigration();
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
@@ -226,6 +233,21 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         var agilityAbilities = getAbilityManager().getAbilityImpl(AgilityAbilities.class);
         for (Player player : Bukkit.getOnlinePlayers()) {
             agilityAbilities.removeFleetingQuit(player);
+        }
+    }
+
+    public void generateConfigs() {
+        ConfigurateLoader loader = new ConfigurateLoader(this, null);
+        loader.generateUserFile("config.yml");
+        loader.generateUserFile("skills.yml");
+        loader.generateUserFile("stats.yml");
+        loader.generateUserFile("traits.yml");
+        loader.generateUserFile("abilities.yml");
+        loader.generateUserFile("mana_abilities.yml");
+        loader.generateUserFile("xp_requirements.yml");
+        for (Skill skill : Skills.values()) {
+            String sources = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
+            loader.generateUserFile(sources);
         }
     }
 
@@ -327,7 +349,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     public int getResourceId() {
-        return resourceId;
+        return 81069;
     }
 
     @Override
@@ -527,7 +549,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         }
     }
 
-    public boolean isNbtApiEnabled() {
-        return nbtApiEnabled;
+    public boolean isNbtApiDisabled() {
+        return !nbtApiEnabled;
     }
 }

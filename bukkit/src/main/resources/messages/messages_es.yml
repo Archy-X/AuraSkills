@@ -1039,6 +1039,50 @@ stats:
     desc: "&7La Resistencia incrementa la cantidad de\n&7de daño reducido de los ataques enemigos"
     color: '&5'
     symbol: '✦'
+  crit_chance:
+    name: ""
+    desc: ""
+    color: "<green>"
+    symbol: "⌘"
+  crit_damage:
+    name: ""
+    desc: ""
+    color: "<dark_aqua>"
+    symbol: "★"
+  attack_speed:
+    name: ""
+    desc: ""
+    color: "<light_purple>"
+    symbol: "⚔"
+traits:
+  attack_damage:
+    name: ""
+  hp:
+    name: ""
+  saturation_regen:
+    name: ""
+  hunger_regen:
+    name: ""
+  mana_regen:
+    name: ""
+  luck:
+    name: ""
+  double_drop:
+    name: ""
+  experience_bonus:
+    name: ""
+  anvil_discount:
+    name: ""
+  max_mana:
+    name: ""
+  damage_reduction:
+    name: ""
+  crit_chance:
+    name: ""
+  crit_damage:
+    name: ""
+  attack_speed:
+    name: ""
 units:
   mana: Maná
   hp: HP

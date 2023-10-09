@@ -30,13 +30,6 @@ public class BukkitConfigProvider implements ConfigProvider {
     public void loadOptions() {
         PlatformLogger logger = plugin.logger();
         ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
-        // Save the config to file if not exist
-        try {
-            loader.generateUserFile("config.yml");
-        } catch (IOException e) {
-            plugin.logger().severe("Failed to save default config.yml file");
-            e.printStackTrace();
-        }
         try {
             // Load embedded file
             ConfigurationNode embedded = loader.loadEmbeddedFile("config.yml");

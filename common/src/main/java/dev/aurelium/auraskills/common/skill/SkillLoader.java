@@ -15,11 +15,11 @@ import dev.aurelium.auraskills.common.mana.LoadedManaAbility;
 import dev.aurelium.auraskills.common.mana.ManaAbilityLoader;
 import dev.aurelium.auraskills.common.source.SourceLoader;
 import dev.aurelium.auraskills.common.source.SourceTag;
-import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.io.IOException;
 import java.util.*;
 
 public class SkillLoader {
@@ -74,7 +74,7 @@ public class SkillLoader {
             plugin.logger().info("Loaded " + skillsLoaded + " skills: " + Arrays.toString(plugin.getSkillManager().getSkills().stream().map(loaded -> loaded.skill().getId()).toArray()));
 
             loadSourceTags();
-        } catch (ConfigurateException e) {
+        } catch (IOException e) {
             plugin.logger().severe("Error loading skills.yml file: " + e.getMessage());
             e.printStackTrace();
         }

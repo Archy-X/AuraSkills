@@ -27,7 +27,7 @@ public class Modifiers {
     }
 
     public ItemStack addModifier(ModifierType type, ItemStack item, Stat stat, double value) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         compound.setDouble(getName(stat), value);
@@ -35,7 +35,7 @@ public class Modifiers {
     }
 
     public ItemStack convertFromLegacy(ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         boolean modified = false;
         for (ModifierType type : ModifierType.values()) {
@@ -56,7 +56,7 @@ public class Modifiers {
     }
 
     public ItemStack removeModifier(ModifierType type, ItemStack item, Stat stat) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         compound.removeKey(getName(stat));
@@ -65,7 +65,7 @@ public class Modifiers {
     }
 
     public ItemStack removeAllModifiers(ModifierType type, ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
@@ -76,7 +76,7 @@ public class Modifiers {
     }
 
     public List<StatModifier> getLegacyModifiers(ModifierType type, NBTItem nbtItem) {
-        if (!plugin.isNbtApiEnabled()) return new ArrayList<>();
+        if (plugin.isNbtApiDisabled()) return new ArrayList<>();
         List<StatModifier> modifiers = new ArrayList<>();
         NBTCompound compound = ItemUtils.getLegacyModifiersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {
@@ -90,7 +90,7 @@ public class Modifiers {
     }
 
     public List<StatModifier> getModifiers(ModifierType type, ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return new ArrayList<>();
+        if (plugin.isNbtApiDisabled()) return new ArrayList<>();
         NBTItem nbtItem = new NBTItem(item);
         List<StatModifier> modifiers = new ArrayList<>();
         NBTCompound compound = ItemUtils.getModifiersTypeCompound(nbtItem, type);

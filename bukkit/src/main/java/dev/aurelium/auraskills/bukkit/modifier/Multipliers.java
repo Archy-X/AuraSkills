@@ -29,7 +29,7 @@ public class Multipliers {
     }
 
     public List<Multiplier> getMultipliers(ModifierType type, ItemStack item) {
-        if (!plugin.configBoolean(Option.MODIFIER_MULTIPLIER_ENABLED) || !plugin.isNbtApiEnabled()) { // Return empty list if disabled
+        if (!plugin.configBoolean(Option.MODIFIER_MULTIPLIER_ENABLED) || plugin.isNbtApiDisabled()) { // Return empty list if disabled
             return new ArrayList<>();
         }
         NBTItem nbtItem = new NBTItem(item);
@@ -59,7 +59,7 @@ public class Multipliers {
     }
 
     public ItemStack convertFromLegacy(ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         boolean modified = false;
         for (ModifierType type : ModifierType.values()) {
@@ -78,7 +78,7 @@ public class Multipliers {
     }
 
     public ItemStack addMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill, double value) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         compound.setDouble(getNBTName(skill), value);
@@ -86,7 +86,7 @@ public class Multipliers {
     }
 
     public ItemStack removeMultiplier(ModifierType type, ItemStack item, @Nullable Skill skill) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         compound.removeKey(getNBTName(skill));
@@ -95,7 +95,7 @@ public class Multipliers {
     }
 
     public ItemStack removeAllMultipliers(ModifierType type, ItemStack item) {
-        if (!plugin.isNbtApiEnabled()) return item;
+        if (plugin.isNbtApiDisabled()) return item;
         NBTItem nbtItem = new NBTItem(item);
         NBTCompound compound = ItemUtils.getMultipliersTypeCompound(nbtItem, type);
         for (String key : compound.getKeys()) {

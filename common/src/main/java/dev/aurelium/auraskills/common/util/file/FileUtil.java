@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.util.file;
 
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -8,6 +9,14 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FileUtil {
 
@@ -75,8 +84,47 @@ public class FileUtil {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .file(file)
                 .nodeStyle(NodeStyle.BLOCK)
+                .indent(2)
                 .build();
         loader.save(config);
+    }
+
+    public static ConfigurationNode loadEmbeddedYamlFile(String fileName, AuraSkillsPlugin plugin) throws IOException {
+        URI uri = getEmbeddedURI(fileName, plugin);
+
+        if (uri == null) {
+            throw new IllegalArgumentException("File " + fileName + " does not exist");
+        }
+
+        Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
+        try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
+
+            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                    .path(Path.of(uri))
+                    .build();
+
+            return loader.load();
+        }
+    }
+
+    private static URI getEmbeddedURI(String fileName, AuraSkillsPlugin plugin) {
+        if (fileName == null) {
+            throw new IllegalArgumentException("fileName cannot be null");
+        }
+
+        try {
+            URL url = plugin.getClass().getClassLoader().getResource(fileName);
+
+            if (url == null) {
+                return null;
+            }
+
+            // Convert URL to URI
+            return url.toURI();
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
 }
