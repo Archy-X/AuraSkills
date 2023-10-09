@@ -5,12 +5,11 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 
 import java.text.DecimalFormat;
@@ -137,14 +136,6 @@ public class LevelUpMessenger {
     private String getMoneyRewardMessage() {
         MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
         double totalMoney = 0;
-        // Legacy system
-        if (plugin.getHookManager().isRegistered(EconomyHook.class)) {
-            if (plugin.configBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-                double base = plugin.configDouble(Option.SKILL_MONEY_REWARDS_BASE);
-                double multiplier = plugin.configDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-                totalMoney += base + (multiplier * level * level);
-            }
-        }
         // New rewards
         for (MoneyReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(MoneyReward.class, level)) {
             totalMoney += reward.getAmount();

@@ -14,6 +14,7 @@ import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
+import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
@@ -306,6 +307,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new ArmorListener(configStringList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
         pm.registerEvents(new ArmorModifierListener(this), this);
         pm.registerEvents(new RegionBlockListener(this), this);
+        pm.registerEvents(new PlayerDeath(this), this);
     }
 
     public BukkitAudiences getAudiences() {

@@ -51,7 +51,7 @@ public class RegionBlockListener implements Listener {
                 return;
             }
         }
-        if (!plugin.configBoolean(Option.CHECK_BLOCK_REPLACE)) return;
+        if (!plugin.configBoolean(Option.CHECK_BLOCK_REPLACE_ENABLED)) return;
 
         Block block = event.getBlock();
 

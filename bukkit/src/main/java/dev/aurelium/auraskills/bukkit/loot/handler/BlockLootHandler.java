@@ -57,7 +57,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
         if (getSource(block) == null) return;
 
         // Check block replace
-        if (plugin.configBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
+        if (plugin.configBoolean(Option.CHECK_BLOCK_REPLACE_ENABLED) && plugin.getRegionManager().isPlacedBlock(block)) {
             return;
         }
 

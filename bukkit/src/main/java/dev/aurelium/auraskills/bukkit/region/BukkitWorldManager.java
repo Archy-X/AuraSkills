@@ -33,7 +33,7 @@ public class BukkitWorldManager implements WorldManager {
             disabledWorlds.add(blockedWorld);
             blockedWorldsLoaded++;
         }
-        for (String blockedWorld : config.getStringList("blocked_check_block_replace_worlds")) {
+        for (String blockedWorld : config.getStringList("check_block_replace.blocked_worlds")) {
             blockedCheckBlockReplaceWorlds.add(blockedWorld);
             blockedWorldsLoaded++;
         }

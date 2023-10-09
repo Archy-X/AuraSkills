@@ -51,7 +51,7 @@ public class WorldGuardHook extends Hook {
         blockedRegions = new LinkedList<>();
         blockedRegions.addAll(config.node("blocked_regions").getList(String.class, new ArrayList<>()));
         blockedCheckBlockReplaceRegions = new LinkedList<>();
-        blockedCheckBlockReplaceRegions.addAll(config.node("blocked_check_replace_regions").getList(String.class, new ArrayList<>()));
+        blockedCheckBlockReplaceRegions.addAll(config.node("check_block_replace", "blocked_regions").getList(String.class, new ArrayList<>()));
     }
 
     public boolean isBlocked(Location location, Player player, FlagKey flagKey) {

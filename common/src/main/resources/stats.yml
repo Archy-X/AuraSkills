@@ -24,7 +24,7 @@ stats:
       auraskills/luck:
         modifier: 0.1
       auraskills/double_drop:
-        modifier: 0.05
+        modifier: 0.005
   auraskills/wisdom:
     enabled: true
     traits:

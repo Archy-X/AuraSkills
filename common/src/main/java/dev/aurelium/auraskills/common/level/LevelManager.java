@@ -6,10 +6,9 @@ import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.scheduler.Tick;
+import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -118,7 +117,6 @@ public abstract class LevelManager {
         for (SkillReward reward : rewards) {
             reward.giveReward(user, skill, level);
         }
-        giveLegacyMoneyRewards(user, level);
 
         // Reload items and armor to check for newly met requirements
         reloadModifiers(user);
@@ -138,19 +136,6 @@ public abstract class LevelManager {
 
         // Check for multiple level ups in a row after a delay
         plugin.getScheduler().scheduleSync(() -> checkLevelUp(user, skill), Tick.MS * plugin.configInt(Option.LEVELER_DOUBLE_CHECK_DELAY), TimeUnit.MILLISECONDS);
-    }
-
-    private void giveLegacyMoneyRewards(User user, int level) {
-        // Adds money rewards if enabled
-        if (plugin.getHookManager().isRegistered(EconomyHook.class)) {
-            if (plugin.configBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-                double base = plugin.configDouble(Option.SKILL_MONEY_REWARDS_BASE);
-                double multiplier = plugin.configDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-                double moneyToAdd = base + (multiplier * level * level);
-
-                plugin.getHookManager().getHook(EconomyHook.class).deposit(user, moneyToAdd);
-            }
-        }
     }
 
     public double calculateMultiplier(@NotNull User user, Skill skill) {

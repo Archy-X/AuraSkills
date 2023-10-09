@@ -92,7 +92,7 @@ public class BlockLevelerHelper {
     }
 
     private boolean checkReplace() {
-        return plugin.configBoolean(Option.CHECK_BLOCK_REPLACE);
+        return plugin.configBoolean(Option.CHECK_BLOCK_REPLACE_ENABLED);
     }
 
 }

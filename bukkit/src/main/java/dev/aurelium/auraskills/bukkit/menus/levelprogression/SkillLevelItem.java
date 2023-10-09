@@ -6,8 +6,6 @@ import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
-import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
@@ -76,14 +74,6 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
             message.append(reward.getMenuMessage(plugin.getUser(player), locale, skill, level));
             if (reward instanceof MoneyReward) {
                 totalMoney += ((MoneyReward) reward).getAmount();
-            }
-        }
-        // Legacy money rewards
-        if (plugin.getHookManager().isRegistered(EconomyHook.class)) {
-            if (plugin.configBoolean(Option.SKILL_MONEY_REWARDS_ENABLED)) {
-                double base = plugin.configDouble(Option.SKILL_MONEY_REWARDS_BASE);
-                double multiplier = plugin.configDouble(Option.SKILL_MONEY_REWARDS_MULTIPLIER);
-                totalMoney += base + (multiplier * level * level);
             }
         }
         if (totalMoney > 0) {

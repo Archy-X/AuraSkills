@@ -7,7 +7,6 @@
 # +----------------------------------------------------------------------------+ #
 # Plugin made by Archy
 
-# MySql Options
 mysql:
   enabled: false
   host: localhost
@@ -18,7 +17,6 @@ mysql:
   load_delay: 0
   always_load_on_join: false
   ssl: false
-
 hooks:
   HolographicDisplays:
     enabled: false
@@ -42,11 +40,8 @@ hooks:
       - 'Example'
     blocked_check_replace_regions:
       - 'Example'
-
 default_language: en
-
 try_detect_client_language: false
-
 languages:
   - en
   - es
@@ -65,8 +60,6 @@ languages:
   - cs
   - nl
   - ja
-
-# Action Bar Options
 action_bar:
   enabled: true
   idle: true
@@ -77,8 +70,6 @@ action_bar:
   round_xp: false
   placeholder_api: true
   use_suffix: true
-
-# Boss Bar Options
 boss_bar:
   enabled: true
   mode: single
@@ -104,13 +95,7 @@ boss_bar:
     - 'SORCERY BLUE PROGRESS'
     - 'HEALING WHITE PROGRESS'
     - 'FORGING YELLOW PROGRESS'
-
-# The base mana amount
-base_mana: 20
-
-# Whether certain numbers should show up as roman numerals:
 enable_roman_numerals: true
-
 damage_holograms:
   enabled: true
   scaling: true
@@ -133,39 +118,27 @@ damage_holograms:
     default: gray
     critical:
       digits: [gray, white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
-
 leaderboards:
   update_period: 6000
   update_delay: 6000
-
-# Skill Options
 enable_skill_commands: true
-
-check_block_replace: true
-blocked_check_block_replace_worlds:
-  - Example
-blocked_check_block_replace_regions:
-  - Example
-
+check_block_replace:
+  enabled: true
+  blocked_worlds:
+    - Example
+  blocked_regions:
+    - Example
 blocked_worlds:
   - Example
-
 disabled_worlds:
   - Example
-
 disable_in_creative_mode: false
-reset_skills_on_death: false
-reset_xp_on_death: false
-
+on_death:
+  reset_skills: false
+  reset_xp: false
 auto_save:
   enabled: false
   interval_ticks: 12000
-
-skill_money_rewards:
-  enabled: false
-  base: 100
-  multiplier: 10
-
 leveler:
   title:
     enabled: true
@@ -179,7 +152,6 @@ leveler:
     volume: 1.0
     pitch: 0.5
   double_check_delay: 20
-
 modifier:
   armor:
     equip_blocked_materials:
@@ -193,7 +165,6 @@ modifier:
   multiplier:
     enabled: true
   auto_convert_from_legacy: true
-
 requirement:
   enabled: true
   item:
@@ -205,7 +176,6 @@ requirement:
   armor:
     prevent_armor_equip: true
     global:
-
 critical:
   enabled:
     sword: true
@@ -216,20 +186,15 @@ critical:
     hoe: true
     hand: false
     other: false
-
 menus:
   placeholder_api: true
   stats:
     show_trait_values_directly: true
-
 check_for_updates: true
-
 automatic_backups:
   enabled: true
   minimum_interval_hours: 24
-
 save_blank_profiles: false
-
 metadata:
   config_migration_complete: false
   file_user_migration_complete: false

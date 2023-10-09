@@ -90,7 +90,7 @@ public class SkillCommand extends BaseCommand {
         Locale locale = user.getLocale();
         if (skill != null) {
             if (skill.isEnabled()) {
-                resetPlayerSkills(user, skill);
+                user.resetSkill(skill);
                 // Reload items and armor to check for newly met requirements
                 this.plugin.getModifierManager().reloadPlayer(player);
                 sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
@@ -101,20 +101,11 @@ public class SkillCommand extends BaseCommand {
             }
         } else {
             for (Skill s : plugin.getSkillRegistry().getValues()) {
-                resetPlayerSkills(user, s);
+                user.resetSkill(s);
             }
             sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_RESET_RESET_ALL, locale)
                     .replace("{player}", player.getName()));
         }
-    }
-
-    private void resetPlayerSkills(User user, Skill skill) {
-        int oldLevel = user.getSkillLevel(skill);
-        user.setSkillLevel(skill, 1);
-        user.setSkillXp(skill, 0);
-        plugin.getStatManager().updateStats(user);
-        plugin.getRewardManager().updatePermissions(user);
-        plugin.getRewardManager().applyRevertCommands(user, skill, oldLevel, 1);
     }
 
 

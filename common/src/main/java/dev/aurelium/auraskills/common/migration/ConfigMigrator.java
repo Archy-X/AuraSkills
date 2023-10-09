@@ -40,7 +40,9 @@ public class ConfigMigrator {
 
                     if (fromNode.node(fromPath).virtual()) continue;
                     // Set the value of the new path to the value of the old path
-                    toNode.node(toPath).set(fromNode.node(fromPath).raw());
+                    if (!toNode.node(toPath).virtual()) { // Only set if the path already exists
+                        toNode.node(toPath).set(fromNode.node(fromPath).raw());
+                    }
                 }
                 FileUtil.saveYamlFile(newFile, toNode);
                 plugin.logger().warn("[Migrator] Migrated config values from " + oldFile.getName() + " to " + newFile.getName());
@@ -76,8 +78,22 @@ public class ConfigMigrator {
         List<Pair<String, String>> list = new ArrayList<>();
         for (Map.Entry<Object, ? extends ConfigurationNode> entry : config.childrenMap().entrySet()) {
             String fromPath = (String) entry.getKey();
-            String toPath = entry.getValue().getString();
-            list.add(new Pair<>(fromPath, toPath));
+            if (entry.getValue().isList()) { // One to many
+                for (ConfigurationNode node : entry.getValue().childrenList()) {
+                    String toPath = node.getString();
+                    list.add(new Pair<>(fromPath, toPath));
+                }
+            } else {
+                String toPath = entry.getValue().getString();
+                if (toPath == null) continue;
+                if (toPath.isEmpty()) { // If empty string, use the "from" path for both from and to
+                    list.add(new Pair<>(fromPath, fromPath));
+                } else if (toPath.equals("_")) { // If is underscore, use the same path but replace hyphens with underscores
+                    list.add(new Pair<>(fromPath, fromPath.replace("-", "_")));
+                } else {
+                    list.add(new Pair<>(fromPath, toPath));
+                }
+            }
         }
         return list;
     }

@@ -46,7 +46,7 @@ public class SpeedMine extends ReadiedManaAbility {
         if (event.isCancelled()) return;
 
         Block block = event.getBlock();
-        if (plugin.configBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
+        if (plugin.configBoolean(Option.CHECK_BLOCK_REPLACE_ENABLED) && plugin.getRegionManager().isPlacedBlock(block)) {
             return;
         }
         Player player = event.getPlayer();
