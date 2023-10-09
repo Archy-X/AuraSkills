@@ -39,14 +39,14 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
         this.stopMessage = stopMessage;
     }
 
-    public void activate(Player player) {
+    public boolean activate(Player player) {
         PlayerData playerData = plugin.getPlayerManager().getPlayerData(player);
-        if (playerData == null) return;
+        if (playerData == null) return false;
 
         int duration = getDuration(playerData);
         ManaAbilityActivateEvent event = new ManaAbilityActivateEvent(player, mAbility, duration);
         Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled()) return;
+        if (event.isCancelled()) return false;
 
         manager.setActivated(player, mAbility, true);
 
@@ -68,6 +68,7 @@ public abstract class ManaAbilityProvider extends AbilityProvider implements Lis
             manager.setActivated(player, mAbility, false);
             manager.setReady(player.getUniqueId(), mAbility, false);
         }
+        return true;
     }
 
     public abstract void onActivate(Player player, PlayerData playerData);

@@ -57,8 +57,9 @@ public class Absorption extends ReadiedManaAbility {
                 return;
             }
             if (hasEnoughMana(player)) {
-                activate(player);
-                handleAbsorbedHit(event, player, playerData);
+                if (activate(player)) {
+                    handleAbsorbedHit(event, player, playerData);
+                }
             }
         }
     }

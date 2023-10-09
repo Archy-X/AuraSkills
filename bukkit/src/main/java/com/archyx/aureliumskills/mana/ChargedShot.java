@@ -89,16 +89,16 @@ public class ChargedShot extends ManaAbilityProvider {
             if (playerData.getAbilityData(MAbility.CHARGED_SHOT).getBoolean("enabled")) {
                 if (playerData.getManaAbilityLevel(MAbility.CHARGED_SHOT) == 0) return;
                 ManaAbilityManager manager = plugin.getManaAbilityManager();
-                int cooldown = manager.getPlayerCooldown(player.getUniqueId(), MAbility.SHARP_HOOK);
+                int cooldown = manager.getPlayerCooldown(player.getUniqueId(), MAbility.CHARGED_SHOT);
                 if (cooldown == 0) {
                     playerData.getMetadata().put("charged_shot_projectile", event.getProjectile());
                     playerData.getMetadata().put("charged_shot_force", event.getForce());
                     activate(player);
                 } else {
-                    if (manager.getErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK) == 0) {
+                    if (manager.getErrorTimer(player.getUniqueId(), MAbility.CHARGED_SHOT) == 0) {
                         Locale locale = playerData.getLocale();
                         plugin.getAbilityManager().sendMessage(player, TextUtil.replace(Lang.getMessage(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
-                        manager.setErrorTimer(player.getUniqueId(), MAbility.SHARP_HOOK, 2);
+                        manager.setErrorTimer(player.getUniqueId(), MAbility.CHARGED_SHOT, 2);
                     }
                 }
             }

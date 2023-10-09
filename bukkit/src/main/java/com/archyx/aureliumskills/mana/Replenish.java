@@ -42,8 +42,9 @@ public class Replenish extends ReadiedManaAbility {
         if (isActivated(player)) {
             onBreak(event);
         } else if (isReady(player) && isHoldingMaterial(player) && hasEnoughMana(player)) {
-            activate(player);
-            onBreak(event);
+            if (activate(player)) {
+                onBreak(event);
+            }
         }
     }
 

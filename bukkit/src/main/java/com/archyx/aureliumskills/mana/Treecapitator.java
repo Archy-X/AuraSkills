@@ -66,8 +66,9 @@ public class Treecapitator extends ReadiedManaAbility {
             }
             if (isReady(player) && isHoldingMaterial(player) && hasEnoughMana(player)) {
                 if (hasEnoughMana(player)) {
-                    activate(player);
-                    breakTree(player, block);
+                    if (activate(player)) {
+                        breakTree(player, block);
+                    }
                 }
             }
         }

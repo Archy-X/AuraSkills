@@ -66,8 +66,9 @@ public class Terraform extends ReadiedManaAbility {
         }
         // Checks if ability is ready
         if (isReady(player) && isHoldingMaterial(player) && hasEnoughMana(player)) {
-            activate(player);
-            terraformBreak(player, block);
+            if (activate(player)) {
+                terraformBreak(player, block);
+            }
         }
     }
 
