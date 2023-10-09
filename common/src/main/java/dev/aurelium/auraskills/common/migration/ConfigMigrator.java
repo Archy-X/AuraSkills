@@ -1,16 +1,16 @@
 package dev.aurelium.auraskills.common.migration;
 
+import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.mana.ManaAbilities;
+import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigMigrator {
 
@@ -53,7 +53,7 @@ public class ConfigMigrator {
         }
     }
 
-    private Map<Pair<File, File>, List<Pair<String, String>>> loadFilesAndPaths(ConfigurationNode config) throws IOException {
+    private Map<Pair<File, File>, List<Pair<String, String>>> loadFilesAndPaths(ConfigurationNode config) {
         Map<Pair<File, File>, List<Pair<String, String>>> pathMap = new HashMap<>();
 
         for (Map.Entry<Object, ? extends ConfigurationNode> entry : config.childrenMap().entrySet()) {
@@ -71,6 +71,7 @@ public class ConfigMigrator {
                 pathMap.put(new Pair<>(oldFile, newFile), loadMigrationPaths(childEntry.getValue()));
             }
         }
+        loadAbilitiesConfigMigrationPaths(pathMap);
         return pathMap;
     }
 
@@ -96,6 +97,81 @@ public class ConfigMigrator {
             }
         }
         return list;
+    }
+
+    private void loadAbilitiesConfigMigrationPaths(Map<Pair<File, File>, List<Pair<String, String>>> pathMap) {
+        File legacyFile = new File(plugin.getPluginFolder().getParentFile(), "AureliumSkills/abilities_config.yml");
+        File abilitiesFile = new File(plugin.getPluginFolder(), "abilities.yml");
+        File manaAbilitiesFile = new File(plugin.getPluginFolder(), "mana_abilities.yml");
+
+        List<Pair<String, String>> abList = new ArrayList<>();
+        for (Ability ability : Abilities.values()) {
+            String skillName = ability.getSkill().getId().getKey().toLowerCase(Locale.ROOT);
+            String abilityName = ability.getId().getKey().toLowerCase(Locale.ROOT);
+            String oPath = "abilities." + skillName + "." + abilityName + ".";
+            String nPath = "abilities.auraskills/" + abilityName + ".";
+
+            abList.add(genPair(oPath, nPath, "enabled"));
+            abList.add(new Pair<>(oPath + "base", nPath + "base_value"));
+            abList.add(new Pair<>(oPath + "per_level", nPath + "value_per_level"));
+            abList.add(genPair(oPath, nPath, "unlock"));
+            abList.add(genPair(oPath, nPath, "level_up"));
+            abList.add(genPair(oPath, nPath, "max_level"));
+            abList.add(new Pair<>(oPath + "base_2", nPath + "secondary_base_value"));
+            abList.add(new Pair<>(oPath + "per_level_2", nPath + "secondary_value_per_level"));
+            abList.add(genPair(oPath, nPath, "enable_message"));
+            abList.add(genPair(oPath, nPath, "health_percent_required"));
+            abList.add(genPair(oPath, nPath, "cooldown_ticks"));
+            abList.add(genPair(oPath, nPath, "scale_base_chance"));
+            if (ability == Abilities.BLEED) {
+                abList.add(genPair(oPath, nPath, "enable_enemy_message"));
+                abList.add(genPair(oPath, nPath, "enable_self_message"));
+                abList.add(genPair(oPath, nPath, "enable_stop_message"));
+                abList.add(genPair(oPath, nPath, "base_ticks"));
+                abList.add(genPair(oPath, nPath, "added_ticks"));
+                abList.add(genPair(oPath, nPath, "max_ticks"));
+                abList.add(genPair(oPath, nPath, "tick_period"));
+                abList.add(genPair(oPath, nPath, "show_particles"));
+            }
+        }
+        pathMap.put(new Pair<>(legacyFile, abilitiesFile), abList);
+
+        List<Pair<String, String>> maList = new ArrayList<>();
+        for (ManaAbility manaAbility : ManaAbilities.values()) {
+            String manaAbilityName = manaAbility.getId().getKey().toLowerCase(Locale.ROOT);
+            String oPath = "mana_abilities." + manaAbilityName + ".";
+            String nPath = "mana_abilities.auraskills/" + manaAbilityName + ".";
+
+            maList.add(genPair(oPath, nPath, "enabled"));
+            maList.add(genPair(oPath, nPath, "base_value"));
+            maList.add(genPair(oPath, nPath, "value_per_level"));
+            maList.add(new Pair<>(oPath + "cooldown", nPath + "base_cooldown"));
+            maList.add(genPair(oPath, nPath, "cooldown_per_level"));
+            maList.add(new Pair<>(oPath + "mana_cost", nPath + "base_mana_cost"));
+            maList.add(genPair(oPath, nPath, "mana_cost_per_level"));
+            maList.add(genPair(oPath, nPath, "unlock"));
+            maList.add(genPair(oPath, nPath, "level_up"));
+            maList.add(genPair(oPath, nPath, "max_level"));
+            maList.add(genPair(oPath, nPath, "require_sneak"));
+            maList.add(genPair(oPath, nPath, "check_offhand"));
+            maList.add(genPair(oPath, nPath, "sneak_offhand_bypass"));
+            maList.add(genPair(oPath, nPath, "replant_delay"));
+            maList.add(genPair(oPath, nPath, "show_particles"));
+            maList.add(genPair(oPath, nPath, "prevent_unripe_break"));
+            maList.add(genPair(oPath, nPath, "max_blocks_multipliers"));
+            maList.add(genPair(oPath, nPath, "haste_level"));
+            maList.add(genPair(oPath, nPath, "display_damage_with_scaling"));
+            maList.add(genPair(oPath, nPath, "enable_sound"));
+            maList.add(genPair(oPath, nPath, "disable_health_check"));
+            maList.add(genPair(oPath, nPath, "max_blocks"));
+            maList.add(genPair(oPath, nPath, "enable_message"));
+            maList.add(genPair(oPath, nPath, "enable_particles"));
+        }
+        pathMap.put(new Pair<>(legacyFile, manaAbilitiesFile), maList);
+    }
+
+    private Pair<String, String> genPair(String legacyPath, String newPath, String append) {
+        return new Pair<>(legacyPath + append, newPath + append);
     }
 
     private String[] toPathArray(String path) {

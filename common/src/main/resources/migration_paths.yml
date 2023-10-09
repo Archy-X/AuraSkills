@@ -204,3 +204,8 @@ config.yml:
     luck.double-drop-percent-max: traits.auraskills/double_drop.max_percent
     wisdom.allow-over-max-mana: traits.auraskills/max_mana.allow_overflow
     base-mana: traits.auraskills/max_mana.base
+xp_requirements.yml:
+  xp_requirements.yml:
+    default.expression: ''
+    default.multiplier: ''
+    default.base: ''
