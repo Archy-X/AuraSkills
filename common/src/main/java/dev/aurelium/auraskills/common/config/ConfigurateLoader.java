@@ -93,7 +93,9 @@ public class ConfigurateLoader {
         try {
             ConfigurationNode config = loadEmbeddedFile(path);
             File file = new File(plugin.getPluginFolder(), path);
-            FileUtil.saveYamlFile(file, config);
+            if (!file.exists()) {
+                FileUtil.saveYamlFile(file, config);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

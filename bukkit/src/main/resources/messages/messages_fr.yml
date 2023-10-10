@@ -312,7 +312,7 @@ acf:
     unknown_command: "<red>Commande inconnue, veuillez taper <yellow>/sk help"
     invalid_syntax: "<yellow>Utilisation: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Erreur: {message}"
-    error_performing_command: "<red>Je suis désolée, mais une erreur s"est produite lors de l"exécution de cette commande."
+    error_performing_command: "<red>Je suis désolée, mais une erreur s'est produite lors de l'exécution de cette commande."
     info_message: "{message}"
     please_specify_one_of: "<red>Erreur: Veuillez spécifier une de (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Erreur : {num} doit être un nombre."
@@ -667,7 +667,7 @@ mana_abilities:
     end: "<gray>Mineur de l'extrème a été désactivée"
   absorption:
     name: Absorption
-    desc: "Les dégâts reçus réduiront le mana de 2x au lieu de vos points de vie Minecraft pendant {value} secondes. Le mana ne se régénérera pas lorsque l"Absorption est active. <1>[Clic gauche avec un bouclier et subit des dégâts pour l"activer]"
+    desc: "Les dégâts reçus réduiront le mana de 2x au lieu de vos points de vie Minecraft pendant {value} secondes. Le mana ne se régénérera pas lorsque l'Absorption est active. <1>[Clic gauche avec un bouclier et subit des dégâts pour l'activer]"
     raise: "<gray>Vous levez votre bouclier"
     lower: "<gray>Vous baissez votre bouclier"
     start: "<gold>Absorption activé! <gray>(-{mana} {mana_unit})"
@@ -685,7 +685,7 @@ mana_abilities:
     use: "<gold>Crochet pointu utilisé <gray>(-{mana} {mana_unit})"
   charged_shot:
     name: Coup chargé
-    desc: "Les flèches que vous tirez infligeront plus de dégâts en fonction de la distance à laquelle l"arc a été bandé, le processus consomme du mana. Fait {value}% de dégâts en plus par mana consommé. <1>[Clic gauche avec un arc pour activer/désactiver le mode de tir chargé]"
+    desc: "Les flèches que vous tirez infligeront plus de dégâts en fonction de la distance à laquelle l'arc a été bandé, le processus consomme du mana. Fait {value}% de dégâts en plus par mana consommé. <1>[Clic gauche avec un arc pour activer/désactiver le mode de tir chargé]"
     enable: "<gray>Le mode de tir chargé est maintenant activé"
     disable: "<gray>Le mode de tir chargé est maintenant désactivé"
     shoot: "<gold>Tir chargé utilisé ! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
@@ -725,7 +725,7 @@ skills:
     desc: "Tirez sur les mobs et les joueurs avec un arc pour gagnez de l'{xp_unit} Archer"
   defense:
     name: Defenseur
-    desc: "Subissez des dégâts d"un joueur ou d"un mobs pour gagnez de l'{xp_unit} Defenseur"
+    desc: "Subissez des dégâts d'un joueur ou d'un mobs pour gagnez de l'{xp_unit} Defenseur"
   fighting:
     name: Combatant
     desc: "Combattez les mobs avec une arme de corps à corps pour gagnez de l'{xp_unit} Combatant"
@@ -1012,7 +1012,7 @@ stats:
     name: Force
     desc: "La force augmente vos dégâts d'attaque avec différentes armes"
     color: "<dark_red>"
-    symbol: ""➽"
+    symbol: "➽"
   health:
     name: Santé
     desc: "La santé augmente le nombre d'{hp_unit} que vous avez, vous permettant de durer plus longtemps en combat"
@@ -1030,7 +1030,7 @@ stats:
     symbol: "☘"
   wisdom:
     name: Sagesse
-    desc: "La sagesse augmente votre mana maximum, augmente votre gain d"éxpérience, et réduit les coup de l'enclume"
+    desc: "La sagesse augmente votre mana maximum, augmente votre gain d'éxpérience, et réduit les coup de l'enclume"
     color: "<blue>"
     symbol: "✿"
   toughness:
