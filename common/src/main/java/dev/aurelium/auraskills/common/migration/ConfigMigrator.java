@@ -3,6 +3,8 @@ package dev.aurelium.auraskills.common.migration;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
@@ -32,22 +34,28 @@ public class ConfigMigrator {
             for (var entry : paths.entrySet()) {
                 File oldFile = entry.getKey().first();
                 File newFile = entry.getKey().second();
+                try {
+                    ConfigurationNode fromNode = FileUtil.loadYamlFile(oldFile);
+                    ConfigurationNode toNode = FileUtil.loadYamlFile(newFile);
 
-                ConfigurationNode fromNode = FileUtil.loadYamlFile(oldFile);
-                ConfigurationNode toNode = FileUtil.loadYamlFile(newFile);
+                    for (var path : entry.getValue()) {
+                        Object[] fromPath = toPathArray(path.first());
+                        Object[] toPath = toPathArray(path.second());
 
-                for (var path : entry.getValue()) {
-                    Object[] fromPath = toPathArray(path.first());
-                    Object[] toPath = toPathArray(path.second());
-
-                    if (fromNode.node(fromPath).virtual()) continue;
-                    // Set the value of the new path to the value of the old path
-                    if (!toNode.node(toPath).virtual()) { // Only set if the path already exists
-                        toNode.node(toPath).set(fromNode.node(fromPath).raw());
+                        if (fromNode.node(fromPath).virtual()) continue;
+                        // Set the value of the new path to the value of the old path
+                        if (!toNode.node(toPath).virtual()) { // Only set if the path already exists
+                            toNode.node(toPath).set(fromNode.node(fromPath).raw());
+                        }
                     }
+                    FileUtil.saveYamlFile(newFile, toNode);
+
+                    Path pluginPath = plugin.getPluginFolder().toPath();
+                    plugin.logger().info("[Migrator] Migrated config values from " + oldFile.getName() + " to " + pluginPath.relativize(newFile.toPath()));
+                } catch (Exception e) {
+                    plugin.logger().severe("[Migrator] Error while migrating from " + oldFile.getPath() + " to " + newFile.getPath());
+                    e.printStackTrace();
                 }
-                FileUtil.saveYamlFile(newFile, toNode);
-                plugin.logger().info("[Migrator] Migrated config values from " + oldFile.getName() + " to " + newFile.getName());
             }
             migrateLootAndRewards();
         } catch (Exception e) {
@@ -57,7 +65,7 @@ public class ConfigMigrator {
     }
 
     private Map<Pair<File, File>, List<Pair<String, String>>> loadFilesAndPaths(ConfigurationNode config) {
-        Map<Pair<File, File>, List<Pair<String, String>>> pathMap = new HashMap<>();
+        Map<Pair<File, File>, List<Pair<String, String>>> pathMap = new LinkedHashMap<>();
 
         for (Map.Entry<Object, ? extends ConfigurationNode> entry : config.childrenMap().entrySet()) {
             String oldFileName = (String) entry.getKey();
@@ -75,6 +83,7 @@ public class ConfigMigrator {
             }
         }
         loadAbilitiesConfigMigrationPaths(pathMap);
+        loadSourcesConfigMigrationPaths(pathMap);
         return pathMap;
     }
 
@@ -173,12 +182,38 @@ public class ConfigMigrator {
         pathMap.put(new Pair<>(legacyFile, manaAbilitiesFile), maList);
     }
 
+    private void loadSourcesConfigMigrationPaths(Map<Pair<File, File>, List<Pair<String, String>>> pathMap) {
+        File legacyFile = new File(plugin.getPluginFolder().getParentFile(), "AureliumSkills/sources_config.yml");
+        try {
+            ConfigurationNode sConfig = FileUtil.loadYamlFile(legacyFile);
+
+            for (Skill skill : Skills.values()) {
+                List<Pair<String, String>> paths = new ArrayList<>();
+
+                String skillName = skill.getId().getKey().toLowerCase(Locale.ROOT);
+                File newFile = new File(plugin.getPluginFolder(), "sources/" + skillName + ".yml");
+
+                for (Object key : sConfig.node("sources", skillName).childrenMap().keySet()) {
+                    String sourceName = (String) key;
+                    String oPath = "sources." + skillName + "." + sourceName;
+                    String nPath = "sources." + sourceName + ".xp";
+
+                    paths.add(new Pair<>(oPath, nPath));
+                }
+                pathMap.put(new Pair<>(legacyFile, newFile), paths);
+            }
+        } catch (IOException e) {
+            plugin.logger().severe("[Migrator] Error loading sources config migration paths");
+            e.printStackTrace();
+        }
+    }
+
     private void migrateLootAndRewards() {
         File oldPluginDir = new File(plugin.getPluginFolder().getParentFile(), "AureliumSkills");
         copyDirectory(new File(oldPluginDir, "loot"), new File(plugin.getPluginFolder(), "loot"));
-        plugin.logger().info("[Migrator] Copied contents of AureliumSkills/loot/ directory to AuraSkills/loot/");
+        plugin.logger().info("[Migrator] Copied contents of AureliumSkills/loot directory to AuraSkills/loot");
         copyDirectory(new File(oldPluginDir, "rewards"), new File(plugin.getPluginFolder(), "rewards"));
-        plugin.logger().info("[Migrator] Copied contents of AureliumSkills/rewards/ directory to AuraSkills/rewards/");
+        plugin.logger().info("[Migrator] Copied contents of AureliumSkills/rewards directory to AuraSkills/rewards");
     }
 
     private void copyDirectory(File sourceDir, File destDir) {
