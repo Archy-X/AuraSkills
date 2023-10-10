@@ -34,7 +34,6 @@ public enum Option {
     BOSS_BAR_PLACEHOLDER_API("boss_bar.placeholder_api", OptionType.BOOLEAN),
     BOSS_BAR_USE_SUFFIX("boss_bar.use_suffix", OptionType.BOOLEAN),
     BOSS_BAR_FORMAT("boss_bar.format", OptionType.LIST),
-    BASE_MANA("base_mana", OptionType.DOUBLE),
     ENABLE_ROMAN_NUMERALS("enable_roman_numerals", OptionType.BOOLEAN),
     // Damage hologram options
     DAMAGE_HOLOGRAMS_ENABLED("damage_holograms.enabled", OptionType.BOOLEAN),

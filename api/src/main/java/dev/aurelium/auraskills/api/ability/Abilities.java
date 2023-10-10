@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.api.ability;
 
-import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Skill;
 
 import java.util.List;
 import java.util.Locale;
@@ -10,91 +10,93 @@ import java.util.Map;
 
 public enum Abilities implements Ability {
 
-    BOUNTIFUL_HARVEST,
-    FARMER,
-    SCYTHE_MASTER,
-    GENETICIST,
-    TRIPLE_HARVEST,
-    LUMBERJACK,
-    FORAGER,
-    AXE_MASTER,
-    VALOR,
-    SHREDDER,
-    LUCKY_MINER,
-    MINER,
-    PICK_MASTER,
-    STAMINA,
-    HARDENED_ARMOR,
-    LUCKY_CATCH,
-    FISHER,
-    TREASURE_HUNTER,
-    GRAPPLER,
-    EPIC_CATCH,
-    METAL_DETECTOR,
-    EXCAVATOR,
-    SPADE_MASTER,
-    BIGGER_SCOOP,
-    LUCKY_SPADES,
-    CRIT_CHANCE,
-    ARCHER,
-    BOW_MASTER,
-    PIERCING,
-    STUN,
-    SHIELDING,
-    DEFENDER,
-    MOB_MASTER,
-    IMMUNITY,
-    NO_DEBUFF,
-    CRIT_DAMAGE,
-    FIGHTER,
-    SWORD_MASTER,
-    FIRST_STRIKE,
-    BLEED(true),
-    ANTI_HUNGER,
-    RUNNER,
-    GOLDEN_HEAL,
-    RECOVERY,
-    MEAL_STEAL,
-    LIGHT_FALL,
-    JUMPER,
-    SUGAR_RUSH,
-    FLEETING,
-    THUNDER_FALL(true),
-    ALCHEMIST,
-    BREWER,
-    SPLASHER,
-    LINGERING(true),
-    WISE_EFFECT,
-    XP_CONVERT,
-    ENCHANTER,
-    XP_WARRIOR,
-    ENCHANTED_STRENGTH,
-    LUCKY_TABLE,
-    SORCERER,
-    LIFE_ESSENCE,
-    HEALER,
-    LIFE_STEAL,
-    GOLDEN_HEART,
-    REVIVAL(true),
-    DISENCHANTER,
-    FORGER,
-    REPAIRING,
-    ANVIL_MASTER,
-    SKILL_MENDER;
+    BOUNTIFUL_HARVEST("farming"),
+    FARMER("farming"),
+    SCYTHE_MASTER("farming"),
+    GENETICIST("farming"),
+    TRIPLE_HARVEST("farming"),
+    LUMBERJACK("foraging"),
+    FORAGER("foraging"),
+    AXE_MASTER("foraging"),
+    VALOR("foraging"),
+    SHREDDER("foraging"),
+    LUCKY_MINER("mining"),
+    MINER("mining"),
+    PICK_MASTER("mining"),
+    STAMINA("mining"),
+    HARDENED_ARMOR("mining"),
+    LUCKY_CATCH("fishing"),
+    FISHER("fishing"),
+    TREASURE_HUNTER("fishing"),
+    GRAPPLER("fishing"),
+    EPIC_CATCH("fishing"),
+    METAL_DETECTOR("excavation"),
+    EXCAVATOR("excavation"),
+    SPADE_MASTER("excavation"),
+    BIGGER_SCOOP("excavation"),
+    LUCKY_SPADES("excavation"),
+    CRIT_CHANCE("archery"),
+    ARCHER("archery"),
+    BOW_MASTER("archery"),
+    PIERCING("archery"),
+    STUN("archery"),
+    SHIELDING("defense"),
+    DEFENDER("defense"),
+    MOB_MASTER("defense"),
+    IMMUNITY("defense"),
+    NO_DEBUFF("defense"),
+    CRIT_DAMAGE("fighting"),
+    FIGHTER("fighting"),
+    SWORD_MASTER("fighting"),
+    FIRST_STRIKE("fighting"),
+    BLEED("fighting", true),
+    ANTI_HUNGER("endurance"),
+    RUNNER("endurance"),
+    GOLDEN_HEAL("endurance"),
+    RECOVERY("endurance"),
+    MEAL_STEAL("endurance"),
+    LIGHT_FALL("agility"),
+    JUMPER("agility"),
+    SUGAR_RUSH("agility"),
+    FLEETING("agility"),
+    THUNDER_FALL("agility", true),
+    ALCHEMIST("alchemy"),
+    BREWER("alchemy"),
+    SPLASHER("alchemy"),
+    LINGERING("alchemy", true),
+    WISE_EFFECT("alchemy"),
+    XP_CONVERT("enchanting"),
+    ENCHANTER("enchanting"),
+    XP_WARRIOR("enchanting"),
+    ENCHANTED_STRENGTH("enchanting"),
+    LUCKY_TABLE("enchanting"),
+    SORCERER("sorcery"),
+    LIFE_ESSENCE("healing"),
+    HEALER("healing"),
+    LIFE_STEAL("healing"),
+    GOLDEN_HEART("healing"),
+    REVIVAL("healing", true),
+    DISENCHANTER("forging"),
+    FORGER("forging"),
+    REPAIRING("forging"),
+    ANVIL_MASTER("forging"),
+    SKILL_MENDER("forging");
 
     @Inject
     private AbilityProvider provider;
 
     private final NamespacedId id;
     private final boolean hasSecondaryValue;
+    private final String defaultSkillName;
 
-    Abilities() {
-        this(false);
+    Abilities(String defaultSkillName) {
+        this(defaultSkillName, false);
     }
 
-    Abilities(boolean hasSecondaryValue) {
+    Abilities(String defaultSkill, boolean hasSecondaryValue) {
         this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
         this.hasSecondaryValue = hasSecondaryValue;
+        this.defaultSkillName = defaultSkill;
     }
 
     @Override
@@ -110,6 +112,10 @@ public enum Abilities implements Ability {
     @Override
     public Skill getSkill() {
         return provider.getSkill(this);
+    }
+
+    public String getDefaultSkillName() {
+        return defaultSkillName;
     }
 
     @Override

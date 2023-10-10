@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.common.migration;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -10,6 +9,9 @@ import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class ConfigMigrator {
@@ -45,8 +47,9 @@ public class ConfigMigrator {
                     }
                 }
                 FileUtil.saveYamlFile(newFile, toNode);
-                plugin.logger().warn("[Migrator] Migrated config values from " + oldFile.getName() + " to " + newFile.getName());
+                plugin.logger().info("[Migrator] Migrated config values from " + oldFile.getName() + " to " + newFile.getName());
             }
+            migrateLootAndRewards();
         } catch (Exception e) {
             plugin.logger().severe("[Migrator] Error while migrating configs, please report this to the plugin Discord!");
             e.printStackTrace();
@@ -105,8 +108,8 @@ public class ConfigMigrator {
         File manaAbilitiesFile = new File(plugin.getPluginFolder(), "mana_abilities.yml");
 
         List<Pair<String, String>> abList = new ArrayList<>();
-        for (Ability ability : Abilities.values()) {
-            String skillName = ability.getSkill().getId().getKey().toLowerCase(Locale.ROOT);
+        for (Abilities ability : Abilities.values()) {
+            String skillName = ability.getDefaultSkillName().toLowerCase(Locale.ROOT);
             String abilityName = ability.getId().getKey().toLowerCase(Locale.ROOT);
             String oPath = "abilities." + skillName + "." + abilityName + ".";
             String nPath = "abilities.auraskills/" + abilityName + ".";
@@ -168,6 +171,34 @@ public class ConfigMigrator {
             maList.add(genPair(oPath, nPath, "enable_particles"));
         }
         pathMap.put(new Pair<>(legacyFile, manaAbilitiesFile), maList);
+    }
+
+    private void migrateLootAndRewards() {
+        File oldPluginDir = new File(plugin.getPluginFolder().getParentFile(), "AureliumSkills");
+        copyDirectory(new File(oldPluginDir, "loot"), new File(plugin.getPluginFolder(), "loot"));
+        plugin.logger().info("[Migrator] Copied contents of AureliumSkills/loot/ directory to AuraSkills/loot/");
+        copyDirectory(new File(oldPluginDir, "rewards"), new File(plugin.getPluginFolder(), "rewards"));
+        plugin.logger().info("[Migrator] Copied contents of AureliumSkills/rewards/ directory to AuraSkills/rewards/");
+    }
+
+    private void copyDirectory(File sourceDir, File destDir) {
+        try {
+            Path sourcePath = sourceDir.toPath();
+            Path destinationPath = destDir.toPath();
+            Files.copy(sourcePath, destinationPath);
+            File[] files = sourceDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        Path filePath = file.toPath();
+                        Path destFilePath = destinationPath.resolve(file.getName());
+                        Files.copy(filePath, destFilePath);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Pair<String, String> genPair(String legacyPath, String newPath, String append) {
