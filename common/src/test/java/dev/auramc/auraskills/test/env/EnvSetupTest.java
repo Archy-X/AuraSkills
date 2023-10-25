@@ -9,7 +9,7 @@ import java.io.File;
 public class EnvSetupTest {
 
     @Test
-    public void testEnvSetup(@TempDir(cleanup = CleanupMode.ON_SUCCESS) File testDir) {
+    public void testEnvSetup(@TempDir(cleanup = CleanupMode.ALWAYS) File testDir) {
         TestAuraSkills plugin = new TestAuraSkills(testDir);
         assert new File(testDir, "AuraSkills/config.yml").exists();
         assert new File(plugin.getPluginFolder(), "config.yml").exists();

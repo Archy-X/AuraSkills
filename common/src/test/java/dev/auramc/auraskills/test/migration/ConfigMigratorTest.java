@@ -17,7 +17,7 @@ import java.util.Objects;
 public class ConfigMigratorTest {
 
     @Test
-    public void testMigrateMainConfig(@TempDir(cleanup = CleanupMode.ON_SUCCESS) File testDir) throws IOException {
+    public void testMigrateMainConfig(@TempDir(cleanup = CleanupMode.ALWAYS) File testDir) throws IOException {
         TestAuraSkills plugin = new TestAuraSkills(testDir);
         ConfigMigrator migrator = new ConfigMigrator(plugin);
 
