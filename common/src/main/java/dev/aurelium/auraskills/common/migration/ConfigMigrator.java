@@ -34,28 +34,7 @@ public class ConfigMigrator {
             for (var entry : paths.entrySet()) {
                 File oldFile = entry.getKey().first();
                 File newFile = entry.getKey().second();
-                try {
-                    ConfigurationNode fromNode = FileUtil.loadYamlFile(oldFile);
-                    ConfigurationNode toNode = FileUtil.loadYamlFile(newFile);
-
-                    for (var path : entry.getValue()) {
-                        Object[] fromPath = toPathArray(path.first());
-                        Object[] toPath = toPathArray(path.second());
-
-                        if (fromNode.node(fromPath).virtual()) continue;
-                        // Set the value of the new path to the value of the old path
-                        if (!toNode.node(toPath).virtual()) { // Only set if the path already exists
-                            toNode.node(toPath).set(fromNode.node(fromPath).raw());
-                        }
-                    }
-                    FileUtil.saveYamlFile(newFile, toNode);
-
-                    Path pluginPath = plugin.getPluginFolder().toPath();
-                    plugin.logger().info("[Migrator] Migrated config values from " + oldFile.getName() + " to " + pluginPath.relativize(newFile.toPath()));
-                } catch (Exception e) {
-                    plugin.logger().severe("[Migrator] Error while migrating from " + oldFile.getPath() + " to " + newFile.getPath());
-                    e.printStackTrace();
-                }
+                migrateFile(entry.getValue(), oldFile, newFile);
             }
             migrateLootAndRewards();
         } catch (Exception e) {
@@ -64,7 +43,32 @@ public class ConfigMigrator {
         }
     }
 
-    private Map<Pair<File, File>, List<Pair<String, String>>> loadFilesAndPaths(ConfigurationNode config) {
+    public void migrateFile(List<Pair<String, String>> paths, File oldFile, File newFile) {
+        try {
+            ConfigurationNode fromNode = FileUtil.loadYamlFile(oldFile);
+            ConfigurationNode toNode = FileUtil.loadYamlFile(newFile);
+
+            for (var path : paths) {
+                Object[] fromPath = toPathArray(path.first());
+                Object[] toPath = toPathArray(path.second());
+
+                if (fromNode.node(fromPath).virtual()) continue;
+                // Set the value of the new path to the value of the old path
+                if (!toNode.node(toPath).virtual()) { // Only set if the path already exists
+                    toNode.node(toPath).set(fromNode.node(fromPath).raw());
+                }
+            }
+            FileUtil.saveYamlFile(newFile, toNode);
+
+            Path pluginPath = plugin.getPluginFolder().toPath();
+            plugin.logger().info("[Migrator] Migrated config values from " + oldFile.getName() + " to " + pluginPath.relativize(newFile.toPath()));
+        } catch (Exception e) {
+            plugin.logger().severe("[Migrator] Error while migrating from " + oldFile.getPath() + " to " + newFile.getPath());
+            e.printStackTrace();
+        }
+    }
+
+    public Map<Pair<File, File>, List<Pair<String, String>>> loadFilesAndPaths(ConfigurationNode config) {
         Map<Pair<File, File>, List<Pair<String, String>>> pathMap = new LinkedHashMap<>();
 
         for (Map.Entry<Object, ? extends ConfigurationNode> entry : config.childrenMap().entrySet()) {

@@ -35,6 +35,7 @@ config.yml:
     damage-holograms: damage_holograms.enabled
     damage-holograms-scaling: damage_holograms.scaling
     damage-holograms-decimal.display-when-less-than: damage_holograms.decimal.display_when_less_than
+    damage-holograms-decimal.decimal-max-amount: damage_holograms.decimal.max_amount
     damage-holograms-offset.x: damage_holograms.offset.x
     damage-holograms-offset.y: damage_holograms.offset.y
     damage-holograms-offset.z: damage_holograms.offset.z
