@@ -126,8 +126,6 @@ check_block_replace:
   enabled: true
   blocked_worlds:
     - Example
-  blocked_regions:
-    - Example
 blocked_worlds:
   - Example
 disabled_worlds:

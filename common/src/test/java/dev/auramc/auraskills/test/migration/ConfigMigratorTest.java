@@ -41,6 +41,11 @@ public class ConfigMigratorTest {
         assert config.node("damage_holograms", "decimal", "max_amount").getInt() == 3;
         assert !config.node("check_block_replace", "enabled").getBoolean();
         assert Objects.equals(config.node("check_block_replace", "blocked_worlds").getList(String.class), List.of("Example", "Example2"));
+        assert Objects.equals(config.node("hooks", "WorldGuard", "blocked_regions").getList(String.class), List.of("spawn", "test"));
+        assert Objects.equals(config.node("hooks", "WorldGuard", "blocked_check_replace_regions").getList(String.class), List.of("Example", "Example2"));
+        assert Objects.equals(config.node("disabled_worlds").getList(String.class), List.of("Example", "disabled"));
+        assert config.node("on_death", "reset_skills").getBoolean();
+        assert config.node("auto_save", "interval_ticks").getInt() == 14000;
     }
 
 }

@@ -110,21 +110,23 @@ blocked-check-block-replace-regions:
   - Example2
 
 blocked-worlds:
-  - Example
+  - Renamed
 
 blocked-regions:
   - spawn
+  - test
 
 disabled-worlds:
   - Example
+  - disabled
 
 disable-in-creative-mode: false
-reset-skills-on-death: false
+reset-skills-on-death: true
 reset-xp-on-death: false
 
 auto-save:
   enabled: false
-  interval-ticks: 12000
+  interval-ticks: 14000
 
 skill-money-rewards:
   enabled: false

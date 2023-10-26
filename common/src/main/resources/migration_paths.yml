@@ -51,9 +51,9 @@ config.yml:
     enable-skill-commands: '_'
     check-block-replace: check_block_replace.enabled
     blocked-check-block-replace-worlds: check_block_replace.blocked_worlds
-    blocked-check-block-replace-regions: check_block_replace.blocked_regions
+    blocked-check-block-replace-regions: hooks.WorldGuard.blocked_check_replace_regions
     blocked-worlds: '_'
-    blocked-regions: '_'
+    blocked-regions: hooks.WorldGuard.blocked_regions
     disabled-worlds: '_'
     disable-in-creative-mode: '_'
     reset-skills-on-death: on_death.reset_skills
