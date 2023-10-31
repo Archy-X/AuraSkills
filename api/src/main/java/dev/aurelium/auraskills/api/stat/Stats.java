@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.api.stat;
 
-import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -46,7 +45,7 @@ public enum Stats implements Stat {
     }
 
     @Override
-    public ImmutableList<Trait> getTraits() {
+    public List<Trait> getTraits() {
         return provider.getTraits(this);
     }
 

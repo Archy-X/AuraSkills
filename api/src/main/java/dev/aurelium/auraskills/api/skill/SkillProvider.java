@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.api.skill;
 
-import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.option.OptionedProvider;
@@ -8,6 +7,7 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Locale;
 
 public interface SkillProvider extends OptionedProvider<Skill> {
@@ -15,13 +15,13 @@ public interface SkillProvider extends OptionedProvider<Skill> {
     boolean isEnabled(Skill skill);
 
     @NotNull
-    ImmutableList<Ability> getAbilities(Skill skill);
+    List<Ability> getAbilities(Skill skill);
 
     @Nullable
     ManaAbility getManaAbility(Skill skill);
 
     @NotNull
-    ImmutableList<XpSource> getSources(Skill skill);
+    List<XpSource> getSources(Skill skill);
 
     int getMaxLevel(Skill skill);
 

@@ -1,10 +1,10 @@
 package dev.aurelium.auraskills.api.stat;
 
-import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.option.Optioned;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.trait.Trait;
 
+import java.util.List;
 import java.util.Locale;
 
 public interface Stat extends Optioned {
@@ -13,7 +13,7 @@ public interface Stat extends Optioned {
 
     boolean isEnabled();
 
-    ImmutableList<Trait> getTraits();
+    List<Trait> getTraits();
 
     double getTraitModifier(Trait trait);
 

@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.ability;
 
-import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
@@ -60,7 +59,7 @@ public abstract class AbilityManager {
      * @return A list of abilities
      */
     public List<Ability> getAbilities(Skill skill, int level) {
-        ImmutableList<Ability> skillAbilities = skill.getAbilities();
+        List<Ability> skillAbilities = skill.getAbilities();
         List<Ability> abilities = new ArrayList<>();
         if (skillAbilities.size() == 5) {
             for (Ability ability : skillAbilities) {

@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.api.skill;
 
-import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.annotation.Inject;
@@ -59,7 +58,7 @@ public enum Skills implements Skill {
     }
 
     @Override
-    public @NotNull ImmutableList<Ability> getAbilities() {
+    public @NotNull List<Ability> getAbilities() {
         return provider.getAbilities(this);
     }
 
@@ -74,7 +73,7 @@ public enum Skills implements Skill {
     }
 
     @Override
-    public @NotNull ImmutableList<XpSource> getSources() {
+    public @NotNull List<XpSource> getSources() {
         return provider.getSources(this);
     }
 
