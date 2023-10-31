@@ -26,7 +26,6 @@ public class ConfigMigratorTest {
 
         ConfigurationNode migrationPaths = FileUtil.loadYamlFile(new File("src/main/resources/migration_paths.yml"));
         var paths = migrator.loadFilesAndPaths(migrationPaths).get(new Pair<>(oldFile, newFile));
-
         migrator.migrateFile(paths, oldFile, newFile);
 
         ConfigurationNode config = FileUtil.loadYamlFile(newFile);
@@ -46,6 +45,64 @@ public class ConfigMigratorTest {
         assert Objects.equals(config.node("disabled_worlds").getList(String.class), List.of("Example", "disabled"));
         assert config.node("on_death", "reset_skills").getBoolean();
         assert config.node("auto_save", "interval_ticks").getInt() == 14000;
+    }
+
+    @Test
+    public void testMigrateSkills(@TempDir(cleanup = CleanupMode.ALWAYS) File testDir) throws IOException {
+        TestAuraSkills plugin = new TestAuraSkills(testDir);
+        ConfigMigrator migrator = new ConfigMigrator(plugin);
+
+        File oldFile = new File(testDir, "AureliumSkills/config.yml");
+        File newFile = new File(testDir, "AuraSkills/skills.yml");
+
+        ConfigurationNode migrationPaths = FileUtil.loadYamlFile(new File("src/main/resources/migration_paths.yml"));
+        var paths = migrator.loadFilesAndPaths(migrationPaths).get(new Pair<>(oldFile, newFile));
+        migrator.migrateFile(paths, oldFile, newFile);
+
+        ConfigurationNode config = FileUtil.loadYamlFile(newFile);
+        assert !config.node("skills", "auraskills/farming", "options", "enabled").getBoolean();
+        assert config.node("skills", "auraskills/foraging", "options", "max_level").getInt() == 96;
+        assert !config.node("skills", "auraskills/mining", "options", "check_cancelled").getBoolean();
+        assert !config.node("skills", "auraskills/fishing", "options", "check_multiplier_permissions").getBoolean();
+    }
+
+    @Test
+    public void testMigrateStats(@TempDir(cleanup = CleanupMode.ALWAYS) File testDir) throws IOException {
+        TestAuraSkills plugin = new TestAuraSkills(testDir);
+        ConfigMigrator migrator = new ConfigMigrator(plugin);
+
+        File oldFile = new File(testDir, "AureliumSkills/config.yml");
+        File newFile = new File(testDir, "AuraSkills/stats.yml");
+
+        ConfigurationNode migrationPaths = FileUtil.loadYamlFile(new File("src/main/resources/migration_paths.yml"));
+        var paths = migrator.loadFilesAndPaths(migrationPaths).get(new Pair<>(oldFile, newFile));
+        migrator.migrateFile(paths, oldFile, newFile);
+
+        ConfigurationNode config = FileUtil.loadYamlFile(newFile);
+        assert config.node("stats", "auraskills/strength", "traits", "auraskills/attack_damage", "modifier").getDouble() == 0.4;
+        assert config.node("stats", "auraskills/health", "traits", "auraskills/hp", "modifier").getDouble() == 0.4;
+        assert config.node("stats", "auraskills/regeneration", "traits", "auraskills/hunger_regen", "modifier").getDouble() == 0.003;
+        assert config.node("stats", "auraskills/toughness", "traits", "auraskills/damage_reduction", "modifier").getDouble() == 0.4;
+    }
+
+    @Test
+    public void testMigrateTraits(@TempDir(cleanup = CleanupMode.ALWAYS) File testDir) throws IOException {
+        TestAuraSkills plugin = new TestAuraSkills(testDir);
+        ConfigMigrator migrator = new ConfigMigrator(plugin);
+
+        File oldFile = new File(testDir, "AureliumSkills/config.yml");
+        File newFile = new File(testDir, "AuraSkills/traits.yml");
+
+        ConfigurationNode migrationPaths = FileUtil.loadYamlFile(new File("src/main/resources/migration_paths.yml"));
+        var paths = migrator.loadFilesAndPaths(migrationPaths).get(new Pair<>(oldFile, newFile));
+        migrator.migrateFile(paths, oldFile, newFile);
+
+        ConfigurationNode config = FileUtil.loadYamlFile(newFile);
+        assert !config.node("traits", "auraskills/attack_damage", "display_damage_with_health_scaling").getBoolean();
+        assert config.node("traits", "auraskills/hp", "action_bar_scaling").getDouble() == 5;
+        assert config.node("traits", "auraskills/hp", "hearts", "12").getDouble() == 25;
+        assert config.node("traits", "auraskills/saturation_regen", "use_custom_delay").getBoolean();
+        assert config.node("traits", "auraskills/hunger_regen", "use_custom_delay").getBoolean();
     }
 
 }

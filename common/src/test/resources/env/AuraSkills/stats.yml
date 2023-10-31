@@ -1,0 +1,51 @@
+stats:
+  auraskills/strength:
+    enabled: true
+    traits:
+      auraskills/attack_damage:
+        modifier: 0.5
+  auraskills/health:
+    enabled: true
+    traits:
+      auraskills/hp:
+        modifier: 1
+  auraskills/regeneration:
+    enabled: true
+    traits:
+      auraskills/saturation_regen:
+        modifier: 0.007
+      auraskills/hunger_regen:
+        modifier: 0.006
+      auraskills/mana_regen:
+        modifier: 0.1
+  auraskills/luck:
+    enabled: true
+    traits:
+      auraskills/luck:
+        modifier: 0.1
+      auraskills/double_drop:
+        modifier: 0.005
+  auraskills/wisdom:
+    enabled: true
+    traits:
+      auraskills/experience_bonus:
+        modifier: 0.01
+      auraskills/anvil_discount:
+        modifier: 0.25
+      auraskills/max_mana:
+        modifier: 2.0
+  auraskills/toughness:
+    enabled: true
+    traits:
+      auraskills/damage_reduction:
+        modifier: 0.3
+  auraskills/crit_chance:
+    enabled: true
+    traits:
+      auraskills/crit_chance:
+        modifier: 1
+  auraskills/crit_damage:
+    enabled: true
+    traits:
+      auraskills/crit_damage:
+        modifier: 1

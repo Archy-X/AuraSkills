@@ -198,25 +198,25 @@ save-blank-profiles: false
 
 # Skill specific options
 farming:
-  enabled: true
+  enabled: false
   max-level: 97
   check-cancelled: true
   check-multiplier-permissions: true
 foraging:
   enabled: true
-  max-level: 97
+  max-level: 96
   check-cancelled: true
   check-multiplier-permissions: true
 mining:
   enabled: true
   max-level: 97
-  check-cancelled: true
+  check-cancelled: false
   check-multiplier-permissions: true
 fishing:
   enabled: true
   max-level: 97
   check-cancelled: true
-  check-multiplier-permissions: true
+  check-multiplier-permissions: false
 excavation:
   enabled: true
   max-level: 97
@@ -292,7 +292,7 @@ health:
   hearts:
     '10': 20
     '11': 22
-    '12': 26
+    '12': 25
     '13': 32
     '14': 40
     '15': 52
@@ -301,25 +301,25 @@ health:
     '18': 104
     '19': 126
     '20': 150
-  hp-indicator-scaling: 1
+  hp-indicator-scaling: 5
   update-delay: 0
   force-base-health: false
   keep-full-on-increase: false
 
 strength:
-  modifier: 0.5
+  modifier: 0.4
   hand-damage: true
   bow-damage: true
-  display-damage-with-health-scaling: true
+  display-damage-with-health-scaling: false
   use-percent: true
 toughness:
-  new-modifier: 0.3
+  new-modifier: 0.4
 regeneration:
-  custom-regen-mechanics: false
+  custom-regen-mechanics: true
   base-regen: 1
   saturated-modifier: 0.007
   hunger-full-modifier: 0.006
-  hunger-almost-full-modifier: 0.005
+  hunger-almost-full-modifier: 0.003
   custom-regen-options:
     saturated-delay: 20
     hunger-delay: 60

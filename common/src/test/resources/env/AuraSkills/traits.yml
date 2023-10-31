@@ -1,0 +1,62 @@
+traits:
+  auraskills/attack_damage:
+    enabled: true
+    hand_damage: true
+    bow_damage: true
+    display_damage_with_health_scaling: true
+    use_percent: true
+  auraskills/hp:
+    enabled: true
+    health_scaling: true
+    hearts:
+      '10': 20
+      '11': 22
+      '12': 26
+      '13': 32
+      '14': 40
+      '15': 52
+      '16': 66
+      '17': 84
+      '18': 104
+      '19': 126
+      '20': 150
+    action_bar_scaling: 1
+    update_delay: 0
+    force_base_health: false
+    keep_full_on_increase: false
+  auraskills/saturation_regen:
+    enabled: true
+    use_custom_delay: false
+    delay: 20
+    base: 1
+  auraskills/hunger_regen:
+    enabled: true
+    use_custom_delay: false
+    delay: 60
+    base: 1
+  auraskills/mana_regen:
+    enabled: true
+    base: 1
+  auraskills/luck:
+    enabled: true
+  auraskills/double_drop:
+    enabled: true
+    max_percent: 100
+  auraskills/experience_bonus:
+    enabled: true
+  auraskills/anvil_discount:
+    enabled: true
+  auraskills/max_mana:
+    enabled: true
+    allow_overflow: false
+    base: 20
+  auraskills/damage_reduction:
+    enabled: true
+  auraskills/crit_chance:
+    enabled: true
+    base: 0
+  auraskills/crit_damage:
+    enabled: true
+    base: 50
+  auraskills/attack_speed:
+    enabled: true
