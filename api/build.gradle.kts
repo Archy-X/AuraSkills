@@ -17,6 +17,7 @@ tasks.withType<JavaCompile>() {
 
 tasks {
     javadoc {
+        title = "auraskills-api ${project.version} API"
         options {
             (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
         }
