@@ -66,7 +66,7 @@ public class BukkitUserManager implements UserManager {
         User user = new BukkitUser(player, plugin);
         // Set all skills to level 1 for new players
         for (LoadedSkill loadedSkill : plugin.getSkillManager().getSkills()) {
-            user.setSkillLevel(loadedSkill.skill(), 1);
+            user.setSkillLevel(loadedSkill.skill(), plugin.config().getStartLevel());
             user.setSkillXp(loadedSkill.skill(), 0.0);
         }
         return user;

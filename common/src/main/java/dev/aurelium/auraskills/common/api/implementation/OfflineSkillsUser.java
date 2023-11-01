@@ -1,127 +1,118 @@
 package dev.aurelium.auraskills.common.api.implementation;
 
-
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
-import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.user.User;
 
 import java.util.Locale;
 import java.util.UUID;
 
-public class ApiSkillsUser implements SkillsUser {
+public class OfflineSkillsUser implements SkillsUser {
 
-    private final User user;
     private final AuraSkillsPlugin plugin;
+    private final UUID uuid;
 
-    public ApiSkillsUser(User user) {
-        this.user = user;
-        this.plugin = user.getPlugin();
-    }
-
-    public User getUser() {
-        return user;
+    public OfflineSkillsUser(AuraSkillsPlugin plugin, UUID uuid) {
+        this.plugin = plugin;
+        this.uuid = uuid;
     }
 
     @Override
     public UUID getUuid() {
-        return user.getUuid();
+        return uuid;
     }
 
     @Override
     public boolean isLoaded() {
-        return true;
+        return false;
     }
 
     @Override
     public double getSkillXp(Skill skill) {
-        return user.getSkillXp(skill);
+        return 0;
     }
 
     @Override
     public void addSkillXp(Skill skill, double amountToAdd) {
-        plugin.getLevelManager().addXp(user, skill, amountToAdd);
+
     }
 
     @Override
     public void addSkillXpRaw(Skill skill, double amountToAdd) {
-        user.addSkillXp(skill, amountToAdd);
-        plugin.getLevelManager().checkLevelUp(user, skill);
+
     }
 
     @Override
     public void setSkillXp(Skill skill, double amount) {
-        user.setSkillXp(skill, amount);
-        plugin.getLevelManager().checkLevelUp(user, skill);
+
     }
 
     @Override
     public int getSkillLevel(Skill skill) {
-        return user.getSkillLevel(skill);
+        return plugin.config().getStartLevel();
     }
 
     @Override
     public void setSkillLevel(Skill skill, int level) {
-        user.setSkillLevel(skill, level);
+
     }
 
     @Override
     public double getStatLevel(Stat stat) {
-        return user.getStatLevel(stat);
+        return 0;
     }
 
     @Override
     public double getBaseStatLevel(Stat stat) {
-        return user.getBaseStatLevel(stat);
+        return 0;
     }
 
     @Override
     public double getMana() {
-        return user.getMana();
+        return 0;
     }
 
     @Override
     public double getMaxMana() {
-        return user.getMaxMana();
+        return 0;
     }
 
     @Override
     public void setMana(double mana) {
-        user.setMana(mana);
+
     }
 
     @Override
     public int getPowerLevel() {
-        return user.getPowerLevel();
+        return 0;
     }
 
     @Override
     public void addStatModifier(StatModifier statModifier) {
-        user.addStatModifier(statModifier);
+
     }
 
     @Override
     public void removeStatModifier(String name) {
-        user.removeStatModifier(name);
+
     }
 
     @Override
     public int getAbilityLevel(Ability ability) {
-        return user.getAbilityLevel(ability);
+        return 0;
     }
 
     @Override
     public int getManaAbilityLevel(ManaAbility manaAbility) {
-        return user.getManaAbilityLevel(manaAbility);
+        return 0;
     }
 
     @Override
     public Locale getLocale() {
-        return user.getLocale();
+        return plugin.getDefaultLanguage();
     }
-
 }

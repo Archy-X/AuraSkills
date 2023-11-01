@@ -32,6 +32,7 @@ public class AuraSkillsEventManager implements EventManager {
         return subscribe(plugin, eventClass, handler);
     }
 
+    @Override
     public void registerEvents(Object pluginObj, AuraSkillsListener listener) {
         for (Method method : listener.getClass().getDeclaredMethods()) {
             if (!method.isAnnotationPresent(AuraSkillsEventHandler.class)) {

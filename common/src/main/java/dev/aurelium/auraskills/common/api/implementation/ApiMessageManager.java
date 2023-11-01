@@ -35,4 +35,9 @@ public class ApiMessageManager implements MessageManager {
         return plugin.getMessageProvider().getStatDescription(stat, locale);
     }
 
+    @Override
+    public Locale getDefaultLanguage() {
+        return plugin.getMessageProvider().getDefaultLanguage();
+    }
+
 }

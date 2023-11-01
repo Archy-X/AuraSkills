@@ -21,7 +21,7 @@ public class ApiUserManager implements UserManager {
         if (user != null) {
             return new ApiSkillsUser(user);
         }
-        return null;
+        return new OfflineSkillsUser(plugin, playerId);
     }
 
 }
