@@ -26,7 +26,7 @@ public interface AuraSkillsApi {
     /**
      * Gets information about the XP required to level up skills
      *
-     * @return the xp requirements
+     * @return the XP requirements
      */
     XpRequirements getXpRequirements();
 
