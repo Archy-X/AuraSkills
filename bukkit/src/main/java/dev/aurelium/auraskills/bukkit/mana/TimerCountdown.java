@@ -1,11 +1,14 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
-import dev.aurelium.auraskills.api.event.mana.ManaAbilityRefreshEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.event.mana.ManaAbilityRefreshEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
 
@@ -64,8 +67,9 @@ public class TimerCountdown {
     }
 
     private void callRefreshEvent(User user, ManaAbility manaAbility) {
-        ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(plugin.getApi(), user.toApi(), manaAbility);
-        plugin.getEventManager().callEvent(event);
+        Player player = ((BukkitUser) user).getPlayer();
+        ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(player, user.toApi(), manaAbility);
+        Bukkit.getPluginManager().callEvent(event);
     }
 
 }

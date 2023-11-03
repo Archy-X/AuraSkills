@@ -1,7 +1,5 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -19,7 +17,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class PlayerJoinQuit implements Listener, AuraSkillsListener {
+public class PlayerJoinQuit implements Listener {
 
     private final AuraSkills plugin;
 
@@ -75,9 +73,9 @@ public class PlayerJoinQuit implements Listener, AuraSkillsListener {
         });
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void onUserLoad(UserLoadEvent event) {
-        detectUserLanguage(BukkitUser.getUser(event.getUser()), BukkitUser.getPlayer(event.getUser()));
+        detectUserLanguage(BukkitUser.getUser(event.getUser()), event.getPlayer());
     }
 
     private void detectUserLanguage(User user, Player player) {

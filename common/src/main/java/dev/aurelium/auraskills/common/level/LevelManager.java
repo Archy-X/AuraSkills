@@ -1,8 +1,6 @@
 package dev.aurelium.auraskills.common.level;
 
 import dev.aurelium.auraskills.api.ability.Ability;
-import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
-import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
@@ -54,12 +52,11 @@ public abstract class LevelManager {
         double amountToAdd = amount * calculateMultiplier(user, skill);
 
         // Call event
-        XpGainEvent event = new XpGainEvent(plugin.getApi(), user.toApi(), skill, amountToAdd);
-        plugin.getEventManager().callEvent(event);
-        if (event.isCancelled()) return;
+        var res = plugin.getEventHandler().callXpGainEvent(user, skill, amountToAdd);
+        if (res.first()) return;
 
         // Add XP to player
-        amountToAdd = event.getAmount();
+        amountToAdd = res.second();
         user.addSkillXp(skill, amountToAdd);
 
         checkLevelUp(user, skill);
@@ -121,8 +118,7 @@ public abstract class LevelManager {
         // Reload items and armor to check for newly met requirements
         reloadModifiers(user);
         // Calls event
-        SkillLevelUpEvent event = new SkillLevelUpEvent(plugin.getApi(), user.toApi(), skill, level);
-        plugin.getEventManager().callEvent(event);
+        plugin.getEventHandler().callSkillLevelUpEvent(user, skill, level);
 
         // Sends messages
         LevelUpMessenger messenger = new LevelUpMessenger(plugin, user, locale, skill, level, rewards);

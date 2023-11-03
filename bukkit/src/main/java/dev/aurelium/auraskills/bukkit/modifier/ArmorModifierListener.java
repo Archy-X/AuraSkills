@@ -1,9 +1,8 @@
 package dev.aurelium.auraskills.bukkit.modifier;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.requirement.Requirements;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -46,9 +45,9 @@ public class ArmorModifierListener implements Listener {
         }
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void onJoin(UserLoadEvent event) {
-        Player player = BukkitUser.getPlayer(event.getUser());
+        Player player = event.getPlayer();
         User user = BukkitUser.getUser(event.getUser());
         for (ItemStack armor : player.getInventory().getArmorContents()) {
             if (armor == null) {

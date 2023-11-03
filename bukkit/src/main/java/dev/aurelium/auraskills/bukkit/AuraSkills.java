@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
+import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
@@ -47,7 +48,7 @@ import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.api.ApiRegistrationUtil;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
+import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.level.XpRequirements;
@@ -107,7 +108,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitLevelManager levelManager;
     private BukkitUserManager userManager;
     private XpRequirements xpRequirements;
-    private AuraSkillsEventManager eventManager;
     private PlatformLogger logger;
     private HookManager hookManager;
     private LeaderboardManager leaderboardManager;
@@ -127,6 +127,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BackupProvider backupProvider;
     private InventoryManager inventoryManager;
     private MenuHelper menuHelper;
+    private EventHandler eventHandler;
     private boolean nbtApiEnabled;
 
     @Override
@@ -134,7 +135,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         registerApi();
         logger = new BukkitLogger(this);
         audiences = BukkitAudiences.create(this);
-        eventManager = new AuraSkillsEventManager(this);
+        eventHandler = new BukkitEventHandler(this);
         hookManager = new HookManager();
         generateConfigs(); // Generate default config files if missing
         // Handle migration
@@ -297,7 +298,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
         PlayerJoinQuit joinQuit = new PlayerJoinQuit(this);
         pm.registerEvents(joinQuit, this);
-        eventManager.registerEvents(this, joinQuit);
 
         pm.registerEvents(new DamageListener(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
@@ -410,11 +410,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public AuraSkillsEventManager getEventManager() {
-        return eventManager;
-    }
-
-    @Override
     public PlatformLogger logger() {
         return logger;
     }
@@ -497,6 +492,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public MenuHelper getMenuHelper() {
         return menuHelper;
+    }
+
+    @Override
+    public EventHandler getEventHandler() {
+        return eventHandler;
     }
 
     @Override

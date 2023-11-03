@@ -1,8 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.endurance;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
@@ -17,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
-public class EnduranceAbilities extends AbilityImpl implements AuraSkillsListener {
+public class EnduranceAbilities extends AbilityImpl {
 
     public EnduranceAbilities(AuraSkills plugin) {
         super(plugin, Abilities.ANTI_HUNGER, Abilities.RUNNER, Abilities.GOLDEN_HEAL, Abilities.RECOVERY, Abilities.MEAL_STEAL);
@@ -81,7 +79,7 @@ public class EnduranceAbilities extends AbilityImpl implements AuraSkillsListene
         }
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void recoveryCustom(CustomRegenEvent event) {
         var ability = Abilities.RECOVERY;
         if (event.isCancelled()) return;

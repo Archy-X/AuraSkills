@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
+import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
@@ -59,8 +59,6 @@ public interface AuraSkillsPlugin {
 
     XpRequirements getXpRequirements();
 
-    AuraSkillsEventManager getEventManager();
-
     PlatformLogger logger();
 
     SkillManager getSkillManager();
@@ -94,6 +92,8 @@ public interface AuraSkillsPlugin {
     WorldManager getWorldManager();
 
     MenuHelper getMenuHelper();
+
+    EventHandler getEventHandler();
 
     // Message convenience methods
 

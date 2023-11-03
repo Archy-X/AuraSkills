@@ -2,8 +2,6 @@ package dev.aurelium.auraskills.bukkit.skills.agility;
 
 import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
@@ -36,7 +34,7 @@ import org.bukkit.potion.PotionType;
 
 import java.util.Locale;
 
-public class AgilityAbilities extends AbilityImpl implements AuraSkillsListener {
+public class AgilityAbilities extends AbilityImpl {
 
     private final String FLEETING_METADATA = "AureliumSkills-Fleeting";
 
@@ -250,13 +248,13 @@ public class AgilityAbilities extends AbilityImpl implements AuraSkillsListener 
         }
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void fleetingJoin(UserLoadEvent event) {
         var ability = Abilities.FLEETING;
 
         if (isDisabled(ability)) return;
 
-        Player player = BukkitUser.getPlayer(event.getUser());
+        Player player = event.getPlayer();
 
         if (failsChecks(player, ability)) return;
 

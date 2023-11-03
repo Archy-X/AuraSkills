@@ -1,11 +1,9 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -36,9 +34,9 @@ public class LuckTrait extends TraitImpl {
         return current;
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void onJoin(UserLoadEvent event) {
-        setLuck(BukkitUser.getPlayer(event.getUser()));
+        setLuck(event.getPlayer());
     }
 
     @Override

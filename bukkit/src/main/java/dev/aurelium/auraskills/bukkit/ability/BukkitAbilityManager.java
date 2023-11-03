@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.ability;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.skills.alchemy.AlchemyAbilities;
@@ -57,9 +56,6 @@ public class BukkitAbilityManager extends AbilityManager {
     public void registerAbilityImpl(AbilityImpl abilityImpl) {
         abilityImpls.add(abilityImpl);
         Bukkit.getPluginManager().registerEvents(abilityImpl, plugin);
-        if (abilityImpl instanceof AuraSkillsListener listener) {
-            plugin.getEventManager().registerEvents(plugin, listener);
-        }
     }
 
     public <T extends AbilityImpl> T getAbilityImpl(Class<T> clazz) {

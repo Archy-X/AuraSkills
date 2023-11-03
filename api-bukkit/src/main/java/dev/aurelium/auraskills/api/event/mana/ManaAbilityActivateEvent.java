@@ -1,24 +1,33 @@
 package dev.aurelium.auraskills.api.event.mana;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsEvent;
-import dev.aurelium.auraskills.api.user.SkillsUser;
-import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
-import dev.aurelium.auraskills.api.event.Cancellable;
+import dev.aurelium.auraskills.api.user.SkillsUser;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
-public class ManaAbilityActivateEvent extends AuraSkillsEvent implements Cancellable {
+public class ManaAbilityActivateEvent extends Event implements Cancellable {
 
+    private static final HandlerList handlers = new HandlerList();
+
+    private final Player player;
     private final SkillsUser skillsUser;
     private final ManaAbility manaAbility;
     private int duration;
     private boolean cancelled = false;
     private double manaUsed;
 
-    public ManaAbilityActivateEvent(AuraSkillsApi api, SkillsUser skillsUser, ManaAbility manaAbility, int duration, double manaUsed) {
-        super(api);
-        this.skillsUser = skillsUser;
+    public ManaAbilityActivateEvent(Player player, SkillsUser user, ManaAbility manaAbility, int duration, double manaUsed) {
+        this.player = player;
+        this.skillsUser = user;
         this.manaAbility = manaAbility;
         this.duration = duration;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public SkillsUser getUser() {
@@ -53,5 +62,15 @@ public class ManaAbilityActivateEvent extends AuraSkillsEvent implements Cancell
     @Override
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
+    }
+
+    @NotNull
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

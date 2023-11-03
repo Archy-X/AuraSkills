@@ -4,9 +4,8 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
-import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,12 +38,11 @@ public class FarmingAbilities extends AbilityImpl {
             for (ItemStack item : block.getDrops()) {
                 checkMelonSilkTouch(player, block, item);
 
-                var itemHolder = new BukkitItemHolder(item);
-                var locationHolder = new BukkitLocationHolder(block.getLocation().add(0.5, 0.5, 0.5));
-                LootDropEvent event = new LootDropEvent(plugin.getApi(), user.toApi(), itemHolder, locationHolder, LootDropEvent.Cause.BOUNTIFUL_HARVEST);
-                plugin.getEventManager().callEvent(event);
+                Location location = block.getLocation().add(0.5, 0.5, 0.5);
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), item, location, LootDropEvent.Cause.BOUNTIFUL_HARVEST);
+                Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation().get(Location.class), event.getItem().get(ItemStack.class));
+                    block.getWorld().dropItem(event.getLocation(), event.getItem());
                 }
             }
         }
@@ -65,12 +63,11 @@ public class FarmingAbilities extends AbilityImpl {
                 ItemStack droppedItem = item.clone();
                 droppedItem.setAmount(2);
 
-                var itemHolder = new BukkitItemHolder(droppedItem);
-                var locHolder = new BukkitLocationHolder(block.getLocation().add(0.5, 0.5, 0.5));
-                LootDropEvent event = new LootDropEvent(plugin.getApi(), user.toApi(), itemHolder, locHolder, LootDropEvent.Cause.TRIPLE_HARVEST);
-                plugin.getEventManager().callEvent(event);
+                Location location = block.getLocation().add(0.5, 0.5, 0.5);
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), droppedItem, location, LootDropEvent.Cause.TRIPLE_HARVEST);
+                Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation().get(Location.class), event.getItem().get(ItemStack.class));
+                    block.getWorld().dropItem(event.getLocation(), event.getItem());
                 }
             }
         }

@@ -1,13 +1,12 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
-import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -91,16 +90,13 @@ public class DoubleDropTrait extends TraitImpl {
                         itemToDrop = item.clone();
                     }
 
-                    BukkitItemHolder itemHolder = new BukkitItemHolder(itemToDrop);
-                    BukkitLocationHolder locationHolder = new BukkitLocationHolder(location);
-
-                    LootDropEvent lootDropEvent = new LootDropEvent(plugin.getApi(), user.toApi(), itemHolder, locationHolder, LootDropEvent.Cause.LUCK_DOUBLE_DROP);
-                    plugin.getEventManager().callEvent(lootDropEvent);
+                    LootDropEvent lootDropEvent = new LootDropEvent(player, user.toApi(), itemToDrop, location, LootDropEvent.Cause.LUCK_DOUBLE_DROP);
+                    Bukkit.getPluginManager().callEvent(lootDropEvent);
 
                     if (lootDropEvent.isCancelled()) {
                         continue;
                     }
-                    block.getWorld().dropItem(lootDropEvent.getLocation().get(Location.class), lootDropEvent.getItem().get(ItemStack.class));
+                    block.getWorld().dropItem(lootDropEvent.getLocation(), lootDropEvent.getItem());
                 }
             }
         }

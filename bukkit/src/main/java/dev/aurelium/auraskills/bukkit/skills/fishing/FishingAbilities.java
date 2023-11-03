@@ -4,9 +4,8 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
-import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,13 +44,11 @@ public class FishingAbilities extends AbilityImpl {
 
             drop.setAmount(drop.getAmount() * 2);
 
-            var itemHolder = new BukkitItemHolder(drop);
-            var locHolder = new BukkitLocationHolder(item.getLocation());
-            LootDropEvent dropEvent = new LootDropEvent(plugin.getApi(), user.toApi(), itemHolder, locHolder, LootDropEvent.Cause.LUCKY_CATCH);
-            plugin.getEventManager().callEvent(dropEvent);
+            LootDropEvent dropEvent = new LootDropEvent(player, user.toApi(), drop, item.getLocation(), LootDropEvent.Cause.LUCKY_CATCH);
+            Bukkit.getPluginManager().callEvent(dropEvent);
 
-            if (!event.isCancelled()) {
-                item.setItemStack(dropEvent.getItem().get(ItemStack.class));
+            if (!dropEvent.isCancelled()) {
+                item.setItemStack(dropEvent.getItem());
             }
         }
     }

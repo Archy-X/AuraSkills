@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
-import dev.aurelium.auraskills.common.event.AuraSkillsEventManager;
+import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
@@ -116,11 +116,6 @@ public class TestAuraSkills implements AuraSkillsPlugin {
     }
 
     @Override
-    public AuraSkillsEventManager getEventManager() {
-        return null;
-    }
-
-    @Override
     public PlatformLogger logger() {
         return logger;
     }
@@ -202,6 +197,11 @@ public class TestAuraSkills implements AuraSkillsPlugin {
 
     @Override
     public MenuHelper getMenuHelper() {
+        return null;
+    }
+
+    @Override
+    public EventHandler getEventHandler() {
         return null;
     }
 

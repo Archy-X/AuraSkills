@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -43,9 +42,6 @@ public class BukkitTraitManager extends TraitManager {
     public void registerTraitImpl(TraitImpl traitImpl) {
         traitImpls.add(traitImpl);
         Bukkit.getPluginManager().registerEvents(traitImpl, plugin);
-        if (traitImpl instanceof AuraSkillsListener listener) {
-            plugin.getEventManager().registerEvents(plugin, listener);
-        }
     }
 
     public <T extends TraitImpl> T getTraitImpl(Class<T> clazz) {

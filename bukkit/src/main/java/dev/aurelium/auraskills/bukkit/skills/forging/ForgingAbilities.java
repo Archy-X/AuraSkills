@@ -1,10 +1,8 @@
 package dev.aurelium.auraskills.bukkit.skills.forging;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
-import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.source.GrindstoneLeveler;
@@ -33,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class ForgingAbilities extends AbilityImpl implements AuraSkillsListener {
+public class ForgingAbilities extends AbilityImpl {
 
     public ForgingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.DISENCHANTER, Abilities.FORGER, Abilities.REPAIRING, Abilities.ANVIL_MASTER, Abilities.SKILL_MENDER);
@@ -194,7 +192,7 @@ public class ForgingAbilities extends AbilityImpl implements AuraSkillsListener 
         anvil.setMaximumRepairCost(maxCost);
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void skillMender(XpGainEvent event) {
         var ability = Abilities.SKILL_MENDER;
 
@@ -202,7 +200,7 @@ public class ForgingAbilities extends AbilityImpl implements AuraSkillsListener 
 
         if (isDisabled(ability)) return;
 
-        Player player = BukkitUser.getPlayer(event.getUser());
+        Player player = event.getPlayer();
 
         if (failsChecks(player, ability)) return;
 

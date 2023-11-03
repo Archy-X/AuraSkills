@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.archery.ChargedShot;
 import dev.aurelium.auraskills.bukkit.skills.defense.Absorption;
@@ -44,9 +43,6 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
     private void registerProvider(ManaAbilityProvider provider) {
         providerSet.add(provider);
         Bukkit.getPluginManager().registerEvents(provider, plugin);
-        if (provider instanceof AuraSkillsListener listener) {
-            plugin.getEventManager().registerEvents(plugin, listener);
-        }
     }
 
     public <T extends ManaAbilityProvider> T getProvider(Class<T> clazz) {

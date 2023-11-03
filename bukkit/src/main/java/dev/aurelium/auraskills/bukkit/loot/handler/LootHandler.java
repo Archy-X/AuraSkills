@@ -7,14 +7,12 @@ import com.archyx.lootmanager.loot.type.CommandLoot;
 import com.archyx.lootmanager.loot.type.ItemLoot;
 import com.archyx.lootmanager.util.CommandExecutor;
 import dev.aurelium.auraskills.api.ability.Ability;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
 import dev.aurelium.auraskills.bukkit.loot.SourceContextWrapper;
-import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.user.User;
@@ -64,15 +62,12 @@ public abstract class LootHandler {
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
-        var itemHolder = new BukkitItemHolder(drop);
-        var locHolder = new BukkitLocationHolder(location);
-
-        LootDropEvent dropEvent = new LootDropEvent(plugin.getApi(), plugin.getUser(player).toApi(), itemHolder, locHolder, cause);
-        plugin.getEventManager().callEvent(dropEvent);
+        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, location, cause);
+        Bukkit.getPluginManager().callEvent(dropEvent);
 
         if (dropEvent.isCancelled()) return;
 
-        block.getWorld().dropItem(dropEvent.getLocation().get(Location.class), dropEvent.getItem().get(ItemStack.class));
+        block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItem());
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
     }
@@ -86,14 +81,12 @@ public abstract class LootHandler {
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(amount);
 
-        var itemHolder = new BukkitItemHolder(drop);
-        var locHolder = new BukkitLocationHolder(event.getHook().getLocation());
-
-        LootDropEvent dropEvent = new LootDropEvent(plugin.getApi(), plugin.getUser(player).toApi(), itemHolder, locHolder, cause);
+        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, event.getHook().getLocation(), cause);
+        Bukkit.getPluginManager().callEvent(dropEvent);
 
         if (dropEvent.isCancelled()) return;
 
-        itemEntity.setItemStack(dropEvent.getItem().get(ItemStack.class));
+        itemEntity.setItemStack(dropEvent.getItem());
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
     }

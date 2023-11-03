@@ -2,10 +2,9 @@ package dev.aurelium.auraskills.bukkit.modifier;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import de.tr7zw.changeme.nbtapi.NBTType;
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.requirement.Requirements;
 import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
@@ -55,9 +54,9 @@ public class ItemListener implements Listener {
         scheduleTask();
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void onJoin(UserLoadEvent event) {
-        Player player = BukkitUser.getPlayer(event.getUser());
+        Player player = event.getPlayer();
         User user = BukkitUser.getUser(event.getUser());
         
         ItemStack held = player.getInventory().getItemInMainHand();

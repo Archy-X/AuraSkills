@@ -15,19 +15,6 @@ tasks.withType<JavaCompile>() {
     options.encoding = "UTF-8"
 }
 
-tasks {
-    javadoc {
-        title = "AuraSkills API (${project.version})"
-        options {
-            (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
-            overview("javadoc/overview.html")
-            encoding("UTF-8")
-            charset("UTF-8")
-        }
-    }
-}
-
 java {
-    withJavadocJar()
     sourceCompatibility = JavaVersion.VERSION_1_8
 }

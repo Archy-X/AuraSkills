@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
-import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -62,14 +63,14 @@ public abstract class ManaAbilityProvider implements Listener {
             return false;
         }
 
-        ManaAbilityActivateEvent event = new ManaAbilityActivateEvent(plugin.getApi(), user.toApi(), manaAbility, duration, manaCost);
-        plugin.getEventManager().callEvent(event);
+        ManaAbilityActivateEvent event = new ManaAbilityActivateEvent(player, user.toApi(), manaAbility, duration, manaCost);
+        Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
 
         data.setActivated(true);
 
         onActivate(player, user); // Mana ability specific behavior is run
-        consumeMana(player, user, manaCost);
+        consumeMana(player, user, event.getManaUsed());
 
         if (duration != 0) {
             //Schedules stop

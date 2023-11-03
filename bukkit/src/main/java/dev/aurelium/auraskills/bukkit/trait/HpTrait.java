@@ -1,10 +1,8 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
-import dev.aurelium.auraskills.api.event.AuraSkillsEventHandler;
-import dev.aurelium.auraskills.api.event.AuraSkillsListener;
-import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -24,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class HpTrait extends TraitImpl implements AuraSkillsListener {
+public class HpTrait extends TraitImpl {
 
     private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
     private final Map<Integer, Double> hearts = new HashMap<>();
@@ -54,9 +52,9 @@ public class HpTrait extends TraitImpl implements AuraSkillsListener {
         applyScaling(event.getPlayer());
     }
 
-    @AuraSkillsEventHandler
+    @EventHandler
     public void onLoad(UserLoadEvent event) {
-        setHealth(BukkitUser.getPlayer(event.getUser()), BukkitUser.getUser(event.getUser()));
+        setHealth(event.getPlayer(), BukkitUser.getUser(event.getUser()));
     }
 
     @Override

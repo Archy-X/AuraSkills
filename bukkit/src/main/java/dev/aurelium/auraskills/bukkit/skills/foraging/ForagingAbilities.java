@@ -2,15 +2,14 @@ package dev.aurelium.auraskills.bukkit.skills.foraging;
 
 import com.cryptomorin.xseries.XMaterial;
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemHolder;
-import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,12 +41,11 @@ public class ForagingAbilities extends AbilityImpl {
 
         if (rand.nextDouble() < (getValue(ability, user) / 100)) {
             for (ItemStack item : block.getDrops(player.getInventory().getItemInMainHand())) {
-                var itemHolder = new BukkitItemHolder(item.clone());
-                var locHolder = new BukkitLocationHolder(block.getLocation().add(0.5, 0.5, 0.5));
-                LootDropEvent event = new LootDropEvent(plugin.getApi(), user.toApi(), itemHolder, locHolder, LootDropEvent.Cause.LUMBERJACK);
-                plugin.getEventManager().callEvent(event);
+                Location location = block.getLocation().add(0.5, 0.5, 0.5);
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUMBERJACK);
+                Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation().get(Location.class), event.getItem().get(ItemStack.class));
+                    block.getWorld().dropItem(event.getLocation(), event.getItem());
                 }
             }
         }
