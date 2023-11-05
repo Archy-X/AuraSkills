@@ -108,7 +108,7 @@ public class SkillManager {
 
     @Nullable
     public XpSource getSourceById(NamespacedId id) {
-        for (Skill skill : getEnabledSkills()) {
+        for (Skill skill : getSkillValues()) {
             for (XpSource source : skill.getSources()) {
                 if (source.getId().equals(id)) {
                     return source;

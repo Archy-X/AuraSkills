@@ -2,8 +2,6 @@ package dev.aurelium.auraskills.bukkit.hooks;
 
 import com.archyx.aureliumskills.util.text.TextUtil;
 import dev.aurelium.auraskills.api.trait.Traits;
-import dev.aurelium.auraskills.api.util.LocationHolder;
-import dev.aurelium.auraskills.bukkit.util.BukkitLocationHolder;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.hooks.Hook;
@@ -46,7 +44,7 @@ public abstract class HologramsHook extends Hook implements Listener {
                 .toList();
     }
 
-    public abstract void createHologram(LocationHolder locationHolder, String text);
+    public abstract void createHologram(Location location, String text);
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
@@ -75,7 +73,7 @@ public abstract class HologramsHook extends Hook implements Listener {
         createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), critical));
     }
 
-    private LocationHolder getLocation(Entity entity) {
+    private Location getLocation(Entity entity) {
         Location location = entity.getLocation();
         if (plugin.configBoolean(Option.DAMAGE_HOLOGRAMS_OFFSET_RANDOM_ENABLED)) {
             //Calculate random holograms
@@ -95,7 +93,7 @@ public abstract class HologramsHook extends Hook implements Listener {
             double z = plugin.configDouble(Option.DAMAGE_HOLOGRAMS_OFFSET_Z);
             location.add(x, y, z);
         }
-        return new BukkitLocationHolder(location);
+        return location;
     }
 
     private String getText(double damage, boolean critical) {

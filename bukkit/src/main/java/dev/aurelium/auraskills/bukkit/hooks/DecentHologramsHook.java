@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
-import dev.aurelium.auraskills.api.util.LocationHolder;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import eu.decentsoftware.holograms.api.DHAPI;
@@ -22,8 +21,8 @@ public class DecentHologramsHook extends HologramsHook {
     }
 
     @Override
-    public void createHologram(LocationHolder locationHolder, String text) {
-        Hologram hologram = DHAPI.createHologram("AureliumSkills_" + UUID.randomUUID(), locationHolder.get(Location.class), false, Collections.singletonList(text));
+    public void createHologram(Location location, String text) {
+        Hologram hologram = DHAPI.createHologram("AureliumSkills_" + UUID.randomUUID(), location, false, Collections.singletonList(text));
         deleteHologram(hologram);
     }
 

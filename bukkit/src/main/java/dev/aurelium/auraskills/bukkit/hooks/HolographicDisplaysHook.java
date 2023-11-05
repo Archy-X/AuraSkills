@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.bukkit.hooks;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import dev.aurelium.auraskills.api.util.LocationHolder;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import org.bukkit.Location;
@@ -20,8 +19,8 @@ public class HolographicDisplaysHook extends HologramsHook {
     }
 
     @Override
-    public void createHologram(LocationHolder locationHolder, String text) {
-        Hologram hologram = HologramsAPI.createHologram(plugin, locationHolder.get(Location.class));
+    public void createHologram(Location location, String text) {
+        Hologram hologram = HologramsAPI.createHologram(plugin, location);
         hologram.appendTextLine(text);
         deleteHologram(hologram);
     }
