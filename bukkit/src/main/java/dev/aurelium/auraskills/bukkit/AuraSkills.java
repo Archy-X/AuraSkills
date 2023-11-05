@@ -91,24 +91,24 @@ import java.util.Locale;
 
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
-    private AuraSkillsApi api;
+    private final AuraSkillsApi api;
+    private final SkillManager skillManager;
+    private final BukkitAbilityManager abilityManager;
+    private final BukkitManaAbilityManager manaAbilityManager;
+    private final StatManager statManager;
+    private final BukkitTraitManager traitManager;
+    private final SkillRegistry skillRegistry;
+    private final StatRegistry statRegistry;
+    private final TraitRegistry traitRegistry;
+    private final AbilityRegistry abilityRegistry;
+    private final ManaAbilityRegistry manaAbilityRegistry;
+    private final BukkitItemRegistry itemRegistry;
+    private final PlatformLogger logger;
     private BukkitConfigProvider configProvider;
     private MessageProvider messageProvider;
-    private SkillManager skillManager;
-    private BukkitAbilityManager abilityManager;
-    private BukkitManaAbilityManager manaAbilityManager;
-    private StatManager statManager;
-    private BukkitTraitManager traitManager;
-    private SkillRegistry skillRegistry;
-    private StatRegistry statRegistry;
-    private TraitRegistry traitRegistry;
-    private AbilityRegistry abilityRegistry;
-    private ManaAbilityRegistry manaAbilityRegistry;
-    private BukkitItemRegistry itemRegistry;
     private BukkitLevelManager levelManager;
     private BukkitUserManager userManager;
     private XpRequirements xpRequirements;
-    private PlatformLogger logger;
     private HookManager hookManager;
     private LeaderboardManager leaderboardManager;
     private BukkitUiProvider uiProvider;
@@ -130,10 +130,31 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private EventHandler eventHandler;
     private boolean nbtApiEnabled;
 
+    public AuraSkills() {
+        this.api = new ApiAuraSkills(this);
+        ApiRegistrationUtil.register(api);
+        logger = new BukkitLogger(this);
+        // Load messages
+        messageProvider = new MessageProvider(this);
+        messageProvider.loadMessages();
+        // Init managers
+        skillManager = new SkillManager(this);
+        abilityManager = new BukkitAbilityManager(this);
+        manaAbilityManager = new BukkitManaAbilityManager(this);
+        statManager = new BukkitStatManager(this);
+        traitManager = new BukkitTraitManager(this);
+
+        // Init registries
+        skillRegistry = new SkillRegistry(this);
+        statRegistry = new StatRegistry(this);
+        traitRegistry = new TraitRegistry(this);
+        abilityRegistry = new AbilityRegistry(this);
+        manaAbilityRegistry = new ManaAbilityRegistry(this);
+        itemRegistry = new BukkitItemRegistry(this);
+    }
+
     @Override
     public void onEnable() {
-        registerApi();
-        logger = new BukkitLogger(this);
         audiences = BukkitAudiences.create(this);
         eventHandler = new BukkitEventHandler(this);
         hookManager = new HookManager();
@@ -144,35 +165,19 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
-        // Load messages
-        messageProvider = new MessageProvider(this);
-        messageProvider.loadMessages();
         // Load blocked/disabled worlds lists
         worldManager = new BukkitWorldManager(this);
         worldManager.loadWorlds(getConfig());
         // Create scheduler
         scheduler = new BukkitScheduler(this);
-
-        // Init managers
-        skillManager = new SkillManager(this);
-        abilityManager = new BukkitAbilityManager(this);
-        manaAbilityManager = new BukkitManaAbilityManager(this);
-        statManager = new BukkitStatManager(this);
-        traitManager = new BukkitTraitManager(this);
         regionManager = new RegionManager(this);
-
-        // Init registries
-        skillRegistry = new SkillRegistry(this);
-        statRegistry = new StatRegistry(this);
-        traitRegistry = new TraitRegistry(this);
-        abilityRegistry = new AbilityRegistry(this);
-        manaAbilityRegistry = new ManaAbilityRegistry(this);
-        itemRegistry = new BukkitItemRegistry(this);
 
         // Load skills, stats
         loadSkills();
 
-        // Register default traits
+        // Register default content
+        abilityManager.registerAbilityImplementations();
+        manaAbilityManager.registerProviders();
         traitManager.registerTraitImplementations();
 
         xpRequirements = new XpRequirements(this);
@@ -219,10 +224,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Save users
         for (User user : userManager.getUserMap().values()) {
             try {
-                logger().info("Saving user " + user.getUsername());
                 storageProvider.save(user);
             } catch (Exception e) {
-                logger().warn("Failed to save user " + user.getUsername());
                 e.printStackTrace();
             }
         }
@@ -258,11 +261,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         skillLoader.loadSkills();
         StatLoader statLoader = new StatLoader(this);
         statLoader.loadStats();
-    }
-
-    private void registerApi() {
-        this.api = new ApiAuraSkills(this);
-        ApiRegistrationUtil.register(api);
     }
 
     private void registerAndLoadMenus() {

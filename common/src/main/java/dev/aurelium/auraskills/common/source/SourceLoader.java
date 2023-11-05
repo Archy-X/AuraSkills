@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.api.item.ItemFilterMeta;
 import dev.aurelium.auraskills.api.item.LootItemFilter;
 import dev.aurelium.auraskills.api.item.PotionData;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -21,6 +21,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -42,20 +43,24 @@ public class SourceLoader {
         this.configurateLoader = new ConfigurateLoader(plugin, sourceSerializers);
     }
 
-    public List<XpSource> loadSources(Skills skill) {
+    public List<XpSource> loadSources(Skill skill, File contentDirectory, boolean loadEmbedded) {
+        File sourceFile = new File(contentDirectory, "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml");
         String fileName = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
         try {
-            ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(fileName);
-
-            // Get the node containing default values in the file
-            ConfigurationNode fileDefault = embedded.node("default");
-
-            // Load each embedded source
             Map<String, ConfigurationNode> embeddedSources = new HashMap<>();
-            addToMap(embedded, embeddedSources);
+            ConfigurationNode fileDefault = null;
+            if (loadEmbedded) {
+                ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(fileName);
+
+                // Get the node containing default values in the file
+                fileDefault = embedded.node("default");
+
+                // Load each embedded source
+                addToMap(embedded, embeddedSources);
+            }
 
             // Load each user source file
-            ConfigurationNode user = configurateLoader.loadUserFile(fileName);
+            ConfigurationNode user = configurateLoader.loadUserFile(sourceFile);
 
             ConfigurationNode userDefault = user.node("default");
 
@@ -66,10 +71,14 @@ public class SourceLoader {
             Map<String, ConfigurationNode> sources = new HashMap<>();
 
             for (String sourceName : userSources.keySet()) {
-                ConfigurationNode embeddedNode = embeddedSources.get(sourceName);
                 ConfigurationNode userNode = userSources.get(sourceName);
-
-                ConfigurationNode merged = configurateLoader.mergeNodes(fileDefault, embeddedNode, userDefault, userNode);
+                ConfigurationNode merged;
+                if (loadEmbedded && fileDefault != null) {
+                    ConfigurationNode embeddedNode = embeddedSources.get(sourceName);
+                    merged = configurateLoader.mergeNodes(fileDefault, embeddedNode, userDefault, userNode);
+                } else {
+                    merged = configurateLoader.mergeNodes(userDefault, userNode);
+                }
                 sources.put(sourceName, merged);
             }
 
@@ -98,12 +107,12 @@ public class SourceLoader {
         }
     }
 
-    public Map<SourceTag, List<XpSource>> loadTags(Skills skill) {
-        String fileName = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
+    public Map<SourceTag, List<XpSource>> loadTags(Skill skill, File contentDirectory) {
+        File sourceFile = new File(contentDirectory, "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml");
         try {
             Map<SourceTag, List<XpSource>> tagMap = new HashMap<>();
 
-            ConfigurationNode user = configurateLoader.loadUserFile(fileName);
+            ConfigurationNode user = configurateLoader.loadUserFile(sourceFile);
 
             for (SourceTag tag : SourceTag.ofSkill(skill)) {
                 ConfigurationNode tagNode = user.node("tags").node(tag.name().toLowerCase(Locale.ROOT));
@@ -132,7 +141,7 @@ public class SourceLoader {
 
             return tagMap;
         } catch (Exception e) {
-            plugin.logger().warn("Error loading tags in sources file " + fileName + ": " + e.getMessage());
+            plugin.logger().warn("Error loading tags in sources file " + sourceFile.getName() + ": " + e.getMessage());
             e.printStackTrace();
             // Return map with empty lists for each tag
             Map<SourceTag, List<XpSource>> fallback = new HashMap<>();

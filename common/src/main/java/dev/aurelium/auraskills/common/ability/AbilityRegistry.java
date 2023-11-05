@@ -9,18 +9,17 @@ import dev.aurelium.auraskills.common.registry.Registry;
 /**
  * Registry for storing abilities and their properties.
  */
-public class AbilityRegistry extends Registry<Ability> {
+public class AbilityRegistry extends Registry<Ability, AbilityProvider> {
 
     public AbilityRegistry(AuraSkillsPlugin plugin) {
-        super(plugin, Ability.class);
+        super(plugin, Ability.class, AbilityProvider.class);
         registerDefaults();
     }
 
     @Override
     public void registerDefaults() {
         for (Ability ability : Abilities.values()) {
-            injectProvider(ability, AbilityProvider.class, plugin.getAbilityManager().getSupplier()); // Inject the AbilityProvider instance
-            this.register(ability.getId(), ability);
+            this.register(ability.getId(), ability, plugin.getAbilityManager().getSupplier());
         }
     }
 }

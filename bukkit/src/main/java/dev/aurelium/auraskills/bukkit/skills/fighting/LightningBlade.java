@@ -1,8 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.fighting;
 
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
-import dev.aurelium.auraskills.api.trait.TraitModifier;
-import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
@@ -20,7 +18,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.UUID;
+
 public class LightningBlade extends ReadiedManaAbility {
+
+    private final UUID MODIFIER_ID = UUID.fromString("2fc64528-614b-11ee-8c99-0242ac120002");
 
     public LightningBlade(AuraSkills plugin) {
         super(plugin, ManaAbilities.LIGHTNING_BLADE, ManaAbilityMessage.LIGHTNING_BLADE_START, ManaAbilityMessage.LIGHTNING_BLADE_END,
@@ -29,7 +31,18 @@ public class LightningBlade extends ReadiedManaAbility {
 
     @Override
     public void onActivate(Player player, User user) {
-        user.addTraitModifier(new TraitModifier("lightning_blade", Traits.ATTACK_SPEED, getValue(user)));
+        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        if (attribute == null) return;
+
+        // Remove existing modifier if exists
+        for (AttributeModifier modifier : attribute.getModifiers()) {
+            if (modifier.getName().equals("auraskills_lightning_blade")) {
+                attribute.removeModifier(modifier);
+            }
+        }
+        // Increase attack speed attribute
+        double addedValue = getValue(user) / 100;
+        attribute.addModifier(new AttributeModifier(MODIFIER_ID, "auraskills_lightning_blade", addedValue, AttributeModifier.Operation.MULTIPLY_SCALAR_1));
         // Play sound and send message
         player.playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 0.5f, 1);
     }

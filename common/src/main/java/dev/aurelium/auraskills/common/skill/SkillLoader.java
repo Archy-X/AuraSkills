@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -19,6 +20,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -50,7 +52,8 @@ public class SkillLoader {
             plugin.getAbilityManager().unregisterAll();
             plugin.getManaAbilityManager().unregisterAll();
 
-            ConfigurationNode root = configurateLoader.loadUserFile("skills.yml");
+            ConfigurationNode main = configurateLoader.loadUserFile("skills.yml");
+            ConfigurationNode root = configurateLoader.loadContentAndMerge("skills.yml", main);
 
             ConfigurationNode skillsNode = root.node("skills");
 
@@ -73,7 +76,10 @@ public class SkillLoader {
             }
             plugin.logger().info("Loaded " + skillsLoaded + " skills: " + Arrays.toString(plugin.getSkillManager().getSkills().stream().map(loaded -> loaded.skill().getId()).toArray()));
 
-            loadSourceTags();
+            // Load source tags
+            for (Skill skill : plugin.getSkillManager().getSkillValues()) {
+                loadSourceTags(skill);
+            }
         } catch (IOException e) {
             plugin.logger().severe("Error loading skills.yml file: " + e.getMessage());
             e.printStackTrace();
@@ -144,7 +150,9 @@ public class SkillLoader {
     private ImmutableList<XpSource> loadSources(Skill skill) {
         if (skill instanceof Skills auraSkill) {
             // Load sources from file for included skill
-            return ImmutableList.copyOf(sourceLoader.loadSources(auraSkill));
+            return ImmutableList.copyOf(sourceLoader.loadSources(auraSkill, plugin.getPluginFolder(), true));
+        } else if (skill instanceof CustomSkill customSkill && customSkill.getContentDirectory() != null) {
+            return ImmutableList.copyOf(sourceLoader.loadSources(customSkill, customSkill.getContentDirectory(), false));
         } else {
             return ImmutableList.of();
         }
@@ -162,15 +170,20 @@ public class SkillLoader {
         return new SkillOptions(optionMap);
     }
 
-    private void loadSourceTags() {
-        for (Skills skill : Skills.values()) {
-            if (!skill.isEnabled()) continue;
+    private void loadSourceTags(Skill skill) {
+        if (!skill.isEnabled()) return;
 
-            Map<SourceTag, List<XpSource>> tagMap = sourceLoader.loadTags(skill);
+        File contentDir;
+        if (skill instanceof CustomSkill customSkill && customSkill.getContentDirectory() != null) {
+            contentDir = customSkill.getContentDirectory();
+        } else {
+            contentDir = plugin.getPluginFolder();
+        }
 
-            for (Map.Entry<SourceTag, List<XpSource>> entry : tagMap.entrySet()) {
-                plugin.getSkillManager().registerSourceTag(entry.getKey(), entry.getValue());
-            }
+        Map<SourceTag, List<XpSource>> tagMap = sourceLoader.loadTags(skill, contentDir);
+
+        for (Map.Entry<SourceTag, List<XpSource>> entry : tagMap.entrySet()) {
+            plugin.getSkillManager().registerSourceTag(entry.getKey(), entry.getValue());
         }
     }
 

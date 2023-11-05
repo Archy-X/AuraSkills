@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.common.util.data.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.util.*;
 
 public class SkillManager {
@@ -18,12 +19,14 @@ public class SkillManager {
     private final Map<Skill, LoadedSkill> skillMap;
     private final Map<SourceTag, List<XpSource>> sourceTagMap;
     private final SkillSupplier supplier;
+    private final Set<File> contentDirectories;
 
     public SkillManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.skillMap = new LinkedHashMap<>();
         this.sourceTagMap = new HashMap<>();
         this.supplier = new SkillSupplier(this, plugin.getMessageProvider());
+        this.contentDirectories = new LinkedHashSet<>();
     }
 
     public SkillSupplier getSupplier() {
@@ -133,6 +136,14 @@ public class SkillManager {
 
     public boolean hasTag(XpSource source, SourceTag tag) {
         return sourceTagMap.getOrDefault(tag, new ArrayList<>()).contains(source);
+    }
+
+    public Set<File> getContentDirectories() {
+        return contentDirectories;
+    }
+
+    public void addContentDirectory(File file) {
+        contentDirectories.add(file);
     }
 
 }

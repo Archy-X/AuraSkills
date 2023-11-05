@@ -16,8 +16,7 @@ public class TraitLoader {
     private final AuraSkillsPlugin plugin;
     private final ConfigurateLoader configurateLoader;
 
-    private ConfigurationNode embedded;
-    private ConfigurationNode user;
+    private ConfigurationNode root;
 
     public TraitLoader(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -27,8 +26,10 @@ public class TraitLoader {
 
     public void init() {
         try {
-            this.embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
-            this.user = configurateLoader.loadUserFile(FILE_NAME);
+            ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
+            ConfigurationNode user = configurateLoader.loadUserFile(FILE_NAME);
+
+            this.root = configurateLoader.loadContentAndMerge(FILE_NAME, embedded, user);
         } catch (Exception e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();
@@ -36,10 +37,7 @@ public class TraitLoader {
     }
 
     public LoadedTrait loadTrait(Trait trait) throws SerializationException {
-        ConfigurationNode embeddedTrait = embedded.node("traits", trait.getId().toString());
-        ConfigurationNode userTrait = user.node("traits", trait.getId().toString());
-
-        ConfigurationNode traitNode = configurateLoader.mergeNodes(embeddedTrait, userTrait);
+        ConfigurationNode traitNode = root.node("traits", trait.getId().toString());
 
         // Add all values in trait to a map
         Map<String, Object> configMap = new HashMap<>();

@@ -9,17 +9,16 @@ import dev.aurelium.auraskills.common.registry.Registry;
 /**
  * Registry for skills.
  */
-public class SkillRegistry extends Registry<Skill> {
+public class SkillRegistry extends Registry<Skill, SkillProvider> {
 
     public SkillRegistry(AuraSkillsPlugin plugin) {
-        super(plugin, Skill.class);
+        super(plugin, Skill.class, SkillProvider.class);
         registerDefaults();
     }
 
     public void registerDefaults() {
         for (Skill skill : Skills.values()) {
-            injectProvider(skill, SkillProvider.class, plugin.getSkillManager().getSupplier()); // Inject the SkillProvider instance
-            this.register(skill.getId(), skill);
+            this.register(skill.getId(), skill, plugin.getSkillManager().getSupplier());
         }
     }
 

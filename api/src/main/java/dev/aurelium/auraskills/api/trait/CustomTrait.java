@@ -1,32 +1,30 @@
-package dev.aurelium.auraskills.api.stat;
+package dev.aurelium.auraskills.api.trait;
 
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public enum Stats implements Stat {
-
-    STRENGTH,
-    HEALTH,
-    REGENERATION,
-    LUCK,
-    WISDOM,
-    TOUGHNESS,
-    CRIT_CHANCE,
-    CRIT_DAMAGE,
-    SPEED;
+public class CustomTrait implements Trait {
 
     @Inject
-    private StatProvider provider;
+    private TraitProvider provider;
 
     private final NamespacedId id;
+    @Nullable
+    private final String displayName;
 
-    Stats() {
-        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
+    private CustomTrait(NamespacedId id, @Nullable String displayName) {
+        this.id = id;
+        this.displayName = displayName;
+    }
+
+    public static CustomTraitBuilder builder(NamespacedRegistry registry, String name) {
+        return new CustomTraitBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 
     @Override
@@ -35,43 +33,18 @@ public enum Stats implements Stat {
     }
 
     @Override
-    public String toString() {
-        return getId().toString();
-    }
-
-    @Override
     public boolean isEnabled() {
         return provider.isEnabled(this);
     }
 
     @Override
-    public List<Trait> getTraits() {
-        return provider.getTraits(this);
-    }
-
-    @Override
-    public double getTraitModifier(Trait trait) {
-        return provider.getTraitModifier(this, trait);
-    }
-
-    @Override
     public String getDisplayName(Locale locale) {
-        return provider.getDisplayName(this, locale);
+        return displayName != null ? displayName : provider.getDisplayName(this, locale);
     }
 
     @Override
-    public String getDescription(Locale locale) {
-        return provider.getDescription(this, locale);
-    }
-
-    @Override
-    public String getColor(Locale locale) {
-        return provider.getColor(this, locale);
-    }
-
-    @Override
-    public String getSymbol(Locale locale) {
-        return provider.getSymbol(this, locale);
+    public String name() {
+        return id.getKey().toUpperCase(Locale.ROOT);
     }
 
     @Override
@@ -123,4 +96,26 @@ public enum Stats implements Stat {
     public Map<String, Object> optionMap(String key) {
         return provider.optionMap(this, key);
     }
+
+    public static class CustomTraitBuilder {
+
+        private final NamespacedId id;
+        @Nullable
+        private String displayName;
+
+        public CustomTraitBuilder(NamespacedId id) {
+            this.id = id;
+        }
+
+        public CustomTraitBuilder displayName(String displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+
+        public CustomTrait build() {
+            return new CustomTrait(id, displayName);
+        }
+
+    }
+
 }

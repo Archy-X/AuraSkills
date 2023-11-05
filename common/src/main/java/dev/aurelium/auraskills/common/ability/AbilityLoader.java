@@ -18,8 +18,7 @@ public class AbilityLoader {
     private final AuraSkillsPlugin plugin;
     private final ConfigurateLoader configurateLoader;
 
-    private ConfigurationNode embedded;
-    private ConfigurationNode user;
+    private ConfigurationNode root;
 
     public AbilityLoader(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -29,8 +28,10 @@ public class AbilityLoader {
 
     public void init() {
         try {
-            this.embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
-            this.user = configurateLoader.loadUserFile(FILE_NAME);
+            ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
+            ConfigurationNode user = configurateLoader.loadUserFile(FILE_NAME);
+
+            this.root = configurateLoader.loadContentAndMerge(FILE_NAME, embedded, user);
         } catch (IOException e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();
@@ -38,10 +39,7 @@ public class AbilityLoader {
     }
 
     public LoadedAbility loadAbility(Ability ability, Skill skill) throws SerializationException {
-        ConfigurationNode embeddedAbility = embedded.node("abilities", ability.getId().toString());
-        ConfigurationNode userAbility = user.node("abilities", ability.getId().toString());
-
-        ConfigurationNode abilityNode = configurateLoader.mergeNodes(embeddedAbility, userAbility);
+        ConfigurationNode abilityNode = root.node("abilities", ability.getId().toString());
 
         // Add all values in ability to a map
         Map<String, Object> configMap = new HashMap<>();

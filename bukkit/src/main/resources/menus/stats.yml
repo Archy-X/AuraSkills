@@ -39,13 +39,13 @@ templates:
         material: purple_stained_glass_pane
       crit_chance:
         pos: 2,3
-        material: magenta_stained_glass_pane
+        material: lime_stained_glass_pane
       crit_damage:
         pos: 2,4
         material: cyan_stained_glass_pane
-      attack_speed:
+      speed:
         pos: 2,5
-        material: lime_stained_glass_pane
+        material: white_stained_glass_pane
     display_name: '{color}{stat}'
     lore:
       - text: '{stat_desc}'

@@ -6,18 +6,17 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.registry.Registry;
 
-public class TraitRegistry extends Registry<Trait> {
+public class TraitRegistry extends Registry<Trait, TraitProvider> {
 
     public TraitRegistry(AuraSkillsPlugin plugin) {
-        super(plugin, Trait.class);
+        super(plugin, Trait.class, TraitProvider.class);
         registerDefaults();
     }
 
     @Override
     public void registerDefaults() {
         for (Trait trait : Traits.values()) {
-            injectProvider(trait, TraitProvider.class, plugin.getTraitManager().getSupplier());
-            this.register(trait.getId(), trait);
+            this.register(trait.getId(), trait, plugin.getTraitManager().getSupplier());
         }
     }
 }

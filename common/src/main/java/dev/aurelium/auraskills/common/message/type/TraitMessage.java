@@ -21,7 +21,7 @@ public enum TraitMessage implements MessageKey {
     DAMAGE_REDUCTION_NAME,
     CRIT_CHANCE_NAME,
     CRIT_DAMAGE_NAME,
-    ATTACK_SPEED_NAME;
+    MOVEMENT_SPEED_NAME;
 
     private final String path;
 

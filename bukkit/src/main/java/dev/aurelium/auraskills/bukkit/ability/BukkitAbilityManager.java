@@ -33,10 +33,9 @@ public class BukkitAbilityManager extends AbilityManager {
     public BukkitAbilityManager(AuraSkills plugin) {
         super(plugin);
         this.plugin = plugin;
-        registerAbilityImplementations();
     }
 
-    private void registerAbilityImplementations() {
+    public void registerAbilityImplementations() {
         registerAbilityImpl(new FarmingAbilities(plugin));
         registerAbilityImpl(new ForagingAbilities(plugin));
         registerAbilityImpl(new MiningAbilities(plugin));

@@ -24,12 +24,10 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
         super(plugin);
         this.plugin = plugin;
         this.providerSet = new HashSet<>();
-
-        registerProviders();
-        new TimerCountdown(plugin); // Start counting down cooldown and error timers
     }
 
-    private void registerProviders() {
+    public void registerProviders() {
+        new TimerCountdown(plugin); // Start counting down cooldown and error timers
         registerProvider(new Replenish(plugin));
         registerProvider(new Treecapitator(plugin));
         registerProvider(new SpeedMine(plugin));

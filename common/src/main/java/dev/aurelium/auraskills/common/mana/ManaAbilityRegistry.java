@@ -9,18 +9,17 @@ import dev.aurelium.auraskills.common.registry.Registry;
 /**
  * Registry for storing mana abilities and their properties.
  */
-public class ManaAbilityRegistry extends Registry<ManaAbility> {
+public class ManaAbilityRegistry extends Registry<ManaAbility, ManaAbilityProvider> {
 
     public ManaAbilityRegistry(AuraSkillsPlugin plugin) {
-        super(plugin, ManaAbility.class);
+        super(plugin, ManaAbility.class, ManaAbilityProvider.class);
         registerDefaults();
     }
 
     @Override
     public void registerDefaults() {
         for (ManaAbility manaAbility : ManaAbilities.values()) {
-            injectProvider(manaAbility, ManaAbilityProvider.class, plugin.getManaAbilityManager().getSupplier()); // Inject the ManaAbilityProvider instance
-            this.register(manaAbility.getId(), manaAbility);
+            this.register(manaAbility.getId(), manaAbility, plugin.getManaAbilityManager().getSupplier());
         }
     }
 }

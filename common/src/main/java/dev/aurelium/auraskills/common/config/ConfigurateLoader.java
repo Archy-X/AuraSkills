@@ -16,8 +16,7 @@ import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigurateLoader {
 
@@ -79,6 +78,10 @@ public class ConfigurateLoader {
             throw new RuntimeException("File does not exist!");
         }
 
+        return loadUserFile(file);
+    }
+
+    public ConfigurationNode loadUserFile(File file) throws IOException {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .path(file.toPath())
                 .defaultOptions(opts ->
@@ -135,6 +138,27 @@ public class ConfigurateLoader {
                 base.node(child.key()).set(child.raw());
             }
         }
+    }
+
+    // Combines the files in all content directories into one ConfigurationNode
+    public ConfigurationNode loadContentAndMerge(String path, ConfigurationNode... others) throws SerializationException {
+        List<ConfigurationNode> loadedFiles = new ArrayList<>();
+
+        for (File dir : plugin.getSkillManager().getContentDirectories()) {
+            File file = new File(dir, path);
+
+            try {
+                ConfigurationNode config = loadUserFile(file);
+                loadedFiles.add(config);
+            } catch (IOException e) {
+                plugin.logger().warn("Failed to load file " + file.getName() + " in content directory " + dir.getPath());
+                e.printStackTrace();
+            }
+        }
+
+        loadedFiles.addAll(Arrays.asList(others));
+
+        return mergeNodes(loadedFiles.toArray(new ConfigurationNode[0]));
     }
 
     private URI getEmbeddedURI(String fileName) {

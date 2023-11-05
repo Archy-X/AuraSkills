@@ -88,7 +88,7 @@ public abstract class StatManager {
         reloadStat(user, Stats.WISDOM);
         reloadStat(user, Stats.CRIT_CHANCE);
         reloadStat(user, Stats.CRIT_DAMAGE);
-        reloadStat(user, Stats.ATTACK_SPEED);
+        reloadStat(user, Stats.SPEED);
     }
 
     public boolean isLoaded(Stat stat) {

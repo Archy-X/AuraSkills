@@ -49,3 +49,8 @@ stats:
     traits:
       auraskills/crit_damage:
         modifier: 1
+  auraskills/speed:
+    enabled: true
+    traits:
+      auraskills/movement_speed:
+        modifier: 1

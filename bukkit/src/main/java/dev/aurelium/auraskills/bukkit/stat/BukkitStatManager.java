@@ -34,6 +34,7 @@ public class BukkitStatManager extends StatManager {
 
     @Override
     public void reloadStat(User user, Stat stat) {
+        if (!stat.isEnabled()) return;
         // Reload traits
         for (Trait trait : stat.getTraits()) {
             TraitImpl traitImpl = ((BukkitTraitManager) plugin.getTraitManager()).getTraitImpl(trait);

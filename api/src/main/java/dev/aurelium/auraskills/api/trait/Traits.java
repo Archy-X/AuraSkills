@@ -22,7 +22,7 @@ public enum Traits implements Trait {
     DAMAGE_REDUCTION,
     CRIT_CHANCE,
     CRIT_DAMAGE,
-    ATTACK_SPEED;
+    MOVEMENT_SPEED;
 
     @Inject
     private TraitProvider provider;

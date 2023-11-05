@@ -11,15 +11,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Registry<T> {
+public abstract class Registry<T, P> {
 
     protected final AuraSkillsPlugin plugin;
     private final Class<T> type;
+    private final Class<P> providerType;
     private final Map<NamespacedId, T> registryMap;
 
-    public Registry(AuraSkillsPlugin plugin, Class<T> type) {
+    public Registry(AuraSkillsPlugin plugin, Class<T> type, Class<P> providerType) {
         this.plugin = plugin;
         this.type = type;
+        this.providerType = providerType;
         this.registryMap = new HashMap<>();
     }
 
@@ -47,7 +49,8 @@ public abstract class Registry<T> {
         return registryMap.values();
     }
 
-    public void register(@NotNull NamespacedId id, @NotNull T value) {
+    public void register(@NotNull NamespacedId id, @NotNull T value, P provider) {
+        injectProvider(value, providerType, provider);
         registryMap.put(id, value);
     }
 
@@ -55,7 +58,7 @@ public abstract class Registry<T> {
         registryMap.remove(id);
     }
 
-    protected <P> void injectProvider(Object obj, Class<P> type, P provider) {
+    private void injectProvider(Object obj, Class<P> type, P provider) {
         for (Field field : obj.getClass().getDeclaredFields()) {
             if (!field.isAnnotationPresent(Inject.class)) continue; // Ignore fields without @Inject
             if (field.getType().equals(type)) {
