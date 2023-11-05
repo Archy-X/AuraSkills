@@ -1,6 +1,5 @@
 plugins {
     java
-    `maven-publish`
 }
 
 repositories {
@@ -18,12 +17,6 @@ allprojects {
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
-
-publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
-    }
-}
 
 tasks.withType<JavaCompile>() {
     options.encoding = "UTF-8"
