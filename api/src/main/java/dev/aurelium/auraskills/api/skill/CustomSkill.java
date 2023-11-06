@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.api.skill;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.annotation.Inject;
+import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
@@ -20,17 +21,23 @@ public class CustomSkill implements Skill {
     private SkillProvider provider;
 
     private final NamespacedId id;
+    private final ItemContext item;
     private final File contentDirectory;
     private final Ability xpMultiplierAbility;
 
-    private CustomSkill(NamespacedId id, File contentDirectory, Ability xpMultiplierAbility) {
+    private CustomSkill(NamespacedId id, ItemContext item, File contentDirectory, Ability xpMultiplierAbility) {
         this.id = id;
         this.contentDirectory = contentDirectory;
         this.xpMultiplierAbility = xpMultiplierAbility;
+        this.item = item;
     }
 
     public static CustomSkillBuilder builder(NamespacedRegistry registry, String name) {
         return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name), registry.getContentDirectory());
+    }
+
+    public ItemContext getItem() {
+        return item;
     }
 
     @Override
@@ -141,12 +148,23 @@ public class CustomSkill implements Skill {
     public static class CustomSkillBuilder {
 
         private final NamespacedId id;
+        private ItemContext item;
         private File contentDirectory;
         private Ability xpMultiplierAbility;
 
         public CustomSkillBuilder(NamespacedId id, File contentDirectory) {
             this.id = id;
             this.contentDirectory = contentDirectory;
+            this.item = ItemContext.builder()
+                    .material("stone")
+                    .group("third_row")
+                    .order(6)
+                    .build();
+        }
+
+        public CustomSkillBuilder item(ItemContext item) {
+            this.item = item;
+            return this;
         }
 
         public CustomSkillBuilder contentDirectory(File contentDirectory) {
@@ -160,7 +178,7 @@ public class CustomSkill implements Skill {
         }
 
         public CustomSkill build() {
-            return new CustomSkill(id, contentDirectory, xpMultiplierAbility);
+            return new CustomSkill(id, item, contentDirectory, xpMultiplierAbility);
         }
     }
 

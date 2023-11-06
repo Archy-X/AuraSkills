@@ -4,13 +4,19 @@ import com.archyx.slate.item.provider.ListBuilder;
 import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
+import com.archyx.slate.position.PositionProvider;
+import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.bukkit.trait.TraitImpl;
+import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -61,4 +67,38 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         return builder.build();
     }
 
+    @Override
+    public void onInitialize(Player player, ActiveMenu activeMenu, Stat context) {
+        if (!(context instanceof CustomStat stat)) {
+            return;
+        }
+        try {
+            ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
+            ConfigurationNode config = parser.parseItemContext(stat.getItem());
+
+            PositionProvider provider = parser.parsePositionProvider(config, activeMenu);
+            if (provider != null) {
+                activeMenu.setPositionProvider("stat", context, provider);
+            }
+        } catch (SerializationException e) {
+            plugin.logger().warn("Error parsing ItemContext of CustomStat " + stat.getId());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Stat context) {
+        // Handle custom stats
+        if (baseItem == null && context instanceof CustomStat stat) {
+            try {
+                ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
+
+                return parser.parseBaseItem(parser.parseItemContext(stat.getItem()));
+            } catch (SerializationException | IllegalArgumentException e) {
+                plugin.logger().warn("Error parsing ItemContext of CustomStat " + stat.getId());
+                e.printStackTrace();
+            }
+        }
+        return baseItem;
+    }
 }

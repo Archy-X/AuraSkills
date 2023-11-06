@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api.stat;
 
 import dev.aurelium.auraskills.api.annotation.Inject;
+import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.trait.Trait;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +16,7 @@ public class CustomStat implements Stat {
     private StatProvider provider;
 
     private final NamespacedId id;
+    private final ItemContext item;
     @Nullable
     private final String displayName;
     @Nullable
@@ -24,8 +26,9 @@ public class CustomStat implements Stat {
     @Nullable
     private final String symbol;
 
-    private CustomStat(NamespacedId id, @Nullable String displayName, @Nullable String description, @Nullable String color, @Nullable String symbol) {
+    private CustomStat(NamespacedId id, ItemContext item, @Nullable String displayName, @Nullable String description, @Nullable String color, @Nullable String symbol) {
         this.id = id;
+        this.item = item;
         this.displayName = displayName;
         this.description = description;
         this.color = color;
@@ -34,6 +37,10 @@ public class CustomStat implements Stat {
 
     public static CustomStatBuilder builder(NamespacedId registry, String name) {
         return new CustomStatBuilder(NamespacedId.from(registry.getNamespace(), name));
+    }
+
+    public ItemContext getItem() {
+        return item;
     }
 
     @Override
@@ -134,6 +141,7 @@ public class CustomStat implements Stat {
     public static class CustomStatBuilder {
 
         private final NamespacedId id;
+        private ItemContext item;
         @Nullable
         private String displayName;
         @Nullable
@@ -145,6 +153,17 @@ public class CustomStat implements Stat {
 
         public CustomStatBuilder(NamespacedId id) {
             this.id = id;
+            // The default item
+            this.item = ItemContext.builder()
+                    .material("magenta_stained_glass_pane")
+                    .group("lower")
+                    .order(6)
+                    .build();
+        }
+
+        public CustomStatBuilder item(ItemContext item) {
+            this.item = item;
+            return this;
         }
 
         public CustomStatBuilder displayName(String displayName) {
@@ -168,7 +187,7 @@ public class CustomStat implements Stat {
         }
 
         public CustomStat build() {
-            return new CustomStat(id, displayName, description, color, symbol);
+            return new CustomStat(id, item, displayName, description, color, symbol);
         }
 
     }

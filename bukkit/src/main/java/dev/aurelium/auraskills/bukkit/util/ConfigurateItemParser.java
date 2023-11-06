@@ -1,5 +1,10 @@
 package dev.aurelium.auraskills.bukkit.util;
 
+import com.archyx.slate.context.ContextGroup;
+import com.archyx.slate.menu.ActiveMenu;
+import com.archyx.slate.position.FixedPosition;
+import com.archyx.slate.position.GroupPosition;
+import com.archyx.slate.position.PositionProvider;
 import com.archyx.slate.util.NumberUtil;
 import com.archyx.slate.util.TextUtil;
 import com.archyx.slate.util.Validate;
@@ -8,9 +13,11 @@ import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.dbassett.skullcreator.SkullCreator;
+import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -26,6 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
@@ -221,7 +229,48 @@ public class ConfigurateItemParser {
         }
     }
 
-    @SuppressWarnings("deprecation")
+    public SlotPos parsePosition(String input) {
+        String[] splitInput = input.split(",", 2);
+        if (splitInput.length == 2) {
+            int row = Integer.parseInt(splitInput[0]);
+            int column = Integer.parseInt(splitInput[1]);
+            return SlotPos.of(row, column);
+        } else {
+            int slot = Integer.parseInt(input);
+            int row = slot / 9;
+            int column = slot % 9;
+            return SlotPos.of(row, column);
+        }
+    }
+
+    public ConfigurationNode parseItemContext(ItemContext itemContext) throws SerializationException {
+        ConfigurationNode config = CommentedConfigurationNode.root();
+        for (Map.Entry<String, Object> entry : itemContext.getMap().entrySet()) {
+            config.node(entry.getKey()).set(entry.getValue());
+        }
+        return config;
+    }
+
+    @Nullable
+    public PositionProvider parsePositionProvider(ConfigurationNode config, ActiveMenu activeMenu) {
+        String pos = config.node("pos").getString();
+        if (pos != null) {
+            // Static position
+            SlotPos slotPos = parsePosition(pos);
+            return new FixedPosition(slotPos);
+        } else if (!config.node("group").virtual()) {
+            // Group and order position
+            String groupName = config.node("group").getString("");
+            ContextGroup contextGroup = activeMenu.getContextGroups("stat").get(groupName);
+            if (contextGroup != null) {
+                int order = config.node("order").getInt();
+
+                return new GroupPosition(contextGroup, order);
+            }
+        }
+        return null;
+    }
+
     private ItemStack parseMaterialString(String materialString) {
         ItemStack item;
         String materialName = materialString.toUpperCase(Locale.ROOT);
