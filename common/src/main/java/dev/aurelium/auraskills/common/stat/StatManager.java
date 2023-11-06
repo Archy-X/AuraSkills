@@ -70,7 +70,7 @@ public abstract class StatManager {
         for (Stat stat : plugin.getStatRegistry().getValues()) {
             user.setStatLevel(stat, 0);
         }
-        for (Skill skill : plugin.getSkillRegistry().getValues()) {
+        for (Skill skill : plugin.getSkillManager().getSkillValues()) {
             plugin.getRewardManager().getRewardTable(skill).applyStats(user, user.getSkillLevel(skill));
         }
         // Reloads modifiers

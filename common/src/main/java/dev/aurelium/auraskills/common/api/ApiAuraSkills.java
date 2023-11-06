@@ -55,7 +55,10 @@ public class ApiAuraSkills implements AuraSkillsApi {
             throw new IllegalArgumentException("Cannot get a namespaced registry for auraskills, use the name of your plugin!");
         }
         final String finalNamespace = namespace;
-        return namespacedRegistryMap.computeIfAbsent(namespace, s -> new ApiNamespacedRegistry(plugin, finalNamespace, contentDirectory));
+        return namespacedRegistryMap.computeIfAbsent(namespace, s -> {
+            plugin.getSkillManager().addContentDirectory(contentDirectory);
+            return new ApiNamespacedRegistry(plugin, finalNamespace, contentDirectory);
+        });
     }
 
 }

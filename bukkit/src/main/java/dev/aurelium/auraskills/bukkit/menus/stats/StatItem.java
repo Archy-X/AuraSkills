@@ -35,6 +35,21 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
 
     @Override
     public Set<Stat> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+        for (Stat context : plugin.getStatManager().getEnabledStats()) {
+            if (!(context instanceof CustomStat stat)) continue;
+            try {
+                ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
+                ConfigurationNode config = parser.parseItemContext(stat.getItem());
+
+                PositionProvider provider = parser.parsePositionProvider(config, activeMenu);
+                if (provider != null) {
+                    activeMenu.setPositionProvider("stat", context, provider);
+                }
+            } catch (SerializationException e) {
+                plugin.logger().warn("Error parsing ItemContext of CustomStat " + stat.getId());
+                e.printStackTrace();
+            }
+        }
         return new HashSet<>(plugin.getStatManager().getEnabledStats());
     }
 
@@ -65,25 +80,6 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
                     "{level}", impl.getMenuDisplay(user.getEffectiveTraitLevel(trait), trait));
         }
         return builder.build();
-    }
-
-    @Override
-    public void onInitialize(Player player, ActiveMenu activeMenu, Stat context) {
-        if (!(context instanceof CustomStat stat)) {
-            return;
-        }
-        try {
-            ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
-            ConfigurationNode config = parser.parseItemContext(stat.getItem());
-
-            PositionProvider provider = parser.parsePositionProvider(config, activeMenu);
-            if (provider != null) {
-                activeMenu.setPositionProvider("stat", context, provider);
-            }
-        } catch (SerializationException e) {
-            plugin.logger().warn("Error parsing ItemContext of CustomStat " + stat.getId());
-            e.printStackTrace();
-        }
     }
 
     @Override

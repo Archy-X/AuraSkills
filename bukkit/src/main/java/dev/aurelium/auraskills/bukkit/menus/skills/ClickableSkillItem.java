@@ -37,26 +37,22 @@ public class ClickableSkillItem extends AbstractSkillItem {
 
     @Override
     public Set<Skill> getDefinedContexts(Player player, ActiveMenu activeMenu) {
-        return new HashSet<>(plugin.getSkillManager().getEnabledSkills());
-    }
+        for (Skill context : plugin.getSkillManager().getEnabledSkills()) {
+            if (!(context instanceof CustomSkill skill)) continue;
+            try {
+                ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
+                ConfigurationNode config = parser.parseItemContext(skill.getItem());
 
-    @Override
-    public void onInitialize(Player player, ActiveMenu activeMenu, Skill context) {
-        if (!(context instanceof CustomSkill skill)) {
-            return;
-        }
-        try {
-            ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
-            ConfigurationNode config = parser.parseItemContext(skill.getItem());
-
-            PositionProvider provider = parser.parsePositionProvider(config, activeMenu);
-            if (provider != null) {
-                activeMenu.setPositionProvider("skill", context, provider);
+                PositionProvider provider = parser.parsePositionProvider(config, activeMenu);
+                if (provider != null) {
+                    activeMenu.setPositionProvider("skill", context, provider);
+                }
+            } catch (SerializationException e) {
+                plugin.logger().warn("Error parsing ItemContext of CustomSkill " + skill.getId());
+                e.printStackTrace();
             }
-        } catch (SerializationException e) {
-            plugin.logger().warn("Error parsing ItemContext of CustomSkill " + skill.getId());
-            e.printStackTrace();
         }
+        return new HashSet<>(plugin.getSkillManager().getEnabledSkills());
     }
 
     @Override

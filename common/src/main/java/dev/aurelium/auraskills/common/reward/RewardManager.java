@@ -27,7 +27,7 @@ public abstract class RewardManager {
     }
 
     public RewardTable getRewardTable(Skill skill) {
-        return rewardTables.get(skill);
+        return rewardTables.getOrDefault(skill, new RewardTable(plugin));
     }
 
     public abstract void loadRewards();

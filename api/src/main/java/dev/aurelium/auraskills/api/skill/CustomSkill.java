@@ -149,7 +149,7 @@ public class CustomSkill implements Skill {
 
         private final NamespacedId id;
         private ItemContext item;
-        private File contentDirectory;
+        private final File contentDirectory;
         private Ability xpMultiplierAbility;
 
         public CustomSkillBuilder(NamespacedId id, File contentDirectory) {
@@ -164,11 +164,6 @@ public class CustomSkill implements Skill {
 
         public CustomSkillBuilder item(ItemContext item) {
             this.item = item;
-            return this;
-        }
-
-        public CustomSkillBuilder contentDirectory(File contentDirectory) {
-            this.contentDirectory = contentDirectory;
             return this;
         }
 
