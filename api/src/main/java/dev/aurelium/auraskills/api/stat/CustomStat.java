@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.trait.Trait;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,14 +27,16 @@ public class CustomStat implements Stat {
     private final String color;
     @Nullable
     private final String symbol;
+    private final Map<Trait, Double> definedTraits;
 
-    private CustomStat(NamespacedId id, ItemContext item, @Nullable String displayName, @Nullable String description, @Nullable String color, @Nullable String symbol) {
+    private CustomStat(NamespacedId id, ItemContext item, @Nullable String displayName, @Nullable String description, @Nullable String color, @Nullable String symbol, Map<Trait, Double> definedTraits) {
         this.id = id;
         this.item = item;
         this.displayName = displayName;
         this.description = description;
         this.color = color;
         this.symbol = symbol;
+        this.definedTraits = definedTraits;
     }
 
     public static CustomStatBuilder builder(String name, NamespacedRegistry registry) {
@@ -42,6 +45,10 @@ public class CustomStat implements Stat {
 
     public ItemContext getItem() {
         return item;
+    }
+
+    public Map<Trait, Double> getDefinedTraits() {
+        return definedTraits;
     }
 
     @Override
@@ -151,6 +158,7 @@ public class CustomStat implements Stat {
         private String color;
         @Nullable
         private String symbol;
+        private final Map<Trait, Double> traits;
 
         public CustomStatBuilder(NamespacedId id) {
             this.id = id;
@@ -160,6 +168,7 @@ public class CustomStat implements Stat {
                     .group("lower")
                     .order(6)
                     .build();
+            this.traits = new HashMap<>();
         }
 
         public CustomStatBuilder item(ItemContext item) {
@@ -187,8 +196,13 @@ public class CustomStat implements Stat {
             return this;
         }
 
+        public CustomStatBuilder trait(Trait trait, double modifier) {
+            this.traits.put(trait, modifier);
+            return this;
+        }
+
         public CustomStat build() {
-            return new CustomStat(id, item, displayName, description, color, symbol);
+            return new CustomStat(id, item, displayName, description, color, symbol, traits);
         }
 
     }

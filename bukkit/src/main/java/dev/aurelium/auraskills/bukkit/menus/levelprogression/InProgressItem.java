@@ -27,19 +27,14 @@ public class InProgressItem extends SkillLevelItem {
 
         double currentXp = user.getSkillXp(skill);
         double xpToNext = plugin.getXpRequirements().getXpRequired(skill, level);
-        switch (placeholder) {
-            case "level":
-                return String.valueOf(level);
-            case "entries":
-                return getRewardEntries(skill, level, player, locale, activeMenu);
-            case "percent":
-                return NumberUtil.format2(currentXp / xpToNext * 100);
-            case "current_xp":
-                return NumberUtil.format2(currentXp);
-            case "level_xp":
-                return String.valueOf((int) xpToNext);
-        }
-        return replaceMenuMessage(placeholder, player, activeMenu);
+        return switch (placeholder) {
+            case "level" -> String.valueOf(level);
+            case "entries" -> getRewardEntries(skill, level, player, locale, activeMenu);
+            case "percent" -> NumberUtil.format2(currentXp / xpToNext * 100);
+            case "current_xp" -> NumberUtil.format2(currentXp);
+            case "level_xp" -> String.valueOf((int) xpToNext);
+            default -> replaceMenuMessage(placeholder, player, activeMenu);
+        };
     }
 
     @Override

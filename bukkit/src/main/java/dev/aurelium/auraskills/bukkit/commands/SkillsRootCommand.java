@@ -181,9 +181,7 @@ public class SkillsRootCommand extends BaseCommand {
 					e.printStackTrace();
 				}
 			}
-			plugin.getScheduler().executeSync(() -> {
-				sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SAVE_SAVED, locale));
-			});
+			plugin.getScheduler().executeSync(() -> sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SAVE_SAVED, locale)));
 		});
 	}
 

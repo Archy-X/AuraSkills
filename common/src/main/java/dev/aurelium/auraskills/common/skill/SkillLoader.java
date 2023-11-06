@@ -53,7 +53,7 @@ public class SkillLoader {
             plugin.getManaAbilityManager().unregisterAll();
 
             ConfigurationNode main = configurateLoader.loadUserFile("skills.yml");
-            ConfigurationNode root = configurateLoader.loadContentAndMerge("skills.yml", main);
+            ConfigurationNode root = configurateLoader.loadContentAndMerge(null, "skills.yml", main);
 
             ConfigurationNode skillsNode = root.node("skills");
 

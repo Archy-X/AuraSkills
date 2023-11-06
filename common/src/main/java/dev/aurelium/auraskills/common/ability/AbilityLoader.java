@@ -31,7 +31,7 @@ public class AbilityLoader {
             ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
             ConfigurationNode user = configurateLoader.loadUserFile(FILE_NAME);
 
-            this.root = configurateLoader.loadContentAndMerge(FILE_NAME, embedded, user);
+            this.root = configurateLoader.loadContentAndMerge(null, FILE_NAME, embedded, user);
         } catch (IOException e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();

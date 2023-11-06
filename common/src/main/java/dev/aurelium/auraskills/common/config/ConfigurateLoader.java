@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.config;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -141,8 +142,11 @@ public class ConfigurateLoader {
     }
 
     // Combines the files in all content directories into one ConfigurationNode
-    public ConfigurationNode loadContentAndMerge(String path, ConfigurationNode... others) throws SerializationException {
+    public ConfigurationNode loadContentAndMerge(@Nullable ConfigurationNode base, String path, ConfigurationNode... others) throws SerializationException {
         List<ConfigurationNode> loadedFiles = new ArrayList<>();
+        if (base != null) {
+            loadedFiles.add(base);
+        }
 
         for (File dir : plugin.getSkillManager().getContentDirectories()) {
             File file = new File(dir, path);

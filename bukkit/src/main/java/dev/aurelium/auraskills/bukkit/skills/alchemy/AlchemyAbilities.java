@@ -92,17 +92,10 @@ public class AlchemyAbilities extends AbilityImpl {
     }
 
     private boolean isApplicablePotion(PotionType potionType) {
-        switch (potionType) {
-            case INSTANT_DAMAGE:
-            case INSTANT_HEAL:
-            case AWKWARD:
-            case MUNDANE:
-            case THICK:
-            case WATER:
-                return false;
-            default:
-                return true;
-        }
+        return switch (potionType) {
+            case INSTANT_DAMAGE, INSTANT_HEAL, AWKWARD, MUNDANE, THICK, WATER -> false;
+            default -> true;
+        };
     }
 
     private ItemStack applyDurationData(ItemStack item, double multiplier, Locale locale) {

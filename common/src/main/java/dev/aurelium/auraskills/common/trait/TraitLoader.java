@@ -28,8 +28,9 @@ public class TraitLoader {
         try {
             ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
             ConfigurationNode user = configurateLoader.loadUserFile(FILE_NAME);
+            ConfigurationNode defined = plugin.getTraitRegistry().getDefinedConfig();
 
-            this.root = configurateLoader.loadContentAndMerge(FILE_NAME, embedded, user);
+            this.root = configurateLoader.loadContentAndMerge(defined, FILE_NAME, embedded, user);
         } catch (Exception e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();
