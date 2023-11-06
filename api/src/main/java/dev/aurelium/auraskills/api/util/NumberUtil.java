@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.util.math;
+package dev.aurelium.auraskills.api.util;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;

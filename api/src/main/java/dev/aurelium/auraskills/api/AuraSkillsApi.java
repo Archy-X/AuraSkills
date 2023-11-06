@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api;
 
 import dev.aurelium.auraskills.api.message.MessageManager;
+import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
 import dev.aurelium.auraskills.api.user.UserManager;
@@ -45,6 +46,13 @@ public interface AuraSkillsApi {
      * @throws IllegalArgumentException if the namespace is "auraskills", which is not allowed
      */
     NamespacedRegistry getRegistry(String namespace, File contentDirectory);
+
+    /**
+     * Gets the {@link Handlers} used to register platform-specific handlers for custom content.
+     *
+     * @return the handlers
+     */
+    Handlers getHandlers();
 
     /**
      * Gets the instance of the {@link AuraSkillsApi},

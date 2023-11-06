@@ -104,8 +104,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private final ManaAbilityRegistry manaAbilityRegistry;
     private final BukkitItemRegistry itemRegistry;
     private final PlatformLogger logger;
+    private final MessageProvider messageProvider;
     private BukkitConfigProvider configProvider;
-    private MessageProvider messageProvider;
     private BukkitLevelManager levelManager;
     private BukkitUserManager userManager;
     private XpRequirements xpRequirements;

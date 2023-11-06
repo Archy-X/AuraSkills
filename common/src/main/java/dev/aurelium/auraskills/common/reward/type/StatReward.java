@@ -6,7 +6,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.util.Locale;

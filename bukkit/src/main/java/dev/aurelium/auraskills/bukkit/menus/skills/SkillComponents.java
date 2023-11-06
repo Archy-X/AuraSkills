@@ -13,7 +13,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.AbstractComponent;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;

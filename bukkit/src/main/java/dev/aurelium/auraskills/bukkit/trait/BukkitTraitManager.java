@@ -1,10 +1,12 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitHandler;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +17,7 @@ import java.util.Set;
 public class BukkitTraitManager extends TraitManager {
 
     private final AuraSkills plugin;
-    private final Set<TraitImpl> traitImpls = new HashSet<>();
+    private final Set<BukkitTraitHandler> traitImpls = new HashSet<>();
 
     public BukkitTraitManager(AuraSkills plugin) {
         super(plugin);
@@ -39,13 +41,15 @@ public class BukkitTraitManager extends TraitManager {
         registerTraitImpl(new MovementSpeedTrait(plugin));
     }
 
-    public void registerTraitImpl(TraitImpl traitImpl) {
-        traitImpls.add(traitImpl);
-        Bukkit.getPluginManager().registerEvents(traitImpl, plugin);
+    public void registerTraitImpl(BukkitTraitHandler bukkitTrait) {
+        traitImpls.add(bukkitTrait);
+        if (bukkitTrait instanceof TraitImpl traitImpl) {
+            Bukkit.getPluginManager().registerEvents(traitImpl, plugin);
+        }
     }
 
-    public <T extends TraitImpl> T getTraitImpl(Class<T> clazz) {
-        for (TraitImpl traitImpl : traitImpls) {
+    public <T extends BukkitTraitHandler> T getTraitImpl(Class<T> clazz) {
+        for (BukkitTraitHandler traitImpl : traitImpls) {
             if (traitImpl.getClass().equals(clazz)) {
                 return clazz.cast(traitImpl);
             }
@@ -54,10 +58,12 @@ public class BukkitTraitManager extends TraitManager {
     }
 
     @Nullable
-    public TraitImpl getTraitImpl(Trait trait) {
-        for (TraitImpl traitImpl : traitImpls) {
-            if (traitImpl.getTraits().contains(trait)) {
-                return traitImpl;
+    public BukkitTraitHandler getTraitImpl(Trait trait) {
+        for (BukkitTraitHandler traitImpl : traitImpls) {
+            for (Trait tr : traitImpl.getTraits()) {
+                if (trait.equals(tr)) {
+                    return traitImpl;
+                }
             }
         }
         return null;
@@ -66,11 +72,18 @@ public class BukkitTraitManager extends TraitManager {
     @Override
     public double getBaseLevel(User user, Trait trait) {
         Player player = ((BukkitUser) user).getPlayer();
-        TraitImpl traitImpl = getTraitImpl(trait);
+        BukkitTraitHandler traitImpl = getTraitImpl(trait);
         if (traitImpl != null) {
             return traitImpl.getBaseLevel(player, trait);
         } else {
             return 0.0;
+        }
+    }
+
+    @Override
+    public void registerTraitHandler(TraitHandler traitHandler) {
+        if (traitHandler instanceof BukkitTraitHandler bukkitTraitHandler) {
+            registerTraitImpl(bukkitTraitHandler);
         }
     }
 }

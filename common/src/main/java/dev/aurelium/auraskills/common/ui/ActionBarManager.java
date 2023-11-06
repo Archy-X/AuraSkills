@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.type.ActionBarMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 

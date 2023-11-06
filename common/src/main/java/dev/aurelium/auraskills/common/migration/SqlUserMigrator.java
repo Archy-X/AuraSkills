@@ -12,7 +12,7 @@ import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.data.Pair;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 
 import java.sql.*;
 import java.util.*;

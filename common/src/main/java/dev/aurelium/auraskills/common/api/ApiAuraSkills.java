@@ -2,15 +2,13 @@ package dev.aurelium.auraskills.common.api;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.message.MessageManager;
+import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
 import dev.aurelium.auraskills.api.user.UserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.api.implementation.ApiMessageManager;
-import dev.aurelium.auraskills.common.api.implementation.ApiNamespacedRegistry;
-import dev.aurelium.auraskills.common.api.implementation.ApiUserManager;
-import dev.aurelium.auraskills.common.api.implementation.ApiXpRequirements;
+import dev.aurelium.auraskills.common.api.implementation.*;
 
 import java.io.File;
 import java.util.HashMap;
@@ -24,6 +22,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
     private final MessageManager messageManager;
     private final XpRequirements xpRequirements;
     private final Map<String, NamespacedRegistry> namespacedRegistryMap;
+    private final Handlers handlers;
 
     public ApiAuraSkills(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -31,6 +30,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
         this.messageManager = new ApiMessageManager(plugin);
         this.xpRequirements = new ApiXpRequirements(plugin);
         this.namespacedRegistryMap = new HashMap<>();
+        this.handlers = new ApiHandlers(plugin);
     }
 
     @Override
@@ -61,4 +61,8 @@ public class ApiAuraSkills implements AuraSkillsApi {
         });
     }
 
+    @Override
+    public Handlers getHandlers() {
+        return handlers;
+    }
 }

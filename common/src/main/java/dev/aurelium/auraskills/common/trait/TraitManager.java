@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.trait;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitHandler;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
@@ -69,4 +70,6 @@ public abstract class TraitManager {
     public boolean isLoaded(Trait trait) {
         return traitMap.containsKey(trait);
     }
+
+    public abstract void registerTraitHandler(TraitHandler traitHandler);
 }

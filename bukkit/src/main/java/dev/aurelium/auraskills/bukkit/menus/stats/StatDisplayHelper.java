@@ -2,11 +2,11 @@ package dev.aurelium.auraskills.bukkit.menus.stats;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.trait.TraitImpl;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
+import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 
 public class StatDisplayHelper {
 
@@ -22,7 +22,7 @@ public class StatDisplayHelper {
             Trait trait = stat.getTraits().get(0);
             double value = user.getEffectiveTraitLevel(trait);
 
-            TraitImpl impl = plugin.getTraitManager().getTraitImpl(trait);
+            BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
             if (impl != null) {
                 return impl.getMenuDisplay(value, trait);
             } else {

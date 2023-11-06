@@ -10,9 +10,9 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
-import dev.aurelium.auraskills.bukkit.trait.TraitImpl;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -71,7 +71,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         ListBuilder builder = new ListBuilder(data.getListData());
 
         for (Trait trait : stat.getTraits()) {
-            TraitImpl impl = plugin.getTraitManager().getTraitImpl(trait);
+            BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
             if (impl == null) continue;
 
             builder.append(activeMenu.getFormat("trait_entry"),

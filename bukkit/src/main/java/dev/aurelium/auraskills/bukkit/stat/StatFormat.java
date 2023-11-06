@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.stat;
 import com.archyx.polyglot.util.TextUtil;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;

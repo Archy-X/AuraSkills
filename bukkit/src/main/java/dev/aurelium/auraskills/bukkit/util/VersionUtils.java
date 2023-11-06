@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.util;
 
 import com.cryptomorin.xseries.XMaterial;
-import dev.aurelium.auraskills.common.util.math.NumberUtil;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
