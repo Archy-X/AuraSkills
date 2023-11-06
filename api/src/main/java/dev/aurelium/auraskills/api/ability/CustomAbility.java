@@ -32,7 +32,7 @@ public class CustomAbility implements Ability {
         this.info = info;
     }
 
-    public static CustomAbilityBuilder builder(NamespacedRegistry registry, String name) {
+    public static CustomAbilityBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomAbilityBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 

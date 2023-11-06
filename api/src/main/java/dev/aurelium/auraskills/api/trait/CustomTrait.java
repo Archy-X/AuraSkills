@@ -23,7 +23,7 @@ public class CustomTrait implements Trait {
         this.displayName = displayName;
     }
 
-    public static CustomTraitBuilder builder(NamespacedRegistry registry, String name) {
+    public static CustomTraitBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomTraitBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 

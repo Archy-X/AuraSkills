@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.api.mana;
 
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.Skill;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,7 +27,7 @@ public class CustomManaAbility implements ManaAbility {
         this.description = description;
     }
 
-    public static CustomManaAbilityBuilder builder(NamespacedId registry, String name) {
+    public static CustomManaAbilityBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomManaAbilityBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 

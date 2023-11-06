@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.api.stat;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.trait.Trait;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +36,7 @@ public class CustomStat implements Stat {
         this.symbol = symbol;
     }
 
-    public static CustomStatBuilder builder(NamespacedId registry, String name) {
+    public static CustomStatBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomStatBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 

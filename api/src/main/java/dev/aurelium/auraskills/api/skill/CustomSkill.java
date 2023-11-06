@@ -32,7 +32,7 @@ public class CustomSkill implements Skill {
         this.item = item;
     }
 
-    public static CustomSkillBuilder builder(NamespacedRegistry registry, String name) {
+    public static CustomSkillBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name), registry.getContentDirectory());
     }
 
