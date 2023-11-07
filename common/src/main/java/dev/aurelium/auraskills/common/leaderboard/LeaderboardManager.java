@@ -23,29 +23,37 @@ public class LeaderboardManager {
         this.averageLeaderboard = new ArrayList<>();
     }
 
-    public void updateLeaderboards() {
+    public synchronized void updateLeaderboards() {
         plugin.getScheduler().executeAsync(() -> {
-            try {
-                setSorting(true);
-                // Initialize lists
-                Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
-                for (Skill skill : plugin.getSkillRegistry().getValues()) {
-                    skillLeaderboards.put(skill, new ArrayList<>());
+            synchronized (plugin) {
+                try {
+                    plugin.wait(5000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                List<SkillValue> powerLeaderboard = new ArrayList<>();
-                List<SkillValue> averageLeaderboard = new ArrayList<>();
-                // Add players already in memory
-                addLoadedPlayersToLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
-                // Add offline players
-                addOfflinePlayers(skillLeaderboards, powerLeaderboard, averageLeaderboard);
-                // Sort leaderboards and set as current
-                sortLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+                try {
+                    plugin.logger().debug("Updating leaderboards...");
+                    setSorting(true);
+                    // Initialize lists
+                    Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
+                    for (Skill skill : plugin.getSkillRegistry().getValues()) {
+                        skillLeaderboards.put(skill, new ArrayList<>());
+                    }
+                    List<SkillValue> powerLeaderboard = new ArrayList<>();
+                    List<SkillValue> averageLeaderboard = new ArrayList<>();
+                    // Add players already in memory
+                    addLoadedPlayersToLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+                    // Add offline players
+                    addOfflinePlayers(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+                    // Sort leaderboards and set as current
+                    sortLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
 
-                setSorting(false);
-            } catch (Exception e) {
-                plugin.logger().warn("Error updating leaderboards: " + e.getMessage());
-                e.printStackTrace();
-                setSorting(false);
+                    setSorting(false);
+                } catch (Exception e) {
+                    plugin.logger().warn("Error updating leaderboards: " + e.getMessage());
+                    e.printStackTrace();
+                    setSorting(false);
+                }
             }
         });
     }

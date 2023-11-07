@@ -41,7 +41,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
                 ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
                 ConfigurationNode config = parser.parseItemContext(stat.getItem());
 
-                PositionProvider provider = parser.parsePositionProvider(config, activeMenu);
+                PositionProvider provider = parser.parsePositionProvider(config, activeMenu, "stat");
                 if (provider != null) {
                     activeMenu.setPositionProvider("stat", context, provider);
                 }
@@ -73,7 +73,6 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         for (Trait trait : stat.getTraits()) {
             BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
             if (impl == null) continue;
-
             builder.append(activeMenu.getFormat("trait_entry"),
                     "{trait}", trait.getDisplayName(locale),
                     "{color}", stat.getColor(locale),

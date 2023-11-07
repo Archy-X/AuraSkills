@@ -588,6 +588,10 @@ menus:
     in_progress: "EN COURS"
     locked: "BLOQUÉ"
     your_level: "Votre niveau"
+    next_page: 'Page suivante'
+    next_page_click: 'Cliquez pour aller à la page suivante'
+    previous_page: 'Page précedente'
+    previous_page_click: 'Cliquez pour aller à la page précédente'
   skills:
     skills_title: "Vos compétences"
     your_skills: "Vos compétences"
@@ -603,10 +607,6 @@ menus:
     your_ranking: 'Votre classement de compétences'
     rank_out_of: '<1>Vous êtes classé <2>{rank}</2> sur un total de {total} joueurs</1>'
     rank_percent: '<1>Vous êtes dans le top <2>{percent}%</2> des joueurs</1>'
-    next_page: 'Page suivante'
-    next_page_click: 'Cliquez pour aller à la page suivante'
-    previous_page: 'Page précedente'
-    previous_page_click: 'Cliquez pour aller à la page précédente'
     rewards: 'Récompenses'
     ability_unlock: "Débloquage de compétence"
     mana_ability_unlock: "Débloquage de compétence de mana"

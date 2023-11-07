@@ -176,6 +176,11 @@ public class CustomManaAbility implements ManaAbility {
         return provider.optionMap(this, key);
     }
 
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
     public static class CustomManaAbilityBuilder {
 
         private final NamespacedId id;

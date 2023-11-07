@@ -13,10 +13,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class StatLoader {
 
@@ -48,7 +45,26 @@ public class StatLoader {
 
             int statsLoaded = 0;
 
-            for (Object key : statsNode.childrenMap().keySet()) {
+            List<Object> keys = new ArrayList<>(statsNode.childrenMap().keySet());
+            // Sort so that default stats are loaded first
+            keys.sort((o1, o2) -> {
+                String stat1 = (String) o1;
+                String stat2 = (String) o2;
+                boolean is1Default = stat1.startsWith(NamespacedId.AURASKILLS + "/");
+                boolean is2Default = stat2.startsWith(NamespacedId.AURASKILLS + "/");
+                if (is1Default && is2Default) {
+                    return 0;
+                }
+                if (is1Default) {
+                    return -1;
+                }
+                if (is2Default) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            for (Object key : keys) {
                 String statName = (String) key;
                 // Parse Skill from registry
                 Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(statName));

@@ -29,9 +29,7 @@ dependencies {
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("com.udojava:EvalEx:2.7")
-    implementation("com.github.Archy-X:Slate:46e358db1d") {
-        exclude("org.spigotmc", "spigot-api")
-    }
+    implementation("com.github.Archy-X:Slate:7a9f00d2dc")
     implementation("com.github.Archy-X:LootManager:60d109fdde")
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")

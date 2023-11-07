@@ -22,13 +22,13 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BukkitAbilityManager extends AbilityManager {
 
     private final AuraSkills plugin;
-    private final Set<AbilityImpl> abilityImpls = new HashSet<>();
+    private final Map<Class<?>, AbilityImpl> abilityImpls = new HashMap<>();
 
     public BukkitAbilityManager(AuraSkills plugin) {
         super(plugin);
@@ -53,15 +53,14 @@ public class BukkitAbilityManager extends AbilityManager {
     }
 
     public void registerAbilityImpl(AbilityImpl abilityImpl) {
-        abilityImpls.add(abilityImpl);
+        abilityImpls.put(abilityImpl.getClass(), abilityImpl);
         Bukkit.getPluginManager().registerEvents(abilityImpl, plugin);
     }
 
     public <T extends AbilityImpl> T getAbilityImpl(Class<T> clazz) {
-        for (AbilityImpl abilityImpl : abilityImpls) {
-            if (abilityImpl.getClass().equals(clazz)) {
-                return clazz.cast(abilityImpl);
-            }
+        AbilityImpl abilityImpl = abilityImpls.get(clazz);
+        if (abilityImpl != null) {
+            return clazz.cast(abilityImpl);
         }
         throw new IllegalArgumentException("Ability implementation of type " + clazz.getSimpleName() + " not found!");
     }

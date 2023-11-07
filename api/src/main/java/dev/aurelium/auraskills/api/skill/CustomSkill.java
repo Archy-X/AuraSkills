@@ -145,6 +145,11 @@ public class CustomSkill implements Skill {
         return provider.optionMap(this, key);
     }
 
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
     public static class CustomSkillBuilder {
 
         private final NamespacedId id;

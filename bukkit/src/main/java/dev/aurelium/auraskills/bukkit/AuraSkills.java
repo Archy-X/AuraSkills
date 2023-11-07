@@ -171,44 +171,43 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Create scheduler
         scheduler = new BukkitScheduler(this);
         regionManager = new RegionManager(this);
-
-        // Load skills, stats
-        loadSkills();
-
-        // Register default content
-        abilityManager.registerAbilityImplementations();
-        manaAbilityManager.registerProviders();
-        traitManager.registerTraitImplementations();
-
-        xpRequirements = new XpRequirements(this);
         userManager = new BukkitUserManager(this);
         backupProvider = new BackupProvider(this);
-        levelManager = new BukkitLevelManager(this);
+        xpRequirements = new XpRequirements(this);
         leaderboardManager = new LeaderboardManager(this);
         uiProvider = new BukkitUiProvider(this);
-        uiProvider.getBossBarManager().loadOptions();
         modifierManager = new ModifierManager(this);
-        requirementManager = new RequirementManager(this);
         inventoryManager = new InventoryManager(this);
         inventoryManager.init();
-
-        // Load rewards
-        rewardManager = new BukkitRewardManager(this);
-        rewardManager.loadRewards();
-
-        // Loads loot
-        lootTableManager = new LootTableManager(this);
-        lootTableManager.loadLootTables();
-
-        initStorageProvider();
-
-        levelManager.registerLevelers(); // Register levelers for skills
-        registerEvents();
+        rewardManager = new BukkitRewardManager(this); // Loaded later
+        lootTableManager = new LootTableManager(this); // Loaded later
         commandManager = new CommandRegistrar(this).registerCommands();
-        registerAndLoadMenus();
+        levelManager = new BukkitLevelManager(this);
+        initStorageProvider();
+        leaderboardManager.updateLeaderboards(); // Schedules async task
+        registerPriorityEvents();
 
-        // Update leaderboards
-        leaderboardManager.updateLeaderboards();
+        // Stuff to be run on the first tick
+        scheduler.executeSync(() -> {
+            loadSkills(); // Load skills, stats, abilities, etc from configs
+            levelManager.registerLevelers(); // Requires skills loaded
+            levelManager.loadXpRequirements(); // Requires skills loaded
+            uiProvider.getBossBarManager().loadOptions(); // Requires skills registered
+            requirementManager = new RequirementManager(this); // Requires skills registered
+            rewardManager.loadRewards(); // Requires skills loaded
+            lootTableManager.loadLootTables(); // Requires skills registered
+            // Register default content
+            abilityManager.registerAbilityImplementations();
+            manaAbilityManager.registerProviders();
+            traitManager.registerTraitImplementations();
+            registerEvents();
+            registerAndLoadMenus();
+            // Tell threads that the plugin has finished loading
+            AuraSkills plugin = getInstance();
+            synchronized (plugin) {
+                plugin.notifyAll();
+            }
+        });
 
         // Check if NBT API is supported for the version
         if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
@@ -221,6 +220,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void onDisable() {
+        scheduler.shutdown();
         // Save users
         for (User user : userManager.getUserMap().values()) {
             try {
@@ -291,12 +291,13 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         }
     }
 
+    private void registerPriorityEvents() {
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new PlayerJoinQuit(this), this);
+    }
+
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
-
-        PlayerJoinQuit joinQuit = new PlayerJoinQuit(this);
-        pm.registerEvents(joinQuit, this);
-
         pm.registerEvents(new DamageListener(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
         pm.registerEvents(new FishingLootHandler(this), this);
@@ -552,4 +553,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     public boolean isNbtApiDisabled() {
         return !nbtApiEnabled;
     }
+
+    private AuraSkills getInstance() {
+        return this;
+    }
+
 }

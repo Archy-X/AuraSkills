@@ -146,6 +146,11 @@ public class CustomStat implements Stat {
         return provider.optionMap(this, key);
     }
 
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
     public static class CustomStatBuilder {
 
         private final NamespacedId id;

@@ -171,6 +171,11 @@ public class CustomAbility implements Ability {
         return provider.optionMap(this, key);
     }
 
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
     public static class CustomAbilityBuilder {
 
         private final NamespacedId id;

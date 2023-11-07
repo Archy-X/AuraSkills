@@ -20,8 +20,7 @@ public class HealthRegenTrait extends TraitImpl {
 
     public HealthRegenTrait(AuraSkills plugin) {
         super(plugin, Traits.HUNGER_REGEN, Traits.SATURATION_REGEN);
-        startHungerRegen();
-        startSaturationRegen();
+        startRegenTasks();
     }
 
     @Override
@@ -63,7 +62,12 @@ public class HealthRegenTrait extends TraitImpl {
         }
     }
 
-    public void startHungerRegen() {
+    public void startRegenTasks() {
+        startHungerRegen();
+        startSaturationRegen();
+    }
+
+    private void startHungerRegen() {
         var task = new TaskRunnable() {
             @Override
             public void run() {
@@ -100,7 +104,7 @@ public class HealthRegenTrait extends TraitImpl {
         plugin.getScheduler().timerSync(task, 0, Traits.HUNGER_REGEN.optionInt("delay") * 50L, TimeUnit.MILLISECONDS);
     }
 
-    public void startSaturationRegen() {
+    private void startSaturationRegen() {
         var task = new TaskRunnable() {
             @Override
             public void run() {

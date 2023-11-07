@@ -252,7 +252,7 @@ public class ConfigurateItemParser {
     }
 
     @Nullable
-    public PositionProvider parsePositionProvider(ConfigurationNode config, ActiveMenu activeMenu) {
+    public PositionProvider parsePositionProvider(ConfigurationNode config, ActiveMenu activeMenu, String templateName) {
         String pos = config.node("pos").getString();
         if (pos != null) {
             // Static position
@@ -261,7 +261,7 @@ public class ConfigurateItemParser {
         } else if (!config.node("group").virtual()) {
             // Group and order position
             String groupName = config.node("group").getString("");
-            ContextGroup contextGroup = activeMenu.getContextGroups("stat").get(groupName);
+            ContextGroup contextGroup = activeMenu.getContextGroups(templateName).get(groupName);
             if (contextGroup != null) {
                 int order = config.node("order").getInt();
 

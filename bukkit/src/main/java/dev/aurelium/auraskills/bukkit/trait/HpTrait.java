@@ -30,6 +30,18 @@ public class HpTrait extends TraitImpl {
 
     HpTrait(AuraSkills plugin) {
         super(plugin, Traits.HP);
+        // Load default hearts
+        this.hearts.put(10, 0.0);
+        this.hearts.put(11, 24.0);
+        this.hearts.put(12, 29.0);
+        this.hearts.put(13, 37.0);
+        this.hearts.put(14, 50.0);
+        this.hearts.put(15, 71.0);
+        this.hearts.put(16, 105.0);
+        this.hearts.put(17, 160.0);
+        this.hearts.put(18, 249.0);
+        this.hearts.put(19, 393.0);
+        this.hearts.put(20, 626.0);
         loadHearts();
     }
 
@@ -171,19 +183,7 @@ public class HpTrait extends TraitImpl {
     }
 
     public void loadHearts() {
-        // Load default hearts
         this.hearts.clear();
-        this.hearts.put(10, 0.0);
-        this.hearts.put(11, 24.0);
-        this.hearts.put(12, 29.0);
-        this.hearts.put(13, 37.0);
-        this.hearts.put(14, 50.0);
-        this.hearts.put(15, 71.0);
-        this.hearts.put(16, 105.0);
-        this.hearts.put(17, 160.0);
-        this.hearts.put(18, 249.0);
-        this.hearts.put(19, 393.0);
-        this.hearts.put(20, 626.0);
         // Load hearts from trait options
         Map<String, Object> map = Traits.HP.optionMap("hearts");
         try {

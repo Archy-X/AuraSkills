@@ -97,6 +97,11 @@ public class CustomTrait implements Trait {
         return provider.optionMap(this, key);
     }
 
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
     public static class CustomTraitBuilder {
 
         private final NamespacedId id;
