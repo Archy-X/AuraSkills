@@ -1,6 +1,6 @@
-package dev.auramc.auraskills.test.migration;
+package dev.aurelium.auraskills.test.migration;
 
-import dev.auramc.auraskills.test.env.TestAuraSkills;
+import dev.aurelium.auraskills.test.env.TestAuraSkills;
 import dev.aurelium.auraskills.common.migration.ConfigMigrator;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.file.FileUtil;

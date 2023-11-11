@@ -1,4 +1,4 @@
-package dev.auramc.auraskills.test;
+package dev.aurelium.auraskills.test;
 
 import org.atteo.evo.inflector.English;
 import org.junit.jupiter.api.Test;

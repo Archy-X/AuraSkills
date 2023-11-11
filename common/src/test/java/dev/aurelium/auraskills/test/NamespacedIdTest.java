@@ -1,4 +1,4 @@
-package dev.auramc.auraskills.test;
+package dev.aurelium.auraskills.test;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import org.junit.jupiter.api.Test;
