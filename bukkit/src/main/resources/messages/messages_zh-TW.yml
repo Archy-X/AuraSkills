@@ -370,7 +370,7 @@ commands:
     list: "<gold>{player}<white>的經驗值倍數: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>只有玩家才能列出自己的經驗值倍數! 請指定一個玩家!"
   rank:
-    header: "<aqua><bold>你的技能排行"
+    header: "<aqua><bold>你的技能排行</bold>"
     power: "<yellow>Power <gray>(全部技能): <white>#{rank} 共 {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} 共 {total}"
   reload: "<green>已重新載入設定!"
@@ -394,10 +394,10 @@ commands:
     not_enabled: "<green>這個伺服器沒有啟用技能Actionbar!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>全部技能排行榜<white>==--"
-    power_header_page: "<white>--==<aqua><bold>全部技能排行榜 <white>( 第{page} 頁)==--"
-    skill_header: "<white>--==<aqua><bold>{skill} 排行榜<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} 排行榜 <white>(第 {page} 頁)==--"
+    power_header: "<white>--==<aqua><bold>全部技能排行榜</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>全部技能排行榜 </bold><white>( 第{page} 頁)==--"
+    skill_header: "<white>--==<aqua><bold>{skill} 排行榜</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} 排行榜 </bold><white>(第 {page} 頁)==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>使用: <green>/sk top <white><頁碼> <gray>或 <green>/sk top <white>[skill] <頁碼>"
   updateleaderboards:
@@ -412,12 +412,12 @@ commands:
 leveler:
   title: "<green>{skill} 升級"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>技能升級! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Rewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>技能升級! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Rewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+1{symbol} {stat}"
-  ability_unlock: "\n  <green>能力解鎖! <gold><bold>{ability} <gray>已經解鎖"
-  ability_level_up: "\n  <green>能力升級! <gold><bold>{ability} <gray>現在為等級<gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>法術能力解鎖! <blue><bold>{mana_ability} <gray>已經解鎖"
-  mana_ability_level_up: "\n  <green>法術能力升級! <blue><bold>{mana_ability}<gray>現在為等級<gold>{level}"
+  ability_unlock: "\n  <green>能力解鎖! <gold><bold>{ability} </bold><gray>已經解鎖"
+  ability_level_up: "\n  <green>能力升級! <gold><bold>{ability} </bold><gray>現在為等級<gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>法術能力解鎖! <blue><bold>{mana_ability} </bold><gray>已經解鎖"
+  mana_ability_level_up: "\n  <green>法術能力升級! <blue><bold>{mana_ability}</bold><gray>現在為等級<gold>{level}"
   money_reward: "\n  <green>${amount}"
 menus:
   common:
@@ -430,7 +430,7 @@ menus:
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     primary_stat: "<gray>主要: {color}{stat}"
     secondary_stat: "<gray>次要: {color}{stat}"
-    mana_ability: "<light_purple><bold>法術能力 <blue>{mana_ability} {level}<gray>持續時間: <green>{duration}秒 <gray>法力成本: <aqua>{mana_cost} <gray>冷卻時間: <yellow>{cooldown}秒"
+    mana_ability: "<light_purple><bold>法術能力 </bold><blue>{mana_ability} {level}<gray>持續時間: <green>{duration}秒 <gray>法力成本: <aqua>{mana_cost} <gray>冷卻時間: <yellow>{cooldown}秒"
   skills_menu:
     skills_menu_title: 你的技能
     your_skills: "<aqua>你的技能 - <gold>{player}"
@@ -459,9 +459,9 @@ menus:
     locked: "<red>已鎖定"
     rewards: "<gray>獎勵:{rewards}"
     rewards_entry: " {color}+{num} {symbol} {stat}"
-    ability_unlock: "<gold>{ability} <green><bold>能力解鎖<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>能力解鎖</bold><gray>  {desc}"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>法術能力解鎖<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>法術能力解鎖</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>進度: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -516,7 +516,7 @@ mana_abilities:
     name: "釣鉤"
     desc: "＆7使用釣魚竿左鍵點擊時被鉤到的實體造成 {value} 傷害"
     use: "<gold>使用了锋利釣鉤! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>法力能力 <blue>{mana_ability} {level}<gray>傷害: <red>{value} <gray>法力消耗: <aqua>{mana_cost} <gray>冷卻時間: <yellow>{cooldown} 秒"
+    menu: "<light_purple><bold>法力能力 </bold><blue>{mana_ability} {level}<gray>傷害: <red>{value} <gray>法力消耗: <aqua>{mana_cost} <gray>冷卻時間: <yellow>{cooldown} 秒"
   not_ready: "<red>能力尚未準備好! <gray>({cooldown}秒)"
   not_enough_mana: "<yellow>法力值不夠! <gray>(需要{mana} {mana_unit})"
 skills:

@@ -510,7 +510,7 @@ commands:
     stats: "Aurelium Skillsの統計プロフィール: <gold>{name}:<gray>UUID: <white>{uuid}<gray>統計情報:{stat_entries}"
     stat_entry: " <dark_aqua>{stat} <gray>- 総レベル: <white>{total_level}<gray>, 基本レベル: <white>{base_level}<gray>, 変更されたレベル: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>あなたのスキルランキング"
+    header: "<aqua><bold>あなたのスキルランキング</bold>"
     power: "<yellow>パワー <gray>(全スキル): <white>#{rank} / {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} / {total}"
   reload: "<green>設定をリロードしました！"
@@ -534,13 +534,13 @@ commands:
     not_enabled: "<yellow>このサーバーではスキルアクションバーが有効になっていません！"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>全スキルリーダーボード<white>==--"
-    power_header_page: "<white>--==<aqua><bold>全スキルリーダーボード <white>(ページ{page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill}リーダーボード<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill}リーダーボード <white>(ページ{page})==--"
+    power_header: "<white>--==<aqua><bold>全スキルリーダーボード</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>全スキルリーダーボード </bold><white>(ページ{page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill}リーダーボード</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill}リーダーボード </bold><white>(ページ{page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>スキル平均リーダーボード<white>==--"
-    average_header_page: "<white>--==<aqua><bold>スキル平均リーダーボード <white>(ページ{page})==--"
+    average_header: "<white>--==<aqua><bold>スキル平均リーダーボード</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>スキル平均リーダーボード </bold><white>(ページ{page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>使い方: <green>/sk top <white><ページ> <gray>または <green>/sk top <white>[skill] <ページ>"
   transfer:
@@ -559,12 +559,12 @@ commands:
 leveler:
   title: "<green>{skill} レベルアップ"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>スキルレベルアップ！ <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>報酬:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>スキルレベルアップ！ <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>報酬:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>アビリティアンロック！ <gold><bold>{ability} <gray>がアンロックされました"
-  ability_level_up: "\n  <green>アビリティレベルアップ！ <gold><bold>{ability} <gray>のレベルが <gold>{level} <gray>になりました"
-  mana_ability_unlock: "\n  <light_purple>マナアビリティアンロック！ <blue><bold>{mana_ability} <gray>がアンロックされました"
-  mana_ability_level_up: "\n  <light_purple>マナアビリティレベルアップ！ <blue><bold>{mana_ability} <gray>のレベルが <gold>{level} <gray>になりました"
+  ability_unlock: "\n  <green>アビリティアンロック！ <gold><bold>{ability} </bold><gray>がアンロックされました"
+  ability_level_up: "\n  <green>アビリティレベルアップ！ <gold><bold>{ability} </bold><gray>のレベルが <gold>{level} <gray>になりました"
+  mana_ability_unlock: "\n  <light_purple>マナアビリティアンロック！ <blue><bold>{mana_ability} </bold><gray>がアンロックされました"
+  mana_ability_level_up: "\n  <light_purple>マナアビリティレベルアップ！ <blue><bold>{mana_ability} </bold><gray>のレベルが <gold>{level} <gray>になりました"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>インベントリがいっぱいで未受領のアイテムがあります。<yellow>/skills claimitems <red>を使用して受領してください"
 menus:
@@ -577,7 +577,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>レベルアップしたステータス: {stats}"
-    mana_ability: "<light_purple><bold>マナアビリティ <blue>{mana_ability} {level} <gray>効果時間: <green>{duration}s <gray>消費マナ: <aqua>{mana_cost} <gray>クールダウン: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>マナアビリティ </bold><blue>{mana_ability} {level} <gray>効果時間: <green>{duration}s <gray>消費マナ: <aqua>{mana_cost} <gray>クールダウン: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: スキルメニュー
     your_skills: "<aqua>あなたのスキル - <gold>{player}"
@@ -610,9 +610,9 @@ menus:
     rewards: "<gray>報酬:{rewards}"
     rewards_entry: " {color}+{num} {symbol} {stat}"
     money_reward: " <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>アビリティアンロック<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>アビリティアンロック<gray>  {desc}</bold>"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>マナアビリティアンロック<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>マナアビリティアンロック<gray>  {desc}</bold>"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>進捗: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: "<yellow>{skill}リーダーボードを表示するにはクリック"
@@ -712,14 +712,14 @@ mana_abilities:
     name: Sharp Hook
     desc: "釣竿を左クリックすると、フックされたエンティティに<gray>{value}ダメージを与えます。"
     use: "<gold>シャープフックを使用しました！ <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>マナアビリティ <blue>{mana_ability} {level} <gray>ダメージ: <red>{value} <gray>マナコスト: <aqua>{mana_cost} <gray>クールダウン: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>マナアビリティ </bold><blue>{mana_ability} {level} <gray>ダメージ: <red>{value} <gray>マナコスト: <aqua>{mana_cost} <gray>クールダウン: <yellow>{cooldown}s"
   charged_shot:
     name: Charged Shot
     desc: "弓を引くと、消費したマナに応じて<gray>矢のダメージが{value}%増加します。<yellow>[弓を左クリックしてチャージドショットモードを切り替えます]"
     enable: "<gray>チャージドショットモードを有効にしました"
     disable: "<gray>チャージドショットモードを無効にしました"
     shoot: "<gold>チャージドショットを使用しました！ <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>マナアビリティ <blue>{mana_ability} {level} <gray>ダメージ: <red>+{value}% / マナ <gray>最大マナコスト: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>マナアビリティ </bold><blue>{mana_ability} {level} <gray>ダメージ: <red>+{value}% / マナ <gray>最大マナコスト: <aqua>{mana_cost}"
   lightning_blade:
     name: Lightning Blade
     desc: "攻撃速度が{value}%増加し、{duration}秒間持続します。<yellow>[剣を右クリックしてモブを攻撃することでアクティブ化]"
@@ -727,7 +727,7 @@ mana_abilities:
     lower: "<gray>剣を下げました"
     start: "<gold>ライトニングブレードをアクティブ化しました！ <gray>(-{mana} {mana_unit})"
     end: "<gray>ライトニングブレードが終了しました"
-    menu: "<light_purple><bold>マナ能力 <blue>{mana_ability} {level} <gray>攻撃速度: <red>+{value}% <gray>効果時間: <green>{duration}s <gray>マナコスト: <aqua>{mana_cost} <gray>クールダウン: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>マナ能力 </bold><blue>{mana_ability} {level} <gray>攻撃速度: <red>+{value}% <gray>効果時間: <green>{duration}s <gray>マナコスト: <aqua>{mana_cost} <gray>クールダウン: <yellow>{cooldown}s"
   not_ready: "<red>能力はまだ使用できません！ <gray>({cooldown}s)"
   not_enough_mana: "<yellow>マナが足りません！ <gray>({mana} {mana_unit} 必要です、現在のマナ: {current_mana}/{max_mana})"
 rewards:

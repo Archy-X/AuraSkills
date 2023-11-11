@@ -529,13 +529,13 @@ commands:
     not_enabled: "<yellow>Panel akcí dovedností není na tomto serveru povolen!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Žebříček všech dovedností<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Žebříček všech dovedností <white>(Page {page})==--"
+    power_header: "<white>--==<aqua><bold>Žebříček všech dovedností</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Žebříček všech dovedností </bold><white>(Page {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Žebříček<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Žebříček <white>(Page {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Průměrný žebříček dovedností<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Průměrný žebříček dovedností <white>(Page {page})==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Žebříček </bold><white>(Page {page})==--"
+    skill_entry: "<white>{rank}. <aqua>{player} </bold><white>- {level}"
+    average_header: "<white>--==<aqua><bold>Průměrný žebříček dovedností</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Průměrný žebříček dovedností </bold><white>(Page {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Použij: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   updateleaderboards:
@@ -551,12 +551,12 @@ commands:
 leveler:
   title: "<green>{skill} Level Up"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Dovednosticky Level Up! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Odměna:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Dovednosticky Level Up! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Odměna:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Ability Odemčen! <gold><bold>{ability} <gray>byl odečmen"
-  ability_level_up: "\n  <green>Ability Level Up! <gold><bold>{ability} <gray>je nyní na úrovni <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Mana Ability Odemčený! <blue><bold>{mana_ability} <gray>bylo odemčeno"
-  mana_ability_level_up: "\n  <light_purple>Mana Ability Level Up! <blue><bold>{mana_ability} <gray>je nyní na úrovni <gold>{level}"
+  ability_unlock: "\n  <green>Ability Odemčen! <gold><bold>{ability} </bold><gray>byl odečmen"
+  ability_level_up: "\n  <green>Ability Level Up! <gold><bold>{ability} </bold><gray>je nyní na úrovni <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Mana Ability Odemčený! <blue><bold>{mana_ability} </bold><gray>bylo odemčeno"
+  mana_ability_level_up: "\n  <light_purple>Mana Ability Level Up! <blue><bold>{mana_ability} </bold><gray>je nyní na úrovni <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Máš nevyzvednuté položky, protože tvůj inventář byl plný, použij <yellow>/skills claimitems <red>pro vyzvednuti"
 menus:
@@ -569,7 +569,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Statistiky Level: {stats} "
-    mana_ability: "<light_purple><bold>Mana Ability <blue>{mana_ability} {level} <gray>Poškození: <green>{duration}s <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
+    mana_ability: "<light_purple><bold>Mana Ability </bold><blue>{mana_ability} {level} <gray>Poškození: <green>{duration}s <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   skills_menu:
     skills_menu_title: Tvoje dovednosti
     your_skills: "<aqua>Tvé dovednosti  - <gold>{player}"
@@ -599,9 +599,9 @@ menus:
     rewards: "<gray>Odměna:{rewards}"
     rewards_entry: "  {color}+{num} {symbol} {stat}"
     money_reward: "  <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Abilita Odemčena {desc} "
+    ability_unlock: "<gold>{ability} <green><bold>Abilita Odemčena {desc} </bold>"
     ability_level: "<gold>{ability} {level} {desc} "
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana Ability Odemčena  {desc} "
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana Ability Odemčena  {desc} </bold>"
     mana_ability_level: "<blue>{mana_ability} {level} {desc} "
     progress: "<gray>Průběh: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -665,14 +665,14 @@ mana_abilities:
     name: Ostrý hák
     desc: "Způsob {value} poškození zahnuté entitě při kliknutí levým rybářským prutem"
     use: "<gold>Použij ostrý háček! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Schopnost Many <blue>{mana_ability} {level} <gray>Poškození <red>{value} <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
+    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>{value} <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   charged_shot:
     name: Nabitá Střela
     desc: "Vystřelené šípy způsobí větší škody Na základě toho, jak daleko byl luk natažen zpět Spotřebovana mana v procesu. Zbývá o {value}% více Poškození na jednoho jedince <yellow>[Levé kliknutí myši]<yellow>  Luk přepneš do režimu nabitého snímku]"
     enable: "<gray>Režim nabití snímku je nyní povolen"
     disable: "<gray>Režim nabitého snímku je nyní deaktivován"
     shoot: "<gold>Použij nabitou střelu! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Schopnost Many <blue>{mana_ability} {level} <gray>Poškození <red>+{value}% / Mana <gray>Max Mana Cost: <aqua>{mana_cost} "
+    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>+{value}% / Mana <gray>Max Mana Cost: <aqua>{mana_cost} "
   lightning_blade:
     name: Lightning Blade
     desc: Zvyšuj rychlost útoku o {value}% po dobu {duration} sekund.<yellow>  [Klepni pravým tlačítkem myši a zaútoč na moba pro aktivaci]
@@ -680,7 +680,7 @@ mana_abilities:
     lower: "<gray>Sklopil si svůj meč"
     start: "<gold>Lightning Blade Aktivován! <gray>(-{mana} {mana_unit})"
     end: "<gray>Lightning Blade se opotřeboval"
-    menu: "<light_purple><bold>Schopnost Many <blue>{mana_ability} {level} <gray>Rychlost útoku <red>+{value}% <gray>Trvání: <green>{duration}s <gray>Cena Many <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
+    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Rychlost útoku <red>+{value}% <gray>Trvání: <green>{duration}s <gray>Cena Many <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   not_ready: "<red>Schopnost není připravena! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Nedostane many! <gray>({mana} {mana_unit} vyžadovan, tvoje mana {current_mana}/{max_mana})"
 rewards:

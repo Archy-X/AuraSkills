@@ -505,7 +505,7 @@ commands:
     skill_entry: "<white>Multiplicador de <aqua>{skill} <white>XP: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>¡Solo los jugadores pueden ver sus propios modificadores! Intenta especificando un jugador!"
   rank:
-    header: "<aqua><bold>Tu Clasificación de Habilidades"
+    header: "<aqua><bold>Tu Clasificación de Habilidades</bold>"
     power: "<yellow>Poder <gray>(Todas las habilidades): <white>#{rank} de {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} de {total}"
   reload: "<green>¡Configuración recargada!"
@@ -529,13 +529,13 @@ commands:
     not_enabled: "<yellow>¡La barra de acción de habilidades no esta habilitada en este servidor!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Clasificación de todas las Habilidades<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Clasificación de todas las Habilidades<white>(Página {page})==--"
-    skill_header: "<white>--==<aqua><bold>Tabla de Clasificación de {skill}<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>Tabla de Clasificación de {skill}<white> (Página {page})==--"
+    power_header: "<white>--==<aqua><bold>Clasificación de todas las Habilidades</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Clasificación de todas las Habilidades</bold><white>(Página {page})==--"
+    skill_header: "<white>--==<aqua><bold>Tabla de Clasificación de {skill}</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>Tabla de Clasificación de {skill}</bold><white> (Página {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Clasificación de Promedio de Habilidades<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Clasificación de Promedio de Habilidades <white>(Página {page})==--"
+    average_header: "<white>--==<aqua><bold>Clasificación de Promedio de Habilidades</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Clasificación de Promedio de Habilidades </bold><white>(Página {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Intenta con: <green>/sk top <white><page> <gray>o <green>/sk top <white>[skill] <page>"
   updateleaderboards:
@@ -551,12 +551,12 @@ commands:
 leveler:
   title: "<green>Nuevo nivel de {skill}"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>¡Nuevo Nivel! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Recompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>¡Nuevo Nivel! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Recompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>¡Habilidad Desbloqueada! <gold><bold>{ability} <gray>ha sido desbloqueada"
-  ability_level_up: "\n  <green>¡Nuevo Nivel de Habilidad! <gold><bold>{ability} <gray>es ahora nivel <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>¡Habilidad de Maná Desbloqueada! <blue><bold>{mana_ability} <gray>se ha desbloqueado"
-  mana_ability_level_up: "\n  <light_purple>¡Nuevo Nivel de Habilidad de Maná! <blue><bold>{mana_ability} <gray>es ahora nivel <gold>{level}"
+  ability_unlock: "\n  <green>¡Habilidad Desbloqueada! <gold><bold>{ability} </bold><gray>ha sido desbloqueada"
+  ability_level_up: "\n  <green>¡Nuevo Nivel de Habilidad! <gold><bold>{ability} </bold><gray>es ahora nivel <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>¡Habilidad de Maná Desbloqueada! <blue><bold>{mana_ability} </bold><gray>se ha desbloqueado"
+  mana_ability_level_up: "\n  <light_purple>¡Nuevo Nivel de Habilidad de Maná! <blue><bold>{mana_ability} </bold><gray>es ahora nivel <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Tienes objetos sin reclamar porque tu invnetario estaba lleno, usa <yellow>/skills claimitems <red>para reclamarlos"
 menus:
@@ -569,7 +569,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Estadísticas mejoradas: {stats}"
-    mana_ability: "<light_purple><bold>Habilidad de Mana <blue>{mana_ability} {level} <gray>Duracion: <green>{duration}s <gray>Coste de Mana: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Habilidad de Mana </bold><blue>{mana_ability} {level} <gray>Duracion: <green>{duration}s <gray>Coste de Mana: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Tus Habilidades
     your_skills: "<aqua>Tus Habilidades - <gold>{player}"
@@ -602,9 +602,9 @@ menus:
     rewards: "<gray>Recompensas:{rewards}"
     rewards_entry: " {color}+{num} {symbol} {stat}"
     money_reward: " <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Habilidad Desbloqueada<gray> {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>Habilidad Desbloqueada<gray> {desc}</bold>"
     ability_level: "<gold>{ability} {level}<gray> {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Habilidad de Mana Desbloqueada<gray> {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Habilidad de Mana Desbloqueada<gray> {desc}</bold>"
     mana_ability_level: "<blue>{mana_ability} {level}<gray> {desc}"
     progress: "<gray>Progreso: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: "<yellow>Clic para ver la clasificación de la hablidad de {skill}"
@@ -703,14 +703,14 @@ mana_abilities:
     name: Gancho Afilado
     desc: "Inflige {value} de daño a una entidad enganchada <gray> al hacer click izquierdo con una caña de pescar"
     use: "<gold>¡Usaste el Gancho Afilado! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Habilidad de Mana <blue>{mana_ability} {level}<gray>Daño: <red>{value} <gray>Costo de Mana: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Habilidad de Mana </bold><blue>{mana_ability} {level}<gray>Daño: <red>{value} <gray>Costo de Mana: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s"
   charged_shot:
     name: Tiro cargado
     desc: "Las flechas que dispares infligirán más daño<gray> en función de lo lejos que se haya retirado el arco<gray> consumiendo maná en el proceso. Hace {value}% más<gray> de daño por maná consumido. <yellow>[Click izquierdo a<yellow> un arco para cambiar el modo de disparo cargado]"
     enable: "<gray>El modo de disparo cargado está activado"
     disable: "<gray>El modo de disparo cargado está desactivado"
     shoot: "<gold>¡Usaste Disparo Cargado! <light_purple>+{percent}% DAÑO <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Habilidad de Maná <blue>{mana_ability} {level}<gray>Daño: <red>+{value}% / <gray>Costo de Maná máximo: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>Habilidad de Maná </bold><blue>{mana_ability} {level}<gray>Daño: <red>+{value}% / <gray>Costo de Maná máximo: <aqua>{mana_cost}"
   lightning_blade:
     name: Espada de Relámpagos
     desc: Aumenta la velocidad de ataque en un {value}% por {duration} segundos.<yellow> [Haz clic derecho a la espada y ataca a una entidad para activar]
@@ -718,7 +718,7 @@ mana_abilities:
     lower: "<gray>Bajas tu espada"
     start: "<gold>Espada de relámpagos activada <gray>(-{mana} {mana_unit})"
     end: "<gray>La espada de relámpagos se desgastó"
-    menu: "<light_purple><bold>Habilidad de Maná <blue>{mana_ability} {level}<gray>Velocidad de Ataque: <red>+{value}% <gray>Duración: <green>{duration}s<gray>Costo de Maná: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s "
+    menu: "<light_purple><bold>Habilidad de Maná </bold><blue>{mana_ability} {level}<gray>Velocidad de Ataque: <red>+{value}% <gray>Duración: <green>{duration}s<gray>Costo de Maná: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s "
   not_ready: "<red>¡La habilitad no está lista! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>¡No hay maná suficiente! <gray>(Necesitas {mana} {mana_unit} y tienes {current_mana}/{max_mana})"
 rewards:

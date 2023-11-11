@@ -510,7 +510,7 @@ commands:
     stats: "Профиль статистики навыков Aurelium для <gold>{name}:\n<gray>UID: <white>{uuid}\n<gray>Статистика:{stat_entries}"
     stat_entry: "\n  <dark_aqua>{stat} <gray>- Общий уровень: <white>{total_level}<gray>, Базовый уровень: <white>{base_level}<gray>, Изменённый уровень: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Ваш рейтинг навыков"
+    header: "<aqua><bold>Ваш рейтинг навыков</bold>"
     power: "<yellow>Мощность <gray>(Все навыки): <white>#{rank} из {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} из {total}"
   reload: "<green>Конфиг перезагружен!"
@@ -534,13 +534,13 @@ commands:
     not_enabled: "<yellow>Панель действий навыков не активирована на этом сервере!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Таблица лидеров всех навыков<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Таблица лидеров всех навыков <white>(Страница {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Таблица лидеров<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Таблица лидеров <white>(Страница {page})==--"
+    power_header: "<white>--==<aqua><bold>Таблица лидеров всех навыков</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Таблица лидеров всех навыков </bold><white>(Страница {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Таблица лидеров</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Таблица лидеров </bold><white>(Страница {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Таблица средних навыков<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Таблица средних навыков <white>(Страница {page})==--"
+    average_header: "<white>--==<aqua><bold>Таблица средних навыков</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Таблица средних навыков </bold><white>(Страница {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Используйте: <green>/sk top <white><page> <gray>из <green>/sk top <white>[skill] <page>"
   transfer:
@@ -559,12 +559,12 @@ commands:
 leveler:
   title: "<green>{skill} Уровень повышен"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Повышение уровня мастерства! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Награды:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Повышение уровня мастерства! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Награды:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Разблокировка способности! <gold><bold>{ability} <gray>был разблокирован"
-  ability_level_up: "\n  <green>Повышение уровня способности! <gold><bold>{ability} <gray>сейчас уровень <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Разблокируйте способность маны! <blue><bold>{mana_ability} <gray>был разблокирован"
-  mana_ability_level_up: "\n  <light_purple>Повышение уровня мановой способности! <blue><bold>{mana_ability} <gray>сейчас уровень <gold>{level}"
+  ability_unlock: "\n  <green>Разблокировка способности! <gold><bold>{ability} </bold><gray>был разблокирован"
+  ability_level_up: "\n  <green>Повышение уровня способности! <gold><bold>{ability} </bold><gray>сейчас уровень <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Разблокируйте способность маны! <blue><bold>{mana_ability} </bold><gray>был разблокирован"
+  mana_ability_level_up: "\n  <light_purple>Повышение уровня мановой способности! <blue><bold>{mana_ability} </bold><gray>сейчас уровень <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>У вас есть не собранные предметы, потому что ваш инвентарь заполнен, используйте <yellow>/skills claimitems <red>для сбора"
 menus:
@@ -577,7 +577,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Уровень статистики: {stats}"
-    mana_ability: "<light_purple><bold>Способность к мане <blue>{mana_ability} {level}<gray>Продолжительность: <green>{duration}с <gray>Стоимость маны: <aqua>{mana_cost} <gray>Перезарядка: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Способность к мане </bold><blue>{mana_ability} {level}<gray>Продолжительность: <green>{duration}с <gray>Стоимость маны: <aqua>{mana_cost} <gray>Перезарядка: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Ваши навыки
     your_skills: "<aqua>Ваши навыки - <gold>{player}"
@@ -610,9 +610,9 @@ menus:
     rewards: "<gray>Recompensas: {rewards}"
     rewards_entry: "\n{color}+{num} {symbol} {stat}"
     money_reward: "\n  <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Разблокировка способности<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>Разблокировка способности<gray>  {desc}</bold>"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Разблокировка мановой способности<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Разблокировка мановой способности<gray>  {desc}</bold>"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>Прогресс: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: "<yellow>Нажмите, чтобы просмотреть таблицу лидеров {skill}"
@@ -712,14 +712,14 @@ mana_abilities:
     name: Острый крюк
     desc: "Нанести {value} урон зацепившемуся объекту<gray>  щелкнув левой кнопкой мыши удочкой"
     use: "<gold>Используемый острый крючок! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Способность к мане <blue>{mana_ability} {level}<gray>Урон: <red>{value} <gray>Стоимость маны: <aqua>{mana_cost} <gray>Перезарядка: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Способность к мане </bold><blue>{mana_ability} {level}<gray>Урон: <red>{value} <gray>Стоимость маны: <aqua>{mana_cost} <gray>Перезарядка: <yellow>{cooldown}s"
   charged_shot:
     name: Заряженный выстрел
     desc: "Стрелы, которые вы стреляете, нанесут больше урона<gray>  в зависимости от того, насколько далеко был отведен лук,<gray>  потребляя при этом ману. Наносит на {value}% больше<gray>  урона за потребленную ману. <yellow>[Щелкните ЛКМ<yellow>  по луку, чтобы переключить режим заряженного выстрела]"
     enable: "<gray>Режим заряженного выстрела теперь включен"
     disable: "<gray>Режим заряженного выстрела отключен."
     shoot: "<gold>Используется заряженный выстрел! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Способность к мане <blue>{mana_ability} {level}<gray>Урон: <red>+{value}% / Мана <gray>Максимальная стоимость маны: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>Способность к мане </bold><blue>{mana_ability} {level}<gray>Урон: <red>+{value}% / Мана <gray>Максимальная стоимость маны: <aqua>{mana_cost}"
   lightning_blade:
     name: Световой меч
     desc: Увеличивает скорость атаки на {value}% в течение {duration} секунд.<yellow> [ПКМ и удар по мобу для активации]
@@ -727,7 +727,7 @@ mana_abilities:
     lower: "<gray>Вы опускаете меч"
     start: "<gold>Световое лезвие активно! <gray>(-{mana} {mana_unit})"
     end: "<gray>Световое лезвие стерлось"
-    menu: "<light_purple><bold>Мана <blue>{mana_ability} {level}<gray>Скорость атаки: <red>+{value}% <gray>Длительность: <green>{duration}сек<gray>Цена маны: <aqua>{mana_cost} <gray>Перезагрядка: <yellow>{cooldown}сек"
+    menu: "<light_purple><bold>Мана </bold><blue>{mana_ability} {level}<gray>Скорость атаки: <red>+{value}% <gray>Длительность: <green>{duration}сек<gray>Цена маны: <aqua>{mana_cost} <gray>Перезагрядка: <yellow>{cooldown}сек"
   not_ready: "<red>Способность не готова! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Недостаточно маны! <gray>({mana} {mana_unit} required)"
 rewards:

@@ -510,7 +510,7 @@ commands:
     stats: "Aurelium Vaardigheden statistieken profiel voor <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
     stat_entry: "\n  <dark_aqua>{stat} <gray>- Totaal Level: <white>{total_level}<gray>, Basis Level: <white>{base_level}<gray>, Gewijzigd Level: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Jouw Vaardigheid Rang"
+    header: "<aqua><bold>Jouw Vaardigheid Rang</bold>"
     power: "<yellow>Kracht <gray>(Alle Vaardigheden): <white>#{rank} van {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} van {total}"
   reload: "<green>Configuratie herladen!"
@@ -534,13 +534,13 @@ commands:
     not_enabled: "<yellow>Skills actiebalk is niet ingeschakeld op deze server!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord <white>(Pagina {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Scorebord<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Scorebord <white>(Pagina {page})==--"
+    power_header: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord </bold><white>(Pagina {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Scorebord</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Scorebord </bold><white>(Pagina {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Skill Gemiddeld Scorebord<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Skill Gemiddelde Scorebord <white>(Pagina {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Gemiddeld Scorebord</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Gemiddelde Scorebord </bold><white>(Pagina {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Gebruik: <green>/sk top <white><page> <gray>of <green>/sk top <white>[skill] <page>"
   transfer:
@@ -559,12 +559,12 @@ commands:
 leveler:
   title: "<green>{skill} niveau omhoog"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Vaardigheid Level Omhoog! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n \n<aqua>Beloning:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Vaardigheid Level Omhoog! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n \n</bold><aqua>Beloning:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Ability Ontgrendelen! <gold><bold>{ability} <gray>is ontgrendeld"
-  ability_level_up: "\n  <green>Vermogen level omhoog! <gold><bold>{ability} <gray>is nu het niveau <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Mana vaardigheid ontgrendeling! <blue><bold>{mana_ability} <gray>is ontgrendeld"
-  mana_ability_level_up: "\n  <light_purple>Mana Vermogen Level Omhoog! <blue><bold>{mana_ability} <gray>is nu het niveau <gold>{level}"
+  ability_unlock: "\n  <green>Ability Ontgrendelen! <gold><bold>{ability} </bold><gray>is ontgrendeld"
+  ability_level_up: "\n  <green>Vermogen level omhoog! <gold><bold>{ability} </bold><gray>is nu het niveau <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Mana vaardigheid ontgrendeling! <blue><bold>{mana_ability} </bold><gray>is ontgrendeld"
+  mana_ability_level_up: "\n  <light_purple>Mana Vermogen Level Omhoog! <blue><bold>{mana_ability} </bold><gray>is nu het niveau <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Je hebt onopgeëiste items omdat je inventaris vol was, gebruik <yellow>/vaardigheden claimitems <red>to ze te claimen"
 menus:
@@ -577,7 +577,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Statistieken Niveau: {stats}"
-    mana_ability: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Duur: <green>{duration}s <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Mana Vermogen </bold><blue>{mana_ability} {level} <gray>Duur: <green>{duration}s <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Jouw Vaardigheden
     your_skills: "<aqua>Je Vaardigheden - <gold>{player}"
@@ -612,7 +612,7 @@ menus:
     money_reward: "\n  <green>${amount}"
     ability_unlock: "<gold>{ability} <green>&vaardigheid ontgrendel<gray>  {desc}"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana vermogensontgrendeling<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana vermogensontgrendeling</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>Voortgang: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: "<yellow>Klik om het scorebord van {skill} te bekijken"
@@ -660,7 +660,7 @@ menus:
     source_name: "<white>{name}"
     source_xp: "<gray>XP: <green>{xp}"
     source_xp_rate: "<gray>XP: <green>{xp}/{unit}"
-    multiplied_xp: "<strikethrough>ultiplied XP: <green>{xp}"
+    multiplied_xp: "<gray>Multiplied XP: <green>{xp}"
     multiplied_xp_rate: "&XP met Vermenigvuldiging: <green>{xp}/{unit}"
     multiplied_desc: "<gray><italic>Dit is de XP die je daadwerkelijk verdient<gray><italic>based op je huidige XP multipliers"
   abilities:
@@ -712,14 +712,14 @@ mana_abilities:
     name: Scherpe Haak
     desc: "Breng {value} schade toe aan een gehakte entiteit<gray>  als je links klikt met een vishengel"
     use: "<gold>Gebruikt Scherpe Hook! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Schade: <red>{value} <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Mana Vermogen </bold><blue>{mana_ability} {level} <gray>Schade: <red>{value} <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   charged_shot:
     name: Geladen Schot
     desc: "Pijlen die je schiet brengen meer schade toe<gray>  op basis van hoe ver de boog werd teruggetrokken.<gray>  mana consumeert in dit proces. Doet {value}% meer<gray>  schade per mana verbruikt. <yellow>[linkermuisklik<yellow>  een boog om te schakelen van geladen opname modus]"
     enable: "<gray>Geladen opname modus is nu ingeschakeld"
     disable: "<gray>Geladen opname modus is nu uitgeschakeld"
     shoot: "<gold>Gebruikt Opgeladen Schot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Schade: <red>+{value}% / Mana <gray>Max Mana Kosten: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>Mana Vermogen </bold><blue>{mana_ability} {level} <gray>Schade: <red>+{value}% / Mana <gray>Max Mana Kosten: <aqua>{mana_cost}"
   lightning_blade:
     name: Bliksem Zwaard
     desc: Verhoogt aanvalsnelheid met {value}% gedurende {duration} seconden.<yellow> [Rechtsklik zwaard en valt mob aan om te activeren]
@@ -727,7 +727,7 @@ mana_abilities:
     lower: "<gray>Je verlaagt je zwaard"
     start: "<gold>Bliksem Zwaard Geactiveerd! <gray>(-{mana} {mana_unit})"
     end: "<gray>Bliksemmes is uitgeput"
-    menu: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Aanval Snelheid: <red>+{value}% <gray>Duur: <yellow>en{duration}s <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Mana Vermogen </bold><blue>{mana_ability} {level} <gray>Aanval Snelheid: <red>+{value}% <gray>Duur: <yellow>en{duration}s <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   not_ready: "<red>Mogelijkheid niet gereed! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Niet genoeg mana! <gray>({mana} {mana_unit} vereist, je hebt {current_mana}/{max_mana})"
 rewards:

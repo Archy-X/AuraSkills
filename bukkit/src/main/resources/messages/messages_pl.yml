@@ -510,7 +510,7 @@ commands:
     stats: "Profil statystyk Aurelium Skills dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Statystyki:{stat_entries}"
     stat_entry: "\n  <dark_aqua>{stat} <gray>- Całkowity poziom: <white>{total_level}<gray>, Podstawowy poziom: <white>{base_level}<gray>, Zmodyfikowany poziom: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Twój Ranking Umiejętności"
+    header: "<aqua><bold>Twój Ranking Umiejętności</bold>"
     power: "<yellow>Moc <gray>(Wszystkie Umiejętności): <white>#{rank} z {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} z {total}"
   reload: "<green>Konfiguracja przeładowana!"
@@ -534,13 +534,13 @@ commands:
     not_enabled: "<yellow>Pasek umiejętności nie jest włączony na serwerze!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności <white>(Strona {page})==--"
-    skill_header: "<white>--==<aqua><bold>Tabela {skill}<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>Tabela {skill} <gray>(Strona {page})==--"
+    power_header: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności </bold><white>(Strona {page})==--"
+    skill_header: "<white>--==<aqua><bold>Tabela {skill}</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>Tabela {skill} </bold><gray>(Strona {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Średni Ranking Umiejętności<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Średni Ranking Umiejętności <white>(Strona {page})=--"
+    average_header: "<white>--==<aqua><bold>Średni Ranking Umiejętności</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Średni Ranking Umiejętności </bold><white>(Strona {page})=--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Użycie: <green>/sk top <white><page> <gray>lub <green>/sk top <white>[skill] <page>"
   transfer:
@@ -559,12 +559,12 @@ commands:
 leveler:
   title: "<green>Nowy Poziom {skill}"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Nowy Poziom Umiejętności! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Nagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Nowy Poziom Umiejętności! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Nagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Odblokowano Zdolność! <gray>Zdolność <gold><bold>{ability} <gray>została odblokowana."
-  ability_level_up: "\n  <green>Nowy Poziom Zdolności! <gray>Zdolność <gold><bold>{ability} <gray>ma teraz poziom <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Odblokowano Zdolność Many! <gray>Zdolność <blue><bold>{mana_ability} <gray>została odblokowana"
-  mana_ability_level_up: "\n  <light_purple>Nowy Poziom Zdolności Many! <gray>Zdolność <blue><bold>{mana_ability} <gray>ma teraz poziom <gold>{level}"
+  ability_unlock: "\n  <green>Odblokowano Zdolność! <gray>Zdolność <gold><bold>{ability} </bold><gray>została odblokowana."
+  ability_level_up: "\n  <green>Nowy Poziom Zdolności! <gray>Zdolność <gold><bold>{ability} </bold><gray>ma teraz poziom <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Odblokowano Zdolność Many! <gray>Zdolność <blue><bold>{mana_ability} </bold><gray>została odblokowana"
+  mana_ability_level_up: "\n  <light_purple>Nowy Poziom Zdolności Many! <gray>Zdolność <blue><bold>{mana_ability} </bold><gray>ma teraz poziom <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Masz nieodebrane przedmioty, ponieważ twój ekwipunek był pełny, użyj <yellow>/skills claimitems <red>aby je odebrać"
 menus:
@@ -577,7 +577,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Podstawowe Statystyki: {stats}"
-    mana_ability: "<light_purple><bold>Zdolność Many <blue>{mana_ability} {level}<gray>Czas trwania: <green>{duration}s <gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Czas trwania: <green>{duration}s <gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Twoje Umiejętności
     your_skills: "<aqua>Twoje Umiejętności - <gold>{player}"
@@ -610,9 +610,9 @@ menus:
     rewards: "<gray>Nagrody:{rewards}"
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
     money_reward: "\n  <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Do Odblokowania<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>Do Odblokowania<gray>  {desc}</bold>"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Do Odblokowania (mana)<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Do Odblokowania (mana)<gray>  {desc}</bold>"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>Postęp: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: "<yellow>Kliknij, aby wyświetlić tablicę wyników {skill}"
@@ -712,14 +712,14 @@ mana_abilities:
     name: Ostry Hak
     desc: "Zadaj {value} obrażeń zaczepionemu mobowi<gray>  klikając wędką lewym przyciskiem myszy"
     use: "<gold>Użyto Ostrego Haka! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Zdolność Many <blue>{mana_ability} {level}<gray>Obrażenia: <red>{value} <gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Obrażenia: <red>{value} <gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
   charged_shot:
     name: Naładowany Strzał
     desc: "Strzały które wystrzelisz zadają więcej obrażeń<gray>  w zależności od tego, w jakim stopniu łuk został naciągnięty,<gray>  zużywając manę w tym procesie. Zadaje {value}% więcej<gray>  obrażeń na zużytą manę. <yellow>  [Kliknij lewym przyciskiem myszy łuk, aby przełączyć tryb naładowanego strzału]"
     enable: "<gray>Tryb naładowanego strzału jest teraz włączony"
     disable: "<gray>Tryb naładowanego strzału jest teraz wyłączony"
     shoot: "<gold>Użyto Naładowanego Strzału! <light_purple>+{percent}% Obrażeń <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Zdolność Many <blue>{mana_ability} {level}<gray>Obrażenia: <red>+{value}% / Mana <gray>Maksymalny koszt many: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Obrażenia: <red>+{value}% / Mana <gray>Maksymalny koszt many: <aqua>{mana_cost}"
   lightning_blade:
     name: Ostrze Błyskawicy
     desc: Zwiększa szybkość ataku o {value}% na {duration} sekund.<yellow> [Kliknij prawym przyciskiem miecz i zaatakuj moba, aby aktywować]
@@ -727,7 +727,7 @@ mana_abilities:
     lower: "<gray>Obniżasz swój miecz"
     start: "<gold>Ostrze Błyskawicy Aktywowane! <gray>(-{mana} {mana_unit})"
     end: "<gray>Ostrze Błyskawicy zostało wyłączone"
-    menu: "<light_purple><bold>Zdolność Many <blue>{mana_ability} {level}<gray>Prędkość ataku: <red>+{value}% <gray>Czas trwania: <green>{duration}s<gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Prędkość ataku: <red>+{value}% <gray>Czas trwania: <green>{duration}s<gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
   not_ready: "<red>Zdolność many nie jest gotowa! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Niewystarczająca ilość many! <gray>(wymagane {mana} {mana_unit}, masz {current_mana}/{max_mana}"
 rewards:

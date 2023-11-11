@@ -413,7 +413,7 @@ commands:
         does_not_exist: "<yellow>aIl tuo oggetto non ha un {color}{stat} <yellow>modificatore!"
         removed: "{color}{stat} <gray>modificatore è stato rimosso dall''oggetto"
       list:
-        header: "<strikethrough>odificatori oggetto trovati:"
+        header: "<strikethrough>odificatori oggetto trovati:</strikethrough>"
         entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Tutti i modificatori oggetto sono stati rimossi dal tuo oggetto"
@@ -471,7 +471,7 @@ commands:
     list: "<white>Moltiplicatori XP per <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Solo i giocatori possono elencare i loro multiplicatori! Specifica un giocatore!"
   rank:
-    header: "<aqua><bold>Classifica delle tue Abilità"
+    header: "<aqua><bold>Classifica delle tue Abilità</bold>"
     power: "<yellow>Potenza <gray>(All Skills): <white>#{rank} di {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} di {total}"
   reload: "<green>Config ricaricati!"
@@ -495,13 +495,13 @@ commands:
     not_enabled: "<yellow>Le barre d''azione per le abilità non sono abilitate sul server!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Classifica di tutte le abilità<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Classifica di tutte le abilità <white>(Pagina {page})==--"
-    skill_header: "<white>--==<aqua><bold>Classifica {skill}<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>Classifica {skill}<white>(Pagina {page})==--"
+    power_header: "<white>--==<aqua><bold>Classifica di tutte le abilità</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Classifica di tutte le abilità </bold><white>(Pagina {page})==--"
+    skill_header: "<white>--==<aqua><bold>Classifica {skill}</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>Classifica {skill}</bold><white>(Pagina {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Classifica media abilità<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Classifica media abilità <white>(Pagina {page})==--"
+    average_header: "<white>--==<aqua><bold>Classifica media abilità</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Classifica media abilità </bold><white>(Pagina {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Utilizzo: <green>/sk top <white><page> <gray>o <green>/sk top <white>[skill] <page>"
   updateleaderboards:
@@ -517,12 +517,12 @@ commands:
 leveler:
   title: "<green>{skill} Level Up"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Level Up Abilità! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Ricompense:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Level Up Abilità! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Ricompense:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+1{symbol} {stat}"
-  ability_unlock: "\n  <green>Abilità Sbloccata! <gold><bold>{ability} <gray>è stata sbloccata"
-  ability_level_up: "\n  <green>Level Up Abilità! <gold><bold>{ability} <gray>è adesso livello <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Abilità Mana Sbloccata! <blue><bold>{mana_ability} <gray>è adesso bloccata"
-  mana_ability_level_up: "\n  <light_purple>Abilità Mana Level Up! <blue><bold>{mana_ability} <gray>è adesso livello <gold>{level}"
+  ability_unlock: "\n  <green>Abilità Sbloccata! <gold><bold>{ability} </bold><gray>è stata sbloccata"
+  ability_level_up: "\n  <green>Level Up Abilità! <gold><bold>{ability} </bold><gray>è adesso livello <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Abilità Mana Sbloccata! <blue><bold>{mana_ability} </bold><gray>è adesso bloccata"
+  mana_ability_level_up: "\n  <light_purple>Abilità Mana Level Up! <blue><bold>{mana_ability} </bold><gray>è adesso livello <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Hai oggetti non reclamati perchè il tuo inventario era pieno, usa <yellow>/skills claimitems <red>per reclamarli"
 menus:
@@ -535,7 +535,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Statistiche Salite di Livello: {stats}"
-    mana_ability: "<light_purple><bold>Abilità Mana <blue>{mana_ability} {level}<gray>Durata: <green>{duration}s <gray>Costo Mana: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Abilità Mana </bold><blue>{mana_ability} {level}<gray>Durata: <green>{duration}s <gray>Costo Mana: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Your Skills
     your_skills: "<aqua>Le tue abilità - <gold>{player}"
@@ -565,9 +565,9 @@ menus:
     rewards: "<gray>Ricompense:{rewards}"
     rewards_entry: " {color}+{num} {symbol} {stat}"
     money_reward: " <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Abilità Sbloccata<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>Abilità Sbloccata</bold><gray>  {desc}"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Abilità Mana Sbloccata<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Abilità Mana Sbloccata</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>In corso: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -631,14 +631,14 @@ mana_abilities:
     name: Gancio Affilato
     desc: "Fa {value} danno ad un'entità aggangiata<gray>quando si fa tasto sinistro con una canna da pesca"
     use: "<gold>Usato Gancio Affilato! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Abilità Mana <blue>{mana_ability} {level}<gray>Danno: <red>{value} <gray>Costo Mana: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Abilità Mana </bold><blue>{mana_ability} {level}<gray>Danno: <red>{value} <gray>Costo Mana: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   charged_shot:
     name: Colpo Caricato
     desc: "Le freccie scoccate causeranno un danno maggiore<gray>in base a come è stato caricato l'arco,<gray>consumerà mana nel processo. Fa {value}% più<gray>danno per mana consumato.<yellow>[Tasto sinistro con un arco per cambiare la modalità colpo caricato]"
     enable: "<gray>Colpo caricato ora abilitato"
     disable: "<gray>Colpo caricato ora disabilitato"
     shoot: "<gold>Usato slot caricato! <light_purple>+{percent}% Danno <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Abilità Mana<blue>{mana_ability} {level}<gray>Danno: <red>+{value}% / Mana <gray>Costo Massimo Mana: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>Abilità Mana</bold><blue>{mana_ability} {level}<gray>Danno: <red>+{value}% / Mana <gray>Costo Massimo Mana: <aqua>{mana_cost}"
   lightning_blade:
     name: Lama Fulminea
     desc: Aumenta la velocità d'attacco di {value}% per {duration} secondi.<yellow>  [Click Destro sulla spada e attacca dei mob per attivarla]
@@ -646,7 +646,7 @@ mana_abilities:
     lower: "<gray>Abbassi la spada"
     start: "<gold>Lama Fulminea Attivata! <gray>(-{mana} {mana_unit})"
     end: "<gray>La Lama Fulminea è stata disattivata"
-    menu: "<light_purple><bold>Abilità Mana <blue>{mana_ability} {level}<gray>Velocità d'attacco: <red>+{value}% <gray>Durata: <green>{duration}s<gray>Costo Mana: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Abilità Mana </bold><blue>{mana_ability} {level}<gray>Velocità d'attacco: <red>+{value}% <gray>Durata: <green>{duration}s<gray>Costo Mana: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   not_ready: "<red>Abilità non pronta! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Non hai abbastanza mana! <gray>({mana} {mana_unit} richiesto, tu hai {current_mana}/{max_mana})"
 rewards:

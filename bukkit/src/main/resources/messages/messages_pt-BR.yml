@@ -510,7 +510,7 @@ commands:
     stats: "Perfil de Habilidades Aurelium para <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Habilidades:{stat_entries}"
     stat_entry: "\n  <dark_aqua>{stat} <gray>- Nível total: <white>{total_level}<gray>, Nível Base: <white>{base_level}<gray>, Nível modificado: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Sua Classificação de Habilidade"
+    header: "<aqua><bold>Sua Classificação de Habilidade</bold>"
     power: "<yellow>Poder <gray>(Todas as Habilidades): <white>#{rank} de {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} de {total}"
   reload: "<green>Configuração recarregada!"
@@ -534,13 +534,13 @@ commands:
     not_enabled: "<yellow>As Habilidades não estão ativadas neste servidor!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Todas as Habilidades<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Todas as Habilidades <white>(Página {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Classificação<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Placar de Liderança <white>(Página {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Placar de Líderes<white>==--"
-    average_header_page: "<white>--==<aqua><bold>Placar de Líderes <white>(Página {page})==--"
+    power_header: "<white>--==<aqua><bold>Todas as Habilidades</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Todas as Habilidades </bold><white>(Página {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Classificação</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Placar de Liderança </bold><white>(Página {page})==--"
+    skill_entry: "<white>{rank}. <aqua>{player} </bold><white>- {level}"
+    average_header: "<white>--==<aqua><bold>Placar de Líderes</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Placar de Líderes </bold><white>(Página {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Uso: <green>/sk top <white><page> <gray>ou <green>/sk top <white>[skill] <page>"
   transfer:
@@ -559,12 +559,12 @@ commands:
 leveler:
   title: "<green>{skill} Melhorada"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Habilidade Melhorada! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Recompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Habilidade Melhorada! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Recompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n{color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Desbloqueio de Especialização! <gold><bold>{ability} <gray>foi desbloqueada"
-  ability_level_up: "\n  <green>Nível de Habilidade aumentado! <gold><bold>{ability} <gray>é agora nível <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Habilidade de mana desbloqueada! <blue><bold>{mana_ability} <gray> foi Desbloqueado"
-  mana_ability_level_up: "\n  <light_purple>Habilidade de mana melhorada! <blue><bold>{mana_ability} <gray>é agora nível <gold>{level}"
+  ability_unlock: "\n  <green>Desbloqueio de Especialização! <gold><bold>{ability} </bold><gray>foi desbloqueada"
+  ability_level_up: "\n  <green>Nível de Habilidade aumentado! <gold><bold>{ability} </bold><gray>é agora nível <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Habilidade de mana desbloqueada! <blue><bold>{mana_ability} </bold><gray> foi Desbloqueado"
+  mana_ability_level_up: "\n  <light_purple>Habilidade de mana melhorada! <blue><bold>{mana_ability} </bold><gray>é agora nível <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Você tem itens não reivindicados porque seu inventário estava cheio, use <yellow>/skills claimitems <red>para reivindicá-los"
 menus:
@@ -577,7 +577,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Estatísticas Nívelada: {stats}"
-    mana_ability: "<light_purple><bold>Habilidade de Mana <blue>{mana_ability} {level}<gray>Duração: <green>{duration}s <gray>Custo de Mana: <aqua>{mana_cost} <gray>Resfriamento: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Habilidade de Mana </bold><blue>{mana_ability} {level}<gray>Duração: <green>{duration}s <gray>Custo de Mana: <aqua>{mana_cost} <gray>Resfriamento: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Suas Habilidades
     your_skills: "<aqua>Suas Habilidades - <gold>{player}"

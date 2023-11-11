@@ -370,7 +370,7 @@ commands:
     list: "<white>XP çarpanı <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Yalnızca oyuncular kendi çarpanlarını listeleyebilir! Bir oyuncu belirleyin!"
   rank:
-    header: "<aqua><bold>Beceri Sıralamanız"
+    header: "<aqua><bold>Beceri Sıralamanız</bold>"
     power: "<yellow>Güç <gray>(Tüm Beceriler): <white>#{rank} of {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} ın {total}"
   reload: "<green>Yapılandırma Yeniden Yükleniyor!"
@@ -394,10 +394,10 @@ commands:
     not_enabled: "<yellow>Beceriler işlem çubuğu bu sunucuda etkin değil!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Tüm Beceriler Skor Tablosu<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Tüm Beceriler Skor Tablosu <white>(Sayfa {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Skor Tablosu<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Skor Tablosu <white>(Sayfa {page})==--"
+    power_header: "<white>--==<aqua><bold>Tüm Beceriler Skor Tablosu</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Tüm Beceriler Skor Tablosu </bold><white>(Sayfa {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Skor Tablosu</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Skor Tablosu </bold><white>(Sayfa {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Kullanım: <green>/sk top <white><page> <green> yada <green>/sk top <white>[skill] <page>"
   updateleaderboards:
@@ -412,12 +412,12 @@ commands:
 leveler:
   title: "<green>{skill} Seviye atladın"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Yetenek Level Atladı! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Ödüller:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Yetenek Level Atladı! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Ödüller:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+1{symbol} {stat}"
-  ability_unlock: "\n  <green>Yetenek Kilidin! <gold><bold>{ability} <gray>açıldı"
-  ability_level_up: "\n  <green>Yeteneğin level Atladı! <gold><bold>{ability} <gray>Şimdi ki seviye <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Mana Yeteneği Açıldı! <blue><bold>{mana_ability} <gray> Kildi Açıldı"
-  mana_ability_level_up: "\n  <light_purple>Mana Yetenek Seviyesi Arttı! <blue><bold>{mana_ability} <gray>Şimdi Seviyen <gold>{level}"
+  ability_unlock: "\n  <green>Yetenek Kilidin! <gold><bold>{ability} </bold><gray>açıldı"
+  ability_level_up: "\n  <green>Yeteneğin level Atladı! <gold><bold>{ability} </bold><gray>Şimdi ki seviye <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Mana Yeteneği Açıldı! <blue><bold>{mana_ability} </bold><gray> Kildi Açıldı"
+  mana_ability_level_up: "\n  <light_purple>Mana Yetenek Seviyesi Arttı! <blue><bold>{mana_ability} </bold><gray>Şimdi Seviyen <gold>{level}"
   money_reward: "\n  <green>${amount}"
 menus:
   common:
@@ -430,7 +430,7 @@ menus:
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     primary_stat: "<gray>Ana İstatistik: {color}{stat}"
     secondary_stat: "<gray>İkincil İstatistik: {color}{stat}"
-    mana_ability: "<light_purple><bold>Mana Yeteneği <blue>{mana_ability} {level}<gray>Süre: <green>{duration}s <gray>Mana bedeli: <aqua>{mana_cost} <gray>Bekleme süresi: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Mana Yeteneği </bold><blue>{mana_ability} {level}<gray>Süre: <green>{duration}s <gray>Mana bedeli: <aqua>{mana_cost} <gray>Bekleme süresi: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Yeteneklerin
     your_skills: "<aqua>Yeteneklerin - <gold>{player}"
@@ -459,9 +459,9 @@ menus:
     locked: "<red>Kilitli"
     rewards: "<gray>Ödüller:{rewards}"
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
-    ability_unlock: "<gold>{ability} <green><bold>Yetenek Kilidi  Açıldı<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>Yetenek Kilidi  Açıldı</bold><gray>  {desc}"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana Yeteneği Açıldı<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana Yeteneği Açıldı</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>İlerleme: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -516,7 +516,7 @@ mana_abilities:
     name: Keskin Kanca
     desc: "Balık Oltası Bir varlığa bağlıyken<gray>  Sol Tıklayıp {value} Hasar Verin"
     use: "<gold>Keskin Kanca Kullanıldı! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Mana Yeteneği <blue>{mana_ability} {level}<gray>Hasar:<red>{value} <gray>Mana Maliyeti: <aqua>{mana_cost} <gray>Bekleme Süresi: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Mana Yeteneği </bold><blue>{mana_ability} {level}<gray>Hasar:<red>{value} <gray>Mana Maliyeti: <aqua>{mana_cost} <gray>Bekleme Süresi: <yellow>{cooldown}s"
   not_ready: "<red>Yetenek Hazır Değil! <gray>({cooldown}sn)"
   not_enough_mana: "<yellow>Yetersiz mana! <gray>({mana} {mana_unit} Gerekli)"
 skills:

@@ -332,18 +332,18 @@ acf:
     help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Hasil pencarian untuk <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: '<red>Kesalahan: Dunia ini tidak ada."
-    you_must_be_holding_item: '<red>Kesalahan: Kamu harus memegang benda ditanganmu."
+    invalid_world: "<red>Kesalahan: Dunia ini tidak ada."
+    you_must_be_holding_item: "<red>Kesalahan: Kamu harus memegang benda ditanganmu."
     player_is_vanished_confirm: "<yellow>Peringatan: <green>{vanished} <yellow>sedang menyamar. Jangan buka kedok dia!\n<yellow>Untuk mengkorfimasi tindakan anda tambahkan <green>:confirm <yellow>diakhir nama dia.\n<yellow>Contoh: {vanished}:confirm"
-    username_too_short: '<red>Kesalahan: Nama terlalu pendek, setidaknya harus 3 huruf."
-    is_not_a_valid_name: '<red>Kesalahan: <yellow>{name} <red>bukanlah nama yang valid."
-    multiple_players_match: '<red>Kesalahan: Pemain dengan nama yang sama dideteksi <aqua>{search} <yellow>({all})<red>, mohon untuk lebih spesifik."
-    no_player_found_server: '<red>Tidak ada pemain yang cocok <yellow>{search} <red>yang sedang ada di server ini."
-    no_player_found_offline: '<red>Tidak ada pemain yang cocok <yellow>{search}<red> yang bisa ditemukan."
-    no_player_found: '<red>Tidak ada pemain yang cocok <yellow>{search}<red> ditemukan."
-    location_please_specify_world: '<red>Kesalahan: Mohon untuk spesifikan dunia. Contoh: <yellow>dunia:x,y,z."
-    location_please_specify_xyz: '<red>Kesalahan: Mohon untuk spesifikan kordinat x, y, and z. Contoh: <yellow>dunia:x,y,z."
-    location_console_not_relative: '<red>Kesalahan: Konsol tidak bisa menggunakan kordinat yang relatif."
+    username_too_short: "<red>Kesalahan: Nama terlalu pendek, setidaknya harus 3 huruf."
+    is_not_a_valid_name: "<red>Kesalahan: <yellow>{name} <red>bukanlah nama yang valid."
+    multiple_players_match: "<red>Kesalahan: Pemain dengan nama yang sama dideteksi <aqua>{search} <yellow>({all})<red>, mohon untuk lebih spesifik."
+    no_player_found_server: "<red>Tidak ada pemain yang cocok <yellow>{search} <red>yang sedang ada di server ini."
+    no_player_found_offline: "<red>Tidak ada pemain yang cocok <yellow>{search}<red> yang bisa ditemukan."
+    no_player_found: "<red>Tidak ada pemain yang cocok <yellow>{search}<red> ditemukan."
+    location_please_specify_world: "<red>Kesalahan: Mohon untuk spesifikan dunia. Contoh: <yellow>dunia:x,y,z."
+    location_please_specify_xyz: "<red>Kesalahan: Mohon untuk spesifikan kordinat x, y, and z. Contoh: <yellow>dunia:x,y,z."
+    location_console_not_relative: "<red>Kesalahan: Konsol tidak bisa menggunakan kordinat yang relatif."
 action_bar:
   idle: "<red>{hp}/{max_hp} {hp_unit}                <aqua>{mana}/{max_mana} {mana_unit}"
   xp: "<red>{hp}/{max_hp} {hp_unit}  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
@@ -443,7 +443,7 @@ commands:
     list: "<white>Pengganda EXP untuk pemain <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Hanya pemain yang bisa melihat pengganda Exp! Spesifikasikan pemain!"
   rank:
-    header: "<aqua><bold>Peringkat Skill Kamu"
+    header: "<aqua><bold>Peringkat Skill Kamu</bold>"
     power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
   reload: "<green>Config dimuat ulang!"
@@ -467,10 +467,10 @@ commands:
     not_enabled: "<yellow>Actionbar skill dilarang di server ini!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Peringkat Semua Skill<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Peringkat Semua Skill<white>(Halaman {page})==--"
-    skill_header: "<white>--==<aqua><bold>Peringkat {skill}<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>Peringkat {skill}<white>(Halaman {page})==--"
+    power_header: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>(Halaman {page})==--"
+    skill_header: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>(Halaman {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Perintah: <green>/sk top <white><page> <gray>atau <green>/sk top <white>[skill] <page>"
   updateleaderboards:
@@ -483,14 +483,14 @@ commands:
   unknown_skill: "<yellow>Skill tidak ditemukan!"
   no_profile: "<yellow>Pemain tidak memiliki profil skill!"
 leveler:
-  title: '<green>Level {skill} Meningkat"
+  title: "<green>Level {skill} Meningkat"
   subtitle: '<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Level Skill Naik! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Rewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Level Skill Naik! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Rewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+1{symbol} {stat}"
-  ability_unlock: "\n  <green>Keahlian terbuka! <gold><bold>{ability} <gray>telah didapatkan"
-  ability_level_up: "\n  <green>Level keahlian naik! <gold><bold>{ability} <gray>sekarang level <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Keahlian sihir terbuka! <blue><bold>{mana_ability} <gray>telah didapatkan"
-  mana_ability_level_up: "\n  <green>Level keahlian naik! <blue><bold>{mana_ability} <gray>sekarang level <gold>{level}"
+  ability_unlock: "\n  <green>Keahlian terbuka! <gold><bold>{ability} </bold><gray>telah didapatkan"
+  ability_level_up: "\n  <green>Level keahlian naik! <gold><bold>{ability} </bold><gray>sekarang level <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Keahlian sihir terbuka! <blue><bold>{mana_ability} </bold><gray>telah didapatkan"
+  mana_ability_level_up: "\n  <green>Level keahlian naik! <blue><bold>{mana_ability} </bold><gray>sekarang level <gold>{level}"
   money_reward: "\n  <green>${amount}"
 menus:
   common:
@@ -503,7 +503,7 @@ menus:
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     primary_stat: "<gray>Statistik Utama: {color}{stat}"
     secondary_stat: "<gray>Statistik Kedua: {color}{stat}"
-    mana_ability: "<light_purple><bold>Kemampuan Sihir <blue>{mana_ability} {level}<gray>Durasi: <green>{duration}s <gray>Sihir dibutuhkan: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>Kemampuan Sihir </bold><blue>{mana_ability} {level}<gray>Durasi: <green>{duration}s <gray>Sihir dibutuhkan: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Skills kamu
     your_skills: "<aqua>Skill Kamu - <gold>{player}"
@@ -532,9 +532,9 @@ menus:
     locked: "<red>TERKUNCI"
     rewards: "<gray>Hadiah:{rewards}"
     rewards_entry: " {color}+{num} {symbol} {stat}"
-    ability_unlock: "<gold>{ability} <green><bold>Ability Unlock<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>Ability Unlock<gray>  {desc}</bold>"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Kemampuan Sihir Terbuka<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Kemampuan Sihir Terbuka<gray>  {desc}</bold>"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>Perjalanan: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -597,14 +597,14 @@ mana_abilities:
     name: Kail Tajam
     desc: "Menghasilkan {value} kerusakan ke entitiy yang ditarik<gray>  ketika Left-Click kail pancing"
     use: "<gold>Menggunakan Kail Tajam! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Ability Sihir <blue>{mana_ability} {level}<gray>Durasi: <green>{value}s <gray>Sihir dibutuhkan: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>Ability Sihir </bold><blue>{mana_ability} {level}<gray>Durasi: <green>{value}s <gray>Sihir dibutuhkan: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   charged_shot:
     name: Tembakan bermuatan
     desc: "Panah yang kamu tembakkan memberikan kerusakan<gray>  lebih banyak teergantung dari jaraknya,<gray>  menggunakan sihir saat panah ditembakkan. menghasilkan {value}%<gray>  lebih banyak kerusakan untuk setiap sihir. <yellow>  [Clivk kiri busur untuk mengaktifkan]"
     enable: "<gray>Tembakaan bermuatan aktif"
     disable: "<gray>Tembakan bermuatan nonaktif"
     shoot: "<gold>Tembakan bermuatan dipakai! <light_purple>+{percent}% Kerusakan <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Kemampuan Sihir <blue>{mana_ability} {level}<gray>Kerusakan: <red>+{value}% / Sihir <gray>Sihir Maximal: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>Kemampuan Sihir </bold><blue>{mana_ability} {level}<gray>Kerusakan: <red>+{value}% / Sihir <gray>Sihir Maximal: <aqua>{mana_cost}"
   not_ready: "<red>Kemampuan sedang cooldown! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Sihir tidak cukup! <gray>({mana} {mana_unit} required)"
 skills:

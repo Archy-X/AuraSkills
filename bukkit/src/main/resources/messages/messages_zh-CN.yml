@@ -510,7 +510,7 @@ commands:
     stats: "玩家 <gold>{name} <gray>的 Aurelium Skills 详细描述:\n<gray>玩家 UUID: <white>{uuid}\n<gray>属性: {stat_entries}"
     stat_entry: "\n  <dark_aqua>{stat} <gray>- 总等级: <white>{total_level}<gray>, 基础等级: <white>{base_level}<gray>, 翻倍等级: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>技能排名"
+    header: "<aqua><bold>技能排名</bold>"
     power: "<yellow>战力 <gray>(技能综合): <white>#{rank}, 总第 {total} 名"
     entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
   reload: "<green>配置已重新加载!"
@@ -534,13 +534,13 @@ commands:
     not_enabled: "<yellow>此服务器未启用技能状态栏!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>技能综合排行榜<white>==--"
-    power_header_page: "<white>--==<aqua><bold>技能综合排行榜 <white>(第 {page} 页)==--"
-    skill_header: "<white>--==<aqua><bold>技能 {skill} 排行榜<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>技能 {skill} 排行榜<white>(第 {page} 页)==--"
+    power_header: "<white>--==<aqua><bold>技能综合排行榜</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>技能综合排行榜 </bold><white>(第 {page} 页)==--"
+    skill_header: "<white>--==<aqua><bold>技能 {skill} 排行榜</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>技能 {skill} 排行榜</bold><white>(第 {page} 页)==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>技能综合排行榜<white>==--"
-    average_header_page: "<white>--==<aqua><bold>技能综合排行榜<white>(第 {page} 页)==--"
+    average_header: "<white>--==<aqua><bold>技能综合排行榜</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>技能综合排行榜</bold><white>(第 {page} 页)==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>提示: <green>/sk top <white><page> <gray> 或 <green>/sk top <white>[skill] <page>"
   transfer:
@@ -559,12 +559,12 @@ commands:
 leveler:
   title: "<green>{skill} 等级提升"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>技能成功升级! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>升级奖励:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>技能成功升级! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>升级奖励:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num} {symbol} {stat}"
-  ability_unlock: "\n  <green>技能解锁! <gold><bold>{ability} <gray>已被解锁"
-  ability_level_up: "\n  <green>技能升级! <gold><bold>{ability} <gray>现在等级为 <gold>{level} <gray>级"
-  mana_ability_unlock: "\n  <light_purple>魔法技能解锁! <blue><bold>{mana_ability} <gray>已被解锁"
-  mana_ability_level_up: "\n  <light_purple>魔法技能升级! <blue><bold>{mana_ability} <gray>现在等级为l <gold>{level} <gray>级"
+  ability_unlock: "\n  <green>技能解锁! <gold><bold>{ability} </bold><gray>已被解锁"
+  ability_level_up: "\n  <green>技能升级! <gold><bold>{ability} </bold><gray>现在等级为 <gold>{level} <gray>级"
+  mana_ability_unlock: "\n  <light_purple>魔法技能解锁! <blue><bold>{mana_ability} </bold><gray>已被解锁"
+  mana_ability_level_up: "\n  <light_purple>魔法技能升级! <blue><bold>{mana_ability} </bold><gray>现在等级为l <gold>{level} <gray>级"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>因为背包已满, 部分无法存储在物品栏的物品已被转移至临时存储区. 请输入 <yellow>/skills claimitems <red>及时领取这些物品."
 menus:
@@ -577,7 +577,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>属性已升级了 {stats} 级"
-    mana_ability: "<light_purple><bold>魔法技能 <blue>{mana_ability} {level}<gray>持续时间: <green>{duration}s <gray>魔法值耗费: <aqua>{mana_cost} <gray>冷却时长: <yellow>{cooldown}s "
+    mana_ability: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level}<gray>持续时间: <green>{duration}s <gray>魔法值耗费: <aqua>{mana_cost} <gray>冷却时长: <yellow>{cooldown}s "
   skills_menu:
     skills_menu_title: 你的技能
     your_skills: "<aqua>你的技能 - <gold>{player}"
@@ -610,9 +610,9 @@ menus:
     rewards: "<gray>奖励: {rewards}"
     rewards_entry: " {color}+{num} {symbol} {stat}"
     money_reward: " <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>技能解锁<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>技能解锁</bold><gray>  {desc}"
     ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>魔法技能解锁<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>魔法技能解锁</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>进度: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: "<yellow>点击查看 {skill} 排行榜"
@@ -712,14 +712,14 @@ mana_abilities:
     name: 锋利鱼钩
     desc: "持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害"
     use: "<gold>使用了锋利鱼钩! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>魔法技能 <blue>{mana_ability} {level} <gray>伤害: <red>{value} <gray>魔法消耗: <aqua>{mana_cost} <gray>冷却时间: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level} <gray>伤害: <red>{value} <gray>魔法消耗: <aqua>{mana_cost} <gray>冷却时间: <yellow>{cooldown}s"
   charged_shot:
     name: 聚能穿射
     desc: "你射出的箭将会额外造成伤害<gray>  此伤害取决于箭落地后与你的距离<gray>  并且此过程消耗魔法值. 每点魔法值的消耗<gray>  能为每支箭增加 {value}% 的伤害<yellow>  [左键弓可触发聚能穿射]"
     enable: "<gray>聚能穿射已启用"
     disable: "<gray>聚能穿射已禁用"
     shoot: "<gold>聚能穿射已启用! <light_purple>+{percent}% 伤害 <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>魔法技能 <blue>{mana_ability} {level}<gray>伤害: <red>+{value}% / 魔法值 <gray>最大魔法值消耗: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level}<gray>伤害: <red>+{value}% / 魔法值 <gray>最大魔法值消耗: <aqua>{mana_cost}"
   lightning_blade:
     name: 狂战之刃
     desc: 在 {duration} 秒内增加 {value}% 的攻击速度.<yellow> [持剑右键后攻击敌人以激活]
@@ -727,8 +727,8 @@ mana_abilities:
     lower: "<gray>你放下了你的剑"
     start: "<gold>狂战之刃已激活! <gray>(-{mana} {mana_unit})"
     end: "<gray>狂战之刃已经已经结束"
-    menu: "<light_purple><bold>魔法技能 <blue>{mana_ability} {level}<gray>攻击速度: <red>+{value}% <gray>持续时间: <green>{duration}s<gray>魔力耗费: <aqua>{mana_cost} <gray>冷却时间: <yellow>{cooldown}s"
-  not_ready: "<red><italic>技能还没有准备好! <gray>({cooldown}s)"
+    menu: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level}<gray>攻击速度: <red>+{value}% <gray>持续时间: <green>{duration}s<gray>魔力耗费: <aqua>{mana_cost} <gray>冷却时间: <yellow>{cooldown}s"
+  not_ready: "<red><italic>技能还没有准备好! </italic><gray>({cooldown}s)"
   not_enough_mana: "&法力不足! <gray>({mana} {mana_unit} 需要, 但是你只有 {current_mana}/{max_mana})"
 rewards:
   item:

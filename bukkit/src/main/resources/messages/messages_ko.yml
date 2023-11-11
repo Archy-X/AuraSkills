@@ -505,7 +505,7 @@ commands:
     skill_entry: "<aqua>{skill} <white>XP 배율: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>사용자만 본인의 경험치 배율을 확인 할 수 있습니다! 사용자 지정 후 재시도하십시오."
   rank:
-    header: "<aqua><bold>스킬 순위"
+    header: "<aqua><bold>스킬 순위</bold>"
     power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
   reload: "<green>구성 다시 불러오기가 완료되었습니다!"
@@ -529,13 +529,13 @@ commands:
     not_enabled: "<yellow>이 서버에서 스킬 액션 표시줄이 사용 불가능합니다!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold> 모든 스킬 순위 <white>==--"
-    power_header_page: "<white>--==<aqua><bold> 모든 스킬 순위 <white>(Page {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} 순위<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} 순위 <white>(Page {page})==--"
+    power_header: "<white>--==<aqua><bold> 모든 스킬 순위 </bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold> 모든 스킬 순위 </bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} 순위</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} 순위 </bold><white>(Page {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold> 스킬 평균 순위 <white>==--"
-    average_header_page: "<white>--==<aqua><bold> 스킬 평균 순위 <white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold> 스킬 평균 순위 </bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold> 스킬 평균 순위 </bold><white>(Page {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>사용: <green>/sk top <white><page> <gray>나 <green>/sk top <white>[skill] <page>"
   updateleaderboards:
@@ -551,12 +551,12 @@ commands:
 leveler:
   title: '<green>{skill} 레벨 상승'
   subtitle: '<gold>{old} ➜ {new}'
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>스킬 레벨 업! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>보상:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>스킬 레벨 업! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>보상:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>능력 해금! <gold><bold>{ability} <gray>이(가) 해금되었습니다."
-  ability_level_up: "\n  <green>능력 레벨 업! <gold><bold>{ability} <gray>현재 레벨 <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>마나 능력 해금! <blue><bold>{mana_ability} <gray>이(가) 해금되었습니다."
-  mana_ability_level_up: "\n  <light_purple>마나 능력 레벨 업! <blue><bold>{mana_ability} <gray>현재 레벨 <gold>{level}"
+  ability_unlock: "\n  <green>능력 해금! <gold><bold>{ability} </bold><gray>이(가) 해금되었습니다."
+  ability_level_up: "\n  <green>능력 레벨 업! <gold><bold>{ability} </bold><gray>현재 레벨 <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>마나 능력 해금! <blue><bold>{mana_ability} </bold><gray>이(가) 해금되었습니다."
+  mana_ability_level_up: "\n  <light_purple>마나 능력 레벨 업! <blue><bold>{mana_ability} </bold><gray>현재 레벨 <gold>{level}"
   money_reward: "\n<green>${amount}"
   unclaimed_item: '<red>인벤토리 공간이 부족하여 수령하지 못한 아이템이 있습니다, <yellow>/skills claimitems <red>명령어를 입력하여 수령하십시오.'
 menus:
@@ -569,7 +569,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>능력치 레벨: {stats}"
-    mana_ability: "<light_purple><bold>마나 능력 <blue>{mana_ability} {level}<gray>지속시간: <green>{duration}s <gray>마나 소모량: <aqua>{mana_cost} <gray>재사용대기시간: <yellow>{cooldown}s"
+    mana_ability: "<light_purple><bold>마나 능력 </bold><blue>{mana_ability} {level}<gray>지속시간: <green>{duration}s <gray>마나 소모량: <aqua>{mana_cost} <gray>재사용대기시간: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: 내 스킬 목록
     your_skills: "<aqua>내 스킬 - <gold>{player}"
@@ -602,9 +602,9 @@ menus:
     rewards: "<gray>보상:{rewards}"
     rewards_entry: "{color}+{num} {symbol} {stat}"
     money_reward: "<green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>능력 해금<gray>  {desc}"
+    ability_unlock: "<gold>{ability} <green><bold>능력 해금</bold><gray>  {desc}"
     ability_level: "<gold>{ability} {level}<gray>  {desc} "
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>마나 능력 해금<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>마나 능력 해금</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>진행상황: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
     leaderboard_click: "<yellow>클릭해서 {skill} 순위 보기"
@@ -703,14 +703,14 @@ mana_abilities:
     name: 에리한 바늘
     desc: "낚싯바늘에 걸린 대상에게 {value} 만큼의 피해를 줍니다.<gray> [낚싯대 좌클릭으로 발동]"
     use: "<gold>예리한 바늘 발동! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>마나 능력 <blue>{mana_ability} {level}<gray>피해: <red>{value} <gray>마나 소모량: <aqua>{mana_cost} <gray>재사용대기시간: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>마나 능력 </bold><blue>{mana_ability} {level}<gray>피해: <red>{value} <gray>마나 소모량: <aqua>{mana_cost} <gray>재사용대기시간: <yellow>{cooldown}s"
   charged_shot:
     name: 모아 쏘기
     desc: "활을 얼마나 당겼는지에 따라 더 많은피해를 입게 되며, <gray>그 과정에서 마나를 소모합니다.<gray> 마나를 소모할 때마다 {value}% 더 많은 피해를 줍니다. <yellow> [활 좌클릭이나 사격 모드 진입으로 발동]"
     enable: "<gray>모아쏘기 모드가 발동되었습니다."
     disable: "<gray>모아쏘기 모드가 해제되었습니다."
     shoot: "<gold>모아쏘기! <light_purple>+{percent}% 피해 <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>마나 능력 <blue>{mana_ability} {level} <gray>피해: <red>+{value}% / 마나 <gray>최대 마나 소모량: <aqua>{mana_cost}"
+    menu: "<light_purple><bold>마나 능력 </bold><blue>{mana_ability} {level} <gray>피해: <red>+{value}% / 마나 <gray>최대 마나 소모량: <aqua>{mana_cost}"
   lightning_blade:
     name: 번개 검
     desc: 공격 속도가 {duration} 초 간 {value}% 상승합니다.<yellow> [검 우클릭이나 몹을 공격하여 발동]
@@ -718,7 +718,7 @@ mana_abilities:
     lower: "<gray>검을 내려주십시오."
     start: "<gold>번개 검이 발동되었습니다! <gray>(-{mana} {mana_unit})"
     end: "<gray>번개 검이 해제되었습니다."
-    menu: "<light_purple><bold>마나 능력 <blue>{mana_ability} {level} <gray>공격 속도: <red>+{value}% <gray>지속시간: <green>{duration}s <gray>마나 소모량: <aqua>{mana_cost} <gray>재사용대기시간: <yellow>{cooldown}s"
+    menu: "<light_purple><bold>마나 능력 </bold><blue>{mana_ability} {level} <gray>공격 속도: <red>+{value}% <gray>지속시간: <green>{duration}s <gray>마나 소모량: <aqua>{mana_cost} <gray>재사용대기시간: <yellow>{cooldown}s"
   not_ready: "<red>능력이 준비되지 않았습니다! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>마나가 부족합니다! <gray>(필요량: {mana} {mana_unit}, 보유량: {current_mana}/{max_mana})"
 rewards:

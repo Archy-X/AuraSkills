@@ -467,10 +467,10 @@ commands:
     not_enabled: "<yellow>Įgūdžių lentelė šiame serveryje neįjungta!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>All Įgūdžių lyderių lentelė<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Visų įgūdžių lyderių lentelė <white>(Page {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} lyderių lentelė<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} lyderių lentelė <white>(Page {page})==--"
+    power_header: "<white>--==<aqua><bold>All Įgūdžių lyderių lentelė</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Visų įgūdžių lyderių lentelė </bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} lyderių lentelė</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} lyderių lentelė </bold><white>(Page {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Naudojimas: <green>/sk viršus <white><page> <gray>ar <green>/sk viršus <white>[skill] <page>"
   updateleaderboards:
@@ -485,12 +485,12 @@ commands:
 leveler:
   title: "<green>{skill} Pasikeltas lygis"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Skill Pasikeltas lygis! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Apdovanojimas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Skill Pasikeltas lygis! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Apdovanojimas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+1{symbol} {stat}"
-  ability_unlock: "\n  <green>Gebėjimas atrakintas! <gold><bold>{ability} <gray> atrakinta"
-  ability_level_up: "\n  <green>Gebėjimo lygis pakeltas! <gold><bold>{ability} <gray> dabar yra lygio <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Mana įgūdis atrakintas! <blue><bold>{mana_ability} <gray> atrakinta"
-  mana_ability_level_up: "\n  <light_purple>Mana įgūdžio lygis pakeltas! <blue><bold>{mana_ability} <gray>dabar yra lygio <gold>{level}"
+  ability_unlock: "\n  <green>Gebėjimas atrakintas! <gold><bold>{ability} </bold><gray> atrakinta"
+  ability_level_up: "\n  <green>Gebėjimo lygis pakeltas! <gold><bold>{ability} </bold><gray> dabar yra lygio <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Mana įgūdis atrakintas! <blue><bold>{mana_ability} </bold><gray> atrakinta"
+  mana_ability_level_up: "\n  <light_purple>Mana įgūdžio lygis pakeltas! <blue><bold>{mana_ability} </bold><gray>dabar yra lygio <gold>{level}"
   money_reward: "\n  <green>${amount}"
 menus:
   common:
@@ -503,7 +503,7 @@ menus:
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     primary_stat: "<gray>Pradinė statistika: {color}{stat}"
     secondary_stat: "<gray>Antrinė statistika: {color}{stat}"
-    mana_ability: "<light_purple><bold>Mana įgūdis <blue>{mana_ability} {level} <gray>Trūkmė: <green>{duration}s <gray>Manos užmokestis: <aqua>{mana_cost} <gray>ataušimas: <yellow>{cooldown}s "
+    mana_ability: "<light_purple><bold>Mana įgūdis </bold><blue>{mana_ability} {level} <gray>Trūkmė: <green>{duration}s <gray>Manos užmokestis: <aqua>{mana_cost} <gray>ataušimas: <yellow>{cooldown}s "
   skills_menu:
     skills_menu_title: Tavo sugebėjimai
     your_skills: "<aqua>Tavo įgūdžiai - <gold>{player}"
@@ -532,9 +532,9 @@ menus:
     locked: "<red>UŽRAKINTA"
     rewards: "<gray>Apdovanojimai:{rewards}"
     rewards_entry: "  {color}+{num} {symbol} {stat}"
-    ability_unlock: "<gold>{ability} <green><bold>Įgūdžiai atrakinti<gray>  {desc} "
+    ability_unlock: "<gold>{ability} <green><bold>Įgūdžiai atrakinti</bold><gray>  {desc}"
     ability_level: "<gold>{ability} {level}<gray>  {desc} "
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana įgūdžiai atrakinti<gray>  {desc} "
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana įgūdžiai atrakinti</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc} "
     progress: "<gray>Progresas: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -597,14 +597,14 @@ mana_abilities:
     name: Stiprus užkabinimas
     desc: "Daryti {value} žalos užkabintam subjektui<gray>  paspaudus kairįjį pelytės mygtuka su meškere"
     use: "<gold>Panaudojai stiprųjį užkabinimą! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Manos įgūdį <blue>{mana_ability} {level} <gray>žala: <red>{value} <gray>Manos sunaudojimas: <aqua>{mana_cost} <gray>Atšalimas: <yellow>{cooldown}s "
+    menu: "<light_purple><bold>Manos įgūdį </bold><blue>{mana_ability} {level} <gray>žala: <red>{value} <gray>Manos sunaudojimas: <aqua>{mana_cost} <gray>Atšalimas: <yellow>{cooldown}s "
   charged_shot:
     name: užkrautas šūvis
     desc: "Streles kurias iššauni darys žalos<gray>  priklausant kiek buvo atitrauktas lankas,<gray>  naudojant mana procese. Daro {value}% daugiau<gray>  žalos naudojant mana. <yellow>[Kairįjį pelytės mygtuka paspausti<yellow> ant lanko, jog suaktyvinti užkrautą šūvį]"
     enable: "<gray>Užkrautas šūvis paruoštas"
     disable: "<gray>Užkrautas šūvis neparuoštas"
     shoot: "<gold>Panaudojai užkrautą šūvį! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Manos įgūdis <blue>{mana_ability} {level} <gray>Žala: <red>+{value}% / Mana <gray>Maximali manos kaina: <aqua>{mana_cost} "
+    menu: "<light_purple><bold>Manos įgūdis </bold><blue>{mana_ability} {level} <gray>Žala: <red>+{value}% / Mana <gray>Maximali manos kaina: <aqua>{mana_cost} "
   not_ready: "<red>Įgūdis neparuoštas! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Nepakanka manos! <gray>({mana} {mana_unit} privalo būti, Jūs turite {current_mana}/{max_mana})"
 skills:

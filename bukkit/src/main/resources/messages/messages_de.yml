@@ -505,7 +505,7 @@ commands:
     skill_entry: "<aqua>{skill} <white>XP Multiplikator: <aqua>{multiplier}x / +{percent}%"
     players_only: "Nur Spieler können ihre eigenen Modifikatoren auflisten! Versuche einen Spieler anzugeben!"
   rank:
-    header: "<aqua><bold>Deine Fertigkeiten-Platzierungen"
+    header: "<aqua><bold>Deine Fertigkeiten-Platzierungen</bold>"
     power: "<yellow>Macht <gray>(Alle Fähigkeiten): <white>#{rank} von {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} von {total}"
   reload: "<green>Konfiguration neu geladen!"
@@ -529,13 +529,13 @@ commands:
     not_enabled: "<yellow>Fertigkeiten-Aktionsleiste ist auf diesem Server nicht aktiviert!"
   top:
     power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    power_header: "<white>--==<aqua><bold>Rangliste für alle Fertigkeiten<white>==--"
-    power_header_page: "<white>--==<aqua><bold>Rangliste für alle Fertigkeiten <white>(Page {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Rangliste<white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Rangliste <white>(Page {page})==--"
+    power_header: "<white>--==<aqua><bold>Rangliste für alle Fertigkeiten</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Rangliste für alle Fertigkeiten </bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Rangliste</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Rangliste </bold><white>(Page {page})==--"
     skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
-    average_header: "<white>--==<aqua><bold>Durchschnitts Fertigkeitenrangliste <white>==--"
-    average_header_page: "<white>--==<aqua><bold>Durchschnitts Fertigkeitenrangliste <white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Durchschnitts Fertigkeitenrangliste </bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Durchschnitts Fertigkeitenrangliste </bold><white>(Page {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Verwendung: <green>/sk Top <white><page> <gray>oder <green>/sk Top <white>[skill] <page>"
   updateleaderboards:
@@ -551,12 +551,12 @@ commands:
 leveler:
   title: "<green>{skill} Stufe erhöht"
   subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Fähigkeiten Levelaufstieg! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n <aqua>Belohnung:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Fähigkeiten Levelaufstieg! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Belohnung:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Fähigkeit freigeschaltet! <gold><bold>{ability} <gray>wurde freigeschaltet"
-  ability_level_up: "\n  <green>Fähigkeiten Levelaufstieg! <gold><bold>{ability} <gray> ist nun Level <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Manafähigkeit freigeschaltet! <blue><bold>{mana_ability} <gray>wurde freigeschaltet"
-  mana_ability_level_up: "\n  <light_purple>Manafähigkeiten Levelaufstieg! <blue><bold>{mana_ability} <gray>ist nun Level <gold>{level}"
+  ability_unlock: "\n  <green>Fähigkeit freigeschaltet! <gold><bold>{ability} </bold><gray>wurde freigeschaltet"
+  ability_level_up: "\n  <green>Fähigkeiten Levelaufstieg! <gold><bold>{ability} </bold><gray> ist nun Level <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Manafähigkeit freigeschaltet! <blue><bold>{mana_ability} </bold><gray>wurde freigeschaltet"
+  mana_ability_level_up: "\n  <light_purple>Manafähigkeiten Levelaufstieg! <blue><bold>{mana_ability} </bold><gray>ist nun Level <gold>{level}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Du hast unbeanspruchte Gegenstände, weil dein Inventar voll war, benutze <yellow>/Skills um <red>to sie zu beanspruchen"
 menus:
@@ -569,7 +569,7 @@ menus:
     ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>Stats gelevelt: {stats} "
-    mana_ability: "<light_purple><bold>Mana-Fähigkeit <blue>{mana_ability} {level}  <gray>Dauer: <green>{duration}s <gray>Mana-Kosten: <aqua>{mana_cost} <gray>Abklingzeit: <yellow>{cooldown}s "
+    mana_ability: "<light_purple><bold>Mana-Fähigkeit </bold><blue>{mana_ability} {level}  <gray>Dauer: <green>{duration}s <gray>Mana-Kosten: <aqua>{mana_cost} <gray>Abklingzeit: <yellow>{cooldown}s "
   skills_menu:
     skills_menu_title: Deine Fertigkeiten
     your_skills: "<aqua>Deine Fähigkeiten - <gold>{player}"
@@ -599,9 +599,9 @@ menus:
     rewards: "<gray>Verdienste:{rewards}"
     rewards_entry: "  {color}+{num} {symbol} {stat}"
     money_reward: "  <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Fähigkeit freischalten {desc} "
+    ability_unlock: "<gold>{ability} <green><bold>Fähigkeit freischalten {desc} </bold>"
     ability_level: "<gold>{ability} {level} {desc} "
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Manafähigkeit freischalten {desc} "
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Manafähigkeit freischalten {desc} </bold>"
     mana_ability_level: "<blue>{mana_ability} {level} {desc} "
     progress: "<gray>Fortschritt: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
@@ -665,14 +665,14 @@ mana_abilities:
     name: Scharfer Haken
     desc: "Füge {value} Schaden einem eingefangen Gegenstand  zu, wenn du mit einer Angelrute linksklickst"
     use: "<gold>Scharfer Haken verwendet! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Manafähigkeit <blue>{mana_ability} {level} <gray>Schaden: <red>{value} <gray>Manakosten: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s "
+    menu: "<light_purple><bold>Manafähigkeit </bold><blue>{mana_ability} {level} <gray>Schaden: <red>{value} <gray>Manakosten: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s "
   charged_shot:
     name: Aufgeladener Schuss
     desc: "Pfeile die du verschießt werden mehr Schaden anrichten abhängig davon, wie weit der Bogen zurückgezogen wurde, und verbrauchen Mana. Richtet {value}% mehr Schaden pro verbrauchtes Mana an. <yellow>[Linksklick<yellow>  ein Bogen um in den geladenen Schussmodus umzuschalten]"
     enable: "<gray>Geladener Schussmodus ist nun aktiviert"
     disable: "<gray>Geladener Schussmodus ist nun deaktiviert"
     shoot: "<gold>Geladener Schuss wurde genutzt! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Mana Fähigkeit <blue>{mana_ability} {level} <gray>Schaden: <red>+{value}% / Mana <gray>Maximale Manakosten: <aqua>{mana_cost} "
+    menu: "<light_purple><bold>Mana Fähigkeit </bold><blue>{mana_ability} {level} <gray>Schaden: <red>+{value}% / Mana <gray>Maximale Manakosten: <aqua>{mana_cost} "
   lightning_blade:
     name: Blitzklinge
     desc: Erhöht Angriffsgeschwindigkeit um {value}% für {duration} Sekunden.<yellow>  [Rechtsklick ein Schwert und attackier ein Monster zum aktivieren]
