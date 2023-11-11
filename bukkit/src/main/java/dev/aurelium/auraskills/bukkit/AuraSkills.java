@@ -2,10 +2,12 @@ package dev.aurelium.auraskills.bukkit;
 
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.PaperCommandManager;
+import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
@@ -13,6 +15,7 @@ import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
+import dev.aurelium.auraskills.bukkit.item.ItemManagerImpl;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
@@ -128,6 +131,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private InventoryManager inventoryManager;
     private MenuHelper menuHelper;
     private EventHandler eventHandler;
+    private ItemManager itemManager;
     private boolean nbtApiEnabled;
 
     public AuraSkills() {
@@ -183,9 +187,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         lootTableManager = new LootTableManager(this); // Loaded later
         commandManager = new CommandRegistrar(this).registerCommands();
         levelManager = new BukkitLevelManager(this);
+        itemManager = new ItemManagerImpl(this);
         initStorageProvider();
         leaderboardManager.updateLeaderboards(); // Schedules async task
         registerPriorityEvents();
+        AureliumAPI.setPlugin(this); // Initialize legacy API
 
         // Stuff to be run on the first tick
         scheduler.executeSync(() -> {
@@ -496,6 +502,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public EventHandler getEventHandler() {
         return eventHandler;
+    }
+
+    @Override
+    public <T> T getItemManager(Class<T> itemManagerClass) {
+        if (itemManagerClass.equals(ItemManager.class)) {
+            return itemManagerClass.cast(itemManager);
+        }
+        throw new IllegalArgumentException("Invalid itemManagerClass");
     }
 
     @Override

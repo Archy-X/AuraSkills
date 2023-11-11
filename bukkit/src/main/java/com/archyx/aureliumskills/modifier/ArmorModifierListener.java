@@ -10,6 +10,7 @@ import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.util.armor.ArmorEquipEvent;
 import com.archyx.aureliumskills.util.armor.ArmorType;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.skills.mining.MiningAbilities;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.stats.StatLeveler;
 import com.archyx.aureliumskills.util.item.ItemUtils;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.modifier;
 
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
