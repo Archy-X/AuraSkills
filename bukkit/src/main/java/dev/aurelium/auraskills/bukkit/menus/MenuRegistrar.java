@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.archyx.aureliumskills.mana.MAbility;
 import com.archyx.slate.Slate;
 import com.archyx.slate.context.ContextManager;
 import com.archyx.slate.item.provider.ProviderManager;
@@ -125,9 +124,9 @@ public class MenuRegistrar {
         ProviderManager abilities = manager.getProviderManager("abilities");
         abilities.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
         abilities.registerTemplateItem("locked_ability", Ability.class, () -> new LockedAbilityItem(plugin));
-        abilities.registerTemplateItem("locked_mana_ability", MAbility.class, () -> new LockedManaAbilityItem(plugin));
+        abilities.registerTemplateItem("locked_mana_ability", ManaAbility.class, () -> new LockedManaAbilityItem(plugin));
         abilities.registerTemplateItem("unlocked_ability", Ability.class, () -> new UnlockedAbilityItem(plugin));
-        abilities.registerTemplateItem("unlocked_mana_ability", MAbility.class, () -> new UnlockedManaAbilityItem(plugin));
+        abilities.registerTemplateItem("unlocked_mana_ability", ManaAbility.class, () -> new UnlockedManaAbilityItem(plugin));
         abilities.registerComponent("your_level", () -> new AbilitiesComponents.YourLevel(plugin));
         abilities.registerComponent("your_level_maxed", () -> new AbilitiesComponents.YourLevelMaxed(plugin));
         abilities.registerComponent("unlocked_desc", () -> new AbilitiesComponents.UnlockedDesc(plugin));

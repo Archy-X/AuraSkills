@@ -1,4 +1,4 @@
-package com.archyx.aureliumskills.util.block;
+package dev.aurelium.auraskills.bukkit.util;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

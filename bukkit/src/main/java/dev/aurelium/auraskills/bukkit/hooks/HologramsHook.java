@@ -1,10 +1,10 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
-import com.archyx.aureliumskills.util.text.TextUtil;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.hooks.Hook;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -33,7 +33,7 @@ public abstract class HologramsHook extends Hook implements Listener {
 
     public HologramsHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
         super(plugin, config);
-        this.numberFormat = new DecimalFormat("#." + TextUtil.repeat("#", plugin.configInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
+        this.numberFormat = new DecimalFormat("#." + TextUtil.repeat('#', plugin.configInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
         loadColors();
     }
 
