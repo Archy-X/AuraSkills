@@ -11,6 +11,7 @@ import com.archyx.aureliumskills.requirement.Requirements;
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
 import com.archyx.aureliumskills.util.text.TextUtil;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

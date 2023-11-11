@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.modifier;
+package dev.aurelium.auraskills.api.item;
 
 public enum ModifierType {
 

@@ -1,9 +1,9 @@
 package com.archyx.aureliumskills.requirement;
 
 import com.archyx.aureliumskills.AureliumSkills;
-import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.skills.Skill;
 import com.cryptomorin.xseries.XMaterial;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;

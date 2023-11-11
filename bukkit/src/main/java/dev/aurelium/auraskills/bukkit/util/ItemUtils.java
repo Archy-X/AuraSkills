@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.util;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import dev.aurelium.auraskills.bukkit.modifier.ModifierType;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

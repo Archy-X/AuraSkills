@@ -65,4 +65,9 @@ public class ApiAuraSkills implements AuraSkillsApi {
     public Handlers getHandlers() {
         return handlers;
     }
+
+    @Override
+    public <T> T getItemManager(Class<T> itemManagerClass) {
+        return null;
+    }
 }

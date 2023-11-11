@@ -2,10 +2,10 @@ package dev.aurelium.auraskills.bukkit.requirement;
 
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.modifier.ModifierType;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;

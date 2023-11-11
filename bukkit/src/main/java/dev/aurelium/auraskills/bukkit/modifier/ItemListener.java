@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.modifier;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import de.tr7zw.changeme.nbtapi.NBTType;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;

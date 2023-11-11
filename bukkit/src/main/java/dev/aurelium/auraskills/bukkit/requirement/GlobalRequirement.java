@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.requirement;
 
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.bukkit.modifier.ModifierType;
 import org.bukkit.Material;
 
 import java.util.Map;

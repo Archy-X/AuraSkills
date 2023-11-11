@@ -3,7 +3,6 @@ package com.archyx.aureliumskills;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.aureliumskills.ability.AbilityManager;
-import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.aureliumskills.commands.*;
 import com.archyx.aureliumskills.configuration.Option;
 import com.archyx.aureliumskills.configuration.OptionL;
@@ -177,7 +176,6 @@ public class AureliumSkills extends JavaPlugin {
 		itemRegistry = new ItemRegistry(this);
 		inventoryManager = new InventoryManager(this);
 		inventoryManager.init();
-		AureliumAPI.setPlugin(this);
 		// Checks for world guard
 		if (getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
 			if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {

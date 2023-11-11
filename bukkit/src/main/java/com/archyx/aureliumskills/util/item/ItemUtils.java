@@ -1,10 +1,10 @@
 package com.archyx.aureliumskills.util.item;
 
-import com.archyx.aureliumskills.modifier.ModifierType;
 import com.archyx.aureliumskills.util.text.TextUtil;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
