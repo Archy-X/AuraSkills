@@ -1,4 +1,4 @@
-package dev.auramc.auraskills.test.env;
+package dev.aurelium.auraskills.test.env;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.CleanupMode;

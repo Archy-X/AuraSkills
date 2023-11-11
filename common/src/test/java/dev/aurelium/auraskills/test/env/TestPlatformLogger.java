@@ -1,4 +1,4 @@
-package dev.auramc.auraskills.test.env;
+package dev.aurelium.auraskills.test.env;
 
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 
