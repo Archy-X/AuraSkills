@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
-import com.archyx.aureliumskills.util.math.NumberUtil;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;

@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.ability;
 
-import com.archyx.aureliumskills.AureliumSkills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.skills.alchemy.AlchemyAbilities;
@@ -71,7 +70,7 @@ public class BukkitAbilityManager extends AbilityManager {
             plugin.getUiProvider().getActionBarManager().sendAbilityActionBar(user, message);
         } else {
             if (message == null || message.isEmpty()) return; // Don't send empty message
-            player.sendMessage(AureliumSkills.getPrefix(user.getLocale()) + message);
+            player.sendMessage(plugin.getPrefix(user.getLocale()) + message);
         }
     }
 
