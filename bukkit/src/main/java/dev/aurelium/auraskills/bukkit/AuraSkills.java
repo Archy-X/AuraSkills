@@ -94,20 +94,20 @@ import java.util.Locale;
 
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
-    private final AuraSkillsApi api;
-    private final SkillManager skillManager;
-    private final BukkitAbilityManager abilityManager;
-    private final BukkitManaAbilityManager manaAbilityManager;
-    private final StatManager statManager;
-    private final BukkitTraitManager traitManager;
-    private final SkillRegistry skillRegistry;
-    private final StatRegistry statRegistry;
-    private final TraitRegistry traitRegistry;
-    private final AbilityRegistry abilityRegistry;
-    private final ManaAbilityRegistry manaAbilityRegistry;
-    private final BukkitItemRegistry itemRegistry;
-    private final PlatformLogger logger;
-    private final MessageProvider messageProvider;
+    private AuraSkillsApi api;
+    private SkillManager skillManager;
+    private BukkitAbilityManager abilityManager;
+    private BukkitManaAbilityManager manaAbilityManager;
+    private StatManager statManager;
+    private BukkitTraitManager traitManager;
+    private SkillRegistry skillRegistry;
+    private StatRegistry statRegistry;
+    private TraitRegistry traitRegistry;
+    private AbilityRegistry abilityRegistry;
+    private ManaAbilityRegistry manaAbilityRegistry;
+    private BukkitItemRegistry itemRegistry;
+    private PlatformLogger logger;
+    private MessageProvider messageProvider;
     private BukkitConfigProvider configProvider;
     private BukkitLevelManager levelManager;
     private BukkitUserManager userManager;
@@ -134,7 +134,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private ItemManager itemManager;
     private boolean nbtApiEnabled;
 
-    public AuraSkills() {
+    @Override
+    public void onEnable() {
         this.api = new ApiAuraSkills(this);
         ApiRegistrationUtil.register(api);
         logger = new BukkitLogger(this);
@@ -155,10 +156,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         abilityRegistry = new AbilityRegistry(this);
         manaAbilityRegistry = new ManaAbilityRegistry(this);
         itemRegistry = new BukkitItemRegistry(this);
-    }
 
-    @Override
-    public void onEnable() {
         audiences = BukkitAudiences.create(this);
         eventHandler = new BukkitEventHandler(this);
         hookManager = new HookManager();
