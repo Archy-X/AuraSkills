@@ -5,7 +5,7 @@ abilities:
   farming:
     bountiful_harvest:
       name: Bohatá Sklizeň
-      desc: "{value}% šance na dvojité dropy  z plodin."
+      desc: "{value}% šance na dvojité dropy z plodin."
       info: "{value}% Dvojité dropy"
     farmer:
       name: Farmář
@@ -238,12 +238,12 @@ abilities:
       info: "-{value}% Přírodní, -{value_2}% Rozpadu Entity"
     wise_effect:
       name: Účinek Moudrosti
-      desc: "Získej {value} Moudrosti pro každý unikátní  aktivní efekt / lektvar."
+      desc: "Získej {value} Moudrosti pro každý unikátní aktivní efekt / lektvar."
       info: "+{value} Moudrosti/Efekt"
   enchanting:
     xp_convert:
       name: Převaděč XP
-      desc: "Získej 1 Minecraftí zkušenost za každých {value} Skill XP,  které získaš."
+      desc: "Získej 1 Minecraftí zkušenost za každých {value} Skill XP, které získaš."
       info: "1 EXP/{value} Skill XP"
     enchanter:
       name: Zaklínač
@@ -272,7 +272,7 @@ abilities:
       info: "+{value}% XP"
     life_steal:
       name: Ukrást život
-      desc: Uzdrav{value}% of the max HP nepřatelské davy<gray>  a hráče, které zabiješ.
+      desc: Uzdrav{value}% of the max HP nepřatelské davy<gray> a hráče, které zabiješ.
       info: "UKRÁST {value}% HP"
     golden_heart:
       name: Zlaté srdce
@@ -294,7 +294,7 @@ abilities:
       info: "+{value}% XP"
     repairing:
       name: Opravení
-      desc: Opravení předmětů v kovadlině za použití sýrové suroviny zníž bude vyroben z opravy n<gray>  {value}% více durability.
+      desc: Opravení předmětů v kovadlině za použití sýrové suroviny zníž bude vyroben z opravy n<gray> {value}% více durability.
       info: "+{value}% Opravení kovadliny"
     anvil_master:
       name: Mistr Kovadliny
@@ -628,21 +628,21 @@ menus:
 mana_abilities:
   replenish:
     name: Doplnění
-    desc: "<gray>Automaticky se znovu zasadí plodiny po dobu {value} sekund <yellow>[Pravym tlacitkem mysi na motyčku a<yellow>  prerušíš oříznutí pro aktivaci]"
+    desc: "<gray>Automaticky se znovu zasadí plodiny po dobu {value} sekund <yellow>[Pravym tlacitkem mysi na motyčku a prerušíš oříznutí pro aktivaci]"
     raise: "<gray>Zvedl si svojí motyku"
     lower: "<gray>Sklopil si motyku"
     start: "<gold>Doplnění - Aktivován! <gray>(-{mana} {mana_unit})"
     end: "<gray>Doplnění dosloužilo"
   treecapitator:
     name: Treecapitator
-    desc: "<gray>Pokácí celý strom za  {value} vteřin. <yellow>[Klikni pravým tlačítkem<yellow>  a znič blok dřeva pro aktivaci]"
+    desc: "<gray>Pokácí celý strom za {value} vteřin. <yellow>[Klikni pravým tlačítkem a znič blok dřeva pro aktivaci]"
     raise: "<gray>Pozdvihl jsi sekeru"
     lower: "<gray>Sklonil jsi sekeru"
     start: "<gold>Treecapitator Aktivován! <gray>(-{mana} {mana_unit})"
     end: "<gray>Treecapitator se opotřeboval"
   speed_mine:
     name: Rychlá těžba
-    desc: "<gray>Přidá spěch {haste_level} na {value} vteřin.<yellow>  [Klikni pravým s krumpáčem<yellow>  v ruce a vykopej blok pro aktivaci]"
+    desc: "<gray>Přidá spěch {haste_level} na {value} vteřin.<yellow> [Klikni pravým s krumpáčem v ruce a vykopej blok pro aktivaci]"
     raise: "<gray>Pozvedl jsi krumpáč"
     lower: "<gray>Skopil si svůj krumpáč"
     start: "<gold>Rychlost těžení - Aktivován <gray>(-{mana} {mana_unit})"
@@ -668,14 +668,14 @@ mana_abilities:
     menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>{value} <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   charged_shot:
     name: Nabitá Střela
-    desc: "Vystřelené šípy způsobí větší škody Na základě toho, jak daleko byl luk natažen zpět Spotřebovana mana v procesu. Zbývá o {value}% více Poškození na jednoho jedince <yellow>[Levé kliknutí myši]<yellow>  Luk přepneš do režimu nabitého snímku]"
+    desc: "Vystřelené šípy způsobí větší škody Na základě toho, jak daleko byl luk natažen zpět Spotřebovana mana v procesu. Zbývá o {value}% více Poškození na jednoho jedince <yellow>[Levé kliknutí myši Luk přepneš do režimu nabitého snímku]"
     enable: "<gray>Režim nabití snímku je nyní povolen"
     disable: "<gray>Režim nabitého snímku je nyní deaktivován"
     shoot: "<gold>Použij nabitou střelu! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
     menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>+{value}% / Mana <gray>Max Mana Cost: <aqua>{mana_cost} "
   lightning_blade:
     name: Lightning Blade
-    desc: Zvyšuj rychlost útoku o {value}% po dobu {duration} sekund.<yellow>  [Klepni pravým tlačítkem myši a zaútoč na moba pro aktivaci]
+    desc: Zvyšuj rychlost útoku o {value}% po dobu {duration} sekund.<yellow> [Klepni pravým tlačítkem myši a zaútoč na moba pro aktivaci]
     raise: "<gray>Pozdvihnul si svůj meč"
     lower: "<gray>Sklopil si svůj meč"
     start: "<gold>Lightning Blade Aktivován! <gray>(-{mana} {mana_unit})"

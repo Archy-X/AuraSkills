@@ -628,7 +628,7 @@ menus:
 mana_abilities:
   replenish:
     name: Auffüllen
-    desc: "<gray>Pflanzt für {value} Sekunden Pflanzen automatisch nach <yellow>[Rechtsklick eine Hacke<yellow>  und ernte eine Pflanze zum aktivieren]"
+    desc: "<gray>Pflanzt für {value} Sekunden Pflanzen automatisch nach <yellow>[Rechtsklick eine Hacke und ernte eine Pflanze zum aktivieren]"
     raise: "<gray>Du hebst deine Hacke"
     lower: "<gray>Du senkst deine Hacke"
     start: "<gold>Auffüllen aktiviert! <gray>(-{mana} {mana_unit})"
@@ -642,40 +642,40 @@ mana_abilities:
     end: "<gray>Entwurzeler ist ausgelaufen"
   speed_mine:
     name: Rasanter Abbau
-    desc: "<gray>Gibt Eile {haste_level} für {value} Sekunden.<yellow>  [Rechtsklick Spitzhacke und<yellow>  bau einen Block ab zum Aktivieren]"
+    desc: "<gray>Gibt Eile {haste_level} für {value} Sekunden.<yellow> [Rechtsklick Spitzhacke und bau einen Block ab zum Aktivieren]"
     raise: "<gray>Du hebst deine Spitzhacke an"
     lower: "<gray>Du senkst deine Spitzhacke"
     start: "<gold>Rasanter Abbau aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Rasanter Abbau ist ausgelaufen"
   absorption:
     name: Absorption
-    desc: "Eingehenden Schaden verringert Mana um 2x Minecraft-Schaden anstelle deines Lebens für {value} Sekunden. Mana wird nicht regeneriert, wenn Absorption aktiv ist.   <yellow>[Linksklick ein Schild und erleide Schaden zum aktivieren]"
+    desc: "Eingehenden Schaden verringert Mana um 2x Minecraft-Schaden anstelle deines Lebens für {value} Sekunden. Mana wird nicht regeneriert, wenn Absorption aktiv ist. <yellow>[Linksklick ein Schild und erleide Schaden zum aktivieren]"
     raise: "<gray>Du hebst deinen Schild"
     lower: "<gray>Du senkst deinen Schild"
     start: "<gold>Absorption aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Absorption ist ausgelaufen"
   terraform:
     name: Terraform
-    desc: "Baue Blöcke in einem 4 Block Radius sofort ab in der selben Ebene wenn du für {value} Sekunden abbaust. Du musst eine Schaufel benutzen und zusätzlichen Blöcke die  abgebaut werden müssen von der selben Art sein und in einer  einzigen verbundene Vene sein. <yellow>[Rechtsklick eine Schaufel <yellow>  und bau Blöcke ab zum aktivieren]"
+    desc: "Baue Blöcke in einem 4 Block Radius sofort ab in der selben Ebene wenn du für {value} Sekunden abbaust. Du musst eine Schaufel benutzen und zusätzlichen Blöcke die abgebaut werden müssen von der selben Art sein und in einer einzigen verbundene Vene sein. <yellow>[Rechtsklick eine Schaufel und bau Blöcke ab zum aktivieren]"
     raise: "<gray>Du hebst deine Schaufel"
     lower: "<gray>Du senkst deinen Schaufel"
     start: "<gold>Terraform aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Terraform ist ausgelaufen"
   sharp_hook:
     name: Scharfer Haken
-    desc: "Füge {value} Schaden einem eingefangen Gegenstand  zu, wenn du mit einer Angelrute linksklickst"
+    desc: "Füge {value} Schaden einem eingefangen Gegenstand zu, wenn du mit einer Angelrute linksklickst"
     use: "<gold>Scharfer Haken verwendet! <gray>(-{mana} {mana_unit})"
     menu: "<light_purple><bold>Manafähigkeit </bold><blue>{mana_ability} {level} <gray>Schaden: <red>{value} <gray>Manakosten: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s "
   charged_shot:
     name: Aufgeladener Schuss
-    desc: "Pfeile die du verschießt werden mehr Schaden anrichten abhängig davon, wie weit der Bogen zurückgezogen wurde, und verbrauchen Mana. Richtet {value}% mehr Schaden pro verbrauchtes Mana an. <yellow>[Linksklick<yellow>  ein Bogen um in den geladenen Schussmodus umzuschalten]"
+    desc: "Pfeile die du verschießt werden mehr Schaden anrichten abhängig davon, wie weit der Bogen zurückgezogen wurde, und verbrauchen Mana. Richtet {value}% mehr Schaden pro verbrauchtes Mana an. <yellow>[Linksklick ein Bogen um in den geladenen Schussmodus umzuschalten]"
     enable: "<gray>Geladener Schussmodus ist nun aktiviert"
     disable: "<gray>Geladener Schussmodus ist nun deaktiviert"
     shoot: "<gold>Geladener Schuss wurde genutzt! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
     menu: "<light_purple><bold>Mana Fähigkeit </bold><blue>{mana_ability} {level} <gray>Schaden: <red>+{value}% / Mana <gray>Maximale Manakosten: <aqua>{mana_cost} "
   lightning_blade:
     name: Blitzklinge
-    desc: Erhöht Angriffsgeschwindigkeit um {value}% für {duration} Sekunden.<yellow>  [Rechtsklick ein Schwert und attackier ein Monster zum aktivieren]
+    desc: Erhöht Angriffsgeschwindigkeit um {value}% für {duration} Sekunden.<yellow> [Rechtsklick ein Schwert und attackier ein Monster zum aktivieren]
     raise: "<gray>Du hebst dein Schwert"
     lower: "<gray>Du senkst deinen Schwert"
     start: "<aqua>litzklinge aktiviert! <gray>(-{mana} {mana_unit})"
