@@ -5,731 +5,731 @@ abilities:
   farming:
     bountiful_harvest:
       name: Goede oogst
-      desc: "{value}% kans om dubbele drops te krijgen\n&7  van gewassen."
-      info: '{value}% 2x Drops'
+      desc: "{value}% kans om dubbele drops te krijgen<gray>  van gewassen."
+      info: "{value}% 2x Drops"
     farmer:
       name: Boer
-      desc: 'Verdien {value}% meer landbouw XP.'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer landbouw XP."
+      info: "+{value}% XP"
     scythe_master:
       name: Schoffel meester
-      desc: 'Verhoogt schade van schoffels met {value}%'
-      info: '+{value}% schoffel schade'
+      desc: "Verhoogt schade van schoffels met {value}%"
+      info: "+{value}% schoffel schade"
     geneticist:
       name: Geneticist
-      desc: "Verhoogt het verzadigingspunt van\n&7  plantaardig voedsel met {value}."
-      info: '+{value} Verzadiging'
+      desc: "Verhoogt het verzadigingspunt van<gray>  plantaardig voedsel met {value}."
+      info: "+{value} Verzadiging"
     triple_harvest:
       name: Driedubbele oogst
-      desc: "{value}% kans om driedubbele drops te krijgen van\n&7  gewassen."
-      info: '{value}% 3x drops'
+      desc: "{value}% kans om driedubbele drops te krijgen van<gray>  gewassen."
+      info: "{value}% 3x drops"
   foraging:
     lumberjack:
       name: Houthakker
-      desc: "{value}% kans om dubbele drops te krijgen\n&7  van boomstammen."
-      info: '{value}% 2x Drops'
+      desc: "{value}% kans om dubbele drops te krijgen<gray>  van boomstammen."
+      info: "{value}% 2x Drops"
     forager:
       name: Verzamelaar
-      desc: 'Verdien {value}% meer landbouw XP.'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer landbouw XP."
+      info: "+{value}% XP"
     axe_master:
       name: Bijl Meester
-      desc: 'Verhoogt schade van bijlen met {value}%'
-      info: '+{value}% bijl schade'
+      desc: "Verhoogt schade van bijlen met {value}%"
+      info: "+{value}% bijl schade"
     valor:
       name: Moed
-      desc: "Geeft +{value} Kracht terwijl je\n&7  een bijl vasthoudt"
-      info: '+{value} Kracht'
+      desc: "Geeft +{value} Kracht terwijl je<gray>  een bijl vasthoudt"
+      info: "+{value} Kracht"
     shredder:
       name: Versnipperaar
-      desc: "{value}% kans op drievoudige duurzaamheid\n&7  schade met bijlen."
-      info: '{value}% 3x Duurzaamheid Schade'
+      desc: "{value}% kans op drievoudige duurzaamheid<gray>  schade met bijlen."
+      info: "{value}% 3x Duurzaamheid Schade"
   mining:
     lucky_miner:
       name: Lucky Miner
-      desc: "{value}% kans om dubbele drops te krijgen\n&7  van ertsen."
-      info: '{value}% 2x Drops'
+      desc: "{value}% kans om dubbele drops te krijgen<gray>  van ertsen."
+      info: "{value}% 2x Drops"
     miner:
       name: Miner
-      desc: 'Verdien {value}% meer mijnbouw XP.'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer mijnbouw XP."
+      info: "+{value}% XP"
     pick_master:
       name: Pick Master
-      desc: 'Breng {value}% meer schade toe met pickaxe.'
-      info: '+{value}% Pickaxe schade'
+      desc: "Breng {value}% meer schade toe met pickaxe."
+      info: "+{value}% Pickaxe schade"
     stamina:
       name: Uithoudingsvermogen
-      desc: "Geeft +{value} Taaiheid terwijl\n&7  een pikhouweel vastgehouden word"
-      info: '+{value} Taaiheid'
+      desc: "Geeft +{value} Taaiheid terwijl<gray>  een pikhouweel vastgehouden word"
+      info: "+{value} Taaiheid"
     hardened_armor:
       name: Gehard Armor
-      desc: "{value}% kans om duurzaamheid te ontzeggen\n&7  schade op armor."
-      info: '{value}% Geen Duurzaamheid Verlies'
+      desc: "{value}% kans om duurzaamheid te ontzeggen<gray>  schade op armor."
+      info: "{value}% Geen Duurzaamheid Verlies"
   fishing:
     lucky_catch:
       name: Geluk vangst
-      desc: "{value}% kans om dubbele drops te krijgen\n&7  van vissen."
-      info: '{value}% 2x Drops'
+      desc: "{value}% kans om dubbele drops te krijgen<gray>  van vissen."
+      info: "{value}% 2x Drops"
     fisher:
       name: Visser
-      desc: 'Verdien {value}% meer vissen XP'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer vissen XP"
+      info: "+{value}% XP"
     treasure_hunter:
       name: Schatten Jager
-      desc: '{value}% grotere kans om zeldzame loot te krijgen van het vissen.'
-      info: '+{value}% Zeldzame Loot'
+      desc: "{value}% grotere kans om zeldzame loot te krijgen van het vissen."
+      info: "+{value}% Zeldzame Loot"
     grappler:
       name: Grijphaak
-      desc: 'Vang entiteiten met {value}% meer snelheid.'
-      info: '+{value}% Haak Snelheid'
+      desc: "Vang entiteiten met {value}% meer snelheid."
+      info: "+{value}% Haak Snelheid"
     epic_catch:
       name: Epische vangst
-      desc: "{value}% extra kans om epische buit te krijgen\n&7  van vissen."
-      info: '+{value}% Zeldzame Loot'
+      desc: "{value}% extra kans om epische buit te krijgen<gray>  van vissen."
+      info: "+{value}% Zeldzame Loot"
   excavation:
     metal_detector:
       name: Metaaldetector
-      desc: '{value}% grotere kans om zeldzame buit te krijgen van de graven.'
-      info: '+{value}% Zeldzame Loot'
+      desc: "{value}% grotere kans om zeldzame buit te krijgen van de graven."
+      info: "+{value}% Zeldzame Loot"
     excavator:
       name: Graafmachine
-      desc: 'Verdien {value}% meer Uitgraving XP'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer Uitgraving XP"
+      info: "+{value}% XP"
     spade_master:
       name: Spade Meester
-      desc: 'Breng {value}% meer schade toe met een schep.'
-      info: '+{value}% schep schade'
+      desc: "Breng {value}% meer schade toe met een schep."
+      info: "+{value}% schep schade"
     bigger_scoop:
       name: Grotere Scoop
-      desc: '{value}% kans om driedubbele drops te krijgen van graven.'
-      info: '{value}% 3x drops'
+      desc: "{value}% kans om driedubbele drops te krijgen van graven."
+      info: "{value}% 3x drops"
     lucky_spades:
       name: Lucky Spades
-      desc: '{value}% grotere kans om zeldzame buit te krijgen van de graven.'
-      info: '+{value}% Epische Loot'
+      desc: "{value}% grotere kans om zeldzame buit te krijgen van de graven."
+      info: "+{value}% Epische Loot"
   archery:
     crit_chance:
       name: Kans op kritieke slag
-      desc: '+{value}% kans om een kritische slag te doen.'
-      info: '+{value}% Kritieke Kans'
+      desc: "+{value}% kans om een kritische slag te doen."
+      info: "+{value}% Kritieke Kans"
     archer:
       name: Boogschutter
-      desc: 'Verdien {value}% meer Boogschutters XP.'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer Boogschutters XP."
+      info: "+{value}% XP"
     bow_master:
       name: Boogmeester
-      desc: 'Breng {value}% meer schade toe met een boog.'
-      info: '+{value}% boog schade'
+      desc: "Breng {value}% meer schade toe met een boog."
+      info: "+{value}% boog schade"
     piercing:
       name: Piercing
-      desc: "{value}% kans voor pijlen om\n&7  door mobs heen te gaan."
-      info: '{value}% Pierce Kans'
+      desc: "{value}% kans voor pijlen om<gray>  door mobs heen te gaan."
+      info: "{value}% Pierce Kans"
     stun:
       name: Verstijven
-      desc: "{value}% kans om vijand\n&7  bewegingssnelheid met 20% te verlagen gedurende 2 seconden."
-      info: '{value}% Stun Kans'
+      desc: "{value}% kans om vijand<gray>  bewegingssnelheid met 20% te verlagen gedurende 2 seconden."
+      info: "{value}% Stun Kans"
   defense:
     shielding:
       name: Beschermd
-      desc: "Verminder inkomende schade met {value}%\n&7  terwijl je sluipt."
-      info: '-{value}% Inkomende Dmg tijdens het Sluipen'
+      desc: "Verminder inkomende schade met {value}%<gray>  terwijl je sluipt."
+      info: "-{value}% Inkomende Dmg tijdens het Sluipen"
     defender:
       name: Verdediger
-      desc: 'Verdien {value}% meer Verdediging XP'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer Verdediging XP"
+      info: "+{value}% XP"
     mob_master:
       name: Mobmeester
-      desc: 'Verminder inkomende schade van mobs met {value}%'
-      info: '-{value}% mob dmg'
+      desc: "Verminder inkomende schade van mobs met {value}%"
+      info: "-{value}% mob dmg"
     immunity:
       name: Immuniteit
-      desc: "{value}% kans om\n&7  een vijandelijke aanval volledig te vernietigen."
-      info: '{value}% immuniteit'
+      desc: "{value}% kans om<gray>  een vijandelijke aanval volledig te vernietigen."
+      info: "{value}% immuniteit"
     no_debuff:
       name: Geen Debuff
-      desc: "{value}% kans om een schadelijk\n&7  drankeffect te ontwijken."
-      info: '{value}% Geen Debuff'
+      desc: "{value}% kans om een schadelijk<gray>  drankeffect te ontwijken."
+      info: "{value}% Geen Debuff"
   fighting:
     crit_damage:
       name: Kritieke Schade
-      desc: 'Verhoogt kritieke schade met {value}%'
-      info: '+{value}% Kritieke Schade'
+      desc: "Verhoogt kritieke schade met {value}%"
+      info: "+{value}% Kritieke Schade"
     fighter:
       name: Vechter
-      desc: 'Verdien {value}% meer Vecht XP'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer Vecht XP"
+      info: "+{value}% XP"
     sword_master:
       name: Zwaardmeester
-      desc: 'Breng {value}% meer schade met zwaard.'
-      info: '+{value}% Zwaard Schade'
+      desc: "Breng {value}% meer schade met zwaard."
+      info: "+{value}% Zwaard Schade"
     first_strike:
       name: Eerste aanval
-      desc: 'Doe {value}% meer schade bij de eerste slag.'
-      info: '+{value}% Dmg eerste slag'
-      dealt: '&cEerste Aanval Dealt!'
+      desc: "Doe {value}% meer schade bij de eerste slag."
+      info: "+{value}% Dmg eerste slag"
+      dealt: "<red>Eerste Aanval Dealt!"
     bleed:
       name: Bloeden
-      desc: "{value}% kans om de vijand te laten bloeden voor\n&7  3 bloeiende ticks, die {value_2} schade per tick toebrengen."
-      info: '{value}% kans, {value_2} Schade'
-      enemy_bleeding: '&cVijandelijke Bloeding!'
-      self_bleeding: '&cJe bloedt!'
-      stop: '&fDe bloeding is gestopt'
+      desc: "{value}% kans om de vijand te laten bloeden voor<gray>  3 bloeiende ticks, die {value_2} schade per tick toebrengen."
+      info: "{value}% kans, {value_2} Schade"
+      enemy_bleeding: "<red>Vijandelijke Bloeding!"
+      self_bleeding: "<red>Je bloedt!"
+      stop: "<white>De bloeding is gestopt"
   endurance:
     anti_hunger:
       name: Anti Honger
-      desc: '{value}% kans om het hongerverlies te stoppen.'
-      info: '{value}% Geen Honger Verlies'
+      desc: "{value}% kans om het hongerverlies te stoppen."
+      info: "{value}% Geen Honger Verlies"
     runner:
       name: Renner
-      desc: 'Verdien {value}% meer Uithoudingsvermogen XP.'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer Uithoudingsvermogen XP."
+      info: "+{value}% XP"
     golden_heal:
       name: Gouden Genezing
-      desc: "Verhoogt regeneratie effect\n&7  Gezondheidswinst met {value}%"
-      info: '+{value}% Effect Regen'
+      desc: "Verhoogt regeneratie effect<gray>  Gezondheidswinst met {value}%"
+      info: "+{value}% Effect Regen"
     recovery:
       name: Herstel
-      desc: "Verhoogt natuurlijke regeneratie\n&7  met minder dan de helft gezondheid met {value}%"
-      info: '+{value}% Lage HP Regeneratie'
+      desc: "Verhoogt natuurlijke regeneratie<gray>  met minder dan de helft gezondheid met {value}%"
+      info: "+{value}% Lage HP Regeneratie"
     meal_steal:
       name: Maaltijd Steel
-      desc: "{value}% kans om 1 hongerbar te stelen\n&7  bij het aanvallen van een speler."
-      info: '{value}% Honger Steel'
+      desc: "{value}% kans om 1 hongerbar te stelen<gray>  bij het aanvallen van een speler."
+      info: "{value}% Honger Steel"
   agility:
     light_fall:
       name: Lichte val
-      desc: 'Vermindert alle val schade met {value}%'
-      info: '-{value}% Val Schade'
+      desc: "Vermindert alle val schade met {value}%"
+      info: "-{value}% Val Schade"
     jumper:
       name: Springer
-      desc: 'Verdien {value}% meer Behendigheid XP'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer Behendigheid XP"
+      info: "+{value}% XP"
     sugar_rush:
       name: Suiker Rush
-      desc: "Verbruikt en gespatte snelheid en sprong vergroting\n&7  toverdranken duren {value}% langer."
-      info: '{value}% Langere Snelheid'
+      desc: "Verbruikt en gespatte snelheid en sprong vergroting<gray>  toverdranken duren {value}% langer."
+      info: "{value}% Langere Snelheid"
     fleeting:
       name: Vluchtig
-      desc: 'Krijg +{value}% bewegingssnelheid wanneer je minder dan 20% gezondheid hebt'
-      info: '+{value}% Snelheid'
-      start: '&fJe hebt een snelheid boost gekregen! &7(+{value}% Snelheid)'
-      end: '&7Vloot snelheidsboost is versleten'
+      desc: "Krijg +{value}% bewegingssnelheid wanneer je minder dan 20% gezondheid hebt"
+      info: "+{value}% Snelheid"
+      start: "<white>Je hebt een snelheid boost gekregen! <gray>(+{value}% Snelheid)"
+      end: "<gray>Vloot snelheidsboost is versleten"
     thunder_fall:
       name: Donder Val
-      desc: "Bij sluipen tijdens een val je hebt een {value}% kans\n&7  om {value_2}% van de schade die wordt verwacht aan mobs\n&7  in een straal van 3 blokken te doen"
-      info: '{value}% kans, {value_2}% Schade'
+      desc: "Bij sluipen tijdens een val je hebt een {value}% kans<gray>  om {value_2}% van de schade die wordt verwacht aan mobs<gray>  in een straal van 3 blokken te doen"
+      info: "{value}% kans, {value_2}% Schade"
   alchemy:
     alchemist:
       name: Alchemist
-      desc: "Drankjes die je brouwt, hebben een {value}% meer\n&7  duur."
-      info: '+{value}% Drankduur'
-      lore: '&a(+{duration})'
+      desc: "Drankjes die je brouwt, hebben een {value}% meer<gray>  duur."
+      info: "+{value}% Drankduur"
+      lore: "<green>(+{duration})"
     brewer:
       name: Brouwer
-      desc: 'Verdien {value}% meer Alchemie XP'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer Alchemie XP"
+      info: "+{value}% XP"
     splasher:
       name: Splasher
-      desc: "Drankjes die je spuwt krijgen {value}% langer\n&7 duur voor elke betrokken speler."
-      info: '+{value}% Duur/Speler'
+      desc: "Drankjes die je spuwt krijgen {value}% langer<gray> duur voor elke betrokken speler."
+      info: "+{value}% Duur/Speler"
     lingering:
       name: Lingering
-      desc: "Vertragende drankjes vervallen natuurlijk {value}%\n&7  langzamer en vervallen {value_2}% minder per getroffen entiteit."
-      info: '-{value}% Natuur, -{value_2}% Entiteit Verval'
+      desc: "Vertragende drankjes vervallen natuurlijk {value}%<gray>  langzamer en vervallen {value_2}% minder per getroffen entiteit."
+      info: "-{value}% Natuur, -{value_2}% Entiteit Verval"
     wise_effect:
       name: Wijze Effect
-      desc: "Krijg {value} Wisdom voor elk uniek actief\n&7  drankeffect."
-      info: '+{value} Wijsdom/Effect'
+      desc: "Krijg {value} Wisdom voor elk uniek actief<gray>  drankeffect."
+      info: "+{value} Wijsdom/Effect"
   enchanting:
     xp_convert:
       name: XP Converteren
-      desc: "Verdien 1 Minecraft ervaring voor elke {value}\n&7  vaardigheid XP die je wint."
-      info: '1 EXP/{value} Vaardigheid XP'
+      desc: "Verdien 1 Minecraft ervaring voor elke {value}<gray>  vaardigheid XP die je wint."
+      info: "1 EXP/{value} Vaardigheid XP"
     enchanter:
       name: Betoverder
-      desc: 'Verdien {value}% meer betovering XP.'
-      info: '+{value}% XP'
+      desc: "Verdien {value}% meer betovering XP."
+      info: "+{value}% XP"
     xp_warrior:
       name: XP Strijder
-      desc: "Mobs die je dood hebben een kans van {value}%\n&7  dubbele-ervaring laten vallen."
-      info: '{value}% 2x mob XP'
+      desc: "Mobs die je dood hebben een kans van {value}%<gray>  dubbele-ervaring laten vallen."
+      info: "{value}% 2x mob XP"
     enchanted_strength:
       name: Betoverde Kracht
-      desc: "Krijg {value} Kracht voor elke unieke\n&7  betovering van het vastgehouden item."
-      info: '{value} Kracht/Betover'
+      desc: "Krijg {value} Kracht voor elke unieke<gray>  betovering van het vastgehouden item."
+      info: "{value} Kracht/Betover"
     lucky_table:
       name: Gelukkige tafel
-      desc: "Items die je betoverd met behulp van de betovering\n&7  tabel hebben een {value}% kans om het betoverings te upgraden\n&7  level met 1 indien niet het maximale level"
-      info: '{value}% Betover Verbetering kans'
+      desc: "Items die je betoverd met behulp van de betovering<gray>  tabel hebben een {value}% kans om het betoverings te upgraden<gray>  level met 1 indien niet het maximale level"
+      info: "{value}% Betover Verbetering kans"
   healing:
     life_essence:
       name: Levenslang Essentie
       desc: Directe gezondheidsdrankjes genezen {value}% meer.
-      info: '+{value}% Directe Gezondheid'
+      info: "+{value}% Directe Gezondheid"
     healer:
       name: Genezer
       desc: Verdien {value}% meer Genezing XP.
-      info: '+{value}% XP'
+      info: "+{value}% XP"
     life_steal:
       name: Levens Stelen
-      desc: Genees {value}% van de max HP vijandige mobs\n&7  en spelers die je doodt.
-      info: 'Steel {value}% HP'
+      desc: Genees {value}% van de max HP vijandige mobs<gray>  en spelers die je doodt.
+      info: "Steel {value}% HP"
     golden_heart:
       name: Gouden hart
-      desc: De schade aan je absorptie harts is\n&7  verminderd met {value}%
-      info: '-{value}% Absorptie Dmg'
+      desc: De schade aan je absorptie harts is<gray>  verminderd met {value}%
+      info: "-{value}% Absorptie Dmg"
     revival:
       name: Terugkomen
-      desc: Krijg &c+{value} Gezondheid &7en &6+{value_2} Regeneratie\n&7  voor 30 seconden na respawnen.
-      info: '+{value} Gezondheid, +{value_2} Regeneratie'
-      message: '&fJe hebt een reactievorm bonus gekregen voor 30 seconden! &f(&c+{value} Gezondheid, &6+{value_2} Regeneratie&f)'
+      desc: Krijg <red>+{value} Gezondheid <gray>en <gold>+{value_2} Regeneratie<gray>  voor 30 seconden na respawnen.
+      info: "+{value} Gezondheid, +{value_2} Regeneratie"
+      message: "<white>Je hebt een reactievorm bonus gekregen voor 30 seconden! <white>(<red>+{value} Gezondheid, <gold>+{value_2} Regeneratie<white>)"
   forging:
     disenchanter:
       name: Disenchanter
-      desc: Krijg {value}% meer ervaring wanneer je\n&7  voorwerpen met behulp van een hoofdsteen disenchant.
-      info: '+{value}% Grindstone EXP'
+      desc: Krijg {value}% meer ervaring wanneer je<gray>  voorwerpen met behulp van een hoofdsteen disenchant.
+      info: "+{value}% Grindstone EXP"
     forger:
       name: Smederij
       desc: Verdien {value}% meer smeden XP.
-      info: '+{value}% XP'
+      info: "+{value}% XP"
     repairing:
       name: Repareren
-      desc: Repareer voorwerpen in een aambeeld met behulp van de ruwe\n&7  materiaal dat het voorwerp gemaakt is van reparaties\n&7  {value}% meer duurzaamheid.
-      info: '+{value}% Aambeeld reparatie'
+      desc: Repareer voorwerpen in een aambeeld met behulp van de ruwe<gray>  materiaal dat het voorwerp gemaakt is van reparaties<gray>  {value}% meer duurzaamheid.
+      info: "+{value}% Aambeeld reparatie"
     anvil_master:
       name: Aambeeld Meester
-      desc: Verhoogt de maximale reparatiekosten van een aambeeld\n&7  voordat het te duur is voor {value} ervaring.
-      info: '{value} Max Kosten'
+      desc: Verhoogt de maximale reparatiekosten van een aambeeld<gray>  voordat het te duur is voor {value} ervaring.
+      info: "{value} Max Kosten"
     skill_mender:
       name: Vaardigheid Mender
-      desc: Verkrijg vaardigheid XP heeft een {value}% kans om te repareren\n&7  een vastgehouden voorwerp of een gedragen harnas stuk met de Mending\n&7  betovering met 1 duurzaamheid per 2 vaardigheid XP.
-      info: '{value}% Mend Kans'
+      desc: Verkrijg vaardigheid XP heeft een {value}% kans om te repareren<gray>  een vastgehouden voorwerp of een gedragen harnas stuk met de Mending<gray>  betovering met 1 duurzaamheid per 2 vaardigheid XP.
+      info: "{value}% Mend Kans"
 acf:
   core:
-    permission_denied: '&cHet spijt me, maar je hebt geen toestemming om deze opdracht uit te voeren.'
-    permission_denied_parameter: '&cHet spijt me, maar je hebt geen toestemming om deze opdracht uit te voeren.'
-    error_generic_logged: '&cEr is een fout opgetreden. Dit probleem is geregistreerd. Sorry voor het ongemak.'
-    unknown_command: '&cOnbekend commando, typ alstublieft &e/sk hulp'
-    invalid_syntax: '&eGebruik: &e{command} &a{syntax}'
-    error_prefix: '&cError: {message}'
-    error_performing_command: "&cHet spijt me, maar er is een fout opgetreden bij het uitvoeren van deze opdracht."
-    info_message: '{message}'
-    please_specify_one_of: '&cfout: Specificeer één van (&e{valid}&c)'
-    must_be_a_number: '&cError: {num} moet een getal zijn.'
-    must_be_min_length: '&cFout: Moet minstens {min} tekens lang zijn.'
-    must_be_max_length: '&cfout: mag maximaal {max} tekens lang zijn.'
-    please_specify_at_most: '&cError: Specificeer maximaal een waarde {max}.'
-    please_specify_at_least: '&cFout: Geef ten minste een waarde {min} op.'
-    not_allowed_on_console: '&cError: Console mag dit commando niet uitvoeren.'
-    could_not_find_player: '&cError: Kan geen speler vinden op de naam: &e{search}'
-    no_command_matched_search: '&cGeen commando komt overeen met &e{search}.'
-    help_page_information: '&b - Pagina &a{page} &bof &a{totalpages} &b(&e{results}&b resultaten).'
-    help_no_results: '&bError: Geen resultaten meer.'
-    help_header: '&e=== Hulp weergeven voor &a{commandprefix}{command}&e ==='
-    help_format: '&b{commandprefix}{command} &a{parameters} &e{separator} {description}'
-    help_detailed_header: '&e=== &bToont gedetailleerde hulp voor &a{commandprefix}{command}&e ==='
-    help_detailed_command_format: '&b{command} &a{parameters} &e{separator} {description}'
-    help_detailed_parameter_format: '&a{syntaxorname}: &e{description}'
-    help_search_header: '&e=== &bZoek resultaten voor &a{commandprefix}{command} {search}&e ==='
+    permission_denied: "<red>Het spijt me, maar je hebt geen toestemming om deze opdracht uit te voeren."
+    permission_denied_parameter: "<red>Het spijt me, maar je hebt geen toestemming om deze opdracht uit te voeren."
+    error_generic_logged: "<red>Er is een fout opgetreden. Dit probleem is geregistreerd. Sorry voor het ongemak."
+    unknown_command: "<red>Onbekend commando, typ alstublieft <yellow>/sk hulp"
+    invalid_syntax: "<yellow>Gebruik: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>Het spijt me, maar er is een fout opgetreden bij het uitvoeren van deze opdracht."
+    info_message: "{message}"
+    please_specify_one_of: "<red>fout: Specificeer één van (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} moet een getal zijn."
+    must_be_min_length: "<red>Fout: Moet minstens {min} tekens lang zijn."
+    must_be_max_length: "<red>fout: mag maximaal {max} tekens lang zijn."
+    please_specify_at_most: "<red>Error: Specificeer maximaal een waarde {max}."
+    please_specify_at_least: "<red>Fout: Geef ten minste een waarde {min} op."
+    not_allowed_on_console: "<red>Error: Console mag dit commando niet uitvoeren."
+    could_not_find_player: "<red>Error: Kan geen speler vinden op de naam: <yellow>{search}"
+    no_command_matched_search: "<red>Geen commando komt overeen met <yellow>{search}."
+    help_page_information: "<aqua> - Pagina <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> resultaten)."
+    help_no_results: "<aqua>Error: Geen resultaten meer."
+    help_header: "<yellow>=== Hulp weergeven voor <green>{commandprefix}{command}<yellow> ==="
+    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_header: "<yellow>=== <aqua>Toont gedetailleerde hulp voor <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
+    help_search_header: "<yellow>=== <aqua>Zoek resultaten voor <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: '&cfout: Die wereld bestaat niet.'
-    you_must_be_holding_item: '&cError: Je moet een item in je hoofdhand houden.'
-    player_is_vanished_confirm: "&eWaarschuwing: &een{vanished} &eis verdwenen. Blad hun omslag niet in!\n&eOm je actie te bevestigen voeg &a:bevestig &eaan het einde van hun naam.\n&eEx: {vanished}:confirm"
-    username_too_short: '&cfout: Gebruikersnaam te kort, moet ten minste drie tekens bevatten.'
-    is_not_a_valid_name: '&cfout: &e{name} &cis geen geldige gebruikersnaam.'
-    multiple_players_match: '&cError: Meerdere spelers kwamen overeen met &b{search} &e({all})&c, graag specifieker.'
-    no_player_found_server: '&cGeen speler die overeenkomt met &e{search} &cis verbonden met deze server.'
-    no_player_found_offline: '&cGeen speler die overeenkomt met &e{search}&c kan worden gevonden.'
-    no_player_found: '&cGeen speler die overeenkomt met &e{search}&c kan worden gevonden.'
-    location_please_specify_world: '&cError: Specificeer wereld. Voorbeeld: &eworld:x,y,z.'
-    location_please_specify_xyz: '&cError: Specificeer de coördinaten x, y en z. Voorbeeld: &eworld:x,y,z.'
-    location_console_not_relative: '&cError: Console mag geen relatieve coördinaten gebruiken voor locatie.'
+    invalid_world: "<red>fout: Die wereld bestaat niet."
+    you_must_be_holding_item: "<red>Error: Je moet een item in je hoofdhand houden."
+    player_is_vanished_confirm: "<yellow>Waarschuwing: <yellow>en{vanished} <yellow>is verdwenen. Blad hun omslag niet in!\n<yellow>Om je actie te bevestigen voeg <green>:bevestig <yellow>aan het einde van hun naam.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>fout: Gebruikersnaam te kort, moet ten minste drie tekens bevatten."
+    is_not_a_valid_name: "<red>fout: <yellow>{name} <red>is geen geldige gebruikersnaam."
+    multiple_players_match: "<red>Error: Meerdere spelers kwamen overeen met <aqua>{search} <yellow>({all})<red>, graag specifieker."
+    no_player_found_server: "<red>Geen speler die overeenkomt met <yellow>{search} <red>is verbonden met deze server."
+    no_player_found_offline: "<red>Geen speler die overeenkomt met <yellow>{search}<red> kan worden gevonden."
+    no_player_found: "<red>Geen speler die overeenkomt met <yellow>{search}<red> kan worden gevonden."
+    location_please_specify_world: "<red>Error: Specificeer wereld. Voorbeeld: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Specificeer de coördinaten x, y en z. Voorbeeld: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console mag geen relatieve coördinaten gebruiken voor locatie."
 action_bar:
-  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp}❤ &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
-  ability: '{message}'
-  boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
-  boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
+  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
+  xp: "<red>{hp}/{max_hp}❤ <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
+  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
+  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
+  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
+  ability: "{message}"
+  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
+  boss_bar_maxed: "<gold>{skill} {level} <gray>(MAXED)"
 commands:
-  prefix: '&8[&bSkills&8]&r '
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
   armor:
     modifier:
       add:
-        added: '{color}{stat} &7modifier met level &b{value} &7is toegevoegd aan je item'
-        already_exists: '&eEen item modifier met statistiek {color}{stat} &e bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove'
-        lore: '&7{stat}: {color}+{value}'
-        lore_subtract: '&7{stat}: {color}-{value}'
+        added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
-        does_not_exist: '&Je item heeft geen {color}{stat} &emodifier!'
-        removed: '{color}{stat} &7modifier is verwijderd van je item'
+        does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier is verwijderd van je item"
       list:
-        header: '&fArmor modifiers gevonden:'
-        entry: '  {color}{stat}&f - {value}'
+        header: "<white>Armor modifiers gevonden:"
+        entry: "  {color}{stat}<white> - {value}"
       removeall:
-        removed: '&7Alle armor modifiers zijn verwijderd van je voorwerp'
+        removed: "<gray>Alle armor modifiers zijn verwijderd van je voorwerp"
     multiplier:
       add:
-        added: '&b{target} &7multiplier met de waarde &b{value} &7is toegevoegd aan je item'
-        already_exists: '&eEen harnasvermenigvuldiger met doel &b{target} &eal bestaat al op je harnassen! Verwijder deze eerst met /sk armor multiplier remove'
-        skill_lore: '&7Wanneer versleten: &b+{value}% {skill} XP'
-        skill_lore_subtract: '&7Wanneer versleten: &b-{value}% {skill} XP'
-        global_lore: '&7Wanneer versleten: &9+{value}% Vaardigheid XP'
-        global_lore_subtract: '&7Wanneer versleten: &9-{value}% Vaardigheid XP'
+        added: "<aqua>{target} <gray>multiplier met de waarde <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een harnasvermenigvuldiger met doel <aqua>{target} <yellow>al bestaat al op je harnassen! Verwijder deze eerst met /sk armor multiplier remove"
+        skill_lore: "<gray>Wanneer versleten: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Wanneer versleten: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Wanneer versleten: <blue>+{value}% Vaardigheid XP"
+        global_lore_subtract: "<gray>Wanneer versleten: <blue>-{value}% Vaardigheid XP"
       remove:
-        does_not_exist: '&eJouw item heeft geen &b{target} &earmor vermenigvuldiger!'
-        removed: '&b{target} &7armor vermenigvuldiger is verwijderd uit je item'
+        does_not_exist: "<yellow>Jouw item heeft geen <aqua>{target} <yellow>armor vermenigvuldiger!"
+        removed: "<aqua>{target} <gray>armor vermenigvuldiger is verwijderd uit je item"
       list:
-        header: '&fArmor vermenigvuldigers gevonden:'
-        entry: '  &b{target}&f - {value}'
+        header: "<white>Armor vermenigvuldigers gevonden:"
+        entry: "  <aqua>{target}<white> - {value}"
       removeall:
-        removed: '&7Alle harnasvermenigvuldigers zijn verwijderd uit je item'
+        removed: "<gray>Alle harnasvermenigvuldigers zijn verwijderd uit je item"
     requirement:
       add:
-        added: '&3{skill}&7 harnas vereiste met level &b{level}&7 is toegevoegd aan je voorwerp'
-        already_exists: '&evoorwerp heeft al een &3{skill}&e harnas vereist! Verwijder het eerst met &6/sk uitrusting vereiste verwijderen'
-        lore: '&cVereist &3{skill} {level}'
+        added: "<dark_aqua>{skill}<gray> harnas vereiste met level <aqua>{level}<gray> is toegevoegd aan je voorwerp"
+        already_exists: "<yellow>voorwerp heeft al een <dark_aqua>{skill}<yellow> harnas vereist! Verwijder het eerst met <gold>/sk uitrusting vereiste verwijderen"
+        lore: "<red>Vereist <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: '&eJe voorwerp heeft geen &3{skill}&e armor vereist!'
-        removed: '&3{skill}&7 harnaseis is verwijderd uit je artikel'
+        does_not_exist: "<yellow>Je voorwerp heeft geen <dark_aqua>{skill}<yellow> armor vereist!"
+        removed: "<dark_aqua>{skill}<gray> harnaseis is verwijderd uit je artikel"
       list:
-        header: '&fArmor vereisten gevonden:'
-        entry: '  &3{skill} &f- &b{level}'
+        header: "<white>Armor vereisten gevonden:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
-        removed: '&7Alle harnas vereisten zijn verwijderd uit je voorwerp'
-      equip: '&eJe voldoet niet aan de vereisten om dit voorwerp uit te rusten: {requirements}'
-      entry: '&b{skill} {level}&7, '
+        removed: "<gray>Alle harnas vereisten zijn verwijderd uit je voorwerp"
+      equip: "<yellow>Je voldoet niet aan de vereisten om dit voorwerp uit te rusten: {requirements}"
+      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
-      confirm: '&cHet laden van een back-up zal alle vaardigheidsgegevens van spelers herstellen. Deze actie is permanent en kan niet ongedaan worden gemaakt. Je wilt misschien een back-up opslaan voordat je deze laadt. Typ de opdracht opnieuw om deze actie te bevestigen'
-      loading: '&fLaden backup...'
-      loaded: '&aBack-up geladen'
-      error: '&cFout tijdens laden back-up: {error}'
-      must_be_yaml: '&eFile moet een .yml bestand zijn!'
-      file_not_found: '&eA back-up van deze bestandsnaam bestaat niet in de backups map!'
+      confirm: "<red>Het laden van een back-up zal alle vaardigheidsgegevens van spelers herstellen. Deze actie is permanent en kan niet ongedaan worden gemaakt. Je wilt misschien een back-up opslaan voordat je deze laadt. Typ de opdracht opnieuw om deze actie te bevestigen"
+      loading: "<white>Laden backup..."
+      loaded: "<green>Back-up geladen"
+      error: "<red>Fout tijdens laden back-up: {error}"
+      must_be_yaml: "<yellow>File moet een .yml bestand zijn!"
+      file_not_found: "<yellow>A back-up van deze bestandsnaam bestaat niet in de backups map!"
     save:
-      saving: '&fBackup opslaan...'
-      saved: '&een back-up gemaakt van {type} als {file}'
-      error: '&cFout bij het back-uppen van {type} gegevens! Bekijk de fout in console/beneden voor details'
+      saving: "<white>Backup opslaan..."
+      saved: "<yellow>en back-up gemaakt van {type} als {file}"
+      error: "<red>Fout bij het back-uppen van {type} gegevens! Bekijk de fout in console/beneden voor details"
   claimitems:
-    no_items: '&eJe hebt geen items om te claimen'
+    no_items: "<yellow>Je hebt geen items om te claimen"
   item:
     give:
-      sender: '&fGaf &b{amount}x {key} &fto {player}'
-      receiver: '&fJe hebt &b{amount}x {key} gekregen'
+      sender: "<white>Gaf <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>Je hebt <aqua>{amount}x {key} gekregen"
     modifier:
       add:
-        added: '{color}{stat} &7modifier met level &b{value} &7is toegevoegd aan je item'
-        already_exists: '&eEen item modifier met statistiek {color}{stat} &e bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove'
-        lore: '&7{stat}: {color}+{value}'
-        lore_subtract: '&7{stat}: {color}-{value}'
+        added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
-        does_not_exist: '&Je item heeft geen {color}{stat} &emodifier!'
-        removed: '{color}{stat} &7modifier is verwijderd van je item'
+        does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier is verwijderd van je item"
       list:
-        header: '&fItem wijzigers gevonden:'
-        entry: '  {color}{stat}&f - {value}'
+        header: "<white>Item wijzigers gevonden:"
+        entry: "  {color}{stat}<white> - {value}"
       removeall:
-        removed: '&7Alle item modifiers zijn verwijderd uit je item'
+        removed: "<gray>Alle item modifiers zijn verwijderd uit je item"
     multiplier:
       add:
-        added: '&b{target} &7multiplier met de waarde &b{value} &7is toegevoegd aan je item'
-        already_exists: '&eEen item vermenigvuldiger met doel &b{target} &e bestaat al op je item! Verwijder deze eerst met /sk item vermenigvuldiger verwijderen'
-        skill_lore: '&7Wanneer verwijderd: &b+{value}% {skill} XP'
-        skill_lore_subtract: '&7Wanneer verwijderd: &b-{value}% {skill} XP'
-        global_lore: '&7Wanneer verwijderd: &9+{value}% Vaardigheid XP'
-        global_lore_subtract: '&7Wanneer verwijderd: &9-{value}% Vaardigheid XP'
+        added: "<aqua>{target} <gray>multiplier met de waarde <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een item vermenigvuldiger met doel <aqua>{target} <yellow> bestaat al op je item! Verwijder deze eerst met /sk item vermenigvuldiger verwijderen"
+        skill_lore: "<gray>Wanneer verwijderd: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Wanneer verwijderd: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Wanneer verwijderd: <blue>+{value}% Vaardigheid XP"
+        global_lore_subtract: "<gray>Wanneer verwijderd: <blue>-{value}% Vaardigheid XP"
       remove:
-        does_not_exist: '&eJe item heeft geen &b{target} &eitem multiplier!'
-        removed: '&b{target} &7item vermenigvuldiger is verwijderd uit je item'
+        does_not_exist: "<yellow>Je item heeft geen <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item vermenigvuldiger is verwijderd uit je item"
       list:
-        header: '&fItem multipliers gevonden:'
-        entry: '  &b{target}&f - {value}'
+        header: "<white>Item multipliers gevonden:"
+        entry: "  <aqua>{target}<white> - {value}"
       removeall:
-        removed: '&7Alle item vermenigvuldigers zijn verwijderd uit je item'
+        removed: "<gray>Alle item vermenigvuldigers zijn verwijderd uit je item"
     register:
-      registered: '&fGeregistreerd vastgehouden item naar sleutel {key}'
-      already_registered: '&eEr is al een item geregistreerd voor de sleutel{key}&e, gebruik &f/vaardigheden item deregister &eto deregistreren eerst'
-      no_spaces: '&eItem sleutel kan geen spaties bevatten!'
+      registered: "<white>Geregistreerd vastgehouden item naar sleutel {key}"
+      already_registered: "<yellow>Er is al een item geregistreerd voor de sleutel{key}<yellow>, gebruik <white>/vaardigheden item deregister <yellow>to deregistreren eerst"
+      no_spaces: "<yellow>Item sleutel kan geen spaties bevatten!"
     requirement:
       add:
-        added: '&3{skill}&7 item vereiste met level &b{level}&7 is toegevoegd aan uw item'
-        already_exists: '&eItem heeft al een &3{skill}&e item vereist! Verwijder het eerst met &6/sk item vereiste verwijderen'
-        lore: '&cVereist &3{skill} {level}'
+        added: "<dark_aqua>{skill}<gray> item vereiste met level <aqua>{level}<gray> is toegevoegd aan uw item"
+        already_exists: "<yellow>Item heeft al een <dark_aqua>{skill}<yellow> item vereist! Verwijder het eerst met <gold>/sk item vereiste verwijderen"
+        lore: "<red>Vereist <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: '&eJe item heeft geen &3{skill}&e vereiste artikel!'
-        removed: '&3{skill}&7 artikelvereiste is verwijderd van uw artikel'
+        does_not_exist: "<yellow>Je item heeft geen <dark_aqua>{skill}<yellow> vereiste artikel!"
+        removed: "<dark_aqua>{skill}<gray> artikelvereiste is verwijderd van uw artikel"
       list:
-        header: '&fItem vereisten gevonden:'
-        entry: '  &3{skill} &f- &b{level}'
+        header: "<white>Item vereisten gevonden:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
-        removed: '&7Alle item vereisten zijn verwijderd uit je artikel'
-      use: '&eJe voldoet niet aan de vereisten om dit item te gebruiken: {requirements}'
-      entry: '&b{skill} {level}&7, '
+        removed: "<gray>Alle item vereisten zijn verwijderd uit je artikel"
+      use: "<yellow>Je voldoet niet aan de vereisten om dit item te gebruiken: {requirements}"
+      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
-      unregistered: '&fOngeregistreerd item met sleutel {key}'
-      not_registered: '&eEr is geen item geregistreerd met sleutel {key}'
+      unregistered: "<white>Ongeregistreerd item met sleutel {key}"
+      not_registered: "<yellow>Er is geen item geregistreerd met sleutel {key}"
   lang:
-    set: '&7Taal ingesteld op &b{lang}'
-    not_found: '&eTaal niet gevonden!'
+    set: "<gray>Taal ingesteld op <aqua>{lang}"
+    not_found: "<yellow>Taal niet gevonden!"
   mana:
-    display: '&fYour {mana_unit}: &b{current}/{max}'
-    display_other: '&f{mana_unit} van {player}: &b{current}/{max}'
-    add: '&7Toegevoegd &b{amount} {mana_unit} &7aan speler &6{player}'
-    remove: '&7Verwijderd &b{amount} {mana_unit} &7van speler &6{player}'
-    set: '&7Zet speler &6{player} &7naar &b{amount} {mana_unit}'
-    at_least_zero: '&e{mana_unit} moet ten minste nul zijn!'
-    console_specify_player: '&eConsole moet een speler opgeven!'
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} van {player}: <aqua>{current}/{max}"
+    add: "<gray>Toegevoegd <aqua>{amount} {mana_unit} <gray>aan speler <gold>{player}"
+    remove: "<gray>Verwijderd <aqua>{amount} {mana_unit} <gray>van speler <gold>{player}"
+    set: "<gray>Zet speler <gold>{player} <gray>naar <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} moet ten minste nul zijn!"
+    console_specify_player: "<yellow>Console moet een speler opgeven!"
   modifier:
     add:
-      added: '{color}{stat} &7modifier niveau &b{value} &7met de naam &f{name} &7toegevoegd aan speler &6{player}'
-      already_exists: '&eModifier met naam {name} bestaat al op speler &6{player}&! Verwijder deze met &6/sk modifier verwijder {player} {name}'
+      added: "{color}{stat} <gray>modifier niveau <aqua>{value} <gray>met de naam <white>{name} <gray>toegevoegd aan speler <gold>{player}"
+      already_exists: "<yellow>Modifier met naam {name} bestaat al op speler <gold>{player}&! Verwijder deze met <gold>/sk modifier verwijder {player} {name}"
     remove:
-      not_found: '&eModifier {name} niet gevonden voor speler &6{player}'
-      removed: '&7Wijziger &f{name} &7verwijderd van speler &6{player}'
+      not_found: "<yellow>Modifier {name} niet gevonden voor speler <gold>{player}"
+      removed: "<gray>Wijziger <white>{name} <gray>verwijderd van speler <gold>{player}"
     list:
-      all_stats_header: '&7Stat modificaties voor speler &6{player}:'
-      all_stats_entry: '  &f{name} - {color}{stat} &fLevel &6{value}'
-      one_stat_header: '&7Stat modificaties ({color}{stat}&7) voor speler &6{player}:'
-      one_stat_entry: '  &f{name} - {color}{stat} &fLevel &6{value}'
-      players_only: '&eAlleen spelers kunnen hun eigen parameters aanmaken! Probeer een speler te specificeren'
+      all_stats_header: "<gray>Stat modificaties voor speler <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modificaties ({color}{stat}<gray>) voor speler <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Alleen spelers kunnen hun eigen parameters aanmaken! Probeer een speler te specificeren"
     removeall:
-      removed_all_stats: '&7Verwijderd &b{num} &7stat modifiers van speler &6{player}'
-      removed_one_stat: '&7Verwijderd &b{num} {color}{stat} &7modifiers van speler &6{player}'
-      players_only: '&eAlleen spelers kunnen hun eigen parameters verwijderen! Probeer een speler te specificeren'
+      removed_all_stats: "<gray>Verwijderd <aqua>{num} <gray>stat modifiers van speler <gold>{player}"
+      removed_one_stat: "<gray>Verwijderd <aqua>{num} {color}{stat} <gray>modifiers van speler <gold>{player}"
+      players_only: "<yellow>Alleen spelers kunnen hun eigen parameters verwijderen! Probeer een speler te specificeren"
   multiplier:
     global: Wereldwijd
-    list: '&fGlobale XP vermenigvuldiger voor &6{player}&f: &b{multiplier}x / +{percent}%'
-    skill_entry: '&b{skill} &fXP multiplier: &b{multiplier}x / +{percent}%'
-    players_only: '&eAlleen spelers kunnen hun eigen multiplier vermelden! Geef een speler op!'
+    list: "<white>Globale XP vermenigvuldiger voor <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Alleen spelers kunnen hun eigen multiplier vermelden! Geef een speler op!"
   profile:
-    skills: "Aurelium Vaardigheden profiel voor &6{name}:\n&7UUID: &f{uuid}\n&7Vaardigheden:{skill_entries}"
-    skill_entry: "\n  &3{skill} &7- Level: &f{level}&7, XP: &f{xp}"
-    stats: "Aurelium Vaardigheden statistieken profiel voor &6{name}:\n&7UUID: &f{uuid}\n&7Stats:{stat_entries}"
-    stat_entry: "\n  &3{stat} &7- Totaal Level: &f{total_level}&7, Basis Level: &f{base_level}&7, Gewijzigd Level: &f{modified_level}"
+    skills: "Aurelium Vaardigheden profiel voor <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Vaardigheden:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Aurelium Vaardigheden statistieken profiel voor <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Totaal Level: <white>{total_level}<gray>, Basis Level: <white>{base_level}<gray>, Gewijzigd Level: <white>{modified_level}"
   rank:
-    header: '&b&lJouw Vaardigheid Rang'
-    power: '&eKracht &7(Alle Vaardigheden): &f#{rank} van {total}'
-    entry: '&b{skill}&7: &f#{rank} van {total}'
-  reload: '&aConfiguratie herladen!'
+    header: "<aqua><bold>Jouw Vaardigheid Rang"
+    power: "<yellow>Kracht <gray>(Alle Vaardigheden): <white>#{rank} van {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} van {total}"
+  reload: "<green>Configuratie herladen!"
   save:
-    already_saving: '&eData wordt al opgeslagen!'
-    mysql_not_enabled: '&eMySQL was niet ingeschakeld bij het opstarten van de server, in plaats daarvan het opslaan naar bestand!'
-    saved: '&aSkill gegevens opgeslagen!'
+    already_saving: "<yellow>Data wordt al opgeslagen!"
+    mysql_not_enabled: "<yellow>MySQL was niet ingeschakeld bij het opstarten van de server, in plaats daarvan het opslaan naar bestand!"
+    saved: "<green>Skill gegevens opgeslagen!"
   skill:
     reset:
-      reset_all: '&7Alle vaardigheden zijn ingesteld op niveau &b1 &7voor speler &6{player}'
-      reset_skill: '&7Vaardigheid &{skill} &7ingesteld op niveau &b1 &7voor speler &6{player}'
+      reset_all: "<gray>Alle vaardigheden zijn ingesteld op niveau <aqua>1 <gray>voor speler <gold>{player}"
+      reset_skill: "<gray>Vaardigheid &{skill} <gray>ingesteld op niveau <aqua>1 <gray>voor speler <gold>{player}"
     setall:
-      at_least_one: '&eNiveau moet ten minste 1 zijn!'
-      set: '&7Alle vaardigheden ingesteld op niveau &b{level} &7voor speler &6{player}'
+      at_least_one: "<yellow>Niveau moet ten minste 1 zijn!"
+      set: "<gray>Alle vaardigheden ingesteld op niveau <aqua>{level} <gray>voor speler <gold>{player}"
     setlevel:
-      at_least_one: '&eNiveau moet ten minste 1 zijn!'
-      set: '&7Vaardigheid &{skill} &7ingesteld op niveau &b{level} &7voor speler &6{player}'
+      at_least_one: "<yellow>Niveau moet ten minste 1 zijn!"
+      set: "<gray>Vaardigheid &{skill} <gray>ingesteld op niveau <aqua>{level} <gray>voor speler <gold>{player}"
   toggle:
-    enabled: '&aJouw vaardigheidsactiebalk is ingeschakeld'
-    disabled: '&cJouw vaardigheidsactiebalk is uitgeschakeld'
-    not_enabled: '&eSkills actiebalk is niet ingeschakeld op deze server!'
+    enabled: "<green>Jouw vaardigheidsactiebalk is ingeschakeld"
+    disabled: "<red>Jouw vaardigheidsactiebalk is uitgeschakeld"
+    not_enabled: "<yellow>Skills actiebalk is niet ingeschakeld op deze server!"
   top:
-    power_entry: '&f{rank}. &b{player} &f- {level}'
-    power_header: '&f--==&b&lAlle Vaardigheden Scorebord&f==--'
-    power_header_page: '&f--==&b&lAlle Vaardigheden Scorebord &f(Pagina {page})==--'
-    skill_header: '&f--==&b&l{skill} Scorebord&f==--'
-    skill_header_page: '&f--==&b&l{skill} Scorebord &f(Pagina {page})==--'
-    skill_entry: '&f{rank}. &b{player} &f- {level}'
-    average_header: '&f--==&b&lSkill Gemiddeld Scorebord&f==--'
-    average_header_page: '&f--==&b&lSkill Gemiddelde Scorebord &f(Pagina {page})==--'
-    average_entry: '&f{rank}. &b{player} &f- {level}'
-    usage: '&eGebruik: &a/sk top &f<page> &7of &a/sk top &f[skill] <page>'
+    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    power_header: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord<white>==--"
+    power_header_page: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord <white>(Pagina {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Scorebord<white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Scorebord <white>(Pagina {page})==--"
+    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    average_header: "<white>--==<aqua><bold>Skill Gemiddeld Scorebord<white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Gemiddelde Scorebord <white>(Pagina {page})==--"
+    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    usage: "<yellow>Gebruik: <green>/sk top <white><page> <gray>of <green>/sk top <white>[skill] <page>"
   transfer:
-    success: '&aSuccesvol spelersgegevens overgedragen van &7{from} &ato &7{to}'
-    error: 'Er is een fout opgetreden bij het overzetten van spelergegevens. Controleer de console voor fouten.'
+    success: "<green>Succesvol spelersgegevens overgedragen van <gray>{from} <green>to <gray>{to}"
+    error: "Er is een fout opgetreden bij het overzetten van spelergegevens. Controleer de console voor fouten."
   updateleaderboards:
-    already_updating: '&eLeaderboard is al aan het updaten!'
-    updated: '&aLeaderboard bijgewerkt!'
-  version: '&fJe bent op Aurelium Skills versie &b{current_version}&f. De laatste versie is &b{latest_version}'
+    already_updating: "<yellow>Leaderboard is al aan het updaten!"
+    updated: "<green>Leaderboard bijgewerkt!"
+  version: "<white>Je bent op Aurelium Skills versie <aqua>{current_version}<white>. De laatste versie is <aqua>{latest_version}"
   xp:
-    add: '&7Toegevoegd &b{amount} {skill} &7XP aan speler &7{player}'
-    set: '&7Stel &b{skill} &7XP in voor speler &7{player} &7naar {amount}'
-    remove: '&7Verwijderd &b{amount} {skill} &7XP van speler &6{player}'
-  unknown_skill: '&eOnbekende vaardigheid!'
-  no_profile: '&ePlayer heeft geen vaardighedenprofiel. Probeer het spel opnieuw aan te sluiten of de server opnieuw te starten.'
+    add: "<gray>Toegevoegd <aqua>{amount} {skill} <gray>XP aan speler <gray>{player}"
+    set: "<gray>Stel <aqua>{skill} <gray>XP in voor speler <gray>{player} <gray>naar {amount}"
+    remove: "<gray>Verwijderd <aqua>{amount} {skill} <gray>XP van speler <gold>{player}"
+  unknown_skill: "<yellow>Onbekende vaardigheid!"
+  no_profile: "<yellow>Player heeft geen vaardighedenprofiel. Probeer het spel opnieuw aan te sluiten of de server opnieuw te starten."
 leveler:
-  title: '&a{skill} niveau omhoog'
-  subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Vaardigheid Level Omhoog! &b&l{skill} &8{old}➜&3&l{new}\n \n \n&bBeloning:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  title: "<green>{skill} niveau omhoog"
+  subtitle: "<gold>{old} ➜ {new}"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Vaardigheid Level Omhoog! <aqua><bold>{skill} <dark_grey>{old}➜<dark_aqua><bold>{new}\n \n \n<aqua>Beloning:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  &aAbility Ontgrendelen! &6&l{ability} &7is ontgrendeld"
-  ability_level_up: "\n  &aVermogen level omhoog! &6&l{ability} &7is nu het niveau &6{level}"
-  mana_ability_unlock: "\n  &dMana vaardigheid ontgrendeling! &9&l{mana_ability} &7is ontgrendeld"
-  mana_ability_level_up: "\n  &dMana Vermogen Level Omhoog! &9&l{mana_ability} &7is nu het niveau &6{level}"
-  money_reward: "\n  &a${amount}"
-  unclaimed_item: '&cJe hebt onopgeëiste items omdat je inventaris vol was, gebruik &e/vaardigheden claimitems &cto ze te claimen'
+  ability_unlock: "\n  <green>Ability Ontgrendelen! <gold><bold>{ability} <gray>is ontgrendeld"
+  ability_level_up: "\n  <green>Vermogen level omhoog! <gold><bold>{ability} <gray>is nu het niveau <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Mana vaardigheid ontgrendeling! <blue><bold>{mana_ability} <gray>is ontgrendeld"
+  mana_ability_level_up: "\n  <light_purple>Mana Vermogen Level Omhoog! <blue><bold>{mana_ability} <gray>is nu het niveau <gold>{level}"
+  money_reward: "\n  <green>${amount}"
+  unclaimed_item: "<red>Je hebt onopgeëiste items omdat je inventaris vol was, gebruik <yellow>/vaardigheden claimitems <red>to ze te claimen"
 menus:
   common:
-    close: '&cSluiten'
-    level: '&7Niveau: &e{level}'
-    progress_to_level: "&7Voortgang naar niveau {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
-    max_level: '&6MAX NIVEAU'
-    ability_levels: "\n&7Vaardigheidsniveaus:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
-    ability_level_entry: '&6{ability} {level} &8({info})'
-    ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7Statistieken Niveau: {stats}"
-    mana_ability: "\n&d&lMana Vermogen &9{mana_ability} {level}\n  &7Duur: &a{duration}s &7Mana Kost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+    close: "<red>Sluiten"
+    level: "<gray>Niveau: <yellow>{level}"
+    progress_to_level: "<gray>Voortgang naar niveau {level}: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
+    max_level: "<gold>MAX NIVEAU"
+    ability_levels: "<gray>Vaardigheidsniveaus: {ability_1} {ability_2} {ability_3} {ability_4} {ability_5}"
+    ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
+    ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
+    stats_leveled: "<gray>Statistieken Niveau: {stats}"
+    mana_ability: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Duur: <green>{duration}s <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   skills_menu:
     skills_menu_title: Jouw Vaardigheden
-    your_skills: '&bJe Vaardigheden - &6{player}'
-    your_skills_desc: "&7Upgrade vaardigheden door verschillende taken\n&7uit te voeren om de waardevolle stat boosts\n&7te ontgrendelen en meer!"
-    your_skills_hover: '&eHover over een vaardigheid voor meer informatie!'
-    your_skills_click: '&eKlik op een Vaardigheid om de level voortgang te bekijken!'
-    skill_click: '&eKlik om level vooruitgang te bekijken!'
-    skill_locked: '&cJe hebt geen toestemming om deze vaardigheid te bekijken!'
-    stats: '&bStats'
-    stats_desc: '&7Verdien stat buffs door vaardigheden te verbeteren'
-    stats_click: '&eKlik voor meer informatie of bekijk je statistieken'
+    your_skills: "<aqua>Je Vaardigheden - <gold>{player}"
+    your_skills_desc: "<gray>Upgrade vaardigheden door verschillende taken<gray>uit te voeren om de waardevolle stat boosts<gray>te ontgrendelen en meer!"
+    your_skills_hover: "<yellow>Hover over een vaardigheid voor meer informatie!"
+    your_skills_click: "<yellow>Klik op een Vaardigheid om de level voortgang te bekijken!"
+    skill_click: "<yellow>Klik om level vooruitgang te bekijken!"
+    skill_locked: "<red>Je hebt geen toestemming om deze vaardigheid te bekijken!"
+    stats: "<aqua>Stats"
+    stats_desc: "<gray>Verdien stat buffs door vaardigheden te verbeteren"
+    stats_click: "<yellow>Klik voor meer informatie of bekijk je statistieken"
   level_progression_menu:
-    level_progression_menu_title: '{skill} Niveaus - Pagina {page}'
-    your_ranking: '&6Jouw Vaardigheid Rang'
-    rank_out_of: '&fJe bent gerangschikt op &6{rank}&f van {total} spelers'
-    rank_percent: '&fJe staat in de top &6{percent}%&f van spelers'
-    back: '&aGa terug'
-    back_click: '&7Terug naar {menu_name} menu'
-    next_page: '&6Volgende pagina'
-    next_page_click: '&eKlik om naar de volgende pagina te gaan'
-    previous_page: '&6Vorige pagina'
-    previous_page_click: '&eKlik om naar de vorige pagina te gaan'
-    level_unlocked: '&aNiveau {level}'
-    level_in_progress: '&eNiveau {level}'
-    level_locked: '&cNiveau {level}'
-    level_number: '&7Niveau &f{level}'
-    unlocked: '&aONVERGRENDELD'
-    in_progress: '&eIN PROGRES'
-    locked: '&cVERGRENDELD'
-    rewards: '&7Beloningen:{rewards}'
+    level_progression_menu_title: "{skill} Niveaus - Pagina {page}"
+    your_ranking: "<gold>Jouw Vaardigheid Rang"
+    rank_out_of: "<white>Je bent gerangschikt op <gold>{rank}<white> van {total} spelers"
+    rank_percent: "<white>Je staat in de top <gold>{percent}%<white> van spelers"
+    back: "<green>Ga terug"
+    back_click: "<gray>Terug naar {menu_name} menu"
+    next_page: "<gold>Volgende pagina"
+    next_page_click: "<yellow>Klik om naar de volgende pagina te gaan"
+    previous_page: "<gold>Vorige pagina"
+    previous_page_click: "<yellow>Klik om naar de vorige pagina te gaan"
+    level_unlocked: "<green>Niveau {level}"
+    level_in_progress: "<yellow>Niveau {level}"
+    level_locked: "<red>Niveau {level}"
+    level_number: "<gray>Niveau <white>{level}"
+    unlocked: "<green>ONVERGRENDELD"
+    in_progress: "<yellow>IN PROGRES"
+    locked: "<red>VERGRENDELD"
+    rewards: "<gray>Beloningen:{rewards}"
     rewards_entry: "\n  {color}+{num} {symbol} {stat}"
-    money_reward: "\n  &a${amount}"
-    ability_unlock: "\n&6{ability} &a&vaardigheid ontgrendel\n&7  {desc}\n "
-    ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
-    mana_ability_unlock: "\n&9{mana_ability} &d&lMana vermogensontgrendeling\n&7  {desc}\n "
-    mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
-    progress: "&7Voortgang: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
-    leaderboard_click: '&eKlik om het scorebord van {skill} te bekijken'
-    sources: '&aXP Bronnen'
-    sources_desc: "&7Het bronmenu toont alle manieren waarop je\n&7kan verdienen XP in een vaardigheid, evenals hoeveel\n&7XP elke bron geeft."
-    sources_click: '&eKlik om {skill} bronnen te bekijken'
-    abilities: '&cMogelijkheden'
-    abilities_desc: "&bMogelijkheden &7zijn passieve voordelen die je ontgrendelt en\n&7upgrade terwijl je vaardigheden aan het verbeteren bent.\n&dMana vaardigheden &7zijn een speciaal type vaardigheid\n&7dat activering vereist en gebruik makend van mana."
-    abilities_click: '&eKlik om {skill} vaardigheden te bekijken'
+    money_reward: "\n  <green>${amount}"
+    ability_unlock: "<gold>{ability} <green>&vaardigheid ontgrendel<gray>  {desc}"
+    ability_level: "<gold>{ability} {level}<gray>  {desc}"
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana vermogensontgrendeling<gray>  {desc}"
+    mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
+    progress: "<gray>Voortgang: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
+    leaderboard_click: "<yellow>Klik om het scorebord van {skill} te bekijken"
+    sources: "<green>XP Bronnen"
+    sources_desc: "<gray>Het bronmenu toont alle manieren waarop je<gray>kan verdienen XP in een vaardigheid, evenals hoeveel<gray>XP elke bron geeft."
+    sources_click: "<yellow>Klik om {skill} bronnen te bekijken"
+    abilities: "<red>Mogelijkheden"
+    abilities_desc: "<aqua>Mogelijkheden <gray>zijn passieve voordelen die je ontgrendelt en<gray>upgrade terwijl je vaardigheden aan het verbeteren bent.<light_purple>Mana vaardigheden <gray>zijn een speciaal type vaardigheid<gray>dat activering vereist en gebruik makend van mana."
+    abilities_click: "<yellow>Klik om {skill} vaardigheden te bekijken"
   stats_menu:
     stats_menu_title: Jouw statistieken
-    player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    skills: "\n&7Vaardigheden: &f{skills}"
-    your_level: '&7Jouw Niveau: {color}{level}'
-    attack_damage: '&b+{value}% Aanvalsschade'
-    hp: '&c+{value}❤'
-    saturated_regen: '&6+{value} verzadigde regeneratie'
-    full_hunger_regen: '&6+{value} Volledige Honger Regeneratie'
-    almost_full_hunger_regen: '&6+{value} Bijna Volledige Honger Regeneratie'
-    mana_regen: '&b+{value} Mana/s Regen'
-    luck: '&2+{value} Geluk'
-    double_drop_chance: '&2Dubbele Drop Kans: {value}%'
-    xp_gain: '&9+{value}% {xp_unit} winst'
-    anvil_cost_reduction: '&9Aambeeld Vermindering: {value}%'
-    max_mana: '&9Max Mana: {value}'
-    incoming_damage: '&5-{value}% Inkomende Schade'
+    player_stat_entry: " {color}{symbol} {stat} <white>{level}"
+    skills: "<gray>Vaardigheden: <white>{skills}"
+    your_level: "<gray>Jouw Niveau: {color}{level}"
+    attack_damage: "<aqua>+{value}% Aanvalsschade"
+    hp: "<red>+{value}❤"
+    saturated_regen: "<gold>+{value} verzadigde regeneratie"
+    full_hunger_regen: "<gold>+{value} Volledige Honger Regeneratie"
+    almost_full_hunger_regen: "<gold>+{value} Bijna Volledige Honger Regeneratie"
+    mana_regen: "<aqua>+{value} Mana/s Regen"
+    luck: "<dark_green>+{value} Geluk"
+    double_drop_chance: "<dark_green>Dubbele Drop Kans: {value}%"
+    xp_gain: "<blue>+{value}% {xp_unit} winst"
+    anvil_cost_reduction: "<blue>Aambeeld Vermindering: {value}%"
+    max_mana: "<blue>Max Mana: {value}"
+    incoming_damage: "<dark_purple>-{value}% Inkomende Schade"
   unclaimed_items:
-    unclaimed_items_title: 'Eis items op'
-    inventory_full: '&eJe hebt niet genoeg ruimte in je inventaris om dat item te claimen'
-    click_to_claim: '&eKlik om te claimen!'
+    unclaimed_items_title: "Eis items op"
+    inventory_full: "<yellow>Je hebt niet genoeg ruimte in je inventaris om dat item te claimen"
+    click_to_claim: "<yellow>Klik om te claimen!"
   leaderboard:
-    leaderboard_title: '{skill} Scorebord'
-    player_entry: '&e{place}. &6{player}'
-    skill_level: '&7Niveau: &f{level}'
+    leaderboard_title: "{skill} Scorebord"
+    player_entry: "<yellow>{place}. <gold>{player}"
+    skill_level: "<gray>Niveau: <white>{level}"
   sources:
-    sources_title: '{skill} XP Bronnen ({current_page}/{total_pages})'
-    sorter: '&bSorteer XP bronnen'
-    sort_type: "&7{selected}{type_name}\n"
-    selected: '&f> '
-    descending: 'Hoogste naar laagste'
-    ascending: 'Laagste naar Hoogste'
-    alphabetical: 'Naam (A-Z)'
-    reverse_alphabetical: 'Naam (Z-A)'
-    sort_click: '&eClick om sorteertype te wisselen'
-    source_name: '&f{name}'
-    source_xp: '&7XP: &a{xp}'
-    source_xp_rate: '&7XP: &a{xp}/{unit}'
-    multiplied_xp: "\n\n&Multiplied XP: &a{xp}"
-    multiplied_xp_rate: "\n\n&XP met Vermenigvuldiging: &a{xp}/{unit}"
-    multiplied_desc: "\n&7&oDit is de XP die je daadwerkelijk verdient\n&7&obased op je huidige XP multipliers"
+    sources_title: "{skill} XP Bronnen ({current_page}/{total_pages})"
+    sorter: "<aqua>Sorteer XP bronnen"
+    sort_type: "<gray>{selected}{type_name}"
+    selected: "<white>> "
+    descending: "Hoogste naar laagste"
+    ascending: "Laagste naar Hoogste"
+    alphabetical: "Naam (A-Z)"
+    reverse_alphabetical: "Naam (Z-A)"
+    sort_click: "<yellow>Click om sorteertype te wisselen"
+    source_name: "<white>{name}"
+    source_xp: "<gray>XP: <green>{xp}"
+    source_xp_rate: "<gray>XP: <green>{xp}/{unit}"
+    multiplied_xp: "<strikethrough>ultiplied XP: <green>{xp}"
+    multiplied_xp_rate: "&XP met Vermenigvuldiging: <green>{xp}/{unit}"
+    multiplied_desc: "<gray><italic>Dit is de XP die je daadwerkelijk verdient<gray><italic>based op je huidige XP multipliers"
   abilities:
-    abilities_title: '{skill} Mogelijkheden'
-    locked_desc: "&fBeschrijving:\n  &7{desc}"
-    unlocked_at: '&7Ontgrendeld op &3{skill} {level}'
-    your_ability_level: '&fJouw Level: &b{level}'
-    your_ability_level_maxed: '&fJouw Level: &b{level} &6(MAXED)'
-    unlocked_desc: "&fVolgende upgrade op &3{skill} {level}&f\n  &7{desc}"
-    unlocked_desc_maxed: "&fBeschrijving:\n  &7{desc}"
-    desc_upgrade_value: '&7{current}&8→{next}&7'
+    abilities_title: "{skill} Mogelijkheden"
+    locked_desc: "<white>Beschrijving: <gray>{desc}"
+    unlocked_at: "<gray>Ontgrendeld op <dark_aqua>{skill} {level}"
+    your_ability_level: "<white>Jouw Level: <aqua>{level}"
+    your_ability_level_maxed: "<white>Jouw Level: <aqua>{level} <gold>(MAXED)"
+    unlocked_desc: "<white>Volgende upgrade op <dark_aqua>{skill} {level}<white> <gray>{desc}"
+    unlocked_desc_maxed: "<white>Beschrijving: <gray>{desc}"
+    desc_upgrade_value: "<gray>{current}<dark_gray>→{next}<gray>"
 mana_abilities:
   replenish:
     name: Aanvullen
-    desc: "&7Replants worden automatisch gewassen voor \n&7  {value} seconden. &e[Rechtsklik schoffel en\n&e breekt de bijsnijd om te activeren]"
-    raise: '&7Je verhoogt je schoffel'
-    lower: '&7Je verlaagt je schoffel'
-    start: '&6Replenish Geactiveerd! &7(-{mana} {mana_unit})'
-    end: '&7Replenish is versleten uit'
+    desc: "<gray>Replants worden automatisch gewassen voor <gray>  {value} seconden. <yellow>[Rechtsklik schoffel en<yellow> breekt de bijsnijd om te activeren]"
+    raise: "<gray>Je verhoogt je schoffel"
+    lower: "<gray>Je verlaagt je schoffel"
+    start: "<gold>Replenish Geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish is versleten uit"
   treecapitator:
     name: Treecapitator
-    desc: "&7Breekt complete bomen meteen voor \n&7  {value} seconden. &e[Rechtsklik bijl en\n&e breek logboek om te activeren]"
-    raise: '&7Je verhoogt je bijl'
-    lower: '&7Je verlaagt je bijl'
-    start: '&6Treecapitator geactiveerd! &7(-{mana} {mana_unit})'
-    end: '&7Treecapitator is uitgeput'
+    desc: "<gray>Breekt complete bomen meteen voor <gray>  {value} seconden. <yellow>[Rechtsklik bijl en<yellow> breek logboek om te activeren]"
+    raise: "<gray>Je verhoogt je bijl"
+    lower: "<gray>Je verlaagt je bijl"
+    start: "<gold>Treecapitator geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator is uitgeput"
   speed_mine:
     name: Snelheid Mijn
-    desc: "&7Geeft Haast {haste_level} voor {value} seconden.\n&e  [Rechtsklik pikhouweel en mijn\n&e  blok om te activeren]"
-    raise: '&7Je verhoogt je pikhouweel'
-    lower: '&7Je verlaagt je pikhouweel'
-    start: '&6Snelheidsmijn geactiveerd! &7(-{mana} {mana_unit})'
-    end: '&7Snelheidsmijn is uitgeput'
+    desc: "<gray>Geeft Haast {haste_level} voor {value} seconden.<yellow>  [Rechtsklik pikhouweel en mijn<yellow>  blok om te activeren]"
+    raise: "<gray>Je verhoogt je pikhouweel"
+    lower: "<gray>Je verlaagt je pikhouweel"
+    start: "<gold>Snelheidsmijn geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Snelheidsmijn is uitgeput"
   absorption:
     name: Absorptie
-    desc: "Inkomende schade vermindert mana\n&7 bij 2x Minecraft schade in plaats van je\n&7 gezondheid voor {value} seconden. Mana zal niet\n&7 regenereren terwijl Absorptie actief is.\n  &e[Klik met de linkermuisknop en neem schade om te activeren]"
-    raise: '&7U verhoogt uw schild'
-    lower: '&7Je verlaagt je schild'
-    start: '&6Absorptie geactiveerd! &7(-{mana} {mana_unit})'
-    end: '&7Absorptie is versleten uit'
+    desc: "Inkomende schade vermindert mana<gray> bij 2x Minecraft schade in plaats van je<gray> gezondheid voor {value} seconden. Mana zal niet<gray> regenereren terwijl Absorptie actief is. <yellow>[Klik met de linkermuisknop en neem schade om te activeren]"
+    raise: "<gray>U verhoogt uw schild"
+    lower: "<gray>Je verlaagt je schild"
+    start: "<gold>Absorptie geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorptie is versleten uit"
   terraform:
     name: Terraform
-    desc: "Breek blokken direct in een blokstraal\n&7  in dezelfde laag bij het graven voor {value} seconden. Je\n&7  moet een schep gebruiken en extra blokken die kapot zijn moeten\n&7  hetzelfde type en in een enkele aangesloten venijn zijn.\n&7  &e[Rechtsklik schep en graf blok om te activeren]"
-    raise: '&7Je verhoogt je schep'
-    lower: '&7Je verlaagt je schep'
-    start: '&6Terraform geactiveerd! &7(-{mana} {mana_unit})'
-    end: '&7Terraform is uitgeput'
+    desc: "Breek blokken direct in een blokstraal<gray>  in dezelfde laag bij het graven voor {value} seconden. Je<gray>  moet een schep gebruiken en extra blokken die kapot zijn moeten<gray>  hetzelfde type en in een enkele aangesloten venijn zijn.<gray>  <yellow>[Rechtsklik schep en graf blok om te activeren]"
+    raise: "<gray>Je verhoogt je schep"
+    lower: "<gray>Je verlaagt je schep"
+    start: "<gold>Terraform geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform is uitgeput"
   sharp_hook:
     name: Scherpe Haak
-    desc: "Breng {value} schade toe aan een gehakte entiteit\n&7  als je links klikt met een vishengel"
-    use: '&6Gebruikt Scherpe Hook! &7(-{mana} {mana_unit})'
-    menu: "\n&d&lMana Vermogen &9{mana_ability} {level}\n  &7Schade: &c{value} &7Mana Kost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
+    desc: "Breng {value} schade toe aan een gehakte entiteit<gray>  als je links klikt met een vishengel"
+    use: "<gold>Gebruikt Scherpe Hook! <gray>(-{mana} {mana_unit})"
+    menu: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Schade: <red>{value} <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
   charged_shot:
     name: Geladen Schot
-    desc: "Pijlen die je schiet brengen meer schade toe\n&7  op basis van hoe ver de boog werd teruggetrokken.\n&7  mana consumeert in dit proces. Doet {value}% meer\n&7  schade per mana verbruikt. &e[linkermuisklik\n&e  een boog om te schakelen van geladen opname modus]"
-    enable: '&7Geladen opname modus is nu ingeschakeld'
-    disable: '&7Geladen opname modus is nu uitgeschakeld'
-    shoot: '&6Gebruikt Opgeladen Schot! &d+{percent}% DMG &7(-{mana} {mana_unit})'
-    menu: "\n&d&lMana Vermogen &9{mana_ability} {level}\n  &7Schade: &c+{value}% / Mana &7Max Mana Kosten: &b{mana_cost}\n "
+    desc: "Pijlen die je schiet brengen meer schade toe<gray>  op basis van hoe ver de boog werd teruggetrokken.<gray>  mana consumeert in dit proces. Doet {value}% meer<gray>  schade per mana verbruikt. <yellow>[linkermuisklik<yellow>  een boog om te schakelen van geladen opname modus]"
+    enable: "<gray>Geladen opname modus is nu ingeschakeld"
+    disable: "<gray>Geladen opname modus is nu uitgeschakeld"
+    shoot: "<gold>Gebruikt Opgeladen Schot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+    menu: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Schade: <red>+{value}% / Mana <gray>Max Mana Kosten: <aqua>{mana_cost}"
   lightning_blade:
     name: Bliksem Zwaard
-    desc: Verhoogt aanvalsnelheid met {value}% gedurende {duration} seconden.\n&e [Rechtsklik zwaard en valt mob aan om te activeren]
-    raise: '&7Je maakt je zwaard klaar'
-    lower: '&7Je verlaagt je zwaard'
-    start: '&6Bliksem Zwaard Geactiveerd! &7(-{mana} {mana_unit})'
-    end: '&7Bliksemmes is uitgeput'
-    menu: "\n&d&lMana Vermogen &9{mana_ability} {level}\n  &7Aanval Snelheid: &c+{value}% &7Duur: &een{duration}s\n  &7Mana Kost: &b{mana_cost} &7Cooldown: &e{cooldown}s\n "
-  not_ready: '&cMogelijkheid niet gereed! &7({cooldown}s)'
-  not_enough_mana: '&eNiet genoeg mana! &7({mana} {mana_unit} vereist, je hebt {current_mana}/{max_mana})'
+    desc: Verhoogt aanvalsnelheid met {value}% gedurende {duration} seconden.<yellow> [Rechtsklik zwaard en valt mob aan om te activeren]
+    raise: "<gray>Je maakt je zwaard klaar"
+    lower: "<gray>Je verlaagt je zwaard"
+    start: "<gold>Bliksem Zwaard Geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Bliksemmes is uitgeput"
+    menu: "<light_purple><bold>Mana Vermogen <blue>{mana_ability} {level} <gray>Aanval Snelheid: <red>+{value}% <gray>Duur: <yellow>en{duration}s <gray>Mana Kost: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s"
+  not_ready: "<red>Mogelijkheid niet gereed! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Niet genoeg mana! <gray>({mana} {mana_unit} vereist, je hebt {current_mana}/{max_mana})"
 rewards:
   item:
     default_menu_message: "\n  {display_name}"
@@ -739,49 +739,49 @@ rewards:
 skills:
   farming:
     name: Landbouw
-    desc: '&7Oogst gewassen om Landbouw {xp_unit} te verdienen'
+    desc: "<gray>Oogst gewassen om Landbouw {xp_unit} te verdienen"
   foraging:
     name: Smeden
-    desc: '&7Knip bomen om houtkap {xp_unit} te verdienen'
+    desc: "<gray>Knip bomen om houtkap {xp_unit} te verdienen"
   mining:
     name: Mijnbouw
-    desc: '&7Mijn steen en erts om Mijnbouw {xp_unit} te verdienen'
+    desc: "<gray>Mijn steen en erts om Mijnbouw {xp_unit} te verdienen"
   fishing:
     name: Vissen
-    desc: '&7Vis om vissen te verdienen {xp_unit}'
+    desc: "<gray>Vis om vissen te verdienen {xp_unit}"
   excavation:
     name: Opgraving
-    desc: '&7Graaf met een schep om de Uitgraving te verdienen {xp_unit}'
+    desc: "<gray>Graaf met een schep om de Uitgraving te verdienen {xp_unit}"
   archery:
     name: Boogschieten
-    desc: "&7Schiet mobs en spelers met een boog om\n&7verdien Boogschutter {xp_unit}"
+    desc: "<gray>Schiet mobs en spelers met een boog om<gray>verdien Boogschutter {xp_unit}"
   defense:
     name: Verdediging
-    desc: '&7Neem schade van entiteiten om Verdediging te verdienen {xp_unit}'
+    desc: "<gray>Neem schade van entiteiten om Verdediging te verdienen {xp_unit}"
   fighting:
     name: Vechten
-    desc: "&7Vecht mobs met slagwapens om\n&7Vecht {xp_unit} te verdienen"
+    desc: "<gray>Vecht mobs met slagwapens om<gray>Vecht {xp_unit} te verdienen"
   endurance:
     name: Uithoudingsvermogen
-    desc: '&7Loop en rennen om Uithoudingsvermogen te verdienen {xp_unit}'
+    desc: "<gray>Loop en rennen om Uithoudingsvermogen te verdienen {xp_unit}"
   agility:
     name: Geloof
-    desc: "&7Spring en neem val schade om\n&7Agility {xp_unit} te verdienen"
+    desc: "<gray>Spring en neem val schade om<gray>Agility {xp_unit} te verdienen"
   alchemy:
     name: Alchemie
-    desc: '&7Drankjes om Alchemie te verdienen {xp_unit}'
+    desc: "<gray>Drankjes om Alchemie te verdienen {xp_unit}"
   enchanting:
     name: Betovering
-    desc: "&7Betover items en boeken om\n&7Betovering {xp_unit} te verdienen"
+    desc: "<gray>Betover items en boeken om<gray>Betovering {xp_unit} te verdienen"
   sorcery:
     name: Sorcery
-    desc: '&7Gebruik mana vaardigheden om Sorcery {xp_unit} te verdienen'
+    desc: "<gray>Gebruik mana vaardigheden om Sorcery {xp_unit} te verdienen"
   healing:
     name: Genezing
-    desc: "&7Drink en drankjes splash om\n&7Genezing {xp_unit} te verdienen"
+    desc: "<gray>Drink en drankjes splash om<gray>Genezing {xp_unit} te verdienen"
   forging:
     name: Smeden
-    desc: "&7Combineer en pas boeken in een aambeeld toe op\n&7verdien met {xp_unit}"
+    desc: "<gray>Combineer en pas boeken in een aambeeld toe op<gray>verdien met {xp_unit}"
 sources:
   farming:
     wheat: Tarwe
@@ -1035,34 +1035,34 @@ sources:
 stats:
   strength:
     name: Kracht
-    desc: "&7Kracht verhoogt uw aanvalsschade\n&7met verschillende wapens"
-    color: '&4'
-    symbol: '➽'
+    desc: "<gray>Kracht verhoogt uw aanvalsschade<gray>met verschillende wapens"
+    color: "<dark_red>"
+    symbol: "➽"
   health:
     name: Gezondheid
-    desc: "&7Gezondheid verhoogt het aantal van {hp_unit} jij\n&7hebt waardoor je langer kunt meedoen in\n&7gevechten"
-    color: '&c'
-    symbol: '❤'
+    desc: "<gray>Gezondheid verhoogt het aantal van {hp_unit} jij<gray>hebt waardoor je langer kunt meedoen in<gray>gevechten"
+    color: "<red>"
+    symbol: "❤"
   regeneration:
     name: Regeneratie
-    desc: "&7Regeneratie verhoogt hoe snel je\n&7herstel zowel gezondheid als mana"
-    color: '&6'
-    symbol: '❥'
+    desc: "<gray>Regeneratie verhoogt hoe snel je<gray>herstel zowel gezondheid als mana"
+    color: "<gold>"
+    symbol: "❥"
   luck:
     name: Luck
-    desc: "&7Geluk verhoogt je kansen om\n&7zeldzame buit van mobs, vissen en meer te krijgen"
-    color: '&2'
-    symbol: '☘'
+    desc: "<gray>Geluk verhoogt je kansen om<gray>zeldzame buit van mobs, vissen en meer te krijgen"
+    color: "<dark_green>"
+    symbol: "☘"
   wisdom:
     name: Wijsdom
-    desc: "&7Wisdom verhoogt je max mana, verhoogt\n&7ervaring winst en vermindert de aambeeld kosten"
-    color: '&9'
-    symbol: '✿'
+    desc: "<gray>Wisdom verhoogt je max mana, verhoogt<gray>ervaring winst en vermindert de aambeeld kosten"
+    color: "<blue>"
+    symbol: "✿"
   toughness:
     name: Hardheid
-    desc: "&7Hardheid verhoogt het aantal\n&7schade verminderd door vijandelijke aanvallen"
-    color: '&5'
-    symbol: '✦'
+    desc: "<gray>Hardheid verhoogt het aantal<gray>schade verminderd door vijandelijke aanvallen"
+    color: "<dark_purple>"
+    symbol: "✦"
 units:
   mana: Mana
   hp: HP
