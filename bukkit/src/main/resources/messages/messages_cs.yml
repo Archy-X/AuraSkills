@@ -5,767 +5,767 @@ abilities:
   farming:
     bountiful_harvest:
       name: Bohatá Sklizeň
-      desc: "{value}% šance na dvojité dropy\n&7  z plodin."
-      info: '{value}% Dvojité dropy'
+      desc: "{value}% šance na dvojité dropy z plodin."
+      info: "{value}% Dvojité dropy"
     farmer:
       name: Farmář
-      desc: 'Získejte o {value}% více XP při farmaření.'
-      info: '+{value}% XP'
+      desc: "Získejte o {value}% více XP při farmaření."
+      info: "+{value}% XP"
     scythe_master:
       name: Mistr kosy
-      desc: 'Zvýší poškození motykou o {value}%'
-      info: '+{value}% Poškození motikou'
+      desc: "Zvýší poškození motykou o {value}%"
+      info: "+{value}% Poškození motikou"
     geneticist:
       name: Genetik
-      desc: "Zvyšuje nárůst nasycení pomocí\n&7  rostlinných potravin o {value}."
-      info: '+{value} Sytosti'
+      desc: "Zvyšuje nárůst nasycení pomocí rostlinných potravin o {value}."
+      info: "+{value} Sytosti"
     triple_harvest:
       name: Trojnásobná sklizeň
-      desc: "{value}% šance na dvojité dropy\n&7  z plodin."
-      info: '{value}% 2x Drops'
+      desc: "{value}% šance na dvojité dropy z plodin."
+      info: "{value}% 2x Drops"
   foraging:
     lumberjack:
       name: Dřevorubec
-      desc: "{value}% šance na dvojité dropy\n&7  z plodin."
-      info: '{value}% Dvojité dropy'
+      desc: "{value}% šance na dvojité dropy z plodin."
+      info: "{value}% Dvojité dropy"
     forager:
       name: Lesník
-      desc: 'Získejte o {value}% více XP při lesnictví.'
-      info: '+{value}% XP'
+      desc: "Získejte o {value}% více XP při lesnictví."
+      info: "+{value}% XP"
     axe_master:
       name: Mistr sekery
-      desc: 'Zvyšuje poškození seker o {value}%'
-      info: '+{value}% Poškození Sekerou'
+      desc: "Zvyšuje poškození seker o {value}%"
+      info: "+{value}% Poškození Sekerou"
     valor:
       name: Udatnost
-      desc: "Granty +{value} Síla při držení\n&7  sekery"
-      info: '+{value} Síla'
+      desc: "Granty +{value} Síla při držení sekery"
+      info: "+{value} Síla"
     shredder:
       name: Drtič
-      desc: "{value}% šance na trojnásobné poškození\n&7  trvanlivosti sekerami."
-      info: '{value}% 3x Poškození Odolnosti'
+      desc: "{value}% šance na trojnásobné poškození trvanlivosti sekerami."
+      info: "{value}% 3x Poškození Odolnosti"
   mining:
     lucky_miner:
       name: Horník Štěstěny
-      desc: "{value}% šance na dvojité dropy\n&7  z rud."
-      info: '{value}% Dvojité dropy'
+      desc: "{value}% šance na dvojité dropy z rud."
+      info: "{value}% Dvojité dropy"
     miner:
       name: Horník
-      desc: 'Získej o {value}% více XP při těžení.'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP při těžení."
+      info: "+{value}% XP"
     pick_master:
       name: Mistr Krumpáče
-      desc: 'Uděl o {value}% více poškození krumpáčem.'
-      info: '+{value}% poškození krumpáče'
+      desc: "Uděl o {value}% více poškození krumpáčem."
+      info: "+{value}% poškození krumpáče"
     stamina:
       name: Výdrž
-      desc: "Přidá +{value} odolnosti, když\n&7  držíš krumpáč"
-      info: '+{value} Odolnosti'
+      desc: "Přidá +{value} odolnosti, když držíš krumpáč"
+      info: "+{value} Odolnosti"
     hardened_armor:
       name: Odolné brnění
-      desc: "{value}% šance na negaci odolnosti\n&7  poškození zbroje."
-      info: '{value}% Bez ztráty životnosti'
+      desc: "{value}% šance na negaci odolnosti poškození zbroje."
+      info: "{value}% Bez ztráty životnosti"
   fishing:
     lucky_catch:
       name: Úlovek štěstěny
-      desc: "{value}% šance na dvojité dropy\n&7  při rybaření."
-      info: '{value}% Dvojité dropy'
+      desc: "{value}% šance na dvojité dropy při rybaření."
+      info: "{value}% Dvojité dropy"
     fisher:
       name: Rybář
-      desc: 'Získejte o {value}% více XP k rybaření'
-      info: '+{value}% XP'
+      desc: "Získejte o {value}% více XP k rybaření"
+      info: "+{value}% XP"
     treasure_hunter:
       name: Lovec pokladů
-      desc: 'O {value}% vyšší šance na získání vzácné kořisti při rybolovu.'
-      info: '+{value}% Vzácné kořisti'
+      desc: "O {value}% vyšší šance na získání vzácné kořisti při rybolovu."
+      info: "+{value}% Vzácné kořisti"
     grappler:
       name: Kovboj
-      desc: 'Přitáhni entity s {value}% více rychlosti.'
-      info: '+{value}% Rychlosti Zahákování'
+      desc: "Přitáhni entity s {value}% více rychlosti."
+      info: "+{value}% Rychlosti Zahákování"
     epic_catch:
       name: Epický úlovek
-      desc: "{value}% šance na dvojité dropy\n&7 z rybaření."
-      info: '+{value}% Epické kořisti'
+      desc: "{value}% šance na dvojité dropyz rybaření."
+      info: "+{value}% Epické kořisti"
   excavation:
     metal_detector:
       name: Detektor kovů
-      desc: 'O {value}% vyšší šance na získání vzácné kořisti z kopání.'
-      info: '+{value}% Vzácná kořist'
+      desc: "O {value}% vyšší šance na získání vzácné kořisti z kopání."
+      info: "+{value}% Vzácná kořist"
     excavator:
       name: Bagr
-      desc: 'Získej o {value}% více XP k bagrování'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP k bagrování"
+      info: "+{value}% XP"
     spade_master:
       name: Mistr rýče
-      desc: 'Uděl o {value}% více poškození lopatou.'
-      info: '+{value}% Poškození lopatou'
+      desc: "Uděl o {value}% více poškození lopatou."
+      info: "+{value}% Poškození lopatou"
     bigger_scoop:
       name: Větší Naběračka
-      desc: 'O {value}% vetší šance na získání trojitých dropů z kopání.'
-      info: '{value}% šance na trojitý drop'
+      desc: "O {value}% vetší šance na získání trojitých dropů z kopání."
+      info: "{value}% šance na trojitý drop"
     lucky_spades:
       name: Rýče štěstěny
-      desc: 'O {value}% vyšší šance na získání epické kořisti z kopání.'
-      info: '+{value}% Epická kořist'
+      desc: "O {value}% vyšší šance na získání epické kořisti z kopání."
+      info: "+{value}% Epická kořist"
   archery:
     crit_chance:
       name: Šance na Critical
-      desc: '+{value}% šance na udělení critical hitu.'
-      info: '+{value}% Šance na Critical'
+      desc: "+{value}% šance na udělení critical hitu."
+      info: "+{value}% Šance na Critical"
     archer:
       name: Střelec
-      desc: 'Získej o {value}% více XP k farmaření.'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP k farmaření."
+      info: "+{value}% XP"
     bow_master:
       name: Mistr lukostřelec
-      desc: 'Uděl o {value}% více poškození lukem.'
-      info: '+{value}% Poškození Lukem'
+      desc: "Uděl o {value}% více poškození lukem."
+      info: "+{value}% Poškození Lukem"
     piercing:
       name: Průraznost
-      desc: "{value}% šance na proražení\n&7  šípů skrz moby."
-      info: '{value}% Šance na Proražení'
+      desc: "{value}% šance na proražení šípů skrz moby."
+      info: "{value}% Šance na Proražení"
     stun:
       name: Omráčení
-      desc: "{value}% šance na snížení rychlosti\n&7  nepřítele o 20% na 2 sekundy."
-      info: '{value}% Šance na Omráčení'
+      desc: "{value}% šance na snížení rychlosti nepřítele o 20% na 2 sekundy."
+      info: "{value}% Šance na Omráčení"
   defense:
     shielding:
       name: Zaštítění
-      desc: "Snižuje příchozí poškození o {value}%\n&7  při plížení."
-      info: '-{value}% Příchozí poškození při plížení'
+      desc: "Snižuje příchozí poškození o {value}% při plížení."
+      info: "-{value}% Příchozí poškození při plížení"
     defender:
       name: Obránce
-      desc: 'Získej o {value}% více XP k Obraně'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP k Obraně"
+      info: "+{value}% XP"
     mob_master:
       name: Mistr Mobů
-      desc: 'Sníží příchozí poškození z mobů o {value}%'
-      info: '-{value}% Poškození z Mobů'
+      desc: "Sníží příchozí poškození z mobů o {value}%"
+      info: "-{value}% Poškození z Mobů"
     immunity:
       name: Imunita
-      desc: "{value}% šance na úplné zrušení\n&7  nepřátelského útoku."
-      info: 'Na {value}% Imunní'
+      desc: "{value}% šance na úplné zrušení nepřátelského útoku."
+      info: "Na {value}% Imunní"
     no_debuff:
       name: No Debuff
-      desc: "{value}% šance na zrušení škodlivého\n&7  účinku lektvaru."
-      info: '{value}% No Debuff'
+      desc: "{value}% šance na zrušení škodlivého účinku lektvaru."
+      info: "{value}% No Debuff"
   fighting:
     crit_damage:
       name: Kritické Poškození
-      desc: 'Zvyšuje kritické poškození o {value}%'
-      info: '+{value}% Kritické Požkození'
+      desc: "Zvyšuje kritické poškození o {value}%"
+      info: "+{value}% Kritické Požkození"
     fighter:
       name: Bojovník
-      desc: 'Získej o {value}% více XP k bojování'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP k bojování"
+      info: "+{value}% XP"
     sword_master:
       name: Mistr Meče
-      desc: 'Udělejte o {value}% více poškození mečem.'
-      info: '+{value}% Poškození mečem'
+      desc: "Udělejte o {value}% více poškození mečem."
+      info: "+{value}% Poškození mečem"
     first_strike:
       name: První Úder
-      desc: 'Uděl o {value}% více poškození na první hit.'
-      info: '+{value}% Poškození Prvního Zásahu'
-      dealt: '&cPrvní úder!'
+      desc: "Uděl o {value}% více poškození na první hit."
+      info: "+{value}% Poškození Prvního Zásahu"
+      dealt: "<red>První úder!"
     bleed:
       name: Krvácení
-      desc: "{value}% šance na způsobení krvácení pro\n&7  nepřítele na 3 tiky krvácení,\n&7  což způsobí poškození {value_2} za tik."
-      info: '{value}% šance, {value_2} poškození'
-      enemy_bleeding: '&cNepřítel Krvácí!'
-      self_bleeding: '&cKrvácíš!'
-      stop: '&fKrvácení přestalo'
+      desc: "{value}% šance na způsobení krvácení pro nepřítele na 3 tiky krvácení, což způsobí poškození {value_2} za tik."
+      info: "{value}% šance, {value_2} poškození"
+      enemy_bleeding: "<red>Nepřítel Krvácí!"
+      self_bleeding: "<red>Krvácíš!"
+      stop: "<white>Krvácení přestalo"
   endurance:
     anti_hunger:
       name: Anti-Hlad
-      desc: '{value}% šance na zastavení hladovění.'
-      info: '{value}% Bez ztráty hladu'
+      desc: "{value}% šance na zastavení hladovění."
+      info: "{value}% Bez ztráty hladu"
     runner:
       name: Běžec
-      desc: 'Získej o {value}% více XP k Výdrži.'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP k Výdrži."
+      info: "+{value}% XP"
     golden_heal:
       name: Zlaté Léčení
-      desc: "Zvyšuje efekt regenerace\n&7  uzdravování o {value}%"
-      info: '+{value}% Regenerační efekt'
+      desc: "Zvyšuje efekt regenerace uzdravování o {value}%"
+      info: "+{value}% Regenerační efekt"
     recovery:
       name: Obnovení
-      desc: "Zvyšuje přirozenou regeneraci, když\n&7  je méně než polovina zdraví o {value}%"
-      info: '+{value}% Regenerace při Nízkém HP'
+      desc: "Zvyšuje přirozenou regeneraci, když je méně než polovina zdraví o {value}%"
+      info: "+{value}% Regenerace při Nízkém HP"
     meal_steal:
       name: Zloděj Jídla
-      desc: "{value}% šance na ukradení 1 bodu hladu\n&7  při útoku na hráče."
-      info: '{value}% Ukradení Jídla'
+      desc: "{value}% šance na ukradení 1 bodu hladu při útoku na hráče."
+      info: "{value}% Ukradení Jídla"
   agility:
     light_fall:
       name: Lehký Pád
-      desc: 'Sníží poškození pádem o {value}%'
-      info: '-{value}% Poškození Pádem'
+      desc: "Sníží poškození pádem o {value}%"
+      info: "-{value}% Poškození Pádem"
     jumper:
       name: Skokan
-      desc: 'Získej o {value}% více XP k Výdrži'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP k Výdrži"
+      info: "+{value}% XP"
     sugar_rush:
       name: Cukrová Horečka
-      desc: "Vypité a rozbité lektvary rychlosti a zesílení skoků\n&7  přetrvají déle o {value}%."
-      info: '{value}% Dlouhotrvající Rychlost'
+      desc: "Vypité a rozbité lektvary rychlosti a zesílení skoků přetrvají déle o {value}%."
+      info: "{value}% Dlouhotrvající Rychlost"
     fleeting:
       name: Doznívání
-      desc: 'Získej o +{value}% rychlosti pohybu, když máš méně než 20% životů'
-      info: '+{value}% Rychlost'
-      start: '&fPrávě jsi získal doznívající zvýšení rychlosti pohybu! &7(+{value}% Rychlost)'
-      end: '&7Zvýšení rychlosti pohybu odeznělo'
+      desc: "Získej o +{value}% rychlosti pohybu, když máš méně než 20% životů"
+      info: "+{value}% Rychlost"
+      start: "<white>Právě jsi získal doznívající zvýšení rychlosti pohybu! <gray>(+{value}% Rychlost)"
+      end: "<gray>Zvýšení rychlosti pohybu odeznělo"
     thunder_fall:
       name: Bouřlivý Pád
-      desc: "Při plížení během pádu máš {value}% šanci\n&7 na udělení {value_2}% z fall damage mobům\n&7 v okolí 3 bloků"
-      info: '{value}% Šance, {value_2}% Poškození'
+      desc: "Při plížení během pádu máš {value}% šancina udělení {value_2}% z fall damage mobůmv okolí 3 bloků"
+      info: "{value}% Šance, {value_2}% Poškození"
   alchemy:
     alchemist:
       name: Alchymista
-      desc: "Lektvary které uvaříš budou\n&7  trvat o {value}% déle."
-      info: '+{value}% Trvání Lektvarů'
-      lore: '&a(+{duration})'
+      desc: "Lektvary které uvaříš budou trvat o {value}% déle."
+      info: "+{value}% Trvání Lektvarů"
+      lore: "<green>(+{duration})"
     brewer:
       name: Vařič
-      desc: 'Získej o {value}% více XP k Alchymii'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP k Alchymii"
+      info: "+{value}% XP"
     splasher:
       name: Rozstřikovač
-      desc: "Hozené lektvary přetrvají o {value}% déle\n&7  pro každého postiženého hráče."
-      info: '+{value}% Trvání/Hráč'
+      desc: "Hozené lektvary přetrvají o {value}% déle pro každého postiženého hráče."
+      info: "+{value}% Trvání/Hráč"
     lingering:
       name: Doznívání
-      desc: "Doznívající lektvary přirozeně mizí o {value}%\n&7  pomaleji a mizí o {value_2}% méně za každou dotčenou entitu."
-      info: '-{value}% Přírodní, -{value_2}% Rozpadu Entity'
+      desc: "Doznívající lektvary přirozeně mizí o {value}% pomaleji a mizí o {value_2}% méně za každou dotčenou entitu."
+      info: "-{value}% Přírodní, -{value_2}% Rozpadu Entity"
     wise_effect:
       name: Účinek Moudrosti
-      desc: "Získej {value} Moudrosti pro každý unikátní \n&7  aktivní efekt / lektvar."
-      info: '+{value} Moudrosti/Efekt'
+      desc: "Získej {value} Moudrosti pro každý unikátní aktivní efekt / lektvar."
+      info: "+{value} Moudrosti/Efekt"
   enchanting:
     xp_convert:
       name: Převaděč XP
-      desc: "Získej 1 Minecraftí zkušenost za každých {value}\n&7  Skill XP,  které získaš."
-      info: '1 EXP/{value} Skill XP'
+      desc: "Získej 1 Minecraftí zkušenost za každých {value} Skill XP, které získaš."
+      info: "1 EXP/{value} Skill XP"
     enchanter:
       name: Zaklínač
-      desc: 'Získej o {value}% více XP při enchantování.'
-      info: '+{value}% XP'
+      desc: "Získej o {value}% více XP při enchantování."
+      info: "+{value}% XP"
     xp_warrior:
       name: XP Bojovník
-      desc: "Moby, které zabiješ, mají o {value}% šanci na\n&7  dropnutí dvojitých XP."
-      info: '{value}% Dvojité mob XP'
+      desc: "Moby, které zabiješ, mají o {value}% šanci na dropnutí dvojitých XP."
+      info: "{value}% Dvojité mob XP"
     enchanted_strength:
       name: Síla Očarování
-      desc: "Získej {value} Síly za každý enchant\n&7  co máš na předmětu v ruce."
-      info: '{value} Síla/Enchant'
+      desc: "Získej {value} Síly za každý enchant co máš na předmětu v ruce."
+      info: "{value} Síla/Enchant"
     lucky_table:
       name: Enchant Table Štěstěny
-      desc: "Položky, které očaruješ pomocí enchantu\n&7  mají o {value}% větší šanci na lepší enchant\n&7  o 1, pokud není maximální úroveň enchantu"
-      info: '{value}% Šance na vylepšení enchantů'
+      desc: "Položky, které očaruješ pomocí enchantu mají o {value}% větší šanci na lepší enchant o 1, pokud není maximální úroveň enchantu"
+      info: "{value}% Šance na vylepšení enchantů"
   healing:
     life_essence:
       name: Životní Esence
       desc: Instatní lečivé lektvarý pro zdraví {value}% více.
-      info: '+{value}% Okamžité zdraví '
+      info: "+{value}% Okamžité zdraví "
     healer:
       name: Lečitel
       desc: Získej {value}% více XP za lečení.
-      info: '+{value}% XP'
+      info: "+{value}% XP"
     life_steal:
       name: Ukrást život
-      desc: Uzdrav{value}% of the max HP nepřatelské davy\nn&7  a hráče, které zabiješ.
-      info: 'UKRÁST {value}% HP'
+      desc: Uzdrav{value}% of the max HP nepřatelské davy<gray> a hráče, které zabiješ.
+      info: "UKRÁST {value}% HP"
     golden_heart:
       name: Zlaté srdce
-      desc: Poškození způsoben tvým absorpčního srdcem je\n&7  snížena o {value}%
-      info: '-{value}% Absorptní poškození'
+      desc: Poškození způsoben tvým absorpčního srdcem je snížena o {value}%
+      info: "-{value}% Absorptní poškození"
     revival:
       name: Oživení
-      desc: Získaní &c+{value} Zdraví &7and &6+{value_2} Regenerace\n&7  po dobu 30 sekund po respawnu.
-      info: '+{value} Zdraví, +{value_2} Regenerace'
-      message: '&fZískal si bonus k oživení na 30 sekund! &f(&c+{value} Zdraví, &6+{value_2} Regenerace&f)'
+      desc: Získaní <red>+{value} Zdraví <gray>and <gold>+{value_2} Regenerace po dobu 30 sekund po respawnu.
+      info: "+{value} Zdraví, +{value_2} Regenerace"
+      message: "<white>Získal si bonus k oživení na 30 sekund! <white>(<red>+{value} Zdraví, <gold>+{value_2} Regenerace<white>)"
   forging:
     disenchanter:
       name: Zaklínač
-      desc: Získaní {value}% více zkušeností při zaklínaní\n&7  Item pomocí grindstone.
-      info: '+{value}% Grindstone EXP'
+      desc: Získaní {value}% více zkušeností při zaklínaní Item pomocí grindstone.
+      info: "+{value}% Grindstone EXP"
     forger:
       name: Kovář
       desc: Získaní {value}% Více kovářských XP.
-      info: '+{value}% XP'
+      info: "+{value}% XP"
     repairing:
       name: Opravení
-      desc: Opravení předmětů v kovadlině za použití sýrové suroviny\n&7  zníž bude vyroben z opravy n&7  {value}% více durability.
-      info: '+{value}% Opravení kovadliny'
+      desc: Opravení předmětů v kovadlině za použití sýrové suroviny zníž bude vyroben z opravy n<gray> {value}% více durability.
+      info: "+{value}% Opravení kovadliny"
     anvil_master:
       name: Mistr Kovadliny
-      desc: Zvyšuje maximální náklady na opravu kovadliny\n&7  než to bude přilíš drahé {value} to zažít.
-      info: '{value} Maximální cena'
+      desc: Zvyšuje maximální náklady na opravu kovadliny než to bude přilíš drahé {value} to zažít.
+      info: "{value} Maximální cena"
     skill_mender:
       name: Dovednostní Mender
-      desc: Získaní dovednosti XP má a {value}% šance na opravení\n&7  držený předmět nebo opotřebovaný kus brnění s Mending\n&7  enchantováním 1 durability per 2 dovednostní XP.
-      info: '{value}% Šance na omráčení'
+      desc: Získaní dovednosti XP má a {value}% šance na opravení držený předmět nebo opotřebovaný kus brnění s Mending enchantováním 1 durability per 2 dovednostní XP.
+      info: "{value}% Šance na omráčení"
 acf:
   core:
-    permission_denied: '&cJe mi líto, ale k provedení tohoto příkazu nemáš oprávnění.'
-    permission_denied_parameter: '&cJe mi líto, ale k provedení tohoto příkazu nemáš oprávnění.'
-    error_generic_logged: '&cVyskytla se chyba. Tento problém byl zaznamenán. Omluvám se za nepříjemnost.'
-    unknown_command: '&cNeznámý příkaz, napiš &e/sk help'
-    invalid_syntax: '&ePouži: &e{command} &a{syntax}'
-    error_prefix: '&cError: {message}'
-    error_performing_command: "&cOmlouvám se, ale při provádění tohoto příkazu došlo k chybě."
-    info_message: '{message}'
-    please_specify_one_of: '&cChyba: Zadej jednu z (&e{valid}&c)'
-    must_be_a_number: '&cChyba: {num} musí být číslo.'
-    must_be_min_length: '&cChyba: musí mít alespoň {min} znaků.'
-    must_be_max_length: '&cChyba: musí být nanejvýš {max} znaků.'
-    please_specify_at_most: '&cChyba: Zadej hodnotu nanejvýš {max}.'
-    please_specify_at_least: '&cChyba: Zadej hodnotu alespoň {min}.'
-    not_allowed_on_console: '&cChyba: Konzole nesmí spustit tento příkaz.'
-    could_not_find_player: '&cChyba: Nelze najít hráče s názvem: &e{search}'
-    no_command_matched_search: '&cŽádný příkaz neodpovídá &e{search}.'
-    help_page_information: '&b - Zobrazí se stránka &a{page} &bof &a{totalpages} &b(&e{results}&b výsledků).'
-    help_no_results: '&bChyba: Žádné další výsledky.'
-    help_header: '&e=== &bZobrazení nápovědy pro &a{commandprefix}{command}&e ==='
-    help_format: '&b{commandprefix}{command} &a{parameters} &e{separator} {description}'
-    help_detailed_header: '&e=== &bZobrazení nápovědy pro &a{commandprefix}{command}&e ==='
-    help_detailed_command_format: '&b{command}{parameters} &a{separator} &e{description}'
-    help_detailed_parameter_format: '&a{syntaxorname}: &e{description}'
-    help_search_header: '&e=== &bZobrazení nápovědy pro &a{commandprefix}{command}&e ==='
+    permission_denied: "<red>Je mi líto, ale k provedení tohoto příkazu nemáš oprávnění."
+    permission_denied_parameter: "<red>Je mi líto, ale k provedení tohoto příkazu nemáš oprávnění."
+    error_generic_logged: "<red>Vyskytla se chyba. Tento problém byl zaznamenán. Omluvám se za nepříjemnost."
+    unknown_command: "<red>Neznámý příkaz, napiš <yellow>/sk help"
+    invalid_syntax: "<yellow>Použi: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>Omlouvám se, ale při provádění tohoto příkazu došlo k chybě."
+    info_message: "{message}"
+    please_specify_one_of: "<red>Chyba: Zadej jednu z (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Chyba: {num} musí být číslo."
+    must_be_min_length: "<red>Chyba: musí mít alespoň {min} znaků."
+    must_be_max_length: "<red>Chyba: musí být nanejvýš {max} znaků."
+    please_specify_at_most: "<red>Chyba: Zadej hodnotu nanejvýš {max}."
+    please_specify_at_least: "<red>Chyba: Zadej hodnotu alespoň {min}."
+    not_allowed_on_console: "<red>Chyba: Konzole nesmí spustit tento příkaz."
+    could_not_find_player: "<red>Chyba: Nelze najít hráče s názvem: <yellow>{search}"
+    no_command_matched_search: "<red>Žádný příkaz neodpovídá <yellow>{search}."
+    help_page_information: "<aqua> - Zobrazí se stránka <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> výsledků)."
+    help_no_results: "<aqua>Chyba: Žádné další výsledky."
+    help_header: "<yellow>=== <aqua>Zobrazení nápovědy pro <green>{commandprefix}{command}<yellow> ==="
+    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_header: "<yellow>=== <aqua>Zobrazení nápovědy pro <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_command_format: "<aqua>{command}{parameters} <green>{separator} <yellow>{description}"
+    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
+    help_search_header: "<yellow>=== <aqua>Zobrazení nápovědy pro <green>{commandprefix}{command}<yellow> ==="
   minecraft:
-    invalid_world: '&cChyba: Tento svět neexistuje.'
-    you_must_be_holding_item: '&cChyba: Musíš držet předmět v hlavní ruce.'
-    player_is_vanished_confirm: "&eVarování: &a{vanished} &eis zmizel. Nevyhazujte jejich obálku!\n&eChcete-li potvrdit přidání akce &a:potvrďte &eto konec jejich jména.\n&eEx: {vanished}:Potvrdit"
-    username_too_short: 'Chyba: Uživatelské jméno je příliš krátké, musí mít alespoň tři znaky.'
-    is_not_a_valid_name: '&cChyba: &e{name} &cje neplatné uživatelské jméno.'
-    multiple_players_match: '&cChyba: Více hráčů odpovídá &b{search} &e({all})&c, buď prosím konkrétnější.'
-    no_player_found_server: '&cŽádný hráč &e{search} &cis připojen k tomuto serveru.'
-    no_player_found_offline: '&cŽádný hráč &e{search}&c nebyl nalezen.'
-    no_player_found: '&cŽádný hráč &e{search}&c nebyl nalezen.'
-    location_please_specify_world: '&cChyba: Zadej svět. Příklad: &eworld:x,y,z.'
-    location_please_specify_xyz: '&cChyba: Zadej souřadnice x, y a z. Příklad: &eworld:x,y,z.'
-    location_console_not_relative: '&cChyba: Konzole nesmí použít relativní souřadnice pro umístění.'
+    invalid_world: "<red>Chyba: Tento svět neexistuje."
+    you_must_be_holding_item: "<red>Chyba: Musíš držet předmět v hlavní ruce."
+    player_is_vanished_confirm: "<yellow>Varování: <green>{vanished} <yellow>is zmizel. Nevyhazujte jejich obálku!\n<yellow>Chcete-li potvrdit přidání akce <green>:potvrďte <yellow>to konec jejich jména.\n<yellow>Ex: {vanished}:Potvrdit"
+    username_too_short: "Chyba: Uživatelské jméno je příliš krátké, musí mít alespoň tři znaky."
+    is_not_a_valid_name: "<red>Chyba: <yellow>{name} <red>je neplatné uživatelské jméno."
+    multiple_players_match: "<red>Chyba: Více hráčů odpovídá <aqua>{search} <yellow>({all})<red>, buď prosím konkrétnější."
+    no_player_found_server: "<red>Žádný hráč <yellow>{search} <red>is připojen k tomuto serveru."
+    no_player_found_offline: "<red>Žádný hráč <yellow>{search}<red> nebyl nalezen."
+    no_player_found: "<red>Žádný hráč <yellow>{search}<red> nebyl nalezen."
+    location_please_specify_world: "<red>Chyba: Zadej svět. Příklad: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Chyba: Zadej souřadnice x, y a z. Příklad: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Chyba: Konzole nesmí použít relativní souřadnice pro umístění."
 action_bar:
-  idle: '&c{hp}/{max_hp}❤                 &b{mana}/{max_mana} {mana_unit}'
-  xp: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  xp_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7({current_xp}/{level_xp} {xp_unit})  &b{mana}/{max_mana} {mana_unit}'
-  maxed: '&c{hp}/{max_hp}❤  &6+{xp_gained} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
-  maxed_removed: '&c{hp}/{max_hp}❤  &6-{xp_removed} {skill} {xp_unit} &7(MAXED)  &b{mana}/{max_mana} {mana_unit}'
-  ability: '{Zpráva}'
-  boss_bar_xp: '&6{skill} {level} &7({current_xp}/{level_xp} {xp_unit})'
-  boss_bar_maxed: '&6{skill} {level} &7(MAXED)'
+  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
+  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
+  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
+  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
+  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
+  ability: "{Zpráva}"
+  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
+  boss_bar_maxed: "<gold>{skill} {level} <gray>(MAXED)"
 commands:
-  prefix: '&8[&bDovednosti&8]&r '
+  prefix: "<dark_gray>[<aqua>Dovednosti<dark_gray>]<reset> "
   armor:
     modifier:
       add:
-        added: '{color}{stat} &7modifikátor s úrovní &b{value} &7byl přidán k tvémů itemů'
-        already_exists: '&eModifikátor brnění se staty {color}{stat} &již existuje na tvém brnění! Odstraníš to pomocí with /sk armor modifier remove'
-        lore: '&7{stat}: {color}+{value}'
-        lore_subtract: '&7{stat}: {color}-{value}'
+        added: "{color}{stat} <gray>modifikátor s úrovní <aqua>{value} <gray>byl přidán k tvémů itemů"
+        already_exists: "<yellow>Modifikátor brnění se staty {color}{stat} &již existuje na tvém brnění! Odstraníš to pomocí with /sk armor modifier remove"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
-        does_not_exist: '&eTvůj item nemá a {color}{stat} &emodifikátorů!'
-        removed: '{color}{stat} &7modifikátor byl z tvého itemů odstraněn'
+        does_not_exist: "<yellow>Tvůj item nemá a {color}{stat} <yellow>modifikátorů!"
+        removed: "{color}{stat} <gray>modifikátor byl z tvého itemů odstraněn"
       list:
-        header: '&fNalezené modifikátory brnění:'
-        entry: '  {color}{stat}&f - {value}'
+        header: "<white>Nalezené modifikátory brnění:"
+        entry: "  {color}{stat}<white> - {value}"
       removeall:
-        removed: '&7Z tvého itemů byly odstraněny všechny modifikátory brnění'
+        removed: "<gray>Z tvého itemů byly odstraněny všechny modifikátory brnění"
     multiplier:
       add:
-        added: '&b{target} &7multiplikátor s hodnotou &b{value} &7byl přidán na tvůj item'
-        already_exists: '&eMultiplikátor brnění s cílem &b{target} &ejiž existuje na tvém brnění! Nejprv ho odstraň pomocí /sk armor multiplier remove'
-        skill_lore: '&7Při nošení: &b+{value}% {skill} XP'
-        skill_lore_subtract: '&7Při nošení: &b-{value}% {skill} XP'
-        global_lore: '&7Při nošení: &9+{value}% Dovednostni XP'
-        global_lore_subtract: '&7Při nošení: &9-{value}% Dovednostni XP'
+        added: "<aqua>{target} <gray>multiplikátor s hodnotou <aqua>{value} <gray>byl přidán na tvůj item"
+        already_exists: "<yellow>Multiplikátor brnění s cílem <aqua>{target} <yellow>již existuje na tvém brnění! Nejprv ho odstraň pomocí /sk armor multiplier remove"
+        skill_lore: "<gray>Při nošení: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Při nošení: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Při nošení: <blue>+{value}% Dovednostni XP"
+        global_lore_subtract: "<gray>Při nošení: <blue>-{value}% Dovednostni XP"
       remove:
-        does_not_exist: '&eTvůj item nemá a &b{target} &earmor multiplikátor!'
-        removed: '&b{target} &7multiplikátor brnění byl z tvého předmětu odstraněn'
+        does_not_exist: "<yellow>Tvůj item nemá a <aqua>{target} <yellow>armor multiplikátor!"
+        removed: "<aqua>{target} <gray>multiplikátor brnění byl z tvého předmětu odstraněn"
       list:
-        header: '&fNalezené multiplikátory brnění:'
-        entry: '  &b{target}&f - {value}'
+        header: "<white>Nalezené multiplikátory brnění:"
+        entry: "  <aqua>{target}<white> - {value}"
       removeall:
-        removed: '&7Z tvého předmětu byly odstraněny všechny multiplikátory brnění'
+        removed: "<gray>Z tvého předmětu byly odstraněny všechny multiplikátory brnění"
     requirement:
       add:
-        added: '&3{skill}&7 požádavek na brnění s úrovni &b{level}&7 byl přidán na tvůj item'
-        already_exists: '&eItem už má požádavek na &3{skill}&e požadovanou zbroj! Nejprv ji odstraníš pomocí with &6/sk armor requirement remove'
-        lore: '&cVyžaduje &3{skill} {level}'
+        added: "<dark_aqua>{skill}<gray> požádavek na brnění s úrovni <aqua>{level}<gray> byl přidán na tvůj item"
+        already_exists: "<yellow>Item už má požádavek na <dark_aqua>{skill}<yellow> požadovanou zbroj! Nejprv ji odstraníš pomocí with <gold>/sk armor requirement remove"
+        lore: "<red>Vyžaduje <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: '&eTvůj Item &3{skill}&e nemá požádovanou zbroj!'
-        removed: '&3{skill}&7 Z tvého předmětu byl odstraněn požadavek na brnění'
+        does_not_exist: "<yellow>Tvůj Item <dark_aqua>{skill}<yellow> nemá požádovanou zbroj!"
+        removed: "<dark_aqua>{skill}<gray> Z tvého předmětu byl odstraněn požadavek na brnění"
       list:
-        header: '&fNalezené požadavky na zbroj:'
-        entry: '  &3{skill} &f- &b{level}'
+        header: "<white>Nalezené požadavky na zbroj:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
-        removed: '&7Z tvého předmětu byly odstraněny všechny požadavky na brnění'
-      equip: '&eNesplňuješ požadavky na vybavení tohoto itemu: {requirements}'
-      entry: '&b{skill} {level}&7, '
+        removed: "<gray>Z tvého předmětu byly odstraněny všechny požadavky na brnění"
+      equip: "<yellow>Nesplňuješ požadavky na vybavení tohoto itemu: {requirements}"
+      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
-      confirm: '&cNačtením zálohy se vrátí všechna data dovedností hráčů. Tato akce je trvalá a nelze ji vrátit zpět. Před načtením zálohy můžeš chtít uložit. Chceš tuto akci potvrdit, zadej příkaz znovu'
-      loading: '&fNačítaní zálohy...'
-      loaded: '&aÚspěšně načtená záloha'
-      error: '&cChyba při načtení zálohy: {error}'
-      must_be_yaml: '&eSoubor musí být pouze .yml souboru!'
-      file_not_found: '&eZáloha tohoto názvu souboru ve složce záloh neexistuje!'
+      confirm: "<red>Načtením zálohy se vrátí všechna data dovedností hráčů. Tato akce je trvalá a nelze ji vrátit zpět. Před načtením zálohy můžeš chtít uložit. Chceš tuto akci potvrdit, zadej příkaz znovu"
+      loading: "<white>Načítaní zálohy..."
+      loaded: "<green>Úspěšně načtená záloha"
+      error: "<red>Chyba při načtení zálohy: {error}"
+      must_be_yaml: "<yellow>Soubor musí být pouze .yml souboru!"
+      file_not_found: "<yellow>Záloha tohoto názvu souboru ve složce záloh neexistuje!"
     save:
-      saving: '&fÚkládání zálohy...'
-      saved: '&fZaláhovaný {type} data jako {file}'
-      error: '&cChyba při zálohování {type} dat! Podrobnosti viz chyba v konzole/níže'
+      saving: "<white>Úkládání zálohy..."
+      saved: "<white>Zaláhovaný {type} data jako {file}"
+      error: "<red>Chyba při zálohování {type} dat! Podrobnosti viz chyba v konzole/níže"
   claimitems:
-    no_items: '&eNemáš žádný item k reklamaci'
+    no_items: "<yellow>Nemáš žádný item k reklamaci"
   item:
     give:
-      sender: '&fDaroval &b{amount}x {key} &fpro{player}'
-      receiver: '&Bylo ti dáno&b{amount}x {key}'
+      sender: "<white>Daroval <aqua>{amount}x {key} <white>pro{player}"
+      receiver: "<aqua>ylo ti dáno<aqua>{amount}x {key}"
     modifier:
       add:
-        added: '{color}{stat} &7modifikátor s úrovní &b{value} &7byl přidán k tvému itemu'
-        already_exists: '&eModifikátor itemů se statem {color}{stat} &ejiž existuje tvém brnění! Nejprv to musíš odstranit pomocí /sk item modifier remove'
-        lore: '&7{stat}: {color}+{value}'
-        lore_subtract: '&7{stat}: {color}-{value}'
+        added: "{color}{stat} <gray>modifikátor s úrovní <aqua>{value} <gray>byl přidán k tvému itemu"
+        already_exists: "<yellow>Modifikátor itemů se statem {color}{stat} <yellow>již existuje tvém brnění! Nejprv to musíš odstranit pomocí /sk item modifier remove"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
-        does_not_exist: '&Tvůj item nemá {color}{stat} &emodifikátor!'
-        removed: '{color}{stat} &7modifikátor byl z tvého itemu odstraněn'
+        does_not_exist: "&Tvůj item nemá {color}{stat} <yellow>modifikátor!"
+        removed: "{color}{stat} <gray>modifikátor byl z tvého itemu odstraněn"
       list:
-        header: '&fNalezená modifikace pro item:'
-        entry: '  {color}{stat}&f - {value}'
+        header: "<white>Nalezená modifikace pro item:"
+        entry: "  {color}{stat}<white> - {value}"
       removeall:
-        removed: '&7Z tvého itemu byly odstraněny všechny modifikace na itemu'
+        removed: "<gray>Z tvého itemu byly odstraněny všechny modifikace na itemu"
     multiplier:
       add:
-        added: '&b{target} &7multiplikátor s hodnotou &b{value} &byl přidán k tvému itemu'
-        already_exists: '&eMultiplikátor itemu s cílem &b{target} &ejiž na tvém itemu už existuje! Nejprv to musíš odstranit pomocí /sk item multiplier remove'
-        skill_lore: '&7Při držení:: &b+{value}% {skill} XP'
-        skill_lore_subtract: '&7Při držení: &b-{value}% {skill} XP'
-        global_lore: '&7Při držení: &9+{value}% Dovednostní XP'
-        global_lore_subtract: '&7Při držení: &9-{value}% Dovednostní XP'
+        added: "<aqua>{target} <gray>multiplikátor s hodnotou <aqua>{value} <aqua>yl přidán k tvému itemu"
+        already_exists: "<yellow>Multiplikátor itemu s cílem <aqua>{target} <yellow>již na tvém itemu už existuje! Nejprv to musíš odstranit pomocí /sk item multiplier remove"
+        skill_lore: "<gray>Při držení:: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Při držení: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Při držení: <blue>+{value}% Dovednostní XP"
+        global_lore_subtract: "<gray>Při držení: <blue>-{value}% Dovednostní XP"
       remove:
-        does_not_exist: '&eTvůj item nemá a &b{target} &emultiplikátor itemů!'
-        removed: '&b{target} &7multiplikátor itemů byl z tvého itemů byl odstraněn'
+        does_not_exist: "<yellow>Tvůj item nemá a <aqua>{target} <yellow>multiplikátor itemů!"
+        removed: "<aqua>{target} <gray>multiplikátor itemů byl z tvého itemů byl odstraněn"
       list:
-        header: '&fNalezené multiplikátory pro itemy:'
-        entry: '  &b{target}&f - {value}'
+        header: "<white>Nalezené multiplikátory pro itemy:"
+        entry: "  <aqua>{target}<white> - {value}"
       removeall:
-        removed: '&7Všechny multiplikátory položek byly z tvého itemů odstraněny'
+        removed: "<gray>Všechny multiplikátory položek byly z tvého itemů odstraněny"
     register:
-      registered: '&fRegistrovaní držení itemů na klíč {key}'
-      already_registered: '&eKe klíči již byl zaregistrován item&f{key}&e, Použij &f/skills item unregister &epro odregistrovani prvně'
-      no_spaces: '&eKlíč itemů nesmí obsahovat mezery!'
+      registered: "<white>Registrovaní držení itemů na klíč {key}"
+      already_registered: "<yellow>Ke klíči již byl zaregistrován item<white>{key}<yellow>, Použij <white>/skills item unregister <yellow>pro odregistrovani prvně"
+      no_spaces: "<yellow>Klíč itemů nesmí obsahovat mezery!"
     requirement:
       add:
-        added: '&3{skill}&7 požadavek na item s úrovní &b{level}&7 byl přidán na tvůj item'
-        already_exists: '&eItem již má a &3{skill}&e item požádavek! Nejprv odstraň pomocí příkazu pomocí &6/sk item requirement remove'
-        lore: '&cVyžaduje &3{skill} {level}'
+        added: "<dark_aqua>{skill}<gray> požadavek na item s úrovní <aqua>{level}<gray> byl přidán na tvůj item"
+        already_exists: "<yellow>Item již má a <dark_aqua>{skill}<yellow> item požádavek! Nejprv odstraň pomocí příkazu pomocí <gold>/sk item requirement remove"
+        lore: "<red>Vyžaduje <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: '&eTvůj item nemá &3{skill}&e item požádavek!'
-        removed: '&3{skill}&7 požadavek na položku byl z tvoji položky odstraněn'
+        does_not_exist: "<yellow>Tvůj item nemá <dark_aqua>{skill}<yellow> item požádavek!"
+        removed: "<dark_aqua>{skill}<gray> požadavek na položku byl z tvoji položky odstraněn"
       list:
-        header: '&fNalezené požadavky na položku:'
-        entry: '  &3{skill} &f- &b{level}'
+        header: "<white>Nalezené požadavky na položku:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
-        removed: '&7Z tvoji položky byly odstraněny všechny požadavky na položku'
-      use: '&eNesplňuješ požadavky pro použití této položky: {requirements}'
-      entry: '&b{skill} {level}&7, '
+        removed: "<gray>Z tvoji položky byly odstraněny všechny požadavky na položku"
+      use: "<yellow>Nesplňuješ požadavky pro použití této položky: {requirements}"
+      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
-      unregistered: '&fNeregistrovaná položka s klíčem {key}'
-      not_registered: '&eS klíčem není registrována žádná položka {key}'
+      unregistered: "<white>Neregistrovaná položka s klíčem {key}"
+      not_registered: "<yellow>S klíčem není registrována žádná položka {key}"
   lang:
-    set: '&7Language set to &b{lang}'
-    not_found: '&eJazyk nenalezen!'
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Jazyk nenalezen!"
   mana:
-    display: '&fTvoje {mana_unit}: &b{current}/{max}'
-    display_other: '&f{mana_unit} of {player}: &b{current}/{max}'
-    add: '&7Přidáno &b{amount} {mana_unit} &7pro hráče &6{player}'
-    remove: '&7Odstraněno&b{amount} {mana_unit} &7od hráče &6{player}'
-    set: '&7Nastavit hráče &6{player} &7to &b{amount} {mana_unit}'
-    at_least_zero: '&e{mana_unit} musí být alespoň nula!'
-    console_specify_player: '&eKonzole musí specifikovat hráče!'
+    display: "<white>Tvoje {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Přidáno <aqua>{amount} {mana_unit} <gray>pro hráče <gold>{player}"
+    remove: "<gray>Odstraněno<aqua>{amount} {mana_unit} <gray>od hráče <gold>{player}"
+    set: "<gray>Nastavit hráče <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} musí být alespoň nula!"
+    console_specify_player: "<yellow>Konzole musí specifikovat hráče!"
   modifier:
     add:
-      added: '{color}{stat} &7Modifikátor level &b{value} &7se jmeném &f{name} &7přidán do hráčovi &6{player}'
-      already_exists: '&eModifier se jmeném {name} již hráč existuje &6{player}&e! Odstranis jej pomoci prikazu &6/sk modifier remove {player} {name}'
+      added: "{color}{stat} <gray>Modifikátor level <aqua>{value} <gray>se jmeném <white>{name} <gray>přidán do hráčovi <gold>{player}"
+      already_exists: "<yellow>Modifier se jmeném {name} již hráč existuje <gold>{player}<yellow>! Odstranis jej pomoci prikazu <gold>/sk modifier remove {player} {name}"
     remove:
-      not_found: '&eModifier {name} nemuže nalézt hráče &6{player}'
-      removed: '&7Modifier &f{name} &7odstraněn z hráče&6{player}'
+      not_found: "<yellow>Modifier {name} nemuže nalézt hráče <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>odstraněn z hráče<gold>{player}"
     list:
-      all_stats_header: '&7Modifikátory statistik pro hráče &6{player}:'
-      all_stats_entry: '  &f{name} - {color}{stat} &fLevel &6{value}'
-      one_stat_header: '&7Statistiky modifiery ({color}{stat}&7) pro hráče &6{player}:'
-      one_stat_entry: '  &f{name} - {color}{stat} &fLevel &6{value}'
-      players_only: '&ePouze hráči mohou uvést své vlastní modifikátory! Zkus zadat hráče'
+      all_stats_header: "<gray>Modifikátory statistik pro hráče <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Statistiky modifiery ({color}{stat}<gray>) pro hráče <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Pouze hráči mohou uvést své vlastní modifikátory! Zkus zadat hráče"
     removeall:
-      removed_all_stats: '&7Odstraněno &b{num} &7statistiky modifikatoru hrace&6{player}'
-      removed_one_stat: '&7Odsraněno &b{num} {color}{stat} &7modifier pro hráče &6{player}'
-      players_only: '&ePouze hráči mohou odstranit své vlastní modifikátory! Zkus zadat hráče'
+      removed_all_stats: "<gray>Odstraněno <aqua>{num} <gray>statistiky modifikatoru hrace<gold>{player}"
+      removed_one_stat: "<gray>Odsraněno <aqua>{num} {color}{stat} <gray>modifier pro hráče <gold>{player}"
+      players_only: "<yellow>Pouze hráči mohou odstranit své vlastní modifikátory! Zkus zadat hráče"
   multiplier:
     global: Global
-    list: '&fGlobal XP multiplikátor pro &6{player}&f: &b{multiplier}x / +{percent}%'
-    skill_entry: '&b{skill} &fXP multiplikátor: &b{multiplier}x / +{percent}%'
-    players_only: '&ePouze hráči mohou uvést svůj vlastní multiplikátor! Urči hráče!'
+    list: "<white>Global XP multiplikátor pro <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplikátor: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Pouze hráči mohou uvést svůj vlastní multiplikátor! Urči hráče!"
   rank:
-    header: '&b&lTvoje hodnocená dovednost'
-    power: '&eEnergie &7(Všechna dovednost): &f#{rank} z {total}'
-    entry: '&b{skill}&7: &f#{rank} of {total}'
-  reload: '&aConfig reloaded!'
+    header: "<aqua><bold>Tvoje hodnocená dovednost"
+    power: "<yellow>Energie <gray>(Všechna dovednost): <white>#{rank} z {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+  reload: "<green>Config reloaded!"
   save:
-    already_saving: '&eData jsou již ukládaná!'
-    mysql_not_enabled: '&eMySQL nebyl povolen při spuštění serveru, místo toho se ukládá do souboru!'
-    saved: '&aDovednostni data ulozena!'
+    already_saving: "<yellow>Data jsou již ukládaná!"
+    mysql_not_enabled: "<yellow>MySQL nebyl povolen při spuštění serveru, místo toho se ukládá do souboru!"
+    saved: "<green>Dovednostni data ulozena!"
   skill:
     reset:
-      reset_all: '&7Všechny dovednosti nastavená na level &b1 &7pro hráče &6{player}'
-      reset_skill: '&7Dovednost &b{skill} &7nastavena na úroveň &b1 &7pro hráče &6{player}'
+      reset_all: "<gray>Všechny dovednosti nastavená na level <aqua>1 <gray>pro hráče <gold>{player}"
+      reset_skill: "<gray>Dovednost <aqua>{skill} <gray>nastavena na úroveň <aqua>1 <gray>pro hráče <gold>{player}"
     setall:
-      at_least_one: '&eÚroveň musí být alespoň 1!'
-      set: '&7Všechny dovednosti nastavené na level &b{level} &7pro hráče &6{player}'
+      at_least_one: "<yellow>Úroveň musí být alespoň 1!"
+      set: "<gray>Všechny dovednosti nastavené na level <aqua>{level} <gray>pro hráče <gold>{player}"
     setlevel:
-      at_least_one: '&eÚroveň musí být alespoň 1!'
-      set: '&7Dovednosti &b{skill} &7nastavena na level &b{level} &7pro hráče &6{player}'
+      at_least_one: "<yellow>Úroveň musí být alespoň 1!"
+      set: "<gray>Dovednosti <aqua>{skill} <gray>nastavena na level <aqua>{level} <gray>pro hráče <gold>{player}"
   toggle:
-    enabled: '&aPanel akcí tvých dovedností byl aktivován'
-    disabled: '&cPanel akcí tvých dovedností byl deaktivován'
-    not_enabled: '&ePanel akcí dovedností není na tomto serveru povolen!'
+    enabled: "<green>Panel akcí tvých dovedností byl aktivován"
+    disabled: "<red>Panel akcí tvých dovedností byl deaktivován"
+    not_enabled: "<yellow>Panel akcí dovedností není na tomto serveru povolen!"
   top:
-    power_entry: '&f{rank}. &b{player} &f- {level}'
-    power_header: '&f--==&b&lŽebříček všech dovedností&f==--'
-    power_header_page: '&f--==&b&lŽebříček všech dovedností &f(Page {page})==--'
-    skill_header: '&f--==&b&l{skill} Žebříček&f==--'
-    skill_header_page: '&f--==&b&l{skill} Žebříček &f(Page {page})==--'
-    skill_entry: '&f{rank}. &b{player} &f- {level}'
-    average_header: '&f--==&b&lPrůměrný žebříček dovedností&f==--'
-    average_header_page: '&f--==&b&lPrůměrný žebříček dovedností &f(Page {page})==--'
-    average_entry: '&f{rank}. &b{player} &f- {level}'
-    usage: '&ePoužij: &a/sk top &f<page> &7or &a/sk top &f[skill] <page>'
+    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    power_header: "<white>--==<aqua><bold>Žebříček všech dovedností</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Žebříček všech dovedností </bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Žebříček<white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Žebříček </bold><white>(Page {page})==--"
+    skill_entry: "<white>{rank}. <aqua>{player} </bold><white>- {level}"
+    average_header: "<white>--==<aqua><bold>Průměrný žebříček dovedností</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Průměrný žebříček dovedností </bold><white>(Page {page})==--"
+    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    usage: "<yellow>Použij: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   updateleaderboards:
-    already_updating: '&eŽebříček se již aktualizuje!'
-    updated: '&aŽebříček aktualizován!'
-  version: '&fJsi na verzi dovednosti Aurelium &b{current_version}&f. Nejnovejsi verye Aurelium &b{latest_version}'
+    already_updating: "<yellow>Žebříček se již aktualizuje!"
+    updated: "<green>Žebříček aktualizován!"
+  version: "<white>Jsi na verzi dovednosti Aurelium <aqua>{current_version}<white>. Nejnovejsi verye Aurelium <aqua>{latest_version}"
   xp:
-    add: '&7Přidáno &b{amount} {skill} &7XP k hráči &7{player}'
-    set: '&7Nastavit &b{skill} &7XP pro hráče &7{player} &7to {amount}'
-    remove: '&7Odstraněno &b{amount} {skill} &7XP od hráče &6{player}'
-  unknown_skill: '&eNeznamá Dovednost!'
-  no_profile: '&eHráč nemá profil dovedností!'
+    add: "<gray>Přidáno <aqua>{amount} {skill} <gray>XP k hráči <gray>{player}"
+    set: "<gray>Nastavit <aqua>{skill} <gray>XP pro hráče <gray>{player} <gray>to {amount}"
+    remove: "<gray>Odstraněno <aqua>{amount} {skill} <gray>XP od hráče <gold>{player}"
+  unknown_skill: "<yellow>Neznamá Dovednost!"
+  no_profile: "<yellow>Hráč nemá profil dovedností!"
 leveler:
-  title: '&a{skill} Level Up'
-  subtitle: '&6{old} ➜ {new}'
-  level_up: "&3&m----------------------------------------\n&r &3Dovednosticky Level Up! &b&l{skill} &8{old}➜&3&l{new}\n \n &bOdměna:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n&3&m----------------------------------------"
+  title: "<green>{skill} Level Up"
+  subtitle: "<gold>{old} ➜ {new}"
+  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Dovednosticky Level Up! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Odměna:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  &aAbility Odemčen! &6&l{ability} &7byl odečmen"
-  ability_level_up: "\n  &aAbility Level Up! &6&l{ability} &7je nyní na úrovni &6{level}"
-  mana_ability_unlock: "\n  &dMana Ability Odemčený! &9&l{mana_ability} &7bylo odemčeno"
-  mana_ability_level_up: "\n  &dMana Ability Level Up! &9&l{mana_ability} &7je nyní na úrovni &6{level}"
-  money_reward: "\n  &a${amount}"
-  unclaimed_item: '&cMáš nevyzvednuté položky, protože tvůj inventář byl plný, použij &e/skills claimitems &cpro vyzvednuti'
+  ability_unlock: "\n  <green>Ability Odemčen! <gold><bold>{ability} </bold><gray>byl odečmen"
+  ability_level_up: "\n  <green>Ability Level Up! <gold><bold>{ability} </bold><gray>je nyní na úrovni <gold>{level}"
+  mana_ability_unlock: "\n  <light_purple>Mana Ability Odemčený! <blue><bold>{mana_ability} </bold><gray>bylo odemčeno"
+  mana_ability_level_up: "\n  <light_purple>Mana Ability Level Up! <blue><bold>{mana_ability} </bold><gray>je nyní na úrovni <gold>{level}"
+  money_reward: "\n  <green>${amount}"
+  unclaimed_item: "<red>Máš nevyzvednuté položky, protože tvůj inventář byl plný, použij <yellow>/skills claimitems <red>pro vyzvednuti"
 menus:
   common:
-    close: '&cZavřít'
-    level: '&7Level: &e{level}'
-    progress_to_level: "&7Průběh na Levelů {level}: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
-    max_level: '&6MAX LEVEL'
-    ability_levels: "&7Ability Levels:\n  {ability_1}\n  {ability_2}\n  {ability_3}\n  {ability_4}\n  {ability_5}\n "
-    ability_level_entry: '&6{ability} {level} &8({info})'
-    ability_level_entry_locked: '&8&m{ability}'
-    stats_leveled: "\n&7Statistiky Level: {stats}\n "
-    mana_ability: "\n&d&lMana Ability &9{mana_ability} {level}\n &7Poškození: &a{duration}s &7Cena Many: &b{mana_cost} &7Odpočet: &e{cooldown}s\n "
+    close: "<red>Zavřít"
+    level: "<gray>Level: <yellow>{level}"
+    progress_to_level: "<gray>Průběh na Levelů {level}: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
+    max_level: "<gold>MAX LEVEL"
+    ability_levels: "<gray>Ability Levels:  {ability_1}  {ability_2}  {ability_3}  {ability_4}  {ability_5} "
+    ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
+    ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
+    stats_leveled: "<gray>Statistiky Level: {stats} "
+    mana_ability: "<light_purple><bold>Mana Ability </bold><blue>{mana_ability} {level} <gray>Poškození: <green>{duration}s <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   skills_menu:
     skills_menu_title: Tvoje dovednosti
-    your_skills: '&bTvé dovednosti  - &6{player}'
-    your_skills_desc: "&7Upragdni dovednosti pro prováděním různých úkolů\n&7Odemkni cenná vylepšení stastistik,\n&7schopnosti a další!"
-    your_skills_hover: '&eUmístěním ukazatele myši na dovednost zobrazíš další informace!'
-    your_skills_click: '&eKliknutím na dovednost zobrazíš postup na úroveň!'
-    skill_click: '&eKlikni pro zobrazení Level Progression!'
-    skill_locked: '&cK zobrazení této dovednosti nemáš oprávnění!'
+    your_skills: "<aqua>Tvé dovednosti  - <gold>{player}"
+    your_skills_desc: "<gray>Upragdni dovednosti pro prováděním různých úkolů<gray>Odemkni cenná vylepšení stastistik,<gray>schopnosti a další!"
+    your_skills_hover: "<yellow>Umístěním ukazatele myši na dovednost zobrazíš další informace!"
+    your_skills_click: "<yellow>Kliknutím na dovednost zobrazíš postup na úroveň!"
+    skill_click: "<yellow>Klikni pro zobrazení Level Progression!"
+    skill_locked: "<red>K zobrazení této dovednosti nemáš oprávnění!"
   level_progression_menu:
-    level_progression_menu_title: '{skill} Levely - Strana {page}'
-    your_ranking: '&eTvoje hodnocená dovednost'
-    rank_out_of: '&fJsi nově zařadil do &6{rank}&f mimo {total} hráčů'
-    rank_percent: '&fJste v top &6{percent}%&f hráčů'
-    back: '&aJdi zpátky'
-    back_click: '&7Zpět do nabídky dovedností'
-    next_page: '&6Další strana'
-    next_page_click: '&eKliknutím přejdeš na další stránku'
-    previous_page: '&6Předchozí stránka'
-    previous_page_click: '&eKliknutím přejdeš na předchozí stránku'
-    level_unlocked: '&aLevel {level}'
-    level_in_progress: '&eLevel {level}'
-    level_locked: '&cLevel {level}'
-    level_number: '&7Level &f{level}'
-    unlocked: '&aODEMČENÁ'
-    in_progress: '&ePRAVĚ PROBÍHÁ'
-    locked: '&cZAMKNUTO'
-    rewards: '&7Odměna:{rewards}'
-    rewards_entry: "\n  {color}+{num} {symbol} {stat}"
-    money_reward: "\n  &a${amount}"
-    ability_unlock: "\n&6{ability} &a&lAbilita Odemčena\n&7  {desc}\n "
-    ability_level: "\n&6{ability} {level}\n&7  {desc}\n "
-    mana_ability_unlock: "\n&9{mana_ability} &d&lMana Ability Odemčena \n&7  {desc}\n "
-    mana_ability_level: "\n&9{mana_ability} {level}\n&7  {desc}\n "
-    progress: "&7Průběh: &e{percent}%\n  &7{current_xp}/{level_xp} {xp_unit}"
+    level_progression_menu_title: "{skill} Levely - Strana {page}"
+    your_ranking: "<yellow>Tvoje hodnocená dovednost"
+    rank_out_of: "<white>Jsi nově zařadil do <gold>{rank}<white> mimo {total} hráčů"
+    rank_percent: "<white>Jste v top <gold>{percent}%<white> hráčů"
+    back: "<green>Jdi zpátky"
+    back_click: "<gray>Zpět do nabídky dovedností"
+    next_page: "<gold>Další strana"
+    next_page_click: "<yellow>Kliknutím přejdeš na další stránku"
+    previous_page: "<gold>Předchozí stránka"
+    previous_page_click: "<yellow>Kliknutím přejdeš na předchozí stránku"
+    level_unlocked: "<green>Level {level}"
+    level_in_progress: "<yellow>Level {level}"
+    level_locked: "<red>Level {level}"
+    level_number: "<gray>Level <white>{level}"
+    unlocked: "<green>ODEMČENÁ"
+    in_progress: "<yellow>PRAVĚ PROBÍHÁ"
+    locked: "<red>ZAMKNUTO"
+    rewards: "<gray>Odměna:{rewards}"
+    rewards_entry: "  {color}+{num} {symbol} {stat}"
+    money_reward: "  <green>${amount}"
+    ability_unlock: "<gold>{ability} <green><bold>Abilita Odemčena {desc} </bold>"
+    ability_level: "<gold>{ability} {level} {desc} "
+    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana Ability Odemčena  {desc} </bold>"
+    mana_ability_level: "<blue>{mana_ability} {level} {desc} "
+    progress: "<gray>Průběh: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
   stats_menu:
     stats_menu_title: Tvé statistiky
-    player_stat_entry: ' {color}{symbol} {stat} &f{level}'
-    skills: "\n&7Dovednosti: &f{skills}"
-    your_level: '&7Tvůj Level: {color}{level}'
-    attack_damage: '&4+{value}% Poškození při útoku'
-    hp: '&c+{value} ❤'
-    saturated_regen: '&6+{value} Nasycená regenerace'
-    full_hunger_regen: '&6+{value} Plná regenerace hladu'
-    almost_full_hunger_regen: '&6+{value} Téměř plná regenerace hladu'
-    mana_regen: '&b+{value} Mana/s Regen'
-    luck: '&2+{value} Štěstí'
-    double_drop_chance: '&2Dvojitá Drop Šánce: {value}%'
-    xp_gain: '&9+{value}% {xp_unit} Získaní'
-    anvil_cost_reduction: '&9Snížení nákladů na kovadlinu:: {value}%'
-    max_mana: '&9Max Mana: {value}'
-    incoming_damage: '&5-{value}% Příchozí poškození'
+    player_stat_entry: " {color}{symbol} {stat} <white>{level}"
+    skills: "<gray>Dovednosti: <white>{skills}"
+    your_level: "<gray>Tvůj Level: {color}{level}"
+    attack_damage: "<dark_red>+{value}% Poškození při útoku"
+    hp: "<red>+{value} ❤"
+    saturated_regen: "<gold>+{value} Nasycená regenerace"
+    full_hunger_regen: "<gold>+{value} Plná regenerace hladu"
+    almost_full_hunger_regen: "<gold>+{value} Téměř plná regenerace hladu"
+    mana_regen: "<aqua>+{value} Mana/s Regen"
+    luck: "<dark_green>+{value} Štěstí"
+    double_drop_chance: "<dark_green>Dvojitá Drop Šánce: {value}%"
+    xp_gain: "<blue>+{value}% {xp_unit} Získaní"
+    anvil_cost_reduction: "<blue>Snížení nákladů na kovadlinu:: {value}%"
+    max_mana: "<blue>Max Mana: {value}"
+    incoming_damage: "<dark_purple>-{value}% Příchozí poškození"
   unclaimed_items:
-    unclaimed_items_title: 'Získej předměty'
-    inventory_full: '&eNemáš dostatek místa ve svém inventáři, abys sis tento předmět mohli nárokovat'
-    click_to_claim: '&eKlikni pro Claimnutí!'
+    unclaimed_items_title: "Získej předměty"
+    inventory_full: "<yellow>Nemáš dostatek místa ve svém inventáři, abys sis tento předmět mohli nárokovat"
+    click_to_claim: "<yellow>Klikni pro Claimnutí!"
 mana_abilities:
   replenish:
     name: Doplnění
-    desc: "&7Automaticky se znovu zasadí plodiny po dobu\n&7  {value} sekund &e[Pravym tlacitkem mysi na motyčku a\n&e  prerušíš oříznutí pro aktivaci]"
-    raise: '&7Zvedl si svojí motyku'
-    lower: '&7Sklopil si motyku'
-    start: '&6Doplnění - Aktivován! &7(-{mana} {mana_unit})'
-    end: '&7Doplnění dosloužilo'
+    desc: "<gray>Automaticky se znovu zasadí plodiny po dobu {value} sekund <yellow>[Pravym tlacitkem mysi na motyčku a prerušíš oříznutí pro aktivaci]"
+    raise: "<gray>Zvedl si svojí motyku"
+    lower: "<gray>Sklopil si motyku"
+    start: "<gold>Doplnění - Aktivován! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Doplnění dosloužilo"
   treecapitator:
     name: Treecapitator
-    desc: "&7Pokácí celý strom za \n&7  {value} vteřin. &e[Klikni pravým tlačítkem\n&e  a znič blok dřeva pro aktivaci]"
-    raise: '&7Pozdvihl jsi sekeru'
-    lower: '&7Sklonil jsi sekeru'
-    start: '&6Treecapitator Aktivován! &7(-{mana} {mana_unit})'
-    end: '&7Treecapitator se opotřeboval'
+    desc: "<gray>Pokácí celý strom za {value} vteřin. <yellow>[Klikni pravým tlačítkem a znič blok dřeva pro aktivaci]"
+    raise: "<gray>Pozdvihl jsi sekeru"
+    lower: "<gray>Sklonil jsi sekeru"
+    start: "<gold>Treecapitator Aktivován! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator se opotřeboval"
   speed_mine:
     name: Rychlá těžba
-    desc: "&7Přidá spěch {haste_level} na {value} vteřin.\n&e  [Klikni pravým s krumpáčem\n&e  v ruce a vykopej blok pro aktivaci]"
-    raise: '&7Pozvedl jsi krumpáč'
-    lower: '&7Skopil si svůj krumpáč'
-    start: '&6Rychlost těžení - Aktivován &7(-{mana} {mana_unit})'
-    end: '&7Rychlí dolů se odčervoval'
+    desc: "<gray>Přidá spěch {haste_level} na {value} vteřin.<yellow> [Klikni pravým s krumpáčem v ruce a vykopej blok pro aktivaci]"
+    raise: "<gray>Pozvedl jsi krumpáč"
+    lower: "<gray>Skopil si svůj krumpáč"
+    start: "<gold>Rychlost těžení - Aktivován <gray>(-{mana} {mana_unit})"
+    end: "<gray>Rychlí dolů se odčervoval"
   absorption:
     name: Vstřebávání
-    desc: "Nastavajicí poškození sníží manu\n&7  o 2x poškození místo tvého \n&7  zdraví po dobu {value} sekund. Mana nebude\n&7  regenerovana, když je aktviní absorpce.\n  &e[Klikni levým tlačítkem na štít a aktivuj si poškození]"
-    raise: '&7Pozdvihnul si svůj štít'
-    lower: '&7Sklopil si svůj štít'
-    start: '&6Absorpce Aktivován! &7(-{mana} {mana_unit})'
-    end: '&7Absorpce vyprchal'
+    desc: "Nastavajicí poškození sníží manu o 2x poškození místo tvého zdraví po dobu {value} sekund. Mana nebude regenerovana, když je aktviní absorpce. <yellow>[Klikni levým tlačítkem na štít a aktivuj si poškození]"
+    raise: "<gray>Pozdvihnul si svůj štít"
+    lower: "<gray>Sklopil si svůj štít"
+    start: "<gold>Absorpce Aktivován! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorpce vyprchal"
   terraform:
     name: Terraform
-    desc: "Rozbij bloky okamžitě v okruhu 4 bloků\n&7  Ve stejné vrstvě při kopání po dobu {value} sekund. Ty\n&7  musíš použit lopatu a další bloky musí být rozbité\n&7  stejného typu a v jediné spojené žílé.\n&7  &e[Pro aktivaci klikni pravým tlačítkem na lopatu a vykopej blok]"
-    raise: '&7Pozdvihnul si svoji lopatu'
-    lower: '&7Sklopil si svoji lopatu'
-    start: '&6Terraform Aktivován! &7(-{mana} {mana_unit})'
-    end: '&7Terraform pravě vyprchal'
+    desc: "Rozbij bloky okamžitě v okruhu 4 bloků Ve stejné vrstvě při kopání po dobu {value} sekund. Ty musíš použit lopatu a další bloky musí být rozbité stejného typu a v jediné spojené žílé. <yellow>[Pro aktivaci klikni pravým tlačítkem na lopatu a vykopej blok]"
+    raise: "<gray>Pozdvihnul si svoji lopatu"
+    lower: "<gray>Sklopil si svoji lopatu"
+    start: "<gold>Terraform Aktivován! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform pravě vyprchal"
   sharp_hook:
     name: Ostrý hák
-    desc: "Způsob {value} poškození zahnuté entitě\n&7  při kliknutí levým rybářským prutem"
-    use: '&6Použij ostrý háček! &7(-{mana} {mana_unit})'
-    menu: "\n&d&lSchopnost Many &9{mana_ability} {level}\n &7Poškození &c{value} &7Cena Many: &b{mana_cost} &7Odpočet: &e{cooldown}s\n "
+    desc: "Způsob {value} poškození zahnuté entitě při kliknutí levým rybářským prutem"
+    use: "<gold>Použij ostrý háček! <gray>(-{mana} {mana_unit})"
+    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>{value} <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   charged_shot:
     name: Nabitá Střela
-    desc: "Vystřelené šípy způsobí větší škody\n&7  Na základě toho, jak daleko byl luk natažen zpět\n&7  Spotřebovana mana v procesu. Zbývá o {value}% více\n&7  Poškození na jednoho jedince &e[Levé kliknutí myši]\n&e  Luk přepneš do režimu nabitého snímku]"
-    enable: '&7Režim nabití snímku je nyní povolen'
-    disable: '&7Režim nabitého snímku je nyní deaktivován'
-    shoot: '&6Použij nabitou střelu! &d+{percent}% DMG &7(-{mana} {mana_unit})'
-    menu: "\n&d&lSchopnost Many &9{mana_ability} {level}\n &7Poškození &c+{value}% / Mana &7Max Mana Cost: &b{mana_cost}\n "
+    desc: "Vystřelené šípy způsobí větší škody Na základě toho, jak daleko byl luk natažen zpět Spotřebovana mana v procesu. Zbývá o {value}% více Poškození na jednoho jedince <yellow>[Levé kliknutí myši Luk přepneš do režimu nabitého snímku]"
+    enable: "<gray>Režim nabití snímku je nyní povolen"
+    disable: "<gray>Režim nabitého snímku je nyní deaktivován"
+    shoot: "<gold>Použij nabitou střelu! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>+{value}% / Mana <gray>Max Mana Cost: <aqua>{mana_cost} "
   lightning_blade:
     name: Lightning Blade
-    desc: Zvyšuj rychlost útoku o {value}% po dobu {duration} sekund.\n&e  [Klepni pravým tlačítkem myši a zaútoč na moba pro aktivaci]
-    raise: '&7Pozdvihnul si svůj meč'
-    lower: '&7Sklopil si svůj meč'
-    start: '&6Lightning Blade Aktivován! &7(-{mana} {mana_unit})'
-    end: '&7Lightning Blade se opotřeboval'
-    menu: "\n&d&lSchopnost Many &9{mana_ability} {level}\n &7Rychlost útoku &c+{value}% &7Trvání: &a{duration}s\n &7Cena Many &b{mana_cost} &7Odpočet: &e{cooldown}s\n "
-  not_ready: '&cSchopnost není připravena! &7({cooldown}s)'
-  not_enough_mana: '&eNedostane many! &7({mana} {mana_unit} vyžadovan, tvoje mana {current_mana}/{max_mana})'
+    desc: Zvyšuj rychlost útoku o {value}% po dobu {duration} sekund.<yellow> [Klepni pravým tlačítkem myši a zaútoč na moba pro aktivaci]
+    raise: "<gray>Pozdvihnul si svůj meč"
+    lower: "<gray>Sklopil si svůj meč"
+    start: "<gold>Lightning Blade Aktivován! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Lightning Blade se opotřeboval"
+    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Rychlost útoku <red>+{value}% <gray>Trvání: <green>{duration}s <gray>Cena Many <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
+  not_ready: "<red>Schopnost není připravena! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Nedostane many! <gray>({mana} {mana_unit} vyžadovan, tvoje mana {current_mana}/{max_mana})"
 rewards:
   item:
-    default_menu_message: "\n  {display_name}"
-    default_menu_message_multiple: "\n  {display_name} {amount}x"
-    default_chat_message: "\n  {display_name}"
-    default_chat_message_multiple: "\n  {display_name} {amount}x"
+    default_menu_message: "  {display_name}"
+    default_menu_message_multiple: "  {display_name} {amount}x"
+    default_chat_message: "  {display_name}"
+    default_chat_message_multiple: "  {display_name} {amount}x"
 skills:
   farming:
     name: Farmaření
-    desc: '&7Skliď plodiny k získaní Farmaření {xp_unit}'
+    desc: "<gray>Skliď plodiny k získaní Farmaření {xp_unit}"
   foraging:
     name: Lesnictví
-    desc: '&7Pokacej strom k vydělávaní Lesnictví {xp_unit}'
+    desc: "<gray>Pokacej strom k vydělávaní Lesnictví {xp_unit}"
   mining:
     name: Těžba
-    desc: '&7Těž kámen a rudu, abys získal Mining {xp_unit}'
+    desc: "<gray>Těž kámen a rudu, abys získal Mining {xp_unit}"
   fishing:
     name: Fishing
-    desc: '&7Uchytni rybu a vyděl jako rybář {xp_unit}'
+    desc: "<gray>Uchytni rybu a vyděl jako rybář {xp_unit}"
   excavation:
     name: Excavation
-    desc: '&7Kopej s lopatou pro získaní Excavation {xp_unit}'
+    desc: "<gray>Kopej s lopatou pro získaní Excavation {xp_unit}"
   archery:
     name: Lukostřelectví
-    desc: "&7Střílej příšery a hráče s lukem na\n&7Získej lučišniství {xp_unit}"
+    desc: "<gray>Střílej příšery a hráče s lukem na<gray>Získej lučišniství {xp_unit}"
   defense:
     name: Obrana
-    desc: '&7Získej poškození od entity, abys získal obranu {xp_unit}'
+    desc: "<gray>Získej poškození od entity, abys získal obranu {xp_unit}"
   fighting:
     name: Bojování
-    desc: "&7Bojuj s příšery se zbraněmi na blízko a vydělej si\n&7Bojování {xp_unit}"
+    desc: "<gray>Bojuj s příšery se zbraněmi na blízko a vydělej si<gray>Bojování {xp_unit}"
   endurance:
     name: Vytrvalost
-    desc: '&7Procházej se a spusť pro získaní zkušenosti {xp_unit}'
+    desc: "<gray>Procházej se a spusť pro získaní zkušenosti {xp_unit}"
   agility:
     name: Agility
-    desc: "&7Skok a padni k poškození k výdělku\n&7Agility {xp_unit}"
+    desc: "<gray>Skok a padni k poškození k výdělku<gray>Agility {xp_unit}"
   alchemy:
     name: Alchemie
-    desc: '&7Uvař lektvary k získaní Xp pro alchemii{xp_unit}'
+    desc: "<gray>Uvař lektvary k získaní Xp pro alchemii{xp_unit}"
   enchanting:
     name: Enchanting
-    desc: "&7Enchantováné itemy a knihy k výdělku\n&7Enchanting {xp_unit}"
+    desc: "<gray>Enchantováné itemy a knihy k výdělku<gray>Enchanting {xp_unit}"
   sorcery:
     name: Čarodějnictví
-    desc: '&7Použij schopnost many k získání Sorceru {xp_unit}'
+    desc: "<gray>Použij schopnost many k získání Sorceru {xp_unit}"
   healing:
     name: Léčení
-    desc: "&7Pití a splashnutí lektvarů k výdělku\n&7Léčení {xp_unit}"
+    desc: "<gray>Pití a splashnutí lektvarů k výdělku<gray>Léčení {xp_unit}"
   forging:
     name: Kovářství
-    desc: "&7Kombinuj knihy v kovadlině na\n&7Vydělávej jako kováč {xp_unit}"
+    desc: "<gray>Kombinuj knihy v kovadlině na<gray>Vydělávej jako kováč {xp_unit}"
 stats:
   strength:
     name: Strength
-    desc: "&7Strength zvyšuje poškezení při útoku\n&7s různýni zbraněmi"
-    color: '&4'
-    symbol: '➽'
+    desc: "<gray>Strength zvyšuje poškezení při útoku<gray>s různýni zbraněmi"
+    color: "<dark_red>"
+    symbol: "➽"
   health:
     name: Zdraví
-    desc: "&7Zdraví zvyšuje počet {hp_unit} tobě\n&7Mít, což tobě úmožní vydržet déle\n&7v bojích"
-    color: '&c'
-    symbol: '❤'
+    desc: "<gray>Zdraví zvyšuje počet {hp_unit} tobě<gray>Mít, což tobě úmožní vydržet déle<gray>v bojích"
+    color: "<red>"
+    symbol: "❤"
   regeneration:
     name: Regenarace
-    desc: "&7Regenerace zvyšuje tvojí rychlost\n&7Obnovení zdraví i many"
-    color: '&6'
-    symbol: '❥'
+    desc: "<gray>Regenerace zvyšuje tvojí rychlost<gray>Obnovení zdraví i many"
+    color: "<gold>"
+    symbol: "❥"
   luck:
     name: Štěstí
-    desc: "&7Štěstí zvyšuje tvoji šancí na získaní\n&7Vzácnou kořist z příšer, rybaření, a ostátních"
-    color: '&2'
-    symbol: '☘'
+    desc: "<gray>Štěstí zvyšuje tvoji šancí na získaní<gray>Vzácnou kořist z příšer, rybaření, a ostátních"
+    color: "<dark_green>"
+    symbol: "☘"
   wisdom:
     name: Moudrost
-    desc: "&7Moudrost zvyšuje tvoji maximální manu, zvyšuje\n&7Získávání zkušeností a snižuje náklad na kovadlinu"
-    color: '&9'
-    symbol: '✿'
+    desc: "<gray>Moudrost zvyšuje tvoji maximální manu, zvyšuje<gray>Získávání zkušeností a snižuje náklad na kovadlinu"
+    color: "<blue>"
+    symbol: "✿"
   toughness:
     name: Odolnost
-    desc: "&7Tvrdost zvyšuje množství poškození\n&7snížených při útoku nepřítelem"
-    color: '&5'
-    symbol: '✦'
+    desc: "<gray>Tvrdost zvyšuje množství poškození<gray>snížených při útoku nepřítelem"
+    color: "<dark_purple>"
+    symbol: "✦"
 units:
   mana: Mana
   hp: HP

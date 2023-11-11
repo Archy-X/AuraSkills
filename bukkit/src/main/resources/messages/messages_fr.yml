@@ -212,7 +212,7 @@ abilities:
       name: Fugace
       desc: "Gagnez +{value}% de vitesse de déplacement lorsque vous êtes à moins de 20% de votre vie"
       info: "+{value}% De vitesse"
-      start: "<white>Vous avez gagné un boost de vitesse de déplacement! &7(+{value}% de vitesse)"
+      start: "<white>Vous avez gagné un boost de vitesse de déplacement! <gray>(+{value}% de vitesse)"
       end: "<gray>Le gain de vitesse s'est dissipé."
     thunder_fall:
       name: Chute du tonnerre
