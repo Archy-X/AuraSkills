@@ -354,7 +354,7 @@ action_bar:
   boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
   boss_bar_maxed: "<gold>{skill} {level} <gray>(HÖCHSTLEVEL)"
 commands:
-  prefix: "<dark_gray>[<aqua>Fertigkeiten<dark_gray>] "
+  prefix: "<dark_gray>[<aqua>Fertigkeiten<dark_gray>]<reset> "
   armor:
     modifier:
       add:
@@ -504,6 +504,11 @@ commands:
     list: "<white>Globaler XP Multiplikator für <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP Multiplikator: <aqua>{multiplier}x / +{percent}%"
     players_only: "Nur Spieler können ihre eigenen Modifikatoren auflisten! Versuche einen Spieler anzugeben!"
+  profile:
+    skills: "Skills-Profil für <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats-Profil für <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Gesamtes Level: <white>{total_level}<gray>, Basislevel: <white>{base_level}<gray>, Geändertes Level: <white>{modified_level}"
   rank:
     header: "<aqua><bold>Deine Fertigkeiten-Platzierungen</bold>"
     power: "<yellow>Macht <gray>(Alle Fähigkeiten): <white>#{rank} von {total}"
@@ -538,6 +543,9 @@ commands:
     average_header_page: "<white>--==<aqua><bold>Durchschnitts Fertigkeitenrangliste </bold><white>(Page {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Verwendung: <green>/sk Top <white><page> <gray>oder <green>/sk Top <white>[skill] <page>"
+  transfer:
+    success: "<green>Erfolgreich Spielerdaten von <gray>{from} <green>zu <gray>{to} übertragen"
+    error: "<red>Es gab einen Fehler bei der Übertragung der Spielerdaten. Überprüfen Sie die Konsole auf Fehler."
   updateleaderboards:
     already_updating: "<yellow>Rangliste wird bereits aktualisiert!"
     updated: "<green>Rangliste aktualisiert!"
@@ -547,6 +555,7 @@ commands:
     set: "<gray>Setze <aqua>{skill} <gray>XP für Spieler <gray>{player} <gray>auf <aqua>{amount}"
     remove: "<gray>Entfernt <aqua>{amount} {skill} <gray>XP von Spieler <gold>{player}"
   unknown_skill: "<yellow>Unbekannte Fertigkeit!"
+  unknown_stat: ""
   no_profile: "<yellow>Spieler hat kein Fertigkeitenprofil!"
 leveler:
   title: "<green>{skill} Stufe erhöht"
@@ -561,102 +570,112 @@ leveler:
   unclaimed_item: "<red>Du hast unbeanspruchte Gegenstände, weil dein Inventar voll war, benutze <yellow>/Skills um <red>to sie zu beanspruchen"
 menus:
   common:
-    close: "<red>Schließen"
-    level: "<gray>Stufe: <yellow>{level}"
-    progress_to_level: "<gray>Fortschritt zu Level {level}: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
-    max_level: "<gold>HÖCHSTE STUFE"
-    ability_levels: "<gray>Fähigkeitsstufen:  {ability_1}  {ability_2}  {ability_3}  {ability_4}  {ability_5} "
-    ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
-    ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
-    stats_leveled: "<gray>Stats gelevelt: {stats} "
-    mana_ability: "<light_purple><bold>Mana-Fähigkeit </bold><blue>{mana_ability} {level}  <gray>Dauer: <green>{duration}s <gray>Mana-Kosten: <aqua>{mana_cost} <gray>Abklingzeit: <yellow>{cooldown}s "
-  skills_menu:
-    skills_menu_title: Deine Fertigkeiten
-    your_skills: "<aqua>Deine Fähigkeiten - <gold>{player}"
-    your_skills_desc: "<gray>Verbessere deine Fertigkeiten, indem du verschiedene Aufgaben<gray>erledigst um wertvolle Statistik-Boosts freizuschalten,<gray>Fähigkeiten, und mehr!"
-    your_skills_hover: "<yellow>Fahre über eine Fertigkeit um weitere Informationen zu erhalten!"
-    your_skills_click: "<yellow>Klicke auf eine Fertigkeit, um den Stufenfortschritt zu sehen!"
-    skill_click: "<yellow>Klicken, um den Levelfortschritt anzuzeigen!"
-    skill_locked: "<red>Du bist nicht berechtigt diese Fertigkeit anzuzeigen!"
-  level_progression_menu:
-    level_progression_menu_title: "{skill} Stufen - Seite {page}"
-    your_ranking: "<yellow>Dein Fertigkeitsrang"
-    rank_out_of: "<white>Du bist auf Rang <gold>{rank}<white> von {total} Spielern"
-    rank_percent: "<white>Du bist in den Top <gold>{percent}%<white> aller Spieler"
-    back: "<green>Zurück"
-    back_click: "<gray>Zurück zum Fertigkeiten-Menü"
-    next_page: "<gold>Nächste Seite"
-    next_page_click: "<yellow>Klicken, um zur nächsten Seite zu gelangen"
-    previous_page: "<gold>Vorherige Seite"
-    previous_page_click: "<yellow>Klicken, um zur vorherigen Seite zu gelangen"
-    level_unlocked: "<green>Stufe {level}"
-    level_in_progress: "<yellow>Stufe {level}"
-    level_locked: "<red>Stufe {level}"
-    level_number: "<gray>Stufe <white>{level}"
-    unlocked: "<green>FREIGESCHALTEN"
-    in_progress: "<yellow>IN ARBEIT"
-    locked: "<red>GESPERRT"
-    rewards: "<gray>Verdienste:{rewards}"
-    rewards_entry: "  {color}+{num} {symbol} {stat}"
-    money_reward: "  <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Fähigkeit freischalten {desc} </bold>"
-    ability_level: "<gold>{ability} {level} {desc} "
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Manafähigkeit freischalten {desc} </bold>"
-    mana_ability_level: "<blue>{mana_ability} {level} {desc} "
-    progress: "<gray>Fortschritt: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
-  stats_menu:
-    stats_menu_title: Deine Werte
-    player_stat_entry: " {color}{symbol} {stat} <white>{level}"
-    skills: "<gray>Fähigkeiten: <white>{skills}"
-    your_level: "<gray>Deine Stufe: {color}{level}"
-    attack_damage: "<dark_red>+{value}% Angriffsschaden"
-    hp: "<red>+{value} ❤"
-    saturated_regen: "<gold>+{value} Regeneration durch Sättigung"
-    full_hunger_regen: "<gold>+{value} Regeneration bei vollem Hunger"
-    almost_full_hunger_regen: "<gold>+{value} Regeneration bei fast vollem Hunger"
-    mana_regen: "<aqua>+{value} Mana Regeneration"
-    luck: "<dark_green>+{value} Glück"
-    double_drop_chance: "<dark_green>Doppelte Drop Chance: {value}%"
-    xp_gain: "<blue>+{value}% {xp_unit} Gewinn"
-    anvil_cost_reduction: "<blue>Amboss Kostensenkung: {value}%"
-    max_mana: "<blue>Max Mana: {value}"
-    incoming_damage: "<dark_purple>-{value}% eingehender Schaden"
+    close: "Schließen"
+    level: "Stufe"
+    progress_to_level: "Fortschritt zu Level"
+    max_level: "HÖCHSTE STUFE"
+    ability_levels: "Fähigkeitsstufen"
+    stats_leveled: "Stats gelevelt"
+    mana_ability: "Mana-Fähigkeit"
+    duration: "Dauer"
+    mana_cost: "Mana-Kosten"
+    cooldown: "Abklingzeit"
+    damage: "Schaden"
+    max_mana_cost: "Maximale Manakosten"
+    attack_speed: "Angriffsgeschwindigkeit"
+    back: "Zurück"
+    back_click: "Zurück zum {menu_name}-Menü"
+    unlocked: "FREIGESCHALTEN"
+    in_progress: "IN ARBEIT"
+    locked: "GESPERRT"
+    your_level: "Deine Stufe"
+    next_page: "Nächste Seite"
+    next_page_click: "Klicken, um zur nächsten Seite zu gelangen"
+    previous_page: "Vorherige Seite"
+    previous_page_click: "Klicken, um zur vorherigen Seite zu gelangen"
+  skills:
+    skills_title: Deine Fertigkeiten
+    your_skills: "Deine Fähigkeiten"
+    your_skills_desc: "Verbessere deine Fertigkeiten, indem du verschiedene Aufgaben erledigst um wertvolle Statistik-Boosts freizuschalten, Fähigkeiten, und mehr!"
+    your_skills_hover: "Fahre über eine Fertigkeit um weitere Informationen zu erhalten!"
+    your_skills_click: "Klicke auf eine Fertigkeit, um den Stufenfortschritt zu sehen!"
+    skill_click: "Klicken, um den Levelfortschritt anzuzeigen!"
+    stats: "Stats"
+    stats_desc: "Erhalte stat buffs indem du Skills hochlevelst."
+    stats_click: "Klick um mehr zu erfahren, oder deine stats anzuschauen"
+  level_progression:
+    level_progression_title: "{skill} Stufen - Seite {page}"
+    your_ranking: "Dein Fertigkeitsrang"
+    rank_out_of: "<1>Du bist auf Rang <2>{rank}</2> von {total} Spielern</1>"
+    rank_percent: "<1>Du bist in den Top <2>{percent}%</2> aller Spieler</1>"
+    rewards: "Verdienste"
+    ability_unlock: "Fähigkeit freischalten"
+    mana_ability_unlock: "Manafähigkeit freischalten"
+    progress: "Fortschritt"
+    leaderboard_click: "Clicke um das {skill} leaderboard zu sehen"
+    sources: "XP Quellen"
+    sources_desc: "Das XP Quellenmenu zeigt dir, wie du XP in einem skills bekommst, und wieviel XP die jeweilige Quelle gibt"
+    sources_click: "Clicke, um {skill} XP quellen zu sehen"
+    abilities: "Fähigkeiten"
+    abilities_desc: "<2>Fähigkeiten</2> <1>sind passive Verbesserungen, die du freischaltest und upgradest, während du skills hochlevelst.</1>"
+    mana_abilities_desc: "<3>Mana Fähigkeiten</3> <1>sind spezielle Fähigkeiten, welche man aktivieren muss, und Mana kosten.</1>"
+    abilities_click: "Klicke um die Fähigkeiten von {skill} zu sehen"
+  stats:
+    stats_title: Deine Werte
+    skills: "Fähigkeiten"
   unclaimed_items:
     unclaimed_items_title: "Gegenstand beanspruchen"
-    inventory_full: "<yellow>Du hast nicht genug Platz im Inventar um diesen Gegenstand zu beanspruchen"
-    click_to_claim: "<yellow>Zum Abholen klicken!"
+    inventory_full: "Du hast nicht genug Platz im Inventar um diesen Gegenstand zu beanspruchen"
+    click_to_claim: "Zum Abholen klicken!"
+  leaderboard:
+    leaderboard_title: "{skill} Leaderboard"
+  sources:
+    sources_title: "{skill} XP Quellen"
+    sorter: "Sortiere XP Quellen"
+    descending: "Höchstes zu Niedrigstem"
+    ascending: "Niedrigstes zu Höchstem"
+    alphabetical: "Name (A-Z)"
+    reverse_alphabetical: "Name (Z-A)"
+    sort_click: "Clicke, um den Sortierungsmodus zu wechseln"
+    multiplied_xp: "Multiplizierte XP"
+    multiplied_desc: "Soviel XP wirst du, entsprechend deiner XP Multiplizierer bekommen"
+  abilities:
+    abilities_title: "{skill} Fähigkeiten"
+    description: "Beschreibung"
+    unlocked_at: "<1>Schalte dies mit <2>Level {level}</2> in <2>{skill}</2> frei"
+    next_upgrade_at: "<1>Nächstes Upgrade in <2>Skill {skill}</2> bei <2>Level {level}</2>"
 mana_abilities:
   replenish:
     name: Auffüllen
-    desc: "<gray>Pflanzt für {value} Sekunden Pflanzen automatisch nach <yellow>[Rechtsklick eine Hacke und ernte eine Pflanze zum aktivieren]"
+    desc: "Pflanzt für {value} Sekunden Pflanzen automatisch nach <1>[Rechtsklick eine Hacke und ernte eine Pflanze zum aktivieren]"
     raise: "<gray>Du hebst deine Hacke"
     lower: "<gray>Du senkst deine Hacke"
     start: "<gold>Auffüllen aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Auffüllen ist ausgelaufen"
   treecapitator:
     name: Entwurzeler
-    desc: "<gray>Fälle für {value} Sekunden ganze Bäume auf einmal. <yellow>[Rechtsklick zum aktivieren]"
+    desc: "Fälle für {value} Sekunden ganze Bäume auf einmal. <1>[Rechtsklick zum aktivieren]"
     raise: "<gray>Du hebst deine Axt"
     lower: "<gray>Du senkst deine Axt"
     start: "<gold>Entwurzeler aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Entwurzeler ist ausgelaufen"
   speed_mine:
     name: Rasanter Abbau
-    desc: "<gray>Gibt Eile {haste_level} für {value} Sekunden.<yellow> [Rechtsklick Spitzhacke und bau einen Block ab zum Aktivieren]"
+    desc: "Gibt Eile {haste_level} für {value} Sekunden. <1>[Rechtsklick Spitzhacke und bau einen Block ab zum Aktivieren]"
     raise: "<gray>Du hebst deine Spitzhacke an"
     lower: "<gray>Du senkst deine Spitzhacke"
     start: "<gold>Rasanter Abbau aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Rasanter Abbau ist ausgelaufen"
   absorption:
     name: Absorption
-    desc: "Eingehenden Schaden verringert Mana um 2x Minecraft-Schaden anstelle deines Lebens für {value} Sekunden. Mana wird nicht regeneriert, wenn Absorption aktiv ist. <yellow>[Linksklick ein Schild und erleide Schaden zum aktivieren]"
+    desc: "Eingehenden Schaden verringert Mana um 2x Minecraft-Schaden anstelle deines Lebens für {value} Sekunden. Mana wird nicht regeneriert, wenn Absorption aktiv ist. <1>[Linksklick ein Schild und erleide Schaden zum aktivieren]"
     raise: "<gray>Du hebst deinen Schild"
     lower: "<gray>Du senkst deinen Schild"
     start: "<gold>Absorption aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Absorption ist ausgelaufen"
   terraform:
     name: Terraform
-    desc: "Baue Blöcke in einem 4 Block Radius sofort ab in der selben Ebene wenn du für {value} Sekunden abbaust. Du musst eine Schaufel benutzen und zusätzlichen Blöcke die abgebaut werden müssen von der selben Art sein und in einer einzigen verbundene Vene sein. <yellow>[Rechtsklick eine Schaufel und bau Blöcke ab zum aktivieren]"
+    desc: "Baue Blöcke in einem 4 Block Radius sofort ab in der selben Ebene wenn du für {value} Sekunden abbaust. Du musst eine Schaufel benutzen und zusätzlichen Blöcke die abgebaut werden müssen von der selben Art sein und in einer einzigen verbundene Vene sein. <1>[Rechtsklick eine Schaufel und bau Blöcke ab zum aktivieren]"
     raise: "<gray>Du hebst deine Schaufel"
     lower: "<gray>Du senkst deinen Schaufel"
     start: "<gold>Terraform aktiviert! <gray>(-{mana} {mana_unit})"
@@ -665,90 +684,343 @@ mana_abilities:
     name: Scharfer Haken
     desc: "Füge {value} Schaden einem eingefangen Gegenstand zu, wenn du mit einer Angelrute linksklickst"
     use: "<gold>Scharfer Haken verwendet! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Manafähigkeit </bold><blue>{mana_ability} {level} <gray>Schaden: <red>{value} <gray>Manakosten: <aqua>{mana_cost} <gray>Cooldown: <yellow>{cooldown}s "
   charged_shot:
     name: Aufgeladener Schuss
-    desc: "Pfeile die du verschießt werden mehr Schaden anrichten abhängig davon, wie weit der Bogen zurückgezogen wurde, und verbrauchen Mana. Richtet {value}% mehr Schaden pro verbrauchtes Mana an. <yellow>[Linksklick ein Bogen um in den geladenen Schussmodus umzuschalten]"
+    desc: "Pfeile die du verschießt werden mehr Schaden anrichten abhängig davon, wie weit der Bogen zurückgezogen wurde, und verbrauchen Mana. Richtet {value}% mehr Schaden pro verbrauchtes Mana an. <1>[Linksklick ein Bogen um in den geladenen Schussmodus umzuschalten]"
     enable: "<gray>Geladener Schussmodus ist nun aktiviert"
     disable: "<gray>Geladener Schussmodus ist nun deaktiviert"
     shoot: "<gold>Geladener Schuss wurde genutzt! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Mana Fähigkeit </bold><blue>{mana_ability} {level} <gray>Schaden: <red>+{value}% / Mana <gray>Maximale Manakosten: <aqua>{mana_cost} "
   lightning_blade:
     name: Blitzklinge
-    desc: Erhöht Angriffsgeschwindigkeit um {value}% für {duration} Sekunden.<yellow> [Rechtsklick ein Schwert und attackier ein Monster zum aktivieren]
+    desc: Erhöht Angriffsgeschwindigkeit um {value}% für {duration} Sekunden. <1>[Rechtsklick ein Schwert und attackier ein Monster zum aktivieren]
     raise: "<gray>Du hebst dein Schwert"
     lower: "<gray>Du senkst deinen Schwert"
     start: "<aqua>litzklinge aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Blitzklinge ist ausgelaufen"
-    menu: "<light_purple><strikethrough>ana Fähigkeit <blue>{mana_ability} {level} <green>ngriffsgeschwindigkeit: <red>+{value}% <gray>Dauer: <green>{duration}s <gray>Manakosten: <aqua>{mana_cost} <gray>Abklingzeit: <yellow>{cooldown}s "
   not_ready: "<red>Fähigkeit nicht bereit! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Nicht genug Mana! <gray>({mana} {mana_unit} erforderlich, du hast {current_mana}/{max_mana})"
 rewards:
   item:
-    default_menu_message: "  {display_name}"
-    default_menu_message_multiple: "  {display_name} {amount}x"
-    default_chat_message: "  {display_name}"
-    default_chat_message_multiple: "  {display_name} {amount}x"
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Ackerbau
-    desc: "<gray>Ernte Nutzpflanzen, um Landwirtschafts {xp_unit} zu verdienen"
+    desc: "Ernte Nutzpflanzen, um Landwirtschafts {xp_unit} zu verdienen"
   foraging:
     name: Sammeln
-    desc: "<gray>Fälle Bäume um Landwirtschafts-EXP {xp_unit} zu verdienen"
+    desc: "Fälle Bäume um Landwirtschafts {xp_unit} zu verdienen"
   mining:
     name: Bergbau
-    desc: "<gray>Baue Steine und Erze ab, um {xp_unit} zu verdienen"
+    desc: "Baue Steine und Erze ab, um {xp_unit} zu verdienen"
   fishing:
     name: Fischen
-    desc: "<gray>Fange Fische um Fischer- EXP {xp_unit} zu erhalten"
+    desc: "Fange Fische um Fischer {xp_unit} zu erhalten"
   excavation:
     name: Ausgrabung
-    desc: "<gray>Grabe mit einer Schaufel um Ausgrabung {xp_unit} zu erhalten"
+    desc: "Grabe mit einer Schaufel um Ausgrabung {xp_unit} zu erhalten"
   archery:
     name: Bogenschießen
-    desc: "<gray>Schieße mit einem Bogen auf Mobs und Spieler<gray>um Bogenschießen {xp_unit} zu verdienen"
+    desc: "Schieße mit einem Bogen auf Mobs und Spieler um Bogenschießen {xp_unit} zu verdienen"
   defense:
     name: Abwehr
-    desc: "<gray>Nimm Schaden von Feinden, um Verteidigungs- EXP {xp_unit} zu erhalten"
+    desc: "Nimm Schaden von Feinden, um Verteidigungs {xp_unit} zu erhalten"
   fighting:
     name: Kampf
-    desc: "<gray>Bekämpfe Mobs mit Nahkampfwaffen um<gray>Kampf {xp_unit} zu erhalten"
+    desc: "Bekämpfe Mobs mit Nahkampfwaffen um Kampf {xp_unit} zu erhalten"
   endurance:
     name: Ausdauer
-    desc: "<gray>Gehe und laufe um Ausdauer {xp_unit} zu erhalten"
+    desc: "Gehe und laufe um Ausdauer {xp_unit} zu erhalten"
   agility:
     name: Beweglichkeit
-    desc: "<gray>Springe und bekomme Fallschaden um<gray>Beweglichkeits- EXP {xp_unit} zu erhalten"
+    desc: "Springe und bekomme Fallschaden um Beweglichkeits {xp_unit} zu erhalten"
   alchemy:
     name: Alchemie
-    desc: "<gray>Braue Tränke um Alchemie EXP {xp_unit} zu verdienen!"
+    desc: "Braue Tränke um Alchemie {xp_unit} zu verdienen!"
   enchanting:
     name: Verzaubern
-    desc: "<gray>Verzaubernde Gegenstände und Bücher, um<gray>Verzaubern {xp_unit} zu erhalten"
+    desc: "Verzaubernde Gegenstände und Bücher, um Verzaubern {xp_unit} zu erhalten"
   sorcery:
     name: Zauberei
-    desc: "<gray>Verwende Mana-Fähigkeiten, um Hexerei {xp_unit} zu erhalten"
+    desc: "Verwende Mana-Fähigkeiten, um Hexerei {xp_unit} zu erhalten"
   healing:
     name: Heilung
-    desc: "<gray>Trink und wirf Tränke um<gray>Heilungs- EXP {xp_unit} zu erhalten"
+    desc: "Trink und wirf Tränke um Heilungs {xp_unit} zu erhalten"
   forging:
     name: Schmieden
-    desc: "<gray>Kombiniere und verwende deine Bücher<gray>in einem Amboss um Schmiede-EXP {xp_unit} <gray>zu bekommen"
+    desc: "Kombiniere und verwende deine Bücher in einem Amboss um Schmiede {xp_unit} zu bekommen"
+sources:
+  block:
+    wheat: Weizen
+    potato: Kartoffel
+    carrot: Karotte
+    beetroot: Rote Beete
+    nether_wart: Netherwarze
+    pumpkin: Kürbis
+    melon: Melone
+    sugar_cane: Zuckerrohr
+    bamboo: Bambou
+    cocoa: Kakao
+    cactus: Kaktus
+    brown_mushroom: Brauner Pilz
+    red_mushroom: Roter Pilz
+    kelp: Seetang
+    sea_pickle: Meeresgurke
+    sweet_berry_bush: Süße Beeren
+    glow_berries: Leuchtbeeren
+    torchflower: Fackellilie
+    pitcher_plant: Kannenpflanze
+    oak_log: Eichenstamm
+    spruce_log: Fichtenstamm
+    birch_log: Birkenstamm
+    jungle_log: Tropenstamm
+    acacia_log: Akazienstamm
+    dark_oak_log: Schwarzeichenstamm
+    oak_leaves: Eichenlaub
+    spruce_leaves: Fichtennadeln
+    birch_leaves: Birkenlaub
+    jungle_leaves: Tropenbaumblätter
+    acacia_leaves: Akazienblätter
+    dark_oak_leaves: Schwarzeichenlaub
+    crimson_stem: Karmesinstiel
+    warped_stem: Wirrstiel
+    nether_wart_block: Netherwarzenblock
+    warped_wart_block: Wirrwarzenblock
+    moss_block: Moosblock
+    moss_carpet: Moosteppich
+    azalea: Azalee
+    flowering_azalea: Blühende Azalee
+    azalea_leaves: Azaleenblätter
+    flowering_azalea_leaves: Blühendes Azaleenlaub
+    mangrove_log: Mangrovenstamm
+    mangrove_leaves: Mangrovenlaub
+    mangrove_roots: Mangrovenwurzel
+    cherry_log: Kirschstamm
+    cherry_leaves: Kirschlaub
+    pink_petals: Rosa Blütenblätter
+    stone: Stein
+    cobblestone: Bruchstein
+    andesite: Andesit
+    diorite: Diorit
+    granite: Granit
+    coal_ore: Kohleerz
+    nether_quartz_ore: Netherquarzerz
+    iron_ore: Eisenerz
+    lapis_ore: Lapis Stufe
+    redstone_ore: Redstone-Erz
+    gold_ore: Golderz
+    diamond_ore: Diamanterz
+    emerald_ore: Smaragderz
+    terracotta: Terrakotta
+    white_terracotta: Weiße Keramik
+    orange_terracotta: Orange Keramik
+    yellow_terracotta: Gelbe Keramik
+    light_gray_terracotta: Hellgraue Keramik
+    brown_terracotta: Braune Terrcotta
+    red_terracotta: Rote Keramik
+    netherrack: Netherit
+    blackstone: Schwarzstein
+    basalt: Basalt
+    magma_block: Magmablock
+    nether_gold_ore: Nethergolderz
+    ancient_debris: Antiker Schrott
+    end_stone: Endstein
+    obsidian: Obsidian
+    deepslate: Tiefenschiefer
+    copper_ore: Kupfererz
+    tuff: Tuffstein
+    calcite: Calcite
+    smooth_basalt: Smooth Basalt
+    amethyst_block: Amethyst Block
+    amethyst_cluster: Amethyst Cluster
+    deepslate_coal_ore: Deepslate Coal Ore
+    deepslate_iron_ore: Deepslate Iron Ore
+    deepslate_copper_ore: Deepslate Copper Ore
+    deepslate_gold_ore: Deepslate Gold Ore
+    deepslate_redstone_ore: Deepslate Redstone Ore
+    deepslate_lapis_ore: Deepslate Lapis Ore
+    deepslate_emerald_ore: Deepslate Emerald Ore
+    deepslate_diamond_ore: Deepslate Diamond Ore
+    dripstone_block: Dripstone Block
+    ice: Ice
+    packed_ice: Packed Ice
+    blue_ice: Blue Ice
+    reinforced_deepslate: Verstärkter Tiefenschiefer
+    dirt: Dirt
+    grass_block: Grass Block
+    sand: Sand
+    gravel: Gravel
+    mycelium: Mycelium
+    clay: Clay
+    soul_sand: Soul Sand
+    coarse_dirt: Coarse Dirt
+    podzol: Podzol
+    soul_soil: Soul Soil
+    red_sand: Red Sand
+    rooted_dirt: Rooted Dirt
+    mud: Schlamm
+    muddy_mangrove_roots: Schlammige Mangrovenwurzel
+    sculk: Sculk
+    sculk_vein: Sculk-Ader
+    sculk_sensor: Sculk-Sensor
+    sculk_catalyst: Sculk-Katalysator
+    sculk_shrieker: Sculk-Shrieker
+  fishing:
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
+  entity:
+    player: Player
+    bat: Bat
+    cat: Cat
+    chicken: Chicken
+    cod: Cod
+    cow: Cow
+    donkey: Donkey
+    fox: Fox
+    giant: Giant
+    horse: Horse
+    mooshroom: Mooshroom
+    mule: Mule
+    ocelot: Ocelot
+    parrot: Parrot
+    pig: Schwein
+    rabbit: Hase
+    salmon: Lachs
+    sheep: Schaf
+    skeleton_horse: Skelettpferd
+    snow_golem: Schneegolem
+    squid: Tintenfisch
+    strider: Schreiter
+    tropical_fish: Tropischer Fisch
+    turtle: Schildkröte
+    villager: Dorfbewohner
+    wandering_trader: Wandernder Händler
+    bee: Biene
+    cave_spider: Höhlenspinne
+    dolphin: Delfin
+    enderman: Enderman
+    iron_golem: Eisengolem
+    llama: Lama
+    piglin: Piglin
+    panda: Panda
+    polar_bear: Eisbär
+    pufferfish: Kugelfisch
+    spider: Spinne
+    wolf: Wolf
+    zombified_piglin: Zombie-Piglin
+    blaze: Lohe
+    creeper: Creeper
+    drowned: Ertrunken
+    elder_guardian: Elder Wächter
+    endermite: Endermite
+    evoker: Magier
+    ghast: Gast
+    guardian: Wächter
+    hoglin: Hoglin
+    husk: Wüstenzombie
+    illusioner: Illusioner
+    magma_cube: Magmawürfel
+    phantom: Phantom
+    piglin_brute: Piglin-Grobian
+    pillager: Plünderer
+    ravager: Verwüster
+    shulker: Shulker
+    silverfish: Silberfisch
+    skeleton: Skelett
+    slime: Schleim
+    stray: Streuner
+    vex: Vex
+    vindicator: Verteidiger
+    witch: Hexe
+    wither_skeleton: Wither Skelett
+    zoglin: Zoglin
+    zombie: Zombie
+    zombie_villager: Zombie Villager
+    ender_dragon: Ender Dragon
+    wither: Wither
+    axolotl: Axolotl
+    glow_squid: Glow Squid
+    goat: Goat
+    allay: Hilfsgeist
+    frog: Frosch
+    tadpole: Kaulquappe
+    warden: Warden
+    camel: Dromedar
+    sniffer: Schnüffler
+  damage:
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+    fall_damage: Taking Fall Damage
+  statistic:
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
+  jumping:
+    jump_per_100: Jumping
+  brewing:
+    awkward: Awkward Potion
+    regular: Regular Potion
+    extended: Extended Duration Potion
+    upgraded: Upgraded Potion
+    splash: Splash Potion
+    lingering: Lingering Potion
+  enchanting:
+    weapon_per_level: Weapon
+    armor_per_level: Armor
+    tool_per_level: Tool
+    book_per_level: Book
+  mana_ability_use:
+    mana_ability_use: Using Mana Abilities
+  item_consume:
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    golden_apple: Golden Apple
+    enchanted_golden_apple: Enchanted Golden Apple
+  potion_splash:
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
+  forging:
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
+  grindstone:
+    grindstone_per_level: Disenchant Item with Grindstone
+  units:
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost XP
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
     name: Stärke
-    desc: "<gray>Stärke erhöht deinen Angriffsschaden<gray>mit verschiedenen Waffen"
+    desc: "Stärke erhöht deinen Angriffsschaden mit verschiedenen Waffen"
     color: "<dark_red>"
     symbol: "➽"
   health:
     name: Gesundheit
-    desc: "<gray>Gesundheit erhöht deine maximalen {hp_unit} <gray>und erlaubt dir im Kampf länger durchzuhalten"
+    desc: "Gesundheit erhöht deine maximalen {hp_unit} und erlaubt dir im Kampf länger durchzuhalten"
     color: "<red>"
     symbol: "❤"
   regeneration:
     name: Erholung
-    desc: "<gray>Regeneration erhöht die Geschwindigkeit mit der sich<gray>sowohl Gesundheit als auch Mana erholen"
+    desc: "Regeneration erhöht die Geschwindigkeit mit der sich sowohl Gesundheit als auch Mana erholen"
     color: "<gold>"
     symbol: "❥"
   luck:
@@ -758,14 +1030,58 @@ stats:
     symbol: "☘"
   wisdom:
     name: Weisheit
-    desc: "<gray>Weisheit erhöht dein maximales Mana, erhöht <gray>Erfahrungsgewinn und senkt Schmiedekosten"
+    desc: "Weisheit erhöht dein maximales Mana, erhöht Erfahrungsgewinn und senkt Schmiedekosten"
     color: "<blue>"
     symbol: "✿"
   toughness:
     name: Widerstandskraft
-    desc: "<gray>Widerstandskraft reduziert den durch<gray>feindliche Angriffe erlittenen Schaden"
+    desc: "Widerstandskraft reduziert den durch feindliche Angriffe erlittenen Schaden"
     color: "<dark_purple>"
     symbol: "✦"
+  crit_chance:
+    name: Kritische Trefferchance
+    desc: "Die kritische Trefferchance ist deine Chance, einen kritischen Treffer zu verüben"
+    color: "<green>"
+    symbol: "⌘"
+  crit_damage:
+    name: Kritischer Schaden
+    desc: "Der kritische Schaden ist die prozentuale Erhöhung deines Schadens bei einem kritischen Treffer"
+    color: "<dark_aqua>"
+    symbol: "★"
+  speed:
+    name: Bewegungsgeschwindigkeit
+    desc: "Bewegungsgeschwindigkeit erhöht die Geschwindigkeit, mit der du dich bewegst"
+    color: "<white>"
+    symbol: "➤"
+traits:
+  attack_damage:
+    name: Angriffsschaden
+  hp:
+    name: Gesundheit
+  saturation_regen:
+    name: Sättigungsregeneration
+  hunger_regen:
+    name: Hungerregeneration
+  mana_regen:
+    name: Manaregeneration
+  luck:
+    name: Glück
+  double_drop:
+    name: Doppelte Drops
+  experience_bonus:
+    name: Erfahrungs Bonus
+  anvil_discount:
+    name: Amboss Kostensenkung
+  max_mana:
+    name: Maximales Mana
+  damage_reduction:
+    name: Schadensverringerung
+  crit_chance:
+    name: Kritische Trefferchance
+  crit_damage:
+    name: Kritischer Schaden
+  movement_speed:
+    name: Bewegungsgeschwindigkeit
 units:
   mana: Mana
   hp: LP
