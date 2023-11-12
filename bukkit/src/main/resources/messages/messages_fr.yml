@@ -620,7 +620,7 @@ menus:
     mana_abilities_desc: "<3>Les capacités de mana</3> <1>sont un type spécial de capacité qui nécessite l'activation et consomme de la mana.</1>"
     abilities_click: 'Cliquez pour voir les capacités de {skill}'
   stats:
-    stats_menu_title: Vos statistiques
+    stats_title: Vos statistiques
     skills: "7Compétences"
   unclaimed_items:
     unclaimed_items_title: 'Réclamer les articles'
@@ -751,7 +751,7 @@ skills:
     name: Forgeron
     desc: "Combinez et appliquez un livre dans une enclume pour gagner de l'{xp_unit} Forgeron"
 sources:
-  farming:
+  block:
     wheat: Blé
     potato: Patate
     carrot: Carotte
@@ -771,7 +771,6 @@ sources:
     glow_berries: Baies luisantes
     torchflower: Fleur de flambeau
     pitcher_plant: Plante carnivore
-  foraging:
     oak_log: Bûche de Chêne
     spruce_log: Bûche de Sapin
     birch_log: Bûche de Bouleau
@@ -800,7 +799,6 @@ sources:
     cherry_log: Bûche de cerisier
     cherry_leaves: Feuilles de cerisier
     pink_petals: Pétales Roses
-  mining:
     stone: Pierre
     cobblestone: Cobblestone
     andesite: Andésite
@@ -849,16 +847,6 @@ sources:
     packed_ice: Glace Compactée
     blue_ice: Glace bleue
     reinforced_deepslate: Ardoise des Abîmes Renforcée
-  fishing:
-    cod: Morue
-    salmon: Saumon
-    tropical_fish: Poisson tropical
-    pufferfish: Poisson-globe
-    treasure: Coffre à trésor
-    junk: Éléments indésirables
-    rare: Butin de groupe
-    epic: Butin Épique
-  excavation:
     dirt: Terre
     grass_block: Bloc d'herbe
     sand: Sable
@@ -873,7 +861,21 @@ sources:
     rooted_dirt: Terre avec racines
     mud: Boue
     muddy_mangrove_roots: Racines de Mangrove Boueuses
-  mobs:
+    sculk: Sculk
+    sculk_vein: Veines de Sculk
+    sculk_sensor: Capteur Sculk
+    sculk_catalyst: Catalyseur de Sculk
+    sculk_shrieker: Hurleur Sculk
+  fishing:
+    cod: Morue
+    salmon: Saumon
+    tropical_fish: Poisson tropical
+    pufferfish: Poisson-globe
+    treasure: Coffre à trésor
+    junk: Éléments indésirables
+    rare: Butin de groupe
+    epic: Butin Épique
+  entity:
     player: Joueur
     bat: Chauve souris
     cat: Chat
@@ -952,17 +954,17 @@ sources:
     warden: Warden
     camel: Chameau
     sniffer: Sniffeur
-  defense:
+  damage:
     mob_damage: Dégâts causés par les monstres
     player_damage: Dégâts infligés par un joueur
-  endurance:
+    fall_damage: Subit des dégâts de chute
+  statistic:
     walk_per_meter: Marcher
     sprint_per_meter: Sprinter
     swim_per_meter: Nager
-  agility:
+  jumping:
     jump_per_100: Sauter
-    fall_damage: Subit des dégâts de chute
-  alchemy:
+  brewing:
     awkward: Potion étrange
     regular: Potion normale
     extended: Potion de durée prolongée
@@ -974,30 +976,27 @@ sources:
     armor_per_level: Armure
     tool_per_level: Outils
     book_per_level: Livre
-  sorcery:
+  mana_ability_use:
     mana_ability_use: Utiliser des aptitudes de mana
-    sculk: Sculk
-    sculk_vein: Veines de Sculk
-    sculk_sensor: Capteur Sculk
-    sculk_catalyst: Catalyseur de Sculk
-    sculk_shrieker: Hurleur Sculk
-  healing:
+  item_consume:
     drink_regular: Buvez une potion normale
     drink_extended: Boire Potion de durée prolongée
     drink_upgraded: Boire Potion améliorée
+    golden_apple: Pomme dorée
+    enchanted_golden_apple: Pomme Dorée Enchantée
+  potion_splash:
     splash_regular: Jettez une potion normal
     splash_extended: Jettez une Potion de durée prolongée
     splash_upgraded: Jettez une Potion améliorée
     lingering_regular: Utiliser une potion persistante normale
     lingering_extended: Utiliser une potion persistante de durée prolongée
     lingering_upgraded: Utiliser une potion persistante améliorée
-    golden_apple: Pomme dorée
-    enchanted_golden_apple: Pomme Dorée Enchantée
-  forging:
+  anvil:
     combine_books_per_level: Combiner les livres enchantés
     combine_weapon_per_level: Combiner une arme avec un livre
     combine_armor_per_level: Combiner une arme avec un livre
     combine_tool_per_level: Combiner un outil avec un livre
+  grindstone:
     grindstone_per_level: Désenchanter un objet à l'aide de Grindstone
   units:
     damage: Dégâts
@@ -1038,50 +1037,6 @@ stats:
     desc: "La Ténacité augmente les dégats réduit par les attaques ennemies"
     color: "<dark_purple>"
     symbol: "✦"
-  crit_chance:
-    name: ""
-    desc: ""
-    color: "<green>"
-    symbol: "⌘"
-  crit_damage:
-    name: ""
-    desc: ""
-    color: "<dark_aqua>"
-    symbol: "★"
-  attack_speed:
-    name: ""
-    desc: ""
-    color: "<light_purple>"
-    symbol: "⚔"
-traits:
-  attack_damage:
-    name: ""
-  hp:
-    name: ""
-  saturation_regen:
-    name: ""
-  hunger_regen:
-    name: ""
-  mana_regen:
-    name: ""
-  luck:
-    name: ""
-  double_drop:
-    name: ""
-  experience_bonus:
-    name: ""
-  anvil_discount:
-    name: ""
-  max_mana:
-    name: ""
-  damage_reduction:
-    name: ""
-  crit_chance:
-    name: ""
-  crit_damage:
-    name: ""
-  attack_speed:
-    name: ""
 units:
   mana: Mana
   hp: PV
