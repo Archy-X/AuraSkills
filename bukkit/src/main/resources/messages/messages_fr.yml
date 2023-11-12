@@ -264,45 +264,45 @@ abilities:
   healing:
     life_essence:
       name: Essence de vie
-      desc: "Les potions de santé instantanées soignent {value}% de plus"
+      desc: Les potions de santé instantanées soignent {value}% de plus
       info: "+{value}% de vie instantanée"
     healer:
       name: Guérisseur
-      desc: "Gagnez {value}% d'XP en plus dans ce skill"
+      desc: Gagnez {value}% d'XP en plus dans ce skill
       info: "+{value}% XP"
     life_steal:
       name: Vol de vie
-      desc: "Soigne {value}% des PV max des créatures hostiles et des joueurs que vous tuez."
+      desc: Soigne {value}% des PV max des créatures hostiles et des joueurs que vous tuez.
       info: "Vol de {value}% PV"
     golden_heart:
       name: Coeurs en Or
-      desc: "Les dégâts infligés à vos cœur d'absorption sont réduits de {value}%"
+      desc: Les dégâts infligés à vos cœur d'absorption sont réduits de {value}%
       info: "-{value}% Dmg d'absorption"
     revival:
       name: Résurrection
-      desc: "Gagnez <red>+{value} points de vie</red> <gray>et <gold>+{value_2} Régénération</gold> pendant 30 secondes après réapparition."
-      info: '+{value} points de vie, +{value_2} régénération'
-      message: '<white>Vous avez gagné un bonus de renaissance pendant 30 secondes ! <white>(<red>+{value} points de vie, <gold>+{value_2} régénération<white>)'
+      desc: Gagnez <red>+{value} points de vie</red> <gray>et <gold>+{value_2} Régénération</gold> pendant 30 secondes après réapparition.
+      info: "+{value} points de vie, +{value_2} régénération"
+      message: "<white>Vous avez gagné un bonus de renaissance pendant 30 secondes ! <white>(<red>+{value} points de vie, <gold>+{value_2} régénération<white>)"
   forging:
     disenchanter:
       name: Désenchanteur
-      desc: "Gagnez {value}% d'expérience en plus lorsque vous désenchantez un objets en utilisant une meule."
+      desc: Gagnez {value}% d'expérience en plus lorsque vous désenchantez un objets en utilisant une meule.
       info: "+{value}% Meule EXP"
     forger:
       name: Forgeron
-      desc: "Gagnez {value}% d'xp en plus dans ce skill."
+      desc: Gagnez {value}% d'xp en plus dans ce skill.
       info: "+{value}% d'XP"
     repairing:
       name: Réparation
-      desc: "Réparation d'objets dans une enclume en utilisant la matière brute que l'objet a été fabriqué à partir de réparations {value}% plus de durabilité."
+      desc: Réparation d'objets dans une enclume en utilisant la matière brute que l'objet a été fabriqué à partir de réparations {value}% plus de durabilité.
       info: "+{value}% réparation d'enclume"
     anvil_master:
       name: Maître de l'enclume
-      desc: "Diminue le coût de réparation maximal d'une enclume avant qu'il ne soit trop cher pour {value} expérience."
+      desc: Diminue le coût de réparation maximal d'une enclume avant qu'il ne soit trop cher pour {value} expérience.
       info: "Coût Max {value}"
     skill_mender:
       name: Réparateur de compétences
-      desc: "Gagner de l'expérience de compétence avec {value}% de chance de réparer un objet tenu ou une pièce d'armure avec l'enchantement mending de 1 de durabilitée pour 2 xp de skill."
+      desc: Gagner de l'expérience de compétence avec {value}% de chance de réparer un objet tenu ou une pièce d'armure avec l'enchantement mending de 1 de durabilitée pour 2 xp de skill.
       info: "{value}% Chance de réparer"
 acf:
   core:
@@ -555,6 +555,7 @@ commands:
     set: "<gray>XP de <aqua>{skill} <gray>pour le joueur {player} <gray>défini sur {amount}"
     remove: "<aqua>{amount} <gray>XP de <aqua>{skill} <gray>ont été supprimé du joueur <gold>{player}"
   unknown_skill: "<yellow>Compétence inconnue!"
+  unknown_stat: "<yellow>Statistiques inconnues !"
   no_profile: "<yellow>Le joueur n’a pas de profil de compétences. Veuillez essayer de rejoindre le jeu ou de redémarrer le serveur."
 leveler:
   title: "<green>{skill} Niveau supérieur"
@@ -588,58 +589,58 @@ menus:
     in_progress: "EN COURS"
     locked: "BLOQUÉ"
     your_level: "Votre niveau"
-    next_page: 'Page suivante'
-    next_page_click: 'Cliquez pour aller à la page suivante'
-    previous_page: 'Page précedente'
-    previous_page_click: 'Cliquez pour aller à la page précédente'
+    next_page: "Page suivante"
+    next_page_click: "Cliquez pour aller à la page suivante"
+    previous_page: "Page précedente"
+    previous_page_click: "Cliquez pour aller à la page précédente"
   skills:
     skills_title: "Vos compétences"
     your_skills: "Vos compétences"
     your_skills_desc: "Améliorez vos compétences en effectuant diverses tâches pour débloquer des améliorations de statistiques, des capacités et plus encore"
     your_skills_hover: "Survolez une compétence pour plus d'informations!"
     your_skills_click: "Cliquez sur une compétence pour voir la progression du niveau!"
-    skill_click: 'Cliquez pour voir la progression des niveaux!'
-    stats: 'Stats'
-    stats_desc: 'Gagnez des buffs de stats en augmentant le niveau de compétences'
-    stats_click: 'Cliquez pour en savoir plus ou voir vos statistiques'
+    skill_click: "Cliquez pour voir la progression des niveaux!"
+    stats: "Stats"
+    stats_desc: "Gagnez des buffs de stats en augmentant le niveau de compétences"
+    stats_click: "Cliquez pour en savoir plus ou voir vos statistiques"
   level_progression:
-    level_progression_title: 'Niveau {skill} - Page {page}'
-    your_ranking: 'Votre classement de compétences'
-    rank_out_of: '<1>Vous êtes classé <2>{rank}</2> sur un total de {total} joueurs</1>'
-    rank_percent: '<1>Vous êtes dans le top <2>{percent}%</2> des joueurs</1>'
-    rewards: 'Récompenses'
+    level_progression_title: "Niveau {skill} - Page {page}"
+    your_ranking: "Votre classement de compétences"
+    rank_out_of: "<1>Vous êtes classé <2>{rank}</2> sur un total de {total} joueurs</1>"
+    rank_percent: "<1>Vous êtes dans le top <2>{percent}%</2> des joueurs</1>"
+    rewards: "Récompenses"
     ability_unlock: "Débloquage de compétence"
     mana_ability_unlock: "Débloquage de compétence de mana"
     progress: "Progrès"
-    leaderboard_click: 'Cliquez pour voir le classement de {skill}'
-    sources: 'Sources d''Xp'
+    leaderboard_click: "Cliquez pour voir le classement de {skill}"
+    sources: "Sources d'Xp"
     sources_desc: "Le menu sources montre toutes les façons dont vous pouvez gagner de l'XP dans une compétence, ainsi que combien XP chaque source donne."
-    sources_click: 'Cliquez pour afficher les sources de {skill}'
-    abilities: 'Compétences'
+    sources_click: "Cliquez pour afficher les sources de {skill}"
+    abilities: "Compétences"
     abilities_desc: "<2>Les aptitudes</2> <1>sont des compétences passives que vous débloquez et améliorez au fur et à mesure que vous améliorez vos compétences.</1>"
     mana_abilities_desc: "<3>Les capacités de mana</3> <1>sont un type spécial de capacité qui nécessite l'activation et consomme de la mana.</1>"
-    abilities_click: 'Cliquez pour voir les capacités de {skill}'
+    abilities_click: "Cliquez pour voir les capacités de {skill}"
   stats:
     stats_title: Vos statistiques
     skills: "7Compétences"
   unclaimed_items:
-    unclaimed_items_title: 'Réclamer les articles'
-    inventory_full: 'Vous n''avez pas assez de place dans votre inventaire pour récupérer ceci'
-    click_to_claim: 'Cliquez pour réclamer!'
+    unclaimed_items_title: "Réclamer les articles"
+    inventory_full: "Vous n'avez pas assez de place dans votre inventaire pour récupérer ceci"
+    click_to_claim: "Cliquez pour réclamer!"
   leaderboard:
-    leaderboard_title: 'Classement de {skill}'
+    leaderboard_title: "Classement de {skill}"
   sources:
-    sources_title: 'Sources d''XP de {skill}'
-    sorter: 'Trier les Sources XP'
-    descending: 'Du plus haut au plus bas'
-    ascending: 'Du plus bas au plus haut'
-    alphabetical: 'Nom (A-Z)'
-    reverse_alphabetical: 'Nom (Z-A)'
-    sort_click: 'Cliquez pour choisir le type de tri'
+    sources_title: "Sources d'XP de {skill}"
+    sorter: "Trier les Sources XP"
+    descending: "Du plus haut au plus bas"
+    ascending: "Du plus bas au plus haut"
+    alphabetical: "Nom (A-Z)"
+    reverse_alphabetical: "Nom (Z-A)"
+    sort_click: "Cliquez pour choisir le type de tri"
     multiplied_xp: "{xp_unit} Multiplié"
     multiplied_desc: "C'est l'XP que vous allez réellement gagner basé sur vos multiplicateurs d'XP actuels"
   abilities:
-    abilities_title: 'Capacités de {skill}'
+    abilities_title: "Capacités de {skill}"
     description: "Description"
     unlocked_at: "<1>Déverrouillé à <2>{skill} {level}"
     next_upgrade_at: "<1>Prochaine amélioration à <2>{skill} {level}"
@@ -1037,6 +1038,50 @@ stats:
     desc: "La Ténacité augmente les dégats réduit par les attaques ennemies"
     color: "<dark_purple>"
     symbol: "✦"
+  crit_chance:
+    name: Chances de critique
+    desc: "Les chances de coup critique sont vos chances d'infliger un coup critique"
+    color: "<green>"
+    symbol: "⌘"
+  crit_damage:
+    name: Dégâts critique
+    desc: "Les dégâts critiques augmentent en pourcentage les dégâts infligés par un coup critique"
+    color: "<dark_aqua>"
+    symbol: "★"
+  speed:
+    name: Vitesse
+    desc: "La vitesse augmente la vitesse de marche et de course"
+    color: "<white>"
+    symbol: "➤"
+traits:
+  attack_damage:
+    name: Dégâts d'attaque
+  hp:
+    name: PV
+  saturation_regen:
+    name: Régénération de saturation
+  hunger_regen:
+    name: Régéneration de nourriture
+  mana_regen:
+    name: Régénération de mana
+  luck:
+    name: Chance
+  double_drop:
+    name: Butins Doublés
+  experience_bonus:
+    name: Bonus d’expérience
+  anvil_discount:
+    name: Remise sur l'enclume
+  max_mana:
+    name: Mana maximum
+  damage_reduction:
+    name: Réduction des dégâts
+  crit_chance:
+    name: Chances de critique
+  crit_damage:
+    name: Dégâts critique
+  movement_speed:
+    name: Vitesse de mouvement
 units:
   mana: Mana
   hp: PV
