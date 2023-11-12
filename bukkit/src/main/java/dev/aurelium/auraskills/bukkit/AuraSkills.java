@@ -7,6 +7,7 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.event.skill.SkillsLoadEvent;
 import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -206,6 +207,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             traitManager.registerTraitImplementations();
             registerEvents();
             registerAndLoadMenus();
+            // Call SkillsLoadEvent
+            SkillsLoadEvent event = new SkillsLoadEvent(skillManager.getSkillValues());
+            Bukkit.getPluginManager().callEvent(event);
             // Tell threads that the plugin has finished loading
             AuraSkills plugin = getInstance();
             synchronized (plugin) {
