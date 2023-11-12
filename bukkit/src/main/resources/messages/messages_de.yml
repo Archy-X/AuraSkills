@@ -555,7 +555,7 @@ commands:
     set: "<gray>Setze <aqua>{skill} <gray>XP für Spieler <gray>{player} <gray>auf <aqua>{amount}"
     remove: "<gray>Entfernt <aqua>{amount} {skill} <gray>XP von Spieler <gold>{player}"
   unknown_skill: "<yellow>Unbekannte Fertigkeit!"
-  unknown_stat: ""
+  unknown_stat: "<yellow>Unbekannte Fertigkeit!"
   no_profile: "<yellow>Spieler hat kein Fertigkeitenprofil!"
 leveler:
   title: "<green>{skill} Stufe erhöht"
@@ -594,7 +594,7 @@ menus:
     previous_page: "Vorherige Seite"
     previous_page_click: "Klicken, um zur vorherigen Seite zu gelangen"
   skills:
-    skills_title: Deine Fertigkeiten
+    skills_title: "Deine Fertigkeiten"
     your_skills: "Deine Fähigkeiten"
     your_skills_desc: "Verbessere deine Fertigkeiten, indem du verschiedene Aufgaben erledigst um wertvolle Statistik-Boosts freizuschalten, Fähigkeiten, und mehr!"
     your_skills_hover: "Fahre über eine Fertigkeit um weitere Informationen zu erhalten!"
@@ -831,35 +831,35 @@ sources:
     deepslate: Tiefenschiefer
     copper_ore: Kupfererz
     tuff: Tuffstein
-    calcite: Calcite
-    smooth_basalt: Smooth Basalt
-    amethyst_block: Amethyst Block
-    amethyst_cluster: Amethyst Cluster
-    deepslate_coal_ore: Deepslate Coal Ore
-    deepslate_iron_ore: Deepslate Iron Ore
-    deepslate_copper_ore: Deepslate Copper Ore
-    deepslate_gold_ore: Deepslate Gold Ore
-    deepslate_redstone_ore: Deepslate Redstone Ore
-    deepslate_lapis_ore: Deepslate Lapis Ore
-    deepslate_emerald_ore: Deepslate Emerald Ore
-    deepslate_diamond_ore: Deepslate Diamond Ore
-    dripstone_block: Dripstone Block
-    ice: Ice
-    packed_ice: Packed Ice
-    blue_ice: Blue Ice
+    calcite: Kalzit
+    smooth_basalt: Glatter Basalt
+    amethyst_block: Amethystblock
+    amethyst_cluster: Amethysthaufen
+    deepslate_coal_ore: Tiefenschiefer-Steinkohle
+    deepslate_iron_ore: Tiefenschiefer-Eisenerz
+    deepslate_copper_ore: Tiefenschiefer-Kupfererz
+    deepslate_gold_ore: Tiefenschiefer-Golderz
+    deepslate_redstone_ore: Tiefenschiefer-Redstone-Erz
+    deepslate_lapis_ore: Tiefenschiefer-Lapislazulierz
+    deepslate_emerald_ore: Tiefenschiefer-Smaragderz
+    deepslate_diamond_ore: Tiefenschiefer-Diamanterz
+    dripstone_block: Tropfsteinblock
+    ice: Eis
+    packed_ice: Packeis
+    blue_ice: Blaueis
     reinforced_deepslate: Verstärkter Tiefenschiefer
-    dirt: Dirt
-    grass_block: Grass Block
+    dirt: Erde
+    grass_block: Grasblock
     sand: Sand
-    gravel: Gravel
-    mycelium: Mycelium
-    clay: Clay
-    soul_sand: Soul Sand
-    coarse_dirt: Coarse Dirt
-    podzol: Podzol
-    soul_soil: Soul Soil
-    red_sand: Red Sand
-    rooted_dirt: Rooted Dirt
+    gravel: Kies
+    mycelium: Myzel
+    clay: Ton
+    soul_sand: Seelensand
+    coarse_dirt: Grobe Erde
+    podzol: Podsol
+    soul_soil: Seelenerde
+    red_sand: Roter Sand
+    rooted_dirt: Wurzelerde
     mud: Schlamm
     muddy_mangrove_roots: Schlammige Mangrovenwurzel
     sculk: Sculk
@@ -868,29 +868,29 @@ sources:
     sculk_catalyst: Sculk-Katalysator
     sculk_shrieker: Sculk-Shrieker
   fishing:
-    cod: Cod
-    salmon: Salmon
-    tropical_fish: Tropical Fish
-    pufferfish: Pufferfish
-    treasure: Treasure Items
-    junk: Junk Items
-    rare: Rare Loot
-    epic: Epic Loot
+    cod: Kabeljau
+    salmon: Lachs
+    tropical_fish: Tropenfisch
+    pufferfish: Kugelfisch
+    treasure: Schatzgegenstände
+    junk: Müll
+    rare: Seltene Beute
+    epic: Epische Beute
   entity:
-    player: Player
-    bat: Bat
-    cat: Cat
-    chicken: Chicken
-    cod: Cod
-    cow: Cow
-    donkey: Donkey
-    fox: Fox
-    giant: Giant
-    horse: Horse
+    player: Spieler
+    bat: Fledermaus
+    cat: Katze
+    chicken: Huhn
+    cod: Kabeljau
+    cow: Kuh
+    donkey: Esel
+    fox: Fuchs
+    giant: Riese
+    horse: Pferd
     mooshroom: Mooshroom
-    mule: Mule
-    ocelot: Ocelot
-    parrot: Parrot
+    mule: Maultier
+    ocelot: Ozelot
+    parrot: Papagei
     pig: Schwein
     rabbit: Hase
     salmon: Lachs
@@ -926,7 +926,7 @@ sources:
     guardian: Wächter
     hoglin: Hoglin
     husk: Wüstenzombie
-    illusioner: Illusioner
+    illusioner: Illusionist
     magma_cube: Magmawürfel
     phantom: Phantom
     piglin_brute: Piglin-Grobian
@@ -937,76 +937,76 @@ sources:
     skeleton: Skelett
     slime: Schleim
     stray: Streuner
-    vex: Vex
+    vex: Plagegeist
     vindicator: Verteidiger
     witch: Hexe
     wither_skeleton: Wither Skelett
     zoglin: Zoglin
     zombie: Zombie
-    zombie_villager: Zombie Villager
-    ender_dragon: Ender Dragon
+    zombie_villager: Zombiedorfbewohner
+    ender_dragon: Enderdrache
     wither: Wither
     axolotl: Axolotl
-    glow_squid: Glow Squid
-    goat: Goat
+    glow_squid: Leuchttintenfisch
+    goat: Ziege
     allay: Hilfsgeist
     frog: Frosch
     tadpole: Kaulquappe
-    warden: Warden
+    warden: Wärter
     camel: Dromedar
     sniffer: Schnüffler
   damage:
-    mob_damage: Damage from Mobs
-    player_damage: Damage from Players
-    fall_damage: Taking Fall Damage
+    mob_damage: Schaden von Mobs
+    player_damage: Schaden von Spielern
+    fall_damage: Bekomme Fallschaden
   statistic:
-    walk_per_meter: Walking
-    sprint_per_meter: Sprinting
-    swim_per_meter: Swimming
+    walk_per_meter: Gehen
+    sprint_per_meter: Sprinten
+    swim_per_meter: Schwimmen
   jumping:
-    jump_per_100: Jumping
+    jump_per_100: Springen
   brewing:
-    awkward: Awkward Potion
-    regular: Regular Potion
-    extended: Extended Duration Potion
-    upgraded: Upgraded Potion
-    splash: Splash Potion
-    lingering: Lingering Potion
+    awkward: Seltsamer Trank
+    regular: Gewöhnlicher Trank
+    extended: Trank mit verlängerter Wirkungsdauer
+    upgraded: Verbesserter Trank
+    splash: Wurftrank
+    lingering: Verweiltrank
   enchanting:
-    weapon_per_level: Weapon
-    armor_per_level: Armor
-    tool_per_level: Tool
-    book_per_level: Book
+    weapon_per_level: Waffe
+    armor_per_level: Rüstung
+    tool_per_level: Werkzeug
+    book_per_level: Buch
   mana_ability_use:
-    mana_ability_use: Using Mana Abilities
+    mana_ability_use: Mana-Fähigkeiten benutzen
   item_consume:
-    drink_regular: Drink Regular Potion
-    drink_extended: Drink Extended Duration Potion
-    drink_upgraded: Drink Upgraded Potion
-    golden_apple: Golden Apple
-    enchanted_golden_apple: Enchanted Golden Apple
+    drink_regular: Einen gewöhnlichen Trank trinken
+    drink_extended: Einen Trank mit verlängerter Dauer trinken
+    drink_upgraded: Einen verbesserten Trank trinken
+    golden_apple: Goldener Apfel
+    enchanted_golden_apple: Verzauberter goldener Apfel
   potion_splash:
-    splash_regular: Splash Regular Potion
-    splash_extended: Splash Extended Duration Potion
-    splash_upgraded: Splash Upgraded Potion
-    lingering_regular: Use Regular Lingering Potion
-    lingering_extended: Use Extended Duration Lingering Potion
-    lingering_upgraded: Use Upgraded Lingering Potion
-  forging:
-    combine_books_per_level: Combine Enchanted Books
-    combine_weapon_per_level: Combine Weapon with Book
-    combine_armor_per_level: Combine Armor with Book
-    combine_tool_per_level: Combine Tool with Book
+    splash_regular: Gewöhnlicher Wurftrank
+    splash_extended: Wurftrank mit verlängerter Wirkungsdauer
+    splash_upgraded: Verbesserter Wurftrank
+    lingering_regular: Benutze gewöhnlichen Verweiltrank
+    lingering_extended: Benutze Verweiltrank mit verlängerter Dauer
+    lingering_upgraded: Benutze verbesserten Verweiltrank
+  anvil:
+    combine_books_per_level: Kombiniere verzauberte Bücher
+    combine_weapon_per_level: Kombiniere eine Waffe mit einem verzauberten Buch
+    combine_armor_per_level: Kombiniere eine Rüstung mit einem verzauberten Buch
+    combine_tool_per_level: Kombiniere ein Werkzeug mit einem verzauberten Buch
   grindstone:
-    grindstone_per_level: Disenchant Item with Grindstone
+    grindstone_per_level: Entzaubere einen Gegenstand mit dem Schleifstein
   units:
-    damage: Damage
+    damage: Schaden
     meter: Meter
-    100_jumps: 100 Jumps
-    mana: Mana Consumed
-    combine_level: Anvil Cost XP
-    grindstone_level: Level of Enchant on Item
-    enchant_level: Level of Enchant Received
+    100_jumps: 100 Sprünge
+    mana: Mana Konsum
+    combine_level: Amboss Kosten Erfahrung
+    grindstone_level: Stufe der Verzauberung des Gegenstands
+    enchant_level: Level der erhaltenen Verzauberung
 stats:
   strength:
     name: Stärke
@@ -1086,4 +1086,4 @@ units:
   mana: Mana
   hp: LP
   xp: EP
-file_version: 24
+file_version: 30
