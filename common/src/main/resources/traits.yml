@@ -60,3 +60,4 @@ traits:
     base: 50
   auraskills/movement_speed:
     enabled: true
+    max: 400.0
