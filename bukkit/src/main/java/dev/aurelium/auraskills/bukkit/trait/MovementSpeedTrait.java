@@ -7,17 +7,12 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
-import java.util.UUID;
-
 public class MovementSpeedTrait extends TraitImpl {
-
-    private final UUID MODIFIER_ID = UUID.fromString("3f805765-46e6-494e-877b-37ef82ed9e22");
 
     MovementSpeedTrait(AuraSkills plugin) {
         super(plugin, Traits.MOVEMENT_SPEED);
@@ -31,27 +26,28 @@ public class MovementSpeedTrait extends TraitImpl {
         }
         double totalValue = attribute.getValue();
         // Subtract the trait value
-        double baseValue = totalValue - getAttributeModifierValue(player, trait);
-        return baseValue * 500;
+        double ATTRIBUTE_RATIO = 1000;
+        double baseValue = totalValue - getValue(player, trait, ATTRIBUTE_RATIO);
+        return baseValue * ATTRIBUTE_RATIO;
     }
 
     @Override
     protected void reload(Player player, Trait trait) {
-        double value = getAttributeModifierValue(player, trait);
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
-        if (attribute == null) return;
-        // Remove existing modifier
-        for (AttributeModifier modifier : attribute.getModifiers()) {
-            if (modifier.getUniqueId().equals(MODIFIER_ID)) {
-                attribute.removeModifier(modifier);
-            }
-        }
-        if (!trait.isEnabled()) return;
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) return;
-        if (attribute.getValue() > trait.optionDouble("max") * 0.002) return;
+        double WALK_SPEED_RATIO = 500;
+        double value = getValue(player, trait, WALK_SPEED_RATIO);
 
-        var mod = new AttributeModifier(MODIFIER_ID, "auraskills_movement_speed", value, AttributeModifier.Operation.ADD_NUMBER);
-        attribute.addModifier(mod);
+        if (!trait.isEnabled()) return;
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+            player.setWalkSpeed(0.2f);
+            return;
+        }
+        double max = trait.optionDouble("max") / WALK_SPEED_RATIO;
+        if (0.2 + value > max) {
+            player.setWalkSpeed((float) (max));
+            return;
+        }
+
+        player.setWalkSpeed(Math.min((float) (0.2 + value), 1f));
     }
 
     @EventHandler
@@ -64,9 +60,9 @@ public class MovementSpeedTrait extends TraitImpl {
         reload(event.getPlayer(), getTraits()[0]);
     }
 
-    private double getAttributeModifierValue(Player player, Trait trait) {
+    private double getValue(Player player, Trait trait, double ratio) {
         User user = plugin.getUser(player);
-        return user.getBonusTraitLevel(trait) * 0.002;
+        return user.getBonusTraitLevel(trait) / ratio;
     }
 
 }
