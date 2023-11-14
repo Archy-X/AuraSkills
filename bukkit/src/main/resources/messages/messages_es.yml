@@ -1,5 +1,5 @@
 # Aurelium Skills Spanish (es) messages
-# Translators: Adrián, Edwin Sanchez, JORC, TnTVlogs
+# Translators: Adrián, Edwin Sanchez, JORC, TnTVlogs, 25thsin
 # Contribute here: https://crowdin.com/project/aureliumskills/es#
 abilities:
   farming:
@@ -302,7 +302,7 @@ abilities:
       info: "{value} Coste Máximo"
     skill_mender:
       name: Reparador de habilidades
-      desc: "Obtener XP de habilidad tiene un {value}% de probabilidad de reparar un objeto sostenido o una pieza de armadura desgastada con el hechizo de Reparación con 1 durabilidad por 2 habilidades XP."
+      desc: Obtener XP de habilidad tiene un {value}% de probabilidad de reparar un objeto sostenido o una pieza de armadura desgastada con el hechizo de Reparación con 1 durabilidad por 2 habilidades XP.
       info: "{value}% Probabilidad de Aturdimiento"
 acf:
   core:
@@ -647,7 +647,7 @@ menus:
 mana_abilities:
   replenish:
     name: Replantar
-    desc: "Replanta semillas automáticamente durante {value} segundos. <1>[Click derecho<yellow> a una azada para activar]"
+    desc: "Replanta semillas automáticamente durante {value} segundos. <1>[Click derecho a una azada para activar]"
     raise: "<gray>Levantaste tu azada"
     lower: "<gray>Bajaste tu azada"
     start: "<gold>¡Replantación Activada! <gray>(-{mana} {mana_unit})"
@@ -692,7 +692,7 @@ mana_abilities:
     shoot: "<gold>¡Usaste Disparo Cargado! <light_purple>+{percent}% DAÑO <gray>(-{mana} {mana_unit})"
   lightning_blade:
     name: Espada de Relámpagos
-    desc: "Aumenta la velocidad de ataque en un {value}% por {duration} segundos. <1>[Haz clic derecho a la espada y ataca a una entidad para activar]"
+    desc: Aumenta la velocidad de ataque en un {value}% por {duration} segundos. <1>[Haz clic derecho a la espada y ataca a una entidad para activar]
     raise: "<gray>Preparas tu espada"
     lower: "<gray>Bajas tu espada"
     start: "<gold>Espada de relámpagos activada <gray>(-{mana} {mana_unit})"
@@ -860,8 +860,8 @@ sources:
     soul_soil: Tierra de almas
     red_sand: Arena roja
     rooted_dirt: Tierra enraizada
-    mud: "Lodo"
-    muddy_mangrove_roots: "Raices de manglares fangosos"
+    mud: Lodo
+    muddy_mangrove_roots: Raices de manglares fangosos
     sculk: Sculk
     sculk_vein: Enredaderas de Sculk
     sculk_sensor: Sensor de Sculk
@@ -1038,6 +1038,50 @@ stats:
     desc: "La Resistencia incrementa la cantidad de de daño reducido de los ataques enemigos"
     color: "<dark_purple>"
     symbol: "✦"
+  crit_chance:
+    name: Chansa de Critía
+    desc: "Chansa de crítica es tu probabilidad de causar un golpe crítico"
+    color: "<green>"
+    symbol: "⌘"
+  crit_damage:
+    name: Daño Crítico
+    desc: "Daño Crítico es el porcentaje de aumento el daño cuando infliges un golpe crítico"
+    color: "<dark_aqua>"
+    symbol: "★"
+  speed:
+    name: Velocidad
+    desc: "La velocidad aumenta con la rapidez que puedes caminar y correr"
+    color: "<white>"
+    symbol: "➤"
+traits:
+  attack_damage:
+    name: Daño del Ataque
+  hp:
+    name: PV
+  saturation_regen:
+    name: Regeneración de Saturación
+  hunger_regen:
+    name: Regeneración del Hambre
+  mana_regen:
+    name: Regeneración de Maná
+  luck:
+    name: Suerte
+  double_drop:
+    name: Doble Suelta
+  experience_bonus:
+    name: Bono de Experiencia
+  anvil_discount:
+    name: Descuento Yunque
+  max_mana:
+    name: Máximo de Maná
+  damage_reduction:
+    name: Reducción del Daño
+  crit_chance:
+    name: Chansa de Critía
+  crit_damage:
+    name: Daño Crítico
+  movement_speed:
+    name: Velocidad
 units:
   mana: Maná
   hp: HP
