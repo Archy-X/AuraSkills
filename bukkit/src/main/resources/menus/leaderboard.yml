@@ -37,5 +37,3 @@ templates:
     display_name: '<yellow>{place}. <gold>{player}'
     lore:
       - '<gray>{{level}}: <white>{level}'
-options:
-  auto_replace_heads_on_legacy: true
