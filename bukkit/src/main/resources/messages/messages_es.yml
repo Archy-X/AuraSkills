@@ -1,11 +1,11 @@
 # Aurelium Skills Spanish (es) messages
-# Translators: Adrián, Edwin Sanchez, JORC, TnTVlogs
+# Translators: Adrián, Edwin Sanchez, JORC, TnTVlogs, 25thsin
 # Contribute here: https://crowdin.com/project/aureliumskills/es#
 abilities:
   farming:
     bountiful_harvest:
       name: Cosecha Abundante
-      desc: "{value}% de posibilidad para obtener drops dobles <gray> de los cultivos."
+      desc: "{value}% de posibilidad para obtener drops dobles de los cultivos."
       info: "{value}% 2x Drops"
     farmer:
       name: Agricultor
@@ -17,16 +17,16 @@ abilities:
       info: "+{value}% Daño de Azada"
     geneticist:
       name: Genetista
-      desc: "Aumenta la ganancia de saturación de<gray> los alimentos de origen vegetal en {value}."
+      desc: "Aumenta la ganancia de saturación de los alimentos de origen vegetal en {value}."
       info: "+{value} Saturación"
     triple_harvest:
       name: Cosecha Triple
-      desc: "{value}% de posibilidad para obtener drops<gray> triples de los cultivos."
+      desc: "{value}% de posibilidad para obtener drops triples de los cultivos."
       info: "{value}% 3x Drops"
   foraging:
     lumberjack:
       name: Leñador
-      desc: "{value}% de posibilidad para obtener<gray> drops dobles de los troncos."
+      desc: "{value}% de posibilidad para obtener drops dobles de los troncos."
       info: "{value}% 2x Drops"
     forager:
       name: Forrajero
@@ -38,16 +38,16 @@ abilities:
       info: "+{value}% Daño de Hacha"
     valor:
       name: Valor
-      desc: "Obtén +{value} de Fuerza mientras <gray> sostienes un hacha"
+      desc: "Obtén +{value} de Fuerza mientras sostienes un hacha"
       info: "+{value} de Fuerza"
     shredder:
       name: Trituradora
-      desc: "{value}% de probabilidad de infligir triple daño<gray> de durabilidad con hachas."
+      desc: "{value}% de probabilidad de infligir triple daño de durabilidad con hachas."
       info: "{value}% 3x Daño de Durabilidad"
   mining:
     lucky_miner:
       name: Minero Afortunado
-      desc: "{value}% de posibilidad para obtener<gray> drops dobles de los minerales."
+      desc: "{value}% de posibilidad para obtener drops dobles de los minerales."
       info: "{value}% 2x Drops"
     miner:
       name: Minero
@@ -59,16 +59,16 @@ abilities:
       info: "+{value}% Daño de Pico"
     stamina:
       name: Energía
-      desc: "Obtén +{value} de Resistencia mientras<gray> sostienes un pico"
+      desc: "Obtén +{value} de Resistencia mientras sostienes un pico"
       info: "+{value} Resistencia"
     hardened_armor:
       name: Armadura Resistente
-      desc: "{value}% de probabilidad para negar el<gray> daño de durabilidad en la armadura."
+      desc: "{value}% de probabilidad para negar el daño de durabilidad en la armadura."
       info: "{value}% Sin Pérdida de Durabilidad"
   fishing:
     lucky_catch:
       name: Pesca de la Suerte
-      desc: "{value}% de posibilidad para obtener<gray> drops dobles de la pesca."
+      desc: "{value}% de posibilidad para obtener drops dobles de la pesca."
       info: "{value}% 2x Drops"
     fisher:
       name: Pescador
@@ -80,7 +80,7 @@ abilities:
       info: "+{value}% Botín Raro"
     grappler:
       name: Agarrador
-      desc: "Agarra entidades con un {value}% más<gray> de velocidad."
+      desc: "Agarra entidades con un {value}% más de velocidad."
       info: "+{value}% Velocidad de Agarre"
     epic_catch:
       name: Captura Épica
@@ -101,7 +101,7 @@ abilities:
       info: "+{value}% Daño de Pala"
     bigger_scoop:
       name: Pala Grande
-      desc: "{value}% de probabilidad para obtener drops<gray> triples al cavar."
+      desc: "{value}% de probabilidad para obtener drops triples al cavar."
       info: "{value}% 3x Drops"
     lucky_spades:
       name: Pala de la Suerte
@@ -122,16 +122,16 @@ abilities:
       info: "+{value}% Daño de Arco"
     piercing:
       name: Perforación
-      desc: "{value}% de probabilidad para que las<gray> flechas perforen a los mobs."
+      desc: "{value}% de probabilidad para que las flechas perforen a los mobs."
       info: "{value}% Probabilidad de Perforación"
     stun:
       name: Aturdir
-      desc: "{value}% de probabilidad para reducir la velocidad del<gray> enemigo en un 20% por 2 segundos."
+      desc: "{value}% de probabilidad para reducir la velocidad del enemigo en un 20% por 2 segundos."
       info: "{value}% Probabilidad de Aturdimiento"
   defense:
     shielding:
       name: Blindaje
-      desc: "Reduce el daño entrante en un {value}%<gray> mientras estás agachado."
+      desc: "Reduce el daño entrante en un {value}% mientras estás agachado."
       info: "-{value}% Daño Entrante agachándote"
     defender:
       name: Defensor
@@ -143,11 +143,11 @@ abilities:
       info: "-{value}% Daño de Mobs"
     immunity:
       name: Inmunidad
-      desc: "{value}% de probabilidad de rechazar<gray> completamente un ataque enemigo."
+      desc: "{value}% de probabilidad de rechazar completamente un ataque enemigo."
       info: "{value}% de Inmunidad"
     no_debuff:
       name: Sin Desventajas
-      desc: "{value}% de probabilidad para negar el efecto<gray> de una poción que te perjudique."
+      desc: "{value}% de probabilidad para negar el efecto de una poción que te perjudique."
       info: "{value}% Sin Desventajas"
   fighting:
     crit_damage:
@@ -169,7 +169,7 @@ abilities:
       dealt: "<red>¡Primer Golpe!"
     bleed:
       name: Sangrar
-      desc: "{value}% de probabilidad de hacer sangrar al enemigo<gray> durante 3 ticks, infligiendo {value_2} puntos de daño por tick."
+      desc: "{value}% de probabilidad de hacer sangrar al enemigo durante 3 ticks, infligiendo {value_2} puntos de daño por tick."
       info: "{value}% de Probabilidad, {value_2} de Daño"
       enemy_bleeding: "<red>¡Enemigo Sangrando!"
       self_bleeding: "<red>¡Estás Sangrando!"
@@ -185,15 +185,15 @@ abilities:
       info: "+{value}% XP"
     golden_heal:
       name: Curación Dorada
-      desc: "Aumenta la ganancia de salud del efecto<gray> de regeneración en un {value}%"
+      desc: "Aumenta la ganancia de salud del efecto de regeneración en un {value}%"
       info: "+{value}% Efecto de Regeneración"
     recovery:
       name: Recuperación
-      desc: "Aumenta la regeneración natural cuando<gray> tiene menos de la mitad de salud en un {value}%"
+      desc: "Aumenta la regeneración natural cuando tiene menos de la mitad de salud en un {value}%"
       info: "+{value}% Regeneración de Salud Baja"
     meal_steal:
       name: Robo de Comida
-      desc: "{value}% de probabilidad de robar 1 punto<gray> de hambre al atacar a un jugador."
+      desc: "{value}% de probabilidad de robar 1 punto de hambre al atacar a un jugador."
       info: "{value}% Robo de Comida"
   agility:
     light_fall:
@@ -206,22 +206,22 @@ abilities:
       info: "+{value}% XP"
     sugar_rush:
       name: Subida de Azúcar
-      desc: "Las pociones de velocidad y salto alto consumidas<gray> y salpicadas duran un {value}% más."
+      desc: "Las pociones de velocidad y salto alto consumidas y salpicadas duran un {value}% más."
       info: "{value}% Velocidad Duradera"
     fleeting:
       name: Fugaz
-      desc: "Gana +{value}% de velocidad de movimiento cuando <gray> estás por debajo del 20% de salud"
+      desc: "Gana +{value}% de velocidad de movimiento cuando estás por debajo del 20% de salud"
       info: "+{value}% de Velocidad"
       start: "<white>Has ganado una mejora de velocidad! <gray>(+{value}% Velocidad)"
       end: "<gray>La mejora de velocidad ha finalizado"
     thunder_fall:
       name: Caída de Trueno
-      desc: "Si te agachas mientras caes, tienes un {value}% de probabilidad<gray> de infligir el {value_2}% del daño de caída a los mobs que<gray> estén en un radio de 3 bloques"
+      desc: "Si te agachas mientras caes, tienes un {value}% de probabilidad de infligir el {value_2}% del daño de caída a los mobs que estén en un radio de 3 bloques"
       info: "{value}% de Probabilidad, {value_2}% de Daño"
   alchemy:
     alchemist:
       name: Alquimista
-      desc: "Las pociones que preparas tienen un {value}%<gray> más de duración."
+      desc: "Las pociones que preparas tienen un {value}% más de duración."
       info: "+{value}% Duración de Poción"
       lore: "<green>(+{duration})"
     brewer:
@@ -230,20 +230,20 @@ abilities:
       info: "+{value}% XP"
     splasher:
       name: Salpicador
-      desc: "Las pociones que salpiques tienen un {value}%<gray> más de duración por cada jugador afectado."
+      desc: "Las pociones que salpiques tienen un {value}% más de duración por cada jugador afectado."
       info: "+{value}% Duración/Jugador"
     lingering:
       name: Persistente
-      desc: "Las pociones persistentes decaen naturalmente un {value}%<gray> más lento y decaen un {value_2}% menos por entidad afectada."
+      desc: "Las pociones persistentes decaen naturalmente un {value}% más lento y decaen un {value_2}% menos por entidad afectada."
       info: "-{value}% Natural, *{value_2}% Decaimiento de Entidad"
     wise_effect:
       name: Efecto Sabio
-      desc: "Gana un {value}% de sabiduría por cada efecto único<gray> de pociones que tengas activas."
+      desc: "Gana un {value}% de sabiduría por cada efecto único de pociones que tengas activas."
       info: "+{value} Sabiduría/Efecto"
   enchanting:
     xp_convert:
       name: Convertir XP
-      desc: "Gana 1 experiencia de Minecraft por cada {value}<gray> de experiencia de habilidad que ganes."
+      desc: "Gana 1 experiencia de Minecraft por cada {value} de experiencia de habilidad que ganes."
       info: "1 EXP/{value} EXP de Habilidad"
     enchanter:
       name: Encantador
@@ -251,15 +251,15 @@ abilities:
       info: "+{value}% XP"
     xp_warrior:
       name: XP de Guerrero
-      desc: "Los monstruos que elimines tienen un {value}% de probabilidades<gray> de dar doble experiencia."
+      desc: "Los monstruos que elimines tienen un {value}% de probabilidades de dar doble experiencia."
       info: "{value}% 2x EXP de Monstruos"
     enchanted_strength:
       name: Fuerza Encantada
-      desc: "Gana {value} de Fuerza por cada<gray> encantamiento único en el objeto que sostienes."
+      desc: "Gana {value} de Fuerza por cada encantamiento único en el objeto que sostienes."
       info: "{value} Fuerza/Encantamiento"
     lucky_table:
       name: Mesa de la suerte
-      desc: "Los objetos que encantes tienen en la mesa de<gray> encantamientos tienen un {value}% de probabilidad de mejorar <gray> el encantamiento en 1 si no es el nivel máximo"
+      desc: "Los objetos que encantes tienen en la mesa de encantamientos tienen un {value}% de probabilidad de mejorar <gray> el encantamiento en 1 si no es el nivel máximo"
       info: "{value}% Posibilidad de Mejora de Encantador"
   healing:
     life_essence:
@@ -272,11 +272,11 @@ abilities:
       info: "+{value}% XP"
     life_steal:
       name: Robo de vida
-      desc: Cura un {value}% del HP máximo de los monstruos hostiles<gray> y jugadores que mates.
+      desc: Cura un {value}% del HP máximo de los monstruos hostiles y jugadores que mates.
       info: "Robar {value}% de HP"
     golden_heart:
       name: Corazones Oro
-      desc: El daño causado a tus corazones de absorción es<gray> reducido en un {value}%
+      desc: El daño causado a tus corazones de absorción es reducido en un {value}%
       info: "-{value}% Daño de Absorción"
     revival:
       name: Renacimiento
@@ -286,7 +286,7 @@ abilities:
   forging:
     disenchanter:
       name: Desencantador
-      desc: Gana un {value}% más de experiencia al desencantar<gray> objetos usando una piedra de afilar.
+      desc: Gana un {value}% más de experiencia al desencantar objetos usando una piedra de afilar.
       info: "+{value}% Piedra de Afilar EXP"
     forger:
       name: Forjador
@@ -294,15 +294,15 @@ abilities:
       info: "+{value}% XP"
     repairing:
       name: Reparando
-      desc: Reparar objetos en un yunque usando el material crudo<gray> del cual el objeto estaba hecho de reparaciones<gray> {value}% más de durabilidad.
+      desc: Reparar objetos en un yunque usando el material crudo del cual el objeto estaba hecho de reparaciones {value}% más de durabilidad.
       info: "+{value}% Reparación del Yunque"
     anvil_master:
       name: Maestro del yunque
-      desc: Aumenta el costo máximo de reparación de un yunque<gray> antes de que sea demasiado caro para la experiencia {value}.
+      desc: Aumenta el costo máximo de reparación de un yunque antes de que sea demasiado caro para la experiencia {value}.
       info: "{value} Coste Máximo"
     skill_mender:
       name: Reparador de habilidades
-      desc: "Obtener XP de habilidad tiene un {value}% de probabilidad de reparar\<gray> un objeto sostenido o una pieza de armadura desgastada\<gray> con el hechizo de Reparación con\<gray> 1 durabilidad por 2 habilidades XP."
+      desc: Obtener XP de habilidad tiene un {value}% de probabilidad de reparar un objeto sostenido o una pieza de armadura desgastada con el hechizo de Reparación con 1 durabilidad por 2 habilidades XP.
       info: "{value}% Probabilidad de Aturdimiento"
 acf:
   core:
@@ -504,6 +504,11 @@ commands:
     list: "<white>Multiplicador de XP global para <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<white>Multiplicador de <aqua>{skill} <white>XP: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>¡Solo los jugadores pueden ver sus propios modificadores! Intenta especificando un jugador!"
+  profile:
+    skills: "Perfíl de Habilidades de <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Habilidades:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Nivel: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Perfil de Estadísticas de <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Estadísticas:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Nivel Total: <white>{total_level}<gray>, Nivel Base: <white>{base_level}<gray>, Nivel Modificado: <white>{modified_level}"
   rank:
     header: "<aqua><bold>Tu Clasificación de Habilidades</bold>"
     power: "<yellow>Poder <gray>(Todas las habilidades): <white>#{rank} de {total}"
@@ -538,6 +543,9 @@ commands:
     average_header_page: "<white>--==<aqua><bold>Clasificación de Promedio de Habilidades </bold><white>(Página {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Intenta con: <green>/sk top <white><page> <gray>o <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>Transferencia exitosa de datos del jugador de <gray>{from} <green>a <gray>{to}"
+    error: "<red>Se ha producido un error al transferir datos del jugador. Comprueba los errores de la consola."
   updateleaderboards:
     already_updating: "<yellow>¡La tabla de clasificaciones ya se está actualizando!"
     updated: "<green>¡Tabla de clasificaciones actualizada!"
@@ -547,7 +555,8 @@ commands:
     set: "<gray>Establecer <aqua>{skill} <gray>XP al jugador <gray>{player} <gray>a {amount}"
     remove: "<gray>Eliminados <aqua>{amount} {skill} <gray>XP del jugador <gold>{player}"
   unknown_skill: "<yellow>¡Habilidad Desconocida!"
-  no_profile: "<yellow>¡El jugador no tiene un perfil de habilidades!"
+  unknown_stat: "<yellow>¡Estadística Desconocida!"
+  no_profile: "<yellow>El jugador no tiene perfíl de habilidades. Porfavor intenta reconectarte o reiniciar el servidor."
 leveler:
   title: "<green>Nuevo nivel de {skill}"
   subtitle: "<gold>{old} ➜ {new}"
@@ -561,220 +570,189 @@ leveler:
   unclaimed_item: "<red>Tienes objetos sin reclamar porque tu invnetario estaba lleno, usa <yellow>/skills claimitems <red>para reclamarlos"
 menus:
   common:
-    close: "<red>Cerrar"
-    level: "<gray>Nivel: <yellow>{level}"
-    progress_to_level: "<gray>Progreso al nivel {level}: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
-    max_level: "<gold>NIVEL MÁXIMO"
-    ability_levels: "<gray>Niveles de habilidad: {ability_1} {ability_2} {ability_3} {ability_4} {ability_5}"
-    ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
-    ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
-    stats_leveled: "<gray>Estadísticas mejoradas: {stats}"
-    mana_ability: "<light_purple><bold>Habilidad de Mana </bold><blue>{mana_ability} {level} <gray>Duracion: <green>{duration}s <gray>Coste de Mana: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s"
-  skills_menu:
-    skills_menu_title: Tus Habilidades
-    your_skills: "<aqua>Tus Habilidades - <gold>{player}"
-    your_skills_desc: "<gray>Mejora las habilidades haciendo varias tareas<gray>para desbloquear mejoras de estadísticas,<gray>habilidades y mucho más!"
-    your_skills_hover: "<yellow>¡Coloca el cursor sobre una habilidad para obtener más información!"
-    your_skills_click: "<yellow>¡Haz click en una habilidad para ver el progreso de nivel!"
-    skill_click: "<yellow>¡Click para ver el progreso de Nivel!"
-    skill_locked: "<red>¡No tienes permiso para ver esta habilidad!"
-    stats: "<aqua>Estadísticas"
-    stats_desc: "<gray>Gana ventajas de estadísticas al subir de nivel las habilidades"
-    stats_click: "<yellow>Haz clic para aprender más o ver tus estadísticas"
-  level_progression_menu:
-    level_progression_menu_title: "Niveles de {skill} - Página {page}"
-    your_ranking: "<gold>Tu Clasificación de habilidades"
-    rank_out_of: "<white>Estás clasificado en el puesto <gold>{rank}<white> de {total} jugadores"
-    rank_percent: "<white>Estás en el top <gold>{percent}%<white> de jugadores"
-    back: "<green>Regresar"
-    back_click: "<gray>Vovler al menú de {menu_name}"
-    next_page: "<gold>Página Siguiente"
-    next_page_click: "<yellow>Click para ir a la página siguiente"
-    previous_page: "<gold>Página Anterior"
-    previous_page_click: "<yellow>Click para ir a la página anterior"
-    level_unlocked: "<green>Nivel {level}"
-    level_in_progress: "<yellow>Nivel {level}"
-    level_locked: "<red>Nivel {level}"
-    level_number: "<gray>Nivel <white>{level}"
-    unlocked: "<green>DESLOQUEADO"
-    in_progress: "<yellow>EN PROGRESO"
-    locked: "<red>BLOQUEADO"
-    rewards: "<gray>Recompensas:{rewards}"
-    rewards_entry: " {color}+{num} {symbol} {stat}"
-    money_reward: " <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Habilidad Desbloqueada<gray> {desc}</bold>"
-    ability_level: "<gold>{ability} {level}<gray> {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Habilidad de Mana Desbloqueada<gray> {desc}</bold>"
-    mana_ability_level: "<blue>{mana_ability} {level}<gray> {desc}"
-    progress: "<gray>Progreso: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
-    leaderboard_click: "<yellow>Clic para ver la clasificación de la hablidad de {skill}"
-    sources: "<green>Fuentes de XP"
-    sources_desc: "<gray>El menú de fuentes muestra todas las maneras en que<gray>puedes ganar XP en una habilidad, así como cuánto<gray>XP da cada fuente."
-    sources_click: "<yellow>Clic para ver las fuentes de XP de {skill}"
-    abilities: "<red>Habilidades"
-    abilities_desc: "<aqua>Las habilidades <gray>son ventajas pasivas que desbloqueas y<gray>mejoras a medida que subes de nivel.<light_purple>Las habilidades de maná <gray>son un tipo especial de habilidad<gray>que requieren activación y consume maná."
-    abilities_click: "<yellow>Clic para ver las habilidades de {skill}"
-  stats_menu:
-    stats_menu_title: Tus estadísticas
-    player_stat_entry: " {color}{symbol} {stat} <white>{level}"
-    skills: "<gray>Habilidades: <white>{skills}"
-    your_level: "<gray>Tu Nivel: {color}{level}"
-    attack_damage: "<dark_red>+{value}% Daño de Ataque"
-    hp: "<red>+{value} ❤"
-    saturated_regen: "<gold>+{value} Regeneración Saturada"
-    full_hunger_regen: "<gold>+{value} Regeneración de Hambre Completa"
-    almost_full_hunger_regen: "<gold>+{value} Regeneración de Hambre Casi Completa"
-    mana_regen: "<aqua>+{value} Regeneración de maná/s"
-    luck: "<dark_green>+{value} Suerte"
-    double_drop_chance: "<dark_green>Probabilidad de doble drop: {value}%"
-    xp_gain: "<blue>+{value}% {xp_unit} Ganancia"
-    anvil_cost_reduction: "<blue>Reducción de costos del yunque: {value}%"
-    max_mana: "<blue>Maná Máximo: {value}"
-    incoming_damage: "<dark_purple>-{value}% Daño entrante"
+    close: "Cerrar"
+    level: "Nivel"
+    progress_to_level: "Progreso al nivel"
+    max_level: "NIVEL MÁXIMO"
+    ability_levels: "Niveles de habilidad"
+    stats_leveled: "Estadísticas mejoradas"
+    mana_ability: "Habilidad de Mana"
+    duration: "Duracion"
+    mana_cost: "Coste de Mana"
+    cooldown: "Recarga"
+    damage: "Daño"
+    max_mana_cost: "Costo de Maná máximo"
+    attack_speed: "Velocidad de Ataque"
+    back: "Regresar"
+    back_click: "Vovler al menú de {menu_name}"
+    unlocked: "DESLOQUEADO"
+    in_progress: "EN PROGRESO"
+    locked: "BLOQUEADO"
+    your_level: "Tu Nivel"
+    next_page: "Página Siguiente"
+    next_page_click: "Click para ir a la página siguiente"
+    previous_page: "Página Anterior"
+    previous_page_click: "Click para ir a la página anterior"
+  skills:
+    skills_title: "Tus Habilidades"
+    your_skills: "Tus Habilidades"
+    your_skills_desc: "Mejora las habilidades haciendo varias tareas<gray>para desbloquear mejoras de estadísticas, habilidades y mucho más!"
+    your_skills_hover: "¡Coloca el cursor sobre una habilidad para obtener más información!"
+    your_skills_click: "¡Haz click en una habilidad para ver el progreso de nivel!"
+    skill_click: "¡Click para ver el progreso de Nivel!"
+    stats: "Estadísticas"
+    stats_desc: "Gana ventajas de estadísticas al subir de nivel las habilidades"
+    stats_click: "Haz clic para aprender más o ver tus estadísticas"
+  level_progression:
+    level_progression_title: "Niveles de {skill} - Página {page}"
+    your_ranking: "Tu Clasificación de habilidades"
+    rank_out_of: "<1>Estás clasificado en el puesto <2>{rank}</2> de {total} jugadores</1>"
+    rank_percent: "<1>Estás en el top <2>{percent}%</2> de jugadores</1>"
+    rewards: "Recompensas"
+    ability_unlock: "Habilidad Desbloqueada"
+    mana_ability_unlock: "Habilidad de Mana Desbloqueada"
+    progress: "Progreso"
+    leaderboard_click: "Clic para ver la clasificación de la hablidad de {skill}"
+    sources: "Fuentes de XP"
+    sources_desc: "El menú de fuentes muestra todas las maneras en que puedes ganar XP en una habilidad, así como cuánto XP da cada fuente."
+    sources_click: "Clic para ver las fuentes de XP de {skill}"
+    abilities: "Habilidades"
+    abilities_desc: "<2>Las habilidades</2> <1>son ventajas pasivas que desbloqueas y mejoras a medida que subes de nivel.</1>"
+    mana_abilities_desc: "<3>Las habilidades</3> <1>de maná son un tipo especial de habilidad que requieren activación y consume maná.</1>"
+    abilities_click: "Clic para ver las habilidades de {skill}"
+  stats:
+    stats_title: Tus estadísticas
+    skills: "Habilidades"
   unclaimed_items:
     unclaimed_items_title: "Reclamar objetos"
-    inventory_full: "<yellow>No tienes suficiente espacio en el inventario para reclamarlos"
-    click_to_claim: "<yellow>¡Clic para reclamar!"
+    inventory_full: "No tienes suficiente espacio en el inventario para reclamarlos"
+    click_to_claim: "¡Clic para reclamar!"
   leaderboard:
     leaderboard_title: "Clasificación de {skill}"
-    player_entry: "<yellow>{place}. <gold>{player}"
-    skill_level: "<gray>Nivel: <white>{level}"
   sources:
-    sources_title: "Fuentes de XP de {skill} ({current_page}/{total_pages})"
-    sorter: "<aqua>Ordenar fuentes de XP"
-    sort_type: "<gray>{selected}{type_name}"
-    selected: "<white>> "
+    sources_title: "Fuentes de XP de {skill}"
+    sorter: "Ordenar fuentes de XP"
     descending: "De mayor a menor"
     ascending: "De menor a mayor"
     alphabetical: "Nombre (A-Z)"
     reverse_alphabetical: "Nombre (Z-A)"
-    sort_click: "<yellow>Clic para cambiar el tipo de orden"
-    source_name: "<white>{name}"
-    source_xp: "<gray>XP: <green>{xp}"
-    source_xp_rate: "<gray>XP: <green>{xp}/{unit}"
-    multiplied_xp: "<white>XP multiplicado: <green>{xp}"
-    multiplied_xp_rate: "<white>XP multiplicado: <green>{xp}/{unit}"
-    multiplied_desc: "<gray><italic>Esta es la XP que obtendrás<gray><italic>con tus multiplicadores de XP actuales"
+    sort_click: "Clic para cambiar el tipo de orden"
+    multiplied_xp: "XP multiplicado"
+    multiplied_desc: "Esta es la XP que obtendrás con tus multiplicadores de XP actuales"
   abilities:
     abilities_title: "Habilidades de {skill}"
-    locked_desc: "<white>Descripción: <gray>{desc}"
-    unlocked_at: "<gray>Desbloqueado en <dark_aqua>{skill} {level}"
-    your_ability_level: "<white>Tu Nivel: <aqua>{level}"
-    your_ability_level_maxed: "<white>Tu Nivel: <aqua>{level} <gold>(MAXED)"
-    unlocked_desc: "<white>Próxima mejora en <dark_aqua>{skill} {level}<white> <gray>{desc}"
-    unlocked_desc_maxed: "<white>Descripción: <gray>{desc}"
+    description: "Descripción"
+    unlocked_at: "<1>Desbloqueado en <2>{skill} {level}"
+    next_upgrade_at: "<1>Próxima mejora en <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: Replantar
-    desc: "<gray>Replanta semillas automáticamente<gray> durante {value} segundos. <yellow>[Click derecho<yellow> a una azada para activar]"
+    desc: "Replanta semillas automáticamente durante {value} segundos. <1>[Click derecho a una azada para activar]"
     raise: "<gray>Levantaste tu azada"
     lower: "<gray>Bajaste tu azada"
     start: "<gold>¡Replantación Activada! <gray>(-{mana} {mana_unit})"
     end: "<gray>Replantar se ha agotado"
   treecapitator:
     name: Treecapitator
-    desc: "<gray>Rompe árboles enteros instantáneamente por <gray> {value} segundos. <yellow>[Haz click derecho al hacha<yellow> y rompe un tronco para activar]"
+    desc: "Rompe árboles enteros instantáneamente por {value} segundos. <1>[Haz click derecho al hacha y rompe un tronco para activar]"
     raise: "<gray>Levantaste tu hacha"
     lower: "<gray>Bajaste tu hacha"
     start: "<gold>¡Treecapitator Activado! <gray>(-{mana} {mana_unit})"
     end: "<gray>Treecapitator se ha agotado"
   speed_mine:
     name: Mina Veloz
-    desc: "<gray>Otorga Prisa {haste_level} durante {value} segundos.<yellow>[Clic derecho pico y mina<yellow> bloquea para activar]"
+    desc: "Otorga Prisa {haste_level} durante {value} segundos. <1>[Clic derecho pico y mina bloquea para activar]"
     raise: "<gray>Levantaste tu pico"
     lower: "<gray>Bajaste tu pico"
     start: "<gold>¡Mina Veloz Activada! <gray>(-{mana} {mana_unit})"
     end: "<gray>La habilidad Mina Veloz se ha agotado"
   absorption:
     name: Absorción
-    desc: "El daño entrante disminuirá el maná en 2 veces<gray> el daño de Minecraft en lugar de tu salud<gray> durante {value} segundos. Tu maná no se regenerará<gray> mientras la habilidad esté activada. <yellow>[Haz click derecho a un escudo y luego recibe daño para activar]"
+    desc: "El daño entrante disminuirá el maná en 2 veces el daño de Minecraft en lugar de tu salud durante {value} segundos. Tu maná no se regenerará mientras la habilidad esté activada. <1>[Haz click derecho a un escudo y luego recibe daño para activar]"
     raise: "<gray>Levantaste tu escudo"
     lower: "<gray>Bajaste tu escudo"
     start: "<gold>¡Habilidad Absorción activada! <gray>(-{mana} {mana_unit})"
     end: "<gray>Absorción se ha agotado"
   terraform:
     name: Terraformar
-    desc: "Rompe bloques instantáneamente en un radio de 4 bloques<gray> en la misma capa al cavar durante {value} segundos. Usted<gray> debe usar una pala y los bloques adicionales rotos deben ser<gray> del mismo tipo y en una sola vena conectada.<gray> <yellow>[Click derecho a una pala y luego cava para activar]"
+    desc: "Rompe bloques instantáneamente en un radio de 4 bloques en la misma capa al cavar durante {value} segundos. Usted debe usar una pala y los bloques adicionales rotos deben ser del mismo tipo y en una sola vena conectada. <1>[Click derecho a una pala y luego cava para activar]"
     raise: "<gray>Levantaste tu pala"
     lower: "<gray>Bajaste tu pala"
     start: "<gold>¡Terraformar activado! <gray>(-{mana} {mana_unit})"
     end: "<gray>Terraformar se ha desgastado"
   sharp_hook:
     name: Gancho Afilado
-    desc: "Inflige {value} de daño a una entidad enganchada <gray> al hacer click izquierdo con una caña de pescar"
+    desc: "Inflige {value} de daño a una entidad enganchada al hacer click izquierdo con una caña de pescar"
     use: "<gold>¡Usaste el Gancho Afilado! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Habilidad de Mana </bold><blue>{mana_ability} {level}<gray>Daño: <red>{value} <gray>Costo de Mana: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s"
   charged_shot:
     name: Tiro cargado
-    desc: "Las flechas que dispares infligirán más daño<gray> en función de lo lejos que se haya retirado el arco<gray> consumiendo maná en el proceso. Hace {value}% más<gray> de daño por maná consumido. <yellow>[Click izquierdo a<yellow> un arco para cambiar el modo de disparo cargado]"
+    desc: "Las flechas que dispares infligirán más daño en función de lo lejos que se haya retirado el arco consumiendo maná en el proceso. Hace {value}% más de daño por maná consumido. <1>[Click izquierdo a<yellow> un arco para cambiar el modo de disparo cargado]"
     enable: "<gray>El modo de disparo cargado está activado"
     disable: "<gray>El modo de disparo cargado está desactivado"
     shoot: "<gold>¡Usaste Disparo Cargado! <light_purple>+{percent}% DAÑO <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Habilidad de Maná </bold><blue>{mana_ability} {level}<gray>Daño: <red>+{value}% / <gray>Costo de Maná máximo: <aqua>{mana_cost}"
   lightning_blade:
     name: Espada de Relámpagos
-    desc: Aumenta la velocidad de ataque en un {value}% por {duration} segundos.<yellow> [Haz clic derecho a la espada y ataca a una entidad para activar]
+    desc: Aumenta la velocidad de ataque en un {value}% por {duration} segundos. <1>[Haz clic derecho a la espada y ataca a una entidad para activar]
     raise: "<gray>Preparas tu espada"
     lower: "<gray>Bajas tu espada"
     start: "<gold>Espada de relámpagos activada <gray>(-{mana} {mana_unit})"
     end: "<gray>La espada de relámpagos se desgastó"
-    menu: "<light_purple><bold>Habilidad de Maná </bold><blue>{mana_ability} {level}<gray>Velocidad de Ataque: <red>+{value}% <gray>Duración: <green>{duration}s<gray>Costo de Maná: <aqua>{mana_cost} <gray>Recarga: <yellow>{cooldown}s "
   not_ready: "<red>¡La habilitad no está lista! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>¡No hay maná suficiente! <gray>(Necesitas {mana} {mana_unit} y tienes {current_mana}/{max_mana})"
 rewards:
   item:
-    default_menu_message: " {display_name}"
-    default_menu_message_multiple: " {display_name} {amount}x"
-    default_chat_message: " {display_name}"
-    default_chat_message_multiple: " {display_name} {amount}x"
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Agricultura
-    desc: "<gray>Cosecha semillas para ganar XP de Agricultura {xp_unit}"
+    desc: "Cosecha semillas para ganar XP de Agricultura {xp_unit}"
   foraging:
     name: Forrajeo
-    desc: "<gray>Corta árboles para ganar XP de Forrajeo {xp_unit}"
+    desc: "Corta árboles para ganar XP de Forrajeo {xp_unit}"
   mining:
     name: Minería
-    desc: "<gray>Mina piedra y minerales para ganar XP de Minería {xp_unit}"
+    desc: "Mina piedra y minerales para ganar XP de Minería {xp_unit}"
   fishing:
     name: Pescadería
-    desc: "<gray>Captura pescados para ganar XP de Pescadería {xp_unit}"
+    desc: "Captura pescados para ganar XP de Pescadería {xp_unit}"
   excavation:
     name: Excavación
-    desc: "<gray>Cava con una pala para ganar XP de Excavación {xp_unit}"
+    desc: "Cava con una pala para ganar XP de Excavación {xp_unit}"
   archery:
     name: Arquería
-    desc: "<gray>Dispara a los mobs y jugadores con arco<gray>para ganar XP de Arquería {xp_unit}"
+    desc: "Dispara a los mobs y jugadores con arco para ganar XP de Arquería {xp_unit}"
   defense:
     name: Defensa
-    desc: "<gray>Recibe daño de las entidades para ganar XP de Defensa {xp_unit}"
+    desc: "Recibe daño de las entidades para ganar XP de Defensa {xp_unit}"
   fighting:
     name: Lucha
-    desc: "<gray>Lucha con armas cuerpo a cuerpo para ganar<gray>XP de Lucha {xp_unit}"
+    desc: "Lucha con armas cuerpo a cuerpo para ganar XP de Lucha {xp_unit}"
   endurance:
     name: Resistencia
-    desc: "<gray>Camina y corre para ganar XP de Resistencia {xp_unit}"
+    desc: "Camina y corre para ganar XP de Resistencia {xp_unit}"
   agility:
     name: Agilidad
-    desc: "<gray>Salta y recibe daño por caída para<gray>ganar XP de Agilidad {xp_unit}"
+    desc: "Salta y recibe daño por caída para ganar XP de Agilidad {xp_unit}"
   alchemy:
     name: Alquimia
-    desc: "<gray>Haz pociones para ganar XP de Alquimia {xp_unit}"
+    desc: "Haz pociones para ganar XP de Alquimia {xp_unit}"
   enchanting:
     name: Encantador
-    desc: "<gray>Encanta items y libros para ganar<gray>XP de Encantador {xp_unit}"
+    desc: "Encanta items y libros para ganar XP de Encantador {xp_unit}"
   sorcery:
     name: Brujería
-    desc: "<gray>Usa habilidades de maná para ganar {xp_unit} de Hechicería"
+    desc: "Usa habilidades de maná para ganar {xp_unit} de Hechicería"
   healing:
     name: Curación
-    desc: "<gray>Bebe y salpica pociones para<gray>ganar XP de Curación {xp_unit}"
+    desc: "Bebe y salpica pociones para ganar XP de Curación {xp_unit}"
   forging:
     name: Forjar
-    desc: "<gray>Combina y aplica libros en un yunque<gray>para ganar XP de Forja {xp_unit}"
+    desc: "Combina y aplica libros en un yunque para ganar XP de Forja {xp_unit}"
 sources:
-  farming:
+  block:
     wheat: Trigo
     potato: Patata
     carrot: Zanahoria
@@ -792,7 +770,8 @@ sources:
     sea_pickle: Pepino de mar
     sweet_berry_bush: Bayas dulces
     glow_berries: Bayas luminosas
-  foraging:
+    torchflower: Flor de antorcha
+    pitcher_plant: Planta Pitcher
     oak_log: Tronco de roble
     spruce_log: Tronco de abeto
     birch_log: Tronco de abedul
@@ -815,7 +794,12 @@ sources:
     flowering_azalea: Azalea florecida
     azalea_leaves: Hojas de azalea
     flowering_azalea_leaves: Hojas de azalea florecida
-  mining:
+    mangrove_log: Log de manglares
+    mangrove_leaves: Hojas de manglar
+    mangrove_roots: Raíces de manglares
+    cherry_log: Tronco de cerezo
+    cherry_leaves: Hojas de cereza
+    pink_petals: Punk Pétalos
     stone: Piedra
     cobblestone: Roca
     andesite: Andesita
@@ -863,16 +847,7 @@ sources:
     ice: Hielo
     packed_ice: Hielo compacto
     blue_ice: Hielo azul
-  fishing:
-    cod: Bacalao
-    salmon: Salmón
-    tropical_fish: Pez tropical
-    pufferfish: Pez globo
-    treasure: Cofre del tesoro
-    junk: Items basura
-    rare: Botín Raro
-    epic: Botín Épico
-  excavation:
+    reinforced_deepslate: Deepslate reforzado
     dirt: Tierra
     grass_block: Césped
     sand: Arena
@@ -885,7 +860,23 @@ sources:
     soul_soil: Tierra de almas
     red_sand: Arena roja
     rooted_dirt: Tierra enraizada
-  mobs:
+    mud: Lodo
+    muddy_mangrove_roots: Raices de manglares fangosos
+    sculk: Sculk
+    sculk_vein: Enredaderas de Sculk
+    sculk_sensor: Sensor de Sculk
+    sculk_catalyst: Catalizador de Sculk
+    sculk_shrieker: Chillador de Sculk
+  fishing:
+    cod: Bacalao
+    salmon: Salmón
+    tropical_fish: Pez tropical
+    pufferfish: Pez globo
+    treasure: Cofre del tesoro
+    junk: Items basura
+    rare: Botín Raro
+    epic: Botín Épico
+  entity:
     player: Jugador
     bat: Murciélago
     cat: Gato
@@ -958,17 +949,23 @@ sources:
     axolotl: Ajolote
     glow_squid: Calamar brillante
     goat: Cabra
-  defense:
+    allay: Allé
+    frog: Rana
+    tadpole: Renacuajo
+    warden: Guardián
+    camel: Camello
+    sniffer: Fragmento
+  damage:
     mob_damage: Daño recibido de un mob
     player_damage: Daño recibido de un jugador
-  endurance:
+    fall_damage: Daño por caída
+  statistic:
     walk_per_meter: Caminando
     sprint_per_meter: Corriendo
     swim_per_meter: Nadando
-  agility:
+  jumping:
     jump_per_100: Saltando
-    fall_damage: Daño por caída
-  alchemy:
+  brewing:
     awkward: Poción Rara
     regular: Poción regular
     extended: Poción de duración extendida
@@ -980,25 +977,27 @@ sources:
     armor_per_level: Armadura
     tool_per_level: Herramienta
     book_per_level: Libro
-  sorcery:
+  mana_ability_use:
     mana_ability_use: Usando habilidades de maná
-  healing:
+  item_consume:
     drink_regular: Beber poción regular
     drink_extended: Beber Poción de Duración Extendida
     drink_upgraded: Beber poción mejorada
+    golden_apple: Manzana dorada
+    enchanted_golden_apple: Manzana dorada encantada
+  potion_splash:
     splash_regular: Poción regular arrojadiza
     splash_extended: Poción arrojadiza de duración extendida
     splash_upgraded: Poción de Arrojadiza mejorada
     lingering_regular: Usar poción persistente mejorada
     lingering_extended: Usar poción de prolongación de duración extendida
     lingering_upgraded: Usar poción de dedicación mejorada
-    golden_apple: Manzana dorada
-    enchanted_golden_apple: Manzana dorada encantada
-  forging:
+  anvil:
     combine_books_per_level: Combina libros encantados
     combine_weapon_per_level: Combina armas con libros
     combine_armor_per_level: Combina armaduras con libros
     combine_tool_per_level: Combina herramientas con libros
+  grindstone:
     grindstone_per_level: Desencanta objetos con la afildora
   units:
     damage: Daño
@@ -1011,80 +1010,80 @@ sources:
 stats:
   strength:
     name: Fuerza
-    desc: "<gray>La fuerza incrementa tu daño de ataque<gray>con diferentes armas"
+    desc: "La fuerza incrementa tu daño de ataque con diferentes armas"
     color: "<dark_red>"
     symbol: "➽"
   health:
     name: Vida
-    desc: "<gray>La salud incrementa la cantidad de {hp_unit} que<gray>tienes y te permite durar más tiempo en<gray>peleas"
+    desc: "La salud incrementa la cantidad de {hp_unit} que tienes y te permite durar más tiempo en peleas"
     color: "<red>"
     symbol: "❤"
   regeneration:
     name: Regeneración
-    desc: "<gray>La regeneración incrementa la rapidez con la que<gray>recuperas salud y maná"
+    desc: "La regeneración incrementa la rapidez con la que recuperas salud y maná"
     color: "<gold>"
     symbol: "❥"
   luck:
     name: Suerte
-    desc: "<gray>La suerte aumenta tus posibilidades de obtener<gray>botínes raros de los mobs, pescar y más"
+    desc: "La suerte aumenta tus posibilidades de obtener botínes raros de los mobs, pescar y más"
     color: "<dark_green>"
     symbol: "☘"
   wisdom:
     name: Sabiduría
-    desc: "<gray>La sabiduría incrementa tu maná máximo, incrementa<gray>la experiencia ganada y reduce el costo del yunque"
+    desc: "La sabiduría incrementa tu maná máximo, incrementa la experiencia ganada y reduce el costo del yunque"
     color: "<blue>"
     symbol: "✿"
   toughness:
     name: Resistencia
-    desc: "<gray>La Resistencia incrementa la cantidad de<gray>de daño reducido de los ataques enemigos"
+    desc: "La Resistencia incrementa la cantidad de de daño reducido de los ataques enemigos"
     color: "<dark_purple>"
     symbol: "✦"
   crit_chance:
-    name: ""
-    desc: ""
+    name: Chansa de Critía
+    desc: "Chansa de crítica es tu probabilidad de causar un golpe crítico"
     color: "<green>"
     symbol: "⌘"
   crit_damage:
-    name: ""
-    desc: ""
+    name: Daño Crítico
+    desc: "Daño Crítico es el porcentaje de aumento el daño cuando infliges un golpe crítico"
     color: "<dark_aqua>"
     symbol: "★"
-  attack_speed:
-    name: ""
-    desc: ""
-    color: "<light_purple>"
-    symbol: "⚔"
+  speed:
+    name: Velocidad
+    desc: "La velocidad aumenta con la rapidez que puedes caminar y correr"
+    color: "<white>"
+    symbol: "➤"
 traits:
   attack_damage:
-    name: ""
+    name: Daño del Ataque
   hp:
-    name: ""
+    name: PV
   saturation_regen:
-    name: ""
+    name: Regeneración de Saturación
   hunger_regen:
-    name: ""
+    name: Regeneración del Hambre
   mana_regen:
-    name: ""
+    name: Regeneración de Maná
   luck:
-    name: ""
+    name: Suerte
   double_drop:
-    name: ""
+    name: Doble Suelta
   experience_bonus:
-    name: ""
+    name: Bono de Experiencia
   anvil_discount:
-    name: ""
+    name: Descuento Yunque
   max_mana:
-    name: ""
+    name: Máximo de Maná
   damage_reduction:
-    name: ""
+    name: Reducción del Daño
   crit_chance:
-    name: ""
+    name: Chansa de Critía
   crit_damage:
-    name: ""
-  attack_speed:
-    name: ""
+    name: Daño Crítico
+  movement_speed:
+    name: Velocidad
 units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 25
+file_version: 30

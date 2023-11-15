@@ -1,4 +1,6 @@
+# ----------------------------
 # Aurelium Skills message file
+# ----------------------------
 abilities:
   farming:
     bountiful_harvest:
@@ -503,9 +505,9 @@ commands:
     skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
   profile:
-    skills: "Aurelium Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Aurelium Skills stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
     stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
   rank:
     header: "<aqua><bold>Your Skill Rankings"

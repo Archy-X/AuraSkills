@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
-import com.archyx.aureliumskills.util.block.BlockFaceUtil;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -8,6 +7,7 @@ import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
+import dev.aurelium.auraskills.bukkit.util.BlockFaceUtil;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Sound;

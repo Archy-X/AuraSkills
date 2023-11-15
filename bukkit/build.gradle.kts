@@ -29,7 +29,9 @@ dependencies {
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("com.udojava:EvalEx:2.7")
-    implementation("com.github.Archy-X:Slate:7a9f00d2dc")
+    implementation("com.github.Archy-X:Slate:59d515020e") {
+        exclude("org.spigotmc", "spigot-api")
+    }
     implementation("com.github.Archy-X:LootManager:60d109fdde")
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
@@ -49,16 +51,16 @@ tasks.withType<ShadowJar> {
     val projectVersion: String by project
     archiveFileName.set("AuraSkills-${projectVersion}.jar")
 
-    relocate("co.aikar.commands", "com.archyx.aureliumskills.acf")
-    relocate("co.aikar.locales", "com.archyx.aureliumskills.locales")
-    relocate("fr.minuskube.inv", "com.archyx.aureliumskills.inv")
-    relocate("de.tr7zw.changeme.nbtapi", "com.archyx.aureliumskills.nbtapi")
-    relocate("com.cryptomorin.xseries", "com.archyx.aureliumskills.xseries")
-    relocate("org.bstats", "com.archyx.aureliumskills.bstats")
-    relocate("com.udojava.evalex", "com.archyx.aureliumskills.evalex")
-    relocate("com.archyx.slate", "com.archyx.aureliumskills.slate")
-    relocate("net.kyori.adventure", "com.archyx.aureliumskills.adventure")
-    relocate("net.kyori.examination", "com.archyx.aureliumskills.examination")
+    relocate("co.aikar.commands", "dev.aurelium.auraskills.acf")
+    relocate("co.aikar.locales", "dev.aurelium.auraskills.locales")
+    relocate("fr.minuskube.inv", "dev.aurelium.auraskills.inv")
+    relocate("de.tr7zw.changeme.nbtapi", "dev.aurelium.auraskills.nbtapi")
+    relocate("com.cryptomorin.xseries", "dev.aurelium.auraskills.xseries")
+    relocate("org.bstats", "dev.aurelium.auraskills.bstats")
+    relocate("com.udojava.evalex", "dev.aurelium.auraskills.evalex")
+    relocate("com.archyx.slate", "dev.aurelium.auraskills.slate")
+    relocate("net.kyori.adventure", "dev.aurelium.auraskills.adventure")
+    relocate("net.kyori.examination", "dev.aurelium.auraskills.examination")
 
     finalizedBy("copyJar")
 }

@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.requirement;
 
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.modifier.ModifierType;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;

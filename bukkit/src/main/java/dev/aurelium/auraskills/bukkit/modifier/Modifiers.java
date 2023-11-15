@@ -2,13 +2,14 @@ package dev.aurelium.auraskills.bukkit.modifier;
 
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

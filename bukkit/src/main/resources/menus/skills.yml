@@ -14,8 +14,12 @@ items:
         wrap: true
         style: '<gray>'
       - ' '
-      - '<yellow>{{your_skills_hover}}'
-      - '<yellow>{{your_skills_click}}'
+      - text: '{{your_skills_hover}}'
+        wrap: true
+        style: '<yellow>'
+      - text: '{{your_skills_click}}'
+        wrap: true
+        style: '<yellow>'
   close:
     pos: 4,8
     material: barrier

@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.requirement;
 
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.modifier.ModifierType;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorEquipEvent;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageKey;

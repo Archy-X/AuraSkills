@@ -32,7 +32,6 @@ public class LeaderboardManager {
                     e.printStackTrace();
                 }
                 try {
-                    plugin.logger().debug("Updating leaderboards...");
                     setSorting(true);
                     // Initialize lists
                     Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
