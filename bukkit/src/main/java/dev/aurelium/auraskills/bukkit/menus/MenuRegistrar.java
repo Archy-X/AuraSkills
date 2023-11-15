@@ -65,9 +65,6 @@ public class MenuRegistrar {
         levelProgressionOptions.put("over_max_stack_amount", 1);
         levelProgressionOptions.put("items_per_page", 24);
         manager.registerDefaultOptions("level_progression", levelProgressionOptions);
-        Map<String, Object> leaderboardOptions = new HashMap<>();
-        leaderboardOptions.put("auto_replace_heads_on_legacy", true);
-        manager.registerDefaultOptions("leaderboard", leaderboardOptions);
         // Global items
         manager.registerSingleItem("back", () -> new BackItem(plugin));
         manager.registerSingleItem("close", () -> new CloseItem(plugin));
