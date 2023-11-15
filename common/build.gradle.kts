@@ -31,17 +31,11 @@ tasks.withType<JavaCompile>() {
 }
 
 tasks {
-    javadoc {
-        options {
-            (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
-        }
-    }
     test {
         useJUnitPlatform()
     }
 }
 
 java {
-    withJavadocJar()
     sourceCompatibility = JavaVersion.VERSION_17
 }
