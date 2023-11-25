@@ -11,10 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: benjlevesque/short-sha@v2.2
-        id: short-sha
-        with:
-          length: 7
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -26,9 +22,9 @@ jobs:
           arguments: build
       - uses: actions/upload-artifact@v3
         with:
-          name: AureliumSkills-${{ env.SHA }}
+          name: AureliumSkills
           path: build/libs/AureliumSkills-**.jar
       - uses: actions/upload-artifact@v3
         with:
-          name: AuraSkills-${{ env.SHA }}
+          name: AuraSkills
           path: build/libs/AuraSkills-**.jar
