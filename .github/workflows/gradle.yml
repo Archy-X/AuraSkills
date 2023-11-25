@@ -1,19 +1,16 @@
 name: Build Plugin with Gradle
-
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
 permissions:
   contents: read
-
+env:
+  COMMIT_HASH: ${{ substring(github.sha, 0, 7) }}
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -27,5 +24,9 @@ jobs:
           arguments: build
       - uses: actions/upload-artifact@v3
         with:
-          name: AureliumSkills
+          name: AureliumSkills-${{ env.COMMIT_HASH }}
           path: build/libs/AureliumSkills-**.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: AuraSkills-${{ env.COMMIT_HASH }}
+          path: build/libs/AuraSkills-**.jar
