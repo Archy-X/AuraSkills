@@ -176,7 +176,7 @@ public class Treecapitator extends ReadiedManaAbility {
 
             String matName = originalBlock.getType().toString();
             if (source == null && matName.contains("STRIPPED")) {
-                String[] woodNames = new String[] {"OAK", "SPRUCE", "BIRCH", "JUNGLE", "ACACIA", "DARK_OAK", "CRIMSON", "WARPED"};
+                String[] woodNames = new String[] {"OAK", "SPRUCE", "BIRCH", "JUNGLE", "ACACIA", "DARK_OAK", "CRIMSON", "WARPED", "MANGROVE", "CHERRY"};
                 for (String woodName : woodNames) {
                     if (matName.contains(woodName)) {
                         if (woodName.equals("CRIMSON") || woodName.equals("WARPED")) {
@@ -189,9 +189,9 @@ public class Treecapitator extends ReadiedManaAbility {
                 }
             }
             if (source != null) {
-                if (matName.contains("OAK") || matName.contains("BIRCH") || matName.contains("ACACIA")) {
+                if (matName.contains("OAK") || matName.contains("BIRCH") || matName.contains("ACACIA") || matName.contains("CHERRY")) {
                     maxBlocks = 100;
-                } else if (matName.contains("SPRUCE") || matName.contains("CRIMSON") || matName.contains("WARPED")) {
+                } else if (matName.contains("SPRUCE") || matName.contains("CRIMSON") || matName.contains("WARPED") || matName.contains("MANGROVE")) {
                     maxBlocks = 125;
                 } else if (matName.contains("JUNGLE")) {
                     maxBlocks = 200;
