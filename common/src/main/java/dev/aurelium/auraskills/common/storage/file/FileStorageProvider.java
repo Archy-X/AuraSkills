@@ -89,11 +89,12 @@ public class FileStorageProvider extends StorageProvider {
         // Load each skill section
         node.childrenMap().forEach((skillName, skillNode) -> {
             NamespacedId skillId = NamespacedId.fromString(skillName.toString());
-            Skill skill = plugin.getSkillRegistry().get(skillId);
-            
+            Skill skill = plugin.getSkillRegistry().getOrNull(skillId);
+            if (skill == null) return;
+
             int level = skillNode.node("level").getInt();
             double xp = skillNode.node("xp").getDouble();
-            
+
             levelsMap.put(skill, level);
             xpMap.put(skill, xp);
         });
@@ -110,7 +111,8 @@ public class FileStorageProvider extends StorageProvider {
 
             if (name != null && statName != null) {
                 NamespacedId statId = NamespacedId.fromString(statName);
-                Stat stat = plugin.getStatRegistry().get(statId);
+                Stat stat = plugin.getStatRegistry().getOrNull(statId);
+                if (stat == null) return;
 
                 StatModifier statModifier = new StatModifier(name, stat, value);
                 statModifiers.put(name, statModifier);
@@ -128,7 +130,8 @@ public class FileStorageProvider extends StorageProvider {
 
             if (name != null && traitName != null) {
                 NamespacedId traitId = NamespacedId.fromString(traitName);
-                Trait trait = plugin.getTraitRegistry().get(traitId);
+                Trait trait = plugin.getTraitRegistry().getOrNull(traitId);
+                if (trait == null) return;
 
                 TraitModifier traitModifier = new TraitModifier(name, trait, value);
                 traitModifiers.put(name, traitModifier);

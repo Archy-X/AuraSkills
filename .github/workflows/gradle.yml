@@ -1,19 +1,14 @@
 name: Build Plugin with Gradle
-
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
 permissions:
   contents: read
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -29,3 +24,7 @@ jobs:
         with:
           name: AureliumSkills
           path: build/libs/AureliumSkills-**.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: AuraSkills
+          path: build/libs/AuraSkills-**.jar
