@@ -17,29 +17,24 @@ public class ReloadExecutor {
 
     public void reload(CommandSender sender) {
         Locale locale = plugin.getLocale(sender);
-        // Load config.yml file
-        plugin.config().loadOptions();
         // Load messages
         plugin.getMessageProvider().loadMessages();
+        // Load config.yml file
+        plugin.config().loadOptions();
         // Load blocked/disabled worlds lists
         plugin.getWorldManager().loadWorlds(plugin.getConfig());
         // Load skills
         plugin.loadSkills();
-        // Register default traits
-        plugin.getTraitManager().registerTraitImplementations();
-
+        plugin.getLevelManager().registerLevelers();
         plugin.getUiProvider().getBossBarManager().loadOptions();
-
         plugin.getRewardManager().loadRewards();
         plugin.getLootTableManager().loadLootTables();
-
-        plugin.getLevelManager().registerLevelers();
+        // Register default traits
+        plugin.getTraitManager().registerTraitImplementations();
         // Load menus
         plugin.getMenuFileManager().generateDefaultFiles();
         plugin.getMenuFileManager().loadMenus();
-
         plugin.getUiProvider().getActionBarManager().resetActionBars();
-
         if (plugin.getHookManager().isRegistered(HologramsHook.class)) {
             plugin.getHookManager().getHook(HologramsHook.class).loadColors();
         }

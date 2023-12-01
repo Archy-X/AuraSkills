@@ -254,7 +254,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         loader.generateUserFile("config.yml");
         loader.generateUserFile("skills.yml");
         loader.generateUserFile("stats.yml");
-        loader.generateUserFile("traits.yml");
         loader.generateUserFile("abilities.yml");
         loader.generateUserFile("mana_abilities.yml");
         loader.generateUserFile("xp_requirements.yml");

@@ -181,7 +181,6 @@ config.yml:
     wisdom.anvil-cost-modifier: stats.auraskills/wisdom.traits.auraskills/anvil_discount.modifier
     wisdom.max-mana-per-wisdom: stats.auraskills/wisdom.traits.auraskills/max_mana.modifier
     toughness.new-modifier: stats.auraskills/toughness.traits.auraskills/damage_reduction.modifier
-  traits.yml:
     strength.hand-damage: traits.auraskills/attack_damage.hand_damage
     strength.bow-damage: traits.auraskills/attack_damage.bow_damage
     strength.display-damage-with-health-scaling: traits.auraskills/attack_damage.display_damage_with_health_scaling
