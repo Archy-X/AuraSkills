@@ -36,7 +36,7 @@ public class ReloadExecutor {
         plugin.getMenuFileManager().loadMenus();
         plugin.getUiProvider().getActionBarManager().resetActionBars();
         if (plugin.getHookManager().isRegistered(HologramsHook.class)) {
-            plugin.getHookManager().getHook(HologramsHook.class).loadColors();
+            plugin.getHookManager().getHook(HologramsHook.class).loadConfig();
         }
 
         sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.RELOAD, locale));

@@ -27,21 +27,21 @@ import java.util.Random;
 public abstract class HologramsHook extends Hook implements Listener {
 
     private final Random random = new Random();
-    private final NumberFormat numberFormat;
+    private NumberFormat numberFormat;
     private ChatColor defaultColor = ChatColor.GRAY;
     private List<ChatColor> criticalColors = new ArrayList<>();
 
     public HologramsHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
         super(plugin, config);
-        this.numberFormat = new DecimalFormat("#." + TextUtil.repeat('#', plugin.configInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
-        loadColors();
+        loadConfig();
     }
 
-    public void loadColors() {
+    public void loadConfig() {
         defaultColor = ChatColor.valueOf(plugin.configString(Option.DAMAGE_HOLOGRAMS_COLORS_DEFAULT).toUpperCase(Locale.ROOT));
         criticalColors = plugin.configStringList(Option.DAMAGE_HOLOGRAMS_COLORS_CRITICAL_DIGITS).stream()
                 .map(s -> ChatColor.valueOf(s.toUpperCase(Locale.ROOT)))
                 .toList();
+        numberFormat = new DecimalFormat("#." + TextUtil.repeat('#', plugin.configInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
     }
 
     public abstract void createHologram(Location location, String text);
@@ -67,6 +67,7 @@ public abstract class HologramsHook extends Hook implements Listener {
         } else {
             return;
         }
+        player.sendMessage("Damage dealt: " + event.getFinalDamage());
 
         boolean critical = player.hasMetadata("skillsCritical");
 

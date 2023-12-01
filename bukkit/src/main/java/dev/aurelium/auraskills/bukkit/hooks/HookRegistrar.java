@@ -22,6 +22,8 @@ public class HookRegistrar {
 
     public void registerHooks(ConfigurationNode config) {
         for (Hooks hookType : Hooks.values()) {
+            // Don't re-register hooks
+            if (manager.isRegistered(hookType.getHookClass())) continue;
             // Make sure the plugin that hooks into is enabled
             if (!plugin.getServer().getPluginManager().isPluginEnabled(hookType.getPluginName())) {
                 continue;
