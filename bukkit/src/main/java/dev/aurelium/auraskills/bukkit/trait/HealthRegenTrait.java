@@ -15,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class HealthRegenTrait extends TraitImpl {
 
@@ -68,36 +69,13 @@ public class HealthRegenTrait extends TraitImpl {
     }
 
     private void startHungerRegen() {
+        Trait trait = Traits.HUNGER_REGEN;
         var task = new TaskRunnable() {
             @Override
             public void run() {
-                if (!Traits.HUNGER_REGEN.optionBoolean("use_custom_delay")) return;
-
+                if (!trait.isEnabled() || !trait.optionBoolean("use_custom_delay")) return;
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    User user = plugin.getUser(player);
-
-                    if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) continue;
-
-                    if (player.isDead()) continue;
-
-                    AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                    if (attribute == null) continue;
-
-                    if (!(player.getHealth() < attribute.getValue())) continue;
-
-                    if (player.getFoodLevel() >= 14 && player.getFoodLevel() < 20) {
-                        double amountGained = Math.min(Traits.HUNGER_REGEN.optionDouble("base") + user.getBonusTraitLevel(Traits.HUNGER_REGEN)
-                                , attribute.getValue() - player.getHealth());
-                        CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, CustomRegenEvent.Reason.HUNGER);
-                        Bukkit.getPluginManager().callEvent(event);
-
-                        if (!event.isCancelled()) {
-                            player.setHealth(player.getHealth() + amountGained);
-                            if (player.getFoodLevel() - 1 >= 0) {
-                                player.setFoodLevel(player.getFoodLevel() - 1);
-                            }
-                        }
-                    }
+                    handleCustomRegen(player, trait, p -> p.getFoodLevel() >= 14 && p.getFoodLevel() < 20, CustomRegenEvent.Reason.HUNGER);
                 }
             }
         };
@@ -105,39 +83,44 @@ public class HealthRegenTrait extends TraitImpl {
     }
 
     private void startSaturationRegen() {
+        Trait trait = Traits.SATURATION_REGEN;
         var task = new TaskRunnable() {
             @Override
             public void run() {
-                if (!Traits.SATURATION_REGEN.optionBoolean("use_custom_delay")) return;
-
+                if (!trait.isEnabled() || !trait.optionBoolean("use_custom_delay")) return;
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    User user = plugin.getUser(player);
-
-                    if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) continue;
-
-                    if (player.isDead()) continue;
-
-                    AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                    if (attribute == null) continue;
-
-                    if (!(player.getHealth() < attribute.getValue())) continue;
-
-                    if (player.getSaturation() >= 0 && player.getFoodLevel() >= 20) {
-                        double amountGained = Math.min(Traits.SATURATION_REGEN.optionDouble("base") + user.getBonusTraitLevel(Traits.SATURATION_REGEN)
-                                , attribute.getValue() - player.getHealth());
-                        CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, CustomRegenEvent.Reason.SATURATION);
-                        Bukkit.getPluginManager().callEvent(event);
-                        if (!event.isCancelled()) {
-                            player.setHealth(player.getHealth() + amountGained);
-                            if (player.getFoodLevel() - 1 >= 0) {
-                                player.setFoodLevel(player.getFoodLevel() - 1);
-                            }
-                        }
-                    }
+                    handleCustomRegen(player, trait, p -> p.getSaturation() >= 0 && p.getFoodLevel() >= 20, CustomRegenEvent.Reason.SATURATION);
                 }
             }
         };
         plugin.getScheduler().timerSync(task, 0, Traits.SATURATION_REGEN.optionInt("delay") * 50L, TimeUnit.MILLISECONDS);
+    }
+
+    private void handleCustomRegen(Player player, Trait trait, Function<Player, Boolean> regenCondition, CustomRegenEvent.Reason reason) {
+        User user = plugin.getUser(player);
+
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) return;
+
+        if (player.isDead()) return;
+
+        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (attribute == null) return;
+
+        if (!(player.getHealth() < attribute.getValue())) return;
+
+        if (regenCondition.apply(player)) {
+            double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait)
+                    , attribute.getValue() - player.getHealth());
+            CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, reason);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (!event.isCancelled()) {
+                player.setHealth(player.getHealth() + amountGained);
+                if (player.getFoodLevel() - 1 >= 0) {
+                    player.setFoodLevel(player.getFoodLevel() - 1);
+                }
+            }
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.reward.type.CommandReward;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -39,6 +40,9 @@ public abstract class RewardManager {
             Map<?, ?> rewardMap = patterns.get(index);
             try {
                 SkillReward reward = parseReward(rewardMap);
+                if (reward == null) {
+                    continue;
+                }
                 // Load pattern info
                 Object patternObj = DataUtil.getElement(rewardMap, "pattern");
                 if (!(patternObj instanceof Map<?, ?> patternMap)) {
@@ -66,6 +70,7 @@ public abstract class RewardManager {
         return patternsLoaded;
     }
 
+    @Nullable
     protected SkillReward parseReward(Map<?, ?> map) {
         // Get type of reward
         String type = DataUtil.getString(map, "type");

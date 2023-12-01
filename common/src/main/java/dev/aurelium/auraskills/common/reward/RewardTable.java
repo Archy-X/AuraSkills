@@ -2,11 +2,12 @@ package dev.aurelium.auraskills.common.reward;
 
 import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.stat.Stat;
-import dev.aurelium.auraskills.common.hooks.PermissionsHook;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.hooks.PermissionsHook;
 import dev.aurelium.auraskills.common.reward.type.PermissionReward;
 import dev.aurelium.auraskills.common.reward.type.StatReward;
+import dev.aurelium.auraskills.common.user.User;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,11 +34,10 @@ public class RewardTable {
         return rewards;
     }
 
-    public void addReward(SkillReward reward, int level) {
+    public void addReward(@NotNull SkillReward reward, int level) {
         List<SkillReward> rewards = this.rewards.computeIfAbsent(level, k -> new ArrayList<>());
         rewards.add(reward);
-        if (reward instanceof StatReward) {
-            StatReward statReward = (StatReward) reward;
+        if (reward instanceof StatReward statReward) {
             if (!statsLeveled.contains(statReward.getStat())) {
                 statsLeveled.add(statReward.getStat());
             }

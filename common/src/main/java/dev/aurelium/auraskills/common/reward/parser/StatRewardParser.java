@@ -19,9 +19,13 @@ public class StatRewardParser extends RewardParser {
         StatRewardBuilder builder = new StatRewardBuilder(plugin);
 
         String statName = getString(map, "stat");
-        Stat stat = plugin.getStatRegistry().get(NamespacedId.fromDefault(statName));
+        Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(statName));
         if (stat == null) {
             throw new IllegalArgumentException("Unknown stat with name: " + statName);
+        }
+        // Don't add reward for disabled stats
+        if (!stat.isEnabled()) {
+            return null;
         }
         builder.stat(stat);
 
