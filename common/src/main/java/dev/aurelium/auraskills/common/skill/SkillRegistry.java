@@ -40,18 +40,18 @@ public class SkillRegistry extends Registry<Skill, SkillProvider> {
 
             // Add the list of defined abilities
             List<String> abilityList = new ArrayList<>();
-            customSkill.getDefinedAbilities().forEach(ability -> abilityList.add(ability.getId().toString()));
+            customSkill.getDefinedValues().getAbilities().forEach(ability -> abilityList.add(ability.getId().toString()));
             if (!abilityList.isEmpty()) {
                 skillNode.node("abilities").set(abilityList);
             }
 
-            if (customSkill.getDefinedManaAbility() != null) {
-                skillNode.node("mana_abilities").set(customSkill.getDefinedManaAbility().getId().toString());
+            if (customSkill.getDefinedValues().getManaAbility() != null) {
+                skillNode.node("mana_abilities").set(customSkill.getDefinedValues().getManaAbility().getId().toString());
             }
             // Set default options
             ConfigurationNode options = skillNode.node("options");
             options.node("enabled").set(true);
-            options.node("max_level").set(true);
+            options.node("max_level").set(97);
             options.node("check_multiplier_permissions").set(true);
         }
         return root;

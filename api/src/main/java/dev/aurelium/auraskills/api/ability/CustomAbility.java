@@ -16,6 +16,11 @@ public class CustomAbility implements Ability {
     private AbilityProvider provider;
 
     private final NamespacedId id;
+    private final double definedBaseValue;
+    private final double definedValuePerLevel;
+    private final int definedUnlock;
+    private final int definedLevelUp;
+    private final int definedMaxLevel;
     private final boolean hasSecondaryValue;
     @Nullable
     private final String displayName;
@@ -24,8 +29,14 @@ public class CustomAbility implements Ability {
     @Nullable
     private final String info;
 
-    private CustomAbility(NamespacedId id, boolean hasSecondaryValue, @Nullable String displayName, @Nullable String description, @Nullable String info) {
+    private CustomAbility(NamespacedId id, double definedBaseValue, double definedValuePerLevel, int definedUnlock, int definedLevelUp, int definedMaxLevel,
+                          boolean hasSecondaryValue, @Nullable String displayName, @Nullable String description, @Nullable String info) {
         this.id = id;
+        this.definedBaseValue = definedBaseValue;
+        this.definedValuePerLevel = definedValuePerLevel;
+        this.definedUnlock = definedUnlock;
+        this.definedLevelUp = definedLevelUp;
+        this.definedMaxLevel = definedMaxLevel;
         this.hasSecondaryValue = hasSecondaryValue;
         this.displayName = displayName;
         this.description = description;
@@ -34,6 +45,26 @@ public class CustomAbility implements Ability {
 
     public static CustomAbilityBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomAbilityBuilder(NamespacedId.from(registry.getNamespace(), name));
+    }
+
+    public double getDefinedBaseValue() {
+        return definedBaseValue;
+    }
+
+    public double getDefinedValuePerLevel() {
+        return definedValuePerLevel;
+    }
+
+    public int getDefinedUnlock() {
+        return definedUnlock;
+    }
+
+    public int getDefinedLevelUp() {
+        return definedLevelUp;
+    }
+
+    public int getDefinedMaxLevel() {
+        return definedMaxLevel;
     }
 
     @Override
@@ -179,6 +210,11 @@ public class CustomAbility implements Ability {
     public static class CustomAbilityBuilder {
 
         private final NamespacedId id;
+        private double baseValue = 10.0;
+        private double valuePerLevel = 10.0;
+        private int unlock = 2;
+        private int levelUp = 5;
+        private int maxLevel = 0;
         private boolean hasSecondaryValue;
         private String displayName;
         private String description;
@@ -186,6 +222,31 @@ public class CustomAbility implements Ability {
 
         public CustomAbilityBuilder(NamespacedId id) {
             this.id = id;
+        }
+
+        public CustomAbilityBuilder baseValue(double baseValue) {
+            this.baseValue = baseValue;
+            return this;
+        }
+
+        public CustomAbilityBuilder valuePerLevel(double valuePerLevel) {
+            this.valuePerLevel = valuePerLevel;
+            return this;
+        }
+
+        public CustomAbilityBuilder unlock(int unlock) {
+            this.unlock = unlock;
+            return this;
+        }
+
+        public CustomAbilityBuilder levelUp(int levelUp) {
+            this.levelUp = levelUp;
+            return this;
+        }
+
+        public CustomAbilityBuilder maxLevel(int maxLevel) {
+            this.maxLevel = maxLevel;
+            return this;
         }
 
         public CustomAbilityBuilder hasSecondaryValue(boolean hasSecondaryValue) {
@@ -209,7 +270,7 @@ public class CustomAbility implements Ability {
         }
 
         public CustomAbility build() {
-            return new CustomAbility(id, hasSecondaryValue, displayName, description, info);
+            return new CustomAbility(id, baseValue, valuePerLevel, unlock, levelUp, maxLevel, hasSecondaryValue, displayName, description, info);
         }
 
     }

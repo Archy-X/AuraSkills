@@ -108,6 +108,7 @@ public class SkillLoader {
                         return ability;
                     } catch (IllegalArgumentException e) {
                         plugin.logger().warn("Could not find ability " + id + " while loading " + skill.getId());
+                        e.printStackTrace();
                         return null;
                     }
                 }).filter(Objects::nonNull).collect(ImmutableList.toImmutableList());

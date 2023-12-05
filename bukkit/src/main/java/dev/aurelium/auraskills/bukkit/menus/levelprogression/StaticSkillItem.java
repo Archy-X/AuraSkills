@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractSkillItem;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +23,11 @@ public class StaticSkillItem extends AbstractSkillItem {
         Set<Skill> skills = new HashSet<>();
         skills.add(skill);
         return skills;
+    }
+
+    @Override
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Skill skill) {
+        return modifyItem(skill, baseItem);
     }
 
 }

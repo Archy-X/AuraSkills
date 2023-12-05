@@ -41,7 +41,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
             if (!(context instanceof CustomSkill skill)) continue;
             try {
                 ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
-                ConfigurationNode config = parser.parseItemContext(skill.getItem());
+                ConfigurationNode config = parser.parseItemContext(skill.getDefinedValues().getItem());
 
                 PositionProvider provider = parser.parsePositionProvider(config, activeMenu, "skill");
                 if (provider != null) {
@@ -57,19 +57,6 @@ public class ClickableSkillItem extends AbstractSkillItem {
 
     @Override
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Skill skill) {
-        if (!skill.isEnabled()) {
-            return null;
-        }
-        if (skill instanceof CustomSkill customSkill) {
-            try {
-                ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
-
-                return parser.parseBaseItem(parser.parseItemContext(customSkill.getItem()));
-            } catch (SerializationException | IllegalArgumentException e) {
-                plugin.logger().warn("Error parsing ItemContext of CustomSkill " + customSkill.getId());
-                e.printStackTrace();
-            }
-        }
-        return baseItem;
+        return modifyItem(skill, baseItem);
     }
 }

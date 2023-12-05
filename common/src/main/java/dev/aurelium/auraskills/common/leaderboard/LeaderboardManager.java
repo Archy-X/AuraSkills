@@ -194,7 +194,7 @@ public class LeaderboardManager {
 
     private void sortLeaderboards(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) {
         LeaderboardSorter sorter = new LeaderboardSorter();
-        for (Skill skill : Skills.values()) {
+        for (Skill skill : plugin.getSkillManager().getSkillValues()) {
             skillLb.get(skill).sort(sorter);
         }
         powerLb.sort(sorter);
@@ -202,7 +202,7 @@ public class LeaderboardManager {
         averageLb.sort(averageSorter);
 
         // Add skill leaderboards to map
-        for (Skill skill : Skills.values()) {
+        for (Skill skill : plugin.getSkillManager().getSkillValues()) {
             setLeaderboard(skill, skillLb.get(skill));
         }
         setPowerLeaderboard(powerLb);

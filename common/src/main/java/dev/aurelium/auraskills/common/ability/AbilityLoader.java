@@ -29,9 +29,10 @@ public class AbilityLoader {
     public void init() {
         try {
             ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
+            ConfigurationNode defined = plugin.getAbilityRegistry().getDefinedConfig();
             ConfigurationNode user = configurateLoader.loadUserFile(FILE_NAME);
 
-            this.root = configurateLoader.loadContentAndMerge(null, FILE_NAME, embedded, user);
+            this.root = configurateLoader.loadContentAndMerge(defined, FILE_NAME, embedded, user);
         } catch (IOException e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();
