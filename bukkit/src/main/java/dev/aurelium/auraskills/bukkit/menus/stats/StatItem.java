@@ -35,6 +35,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
 
     @Override
     public Set<Stat> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+        // Handle custom stats
         for (Stat context : plugin.getStatManager().getEnabledStats()) {
             if (!(context instanceof CustomStat stat)) continue;
             try {

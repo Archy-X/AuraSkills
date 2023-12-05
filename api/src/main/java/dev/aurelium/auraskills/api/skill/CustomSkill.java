@@ -10,10 +10,7 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class CustomSkill implements Skill {
 
@@ -22,32 +19,40 @@ public class CustomSkill implements Skill {
 
     private final NamespacedId id;
     private final ItemContext item;
-    private final File contentDirectory;
+    private final List<Ability> definedAbilities;
+    @Nullable
+    private final ManaAbility definedManaAbility;
+    @Nullable
     private final Ability xpMultiplierAbility;
 
-    private CustomSkill(NamespacedId id, ItemContext item, File contentDirectory, Ability xpMultiplierAbility) {
+    private CustomSkill(NamespacedId id, ItemContext item, List<Ability> definedAbilities, @Nullable ManaAbility definedManaAbility, @Nullable Ability xpMultiplierAbility) {
         this.id = id;
-        this.contentDirectory = contentDirectory;
-        this.xpMultiplierAbility = xpMultiplierAbility;
         this.item = item;
+        this.definedAbilities = definedAbilities;
+        this.definedManaAbility = definedManaAbility;
+        this.xpMultiplierAbility = xpMultiplierAbility;
     }
 
     public static CustomSkillBuilder builder(String name, NamespacedRegistry registry) {
-        return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name), registry.getContentDirectory());
+        return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 
     public ItemContext getItem() {
         return item;
     }
 
-    @Override
-    public NamespacedId getId() {
-        return id;
+    public List<Ability> getDefinedAbilities() {
+        return definedAbilities;
     }
 
     @Nullable
-    public File getContentDirectory() {
-        return contentDirectory;
+    public ManaAbility getDefinedManaAbility() {
+        return definedManaAbility;
+    }
+
+    @Override
+    public NamespacedId getId() {
+        return id;
     }
 
     @Override
@@ -154,21 +159,43 @@ public class CustomSkill implements Skill {
 
         private final NamespacedId id;
         private ItemContext item;
-        private final File contentDirectory;
+        private final List<Ability> abilities;
+        private ManaAbility manaAbility;
         private Ability xpMultiplierAbility;
 
-        public CustomSkillBuilder(NamespacedId id, File contentDirectory) {
+        private CustomSkillBuilder(NamespacedId id) {
             this.id = id;
-            this.contentDirectory = contentDirectory;
             this.item = ItemContext.builder()
                     .material("stone")
                     .group("third_row")
                     .order(6)
                     .build();
+            this.abilities = new ArrayList<>();
         }
 
+        /**
+         * Sets the {@link ItemContext} of the skill used in menus
+         *
+         * @param item the {@link ItemContext}
+         * @return the builder
+         */
         public CustomSkillBuilder item(ItemContext item) {
             this.item = item;
+            return this;
+        }
+
+        public CustomSkillBuilder abilities(Ability... abilities) {
+            this.abilities.addAll(Arrays.asList(abilities));
+            return this;
+        }
+
+        public CustomSkillBuilder ability(Ability ability) {
+            this.abilities.add(ability);
+            return this;
+        }
+
+        public CustomSkillBuilder manaAbility(ManaAbility manaAbility) {
+            this.manaAbility = manaAbility;
             return this;
         }
 
@@ -178,7 +205,7 @@ public class CustomSkill implements Skill {
         }
 
         public CustomSkill build() {
-            return new CustomSkill(id, item, contentDirectory, xpMultiplierAbility);
+            return new CustomSkill(id, item, abilities, manaAbility, xpMultiplierAbility);
         }
     }
 

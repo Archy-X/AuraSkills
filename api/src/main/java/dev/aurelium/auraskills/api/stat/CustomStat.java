@@ -19,6 +19,7 @@ public class CustomStat implements Stat {
 
     private final NamespacedId id;
     private final ItemContext item;
+    private final Map<Trait, Double> definedTraits;
     @Nullable
     private final String displayName;
     @Nullable
@@ -27,16 +28,15 @@ public class CustomStat implements Stat {
     private final String color;
     @Nullable
     private final String symbol;
-    private final Map<Trait, Double> definedTraits;
 
-    private CustomStat(NamespacedId id, ItemContext item, @Nullable String displayName, @Nullable String description, @Nullable String color, @Nullable String symbol, Map<Trait, Double> definedTraits) {
+    private CustomStat(NamespacedId id, ItemContext item, Map<Trait, Double> definedTraits, @Nullable String displayName, @Nullable String description, @Nullable String color, @Nullable String symbol) {
         this.id = id;
         this.item = item;
+        this.definedTraits = definedTraits;
         this.displayName = displayName;
         this.description = description;
         this.color = color;
         this.symbol = symbol;
-        this.definedTraits = definedTraits;
     }
 
     public static CustomStatBuilder builder(String name, NamespacedRegistry registry) {
@@ -165,7 +165,7 @@ public class CustomStat implements Stat {
         private String symbol;
         private final Map<Trait, Double> traits;
 
-        public CustomStatBuilder(NamespacedId id) {
+        private CustomStatBuilder(NamespacedId id) {
             this.id = id;
             // The default item
             this.item = ItemContext.builder()
@@ -207,7 +207,7 @@ public class CustomStat implements Stat {
         }
 
         public CustomStat build() {
-            return new CustomStat(id, item, displayName, description, color, symbol, traits);
+            return new CustomStat(id, item, traits, displayName, description, color, symbol);
         }
 
     }
