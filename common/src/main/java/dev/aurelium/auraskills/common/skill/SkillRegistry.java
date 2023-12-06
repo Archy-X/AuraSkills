@@ -40,13 +40,13 @@ public class SkillRegistry extends Registry<Skill, SkillProvider> {
 
             // Add the list of defined abilities
             List<String> abilityList = new ArrayList<>();
-            customSkill.getDefinedValues().getAbilities().forEach(ability -> abilityList.add(ability.getId().toString()));
+            customSkill.getDefined().getAbilities().forEach(ability -> abilityList.add(ability.getId().toString()));
             if (!abilityList.isEmpty()) {
                 skillNode.node("abilities").set(abilityList);
             }
 
-            if (customSkill.getDefinedValues().getManaAbility() != null) {
-                skillNode.node("mana_abilities").set(customSkill.getDefinedValues().getManaAbility().getId().toString());
+            if (customSkill.getDefined().getManaAbility() != null) {
+                skillNode.node("mana_abilities").set(customSkill.getDefined().getManaAbility().getId().toString());
             }
             // Set default options
             ConfigurationNode options = skillNode.node("options");

@@ -11,8 +11,8 @@ public class StatisticSource extends Source implements StatisticXpSource {
     private final double multiplier;
     private final int minimumIncrease;
 
-    public StatisticSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String statistic, double multiplier, int minimumIncrease) {
-        super(plugin, id, xp);
+    public StatisticSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, String statistic, double multiplier, int minimumIncrease) {
+        super(plugin, id, xp, displayName);
         this.statistic = statistic;
         this.multiplier = multiplier;
         this.minimumIncrease = minimumIncrease;

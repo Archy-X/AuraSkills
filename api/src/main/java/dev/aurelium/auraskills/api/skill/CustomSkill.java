@@ -18,13 +18,13 @@ public class CustomSkill implements Skill {
     private SkillProvider provider;
 
     private final NamespacedId id;
-    private final DefinedValues definedValues;
+    private final Defined defined;
     @Nullable
     private final Ability xpMultiplierAbility;
 
-    private CustomSkill(NamespacedId id, DefinedValues definedValues, @Nullable Ability xpMultiplierAbility) {
+    private CustomSkill(NamespacedId id, Defined defined, @Nullable Ability xpMultiplierAbility) {
         this.id = id;
-        this.definedValues = definedValues;
+        this.defined = defined;
         this.xpMultiplierAbility = xpMultiplierAbility;
     }
 
@@ -32,8 +32,8 @@ public class CustomSkill implements Skill {
         return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 
-    public DefinedValues getDefinedValues() {
-        return definedValues;
+    public Defined getDefined() {
+        return defined;
     }
 
     @Override
@@ -73,12 +73,12 @@ public class CustomSkill implements Skill {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return definedValues.getDisplayName() != null ? definedValues.getDisplayName() : provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return definedValues.getDescription() != null ? definedValues.getDescription() : provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale);
     }
 
     @Override
@@ -144,12 +144,12 @@ public class CustomSkill implements Skill {
     public static class CustomSkillBuilder {
 
         private final NamespacedId id;
-        private final DefinedValues definedValues = new DefinedValues();
+        private final Defined defined = new Defined();
         private Ability xpMultiplierAbility;
 
         private CustomSkillBuilder(NamespacedId id) {
             this.id = id;
-            definedValues.setItem(ItemContext.builder()
+            defined.setItem(ItemContext.builder()
                     .material("stone")
                     .group("third_row")
                     .order(6)
@@ -163,32 +163,32 @@ public class CustomSkill implements Skill {
          * @return the builder
          */
         public CustomSkillBuilder item(ItemContext item) {
-            definedValues.setItem(item);
+            defined.setItem(item);
             return this;
         }
 
         public CustomSkillBuilder abilities(Ability... abilities) {
-            definedValues.getAbilities().addAll(Arrays.asList(abilities));
+            defined.getAbilities().addAll(Arrays.asList(abilities));
             return this;
         }
 
         public CustomSkillBuilder ability(Ability ability) {
-            definedValues.getAbilities().add(ability);
+            defined.getAbilities().add(ability);
             return this;
         }
 
         public CustomSkillBuilder manaAbility(ManaAbility manaAbility) {
-            definedValues.setManaAbility(manaAbility);
+            defined.setManaAbility(manaAbility);
             return this;
         }
 
         public CustomSkillBuilder displayName(String displayName) {
-            definedValues.setDisplayName(displayName);
+            defined.setDisplayName(displayName);
             return this;
         }
 
         public CustomSkillBuilder description(String description) {
-            definedValues.setDescription(description);
+            defined.setDescription(description);
             return this;
         }
 
@@ -198,17 +198,21 @@ public class CustomSkill implements Skill {
         }
 
         public CustomSkill build() {
-            return new CustomSkill(id, definedValues, xpMultiplierAbility);
+            return new CustomSkill(id, defined, xpMultiplierAbility);
         }
     }
 
-    public static class DefinedValues {
+    public static class Defined {
 
         private ItemContext item;
         private final List<Ability> abilities = new ArrayList<>();
         private ManaAbility manaAbility;
         private String displayName;
         private String description;
+
+        private Defined() {
+
+        }
 
         public ItemContext getItem() {
             return item;

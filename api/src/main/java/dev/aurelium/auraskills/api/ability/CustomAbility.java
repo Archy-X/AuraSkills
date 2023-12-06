@@ -4,7 +4,6 @@ import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.Skill;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -16,70 +15,36 @@ public class CustomAbility implements Ability {
     private AbilityProvider provider;
 
     private final NamespacedId id;
-    private final double definedBaseValue;
-    private final double definedValuePerLevel;
-    private final int definedUnlock;
-    private final int definedLevelUp;
-    private final int definedMaxLevel;
+    private final Defined defined;
     private final boolean hasSecondaryValue;
-    @Nullable
-    private final String displayName;
-    @Nullable
-    private final String description;
-    @Nullable
-    private final String info;
 
-    private CustomAbility(NamespacedId id, double definedBaseValue, double definedValuePerLevel, int definedUnlock, int definedLevelUp, int definedMaxLevel,
-                          boolean hasSecondaryValue, @Nullable String displayName, @Nullable String description, @Nullable String info) {
+    private CustomAbility(NamespacedId id, Defined defined, boolean hasSecondaryValue) {
         this.id = id;
-        this.definedBaseValue = definedBaseValue;
-        this.definedValuePerLevel = definedValuePerLevel;
-        this.definedUnlock = definedUnlock;
-        this.definedLevelUp = definedLevelUp;
-        this.definedMaxLevel = definedMaxLevel;
+        this.defined = defined;
         this.hasSecondaryValue = hasSecondaryValue;
-        this.displayName = displayName;
-        this.description = description;
-        this.info = info;
     }
 
     public static CustomAbilityBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomAbilityBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 
-    public double getDefinedBaseValue() {
-        return definedBaseValue;
-    }
-
-    public double getDefinedValuePerLevel() {
-        return definedValuePerLevel;
-    }
-
-    public int getDefinedUnlock() {
-        return definedUnlock;
-    }
-
-    public int getDefinedLevelUp() {
-        return definedLevelUp;
-    }
-
-    public int getDefinedMaxLevel() {
-        return definedMaxLevel;
+    public Defined getDefined() {
+        return defined;
     }
 
     @Override
     public String getDisplayName(Locale locale) {
-        return displayName != null ? displayName : provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return description != null ? description : provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale);
     }
 
     @Override
     public String getInfo(Locale locale) {
-        return info != null ? info : provider.getInfo(this, locale);
+        return defined.info != null ? defined.info : provider.getInfo(this, locale);
     }
 
     @Override
@@ -210,42 +175,35 @@ public class CustomAbility implements Ability {
     public static class CustomAbilityBuilder {
 
         private final NamespacedId id;
-        private double baseValue = 10.0;
-        private double valuePerLevel = 10.0;
-        private int unlock = 2;
-        private int levelUp = 5;
-        private int maxLevel = 0;
+        private final Defined defined = new Defined();
         private boolean hasSecondaryValue;
-        private String displayName;
-        private String description;
-        private String info;
 
         public CustomAbilityBuilder(NamespacedId id) {
             this.id = id;
         }
 
         public CustomAbilityBuilder baseValue(double baseValue) {
-            this.baseValue = baseValue;
+            defined.setBaseValue(baseValue);
             return this;
         }
 
         public CustomAbilityBuilder valuePerLevel(double valuePerLevel) {
-            this.valuePerLevel = valuePerLevel;
+            defined.setValuePerLevel(valuePerLevel);
             return this;
         }
 
         public CustomAbilityBuilder unlock(int unlock) {
-            this.unlock = unlock;
+            defined.setUnlock(unlock);
             return this;
         }
 
         public CustomAbilityBuilder levelUp(int levelUp) {
-            this.levelUp = levelUp;
+            defined.setLevelUp(levelUp);
             return this;
         }
 
         public CustomAbilityBuilder maxLevel(int maxLevel) {
-            this.maxLevel = maxLevel;
+            defined.setMaxLevel(maxLevel);
             return this;
         }
 
@@ -255,24 +213,104 @@ public class CustomAbility implements Ability {
         }
 
         public CustomAbilityBuilder displayName(String displayName) {
-            this.displayName = displayName;
+            defined.setDisplayName(displayName);
             return this;
         }
 
         public CustomAbilityBuilder description(String description) {
-            this.description = description;
+            defined.setDescription(description);
             return this;
         }
 
         public CustomAbilityBuilder info(String info) {
-            this.info = info;
+            defined.setInfo(info);
             return this;
         }
 
         public CustomAbility build() {
-            return new CustomAbility(id, baseValue, valuePerLevel, unlock, levelUp, maxLevel, hasSecondaryValue, displayName, description, info);
+            return new CustomAbility(id, defined, hasSecondaryValue);
         }
 
+    }
+
+    public static class Defined {
+
+        private double baseValue = 10.0;
+        private double valuePerLevel = 10.0;
+        private int unlock = 2;
+        private int levelUp = 5;
+        private int maxLevel = 0;
+        private String displayName;
+        private String description;
+        private String info;
+
+        private Defined() {
+
+        }
+
+        public double getBaseValue() {
+            return baseValue;
+        }
+
+        public void setBaseValue(double baseValue) {
+            this.baseValue = baseValue;
+        }
+
+        public double getValuePerLevel() {
+            return valuePerLevel;
+        }
+
+        public void setValuePerLevel(double valuePerLevel) {
+            this.valuePerLevel = valuePerLevel;
+        }
+
+        public int getUnlock() {
+            return unlock;
+        }
+
+        public void setUnlock(int unlock) {
+            this.unlock = unlock;
+        }
+
+        public int getLevelUp() {
+            return levelUp;
+        }
+
+        public void setLevelUp(int levelUp) {
+            this.levelUp = levelUp;
+        }
+
+        public int getMaxLevel() {
+            return maxLevel;
+        }
+
+        public void setMaxLevel(int maxLevel) {
+            this.maxLevel = maxLevel;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getInfo() {
+            return info;
+        }
+
+        public void setInfo(String info) {
+            this.info = info;
+        }
     }
 
 }

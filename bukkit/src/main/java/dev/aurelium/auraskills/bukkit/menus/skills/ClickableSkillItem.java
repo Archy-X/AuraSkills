@@ -41,7 +41,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
             if (!(context instanceof CustomSkill skill)) continue;
             try {
                 ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
-                ConfigurationNode config = parser.parseItemContext(skill.getDefinedValues().getItem());
+                ConfigurationNode config = parser.parseItemContext(skill.getDefined().getItem());
 
                 PositionProvider provider = parser.parsePositionProvider(config, activeMenu, "skill");
                 if (provider != null) {

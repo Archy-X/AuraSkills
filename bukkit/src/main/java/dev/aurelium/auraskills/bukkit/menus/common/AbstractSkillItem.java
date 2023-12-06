@@ -58,7 +58,7 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
             try {
                 ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
 
-                return parser.parseBaseItem(parser.parseItemContext(customSkill.getDefinedValues().getItem()));
+                return parser.parseBaseItem(parser.parseItemContext(customSkill.getDefined().getItem()));
             } catch (SerializationException | IllegalArgumentException e) {
                 plugin.logger().warn("Error parsing ItemContext of CustomSkill " + customSkill.getId());
                 e.printStackTrace();

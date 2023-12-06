@@ -20,6 +20,6 @@ public class AnvilSourceSerializer extends SourceSerializer<AnvilSource> {
         ItemFilter rightItem = required(source, "right_item").get(ItemFilter.class);
         String multiplier = source.node("multiplier").getString();
 
-        return new AnvilSource(plugin, getId(), getXp(source), leftItem, rightItem, multiplier);
+        return new AnvilSource(plugin, getId(), getXp(source), getDisplayName(source), leftItem, rightItem, multiplier);
     }
 }

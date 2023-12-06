@@ -17,6 +17,6 @@ public class GrindstoneSourceSerializer extends SourceSerializer<GrindstoneSourc
     public GrindstoneSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         String multiplier = source.node("multiplier").getString();
 
-        return new GrindstoneSource(plugin, getId(), getXp(source), multiplier);
+        return new GrindstoneSource(plugin, getId(), getXp(source), getDisplayName(source), multiplier);
     }
 }

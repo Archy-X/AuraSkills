@@ -12,8 +12,8 @@ public class EntitySource extends Source implements EntityXpSource {
     private final EntityTriggers[] triggers;
     private final EntityDamagers[] damagers;
 
-    public EntitySource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers) {
-        super(plugin, id, xp);
+    public EntitySource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers) {
+        super(plugin, id, xp, displayName);
         this.entity = entity;
         this.triggers = triggers;
         this.damagers = damagers;

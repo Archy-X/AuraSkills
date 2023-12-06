@@ -15,9 +15,9 @@ public class ManaAbilityUseSourceSerializer extends SourceSerializer<ManaAbility
     }
 
     @Override
-    public ManaAbilityUseSource deserialize(Type type, ConfigurationNode node) throws SerializationException {
-        ManaAbility[] manaAbilities = pluralizedArray("mana_ability", node, ManaAbility.class);
+    public ManaAbilityUseSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
+        ManaAbility[] manaAbilities = pluralizedArray("mana_ability", source, ManaAbility.class);
 
-        return new ManaAbilityUseSource(plugin, getId(), getXp(node), manaAbilities);
+        return new ManaAbilityUseSource(plugin, getId(), getXp(source), getDisplayName(source), manaAbilities);
     }
 }

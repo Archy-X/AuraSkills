@@ -12,8 +12,8 @@ public class BrewingSource extends Source implements BrewingXpSource {
     private final ItemFilter ingredients;
     private final BrewTriggers trigger;
 
-    public BrewingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter ingredients, BrewTriggers trigger) {
-        super(plugin, id, xp);
+    public BrewingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ItemFilter ingredients, BrewTriggers trigger) {
+        super(plugin, id, xp, displayName);
         this.ingredients = ingredients;
         this.trigger = trigger;
     }

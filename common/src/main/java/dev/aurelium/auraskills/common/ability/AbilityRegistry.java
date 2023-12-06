@@ -35,11 +35,12 @@ public class AbilityRegistry extends Registry<Ability, AbilityProvider> {
             }
             ConfigurationNode abilityNode = root.node("abilities", ability.getId().toString());
             abilityNode.node("enabled").set(true);
-            abilityNode.node("base_value").set(customAbility.getDefinedBaseValue());
-            abilityNode.node("value_per_level").set(customAbility.getDefinedValuePerLevel());
-            abilityNode.node("unlock").set(customAbility.getDefinedUnlock());
-            abilityNode.node("level_up").set(customAbility.getDefinedLevelUp());
-            abilityNode.node("max_level").set(customAbility.getDefinedMaxLevel());
+            CustomAbility.Defined defined = customAbility.getDefined();
+            abilityNode.node("base_value").set(defined.getBaseValue());
+            abilityNode.node("value_per_level").set(defined.getValuePerLevel());
+            abilityNode.node("unlock").set(defined.getUnlock());
+            abilityNode.node("level_up").set(defined.getLevelUp());
+            abilityNode.node("max_level").set(defined.getMaxLevel());
         }
         return root;
     }

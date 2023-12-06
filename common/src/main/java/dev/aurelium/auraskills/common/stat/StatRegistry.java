@@ -33,8 +33,8 @@ public class StatRegistry extends Registry<Stat, StatProvider> {
             }
             ConfigurationNode statNode = root.node("stats", stat.getId().toString());
             statNode.node("enabled").set(true);
-            for (Trait trait : customStat.getDefinedTraits().keySet()) {
-                double modifier = customStat.getDefinedTraits().getOrDefault(trait, 1.0);
+            for (Trait trait : customStat.getDefined().getTraits().keySet()) {
+                double modifier = customStat.getDefined().getTraits().getOrDefault(trait, 1.0);
                 statNode.node("traits", trait.getId().toString(), "modifier").set(modifier);
             }
         }

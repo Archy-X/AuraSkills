@@ -18,6 +18,6 @@ public class PotionSplashSourceSerializer extends SourceSerializer<PotionSplashS
     public PotionSplashSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         ItemFilter item = required(source, "item").get(ItemFilter.class);
 
-        return new PotionSplashSource(plugin, getId(), getXp(source), item);
+        return new PotionSplashSource(plugin, getId(), getXp(source), getDisplayName(source), item);
     }
 }

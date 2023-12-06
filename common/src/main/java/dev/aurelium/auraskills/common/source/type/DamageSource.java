@@ -14,8 +14,8 @@ public class DamageSource extends Source implements DamageXpSource {
     private final boolean mustSurvive;
     private final boolean useOriginalDamage;
 
-    public DamageSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage) {
-        super(plugin, id, xp);
+    public DamageSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage) {
+        super(plugin, id, xp, displayName);
         this.causes = causes;
         this.excludedCauses = excludedCauses;
         this.damager = damager;

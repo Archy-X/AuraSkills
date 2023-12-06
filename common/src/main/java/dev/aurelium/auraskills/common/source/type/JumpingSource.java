@@ -9,8 +9,8 @@ public class JumpingSource extends Source implements JumpingXpSource {
 
     private final int interval;
 
-    public JumpingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, int interval) {
-        super(plugin, id, xp);
+    public JumpingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, int interval) {
+        super(plugin, id, xp, displayName);
         this.interval = interval;
     }
 

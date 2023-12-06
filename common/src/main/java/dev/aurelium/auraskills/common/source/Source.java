@@ -14,11 +14,14 @@ public class Source implements XpSource {
     private final AuraSkillsPlugin plugin;
     private final NamespacedId id;
     private final double xp;
+    @Nullable
+    private final String displayName;
 
-    public Source(AuraSkillsPlugin plugin, NamespacedId id, double xp) {
+    public Source(AuraSkillsPlugin plugin, NamespacedId id, double xp, @Nullable String displayName) {
         this.plugin = plugin;
         this.id = id;
         this.xp = xp;
+        this.displayName = displayName;
     }
 
     @Override
@@ -33,7 +36,14 @@ public class Source implements XpSource {
             return id.getKey();
         }
         String messagePath = "sources." + sourceType.toString().toLowerCase(Locale.ROOT) + "." + getId().getKey().toLowerCase(Locale.ROOT);
-        return plugin.getMsg(MessageKey.of(messagePath), locale);
+        String msg = plugin.getMsg(MessageKey.of(messagePath), locale);
+        if (msg.equals(messagePath)) {
+            // Try to use defined display name
+            if (displayName != null) {
+                return displayName;
+            }
+        }
+        return msg; // Return if exists in messages
     }
 
     @Override

@@ -13,8 +13,8 @@ public class AnvilSource extends Source implements AnvilXpSource {
     private final ItemFilter rightItem;
     private final String multiplier;
 
-    public AnvilSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter leftItem, ItemFilter rightItem, String multiplier) {
-        super(plugin, id, xp);
+    public AnvilSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ItemFilter leftItem, ItemFilter rightItem, String multiplier) {
+        super(plugin, id, xp, displayName);
         this.leftItem = leftItem;
         this.rightItem = rightItem;
         this.multiplier = multiplier;
