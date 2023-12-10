@@ -35,32 +35,50 @@ public class UpdateChecker {
         if (localVersion.equalsIgnoreCase(resourceVersion)) { // Versions match exactly
             return false;
         }
-        if (localVersion.contains("Pre-Release") || localVersion.contains("Build")) { // Ignore Pre-Release or dev builds
+        if (localVersion.contains("Pre-Release") || localVersion.contains("Build") || localVersion.contains("pre") || localVersion.contains("SNAPSHOT")) { // Ignore Pre-Release or dev builds
             return false;
         }
         String[] localSplit = localVersion.split(" ");
         String[] resourceSplit = resourceVersion.split(" ");
+        String localNum;
+        String resourceNum;
         if (localSplit.length >= 2 && resourceSplit.length >= 2) {
-            String localVersionNumber = localSplit[1];
-            String resourceVersionNumber = resourceSplit[1];
-            String[] localVersionSplit = localVersionNumber.split("\\.");
-            String[] resourceVersionSplit = resourceVersionNumber.split("\\.");
+            localNum = localSplit[1];
+        } else {
+            localNum = localSplit[0];
+        }
+        if (resourceSplit.length >= 2) {
+            resourceNum = resourceSplit[1];
+        } else {
+            resourceNum = resourceSplit[0];
+        }
+        // Remove part after any hyphens including the hyphen
+        int localIndex = localNum.indexOf("-");
+        if (localIndex != -1) {
+            localNum = localNum.substring(0, localIndex);
+        }
+        int resourceIndex = resourceNum.indexOf("-");
+        if (resourceIndex != -1) {
+            resourceNum = resourceNum.substring(0, resourceIndex);
+        }
 
-            // Check each part of the version number between the dots
-            for (int i = 0; i < localVersionSplit.length; i++) {
-                if (i >= resourceVersionSplit.length) {
-                    break;
-                }
-                try {
-                    int local = Integer.parseInt(localVersionSplit[i]);
-                    int resource = Integer.parseInt(resourceVersionSplit[i]);
-                    if (local < resource) { // If local is less than resource, return as outdated
-                        return true;
-                    } else if (local > resource) { // If local is greater than resource, return as not outdated
-                        return false;
-                    }
-                } catch (NumberFormatException ignored) {}
+        String[] localVersionSplit = localNum.split("\\.");
+        String[] resourceVersionSplit = resourceNum.split("\\.");
+
+        // Check each part of the version number between the dots
+        for (int i = 0; i < localVersionSplit.length; i++) {
+            if (i >= resourceVersionSplit.length) {
+                break;
             }
+            try {
+                int local = Integer.parseInt(localVersionSplit[i]);
+                int resource = Integer.parseInt(resourceVersionSplit[i]);
+                if (local < resource) { // If local is less than resource, return as outdated
+                    return true;
+                } else if (local > resource) { // If local is greater than resource, return as not outdated
+                    return false;
+                }
+            } catch (NumberFormatException ignored) {}
         }
         return true;
     }

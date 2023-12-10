@@ -145,7 +145,6 @@ public abstract class ActionBarManager {
         plugin.getScheduler().scheduleSync(() -> {
             Integer timerNum = timer.get(uuid);
             if (timerNum != null) {
-                plugin.logger().debug("Timer is " + (int) timerNum);
                 if (timerNum.equals(0)) {
                     isGainingXp.remove(uuid);
                 }
