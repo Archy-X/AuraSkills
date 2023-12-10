@@ -113,7 +113,7 @@ public class TextUtil {
     }
 
     public static boolean isEmpty(final CharSequence cs) {
-        return cs == null || cs.length() == 0;
+        return cs == null || cs.isEmpty();
     }
 
     public static String capitalize(final String str) {

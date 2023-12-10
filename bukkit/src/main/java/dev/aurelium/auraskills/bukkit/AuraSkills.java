@@ -80,6 +80,7 @@ import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import fr.minuskube.inv.InventoryManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;

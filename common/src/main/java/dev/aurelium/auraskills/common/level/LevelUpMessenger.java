@@ -8,7 +8,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityUtil;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
-import dev.aurelium.auraskills.common.message.type.LevelerMessage;
+import dev.aurelium.auraskills.common.message.type.LevelerFormat;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.user.User;
@@ -40,7 +40,7 @@ public class LevelUpMessenger {
     }
 
     public void sendChatMessage() {
-        MessageBuilder.create(plugin).locale(locale).message(LevelerMessage.LEVEL_UP,
+        MessageBuilder.create(plugin).locale(locale).message(LevelerFormat.CHAT,
                 "skill", skill.getDisplayName(locale),
                 "old", RomanNumber.toRoman(level - 1, plugin),
                 "new", RomanNumber.toRoman(level, plugin),
@@ -55,13 +55,13 @@ public class LevelUpMessenger {
 
     public void sendTitle() {
         String title = MessageBuilder.create(plugin).locale(locale)
-                .message(LevelerMessage.TITLE,
+                .message(LevelerFormat.TITLE,
                         "skill", skill.getDisplayName(locale),
                         "old", RomanNumber.toRoman(level - 1, plugin),
                         "new", RomanNumber.toRoman(level, plugin))
                 .toString();
         String subtitle = MessageBuilder.create(plugin).locale(locale)
-                .message(LevelerMessage.SUBTITLE,
+                .message(LevelerFormat.SUBTITLE,
                         "skill", skill.getDisplayName(locale),
                         "old", RomanNumber.toRoman(level - 1, plugin),
                         "new", RomanNumber.toRoman(level, plugin))
@@ -88,7 +88,7 @@ public class LevelUpMessenger {
                         "{value}", AbilityUtil.getCurrentValue(ability, 1),
                         "{value_2}", AbilityUtil.getCurrentValue2(ability, 1));
                 desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
-                builder.message(LevelerMessage.ABILITY_UNLOCK,
+                builder.message(LevelerFormat.ABILITY_UNLOCK,
                         "ability", ability.getDisplayName(locale),
                         "desc", desc);
             }
@@ -104,7 +104,7 @@ public class LevelUpMessenger {
             }
             if (ability.getUnlock() != level) { // If ability is unlocked at this level
                 int level = user.getAbilityLevel(ability);
-                sb.append(TextUtil.replace(plugin.getMsg(LevelerMessage.ABILITY_LEVEL_UP, locale),
+                sb.append(TextUtil.replace(plugin.getMsg(LevelerFormat.ABILITY_LEVEL_UP, locale),
                         "{ability}", ability.getDisplayName(locale),
                         "{previous}", RomanNumber.toRoman(level - 1, plugin),
                         "{level}", RomanNumber.toRoman(level, plugin),
@@ -115,7 +115,7 @@ public class LevelUpMessenger {
     }
 
     private String getAbilityLevelUpDesc(Ability ability, int level, Locale locale) {
-        String format = plugin.getMsg(LevelerMessage.DESC_UPGRADE_VALUE, locale);
+        String format = plugin.getMsg(LevelerFormat.DESC_UPGRADE_VALUE, locale);
         // Subtract 1 from level to go from previous to current value
         String desc = TextUtil.replace(ability.getDescription(locale),
                         "{value}", AbilityUtil.getUpgradeValue(ability, level - 1, format),
@@ -138,7 +138,7 @@ public class LevelUpMessenger {
                     "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
                     "{duration}", NumberUtil.format1(AbilityUtil.getDuration(manaAbility, 1)));
             desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
-            sb.append(TextUtil.replace(plugin.getMsg(LevelerMessage.MANA_ABILITY_UNLOCK, locale),
+            sb.append(TextUtil.replace(plugin.getMsg(LevelerFormat.MANA_ABILITY_UNLOCK, locale),
                     "{mana_ability}", manaAbility.getDisplayName(locale),
                     "{desc}", desc));
         }
@@ -155,7 +155,7 @@ public class LevelUpMessenger {
         // If mana ability is unlocked at this level
         if (manaAbility.getUnlock() != level) {
             int level = user.getManaAbilityLevel(manaAbility);
-            sb.append(TextUtil.replace(plugin.getMsg(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale),
+            sb.append(TextUtil.replace(plugin.getMsg(LevelerFormat.MANA_ABILITY_LEVEL_UP, locale),
                     "{mana_ability}", manaAbility.getDisplayName(locale),
                     "{previous}", RomanNumber.toRoman(level - 1, plugin),
                     "{level}", RomanNumber.toRoman(level, plugin),
@@ -165,7 +165,7 @@ public class LevelUpMessenger {
     }
 
     private String getManaAbilityLevelUpDesc(ManaAbility manaAbility, int level, Locale locale) {
-        String format = plugin.getMsg(LevelerMessage.DESC_UPGRADE_VALUE, locale);
+        String format = plugin.getMsg(LevelerFormat.DESC_UPGRADE_VALUE, locale);
         // Subtract 1 from level to go from previous to current value
         String message = TextUtil.replace(manaAbility.getDescription(locale).replace("<1>", "<white>"),
                         "{value}", AbilityUtil.getUpgradeValue(manaAbility, level - 1, format),
@@ -184,14 +184,14 @@ public class LevelUpMessenger {
         }
         if (totalMoney > 0) {
             NumberFormat nf = new DecimalFormat("#.##");
-            builder.message(LevelerMessage.MONEY_REWARD,
+            builder.message(LevelerFormat.MONEY_REWARD,
                     "amount", nf.format(totalMoney));
         }
         return builder.toString();
     }
 
     private String descWrap(Locale locale) {
-        return plugin.getMsg(LevelerMessage.DESC_WRAP, locale);
+        return plugin.getMsg(LevelerFormat.DESC_WRAP, locale);
     }
 
 }

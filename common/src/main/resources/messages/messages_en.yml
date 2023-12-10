@@ -558,18 +558,14 @@ commands:
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
-  title: "<green>{skill} Level Up"
-  subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Skill Level Up! <aqua><bold>{skill}</bold> <dark_gray>{old}➜<dark_aqua><bold>{new}</bold>\n \n <aqua>Rewards:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
-  stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Ability Unlock! <gold><bold>{ability}</bold>\n      <white>{desc}"
-  ability_level_up: "\n  <green>Ability Level Up! <gold><bold>{ability}</bold> <dark_gray>{previous}→<gold>{level}\n      <white>{desc}"
-  mana_ability_unlock: "\n  <light_purple>Mana Ability Unlock! <blue><bold>{mana_ability}</bold>\n      <white>{desc}"
-  mana_ability_level_up: "\n  <light_purple>Mana Ability Level Up! <blue><bold>{mana_ability}</bold> <dark_gray>{previous}→<gold>{level}\n      <white>{desc}"
-  money_reward: "\n  <green>${amount}"
+  level_up: "{skill} Level Up"
+  skill_level_up: Skill Level Up
+  rewards: Rewards
+  ability_unlock: Ability Unlock
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Unlock
+  mana_ability_level_up: Mana Ability Level Up
   unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
-  desc_upgrade_value: "<dark_gray>{current}→<white>{next}"
-  desc_wrap: "<white>      "
 menus:
   common:
     close: "Close"
@@ -701,12 +697,6 @@ mana_abilities:
     end: "<gray>Lightning Blade has worn off"
   not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required, you have {current_mana}/{max_mana})"
-rewards:
-  item:
-    default_menu_message: "\n  {display_name}"
-    default_menu_message_multiple: "\n  {display_name} {amount}x"
-    default_chat_message: "\n  {display_name}"
-    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Farming
@@ -1013,48 +1003,30 @@ stats:
   strength:
     name: Strength
     desc: "Strength increases your attack damage with various different weapons"
-    color: "<dark_red>"
-    symbol: "➽"
   health:
     name: Health
     desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights"
-    color: "<red>"
-    symbol: "❤"
   regeneration:
     name: Regeneration
     desc: "Regeneration increases how fast you recover both health and mana"
-    color: "<gold>"
-    symbol: "❥"
   luck:
     name: Luck
     desc: "Luck increases your chances of getting rare loot from mobs, fishing, and more"
-    color: "<dark_green>"
-    symbol: "☘"
   wisdom:
     name: Wisdom
     desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs"
-    color: "<blue>"
-    symbol: "✿"
   toughness:
     name: Toughness
     desc: "Toughness increases the amount of damage reduced from enemy attacks"
-    color: "<dark_purple>"
-    symbol: "✦"
   crit_chance:
     name: Crit Chance
     desc: "Crit Chance is your odds to deal a critical hit"
-    color: "<green>"
-    symbol: "⌘"
   crit_damage:
     name: Crit Damage
     desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
-    color: "<dark_aqua>"
-    symbol: "★"
   speed:
     name: Speed
     desc: "Speed increases how fast you can walk and run"
-    color: "<white>"
-    symbol: "➤"
 traits:
   attack_damage:
     name: Attack Damage
