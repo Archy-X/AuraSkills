@@ -562,12 +562,14 @@ leveler:
   subtitle: "<gold>{old} ➜ {new}"
   level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>¡Nuevo Nivel! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Recompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>¡Habilidad Desbloqueada! <gold><bold>{ability} </bold><gray>ha sido desbloqueada"
-  ability_level_up: "\n  <green>¡Nuevo Nivel de Habilidad! <gold><bold>{ability} </bold><gray>es ahora nivel <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>¡Habilidad de Maná Desbloqueada! <blue><bold>{mana_ability} </bold><gray>se ha desbloqueado"
-  mana_ability_level_up: "\n  <light_purple>¡Nuevo Nivel de Habilidad de Maná! <blue><bold>{mana_ability} </bold><gray>es ahora nivel <gold>{level}"
+  ability_unlock: "\n  <green>¡Habilidad Desbloqueada! <gold><bold>{ability} </bold><gray>ha sido desbloqueada\n      <white>{desc}"
+  ability_level_up: "\n  <green>¡Nuevo Nivel de Habilidad! <gold><bold>{ability} </bold><gray>es ahora nivel <gold>{level}\n      <white>{desc}"
+  mana_ability_unlock: "\n  <light_purple>¡Habilidad de Maná Desbloqueada! <blue><bold>{mana_ability} </bold><gray>se ha desbloqueado\n      <white>{desc}"
+  mana_ability_level_up: "\n  <light_purple>¡Nuevo Nivel de Habilidad de Maná! <blue><bold>{mana_ability} </bold><gray>es ahora nivel <gold>{level}\n      <white>{desc}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Tienes objetos sin reclamar porque tu invnetario estaba lleno, usa <yellow>/skills claimitems <red>para reclamarlos"
+  desc_upgrade_value: "<dark_gray>{current}→<white>{next}"
+  desc_wrap: "<white>      "
 menus:
   common:
     close: "Cerrar"
@@ -1086,4 +1088,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 30
+file_version: 31

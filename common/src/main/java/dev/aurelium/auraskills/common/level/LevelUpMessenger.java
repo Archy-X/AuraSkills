@@ -3,7 +3,9 @@ package dev.aurelium.auraskills.common.level;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.ability.AbilityUtil;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
@@ -11,6 +13,7 @@ import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -19,6 +22,7 @@ import java.util.Locale;
 
 public class LevelUpMessenger {
 
+    private static final int WRAP_LENGTH = 40;
     private final AuraSkillsPlugin plugin;
     private final User user;
     private final Locale locale;
@@ -80,30 +84,48 @@ public class LevelUpMessenger {
                 continue;
             }
             if (ability.getUnlock() == level) { // If ability is unlocked at this level
+                String desc = TextUtil.replace(ability.getDescription(locale),
+                        "{value}", AbilityUtil.getCurrentValue(ability, 1),
+                        "{value_2}", AbilityUtil.getCurrentValue2(ability, 1));
+                desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
                 builder.message(LevelerMessage.ABILITY_UNLOCK,
-                        "ability", ability.getDisplayName(locale));
+                        "ability", ability.getDisplayName(locale),
+                        "desc", desc);
             }
         }
         return builder.toString();
     }
 
     private String getAbilityLevelUpMessage() {
-        MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
+        StringBuilder sb = new StringBuilder();
         for (Ability ability : plugin.getAbilityManager().getAbilities(skill, level)) {
             if (!ability.isEnabled()) {
                 continue;
             }
             if (ability.getUnlock() != level) { // If ability is unlocked at this level
-                builder.message(LevelerMessage.ABILITY_LEVEL_UP,
-                        "ability", ability.getDisplayName(locale),
-                        "level", RomanNumber.toRoman(user.getAbilityLevel(ability), plugin));
+                int level = user.getAbilityLevel(ability);
+                sb.append(TextUtil.replace(plugin.getMsg(LevelerMessage.ABILITY_LEVEL_UP, locale),
+                        "{ability}", ability.getDisplayName(locale),
+                        "{previous}", RomanNumber.toRoman(level - 1, plugin),
+                        "{level}", RomanNumber.toRoman(level, plugin),
+                        "{desc}", getAbilityLevelUpDesc(ability, level, locale)));
             }
         }
-        return builder.toString();
+        return sb.toString();
+    }
+
+    private String getAbilityLevelUpDesc(Ability ability, int level, Locale locale) {
+        String format = plugin.getMsg(LevelerMessage.DESC_UPGRADE_VALUE, locale);
+        // Subtract 1 from level to go from previous to current value
+        String desc = TextUtil.replace(ability.getDescription(locale),
+                        "{value}", AbilityUtil.getUpgradeValue(ability, level - 1, format),
+                        "{value_2}", AbilityUtil.getUpgradeValue2(ability, level - 1, format));
+        desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
+        return com.archyx.polyglot.util.TextUtil.applyColor(desc);
     }
 
     private String getManaAbilityUnlockMessage() {
-        MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
+        StringBuilder sb = new StringBuilder();
         ManaAbility manaAbility = plugin.getManaAbilityManager().getManaAbilityAtLevel(skill, level);
 
         if (manaAbility == null) return "";
@@ -111,14 +133,20 @@ public class LevelUpMessenger {
 
         // If mana ability is unlocked at this level
         if (manaAbility.getUnlock() == level) {
-            builder.message(LevelerMessage.MANA_ABILITY_UNLOCK,
-                    "mana_ability", manaAbility.getDisplayName(locale));
+            String desc = TextUtil.replace(manaAbility.getDescription(locale).replace("<1>", "<white>"),
+                    "{value}", String.valueOf(manaAbility.getDisplayValue(1)),
+                    "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
+                    "{duration}", NumberUtil.format1(AbilityUtil.getDuration(manaAbility, 1)));
+            desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
+            sb.append(TextUtil.replace(plugin.getMsg(LevelerMessage.MANA_ABILITY_UNLOCK, locale),
+                    "{mana_ability}", manaAbility.getDisplayName(locale),
+                    "{desc}", desc));
         }
-        return builder.toString();
+        return com.archyx.polyglot.util.TextUtil.applyColor(sb.toString());
     }
 
     private String getManaAbilityLevelUpMessage() {
-        MessageBuilder builder = MessageBuilder.create(plugin).locale(locale);
+        StringBuilder sb = new StringBuilder();
         ManaAbility manaAbility = plugin.getManaAbilityManager().getManaAbilityAtLevel(skill, level);
 
         if (manaAbility == null) return "";
@@ -126,11 +154,25 @@ public class LevelUpMessenger {
 
         // If mana ability is unlocked at this level
         if (manaAbility.getUnlock() != level) {
-            builder.message(LevelerMessage.MANA_ABILITY_LEVEL_UP,
-                    "mana_ability", manaAbility.getDisplayName(locale),
-                    "level", RomanNumber.toRoman(user.getManaAbilityLevel(manaAbility), plugin));
+            int level = user.getManaAbilityLevel(manaAbility);
+            sb.append(TextUtil.replace(plugin.getMsg(LevelerMessage.MANA_ABILITY_LEVEL_UP, locale),
+                    "{mana_ability}", manaAbility.getDisplayName(locale),
+                    "{previous}", RomanNumber.toRoman(level - 1, plugin),
+                    "{level}", RomanNumber.toRoman(level, plugin),
+                    "{desc}", getManaAbilityLevelUpDesc(manaAbility, level, locale)));
         }
-        return builder.toString();
+        return com.archyx.polyglot.util.TextUtil.applyColor(sb.toString());
+    }
+
+    private String getManaAbilityLevelUpDesc(ManaAbility manaAbility, int level, Locale locale) {
+        String format = plugin.getMsg(LevelerMessage.DESC_UPGRADE_VALUE, locale);
+        // Subtract 1 from level to go from previous to current value
+        String message = TextUtil.replace(manaAbility.getDescription(locale).replace("<1>", "<white>"),
+                        "{value}", AbilityUtil.getUpgradeValue(manaAbility, level - 1, format),
+                        "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
+                        "{duration}", AbilityUtil.getUpgradeDuration(manaAbility, level - 1, format));
+        message = TextUtil.wrapText(message, WRAP_LENGTH, "\n" + descWrap(locale));
+        return message;
     }
 
     private String getMoneyRewardMessage() {
@@ -146,6 +188,10 @@ public class LevelUpMessenger {
                     "amount", nf.format(totalMoney));
         }
         return builder.toString();
+    }
+
+    private String descWrap(Locale locale) {
+        return plugin.getMsg(LevelerMessage.DESC_WRAP, locale);
     }
 
 }

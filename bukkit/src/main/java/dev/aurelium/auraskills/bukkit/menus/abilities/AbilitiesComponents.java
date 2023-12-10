@@ -6,12 +6,12 @@ import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
-import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.AbstractComponent;
+import dev.aurelium.auraskills.common.ability.AbilityUtil;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -74,15 +74,18 @@ public class AbilitiesComponents {
             Locale locale = plugin.getUser(player).getLocale();
             if (placeholder.equals("desc")) {
                 User user = plugin.getUser(player);
+                String format = activeMenu.getFormat("desc_upgrade_value");
                 if (context instanceof Ability ability) {
+                    int level = user.getAbilityLevel(ability);
                     return TextUtil.replace(ability.getDescription(locale),
-                            "{value}", getUpgradeValue(ability, user, activeMenu),
-                            "{value_2}", getUpgradeValue2(ability, user, activeMenu));
+                            "{value}", AbilityUtil.getUpgradeValue(ability, level, format),
+                            "{value_2}", AbilityUtil.getUpgradeValue2(ability, level, format));
                 } else if (context instanceof ManaAbility manaAbility) {
+                    int level = user.getManaAbilityLevel(manaAbility);
                     return TextUtil.replace(manaAbility.getDescription(locale),
-                            "{value}", getUpgradeValue(manaAbility, user, activeMenu),
+                            "{value}", AbilityUtil.getUpgradeValue(manaAbility, level, format),
                             "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
-                            "{duration}", getUpgradeDuration(manaAbility, user, activeMenu));
+                            "{duration}", AbilityUtil.getUpgradeDuration(manaAbility, level, format));
                 }
             }
             return replaceMenuMessage(placeholder, player, activeMenu, new Replacer()
@@ -99,46 +102,6 @@ public class AbilitiesComponents {
             int unlock = ability.getUnlock();
             int levelUp = ability.getLevelUp();
             return unlock + levelUp * user.getAbstractAbilityLevel(ability);
-        }
-
-        private String getCurrentValue(Ability ability, User user) {
-            return NumberUtil.format1(ability.getValue(user.getAbilityLevel(ability)));
-        }
-
-        private String getCurrentValue2(Ability ability, User user) {
-            return NumberUtil.format1(ability.getSecondaryValue(user.getAbilityLevel(ability)));
-        }
-
-        private String getUpgradeValue(Ability ability, User user, ActiveMenu activeMenu) {
-            String currentValue = getCurrentValue(ability, user);
-            String nextValue = NumberUtil.format1(ability.getValue(user.getAbilityLevel(ability) + 1));
-            return TextUtil.replace(activeMenu.getFormat("desc_upgrade_value"),
-                    "{current}", currentValue,
-                    "{next}", nextValue);
-        }
-
-        private String getUpgradeValue2(Ability ability, User user, ActiveMenu activeMenu) {
-            String currentValue = getCurrentValue2(ability, user);
-            String nextValue = NumberUtil.format1(ability.getSecondaryValue(user.getAbilityLevel(ability) + 1));
-            return TextUtil.replace(activeMenu.getFormat("desc_upgrade_value"),
-                    "{current}", currentValue,
-                    "{next}", nextValue);
-        }
-
-        private String getUpgradeValue(ManaAbility manaAbility, User user, ActiveMenu activeMenu) {
-            String currentValue = NumberUtil.format1(manaAbility.getDisplayValue(user.getManaAbilityLevel(manaAbility)));
-            String nextValue = NumberUtil.format1(manaAbility.getDisplayValue(user.getManaAbilityLevel(manaAbility) + 1));
-            return TextUtil.replace(activeMenu.getFormat("desc_upgrade_value"),
-                    "{current}", currentValue,
-                    "{next}", nextValue);
-        }
-
-        private String getUpgradeDuration(ManaAbility manaAbility, User user, ActiveMenu activeMenu) {
-            String currentDuration = NumberUtil.format1(getDuration(manaAbility, user.getManaAbilityLevel(manaAbility)));
-            String nextDuration = NumberUtil.format1(getDuration(manaAbility, user.getManaAbilityLevel(manaAbility) + 1));
-            return TextUtil.replace(activeMenu.getFormat("desc_upgrade_value"),
-                    "{current}", currentDuration,
-                    "{next}", nextDuration);
         }
 
     }
@@ -162,7 +125,7 @@ public class AbilitiesComponents {
                     return TextUtil.replace(manaAbility.getDescription(locale),
                             "{value}", NumberUtil.format1(manaAbility.getDisplayValue(user.getManaAbilityLevel(manaAbility))),
                             "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
-                            "{duration}", NumberUtil.format1(getDuration(manaAbility, user.getManaAbilityLevel(manaAbility))));
+                            "{duration}", NumberUtil.format1(AbilityUtil.getDuration(manaAbility, user.getManaAbilityLevel(manaAbility))));
                 }
             }
             return replaceMenuMessage(placeholder, player, activeMenu);
@@ -183,16 +146,6 @@ public class AbilitiesComponents {
             maxLevel = maxAllowedBySkill;
         }
         return user.getAbstractAbilityLevel(ability) < maxLevel;
-    }
-
-    private static double getDuration(ManaAbility manaAbility, int level) {
-        if (manaAbility == ManaAbilities.LIGHTNING_BLADE) {
-            double baseDuration = ManaAbilities.LIGHTNING_BLADE.optionDouble("base_duration");
-            double durationPerLevel = ManaAbilities.LIGHTNING_BLADE.optionDouble("duration_per_level");
-            return baseDuration + (durationPerLevel * (level - 1));
-        } else {
-            return manaAbility.getValue(level);
-        }
     }
 
 }

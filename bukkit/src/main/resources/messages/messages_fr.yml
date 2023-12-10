@@ -562,12 +562,14 @@ leveler:
   subtitle: "<gold>{old} ➜ {new}"
   level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Niveau supérieur! <aqua><bold>{skill}</bold> <dark_gray>{old}➜<dark_aqua><bold>{new}</bold> \n \n <aqua>Récompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
   stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Compétence débloquée! <gold><bold>{ability}</bold> <gray>a été débloquée"
-  ability_level_up: "\n  <green>Niveau de compétence supérieur! <gold><bold>{ability}</bold> <gray>est maintenant niveau <gold>{level}"
-  mana_ability_unlock: "\n<light_purple>Capacité de mana débloquée! <blue><bold>{mana_ability}</bold> <gray>a été débloquée"
-  mana_ability_level_up: "\n  <light_purple>Niveau de compétence de mana supérieur! <blue><bold>{mana_ability}</bold> <gray>est maintenant niveau <gold>{level}"
+  ability_unlock: "\n  <green>Compétence débloquée! <gold><bold>{ability}</bold> <gray>a été débloquée\n      <white>{desc}"
+  ability_level_up: "\n  <green>Niveau de compétence supérieur! <gold><bold>{ability}</bold> <gray>est maintenant niveau <gold>{level}\n      <white>{desc}"
+  mana_ability_unlock: "\n<light_purple>Capacité de mana débloquée! <blue><bold>{mana_ability}</bold> <gray>a été débloquée\n      <white>{desc}"
+  mana_ability_level_up: "\n  <light_purple>Niveau de compétence de mana supérieur! <blue><bold>{mana_ability}</bold> <gray>est maintenant niveau <gold>{level}\n      <white>{desc}"
   money_reward: "\n  <green>${amount}"
   unclaimed_item: "<red>Vous avez des objets non réclamés parce que votre inventaire était plein, utilisez <yellow>/skills claimitems <red>pour les réclamer"
+  desc_upgrade_value: "<dark_gray>{current}→<white>{next}"
+  desc_wrap: "<white>      "
 menus:
   common:
     close: "Fermer"
@@ -1086,4 +1088,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 30
+file_version: 31
