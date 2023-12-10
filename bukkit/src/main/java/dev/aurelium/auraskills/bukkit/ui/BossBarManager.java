@@ -195,13 +195,13 @@ public class BossBarManager implements Listener {
                     "{current_xp}", currentXpText,
                     "{level_xp}", getLevelXpText(levelXp),
                     "{percent}", NumberUtil.format2(currentXp / (double) levelXp * 100),
-                    "{xp_gained}", NumberUtil.format1(xpGained)));
+                    "{xp_gained}", xpGained > 0 ? "+" + NumberUtil.format1(xpGained) : NumberUtil.format1(xpGained)));
         } else {
             bossBarText = setPlaceholders(player, TextUtil.replace(plugin.getMsg(ActionBarMessage.BOSS_BAR_MAXED, locale),
                     "{skill}", skill.getDisplayName(locale),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
-                    "{xp_gained}", NumberUtil.format1(xpGained)));
+                    "{xp_gained}", xpGained > 0 ? "+" + NumberUtil.format1(xpGained) : NumberUtil.format1(xpGained)));
         }
         return bossBarText;
     }

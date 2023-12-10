@@ -4,6 +4,15 @@
 # This file defines formats and styles
 # common across all languages
 # -----------------------------------
+action_bar:
+  idle: "{{action_bar.hp_display}}                 {{action_bar.mana_display}}"
+  hp_display: "<red>{hp}/{max_hp}❤"
+  mana_display: "<aqua>{mana}/{max_mana} {{units.mana}}"
+  xp: "{{action_bar.hp_display}}  <gold>{xp_gained} {skill} {{units.xp}} <gray>({current_xp}/{level_xp} {{units.xp}})  {{action_bar.mana_display}}"
+  maxed: "{{action_bar.hp_display}}  <gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}})  {{action_bar.mana_display}}"
+  ability: "{message}"
+  boss_bar_xp: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({percent}%)"
+  boss_bar_maxed: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}})"
 leveler_format:
   title: "<green>{{leveler.level_up}}"
   subtitle: "<gold>{old} ➜ {new}"

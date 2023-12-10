@@ -38,7 +38,7 @@ public abstract class ActionBarManager {
         var task = new TaskRunnable() {
             @Override
             public void run() {
-                if (plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
+                if (!plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
                     return;
                 }
     
@@ -55,7 +55,7 @@ public abstract class ActionBarManager {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 0, 2, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerSync(task, 0, 2 * 50L, TimeUnit.MILLISECONDS);
     }
     
     public void startUpdatingIdleActionBar() {
@@ -91,7 +91,7 @@ public abstract class ActionBarManager {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD), TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerSync(task, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD) * 50L, TimeUnit.MILLISECONDS);
     }
 
     public void sendXpActionBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
@@ -140,16 +140,17 @@ public abstract class ActionBarManager {
                     String message = getXpActionBarMessage(user, skill, currentXp, levelXp, xpGained, level, maxed);
                     uiProvider.sendActionBar(user, message);
                 }
-            }, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD), TimeUnit.MILLISECONDS);
+            }, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD) * 50L, TimeUnit.MILLISECONDS);
         // Schedule task to stop updating action bar
         plugin.getScheduler().scheduleSync(() -> {
             Integer timerNum = timer.get(uuid);
             if (timerNum != null) {
+                plugin.logger().debug("Timer is " + (int) timerNum);
                 if (timerNum.equals(0)) {
                     isGainingXp.remove(uuid);
                 }
             }
-        }, 41, TimeUnit.MILLISECONDS);
+        }, 41 * 50L, TimeUnit.MILLISECONDS);
     }
 
     public void resetActionBars() {
@@ -202,9 +203,6 @@ public abstract class ActionBarManager {
 
     private String getXpActionBarMessage(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         ActionBarMessage messageKey = maxed ? ActionBarMessage.MAXED : ActionBarMessage.XP;
-        if (xpGained < 0) {
-            messageKey = maxed ? ActionBarMessage.MAXED_REMOVED : ActionBarMessage.XP_REMOVED;
-        }
         Locale locale = user.getLocale();
 
         String message = plugin.getMsg(messageKey, locale);
@@ -212,8 +210,7 @@ public abstract class ActionBarManager {
         message = TextUtil.replace(message,
                 "{hp}", getHp(user),
                 "{max_hp}", getMaxHp(user),
-                "{xp_gained}", NumberUtil.format1(xpGained),
-                "{xp_removed}", NumberUtil.format1(xpGained),
+                "{xp_gained}", xpGained > 0 ? "+" + NumberUtil.format1(xpGained) : NumberUtil.format1(xpGained),
                 "{skill}", skill.getDisplayName(locale),
                 "{current_xp}", NumberUtil.format1(currentXp),
                 "{level_xp}", NumberUtil.format1(levelXp),

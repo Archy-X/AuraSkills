@@ -344,15 +344,6 @@ acf:
     location_please_specify_world: "<red>Error: Please specify world. Example: <yellow>world:x,y,z."
     location_please_specify_xyz: "<red>Error: Please specify the coordinates x, y, and z. Example: <yellow>world:x,y,z."
     location_console_not_relative: "<red>Error: Console may not use relative coordinates for location."
-action_bar:
-  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
-  ability: "{message}"
-  boss_bar_xp: "<gold>+{xp_gained} {skill} XP <gray>({percent}%)"
-  boss_bar_maxed: "<gold>+{xp_gained} {skill} XP <gray>(MAXED)"
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
   armor:
@@ -1056,6 +1047,8 @@ traits:
     name: Crit Damage
   movement_speed:
     name: Movement Speed
+ui:
+  maxed: MAXED
 units:
   mana: Mana
   hp: HP
