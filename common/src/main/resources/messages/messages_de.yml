@@ -803,7 +803,7 @@ sources:
     light_gray_terracotta: Hellgraue Keramik
     brown_terracotta: Braune Terrcotta
     red_terracotta: Rote Keramik
-    netherrack: Netherit
+    netherrack: Netherrack
     blackstone: Schwarzstein
     basalt: Basalt
     magma_block: Magmablock
@@ -905,7 +905,7 @@ sources:
     elder_guardian: Elder Wächter
     endermite: Endermite
     evoker: Magier
-    ghast: Gast
+    ghast: Ghast
     guardian: Wächter
     hoglin: Hoglin
     husk: Wüstenzombie
