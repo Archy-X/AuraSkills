@@ -551,7 +551,7 @@ commands:
 leveler:
   level_up: "{skill} Stufe erhöht"
   skill_level_up: Fähigkeiten Levelaufstieg
-  rewards: Belohnung
+  rewards: Belohnungen
   ability_unlock: Fähigkeit freigeschaltet
   ability_level_up: Fähigkeiten Levelaufstieg
   mana_ability_unlock: Manafähigkeit freigeschaltet
@@ -1048,7 +1048,7 @@ traits:
   movement_speed:
     name: Bewegungsgeschwindigkeit
 ui:
-  maxed: MAXED
+  maxed: Maximiert
 units:
   mana: Mana
   hp: LP
