@@ -3,7 +3,7 @@ stats:
     enabled: true
     traits:
       auraskills/attack_damage:
-        modifier: 0.5
+        modifier: 0.4
   auraskills/health:
     enabled: true
     traits:
@@ -17,7 +17,7 @@ stats:
       auraskills/hunger_regen:
         modifier: 0.006
       auraskills/mana_regen:
-        modifier: 0.1
+        modifier: 0.02
   auraskills/luck:
     enabled: true
     traits:
@@ -38,7 +38,7 @@ stats:
     enabled: true
     traits:
       auraskills/damage_reduction:
-        modifier: 0.3
+        modifier: 0.24
   auraskills/crit_chance:
     enabled: true
     traits:
@@ -92,7 +92,7 @@ traits:
     base: 1
   auraskills/mana_regen:
     enabled: true
-    base: 1
+    base: 0.5
   auraskills/luck:
     enabled: true
   auraskills/double_drop:

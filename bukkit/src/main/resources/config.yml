@@ -95,7 +95,7 @@ boss_bar:
     - 'SORCERY BLUE PROGRESS'
     - 'HEALING WHITE PROGRESS'
     - 'FORGING YELLOW PROGRESS'
-enable_roman_numerals: true
+enable_roman_numerals: false
 damage_holograms:
   enabled: true
   scaling: true
@@ -103,9 +103,9 @@ damage_holograms:
     display_when_less_than: 1
     max_amount: 1
   offset:
-    x: 0
-    y: 0
-    z: 0
+    x: 0.4
+    y: 0.4
+    z: 0.4
     random:
       enabled: false
       x_min: -0.5
@@ -135,7 +135,7 @@ on_death:
   reset_skills: false
   reset_xp: false
 auto_save:
-  enabled: false
+  enabled: true
   interval_ticks: 12000
 leveler:
   title:

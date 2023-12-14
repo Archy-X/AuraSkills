@@ -197,7 +197,7 @@ public abstract class ActionBarManager {
                 "{max_mana}", getMaxMana(user),
                 "{message}", message);
         plugin.getUiProvider().sendActionBar(user, actionBarText);
-        setPaused(user, 40 * 50, TimeUnit.MILLISECONDS);
+        setPaused(user, 15 * 50, TimeUnit.MILLISECONDS);
     }
 
     private String getXpActionBarMessage(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {

@@ -2,13 +2,13 @@ sources:
   jump_per_100:
     type: jumping
     interval: 100
-    xp: 10
+    xp: 7
     menu_item:
       material: feather
     unit: '{sources.units.100_jumps}'
   fall_damage:
     type: damage
-    xp: 2
+    xp: 1.4
     cause: fall
     must_survive: true
     use_original_damage: true

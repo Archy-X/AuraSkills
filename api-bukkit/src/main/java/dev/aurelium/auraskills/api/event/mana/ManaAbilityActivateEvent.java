@@ -24,6 +24,7 @@ public class ManaAbilityActivateEvent extends Event implements Cancellable {
         this.skillsUser = user;
         this.manaAbility = manaAbility;
         this.duration = duration;
+        this.manaUsed = manaUsed;
     }
 
     public Player getPlayer() {

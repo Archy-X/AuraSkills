@@ -6,13 +6,13 @@ default:
 sources:
   wheat:
     block: wheat
-    xp: 2.0
+    xp: 3.0
     check_replace: false
     state:
       age: 7
   potato:
     block: potatoes
-    xp: 2.5
+    xp: 3.5
     check_replace: false
     state:
       age: 7
@@ -20,7 +20,7 @@ sources:
       material: potato
   carrot:
     block: carrots
-    xp: 2.7
+    xp: 3.5
     check_replace: false
     state:
       age: 7
@@ -28,7 +28,7 @@ sources:
       material: carrot
   beetroot:
     block: beetroots
-    xp: 3.0
+    xp: 3.7
     check_replace: false
     state:
       age: 3
@@ -36,21 +36,21 @@ sources:
       material: beetroot
   nether_wart:
     block: nether_wart
-    xp: 3.0
+    xp: 3.7
     check_replace: false
     state:
       age: 3
   pumpkin:
     block: pumpkin
-    xp: 3.4
+    xp: 4.0
     check_replace: true
   melon:
     block: melon
-    xp: 3.4
+    xp: 4.0
     check_replace: true
   sugar_cane:
     block: sugar_cane
-    xp: 1.7
+    xp: 2.0
     triggers: [break, break_indirect]
     check_replace: true
   bamboo:
