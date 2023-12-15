@@ -4,7 +4,7 @@ sources:
     left_item: enchanted_book
     right_item: enchanted_book
     multiplier: '{repair_cost}'
-    xp: 10
+    xp: 12
     menu_item:
       material: enchanted_book
     unit: '{sources.units.combine_level}'
@@ -14,7 +14,7 @@ sources:
       category: weapon
     right_item: enchanted_book
     multiplier: '{repair_cost}'
-    xp: 15
+    xp: 18
     menu_item:
       material: iron_sword
       flags:
@@ -26,7 +26,7 @@ sources:
       category: armor
     right_item: enchanted_book
     multiplier: '{repair_cost}'
-    xp: 20
+    xp: 24
     menu_item:
       material: iron_leggings
       flags:
@@ -38,7 +38,7 @@ sources:
       category: tool
     right_item: enchanted_book
     multiplier: '{repair_cost}'
-    xp: 25
+    xp: 30
     menu_item:
       material: iron_shovel
       flags:
@@ -47,7 +47,7 @@ sources:
   grindstone_per_level:
     type: grindstone
     multiplier: '{total_level}'
-    xp: 30
+    xp: 36
     menu_item:
       material: grindstone
     unit: '{sources.units.grindstone_level}'

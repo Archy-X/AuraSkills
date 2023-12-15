@@ -67,7 +67,6 @@ public abstract class HologramsHook extends Hook implements Listener {
         } else {
             return;
         }
-        player.sendMessage("Damage dealt: " + event.getFinalDamage());
 
         boolean critical = player.hasMetadata("skillsCritical");
 

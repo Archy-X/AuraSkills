@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class Source implements XpSource {
 
@@ -69,5 +70,23 @@ public class Source implements XpSource {
     @Override
     public double getXp() {
         return xp;
+    }
+
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Source source = (Source) o;
+        return Objects.equals(id, source.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

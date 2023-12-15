@@ -39,7 +39,7 @@ public class FarmingAbilities extends AbilityImpl {
                 checkMelonSilkTouch(player, block, item);
 
                 Location location = block.getLocation().add(0.5, 0.5, 0.5);
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), item, location, LootDropEvent.Cause.BOUNTIFUL_HARVEST);
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.BOUNTIFUL_HARVEST);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
                     block.getWorld().dropItem(event.getLocation(), event.getItem());

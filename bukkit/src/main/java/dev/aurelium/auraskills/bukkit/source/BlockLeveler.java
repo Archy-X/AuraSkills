@@ -57,6 +57,7 @@ public class BlockLeveler extends SourceLeveler {
         multiplier *= helper.getStateMultiplier(event.getBlock(), source);
 
         plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
+        applyAbilities(skill, player, user, event.getBlock(), source);
     }
 
     @EventHandler
