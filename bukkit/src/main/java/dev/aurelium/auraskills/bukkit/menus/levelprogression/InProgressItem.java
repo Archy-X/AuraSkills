@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class InProgressItem extends SkillLevelItem {
 
@@ -19,11 +20,10 @@ public class InProgressItem extends SkillLevelItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer position) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer level) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
-        int level = getLevel(activeMenu, position);
 
         double currentXp = user.getSkillXp(skill);
         double xpToNext = plugin.getXpRequirements().getXpRequired(skill, level);
@@ -41,17 +41,12 @@ public class InProgressItem extends SkillLevelItem {
     public Set<Integer> getDefinedContexts(Player player, ActiveMenu activeMenu) {
         User user = plugin.getUser(player);
         Skill skill = (Skill) activeMenu.getProperty("skill");
-        int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
         int level = user.getSkillLevel(skill);
-        if (level >= 1 + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + 1) {
+        int offset = START_LEVEL - 1;
+        if (level >= offset + currentPage * ITEMS_PER_PAGE && level < (currentPage + 1) * ITEMS_PER_PAGE + offset) {
             Set<Integer> levels = new HashSet<>();
-            int position = (level + 1) % itemsPerPage; // Calculate the first-page equivalent next level
-            if (position == 0) { // Account for next skill level 24
-                position = itemsPerPage;
-            } else if (position == 1) { // Account for next skill level 25
-                position = itemsPerPage + 1;
-            }
+            int position = level + 1;
             levels.add(position);
             return levels;
         }

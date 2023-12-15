@@ -118,6 +118,7 @@ damage_holograms:
     default: gray
     critical:
       digits: [gray, white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
+start_level: 1
 leaderboards:
   update_period: 6000
   update_delay: 6000

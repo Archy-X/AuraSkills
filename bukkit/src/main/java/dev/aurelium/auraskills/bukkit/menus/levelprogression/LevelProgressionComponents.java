@@ -28,7 +28,7 @@ public class LevelProgressionComponents {
 
         @Override
         public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, ComponentData componentData, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
 
             Ability ability = getUnlocked(skill, level).get(componentData.getInstance());
@@ -46,14 +46,14 @@ public class LevelProgressionComponents {
 
         @Override
         public <T> boolean shouldShow(Player player, ActiveMenu activeMenu, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
             return !getUnlocked(skill, level).isEmpty();
         }
 
         @Override
         public <T> int getInstances(Player player, ActiveMenu activeMenu, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
             return getUnlocked(skill, level).size();
         }
@@ -72,7 +72,7 @@ public class LevelProgressionComponents {
 
         @Override
         public <T> String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, ComponentData componentData, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
 
             Ability ability = getLeveledUp(skill, level).get(componentData.getInstance());
@@ -90,14 +90,14 @@ public class LevelProgressionComponents {
 
         @Override
         public <T> boolean shouldShow(Player player, ActiveMenu activeMenu, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
             return !getLeveledUp(skill, level).isEmpty();
         }
 
         @Override
         public <T> int getInstances(Player player, ActiveMenu activeMenu, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
             return getLeveledUp(skill, level).size();
         }
@@ -134,7 +134,7 @@ public class LevelProgressionComponents {
 
         @Override
         public <T> boolean shouldShow(Player player, ActiveMenu activeMenu, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
 
             ManaAbility manaAbility = skill.getManaAbility();
@@ -162,7 +162,7 @@ public class LevelProgressionComponents {
 
             Locale locale = plugin.getUser(player).getLocale();
 
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             int manaAbilityLevel = ((level - manaAbility.getUnlock()) / manaAbility.getLevelUp()) + 1;
             return switch (placeholder) {
                 case "name" -> manaAbility.getDisplayName(locale);
@@ -177,7 +177,7 @@ public class LevelProgressionComponents {
 
         @Override
         public <T> boolean shouldShow(Player player, ActiveMenu activeMenu, T context) {
-            int level = getLevel(activeMenu, context);
+            int level = (Integer) context;
             Skill skill = (Skill) activeMenu.getProperty("skill");
 
             ManaAbility manaAbility = skill.getManaAbility();
@@ -188,21 +188,6 @@ public class LevelProgressionComponents {
             }
         }
 
-    }
-
-    private static int getLevel(ActiveMenu activeMenu, Object context) {
-        int position = (Integer) context;
-
-        Object property = activeMenu.getProperty("items_per_page");
-        int itemsPerPage;
-        if (property instanceof Integer) {
-            itemsPerPage = (Integer) property;
-        } else {
-            itemsPerPage = 24;
-        }
-
-        int currentPage = activeMenu.getCurrentPage();
-        return currentPage * itemsPerPage + position;
     }
 
     private static double getDuration(ManaAbility manaAbility, int level) {

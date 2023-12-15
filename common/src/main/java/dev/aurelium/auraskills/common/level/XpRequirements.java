@@ -42,8 +42,8 @@ public class XpRequirements {
         // Use skill specific xp requirements if exists
         List<Integer> skillList = skillXpRequirements.get(skill);
         if (skillList != null) {
-            if (skillList.size() > level - 2) {
-                return skillList.get(level - 2);
+            if (skillList.size() > level - plugin.config().getStartLevel() - 1) {
+                return skillList.get(level - plugin.config().getStartLevel() - 1);
             } else {
                 return 0;
             }
@@ -53,8 +53,8 @@ public class XpRequirements {
     }
 
     public int getDefaultXpRequired(int level) {
-        if (defaultXpRequirements.size() > level - 2) {
-            return defaultXpRequirements.get(level - 2);
+        if (defaultXpRequirements.size() > level - plugin.config().getStartLevel() - 1) {
+            return defaultXpRequirements.get(level - plugin.config().getStartLevel() - 1);
         } else {
             return 0;
         }
@@ -71,7 +71,7 @@ public class XpRequirements {
     private void addDefaultXpRequirements() {
         defaultXpRequirements.clear();
         int highestMaxLevel = plugin.config().getHighestMaxLevel();
-        for (int i = 0; i < highestMaxLevel - 1; i++) {
+        for (int i = 0; i < highestMaxLevel - plugin.config().getStartLevel(); i++) {
             defaultXpRequirements.add(100 * i * i + 100);
         }
     }

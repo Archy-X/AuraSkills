@@ -21,6 +21,8 @@ import java.util.Locale;
 public abstract class SkillLevelItem extends AbstractItem implements TemplateItemProvider<Integer> {
 
     private final List<Integer> track;
+    protected int START_LEVEL = 1;
+    protected int ITEMS_PER_PAGE = 24;
     
     public SkillLevelItem(AuraSkills plugin) {
         super(plugin);
@@ -33,22 +35,26 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     }
 
     @Override
+    public void onInitialize(Player player, ActiveMenu activeMenu, Integer context) {
+        this.START_LEVEL = activeMenu.getOption(Integer.class, "start_level", 1);
+        this.ITEMS_PER_PAGE = activeMenu.getOption(Integer.class, "items_per_page", 24);
+    }
+
+    @Override
     public Class<Integer> getContext() {
         return Integer.class;
     }
 
     @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer context) {
-        int index = context - 2;
+    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer level) {
+        int page = activeMenu.getCurrentPage();
+        int index = level - START_LEVEL - page * ITEMS_PER_PAGE;
         int pos = track.get(index);
         return SlotPos.of(pos / 9, pos % 9);
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer num) {
-        // Functionality for showing the level as the amount on the item
-        int page = activeMenu.getCurrentPage();
-        int level = num + page * (int) activeMenu.getProperty("items_per_page");
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer level) {
         // Don't show if level is more than max skill level
         Skill skill = (Skill) activeMenu.getProperty("skill");
         if (level > skill.getMaxLevel()) {
@@ -80,23 +86,6 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
             message.append(TextUtil.replace(activeMenu.getFormat("money_reward_entry"), "{amount}", NumberUtil.format2(totalMoney)));
         }
         return message.toString();
-    }
-
-    protected int getItemsPerPage(ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("items_per_page");
-        int itemsPerPage;
-        if (property instanceof Integer) {
-            itemsPerPage = (Integer) property;
-        } else {
-            itemsPerPage = 24;
-        }
-        return itemsPerPage;
-    }
-
-    protected int getLevel(ActiveMenu activeMenu, int position) {
-        int itemsPerPage = getItemsPerPage(activeMenu);
-        int currentPage = activeMenu.getCurrentPage();
-        return currentPage * itemsPerPage + position;
     }
 
 }

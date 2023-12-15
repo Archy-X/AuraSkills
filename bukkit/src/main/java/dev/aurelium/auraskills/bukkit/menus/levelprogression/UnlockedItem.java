@@ -18,10 +18,9 @@ public class UnlockedItem extends SkillLevelItem {
     }
 
     @Override
-    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer position) {
+    public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer level) {
         Locale locale = plugin.getUser(player).getLocale();
         Skill skill = (Skill) activeMenu.getProperty("skill");
-        int level = getLevel(activeMenu, position);
         switch (placeholder) {
             case "level":
                 return String.valueOf(level);
@@ -37,12 +36,11 @@ public class UnlockedItem extends SkillLevelItem {
 
         Skill skill = (Skill) activeMenu.getProperty("skill");
         int level = user.getSkillLevel(skill);
-        int itemsPerPage = getItemsPerPage(activeMenu);
         int currentPage = activeMenu.getCurrentPage();
         Set<Integer> levels = new HashSet<>();
-        for (int i = 0; i < itemsPerPage; i++) {
-            if (2 + currentPage * itemsPerPage + i <= level) {
-                levels.add(2 + i);
+        for (int i = 0; i < ITEMS_PER_PAGE; i++) {
+            if (START_LEVEL + currentPage * ITEMS_PER_PAGE + i <= level) {
+                levels.add(START_LEVEL + i + currentPage * ITEMS_PER_PAGE);
             } else {
                 break;
             }
