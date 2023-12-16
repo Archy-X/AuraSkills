@@ -3,15 +3,13 @@ package dev.aurelium.auraskills.bukkit.menus.levelprogression;
 import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class InProgressItem extends SkillLevelItem {
 
@@ -23,13 +21,11 @@ public class InProgressItem extends SkillLevelItem {
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer level) {
         Skill skill = (Skill) activeMenu.getProperty("skill");
         User user = plugin.getUser(player);
-        Locale locale = user.getLocale();
 
         double currentXp = user.getSkillXp(skill);
         double xpToNext = plugin.getXpRequirements().getXpRequired(skill, level);
         return switch (placeholder) {
             case "level" -> String.valueOf(level);
-            case "entries" -> getRewardEntries(skill, level, player, locale, activeMenu);
             case "percent" -> NumberUtil.format2(currentXp / xpToNext * 100);
             case "current_xp" -> NumberUtil.format2(currentXp);
             case "level_xp" -> String.valueOf((int) xpToNext);

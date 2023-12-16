@@ -514,11 +514,10 @@ commands:
       reset_all: "<gray>Alle Fertigkeiten <gray>von Spieler <gold>{player} <gray>auf Stufe <aqua>1 <gray>gesetzt"
       reset_skill: "<gray>Fertigkeit <aqua>{skill} <gray>wurde auf Level <aqua>1 <gray>für Spieler <gold>{player} <gray>gesetzt"
     setall:
-      at_least_one: "<yellow>Stufe muss mindestens 1 sein!"
       set: "<gray>Alle Fertigkeiten von Spieler <gold>{player} <gray>auf Stufe <aqua>{level} <gray>gesetzt"
     setlevel:
-      at_least_one: "<yellow>Stufe muss mindestens 1 sein!"
       set: "<gray>Fertigkeit <aqua>{skill} <gray>wurde auf Level <aqua>{level} <gray>für Spieler <gold>{player} <gray>gesetzt"
+    at_least: "<yellow>Stufe muss mindestens {level} sein!"
   toggle:
     enabled: "<green>Deine Fähigkeitsaktionsleiste wurde aktiviert"
     disabled: "<red>Deine Fähigkeitsaktionsleiste wurde deaktiviert"

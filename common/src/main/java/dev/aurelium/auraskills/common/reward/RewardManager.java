@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common.reward;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.reward.type.CommandReward;
 import dev.aurelium.auraskills.common.user.User;
@@ -48,7 +49,12 @@ public abstract class RewardManager {
                 if (!(patternObj instanceof Map<?, ?> patternMap)) {
                     throw new IllegalArgumentException("Pattern must be a section");
                 }
-                int start = DataUtil.getInt(patternMap, "start");
+                int start;
+                if (patternMap.containsKey("start")) {
+                    start = DataUtil.getInt(patternMap, "start");
+                } else {
+                    start = plugin.configInt(Option.START_LEVEL) + 1;
+                }
                 int interval = DataUtil.getInt(patternMap, "interval");
                 // Get stop interval and check it is not above max skill level
                 int stop = maxLevel;

@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
@@ -27,6 +28,11 @@ public class HealthRegenTrait extends TraitImpl {
     @Override
     public double getBaseLevel(Player player, Trait trait) {
         return 0;
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Trait trait) {
+        return "+" + NumberUtil.format1(value);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

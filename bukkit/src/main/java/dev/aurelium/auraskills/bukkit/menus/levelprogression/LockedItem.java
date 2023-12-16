@@ -8,9 +8,7 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class LockedItem extends SkillLevelItem {
 
@@ -20,13 +18,8 @@ public class LockedItem extends SkillLevelItem {
 
     @Override
     public String onPlaceholderReplace(String placeholder, Player player, ActiveMenu activeMenu, PlaceholderData data, Integer level) {
-        Locale locale = plugin.getUser(player).getLocale();
-        Skill skill = (Skill) activeMenu.getProperty("skill");
-        switch (placeholder) {
-            case "level":
-                return String.valueOf(level);
-            case "entries":
-                return getRewardEntries(skill, level, player, locale, activeMenu);
+        if (placeholder.equals("level")) {
+            return String.valueOf(level);
         }
         return replaceMenuMessage(placeholder, player, activeMenu);
     }

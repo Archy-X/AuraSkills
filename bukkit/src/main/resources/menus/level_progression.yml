@@ -102,7 +102,7 @@ templates:
     display_name: '<green>{{level}} {level}'
     lore:
       - '<gray>{{level}} <white>{level}'
-      - '<gray>{{rewards}}: {entries[]}'
+      - component: rewards
       - component: ability_unlock
       - component: ability_level
       - component: mana_ability_unlock
@@ -114,7 +114,7 @@ templates:
     display_name: '<yellow>{{level}} {level}'
     lore:
       - '<gray>{{level}} <white>{level}'
-      - '<gray>{{rewards}}: {entries[]}'
+      - component: rewards
       - component: ability_unlock
       - component: ability_level
       - component: mana_ability_unlock
@@ -129,7 +129,7 @@ templates:
     display_name: '<red>{{level}} {level}'
     lore:
       - '<gray>{{level}} <white>{level}'
-      - '<gray>{{rewards}}: {entries[]}'
+      - component: rewards
       - component: ability_unlock
       - component: ability_level
       - component: mana_ability_unlock
@@ -162,6 +162,10 @@ components:
     context: Skill
     lore:
       - '<gold>{{max_level}}'
+  rewards:
+    context: Integer
+    lore:
+      - '<gray>{{rewards}}: {entries[]}'
   ability_unlock:
     context: Integer
     lore:

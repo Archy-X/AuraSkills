@@ -13,9 +13,9 @@ stats:
     enabled: true
     traits:
       auraskills/saturation_regen:
-        modifier: 0.007
+        modifier: 0.005
       auraskills/hunger_regen:
-        modifier: 0.006
+        modifier: 0.004
       auraskills/mana_regen:
         modifier: 0.02
   auraskills/luck:
@@ -24,14 +24,14 @@ stats:
       auraskills/luck:
         modifier: 0.1
       auraskills/double_drop:
-        modifier: 0.005
+        modifier: 0.5
   auraskills/wisdom:
     enabled: true
     traits:
       auraskills/experience_bonus:
-        modifier: 0.01
+        modifier: 0.5
       auraskills/anvil_discount:
-        modifier: 0.25
+        modifier: 0.1
       auraskills/max_mana:
         modifier: 2.0
   auraskills/toughness:
@@ -67,15 +67,15 @@ traits:
     hearts:
       '10': 20
       '11': 22
-      '12': 26
-      '13': 32
-      '14': 40
-      '15': 52
-      '16': 66
-      '17': 84
-      '18': 104
-      '19': 126
-      '20': 150
+      '12': 24
+      '13': 26
+      '14': 30
+      '15': 34
+      '16': 40
+      '17': 48
+      '18': 58
+      '19': 70
+      '20': 84
     action_bar_scaling: 1
     update_delay: 0
     force_base_health: false

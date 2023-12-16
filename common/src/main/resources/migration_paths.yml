@@ -121,7 +121,6 @@ config.yml:
     excavation.check-multiplier-permissions: skills.auraskills/excavation.options.check_multiplier_permissions
     archery.enabled: skills.auraskills/archery.options.enabled
     archery.max-level: skills.auraskills/archery.options.max_level
-    archery.damage-based: skills.auraskills/archery.options.damage_based
     archery.spawner-multiplier: skills.auraskills/archery.options.spawner_multiplier
     archery.check-multiplier-permissions: skills.auraskills/archery.options.check_multiplier_permissions
     defense.enabled: skills.auraskills/defense.options.enabled
@@ -133,7 +132,6 @@ config.yml:
     defense.check-multiplier-permissions: skills.auraskills/defense.options.check_multiplier_permissions
     fighting.enabled: skills.auraskills/fighting.options.enabled
     fighting.max-level: skills.auraskills/fighting.options.max_level
-    fighting.damage-based: skills.auraskills/fighting.options.damage_based
     fighting.spawner-multiplier: skills.auraskills/fighting.options.spawner_multiplier
     fighting.check-multiplier-permissions: skills.auraskills/fighting.options.check_multiplier_permissions
     endurance.enabled: skills.auraskills/endurance.options.enabled
@@ -176,7 +174,6 @@ config.yml:
     regeneration.hunger-almost-full-modifier: stats.auraskills/regeneration.traits.auraskills/hunger_regen.modifier
     regeneration.mana-modifier: stats.auraskills/regeneration.traits.auraskills/mana_regen.modifier
     luck.modifier: stats.auraskills/luck.traits.auraskills/luck.modifier
-    luck.double-drop-modifier: stats.auraskills/luck.traits.auraskills/double_drop.modifier
     wisdom.experience-modifier: stats.auraskills/wisdom.traits.auraskills/experience_bonus.modifier
     wisdom.anvil-cost-modifier: stats.auraskills/wisdom.traits.auraskills/anvil_discount.modifier
     wisdom.max-mana-per-wisdom: stats.auraskills/wisdom.traits.auraskills/max_mana.modifier

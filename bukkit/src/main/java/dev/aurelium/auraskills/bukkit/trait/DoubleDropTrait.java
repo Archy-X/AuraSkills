@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.common.user.User;
@@ -31,6 +32,11 @@ public class DoubleDropTrait extends TraitImpl {
     @Override
     public double getBaseLevel(Player player, Trait trait) {
         return 0;
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Trait trait) {
+        return NumberUtil.format1(value) + "%";
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -66,12 +72,13 @@ public class DoubleDropTrait extends TraitImpl {
                 || mat.equals(Material.DIRT) || mat.equals(Material.GRASS_BLOCK) || mat.equals(Material.ANDESITE)
                 || mat.equals(Material.DIORITE) || mat.equals(Material.GRANITE)) {
             //Calculate chance
-            double chance = user.getEffectiveTraitLevel(Traits.DOUBLE_DROP);
+            double percentChance = user.getEffectiveTraitLevel(Traits.DOUBLE_DROP);
             // Apply max_percent option
             double maxPercent = Traits.DOUBLE_DROP.optionDouble("max_percent");
-            if (chance * 100 > maxPercent) {
-                chance = maxPercent;
+            if (percentChance > maxPercent) {
+                percentChance = maxPercent;
             }
+            double chance = percentChance / 100.0;
             if (r.nextDouble() < chance) {
                 ItemStack tool = player.getInventory().getItemInMainHand();
                 Location location = block.getLocation().add(0.5, 0.5, 0.5);

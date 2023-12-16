@@ -514,11 +514,10 @@ commands:
       reset_all: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>1 <gray>para <gold>{player}"
       reset_skill: "<gray>Habilidad <aqua>{skill} <gray>establecida al nivel <aqua>1 <gray>para <gold>{player}"
     setall:
-      at_least_one: "<yellow>¡El nivel debe ser al menos 1!"
       set: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>{level} <gray>para <gold>{player}"
     setlevel:
-      at_least_one: "<yellow>¡El nivel debe ser al menos 1!"
       set: "<gray>Habilidad <aqua>{skill} <gray>establecida al nivel <aqua>{level} <gray>para <gold>{player}"
+    at_least_one: "<yellow>¡El nivel debe ser al menos {level}!"
   toggle:
     enabled: "<green>La barra de acción de tus habilidades ha sido activada"
     disabled: "<red>La barra de acción de tus habilidades ha sido desactivada"

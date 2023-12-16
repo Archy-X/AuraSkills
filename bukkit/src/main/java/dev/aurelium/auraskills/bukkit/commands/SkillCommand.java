@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,8 @@ public class SkillCommand extends BaseCommand {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
         if (skill.isEnabled()) {
-            if (level > 0) {
+            int startLevel = plugin.config().getStartLevel();
+            if (level >= startLevel) {
                 int oldLevel = user.getSkillLevel(skill);
                 user.setSkillLevel(skill, level);
                 user.setSkillXp(skill, 0);
@@ -44,7 +46,10 @@ public class SkillCommand extends BaseCommand {
                         .replace("{level}", String.valueOf(level))
                         .replace("{player}", player.getName()));
             } else {
-                sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_SETLEVEL_AT_LEAST_ONE, locale));
+                sender.sendMessage(MessageBuilder.create(plugin).locale(locale)
+                        .prefix()
+                        .message(CommandMessage.SKILL_AT_LEAST, "level", String.valueOf(startLevel))
+                        .toString());
             }
         } else {
             sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UNKNOWN_SKILL, locale));
@@ -58,7 +63,8 @@ public class SkillCommand extends BaseCommand {
     public void onSkillSetall(CommandSender sender, @Flags("other") Player player, int level) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
-        if (level > 0) {
+        int startLevel = plugin.config().getStartLevel();
+        if (level >= startLevel) {
             for (Skill skill : plugin.getSkillRegistry().getValues()) {
                 if (skill.isEnabled()) {
                     int oldLevel = user.getSkillLevel(skill);
@@ -76,7 +82,10 @@ public class SkillCommand extends BaseCommand {
                     .replace("{level}", String.valueOf(level))
                     .replace("{player}", player.getName()));
         } else {
-            sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_SETALL_AT_LEAST_ONE, locale));
+            sender.sendMessage(MessageBuilder.create(plugin).locale(locale)
+                    .prefix()
+                    .message(CommandMessage.SKILL_AT_LEAST, "level", String.valueOf(startLevel))
+                    .toString());
         }
     }
 

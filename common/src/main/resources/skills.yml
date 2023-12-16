@@ -75,7 +75,6 @@ skills:
     options:
       enabled: true
       max_level: 100
-      damage_based: false
       spawner_multiplier: 1
       check_multiplier_permissions: true
   auraskills/defense:
@@ -105,7 +104,6 @@ skills:
     options:
       enabled: true
       max_level: 100
-      damage_based: false
       spawner_multiplier: 1
       check_multiplier_permissions: true
   auraskills/endurance:

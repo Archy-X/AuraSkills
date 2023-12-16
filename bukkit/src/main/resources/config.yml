@@ -17,6 +17,9 @@ mysql:
   load_delay: 0
   always_load_on_join: false
   ssl: false
+default_language: en
+languages: [en, es, fr, de]
+try_detect_client_language: false
 hooks:
   HolographicDisplays:
     enabled: false
@@ -40,26 +43,6 @@ hooks:
       - 'Example'
     blocked_check_replace_regions:
       - 'Example'
-default_language: en
-try_detect_client_language: false
-languages:
-  - en
-  - es
-  - id
-  - fr
-  - zh-TW
-  - tr
-  - pl
-  - pt-BR
-  - zh-CN
-  - de
-  - lt
-  - ru
-  - it
-  - ko
-  - cs
-  - nl
-  - ja
 action_bar:
   enabled: true
   idle: true
@@ -118,7 +101,7 @@ damage_holograms:
     default: gray
     critical:
       digits: [gray, white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
-start_level: 1
+start_level: 0
 leaderboards:
   update_period: 6000
   update_delay: 6000

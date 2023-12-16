@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.HumanEntity;
@@ -20,6 +21,11 @@ public class AnvilDiscountTrait extends TraitImpl {
     @Override
     public double getBaseLevel(Player player, Trait trait) {
         return 0;
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Trait trait) {
+        return NumberUtil.format1(getDiscount(value) * 100) + "%";
     }
 
     @EventHandler
@@ -43,13 +49,18 @@ public class AnvilDiscountTrait extends TraitImpl {
         if (user != null) {
             AnvilInventory anvil = event.getInventory();
             double wisdom = user.getEffectiveTraitLevel(Traits.ANVIL_DISCOUNT);
-            int cost = (int) Math.round(anvil.getRepairCost() * (1 - (-1.0 * Math.pow(1.025, -1.0 * wisdom) + 1)));
+            int cost = (int) Math.round(anvil.getRepairCost() * (1 - getDiscount(wisdom)));
             if (cost > 0) {
                 anvil.setRepairCost(cost);
             } else {
                 anvil.setRepairCost(1);
             }
         }
-
     }
+
+    // Gets the anvil discount from 0 (0% off) to 1 (100% off)
+    private double getDiscount(double wisdom) {
+        return -1.0 * Math.pow(1.025, -1.0 * wisdom) + 1;
+    }
+
 }

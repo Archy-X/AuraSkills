@@ -2,21 +2,15 @@ package dev.aurelium.auraskills.bukkit.menus.levelprogression;
 
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
-import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
-import dev.aurelium.auraskills.common.reward.SkillReward;
-import dev.aurelium.auraskills.common.reward.type.MoneyReward;
-import dev.aurelium.auraskills.api.util.NumberUtil;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public abstract class SkillLevelItem extends AbstractItem implements TemplateItemProvider<Integer> {
 
@@ -70,22 +64,6 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
             }
         }
         return baseItem;
-    }
-
-    protected String getRewardEntries(Skill skill, int level, Player player, Locale locale, ActiveMenu activeMenu) {
-        ImmutableList<SkillReward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
-        StringBuilder message = new StringBuilder();
-        double totalMoney = 0;
-        for (SkillReward reward : rewards) {
-            message.append(reward.getMenuMessage(plugin.getUser(player), locale, skill, level));
-            if (reward instanceof MoneyReward) {
-                totalMoney += ((MoneyReward) reward).getAmount();
-            }
-        }
-        if (totalMoney > 0) {
-            message.append(TextUtil.replace(activeMenu.getFormat("money_reward_entry"), "{amount}", NumberUtil.format2(totalMoney)));
-        }
-        return message.toString();
     }
 
 }

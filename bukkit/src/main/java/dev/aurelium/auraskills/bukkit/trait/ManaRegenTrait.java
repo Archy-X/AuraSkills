@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.event.mana.ManaRegenerateEvent;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
@@ -22,6 +23,11 @@ public class ManaRegenTrait extends TraitImpl {
     @Override
     public double getBaseLevel(Player player, Trait trait) {
         return Traits.MANA_REGEN.optionDouble("base");
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Trait trait) {
+        return NumberUtil.format1(value) + "/s";
     }
 
     public void startRegen() {
