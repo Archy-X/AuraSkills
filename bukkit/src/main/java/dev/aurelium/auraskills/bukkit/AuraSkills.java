@@ -188,7 +188,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         levelManager = new BukkitLevelManager(this);
         itemManager = new ItemManagerImpl(this);
         initStorageProvider();
-        leaderboardManager.updateLeaderboards(); // Schedules async task
+        leaderboardManager.updateLeaderboards();
+        leaderboardManager.startLeaderboardUpdater();
         registerPriorityEvents();
         AureliumAPI.setPlugin(this); // Initialize legacy API
 
