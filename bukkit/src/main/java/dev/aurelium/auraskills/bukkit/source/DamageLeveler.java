@@ -122,8 +122,12 @@ public class DamageLeveler extends SourceLeveler {
                 }
             }
             // Check damager
-            if (source.getDamager() != null && event instanceof EntityDamageByEntityEvent entityEvent) {
-                if (!damagerMatches(entityEvent.getDamager(), source.getDamager())) {
+            if (source.getDamager() != null) {
+                if (event instanceof EntityDamageByEntityEvent entityEvent) {
+                    if (!damagerMatches(entityEvent.getDamager(), source.getDamager())) {
+                        continue;
+                    }
+                } else {
                     continue;
                 }
             }
