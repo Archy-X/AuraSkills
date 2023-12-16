@@ -174,7 +174,7 @@ public class FileStorageProvider extends StorageProvider {
         for (ActionBarType type : ActionBarType.values()) {
             String typeName = type.toString().toLowerCase(Locale.ROOT);
             if (!node.node(typeName).virtual()) {
-                user.setActionBarSetting(type, node.node(type).getBoolean());
+                user.setActionBarSetting(type, node.node(typeName).getBoolean());
             }
         }
     }
