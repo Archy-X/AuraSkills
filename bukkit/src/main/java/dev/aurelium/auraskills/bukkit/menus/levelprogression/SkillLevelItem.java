@@ -43,8 +43,12 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer level) {
         int page = activeMenu.getCurrentPage();
         int index = level - START_LEVEL - page * ITEMS_PER_PAGE;
-        int pos = track.get(index);
-        return SlotPos.of(pos / 9, pos % 9);
+        if (index < track.size()) {
+            int pos = track.get(index);
+            return SlotPos.of(pos / 9, pos % 9);
+        } else {
+            return SlotPos.of(1, 1);
+        }
     }
 
     @Override
