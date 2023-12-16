@@ -49,8 +49,12 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     @Override
     public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer context) {
         int index = context - 2;
-        int pos = track.get(index);
-        return SlotPos.of(pos / 9, pos % 9);
+        if (index < track.size()) {
+            int pos = track.get(index);
+            return SlotPos.of(pos / 9, pos % 9);
+        } else {
+            return SlotPos.of(1,1);
+        }
     }
 
     @Override
