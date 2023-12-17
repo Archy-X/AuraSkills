@@ -102,6 +102,7 @@ public class SharpHook extends ManaAbilityProvider {
     }
 
     private void activateSharpHook(Player player, User user, LivingEntity caught) {
+        if (!hasEnoughMana(player, user, getManaCost(user))) return;
 
         double damage = manaAbility.getValue(user.getManaAbilityLevel(manaAbility));
         double healthBefore = caught.getHealth();
