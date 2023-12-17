@@ -22,9 +22,10 @@ public class AttackDamageTrait extends TraitImpl {
 
     public void strength(EntityDamageByEntityEvent event, User user, DamageType damageType) {
         Trait trait = Traits.ATTACK_DAMAGE;
+        if (!trait.isEnabled()) return;
+
         if (damageType == DamageType.HAND && trait.optionBoolean("hand_damage")) {
             applyStrength(event, user);
-
         } else if (damageType == DamageType.BOW && trait.optionBoolean("bow_damage")) {
             applyStrength(event, user);
         } else {

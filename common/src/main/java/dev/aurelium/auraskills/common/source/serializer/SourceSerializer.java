@@ -31,6 +31,10 @@ public abstract class SourceSerializer<T> implements TypeSerializer<T> {
         return source.node("xp").getDouble(0.0);
     }
 
+    protected String getDisplayName(ConfigurationNode source) {
+        return source.node("display_name").getString();
+    }
+
     protected ConfigurationNode required(ConfigurationNode node, String path) throws SerializationException {
         if (!node.hasChild(path)) {
             throw new SerializationException("Missing required field: " + path);

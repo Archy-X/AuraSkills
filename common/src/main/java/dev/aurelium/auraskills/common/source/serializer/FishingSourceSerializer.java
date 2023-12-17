@@ -18,6 +18,6 @@ public class FishingSourceSerializer extends SourceSerializer<FishingSource> {
     public FishingSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         LootItemFilter item = required(source, "item").get(LootItemFilter.class);
 
-        return new FishingSource(plugin, getId(), getXp(source), item);
+        return new FishingSource(plugin, getId(), getXp(source), getDisplayName(source), item);
     }
 }

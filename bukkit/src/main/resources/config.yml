@@ -17,6 +17,9 @@ mysql:
   load_delay: 0
   always_load_on_join: false
   ssl: false
+default_language: en
+languages: [en, es, fr, de]
+try_detect_client_language: false
 hooks:
   HolographicDisplays:
     enabled: false
@@ -40,26 +43,6 @@ hooks:
       - 'Example'
     blocked_check_replace_regions:
       - 'Example'
-default_language: en
-try_detect_client_language: false
-languages:
-  - en
-  - es
-  - id
-  - fr
-  - zh-TW
-  - tr
-  - pl
-  - pt-BR
-  - zh-CN
-  - de
-  - lt
-  - ru
-  - it
-  - ko
-  - cs
-  - nl
-  - ja
 action_bar:
   enabled: true
   idle: true
@@ -95,7 +78,7 @@ boss_bar:
     - 'SORCERY BLUE PROGRESS'
     - 'HEALING WHITE PROGRESS'
     - 'FORGING YELLOW PROGRESS'
-enable_roman_numerals: true
+enable_roman_numerals: false
 damage_holograms:
   enabled: true
   scaling: true
@@ -103,9 +86,9 @@ damage_holograms:
     display_when_less_than: 1
     max_amount: 1
   offset:
-    x: 0
-    y: 0
-    z: 0
+    x: 0.4
+    y: 0.4
+    z: 0.4
     random:
       enabled: false
       x_min: -0.5
@@ -118,6 +101,7 @@ damage_holograms:
     default: gray
     critical:
       digits: [gray, white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
+start_level: 0
 leaderboards:
   update_period: 6000
   update_delay: 6000
@@ -135,7 +119,7 @@ on_death:
   reset_skills: false
   reset_xp: false
 auto_save:
-  enabled: false
+  enabled: true
   interval_ticks: 12000
 leveler:
   title:

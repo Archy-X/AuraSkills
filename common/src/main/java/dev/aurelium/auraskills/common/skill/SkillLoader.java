@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -53,7 +54,8 @@ public class SkillLoader {
             plugin.getManaAbilityManager().unregisterAll();
 
             ConfigurationNode main = configurateLoader.loadUserFile("skills.yml");
-            ConfigurationNode root = configurateLoader.loadContentAndMerge(null, "skills.yml", main);
+            ConfigurationNode defined = plugin.getSkillRegistry().getDefinedConfig();
+            ConfigurationNode root = configurateLoader.loadContentAndMerge(defined, "skills.yml", main);
 
             ConfigurationNode skillsNode = root.node("skills");
 
@@ -106,6 +108,7 @@ public class SkillLoader {
                         return ability;
                     } catch (IllegalArgumentException e) {
                         plugin.logger().warn("Could not find ability " + id + " while loading " + skill.getId());
+                        e.printStackTrace();
                         return null;
                     }
                 }).filter(Objects::nonNull).collect(ImmutableList.toImmutableList());
@@ -151,11 +154,14 @@ public class SkillLoader {
         if (skill instanceof Skills auraSkill) {
             // Load sources from file for included skill
             return ImmutableList.copyOf(sourceLoader.loadSources(auraSkill, plugin.getPluginFolder(), true));
-        } else if (skill instanceof CustomSkill customSkill && customSkill.getContentDirectory() != null) {
-            return ImmutableList.copyOf(sourceLoader.loadSources(customSkill, customSkill.getContentDirectory(), false));
-        } else {
-            return ImmutableList.of();
+        } else if (skill instanceof CustomSkill customSkill) {
+            // Load sources of custom skill using the content directory of its registry
+            NamespacedRegistry registry = plugin.getApi().getRegistry(customSkill.getId().getNamespace());
+            if (registry != null) {
+                return ImmutableList.copyOf(sourceLoader.loadSources(customSkill, registry.getContentDirectory(), false));
+            }
         }
+        return ImmutableList.of();
     }
 
     private SkillOptions loadSkillOptions(ConfigurationNode config) {
@@ -174,8 +180,9 @@ public class SkillLoader {
         if (!skill.isEnabled()) return;
 
         File contentDir;
-        if (skill instanceof CustomSkill customSkill && customSkill.getContentDirectory() != null) {
-            contentDir = customSkill.getContentDirectory();
+        NamespacedRegistry registry = plugin.getApi().getRegistry(skill.getId().getNamespace());
+        if (skill instanceof CustomSkill && registry != null) {
+            contentDir = registry.getContentDirectory();
         } else {
             contentDir = plugin.getPluginFolder();
         }

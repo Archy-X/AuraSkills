@@ -11,8 +11,8 @@ public class ManaAbilityUseSource extends Source implements ManaAbilityUseXpSour
 
     private final ManaAbility[] manaAbilities;
 
-    public ManaAbilityUseSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ManaAbility[] manaAbilities) {
-        super(plugin, id, xp);
+    public ManaAbilityUseSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ManaAbility[] manaAbilities) {
+        super(plugin, id, xp, displayName);
         this.manaAbilities = manaAbilities;
     }
 

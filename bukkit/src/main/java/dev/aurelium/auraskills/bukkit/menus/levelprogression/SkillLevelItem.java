@@ -2,25 +2,21 @@ package dev.aurelium.auraskills.bukkit.menus.levelprogression;
 
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
-import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
-import dev.aurelium.auraskills.common.reward.SkillReward;
-import dev.aurelium.auraskills.common.reward.type.MoneyReward;
-import dev.aurelium.auraskills.api.util.NumberUtil;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public abstract class SkillLevelItem extends AbstractItem implements TemplateItemProvider<Integer> {
 
     private final List<Integer> track;
+    protected int START_LEVEL = 1;
+    protected int ITEMS_PER_PAGE = 24;
     
     public SkillLevelItem(AuraSkills plugin) {
         super(plugin);
@@ -33,22 +29,30 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     }
 
     @Override
+    public void onInitialize(Player player, ActiveMenu activeMenu, Integer context) {
+        this.START_LEVEL = activeMenu.getOption(Integer.class, "start_level", 1);
+        this.ITEMS_PER_PAGE = activeMenu.getOption(Integer.class, "items_per_page", 24);
+    }
+
+    @Override
     public Class<Integer> getContext() {
         return Integer.class;
     }
 
     @Override
-    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer context) {
-        int index = context - 2;
-        int pos = track.get(index);
-        return SlotPos.of(pos / 9, pos % 9);
+    public SlotPos getSlotPos(Player player, ActiveMenu activeMenu, Integer level) {
+        int page = activeMenu.getCurrentPage();
+        int index = level - START_LEVEL - page * ITEMS_PER_PAGE;
+        if (index < track.size()) {
+            int pos = track.get(index);
+            return SlotPos.of(pos / 9, pos % 9);
+        } else {
+            return SlotPos.of(1, 1);
+        }
     }
 
     @Override
-    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer num) {
-        // Functionality for showing the level as the amount on the item
-        int page = activeMenu.getCurrentPage();
-        int level = num + page * (int) activeMenu.getProperty("items_per_page");
+    public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, Integer level) {
         // Don't show if level is more than max skill level
         Skill skill = (Skill) activeMenu.getProperty("skill");
         if (level > skill.getMaxLevel()) {
@@ -64,39 +68,6 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
             }
         }
         return baseItem;
-    }
-
-    protected String getRewardEntries(Skill skill, int level, Player player, Locale locale, ActiveMenu activeMenu) {
-        ImmutableList<SkillReward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
-        StringBuilder message = new StringBuilder();
-        double totalMoney = 0;
-        for (SkillReward reward : rewards) {
-            message.append(reward.getMenuMessage(plugin.getUser(player), locale, skill, level));
-            if (reward instanceof MoneyReward) {
-                totalMoney += ((MoneyReward) reward).getAmount();
-            }
-        }
-        if (totalMoney > 0) {
-            message.append(TextUtil.replace(activeMenu.getFormat("money_reward_entry"), "{amount}", NumberUtil.format2(totalMoney)));
-        }
-        return message.toString();
-    }
-
-    protected int getItemsPerPage(ActiveMenu activeMenu) {
-        Object property = activeMenu.getProperty("items_per_page");
-        int itemsPerPage;
-        if (property instanceof Integer) {
-            itemsPerPage = (Integer) property;
-        } else {
-            itemsPerPage = 24;
-        }
-        return itemsPerPage;
-    }
-
-    protected int getLevel(ActiveMenu activeMenu, int position) {
-        int itemsPerPage = getItemsPerPage(activeMenu);
-        int currentPage = activeMenu.getCurrentPage();
-        return currentPage * itemsPerPage + position;
     }
 
 }

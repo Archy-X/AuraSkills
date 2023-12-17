@@ -15,12 +15,12 @@ public class EntitySourceSerializer extends SourceSerializer<EntitySource> {
     }
 
     @Override
-    public EntitySource deserialize(Type type, ConfigurationNode node) throws SerializationException {
-        String entity = required(node, "entity").getString();
-        EntityXpSource.EntityTriggers[] triggers = requiredPluralizedArray("trigger", node, EntityXpSource.EntityTriggers.class);
-        EntityXpSource.EntityDamagers[] damagers = pluralizedArray("damager", node, EntityXpSource.EntityDamagers.class);
+    public EntitySource deserialize(Type type, ConfigurationNode source) throws SerializationException {
+        String entity = required(source, "entity").getString();
+        EntityXpSource.EntityTriggers[] triggers = requiredPluralizedArray("trigger", source, EntityXpSource.EntityTriggers.class);
+        EntityXpSource.EntityDamagers[] damagers = pluralizedArray("damager", source, EntityXpSource.EntityDamagers.class);
 
-        return new EntitySource(plugin, getId(), getXp(node), entity, triggers, damagers);
+        return new EntitySource(plugin, getId(), getXp(source), getDisplayName(source), entity, triggers, damagers);
     }
 
 }

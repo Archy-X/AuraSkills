@@ -10,10 +10,7 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class CustomSkill implements Skill {
 
@@ -21,33 +18,27 @@ public class CustomSkill implements Skill {
     private SkillProvider provider;
 
     private final NamespacedId id;
-    private final ItemContext item;
-    private final File contentDirectory;
+    private final Defined defined;
+    @Nullable
     private final Ability xpMultiplierAbility;
 
-    private CustomSkill(NamespacedId id, ItemContext item, File contentDirectory, Ability xpMultiplierAbility) {
+    private CustomSkill(NamespacedId id, Defined defined, @Nullable Ability xpMultiplierAbility) {
         this.id = id;
-        this.contentDirectory = contentDirectory;
+        this.defined = defined;
         this.xpMultiplierAbility = xpMultiplierAbility;
-        this.item = item;
     }
 
     public static CustomSkillBuilder builder(String name, NamespacedRegistry registry) {
-        return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name), registry.getContentDirectory());
+        return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 
-    public ItemContext getItem() {
-        return item;
+    public Defined getDefined() {
+        return defined;
     }
 
     @Override
     public NamespacedId getId() {
         return id;
-    }
-
-    @Nullable
-    public File getContentDirectory() {
-        return contentDirectory;
     }
 
     @Override
@@ -82,12 +73,12 @@ public class CustomSkill implements Skill {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale);
     }
 
     @Override
@@ -153,22 +144,51 @@ public class CustomSkill implements Skill {
     public static class CustomSkillBuilder {
 
         private final NamespacedId id;
-        private ItemContext item;
-        private final File contentDirectory;
+        private final Defined defined = new Defined();
         private Ability xpMultiplierAbility;
 
-        public CustomSkillBuilder(NamespacedId id, File contentDirectory) {
+        private CustomSkillBuilder(NamespacedId id) {
             this.id = id;
-            this.contentDirectory = contentDirectory;
-            this.item = ItemContext.builder()
+            defined.setItem(ItemContext.builder()
                     .material("stone")
                     .group("third_row")
                     .order(6)
-                    .build();
+                    .build());
         }
 
+        /**
+         * Sets the {@link ItemContext} of the skill used in menus
+         *
+         * @param item the {@link ItemContext}
+         * @return the builder
+         */
         public CustomSkillBuilder item(ItemContext item) {
-            this.item = item;
+            defined.setItem(item);
+            return this;
+        }
+
+        public CustomSkillBuilder abilities(Ability... abilities) {
+            defined.getAbilities().addAll(Arrays.asList(abilities));
+            return this;
+        }
+
+        public CustomSkillBuilder ability(Ability ability) {
+            defined.getAbilities().add(ability);
+            return this;
+        }
+
+        public CustomSkillBuilder manaAbility(ManaAbility manaAbility) {
+            defined.setManaAbility(manaAbility);
+            return this;
+        }
+
+        public CustomSkillBuilder displayName(String displayName) {
+            defined.setDisplayName(displayName);
+            return this;
+        }
+
+        public CustomSkillBuilder description(String description) {
+            defined.setDescription(description);
             return this;
         }
 
@@ -178,7 +198,56 @@ public class CustomSkill implements Skill {
         }
 
         public CustomSkill build() {
-            return new CustomSkill(id, item, contentDirectory, xpMultiplierAbility);
+            return new CustomSkill(id, defined, xpMultiplierAbility);
+        }
+    }
+
+    public static class Defined {
+
+        private ItemContext item;
+        private final List<Ability> abilities = new ArrayList<>();
+        private ManaAbility manaAbility;
+        private String displayName;
+        private String description;
+
+        private Defined() {
+
+        }
+
+        public ItemContext getItem() {
+            return item;
+        }
+
+        public void setItem(ItemContext item) {
+            this.item = item;
+        }
+
+        public List<Ability> getAbilities() {
+            return abilities;
+        }
+
+        public ManaAbility getManaAbility() {
+            return manaAbility;
+        }
+
+        public void setManaAbility(ManaAbility manaAbility) {
+            this.manaAbility = manaAbility;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
     }
 

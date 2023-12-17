@@ -9,8 +9,8 @@ public class GrindstoneSource extends Source implements GrindstoneXpSource {
 
     private final String multiplier;
 
-    public GrindstoneSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String multiplier) {
-        super(plugin, id, xp);
+    public GrindstoneSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, String multiplier) {
+        super(plugin, id, xp, displayName);
         this.multiplier = multiplier;
     }
 

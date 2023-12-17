@@ -1,6 +1,6 @@
 pools:
   rare:
-    base_chance: 1
+    base_chance: 0.2
     selection_priority: 1
     override_vanilla_loot: false
     loot:
@@ -38,7 +38,7 @@ pools:
         sources:
           - clay
   epic:
-    base_chance: 0.2
+    base_chance: 0.05
     selection_priority: 2
     override_vanilla_loot: false
     loot:

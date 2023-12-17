@@ -189,7 +189,7 @@ public class CustomManaAbility implements ManaAbility {
         @Nullable
         private String description;
 
-        public CustomManaAbilityBuilder(NamespacedId id) {
+        private CustomManaAbilityBuilder(NamespacedId id) {
             this.id = id;
         }
 

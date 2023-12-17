@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
+import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.SkillLevelMaps;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
@@ -78,6 +79,9 @@ public class FileStorageProvider extends StorageProvider {
 
         // Load unclaimed items
         loadUnclaimedItems(root.node("unclaimed_items"), user);
+
+        // Load action bar settings
+        loadActionBar(root.node("action_bar"), user);
 
         return user;
     }
@@ -164,6 +168,15 @@ public class FileStorageProvider extends StorageProvider {
             }
         });
         user.setUnclaimedItems(itemList);
+    }
+
+    private void loadActionBar(ConfigurationNode node, User user) {
+        for (ActionBarType type : ActionBarType.values()) {
+            String typeName = type.toString().toLowerCase(Locale.ROOT);
+            if (!node.node(typeName).virtual()) {
+                user.setActionBarSetting(type, node.node(typeName).getBoolean());
+            }
+        }
     }
 
     @NotNull
@@ -284,6 +297,14 @@ public class FileStorageProvider extends StorageProvider {
         unclaimedItemsNode.set(null);
         for (KeyIntPair item : user.getUnclaimedItems()) {
             unclaimedItemsNode.appendListNode().set(item.getKey() + " " + item.getValue());
+        }
+
+        // Save action bar settings
+        ConfigurationNode actionBarNode = root.node("action_bar");
+        for (ActionBarType type : ActionBarType.values()) {
+            if (type != ActionBarType.IDLE) continue; // Only save idle action bar for now
+            boolean value = user.isActionBarEnabled(type);
+            actionBarNode.node(type.toString().toLowerCase(Locale.ROOT)).set(value);
         }
 
         saveYamlFile(root, user.getUuid());

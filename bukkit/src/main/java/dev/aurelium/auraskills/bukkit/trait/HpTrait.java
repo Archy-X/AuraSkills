@@ -104,7 +104,6 @@ public class HpTrait extends TraitImpl {
 
     private void setHealth(Player player, User user) {
         Trait trait = Traits.HP;
-        if (!trait.isEnabled()) return;
 
         double modifier = user.getBonusTraitLevel(trait);
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
@@ -124,13 +123,16 @@ public class HpTrait extends TraitImpl {
                 }
             }
         }
-        // Disable health if in disable world
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+        // Disable health if disabled or in disable world
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) || !trait.isEnabled()) {
             player.setHealthScaled(false);
             for (AttributeModifier am : attribute.getModifiers()) {
                 if (am.getName().equals("skillsHealth")) {
                     attribute.removeModifier(am);
                 }
+            }
+            if (player.getHealth() >= originalMaxHealth) {
+                player.setHealth(attribute.getValue());
             }
             return;
         }

@@ -91,7 +91,7 @@ public class ConfigMigratorTest {
         ConfigMigrator migrator = new ConfigMigrator(plugin);
 
         File oldFile = new File(testDir, "AureliumSkills/config.yml");
-        File newFile = new File(testDir, "AuraSkills/traits.yml");
+        File newFile = new File(testDir, "AuraSkills/stats.yml");
 
         ConfigurationNode migrationPaths = FileUtil.loadYamlFile(new File("src/main/resources/migration_paths.yml"));
         var paths = migrator.loadFilesAndPaths(migrationPaths).get(new Pair<>(oldFile, newFile));

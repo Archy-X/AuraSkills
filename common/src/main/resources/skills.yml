@@ -9,7 +9,7 @@ skills:
     mana_ability: auraskills/replenish
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/foraging:
@@ -22,7 +22,7 @@ skills:
     mana_ability: auraskills/treecapitator
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/mining:
@@ -35,7 +35,7 @@ skills:
     mana_ability: auraskills/speed_mine
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/fishing:
@@ -48,7 +48,7 @@ skills:
     mana_ability: auraskills/sharp_hook
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/excavation:
@@ -61,7 +61,7 @@ skills:
     mana_ability: auraskills/terraform
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/archery:
@@ -74,8 +74,7 @@ skills:
     mana_ability: auraskills/charged_shot
     options:
       enabled: true
-      max_level: 97
-      damage_based: false
+      max_level: 100
       spawner_multiplier: 1
       check_multiplier_permissions: true
   auraskills/defense:
@@ -88,7 +87,7 @@ skills:
     mana_ability: auraskills/absorption
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       max: 100.0
       min: 0
@@ -104,8 +103,7 @@ skills:
     mana_ability: auraskills/lightning_blade
     options:
       enabled: true
-      max_level: 97
-      damage_based: false
+      max_level: 100
       spawner_multiplier: 1
       check_multiplier_permissions: true
   auraskills/endurance:
@@ -117,7 +115,7 @@ skills:
       - auraskills/meal_steal
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       xp_gain_period: 12000
       check_multiplier_permissions: true
   auraskills/agility:
@@ -129,7 +127,7 @@ skills:
       - auraskills/thunder_fall
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/alchemy:
@@ -141,10 +139,10 @@ skills:
       - auraskills/wise_effect
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
-      give_xp_on_takeout: false
+      give_xp_on_takeout: true
       give_xp_on_potion_combat: false
       ignore_custom_potions: false
   auraskills/enchanting:
@@ -156,7 +154,7 @@ skills:
       - auraskills/lucky_table
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/sorcery:
@@ -164,7 +162,7 @@ skills:
       - ''
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
   auraskills/healing:
@@ -176,7 +174,7 @@ skills:
       - auraskills/revival
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
       exclude_negative_potions: false
@@ -189,7 +187,7 @@ skills:
       - auraskills/skill_mender
     options:
       enabled: true
-      max_level: 97
+      max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
       blocked_grindstone_enchants:

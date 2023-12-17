@@ -315,7 +315,7 @@ public class AlchemyAbilities extends AbilityImpl {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 50, 500, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerSync(task, 50, 10 * 50, TimeUnit.MILLISECONDS);
     }
 
 }

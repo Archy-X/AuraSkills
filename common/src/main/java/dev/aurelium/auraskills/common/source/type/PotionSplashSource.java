@@ -11,8 +11,8 @@ public class PotionSplashSource extends Source implements PotionSplashXpSource {
 
     private final ItemFilter item;
 
-    public PotionSplashSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter item) {
-        super(plugin, id, xp);
+    public PotionSplashSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ItemFilter item) {
+        super(plugin, id, xp, displayName);
         this.item = item;
     }
 

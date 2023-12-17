@@ -3,10 +3,12 @@ package dev.aurelium.auraskills.common.leaderboard;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class LeaderboardManager {
 
@@ -23,6 +25,15 @@ public class LeaderboardManager {
         this.averageLeaderboard = new ArrayList<>();
     }
 
+    public void startLeaderboardUpdater() {
+        plugin.getScheduler().timerAsync(new TaskRunnable() {
+            @Override
+            public void run() {
+                updateLeaderboardsSync();
+            }
+        }, 5, 5, TimeUnit.MINUTES);
+    }
+
     public synchronized void updateLeaderboards() {
         plugin.getScheduler().executeAsync(() -> {
             synchronized (plugin) {
@@ -31,30 +42,35 @@ public class LeaderboardManager {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                try {
-                    setSorting(true);
-                    // Initialize lists
-                    Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
-                    for (Skill skill : plugin.getSkillRegistry().getValues()) {
-                        skillLeaderboards.put(skill, new ArrayList<>());
-                    }
-                    List<SkillValue> powerLeaderboard = new ArrayList<>();
-                    List<SkillValue> averageLeaderboard = new ArrayList<>();
-                    // Add players already in memory
-                    addLoadedPlayersToLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
-                    // Add offline players
-                    addOfflinePlayers(skillLeaderboards, powerLeaderboard, averageLeaderboard);
-                    // Sort leaderboards and set as current
-                    sortLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
-
-                    setSorting(false);
-                } catch (Exception e) {
-                    plugin.logger().warn("Error updating leaderboards: " + e.getMessage());
-                    e.printStackTrace();
-                    setSorting(false);
-                }
+                updateLeaderboardsSync();
             }
         });
+    }
+
+    private void updateLeaderboardsSync() {
+        if (sorting) return;
+        try {
+            setSorting(true);
+            // Initialize lists
+            Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
+            for (Skill skill : plugin.getSkillRegistry().getValues()) {
+                skillLeaderboards.put(skill, new ArrayList<>());
+            }
+            List<SkillValue> powerLeaderboard = new ArrayList<>();
+            List<SkillValue> averageLeaderboard = new ArrayList<>();
+            // Add players already in memory
+            addLoadedPlayersToLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+            // Add offline players
+            addOfflinePlayers(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+            // Sort leaderboards and set as current
+            sortLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+
+            setSorting(false);
+        } catch (Exception e) {
+            plugin.logger().warn("Error updating leaderboards: " + e.getMessage());
+            e.printStackTrace();
+            setSorting(false);
+        }
     }
 
     public List<SkillValue> getLeaderboard(Skill skill) {
@@ -194,7 +210,7 @@ public class LeaderboardManager {
 
     private void sortLeaderboards(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) {
         LeaderboardSorter sorter = new LeaderboardSorter();
-        for (Skill skill : Skills.values()) {
+        for (Skill skill : plugin.getSkillManager().getSkillValues()) {
             skillLb.get(skill).sort(sorter);
         }
         powerLb.sort(sorter);
@@ -202,7 +218,7 @@ public class LeaderboardManager {
         averageLb.sort(averageSorter);
 
         // Add skill leaderboards to map
-        for (Skill skill : Skills.values()) {
+        for (Skill skill : plugin.getSkillManager().getSkillValues()) {
             setLeaderboard(skill, skillLb.get(skill));
         }
         setPowerLeaderboard(powerLb);

@@ -7,16 +7,17 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.user.UserState;
-import dev.aurelium.auraskills.common.user.SkillLevelMaps;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
+import dev.aurelium.auraskills.common.ui.ActionBarType;
+import dev.aurelium.auraskills.common.user.SkillLevelMaps;
+import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.user.UserState;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
@@ -31,6 +32,7 @@ public class SqlStorageProvider extends StorageProvider {
     public final int TRAIT_MODIFIER_ID = 2;
     public final int ABILITY_DATA_ID = 3;
     public final int UNCLAIMED_ITEMS_ID = 4;
+    public final int ACTION_BAR_ID = 5;
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
@@ -85,6 +87,8 @@ public class SqlStorageProvider extends StorageProvider {
                     // Load unclaimed items
                     user.setUnclaimedItems(loadUnclaimedItems(connection, userId));
                     user.clearInvalidItems();
+                    // Load action bar
+                    loadActionBar(connection, user, userId);
 
                     return user;
                 }
@@ -224,6 +228,25 @@ public class SqlStorageProvider extends StorageProvider {
         return unclaimedItems;
     }
 
+    private void loadActionBar(Connection connection, User user, int userId) throws SQLException {
+        String query = "SELECT key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, ACTION_BAR_ID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String keyName = resultSet.getString("key_name");
+                    String value = resultSet.getString("value");
+                    try {
+                        ActionBarType type = ActionBarType.valueOf(keyName.toUpperCase(Locale.ROOT));
+                        boolean enabled = !value.equals("false");
+                        user.setActionBarSetting(type, enabled);
+                    } catch (IllegalArgumentException ignored) { }
+                }
+            }
+        }
+    }
+
     @Override
     public @NotNull UserState loadState(UUID uuid) throws Exception {
         String query = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?;";
@@ -358,6 +381,7 @@ public class SqlStorageProvider extends StorageProvider {
         saveTraitModifiers(connection, userId, user.getTraitModifiers());
         saveAbilityData(connection, userId, user.getAbilityDataMap());
         saveUnclaimedItems(connection, userId, user.getUnclaimedItems());
+        saveActionBar(connection, userId, user);
     }
 
     private void deleteKeyValues(Connection connection, int userId) throws SQLException {
@@ -442,6 +466,31 @@ public class SqlStorageProvider extends StorageProvider {
                 statement.setString(6, String.valueOf(unclaimedItem.getValue()));
                 statement.executeUpdate();
             }
+        }
+    }
+
+    private void saveActionBar(Connection connection, int userId, User user) throws SQLException {
+        boolean shouldSave = false;
+        // Only save if one of the action bars is disabled
+        for (ActionBarType type : ActionBarType.values()) {
+            if (!user.isActionBarEnabled(type)) {
+                shouldSave = true;
+            }
+        }
+        if (!shouldSave) {
+            return;
+        }
+        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, ACTION_BAR_ID);
+            statement.setNull(3, Types.NULL);
+            ActionBarType type = ActionBarType.IDLE;
+            statement.setString(4, type.toString().toLowerCase(Locale.ROOT));
+            String value = String.valueOf(user.isActionBarEnabled(type));
+            statement.setString(5, value);
+            statement.setString(6, value);
+            statement.executeUpdate();
         }
     }
 

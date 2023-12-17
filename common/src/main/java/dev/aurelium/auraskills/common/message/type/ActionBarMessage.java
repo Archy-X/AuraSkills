@@ -8,9 +8,7 @@ public enum ActionBarMessage implements MessageKey {
 
     IDLE,
     XP,
-    XP_REMOVED,
     MAXED,
-    MAXED_REMOVED,
     ABILITY,
     BOSS_BAR_XP,
     BOSS_BAR_MAXED;

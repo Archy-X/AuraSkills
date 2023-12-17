@@ -18,6 +18,6 @@ public class EnchantingSourceSerializer extends SourceSerializer<EnchantingSourc
     public EnchantingSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         ItemFilter item = required(source, "item").get(ItemFilter.class);
 
-        return new EnchantingSource(plugin, getId(), getXp(source), item);
+        return new EnchantingSource(plugin, getId(), getXp(source), getDisplayName(source), item);
     }
 }

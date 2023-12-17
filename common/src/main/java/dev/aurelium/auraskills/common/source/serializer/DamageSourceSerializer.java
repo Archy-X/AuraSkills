@@ -22,6 +22,6 @@ public class DamageSourceSerializer extends SourceSerializer<DamageSource> {
         boolean mustSurvive = source.node("must_survive").getBoolean(true);
         boolean useOriginalDamage = source.node("use_original_damage").getBoolean(true);
 
-        return new DamageSource(plugin, getId(), getXp(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
+        return new DamageSource(plugin, getId(), getXp(source), getDisplayName(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
     }
 }

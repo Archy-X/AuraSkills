@@ -18,6 +18,6 @@ public class ItemConsumeSourceSerializer extends SourceSerializer<ItemConsumeSou
     public ItemConsumeSource deserialize(Type type, ConfigurationNode source) throws SerializationException {
         ItemFilter item = required(source, "item").get(ItemFilter.class);
 
-        return new ItemConsumeSource(plugin, getId(), getXp(source), item);
+        return new ItemConsumeSource(plugin, getId(), getXp(source), getDisplayName(source), item);
     }
 }

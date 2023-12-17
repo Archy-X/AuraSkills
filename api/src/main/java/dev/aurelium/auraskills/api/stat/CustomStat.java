@@ -5,7 +5,6 @@ import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.trait.Trait;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,37 +17,19 @@ public class CustomStat implements Stat {
     private StatProvider provider;
 
     private final NamespacedId id;
-    private final ItemContext item;
-    @Nullable
-    private final String displayName;
-    @Nullable
-    private final String description;
-    @Nullable
-    private final String color;
-    @Nullable
-    private final String symbol;
-    private final Map<Trait, Double> definedTraits;
+    private final Defined defined;
 
-    private CustomStat(NamespacedId id, ItemContext item, @Nullable String displayName, @Nullable String description, @Nullable String color, @Nullable String symbol, Map<Trait, Double> definedTraits) {
+    private CustomStat(NamespacedId id, Defined defined) {
         this.id = id;
-        this.item = item;
-        this.displayName = displayName;
-        this.description = description;
-        this.color = color;
-        this.symbol = symbol;
-        this.definedTraits = definedTraits;
+        this.defined = defined;
     }
 
     public static CustomStatBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomStatBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
 
-    public ItemContext getItem() {
-        return item;
-    }
-
-    public Map<Trait, Double> getDefinedTraits() {
-        return definedTraits;
+    public Defined getDefined() {
+        return defined;
     }
 
     @Override
@@ -73,22 +54,22 @@ public class CustomStat implements Stat {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return displayName != null ? displayName : provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return description != null ? description : provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale);
     }
 
     @Override
     public String getColor(Locale locale) {
-        return color != null ? color : provider.getColor(this, locale);
+        return defined.color != null ? defined.color : provider.getColor(this, locale);
     }
 
     @Override
     public String getSymbol(Locale locale) {
-        return symbol != null ? symbol : provider.getSymbol(this, locale);
+        return defined.symbol != null ? defined.symbol : provider.getSymbol(this, locale);
     }
 
     @Override
@@ -154,62 +135,110 @@ public class CustomStat implements Stat {
     public static class CustomStatBuilder {
 
         private final NamespacedId id;
-        private ItemContext item;
-        @Nullable
-        private String displayName;
-        @Nullable
-        private String description;
-        @Nullable
-        private String color;
-        @Nullable
-        private String symbol;
-        private final Map<Trait, Double> traits;
+        private final Defined defined = new Defined();
 
-        public CustomStatBuilder(NamespacedId id) {
+        private CustomStatBuilder(NamespacedId id) {
             this.id = id;
             // The default item
-            this.item = ItemContext.builder()
+            defined.setItem(ItemContext.builder()
                     .material("magenta_stained_glass_pane")
                     .group("lower")
                     .order(6)
-                    .build();
-            this.traits = new HashMap<>();
+                    .build());
         }
 
         public CustomStatBuilder item(ItemContext item) {
-            this.item = item;
+            defined.setItem(item);
             return this;
         }
 
         public CustomStatBuilder displayName(String displayName) {
-            this.displayName = displayName;
+            defined.setDisplayName(displayName);
             return this;
         }
 
         public CustomStatBuilder description(String description) {
-            this.description = description;
+            defined.setDescription(description);
             return this;
         }
 
         public CustomStatBuilder color(String color) {
-            this.color = color;
+            defined.setColor(color);
             return this;
         }
 
         public CustomStatBuilder symbol(String symbol) {
-            this.symbol = symbol;
+            defined.setSymbol(symbol);
             return this;
         }
 
         public CustomStatBuilder trait(Trait trait, double modifier) {
-            this.traits.put(trait, modifier);
+            defined.getTraits().put(trait, modifier);
             return this;
         }
 
         public CustomStat build() {
-            return new CustomStat(id, item, displayName, description, color, symbol, traits);
+            return new CustomStat(id, defined);
         }
 
+    }
+
+    public static class Defined {
+
+        private ItemContext item;
+        private final Map<Trait, Double> traits = new HashMap<>();
+        private String displayName;
+        private String description;
+        private String color;
+        private String symbol;
+
+        private Defined() {
+
+        }
+
+        public ItemContext getItem() {
+            return item;
+        }
+
+        public void setItem(ItemContext item) {
+            this.item = item;
+        }
+
+        public Map<Trait, Double> getTraits() {
+            return traits;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+        }
     }
 
 }

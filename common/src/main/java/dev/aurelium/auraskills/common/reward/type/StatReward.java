@@ -2,11 +2,11 @@ package dev.aurelium.auraskills.common.reward.type;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.message.type.LevelerMessage;
+import dev.aurelium.auraskills.common.message.type.LevelerFormat;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.util.Locale;
@@ -48,7 +48,7 @@ public class StatReward extends SkillReward {
 
     @Override
     public String getChatMessage(User player, Locale locale, Skill skill, int level) {
-        return com.archyx.polyglot.util.TextUtil.applyColor(TextUtil.replace(plugin.getMsg(LevelerMessage.STAT_LEVEL, locale),
+        return com.archyx.polyglot.util.TextUtil.applyColor(TextUtil.replace(plugin.getMsg(LevelerFormat.STAT_LEVEL, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
                 "{symbol}", stat.getSymbol(locale),

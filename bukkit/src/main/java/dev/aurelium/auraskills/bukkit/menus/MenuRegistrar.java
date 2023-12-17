@@ -98,6 +98,7 @@ public class MenuRegistrar {
         levelProgression.registerComponent("ability_level", () -> new LevelProgressionComponents.AbilityLevel(plugin));
         levelProgression.registerComponent("mana_ability_unlock", () -> new LevelProgressionComponents.ManaAbilityUnlock(plugin));
         levelProgression.registerComponent("mana_ability_level", () -> new LevelProgressionComponents.ManaAbilityLevel(plugin));
+        levelProgression.registerComponent("rewards", () -> new LevelProgressionComponents.Rewards(plugin));
 
         // Register components for the skill item in skills and level progression menu
         for (ProviderManager providerManager : new ProviderManager[] {skills, levelProgression}) {

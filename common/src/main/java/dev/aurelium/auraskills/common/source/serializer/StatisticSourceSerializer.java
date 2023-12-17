@@ -19,6 +19,6 @@ public class StatisticSourceSerializer extends SourceSerializer<StatisticSource>
         double multiplier = source.node("multiplier").getDouble(1.0);
         int minimumIncrease = source.node("minimum_increase").getInt(1);
 
-        return new StatisticSource(plugin, getId(), getXp(source), statistic, multiplier, minimumIncrease);
+        return new StatisticSource(plugin, getId(), getXp(source), getDisplayName(source), statistic, multiplier, minimumIncrease);
     }
 }

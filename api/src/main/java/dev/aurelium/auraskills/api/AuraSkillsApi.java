@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
 import dev.aurelium.auraskills.api.user.UserManager;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
@@ -34,7 +35,7 @@ public interface AuraSkillsApi {
     XpRequirements getXpRequirements();
 
     /**
-     * Gets the {@link NamespacedRegistry} for the given namespace and content directory,
+     * Creates and returns the {@link NamespacedRegistry} for the given namespace and content directory,
      * which is used to register custom skills, stats, abilities, etc.
      *
      * @param namespace The name of the plugin this is being called by to uniquely identify custom content.
@@ -42,10 +43,20 @@ public interface AuraSkillsApi {
      *                  by appending "namespace/" to the name of the content.
      * @param contentDirectory The directory where configuration files for custom content will be loaded from.
      *                         For Bukkit, pass in JavaPlugin#getDataFolder to use the plugin's config folder.
-     * @return the namespaced registry to register custom content
+     * @return the {@link NamespacedRegistry} to register custom content
      * @throws IllegalArgumentException if the namespace is "auraskills", which is not allowed
      */
-    NamespacedRegistry getRegistry(String namespace, File contentDirectory);
+    NamespacedRegistry useRegistry(String namespace, File contentDirectory);
+
+    /**
+     * Gets the {@link NamespacedRegistry} linked to a given namespace. This namespace must have been
+     * already created with {@link #useRegistry(String, File)} before calling this method.
+     *
+     * @param namespace the namespace to get
+     * @return the {@link NamespacedRegistry}, or null if not registered
+     */
+    @Nullable
+    NamespacedRegistry getRegistry(String namespace);
 
     /**
      * Gets the {@link Handlers} used to register platform-specific handlers for custom content.

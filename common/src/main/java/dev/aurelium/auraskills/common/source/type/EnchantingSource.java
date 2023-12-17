@@ -11,8 +11,8 @@ public class EnchantingSource extends Source implements EnchantingXpSource {
 
     private final ItemFilter item;
 
-    public EnchantingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter item) {
-        super(plugin, id, xp);
+    public EnchantingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ItemFilter item) {
+        super(plugin, id, xp, displayName);
         this.item = item;
     }
 

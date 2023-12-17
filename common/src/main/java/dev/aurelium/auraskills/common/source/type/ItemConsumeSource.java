@@ -11,8 +11,8 @@ public class ItemConsumeSource extends Source implements ItemConsumeXpSource {
 
     private final ItemFilter item;
 
-    public ItemConsumeSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, ItemFilter item) {
-        super(plugin, id, xp);
+    public ItemConsumeSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ItemFilter item) {
+        super(plugin, id, xp, displayName);
         this.item = item;
     }
 

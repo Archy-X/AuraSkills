@@ -29,7 +29,7 @@ public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
         boolean trunk = source.node("trunk").getBoolean(false);
         boolean leaf = source.node("leaf").getBoolean(false);
 
-        return new BlockSource(plugin, getId(), getXp(source), blocks, triggers, checkReplace, states, stateMultiplier, supportBlockType, trunk, leaf);
+        return new BlockSource(plugin, getId(), getXp(source), getDisplayName(source), blocks, triggers, checkReplace, states, stateMultiplier, supportBlockType, trunk, leaf);
     }
 
     public static class BlockSourceStateSerializer extends SourceSerializer<BlockXpSource.BlockXpSourceState> {

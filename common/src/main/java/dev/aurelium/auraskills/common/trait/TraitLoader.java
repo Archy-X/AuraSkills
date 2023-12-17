@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class TraitLoader {
 
-    private static final String FILE_NAME = "traits.yml";
+    private static final String FILE_NAME = "stats.yml";
     private final AuraSkillsPlugin plugin;
     private final ConfigurateLoader configurateLoader;
 

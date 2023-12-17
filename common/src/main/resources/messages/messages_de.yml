@@ -344,15 +344,6 @@ acf:
     location_please_specify_world: "<red>Fehler: Bitte die Welt angeben. Beispiel: <yellow>world:x,y,z."
     location_please_specify_xyz: "<red>Fehler: Bitte die Koordinaten x, y und z angeben. Beispiel: <yellow>world:x,y,z."
     location_console_not_relative: "<red>Fehler: Konsole darf keine relativen Koordinaten für den Standort verwenden."
-action_bar:
-  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
-  ability: "{message}"
-  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
-  boss_bar_maxed: "<gold>{skill} {level} <gray>(HÖCHSTLEVEL)"
 commands:
   prefix: "<dark_gray>[<aqua>Fertigkeiten<dark_gray>]<reset> "
   armor:
@@ -523,11 +514,10 @@ commands:
       reset_all: "<gray>Alle Fertigkeiten <gray>von Spieler <gold>{player} <gray>auf Stufe <aqua>1 <gray>gesetzt"
       reset_skill: "<gray>Fertigkeit <aqua>{skill} <gray>wurde auf Level <aqua>1 <gray>für Spieler <gold>{player} <gray>gesetzt"
     setall:
-      at_least_one: "<yellow>Stufe muss mindestens 1 sein!"
       set: "<gray>Alle Fertigkeiten von Spieler <gold>{player} <gray>auf Stufe <aqua>{level} <gray>gesetzt"
     setlevel:
-      at_least_one: "<yellow>Stufe muss mindestens 1 sein!"
       set: "<gray>Fertigkeit <aqua>{skill} <gray>wurde auf Level <aqua>{level} <gray>für Spieler <gold>{player} <gray>gesetzt"
+    at_least: "<yellow>Stufe muss mindestens {level} sein!"
   toggle:
     enabled: "<green>Deine Fähigkeitsaktionsleiste wurde aktiviert"
     disabled: "<red>Deine Fähigkeitsaktionsleiste wurde deaktiviert"
@@ -558,15 +548,13 @@ commands:
   unknown_stat: "<yellow>Unbekannte Fertigkeit!"
   no_profile: "<yellow>Spieler hat kein Fertigkeitenprofil!"
 leveler:
-  title: "<green>{skill} Stufe erhöht"
-  subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Fähigkeiten Levelaufstieg! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Belohnung:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
-  stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Fähigkeit freigeschaltet! <gold><bold>{ability} </bold><gray>wurde freigeschaltet"
-  ability_level_up: "\n  <green>Fähigkeiten Levelaufstieg! <gold><bold>{ability} </bold><gray> ist nun Level <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Manafähigkeit freigeschaltet! <blue><bold>{mana_ability} </bold><gray>wurde freigeschaltet"
-  mana_ability_level_up: "\n  <light_purple>Manafähigkeiten Levelaufstieg! <blue><bold>{mana_ability} </bold><gray>ist nun Level <gold>{level}"
-  money_reward: "\n  <green>${amount}"
+  level_up: "{skill} Stufe erhöht"
+  skill_level_up: Fähigkeiten Levelaufstieg
+  rewards: Belohnungen
+  ability_unlock: Fähigkeit freigeschaltet
+  ability_level_up: Fähigkeiten Levelaufstieg
+  mana_ability_unlock: Manafähigkeit freigeschaltet
+  mana_ability_level_up: Manafähigkeiten Levelaufstieg
   unclaimed_item: "<red>Du hast unbeanspruchte Gegenstände, weil dein Inventar voll war, benutze <yellow>/Skills um <red>to sie zu beanspruchen"
 menus:
   common:
@@ -699,12 +687,6 @@ mana_abilities:
     end: "<gray>Blitzklinge ist ausgelaufen"
   not_ready: "<red>Fähigkeit nicht bereit! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Nicht genug Mana! <gray>({mana} {mana_unit} erforderlich, du hast {current_mana}/{max_mana})"
-rewards:
-  item:
-    default_menu_message: "\n  {display_name}"
-    default_menu_message_multiple: "\n  {display_name} {amount}x"
-    default_chat_message: "\n  {display_name}"
-    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Ackerbau
@@ -820,7 +802,7 @@ sources:
     light_gray_terracotta: Hellgraue Keramik
     brown_terracotta: Braune Terrcotta
     red_terracotta: Rote Keramik
-    netherrack: Netherit
+    netherrack: Netherrack
     blackstone: Schwarzstein
     basalt: Basalt
     magma_block: Magmablock
@@ -922,7 +904,7 @@ sources:
     elder_guardian: Elder Wächter
     endermite: Endermite
     evoker: Magier
-    ghast: Gast
+    ghast: Ghast
     guardian: Wächter
     hoglin: Hoglin
     husk: Wüstenzombie
@@ -1011,48 +993,30 @@ stats:
   strength:
     name: Stärke
     desc: "Stärke erhöht deinen Angriffsschaden mit verschiedenen Waffen"
-    color: "<dark_red>"
-    symbol: "➽"
   health:
     name: Gesundheit
     desc: "Gesundheit erhöht deine maximalen {hp_unit} und erlaubt dir im Kampf länger durchzuhalten"
-    color: "<red>"
-    symbol: "❤"
   regeneration:
     name: Erholung
     desc: "Regeneration erhöht die Geschwindigkeit mit der sich sowohl Gesundheit als auch Mana erholen"
-    color: "<gold>"
-    symbol: "❥"
   luck:
     name: Glück
     desc: "<gray>Glück erhöht deine Chance, seltene Beute<gray>von Mobs, Angeln und mehr zu erhalten"
-    color: "<dark_green>"
-    symbol: "☘"
   wisdom:
     name: Weisheit
     desc: "Weisheit erhöht dein maximales Mana, erhöht Erfahrungsgewinn und senkt Schmiedekosten"
-    color: "<blue>"
-    symbol: "✿"
   toughness:
     name: Widerstandskraft
     desc: "Widerstandskraft reduziert den durch feindliche Angriffe erlittenen Schaden"
-    color: "<dark_purple>"
-    symbol: "✦"
   crit_chance:
     name: Kritische Trefferchance
     desc: "Die kritische Trefferchance ist deine Chance, einen kritischen Treffer zu verüben"
-    color: "<green>"
-    symbol: "⌘"
   crit_damage:
     name: Kritischer Schaden
     desc: "Der kritische Schaden ist die prozentuale Erhöhung deines Schadens bei einem kritischen Treffer"
-    color: "<dark_aqua>"
-    symbol: "★"
   speed:
     name: Bewegungsgeschwindigkeit
     desc: "Bewegungsgeschwindigkeit erhöht die Geschwindigkeit, mit der du dich bewegst"
-    color: "<white>"
-    symbol: "➤"
 traits:
   attack_damage:
     name: Angriffsschaden
@@ -1082,8 +1046,10 @@ traits:
     name: Kritischer Schaden
   movement_speed:
     name: Bewegungsgeschwindigkeit
+ui:
+  maxed: Maximiert
 units:
   mana: Mana
   hp: LP
   xp: EP
-file_version: 30
+file_version: 31

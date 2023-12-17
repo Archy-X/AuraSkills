@@ -4,19 +4,22 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 
 import java.util.Locale;
 
-public enum LevelerMessage implements MessageKey {
+public enum LevelerFormat implements MessageKey {
 
-    LEVEL_UP,
-    SKILL_LEVEL_UP,
-    REWARDS,
+    TITLE,
+    SUBTITLE,
+    CHAT,
+    STAT_LEVEL,
     ABILITY_UNLOCK,
     ABILITY_LEVEL_UP,
     MANA_ABILITY_UNLOCK,
     MANA_ABILITY_LEVEL_UP,
-    UNCLAIMED_ITEM;
+    MONEY_REWARD,
+    DESC_UPGRADE_VALUE,
+    DESC_WRAP;
 
     @Override
     public String getPath() {
-        return "leveler." + this.toString().toLowerCase(Locale.ROOT);
+        return "leveler_format." + this.toString().toLowerCase(Locale.ROOT);
     }
 }

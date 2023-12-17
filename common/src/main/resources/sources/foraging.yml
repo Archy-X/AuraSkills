@@ -7,113 +7,113 @@ default:
 sources:
   oak_log:
     block: oak_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   spruce_log:
     block: spruce_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   birch_log:
     block: birch_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   jungle_log:
     block: jungle_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   acacia_log:
     block: acacia_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   dark_oak_log:
     block: dark_oak_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   mangrove_log:
     block: mangrove_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   cherry_log:
     block: cherry_log
-    xp: 4.0
+    xp: 8.0
     trunk: true
   oak_leaves:
     block: oak_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   spruce_leaves:
     block: spruce_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   birch_leaves:
     block: birch_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   jungle_leaves:
     block: jungle_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   acacia_leaves:
     block: acacia_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   dark_oak_leaves:
     block: dark_oak_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   mangrove_leaves:
     block: mangrove_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   cherry_leaves:
     block: cherry_leaves
-    xp: 0.4
+    xp: 0.8
     leaf: true
   crimson_stem:
     block: crimson_stem
-    xp: 5.0
+    xp: 10.0
     trunk: true
   warped_stem:
     block: warped_stem
-    xp: 5.0
+    xp: 10.0
     trunk: true
   nether_wart_block:
     block: nether_wart_block
-    xp: 0.5
+    xp: 1.0
     leaf: true
   warped_wart_block:
     block: warped_wart_block
-    xp: 0.5
+    xp: 1.0
     leaf: true
   moss_block:
     block: moss_block
-    xp: 3.2
+    xp: 6.4
   moss_carpet:
     block: moss_carpet
-    xp: 0.2
+    xp: 2.0
     support_block: below
   azalea:
     block: azalea
-    xp: 7.0
+    xp: 14.0
     support_block: below
   flowering_azalea:
     block: flowering_azalea
-    xp: 9.1
+    xp: 18.2
     support_block: below
   azalea_leaves:
     block: azalea_leaves
-    xp: 1.5
+    xp: 3.0
     leaf: true
   flowering_azalea_leaves:
     block: flowering_azalea_leaves
-    xp: 2.0
+    xp: 4.0
     leaf: true
   mangrove_roots:
     block: mangrove_roots
-    xp: 2.0
+    xp: 4.0
   pink_petals:
     block: pink_petals
-    xp: 0.2
+    xp: 0.4
     support_block: below
 tags:
   lumberjack_applicable:

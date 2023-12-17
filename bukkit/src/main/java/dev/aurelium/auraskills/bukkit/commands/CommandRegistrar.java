@@ -4,8 +4,10 @@ import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
@@ -80,12 +82,20 @@ public class CommandRegistrar {
         });
     }
 
+    private String getSkillName(Skill skill) {
+        if (skill instanceof CustomSkill) {
+            return skill.getId().toString();
+        } else {
+            return skill.name().toLowerCase(Locale.ROOT);
+        }
+    }
+
     private void registerCompletions(PaperCommandManager manager) {
         var completions = manager.getCommandCompletions();
         completions.registerAsyncCompletion("skills", c -> {
             List<String> skills = new ArrayList<>();
             for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
-                skills.add(skill.name().toLowerCase(Locale.ROOT));
+                skills.add(getSkillName(skill));
             }
             return skills;
         });
@@ -93,14 +103,18 @@ public class CommandRegistrar {
             List<String> skills = new ArrayList<>();
             skills.add("global");
             for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
-                skills.add(skill.name().toLowerCase(Locale.ROOT));
+                skills.add(getSkillName(skill));
             }
             return skills;
         });
         completions.registerAsyncCompletion("stats", c -> {
             List<String> stats = new ArrayList<>();
             for (Stat stat : plugin.getStatManager().getEnabledStats()) {
-                stats.add(stat.name().toLowerCase(Locale.ROOT));
+                if (stat instanceof CustomStat) {
+                    stats.add(stat.getId().toString());
+                } else {
+                    stats.add(stat.name().toLowerCase(Locale.ROOT));
+                }
             }
             return stats;
         });
@@ -113,7 +127,7 @@ public class CommandRegistrar {
         completions.registerAsyncCompletion("skill_top", c -> {
             List<String> values = new ArrayList<>();
             for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
-                values.add(skill.name().toLowerCase(Locale.ROOT));
+                values.add(getSkillName(skill));
             }
             values.add("average");
             return values;

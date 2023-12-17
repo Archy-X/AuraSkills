@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.skill.XpRequirements;
 import dev.aurelium.auraskills.api.user.UserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.api.implementation.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
     }
 
     @Override
-    public NamespacedRegistry getRegistry(String namespace, File contentDirectory) {
+    public NamespacedRegistry useRegistry(String namespace, File contentDirectory) {
         namespace = namespace.toLowerCase(Locale.ROOT);
         if (namespace.equals(NamespacedId.AURASKILLS)) {
             throw new IllegalArgumentException("Cannot get a namespaced registry for auraskills, use the name of your plugin!");
@@ -59,6 +60,11 @@ public class ApiAuraSkills implements AuraSkillsApi {
             plugin.getSkillManager().addContentDirectory(contentDirectory);
             return new ApiNamespacedRegistry(plugin, finalNamespace, contentDirectory);
         });
+    }
+
+    @Nullable
+    public NamespacedRegistry getRegistry(String namespace) {
+        return namespacedRegistryMap.get(namespace);
     }
 
     @Override

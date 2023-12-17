@@ -175,6 +175,6 @@ public class BukkitConfigProvider implements ConfigProvider {
 
     @Override
     public int getStartLevel() {
-        return 1;
+        return options.get(Option.START_LEVEL).asInt();
     }
 }

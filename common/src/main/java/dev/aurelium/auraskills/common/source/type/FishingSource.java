@@ -11,8 +11,8 @@ public class FishingSource extends Source implements FishingXpSource {
 
     private final LootItemFilter item;
 
-    public FishingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, LootItemFilter item) {
-        super(plugin, id, xp);
+    public FishingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, LootItemFilter item) {
+        super(plugin, id, xp, displayName);
         this.item = item;
     }
 

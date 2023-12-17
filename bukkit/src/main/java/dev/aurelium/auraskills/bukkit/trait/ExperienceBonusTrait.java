@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
@@ -20,6 +21,11 @@ public class ExperienceBonusTrait extends TraitImpl {
         return 0;
     }
 
+    @Override
+    public String getMenuDisplay(double value, Trait trait) {
+        return "+" + NumberUtil.format1(value) + "%";
+    }
+
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerExpChange(PlayerExpChangeEvent event) {
         Player player = event.getPlayer();
@@ -28,7 +34,8 @@ public class ExperienceBonusTrait extends TraitImpl {
             return;
         }
         User user = plugin.getUser(player);
-        event.setAmount((int) (event.getAmount() * (1 + user.getEffectiveTraitLevel(Traits.EXPERIENCE_BONUS))));
+        double bonus = user.getEffectiveTraitLevel(Traits.EXPERIENCE_BONUS) / 100;
+        event.setAmount((int) (event.getAmount() * (1 + bonus)));
     }
 
 }

@@ -137,7 +137,7 @@ public abstract class ManaAbilityProvider implements Listener {
                 ,"{mana}", NumberUtil.format0(manaConsumed)));
     }
 
-    private boolean hasEnoughMana(Player player, User user, double manaCost) {
+    public boolean hasEnoughMana(Player player, User user, double manaCost) {
         Locale locale = user.getLocale();
         if (user.getMana() >= manaCost) {
             return true;
@@ -150,7 +150,7 @@ public abstract class ManaAbilityProvider implements Listener {
         }
     }
 
-    private double getManaCost(User user) {
+    public double getManaCost(User user) {
         return manaAbility.getManaCost(user.getManaAbilityLevel(manaAbility));
     }
 

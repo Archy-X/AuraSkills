@@ -23,8 +23,8 @@ public class BlockSource extends Source implements BlockXpSource {
     private final boolean trunk;
     private final boolean leaf;
 
-    public BlockSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
-        super(plugin, id, xp);
+    public BlockSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
+        super(plugin, id, xp, displayName);
         this.blocks = blocks;
         this.triggers = triggers;
         this.checkReplace = checkReplace;

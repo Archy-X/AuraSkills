@@ -35,11 +35,12 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
 
     @Override
     public Set<Stat> getDefinedContexts(Player player, ActiveMenu activeMenu) {
+        // Handle custom stats
         for (Stat context : plugin.getStatManager().getEnabledStats()) {
             if (!(context instanceof CustomStat stat)) continue;
             try {
                 ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
-                ConfigurationNode config = parser.parseItemContext(stat.getItem());
+                ConfigurationNode config = parser.parseItemContext(stat.getDefined().getItem());
 
                 PositionProvider provider = parser.parsePositionProvider(config, activeMenu, "stat");
                 if (provider != null) {
@@ -88,7 +89,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
             try {
                 ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
 
-                return parser.parseBaseItem(parser.parseItemContext(stat.getItem()));
+                return parser.parseBaseItem(parser.parseItemContext(stat.getDefined().getItem()));
             } catch (SerializationException | IllegalArgumentException e) {
                 plugin.logger().warn("Error parsing ItemContext of CustomStat " + stat.getId());
                 e.printStackTrace();

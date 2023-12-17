@@ -344,15 +344,6 @@ acf:
     location_please_specify_world: "<red>Error: Por favor especifique un mundo. Ejemplo <yellow>world:x,y,z."
     location_please_specify_xyz: "<red>Error: Por favor especifica las coordenadas x, y, z. Ejemplo: <yellow>world:x,y,z."
     location_console_not_relative: "<red>Error: La consola no puede usar coordenadas relativas para la ubicación."
-action_bar:
-  idle: "<red>{hp}/{max_hp}❤                <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp}❤ <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit}) <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp}❤ <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit}) <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp}❤ <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAXED) <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp}❤ <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAXED) <aqua>{mana}/{max_mana} {mana_unit}"
-  ability: "{message}"
-  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
-  boss_bar_maxed: "<gold>{skill} {level} <gray>(MAXED)"
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>] "
   armor:
@@ -523,11 +514,10 @@ commands:
       reset_all: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>1 <gray>para <gold>{player}"
       reset_skill: "<gray>Habilidad <aqua>{skill} <gray>establecida al nivel <aqua>1 <gray>para <gold>{player}"
     setall:
-      at_least_one: "<yellow>¡El nivel debe ser al menos 1!"
       set: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>{level} <gray>para <gold>{player}"
     setlevel:
-      at_least_one: "<yellow>¡El nivel debe ser al menos 1!"
       set: "<gray>Habilidad <aqua>{skill} <gray>establecida al nivel <aqua>{level} <gray>para <gold>{player}"
+    at_least_one: "<yellow>¡El nivel debe ser al menos {level}!"
   toggle:
     enabled: "<green>La barra de acción de tus habilidades ha sido activada"
     disabled: "<red>La barra de acción de tus habilidades ha sido desactivada"
@@ -558,15 +548,13 @@ commands:
   unknown_stat: "<yellow>¡Estadística Desconocida!"
   no_profile: "<yellow>El jugador no tiene perfíl de habilidades. Porfavor intenta reconectarte o reiniciar el servidor."
 leveler:
-  title: "<green>Nuevo nivel de {skill}"
-  subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>¡Nuevo Nivel! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Recompensas:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
-  stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>¡Habilidad Desbloqueada! <gold><bold>{ability} </bold><gray>ha sido desbloqueada"
-  ability_level_up: "\n  <green>¡Nuevo Nivel de Habilidad! <gold><bold>{ability} </bold><gray>es ahora nivel <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>¡Habilidad de Maná Desbloqueada! <blue><bold>{mana_ability} </bold><gray>se ha desbloqueado"
-  mana_ability_level_up: "\n  <light_purple>¡Nuevo Nivel de Habilidad de Maná! <blue><bold>{mana_ability} </bold><gray>es ahora nivel <gold>{level}"
-  money_reward: "\n  <green>${amount}"
+  level_up: Nuevo nivel de {skill}
+  skill_level_up: ¡Nuevo Nivel!
+  rewards: Recompensas
+  ability_unlock: Habilidad Desbloqueada
+  ability_level_up: Nuevo Nivel de Habilidad
+  mana_ability_unlock: Habilidad de Maná Desbloqueada
+  mana_ability_level_up: Nuevo Nivel de Habilidad de Maná
   unclaimed_item: "<red>Tienes objetos sin reclamar porque tu invnetario estaba lleno, usa <yellow>/skills claimitems <red>para reclamarlos"
 menus:
   common:
@@ -699,12 +687,6 @@ mana_abilities:
     end: "<gray>La espada de relámpagos se desgastó"
   not_ready: "<red>¡La habilitad no está lista! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>¡No hay maná suficiente! <gray>(Necesitas {mana} {mana_unit} y tienes {current_mana}/{max_mana})"
-rewards:
-  item:
-    default_menu_message: "\n  {display_name}"
-    default_menu_message_multiple: "\n  {display_name} {amount}x"
-    default_chat_message: "\n  {display_name}"
-    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Agricultura
@@ -887,7 +869,7 @@ sources:
     fox: Zorro
     giant: Gigante
     horse: Caballo
-    mooshroom: Champiñaca
+    mooshroom: Mooshroom
     mule: Mula
     ocelot: Ocelote
     parrot: Loro
@@ -1011,48 +993,30 @@ stats:
   strength:
     name: Fuerza
     desc: "La fuerza incrementa tu daño de ataque con diferentes armas"
-    color: "<dark_red>"
-    symbol: "➽"
   health:
     name: Vida
     desc: "La salud incrementa la cantidad de {hp_unit} que tienes y te permite durar más tiempo en peleas"
-    color: "<red>"
-    symbol: "❤"
   regeneration:
     name: Regeneración
     desc: "La regeneración incrementa la rapidez con la que recuperas salud y maná"
-    color: "<gold>"
-    symbol: "❥"
   luck:
     name: Suerte
     desc: "La suerte aumenta tus posibilidades de obtener botínes raros de los mobs, pescar y más"
-    color: "<dark_green>"
-    symbol: "☘"
   wisdom:
     name: Sabiduría
     desc: "La sabiduría incrementa tu maná máximo, incrementa la experiencia ganada y reduce el costo del yunque"
-    color: "<blue>"
-    symbol: "✿"
   toughness:
     name: Resistencia
     desc: "La Resistencia incrementa la cantidad de de daño reducido de los ataques enemigos"
-    color: "<dark_purple>"
-    symbol: "✦"
   crit_chance:
     name: Chansa de Critía
     desc: "Chansa de crítica es tu probabilidad de causar un golpe crítico"
-    color: "<green>"
-    symbol: "⌘"
   crit_damage:
     name: Daño Crítico
     desc: "Daño Crítico es el porcentaje de aumento el daño cuando infliges un golpe crítico"
-    color: "<dark_aqua>"
-    symbol: "★"
   speed:
     name: Velocidad
     desc: "La velocidad aumenta con la rapidez que puedes caminar y correr"
-    color: "<white>"
-    symbol: "➤"
 traits:
   attack_damage:
     name: Daño del Ataque
@@ -1082,8 +1046,10 @@ traits:
     name: Daño Crítico
   movement_speed:
     name: Velocidad
+ui:
+  maxed: MAXED
 units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 30
+file_version: 31

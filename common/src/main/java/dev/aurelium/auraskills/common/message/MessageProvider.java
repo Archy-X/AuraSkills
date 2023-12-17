@@ -44,7 +44,7 @@ public class MessageProvider implements PolyglotProvider {
                 .messageDirectory("messages")
                 .messageFileName("messages_{language}.yml")
                 .defaultLanguage("en")
-                .providedLanguages(new String[] {"en", "fr", "de", "es"})
+                .providedLanguages(new String[] {"global", "en", "fr", "de", "es"})
                 .messageReplacements(new MessageReplacements(replace))
                 .processExcluded(List.of("color"))
                 .build();

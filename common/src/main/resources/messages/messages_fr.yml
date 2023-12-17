@@ -344,15 +344,6 @@ acf:
     location_please_specify_world: "<red>Erreur: Veuillez spécifier le monde. Exemple: <yellow>world:x,y,z."
     location_please_specify_xyz: "<red>Erreur: Veuillez spécifier les coordonnées x, y et z. Exemple: <yellow>world:x,y,z."
     location_console_not_relative: "<red>Erreur: La console ne peut pas utiliser de coordonnées relatives pour l'emplacement."
-action_bar:
-  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAX)  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAX)  <aqua>{mana}/{max_mana} {mana_unit}"
-  ability: "{message}"
-  boss_bar_xp: "<gold>+{xp_gained} {skill} XP <gray>({percent}%)"
-  boss_bar_maxed: "<gold>+{xp_gained} {skill} XP <gray>(MAX)"
 commands:
   prefix: "<dark_gray>[<aqua>Compétences<dark_gray>] "
   armor:
@@ -523,11 +514,10 @@ commands:
       reset_all: "<gray>Toutes les compétences ont été mise au niveau <aqua>1 <gray>pour le joueur <gold>{player}"
       reset_skill: "<gray>La compétence <aqua>{skill} <gray>a été mise au niveau <aqua>1 <gray>pour le joueur <gold>{player}"
     setall:
-      at_least_one: "<yellow>Le niveau doit être au moins 1!"
       set: "<gray>Toutes les compétences ont été mise au niveau <aqua>{level} <gray>pour le joueur <gold>{player}"
     setlevel:
-      at_least_one: "<yellow>Le niveau doit être au moins 1!"
       set: "<gray>La compétence <aqua>{skill} <gray>sa été mise au niveau <aqua>{level} <gray>pour le joueur <gold>{player}"
+    at_least: "<yellow>Le niveau doit être au moins {level}!"
   toggle:
     enabled: "<green>La barre d'action de vos compétences à été activé"
     disabled: "<red>La barre d'action de vos compétences à été désactivé"
@@ -558,15 +548,13 @@ commands:
   unknown_stat: "<yellow>Statistiques inconnues !"
   no_profile: "<yellow>Le joueur n’a pas de profil de compétences. Veuillez essayer de rejoindre le jeu ou de redémarrer le serveur."
 leveler:
-  title: "<green>{skill} Niveau supérieur"
-  subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Niveau supérieur! <aqua><bold>{skill}</bold> <dark_gray>{old}➜<dark_aqua><bold>{new}</bold> \n \n <aqua>Récompenses:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
-  stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Compétence débloquée! <gold><bold>{ability}</bold> <gray>a été débloquée"
-  ability_level_up: "\n  <green>Niveau de compétence supérieur! <gold><bold>{ability}</bold> <gray>est maintenant niveau <gold>{level}"
-  mana_ability_unlock: "\n<light_purple>Capacité de mana débloquée! <blue><bold>{mana_ability}</bold> <gray>a été débloquée"
-  mana_ability_level_up: "\n  <light_purple>Niveau de compétence de mana supérieur! <blue><bold>{mana_ability}</bold> <gray>est maintenant niveau <gold>{level}"
-  money_reward: "\n  <green>${amount}"
+  level_up: "{skill} Niveau supérieur"
+  skill_level_up: Niveau supérieur
+  rewards: Récompenses
+  ability_unlock: Compétence débloquée
+  ability_level_up: Niveau de compétence supérieur
+  mana_ability_unlock: Capacité de mana débloquée
+  mana_ability_level_up: Niveau de compétence de mana supérieur
   unclaimed_item: "<red>Vous avez des objets non réclamés parce que votre inventaire était plein, utilisez <yellow>/skills claimitems <red>pour les réclamer"
 menus:
   common:
@@ -699,12 +687,6 @@ mana_abilities:
     end: "<gray>Lame de Foudre s'est épuisée"
   not_ready: "<red>Compétence non chargée! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Mana insuffisante! <gray>({mana} {mana_unit} requis, vous avez {current_mana}/{max_mana})"
-rewards:
-  item:
-    default_menu_message: "\n  {display_name}"
-    default_menu_message_multiple: "\n  {display_name} {amount}x"
-    default_chat_message: "\n  {display_name}"
-    default_chat_message_multiple: "\n  {display_name} {amount}x"
 skills:
   farming:
     name: Fermier
@@ -887,7 +869,7 @@ sources:
     fox: Renard
     giant: Géant
     horse: Cheval
-    mooshroom: Champimeuh
+    mooshroom: Mooshroom
     mule: Mule
     ocelot: Ocelot
     parrot: Perroquet
@@ -1011,48 +993,30 @@ stats:
   strength:
     name: Force
     desc: "La force augmente vos dégâts d'attaque avec différentes armes"
-    color: "<dark_red>"
-    symbol: "➽"
   health:
     name: Santé
     desc: "La santé augmente le nombre d'{hp_unit} que vous avez, vous permettant de durer plus longtemps en combat"
-    color: "<red>"
-    symbol: "❤"
   regeneration:
     name: Régénération
     desc: "La régénération augmente la vitess à laquelle vous récupérez à la fois de la vie et du mana"
-    color: "<gold>"
-    symbol: "❥"
   luck:
     name: Chance
     desc: "Augmente vos chance d'obtenir des butins épique depuis les mobs, la pêche, et plus"
-    color: "<dark_green>"
-    symbol: "☘"
   wisdom:
     name: Sagesse
     desc: "La sagesse augmente votre mana maximum, augmente votre gain d'éxpérience, et réduit les coup de l'enclume"
-    color: "<blue>"
-    symbol: "✿"
   toughness:
     name: Ténacité
     desc: "La Ténacité augmente les dégats réduit par les attaques ennemies"
-    color: "<dark_purple>"
-    symbol: "✦"
   crit_chance:
     name: Chances de critique
     desc: "Les chances de coup critique sont vos chances d'infliger un coup critique"
-    color: "<green>"
-    symbol: "⌘"
   crit_damage:
     name: Dégâts critique
     desc: "Les dégâts critiques augmentent en pourcentage les dégâts infligés par un coup critique"
-    color: "<dark_aqua>"
-    symbol: "★"
   speed:
     name: Vitesse
     desc: "La vitesse augmente la vitesse de marche et de course"
-    color: "<white>"
-    symbol: "➤"
 traits:
   attack_damage:
     name: Dégâts d'attaque
@@ -1082,8 +1046,10 @@ traits:
     name: Dégâts critique
   movement_speed:
     name: Vitesse de mouvement
+ui:
+  maxed: MAX
 units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 30
+file_version: 31
