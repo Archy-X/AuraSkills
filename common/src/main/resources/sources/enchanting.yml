@@ -3,6 +3,7 @@ default:
   menu_item:
     flags:
       - hide_attributes
+  unit: '{sources.units.enchant_level}'
 sources:
   weapon_per_level:
     item:
@@ -10,24 +11,20 @@ sources:
     xp: 4
     menu_item:
       material: diamond_sword
-    unit: '{sources.units.enchant_level}'
   armor_per_level:
     item:
       category: armor
     xp: 4
     menu_item:
       material: diamond_chestplate
-    unit: '{sources.units.enchant_level}'
   tool_per_level:
     item:
       category: tool
     xp: 4
     menu_item:
       material: diamond_pickaxe
-    unit: '{sources.units.enchant_level}'
   book_per_level:
     item: book
     xp: 4
     menu_item:
       material: enchanted_book
-    unit: '{sources.units.enchant_level}'

@@ -37,7 +37,13 @@ public class EnchantingLeveler extends SourceLeveler {
 
         User user = plugin.getUser(player);
 
-        plugin.getLevelManager().addXp(user, skill, source.getXp());
+        double xp = source.getXp();
+        String unit = source.getUnit();
+        if (unit != null && unit.equals("{sources.units.enchant_level}")) {
+            xp *= event.getExpLevelCost();
+        }
+
+        plugin.getLevelManager().addXp(user, skill, xp);
     }
 
     @Nullable
