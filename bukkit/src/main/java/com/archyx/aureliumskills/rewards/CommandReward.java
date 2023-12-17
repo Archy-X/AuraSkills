@@ -32,7 +32,7 @@ public class CommandReward extends MessagedReward {
 
     public void executeRevert(Player player, Skill skill, int level) {
         if (revertCommand != null) {
-            executeCommand(revertExecutor != null ? revertExecutor : CommandExecutor.CONSOLE, command, player, skill, level);
+            executeCommand(revertExecutor != null ? revertExecutor : CommandExecutor.CONSOLE, revertCommand, player, skill, level);
         }
     }
 
