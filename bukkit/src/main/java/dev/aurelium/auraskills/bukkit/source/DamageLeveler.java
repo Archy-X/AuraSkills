@@ -32,6 +32,8 @@ public class DamageLeveler extends SourceLeveler {
             return;
         }
 
+        if(player.hasMetadata("NPC")) return;
+
         var sourcePair = getSource(event);
         if (sourcePair == null) return;
 
