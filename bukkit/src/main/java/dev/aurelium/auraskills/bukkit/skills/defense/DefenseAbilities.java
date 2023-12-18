@@ -120,7 +120,7 @@ public class DefenseAbilities extends AbilityImpl {
         if (event.isCancelled()) return;
 
         if (!(event.getEntity() instanceof Player player)) return;
-
+        if(player.hasMetadata("NPC")) return;
         User user = plugin.getUser(player);
 
         if (event.getDamager() instanceof LivingEntity entity) {

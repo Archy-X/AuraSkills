@@ -58,6 +58,7 @@ public class ArcheryAbilities extends AbilityImpl {
         if (!(event.getDamager() instanceof Arrow arrow)) return;
 
         if (!(arrow.getShooter() instanceof Player player)) return;
+        if(player.hasMetadata("NPC")) return;
 
         // Applies abilities
         User user = plugin.getUser(player);
