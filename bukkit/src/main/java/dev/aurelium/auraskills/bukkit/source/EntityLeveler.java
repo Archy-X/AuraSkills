@@ -80,6 +80,7 @@ public class EntityLeveler extends SourceLeveler {
         if (damagerPair == null) return;
 
         Player player = damagerPair.first();
+        if(player.hasMetadata("NPC")) return;
         User user = plugin.getUser(player);
         EntityXpSource.EntityDamagers damager = damagerPair.second();
 

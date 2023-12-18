@@ -52,6 +52,8 @@ public class DamageListener implements Listener {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
         }
+        if(player.hasMetadata("NPC")) return;
+
         // Gets player skill
         User user = plugin.getUser(player);
 
