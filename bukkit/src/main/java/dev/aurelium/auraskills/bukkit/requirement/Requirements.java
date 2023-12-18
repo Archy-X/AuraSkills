@@ -151,6 +151,7 @@ public class Requirements {
 
     public boolean meetsRequirements(ModifierType type, ItemStack item, Player player) {
         if (!plugin.configBoolean(Option.REQUIREMENT_ENABLED)) return true;
+        if (player.hasMetadata("NPC")) return false;
         User user = plugin.getUser(player);
         // Check global requirements
         for (Map.Entry<Skill, Integer> entry : getGlobalRequirements(type, item).entrySet()) {
