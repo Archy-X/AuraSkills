@@ -138,6 +138,7 @@ public class BukkitItemRegistry implements ItemRegistry {
 
     public boolean passesFilter(ItemStack item, ItemFilter filter) {
         // Check materials
+        if (item == null) return false;
         String[] materials = filter.materials();
         if (materials != null) {
             if (!TextUtil.contains(materials, item.getType().toString())) {

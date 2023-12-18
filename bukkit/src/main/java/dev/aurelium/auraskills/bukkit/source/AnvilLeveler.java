@@ -46,6 +46,7 @@ public class AnvilLeveler extends SourceLeveler {
 
         ItemStack leftItem = inventory.getItem(0);
         ItemStack rightItem = inventory.getItem(1);
+        if (leftItem == null || rightItem == null) return;
 
         Pair<AnvilXpSource, Skill> sourcePair = getSource(leftItem, rightItem);
         if (sourcePair == null) return;
