@@ -90,7 +90,7 @@ public class ProtocolLibHook extends Hook {
             public void onPacketSending(PacketEvent event) {
                 Player player = event.getPlayer();
                 PacketContainer packet = event.getPacket();
-                if (packet.getMeta("AureliumSkills").isPresent()) return; // Ignore Aurelium Skills action bars
+                if (packet.getMeta("AuraSkills").isPresent()) return; // Ignore Aurelium Skills action bars
 
                 getActionBar().setPaused(getUser(player), PAUSE_MILLIS, TimeUnit.MILLISECONDS);
             }
@@ -103,7 +103,7 @@ public class ProtocolLibHook extends Hook {
             public void onPacketSending(PacketEvent event) {
                 Player player = event.getPlayer();
                 PacketContainer packet = event.getPacket();
-                if (packet.getMeta("AureliumSkills").isPresent()) return;
+                if (packet.getMeta("AuraSkills").isPresent()) return;
                 StructureModifier<Integer> integers = packet.getIntegers();
                 if (integers.size() == 1) {
                     if (integers.read(0) == EnumWrappers.ChatType.GAME_INFO.getId()) {
@@ -127,7 +127,7 @@ public class ProtocolLibHook extends Hook {
                 if (packet.getEnumModifier(EnumWrappers.TitleAction.class, 0).read(0) != EnumWrappers.TitleAction.ACTIONBAR) {
                     return;
                 }
-                if (packet.getMeta("AureliumSkills").isPresent()) return; // Ignore Aurelium Skills action bars
+                if (packet.getMeta("AuraSkills").isPresent()) return; // Ignore Aurelium Skills action bars
                 getActionBar().setPaused(getUser(player), PAUSE_MILLIS, TimeUnit.MILLISECONDS);
             }
         });
@@ -143,6 +143,7 @@ public class ProtocolLibHook extends Hook {
                 if (packet.getChatTypes().read(0) != EnumWrappers.ChatType.GAME_INFO) {
                     return;
                 }
+                if (packet.getMeta("AuraSkills").isPresent()) return;
                 getActionBar().setPaused(getUser(player), PAUSE_MILLIS, TimeUnit.MILLISECONDS);
             }
         });
