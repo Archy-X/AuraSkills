@@ -2,6 +2,8 @@ package dev.aurelium.auraskills.bukkit.skills.archery;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -39,6 +41,16 @@ public class ArcheryAbilities extends AbilityImpl {
 
         double value = getValue(ability, user);
         user.addTraitModifier(new TraitModifier(modifierName, Traits.CRIT_CHANCE, value), false);
+    }
+
+    @EventHandler
+    public void onLevelUp(SkillLevelUpEvent event) {
+        if (!event.getSkill().equals(Skills.ARCHERY)) {
+            return;
+        }
+        Player player = event.getPlayer();
+        User user = plugin.getUser(player);
+        reloadCritChance(player, user);
     }
 
     public void bowMaster(EntityDamageByEntityEvent event, Player player, User user) {

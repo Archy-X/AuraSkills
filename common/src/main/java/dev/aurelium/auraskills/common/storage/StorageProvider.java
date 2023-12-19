@@ -19,8 +19,9 @@ public abstract class StorageProvider {
         this.plugin = plugin;
     }
 
-    public User load(UUID uuid) throws Exception {
+    public void load(UUID uuid) throws Exception {
         User user = loadRaw(uuid);
+        plugin.getUserManager().addUser(user);
 
         // Update stats
         plugin.getStatManager().updateStats(user);
@@ -30,7 +31,6 @@ public abstract class StorageProvider {
 
         // Update permissions
         plugin.getRewardManager().updatePermissions(user);
-        return user;
     }
 
     protected abstract User loadRaw(UUID uuid) throws Exception;
