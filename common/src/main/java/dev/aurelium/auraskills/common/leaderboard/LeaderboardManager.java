@@ -82,7 +82,7 @@ public class LeaderboardManager {
     }
 
     public List<SkillValue> getLeaderboard(Skill skill, int page, int numPerPage) {
-        List<SkillValue> leaderboard = skillLeaderboards.get(skill);
+        List<SkillValue> leaderboard = skillLeaderboards.computeIfAbsent(skill, k -> new ArrayList<>());
         int from = (Math.max(page, 1) - 1) * numPerPage;
         int to = from + numPerPage;
         return leaderboard.subList(Math.min(from, leaderboard.size()), Math.min(to, leaderboard.size()));
