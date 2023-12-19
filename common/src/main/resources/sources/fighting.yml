@@ -103,7 +103,7 @@ sources:
   ghast:
     xp: 17.0
   guardian:
-    xp: 15.0
+    xp: 10.0
   hoglin:
     xp: 12.0
   husk:
@@ -163,4 +163,4 @@ sources:
   tadpole:
     xp: 1.2
   warden:
-    xp: 10000.0
+    xp: 2500.0
