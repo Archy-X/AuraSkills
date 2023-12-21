@@ -79,7 +79,7 @@ public class EnchantingAbilities extends AbilityImpl {
     }
 
     private void enchantedStrength() {
-        var ability = Abilities.ENCHANTER;
+        var ability = Abilities.ENCHANTED_STRENGTH;
         String MODIFIER_NAME = "AbilityModifier-EnchantedStrength";
         var task = new TaskRunnable() {
             @Override
@@ -95,7 +95,8 @@ public class EnchantingAbilities extends AbilityImpl {
 
                         // Apply modifier
                         double strengthPerType = getValue(ability, user);
-                        StatModifier modifier = new StatModifier(MODIFIER_NAME, Stats.STRENGTH, strengthPerType * item.getEnchantments().size());
+                        int numEnchants = item.getEnchantments().size();
+                        StatModifier modifier = new StatModifier(MODIFIER_NAME, Stats.STRENGTH, strengthPerType * numEnchants);
                         user.addStatModifier(modifier, false);
                     } else {
                         user.removeStatModifier(MODIFIER_NAME);

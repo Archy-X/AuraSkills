@@ -32,7 +32,7 @@ public class HealthRegenTrait extends TraitImpl {
 
     @Override
     public String getMenuDisplay(double value, Trait trait) {
-        return "+" + NumberUtil.format1(value);
+        return "+" + NumberUtil.format2(value);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

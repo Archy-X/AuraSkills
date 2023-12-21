@@ -99,7 +99,7 @@ sources:
   endermite:
     xp: 5.0
   evoker:
-    xp: 35.0
+    xp: 15.0
   ghast:
     xp: 17.0
   guardian:
@@ -119,7 +119,7 @@ sources:
   piglin_brute:
     xp: 35.0
   pillager:
-    xp: 12.0
+    xp: 10.0
   ravager:
     xp: 100.0
   shulker:
@@ -135,7 +135,7 @@ sources:
   vex:
     xp: 10.0
   vindicator:
-    xp: 12.0
+    xp: 10.0
   witch:
     xp: 9.0
   wither_skeleton:
@@ -163,4 +163,4 @@ sources:
   tadpole:
     xp: 1.2
   warden:
-    xp: 2500.0
+    xp: 1000.0

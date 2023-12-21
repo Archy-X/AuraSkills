@@ -408,8 +408,8 @@ abilities:
     max_level: 0
   auraskills/xp_convert:
     enabled: true
-    base_value: 20.0
-    value_per_level: -0.75
+    base_value: 30.0
+    value_per_level: -0.5
     unlock: '{start}+1'
     level_up: 5
     max_level: 0
@@ -488,8 +488,8 @@ abilities:
     enable_message: true
   auraskills/disenchanter:
     enabled: true
-    base_value: 10.0
-    value_per_level: 7.0
+    base_value: 5.0
+    value_per_level: 3.0
     unlock: '{start}+1'
     level_up: 5
     max_level: 0

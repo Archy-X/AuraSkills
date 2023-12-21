@@ -13,11 +13,11 @@ stats:
     enabled: true
     traits:
       auraskills/saturation_regen:
-        modifier: 0.005
+        modifier: 0.008
       auraskills/hunger_regen:
-        modifier: 0.004
+        modifier: 0.008
       auraskills/mana_regen:
-        modifier: 0.02
+        modifier: 0.01
   auraskills/luck:
     enabled: true
     traits:
@@ -29,7 +29,7 @@ stats:
     enabled: true
     traits:
       auraskills/experience_bonus:
-        modifier: 0.5
+        modifier: 0.4
       auraskills/anvil_discount:
         modifier: 0.1
       auraskills/max_mana:
@@ -92,7 +92,7 @@ traits:
     base: 1
   auraskills/mana_regen:
     enabled: true
-    base: 0.5
+    base: 0.1
   auraskills/luck:
     enabled: true
   auraskills/double_drop:
@@ -113,7 +113,7 @@ traits:
     base: 0
   auraskills/crit_damage:
     enabled: true
-    base: 50
+    base: 25
   auraskills/movement_speed:
     enabled: true
     max: 300.0

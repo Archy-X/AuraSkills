@@ -1,7 +1,7 @@
 patterns:
   - type: stat
     stat: health
-    value: 0.2
+    value: 0.4
     pattern:
       interval: 1
   - type: stat
