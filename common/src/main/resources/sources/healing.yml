@@ -11,7 +11,7 @@ sources:
         excluded_types: [ mundane, thick, water, awkward ]
         extended: false
         upgraded: false
-    xp: 10
+    xp: 20
     menu_item:
       material: potion
       potion_data:
@@ -23,7 +23,7 @@ sources:
       potion_data:
         excluded_types: [ mundane, thick, water, awkward ]
         extended: true
-    xp: 15
+    xp: 30
     menu_item:
       material: potion
       potion_data:
@@ -35,7 +35,7 @@ sources:
       potion_data:
         excluded_types: [ mundane, thick, water, awkward ]
         upgraded: true
-    xp: 15
+    xp: 30
     menu_item:
       material: potion
       potion_data:
@@ -48,7 +48,7 @@ sources:
         excluded_types: [ mundane, thick, water, awkward ]
         extended: false
         upgraded: false
-    xp: 20
+    xp: 40
     menu_item:
       material: splash_potion
       potion_data:
@@ -60,7 +60,7 @@ sources:
       potion_data:
         excluded_types: [ mundane, thick, water, awkward ]
         extended: true
-    xp: 25
+    xp: 50
     menu_item:
       material: splash_potion
       potion_data:
@@ -72,7 +72,7 @@ sources:
       potion_data:
         excluded_types: [ mundane, thick, water, awkward ]
         upgraded: true
-    xp: 25
+    xp: 50
     menu_item:
       material: splash_potion
       potion_data:
@@ -85,7 +85,7 @@ sources:
         excluded_types: [ mundane, thick, water, awkward ]
         extended: false
         upgraded: false
-    xp: 30
+    xp: 60
     menu_item:
       material: lingering_potion
       potion_data:
@@ -97,7 +97,7 @@ sources:
       potion_data:
         excluded_types: [ mundane, thick, water, awkward ]
         extended: true
-    xp: 35
+    xp: 70
     menu_item:
       material: lingering_potion
       potion_data:
@@ -109,7 +109,7 @@ sources:
       potion_data:
         excluded_types: [ mundane, thick, water, awkward ]
         upgraded: true
-    xp: 35
+    xp: 70
     menu_item:
       material: lingering_potion
       potion_data:
@@ -117,12 +117,12 @@ sources:
   golden_apple:
     type: item_consume
     item: golden_apple
-    xp: 5
+    xp: 30
     menu_item:
       material: golden_apple
   enchanted_golden_apple:
     type: item_consume
     item: enchanted_golden_apple
-    xp: 50
+    xp: 500
     menu_item:
       material: enchanted_golden_apple

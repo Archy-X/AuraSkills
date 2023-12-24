@@ -33,7 +33,7 @@ mana_abilities:
     max_blocks_multiplier: 1
   auraskills/speed_mine:
     enabled: true
-    base_value: 5.0
+    base_value: 10.0
     value_per_level: 5.0
     base_cooldown: 200
     cooldown_per_level: -5

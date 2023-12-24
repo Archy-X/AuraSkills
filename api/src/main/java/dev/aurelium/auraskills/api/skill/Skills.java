@@ -25,7 +25,7 @@ public enum Skills implements Skill {
     DEFENSE(Abilities.DEFENDER),
     AGILITY(Abilities.RUNNER),
     ENDURANCE(Abilities.JUMPER),
-    ALCHEMY(Abilities.ALCHEMIST),
+    ALCHEMY(Abilities.BREWER),
     ENCHANTING(Abilities.ENCHANTER),
     SORCERY(Abilities.SORCERER),
     HEALING(Abilities.HEALER),

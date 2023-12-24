@@ -38,11 +38,11 @@ public class PotionSplashLeveler extends SourceLeveler {
         // Only handle potion splash events
         if (!(event instanceof PotionSplashEvent) && !(event instanceof LingeringPotionSplashEvent)) return;
 
-        if (!(event.getEntity() instanceof ThrownPotion potion)) return;
+        ThrownPotion potion = (ThrownPotion) event.getEntity();
 
         if (!(potion.getShooter() instanceof Player player)) return; // Ignore non-player potion throwers
 
-        if (potion.getEffects().size() == 0) return; // Ignore potions with no effects
+        if (potion.getEffects().isEmpty()) return; // Ignore potions with no effects
 
         ItemStack item = potion.getItem();
 

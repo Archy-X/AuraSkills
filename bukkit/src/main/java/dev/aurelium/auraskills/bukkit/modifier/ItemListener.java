@@ -87,14 +87,7 @@ public class ItemListener implements Listener {
                         player.getInventory().setItemInOffHand(offHandItem);
                     }
                 }
-                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, offHandItem)) {
-                    StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
-                    user.addStatModifier(offHandModifier);
-                }
-                for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, offHandItem)) {
-                    Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
-                    user.addMultiplier(offHandMultiplier);
-                }
+                addModifiersToUser(offHandItem, user);
             }
         }
 
@@ -148,11 +141,11 @@ public class ItemListener implements Listener {
                         }
                         // Remove valor
                         if (ItemUtils.isAxe(stored.getType())) {
-                            plugin.getAbilityManager().getAbilityImpl(ForagingAbilities.class).removeValor(user);
+                            foragingAbilities.removeValor(user);
                         }
                         // Remove stamina
                         if (ItemUtils.isPickaxe(stored.getType())) {
-                            plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class).removeStamina(user);
+                            miningAbilities.removeStamina(user);
                         }
                     }
                     // Add modifiers from held item
@@ -175,11 +168,11 @@ public class ItemListener implements Listener {
                         }
                         // Apply valor
                         if (ItemUtils.isAxe(held.getType())) {
-                            foragingAbilities.removeValor(user);
+                            foragingAbilities.applyValor(user);
                         }
                         // Apply stamina
                         if (ItemUtils.isPickaxe(held.getType())) {
-                            miningAbilities.removeStamina(user);
+                            miningAbilities.applyStamina(player, user);
                         }
                     }
                     for (Stat stat : statsToReload) {
@@ -300,16 +293,8 @@ public class ItemListener implements Listener {
                         }
                         // Add modifiers from held item
                         if (!held.getType().equals(Material.AIR)) {
-                            User playerData = plugin.getUser(player);
                             if (requirements.meetsRequirements(ModifierType.ITEM, held, player)) {
-                                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
-                                    StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
-                                    playerData.addStatModifier(offHandModifier);
-                                }
-                                for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
-                                    Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
-                                    playerData.addMultiplier(offHandMultiplier);
-                                }
+                                addModifiersToUser(held, plugin.getUser(player));
                             }
                         }
                         // Set stored item to held item
@@ -319,6 +304,17 @@ public class ItemListener implements Listener {
             }
         };
         plugin.getScheduler().timerSync(task, 0L, plugin.configInt(Option.MODIFIER_ITEM_CHECK_PERIOD) * 50L, TimeUnit.MILLISECONDS);
+    }
+
+    private void addModifiersToUser(ItemStack held, User user) {
+        for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
+            StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
+            user.addStatModifier(offHandModifier);
+        }
+        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
+            Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
+            user.addMultiplier(offHandMultiplier);
+        }
     }
 
 }

@@ -54,12 +54,17 @@ public class BukkitUser extends User {
                 if (pattern.matcher(permission).matches()) { // Parse all skills multiplier
                     multiplier += Double.parseDouble(permission) / 100.0;
                 } else if (skill != null) { // Skill specific multiplier
-                    String skillName = skill.toString().toLowerCase(Locale.ROOT);
-                    if (permission.startsWith(skillName)) {
-                        permission = TextUtil.replace(permission, skillName + ".", "");
-                        if (pattern.matcher(permission).matches()) {
-                            multiplier += Double.parseDouble(permission) / 100.0;
-                        }
+                    String namespacedName = skill.toString().toLowerCase(Locale.ROOT);
+                    String plainName = skill.name().toLowerCase(Locale.ROOT);
+                    if (permission.startsWith(namespacedName)) {
+                        permission = TextUtil.replace(permission, namespacedName + ".", "");
+                    } else if (permission.startsWith(plainName)) {
+                        permission = TextUtil.replace(permission, plainName + ".", "");
+                    } else {
+                        continue;
+                    }
+                    if (pattern.matcher(permission).matches()) {
+                        multiplier += Double.parseDouble(permission) / 100.0;
                     }
                 }
             }

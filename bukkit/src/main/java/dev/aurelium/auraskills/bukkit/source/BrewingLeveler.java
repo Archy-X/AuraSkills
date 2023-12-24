@@ -24,13 +24,12 @@ import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class BrewingLeveler extends SourceLeveler {
 
@@ -56,9 +55,8 @@ public class BrewingLeveler extends SourceLeveler {
         if (source.getTrigger() == BrewingXpSource.BrewTriggers.TAKEOUT) {
             checkBrewedSlots(event);
         } else if (source.getTrigger() == BrewingXpSource.BrewTriggers.BREW) {
-            if (!event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
-                return;
-            }
+            if (!event.getBlock().hasMetadata("skillsBrewingStandOwner")) return;
+
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(event.getBlock().getMetadata("skillsBrewingStandOwner").get(0).asString()));
             if (!offlinePlayer.isOnline()) {
                 return;
@@ -102,25 +100,35 @@ public class BrewingLeveler extends SourceLeveler {
 
         if (!(event.getWhoClicked() instanceof Player player)) return;
 
-        if (!standData.isSlotBrewed(slot)) return; // Check that the slot was brewed
+        BrewingSlot brewingSlot = standData.getSlot(slot);
+        if (!brewingSlot.isBrewed()) return; // Check that the slot was brewed
 
-        ItemStack ingredient = standData.getIngredient();
-        if (ingredient == null) return;
-        if (ingredient.getType() == Material.AIR) return;
+        List<ItemStack> ingredients = brewingSlot.getIngredients();
+        if (ingredients.isEmpty()) return;
 
-        var sourcePair = getSource(ingredient);
-        if (sourcePair == null) return;
+        List<Pair<BrewingXpSource, Skill>> sources = getSources(ingredients);
+        Map<Skill, Double> totalXpMap = new HashMap<>();
 
-        BrewingXpSource source = sourcePair.first();
+        brewingSlot.setBrewed(false); // Set data to false
+        brewingSlot.resetIngredients();
 
-        Skill skill = sourcePair.second();
+        for (Pair<BrewingXpSource, Skill> sourcePair : sources) {
+            if (sourcePair == null) return;
 
-        if (failsChecks(event, player, location, skill)) return;
+            BrewingXpSource source = sourcePair.first();
+            Skill skill = sourcePair.second();
+
+            if (failsChecks(event, player, location, skill)) return;
+
+            // Add the xp to the total for that skill
+            totalXpMap.put(skill, totalXpMap.getOrDefault(skill, 0.0) + source.getXp());
+        }
 
         User user = plugin.getUser(player);
-
-        plugin.getLevelManager().addXp(user, skill, source.getXp()); // Add XP
-        standData.setSlotBrewed(slot, false); // Set data to false
+        for (Skill skill : totalXpMap.keySet()) {
+            // Add all xp from brews in that slot
+            plugin.getLevelManager().addXp(user, skill, totalXpMap.getOrDefault(skill, 0.0));
+        }
     }
 
     private void checkBrewedSlots(BrewEvent event) {
@@ -134,20 +142,29 @@ public class BrewingLeveler extends SourceLeveler {
             if (blockState instanceof BrewingStand brewingStand) {
                 BrewerInventory after = brewingStand.getInventory();
                 ItemStack[] afterItems = Arrays.copyOf(after.getContents(), 3); // Items in result slots after
-                BrewingStandData standData = new BrewingStandData(clonedIngredient);
-                // Set the items that changed as brewed
-                for (int i = 0; i < 3; i++) {
-                    ItemStack beforeItem = beforeItems[i];
-                    ItemStack afterItem = afterItems[i];
-                    if (beforeItem != null && beforeItem.getType() != Material.AIR && afterItem != null && afterItem.getType() != Material.AIR) {
-                        if (!beforeItem.equals(afterItem)) {
-                            standData.setSlotBrewed(i, true);
-                        }
-                    }
-                }
-                brewingStands.put(BlockPosition.fromBlock(event.getBlock()), standData); // Register the stand data
+                BlockPosition pos = BlockPosition.fromBlock(event.getBlock());
+                BrewingStandData standData = getBrewingStandData(clonedIngredient, beforeItems, afterItems, pos);
+                brewingStands.put(pos, standData); // Register the stand data
             }
         }, 50, TimeUnit.MILLISECONDS);
+    }
+
+    @NotNull
+    private BrewingStandData getBrewingStandData(ItemStack ingredient, ItemStack[] beforeItems, ItemStack[] afterItems, BlockPosition pos) {
+        BrewingStandData standData = brewingStands.getOrDefault(pos, new BrewingStandData());
+        // Set the items that changed as brewed
+        for (int i = 0; i < 3; i++) {
+            ItemStack beforeItem = beforeItems[i];
+            ItemStack afterItem = afterItems[i];
+            if (beforeItem != null && beforeItem.getType() != Material.AIR && afterItem != null && afterItem.getType() != Material.AIR) {
+                if (!beforeItem.equals(afterItem)) {
+                    BrewingSlot slot = standData.getSlot(i);
+                    slot.setBrewed(true);
+                    slot.addIngredient(ingredient); // Track the ingredient used to brew
+                }
+            }
+        }
+        return standData;
     }
 
     // Marks brewing stand as owned by player when placed
@@ -207,28 +224,53 @@ public class BrewingLeveler extends SourceLeveler {
         return null;
     }
 
+    private List<Pair<BrewingXpSource, Skill>> getSources(List<ItemStack> items) {
+        return items.stream().map(this::getSource).collect(Collectors.toList());
+    }
+
     public static class BrewingStandData {
 
-        private final Map<Integer, Boolean> potionSlots;
-        private final ItemStack ingredient;
+        private final Map<Integer, BrewingSlot> slots;
 
-        public BrewingStandData(ItemStack ingredient) {
-            this.potionSlots = new HashMap<>();
-            this.ingredient = ingredient;
+        public BrewingStandData() {
+            this.slots = new HashMap<>();
         }
 
-        public boolean isSlotBrewed(int slot) {
-            return potionSlots.getOrDefault(slot, false);
+        public BrewingSlot getSlot(int slot) {
+            return slots.computeIfAbsent(slot, s -> new BrewingSlot());
         }
 
-        public void setSlotBrewed(int slot, boolean isSlotBrewed) {
-            potionSlots.put(slot, isSlotBrewed);
+    }
+
+    public static class BrewingSlot {
+
+        private boolean brewed;
+        private final List<ItemStack> ingredients;
+
+        public BrewingSlot() {
+            this.brewed = false;
+            this.ingredients = new ArrayList<>();
         }
 
-        public ItemStack getIngredient() {
-            return ingredient;
+        public boolean isBrewed() {
+            return brewed;
         }
 
+        public void setBrewed(boolean brewed) {
+            this.brewed = brewed;
+        }
+
+        public List<ItemStack> getIngredients() {
+            return ingredients;
+        }
+
+        public void addIngredient(ItemStack item) {
+            this.ingredients.add(item);
+        }
+
+        public void resetIngredients() {
+            this.ingredients.clear();
+        }
     }
 
 }
