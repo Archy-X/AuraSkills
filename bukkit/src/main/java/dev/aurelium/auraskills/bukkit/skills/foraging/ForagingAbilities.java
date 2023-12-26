@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
+import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -51,16 +52,14 @@ public class ForagingAbilities extends AbilityImpl {
         }
     }
 
-    public void axeMaster(EntityDamageByEntityEvent event, Player player, User user) {
+    public DamageModifier axeMaster(Player player, User user) {
         var ability = Abilities.AXE_MASTER;
 
-        if (isDisabled(ability)) return;
+        if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
 
-        if (failsChecks(player, ability)) return;
+        if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
-        if (user.getAbilityLevel(ability) == 0) return;
-
-        event.setDamage(event.getDamage() * (1 + (getValue(ability, user) / 100)));
+        return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
     }
 
     @EventHandler(priority = EventPriority.HIGH)

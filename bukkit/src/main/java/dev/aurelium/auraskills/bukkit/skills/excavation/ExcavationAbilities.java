@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -12,7 +13,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ExcavationAbilities extends AbilityImpl {
@@ -21,16 +21,14 @@ public class ExcavationAbilities extends AbilityImpl {
         super(plugin, Abilities.METAL_DETECTOR, Abilities.EXCAVATOR, Abilities.SPADE_MASTER, Abilities.BIGGER_SCOOP, Abilities.LUCKY_SPADES);
     }
 
-    public void spadeMaster(EntityDamageByEntityEvent event, Player player, User user) {
+    public DamageModifier spadeMaster(Player player, User user) {
         var ability = Abilities.SPADE_MASTER;
 
-        if (isDisabled(ability)) return;
+        if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
 
-        if (failsChecks(player, ability)) return;
+        if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
-        if (user.getAbilityLevel(ability) == 0) return;
-
-        event.setDamage(event.getDamage() * (1 + (getValue(ability, user) / 100)));
+        return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
     }
 
     public void biggerScoop(Player player, User user, Block block) {

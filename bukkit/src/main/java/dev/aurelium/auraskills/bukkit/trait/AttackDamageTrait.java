@@ -2,12 +2,12 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
-import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.api.util.NumberUtil;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.mechanics.DamageType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class AttackDamageTrait extends TraitImpl {
 
@@ -20,17 +20,16 @@ public class AttackDamageTrait extends TraitImpl {
         return 0;
     }
 
-    public void strength(EntityDamageByEntityEvent event, User user, DamageType damageType) {
+    public DamageModifier strength(User user, DamageType damageType) {
         Trait trait = Traits.ATTACK_DAMAGE;
-        if (!trait.isEnabled()) return;
+        if (!trait.isEnabled()) return DamageModifier.none();
 
-        if (damageType == DamageType.HAND && trait.optionBoolean("hand_damage")) {
-            applyStrength(event, user);
-        } else if (damageType == DamageType.BOW && trait.optionBoolean("bow_damage")) {
-            applyStrength(event, user);
-        } else {
-            applyStrength(event, user);
+        if (damageType == DamageType.HAND && !trait.optionBoolean("hand_damage")) {
+            return DamageModifier.none();
+        } else if (damageType == DamageType.BOW && !trait.optionBoolean("bow_damage")) {
+            return DamageModifier.none();
         }
+        return applyStrength(user);
     }
 
     @Override
@@ -42,12 +41,12 @@ public class AttackDamageTrait extends TraitImpl {
         }
     }
 
-    private void applyStrength(EntityDamageByEntityEvent event, User user) {
+    private DamageModifier applyStrength(User user) {
         double value = user.getBonusTraitLevel(Traits.ATTACK_DAMAGE);
         if (Traits.ATTACK_DAMAGE.optionBoolean("use_percent")) {
-            event.setDamage(event.getDamage() * (1 + (value) / 100));
+            return new DamageModifier(value / 100, DamageModifier.Operation.MULTIPLY);
         } else {
-            event.setDamage(event.getDamage() + value);
+            return new DamageModifier(value, DamageModifier.Operation.ADD_BASE);
         }
     }
 

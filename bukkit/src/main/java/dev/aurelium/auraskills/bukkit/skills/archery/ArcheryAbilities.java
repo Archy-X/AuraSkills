@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -53,16 +54,14 @@ public class ArcheryAbilities extends AbilityImpl {
         reloadCritChance(player, user);
     }
 
-    public void bowMaster(EntityDamageByEntityEvent event, Player player, User user) {
+    public DamageModifier bowMaster(Player player, User user) {
         var ability = Abilities.BOW_MASTER;
-        if (isDisabled(ability)) return;
 
-        if (failsChecks(player, ability)) return;
+        if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
 
-        if (user.getAbilityLevel(ability) > 0) {
-            double multiplier = 1 + (getValue(ability, user) / 100);
-            event.setDamage(event.getDamage() * multiplier);
-        }
+        if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
+
+        return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

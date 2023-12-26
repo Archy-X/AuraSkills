@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
+import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,6 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class FightingAbilities extends AbilityImpl {
 
@@ -45,40 +47,34 @@ public class FightingAbilities extends AbilityImpl {
         user.addTraitModifier(new TraitModifier(modifierName, Traits.CRIT_DAMAGE, value), false);
     }
 
-    public void swordMaster(EntityDamageByEntityEvent event, Player player, User user) {
+    public DamageModifier swordMaster(Player player, User user) {
         var ability = Abilities.SWORD_MASTER;
 
-        if (isDisabled(ability)) return;
+        if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
 
-        if (failsChecks(player, ability)) return;
+        if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
-        if (user.getAbilityLevel(ability) > 0) {
-            event.setDamage(event.getDamage() * (1 + (getValue(ability, user) / 100)));
-        }
+        return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
     }
 
-    public void firstStrike(EntityDamageByEntityEvent event, User user, Player player) {
+    public DamageModifier firstStrike(User user, Player player) {
         var ability = Abilities.FIRST_STRIKE;
         
-        if (isDisabled(ability)) return;
-        
-        if (failsChecks(player, ability)) return;
+        if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
 
         // Player is on cooldown
-        if (player.hasMetadata("AureliumSkills-FirstStrike")) return;
+        if (player.hasMetadata("AureliumSkills-FirstStrike")) return DamageModifier.none();
         
-        if (user.getAbilityLevel(ability) == 0) return;
+        if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
         
         Locale locale = user.getLocale();
-        //Modifies damage
-        double modifier = getValue(ability, user) / 100;
-        event.setDamage(event.getDamage() * (1 + modifier));
+
         if (ability.optionBoolean("enable_message", true)) {
             plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.FIRST_STRIKE_DEALT, locale));
         }
-        //Adds metadata
+        // Adds metadata
         player.setMetadata("AureliumSkills-FirstStrike", new FixedMetadataValue(plugin, true));
-        //Increments counter
+        // Increments counter
         AbilityData abilityData = user.getAbilityData(ability);
         if (abilityData.containsKey("counter")) {
             abilityData.setData("counter", abilityData.getInt("counter") + 1);
@@ -88,17 +84,16 @@ public class FightingAbilities extends AbilityImpl {
         int id = abilityData.getInt("counter");
         // Schedules metadata removal
         long cooldown = ability.optionInt("cooldown_ticks", 6000);
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (user.getAbilityData(ability).containsKey("counter")) {
-                    if (user.getAbilityData(ability).getInt("counter") == id) {
-                        player.removeMetadata("AureliumSkills-FirstStrike", plugin);
-                    }
+        plugin.getScheduler().scheduleSync(() -> {
+            if (user.getAbilityData(ability).containsKey("counter")) {
+                if (user.getAbilityData(ability).getInt("counter") == id) {
+                    player.removeMetadata("AureliumSkills-FirstStrike", plugin);
                 }
             }
-        }.runTaskLater(plugin, cooldown);
+        }, cooldown * 50, TimeUnit.MILLISECONDS);
+
+        double modifier = getValue(ability, user) / 100;
+        return new DamageModifier(modifier, DamageModifier.Operation.ADD_COMBINED);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

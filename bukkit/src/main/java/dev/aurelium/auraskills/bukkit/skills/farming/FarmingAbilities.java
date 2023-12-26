@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -13,7 +14,6 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -107,16 +107,14 @@ public class FarmingAbilities extends AbilityImpl {
                 || mat.equals(Material.POISONOUS_POTATO);
     }
 
-    public void scytheMaster(EntityDamageByEntityEvent event, Player player, User user) {
+    public DamageModifier scytheMaster(Player player, User user) {
         var ability = Abilities.SCYTHE_MASTER;
 
-        if (isDisabled(ability)) return;
+        if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
 
-        if (failsChecks(player, ability)) return;
+        if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
-        if (user.getAbilityLevel(ability) > 0) {
-            event.setDamage(event.getDamage() * (1 + (getValue(ability, user) / 100)));
-        }
+        return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
     }
 
 }

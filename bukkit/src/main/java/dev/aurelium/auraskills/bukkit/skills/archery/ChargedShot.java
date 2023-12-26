@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.bukkit.mana.ManaAbilityProvider;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
+import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -129,11 +130,12 @@ public class ChargedShot extends ManaAbilityProvider {
         }
     }
 
-    public void applyChargedShot(EntityDamageByEntityEvent event) {
-        if (event.getDamager().hasMetadata("ChargedShotMultiplier")) {
-            double multiplier = event.getDamager().getMetadata("ChargedShotMultiplier").get(0).asDouble();
-            event.setDamage(event.getDamage() * multiplier);
+    public DamageModifier applyChargedShot(EntityDamageByEntityEvent event) {
+        if (!event.getDamager().hasMetadata("ChargedShotMultiplier")) {
+            return DamageModifier.none();
         }
+        double multiplier = event.getDamager().getMetadata("ChargedShotMultiplier").get(0).asDouble();
+        return new DamageModifier(multiplier - 1.0, DamageModifier.Operation.ADD_COMBINED);
     }
 
     @Override

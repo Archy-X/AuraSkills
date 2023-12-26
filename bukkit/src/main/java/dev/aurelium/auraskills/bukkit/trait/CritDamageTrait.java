@@ -30,9 +30,4 @@ public class CritDamageTrait extends TraitImpl {
         plugin.getAbilityManager().getAbilityImpl(FightingAbilities.class).reloadCritDamage(player, user);
     }
 
-    public double getCritMultiplier(User user) {
-        return 1 + (user.getEffectiveTraitLevel(Traits.CRIT_DAMAGE) / 100);
-    }
-
-
 }
