@@ -157,7 +157,7 @@ public class RegionManager {
         RegionCoordinate regionCoordinate = new RegionCoordinate(worldName, regionX, regionZ);
         Region region = getRegion(regionCoordinate);
         if (region == null) return;
-        if (region.getChunkMap().size() == 0) return;
+        if (region.getChunkMap().isEmpty()) return;
 
         File file = new File(plugin.getDataFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
         try {
@@ -167,7 +167,7 @@ public class RegionManager {
                 // Save each chunk
                 saveChunk(nbtFile, chunkData);
             }
-            if (nbtFile.getKeys().size() == 0) {
+            if (nbtFile.getKeys().isEmpty()) {
                 if (file.exists()) {
                     try {
                         Files.delete(file.toPath());
@@ -197,16 +197,16 @@ public class RegionManager {
             compound.setInteger("z", block.getZ());
             placedBlocks.addCompound(compound);
         }
-        if (placedBlocks.size() == 0) {
+        if (placedBlocks.isEmpty()) {
             chunk.removeKey("placed_blocks");
         }
-        if (chunk.getKeys().size() == 0) {
+        if (chunk.getKeys().isEmpty()) {
             nbtFile.removeKey(chunk.getName());
         }
     }
 
     public void saveAllRegions(boolean clearUnused, boolean serverShutdown) {
-        if (saving) return;
+        if (saving && !serverShutdown) return;
         saving = true;
         for (Region region : regions.values()) {
             try {

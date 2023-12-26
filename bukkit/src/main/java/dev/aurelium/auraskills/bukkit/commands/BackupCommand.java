@@ -35,7 +35,7 @@ public class BackupCommand extends BaseCommand {
             Locale locale = plugin.getLocale(issuer);
             issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_SAVE_SAVING, locale));
             try {
-                File file = backupProvider.saveBackup(issuer, true);
+                File file = backupProvider.saveBackup(true);
                 MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_SAVE_SAVED,
                         "type", plugin.getStorageProvider().getClass().getSimpleName(),
                         "file", file.getName()).send(issuer);

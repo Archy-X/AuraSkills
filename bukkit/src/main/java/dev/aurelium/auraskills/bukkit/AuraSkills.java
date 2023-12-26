@@ -80,6 +80,7 @@ import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.file.FileUtil;
 import fr.minuskube.inv.InventoryManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -88,6 +89,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.io.File;
 import java.io.InputStream;
@@ -243,10 +245,39 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         if (storageProvider instanceof SqlStorageProvider sqlStorageProvider) {
             sqlStorageProvider.getPool().disable();
         }
+        regionManager.saveAllRegions(false, true);
+        regionManager.clearRegionMap();
+        try {
+            backupAutomatically();
+        } catch (Exception e) {
+            logger.warn("Error creating automatic backup");
+            e.printStackTrace();
+        }
         // Remove fleeting
         var agilityAbilities = getAbilityManager().getAbilityImpl(AgilityAbilities.class);
         for (Player player : Bukkit.getOnlinePlayers()) {
             agilityAbilities.removeFleetingQuit(player);
+        }
+    }
+
+    private void backupAutomatically() throws Exception {
+        // Automatic backups
+        if (!configBoolean(Option.AUTOMATIC_BACKUPS_ENABLED)) {
+            return;
+        }
+        File metaFile = new File(this.getDataFolder(), "/backups/meta.yml");
+        ConfigurationNode metaConfig = FileUtil.loadYamlFile(metaFile);
+
+        long lastBackup = metaConfig.node("last_automatic_backup").getLong(0);
+        // Save backup if past minimum interval
+        if (lastBackup + (long) (configDouble(Option.AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS) * 3600000) <= System.currentTimeMillis()) {
+            if (backupProvider == null) {
+                return;
+            }
+            backupProvider.saveBackup(false);
+            // Update meta file
+            metaConfig.node("last_automatic_backup").set(System.currentTimeMillis());
+            FileUtil.saveYamlFile(metaFile, metaConfig);
         }
     }
 

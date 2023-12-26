@@ -43,7 +43,7 @@ public class BackupProvider {
         }
     }
 
-    public File saveBackup(CommandIssuer issuer, boolean savePlayerData) throws Exception {
+    public File saveBackup(boolean savePlayerData) throws Exception {
         // Save online players
         if (savePlayerData) {
             for (User user : plugin.getUserManager().getOnlineUsers()) {
