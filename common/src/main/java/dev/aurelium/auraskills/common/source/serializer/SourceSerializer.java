@@ -54,16 +54,16 @@ public abstract class SourceSerializer<T> implements TypeSerializer<T> {
     protected <V> V[] pluralizedArray(String key, ConfigurationNode source, Class<V> type) throws SerializationException {
         V[] array;
         String pluralKey = English.plural(key); // Convert key to plural
-        if (source.hasChild(key)) { // Singular case
-            array = (V[]) Array.newInstance(type, 1);
-            array[0] = source.node(key).get(type);
-        } else if (source.hasChild(pluralKey)) { // Plural case
+        if (source.hasChild(pluralKey)) {
             List<V> list = source.node(pluralKey).getList(type);
             if (list != null) {
                 array = list.toArray((V[]) Array.newInstance(type, list.size()));
             } else {
                 array = null;
             }
+        } else if (source.hasChild(key)) { // Singular case
+            array = (V[]) Array.newInstance(type, 1);
+            array[0] = source.node(key).get(type);
         } else {
             array = null;
         }

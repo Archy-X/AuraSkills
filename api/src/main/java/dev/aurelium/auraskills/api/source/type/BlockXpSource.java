@@ -45,6 +45,15 @@ public interface BlockXpSource extends XpSource {
     BlockXpSourceState[] getStates();
 
     /**
+     * Gets the block states the block must be one tick after interacting with the source block
+     * in order for XP to be given.
+     *
+     * @return the required block states after interaction
+     */
+    @Nullable
+    BlockXpSourceState[] getAfterStates();
+
+    /**
      * Gets the multiplier for the xp of the source based on the block state.
      * If there is no block state multiplier set, it will always return 1.
      *

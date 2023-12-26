@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class BlockLeveler extends SourceLeveler {
 
@@ -79,11 +81,21 @@ public class BlockLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, block.getLocation(), skill)) return;
 
-        double multiplier = helper.getBlocksBroken(block, source);
-        multiplier *= helper.getStateMultiplier(block, source);
+        final double multiplier = helper.getBlocksBroken(block, source) * helper.getStateMultiplier(block, source);
 
-        plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
-        applyAbilities(skill, player, user, block, source);
+        Material materialBefore = block.getType();
+        if (source.getAfterStates() != null) {
+            plugin.getScheduler().scheduleSync(() -> {
+                // Checks that the block after one tick is the same material and matches the after_state/after_states
+                if (materialBefore == block.getType() && matchesStates(block, source.getAfterStates())) {
+                    plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
+                    applyAbilities(skill, player, user, block, source);
+                }
+            }, 50, TimeUnit.MILLISECONDS);
+        } else { // Handle sources without after_state/after_states
+            plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
+            applyAbilities(skill, player, user, block, source);
+        }
     }
 
     private void applyAbilities(Skill skill, Player player, User user, Block block, BlockXpSource source) {
@@ -134,43 +146,43 @@ public class BlockLeveler extends SourceLeveler {
             }
 
             // Check block state
-            boolean anyStateMatches = true;
             if (source.getStates() != null) {
-                anyStateMatches = false;
-                // Convert block data to json
-                String blockDataString = block.getBlockData().getAsString(true);
-                Map<String, Object> blockDataMap = parseFromBlockData(blockDataString);
-                // Check if block data matches defined states
-                for (BlockXpSource.BlockXpSourceState state : source.getStates()) {
-                    if (state == null) continue;
-                    boolean stateMatches = true;
-                    for (Map.Entry<String, Object> stateEntry : state.getStateMap().entrySet()) {
-                        String key = stateEntry.getKey();
-                        Object value = stateEntry.getValue();
-                        if (!blockDataMap.containsKey(key)) {
-                            stateMatches = false;
-                            break;
-                        }
-                        if (!blockDataMap.get(key).equals(value)) {
-                            stateMatches = false;
-                            break;
-                        }
-                    }
-                    // If one state matches, then the block matches and we can stop checking
-                    if (stateMatches) {
-                        anyStateMatches = true;
-                        break;
-                    }
+                // Skip if no state matches
+                if (!matchesStates(block, source.getStates())) {
+                    continue;
                 }
-            }
-            // Skip if no state matches
-            if (!anyStateMatches) {
-                continue;
             }
 
             return Pair.fromEntry(entry);
         }
         return null;
+    }
+
+    private boolean matchesStates(Block block, BlockXpSource.BlockXpSourceState[] states) {
+        String blockDataString = block.getBlockData().getAsString(true);
+        Map<String, Object> blockDataMap = parseFromBlockData(blockDataString);
+        // Check if block data matches defined states
+        for (BlockXpSource.BlockXpSourceState state : states) {
+            if (state == null) continue;
+            boolean stateMatches = true;
+            for (Map.Entry<String, Object> stateEntry : state.getStateMap().entrySet()) {
+                String key = stateEntry.getKey();
+                Object value = stateEntry.getValue();
+                if (!blockDataMap.containsKey(key)) {
+                    stateMatches = false;
+                    break;
+                }
+                if (!blockDataMap.get(key).equals(value)) {
+                    stateMatches = false;
+                    break;
+                }
+            }
+            // If one state matches, then the block matches and we can stop checking
+            if (stateMatches) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Map<BlockXpSource, Skill> filterByTrigger(Map<BlockXpSource, Skill> sources, BlockXpSource.BlockTriggers trigger) {

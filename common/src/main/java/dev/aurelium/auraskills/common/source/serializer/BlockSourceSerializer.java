@@ -23,13 +23,14 @@ public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
         BlockXpSource.BlockTriggers[] triggers = requiredPluralizedArray("trigger", source, BlockXpSource.BlockTriggers.class);
         boolean checkReplace = source.node("check_replace").getBoolean(true);
         BlockXpSource.BlockXpSourceState[] states = pluralizedArray("state", source, BlockXpSource.BlockXpSourceState.class);
+        BlockXpSource.BlockXpSourceState[] afterStates = pluralizedArray("after_state", source, BlockXpSource.BlockXpSourceState.class);
         String stateMultiplier = source.node("state_multiplier").getString("");
         BlockXpSource.SupportBlockType supportBlockType = source.node("support_block").get(BlockXpSource.SupportBlockType.class, BlockXpSource.SupportBlockType.NONE);
 
         boolean trunk = source.node("trunk").getBoolean(false);
         boolean leaf = source.node("leaf").getBoolean(false);
 
-        return new BlockSource(plugin, getId(), getXp(source), getDisplayName(source), blocks, triggers, checkReplace, states, stateMultiplier, supportBlockType, trunk, leaf);
+        return new BlockSource(plugin, getId(), getXp(source), getDisplayName(source), blocks, triggers, checkReplace, states, afterStates, stateMultiplier, supportBlockType, trunk, leaf);
     }
 
     public static class BlockSourceStateSerializer extends SourceSerializer<BlockXpSource.BlockXpSourceState> {
