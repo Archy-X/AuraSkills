@@ -181,6 +181,7 @@ public class BossBarManager implements Listener {
             progress = 1.0;
         }
         bossBar.progress((float) progress);
+        bossBar.color(getColor(skill));
 
         plugin.getAudiences().player(player).showBossBar(bossBar);
     }
