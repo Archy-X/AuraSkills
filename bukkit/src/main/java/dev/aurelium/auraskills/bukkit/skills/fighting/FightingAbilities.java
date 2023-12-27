@@ -20,6 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -105,6 +106,8 @@ public class FightingAbilities extends AbilityImpl {
         if (!(event.getDamager() instanceof Player player)) return;
 
         if (failsChecks(player, ability)) return;
+
+        if (event.getCause() == EntityDamageEvent.DamageCause.THORNS) return;
         // If player used sword
         if (player.getInventory().getItemInMainHand().getType().name().toUpperCase(Locale.ROOT).contains("SWORD")) {
             User user = plugin.getUser(player);

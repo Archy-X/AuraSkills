@@ -75,7 +75,7 @@ sources:
     trunk: true
   warped_stem:
     block: warped_stem
-    xp: 10.0
+    xp: 12.0
     trunk: true
   nether_wart_block:
     block: nether_wart_block
@@ -115,6 +115,15 @@ sources:
     block: pink_petals
     xp: 0.4
     support_block: below
+  mushroom_stem:
+    block: mushroom_stem
+    xp: 7.0
+  brown_mushroom_block:
+    block: brown_mushroom_block
+    xp: 2.0
+  red_mushroom_block:
+    block: red_mushroom_block
+    xp: 2.0
 tags:
   lumberjack_applicable:
     - '*'

@@ -100,7 +100,7 @@ damage_holograms:
   colors:
     default: gray
     critical:
-      digits: [gray, white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
+      digits: [white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
 start_level: 0
 leaderboards:
   update_period: 6000

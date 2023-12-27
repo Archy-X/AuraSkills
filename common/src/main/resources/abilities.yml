@@ -271,8 +271,8 @@ abilities:
     max_level: 0
   auraskills/first_strike:
     enabled: true
-    base_value: 20.0
-    value_per_level: 8.0
+    base_value: 15.0
+    value_per_level: 5.0
     unlock: '{start}+4'
     level_up: 5
     max_level: 0
