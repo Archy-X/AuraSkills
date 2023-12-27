@@ -61,8 +61,10 @@ public class FileUserMigrator {
         ConfigurationNode skillsNode = config.node("skills");
         for (ConfigurationNode oldNode : skillsNode.childrenMap().values()) {
             String oldKey = (String) oldNode.key();
-            skillsNode.node(PLUGIN_NAME + "/" + oldKey).set(oldNode.raw());
-            skillsNode.removeChild(oldKey);
+            if (oldKey != null) {
+                skillsNode.node(PLUGIN_NAME + "/" + oldKey).set(oldNode.raw());
+                skillsNode.removeChild(oldKey);
+            }
         }
         // Add namespaces to stat modifiers
         ConfigurationNode statModifiersNode = config.node("stat_modifiers");
@@ -74,8 +76,10 @@ public class FileUserMigrator {
         ConfigurationNode abilityDataNode = config.node("ability_data");
         for (ConfigurationNode oldNode : abilityDataNode.childrenMap().values()) {
             String oldKey = (String) oldNode.key();
-            skillsNode.node(PLUGIN_NAME + "/" + oldKey).set(oldNode.raw());
-            skillsNode.removeChild(oldKey);
+            if (oldKey != null) {
+                abilityDataNode.node(PLUGIN_NAME + "/" + oldKey).set(oldNode.raw());
+                abilityDataNode.removeChild(oldKey);
+            }
         }
     }
 
