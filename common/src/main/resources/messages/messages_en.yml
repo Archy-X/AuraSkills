@@ -280,7 +280,7 @@ abilities:
       info: "-{value}% Absorption Dmg"
     revival:
       name: Revival
-      desc: Gain <red>+{value} Health <gray>and <gold>+{value_2} Regeneration for 30 seconds after respawning.
+      desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
       info: "+{value} Health, +{value_2} Regen"
       message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
   forging:

@@ -307,7 +307,7 @@ public class AlchemyAbilities extends AbilityImpl {
                         double modifierValue = wisdomPerType * uniqueTypes;
                         if (modifierValue > 0.0) {
                             StatModifier modifier = new StatModifier("AbilityModifier-WiseEffect", Stats.WISDOM, modifierValue);
-                            user.addStatModifier(modifier, false);
+                            user.addStatModifier(modifier, true);
                         }
                     } else {
                         user.removeStatModifier("AbilityModifier-WiseEffect", true);
