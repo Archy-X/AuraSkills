@@ -74,7 +74,7 @@ public class LeaderboardManager {
     }
 
     public List<SkillValue> getLeaderboard(Skill skill) {
-        return skillLeaderboards.get(skill);
+        return skillLeaderboards.computeIfAbsent(skill, s -> new ArrayList<>());
     }
 
     public void setLeaderboard(Skill skill, List<SkillValue> leaderboard) {

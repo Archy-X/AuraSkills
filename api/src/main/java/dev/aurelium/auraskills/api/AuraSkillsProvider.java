@@ -6,6 +6,11 @@ public final class AuraSkillsProvider {
 
     private static AuraSkillsApi instance = null;
 
+    /**
+     * Gets the instance of {@link AuraSkillsApi} containing API classes and methods.
+     *
+     * @return the API instance
+     */
     public static AuraSkillsApi getInstance() {
         AuraSkillsApi instance = AuraSkillsProvider.instance;
         if (instance == null) {

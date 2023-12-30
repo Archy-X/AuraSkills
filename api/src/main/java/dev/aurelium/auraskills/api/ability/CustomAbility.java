@@ -1,10 +1,12 @@
 package dev.aurelium.auraskills.api.ability;
 
+import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.Skill;
 
+import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -24,6 +26,13 @@ public class CustomAbility implements Ability {
         this.hasSecondaryValue = hasSecondaryValue;
     }
 
+    /**
+     * Gets a new {@link CustomAbilityBuilder} used to create a custom ability.
+     *
+     * @param name the plain name of the ability in all lowercase
+     * @param registry the {@link NamespacedRegistry} obtained from {@link AuraSkillsApi#useRegistry(String, File)}
+     * @return a new builder
+     */
     public static CustomAbilityBuilder builder(String name, NamespacedRegistry registry) {
         return new CustomAbilityBuilder(NamespacedId.from(registry.getNamespace(), name));
     }
@@ -182,51 +191,120 @@ public class CustomAbility implements Ability {
             this.id = id;
         }
 
+        /**
+         * Sets the default base value of the ability. This is not required if the content directory
+         * contains an abilities.yml that defines a base_value already.
+         *
+         * @param baseValue the default base value
+         * @return the builder
+         */
         public CustomAbilityBuilder baseValue(double baseValue) {
             defined.setBaseValue(baseValue);
             return this;
         }
 
+        /**
+         * Sets the default value per level of the ability. This is not required if the content directory
+         * contains an abilities.yml that defines a value_per_level already.
+         *
+         * @param valuePerLevel the default value per level
+         * @return the builder
+         */
         public CustomAbilityBuilder valuePerLevel(double valuePerLevel) {
             defined.setValuePerLevel(valuePerLevel);
             return this;
         }
 
+        /**
+         * Sets the default unlock level of the ability. This is not required if the content directory
+         * contains an abilities.yml that defines an unlock already.
+         *
+         * @param unlock the default unlock level
+         * @return the builder
+         */
         public CustomAbilityBuilder unlock(int unlock) {
             defined.setUnlock(unlock);
             return this;
         }
 
+        /**
+         * Sets the default level up interval of the ability. This is not required if the content directory
+         * contains an abilities.yml that defines a level_up already.
+         *
+         * @param levelUp the default level up interval
+         * @return the builder
+         */
         public CustomAbilityBuilder levelUp(int levelUp) {
             defined.setLevelUp(levelUp);
             return this;
         }
 
+        /**
+         * Sets the default max level of the ability. This is not required if the content directory
+         * contains an abilities.yml that defines a max_level already.
+         *
+         * @param maxLevel the default max level
+         * @return the builder
+         */
         public CustomAbilityBuilder maxLevel(int maxLevel) {
             defined.setMaxLevel(maxLevel);
             return this;
         }
 
+        /**
+         * Sets whether the ability has a secondary value. This is required for the plugin to load
+         * secondary values from abilities.yml.
+         *
+         * @param hasSecondaryValue whether the ability has a secondary value
+         * @return the builder
+         */
         public CustomAbilityBuilder hasSecondaryValue(boolean hasSecondaryValue) {
             this.hasSecondaryValue = hasSecondaryValue;
             return this;
         }
 
+        /**
+         * Sets the default display name of the ability.
+         *
+         * @param displayName the default display name
+         * @return the builder
+         */
         public CustomAbilityBuilder displayName(String displayName) {
             defined.setDisplayName(displayName);
             return this;
         }
 
+        /**
+         * Sets the default description of the ability. This should include the {value} placeholder
+         * for the ability value. If the ability {@link #hasSecondaryValue()}, the {value_2} placeholder
+         * should be included as well.
+         *
+         * @param description the default description
+         * @return the builder
+         */
         public CustomAbilityBuilder description(String description) {
             defined.setDescription(description);
             return this;
         }
 
+        /**
+         * Sets the default info text of the ability. This should include the {value} placeholder
+         * for the ability value. If the ability {@link #hasSecondaryValue()}, the {value_2} placeholder
+         * should be included as well.
+         *
+         * @param info the default info text
+         * @return the builder
+         */
         public CustomAbilityBuilder info(String info) {
             defined.setInfo(info);
             return this;
         }
 
+        /**
+         * Builds the {@link CustomAbility}. The ability still must be registered using {@link NamespacedRegistry#registerAbility(CustomAbility)}.
+         *
+         * @return the {@link CustomAbility}
+         */
         public CustomAbility build() {
             return new CustomAbility(id, defined, hasSecondaryValue);
         }
