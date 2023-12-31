@@ -155,6 +155,9 @@ public class CommandRegistrar {
         manager.registerCommand(new ProfileCommand(plugin));
         manager.registerCommand(new BackupCommand(plugin));
         manager.registerCommand(new XpCommand(plugin));
+    }
+
+    public void registerSkillCommands(PaperCommandManager manager) {
         if (plugin.configBoolean(Option.ENABLE_SKILL_COMMANDS)) {
             if (Skills.FARMING.isEnabled()) { manager.registerCommand(new SkillCommands.FarmingCommand(plugin)); }
             if (Skills.FORAGING.isEnabled()) { manager.registerCommand(new SkillCommands.ForagingCommand(plugin)); }

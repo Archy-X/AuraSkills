@@ -89,7 +89,7 @@ public class AgilityAbilities extends AbilityImpl {
 
         if (failsChecks(player, ability)) return 1.0;
 
-        if (player.hasPermission("aureliumskills.agility")) {
+        if (player.hasPermission("auraskills.skill.agility")) {
             User user = plugin.getUser(player);
             if (user.getAbilityLevel(ability) > 0) {
                 return 1 + (getValue(ability, user) / 100);
