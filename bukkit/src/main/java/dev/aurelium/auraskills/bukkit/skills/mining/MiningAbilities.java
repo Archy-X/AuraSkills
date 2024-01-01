@@ -61,10 +61,12 @@ public class MiningAbilities extends AbilityImpl {
             Collection<ItemStack> drops = block.getDrops(tool);
             for (ItemStack item : drops) {
                 Location location = block.getLocation().add(0.5, 0.5, 0.5);
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUCKY_MINER);
+
+                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUCKY_MINER, toInventory);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation(), event.getItem());
+                    ItemUtils.giveBlockLoot(player, block, event);
                 }
             }
         }

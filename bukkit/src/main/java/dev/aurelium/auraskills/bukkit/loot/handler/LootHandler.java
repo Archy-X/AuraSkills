@@ -7,12 +7,13 @@ import com.archyx.lootmanager.loot.type.CommandLoot;
 import com.archyx.lootmanager.loot.type.ItemLoot;
 import com.archyx.lootmanager.util.CommandExecutor;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.SourceContextWrapper;
+import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.user.User;
@@ -62,12 +63,15 @@ public abstract class LootHandler {
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
-        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, location, cause);
+        boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+
+        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, location, cause, toInventory);
         Bukkit.getPluginManager().callEvent(dropEvent);
 
         if (dropEvent.isCancelled()) return;
 
-        block.getWorld().dropItem(dropEvent.getLocation(), dropEvent.getItem());
+        ItemUtils.giveBlockLoot(player, block, dropEvent);
+
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
     }
@@ -81,7 +85,7 @@ public abstract class LootHandler {
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(amount);
 
-        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, event.getHook().getLocation(), cause);
+        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, event.getHook().getLocation(), cause, false);
         Bukkit.getPluginManager().callEvent(dropEvent);
 
         if (dropEvent.isCancelled()) return;

@@ -43,10 +43,12 @@ public class ForagingAbilities extends AbilityImpl {
         if (rand.nextDouble() < (getValue(ability, user) / 100)) {
             for (ItemStack item : block.getDrops(player.getInventory().getItemInMainHand())) {
                 Location location = block.getLocation().add(0.5, 0.5, 0.5);
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUMBERJACK);
+                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUMBERJACK, toInventory);
                 Bukkit.getPluginManager().callEvent(event);
+
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation(), event.getItem());
+                    ItemUtils.giveBlockLoot(player, block, event);
                 }
             }
         }

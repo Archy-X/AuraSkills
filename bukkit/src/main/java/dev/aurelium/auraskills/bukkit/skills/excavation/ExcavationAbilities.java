@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -55,10 +56,12 @@ public class ExcavationAbilities extends AbilityImpl {
                 }
                 Location loc = block.getLocation().add(0.5, 0.5, 0.5);
 
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), drop, loc, LootDropEvent.Cause.BIGGER_SCOOP);
+                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), drop, loc, LootDropEvent.Cause.BIGGER_SCOOP, toInventory);
                 Bukkit.getPluginManager().callEvent(event);
+
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation(), event.getItem());
+                    ItemUtils.giveBlockLoot(player, block, event);
                 }
             }
         }

@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
+import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -96,14 +97,15 @@ public class DoubleDropTrait extends TraitImpl {
                     } else {
                         itemToDrop = item.clone();
                     }
-
-                    LootDropEvent lootDropEvent = new LootDropEvent(player, user.toApi(), itemToDrop, location, LootDropEvent.Cause.LUCK_DOUBLE_DROP);
+                    boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+                    LootDropEvent lootDropEvent = new LootDropEvent(player, user.toApi(), itemToDrop, location, LootDropEvent.Cause.LUCK_DOUBLE_DROP, toInventory);
                     Bukkit.getPluginManager().callEvent(lootDropEvent);
 
                     if (lootDropEvent.isCancelled()) {
                         continue;
                     }
-                    block.getWorld().dropItem(lootDropEvent.getLocation(), lootDropEvent.getItem());
+
+                    ItemUtils.giveBlockLoot(player, block, lootDropEvent);
                 }
             }
         }

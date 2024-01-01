@@ -4,6 +4,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    idea
 }
 
 repositories {
@@ -35,7 +36,7 @@ dependencies {
     implementation("com.github.Archy-X:LootManager:60d109fdde")
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
-    compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
     compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9")
@@ -92,4 +93,11 @@ tasks.withType<JavaCompile>() {
     options.compilerArgs.add("-parameters")
     options.isFork = true
     options.forkOptions.executable = "javac"
+}
+
+idea {
+    module {
+        isDownloadSources = true
+        isDownloadJavadoc = true
+    }
 }

@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -39,10 +40,13 @@ public class FarmingAbilities extends AbilityImpl {
                 checkMelonSilkTouch(player, block, item);
 
                 Location location = block.getLocation().add(0.5, 0.5, 0.5);
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.BOUNTIFUL_HARVEST);
+
+                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.BOUNTIFUL_HARVEST, toInventory);
                 Bukkit.getPluginManager().callEvent(event);
+
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation(), event.getItem());
+                    ItemUtils.giveBlockLoot(player, block, event);
                 }
             }
         }
@@ -64,10 +68,12 @@ public class FarmingAbilities extends AbilityImpl {
                 droppedItem.setAmount(2);
 
                 Location location = block.getLocation().add(0.5, 0.5, 0.5);
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), droppedItem, location, LootDropEvent.Cause.TRIPLE_HARVEST);
+                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+                LootDropEvent event = new LootDropEvent(player, user.toApi(), droppedItem, location, LootDropEvent.Cause.TRIPLE_HARVEST, toInventory);
                 Bukkit.getPluginManager().callEvent(event);
+
                 if (!event.isCancelled()) {
-                    block.getWorld().dropItem(event.getLocation(), event.getItem());
+                    ItemUtils.giveBlockLoot(player, block, event);
                 }
             }
         }

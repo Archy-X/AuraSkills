@@ -3,9 +3,12 @@ package dev.aurelium.auraskills.bukkit.util;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -14,6 +17,27 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class ItemUtils {
+
+	public static void giveBlockLoot(Player player, Block block, LootDropEvent event) {
+		if (event.isToInventory()) {
+			Map<Integer, ItemStack> notAdded = player.getInventory().addItem(event.getItem());
+			for (ItemStack leftover : notAdded.values()) {
+				block.getWorld().dropItem(event.getLocation(), leftover);
+			}
+		} else {
+			block.getWorld().dropItem(event.getLocation(), event.getItem());
+		}
+	}
+
+	public static boolean hasTelekinesis(ItemStack item) {
+		if (item == null || item.getType() == Material.AIR) return false;
+		for (Enchantment enchant : item.getEnchantments().keySet()) {
+			if (enchant.getKey().getKey().equals("telekinesis")) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static boolean isArmor(Material material) {
 		String materialName = material.name().toLowerCase(Locale.ROOT);

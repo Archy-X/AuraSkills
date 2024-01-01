@@ -44,7 +44,7 @@ public class FishingAbilities extends AbilityImpl {
 
             drop.setAmount(drop.getAmount() * 2);
 
-            LootDropEvent dropEvent = new LootDropEvent(player, user.toApi(), drop, item.getLocation(), LootDropEvent.Cause.LUCKY_CATCH);
+            LootDropEvent dropEvent = new LootDropEvent(player, user.toApi(), drop, item.getLocation(), LootDropEvent.Cause.LUCKY_CATCH, false);
             Bukkit.getPluginManager().callEvent(dropEvent);
 
             if (!dropEvent.isCancelled()) {

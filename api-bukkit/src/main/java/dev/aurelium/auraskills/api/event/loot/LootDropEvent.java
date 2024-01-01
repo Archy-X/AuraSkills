@@ -18,14 +18,16 @@ public class LootDropEvent extends Event implements Cancellable {
     private ItemStack item;
     private Location location;
     private final Cause cause;
+    private boolean toInventory;
     private boolean cancelled = false;
 
-    public LootDropEvent(Player player, SkillsUser user, ItemStack item, Location location, Cause cause) {
+    public LootDropEvent(Player player, SkillsUser user, ItemStack item, Location location, Cause cause, boolean toInventory) {
         this.player = player;
         this.user = user;
         this.item = item;
         this.location = location;
         this.cause = cause;
+        this.toInventory = toInventory;
     }
 
     public Player getPlayer() {
@@ -56,6 +58,14 @@ public class LootDropEvent extends Event implements Cancellable {
 
     public Cause getCause() {
         return cause;
+    }
+
+    public boolean isToInventory() {
+        return toInventory;
+    }
+
+    public void setToInventory(boolean toInventory) {
+        this.toInventory = toInventory;
     }
 
     @Override
