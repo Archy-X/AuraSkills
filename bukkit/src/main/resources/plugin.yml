@@ -65,6 +65,8 @@ permissions:
         default: op
     auraskills.command.profile:
         default: op
+    auraskills.command.resethealth:
+        default: op
     auraskills.command.modifier.add:
         default: op
     auraskills.command.modifier.remove:

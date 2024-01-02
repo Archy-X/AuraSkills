@@ -292,7 +292,7 @@ public class SkillsRootCommand extends BaseCommand {
 	}
 
 	@Subcommand("resethealth")
-	@CommandPermission("auraskills.*")
+	@CommandPermission("auraskills.command.resethealth")
 	@Description("Removes all attribute modifiers by Aurelium Skills for easy uninstalling. This only works on offline players.")
 	public void onResetHealth(CommandSender sender) {
 		if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) {

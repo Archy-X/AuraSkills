@@ -72,6 +72,8 @@ public class ForagingAbilities extends AbilityImpl {
 
         if (event.isCancelled()) return;
 
+        if (!event.getPlayer().isOnline()) return;
+
         // If is item taking durabilty damage is armor
         if (!ItemUtils.isArmor(event.getItem().getType())) {
             return;
