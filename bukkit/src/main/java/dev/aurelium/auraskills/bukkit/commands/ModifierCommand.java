@@ -29,7 +29,7 @@ public class ModifierCommand extends BaseCommand {
     }
 
     @Subcommand("add")
-    @CommandPermission("auraskills.command.modifier.add")
+    @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @stats @nothing @nothing true true")
     @Description("Adds a stat modifier to a player.")
     public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack) {
@@ -72,7 +72,7 @@ public class ModifierCommand extends BaseCommand {
     }
 
     @Subcommand("remove")
-    @CommandPermission("auraskills.command.modifier.remove")
+    @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @modifiers true")
     @Description("Removes a specific stat modifier from a player.")
     public void onRemove(CommandSender sender, @Flags("other") Player player, String name, @Default("false") boolean silent) {
@@ -91,7 +91,7 @@ public class ModifierCommand extends BaseCommand {
 
     @Subcommand("list")
     @CommandCompletion("@players @stats")
-    @CommandPermission("auraskills.command.modifier.list")
+    @CommandPermission("auraskills.command.modifier")
     @Description("Lists all or a specific stat's modifiers for a player.")
     public void onList(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stat stat) {
         Locale locale = plugin.getLocale(sender);
@@ -131,7 +131,7 @@ public class ModifierCommand extends BaseCommand {
 
     @Subcommand("removeall")
     @CommandCompletion("@players @stats")
-    @CommandPermission("auraskills.command.modifier.removeall")
+    @CommandPermission("auraskills.command.modifier")
     @Description("Removes all stat modifiers from a player.")
     public void onRemoveAll(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stat stat, @Default("false") boolean silent) {
         Locale locale = plugin.getLocale(sender);

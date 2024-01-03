@@ -65,67 +65,23 @@ permissions:
         default: op
     auraskills.command.profile:
         default: op
-    auraskills.command.resethealth:
+    auraskills.command.modifier:
         default: op
-    auraskills.command.modifier.add:
+    auraskills.command.armor.modifier:
         default: op
-    auraskills.command.modifier.remove:
+    auraskills.command.armor.requirement:
         default: op
-    auraskills.command.modifier.list:
+    auraskills.command.armor.multiplier:
         default: op
-    auraskills.command.modifier.removeall:
+    auraskills.command.item.modifier:
         default: op
-    auraskills.command.armor.modifier.add:
+    auraskills.command.item.requirement:
         default: op
-    auraskills.command.armor.modifier.remove:
-        default: op
-    auraskills.command.armor.modifier.list:
-        default: op
-    auraskills.command.armor.modifier.removeall:
-        default: op
-    auraskills.command.armor.requirement.add:
-        default: op
-    auraskills.command.armor.requirement.remove:
-        default: op
-    auraskills.command.armor.requirement.list:
-        default: op
-    auraskills.command.armor.requirement.removeall:
-        default: op
-    auraskills.command.armor.multiplier.add:
-        default: op
-    auraskills.command.armor.multiplier.remove:
-        default: op
-    auraskills.command.armor.multiplier.list:
-        default: op
-    auraskills.command.armor.multiplier.removeall:
-        default: op
-    auraskills.command.item.modifier.add:
-        default: op
-    auraskills.command.item.modifier.remove:
-        default: op
-    auraskills.command.item.modifier.list:
-        default: op
-    auraskills.command.item.modifier.removeall:
-        default: op
-    auraskills.command.item.requirement.add:
-        default: op
-    auraskills.command.item.requirement.remove:
-        default: op
-    auraskills.command.item.requirement.list:
-        default: op
-    auraskills.command.item.requirement.removeall:
+    auraskills.command.item.multiplier:
         default: op
     auraskills.command.item.register:
         default: op
     auraskills.command.item.give:
-        default: op
-    auraskills.command.item.multiplier.add:
-        default: op
-    auraskills.command.item.multiplier.remove:
-        default: op
-    auraskills.command.item.multiplier.list:
-        default: op
-    auraskills.command.item.multiplier.removeall:
         default: op
     auraskills.multiplier:
         default: false
