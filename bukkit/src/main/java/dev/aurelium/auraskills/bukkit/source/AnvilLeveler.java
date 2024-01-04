@@ -1,5 +1,8 @@
 package dev.aurelium.auraskills.bukkit.source;
 
+import com.ezylang.evalex.EvaluationException;
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.parser.ParseException;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -70,9 +73,10 @@ public class AnvilLeveler extends SourceLeveler {
         String multiplierString = source.getMultiplier();
         if (multiplierString != null) {
             multiplierString = TextUtil.replace(multiplierString, "{repair_cost}", String.valueOf(anvil.getRepairCost()));
+            Expression expression = new Expression(multiplierString);
             try {
-                multiplier = Double.parseDouble(multiplierString);
-            } catch (NumberFormatException e) {
+                multiplier = expression.evaluate().getNumberValue().doubleValue();
+            } catch (EvaluationException | ParseException e) {
                 plugin.logger().warn("Invalid multiplier for anvil source " + source.getId() + " in skill " + skill.getId());
                 e.printStackTrace();
             }

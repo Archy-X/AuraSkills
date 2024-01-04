@@ -51,12 +51,12 @@ sources:
   sugar_cane:
     block: sugar_cane
     xp: 2.0
-    triggers: [break, break_indirect]
+    trigger: break
     check_replace: true
   bamboo:
     block: bamboo
     xp: 0.25
-    triggers: [break, break_indirect]
+    trigger: break
     check_replace: true
   cocoa:
     block: cocoa
@@ -69,7 +69,7 @@ sources:
   cactus:
     block: cactus
     xp: 6.0
-    triggers: [break, break_indirect]
+    trigger: break
     check_replace: false
   brown_mushroom:
     block: brown_mushroom
@@ -82,7 +82,7 @@ sources:
   kelp:
     blocks: [kelp, kelp_plant]
     xp: 0.3
-    triggers: [break, break_indirect]
+    trigger: break
     check_replace: true
     menu_item:
       material: kelp

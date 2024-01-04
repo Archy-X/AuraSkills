@@ -1,6 +1,8 @@
 package dev.aurelium.auraskills.bukkit.level;
 
-import com.udojava.evalex.Expression;
+import com.ezylang.evalex.EvaluationException;
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.parser.ParseException;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
@@ -36,7 +38,12 @@ public class XpRequirementsLoader {
             // Load default section
             ConfigurationNode defaultConfig = config.node("default");
             if (!defaultConfig.virtual()) {
-                requirements.setDefaultXpRequirements(loadSection(defaultConfig));
+                try {
+                    requirements.setDefaultXpRequirements(loadSection(defaultConfig));
+                } catch (EvaluationException | ParseException e) {
+                    plugin.logger().warn("Failed to evaluate default XP requirements expression");
+                    e.printStackTrace();
+                }
                 plugin.logger().info("Loaded default section in " + FILE_NAME);
             }
 
@@ -52,7 +59,12 @@ public class XpRequirementsLoader {
                 }
                 // Only load if present
                 if (!skillNode.virtual()) {
-                    requirements.setSkillXpRequirements(skill, loadSection(skillNode));
+                    try {
+                        requirements.setSkillXpRequirements(skill, loadSection(skillNode));
+                    } catch (EvaluationException | ParseException e) {
+                        plugin.logger().warn("Failed to evaluate XP requirement expression for skill " + skill);
+                        e.printStackTrace();
+                    }
                     numLoaded++;
                 }
             }
@@ -65,7 +77,7 @@ public class XpRequirementsLoader {
         }
     }
 
-    private List<Integer> loadSection(ConfigurationNode config) throws SerializationException {
+    private List<Integer> loadSection(ConfigurationNode config) throws SerializationException, EvaluationException, ParseException {
         List<Integer> list = new ArrayList<>();
         int highestMaxLevel = plugin.config().getHighestMaxLevel();
 
@@ -87,8 +99,8 @@ public class XpRequirementsLoader {
             Expression expression = getXpExpression(config);
             // Add xp requirement for each level
             for (int i = 0; i < highestMaxLevel; i++) {
-                expression.setVariable("level", BigDecimal.valueOf(i + 2));
-               list.add((int) Math.round(expression.eval().doubleValue()));
+                expression.with("level", BigDecimal.valueOf(i + 2));
+                list.add((int) Math.round(expression.evaluate().getNumberValue().doubleValue()));
             }
         }
 
@@ -107,7 +119,7 @@ public class XpRequirementsLoader {
             if (variable.equals("expression")) continue;
 
             double variableValue = config.node(variable).getDouble();
-            expression.setVariable(variable, BigDecimal.valueOf(variableValue));
+            expression.with(variable, BigDecimal.valueOf(variableValue));
         }
         return expression;
     }

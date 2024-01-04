@@ -97,7 +97,6 @@ public interface BlockXpSource extends XpSource {
     enum BlockTriggers {
 
         BREAK,
-        BREAK_INDIRECT,
         INTERACT
 
     }
