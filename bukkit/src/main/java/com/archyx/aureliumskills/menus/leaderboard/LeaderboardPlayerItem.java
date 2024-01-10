@@ -13,6 +13,7 @@ import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -76,9 +77,12 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
                 }
             }
             // Set the player skin on the head
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(id);
             SkullMeta meta = (SkullMeta) baseItem.getItemMeta();
-            meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
-            baseItem.setItemMeta(meta);
+            if (offlinePlayer.getName() != null) {
+                meta.setOwningPlayer(offlinePlayer);
+                baseItem.setItemMeta(meta);
+            }
         }
         return baseItem;
     }
