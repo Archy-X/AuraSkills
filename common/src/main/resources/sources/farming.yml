@@ -70,7 +70,7 @@ sources:
     block: cactus
     xp: 6.0
     trigger: break
-    check_replace: false
+    check_replace: true
   brown_mushroom:
     block: brown_mushroom
     xp: 7.0

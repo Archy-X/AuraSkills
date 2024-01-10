@@ -182,7 +182,7 @@ public class SourceLoader {
         }
     }
 
-    private void registerMenuItem(Source source, ConfigurationNode sourceNode) throws SerializationException {
+    private void registerMenuItem(Source source, ConfigurationNode sourceNode) {
         // Parse menu item if present
         ConfigurationNode menuNode = sourceNode.node("menu_item");
         if (!menuNode.virtual()) {

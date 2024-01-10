@@ -986,7 +986,7 @@ sources:
     meter: Meter
     100_jumps: 100 Jumps
     mana: Mana Consumed
-    combine_level: Anvil Cost XP
+    combine_level: Anvil Cost Experience
     grindstone_level: Level of Enchant on Item
     enchant_level: Level of Enchant Received
 stats:
