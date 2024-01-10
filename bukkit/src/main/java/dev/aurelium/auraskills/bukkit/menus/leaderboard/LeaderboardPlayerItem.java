@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -61,8 +62,11 @@ public class LeaderboardPlayerItem extends AbstractItem implements TemplateItemP
         UUID id = skillValue.id();
         if (baseItem.getItemMeta() instanceof SkullMeta meta) {
             // Set the player skin on the head
-            meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
-            baseItem.setItemMeta(meta);
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(id);
+            if (offlinePlayer.getName() != null) {
+                meta.setOwningPlayer(offlinePlayer);
+                baseItem.setItemMeta(meta);
+            }
         }
         return baseItem;
     }
