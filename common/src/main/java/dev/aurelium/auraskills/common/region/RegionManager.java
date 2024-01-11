@@ -52,7 +52,6 @@ public abstract class RegionManager {
 
         File file = new File(plugin.getPluginFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
         if (file.exists()) {
-            plugin.logger().debug("Loading region " + region.getWorldName() + "," + region.getX() + "," + region.getZ());
             if (saving) {
                 region.setReload(true);
             }
