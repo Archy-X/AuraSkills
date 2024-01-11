@@ -7,11 +7,14 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.AuraSkillsBukkit;
 import dev.aurelium.auraskills.api.event.skill.SkillsLoadEvent;
 import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
+import dev.aurelium.auraskills.bukkit.api.ApiAuraSkillsBukkit;
+import dev.aurelium.auraskills.bukkit.api.ApiBukkitRegistrationUtil;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
@@ -99,6 +102,7 @@ import java.util.Locale;
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private AuraSkillsApi api;
+    private AuraSkillsBukkit apiBukkit;
     private SkillManager skillManager;
     private BukkitAbilityManager abilityManager;
     private BukkitManaAbilityManager manaAbilityManager;
@@ -141,8 +145,12 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void onEnable() {
+        // Register the API
         this.api = new ApiAuraSkills(this);
         ApiRegistrationUtil.register(api);
+        this.apiBukkit = new ApiAuraSkillsBukkit(this);
+        ApiBukkitRegistrationUtil.register(apiBukkit);
+
         logger = new BukkitLogger(this);
         // Load messages
         messageProvider = new MessageProvider(this);

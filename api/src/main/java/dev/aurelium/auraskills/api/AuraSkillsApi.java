@@ -4,12 +4,22 @@ import dev.aurelium.auraskills.api.message.MessageManager;
 import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.user.UserManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.UUID;
 
 public interface AuraSkillsApi {
+
+    /**
+     * Gets an online player's user data from the player's UUID.
+     * Same as {@link UserManager#getUser(UUID)}, see for more details.
+     *
+     * @return the {@link SkillsUser} object
+     */
+    SkillsUser getUser(UUID playerId);
 
     /**
      * Gets the {@link UserManager}, which is used to access player-related data in the plugin,
@@ -71,7 +81,7 @@ public interface AuraSkillsApi {
      * Gets the instance of the {@link AuraSkillsApi},
      * throwing {@link IllegalStateException} if the API is not loaded yet.
      *
-     * @return the api instance
+     * @return the API instance
      * @throws IllegalStateException if the API is not loaded
      */
     static AuraSkillsApi get() {

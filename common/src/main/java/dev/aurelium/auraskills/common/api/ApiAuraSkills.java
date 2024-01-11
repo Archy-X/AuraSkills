@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.user.UserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.api.implementation.*;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class ApiAuraSkills implements AuraSkillsApi {
 
@@ -32,6 +34,11 @@ public class ApiAuraSkills implements AuraSkillsApi {
         this.xpRequirements = new ApiXpRequirements(plugin);
         this.namespacedRegistryMap = new HashMap<>();
         this.handlers = new ApiHandlers(plugin);
+    }
+
+    @Override
+    public SkillsUser getUser(UUID playerId) {
+        return userManager.getUser(playerId);
     }
 
     @Override
