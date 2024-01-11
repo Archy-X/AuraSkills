@@ -32,9 +32,10 @@ import dev.aurelium.auraskills.bukkit.menus.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
 import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
 import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
+import dev.aurelium.auraskills.bukkit.region.BukkitRegionManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.region.RegionBlockListener;
-import dev.aurelium.auraskills.bukkit.region.RegionManager;
+import dev.aurelium.auraskills.bukkit.region.RegionListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
@@ -126,7 +127,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private CommandRegistrar commandRegistrar;
     private PaperCommandManager commandManager;
     private BukkitAudiences audiences;
-    private RegionManager regionManager;
+    private BukkitRegionManager regionManager;
     private BukkitWorldManager worldManager;
     private LootTableManager lootTableManager;
     private ModifierManager modifierManager;
@@ -176,7 +177,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         worldManager.loadWorlds(getConfig());
         // Create scheduler
         scheduler = new BukkitScheduler(this);
-        regionManager = new RegionManager(this);
+        regionManager = new BukkitRegionManager(this);
         userManager = new BukkitUserManager(this);
         backupProvider = new BackupProvider(this);
         xpRequirements = new XpRequirements(this);
@@ -347,6 +348,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new ItemListener(this), this);
         pm.registerEvents(new ArmorListener(configStringList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);
         pm.registerEvents(new ArmorModifierListener(this), this);
+        pm.registerEvents(new RegionListener(this), this);
         pm.registerEvents(new RegionBlockListener(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
     }
@@ -371,7 +373,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return commandManager;
     }
 
-    public RegionManager getRegionManager() {
+    public BukkitRegionManager getRegionManager() {
         return regionManager;
     }
 

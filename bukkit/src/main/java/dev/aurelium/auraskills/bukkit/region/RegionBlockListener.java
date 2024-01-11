@@ -30,7 +30,7 @@ import java.util.function.Predicate;
 public class RegionBlockListener implements Listener {
 
     private final AuraSkills plugin;
-    private final RegionManager regionManager;
+    private final BukkitRegionManager regionManager;
     private final BlockLeveler blockLeveler;
 
     public RegionBlockListener(AuraSkills plugin) {

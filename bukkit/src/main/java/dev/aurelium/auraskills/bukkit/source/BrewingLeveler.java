@@ -3,7 +3,8 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BrewingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.region.BlockPosition;
+import dev.aurelium.auraskills.bukkit.region.BukkitBlock;
+import dev.aurelium.auraskills.common.region.BlockPosition;
 import dev.aurelium.auraskills.common.source.SourceType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
@@ -95,7 +96,7 @@ public class BrewingLeveler extends SourceLeveler {
         // Get the brewing stand data
         Location location = inventory.getLocation();
         if (location == null) return;
-        BrewingStandData standData = brewingStands.get(BlockPosition.fromBlock(location.getBlock()));
+        BrewingStandData standData = brewingStands.get(BukkitBlock.from(location.getBlock()));
         if (standData == null) return;
 
         if (!(event.getWhoClicked() instanceof Player player)) return;
@@ -142,7 +143,7 @@ public class BrewingLeveler extends SourceLeveler {
             if (blockState instanceof BrewingStand brewingStand) {
                 BrewerInventory after = brewingStand.getInventory();
                 ItemStack[] afterItems = Arrays.copyOf(after.getContents(), 3); // Items in result slots after
-                BlockPosition pos = BlockPosition.fromBlock(event.getBlock());
+                BlockPosition pos = BukkitBlock.from(event.getBlock());
                 BrewingStandData standData = getBrewingStandData(clonedIngredient, beforeItems, afterItems, pos);
                 brewingStands.put(pos, standData); // Register the stand data
             }
@@ -189,7 +190,7 @@ public class BrewingLeveler extends SourceLeveler {
         if (event.getBlock().hasMetadata("skillsBrewingStandOwner")) {
             event.getBlock().removeMetadata("skillsBrewingStandOwner", plugin);
         }
-        brewingStands.remove(BlockPosition.fromBlock(event.getBlock()));
+        brewingStands.remove(BukkitBlock.from(event.getBlock()));
     }
 
     // Marks brewing stand as owned by player when opened if unclaimed

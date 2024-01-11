@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.region;
+package dev.aurelium.auraskills.common.region;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

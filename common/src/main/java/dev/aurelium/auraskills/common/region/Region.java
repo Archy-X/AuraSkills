@@ -1,16 +1,13 @@
-package dev.aurelium.auraskills.bukkit.region;
+package dev.aurelium.auraskills.common.region;
 
-import org.bukkit.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class Region {
 
-    private final WeakReference<World> world;
     private final String worldName;
     private final int x;
     private final int z;
@@ -18,19 +15,13 @@ public class Region {
     private boolean reload;
     private boolean loading;
 
-    public Region(World world, int x, int z) {
-        this.world = new WeakReference<>(world);
-        this.worldName = world.getName();
+    public Region(String worldName, int x, int z) {
+        this.worldName = worldName;
         this.x = x;
         this.z = z;
         this.chunks = new ConcurrentHashMap<>();
         this.reload = false;
         this.loading = false;
-    }
-
-    @Nullable
-    public World getWorld() {
-        return world.get();
     }
 
     public String getWorldName() {

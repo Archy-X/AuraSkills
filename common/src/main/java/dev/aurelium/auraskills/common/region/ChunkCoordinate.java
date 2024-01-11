@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.region;
+package dev.aurelium.auraskills.common.region;
 
 import com.google.common.base.Objects;
 

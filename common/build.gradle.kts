@@ -19,6 +19,7 @@ dependencies {
     api("com.ezylang:EvalEx:3.0.4")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.atteo:evo-inflector:1.3")
+    implementation("com.github.Querz:NBT:6.1")
     compileOnly("com.google.guava:guava:32.1.3-jre")
     compileOnly("com.google.code.gson:gson:2.10.1")
     compileOnly("net.luckperms:api:5.4")
