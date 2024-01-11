@@ -11,9 +11,21 @@ sources:
   grass_block:
     block: grass_block
     xp: 0.7
+  coarse_dirt:
+    block: coarse_dirt
+    xp: 2.3
+  podzol:
+    block: podzol
+    xp: 2.5
+  rooted_dirt:
+    block: rooted_dirt
+    xp: 5.6
   sand:
     block: sand
     xp: 0.4
+  red_sand:
+    block: red_sand
+    xp: 0.7
   gravel:
     block: gravel
     xp: 1.5
@@ -26,21 +38,9 @@ sources:
   soul_sand:
     block: soul_sand
     xp: 2.7
-  coarse_dirt:
-    block: coarse_dirt
-    xp: 2.3
-  podzol:
-    block: podzol
-    xp: 2.5
   soul_soil:
     block: soul_soil
     xp: 3.0
-  red_sand:
-    block: red_sand
-    xp: 0.7
-  rooted_dirt:
-    block: rooted_dirt
-    xp: 5.6
   mud:
     block: mud
     xp: 0.5
@@ -56,3 +56,10 @@ tags:
     - '*'
   terraform_applicable:
     - '*'
+  dirts:
+    - dirt
+    - grass_block
+    - mycelium
+    - coarse_dirt
+    - podzol
+    - rooted_dirt

@@ -137,7 +137,16 @@ public abstract class LootHandler {
 
     private void giveXp(Player player, Loot loot, @Nullable XpSource source, Skill skill) {
         User user = plugin.getUser(player);
-        double xp = loot.getOption("xp", Double.class, -1.0);
+        Object xpObj = loot.getOptions().get("xp");
+
+        double xp;
+        if (xpObj instanceof Integer) {
+            xp = (int) xpObj;
+        } else if (xpObj instanceof Double) {
+            xp = (double) xpObj;
+        } else {
+            xp = -1.0;
+        }
         if (xp == -1.0 && source != null) { // Xp not specified
             plugin.getLevelManager().addXp(user, skill, source.getXp());
         } else if (xp > 0) { // Xp explicitly specified
