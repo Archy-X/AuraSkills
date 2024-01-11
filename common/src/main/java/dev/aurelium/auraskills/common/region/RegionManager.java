@@ -145,7 +145,15 @@ public abstract class RegionManager {
             chunk = new CompoundTag();
             compound.put(chunkName, chunk);
         }
-        ListTag<CompoundTag> placedBlocks = chunk.getListTag("placed_blocks").asCompoundTagList();
+        ListTag<?> listTag = chunk.getListTag("placed_blocks");
+        ListTag<CompoundTag> placedBlocks;
+        if (listTag != null) {
+            placedBlocks = listTag.asCompoundTagList();
+        } else {
+            // Create and add placed_blocks ListTag if not exists
+            placedBlocks = new ListTag<>(CompoundTag.class);
+            chunk.put("placed_blocks", placedBlocks);
+        }
         placedBlocks.clear(); // Clears list of block positions to account for removed positions
         // Adds all positions to nbt compound list
         for (BlockPosition block : chunkData.getPlacedBlocks().keySet()) {

@@ -161,7 +161,9 @@ public class BrewingLeveler extends SourceLeveler {
                 if (!beforeItem.equals(afterItem)) {
                     BrewingSlot slot = standData.getSlot(i);
                     slot.setBrewed(true);
-                    slot.addIngredient(ingredient); // Track the ingredient used to brew
+                    if (slot.getIngredients().size() < 5) { // Max 5 ingredients stacked to prevent auto brewing
+                        slot.addIngredient(ingredient); // Track the ingredient used to brew
+                    }
                 }
             }
         }
