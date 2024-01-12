@@ -83,6 +83,8 @@ public class ForagingAbilities extends AbilityImpl {
         // If last damage was from player
         if (!(e.getDamager() instanceof Player player)) return;
 
+        if (!player.isOnline()) return;
+
         if (failsChecks(player, ability)) return;
         // If damage was an attack
         if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) return;

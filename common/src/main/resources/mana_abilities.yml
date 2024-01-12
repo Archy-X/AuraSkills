@@ -6,7 +6,7 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 20
+    mana_cost_per_level: 15
     unlock: 7
     level_up: 7
     max_level: 0
@@ -23,7 +23,7 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 20
+    mana_cost_per_level: 15
     unlock: 7
     level_up: 7
     max_level: 0
@@ -38,7 +38,7 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 20
+    mana_cost_per_level: 15
     unlock: 7
     level_up: 7
     max_level: 0
@@ -67,7 +67,7 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 20
+    mana_cost_per_level: 15
     unlock: 7
     level_up: 7
     max_level: 0
@@ -107,7 +107,7 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 20
+    mana_cost_per_level: 15
     base_duration: 5.0
     duration_per_level: 4.0
     unlock: 7
