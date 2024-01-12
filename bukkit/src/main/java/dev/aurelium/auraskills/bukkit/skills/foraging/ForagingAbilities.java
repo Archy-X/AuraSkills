@@ -1,10 +1,9 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
-import com.cryptomorin.xseries.XMaterial;
 import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
@@ -90,15 +89,20 @@ public class ForagingAbilities extends AbilityImpl {
         if (!e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) return;
         // If item used was an axe
         Material mat = player.getInventory().getItemInMainHand().getType();
-        if (mat.equals(Material.DIAMOND_AXE) || mat.equals(Material.IRON_AXE) || mat.equals(XMaterial.GOLDEN_AXE.parseMaterial())
-                || mat.equals(Material.STONE_AXE) || mat.equals(XMaterial.WOODEN_AXE.parseMaterial())) {
-            User user = plugin.getUser(player);
-            //Checks if shredder is used
-            if (user.getAbilityLevel(ability) == 0) return;
 
-            if (rand.nextDouble() < (getValue(ability, user)) / 100) {
-                event.setDamage(event.getDamage() * 3);
-            }
+        boolean isAxe = false;
+        switch (mat) {
+            case NETHERITE_AXE, DIAMOND_AXE, IRON_AXE, GOLDEN_AXE, STONE_AXE, WOODEN_AXE -> isAxe = true;
+        }
+        if (!isAxe) {
+            return;
+        }
+
+        User user = plugin.getUser(player);
+        // Checks if shredder is used
+        if (user.getAbilityLevel(ability) == 0) return;
+        if (rand.nextDouble() < (getValue(ability, user)) / 100) {
+            event.setDamage(event.getDamage() * 3);
         }
     }
 
