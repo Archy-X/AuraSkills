@@ -8,10 +8,13 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +52,25 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
     }
 
     protected boolean isExcludedBlock(Block block) {
-        return false;
+        return hasInteraction(block);
+    }
+
+    protected boolean hasInteraction(Block block) {
+        Material mat = block.getType();
+        return switch (mat) {
+            case ENDER_CHEST, CRAFTING_TABLE, ENCHANTING_TABLE, BEACON, ANVIL, GRINDSTONE, CARTOGRAPHY_TABLE,
+                    LOOM, STONECUTTER, SMITHING_TABLE, LEVER, BAMBOO_BUTTON, BIRCH_BUTTON, ACACIA_BUTTON,
+                    CHERRY_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, MANGROVE_BUTTON, OAK_BUTTON,
+                    POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON
+                    -> true;
+            default -> {
+                BlockData data = block.getBlockData();
+                if (block.getState() instanceof InventoryHolder) {
+                    yield true;
+                } else yield data instanceof Bed || data instanceof Sign || data instanceof Door ||
+                        data instanceof Gate || data instanceof NoteBlock || data instanceof TrapDoor;
+            }
+        };
     }
 
     public String[] getMaterials() {
@@ -71,13 +92,13 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         if (!valid) return;
         // Check block exclusions
         Block block = event.getClickedBlock();
-        if (block != null) {
-            if (isExcludedBlock(block)) return;
-        }
         // Match sure material matches
         Player player = event.getPlayer();
         if (!isHoldingMaterial(player)) {
             return;
+        }
+        if (block != null) {
+            if (isExcludedBlock(block)) return;
         }
         if (!isAllowReady(player, event)) {
             return;

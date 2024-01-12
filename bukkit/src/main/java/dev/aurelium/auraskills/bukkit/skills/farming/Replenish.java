@@ -98,11 +98,12 @@ public class Replenish extends ReadiedManaAbility {
 
     @Override
     protected boolean isExcludedBlock(Block block) {
-        return block.getType() == Material.DIRT
-                || block.getType() == Material.GRASS_BLOCK
-                || block.getType() == Material.COARSE_DIRT
-                || block.getType() == Material.DIRT_PATH
-                || block.getType() == Material.FARMLAND;
+        return super.isExcludedBlock(block) ||
+                block.getType() == Material.DIRT ||
+                block.getType() == Material.GRASS_BLOCK ||
+                block.getType() == Material.COARSE_DIRT ||
+                block.getType() == Material.DIRT_PATH ||
+                block.getType() == Material.FARMLAND;
     }
 
 }
