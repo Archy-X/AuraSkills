@@ -5,8 +5,11 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public interface SkillsUser {
@@ -78,6 +81,13 @@ public interface SkillsUser {
     void setSkillLevel(Skill skill, int level);
 
     /**
+     * Gets the user's average skill level of all enabled skills.
+     *
+     * @return the skill average
+     */
+    double getSkillAverage();
+
+    /**
      * Gets the level of a stat.
      *
      * @param stat the stat to get the level of
@@ -136,6 +146,38 @@ public interface SkillsUser {
      * @param name the name of the stat modifier to remove
      */
     void removeStatModifier(String name);
+
+    /**
+     * Gets a stat modifier from its name.
+     *
+     * @param name the name of the modifier
+     * @return the stat modifier, or null if none exists with the name.
+     */
+    @Nullable
+    StatModifier getStatModifier(String name);
+
+    /**
+     * Gets a map of all the user's stat modifiers.
+     *
+     * @return the map of all stat modifiers
+     */
+    Map<String, StatModifier> getStatModifiers();
+
+    /**
+     * Gets the total level of a trait, including non-plugin base values.
+     *
+     * @param trait the trait to get the level of
+     * @return the total effective level
+     */
+    double getEffectiveTraitLevel(Trait trait);
+
+    /**
+     * Gets the level of a trait from only the plugin's stats and trait modifiers.
+     *
+     * @param trait the trait to get the level of
+     * @return the bonus trait level
+     */
+    double getBonusTraitLevel(Trait trait);
 
     /**
      * Gets the level of an ability.

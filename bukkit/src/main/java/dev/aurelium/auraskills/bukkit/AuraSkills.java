@@ -405,6 +405,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return 81069;
     }
 
+    public AuraSkillsBukkit getApiBukkit() {
+        return apiBukkit;
+    }
+
     @Override
     public AuraSkillsApi getApi() {
         return api;
@@ -550,12 +554,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return eventHandler;
     }
 
-    @Override
-    public <T> T getItemManager(Class<T> itemManagerClass) {
-        if (itemManagerClass.equals(ItemManager.class)) {
-            return itemManagerClass.cast(itemManager);
-        }
-        throw new IllegalArgumentException("Invalid itemManagerClass");
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 
     @Override

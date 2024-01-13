@@ -95,8 +95,6 @@ public interface AuraSkillsPlugin {
 
     EventHandler getEventHandler();
 
-    <T> T getItemManager(Class<T> itemManagerClass);
-
     // Message convenience methods
 
     /**

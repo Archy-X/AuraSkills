@@ -75,8 +75,6 @@ public interface AuraSkillsApi {
      */
     Handlers getHandlers();
 
-    <T> T getItemManager(Class<T> itemManagerClass);
-
     /**
      * Gets the instance of the {@link AuraSkillsApi},
      * throwing {@link IllegalStateException} if the API is not loaded yet.

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.api;
 
+import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.region.Regions;
 
 public interface AuraSkillsBukkit {
@@ -10,6 +11,13 @@ public interface AuraSkillsBukkit {
      * @return the region manager
      */
     Regions getRegions();
+
+    /**
+     * Gets the item manager used to add modifiers, multipliers, and requirements to items.
+     *
+     * @return the item manager
+     */
+    ItemManager getItemManager();
 
     /**
      * Gets the instance of the {@link AuraSkillsBukkit} API,

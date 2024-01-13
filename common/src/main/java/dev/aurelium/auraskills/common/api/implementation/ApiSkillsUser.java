@@ -3,14 +3,17 @@ package dev.aurelium.auraskills.common.api.implementation;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class ApiSkillsUser implements SkillsUser {
@@ -70,6 +73,11 @@ public class ApiSkillsUser implements SkillsUser {
     }
 
     @Override
+    public double getSkillAverage() {
+        return user.getSkillAverage();
+    }
+
+    @Override
     public double getStatLevel(Stat stat) {
         return user.getStatLevel(stat);
     }
@@ -107,6 +115,26 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public void removeStatModifier(String name) {
         user.removeStatModifier(name);
+    }
+
+    @Override
+    public @Nullable StatModifier getStatModifier(String name) {
+        return user.getStatModifier(name);
+    }
+
+    @Override
+    public Map<String, StatModifier> getStatModifiers() {
+        return user.getStatModifiers();
+    }
+
+    @Override
+    public double getEffectiveTraitLevel(Trait trait) {
+        return user.getEffectiveTraitLevel(trait);
+    }
+
+    @Override
+    public double getBonusTraitLevel(Trait trait) {
+        return user.getBonusTraitLevel(trait);
     }
 
     @Override
