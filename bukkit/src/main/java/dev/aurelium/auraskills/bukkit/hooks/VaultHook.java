@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.hooks.HookRegistrationException;
 import dev.aurelium.auraskills.common.user.User;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -26,7 +27,10 @@ public class VaultHook extends EconomyHook {
 
     @Override
     public void deposit(User user, double amount) {
-        economy.depositPlayer(((BukkitUser) user).getPlayer(), amount);
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            economy.depositPlayer(player, amount);
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class BukkitEventHandler implements EventHandler {
 
@@ -21,21 +22,32 @@ public class BukkitEventHandler implements EventHandler {
 
     @Override
     public void callUserLoadEvent(User user) {
-        UserLoadEvent event = new UserLoadEvent(((BukkitUser) user).getPlayer(), user.toApi());
-        Bukkit.getPluginManager().callEvent(event);
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            UserLoadEvent event = new UserLoadEvent(player, user.toApi());
+            Bukkit.getPluginManager().callEvent(event);
+        }
     }
 
     @Override
     public void callSkillLevelUpEvent(User user, Skill skill, int level) {
-        SkillLevelUpEvent event = new SkillLevelUpEvent(((BukkitUser) user).getPlayer(), user.toApi(), skill, level);
-        Bukkit.getPluginManager().callEvent(event);
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            SkillLevelUpEvent event = new SkillLevelUpEvent(player, user.toApi(), skill, level);
+            Bukkit.getPluginManager().callEvent(event);
+        }
     }
 
     @Override
     public Pair<Boolean, Double> callXpGainEvent(User user, Skill skill, double amount) {
-        XpGainEvent event = new XpGainEvent(((BukkitUser) user).getPlayer(), user.toApi(), skill, amount);
-        Bukkit.getPluginManager().callEvent(event);
-        return new Pair<>(event.isCancelled(), event.getAmount());
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            XpGainEvent event = new XpGainEvent(player, user.toApi(), skill, amount);
+            Bukkit.getPluginManager().callEvent(event);
+            return new Pair<>(event.isCancelled(), event.getAmount());
+        } else {
+            return new Pair<>(false, 0.0);
+        }
     }
 
 }

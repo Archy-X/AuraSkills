@@ -68,8 +68,10 @@ public class TimerCountdown {
 
     private void callRefreshEvent(User user, ManaAbility manaAbility) {
         Player player = ((BukkitUser) user).getPlayer();
-        ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(player, user.toApi(), manaAbility);
-        Bukkit.getPluginManager().callEvent(event);
+        if (player != null) {
+            ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(player, user.toApi(), manaAbility);
+            Bukkit.getPluginManager().callEvent(event);
+        }
     }
 
 }

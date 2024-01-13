@@ -36,6 +36,8 @@ public class BukkitUiProvider implements UiProvider {
     @Override
     public void sendActionBar(User user, String message) {
         Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
+
         if (plugin.getHookManager().isRegistered(ProtocolLibHook.class)) {
             ProtocolLibHook hook = plugin.getHookManager().getHook(ProtocolLibHook.class);
             hook.sendActionBar(player, message);
@@ -47,6 +49,7 @@ public class BukkitUiProvider implements UiProvider {
     @Override
     public void sendXpBossBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
         bossBarManager.sendBossBar(player, skill, currentXp, levelXp, xpGained, level, maxed);
     }
 

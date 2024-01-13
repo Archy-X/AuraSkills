@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.user.User;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 
 public class PlaceholderApiHook extends PlaceholderHook {
@@ -18,7 +19,12 @@ public class PlaceholderApiHook extends PlaceholderHook {
 
     @Override
     public String setPlaceholders(User user, String message) {
-        return PlaceholderAPI.setPlaceholders(((BukkitUser) user).getPlayer(), message);
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            return PlaceholderAPI.setPlaceholders(player, message);
+        } else {
+            return message;
+        }
     }
 
     @Override

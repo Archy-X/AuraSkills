@@ -67,6 +67,8 @@ public class BukkitItemRegistry implements ItemRegistry {
     @Override
     public void giveItem(User user, NamespacedId key, int amount) {
         Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
+
         ItemStack item = getItem(key);
 
         if (item == null) {

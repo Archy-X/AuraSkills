@@ -62,11 +62,8 @@ public class BukkitUserManager implements UserManager {
 
     @Override
     public User createNewUser(UUID uuid) {
-        Player player = plugin.getServer().getPlayer(uuid);
-        if (player == null) {
-            throw new IllegalArgumentException("Cannot create user for offline player!");
-        }
-        User user = new BukkitUser(player, plugin);
+        @Nullable Player player = plugin.getServer().getPlayer(uuid);
+        User user = new BukkitUser(uuid, player, plugin);
         // Set all skills to level 1 for new players
         for (LoadedSkill loadedSkill : plugin.getSkillManager().getSkills()) {
             user.setSkillLevel(loadedSkill.skill(), plugin.config().getStartLevel());

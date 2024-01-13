@@ -70,6 +70,8 @@ public class BukkitTraitManager extends TraitManager {
     @Override
     public double getBaseLevel(User user, Trait trait) {
         Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return 0.0;
+
         BukkitTraitHandler traitImpl = getTraitImpl(trait);
         if (traitImpl != null) {
             return traitImpl.getBaseLevel(player, trait);

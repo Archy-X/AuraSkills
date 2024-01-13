@@ -30,7 +30,7 @@ public abstract class User {
 
     protected final AuraSkillsPlugin plugin;
 
-    private final UUID uuid;
+    protected final UUID uuid;
 
     private final Map<Skill, Integer> skillLevels;
     private final Map<Skill, Double> skillXp;

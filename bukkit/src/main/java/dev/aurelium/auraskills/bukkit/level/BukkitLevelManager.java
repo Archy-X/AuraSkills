@@ -67,6 +67,7 @@ public class BukkitLevelManager extends LevelManager {
     @Override
     public void playLevelUpSound(@NotNull User user) {
         Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
         try {
             player.playSound(player.getLocation(), Sound.valueOf(plugin.configString(Option.LEVELER_SOUND_TYPE))
                     , SoundCategory.valueOf(plugin.configString(Option.LEVELER_SOUND_CATEGORY))
@@ -79,6 +80,9 @@ public class BukkitLevelManager extends LevelManager {
 
     @Override
     public void reloadModifiers(User user) {
-        plugin.getModifierManager().reloadPlayer(((BukkitUser) user).getPlayer());
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            plugin.getModifierManager().reloadPlayer(player);
+        }
     }
 }

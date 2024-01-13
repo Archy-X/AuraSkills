@@ -8,11 +8,13 @@ import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class BukkitUser extends User {
@@ -20,13 +22,15 @@ public class BukkitUser extends User {
     // Permission pattern
     private static final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
 
+    @Nullable
     private final Player player;
 
-    public BukkitUser(Player player, AuraSkillsPlugin plugin) {
-        super(player.getUniqueId(), plugin);
+    public BukkitUser(UUID uuid, @Nullable Player player, AuraSkillsPlugin plugin) {
+        super(uuid, plugin);
         this.player = player;
     }
 
+    @Nullable
     public static Player getPlayer(SkillsUser skillsUser) {
         return ((BukkitUser) ((ApiSkillsUser) skillsUser).getUser()).getPlayer();
     }
@@ -35,17 +39,22 @@ public class BukkitUser extends User {
         return (BukkitUser) ((ApiSkillsUser) skillsUser).getUser();
     }
 
+    @Nullable
     public Player getPlayer() {
         return player;
     }
 
     @Override
     public String getUsername() {
-        return player.getName();
+        String name = Bukkit.getOfflinePlayer(uuid).getName();
+        return name != null ? name : "?";
     }
 
     @Override
     public double getPermissionMultiplier(@Nullable Skill skill) {
+        if (player == null) {
+            return 0.0;
+        }
         double multiplier = 0.0;
         for (PermissionAttachmentInfo info : player.getEffectivePermissions()) {
             String permission = info.getPermission().toLowerCase(Locale.ROOT);
@@ -74,6 +83,8 @@ public class BukkitUser extends User {
 
     @Override
     public void sendMessage(Component component) {
-        ((AuraSkills) plugin).getAudiences().player(player).sendMessage(component);
+        if (player != null) {
+            ((AuraSkills) plugin).getAudiences().player(player).sendMessage(component);
+        }
     }
 }

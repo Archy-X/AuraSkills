@@ -86,6 +86,7 @@ public class EnduranceAbilities extends AbilityImpl {
 
         if (isDisabled(ability)) return;
         Player player = BukkitUser.getPlayer(event.getUser());
+        if (player == null) return;
 
         User user = plugin.getUser(player);
         // Gets health

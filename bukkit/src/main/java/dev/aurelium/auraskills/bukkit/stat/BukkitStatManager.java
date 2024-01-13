@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
+import org.bukkit.entity.Player;
 
 public class BukkitStatManager extends StatManager {
 
@@ -18,11 +19,14 @@ public class BukkitStatManager extends StatManager {
     @Override
     public void reloadPlayer(User user) {
         // Reload traits
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
+
         for (Trait trait : plugin.getTraitManager().getEnabledTraits()) {
             BukkitTraitHandler traitImpl = ((BukkitTraitManager) plugin.getTraitManager()).getTraitImpl(trait);
             if (traitImpl == null) continue;
 
-            traitImpl.onReload(((BukkitUser) user).getPlayer(), user.toApi(), trait);
+            traitImpl.onReload(player, user.toApi(), trait);
         }
     }
 
@@ -36,12 +40,14 @@ public class BukkitStatManager extends StatManager {
     @Override
     public void reloadStat(User user, Stat stat) {
         if (!stat.isEnabled()) return;
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
         // Reload traits
         for (Trait trait : stat.getTraits()) {
             BukkitTraitHandler traitImpl = ((BukkitTraitManager) plugin.getTraitManager()).getTraitImpl(trait);
             if (traitImpl == null) continue;
 
-            traitImpl.onReload(((BukkitUser) user).getPlayer(), user.toApi(), trait);
+            traitImpl.onReload(player, user.toApi(), trait);
         }
     }
 }

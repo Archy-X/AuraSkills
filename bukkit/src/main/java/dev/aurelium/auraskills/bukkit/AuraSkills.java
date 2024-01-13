@@ -575,7 +575,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void runPlayerCommand(User user, String command) {
-        getServer().dispatchCommand(((BukkitUser) user).getPlayer(), command);
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            getServer().dispatchCommand(player, command);
+        }
     }
 
     @Override

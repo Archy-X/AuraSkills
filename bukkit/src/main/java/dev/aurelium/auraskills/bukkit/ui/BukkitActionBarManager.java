@@ -21,6 +21,8 @@ public class BukkitActionBarManager extends ActionBarManager {
     @NotNull
     public String getHp(User user) {
         Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return "";
+
         return String.valueOf(Math.round(player.getHealth() * Traits.HP.optionDouble("action_bar_scaling", 1)));
     }
 
@@ -28,6 +30,8 @@ public class BukkitActionBarManager extends ActionBarManager {
     @NotNull
     public String getMaxHp(User user) {
         Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return "";
+
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute != null) {
             return String.valueOf(Math.round(attribute.getValue() * Traits.HP.optionDouble("action_bar_scaling", 1)));
@@ -38,6 +42,10 @@ public class BukkitActionBarManager extends ActionBarManager {
     @Override
     @NotNull
     public String getWorldName(User user) {
-        return ((BukkitUser) user).getPlayer().getWorld().getName();
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            return player.getWorld().getName();
+        }
+        return "";
     }
 }
