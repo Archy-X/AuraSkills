@@ -206,11 +206,6 @@ public class TestAuraSkills implements AuraSkillsPlugin {
     }
 
     @Override
-    public <T> T getItemManager(Class<T> itemManagerClass) {
-        return null;
-    }
-
-    @Override
     public String getMsg(MessageKey key, Locale locale) {
         return null;
     }

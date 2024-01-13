@@ -20,6 +20,9 @@ sources:
   granite:
     block: granite
     xp: 0.2
+  sandstone:
+    block: sandstone
+    xp: 0.2
   coal_ore:
     block: coal_ore
     xp: 1.0

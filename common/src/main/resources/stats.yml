@@ -38,7 +38,7 @@ stats:
     enabled: true
     traits:
       auraskills/damage_reduction:
-        modifier: 0.24
+        modifier: 0.3
   auraskills/crit_chance:
     enabled: true
     traits:

@@ -5,10 +5,14 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 public class OfflineSkillsUser implements SkillsUser {
@@ -62,6 +66,11 @@ public class OfflineSkillsUser implements SkillsUser {
     }
 
     @Override
+    public double getSkillAverage() {
+        return 0;
+    }
+
+    @Override
     public double getStatLevel(Stat stat) {
         return 0;
     }
@@ -99,6 +108,26 @@ public class OfflineSkillsUser implements SkillsUser {
     @Override
     public void removeStatModifier(String name) {
 
+    }
+
+    @Override
+    public @Nullable StatModifier getStatModifier(String name) {
+        return null;
+    }
+
+    @Override
+    public Map<String, StatModifier> getStatModifiers() {
+        return new HashMap<>();
+    }
+
+    @Override
+    public double getEffectiveTraitLevel(Trait trait) {
+        return 0;
+    }
+
+    @Override
+    public double getBonusTraitLevel(Trait trait) {
+        return 0;
     }
 
     @Override
