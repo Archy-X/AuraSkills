@@ -6,8 +6,9 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,14 +19,21 @@ import java.util.*;
 
 public class ItemUtils {
 
-	public static void giveBlockLoot(Player player, Block block, LootDropEvent event) {
+	public static void giveBlockLoot(Player player, LootDropEvent event) {
 		if (event.isToInventory()) {
 			Map<Integer, ItemStack> notAdded = player.getInventory().addItem(event.getItem());
 			for (ItemStack leftover : notAdded.values()) {
-				block.getWorld().dropItem(event.getLocation(), leftover);
+				dropItem(event.getLocation(), leftover);
 			}
 		} else {
-			block.getWorld().dropItem(event.getLocation(), event.getItem());
+			dropItem(event.getLocation(), event.getItem());
+		}
+	}
+
+	private static void dropItem(Location location, ItemStack itemStack) {
+		World world = location.getWorld();
+		if (world != null) {
+			world.dropItem(location, itemStack);
 		}
 	}
 

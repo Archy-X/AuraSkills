@@ -48,12 +48,17 @@ public class BlockLeveler extends SourceLeveler {
         BlockXpSource source = sourcePair.first();
         Skill skill = sourcePair.second();
 
+        if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
+
         // Check for player placed blocks
         if (source.checkReplace() && plugin.getRegionManager().isPlacedBlock(event.getBlock())) {
+            // Allow Lucky Miner drops for ores that don't drop in block form (Silk Touch check handled by Lucky Miner)
+            var miningAbilities = plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class);
+            if (miningAbilities.dropsMineralDirectly(event.getBlock())) {
+                checkLuckyMiner(player, user, skill, event.getBlock(), source);
+            }
             return;
         }
-
-        if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
 
         double multiplier = helper.getBlocksBroken(event.getBlock(), source);
         multiplier *= helper.getStateMultiplier(event.getBlock(), source);
@@ -110,11 +115,17 @@ public class BlockLeveler extends SourceLeveler {
         if (skill.getAbilities().contains(Abilities.LUMBERJACK) && tags.hasTag(source, SourceTag.LUMBERJACK_APPLICABLE)) {
             abilities.getAbilityImpl(ForagingAbilities.class).lumberjack(player, user, block);
         }
-        if (skill.getAbilities().contains(Abilities.LUCKY_MINER) && tags.hasTag(source, SourceTag.LUCKY_MINER_APPLICABLE)) {
-            abilities.getAbilityImpl(MiningAbilities.class).luckyMiner(player, user, block);
-        }
+
+        checkLuckyMiner(player, user, skill, block, source);
+
         if (skill.getAbilities().contains(Abilities.BIGGER_SCOOP) && tags.hasTag(source, SourceTag.BIGGER_SCOOP_APPLICABLE)) {
             abilities.getAbilityImpl(ExcavationAbilities.class).biggerScoop(player, user, block);
+        }
+    }
+
+    private void checkLuckyMiner(Player player, User user, Skill skill, Block block, BlockXpSource source) {
+        if (skill.getAbilities().contains(Abilities.LUCKY_MINER) && plugin.getSkillManager().hasTag(source, SourceTag.LUCKY_MINER_APPLICABLE)) {
+            plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class).luckyMiner(player, user, block);
         }
     }
 

@@ -70,7 +70,7 @@ public abstract class LootHandler {
 
         if (dropEvent.isCancelled()) return;
 
-        ItemUtils.giveBlockLoot(player, block, dropEvent);
+        ItemUtils.giveBlockLoot(player, dropEvent);
 
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);

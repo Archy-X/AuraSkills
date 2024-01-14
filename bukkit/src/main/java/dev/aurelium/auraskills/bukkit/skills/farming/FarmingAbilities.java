@@ -46,7 +46,7 @@ public class FarmingAbilities extends AbilityImpl {
                 Bukkit.getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, block, event);
+                    ItemUtils.giveBlockLoot(player, event);
                 }
             }
         }
@@ -73,7 +73,7 @@ public class FarmingAbilities extends AbilityImpl {
                 Bukkit.getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, block, event);
+                    ItemUtils.giveBlockLoot(player, event);
                 }
             }
         }

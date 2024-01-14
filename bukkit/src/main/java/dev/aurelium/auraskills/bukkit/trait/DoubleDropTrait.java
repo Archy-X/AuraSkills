@@ -105,7 +105,7 @@ public class DoubleDropTrait extends TraitImpl {
                         continue;
                     }
 
-                    ItemUtils.giveBlockLoot(player, block, lootDropEvent);
+                    ItemUtils.giveBlockLoot(player, lootDropEvent);
                 }
             }
         }

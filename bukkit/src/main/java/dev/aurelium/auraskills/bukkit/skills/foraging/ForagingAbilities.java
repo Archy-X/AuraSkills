@@ -47,7 +47,7 @@ public class ForagingAbilities extends AbilityImpl {
                 Bukkit.getPluginManager().callEvent(event);
 
                 if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, block, event);
+                    ItemUtils.giveBlockLoot(player, event);
                 }
             }
         }

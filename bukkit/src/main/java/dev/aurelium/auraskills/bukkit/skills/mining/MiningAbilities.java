@@ -43,20 +43,9 @@ public class MiningAbilities extends AbilityImpl {
 
         if (rand.nextDouble() < (getValue(ability, user) / 100)) {
             ItemStack tool = player.getInventory().getItemInMainHand();
-            Material mat = block.getType();
-            if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
-                if (mat.equals(Material.DIAMOND_ORE) || mat.equals(Material.LAPIS_ORE) ||
-                        mat.equals(Material.REDSTONE_ORE) || mat.name().equals("GLOWING_REDSTONE_ORE") ||
-                        mat.equals(Material.EMERALD_ORE) || mat.equals(Material.COAL_ORE) ||
-                        mat.equals(Material.NETHER_QUARTZ_ORE) || mat.equals(Material.NETHER_GOLD_ORE)) {
-                    return;
-                }
-                if (VersionUtils.isAtLeastVersion(17)) {
-                    if (mat == Material.IRON_ORE || mat == Material.GOLD_ORE || mat == Material.COPPER_ORE ||
-                            mat.toString().contains("DEEPSLATE_")) {
-                        return;
-                    }
-                }
+            // Don't give drops if Silk Touch is used
+            if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0 && dropsMineralDirectly(block)) {
+                return;
             }
             Collection<ItemStack> drops = block.getDrops(tool);
             for (ItemStack item : drops) {
@@ -66,10 +55,27 @@ public class MiningAbilities extends AbilityImpl {
                 LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUCKY_MINER, toInventory);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, block, event);
+                    ItemUtils.giveBlockLoot(player, event);
                 }
             }
         }
+    }
+
+    public boolean dropsMineralDirectly(Block block) {
+        Material mat = block.getType();
+        switch (mat) {
+            case DIAMOND_ORE, REDSTONE_ORE, EMERALD_ORE, COAL_ORE, LAPIS_ORE, NETHER_QUARTZ_ORE, NETHER_GOLD_ORE:
+                return true;
+        }
+        if (VersionUtils.isAtLeastVersion(17)) {
+            switch (mat) {
+                case IRON_ORE, DEEPSLATE_IRON_ORE, GOLD_ORE, DEEPSLATE_GOLD_ORE, COPPER_ORE, DEEPSLATE_COPPER_ORE,
+                        DEEPSLATE_DIAMOND_ORE, DEEPSLATE_REDSTONE_ORE, DEEPSLATE_EMERALD_ORE,
+                        DEEPSLATE_COAL_ORE, DEEPSLATE_LAPIS_ORE:
+                    return true;
+            }
+        }
+        return false;
     }
 
     public DamageModifier pickMaster(Player player, User user) {
