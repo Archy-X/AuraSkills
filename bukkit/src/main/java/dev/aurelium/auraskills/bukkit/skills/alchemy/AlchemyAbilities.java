@@ -92,40 +92,46 @@ public class AlchemyAbilities extends AbilityImpl {
     }
 
     private boolean isApplicablePotion(PotionType potionType) {
-        return switch (potionType) {
-            case INSTANT_DAMAGE, INSTANT_HEAL, AWKWARD, MUNDANE, THICK, WATER -> false;
+        switch (potionType) {
+            case INSTANT_DAMAGE, INSTANT_HEAL, AWKWARD, MUNDANE, THICK, WATER -> {
+                return false;
+            }
+        }
+        return switch (potionType.toString()) {
+            case "STRONG_HARMING", "STRONG_HEALING" -> false;
             default -> true;
         };
     }
 
     private ItemStack applyDurationData(ItemStack item, double multiplier, Locale locale) {
         PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
-        if (potionMeta != null) {
-            PotionData potionData = potionMeta.getBasePotionData();
-            if (isApplicablePotion(potionData.getType())) {
-                int originalDuration = PotionUtil.getDuration(potionData);
-                int duration = (int) (originalDuration * multiplier); // Get duration in ticks
-                int durationBonus = duration - originalDuration;
-                // Add duration to PersistentDataContainer
-                var container = item.getItemMeta().getPersistentDataContainer();
-
-                container.set(DURATION_BONUS_KEY, PersistentDataType.INTEGER, durationBonus);
-
-                ItemMeta meta = item.getItemMeta();
-                if (duration != 0 && meta != null) {
-                    // Add lore
-                    if (Abilities.ALCHEMIST.optionBoolean("add_item_lore", true)) {
-                        List<String> lore = new ArrayList<>();
-                        lore.add(TextUtil.replace(plugin.getMsg(AbilityMessage.ALCHEMIST_LORE, locale)
-                                , "{duration}", PotionUtil.formatDuration(durationBonus)
-                                , "{value}", NumberUtil.format1((multiplier - 1) * 100)));
-                        meta.setLore(lore);
-                        item.setItemMeta(meta);
-                    }
-                }
-                return item;
-            }
+        if (potionMeta == null) {
+            return item;
         }
+        PotionData potionData = potionMeta.getBasePotionData();
+        if (!isApplicablePotion(potionData.getType())) {
+            return item;
+        }
+        int originalDuration = PotionUtil.getDuration(potionData);
+        int duration = (int) (originalDuration * multiplier); // Get duration in ticks
+        int durationBonus = duration - originalDuration;
+
+        ItemMeta meta = item.getItemMeta();
+        if (duration == 0 || meta == null) {
+            return item;
+        }
+        // Add duration to PersistentDataContainer
+        var container = meta.getPersistentDataContainer();
+        container.set(DURATION_BONUS_KEY, PersistentDataType.INTEGER, durationBonus);
+        // Add lore
+        if (Abilities.ALCHEMIST.optionBoolean("add_item_lore", true)) {
+            List<String> lore = new ArrayList<>();
+            lore.add(TextUtil.replace(plugin.getMsg(AbilityMessage.ALCHEMIST_LORE, locale)
+                    , "{duration}", PotionUtil.formatDuration(durationBonus)
+                    , "{value}", NumberUtil.format1((multiplier - 1) * 100)));
+            meta.setLore(lore);
+        }
+        item.setItemMeta(meta);
         return item;
     }
 

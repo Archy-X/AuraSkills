@@ -10,7 +10,7 @@ public class AbilityUtil {
 
     public static String getUpgradeValue(Ability ability, int level, String format) {
         String currentValue = getCurrentValue(ability, level);
-        String nextValue = NumberUtil.format1(ability.getValue(level + 1));
+        String nextValue = NumberUtil.format2(ability.getValue(level + 1));
         return TextUtil.replace(format,
                 "{current}", currentValue,
                 "{next}", nextValue);
@@ -18,31 +18,31 @@ public class AbilityUtil {
 
     public static String getUpgradeValue2(Ability ability, int level, String format) {
         String currentValue = getCurrentValue2(ability, level);
-        String nextValue = NumberUtil.format1(ability.getSecondaryValue(level + 1));
+        String nextValue = NumberUtil.format2(ability.getSecondaryValue(level + 1));
         return TextUtil.replace(format,
                 "{current}", currentValue,
                 "{next}", nextValue);
     }
 
     public static String getCurrentValue(Ability ability, int level) {
-        return NumberUtil.format1(ability.getValue(level));
+        return NumberUtil.format2(ability.getValue(level));
     }
 
     public static String getCurrentValue2(Ability ability, int level) {
-        return NumberUtil.format1(ability.getSecondaryValue(level));
+        return NumberUtil.format2(ability.getSecondaryValue(level));
     }
 
     public static String getUpgradeValue(ManaAbility manaAbility, int level, String format) {
-        String currentValue = NumberUtil.format1(manaAbility.getDisplayValue(level));
-        String nextValue = NumberUtil.format1(manaAbility.getDisplayValue(level + 1));
+        String currentValue = NumberUtil.format2(manaAbility.getDisplayValue(level));
+        String nextValue = NumberUtil.format2(manaAbility.getDisplayValue(level + 1));
         return TextUtil.replace(format,
                 "{current}", currentValue,
                 "{next}", nextValue);
     }
 
     public static String getUpgradeDuration(ManaAbility manaAbility, int level, String format) {
-        String currentDuration = NumberUtil.format1(getDuration(manaAbility, level));
-        String nextDuration = NumberUtil.format1(getDuration(manaAbility, level + 1));
+        String currentDuration = NumberUtil.format2(getDuration(manaAbility, level));
+        String nextDuration = NumberUtil.format2(getDuration(manaAbility, level + 1));
         return TextUtil.replace(format,
                 "{current}", currentDuration,
                 "{next}", nextDuration);
