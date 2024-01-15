@@ -252,6 +252,9 @@ public class FileStorageProvider extends StorageProvider {
 
     @Override
     public void save(@NotNull User user) throws Exception {
+        if (user.isSaving()) return;
+        user.setSaving(true);
+
         CommentedConfigurationNode root = loadYamlFile(user.getUuid());
 
         root.node("uuid").set(user.getUuid().toString());
@@ -308,6 +311,7 @@ public class FileStorageProvider extends StorageProvider {
         }
 
         saveYamlFile(root, user.getUuid());
+        user.setSaving(false);
     }
 
     private void saveYamlFile(CommentedConfigurationNode root, UUID uuid) throws ConfigurateException {

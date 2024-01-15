@@ -340,6 +340,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         } else { // File storage
             storageProvider = new FileStorageProvider(this, getDataFolder().getPath() + "/userdata");
         }
+        storageProvider.startAutoSaving();
     }
 
     private void registerPriorityEvents() {

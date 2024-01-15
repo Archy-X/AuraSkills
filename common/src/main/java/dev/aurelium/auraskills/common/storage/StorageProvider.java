@@ -1,6 +1,8 @@
 package dev.aurelium.auraskills.common.storage;
 
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
 import dev.aurelium.auraskills.common.user.UserState;
@@ -8,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public abstract class StorageProvider {
 
@@ -57,5 +60,30 @@ public abstract class StorageProvider {
     public abstract void delete(UUID uuid) throws Exception;
 
     public abstract List<UserState> loadStates(boolean ignoreOnline) throws Exception;
+
+    public void startAutoSaving() {
+        if (!plugin.configBoolean(Option.AUTO_SAVE_ENABLED)) {
+            return;
+        }
+        long interval = plugin.configInt(Option.AUTO_SAVE_INTERVAL_TICKS);
+        var task = new TaskRunnable() {
+            @Override
+            public void run() {
+                for (User user : userManager.getOnlineUsers()) {
+                    try {
+                        if (user.isSaving()) {
+                            continue;
+                        }
+                        save(user);
+                    } catch (Exception e) {
+                        user.setSaving(false);
+                        plugin.logger().warn("Error running auto-save on user data:");
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        plugin.getScheduler().timerAsync(task, interval * 50, interval * 50, TimeUnit.MILLISECONDS);
+    }
 
 }
