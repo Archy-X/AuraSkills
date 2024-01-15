@@ -2,6 +2,8 @@ package dev.aurelium.auraskills.bukkit.skills.fighting;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -46,6 +48,16 @@ public class FightingAbilities extends AbilityImpl {
 
         double value = getValue(ability, user);
         user.addTraitModifier(new TraitModifier(modifierName, Traits.CRIT_DAMAGE, value), false);
+    }
+
+    @EventHandler
+    public void onLevelUp(SkillLevelUpEvent event) {
+        if (!event.getSkill().equals(Skills.FIGHTING)) {
+            return;
+        }
+        Player player = event.getPlayer();
+        User user = plugin.getUser(player);
+        reloadCritDamage(player, user);
     }
 
     public DamageModifier swordMaster(Player player, User user) {
