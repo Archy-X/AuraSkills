@@ -167,6 +167,7 @@ public class BukkitItemRegistry implements ItemRegistry {
         return passesItemMetaFilter(item, filter);
     }
 
+    @SuppressWarnings("deprecation")
     private boolean passesItemMetaFilter(ItemStack item, ItemFilter filter) {
         ItemFilterMeta filterMeta = filter.meta();
         if (filterMeta == null) {
@@ -182,7 +183,7 @@ public class BukkitItemRegistry implements ItemRegistry {
             }
         }
         List<String> filterLore = filterMeta.lore();
-        if (filterLore != null && filterLore.size() > 0) {
+        if (filterLore != null && !filterLore.isEmpty()) {
             if (!filterLore.equals(itemMeta.getLore())) {
                 return false;
             }
@@ -208,14 +209,12 @@ public class BukkitItemRegistry implements ItemRegistry {
             if (potionData.extended() != basePotionData.isExtended()) {
                 return false;
             }
-            if (potionData.upgraded() != basePotionData.isUpgraded()) {
-                return false;
-            }
+            return potionData.upgraded() == basePotionData.isUpgraded();
         }
         return true;
     }
 
-
+    @SuppressWarnings("deprecation")
     private Set<ItemCategory> getItemCategories(ItemStack item, Material mat) {
         Set<ItemCategory> found = new HashSet<>();
         String name = mat.toString();
@@ -232,7 +231,7 @@ public class BukkitItemRegistry implements ItemRegistry {
             found.add(ItemCategory.FISHING_JUNK);
         }
         if (mat == Material.FISHING_ROD) {
-            if (item.getEnchantments().size() == 0) {
+            if (item.getEnchantments().isEmpty()) {
                 found.add(ItemCategory.FISHING_JUNK);
             } else {
                 found.add(ItemCategory.FISHING_TREASURE);

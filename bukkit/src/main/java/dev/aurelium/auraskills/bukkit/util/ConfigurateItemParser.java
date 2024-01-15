@@ -56,7 +56,7 @@ public class ConfigurateItemParser {
                 meta.setDisplayName(displayName);
             }
             List<String> lore = parseLore(config);
-            if (lore.size() > 0) {
+            if (!lore.isEmpty()) {
                 meta.setLore(lore);
             }
             item.setItemMeta(meta);
@@ -167,6 +167,7 @@ public class ConfigurateItemParser {
         item.setItemMeta(meta);
     }
 
+    @SuppressWarnings("deprecation")
     private void parseCustomEffects(ConfigurationNode section, ItemStack item) {
         PotionMeta potionMeta = (PotionMeta) getMeta(item);
         for (ConfigurationNode effectNode : section.node("custom_effects").childrenList()) {
@@ -184,6 +185,7 @@ public class ConfigurateItemParser {
         item.setItemMeta(potionMeta);
     }
 
+    @SuppressWarnings("deprecation")
     private void parsePotionData(ItemStack item, ConfigurationNode node) {
         PotionMeta potionMeta = (PotionMeta) getMeta(item);
         PotionType potionType = PotionType.valueOf(node.node("type").getString("WATER").toUpperCase(Locale.ROOT));

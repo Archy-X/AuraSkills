@@ -99,6 +99,7 @@ public class AgilityAbilities extends AbilityImpl {
     }
 
     // For potion drinking
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void sugarRushDrink(PlayerItemConsumeEvent event) {
         var ability = Abilities.SUGAR_RUSH;

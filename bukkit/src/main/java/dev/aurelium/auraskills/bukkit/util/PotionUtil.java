@@ -8,50 +8,30 @@ import org.bukkit.potion.PotionType;
 
 public class PotionUtil {
 
+    @SuppressWarnings("deprecation")
     public static int getDuration(PotionData potionData) {
         String type = potionData.getType().toString();
         if (potionData.isUpgraded()) {
-            switch (type) {
-                case "POISON":
-                    return 420;
-                case "REGEN":
-                    return 440;
-                case "SLOWNESS":
-                case "TURTLE_MASTER":
-                    return 400;
-                default:
-                    return 1800;
-            }
-        }
-        else if (potionData.isExtended()) {
-            switch (type) {
-                case "POISON":
-                case "REGEN":
-                    return 1800;
-                case "SLOWNESS":
-                case "SLOW_FALLING":
-                case "WEAKNESS":
-                    return 4800;
-                case "TURTLE_MASTER":
-                    return 800;
-                default:
-                    return 9600;
-            }
-        }
-        else {
-            switch (type) {
-                case "POISON":
-                case "REGEN":
-                    return 900;
-                case "TURTLE_MASTER":
-                    return 400;
-                case "SLOWNESS":
-                case "SLOW_FALLING":
-                case "WEAKNESS":
-                    return 1800;
-                default:
-                    return 3600;
-            }
+            return switch (type) {
+                case "POISON" -> 420;
+                case "REGEN" -> 440;
+                case "SLOWNESS", "TURTLE_MASTER" -> 400;
+                default -> 1800;
+            };
+        } else if (potionData.isExtended()) {
+            return switch (type) {
+                case "POISON", "REGEN" -> 1800;
+                case "SLOWNESS", "SLOW_FALLING", "WEAKNESS" -> 4800;
+                case "TURTLE_MASTER" -> 800;
+                default -> 9600;
+            };
+        } else {
+            return switch (type) {
+                case "POISON", "REGEN" -> 900;
+                case "TURTLE_MASTER" -> 400;
+                case "SLOWNESS", "SLOW_FALLING", "WEAKNESS" -> 1800;
+                default -> 3600;
+            };
         }
     }
 
@@ -83,16 +63,10 @@ public class PotionUtil {
     }
 
     public static boolean isNegativePotion(PotionType potionType) {
-        switch (potionType) {
-            case POISON:
-            case SLOWNESS:
-            case INSTANT_DAMAGE:
-            case WEAKNESS:
-                return true;
-            default:
-                break;
-        }
-        return false;
+        return switch (potionType) {
+            case POISON, SLOWNESS, INSTANT_DAMAGE, WEAKNESS -> true;
+            default -> false;
+        };
     }
 
 }

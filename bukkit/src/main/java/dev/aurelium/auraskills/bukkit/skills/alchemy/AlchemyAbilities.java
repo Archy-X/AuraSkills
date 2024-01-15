@@ -103,6 +103,7 @@ public class AlchemyAbilities extends AbilityImpl {
         };
     }
 
+    @SuppressWarnings("deprecation")
     private ItemStack applyDurationData(ItemStack item, double multiplier, Locale locale) {
         PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
         if (potionMeta == null) {
@@ -135,6 +136,7 @@ public class AlchemyAbilities extends AbilityImpl {
         return item;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDrink(PlayerItemConsumeEvent event) {
         var ability = Abilities.ALCHEMIST;
@@ -187,6 +189,7 @@ public class AlchemyAbilities extends AbilityImpl {
     }
 
     // Handles duration boosts for splash potions. Includes Alchemist, Sugar Rush, and Splasher.
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSplash(PotionSplashEvent event) {
         if (event.isCancelled()) return;

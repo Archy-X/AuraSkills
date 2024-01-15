@@ -2,12 +2,12 @@ package dev.aurelium.auraskills.bukkit.modifier;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import de.tr7zw.changeme.nbtapi.NBTType;
+import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
-import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.requirement.Requirements;
+import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -36,20 +36,14 @@ public class ItemListener implements Listener {
     private final Map<UUID, ItemStack> heldItems;
     private final Map<UUID, ItemStack> offHandItems;
     private final StatManager statManager;
-    private final Modifiers modifiers;
-    private final Requirements requirements;
-    private final Multipliers multipliers;
     private final ForagingAbilities foragingAbilities;
     private final MiningAbilities miningAbilities;
 
     public ItemListener(AuraSkills plugin) {
         this.plugin = plugin;
-        heldItems = new HashMap<>();
-        offHandItems = new HashMap<>();
+        this.heldItems = new HashMap<>();
+        this.offHandItems = new HashMap<>();
         this.statManager = plugin.getStatManager();
-        this.modifiers = new Modifiers(plugin);
-        this.requirements = new Requirements(plugin);
-        this.multipliers = new Multipliers(plugin);
         this.foragingAbilities = plugin.getAbilityManager().getAbilityImpl(ForagingAbilities.class);
         this.miningAbilities = plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class);
         scheduleTask();
@@ -64,16 +58,19 @@ public class ItemListener implements Listener {
         heldItems.put(player.getUniqueId(), held.clone());
       
         if (!held.getType().equals(Material.AIR)) {
+            // Convert the held item
             if (plugin.configBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
                 held = convertLegacyItem(held);
                 if (!held.equals(player.getInventory().getItemInMainHand())) {
                     player.getInventory().setItemInMainHand(held);
                 }
             }
-            for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
+            // Apply modifiers and multipliers
+            SkillsItem skillsItem = new SkillsItem(held, plugin);
+            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
                 user.addStatModifier(modifier, false);
             }
-            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
+            for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
                 user.addMultiplier(multiplier);
             }
         }
@@ -87,16 +84,16 @@ public class ItemListener implements Listener {
                         player.getInventory().setItemInOffHand(offHandItem);
                     }
                 }
-                addModifiersToUser(offHandItem, user);
+                applyOffhandModifiers(offHandItem, user);
             }
         }
 
     }
 
     private ItemStack convertLegacyItem(ItemStack item) {
-        item = modifiers.convertFromLegacy(item);
-        item = requirements.convertFromLegacy(item);
-        item = multipliers.convertFromLegacy(item);
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.convertFromLegacy();
+        item = skillsItem.getItem();
 
         NBTItem nbtItem = new NBTItem(item);
         if (nbtItem.hasTag("AureliumSkills", NBTType.NBTTagCompound)) {
@@ -123,7 +120,7 @@ public class ItemListener implements Listener {
                     ItemStack held = player.getInventory().getItemInMainHand();
                     final ItemStack finalHeld = held;
                     ItemStack stored = heldItems.computeIfAbsent(player.getUniqueId(), id -> finalHeld.clone());
-                    // If stored item is different than held
+                    // If stored item is different from held
                     if (stored.equals(held)) {
                         continue;
                     }
@@ -131,12 +128,13 @@ public class ItemListener implements Listener {
                     // Remove modifiers from stored item
                     if (!stored.getType().equals(Material.AIR)) {
                         User user = plugin.getUser(player);
+                        SkillsItem storedItem = new SkillsItem(stored, plugin);
 
-                        for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, stored)) {
+                        for (StatModifier modifier : storedItem.getModifiers(ModifierType.ITEM)) {
                             user.removeStatModifier(modifier.name(), false);
                             statsToReload.add(modifier.stat());
                         }
-                        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, stored)) {
+                        for (Multiplier multiplier : storedItem.getMultipliers(ModifierType.ITEM)) {
                             user.removeMultiplier(multiplier.name());
                         }
                         // Remove valor
@@ -157,12 +155,13 @@ public class ItemListener implements Listener {
                             }
                         }
                         User user = plugin.getUser(player);
-                        if (requirements.meetsRequirements(ModifierType.ITEM, held, player)) {
-                            for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
+                        SkillsItem heldItem = new SkillsItem(held, plugin);
+                        if (heldItem.meetsRequirements(ModifierType.ITEM, player)) {
+                            for (StatModifier modifier : heldItem.getModifiers(ModifierType.ITEM)) {
                                 user.addStatModifier(modifier, false);
                                 statsToReload.add(modifier.stat());
                             }
-                            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
+                            for (Multiplier multiplier : heldItem.getMultipliers(ModifierType.ITEM)) {
                                 user.addMultiplier(multiplier);
                             }
                         }
@@ -208,57 +207,55 @@ public class ItemListener implements Listener {
         Set<String> offHandModifiers = new HashSet<>();
         Set<Stat> statsToReload = new HashSet<>();
         Set<String> offHandMultipliers = new HashSet<>();
-        // Check off hand item
-        if (itemOffHand != null) {
-            if (itemOffHand.getType() != Material.AIR) {
-                boolean meetsRequirements = requirements.meetsRequirements(ModifierType.ITEM, itemOffHand, player); // Get whether player meets requirements
-                // For each modifier on the item
-                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemOffHand)) {
-                    // Removes the old modifier from main hand
-                    StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
-                    playerData.removeStatModifier(modifier.name(), false);
-                    // Add new one if meets requirements
-                    if (meetsRequirements) {
-                        playerData.addStatModifier(offHandModifier, false);
-                    }
-                    // Reload check stuff
-                    offHandModifiers.add(offHandModifier.name());
-                    statsToReload.add(modifier.stat());
+        // Check offhand item
+        if (itemOffHand != null && itemOffHand.getType() != Material.AIR) {
+            SkillsItem skillsItem = new SkillsItem(itemOffHand, plugin);
+            boolean meetsRequirements = skillsItem.meetsRequirements(ModifierType.ITEM, player); // Get whether player meets requirements
+            // For each modifier on the item
+            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+                // Removes the old modifier from main hand
+                StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
+                playerData.removeStatModifier(modifier.name(), false);
+                // Add new one if meets requirements
+                if (meetsRequirements) {
+                    playerData.addStatModifier(offHandModifier, false);
                 }
-                for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, itemOffHand)) {
-                    Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
-                    playerData.removeMultiplier(multiplier.name());
-                    if (meetsRequirements) {
-                        playerData.addMultiplier(offHandMultiplier);
-                    }
-                    offHandMultipliers.add(offHandMultiplier.name());
+                // Reload check stuff
+                offHandModifiers.add(offHandModifier.name());
+                statsToReload.add(modifier.stat());
+            }
+            for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
+                Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
+                playerData.removeMultiplier(multiplier.name());
+                if (meetsRequirements) {
+                    playerData.addMultiplier(offHandMultiplier);
                 }
+                offHandMultipliers.add(offHandMultiplier.name());
             }
         }
         // Check main hand item
-        if (itemMainHand != null) {
-            if (itemMainHand.getType() != Material.AIR) {
-                boolean meetsRequirements = requirements.meetsRequirements(ModifierType.ITEM, itemMainHand, player); // Get whether player meets requirements
-                // For each modifier on the item
-                for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, itemMainHand)) {
-                    // Removes the offhand modifier if wasn't already added
-                    if (!offHandModifiers.contains(modifier.name() + ".Offhand")) {
-                        playerData.removeStatModifier(modifier.name() + ".Offhand", false);
-                    }
-                    // Add if meets requirements
-                    if (meetsRequirements) {
-                        playerData.addStatModifier(modifier, false);
-                    }
-                    // Reload check stuff
-                    statsToReload.add(modifier.stat());
+        if (itemMainHand != null && itemMainHand.getType() != Material.AIR) {
+            SkillsItem skillsItem = new SkillsItem(itemMainHand, plugin);
+            boolean meetsRequirements = skillsItem.meetsRequirements(ModifierType.ITEM, player); // Get whether player meets requirements
+            // For each modifier on the item
+            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+                // Removes the offhand modifier if wasn't already added
+                if (!offHandModifiers.contains(modifier.name() + ".Offhand")) {
+                    playerData.removeStatModifier(modifier.name() + ".Offhand", false);
                 }
-                for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, itemMainHand)) {
-                    if (!offHandMultipliers.contains(multiplier.name() + ".Offhand")) {
-                        playerData.removeMultiplier(multiplier.name() + ".Offhand");
-                    }
-                    if (meetsRequirements) {
-                        playerData.addMultiplier(multiplier);
-                    }
+                // Add if meets requirements
+                if (meetsRequirements) {
+                    playerData.addStatModifier(modifier, false);
+                }
+                // Reload check stuff
+                statsToReload.add(modifier.stat());
+            }
+            for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
+                if (!offHandMultipliers.contains(multiplier.name() + ".Offhand")) {
+                    playerData.removeMultiplier(multiplier.name() + ".Offhand");
+                }
+                if (meetsRequirements) {
+                    playerData.addMultiplier(multiplier);
                 }
             }
         }
@@ -284,17 +281,19 @@ public class ItemListener implements Listener {
                         //Remove modifiers from stored item
                         if (!stored.getType().equals(Material.AIR)) {
                             User playerData = plugin.getUser(player);
-                            for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, stored)) {
+                            SkillsItem storedItem = new SkillsItem(stored, plugin);
+                            for (StatModifier modifier : storedItem.getModifiers(ModifierType.ITEM)) {
                                 playerData.removeStatModifier(modifier.name() + ".Offhand");
                             }
-                            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, stored)) {
+                            for (Multiplier multiplier : storedItem.getMultipliers(ModifierType.ITEM)) {
                                 playerData.removeMultiplier(multiplier.name() + ".Offhand");
                             }
                         }
                         // Add modifiers from held item
                         if (!held.getType().equals(Material.AIR)) {
-                            if (requirements.meetsRequirements(ModifierType.ITEM, held, player)) {
-                                addModifiersToUser(held, plugin.getUser(player));
+                            SkillsItem heldItem = new SkillsItem(held, plugin);
+                            if (heldItem.meetsRequirements(ModifierType.ITEM, player)) {
+                                applyOffhandModifiers(held, plugin.getUser(player));
                             }
                         }
                         // Set stored item to held item
@@ -306,12 +305,13 @@ public class ItemListener implements Listener {
         plugin.getScheduler().timerSync(task, 0L, plugin.configInt(Option.MODIFIER_ITEM_CHECK_PERIOD) * 50L, TimeUnit.MILLISECONDS);
     }
 
-    private void addModifiersToUser(ItemStack held, User user) {
-        for (StatModifier modifier : modifiers.getModifiers(ModifierType.ITEM, held)) {
+    private void applyOffhandModifiers(ItemStack held, User user) {
+        SkillsItem skillsItem = new SkillsItem(held, plugin);
+        for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
             StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
             user.addStatModifier(offHandModifier);
         }
-        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ITEM, held)) {
+        for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
             Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
             user.addMultiplier(offHandMultiplier);
         }

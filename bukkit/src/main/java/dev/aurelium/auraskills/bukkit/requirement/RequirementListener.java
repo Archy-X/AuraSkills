@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.requirement;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorEquipEvent;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageKey;
@@ -26,12 +27,10 @@ public class RequirementListener implements Listener {
 
     private final AuraSkills plugin;
     private final RequirementManager manager;
-    private final Requirements requirements;
 
     public RequirementListener(AuraSkills plugin) {
         this.plugin = plugin;
         this.manager = plugin.getRequirementManager();
-        this.requirements = new Requirements(plugin);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -45,7 +44,8 @@ public class RequirementListener implements Listener {
         if (item.getType() == Material.AIR) {
             return;
         }
-        if (!requirements.meetsRequirements(ModifierType.ARMOR, item, player)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        if (!skillsItem.meetsRequirements(ModifierType.ARMOR, player)) {
             Locale locale = plugin.getUser(player).getLocale();
             event.setCancelled(true);
             Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());
@@ -65,12 +65,14 @@ public class RequirementListener implements Listener {
     private void sendMessage(MessageKey baseMessage, MessageKey entryMessage, ModifierType modifierType, Player player, Locale locale, ItemStack item) {
         // Build requirements message that shows skills and levels
         StringBuilder requirementsString = new StringBuilder();
-        Map<Skill, Integer> requirementMap = requirements.getRequirements(modifierType, item);
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+
+        Map<Skill, Integer> requirementMap = skillsItem.getRequirements(modifierType);
         for (Map.Entry<Skill, Integer> entry : requirementMap.entrySet()) {
             requirementsString.append(TextUtil.replace(plugin.getMsg(entryMessage, locale),
                     "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue(), plugin)));
         }
-        Map<Skill, Integer> globalRequirementMap = requirements.getGlobalRequirements(modifierType, item);
+        Map<Skill, Integer> globalRequirementMap = skillsItem.getGlobalRequirements(modifierType);
         for (Map.Entry<Skill, Integer> entry : globalRequirementMap.entrySet()) {
             requirementsString.append(TextUtil.replace(plugin.getMsg(entryMessage, locale),
                     "{skill}", entry.getKey().getDisplayName(locale), "{level}", RomanNumber.toRoman(entry.getValue(), plugin)));
@@ -142,7 +144,8 @@ public class RequirementListener implements Listener {
     }
 
     private void checkItemRequirements(Player player, ItemStack item, Cancellable event) {
-        if (!requirements.meetsRequirements(ModifierType.ITEM, item, player)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        if (!skillsItem.meetsRequirements(ModifierType.ITEM, player)) {
             Locale locale = plugin.getUser(player).getLocale();
             event.setCancelled(true);
             Integer timer = manager.getErrorMessageTimer().get(player.getUniqueId());

@@ -47,7 +47,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                     continue;
                 }
                 item.setAmount(amount);
-                contents.set(row, column, ClickableItem.of(getDisplayItem(item), event -> {
+                contents.set(row, column, ClickableItem.from(getDisplayItem(item), data -> {
                     // Give item on click
                     ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
                     if (leftoverItem == null) { // All items were added

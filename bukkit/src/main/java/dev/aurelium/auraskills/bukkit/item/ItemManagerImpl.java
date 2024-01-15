@@ -5,9 +5,6 @@ import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.modifier.Modifiers;
-import dev.aurelium.auraskills.bukkit.modifier.Multipliers;
-import dev.aurelium.auraskills.bukkit.requirement.Requirements;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemManagerImpl implements ItemManager {
@@ -20,31 +17,31 @@ public class ItemManagerImpl implements ItemManager {
 
     @Override
     public ItemStack addModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore) {
-        Modifiers modifiers = new Modifiers(plugin);
-        ItemStack modifiedItem = modifiers.addModifier(type, item, stat, value);
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.addModifier(type, stat, value);
         if (lore) {
-            modifiers.addLore(type, modifiedItem, stat, value, plugin.getDefaultLanguage());
+            skillsItem.addModifierLore(type, stat, value, plugin.getDefaultLanguage());
         }
-        return modifiedItem;
+        return skillsItem.getItem();
     }
 
     @Override
     public ItemStack addMultiplier(ItemStack item, ModifierType type, Skill skill, double value, boolean lore) {
-        Multipliers multipliers = new Multipliers(plugin);
-        ItemStack modifiedItem = multipliers.addMultiplier(type, item, skill, value);
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.addMultiplier(type, skill, value);
         if (lore) {
-            multipliers.addLore(type, modifiedItem, skill, value, plugin.getDefaultLanguage());
+            skillsItem.addMultiplierLore(type, skill, value, plugin.getDefaultLanguage());
         }
-        return modifiedItem;
+        return skillsItem.getItem();
     }
 
     @Override
     public ItemStack addRequirement(ItemStack item, ModifierType type, Skill skill, int level, boolean lore) {
-        Requirements requirements = new Requirements(plugin);
-        ItemStack modifiedItem = requirements.addRequirement(type, item, skill, level);
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.addRequirement(type, skill, level);
         if (lore) {
-            requirements.addLore(type, modifiedItem, skill, level, plugin.getDefaultLanguage());
+            skillsItem.addRequirementLore(type, skill, level, plugin.getDefaultLanguage());
         }
-        return modifiedItem;
+        return skillsItem.getItem();
     }
 }

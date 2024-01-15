@@ -9,9 +9,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.modifier.Modifiers;
-import dev.aurelium.auraskills.bukkit.modifier.Multipliers;
-import dev.aurelium.auraskills.bukkit.requirement.Requirements;
+import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.modifier.Multiplier;
@@ -40,17 +38,18 @@ public class ArmorCommand extends BaseCommand {
     public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, int value, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
-        Modifiers modifiers = new Modifiers(plugin);
-        for (StatModifier statModifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        for (StatModifier statModifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
             if (statModifier.stat() == stat) {
                 player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
                 return;
             }
         }
         if (lore) {
-            modifiers.addLore(ModifierType.ARMOR, item, stat, value, locale);
+            skillsItem.addModifierLore(ModifierType.ARMOR, stat, value, locale);
         }
-        ItemStack newItem = modifiers.addModifier(ModifierType.ARMOR, item, stat, value);
+        skillsItem.addModifier(ModifierType.ARMOR, stat, value);
+        ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
         player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale), stat, value, locale));
 
@@ -64,17 +63,18 @@ public class ArmorCommand extends BaseCommand {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         boolean removed = false;
-        Modifiers modifiers = new Modifiers(plugin);
-        for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
             if (modifier.stat() == stat) {
-                item = modifiers.removeModifier(ModifierType.ARMOR, item, stat);
+                skillsItem.removeModifier(ModifierType.ARMOR, stat);
                 removed = true;
                 break;
             }
         }
         if (lore) {
-            modifiers.removeLore(item, stat, locale);
+            skillsItem.removeModifierLore(stat, locale);
         }
+        item = skillsItem.getItem();
         player.getInventory().setItemInMainHand(item);
         if (removed) {
             player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_REMOVE_REMOVED, locale), stat, locale));
@@ -91,8 +91,8 @@ public class ArmorCommand extends BaseCommand {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         StringBuilder message = new StringBuilder(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_LIST_HEADER, locale));
-        Modifiers modifiers = new Modifiers(plugin);
-        for (StatModifier modifier : modifiers.getModifiers(ModifierType.ARMOR, item)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
             message.append("\n").append(format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_LIST_ENTRY, locale), modifier, locale));
         }
         player.sendMessage(message.toString());
@@ -103,8 +103,9 @@ public class ArmorCommand extends BaseCommand {
     @Description("Removes all armor stat modifiers from the item held.")
     public void onArmorModifierRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
-        Modifiers modifiers = new Modifiers(plugin);
-        ItemStack item = modifiers.removeAllModifiers(ModifierType.ARMOR, player.getInventory().getItemInMainHand());
+        SkillsItem skillsItem = new SkillsItem(player.getInventory().getItemInMainHand(), plugin);
+        skillsItem.removeAll(SkillsItem.MetaType.MODIFIER, ModifierType.ARMOR);
+        ItemStack item = skillsItem.getItem();
         player.getInventory().setItemInMainHand(item);
         player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.ARMOR_MODIFIER_REMOVEALL_REMOVED, locale));
     }
@@ -116,16 +117,17 @@ public class ArmorCommand extends BaseCommand {
     public void onArmorRequirementAdd(@Flags("itemheld") Player player, Skill skill, int level, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
-        Requirements requirements = new Requirements(plugin);
-        if (requirements.hasRequirement(ModifierType.ARMOR, item, skill)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        if (skillsItem.getRequirements(ModifierType.ARMOR).containsKey(skill)) {
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_ADD_ALREADY_EXISTS, locale),
                     "{skill}", skill.getDisplayName(locale)));
             return;
         }
-        item = requirements.addRequirement(ModifierType.ARMOR, item, skill, level);
+        skillsItem.addRequirement(ModifierType.ARMOR, skill, level);
         if (lore) {
-            requirements.addLore(ModifierType.ARMOR, item, skill, level, locale);
+            skillsItem.addRequirementLore(ModifierType.ARMOR, skill, level, locale);
         }
+        item = skillsItem.getItem();
         player.getInventory().setItemInMainHand(item);
         player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_ADD_ADDED, locale),
                 "{skill}", skill.getDisplayName(locale),
@@ -139,12 +141,13 @@ public class ArmorCommand extends BaseCommand {
     public void onArmorRequirementRemove(@Flags("itemheld") Player player, Skill skill, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
-        Requirements requirements = new Requirements(plugin);
-        if (requirements.hasRequirement(ModifierType.ARMOR, item, skill)) {
-            item = requirements.removeRequirement(ModifierType.ARMOR, item, skill);
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        if (skillsItem.getRequirements(ModifierType.ARMOR).containsKey(skill)) {
+            skillsItem.removeRequirement(ModifierType.ARMOR, skill);
             if (lore) {
-                requirements.removeLore(item, skill);
+                skillsItem.removeRequirementLore(skill);
             }
+            item = skillsItem.getItem();
             player.getInventory().setItemInMainHand(item);
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_REMOVE_REMOVED, locale),
                     "{skill}", skill.getDisplayName(locale)));
@@ -161,8 +164,8 @@ public class ArmorCommand extends BaseCommand {
     public void onArmorRequirementList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         player.sendMessage(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_LIST_HEADER, locale));
-        Requirements requirements = new Requirements(plugin);
-        for (Map.Entry<Skill, Integer> entry : requirements.getRequirements(ModifierType.ARMOR, player.getInventory().getItemInMainHand()).entrySet()) {
+        SkillsItem skillsItem = new SkillsItem(player.getInventory().getItemInMainHand(), plugin);
+        for (Map.Entry<Skill, Integer> entry : skillsItem.getRequirements(ModifierType.ARMOR).entrySet()) {
             player.sendMessage(TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_LIST_ENTRY, locale),
                     "{skill}", entry.getKey().getDisplayName(locale),
                     "{level}", String.valueOf(entry.getValue())));
@@ -174,8 +177,9 @@ public class ArmorCommand extends BaseCommand {
     @Description("Removes all armor requirements from the item held.")
     public void onArmorRequirementRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
-        Requirements requirements = new Requirements(plugin);
-        ItemStack item = requirements.removeAllRequirements(ModifierType.ARMOR, player.getInventory().getItemInMainHand());
+        SkillsItem skillsItem = new SkillsItem(player.getInventory().getItemInMainHand(), plugin);
+        skillsItem.removeAll(SkillsItem.MetaType.REQUIREMENT, ModifierType.ARMOR);
+        ItemStack item = skillsItem.getItem();
         player.getInventory().setItemInMainHand(item);
         player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_REMOVEALL_REMOVED, locale));
     }
@@ -189,9 +193,9 @@ public class ArmorCommand extends BaseCommand {
         Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(target));
         Locale locale = plugin.getUser(player).getLocale();
 
-        Multipliers multipliers = new Multipliers(plugin);
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
         if (skill != null) { // Add multiplier for specific skill
-            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+            for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                 if (multiplier.skill() == skill) {
                     player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_MULTIPLIER_ADD_ALREADY_EXISTS, locale),
                             "{target}", skill.getDisplayName(locale)));
@@ -199,15 +203,16 @@ public class ArmorCommand extends BaseCommand {
                 }
             }
             if (lore) {
-                multipliers.addLore(ModifierType.ARMOR, item, skill, value, locale);
+                skillsItem.addMultiplierLore(ModifierType.ARMOR, skill, value, locale);
             }
-            ItemStack newItem = multipliers.addMultiplier(ModifierType.ARMOR, item, skill, value);
+            skillsItem.addMultiplier(ModifierType.ARMOR, skill, value);
+            ItemStack newItem = skillsItem.getItem();
             player.getInventory().setItemInMainHand(newItem);
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_MULTIPLIER_ADD_ADDED, locale),
                     "{target}", skill.getDisplayName(locale), "{value}", String.valueOf(value)));
         } else if (target.equalsIgnoreCase("global")) { // Add multiplier for all skills
             String global = plugin.getMsg(CommandMessage.MULTIPLIER_GLOBAL, locale);
-            for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+            for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                 if (multiplier.skill() == null) {
                     player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_MULTIPLIER_ADD_ALREADY_EXISTS, locale),
                             "{target}", global));
@@ -215,9 +220,10 @@ public class ArmorCommand extends BaseCommand {
                 }
             }
             if (lore) {
-                multipliers.addLore(ModifierType.ARMOR, item, null, value, locale);
+                skillsItem.addMultiplierLore(ModifierType.ARMOR, null, value, locale);
             }
-            ItemStack newItem = multipliers.addMultiplier(ModifierType.ARMOR, item, null, value);
+            skillsItem.addMultiplier(ModifierType.ARMOR, null, value);
+            ItemStack newItem = skillsItem.getItem();
             player.getInventory().setItemInMainHand(newItem);
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_MULTIPLIER_ADD_ADDED, locale),
                     "{target}", global, "{value}", String.valueOf(value)));
@@ -236,14 +242,15 @@ public class ArmorCommand extends BaseCommand {
         Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(target));
         boolean removed = false;
 
-        Multipliers multipliers = new Multipliers(plugin);
-        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
             if (multiplier.skill() == skill) {
-                item = multipliers.removeMultiplier(ModifierType.ARMOR, item, skill);
+                skillsItem.removeMultiplier(ModifierType.ARMOR, skill);
                 removed = true;
                 break;
             }
         }
+        item = skillsItem.getItem();
         player.getInventory().setItemInMainHand(item);
         // Use skill display name if skill is not null, otherwise use global name
         String targetName;
@@ -270,8 +277,8 @@ public class ArmorCommand extends BaseCommand {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         StringBuilder message = new StringBuilder(plugin.getMsg(CommandMessage.ARMOR_MULTIPLIER_LIST_HEADER, locale));
-        Multipliers multipliers = new Multipliers(plugin);
-        for (Multiplier multiplier : multipliers.getMultipliers(ModifierType.ARMOR, item)) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
             String targetName;
             if (multiplier.skill() != null) {
                 targetName = multiplier.skill().getDisplayName(locale);
@@ -289,9 +296,9 @@ public class ArmorCommand extends BaseCommand {
     @Description("Removes all armor multipliers from the item held.")
     public void onArmorMultiplierRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
-        Multipliers multipliers = new Multipliers(plugin);
-        ItemStack item = multipliers.removeAllMultipliers(ModifierType.ARMOR, player.getInventory().getItemInMainHand());
-        player.getInventory().setItemInMainHand(item);
+        SkillsItem skillsItem = new SkillsItem(player.getInventory().getItemInMainHand(), plugin);
+        skillsItem.removeAll(SkillsItem.MetaType.MULTIPLIER, ModifierType.ARMOR);
+        player.getInventory().setItemInMainHand(skillsItem.getItem());
         player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.ARMOR_MULTIPLIER_REMOVEALL_REMOVED, locale));
     }
 

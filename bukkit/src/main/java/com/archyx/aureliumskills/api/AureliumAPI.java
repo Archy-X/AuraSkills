@@ -2,17 +2,13 @@ package com.archyx.aureliumskills.api;
 
 import com.archyx.aureliumskills.skills.Skill;
 import com.archyx.aureliumskills.stats.Stat;
-import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.modifier.Modifiers;
-import dev.aurelium.auraskills.bukkit.modifier.Multipliers;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class AureliumAPI {
 
@@ -136,86 +132,6 @@ public class AureliumAPI {
     public static boolean removeStatModifier(Player player, String name) {
         plugin.getUser(player).removeStatModifier(name);
         return true;
-    }
-
-    /**
-     * Adds an item modifier to an item, with optional lore. This does NOT change the item passed in directly,
-     * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
-     * one is created.
-     * @param item The original item, will not be changed by the method
-     * @param stat The stat to add (Use Stats enum for default stats)
-     * @param value The value of the stat to add
-     * @param lore Whether to add lore. Added lore will use the default language.
-     * @return A new ItemStack with the item modifier
-     */
-    public static ItemStack addItemModifier(ItemStack item, Stat stat, double value, boolean lore) {
-        Modifiers modifiers = new Modifiers(plugin);
-        Stats stats = Stats.valueOf(stat.name());
-        ItemStack modifiedItem = modifiers.addModifier(ModifierType.ITEM, item, stats, value);
-        if (lore) {
-            modifiers.addLore(ModifierType.ITEM, modifiedItem, stats, value, plugin.getDefaultLanguage());
-        }
-        return modifiedItem;
-    }
-
-    /**
-     * Adds an armor modifier to an item, with optional lore. This does NOT change the item passed in directly,
-     * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
-     * one is created.
-     * @param item The original item, will not be changed by the method
-     * @param stat The stat to add (Use Stats enum for default stats)
-     * @param value The value of the stat to add
-     * @param lore Whether to add lore. Added lore will use the default language.
-     * @return A new ItemStack with the armor modifier
-     */
-    public static ItemStack addArmorModifier(ItemStack item, Stat stat, double value, boolean lore) {
-        Modifiers modifiers = new Modifiers(plugin);
-        Stats stats = Stats.valueOf(stat.name());
-        ItemStack modifiedItem = modifiers.addModifier(ModifierType.ARMOR, item, stats, value);
-        if (lore) {
-            modifiers.addLore(ModifierType.ARMOR, modifiedItem, stats, value, plugin.getDefaultLanguage());
-        }
-        return modifiedItem;
-    }
-
-    /**
-     * Adds an item multiplier to an item, with optional lore. This does NOT change the item passed in directly,
-     * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
-     * one is created.
-     * @param item The original item, will not be changed by the method
-     * @param skill The skill to add (Use Skills enum for default skills)
-     * @param value The value of the multiplier (in percentage points) to add
-     * @param lore Whether to add lore. Added lore will use the default language.
-     * @return A new ItemStack with the item modifier
-     */
-    public static ItemStack addItemMultiplier(ItemStack item, Skill skill, double value, boolean lore) {
-        Multipliers multipliers = new Multipliers(plugin);
-        Skills skills = Skills.valueOf(skill.name());
-        ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ITEM, item, skills, value);
-        if (lore) {
-            multipliers.addLore(ModifierType.ITEM, modifiedItem, skills, value, plugin.getDefaultLanguage());
-        }
-        return modifiedItem;
-    }
-
-    /**
-     * Adds an armor multiplier to an item, with optional lore. This does NOT change the item passed in directly,
-     * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
-     * one is created.
-     * @param item The original item, will not be changed by the method
-     * @param skill The skill to add (Use Skills enum for default skills)
-     * @param value The value of the multiplier (in percentage points) to add
-     * @param lore Whether to add lore. Added lore will use the default language.
-     * @return A new ItemStack with the armor modifier
-     */
-    public static ItemStack addArmorMultiplier(ItemStack item, Skill skill, double value, boolean lore) {
-        Multipliers multipliers = new Multipliers(plugin);
-        Skills skills = Skills.valueOf(skill.name());
-        ItemStack modifiedItem = multipliers.addMultiplier(ModifierType.ARMOR, item, skills, value);
-        if (lore) {
-            multipliers.addLore(ModifierType.ARMOR, modifiedItem, skills, value, plugin.getDefaultLanguage());
-        }
-        return modifiedItem;
     }
 
 }

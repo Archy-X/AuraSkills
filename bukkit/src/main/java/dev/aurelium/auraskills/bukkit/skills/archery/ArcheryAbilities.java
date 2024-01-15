@@ -148,7 +148,6 @@ public class ArcheryAbilities extends AbilityImpl {
         }
         if (rand.nextDouble() < (getValue(ability, user) / 100)) {
             if (arrow.getPierceLevel() < 127) {
-                arrow.setBounce(false);
                 arrow.setPierceLevel(arrow.getPierceLevel() + 1);
             }
         }
