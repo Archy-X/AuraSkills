@@ -1,3 +1,4 @@
+type: block
 pools:
   rare:
     base_chance: 0

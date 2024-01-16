@@ -1,19 +1,19 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
-import com.archyx.lootmanager.loot.Loot;
-import com.archyx.lootmanager.loot.LootPool;
-import com.archyx.lootmanager.loot.context.LootContext;
-import com.archyx.lootmanager.loot.type.CommandLoot;
-import com.archyx.lootmanager.loot.type.ItemLoot;
-import com.archyx.lootmanager.util.CommandExecutor;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.SourceContextWrapper;
+import dev.aurelium.auraskills.bukkit.loot.Loot;
+import dev.aurelium.auraskills.bukkit.loot.LootPool;
+import dev.aurelium.auraskills.bukkit.loot.context.SourceContextWrapper;
+import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
+import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
+import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
+import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.user.User;

@@ -1,7 +1,7 @@
-package dev.aurelium.auraskills.bukkit.loot;
+package dev.aurelium.auraskills.bukkit.loot.context;
 
-import com.archyx.lootmanager.loot.context.LootContext;
 import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
 
 public class SourceContextWrapper implements LootContext {
 

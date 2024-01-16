@@ -32,7 +32,6 @@ dependencies {
     implementation("com.github.Archy-X:Slate:59d515020e") {
         exclude("org.spigotmc", "spigot-api")
     }
-    implementation("com.github.Archy-X:LootManager:60d109fdde")
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")

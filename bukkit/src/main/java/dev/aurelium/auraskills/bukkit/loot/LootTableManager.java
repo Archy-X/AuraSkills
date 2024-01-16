@@ -1,11 +1,9 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
-import com.archyx.lootmanager.LootManager;
-import com.archyx.lootmanager.loot.LootPool;
-import com.archyx.lootmanager.loot.LootTable;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.loot.context.SourceContextManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

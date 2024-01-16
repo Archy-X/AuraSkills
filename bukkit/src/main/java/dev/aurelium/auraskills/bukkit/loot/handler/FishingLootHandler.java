@@ -1,18 +1,18 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
-import com.archyx.lootmanager.loot.Loot;
-import com.archyx.lootmanager.loot.LootPool;
-import com.archyx.lootmanager.loot.LootTable;
-import com.archyx.lootmanager.loot.type.CommandLoot;
-import com.archyx.lootmanager.loot.type.ItemLoot;
 import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
+import dev.aurelium.auraskills.bukkit.loot.Loot;
+import dev.aurelium.auraskills.bukkit.loot.LootPool;
+import dev.aurelium.auraskills.bukkit.loot.LootTable;
+import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
+import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;

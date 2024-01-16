@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
-import com.archyx.lootmanager.loot.parser.CustomItemParser;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.loot.parser.CustomItemParser;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 import org.bukkit.inventory.ItemStack;
 

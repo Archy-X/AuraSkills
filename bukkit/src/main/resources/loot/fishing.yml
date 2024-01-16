@@ -1,3 +1,4 @@
+type: fishing
 pools:
   rare:
     base_chance: 2
