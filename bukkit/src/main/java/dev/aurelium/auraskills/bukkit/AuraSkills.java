@@ -169,6 +169,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         abilityRegistry = new AbilityRegistry(this);
         manaAbilityRegistry = new ManaAbilityRegistry(this);
         itemRegistry = new BukkitItemRegistry(this);
+        itemRegistry.getStorage().load();
 
         audiences = BukkitAudiences.create(this);
         eventHandler = new BukkitEventHandler(this);
@@ -265,6 +266,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             logger.warn("Error creating automatic backup");
             e.printStackTrace();
         }
+        itemRegistry.getStorage().save();
         // Remove fleeting
         var agilityAbilities = getAbilityManager().getAbilityImpl(AgilityAbilities.class);
         for (Player player : Bukkit.getOnlinePlayers()) {

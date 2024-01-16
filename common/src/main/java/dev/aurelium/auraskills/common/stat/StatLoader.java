@@ -76,7 +76,7 @@ public class StatLoader {
                 statsLoaded++;
             }
 
-            plugin.logger().info("Loaded " + statsLoaded + " stats: " + Arrays.toString(plugin.getStatManager().getStats().stream().map(loaded -> loaded.stat().getId()).toArray()));
+            plugin.logger().info("Loaded " + statsLoaded + " stats");
         } catch (IOException e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();

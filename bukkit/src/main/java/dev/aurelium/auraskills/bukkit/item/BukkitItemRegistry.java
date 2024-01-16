@@ -31,10 +31,12 @@ public class BukkitItemRegistry implements ItemRegistry {
     private final AuraSkills plugin;
     private final Map<NamespacedId, ItemStack> items = new HashMap<>();
     private final BukkitSourceMenuItems sourceMenuItems;
+    private final ItemRegistryStorage storage;
 
     public BukkitItemRegistry(AuraSkills plugin) {
         this.plugin = plugin;
         this.sourceMenuItems = new BukkitSourceMenuItems(plugin);
+        this.storage = new ItemRegistryStorage(plugin, this);
     }
 
     public void register(NamespacedId key, ItemStack item) {
@@ -57,6 +59,10 @@ public class BukkitItemRegistry implements ItemRegistry {
         } else {
             return null;
         }
+    }
+
+    public Map<NamespacedId, ItemStack> getItems() {
+        return items;
     }
 
     @Override
@@ -165,6 +171,10 @@ public class BukkitItemRegistry implements ItemRegistry {
         }
         // Check meta
         return passesItemMetaFilter(item, filter);
+    }
+
+    public ItemRegistryStorage getStorage() {
+        return storage;
     }
 
     @SuppressWarnings("deprecation")

@@ -76,7 +76,7 @@ public class SkillLoader {
 
                 skillsLoaded++;
             }
-            plugin.logger().info("Loaded " + skillsLoaded + " skills: " + Arrays.toString(plugin.getSkillManager().getSkills().stream().map(loaded -> loaded.skill().getId()).toArray()));
+            plugin.logger().info("Loaded " + skillsLoaded + " skills");
 
             // Load source tags
             for (Skill skill : plugin.getSkillManager().getSkillValues()) {

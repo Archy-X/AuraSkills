@@ -133,7 +133,17 @@ public class CommandRegistrar {
             return values;
         });
         completions.registerAsyncCompletion("lang", c -> plugin.getMessageProvider().getLoadedLanguages().stream().map(Locale::toLanguageTag).toList());
-        completions.registerAsyncCompletion("item_keys", c -> plugin.getItemRegistry().getIds().stream().map(NamespacedId::toString).toList());
+        completions.registerAsyncCompletion("item_keys", c -> {
+            List<String> keys = new ArrayList<>();
+            for (NamespacedId id : plugin.getItemRegistry().getIds()) {
+                if (id.getNamespace().equals(NamespacedId.AURASKILLS)) { // Add just the key if default namespace
+                    keys.add(id.getKey());
+                } else {
+                    keys.add(id.toString());
+                }
+            }
+            return keys;
+        });
         completions.registerAsyncCompletion("sort_types", c -> {
             SorterItem.SortType[] sortTypes = SorterItem.SortType.values();
             List<String> typeNames = new ArrayList<>();
