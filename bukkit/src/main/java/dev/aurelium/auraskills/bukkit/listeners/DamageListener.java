@@ -23,6 +23,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.jetbrains.annotations.Nullable;
 
 public class DamageListener implements Listener {
 
@@ -43,13 +44,17 @@ public class DamageListener implements Listener {
 
         // Gets the player who dealt damage
         Player player = getDamager(event.getDamager());
-        if (player == null) {
-            if (event.getEntity() instanceof Player) {
-                onDamaged(event, (Player) event.getEntity());
-            }
-            return;
+        if (player != null) {
+            handleDamage(event, player);
         }
 
+        // Handles being damaged
+        if (event.getEntity() instanceof Player) {
+            handleBeingDamaged(event, (Player) event.getEntity());
+        }
+    }
+
+    private void handleDamage(EntityDamageByEntityEvent event, Player player) {
         // Check disabled world
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
@@ -119,12 +124,11 @@ public class DamageListener implements Listener {
         event.setDamage(event.getDamage() * (1 + additive));
     }
 
-    private void onDamaged(EntityDamageByEntityEvent event, Player player) {
+    private void handleBeingDamaged(EntityDamageByEntityEvent event, Player player) {
         // Check disabled world
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return;
         }
-        if (event.isCancelled()) return;
         User user = plugin.getUser(player);
 
         // Handles absorption
@@ -168,6 +172,7 @@ public class DamageListener implements Listener {
         return DamageType.OTHER;
     }
 
+    @Nullable
     private Player getDamager(Entity entity) {
         Player player = null;
         if (entity instanceof Player) {
