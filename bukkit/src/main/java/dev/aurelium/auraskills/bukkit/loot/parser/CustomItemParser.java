@@ -1,13 +1,12 @@
 package dev.aurelium.auraskills.bukkit.loot.parser;
 
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public interface CustomItemParser {
 
-    boolean shouldUseParser(Map<?, ?> map);
+    boolean shouldUseParser(ConfigurationNode config);
 
-    ItemStack parseCustomItem(Map<?, ?> map);
+    ItemStack parseCustomItem(ConfigurationNode config);
 
 }

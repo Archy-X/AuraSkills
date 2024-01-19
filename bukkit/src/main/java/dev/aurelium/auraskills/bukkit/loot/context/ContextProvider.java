@@ -1,8 +1,9 @@
 package dev.aurelium.auraskills.bukkit.loot.context;
 
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
-import java.util.Map;
 import java.util.Set;
 
 public abstract class ContextProvider {
@@ -18,6 +19,6 @@ public abstract class ContextProvider {
     }
 
     @Nullable
-    public abstract Set<LootContext> parseContext(Map<?, ?> parentMap);
+    public abstract Set<LootContext> parseContext(ConfigurationNode config) throws SerializationException;
 
 }

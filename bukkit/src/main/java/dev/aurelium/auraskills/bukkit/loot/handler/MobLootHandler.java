@@ -77,7 +77,7 @@ public class MobLootHandler extends LootHandler implements Listener {
                     break;
                 }
                 if (selectedLoot instanceof ItemLoot itemLoot) {
-                    giveMobItemLoot(player, itemLoot, entity.getLocation(), skill, cause);
+                    giveMobItemLoot(player, itemLoot, entity.getLocation(), skill, cause, table);
                 } else if (selectedLoot instanceof CommandLoot commandLoot) {
                     giveCommandLoot(player, commandLoot, null, skill);
                 }

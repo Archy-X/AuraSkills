@@ -4,8 +4,9 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTag;
-import dev.aurelium.auraskills.common.util.data.DataUtil;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
 
@@ -20,12 +21,12 @@ public class SourceContextProvider extends ContextProvider {
 
     @Override
     @Nullable
-    public Set<LootContext> parseContext(Map<?, ?> parentMap) {
+    public Set<LootContext> parseContext(ConfigurationNode config) throws SerializationException {
         Set<LootContext> contexts = new HashSet<>();
-        if (!parentMap.containsKey("sources")) {
+        if (config.node("sources").virtual()) {
             return contexts;
         }
-        List<String> sourcesList = DataUtil.getStringList(parentMap, "sources");
+        List<String> sourcesList = config.node("sources").getList(String.class, new ArrayList<>());
         for (String name : sourcesList) {
             NamespacedId sourceId = NamespacedId.fromDefault(name);
             XpSource source = plugin.getSkillManager().getSourceById(sourceId);

@@ -76,7 +76,8 @@ public class BukkitConfigProvider implements ConfigProvider {
             HookRegistrar hookRegistrar = new HookRegistrar(plugin, plugin.getHookManager());
             hookRegistrar.registerHooks(config.node("hooks"));
 
-            saveConfigIfUpdated(embedded, user, config);
+            File file = new File(plugin.getPluginFolder(), "config.yml");
+            saveConfigIfUpdated(file, embedded, user, config);
 
             long end = System.currentTimeMillis();
             logger.info("Loaded " + loaded + " config options in " + (end - start) + " ms");
@@ -86,8 +87,7 @@ public class BukkitConfigProvider implements ConfigProvider {
         }
     }
 
-    private void saveConfigIfUpdated(ConfigurationNode embedded, ConfigurationNode user, ConfigurationNode merged) throws ConfigurateException {
-        File file = new File(plugin.getPluginFolder(), "config.yml");
+    public void saveConfigIfUpdated(File file, ConfigurationNode embedded, ConfigurationNode user, ConfigurationNode merged) throws ConfigurateException {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .path(file.toPath())
                 .nodeStyle(NodeStyle.BLOCK)
@@ -99,7 +99,8 @@ public class BukkitConfigProvider implements ConfigProvider {
         int userCount = countChildren(user);
         if (countChildren(embedded) > countChildren(user)) {
             loader.save(merged);
-            plugin.logger().info("Updated config.yml with " + (embeddedCount - userCount) + " new keys");
+            String path = plugin.getPluginFolder().toPath().relativize(file.toPath()).toString();
+            plugin.logger().info("Updated " + path + " with " + (embeddedCount - userCount) + " new keys");
         }
     }
 

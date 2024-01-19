@@ -1,13 +1,13 @@
 package dev.aurelium.auraskills.bukkit.loot.builder;
 
 import dev.aurelium.auraskills.bukkit.loot.Loot;
+import dev.aurelium.auraskills.bukkit.loot.item.ItemSupplier;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import org.apache.commons.lang.Validate;
-import org.bukkit.inventory.ItemStack;
 
 public class ItemLootBuilder extends LootBuilder {
 
-    protected ItemStack item;
+    protected ItemSupplier item;
     protected int minAmount;
     protected int maxAmount;
 
@@ -22,7 +22,7 @@ public class ItemLootBuilder extends LootBuilder {
         this.maxAmount = 1;
     }
 
-    public ItemLootBuilder item(ItemStack item) {
+    public ItemLootBuilder item(ItemSupplier item) {
         this.item = item;
         return this;
     }

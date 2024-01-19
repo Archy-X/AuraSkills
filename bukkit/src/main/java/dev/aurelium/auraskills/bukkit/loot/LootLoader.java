@@ -1,12 +1,10 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
-import com.cryptomorin.xseries.XMaterial;
 import dev.aurelium.auraskills.bukkit.loot.parser.CommandLootParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.ItemLootParser;
-import dev.aurelium.auraskills.common.util.data.DataUtil;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.util.data.Parser;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.io.File;
 import java.util.*;
@@ -19,53 +17,55 @@ public class LootLoader extends Parser {
         this.manager = manager;
     }
 
-    public LootTable loadLootTable(File file, FileConfiguration config) {
+    public LootTable loadLootTable(File file, ConfigurationNode config) {
         // Parse loot table type, default to block
-        String typeString = config.getString("type");
+        String typeString = config.node("type").getString();
         LootTableType type = LootTableType.BLOCK;
         if (typeString != null) {
             type = LootTableType.valueOf(typeString.toUpperCase(Locale.ROOT));
         }
         // Load pools
-        ConfigurationSection poolsSection = config.getConfigurationSection("pools");
-        if (poolsSection == null) return null;
-        List<LootPool> pools = new ArrayList<>();
-        for (String poolName : poolsSection.getKeys(false)) {
-            ConfigurationSection currentPool = poolsSection.getConfigurationSection(poolName);
-            if (currentPool == null) continue;
+        ConfigurationNode poolsNode = config.node("pools");
+        if (poolsNode.virtual()) return null;
 
-            double baseChance = currentPool.getDouble("base_chance", 1.0) / 100; // Converts from percent chance to decimal
-            int selectionPriority = currentPool.getInt("selection_priority", 1);
-            boolean overrideVanillaLoot = currentPool.getBoolean("override_vanilla_loot", false);
+        List<LootPool> pools = new ArrayList<>();
+        for (ConfigurationNode poolNode : poolsNode.childrenMap().values()) {
+            String poolName = (String) poolNode.key();
+
+            double baseChance = poolNode.node("base_chance").getDouble(0) / 100; // Converts from percent chance to decimal
+            int selectionPriority = poolNode.node("selection_priority").getInt(1);
+            boolean overrideVanillaLoot = poolNode.node("override_vanilla_loot").getBoolean(false);
 
             // Load pool options
             Map<String, Object> options = new HashMap<>();
             for (String optionKey : manager.getPoolOptionKeys()) {
-                if (currentPool.contains(optionKey)) {
-                    Object option = currentPool.get(optionKey);
+                if (poolNode.hasChild(optionKey)) {
+                    Object option = poolNode.node(optionKey).raw();
                     options.put(optionKey, option);
                 }
             }
 
             // Parse each loot entry
-            List<Map<?,?>> lootMapList = currentPool.getMapList("loot");
             List<Loot> lootList = new ArrayList<>();
             int index = 0;
-            for (Map<?, ?> lootEntryMap : lootMapList) {
+            for (ConfigurationNode lootNode : poolNode.node("loot").childrenList()) {
                 Loot loot = null;
                 try {
-                    String lootType = DataUtil.getString(lootEntryMap, "type");
+                    String lootType = lootNode.node("type").getString("");
                     // Item loot
                     if (lootType.equalsIgnoreCase("item")) {
-                        if (getBooleanOrDefault(lootEntryMap, "ignore_legacy", false) && XMaterial.getVersion() <= 12) {
+                        // Ignore loot if below the ignore_below major version
+                        int ignoreBelow = lootNode.node("ignore_below").getInt(-1);
+                        if (ignoreBelow != -1 && !VersionUtils.isAtLeastVersion(ignoreBelow)) {
                             index++;
                             continue;
                         }
-                        loot = new ItemLootParser(manager).parse(lootEntryMap);
+
+                        loot = new ItemLootParser(manager).parse(lootNode);
                     }
                     // Command loot
                     else if (lootType.equalsIgnoreCase("command")) {
-                        loot = new CommandLootParser(manager).parse(lootEntryMap);
+                        loot = new CommandLootParser(manager).parse(lootNode);
                     } else {
                         throw new IllegalArgumentException("Unknown loot type: " + lootType);
                     }

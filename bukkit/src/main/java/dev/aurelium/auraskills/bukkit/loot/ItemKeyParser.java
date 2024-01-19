@@ -3,10 +3,8 @@ package dev.aurelium.auraskills.bukkit.loot;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.parser.CustomItemParser;
-import dev.aurelium.auraskills.common.util.data.DataUtil;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public class ItemKeyParser implements CustomItemParser {
 
@@ -17,13 +15,13 @@ public class ItemKeyParser implements CustomItemParser {
     }
 
     @Override
-    public boolean shouldUseParser(Map<?, ?> map) {
-        return map.containsKey("key");
+    public boolean shouldUseParser(ConfigurationNode config) {
+        return !config.node("key").virtual();
     }
 
     @Override
-    public ItemStack parseCustomItem(Map<?, ?> map) {
-        NamespacedId itemKey = NamespacedId.fromDefault(DataUtil.getString(map, "key"));
+    public ItemStack parseCustomItem(ConfigurationNode config) {
+        NamespacedId itemKey = NamespacedId.fromDefault(config.node("key").getString(""));
         ItemStack item = plugin.getItemRegistry().getItem(itemKey);
         if (item != null) {
             return item;

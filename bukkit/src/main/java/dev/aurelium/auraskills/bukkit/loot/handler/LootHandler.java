@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootPool;
+import dev.aurelium.auraskills.bukkit.loot.LootTable;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
@@ -61,9 +62,9 @@ public abstract class LootHandler {
         giveXp(player, loot, source, skill);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropEvent.Cause cause) {
+    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropEvent.Cause cause, LootTable table) {
         Block block = breakEvent.getBlock();
-        ItemStack drop = loot.getItem().clone();
+        ItemStack drop = loot.getItem().supplyItem(plugin, table);
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
@@ -73,8 +74,8 @@ public abstract class LootHandler {
         giveXp(player, loot, null, skill);
     }
 
-    protected void giveMobItemLoot(Player player, ItemLoot loot, Location location, Skill skill, LootDropEvent.Cause cause) {
-        ItemStack drop = loot.getItem().clone();
+    protected void giveMobItemLoot(Player player, ItemLoot loot, Location location, Skill skill, LootDropEvent.Cause cause, LootTable table) {
+        ItemStack drop = loot.getItem().supplyItem(plugin, table);
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
 
         giveDropItemLoot(player, location, cause, drop);
@@ -94,13 +95,13 @@ public abstract class LootHandler {
         ItemUtils.giveBlockLoot(player, dropEvent);
     }
 
-    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause) {
+    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause, LootTable table) {
         if (!(event.getCaught() instanceof Item itemEntity)) return;
 
         int amount = generateAmount(loot.getMinAmount(), loot.getMaxAmount());
         if (amount == 0) return;
 
-        ItemStack drop = loot.getItem().clone();
+        ItemStack drop = loot.getItem().supplyItem(plugin, table);
         drop.setAmount(amount);
 
         LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, event.getHook().getLocation(), cause, false);

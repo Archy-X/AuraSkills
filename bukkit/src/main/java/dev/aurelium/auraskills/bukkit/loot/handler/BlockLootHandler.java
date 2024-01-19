@@ -102,19 +102,19 @@ public class BlockLootHandler extends LootHandler implements Listener {
                 cause = LootDropEvent.Cause.UNKNOWN;
             }
             // Select pool and give loot
-            if (selectBlockLoot(pool, player, chance, source, event, skill, cause)) {
+            if (selectBlockLoot(table, pool, player, chance, source, event, skill, cause)) {
                 break;
             }
         }
     }
 
-    private boolean selectBlockLoot(LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropEvent.Cause cause) {
+    private boolean selectBlockLoot(LootTable table, LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropEvent.Cause cause) {
         if (random.nextDouble() < chance) { // Pool is selected
             Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource));
             // Give loot
             if (selectedLoot != null) {
                 if (selectedLoot instanceof ItemLoot itemLoot) {
-                    giveBlockItemLoot(player, itemLoot, event, skill, cause);
+                    giveBlockItemLoot(player, itemLoot, event, skill, cause, table);
                 } else if (selectedLoot instanceof CommandLoot commandLoot) {
                     giveCommandLoot(player, commandLoot, null, skill);
                 }

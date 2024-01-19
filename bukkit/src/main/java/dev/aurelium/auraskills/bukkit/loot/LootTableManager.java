@@ -5,13 +5,17 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContextProvider;
+import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -79,22 +83,40 @@ public class LootTableManager {
 			if (!lootTableFile.isFile() || !lootTableFile.getName().endsWith(".yml")) {
 				continue;
 			}
-			FileConfiguration config = YamlConfiguration.loadConfiguration(lootTableFile);
+			ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
+			try {
+				// Load user file
+				ConfigurationNode user = loader.loadUserFile(lootTableFile);
+				// Merge embedded and user nodes to ensure config has all options
+				ConfigurationNode config = user;
 
-			if (plugin.configBoolean(Option.LOOT_UPDATE_LOOT_TABLES)) {
-				matchConfig(config, lootTableFile); // Try to update file
-			}
-			// Load corresponding loot table type
-			LootTable lootTable = lootManager.getLootLoader().loadLootTable(lootTableFile, config);
-			if (lootTable == null) continue;
+				String path = plugin.getPluginFolder().toPath().relativize(lootTableFile.toPath()).toString();
+				ConfigurationNode embedded = null;
+				if (plugin.getResource(path) != null) {
+					embedded = loader.loadEmbeddedFile(path);
+					if (plugin.configBoolean(Option.LOOT_UPDATE_LOOT_TABLES)) {
+						// Merge embedded and user files if config should update
+						config = loader.mergeNodes(embedded, user);
+					}
+				}
+				// Load corresponding loot table type
+				LootTable lootTable = lootManager.getLootLoader().loadLootTable(lootTableFile, config);
+				if (lootTable == null) continue;
 
-			// Parse skill from file name
-			String fileName = lootTableFile.getName().replace(".yml", "");
-			Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(fileName));
-			if (skill != null) {
-                skillLootTables.put(skill, lootTable);
-            } else {
-				otherLootTables.put(NamespacedId.fromDefault(fileName), lootTable);
+				// Parse skill from file name
+				String fileName = lootTableFile.getName().replace(".yml", "");
+				Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(fileName));
+				if (skill != null) {
+					skillLootTables.put(skill, lootTable);
+				} else {
+					otherLootTables.put(NamespacedId.fromDefault(fileName), lootTable);
+				}
+
+				if (embedded != null) {
+					plugin.config().saveConfigIfUpdated(lootTableFile, embedded, user, config);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		// Send info message

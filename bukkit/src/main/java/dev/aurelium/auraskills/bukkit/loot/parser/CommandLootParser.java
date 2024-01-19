@@ -4,9 +4,11 @@ import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootManager;
 import dev.aurelium.auraskills.bukkit.loot.builder.CommandLootBuilder;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
+import dev.aurelium.auraskills.common.util.data.Validate;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class CommandLootParser extends LootParser {
 
@@ -15,18 +17,20 @@ public class CommandLootParser extends LootParser {
     }
 
     @Override
-    public Loot parse(Map<?, ?> map) {
+    public Loot parse(ConfigurationNode config) throws SerializationException {
         CommandLootBuilder builder = new CommandLootBuilder();
 
-        if (map.containsKey("executor")) {
-            builder.executor(CommandExecutor.valueOf(getString(map, "executor").toUpperCase(Locale.ROOT)));
-        }
+        String executor = config.node("executor").getString("console");
+        builder.executor(CommandExecutor.valueOf(executor.toUpperCase(Locale.ROOT)));
 
-        return builder.command(getString(map, "command"))
-                .message(parseMessage(map))
-                .weight(parseWeight(map))
-                .contexts(parseContexts(map))
-                .options(parseOptions(map))
+        String command = config.node("command").getString("");
+        Validate.notNull(command, "Command loot must specify key command");
+
+        return builder.command(command)
+                .message(parseMessage(config))
+                .weight(parseWeight(config))
+                .contexts(parseContexts(config))
+                .options(parseOptions(config))
                 .build();
     }
 }

@@ -5,7 +5,8 @@ import dev.aurelium.auraskills.bukkit.loot.LootManager;
 import dev.aurelium.auraskills.bukkit.loot.context.ContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
 import dev.aurelium.auraskills.common.util.data.Parser;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,32 +20,24 @@ public abstract class LootParser extends Parser {
         this.manager = manager;
     }
 
-    public abstract Loot parse(Map<?, ?> map);
+    public abstract Loot parse(ConfigurationNode config) throws SerializationException;
 
-    protected int parseWeight(Map<?, ?> map) {
-        if (map.containsKey("weight")) {
-            return getInt(map, "weight");
-        } else {
-            return 10;
-        }
+    protected int parseWeight(ConfigurationNode config) {
+        return config.node("weight").getInt(10);
     }
 
-    protected String parseMessage(Map<?, ?> map) {
-        if (map.containsKey("message")) {
-            return TextUtil.replace(getString(map, "message"), "&", "§");
-        } else {
-            return "";
-        }
+    protected String parseMessage(ConfigurationNode config) {
+        return config.node("message").getString("");
     }
 
-    protected Map<String, Set<LootContext>> parseContexts(Map<?, ?> map) {
+    protected Map<String, Set<LootContext>> parseContexts(ConfigurationNode config) throws SerializationException {
         Map<String, Set<LootContext>> contexts = new HashMap<>();
         for (String contextKey : manager.getContextKeySet()) {
-            if (map.containsKey(contextKey)) {
+            if (!config.node(contextKey).virtual()) {
                 ContextProvider contextProvider = manager.getContextProvider(contextKey); // Get the manager
                 if (contextProvider == null) continue;
 
-                Set<LootContext> lootContext = contextProvider.parseContext(map);
+                Set<LootContext> lootContext = contextProvider.parseContext(config);
 
                 if (lootContext != null) {
                     contexts.put(contextKey, lootContext);
@@ -54,11 +47,11 @@ public abstract class LootParser extends Parser {
         return contexts;
     }
 
-    protected Map<String, Object> parseOptions(Map<?, ?> map) {
+    protected Map<String, Object> parseOptions(ConfigurationNode config) {
         Map<String, Object> options = new HashMap<>();
         for (String optionKey : manager.getLootOptionKeys()) {
-            if (map.containsKey(optionKey)) {
-                Object option = getElement(map, optionKey);
+            if (!config.node(optionKey).virtual()) {
+                Object option = config.node(optionKey).raw();
                 options.put(optionKey, option);
             }
         }

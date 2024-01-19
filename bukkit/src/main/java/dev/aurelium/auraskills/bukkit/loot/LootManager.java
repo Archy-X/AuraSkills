@@ -1,22 +1,22 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
+import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.ContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.parser.CustomItemParser;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class LootManager {
 
-    private final Plugin plugin;
+    private final AuraSkills plugin;
     private final LootLoader lootLoader;
     private final Map<String, ContextProvider> contextProviders;
     private final Set<String> lootOptionKeys;
     private final Set<String> poolOptionKeys;
     private final List<CustomItemParser> customItemParsers;
 
-    public LootManager(Plugin plugin) {
+    public LootManager(AuraSkills plugin) {
         this.plugin = plugin;
         this.lootLoader = new LootLoader(this);
         this.contextProviders = new HashMap<>();
@@ -25,7 +25,7 @@ public class LootManager {
         this.customItemParsers = new ArrayList<>();
     }
 
-    public Plugin getPlugin() {
+    public AuraSkills getPlugin() {
         return plugin;
     }
 

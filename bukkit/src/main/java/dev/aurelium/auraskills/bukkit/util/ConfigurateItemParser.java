@@ -50,7 +50,11 @@ public class ConfigurateItemParser {
     }
 
     public ItemStack parseItem(ConfigurationNode config) {
-        ItemStack item = parseBaseItem(config);
+        return parseItem(config, new ArrayList<>());
+    }
+
+    public ItemStack parseItem(ConfigurationNode config, List<String> excludedKeys) {
+        ItemStack item = parseBaseItem(config, excludedKeys);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             String displayName = parseDisplayName(config);
@@ -67,6 +71,10 @@ public class ConfigurateItemParser {
     }
 
     public ItemStack parseBaseItem(ConfigurationNode config) {
+        return parseBaseItem(config, new ArrayList<>());
+    }
+
+    public ItemStack parseBaseItem(ConfigurationNode config, List<String> excludedKeys) {
         String key = config.node("key").getString();
         if (key != null) {
             ItemStack item = parseItemKey(key);
@@ -80,21 +88,22 @@ public class ConfigurateItemParser {
 
         ItemStack item = parseMaterialString(materialString);
 
-        parseAmount(item, config);
+        if (!excludedKeys.contains("amount")) {
+            parseAmount(item, config);
+        }
 
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
         // Enchantments
-        if (!config.node("enchantments").virtual()) {
+        if (config.hasChild("enchantments") && !excludedKeys.contains("enchantments")) {
             parseEnchantments(item, config);
         }
         // Potions
-        ConfigurationNode potionDataSection = config.node("potion_data");
-        if (!potionDataSection.virtual()) {
-            parsePotionData(item, potionDataSection);
+        if (config.hasChild("potion_data") && !excludedKeys.contains("potion_data")) {
+            parsePotionData(item, config.node("potion_data"));
         }
         // Custom potion effects
-        if (!config.node("custom_effects").virtual()) {
+        if (config.hasChild("custom_effects") && !excludedKeys.contains("custom_effects")) {
             parseCustomEffects(config, item);
         }
         // Glowing w/o enchantments visible
@@ -102,7 +111,7 @@ public class ConfigurateItemParser {
             parseGlow(item);
         }
         // Custom NBT
-        if (!config.node("nbt").virtual()) {
+        if (!config.node("nbt").virtual() && !excludedKeys.contains("nbt")) {
             if (config.node("nbt").isMap()) {
                 ConfigurationNode nbtSection = config.node("nbt");
                 item = parseNBT(item, nbtSection.childrenMap());
@@ -113,14 +122,14 @@ public class ConfigurateItemParser {
                 }
             }
         }
-        if (!config.node("flags").virtual()) {
+        if (!config.node("flags").virtual() && !excludedKeys.contains("flags")) {
             parseFlags(config, item);
         }
-        if (!config.node("durability").virtual()) {
+        if (!config.node("durability").virtual() && !excludedKeys.contains("durability")) {
             parseDurability(config, item);
         }
         ConfigurationNode skullMetaSection = config.node("skull_meta");
-        if (!skullMetaSection.virtual()) {
+        if (!skullMetaSection.virtual() && !excludedKeys.contains("skull_meta")) {
             parseSkullMeta(item, item.getItemMeta(), skullMetaSection);
         }
         return item;

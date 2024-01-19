@@ -1,8 +1,9 @@
 package dev.aurelium.auraskills.bukkit.loot.context;
 
-import dev.aurelium.auraskills.common.util.data.DataUtil;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
 
@@ -13,12 +14,12 @@ public class MobContextProvider extends ContextProvider {
     }
 
     @Override
-    public @Nullable Set<LootContext> parseContext(Map<?, ?> parentMap) {
+    public @Nullable Set<LootContext> parseContext(ConfigurationNode config) throws SerializationException {
         Set<LootContext> contexts = new HashSet<>();
-        if (!parentMap.containsKey("mobs")) {
+        if (config.node("mobs").virtual()) {
             return contexts;
         }
-        List<String> mobList = DataUtil.getStringList(parentMap, "mobs");
+        List<String> mobList = config.node("mobs").getList(String.class, new ArrayList<>());
         for (String name : mobList) {
             EntityType entityType = EntityType.valueOf(name.toUpperCase(Locale.ROOT));
             contexts.add(new MobContext(entityType));
