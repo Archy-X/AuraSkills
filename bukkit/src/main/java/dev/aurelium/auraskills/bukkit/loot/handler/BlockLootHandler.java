@@ -7,10 +7,10 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.SlimefunHook;
-import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootPool;
 import dev.aurelium.auraskills.bukkit.loot.LootTable;
+import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.provider.SkillLootProvider;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
@@ -19,7 +19,6 @@ import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
-import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,15 +62,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
         Player player = event.getPlayer();
 
-        if (player.getGameMode() != GameMode.SURVIVAL) { // Only drop loot in survival mode
-            return;
-        }
-
-        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
-            if (plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(block.getLocation(), player, WorldGuardHook.FlagKey.CUSTOM_LOOT)) {
-                return;
-            }
-        }
+        if (failsChecks(player, block.getLocation())) return;
 
         if (plugin.getHookManager().isRegistered(SlimefunHook.class)) {
             if (plugin.getHookManager().getHook(SlimefunHook.class).hasBlockInfo(block.getLocation())) {
@@ -119,13 +110,13 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
     private boolean selectBlockLoot(LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropEvent.Cause cause) {
         if (random.nextDouble() < chance) { // Pool is selected
-            Loot selectedLoot = selectLoot(pool, originalSource);
+            Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource));
             // Give loot
             if (selectedLoot != null) {
                 if (selectedLoot instanceof ItemLoot itemLoot) {
-                    giveBlockItemLoot(player, itemLoot, event, originalSource, skill, cause);
+                    giveBlockItemLoot(player, itemLoot, event, skill, cause);
                 } else if (selectedLoot instanceof CommandLoot commandLoot) {
-                    giveCommandLoot(player, commandLoot, originalSource, skill);
+                    giveCommandLoot(player, commandLoot, null, skill);
                 }
                 // Override vanilla loot if enabled
                 if (pool.overridesVanillaLoot()) {

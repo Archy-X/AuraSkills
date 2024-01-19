@@ -6,9 +6,11 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootPool;
-import dev.aurelium.auraskills.bukkit.loot.context.SourceContextWrapper;
+import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
+import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
@@ -19,6 +21,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
@@ -26,6 +29,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -39,7 +43,7 @@ public abstract class LootHandler {
         this.plugin = plugin;
     }
 
-    protected void giveCommandLoot(Player player, CommandLoot loot, XpSource source, Skill skill) {
+    protected void giveCommandLoot(Player player, CommandLoot loot, @Nullable XpSource source, Skill skill) {
         // Apply placeholders to command
         String finalCommand = TextUtil.replace(loot.getCommand(), "{player}", player.getName());
         User user = plugin.getUser(player);
@@ -57,12 +61,29 @@ public abstract class LootHandler {
         giveXp(player, loot, source, skill);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause) {
+    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropEvent.Cause cause) {
         Block block = breakEvent.getBlock();
         ItemStack drop = loot.getItem().clone();
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
+        giveDropItemLoot(player, location, cause, drop);
+
+        attemptSendMessage(player, loot);
+        giveXp(player, loot, null, skill);
+    }
+
+    protected void giveMobItemLoot(Player player, ItemLoot loot, Location location, Skill skill, LootDropEvent.Cause cause) {
+        ItemStack drop = loot.getItem().clone();
+        drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
+
+        giveDropItemLoot(player, location, cause, drop);
+
+        attemptSendMessage(player, loot);
+        giveXp(player, loot, null, skill);
+    }
+
+    private void giveDropItemLoot(Player player, Location location, LootDropEvent.Cause cause, ItemStack drop) {
         boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
 
         LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, location, cause, toInventory);
@@ -71,9 +92,6 @@ public abstract class LootHandler {
         if (dropEvent.isCancelled()) return;
 
         ItemUtils.giveBlockLoot(player, dropEvent);
-
-        attemptSendMessage(player, loot);
-        giveXp(player, loot, source, skill);
     }
 
     protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause) {
@@ -96,22 +114,39 @@ public abstract class LootHandler {
     }
 
     @Nullable
-    protected Loot selectLoot(LootPool pool, @Nullable XpSource source) {
+    protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext) {
         List<Loot> lootList = new ArrayList<>();
         // Add applicable loot to list for selection
         for (Loot loot : pool.getLoot()) {
-            Set<LootContext> sourcesContext = loot.getContexts().get("sources");
-            if (sourcesContext != null && source != null) {
-                for (LootContext context : sourcesContext) { // Go through LootContext and cast to Source
-                    if (context instanceof SourceContextWrapper wrapper) {
-                        if (wrapper.getSource().equals(source)) { // Check if source matches one of the contexts
-                            lootList.add(loot);
-                            break;
+            if (providedContext instanceof SourceContext sourceContext) {
+                Set<LootContext> lootContexts = loot.getContexts().get("sources");
+                // Make sure the loot defines a sources context and the provided context exists
+                if (lootContexts != null && sourceContext.source() != null) {
+                    for (LootContext context : lootContexts) { // Go through LootContext and cast to Source
+                        if (context instanceof SourceContext sourceLootContext) {
+                            if (sourceLootContext.source().equals(sourceContext.source())) { // Check if source matches one of the contexts
+                                lootList.add(loot);
+                                break;
+                            }
                         }
                     }
+                } else {
+                    lootList.add(loot);
                 }
-            } else {
-                lootList.add(loot);
+            } else if (providedContext instanceof MobContext mobContext) {
+                Set<LootContext> lootContexts = loot.getContexts().get("mobs");
+                if (lootContexts != null && mobContext.entityType() != null) {
+                    for (LootContext context : lootContexts) {
+                        if (context instanceof MobContext mobLootContext) {
+                            if (mobLootContext.entityType().equals(mobContext.entityType())) {
+                                lootList.add(loot);
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    lootList.add(loot);
+                }
             }
         }
         // Loot selected based on weight
@@ -160,7 +195,7 @@ public abstract class LootHandler {
 
     private void attemptSendMessage(Player player, Loot loot) {
         String message = loot.getMessage();
-        if (message == null || message.equals("")) {
+        if (message == null || message.isEmpty()) {
             return;
         }
         User user = plugin.getUser(player);
@@ -189,6 +224,19 @@ public abstract class LootHandler {
             chance += (ability.getValue(user.getAbilityLevel(ability)) / 100);
         }
         return chance;
+    }
+
+    protected boolean failsChecks(Player player, Location location) {
+        if (player.getGameMode() != GameMode.SURVIVAL) { // Only drop loot in survival mode
+            return true;
+        }
+
+        if (plugin.getWorldManager().isInDisabledWorld(location)) return true;
+
+        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
+            return plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(location, player, WorldGuardHook.FlagKey.CUSTOM_LOOT);
+        }
+        return false;
     }
 
 }

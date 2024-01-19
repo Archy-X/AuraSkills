@@ -6,18 +6,34 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class ItemUtils {
+
+	public static boolean getAndAddEnchant(String enchantName, int level, ItemStack item, ItemMeta meta) {
+		Enchantment enchantment = Registry.ENCHANTMENT.get(NamespacedKey.minecraft(enchantName.toLowerCase(Locale.ROOT)));
+		if (enchantment != null) {
+			if (item.getType() == Material.ENCHANTED_BOOK && meta instanceof EnchantmentStorageMeta esm) {
+				esm.addStoredEnchant(enchantment, level, true);
+				item.setItemMeta(esm);
+			} else {
+				meta.addEnchant(enchantment, level, true);
+				item.setItemMeta(meta);
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public static void giveBlockLoot(Player player, LootDropEvent event) {
 		if (event.isToInventory()) {

@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.bukkit.loot.parser;
 
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootManager;
-import dev.aurelium.auraskills.bukkit.loot.context.ContextManager;
+import dev.aurelium.auraskills.bukkit.loot.context.ContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
 import dev.aurelium.auraskills.common.util.data.Parser;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -41,10 +41,10 @@ public abstract class LootParser extends Parser {
         Map<String, Set<LootContext>> contexts = new HashMap<>();
         for (String contextKey : manager.getContextKeySet()) {
             if (map.containsKey(contextKey)) {
-                ContextManager contextManager = manager.getContextManager(contextKey); // Get the manager
-                if (contextManager == null) continue;
+                ContextProvider contextProvider = manager.getContextProvider(contextKey); // Get the manager
+                if (contextProvider == null) continue;
 
-                Set<LootContext> lootContext = contextManager.parseContext(map);
+                Set<LootContext> lootContext = contextProvider.parseContext(map);
 
                 if (lootContext != null) {
                     contexts.put(contextKey, lootContext);

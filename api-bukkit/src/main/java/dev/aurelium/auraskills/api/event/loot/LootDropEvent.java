@@ -105,7 +105,8 @@ public class LootDropEvent extends Event implements Cancellable {
         EXCAVATION_OTHER_LOOT,
         MINING_OTHER_LOOT,
         FORAGING_OTHER_LOOT,
-        UNKNOWN
+        UNKNOWN,
+        MOB_LOOT_TABLE
 
     }
 

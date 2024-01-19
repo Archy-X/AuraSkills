@@ -8,7 +8,6 @@ import com.archyx.slate.position.PositionProvider;
 import com.archyx.slate.util.NumberUtil;
 import com.archyx.slate.util.TextUtil;
 import com.archyx.slate.util.Validate;
-import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
@@ -24,7 +23,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionData;
@@ -208,21 +210,7 @@ public class ConfigurateItemParser {
                 if (splitEntry.length > 1) {
                     level = NumberUtil.toInt(splitEntry[1], 1);
                 }
-                Optional<XEnchantment> xEnchantment = XEnchantment.matchXEnchantment(enchantmentName.toUpperCase(Locale.ROOT));
-                if (xEnchantment.isPresent()) {
-                    Enchantment enchantment = xEnchantment.get().parseEnchantment();
-                    if (enchantment != null) {
-                        if (item.getType() == Material.ENCHANTED_BOOK && meta instanceof EnchantmentStorageMeta esm) {
-                            esm.addStoredEnchant(enchantment, level, true);
-                            item.setItemMeta(esm);
-                        } else {
-                            meta.addEnchant(enchantment, level, true);
-                            item.setItemMeta(meta);
-                        }
-                    } else {
-                        throw new IllegalArgumentException("Invalid enchantment name " + enchantmentName);
-                    }
-                } else {
+                if (!ItemUtils.getAndAddEnchant(enchantmentName, level, item, meta)) {
                     throw new IllegalArgumentException("Invalid enchantment name " + enchantmentName);
                 }
             }

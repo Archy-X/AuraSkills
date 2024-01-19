@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.loot.parser;
 
-import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
@@ -9,6 +8,7 @@ import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootManager;
 import dev.aurelium.auraskills.bukkit.loot.builder.ItemLootBuilder;
 import dev.aurelium.auraskills.bukkit.loot.util.MaterialUtil;
+import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.dbassett.skullcreator.SkullCreator;
 import org.apache.commons.lang.Validate;
@@ -18,7 +18,10 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -116,22 +119,7 @@ public class ItemLootParser extends LootParser {
                 if (splitEntry.length > 1) {
                     level = NumberUtils.toInt(splitEntry[1], 1);
                 }
-                Optional<XEnchantment> xEnchantment = XEnchantment.matchXEnchantment(enchantmentName.toUpperCase(Locale.ROOT));
-                if (xEnchantment.isPresent()) {
-                    Enchantment enchantment = xEnchantment.get().parseEnchantment();
-                    if (enchantment != null) {
-                        if (item.getType() == Material.ENCHANTED_BOOK && meta instanceof EnchantmentStorageMeta) {
-                            EnchantmentStorageMeta esm = (EnchantmentStorageMeta) meta;
-                            esm.addStoredEnchant(enchantment, level, true);
-                            item.setItemMeta(esm);
-                        } else {
-                            meta.addEnchant(enchantment, level, true);
-                            item.setItemMeta(meta);
-                        }
-                    } else {
-                        throw new IllegalArgumentException("Invalid enchantment name " + enchantmentName);
-                    }
-                } else {
+                if (!ItemUtils.getAndAddEnchant(enchantmentName, level, item, meta)) {
                     throw new IllegalArgumentException("Invalid enchantment name " + enchantmentName);
                 }
             }

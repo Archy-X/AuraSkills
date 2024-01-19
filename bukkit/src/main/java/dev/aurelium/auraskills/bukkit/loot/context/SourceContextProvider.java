@@ -9,11 +9,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class SourceContextManager extends ContextManager {
+public class SourceContextProvider extends ContextProvider {
 
     private final AuraSkills plugin;
 
-    public SourceContextManager(AuraSkills plugin) {
+    public SourceContextProvider(AuraSkills plugin) {
         super("sources");
         this.plugin = plugin;
     }
@@ -30,12 +30,12 @@ public class SourceContextManager extends ContextManager {
             NamespacedId sourceId = NamespacedId.fromDefault(name);
             XpSource source = plugin.getSkillManager().getSourceById(sourceId);
             if (source != null) {
-                contexts.add(new SourceContextWrapper(source));
+                contexts.add(new SourceContext(source));
             } else {
                 SourceTag tag = SourceTag.valueOf(name.toUpperCase(Locale.ROOT));
                 List<XpSource> sourceList = plugin.getSkillManager().getSourcesWithTag(tag);
                 for (XpSource tagSource : sourceList) {
-                    contexts.add(new SourceContextWrapper(tagSource));
+                    contexts.add(new SourceContext(tagSource));
                 }
             }
         }

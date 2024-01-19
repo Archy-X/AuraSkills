@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
-import dev.aurelium.auraskills.bukkit.loot.context.ContextManager;
+import dev.aurelium.auraskills.bukkit.loot.context.ContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.parser.CustomItemParser;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +11,7 @@ public class LootManager {
 
     private final Plugin plugin;
     private final LootLoader lootLoader;
-    private final Map<String, ContextManager> contextManagers;
+    private final Map<String, ContextProvider> contextProviders;
     private final Set<String> lootOptionKeys;
     private final Set<String> poolOptionKeys;
     private final List<CustomItemParser> customItemParsers;
@@ -19,7 +19,7 @@ public class LootManager {
     public LootManager(Plugin plugin) {
         this.plugin = plugin;
         this.lootLoader = new LootLoader(this);
-        this.contextManagers = new HashMap<>();
+        this.contextProviders = new HashMap<>();
         this.lootOptionKeys = new HashSet<>();
         this.poolOptionKeys = new HashSet<>();
         this.customItemParsers = new ArrayList<>();
@@ -34,16 +34,16 @@ public class LootManager {
     }
 
     public Set<String> getContextKeySet() {
-        return contextManagers.keySet();
+        return contextProviders.keySet();
     }
 
     @Nullable
-    public ContextManager getContextManager(String contextKey) {
-        return contextManagers.get(contextKey);
+    public ContextProvider getContextProvider(String contextKey) {
+        return contextProviders.get(contextKey);
     }
 
-    public void registerContextManager(ContextManager contextManager) {
-        this.contextManagers.put(contextManager.getContextKey(), contextManager);
+    public void registerContextProvider(ContextProvider contextProvider) {
+        this.contextProviders.put(contextProvider.getContextKey(), contextProvider);
     }
 
     public Set<String> getLootOptionKeys() {

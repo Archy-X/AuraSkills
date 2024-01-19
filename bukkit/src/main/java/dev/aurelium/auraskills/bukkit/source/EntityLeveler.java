@@ -97,7 +97,7 @@ public class EntityLeveler extends SourceLeveler {
     }
 
     @Nullable
-    private Pair<Player, EntityXpSource.EntityDamagers> resolveDamager(Entity damager, EntityDamageEvent.DamageCause cause) {
+    public Pair<Player, EntityXpSource.EntityDamagers> resolveDamager(Entity damager, EntityDamageEvent.DamageCause cause) {
         if (damager instanceof Player player) { // Player damager
             if (cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK && cause != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
                 return null;
@@ -119,7 +119,7 @@ public class EntityLeveler extends SourceLeveler {
     }
 
     @Nullable
-    private Pair<EntityXpSource, Skill> getSource(LivingEntity entity, EntityXpSource.EntityDamagers eventDamager, EntityXpSource.EntityTriggers trigger) {
+    public Pair<EntityXpSource, Skill> getSource(LivingEntity entity, EntityXpSource.EntityDamagers eventDamager, EntityXpSource.EntityTriggers trigger) {
         Map<EntityXpSource, Skill> sources = plugin.getSkillManager().getSourcesOfType(EntityXpSource.class);
         sources = filterByTrigger(sources, trigger);
 

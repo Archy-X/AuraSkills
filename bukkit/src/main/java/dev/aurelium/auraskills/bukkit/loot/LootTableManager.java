@@ -3,7 +3,9 @@ package dev.aurelium.auraskills.bukkit.loot;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.context.SourceContextManager;
+import dev.aurelium.auraskills.bukkit.loot.context.MobContextProvider;
+import dev.aurelium.auraskills.bukkit.loot.context.SourceContextProvider;
+import dev.aurelium.auraskills.common.config.Option;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,20 +21,33 @@ public class LootTableManager {
 
 	private final AuraSkills plugin;
 	private final LootManager lootManager;
-	private final Map<Skill, LootTable> lootTables;
+	private final Map<Skill, LootTable> skillLootTables;
+	private final Map<NamespacedId, LootTable> otherLootTables;
 	
 	public LootTableManager(AuraSkills plugin) {
 		this.plugin = plugin;
 		this.lootManager = new LootManager(plugin);
-		lootTables = new HashMap<>();
+		this.skillLootTables = new HashMap<>();
+		this.otherLootTables = new HashMap<>();
 		initLootManager();
 	}
 
 	public void initLootManager() {
-		lootManager.registerContextManager(new SourceContextManager(plugin));
+		lootManager.registerContextProvider(new SourceContextProvider(plugin));
+		lootManager.registerContextProvider(new MobContextProvider());
 		lootManager.registerCustomItemParser(new ItemKeyParser(plugin));
 		lootManager.addLootOptionKeys("xp");
 		lootManager.addPoolOptionKeys("chance_per_luck", "require_open_water");
+	}
+
+	@Nullable
+	public LootTable getLootTable(Skill skill) {
+		return skillLootTables.get(skill);
+	}
+
+	@Nullable
+	public LootTable getLootTable(NamespacedId id) {
+		return otherLootTables.get(id);
 	}
 
 	public void generateDefaultLootTables() {
@@ -57,31 +72,43 @@ public class LootTableManager {
 		}
 		if (!lootDirectory.isDirectory()) return;
 
-		lootTables.clear();
+		skillLootTables.clear();
 		File[] files = lootDirectory.listFiles();
 		if (files == null) return;
 		for (File lootTableFile : files) {
 			if (!lootTableFile.isFile() || !lootTableFile.getName().endsWith(".yml")) {
 				continue;
 			}
-			// Parse skill from file name
-			String skillName = lootTableFile.getName().replace(".yml", "");
-			Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(skillName));
-			if (skill == null) return;
-
 			FileConfiguration config = YamlConfiguration.loadConfiguration(lootTableFile);
-			matchConfig(config, lootTableFile); // Try to update file
+
+			if (plugin.configBoolean(Option.LOOT_UPDATE_LOOT_TABLES)) {
+				matchConfig(config, lootTableFile); // Try to update file
+			}
 			// Load corresponding loot table type
 			LootTable lootTable = lootManager.getLootLoader().loadLootTable(lootTableFile, config);
-			if (lootTable != null) {
-				lootTables.put(skill, lootTable);
+			if (lootTable == null) continue;
+
+			// Parse skill from file name
+			String fileName = lootTableFile.getName().replace(".yml", "");
+			Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(fileName));
+			if (skill != null) {
+                skillLootTables.put(skill, lootTable);
+            } else {
+				otherLootTables.put(NamespacedId.fromDefault(fileName), lootTable);
 			}
 		}
 		// Send info message
 		int tablesLoaded = 0;
 		int poolsLoaded = 0;
 		int lootLoaded = 0;
-		for (LootTable table : lootTables.values()) {
+		for (LootTable table : skillLootTables.values()) {
+			for (LootPool pool : table.getPools()) {
+				poolsLoaded++;
+				lootLoaded += pool.getLoot().size();
+			}
+			tablesLoaded++;
+		}
+		for (LootTable table : otherLootTables.values()) {
 			for (LootPool pool : table.getPools()) {
 				poolsLoaded++;
 				lootLoaded += pool.getLoot().size();
@@ -89,11 +116,6 @@ public class LootTableManager {
 			tablesLoaded++;
 		}
 		plugin.getLogger().info("Loaded " + lootLoaded + " loot entries in " + poolsLoaded + " pools and " + tablesLoaded + " tables");
-	}
-
-	@Nullable
-	public LootTable getLootTable(Skill skill) {
-		return lootTables.get(skill);
 	}
 	
 	public void matchConfig(FileConfiguration config, File file) {

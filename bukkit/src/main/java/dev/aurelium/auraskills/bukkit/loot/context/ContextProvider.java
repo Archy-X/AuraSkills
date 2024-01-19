@@ -5,11 +5,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class ContextManager {
+public abstract class ContextProvider {
 
     private final String contextKey;
 
-    public ContextManager(String contextKey) {
+    public ContextProvider(String contextKey) {
         this.contextKey = contextKey;
     }
 

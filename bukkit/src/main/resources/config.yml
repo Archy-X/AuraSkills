@@ -172,6 +172,8 @@ menus:
   placeholder_api: true
   stats:
     show_trait_values_directly: true
+loot:
+  update_loot_tables: true
 check_for_updates: true
 automatic_backups:
   enabled: true

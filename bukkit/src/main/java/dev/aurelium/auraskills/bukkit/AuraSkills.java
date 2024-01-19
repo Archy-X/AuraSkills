@@ -28,6 +28,7 @@ import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
 import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
 import dev.aurelium.auraskills.bukkit.loot.handler.BlockLootHandler;
 import dev.aurelium.auraskills.bukkit.loot.handler.FishingLootHandler;
+import dev.aurelium.auraskills.bukkit.loot.handler.MobLootHandler;
 import dev.aurelium.auraskills.bukkit.mana.BukkitManaAbilityManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
@@ -355,6 +356,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new DamageListener(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
         pm.registerEvents(new FishingLootHandler(this), this);
+        pm.registerEvents(new MobLootHandler(this), this);
         pm.registerEvents(new RequirementListener(this), this);
         pm.registerEvents(new ItemListener(this), this);
         pm.registerEvents(new ArmorListener(configStringList(Option.MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS)), this);

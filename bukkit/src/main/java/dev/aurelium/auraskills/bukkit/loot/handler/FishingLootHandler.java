@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootPool;
 import dev.aurelium.auraskills.bukkit.loot.LootTable;
+import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
@@ -86,7 +87,8 @@ public class FishingLootHandler extends LootHandler implements Listener {
             if (source == null) continue;
 
             if (random.nextDouble() < chance) { // Pool is selected
-                Loot selectedLoot = selectLoot(pool, originalSource != null ? originalSource.first() : null);
+                XpSource contextSource = originalSource != null ? originalSource.first() : null;
+                Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource));
                 // Give loot
                 if (selectedLoot == null) {
                     break;
