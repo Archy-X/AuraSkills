@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.skills.agility;
 
-import com.archyx.aureliumskills.api.event.CustomRegenEvent;
 import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;

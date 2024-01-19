@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.bukkit;
 
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.PaperCommandManager;
-import com.archyx.aureliumskills.api.AureliumAPI;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
@@ -206,7 +205,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         leaderboardManager.updateLeaderboards();
         leaderboardManager.startLeaderboardUpdater();
         registerPriorityEvents();
-        AureliumAPI.setPlugin(this); // Initialize legacy API
 
         // Stuff to be run on the first tick
         scheduler.executeSync(() -> {
