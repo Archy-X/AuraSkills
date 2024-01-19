@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.api.trait;
 
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -23,8 +22,14 @@ public class CustomTrait implements Trait {
         this.displayName = displayName;
     }
 
-    public static CustomTraitBuilder builder(String name, NamespacedRegistry registry) {
-        return new CustomTraitBuilder(NamespacedId.from(registry.getNamespace(), name));
+    /**
+     * Gets a new {@link CustomTraitBuilder} used to create a custom trait.
+     *
+     * @param id the {@link NamespacedId} identifying the trait
+     * @return a new builder
+     */
+    public static CustomTraitBuilder builder(NamespacedId id) {
+        return new CustomTraitBuilder(id);
     }
 
     @Override

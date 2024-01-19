@@ -25,7 +25,7 @@ public enum ManaAbilities implements ManaAbility {
     private final NamespacedId id;
 
     ManaAbilities() {
-        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
+        this.id = NamespacedId.of(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
     }
 
     @Override

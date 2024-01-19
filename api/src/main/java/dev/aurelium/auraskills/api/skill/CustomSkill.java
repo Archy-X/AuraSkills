@@ -5,7 +5,6 @@ import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.source.XpSource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,8 +27,14 @@ public class CustomSkill implements Skill {
         this.xpMultiplierAbility = xpMultiplierAbility;
     }
 
-    public static CustomSkillBuilder builder(String name, NamespacedRegistry registry) {
-        return new CustomSkillBuilder(NamespacedId.from(registry.getNamespace(), name));
+    /**
+     * Gets a new {@link CustomSkillBuilder} used to create a custom skill.
+     *
+     * @param id the {@link NamespacedId} identifying the skill
+     * @return a new builder
+     */
+    public static CustomSkillBuilder builder(NamespacedId id) {
+        return new CustomSkillBuilder(id);
     }
 
     public Defined getDefined() {

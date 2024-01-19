@@ -52,7 +52,7 @@ public class NamespacedId {
      * @param key the key that is the actual name of the instance
      * @return the created NamespacedId
      */
-    public static NamespacedId from(String namespace, String key) {
+    public static NamespacedId of(String namespace, String key) {
         return new NamespacedId(namespace, key);
     }
 

@@ -30,7 +30,7 @@ public enum Traits implements Trait {
     private final NamespacedId id;
 
     Traits() {
-        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
+        this.id = NamespacedId.of(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
     }
 
     @Override

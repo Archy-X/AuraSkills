@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.api.mana;
 
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.Skill;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,8 +26,14 @@ public class CustomManaAbility implements ManaAbility {
         this.description = description;
     }
 
-    public static CustomManaAbilityBuilder builder(String name, NamespacedRegistry registry) {
-        return new CustomManaAbilityBuilder(NamespacedId.from(registry.getNamespace(), name));
+    /**
+     * Gets a new {@link CustomManaAbilityBuilder} used to create a custom mana ability.
+     *
+     * @param id the {@link NamespacedId} identifying the mana ability
+     * @return a new builder
+     */
+    public static CustomManaAbilityBuilder builder(NamespacedId id) {
+        return new CustomManaAbilityBuilder(id);
     }
 
     @Override

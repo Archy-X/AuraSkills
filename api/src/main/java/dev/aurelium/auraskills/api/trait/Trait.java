@@ -1,18 +1,11 @@
 package dev.aurelium.auraskills.api.trait;
 
 import dev.aurelium.auraskills.api.option.Optioned;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 
 import java.util.Locale;
 
-public interface Trait extends Optioned {
-
-    /**
-     * Gets the {@link NamespacedId} of the skill
-     *
-     * @return the {@link NamespacedId}
-     */
-    NamespacedId getId();
+public interface Trait extends Optioned, NamespaceIdentified {
 
     /**
      * Gets whether the trait is enabled. Disabled traits will have no effect

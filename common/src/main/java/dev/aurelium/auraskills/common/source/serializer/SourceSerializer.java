@@ -24,7 +24,7 @@ public abstract class SourceSerializer<T> implements TypeSerializer<T> {
     }
 
     protected NamespacedId getId() {
-        return NamespacedId.from(NamespacedId.AURASKILLS, sourceName.toLowerCase(Locale.ROOT));
+        return NamespacedId.of(NamespacedId.AURASKILLS, sourceName.toLowerCase(Locale.ROOT));
     }
 
     protected double getXp(ConfigurationNode source) {

@@ -3,7 +3,6 @@ package dev.aurelium.auraskills.api.stat;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.trait.Trait;
 
 import java.util.HashMap;
@@ -24,8 +23,14 @@ public class CustomStat implements Stat {
         this.defined = defined;
     }
 
-    public static CustomStatBuilder builder(String name, NamespacedRegistry registry) {
-        return new CustomStatBuilder(NamespacedId.from(registry.getNamespace(), name));
+    /**
+     * Gets a new {@link CustomStatBuilder} used to create a custom stat.
+     *
+     * @param id the {@link NamespacedId} identifying the stat
+     * @return a new builder
+     */
+    public static CustomStatBuilder builder(NamespacedId id) {
+        return new CustomStatBuilder(id);
     }
 
     public Defined getDefined() {

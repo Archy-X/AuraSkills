@@ -7,7 +7,7 @@ public class NamespacedIdTest {
 
     @Test
     public void testFromString() {
-        assert NamespacedId.from("namespace", "key").toString().equals("namespace/key");
+        assert NamespacedId.of("namespace", "key").toString().equals("namespace/key");
         assert NamespacedId.fromString("namespace/key").toString().equals("namespace/key");
         assert NamespacedId.fromDefault("namespace/key").toString().equals("namespace/key");
         assert NamespacedId.fromDefault("key").toString().equals(NamespacedId.AURASKILLS + "/key");

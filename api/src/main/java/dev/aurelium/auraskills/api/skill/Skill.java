@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.api.skill;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.option.Optioned;
+import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
 import org.jetbrains.annotations.NotNull;
@@ -11,14 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Locale;
 
-public interface Skill extends Optioned {
-
-    /**
-     * Gets the {@link NamespacedId} of the skill
-     *
-     * @return the {@link NamespacedId}
-     */
-    NamespacedId getId();
+public interface Skill extends Optioned, NamespaceIdentified {
 
     /**
      * Gets whether the skill is enabled in the configuration. The skill's XP gain, rewards, abilities,

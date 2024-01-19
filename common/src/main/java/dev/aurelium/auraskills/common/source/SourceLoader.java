@@ -88,7 +88,7 @@ public class SourceLoader {
                 String sourceName = entry.getKey();
                 ConfigurationNode sourceNode = entry.getValue();
 
-                NamespacedId id = NamespacedId.from(NamespacedId.AURASKILLS, sourceName);
+                NamespacedId id = NamespacedId.of(NamespacedId.AURASKILLS, sourceName);
 
                 String type = sourceNode.node("type").getString();
                 if (type == null) {

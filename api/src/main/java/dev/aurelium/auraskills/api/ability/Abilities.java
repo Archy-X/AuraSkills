@@ -94,7 +94,7 @@ public enum Abilities implements Ability {
     }
 
     Abilities(String defaultSkill, boolean hasSecondaryValue) {
-        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
+        this.id = NamespacedId.of(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
         this.hasSecondaryValue = hasSecondaryValue;
         this.defaultSkillName = defaultSkill;
     }

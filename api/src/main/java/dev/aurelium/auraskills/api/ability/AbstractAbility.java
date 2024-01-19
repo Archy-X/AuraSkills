@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.api.ability;
 
+import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
 
-public interface AbstractAbility {
+public interface AbstractAbility extends NamespaceIdentified {
 
     /**
      * Gets the skill the ability is leveled up by based on the
@@ -12,13 +12,6 @@ public interface AbstractAbility {
      * @return the skill the ability belongs to
      */
     Skill getSkill();
-
-    /**
-     * Gets the {@link NamespacedId} of the ability.
-     *
-     * @return the {@link NamespacedId}
-     */
-    NamespacedId getId();
 
     /**
      * Gets the max level of the ability based on the configuration.

@@ -1,12 +1,10 @@
 package dev.aurelium.auraskills.api.ability;
 
-import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.Skill;
 
-import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -29,12 +27,11 @@ public class CustomAbility implements Ability {
     /**
      * Gets a new {@link CustomAbilityBuilder} used to create a custom ability.
      *
-     * @param name the plain name of the ability in all lowercase
-     * @param registry the {@link NamespacedRegistry} obtained from {@link AuraSkillsApi#useRegistry(String, File)}
+     * @param id the {@link NamespacedId} identifying the ability
      * @return a new builder
      */
-    public static CustomAbilityBuilder builder(String name, NamespacedRegistry registry) {
-        return new CustomAbilityBuilder(NamespacedId.from(registry.getNamespace(), name));
+    public static CustomAbilityBuilder builder(NamespacedId id) {
+        return new CustomAbilityBuilder(id);
     }
 
     public Defined getDefined() {

@@ -38,7 +38,7 @@ public enum Skills implements Skill {
     private final Ability xpMultiplierAbility;
 
     Skills(Ability xpMultiplierAbility) {
-        this.id = NamespacedId.from(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
+        this.id = NamespacedId.of(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
         this.xpMultiplierAbility = xpMultiplierAbility;
     }
 

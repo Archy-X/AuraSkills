@@ -1,20 +1,13 @@
 package dev.aurelium.auraskills.api.stat;
 
 import dev.aurelium.auraskills.api.option.Optioned;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.trait.Trait;
 
 import java.util.List;
 import java.util.Locale;
 
-public interface Stat extends Optioned {
-
-    /**
-     * Gets the {@link NamespacedId} of the skill
-     *
-     * @return the {@link NamespacedId}
-     */
-    NamespacedId getId();
+public interface Stat extends Optioned, NamespaceIdentified {
 
     /**
      * Gets whether the stat is enabled in the configuration. Disabled stats
