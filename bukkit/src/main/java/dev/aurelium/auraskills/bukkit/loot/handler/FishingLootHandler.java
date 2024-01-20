@@ -86,6 +86,11 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
             if (source == null) continue;
 
+            // Skip if pool has no loot matching the source
+            if (isPoolUnobtainable(pool, source)) {
+                continue;
+            }
+
             if (random.nextDouble() < chance) { // Pool is selected
                 XpSource contextSource = originalSource != null ? originalSource.first() : null;
                 Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource));

@@ -10,9 +10,9 @@ import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootPool;
 import dev.aurelium.auraskills.bukkit.loot.LootTable;
+import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
-import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
@@ -238,6 +238,25 @@ public abstract class LootHandler {
             return plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(location, player, WorldGuardHook.FlagKey.CUSTOM_LOOT);
         }
         return false;
+    }
+
+    protected boolean isPoolUnobtainable(LootPool pool, XpSource source) {
+        for (Loot loot : pool.getLoot()) {
+            Set<LootContext> contexts = loot.getContexts().getOrDefault("sources", new HashSet<>());
+            // Loot will be reachable if it has no contexts
+            if (contexts.isEmpty()) {
+                return false;
+            }
+            // Loot is reachable if at least one context matches the entity type
+            for (LootContext context : contexts) {
+                if (context instanceof SourceContext sourceContext) {
+                    if (sourceContext.source().equals(source)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }

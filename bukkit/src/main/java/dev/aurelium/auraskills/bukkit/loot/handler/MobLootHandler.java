@@ -9,16 +9,15 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootPool;
 import dev.aurelium.auraskills.bukkit.loot.LootTable;
+import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -26,7 +25,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class MobLootHandler extends LootHandler implements Listener {
 
@@ -64,13 +65,19 @@ public class MobLootHandler extends LootHandler implements Listener {
         }
 
         for (LootPool pool : table.getPools()) {
+            // Skip pool if no loot in the pool match the mob context
+            if (isPoolUnobtainable(pool, entity.getType())) {
+                continue;
+            }
+
             double chance = getCommonChance(pool, user);
 
             LootDropEvent.Cause cause = LootDropEvent.Cause.MOB_LOOT_TABLE;
 
             MobContext context = new MobContext(entity.getType());
 
-            if (random.nextDouble() < chance) {
+            double rolled = random.nextDouble();
+            if (rolled < chance) {
                 Loot selectedLoot = selectLoot(pool, context);
                 // Give loot
                 if (selectedLoot == null) {
@@ -84,6 +91,25 @@ public class MobLootHandler extends LootHandler implements Listener {
                 break;
             }
         }
+    }
+
+    private boolean isPoolUnobtainable(LootPool pool, EntityType entityType) {
+        for (Loot loot : pool.getLoot()) {
+            Set<LootContext> contexts = loot.getContexts().getOrDefault("mobs", new HashSet<>());
+            // Loot will be reachable if it has no contexts
+            if (contexts.isEmpty()) {
+                return false;
+            }
+            // Loot is reachable if at least one context matches the entity type
+            for (LootContext context : contexts) {
+                if (context instanceof MobContext mobContext) {
+                    if (mobContext.entityType().equals(entityType)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     @Nullable

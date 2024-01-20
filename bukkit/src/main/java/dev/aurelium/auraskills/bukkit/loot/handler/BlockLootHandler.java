@@ -19,6 +19,7 @@ import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,11 +54,19 @@ public class BlockLootHandler extends LootHandler implements Listener {
         if (event.isCancelled()) return;
 
         Block block = event.getBlock();
-        if (getSource(block) == null) return;
+
+        var originalSource = getSource(block);
+
+        if (originalSource == null) return;
+
+        BlockXpSource source = originalSource.first();
+        Skill skill = originalSource.second();
 
         // Check block replace
         if (plugin.configBoolean(Option.CHECK_BLOCK_REPLACE_ENABLED) && plugin.getRegionManager().isPlacedBlock(block)) {
-            return;
+            if (source.checkReplace()) {
+                return;
+            }
         }
 
         Player player = event.getPlayer();
@@ -72,11 +81,6 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
         User user = plugin.getUser(player);
 
-        var originalSource = getSource(block);
-
-        BlockXpSource source = originalSource.first();
-        Skill skill = originalSource.second();
-
         // Get the loot provider for getting chance and cause
         SkillLootProvider provider = lootProviders.get(skill);
 
@@ -85,6 +89,9 @@ public class BlockLootHandler extends LootHandler implements Listener {
         for (LootPool pool : table.getPools()) {
             // Ignore non-applicable sources
             if (provider != null && !provider.isApplicable(pool, source)) {
+                continue;
+            }
+            if (isPoolUnobtainable(pool, source)) {
                 continue;
             }
             // Calculate chance for pool
@@ -109,7 +116,8 @@ public class BlockLootHandler extends LootHandler implements Listener {
     }
 
     private boolean selectBlockLoot(LootTable table, LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropEvent.Cause cause) {
-        if (random.nextDouble() < chance) { // Pool is selected
+        double rolled = random.nextDouble();
+        if (rolled < chance) { // Pool is selected
             Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource));
             // Give loot
             if (selectedLoot != null) {
