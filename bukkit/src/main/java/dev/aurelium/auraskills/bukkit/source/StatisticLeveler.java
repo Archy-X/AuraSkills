@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.StatisticXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -23,7 +23,7 @@ public class StatisticLeveler extends SourceLeveler {
     private final Map<UUID, Map<StatisticXpSource, Integer>> tracker = new HashMap<>();
 
     public StatisticLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.STATISTIC);
+        super(plugin, SourceTypes.STATISTIC);
         startTracking();
     }
 

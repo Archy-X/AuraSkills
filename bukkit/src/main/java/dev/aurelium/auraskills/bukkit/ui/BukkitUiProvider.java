@@ -34,6 +34,7 @@ public class BukkitUiProvider implements UiProvider {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void sendActionBar(User user, String message) {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) return;

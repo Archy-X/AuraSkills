@@ -4,7 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.Entity;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class DamageLeveler extends SourceLeveler {
 
     public DamageLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.DAMAGE);
+        super(plugin, SourceTypes.DAMAGE);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

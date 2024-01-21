@@ -4,7 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.GrindstoneXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class GrindstoneLeveler extends SourceLeveler {
 
     public GrindstoneLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.GRINDSTONE);
+        super(plugin, SourceTypes.GRINDSTONE);
     }
 
     @EventHandler

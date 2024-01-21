@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.source.type;
 
 import dev.aurelium.auraskills.api.mana.ManaAbility;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.type.ManaAbilityUseXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
@@ -11,8 +11,8 @@ public class ManaAbilityUseSource extends Source implements ManaAbilityUseXpSour
 
     private final ManaAbility[] manaAbilities;
 
-    public ManaAbilityUseSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ManaAbility[] manaAbilities) {
-        super(plugin, id, xp, displayName);
+    public ManaAbilityUseSource(AuraSkillsPlugin plugin, SourceValues values, ManaAbility[] manaAbilities) {
+        super(plugin, values);
         this.manaAbilities = manaAbilities;
     }
 

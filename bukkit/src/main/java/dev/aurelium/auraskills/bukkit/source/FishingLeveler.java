@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class FishingLeveler extends SourceLeveler {
 
     public FishingLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.FISHING);
+        super(plugin, SourceTypes.FISHING);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

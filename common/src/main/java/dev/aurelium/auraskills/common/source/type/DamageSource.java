@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.common.source.type;
 
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
@@ -14,8 +14,8 @@ public class DamageSource extends Source implements DamageXpSource {
     private final boolean mustSurvive;
     private final boolean useOriginalDamage;
 
-    public DamageSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage) {
-        super(plugin, id, xp, displayName);
+    public DamageSource(AuraSkillsPlugin plugin, SourceValues values, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage) {
+        super(plugin, values);
         this.causes = causes;
         this.excludedCauses = excludedCauses;
         this.damager = damager;

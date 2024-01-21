@@ -6,7 +6,7 @@ import com.ezylang.evalex.parser.ParseException;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -25,7 +25,7 @@ import java.util.Map;
 public class AnvilLeveler extends SourceLeveler {
 
     public AnvilLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.ANVIL);
+        super(plugin, SourceTypes.ANVIL);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

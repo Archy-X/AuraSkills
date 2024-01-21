@@ -15,6 +15,8 @@ public interface XpSource {
      */
     NamespacedId getId();
 
+    SourceType getType();
+
     /**
      * Gets the display name of the source.
      * Different sources may return the same name.

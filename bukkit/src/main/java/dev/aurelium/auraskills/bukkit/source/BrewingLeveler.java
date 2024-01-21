@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.api.source.type.BrewingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.region.BukkitBlock;
 import dev.aurelium.auraskills.common.region.BlockPosition;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Bukkit;
@@ -37,7 +37,7 @@ public class BrewingLeveler extends SourceLeveler {
     private final Map<BlockPosition, BrewingStandData> brewingStands;
 
     public BrewingLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.BREWING);
+        super(plugin, SourceTypes.BREWING);
         this.brewingStands = new HashMap<>();
     }
 

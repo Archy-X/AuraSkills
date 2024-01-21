@@ -1,20 +1,19 @@
 package dev.aurelium.auraskills.common.source.serializer.util;
 
+import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.item.ItemCategory;
 import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.item.ItemFilterMeta;
-import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.item.SourceItem;
-import dev.aurelium.auraskills.common.source.serializer.SourceSerializer;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.lang.reflect.Type;
 
-public class ItemFilterSerializer extends SourceSerializer<ItemFilter> {
+public class ItemFilterSerializer extends UtilitySerializer<ItemFilter> {
 
-    public ItemFilterSerializer(AuraSkillsPlugin plugin, String sourceName) {
-        super(plugin, sourceName);
+    public ItemFilterSerializer(AuraSkillsApi api) {
+        super(api);
     }
 
     @Override
@@ -22,14 +21,14 @@ public class ItemFilterSerializer extends SourceSerializer<ItemFilter> {
         if (!source.isMap() && !source.isList()) {
             String material = source.getString();
             if (material == null) {
-                throw new SerializationException("Invalid direct String value item filter for source " + sourceName);
+                throw new SerializationException("Invalid direct String value item filter, must be of type String");
             }
             return new SourceItem(new String[]{material}, null, null, null);
         }
         String[] materials = pluralizedArray("material", source, String.class);
         String[] excludedMaterials = pluralizedArray("excluded_material", source, String.class);
         ItemCategory category = source.node("category").get(ItemCategory.class);
-        ItemFilterMeta meta = new ItemFilterMetaSerializer(plugin, sourceName).deserialize(ItemFilterMeta.class, source);
+        ItemFilterMeta meta = new ItemFilterMetaSerializer(getApi()).deserialize(ItemFilterMeta.class, source);
 
         return new SourceItem(materials, excludedMaterials, category, meta);
     }

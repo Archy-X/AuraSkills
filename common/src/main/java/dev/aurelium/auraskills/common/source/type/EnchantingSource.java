@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.source.type;
 
 import dev.aurelium.auraskills.api.item.ItemFilter;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.type.EnchantingXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
@@ -13,8 +13,8 @@ public class EnchantingSource extends Source implements EnchantingXpSource {
     private final ItemFilter item;
     private final String unit;
 
-    public EnchantingSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ItemFilter item, String unit) {
-        super(plugin, id, xp, displayName);
+    public EnchantingSource(AuraSkillsPlugin plugin, SourceValues values, ItemFilter item, String unit) {
+        super(plugin, values);
         this.item = item;
         this.unit = unit;
     }

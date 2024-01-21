@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.source.serializer;
 
 import dev.aurelium.auraskills.api.item.ItemFilter;
+import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.type.AnvilSource;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -10,8 +11,8 @@ import java.lang.reflect.Type;
 
 public class AnvilSourceSerializer extends SourceSerializer<AnvilSource> {
 
-    public AnvilSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
-        super(plugin, sourceName);
+    public AnvilSourceSerializer(AuraSkillsPlugin plugin, SourceType sourceType, String sourceName) {
+        super(plugin, sourceType, sourceName);
     }
 
     @Override
@@ -20,6 +21,6 @@ public class AnvilSourceSerializer extends SourceSerializer<AnvilSource> {
         ItemFilter rightItem = required(source, "right_item").get(ItemFilter.class);
         String multiplier = source.node("multiplier").getString();
 
-        return new AnvilSource(plugin, getId(), getXp(source), getDisplayName(source), leftItem, rightItem, multiplier);
+        return new AnvilSource(plugin, parseValues(source), leftItem, rightItem, multiplier);
     }
 }

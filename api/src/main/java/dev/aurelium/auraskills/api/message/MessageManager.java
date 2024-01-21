@@ -8,6 +8,16 @@ import java.util.Locale;
 public interface MessageManager {
 
     /**
+     * Gets a messaged defined in an AuraSkills messages file for a given path and locale.
+     *
+     * @param path the path to the message, with periods separating sections
+     * @param locale the locale/language to get the message in
+     * @return The message in the given locale, or the default language if missing. If no languages contain
+     * the specified path, the path will be returned back unchanged.
+     */
+    String getMessage(String path, Locale locale);
+
+    /**
      * Gets the user-configured display name for a skill in a given language.
      *
      * @param skill the skill whose name to get
@@ -52,5 +62,14 @@ public interface MessageManager {
      * @return the default language
      */
     Locale getDefaultLanguage();
+
+    /**
+     * Utility method to convert a word to its plural form, following English
+     * grammar rules.
+     *
+     * @param word the world to convert
+     * @return the plural form
+     */
+    String toPluralForm(String word);
 
 }

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.source.serializer;
 
+import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.type.DamageSource;
@@ -10,8 +11,8 @@ import java.lang.reflect.Type;
 
 public class DamageSourceSerializer extends SourceSerializer<DamageSource> {
 
-    public DamageSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
-        super(plugin, sourceName);
+    public DamageSourceSerializer(AuraSkillsPlugin plugin, SourceType sourceType, String sourceName) {
+        super(plugin, sourceType, sourceName);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class DamageSourceSerializer extends SourceSerializer<DamageSource> {
         boolean mustSurvive = source.node("must_survive").getBoolean(true);
         boolean useOriginalDamage = source.node("use_original_damage").getBoolean(true);
 
-        return new DamageSource(plugin, getId(), getXp(source), getDisplayName(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
+        return new DamageSource(plugin, parseValues(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
     }
 }

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.source.serializer;
 
+import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.type.EntitySource;
@@ -10,8 +11,8 @@ import java.lang.reflect.Type;
 
 public class EntitySourceSerializer extends SourceSerializer<EntitySource> {
 
-    public EntitySourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
-        super(plugin, sourceName);
+    public EntitySourceSerializer(AuraSkillsPlugin plugin, SourceType sourceType, String sourceName) {
+        super(plugin, sourceType, sourceName);
     }
 
     @Override
@@ -20,7 +21,7 @@ public class EntitySourceSerializer extends SourceSerializer<EntitySource> {
         EntityXpSource.EntityTriggers[] triggers = requiredPluralizedArray("trigger", source, EntityXpSource.EntityTriggers.class);
         EntityXpSource.EntityDamagers[] damagers = pluralizedArray("damager", source, EntityXpSource.EntityDamagers.class);
 
-        return new EntitySource(plugin, getId(), getXp(source), getDisplayName(source), entity, triggers, damagers);
+        return new EntitySource(plugin, parseValues(source), entity, triggers, damagers);
     }
 
 }

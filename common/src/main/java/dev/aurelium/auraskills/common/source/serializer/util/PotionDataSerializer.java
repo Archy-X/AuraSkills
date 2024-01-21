@@ -1,18 +1,17 @@
 package dev.aurelium.auraskills.common.source.serializer.util;
 
+import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.item.PotionData;
-import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.item.SourcePotionData;
-import dev.aurelium.auraskills.common.source.serializer.SourceSerializer;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.lang.reflect.Type;
 
-public class PotionDataSerializer extends SourceSerializer<PotionData> {
+public class PotionDataSerializer extends UtilitySerializer<PotionData> {
 
-    public PotionDataSerializer(AuraSkillsPlugin plugin, String sourceName) {
-        super(plugin, sourceName);
+    public PotionDataSerializer(AuraSkillsApi api) {
+        super(api);
     }
 
     @Override

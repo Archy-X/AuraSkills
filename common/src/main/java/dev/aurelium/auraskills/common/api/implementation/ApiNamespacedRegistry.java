@@ -3,8 +3,12 @@ package dev.aurelium.auraskills.common.api.implementation;
 import dev.aurelium.auraskills.api.ability.CustomAbility;
 import dev.aurelium.auraskills.api.mana.CustomManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
+import dev.aurelium.auraskills.api.source.SourceType;
+import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.api.source.XpSourceSerializer;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -56,6 +60,13 @@ public class ApiNamespacedRegistry implements NamespacedRegistry {
     public void registerTrait(CustomTrait trait) {
         validateNamespace(trait);
         plugin.getTraitRegistry().register(trait.getId(), trait, plugin.getTraitManager().getSupplier());
+    }
+
+    @Override
+    public void registerSourceType(String name, Class<? extends XpSource> sourceClass, Class<? extends XpSourceSerializer<?>> serializerClass) {
+        NamespacedId id = NamespacedId.of(namespace, name);
+        SourceType sourceType = new ApiSourceType(id, sourceClass, serializerClass);
+        plugin.getSourceTypeRegistry().register(id, sourceType);
     }
 
     @Override

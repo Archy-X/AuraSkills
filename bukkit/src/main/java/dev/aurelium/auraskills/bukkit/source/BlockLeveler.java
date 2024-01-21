@@ -9,7 +9,7 @@ import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.common.source.SourceTag;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Material;
@@ -29,7 +29,7 @@ public class BlockLeveler extends SourceLeveler {
     private final BlockLevelerHelper helper;
 
     public BlockLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.BLOCK);
+        super(plugin, SourceTypes.BLOCK);
         this.helper = new BlockLevelerHelper(plugin);
     }
 

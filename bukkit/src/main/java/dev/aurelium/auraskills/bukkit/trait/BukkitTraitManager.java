@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -42,8 +43,8 @@ public class BukkitTraitManager extends TraitManager {
 
     public void registerTraitImpl(BukkitTraitHandler bukkitTrait) {
         traitImpls.put(bukkitTrait.getClass(), bukkitTrait);
-        if (bukkitTrait instanceof TraitImpl traitImpl) {
-            Bukkit.getPluginManager().registerEvents(traitImpl, plugin);
+        if (bukkitTrait instanceof Listener eventListener) {
+            Bukkit.getPluginManager().registerEvents(eventListener, plugin);
         }
     }
 

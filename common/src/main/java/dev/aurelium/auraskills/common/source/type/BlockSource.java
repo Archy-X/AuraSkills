@@ -4,7 +4,7 @@ import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.parser.ParseException;
 import com.google.common.collect.ImmutableMap;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
@@ -24,8 +24,8 @@ public class BlockSource extends Source implements BlockXpSource {
     private final boolean trunk;
     private final boolean leaf;
 
-    public BlockSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
-        super(plugin, id, xp, displayName);
+    public BlockSource(AuraSkillsPlugin plugin, SourceValues values, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
+        super(plugin, values);
         this.blocks = blocks;
         this.triggers = triggers;
         this.checkReplace = checkReplace;

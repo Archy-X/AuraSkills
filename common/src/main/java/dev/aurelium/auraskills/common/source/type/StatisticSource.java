@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.common.source.type;
 
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.type.StatisticXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
@@ -11,8 +11,8 @@ public class StatisticSource extends Source implements StatisticXpSource {
     private final double multiplier;
     private final int minimumIncrease;
 
-    public StatisticSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, String statistic, double multiplier, int minimumIncrease) {
-        super(plugin, id, xp, displayName);
+    public StatisticSource(AuraSkillsPlugin plugin, SourceValues values, String statistic, double multiplier, int minimumIncrease) {
+        super(plugin, values);
         this.statistic = statistic;
         this.multiplier = multiplier;
         this.minimumIncrease = minimumIncrease;

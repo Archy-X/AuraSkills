@@ -1,11 +1,11 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.source.SourceType;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;

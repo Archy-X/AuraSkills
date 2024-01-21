@@ -4,6 +4,8 @@ import dev.aurelium.auraskills.api.message.MessageManager;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.message.MessageKey;
+import org.atteo.evo.inflector.English;
 
 import java.util.Locale;
 
@@ -13,6 +15,11 @@ public class ApiMessageManager implements MessageManager {
 
     public ApiMessageManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    @Override
+    public String getMessage(String path, Locale locale) {
+        return plugin.getMessageProvider().get(MessageKey.of(path), locale);
     }
 
     @Override
@@ -38,6 +45,11 @@ public class ApiMessageManager implements MessageManager {
     @Override
     public Locale getDefaultLanguage() {
         return plugin.getMessageProvider().getDefaultLanguage();
+    }
+
+    @Override
+    public String toPluralForm(String word) {
+        return English.plural(word);
     }
 
 }

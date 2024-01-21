@@ -1,20 +1,19 @@
 package dev.aurelium.auraskills.common.source.serializer.util;
 
+import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.item.ItemFilterMeta;
 import dev.aurelium.auraskills.api.item.PotionData;
-import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.item.SourceItemMeta;
-import dev.aurelium.auraskills.common.source.serializer.SourceSerializer;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class ItemFilterMetaSerializer extends SourceSerializer<ItemFilterMeta> {
+public class ItemFilterMetaSerializer extends UtilitySerializer<ItemFilterMeta> {
 
-    public ItemFilterMetaSerializer(AuraSkillsPlugin plugin, String sourceName) {
-        super(plugin, sourceName);
+    public ItemFilterMetaSerializer(AuraSkillsApi api) {
+        super(api);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class ItemFilterMetaSerializer extends SourceSerializer<ItemFilterMeta> {
         // Deserialize PotionData
         PotionData potionData;
         if (!source.node("potion_data").virtual()) {
-            potionData = new PotionDataSerializer(plugin, sourceName).deserialize(PotionData.class, source.node("potion_data"));
+            potionData = new PotionDataSerializer(getApi()).deserialize(PotionData.class, source.node("potion_data"));
         } else {
             potionData = null;
         }

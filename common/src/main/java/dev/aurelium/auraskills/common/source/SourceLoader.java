@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.item.LootItemFilter;
 import dev.aurelium.auraskills.api.item.PotionData;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -34,11 +35,11 @@ public class SourceLoader {
         this.plugin = plugin;
         // Register utility serializers
         TypeSerializerCollection sourceSerializers = TypeSerializerCollection.builder()
-                .register(ItemFilterMeta.class, new ItemFilterMetaSerializer(plugin, ""))
-                .register(ItemFilter.class, new ItemFilterSerializer(plugin, ""))
-                .register(LootItemFilter.class, new LootItemFilterSerializer(plugin, ""))
-                .register(PotionData.class, new PotionDataSerializer(plugin, ""))
-                .register(BlockXpSource.BlockXpSourceState.class, new BlockSourceSerializer.BlockSourceStateSerializer(plugin, ""))
+                .register(ItemFilterMeta.class, new ItemFilterMetaSerializer(plugin.getApi()))
+                .register(ItemFilter.class, new ItemFilterSerializer(plugin.getApi()))
+                .register(LootItemFilter.class, new LootItemFilterSerializer(plugin.getApi()))
+                .register(PotionData.class, new PotionDataSerializer(plugin.getApi()))
+                .register(BlockXpSource.BlockXpSourceState.class, new BlockSourceSerializer.BlockSourceStateSerializer(plugin.getApi()))
                 .build();
         this.configurateLoader = new ConfigurateLoader(plugin, sourceSerializers);
     }
@@ -95,7 +96,7 @@ public class SourceLoader {
                     throw new IllegalArgumentException("Source " + id + " must specify a type");
                 }
                 applyNodeReplacements(sourceNode, sourceNode, sourceName);
-                Source source = parseSourceFromType(type, sourceNode, sourceName);
+                XpSource source = parseSourceFromType(type, sourceNode, sourceName);
                 deserializedSources.add(source);
                 registerMenuItem(source, sourceNode);
             }
@@ -166,15 +167,16 @@ public class SourceLoader {
         });
     }
 
-    private Source parseSourceFromType(String type, ConfigurationNode sourceNode, String sourceName) {
-        SourceType sourceType = SourceType.valueOf(type.toUpperCase(Locale.ROOT));
+    private XpSource parseSourceFromType(String type, ConfigurationNode sourceNode, String sourceName) {
+        NamespacedId sourceTypeId = NamespacedId.fromDefault(type.toLowerCase(Locale.ROOT));
+        SourceType sourceType = plugin.getSourceTypeRegistry().get(sourceTypeId);
 
         Class<?> serializerClass = sourceType.getSerializerClass();
         // Create new instance of serializer
         try {
-            SourceSerializer<?> sourceSerializer = (SourceSerializer<?>) serializerClass.getConstructors()[0].newInstance(plugin, sourceName);
+            SourceSerializer<?> sourceSerializer = (SourceSerializer<?>) serializerClass.getConstructors()[0].newInstance(plugin, sourceType, sourceName);
 
-            return (Source) sourceSerializer.deserialize(sourceType.getSourceClass(), sourceNode);
+            return (XpSource) sourceSerializer.deserialize(sourceType.getSourceClass(), sourceNode);
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
             throw new RuntimeException("Error creating serializer for source of type " + type);
         } catch (SerializationException e) {
@@ -182,7 +184,7 @@ public class SourceLoader {
         }
     }
 
-    private void registerMenuItem(Source source, ConfigurationNode sourceNode) {
+    private void registerMenuItem(XpSource source, ConfigurationNode sourceNode) {
         // Parse menu item if present
         ConfigurationNode menuNode = sourceNode.node("menu_item");
         if (!menuNode.virtual()) {

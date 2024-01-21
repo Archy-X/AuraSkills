@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.JumpingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +21,7 @@ public class JumpingLeveler extends SourceLeveler {
     private final Set<UUID> prevPlayersOnGround = new HashSet<>();
 
     public JumpingLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.JUMPING);
+        super(plugin, SourceTypes.JUMPING);
     }
 
     @EventHandler

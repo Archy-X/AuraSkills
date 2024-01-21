@@ -4,7 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.NamespacedKey;
@@ -28,7 +28,7 @@ public class EntityLeveler extends SourceLeveler {
     private final NamespacedKey SPAWNER_MOB_KEY;
 
     public EntityLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.ENTITY);
+        super(plugin, SourceTypes.ENTITY);
         this.SPAWNER_MOB_KEY = new NamespacedKey(plugin, "is_spawner_mob");
     }
 

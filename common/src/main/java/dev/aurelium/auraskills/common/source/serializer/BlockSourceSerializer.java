@@ -1,8 +1,11 @@
 package dev.aurelium.auraskills.common.source.serializer;
 
 import com.google.common.collect.ImmutableMap;
+import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.source.serializer.util.UtilitySerializer;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -13,8 +16,8 @@ import java.util.Map;
 
 public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
 
-    public BlockSourceSerializer(AuraSkillsPlugin plugin, String sourceName) {
-        super(plugin, sourceName);
+    public BlockSourceSerializer(AuraSkillsPlugin plugin, SourceType sourceType, String sourceName) {
+        super(plugin, sourceType, sourceName);
     }
 
     @Override
@@ -30,13 +33,13 @@ public class BlockSourceSerializer extends SourceSerializer<BlockSource> {
         boolean trunk = source.node("trunk").getBoolean(false);
         boolean leaf = source.node("leaf").getBoolean(false);
 
-        return new BlockSource(plugin, getId(), getXp(source), getDisplayName(source), blocks, triggers, checkReplace, states, afterStates, stateMultiplier, supportBlockType, trunk, leaf);
+        return new BlockSource(plugin, parseValues(source), blocks, triggers, checkReplace, states, afterStates, stateMultiplier, supportBlockType, trunk, leaf);
     }
 
-    public static class BlockSourceStateSerializer extends SourceSerializer<BlockXpSource.BlockXpSourceState> {
+    public static class BlockSourceStateSerializer extends UtilitySerializer<BlockXpSource.BlockXpSourceState> {
 
-        public BlockSourceStateSerializer(AuraSkillsPlugin plugin, String sourceName) {
-            super(plugin, sourceName);
+        public BlockSourceStateSerializer(AuraSkillsApi api) {
+            super(api);
         }
 
         @Override

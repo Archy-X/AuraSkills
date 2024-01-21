@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.source.type;
 
 import dev.aurelium.auraskills.api.item.ItemFilter;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.type.ItemConsumeXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.source.Source;
@@ -11,8 +11,8 @@ public class ItemConsumeSource extends Source implements ItemConsumeXpSource {
 
     private final ItemFilter item;
 
-    public ItemConsumeSource(AuraSkillsPlugin plugin, NamespacedId id, double xp, String displayName, ItemFilter item) {
-        super(plugin, id, xp, displayName);
+    public ItemConsumeSource(AuraSkillsPlugin plugin, SourceValues values, ItemFilter item) {
+        super(plugin, values);
         this.item = item;
     }
 

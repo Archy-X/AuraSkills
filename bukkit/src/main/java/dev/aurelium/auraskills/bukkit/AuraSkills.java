@@ -72,6 +72,7 @@ import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
 import dev.aurelium.auraskills.common.skill.SkillManager;
 import dev.aurelium.auraskills.common.skill.SkillRegistry;
+import dev.aurelium.auraskills.common.source.SourceTypeRegistry;
 import dev.aurelium.auraskills.common.stat.StatLoader;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.stat.StatRegistry;
@@ -113,6 +114,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private TraitRegistry traitRegistry;
     private AbilityRegistry abilityRegistry;
     private ManaAbilityRegistry manaAbilityRegistry;
+    private SourceTypeRegistry sourceTypeRegistry;
     private BukkitItemRegistry itemRegistry;
     private PlatformLogger logger;
     private MessageProvider messageProvider;
@@ -168,6 +170,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         traitRegistry = new TraitRegistry(this);
         abilityRegistry = new AbilityRegistry(this);
         manaAbilityRegistry = new ManaAbilityRegistry(this);
+        sourceTypeRegistry = new SourceTypeRegistry(this);
+        sourceTypeRegistry.registerDefaults();
         itemRegistry = new BukkitItemRegistry(this);
         itemRegistry.getStorage().load();
 
@@ -505,6 +509,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public ManaAbilityRegistry getManaAbilityRegistry() {
         return manaAbilityRegistry;
+    }
+
+    @Override
+    public SourceTypeRegistry getSourceTypeRegistry() {
+        return sourceTypeRegistry;
     }
 
     @Override

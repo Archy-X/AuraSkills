@@ -1,11 +1,11 @@
 package dev.aurelium.auraskills.bukkit.source;
 
+import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.ManaAbilityUseXpSource;
-import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.source.SourceType;
+import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class ManaAbilityUseLeveler extends SourceLeveler {
 
     public ManaAbilityUseLeveler(AuraSkills plugin) {
-        super(plugin, SourceType.MANA_ABILITY_USE);
+        super(plugin, SourceTypes.MANA_ABILITY_USE);
     }
 
     @EventHandler

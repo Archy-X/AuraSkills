@@ -22,6 +22,7 @@ import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillManager;
 import dev.aurelium.auraskills.common.skill.SkillRegistry;
+import dev.aurelium.auraskills.common.source.SourceTypeRegistry;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.stat.StatRegistry;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
@@ -74,6 +75,8 @@ public interface AuraSkillsPlugin {
     AbilityRegistry getAbilityRegistry();
 
     ManaAbilityRegistry getManaAbilityRegistry();
+
+    SourceTypeRegistry getSourceTypeRegistry();
 
     HookManager getHookManager();
 
