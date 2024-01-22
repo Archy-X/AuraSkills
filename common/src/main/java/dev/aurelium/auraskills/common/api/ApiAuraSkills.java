@@ -36,6 +36,10 @@ public class ApiAuraSkills implements AuraSkillsApi {
         this.handlers = new ApiHandlers(plugin);
     }
 
+    public AuraSkillsPlugin getPlugin() {
+        return plugin;
+    }
+
     @Override
     public SkillsUser getUser(UUID playerId) {
         return userManager.getUser(playerId);

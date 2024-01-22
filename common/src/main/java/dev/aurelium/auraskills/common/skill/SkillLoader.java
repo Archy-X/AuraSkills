@@ -63,6 +63,7 @@ public class SkillLoader {
             manaAbilityLoader.init(); // Load mana_abilities.yml file in memory
 
             int skillsLoaded = 0;
+            int sourcesLoaded = 0;
 
             for (Object key : skillsNode.childrenMap().keySet()) {
                 String skillName = (String) key;
@@ -75,8 +76,9 @@ public class SkillLoader {
                 plugin.getSkillManager().register(skill, loadedSkill);
 
                 skillsLoaded++;
+                sourcesLoaded += loadedSkill.sources().size();
             }
-            plugin.logger().info("Loaded " + skillsLoaded + " skills");
+            plugin.logger().info("Loaded " + skillsLoaded + " skills with " + sourcesLoaded + " total sources");
 
             // Load source tags
             for (Skill skill : plugin.getSkillManager().getSkillValues()) {

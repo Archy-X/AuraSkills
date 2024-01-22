@@ -6,24 +6,18 @@ import dev.aurelium.auraskills.api.item.LootItemFilter;
 import dev.aurelium.auraskills.api.item.PotionData;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.api.source.SourceType;
-import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.api.source.*;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
-import dev.aurelium.auraskills.common.source.serializer.BlockSourceSerializer;
-import dev.aurelium.auraskills.common.source.serializer.SourceSerializer;
-import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterMetaSerializer;
-import dev.aurelium.auraskills.common.source.serializer.util.ItemFilterSerializer;
-import dev.aurelium.auraskills.common.source.serializer.util.LootItemFilterSerializer;
-import dev.aurelium.auraskills.common.source.serializer.util.PotionDataSerializer;
+import dev.aurelium.auraskills.common.source.parser.BlockSourceParser;
+import dev.aurelium.auraskills.common.source.parser.util.*;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class SourceLoader {
@@ -34,12 +28,13 @@ public class SourceLoader {
     public SourceLoader(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         // Register utility serializers
+        BaseContext context = new BaseContext(plugin.getApi());
         TypeSerializerCollection sourceSerializers = TypeSerializerCollection.builder()
-                .register(ItemFilterMeta.class, new ItemFilterMetaSerializer(plugin.getApi()))
-                .register(ItemFilter.class, new ItemFilterSerializer(plugin.getApi()))
-                .register(LootItemFilter.class, new LootItemFilterSerializer(plugin.getApi()))
-                .register(PotionData.class, new PotionDataSerializer(plugin.getApi()))
-                .register(BlockXpSource.BlockXpSourceState.class, new BlockSourceSerializer.BlockSourceStateSerializer(plugin.getApi()))
+                .register(ItemFilterMeta.class, new UtilitySerializer<>(new ItemFilterMetaParser(), context))
+                .register(ItemFilter.class, new UtilitySerializer<>(new ItemFilterParser(), context))
+                .register(LootItemFilter.class, new UtilitySerializer<>(new LootItemFilterParser(), context))
+                .register(PotionData.class, new UtilitySerializer<>(new PotionDataParser(), context))
+                .register(BlockXpSource.BlockXpSourceState.class, new UtilitySerializer<>(new BlockSourceParser.BlockSourceStateParser(), context))
                 .build();
         this.configurateLoader = new ConfigurateLoader(plugin, sourceSerializers);
     }
@@ -171,14 +166,11 @@ public class SourceLoader {
         NamespacedId sourceTypeId = NamespacedId.fromDefault(type.toLowerCase(Locale.ROOT));
         SourceType sourceType = plugin.getSourceTypeRegistry().get(sourceTypeId);
 
-        Class<?> serializerClass = sourceType.getSerializerClass();
-        // Create new instance of serializer
-        try {
-            SourceSerializer<?> sourceSerializer = (SourceSerializer<?>) serializerClass.getConstructors()[0].newInstance(plugin, sourceType, sourceName);
+        XpSourceParser<?> parser = sourceType.getParser();
 
-            return (XpSource) sourceSerializer.deserialize(sourceType.getSourceClass(), sourceNode);
-        } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            throw new RuntimeException("Error creating serializer for source of type " + type);
+        SourceContext context = new SourceContext(plugin.getApi(), sourceType, sourceName);
+        try {
+            return (XpSource) parser.parse(sourceNode, context);
         } catch (SerializationException e) {
             throw new IllegalArgumentException("Error deserializing source of type " + type);
         }

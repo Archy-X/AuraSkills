@@ -3,8 +3,7 @@ package dev.aurelium.auraskills.api.registry;
 import dev.aurelium.auraskills.api.ability.CustomAbility;
 import dev.aurelium.auraskills.api.mana.CustomManaAbility;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
-import dev.aurelium.auraskills.api.source.XpSource;
-import dev.aurelium.auraskills.api.source.XpSourceSerializer;
+import dev.aurelium.auraskills.api.source.XpSourceParser;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
 
@@ -54,7 +53,7 @@ public interface NamespacedRegistry {
      */
     void registerTrait(CustomTrait trait);
 
-    void registerSourceType(String name, Class<? extends XpSource> sourceClass, Class<? extends XpSourceSerializer<?>> serializerClass);
+    void registerSourceType(String name, XpSourceParser<?> parser);
 
     /**
      * Gets the directory from which configuration files are loaded for this namespace.

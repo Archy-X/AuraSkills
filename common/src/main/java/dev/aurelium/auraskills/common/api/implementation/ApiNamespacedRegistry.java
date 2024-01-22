@@ -7,13 +7,13 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.source.SourceType;
-import dev.aurelium.auraskills.api.source.XpSource;
-import dev.aurelium.auraskills.api.source.XpSourceSerializer;
+import dev.aurelium.auraskills.api.source.XpSourceParser;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 
 import java.io.File;
+import java.util.Locale;
 
 public class ApiNamespacedRegistry implements NamespacedRegistry {
 
@@ -63,9 +63,9 @@ public class ApiNamespacedRegistry implements NamespacedRegistry {
     }
 
     @Override
-    public void registerSourceType(String name, Class<? extends XpSource> sourceClass, Class<? extends XpSourceSerializer<?>> serializerClass) {
-        NamespacedId id = NamespacedId.of(namespace, name);
-        SourceType sourceType = new ApiSourceType(id, sourceClass, serializerClass);
+    public void registerSourceType(String name, XpSourceParser<?> parser) {
+        NamespacedId id = NamespacedId.of(namespace, name.toLowerCase(Locale.ROOT));
+        SourceType sourceType = new ApiSourceType(id, parser);
         plugin.getSourceTypeRegistry().register(id, sourceType);
     }
 

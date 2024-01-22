@@ -36,7 +36,7 @@ public class SourceTypeRegistry {
 
     public void registerDefaults() {
         for (SourceTypes defaultType : SourceTypes.values()) {
-            sourceTypes.put(NamespacedId.of(NamespacedId.AURASKILLS, defaultType.getName()), defaultType);
+            sourceTypes.put(defaultType.getId(), defaultType);
         }
     }
 

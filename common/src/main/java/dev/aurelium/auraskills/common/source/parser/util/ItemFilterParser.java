@@ -1,23 +1,18 @@
-package dev.aurelium.auraskills.common.source.serializer.util;
+package dev.aurelium.auraskills.common.source.parser.util;
 
-import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.item.ItemCategory;
 import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.item.ItemFilterMeta;
+import dev.aurelium.auraskills.api.source.BaseContext;
+import dev.aurelium.auraskills.api.source.UtilityParser;
 import dev.aurelium.auraskills.common.item.SourceItem;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-import java.lang.reflect.Type;
-
-public class ItemFilterSerializer extends UtilitySerializer<ItemFilter> {
-
-    public ItemFilterSerializer(AuraSkillsApi api) {
-        super(api);
-    }
+public class ItemFilterParser implements UtilityParser<ItemFilter> {
 
     @Override
-    public ItemFilter deserialize(Type type, ConfigurationNode source) throws SerializationException {
+    public ItemFilter parse(ConfigurationNode source, BaseContext context) throws SerializationException {
         if (!source.isMap() && !source.isList()) {
             String material = source.getString();
             if (material == null) {
@@ -25,10 +20,10 @@ public class ItemFilterSerializer extends UtilitySerializer<ItemFilter> {
             }
             return new SourceItem(new String[]{material}, null, null, null);
         }
-        String[] materials = pluralizedArray("material", source, String.class);
-        String[] excludedMaterials = pluralizedArray("excluded_material", source, String.class);
+        String[] materials = context.pluralizedArray("material", source, String.class);
+        String[] excludedMaterials = context.pluralizedArray("excluded_material", source, String.class);
         ItemCategory category = source.node("category").get(ItemCategory.class);
-        ItemFilterMeta meta = new ItemFilterMetaSerializer(getApi()).deserialize(ItemFilterMeta.class, source);
+        ItemFilterMeta meta = new ItemFilterMetaParser().parse(source, context);
 
         return new SourceItem(materials, excludedMaterials, category, meta);
     }

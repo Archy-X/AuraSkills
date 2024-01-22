@@ -44,6 +44,7 @@ public class StatLoader {
             traitLoader.init();
 
             int statsLoaded = 0;
+            int traitsLoaded = 0;
 
             List<Object> keys = new ArrayList<>(statsNode.childrenMap().keySet());
             // Sort so that default stats are loaded first
@@ -74,9 +75,10 @@ public class StatLoader {
 
                 plugin.getStatManager().register(stat, loadedStat);
                 statsLoaded++;
+                traitsLoaded += loadedStat.traits().size();
             }
 
-            plugin.logger().info("Loaded " + statsLoaded + " stats");
+            plugin.logger().info("Loaded " + statsLoaded + " stats and " + traitsLoaded + " traits");
         } catch (IOException e) {
             plugin.logger().warn("Error loading " + FILE_NAME + " file: " + e.getMessage());
             e.printStackTrace();

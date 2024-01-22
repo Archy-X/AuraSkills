@@ -1,37 +1,37 @@
 package dev.aurelium.auraskills.common.source;
 
+import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.SourceType;
-import dev.aurelium.auraskills.common.source.serializer.*;
-import dev.aurelium.auraskills.common.source.type.*;
-import org.jetbrains.annotations.Nullable;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.api.ApiAuraSkills;
+import dev.aurelium.auraskills.common.source.parser.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 
 public enum SourceTypes implements SourceType {
 
-    ANVIL(AnvilSource.class, AnvilSourceSerializer.class),
-    BLOCK(BlockSource.class, BlockSourceSerializer.class),
-    BREWING(BrewingSource.class, BrewingSourceSerializer.class),
-    DAMAGE(DamageSource.class, DamageSourceSerializer.class),
-    ENCHANTING(EnchantingSource.class, EnchantingSourceSerializer.class),
-    ENTITY(EntitySource.class, EntitySourceSerializer.class),
-    FISHING(FishingSource.class, FishingSourceSerializer.class),
-    GRINDSTONE(GrindstoneSource.class, GrindstoneSourceSerializer.class),
-    ITEM_CONSUME(ItemConsumeSource.class, ItemConsumeSourceSerializer.class),
-    JUMPING(JumpingSource.class, JumpingSourceSerializer.class),
-    MANA_ABILITY_USE(ManaAbilityUseSource.class, ManaAbilityUseSourceSerializer.class),
-    POTION_SPLASH(PotionSplashSource.class, PotionSplashSourceSerializer.class),
-    STATISTIC(StatisticSource.class, StatisticSourceSerializer.class);
+    ANVIL(AnvilSourceParser.class),
+    BLOCK(BlockSourceParser.class),
+    BREWING(BrewingSourceParser.class),
+    DAMAGE(DamageSourceParser.class),
+    ENCHANTING(EnchantingSourceParser.class),
+    ENTITY(EntitySourceParser.class),
+    FISHING(FishingSourceParser.class),
+    GRINDSTONE(GrindstoneSourceParser.class),
+    ITEM_CONSUME(ItemConsumeSourceParser.class),
+    JUMPING(JumpingSourceParser.class),
+    MANA_ABILITY_USE(ManaAbilityUseSourceParser.class),
+    POTION_SPLASH(PotionSplashSourceParser.class),
+    STATISTIC(StatisticSourceParser.class);
 
     private final NamespacedId id;
-    private final Class<? extends Source> sourceClass;
-    private final Class<? extends SourceSerializer<?>> serializerClass;
+    private final Class<? extends SourceParser<?>> parserClass;
 
-    SourceTypes(Class<? extends Source> sourceClass, Class<? extends SourceSerializer<?>> serializerClass) {
+    SourceTypes(Class<? extends SourceParser<?>> parserClass) {
         this.id = NamespacedId.of(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
-        this.sourceClass = sourceClass;
-        this.serializerClass = serializerClass;
+        this.parserClass = parserClass;
     }
 
     @Override
@@ -40,28 +40,13 @@ public enum SourceTypes implements SourceType {
     }
 
     @Override
-    public String getName() {
-        return this.name().toLowerCase(Locale.ROOT);
-    }
-
-    @Override
-    public Class<? extends Source> getSourceClass() {
-        return sourceClass;
-    }
-
-    @Override
-    public Class<? extends SourceSerializer<?>> getSerializerClass() {
-        return serializerClass;
-    }
-
-    @Nullable
-    public static SourceType getFromSource(Source source) {
-        for (SourceType sourceType : values()) {
-            if (sourceType.getSourceClass().equals(source.getClass())) {
-                return sourceType;
-            }
+    public SourceParser<?> getParser() {
+        AuraSkillsPlugin plugin = ((ApiAuraSkills) AuraSkillsApi.get()).getPlugin();
+        try {
+            return (SourceParser<?>) parserClass.getConstructors()[0].newInstance(plugin);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalArgumentException("Could not instantiate parser class " + parserClass.getName());
         }
-        return null;
     }
 
 }

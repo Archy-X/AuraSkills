@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.api.source;
 
-import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,11 +7,9 @@ import java.util.Locale;
 
 public class CustomSource implements XpSource {
 
-    private final AuraSkillsApi auraSkills;
     private final SourceValues values;
 
-    public CustomSource(AuraSkillsApi auraSkills, SourceValues values) {
-        this.auraSkills = auraSkills;
+    public CustomSource(SourceValues values) {
         this.values = values;
     }
 
@@ -33,7 +30,7 @@ public class CustomSource implements XpSource {
             return getId().getKey();
         }
         String messagePath = "sources." + sourceType.toString().toLowerCase(Locale.ROOT) + "." + getId().getKey().toLowerCase(Locale.ROOT);
-        String msg = auraSkills.getMessageManager().getMessage(messagePath, locale);
+        String msg = values.getApi().getMessageManager().getMessage(messagePath, locale);
         if (msg.equals(messagePath)) {
             // Try to use defined display name
             if (values.getDisplayName() != null) {

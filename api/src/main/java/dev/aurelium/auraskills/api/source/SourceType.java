@@ -12,14 +12,10 @@ public interface SourceType {
     NamespacedId getId();
 
     /**
-     * Gets the name of the source type in all lowercase.
+     * Gets the parser used to deserialize sources from configuration.
      *
-     * @return the source type name
+     * @return the parser
      */
-    String getName();
-
-    Class<? extends XpSource> getSourceClass();
-
-    Class<? extends XpSourceSerializer<?>> getSerializerClass();
+    XpSourceParser<?> getParser();
 
 }

@@ -98,7 +98,7 @@ public class SkillManager {
     public boolean isSourceEnabled(SourceType sourceType) {
         for (Skill skill : getEnabledSkills()) {
             for (XpSource source : skill.getSources()) {
-                if (sourceType.getSourceClass().isInstance(source)) {
+                if (sourceType.equals(source.getType())) {
                     return true;
                 }
             }
