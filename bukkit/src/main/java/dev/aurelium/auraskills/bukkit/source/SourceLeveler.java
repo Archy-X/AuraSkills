@@ -1,12 +1,10 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.LevelerContext;
 import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
-import dev.aurelium.auraskills.common.config.Option;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,16 +15,16 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-import java.util.Locale;
-
 public abstract class SourceLeveler implements Listener {
 
     protected final AuraSkills plugin;
     private final SourceType sourceType;
+    private final LevelerContext context;
 
     public SourceLeveler(AuraSkills plugin, SourceType sourceType) {
         this.plugin = plugin;
         this.sourceType = sourceType;
+        this.context = new LevelerContext(plugin.getApi(), sourceType);
     }
 
     public SourceType getSourceType() {
@@ -38,43 +36,27 @@ public abstract class SourceLeveler implements Listener {
     }
 
     protected boolean failsChecks(Cancellable event, Player player, Location location, Skill skill) {
-        return isDisabled(skill) || isCancelled(event, skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
+        return context.failsChecks(event, player, location, skill);
     }
 
     protected boolean failsChecks(Player player, Location location, Skill skill) {
-        return isDisabled(skill) || blockLocation(player, location, skill) || blockPlayer(player, skill);
+        return context.failsChecks(player, location, skill);
     }
 
     protected boolean isDisabled(Skill skill) {
-        return !skill.isEnabled();
+        return context.isDisabled(skill);
     }
 
     protected boolean isCancelled(Cancellable event, Skill skill) {
-        return skill.optionBoolean("check_cancelled", true) && event.isCancelled();
+        return context.isCancelled(event, skill);
     }
 
     protected boolean blockLocation(Player player, Location location, Skill skill) {
-        // Checks if in blocked world
-        if (plugin.getWorldManager().isInBlockedWorld(location)) {
-            return true;
-        }
-        // Checks if in blocked region
-        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
-            WorldGuardHook worldGuard = plugin.getHookManager().getHook(WorldGuardHook.class);
-            return worldGuard.isBlocked(location, player, skill);
-        }
-        return false;
+        return context.blockLocation(player, location, skill);
     }
 
     protected boolean blockPlayer(Player player, Skill skill) {
-        if (!player.hasPermission("auraskills.skill." + skill.name().toLowerCase(Locale.ROOT))) {
-            return true;
-        }
-        // Check creative mode disable
-        if (plugin.configBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
-            return player.getGameMode().equals(GameMode.CREATIVE);
-        }
-        return false;
+        return context.blockPlayer(player, skill);
     }
 
     protected boolean failsClickChecks(InventoryClickEvent event) {

@@ -56,7 +56,7 @@ public class BukkitWorldManager implements WorldManager {
         return disabledWorlds.contains(world.getName());
     }
 
-    public boolean isInBlockedCheckWorld(Location location) {
+    public boolean isCheckReplaceDisabled(Location location) {
         if (location.getWorld() == null) {
             return false;
         }

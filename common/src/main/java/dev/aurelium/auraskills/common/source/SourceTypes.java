@@ -49,4 +49,10 @@ public enum SourceTypes implements SourceType {
         }
     }
 
+    @Override
+    public boolean isEnabled() {
+        AuraSkillsPlugin plugin = ((ApiAuraSkills) AuraSkillsApi.get()).getPlugin();
+        return plugin.getSkillManager().isSourceEnabled(this);
+    }
+
 }

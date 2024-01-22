@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.api;
 
+import dev.aurelium.auraskills.api.config.MainConfig;
 import dev.aurelium.auraskills.api.message.MessageManager;
 import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
@@ -74,6 +75,13 @@ public interface AuraSkillsApi {
      * @return the handlers
      */
     Handlers getHandlers();
+
+    /**
+     * Gets an interface for getting common values from the main config.yml file.
+     *
+     * @return the main config provider
+     */
+    MainConfig getMainConfig();
 
     /**
      * Gets the instance of the {@link AuraSkillsApi},

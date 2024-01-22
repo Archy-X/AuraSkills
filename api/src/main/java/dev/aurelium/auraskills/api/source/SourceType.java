@@ -18,4 +18,12 @@ public interface SourceType {
      */
     XpSourceParser<?> getParser();
 
+    /**
+     * Gets whether at least one instance of the source type is defined and loaded from
+     * the plugin's configuration.
+     *
+     * @return whether the source is enabled
+     */
+    boolean isEnabled();
+
 }

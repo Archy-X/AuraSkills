@@ -63,10 +63,11 @@ public class ApiNamespacedRegistry implements NamespacedRegistry {
     }
 
     @Override
-    public void registerSourceType(String name, XpSourceParser<?> parser) {
+    public SourceType registerSourceType(String name, XpSourceParser<?> parser) {
         NamespacedId id = NamespacedId.of(namespace, name.toLowerCase(Locale.ROOT));
-        SourceType sourceType = new ApiSourceType(id, parser);
+        SourceType sourceType = new ApiSourceType(plugin, id, parser);
         plugin.getSourceTypeRegistry().register(id, sourceType);
+        return sourceType;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.api;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.config.MainConfig;
 import dev.aurelium.auraskills.api.message.MessageManager;
 import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
@@ -26,6 +27,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
     private final XpRequirements xpRequirements;
     private final Map<String, NamespacedRegistry> namespacedRegistryMap;
     private final Handlers handlers;
+    private final MainConfig mainConfig;
 
     public ApiAuraSkills(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -34,6 +36,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
         this.xpRequirements = new ApiXpRequirements(plugin);
         this.namespacedRegistryMap = new HashMap<>();
         this.handlers = new ApiHandlers(plugin);
+        this.mainConfig = new ApiMainConfig(plugin);
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -81,6 +84,11 @@ public class ApiAuraSkills implements AuraSkillsApi {
     @Override
     public Handlers getHandlers() {
         return handlers;
+    }
+
+    @Override
+    public MainConfig getMainConfig() {
+        return mainConfig;
     }
 
 }

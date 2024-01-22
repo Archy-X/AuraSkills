@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.api.registry;
 import dev.aurelium.auraskills.api.ability.CustomAbility;
 import dev.aurelium.auraskills.api.mana.CustomManaAbility;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
+import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.XpSourceParser;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
@@ -53,7 +54,14 @@ public interface NamespacedRegistry {
      */
     void registerTrait(CustomTrait trait);
 
-    void registerSourceType(String name, XpSourceParser<?> parser);
+    /**
+     * Registers a source type in the registry.
+     *
+     * @param name The name of the source type in lowercase. Used as the key part of the NamespacedId of the source.
+     * @param parser the parser for the source
+     * @return the created {@link SourceType}
+     */
+    SourceType registerSourceType(String name, XpSourceParser<?> parser);
 
     /**
      * Gets the directory from which configuration files are loaded for this namespace.

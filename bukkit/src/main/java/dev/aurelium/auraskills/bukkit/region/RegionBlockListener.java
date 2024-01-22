@@ -42,7 +42,7 @@ public class RegionBlockListener implements Listener {
     @EventHandler
     public void checkPlace(BlockPlaceEvent event) {
         // Checks if world is blocked
-        if (plugin.getWorldManager().isInBlockedCheckWorld(event.getBlock().getLocation())) {
+        if (plugin.getWorldManager().isCheckReplaceDisabled(event.getBlock().getLocation())) {
             return;
         }
         // Checks if region is blocked

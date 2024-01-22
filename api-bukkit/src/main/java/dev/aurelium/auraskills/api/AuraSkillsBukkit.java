@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api;
 
 import dev.aurelium.auraskills.api.item.ItemManager;
+import dev.aurelium.auraskills.api.region.LocationManager;
 import dev.aurelium.auraskills.api.region.Regions;
 
 public interface AuraSkillsBukkit {
@@ -18,6 +19,13 @@ public interface AuraSkillsBukkit {
      * @return the item manager
      */
     ItemManager getItemManager();
+
+    /**
+     * Gets the location manager for checking the validity of worlds and locations.
+     *
+     * @return the location manager
+     */
+    LocationManager getLocationManager();
 
     /**
      * Gets the instance of the {@link AuraSkillsBukkit} API,
