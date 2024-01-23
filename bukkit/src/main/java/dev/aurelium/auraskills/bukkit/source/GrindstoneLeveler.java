@@ -53,7 +53,7 @@ public class GrindstoneLeveler extends SourceLeveler {
 
         double multiplier = getTotalLevelMultiplier(source, inventory, skill);
 
-        plugin.getLevelManager().addXp(plugin.getUser(player), skill, multiplier * source.getXp());
+        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source, multiplier * source.getXp());
     }
 
     private double getTotalLevelMultiplier(GrindstoneXpSource source, Inventory inventory, Skill skill) {

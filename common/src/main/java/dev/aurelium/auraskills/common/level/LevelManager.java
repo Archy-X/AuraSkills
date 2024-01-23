@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.level;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.reward.SkillReward;
@@ -46,23 +47,23 @@ public abstract class LevelManager {
 
     public abstract void reloadModifiers(User user);
 
-    public void addXp(User user, Skill skill, double amount) {
+    public void addXp(User user, Skill skill, @Nullable XpSource source, double amount) {
         if (amount == 0) return; // Ignore if source amount is 0
 
         double amountToAdd = amount * calculateMultiplier(user, skill);
 
         // Call event
-        var res = plugin.getEventHandler().callXpGainEvent(user, skill, amountToAdd);
+        var res = plugin.getEventHandler().callXpGainEvent(user, skill, source, amountToAdd);
         if (res.first()) return;
 
-        // Add XP to player
-        amountToAdd = res.second();
-        user.addSkillXp(skill, amountToAdd);
+        addXpRaw(user, skill, res.second());
+    }
 
+    protected void addXpRaw(User user, Skill skill, double amount) {
+        user.addSkillXp(skill, amount);
         checkLevelUp(user, skill);
-
         // Send action bar and boss bar
-        sendXpUi(user, skill, amountToAdd);
+        sendXpUi(user, skill, amount);
     }
 
     public void setXp(User user, Skill skill, double amount) {

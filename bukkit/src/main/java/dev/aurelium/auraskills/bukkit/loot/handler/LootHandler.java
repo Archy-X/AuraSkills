@@ -184,9 +184,9 @@ public abstract class LootHandler {
             xp = -1.0;
         }
         if (xp == -1.0 && source != null) { // Xp not specified
-            plugin.getLevelManager().addXp(user, skill, source.getXp());
+            plugin.getLevelManager().addXp(user, skill, source, source.getXp());
         } else if (xp > 0) { // Xp explicitly specified
-            plugin.getLevelManager().addXp(user, skill, xp);
+            plugin.getLevelManager().addXp(user, skill, source, xp);
         }
     }
 

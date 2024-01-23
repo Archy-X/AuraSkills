@@ -31,7 +31,7 @@ public class ManaAbilityUseLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, player.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source.getXp() * event.getManaUsed());
+        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source, source.getXp() * event.getManaUsed());
     }
 
     @Nullable

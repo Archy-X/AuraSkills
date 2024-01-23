@@ -77,7 +77,7 @@ public class DamageLeveler extends SourceLeveler {
 
         User user = plugin.getUser(player);
 
-        plugin.getLevelManager().addXp(user, skill, xp);
+        plugin.getLevelManager().addXp(user, skill, source, xp);
     }
 
     private boolean isSelfInflicted(Entity damager, Player player) {

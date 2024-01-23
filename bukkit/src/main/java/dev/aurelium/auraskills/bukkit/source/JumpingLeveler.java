@@ -70,7 +70,7 @@ public class JumpingLeveler extends SourceLeveler {
 
                 if (failsChecks(event, player, player.getLocation(), skill)) return;
 
-                plugin.getLevelManager().addXp(plugin.getUser(player), skill, source.getXp());
+                plugin.getLevelManager().addXp(plugin.getUser(player), skill, source, source.getXp());
 
                 player.removeMetadata("skillsJumps", plugin);
             }

@@ -31,7 +31,7 @@ public class XpCommand extends BaseCommand {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
         if (skill.isEnabled()) {
-            plugin.getLevelManager().addXp(user, skill, amount);
+            plugin.getLevelManager().addXp(user, skill, null, amount);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_ADD, locale),
                         "{amount}", String.valueOf(amount),

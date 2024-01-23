@@ -70,7 +70,7 @@ public class BrewingLeveler extends SourceLeveler {
 
             if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
 
-            plugin.getLevelManager().addXp(user, skill, source.getXp());
+            plugin.getLevelManager().addXp(user, skill, source, source.getXp());
         }
     }
 
@@ -128,7 +128,7 @@ public class BrewingLeveler extends SourceLeveler {
         User user = plugin.getUser(player);
         for (Skill skill : totalXpMap.keySet()) {
             // Add all xp from brews in that slot
-            plugin.getLevelManager().addXp(user, skill, totalXpMap.getOrDefault(skill, 0.0));
+            plugin.getLevelManager().addXp(user, skill, sources.get(0).first(), totalXpMap.getOrDefault(skill, 0.0));
         }
     }
 

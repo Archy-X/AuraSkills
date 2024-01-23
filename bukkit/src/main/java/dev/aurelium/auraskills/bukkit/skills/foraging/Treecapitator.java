@@ -102,7 +102,7 @@ public class Treecapitator extends ReadiedManaAbility {
             adjacentBlock.breakNaturally();
             tree.incrementBlocksBroken();
             if (source != null) {
-                plugin.getLevelManager().addXp(user, manaAbility.getSkill(), source.getXp());
+                plugin.getLevelManager().addXp(user, manaAbility.getSkill(), source, source.getXp());
             }
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();

@@ -66,7 +66,8 @@ public class EntityLeveler extends SourceLeveler {
 
         if (failsChecks(player, entity.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(user, skill, getSpawnerMultiplier(entity, skill) * source.getXp());
+        plugin.getLevelManager().addEntityXp(user, skill, source, getSpawnerMultiplier(entity, skill) * source.getXp(),
+                entity, damageEvent.getDamager(), event);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -93,7 +94,8 @@ public class EntityLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, entity.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(user, skill, getSpawnerMultiplier(entity, skill) * source.getXp());
+        plugin.getLevelManager().addEntityXp(user, skill, source, getSpawnerMultiplier(entity, skill) * source.getXp(),
+                entity, event.getDamager(), event);
     }
 
     @Nullable

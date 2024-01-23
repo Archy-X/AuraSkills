@@ -41,7 +41,7 @@ public class FishingLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, itemEntity.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source.getXp());
+        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source, source.getXp());
     }
 
     @Nullable

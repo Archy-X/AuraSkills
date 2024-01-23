@@ -63,7 +63,7 @@ public class BlockLeveler extends SourceLeveler {
         double multiplier = helper.getBlocksBroken(event.getBlock(), source);
         multiplier *= helper.getStateMultiplier(event.getBlock(), source);
 
-        plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
+        plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
         applyAbilities(skill, player, user, event.getBlock(), source);
     }
 
@@ -93,12 +93,12 @@ public class BlockLeveler extends SourceLeveler {
             plugin.getScheduler().scheduleSync(() -> {
                 // Checks that the block after one tick is the same material and matches the after_state/after_states
                 if (materialBefore == block.getType() && matchesStates(block, source.getAfterStates())) {
-                    plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
+                    plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
                     applyAbilities(skill, player, user, block, source);
                 }
             }, 50, TimeUnit.MILLISECONDS);
         } else { // Handle sources without after_state/after_states
-            plugin.getLevelManager().addXp(user, skill, source.getXp() * multiplier);
+            plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
             applyAbilities(skill, player, user, block, source);
         }
     }

@@ -54,7 +54,7 @@ public class PotionSplashLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, potion.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source.getXp());
+        plugin.getLevelManager().addXp(plugin.getUser(player), skill, source, source.getXp());
     }
 
     @Nullable

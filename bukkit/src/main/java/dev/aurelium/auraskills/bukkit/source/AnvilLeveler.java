@@ -64,7 +64,7 @@ public class AnvilLeveler extends SourceLeveler {
         AnvilInventory anvil = (AnvilInventory) inventory;
         double multiplier = getRepairCostMultiplier(source, anvil, skill);
 
-        plugin.getLevelManager().addXp(user, skill, multiplier * source.getXp());
+        plugin.getLevelManager().addXp(user, skill, source, multiplier * source.getXp());
     }
 
     private double getRepairCostMultiplier(AnvilXpSource source, AnvilInventory anvil, Skill skill) {

@@ -64,7 +64,7 @@ public class StatisticLeveler extends SourceLeveler {
 
                 double xpToAdd = change * source.getMultiplier() * source.getXp();
 
-                plugin.getLevelManager().addXp(user, entry.getValue(), xpToAdd);
+                plugin.getLevelManager().addXp(user, entry.getValue(), source, xpToAdd);
                 // Update tracker with current value
                 tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>()).put(source, player.getStatistic(statistic));
             } catch (IllegalArgumentException ignored) {}

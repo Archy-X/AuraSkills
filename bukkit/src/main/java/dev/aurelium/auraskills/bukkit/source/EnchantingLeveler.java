@@ -49,7 +49,7 @@ public class EnchantingLeveler extends SourceLeveler {
             }
         }
 
-        plugin.getLevelManager().addXp(user, skill, xp);
+        plugin.getLevelManager().addXp(user, skill, source, xp);
     }
 
     @Nullable

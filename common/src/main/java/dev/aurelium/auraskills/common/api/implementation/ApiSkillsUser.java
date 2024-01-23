@@ -47,7 +47,7 @@ public class ApiSkillsUser implements SkillsUser {
 
     @Override
     public void addSkillXp(Skill skill, double amountToAdd) {
-        plugin.getLevelManager().addXp(user, skill, amountToAdd);
+        plugin.getLevelManager().addXp(user, skill, null, amountToAdd);
     }
 
     @Override
