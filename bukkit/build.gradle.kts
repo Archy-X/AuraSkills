@@ -40,7 +40,7 @@ dependencies {
     compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.5.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-    compileOnly("com.github.dmulloy2:ProtocolLib:43145bd478")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("net.luckperms:api:5.4")
     compileOnly("com.github.TownyAdvanced:Towny:0.98.3.6")
     compileOnly("com.github.Slimefun:Slimefun4:RC-32")
