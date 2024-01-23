@@ -13,7 +13,7 @@ import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.user.User;

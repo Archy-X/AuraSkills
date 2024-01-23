@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
-import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 
 import java.util.ArrayList;
 import java.util.List;

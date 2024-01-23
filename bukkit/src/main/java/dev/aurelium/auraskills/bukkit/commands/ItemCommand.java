@@ -14,7 +14,7 @@ import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
-import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.text.TextUtil;

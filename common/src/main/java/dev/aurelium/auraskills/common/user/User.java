@@ -16,7 +16,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
-import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import net.kyori.adventure.text.Component;

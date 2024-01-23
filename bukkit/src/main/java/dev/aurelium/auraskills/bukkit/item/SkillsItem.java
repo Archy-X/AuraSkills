@@ -14,7 +14,7 @@ import dev.aurelium.auraskills.bukkit.requirement.GlobalRequirement;
 import dev.aurelium.auraskills.bukkit.requirement.Requirements;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
-import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;

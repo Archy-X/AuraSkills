@@ -12,7 +12,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
-import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

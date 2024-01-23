@@ -10,7 +10,7 @@ import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorEquipEvent;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorType;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.modifier.Multiplier;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.user.User;

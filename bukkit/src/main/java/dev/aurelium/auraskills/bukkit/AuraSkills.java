@@ -18,7 +18,7 @@ import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
-import dev.aurelium.auraskills.bukkit.item.ItemManagerImpl;
+import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
@@ -204,7 +204,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
         levelManager = new BukkitLevelManager(this);
-        itemManager = new ItemManagerImpl(this);
+        itemManager = new ApiItemManager(this);
         initStorageProvider();
         leaderboardManager.updateLeaderboards();
         leaderboardManager.startLeaderboardUpdater();
