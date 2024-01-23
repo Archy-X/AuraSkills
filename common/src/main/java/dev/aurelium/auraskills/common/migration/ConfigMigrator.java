@@ -192,6 +192,9 @@ public class ConfigMigrator {
             ConfigurationNode sConfig = FileUtil.loadYamlFile(legacyFile);
 
             for (Skill skill : Skills.values()) {
+                // Skip enchanting due to mechanics change
+                if (skill == Skills.ENCHANTING) return;
+
                 List<Pair<String, String>> paths = new ArrayList<>();
 
                 String skillName = skill.getId().getKey().toLowerCase(Locale.ROOT);
