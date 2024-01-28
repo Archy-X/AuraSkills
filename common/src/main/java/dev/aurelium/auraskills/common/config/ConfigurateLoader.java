@@ -93,6 +93,49 @@ public class ConfigurateLoader {
         return loader.load();
     }
 
+    public void updateUserFile(String path) throws IOException {
+        ConfigurationNode embedded = loadEmbeddedFile(path);
+        File userFile = new File(plugin.getPluginFolder(), path);
+        ConfigurationNode user = loadUserFile(userFile);
+        int embeddedVer = embedded.node("file_version").getInt(-1);
+        int userVer = user.node("file_version").getInt(-1);
+        if (embeddedVer == -1) {
+            throw new IllegalStateException("Embedded file does not have a file_version");
+        }
+        if (userVer == -1) {
+            plugin.logger().warn("File " + path + " is missing a file_version, did you remove it?");
+        }
+        ConfigurationNode merged = mergeNodes(embedded, user);
+        saveConfigIfUpdated(userFile, embedded, user, merged);
+    }
+
+    public void saveConfigIfUpdated(File file, ConfigurationNode embedded, ConfigurationNode user, ConfigurationNode merged) throws IOException {
+        // Save if the number of config values in embedded is greater than user file
+        int embeddedCount = countChildren(embedded);
+        int userCount = countChildren(user);
+        if (countChildren(embedded) > countChildren(user)) {
+            FileUtil.saveYamlFile(file, merged);
+            String path = plugin.getPluginFolder().toPath().relativize(file.toPath()).toString();
+            plugin.logger().info("Updated " + path + " with " + (embeddedCount - userCount) + " new keys");
+        }
+    }
+
+
+    private int countChildren(ConfigurationNode root) {
+        int count = 0;
+        Stack<ConfigurationNode> stack = new Stack<>();
+        stack.addAll(root.childrenMap().values());
+        while (!stack.isEmpty()) {
+            ConfigurationNode node = stack.pop();
+            if (node.isMap()) { // A section node, push children to search
+                stack.addAll(node.childrenMap().values());
+            } else {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public void generateUserFile(String path) {
         try {
             ConfigurationNode config = loadEmbeddedFile(path);

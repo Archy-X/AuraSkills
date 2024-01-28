@@ -113,7 +113,7 @@ public class LootTableManager {
 				}
 
 				if (embedded != null) {
-					plugin.config().saveConfigIfUpdated(lootTableFile, embedded, user, config);
+					loader.saveConfigIfUpdated(lootTableFile, embedded, user, config);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
