@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common.api;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.config.MainConfig;
 import dev.aurelium.auraskills.api.message.MessageManager;
+import dev.aurelium.auraskills.api.registry.GlobalRegistry;
 import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
@@ -28,6 +29,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
     private final Map<String, NamespacedRegistry> namespacedRegistryMap;
     private final Handlers handlers;
     private final MainConfig mainConfig;
+    private final GlobalRegistry globalRegistry;
 
     public ApiAuraSkills(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -37,6 +39,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
         this.namespacedRegistryMap = new HashMap<>();
         this.handlers = new ApiHandlers(plugin);
         this.mainConfig = new ApiMainConfig(plugin);
+        this.globalRegistry = new ApiGlobalRegistry(plugin);
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -64,6 +67,11 @@ public class ApiAuraSkills implements AuraSkillsApi {
     }
 
     @Override
+    public GlobalRegistry getGlobalRegistry() {
+        return globalRegistry;
+    }
+
+    @Override
     public NamespacedRegistry useRegistry(String namespace, File contentDirectory) {
         namespace = namespace.toLowerCase(Locale.ROOT);
         if (namespace.equals(NamespacedId.AURASKILLS)) {
@@ -77,7 +85,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
     }
 
     @Nullable
-    public NamespacedRegistry getRegistry(String namespace) {
+    public NamespacedRegistry getNamespacedRegistry(String namespace) {
         return namespacedRegistryMap.get(namespace);
     }
 

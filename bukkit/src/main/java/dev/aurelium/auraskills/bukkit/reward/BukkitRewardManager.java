@@ -108,7 +108,7 @@ public class BukkitRewardManager extends RewardManager {
 
     private File getRewardsDir(Skill skill) {
         if (skill instanceof CustomSkill customSkill) {
-            NamespacedRegistry registry = plugin.getApi().getRegistry(customSkill.getId().getNamespace());
+            NamespacedRegistry registry = plugin.getApi().getNamespacedRegistry(customSkill.getId().getNamespace());
             if (registry != null) {
                 return new File(registry.getContentDirectory() + "/rewards");
             }

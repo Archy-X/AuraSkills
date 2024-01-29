@@ -160,7 +160,7 @@ public class SkillLoader {
             return ImmutableList.copyOf(sourceLoader.loadSources(auraSkill, plugin.getPluginFolder(), true));
         } else if (skill instanceof CustomSkill customSkill) {
             // Load sources of custom skill using the content directory of its registry
-            NamespacedRegistry registry = plugin.getApi().getRegistry(customSkill.getId().getNamespace());
+            NamespacedRegistry registry = plugin.getApi().getNamespacedRegistry(customSkill.getId().getNamespace());
             if (registry != null) {
                 return ImmutableList.copyOf(sourceLoader.loadSources(customSkill, registry.getContentDirectory(), false));
             }
@@ -184,7 +184,7 @@ public class SkillLoader {
         if (!skill.isEnabled()) return;
 
         File contentDir;
-        NamespacedRegistry registry = plugin.getApi().getRegistry(skill.getId().getNamespace());
+        NamespacedRegistry registry = plugin.getApi().getNamespacedRegistry(skill.getId().getNamespace());
         if (skill instanceof CustomSkill && registry != null) {
             contentDir = registry.getContentDirectory();
         } else {

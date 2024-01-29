@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.api;
 
 import dev.aurelium.auraskills.api.config.MainConfig;
 import dev.aurelium.auraskills.api.message.MessageManager;
+import dev.aurelium.auraskills.api.registry.GlobalRegistry;
 import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
@@ -46,6 +47,13 @@ public interface AuraSkillsApi {
     XpRequirements getXpRequirements();
 
     /**
+     * Gets the global registry for getting any skill, stat, ability, etc. by its id.
+     *
+     * @return the global registry
+     */
+    GlobalRegistry getGlobalRegistry();
+
+    /**
      * Creates and returns the {@link NamespacedRegistry} for the given namespace and content directory,
      * which is used to register custom skills, stats, abilities, etc.
      *
@@ -67,7 +75,7 @@ public interface AuraSkillsApi {
      * @return the {@link NamespacedRegistry}, or null if not registered
      */
     @Nullable
-    NamespacedRegistry getRegistry(String namespace);
+    NamespacedRegistry getNamespacedRegistry(String namespace);
 
     /**
      * Gets the {@link Handlers} used to register platform-specific handlers for custom content.
