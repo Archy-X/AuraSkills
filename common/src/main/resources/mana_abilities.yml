@@ -6,9 +6,9 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 15
-    unlock: 7
-    level_up: 7
+    mana_cost_per_level: 12
+    unlock: 6
+    level_up: 6
     max_level: 0
     require_sneak: false
     check_offhand: true
@@ -23,9 +23,9 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 15
-    unlock: 7
-    level_up: 7
+    mana_cost_per_level: 12
+    unlock: 6
+    level_up: 6
     max_level: 0
     require_sneak: false
     check_offhand: true
@@ -38,9 +38,9 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 15
-    unlock: 7
-    level_up: 7
+    mana_cost_per_level: 12
+    unlock: 6
+    level_up: 6
     max_level: 0
     require_sneak: false
     check_offhand: true
@@ -54,8 +54,8 @@ mana_abilities:
     cooldown_per_level: -0.1
     base_mana_cost: 5
     mana_cost_per_level: 2
-    unlock: 7
-    level_up: 7
+    unlock: 6
+    level_up: 6
     max_level: 0
     display_damage_with_scaling: true
     enable_sound: true
@@ -67,9 +67,9 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 15
-    unlock: 7
-    level_up: 7
+    mana_cost_per_level: 12
+    unlock: 6
+    level_up: 6
     max_level: 0
     require_sneak: false
     check_offhand: true
@@ -78,13 +78,13 @@ mana_abilities:
   auraskills/charged_shot:
     enabled: true
     base_value: 0.5
-    value_per_level: 0.3
+    value_per_level: 0.1
     base_cooldown: 0
     cooldown_per_level: 0
-    base_mana_cost: 5
+    base_mana_cost: 10
     mana_cost_per_level: 5
-    unlock: 7
-    level_up: 7
+    unlock: 6
+    level_up: 6
     max_level: 0
     enable_message: true
     enable_sound: true
@@ -96,8 +96,8 @@ mana_abilities:
     cooldown_per_level: -5
     base_mana_cost: 10
     mana_cost_per_level: 10
-    unlock: 7
-    level_up: 7
+    unlock: 6
+    level_up: 6
     max_level: 0
     enable_particles: true
   auraskills/lightning_blade:
@@ -107,11 +107,11 @@ mana_abilities:
     base_cooldown: 200
     cooldown_per_level: -5
     base_mana_cost: 20
-    mana_cost_per_level: 15
+    mana_cost_per_level: 12
     base_duration: 5.0
     duration_per_level: 4.0
-    unlock: 7
-    level_up: 7
+    unlock: 6
+    level_up: 6
     max_level: 0
     require_sneak: false
     check_offhand: true

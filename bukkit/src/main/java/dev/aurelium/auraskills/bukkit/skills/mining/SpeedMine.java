@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -38,6 +39,11 @@ public class SpeedMine extends ReadiedManaAbility {
     @Override
     public void onStop(Player player, User playerData) {
 
+    }
+
+    @Override
+    public String replaceDescPlaceholders(String input, User user) {
+        return TextUtil.replace(input, "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

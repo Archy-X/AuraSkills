@@ -663,7 +663,7 @@ mana_abilities:
     end: "<gray>Absorción se ha agotado"
   terraform:
     name: Terraformar
-    desc: "Rompe bloques instantáneamente en un radio de 4 bloques en la misma capa al cavar durante {value} segundos. Usted debe usar una pala y los bloques adicionales rotos deben ser del mismo tipo y en una sola vena conectada. <1>[Click derecho a una pala y luego cava para activar]"
+    desc: "Rompe bloques instantáneamente en un radio de {radius} bloques en la misma capa al cavar durante {value} segundos. <1>[Click derecho a una pala y luego cava para activar]"
     raise: "<gray>Levantaste tu pala"
     lower: "<gray>Bajaste tu pala"
     start: "<gold>¡Terraformar activado! <gray>(-{mana} {mana_unit})"
@@ -686,7 +686,7 @@ mana_abilities:
     start: "<gold>Espada de relámpagos activada <gray>(-{mana} {mana_unit})"
     end: "<gray>La espada de relámpagos se desgastó"
   not_ready: "<red>¡La habilitad no está lista! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>¡No hay maná suficiente! <gray>(Necesitas {mana} {mana_unit} y tienes {current_mana}/{max_mana})"
+  not_enough_mana: "<yellow>¡No hay maná suficiente! <gray>(Necesitas {mana} {mana_unit})"
 skills:
   farming:
     name: Agricultura

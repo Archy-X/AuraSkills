@@ -5,13 +5,11 @@ import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Manager for storing and retrieving ability configs. Does not handle
@@ -88,5 +86,7 @@ public abstract class AbilityManager {
     public boolean isLoaded(Ability ability) {
         return abilityMap.containsKey(ability);
     }
+
+    public abstract String getBaseDescription(Ability ability, Locale locale, User user);
 
 }

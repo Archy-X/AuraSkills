@@ -77,14 +77,15 @@ public class AbilitiesComponents {
                 String format = activeMenu.getFormat("desc_upgrade_value");
                 if (context instanceof Ability ability) {
                     int level = user.getAbilityLevel(ability);
-                    return TextUtil.replace(ability.getDescription(locale),
+                    String desc = plugin.getAbilityManager().getBaseDescription(ability, locale, user);
+                    return TextUtil.replace(desc,
                             "{value}", AbilityUtil.getUpgradeValue(ability, level, format),
                             "{value_2}", AbilityUtil.getUpgradeValue2(ability, level, format));
                 } else if (context instanceof ManaAbility manaAbility) {
                     int level = user.getManaAbilityLevel(manaAbility);
-                    return TextUtil.replace(manaAbility.getDescription(locale),
+                    String desc = plugin.getManaAbilityManager().getBaseDescription(manaAbility, locale, user);
+                    return TextUtil.replace(desc,
                             "{value}", AbilityUtil.getUpgradeValue(manaAbility, level, format),
-                            "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
                             "{duration}", AbilityUtil.getUpgradeDuration(manaAbility, level, format));
                 }
             }
@@ -118,13 +119,14 @@ public class AbilitiesComponents {
             if (placeholder.equals("desc")) {
                 User user = plugin.getUser(player);
                 if (context instanceof Ability ability) {
-                    return TextUtil.replace(ability.getDescription(locale),
+                    String desc = plugin.getAbilityManager().getBaseDescription(ability, locale, user);
+                    return TextUtil.replace(desc,
                             "{value}", NumberUtil.format1(ability.getValue(user.getAbilityLevel(ability))),
                             "{value_2}", NumberUtil.format1(ability.getSecondaryValue(user.getAbilityLevel(ability))));
                 } else if (context instanceof ManaAbility manaAbility) {
-                    return TextUtil.replace(manaAbility.getDescription(locale),
+                    String desc = plugin.getManaAbilityManager().getBaseDescription(manaAbility, locale, user);
+                    return TextUtil.replace(desc,
                             "{value}", NumberUtil.format1(manaAbility.getDisplayValue(user.getManaAbilityLevel(manaAbility))),
-                            "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
                             "{duration}", NumberUtil.format1(AbilityUtil.getDuration(manaAbility, user.getManaAbilityLevel(manaAbility))));
                 }
             }

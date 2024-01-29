@@ -214,4 +214,19 @@ public class CustomManaAbility implements ManaAbility {
 
     }
 
+    public static class Defined {
+
+        private double baseValue = 10.0;
+        private double valuePerLevel = 10.0;
+        private double baseCooldown = 100.0;
+        private double cooldownPerLevel = -5.0;
+        private double baseManaCost = 30.0;
+        private double manaCostPerLevel = 5.0;
+        private int maxLevel = 0;
+        private int unlock = 7;
+        private int levelUp = 0;
+
+
+    }
+
 }

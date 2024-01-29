@@ -29,9 +29,8 @@ public class LockedManaAbilityItem extends AbstractManaAbilityItem implements Te
         Locale locale = plugin.getUser(player).getLocale();
         return switch (placeholder) {
             case "name" -> manaAbility.getDisplayName(locale);
-            case "desc" -> TextUtil.replace(manaAbility.getDescription(locale),
+            case "desc" -> TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, locale, plugin.getUser(player)),
                     "{value}", NumberUtil.format1(manaAbility.getDisplayValue(1)),
-                    "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
                     "{duration}", NumberUtil.format1(getDuration(manaAbility)));
             default -> replaceMenuMessage(placeholder, player, activeMenu, new Replacer()
                     .map("{skill}", () -> {

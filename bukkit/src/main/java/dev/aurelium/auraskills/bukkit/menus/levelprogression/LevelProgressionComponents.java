@@ -87,7 +87,8 @@ public class LevelProgressionComponents {
             if (placeholder.equals("name")) {
                 return ability.getDisplayName(locale);
             } else if (placeholder.equals("desc")) {
-                return TextUtil.replace(ability.getDescription(locale),
+                String desc = plugin.getAbilityManager().getBaseDescription(ability, locale, plugin.getUser(player));
+                return TextUtil.replace(desc,
                         "{value}", NumberUtil.format1(ability.getValue(1)),
                         "{value_2}", NumberUtil.format1(ability.getSecondaryValue(1)));
             }
@@ -130,7 +131,7 @@ public class LevelProgressionComponents {
             int abilityLevel = ((level - ability.getUnlock()) / ability.getLevelUp()) + 1;
             return switch (placeholder) {
                 case "name" -> ability.getDisplayName(locale);
-                case "desc" -> TextUtil.replace(ability.getDescription(locale),
+                case "desc" -> TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, locale, plugin.getUser(player)),
                         "{value}", NumberUtil.format1(ability.getValue(abilityLevel)),
                         "{value_2}", NumberUtil.format1(ability.getSecondaryValue(abilityLevel)));
                 case "level" -> RomanNumber.toRoman(abilityLevel, plugin);
@@ -174,7 +175,7 @@ public class LevelProgressionComponents {
             if (placeholder.equals("name")) {
                 return manaAbility.getDisplayName(locale);
             } else if (placeholder.equals("desc")) {
-                return TextUtil.replace(manaAbility.getDescription(locale),
+                return TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, locale, plugin.getUser(player)),
                         "{value}", NumberUtil.format1(manaAbility.getDisplayValue(1)),
                         "{duration}", NumberUtil.format1(getDuration(manaAbility, 1)),
                         "{haste_level}", String.valueOf(ManaAbilities.SPEED_MINE.optionInt("haste_level", 10)));
@@ -216,7 +217,7 @@ public class LevelProgressionComponents {
             int manaAbilityLevel = ((level - manaAbility.getUnlock()) / manaAbility.getLevelUp()) + 1;
             return switch (placeholder) {
                 case "name" -> manaAbility.getDisplayName(locale);
-                case "desc" -> TextUtil.replace(manaAbility.getDescription(locale),
+                case "desc" -> TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, locale, plugin.getUser(player)),
                         "{value}", NumberUtil.format1(manaAbility.getDisplayValue(manaAbilityLevel)),
                         "{duration}", NumberUtil.format1(getDuration(manaAbility, manaAbilityLevel)),
                         "{haste_level}", String.valueOf(ManaAbilities.SPEED_MINE.optionInt("haste_level", 10)));

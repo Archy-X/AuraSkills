@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -36,6 +37,16 @@ public class FightingAbilities extends AbilityImpl {
 
     public FightingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.CRIT_DAMAGE, Abilities.FIGHTER, Abilities.SWORD_MASTER, Abilities.FIRST_STRIKE, Abilities.BLEED);
+    }
+
+    @Override
+    public String replaceDescPlaceholders(String input, Ability ability, User user) {
+        if (ability.equals(Abilities.BLEED)) {
+            return TextUtil.replace(input,
+                    "{base_ticks}", String.valueOf(ability.optionInt("base_ticks", 3)),
+                    "{added_ticks}", String.valueOf(ability.optionInt("added_ticks", 2)));
+        }
+        return input;
     }
 
     public void reloadCritDamage(Player player, User user) {

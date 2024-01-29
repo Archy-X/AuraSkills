@@ -45,6 +45,10 @@ public abstract class ManaAbilityProvider implements Listener {
 
     public abstract void onStop(Player player, User user);
 
+    public String replaceDescPlaceholders(String input, User user) {
+        return input;
+    }
+
     protected boolean checkActivation(Player player) {
         User user = plugin.getUser(player);
 

@@ -36,8 +36,7 @@ public class ChargedShot extends ManaAbilityProvider {
     @Override
     public void onActivate(Player player, User user) {
         // Calculate damage increase
-        double manaConsumed = getManaConsumed(user);
-        if (manaConsumed <= 0) return;
+        double manaConsumed = getManaCost(user);
         double damagePercent = manaConsumed * getValue(user);
         // Add meta to entity
         Object obj = user.getMetadata().get("charged_shot_projectile");
@@ -145,13 +144,16 @@ public class ChargedShot extends ManaAbilityProvider {
         user.setMana(user.getMana() - manaConsumed);
 
         if (manaAbility.optionBoolean("enable_message", true)) {
-            plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(getActivateMessage(), user.getLocale())
-                    , "{mana}", NumberUtil.format0(manaConsumed)
-                    , "{percent}", NumberUtil.format0(damagePercent)));
+            String manaStr = manaConsumed < 1 ? NumberUtil.format1(manaConsumed) : NumberUtil.format0(manaConsumed);
+            String damagePercentStr = damagePercent < 1 ? NumberUtil.format1(damagePercent) : NumberUtil.format0(damagePercent);
+            plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(getActivateMessage(), user.getLocale()),
+                    "{mana}", manaStr,
+                    "{percent}", damagePercentStr));
         }
     }
 
-    private double getManaConsumed(User user) {
+    @Override
+    public double getManaCost(User user) {
         Object obj = user.getMetadata().get("charged_shot_force");
         float force = 0;
         if (obj instanceof Float) {

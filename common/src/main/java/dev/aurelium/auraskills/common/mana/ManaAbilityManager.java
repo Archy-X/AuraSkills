@@ -3,10 +3,12 @@ package dev.aurelium.auraskills.common.mana;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -66,5 +68,7 @@ public abstract class ManaAbilityManager {
     public boolean isLoaded(ManaAbility manaAbility) {
         return manaAbilityMap.containsKey(manaAbility);
     }
+
+    public abstract String getBaseDescription(ManaAbility manaAbility, Locale locale, User user);
 
 }

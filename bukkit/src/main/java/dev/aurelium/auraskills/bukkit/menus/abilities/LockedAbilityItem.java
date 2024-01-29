@@ -27,7 +27,7 @@ public class LockedAbilityItem extends AbstractAbilityItem {
         Locale locale = plugin.getUser(player).getLocale();
         return switch (placeholder) {
             case "name" -> ability.getDisplayName(locale);
-            case "desc" -> TextUtil.replace(ability.getDescription(locale),
+            case "desc" -> TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, locale, plugin.getUser(player)),
                     "{value}", NumberUtil.format1(ability.getValue(1)),
                     "{value_2}", NumberUtil.format1(ability.getSecondaryValue(1)));
             default -> replaceMenuMessage(placeholder, player, activeMenu, new Replacer()

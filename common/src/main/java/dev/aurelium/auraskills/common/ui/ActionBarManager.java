@@ -232,11 +232,11 @@ public abstract class ActionBarManager {
     public abstract String getWorldName(User user);
 
     private String getMana(User user) {
-        return String.valueOf(Math.round(user.getMana()));
+        return String.valueOf((int) Math.floor(user.getMana()));
     }
 
     private String getMaxMana(User user) {
-        return String.valueOf(Math.round(user.getMaxMana()));
+        return String.valueOf((int) Math.floor(user.getMaxMana()));
     }
 
     private String replacePlaceholderApi(User user, String message) {

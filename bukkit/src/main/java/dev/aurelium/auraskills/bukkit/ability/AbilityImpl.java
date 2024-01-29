@@ -27,6 +27,10 @@ public class AbilityImpl extends AbilityContext implements Listener {
         return abilities;
     }
 
+    public String replaceDescPlaceholders(String input, Ability ability, User user) {
+        return input;
+    }
+
     protected double getValue(Ability ability, User user) {
         return ability.getValue(user.getAbilityLevel(ability));
     }

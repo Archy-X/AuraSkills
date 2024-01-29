@@ -663,7 +663,7 @@ mana_abilities:
     end: "<gray>L'Absorption s'est dissipée"
   terraform:
     name: Terraforme
-    desc: "Brisez instantanément des blocs dans un rayon de 4 blocs dans la même couche lorsque vous creusez pendant {value} secondes. Vous devez utiliser une pelle et les blocs supplémentaires cassés doivent être du même type et dans une seule veine connectée. <yellow>[Clic droit sur la pelle et creuse le bloc pour activer]"
+    desc: "Brisez instantanément des blocs dans un rayon de {radius} blocs dans la même couche lorsque vous creusez pendant {value} secondes. <yellow>[Clic droit sur la pelle et creuse le bloc pour activer]"
     raise: "<gray>Vous levez votre pelle"
     lower: "<gray>Vous baissez votre pelle"
     start: "<gold>Terraforme Activé! <gray>(-{mana} {mana_unit})"
@@ -686,7 +686,7 @@ mana_abilities:
     start: "<gold>Lame de foudre activée ! <gray>(-{mana} {mana_unit})"
     end: "<gray>Lame de Foudre s'est épuisée"
   not_ready: "<red>Compétence non chargée! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Mana insuffisante! <gray>({mana} {mana_unit} requis, vous avez {current_mana}/{max_mana})"
+  not_enough_mana: "<yellow>Mana insuffisante! <gray>({mana} {mana_unit} requis)"
 skills:
   farming:
     name: Fermier

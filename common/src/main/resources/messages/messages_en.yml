@@ -169,7 +169,7 @@ abilities:
       dealt: "<red>First Strike Dealt!"
     bleed:
       name: Bleed
-      desc: "{value}% chance to make the enemy bleed for 3 bleed ticks, dealing {value_2} damage per tick."
+      desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
       info: "{value}% Chance, {value_2} Damage"
       enemy_bleeding: "<red>Enemy Bleeding!"
       self_bleeding: "<red>You are bleeding!"
@@ -663,7 +663,7 @@ mana_abilities:
     end: "<gray>Absorption has worn off"
   terraform:
     name: Terraform
-    desc: "Break blocks instantly in a 4 block radius in the same layer when digging for {value} seconds. You must use a shovel and extra blocks broken must be the same type and in a single connected vein. <1>[Right click shovel and dig block to activate]"
+    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
     raise: "<gray>You raise your shovel"
     lower: "<gray>You lower your shovel"
     start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
@@ -686,7 +686,7 @@ mana_abilities:
     start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
     end: "<gray>Lightning Blade has worn off"
   not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required, you have {current_mana}/{max_mana})"
+  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required)"
 skills:
   farming:
     name: Farming

@@ -663,7 +663,7 @@ mana_abilities:
     end: "<gray>Absorption ist ausgelaufen"
   terraform:
     name: Terraform
-    desc: "Baue Blöcke in einem 4 Block Radius sofort ab in der selben Ebene wenn du für {value} Sekunden abbaust. Du musst eine Schaufel benutzen und zusätzlichen Blöcke die abgebaut werden müssen von der selben Art sein und in einer einzigen verbundene Vene sein. <1>[Rechtsklick eine Schaufel und bau Blöcke ab zum aktivieren]"
+    desc: "Baue Blöcke in einem {radius} Block Radius sofort ab in der selben Ebene wenn du für {value} Sekunden abbaust. <1>[Rechtsklick eine Schaufel und bau Blöcke ab zum aktivieren]"
     raise: "<gray>Du hebst deine Schaufel"
     lower: "<gray>Du senkst deinen Schaufel"
     start: "<gold>Terraform aktiviert! <gray>(-{mana} {mana_unit})"
@@ -686,7 +686,7 @@ mana_abilities:
     start: "<aqua>litzklinge aktiviert! <gray>(-{mana} {mana_unit})"
     end: "<gray>Blitzklinge ist ausgelaufen"
   not_ready: "<red>Fähigkeit nicht bereit! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Nicht genug Mana! <gray>({mana} {mana_unit} erforderlich, du hast {current_mana}/{max_mana})"
+  not_enough_mana: "<yellow>Nicht genug Mana! <gray>({mana} {mana_unit} erforderlich)"
 skills:
   farming:
     name: Ackerbau

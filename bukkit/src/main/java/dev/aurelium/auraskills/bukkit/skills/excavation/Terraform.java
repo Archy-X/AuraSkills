@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -39,6 +40,11 @@ public class Terraform extends ReadiedManaAbility {
     @Override
     public void onStop(Player player, User user) {
 
+    }
+
+    @Override
+    public String replaceDescPlaceholders(String input, User user) {
+        return TextUtil.replace(input, "{radius}", String.valueOf(4));
     }
 
     @EventHandler
