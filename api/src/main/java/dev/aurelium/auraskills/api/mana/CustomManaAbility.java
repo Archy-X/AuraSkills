@@ -3,7 +3,6 @@ package dev.aurelium.auraskills.api.mana;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -15,15 +14,11 @@ public class CustomManaAbility implements ManaAbility {
     private ManaAbilityProvider provider;
 
     private final NamespacedId id;
-    @Nullable
-    private final String displayName;
-    @Nullable
-    private final String description;
+    private final Defined defined;
 
-    private CustomManaAbility(NamespacedId id, @Nullable String displayName, @Nullable String description) {
+    private CustomManaAbility(NamespacedId id, Defined defined) {
         this.id = id;
-        this.displayName = displayName;
-        this.description = description;
+        this.defined = defined;
     }
 
     /**
@@ -34,6 +29,10 @@ public class CustomManaAbility implements ManaAbility {
      */
     public static CustomManaAbilityBuilder builder(NamespacedId id) {
         return new CustomManaAbilityBuilder(id);
+    }
+
+    public Defined getDefined() {
+        return defined;
     }
 
     @Override
@@ -63,12 +62,12 @@ public class CustomManaAbility implements ManaAbility {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return displayName != null ? displayName : provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return description != null ? description : provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale);
     }
 
     @Override
@@ -189,27 +188,69 @@ public class CustomManaAbility implements ManaAbility {
     public static class CustomManaAbilityBuilder {
 
         private final NamespacedId id;
-        @Nullable
-        private String displayName;
-        @Nullable
-        private String description;
+        private final Defined defined = new Defined();
 
         private CustomManaAbilityBuilder(NamespacedId id) {
             this.id = id;
         }
 
         public CustomManaAbilityBuilder displayName(String displayName) {
-            this.displayName = displayName;
+            defined.setDisplayName(displayName);
             return this;
         }
 
         public CustomManaAbilityBuilder description(String description) {
-            this.description = description;
+            defined.setDescription(description);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder baseValue(double baseValue) {
+            defined.setBaseValue(baseValue);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder valuePerLevel(double valuePerLevel) {
+            defined.setValuePerLevel(valuePerLevel);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder baseCooldown(double baseCooldown) {
+            defined.setBaseCooldown(baseCooldown);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder cooldownPerLevel(double cooldownPerLevel) {
+            defined.setCooldownPerLevel(cooldownPerLevel);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder baseManaCost(double baseManaCost) {
+            defined.setBaseManaCost(baseManaCost);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder manaCostPerLevel(double manaCostPerLevel) {
+            defined.setManaCostPerLevel(manaCostPerLevel);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder maxLevel(int maxLevel) {
+            defined.setMaxLevel(maxLevel);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder unlock(int unlock) {
+            defined.setUnlock(unlock);
+            return this;
+        }
+
+        public CustomManaAbilityBuilder levelUp(int levelUp) {
+            defined.setLevelUp(levelUp);
             return this;
         }
 
         public CustomManaAbility build() {
-            return new CustomManaAbility(id, displayName, description);
+            return new CustomManaAbility(id, defined);
         }
 
     }
@@ -218,15 +259,103 @@ public class CustomManaAbility implements ManaAbility {
 
         private double baseValue = 10.0;
         private double valuePerLevel = 10.0;
-        private double baseCooldown = 100.0;
+        private double baseCooldown = 200.0;
         private double cooldownPerLevel = -5.0;
         private double baseManaCost = 30.0;
         private double manaCostPerLevel = 5.0;
         private int maxLevel = 0;
-        private int unlock = 7;
-        private int levelUp = 0;
+        private int unlock = 6;
+        private int levelUp = 6;
+        private String displayName;
+        private String description;
 
+        public double getBaseValue() {
+            return baseValue;
+        }
 
+        public void setBaseValue(double baseValue) {
+            this.baseValue = baseValue;
+        }
+
+        public double getValuePerLevel() {
+            return valuePerLevel;
+        }
+
+        public void setValuePerLevel(double valuePerLevel) {
+            this.valuePerLevel = valuePerLevel;
+        }
+
+        public double getBaseCooldown() {
+            return baseCooldown;
+        }
+
+        public void setBaseCooldown(double baseCooldown) {
+            this.baseCooldown = baseCooldown;
+        }
+
+        public double getCooldownPerLevel() {
+            return cooldownPerLevel;
+        }
+
+        public void setCooldownPerLevel(double cooldownPerLevel) {
+            this.cooldownPerLevel = cooldownPerLevel;
+        }
+
+        public double getBaseManaCost() {
+            return baseManaCost;
+        }
+
+        public void setBaseManaCost(double baseManaCost) {
+            this.baseManaCost = baseManaCost;
+        }
+
+        public double getManaCostPerLevel() {
+            return manaCostPerLevel;
+        }
+
+        public void setManaCostPerLevel(double manaCostPerLevel) {
+            this.manaCostPerLevel = manaCostPerLevel;
+        }
+
+        public int getMaxLevel() {
+            return maxLevel;
+        }
+
+        public void setMaxLevel(int maxLevel) {
+            this.maxLevel = maxLevel;
+        }
+
+        public int getUnlock() {
+            return unlock;
+        }
+
+        public void setUnlock(int unlock) {
+            this.unlock = unlock;
+        }
+
+        public int getLevelUp() {
+            return levelUp;
+        }
+
+        public void setLevelUp(int levelUp) {
+            this.levelUp = levelUp;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
     }
 
 }

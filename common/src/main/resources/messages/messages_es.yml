@@ -517,7 +517,7 @@ commands:
       set: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>{level} <gray>para <gold>{player}"
     setlevel:
       set: "<gray>Habilidad <aqua>{skill} <gray>establecida al nivel <aqua>{level} <gray>para <gold>{player}"
-    at_least_one: "<yellow>¡El nivel debe ser al menos {level}!"
+    at_least: "<yellow>¡El nivel debe ser al menos {level}!"
   toggle:
     enabled: "<green>La barra de acción de tus habilidades ha sido activada"
     disabled: "<red>La barra de acción de tus habilidades ha sido desactivada"
