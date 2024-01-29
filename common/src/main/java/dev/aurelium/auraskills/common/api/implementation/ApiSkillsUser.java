@@ -3,11 +3,11 @@ package dev.aurelium.auraskills.common.api.implementation;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
-import dev.aurelium.auraskills.api.trait.Trait;
-import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.Nullable;
@@ -100,6 +100,17 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public void setMana(double mana) {
         user.setMana(mana);
+    }
+
+    @Override
+    public boolean consumeMana(double amount) {
+        if (user.getMana() >= amount) {
+            user.setMana(user.getMana() - amount);
+            return true;
+        } else {
+            plugin.getManaAbilityManager().sendNotEnoughManaMessage(user, amount);
+            return false;
+        }
     }
 
     @Override

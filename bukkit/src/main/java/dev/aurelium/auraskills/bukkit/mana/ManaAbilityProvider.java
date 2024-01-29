@@ -63,7 +63,7 @@ public abstract class ManaAbilityProvider implements Listener {
         double manaCost = getManaCost(user);
 
         // Check that player has enough mana
-        if (!hasEnoughMana(player, user, manaCost)) {
+        if (insufficientMana(user, manaCost)) {
             return false;
         }
 
@@ -141,16 +141,12 @@ public abstract class ManaAbilityProvider implements Listener {
                 ,"{mana}", NumberUtil.format0(manaConsumed)));
     }
 
-    public boolean hasEnoughMana(Player player, User user, double manaCost) {
-        Locale locale = user.getLocale();
+    public boolean insufficientMana(User user, double manaCost) {
         if (user.getMana() >= manaCost) {
-            return true;
-        } else {
-            plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(ManaAbilityMessage.NOT_ENOUGH_MANA, locale)
-                    ,"{mana}", NumberUtil.format0(manaCost)
-                    , "{current_mana}", String.valueOf(Math.round(user.getMana()))
-                    , "{max_mana}", String.valueOf(Math.round(user.getMaxMana()))));
             return false;
+        } else {
+            plugin.getManaAbilityManager().sendNotEnoughManaMessage(user, manaCost);
+            return true;
         }
     }
 

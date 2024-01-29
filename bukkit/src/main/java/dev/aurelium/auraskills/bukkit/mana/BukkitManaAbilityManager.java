@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.archery.ChargedShot;
 import dev.aurelium.auraskills.bukkit.skills.defense.Absorption;
@@ -10,9 +11,13 @@ import dev.aurelium.auraskills.bukkit.skills.fighting.LightningBlade;
 import dev.aurelium.auraskills.bukkit.skills.fishing.SharpHook;
 import dev.aurelium.auraskills.bukkit.skills.foraging.Treecapitator;
 import dev.aurelium.auraskills.bukkit.skills.mining.SpeedMine;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.mana.ManaAbilityManager;
+import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -63,6 +68,16 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
             }
         }
         return null;
+    }
+
+    @Override
+    public void sendNotEnoughManaMessage(User user, double manaCost) {
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
+        plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(ManaAbilityMessage.NOT_ENOUGH_MANA, user.getLocale())
+                ,"{mana}", NumberUtil.format0(manaCost)
+                , "{current_mana}", String.valueOf(Math.round(user.getMana()))
+                , "{max_mana}", String.valueOf(Math.round(user.getMaxMana()))));
     }
 
     public String getBaseDescription(ManaAbility manaAbility, Locale locale, User user) {

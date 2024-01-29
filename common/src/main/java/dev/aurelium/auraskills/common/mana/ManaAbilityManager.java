@@ -69,6 +69,8 @@ public abstract class ManaAbilityManager {
         return manaAbilityMap.containsKey(manaAbility);
     }
 
+    public abstract void sendNotEnoughManaMessage(User user, double manaCost);
+
     public abstract String getBaseDescription(ManaAbility manaAbility, Locale locale, User user);
 
 }

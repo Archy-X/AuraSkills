@@ -126,6 +126,17 @@ public interface SkillsUser {
     void setMana(double mana);
 
     /**
+     * Attempts to consume the specified amount of mana, simulating using a mana ability.
+     * Will only consume if the user's mana is greater than or equal to amount. If the player does not
+     * have enough mana, a "Not enough mana" message will be sent to the user's action bar. Does not send
+     * any message if successful, you must handle that.
+     *
+     * @param amount the amount to consume
+     * @return true if the user had enough mana and the operation was successful, false if not
+     */
+    boolean consumeMana(double amount);
+
+    /**
      * Gets the power level of the player. The power level is the sum of all skill levels.
      *
      * @return the power level
