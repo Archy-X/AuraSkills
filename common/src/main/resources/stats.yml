@@ -117,3 +117,4 @@ traits:
   auraskills/movement_speed:
     enabled: true
     max: 300.0
+file_version: 1

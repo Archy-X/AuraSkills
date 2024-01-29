@@ -44,7 +44,6 @@ public class XpRequirementsLoader {
                     plugin.logger().warn("Failed to evaluate default XP requirements expression");
                     e.printStackTrace();
                 }
-                plugin.logger().info("Loaded default section in " + FILE_NAME);
             }
 
             // Load skill sections
@@ -67,9 +66,6 @@ public class XpRequirementsLoader {
                     }
                     numLoaded++;
                 }
-            }
-            if (numLoaded > 0) {
-                plugin.logger().info("Loaded " + numLoaded + " skill sections in " + FILE_NAME);
             }
         } catch (IOException e) {
             plugin.logger().warn("Failed to load " + FILE_NAME + ": " + e.getMessage());

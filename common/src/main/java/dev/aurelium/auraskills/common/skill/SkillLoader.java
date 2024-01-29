@@ -27,6 +27,7 @@ import java.util.*;
 
 public class SkillLoader {
 
+    private static final String FILE_NAME = "skills.yml";
     private final AuraSkillsPlugin plugin;
     private final SourceLoader sourceLoader;
     private final ConfigurateLoader configurateLoader;
@@ -53,9 +54,10 @@ public class SkillLoader {
             plugin.getAbilityManager().unregisterAll();
             plugin.getManaAbilityManager().unregisterAll();
 
-            ConfigurationNode main = configurateLoader.loadUserFile("skills.yml");
+            configurateLoader.updateUserFile(FILE_NAME); // Update and save file
+            ConfigurationNode main = configurateLoader.loadUserFile(FILE_NAME);
             ConfigurationNode defined = plugin.getSkillRegistry().getDefinedConfig();
-            ConfigurationNode root = configurateLoader.loadContentAndMerge(defined, "skills.yml", main);
+            ConfigurationNode root = configurateLoader.loadContentAndMerge(defined, FILE_NAME, main);
 
             ConfigurationNode skillsNode = root.node("skills");
 

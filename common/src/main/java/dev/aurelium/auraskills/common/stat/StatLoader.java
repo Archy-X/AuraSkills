@@ -35,6 +35,7 @@ public class StatLoader {
             plugin.getStatManager().unregisterAll();
             plugin.getTraitManager().unregisterAll();
 
+            configurateLoader.updateUserFile(FILE_NAME); // Update and save file
             ConfigurationNode main = configurateLoader.loadUserFile(FILE_NAME);
             ConfigurationNode defined = plugin.getStatRegistry().getDefinedConfig();
             ConfigurationNode root = configurateLoader.loadContentAndMerge(defined, FILE_NAME, main);

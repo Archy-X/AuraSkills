@@ -98,15 +98,15 @@ public class ConfigurateLoader {
         File userFile = new File(plugin.getPluginFolder(), path);
         ConfigurationNode user = loadUserFile(userFile);
         int embeddedVer = embedded.node("file_version").getInt(-1);
-        int userVer = user.node("file_version").getInt(-1);
+        int userVer = user.node("file_version").getInt(0);
         if (embeddedVer == -1) {
             throw new IllegalStateException("Embedded file does not have a file_version");
         }
-        if (userVer == -1) {
-            plugin.logger().warn("File " + path + " is missing a file_version, did you remove it?");
+        if (embeddedVer > userVer) {
+            ConfigurationNode merged = mergeNodes(embedded, user);
+            merged.node("file_version").set(embeddedVer); // Update the user's file_version to the new version
+            saveConfigIfUpdated(userFile, embedded, user, merged);
         }
-        ConfigurationNode merged = mergeNodes(embedded, user);
-        saveConfigIfUpdated(userFile, embedded, user, merged);
     }
 
     public void saveConfigIfUpdated(File file, ConfigurationNode embedded, ConfigurationNode user, ConfigurationNode merged) throws IOException {
@@ -116,7 +116,8 @@ public class ConfigurateLoader {
         if (countChildren(embedded) > countChildren(user)) {
             FileUtil.saveYamlFile(file, merged);
             String path = plugin.getPluginFolder().toPath().relativize(file.toPath()).toString();
-            plugin.logger().info("Updated " + path + " with " + (embeddedCount - userCount) + " new keys");
+            int updated = embeddedCount - userCount;
+            plugin.logger().info("Updated " + path + " with " + updated + " new key" + (updated != 1 ? "s" : ""));
         }
     }
 

@@ -32,6 +32,7 @@ public class AbilityLoader {
 
     public void init() {
         try {
+            configurateLoader.updateUserFile(FILE_NAME); // Update and save file
             ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(FILE_NAME);
             ConfigurationNode defined = plugin.getAbilityRegistry().getDefinedConfig();
             ConfigurationNode user = configurateLoader.loadUserFile(FILE_NAME);
