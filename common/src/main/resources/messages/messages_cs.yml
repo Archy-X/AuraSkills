@@ -169,7 +169,7 @@ abilities:
       dealt: "<red>První úder!"
     bleed:
       name: Krvácení
-      desc: "{value}% šance na způsobení krvácení pro nepřítele na 3 tiky krvácení, což způsobí poškození {value_2} za tik."
+      desc: "{value}% šance na způsobení krvácení pro nepřítele na {base_ticks} tiky krvácení, což způsobí poškození {value_2} za tik."
       info: "{value}% šance, {value_2} poškození"
       enemy_bleeding: "<red>Nepřítel Krvácí!"
       self_bleeding: "<red>Krvácíš!"
@@ -344,15 +344,6 @@ acf:
     location_please_specify_world: "<red>Chyba: Zadej svět. Příklad: <yellow>world:x,y,z."
     location_please_specify_xyz: "<red>Chyba: Zadej souřadnice x, y a z. Příklad: <yellow>world:x,y,z."
     location_console_not_relative: "<red>Chyba: Konzole nesmí použít relativní souřadnice pro umístění."
-action_bar:
-  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAXED)  <aqua>{mana}/{max_mana} {mana_unit}"
-  ability: "{Zpráva}"
-  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
-  boss_bar_maxed: "<gold>{skill} {level} <gray>(MAXED)"
 commands:
   prefix: "<dark_gray>[<aqua>Dovednosti<dark_gray>]<reset> "
   armor:
@@ -418,7 +409,7 @@ commands:
   item:
     give:
       sender: "<white>Daroval <aqua>{amount}x {key} <white>pro{player}"
-      receiver: "<aqua>ylo ti dáno<aqua>{amount}x {key}"
+      receiver: "<white>ylo ti dáno<aqua>{amount}x {key}"
     modifier:
       add:
         added: "{color}{stat} <gray>modifikátor s úrovní <aqua>{value} <gray>byl přidán k tvému itemu"
@@ -472,7 +463,7 @@ commands:
       unregistered: "<white>Neregistrovaná položka s klíčem {key}"
       not_registered: "<yellow>S klíčem není registrována žádná položka {key}"
   lang:
-    set: "<gray>Language set to <aqua>{lang}"
+    set: "<gray>Jazyk nastaven na <aqua>{lang}"
     not_found: "<yellow>Jazyk nenalezen!"
   mana:
     display: "<white>Tvoje {mana_unit}: <aqua>{current}/{max}"
@@ -504,6 +495,11 @@ commands:
     list: "<white>Global XP multiplikátor pro <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP multiplikátor: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Pouze hráči mohou uvést svůj vlastní multiplikátor! Urči hráče!"
+  profile:
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
   rank:
     header: "<aqua><bold>Tvoje hodnocená dovednost"
     power: "<yellow>Energie <gray>(Všechna dovednost): <white>#{rank} z {total}"
@@ -518,11 +514,10 @@ commands:
       reset_all: "<gray>Všechny dovednosti nastavená na level <aqua>1 <gray>pro hráče <gold>{player}"
       reset_skill: "<gray>Dovednost <aqua>{skill} <gray>nastavena na úroveň <aqua>1 <gray>pro hráče <gold>{player}"
     setall:
-      at_least_one: "<yellow>Úroveň musí být alespoň 1!"
       set: "<gray>Všechny dovednosti nastavené na level <aqua>{level} <gray>pro hráče <gold>{player}"
     setlevel:
-      at_least_one: "<yellow>Úroveň musí být alespoň 1!"
       set: "<gray>Dovednosti <aqua>{skill} <gray>nastavena na level <aqua>{level} <gray>pro hráče <gold>{player}"
+    at_least: "<yellow>Úroveň musí být alespoň {level}!"
   toggle:
     enabled: "<green>Panel akcí tvých dovedností byl aktivován"
     disabled: "<red>Panel akcí tvých dovedností byl deaktivován"
@@ -538,6 +533,9 @@ commands:
     average_header_page: "<white>--==<aqua><bold>Průměrný žebříček dovedností </bold><white>(Page {page})==--"
     average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Použij: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
   updateleaderboards:
     already_updating: "<yellow>Žebříček se již aktualizuje!"
     updated: "<green>Žebříček aktualizován!"
@@ -547,116 +545,125 @@ commands:
     set: "<gray>Nastavit <aqua>{skill} <gray>XP pro hráče <gray>{player} <gray>to {amount}"
     remove: "<gray>Odstraněno <aqua>{amount} {skill} <gray>XP od hráče <gold>{player}"
   unknown_skill: "<yellow>Neznamá Dovednost!"
+  unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Hráč nemá profil dovedností!"
 leveler:
-  title: "<green>{skill} Level Up"
-  subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Dovednosticky Level Up! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Odměna:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
-  stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Ability Odemčen! <gold><bold>{ability} </bold><gray>byl odečmen"
-  ability_level_up: "\n  <green>Ability Level Up! <gold><bold>{ability} </bold><gray>je nyní na úrovni <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Mana Ability Odemčený! <blue><bold>{mana_ability} </bold><gray>bylo odemčeno"
-  mana_ability_level_up: "\n  <light_purple>Mana Ability Level Up! <blue><bold>{mana_ability} </bold><gray>je nyní na úrovni <gold>{level}"
-  money_reward: "\n  <green>${amount}"
+  level_up: "{skill} Level Up"
+  skill_level_up: Dovednosticky Level Up
+  rewards: Odměna
+  ability_unlock: Ability Odemčen
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Odemčený
+  mana_ability_level_up: Mana Ability Level Up
   unclaimed_item: "<red>Máš nevyzvednuté položky, protože tvůj inventář byl plný, použij <yellow>/skills claimitems <red>pro vyzvednuti"
 menus:
   common:
-    close: "<red>Zavřít"
-    level: "<gray>Level: <yellow>{level}"
-    progress_to_level: "<gray>Průběh na Levelů {level}: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
-    max_level: "<gold>MAX LEVEL"
-    ability_levels: "<gray>Ability Levels:  {ability_1}  {ability_2}  {ability_3}  {ability_4}  {ability_5} "
-    ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
-    ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
-    stats_leveled: "<gray>Statistiky Level: {stats} "
-    mana_ability: "<light_purple><bold>Mana Ability </bold><blue>{mana_ability} {level} <gray>Poškození: <green>{duration}s <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
-  skills_menu:
-    skills_menu_title: Tvoje dovednosti
-    your_skills: "<aqua>Tvé dovednosti  - <gold>{player}"
-    your_skills_desc: "<gray>Upragdni dovednosti pro prováděním různých úkolů<gray>Odemkni cenná vylepšení stastistik,<gray>schopnosti a další!"
-    your_skills_hover: "<yellow>Umístěním ukazatele myši na dovednost zobrazíš další informace!"
-    your_skills_click: "<yellow>Kliknutím na dovednost zobrazíš postup na úroveň!"
-    skill_click: "<yellow>Klikni pro zobrazení Level Progression!"
-    skill_locked: "<red>K zobrazení této dovednosti nemáš oprávnění!"
-  level_progression_menu:
-    level_progression_menu_title: "{skill} Levely - Strana {page}"
-    your_ranking: "<yellow>Tvoje hodnocená dovednost"
-    rank_out_of: "<white>Jsi nově zařadil do <gold>{rank}<white> mimo {total} hráčů"
-    rank_percent: "<white>Jste v top <gold>{percent}%<white> hráčů"
-    back: "<green>Jdi zpátky"
-    back_click: "<gray>Zpět do nabídky dovedností"
-    next_page: "<gold>Další strana"
-    next_page_click: "<yellow>Kliknutím přejdeš na další stránku"
-    previous_page: "<gold>Předchozí stránka"
-    previous_page_click: "<yellow>Kliknutím přejdeš na předchozí stránku"
-    level_unlocked: "<green>Level {level}"
-    level_in_progress: "<yellow>Level {level}"
-    level_locked: "<red>Level {level}"
-    level_number: "<gray>Level <white>{level}"
-    unlocked: "<green>ODEMČENÁ"
-    in_progress: "<yellow>PRAVĚ PROBÍHÁ"
-    locked: "<red>ZAMKNUTO"
-    rewards: "<gray>Odměna:{rewards}"
-    rewards_entry: "  {color}+{num} {symbol} {stat}"
-    money_reward: "  <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Abilita Odemčena {desc} </bold>"
-    ability_level: "<gold>{ability} {level} {desc} "
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Mana Ability Odemčena  {desc} </bold>"
-    mana_ability_level: "<blue>{mana_ability} {level} {desc} "
-    progress: "<gray>Průběh: <yellow>{percent}%  <gray>{current_xp}/{level_xp} {xp_unit}"
-  stats_menu:
-    stats_menu_title: Tvé statistiky
-    player_stat_entry: " {color}{symbol} {stat} <white>{level}"
-    skills: "<gray>Dovednosti: <white>{skills}"
-    your_level: "<gray>Tvůj Level: {color}{level}"
-    attack_damage: "<dark_red>+{value}% Poškození při útoku"
-    hp: "<red>+{value} ❤"
-    saturated_regen: "<gold>+{value} Nasycená regenerace"
-    full_hunger_regen: "<gold>+{value} Plná regenerace hladu"
-    almost_full_hunger_regen: "<gold>+{value} Téměř plná regenerace hladu"
-    mana_regen: "<aqua>+{value} Mana/s Regen"
-    luck: "<dark_green>+{value} Štěstí"
-    double_drop_chance: "<dark_green>Dvojitá Drop Šánce: {value}%"
-    xp_gain: "<blue>+{value}% {xp_unit} Získaní"
-    anvil_cost_reduction: "<blue>Snížení nákladů na kovadlinu:: {value}%"
-    max_mana: "<blue>Max Mana: {value}"
-    incoming_damage: "<dark_purple>-{value}% Příchozí poškození"
+    close: "Zavřít"
+    level: "Level"
+    progress_to_level: "Průběh na Levelů"
+    max_level: "MAX LEVEL"
+    ability_levels: "Ability Levels"
+    stats_leveled: "Statistiky"
+    mana_ability: "Mana Ability"
+    duration: "Trvání"
+    mana_cost: "Cena Many"
+    cooldown: "Odpočet"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Jdi zpátky"
+    back_click: "Zpět do nabídky dovedností"
+    unlocked: "ODEMČENÁ"
+    in_progress: "PRAVĚ PROBÍHÁ"
+    locked: "ZAMKNUTO"
+    your_level: "Your Level"
+    next_page: "Další strana"
+    next_page_click: "Kliknutím přejdeš na další stránku"
+    previous_page: "Předchozí stránka"
+    previous_page_click: "Kliknutím přejdeš na předchozí stránku"
+  skills:
+    skills_title: "Tvoje dovednosti"
+    your_skills: "Tvé dovednosti"
+    your_skills_desc: "Upragdni dovednosti pro prováděním různých úkolů odemkni cenná vylepšení stastistik, schopnosti a další!"
+    your_skills_hover: "Umístěním ukazatele myši na dovednost zobrazíš další informace!"
+    your_skills_click: "Kliknutím na dovednost zobrazíš postup na úroveň!"
+    skill_click: "Klikni pro zobrazení Level Progression!"
+    stats: "Stats"
+    stats_desc: "Earn stat buffs by leveling up skills"
+    stats_click: "Click to learn more or view your stats"
+  level_progression:
+    level_progression_title: "{skill} Levely - Strana {page}"
+    your_ranking: "Tvoje hodnocená dovednost"
+    rank_out_of: "<1>Jsi nově zařadil do <2>{rank}</2> mimo {total} hráčů</1>"
+    rank_percent: "<1>Jste v top <2>{percent}%</2> hráčů</1>"
+    rewards: "Odměna"
+    ability_unlock: "Ability Odemčena"
+    mana_ability_unlock: "Mana Ability Odemčena"
+    progress: "Průběh"
+    leaderboard_click: "Click to view the {skill} leaderboard"
+    sources: "XP Sources"
+    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_click: "Click to view {skill} sources"
+    abilities: "Abilities"
+    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
+    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    abilities_click: "Click to view {skill} abilities"
+  stats:
+    stats_title: Tvé statistiky
+    skills: "Dovednosti"
   unclaimed_items:
     unclaimed_items_title: "Získej předměty"
-    inventory_full: "<yellow>Nemáš dostatek místa ve svém inventáři, abys sis tento předmět mohli nárokovat"
-    click_to_claim: "<yellow>Klikni pro Claimnutí!"
+    inventory_full: "Nemáš dostatek místa ve svém inventáři, abys sis tento předmět mohli nárokovat"
+    click_to_claim: "Klikni pro Claimnutí!"
+  leaderboard:
+    leaderboard_title: "{skill} Leaderboard"
+  sources:
+    sources_title: "{skill} XP Sources"
+    sorter: "Sort XP Sources"
+    descending: "Highest to Lowest"
+    ascending: "Lowest to Highest"
+    alphabetical: "Name (A-Z)"
+    reverse_alphabetical: "Name (Z-A)"
+    sort_click: "Click to cycle sort type"
+    multiplied_xp: "Multiplied {xp_unit}"
+    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
+  abilities:
+    abilities_title: "{skill} Abilities"
+    description: "Description"
+    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: Doplnění
-    desc: "<gray>Automaticky se znovu zasadí plodiny po dobu {value} sekund <yellow>[Pravym tlacitkem mysi na motyčku a prerušíš oříznutí pro aktivaci]"
+    desc: "Automaticky se znovu zasadí plodiny po dobu {value} sekund <1>[Pravym tlacitkem mysi na motyčku a prerušíš oříznutí pro aktivaci]"
     raise: "<gray>Zvedl si svojí motyku"
     lower: "<gray>Sklopil si motyku"
     start: "<gold>Doplnění - Aktivován! <gray>(-{mana} {mana_unit})"
     end: "<gray>Doplnění dosloužilo"
   treecapitator:
     name: Treecapitator
-    desc: "<gray>Pokácí celý strom za {value} vteřin. <yellow>[Klikni pravým tlačítkem a znič blok dřeva pro aktivaci]"
+    desc: "Pokácí celý strom za {value} vteřin. <1>[Klikni pravým tlačítkem a znič blok dřeva pro aktivaci]"
     raise: "<gray>Pozdvihl jsi sekeru"
     lower: "<gray>Sklonil jsi sekeru"
     start: "<gold>Treecapitator Aktivován! <gray>(-{mana} {mana_unit})"
     end: "<gray>Treecapitator se opotřeboval"
   speed_mine:
     name: Rychlá těžba
-    desc: "<gray>Přidá spěch {haste_level} na {value} vteřin.<yellow> [Klikni pravým s krumpáčem v ruce a vykopej blok pro aktivaci]"
+    desc: "Přidá spěch {haste_level} na {value} vteřin. <1>[Klikni pravým s krumpáčem v ruce a vykopej blok pro aktivaci]"
     raise: "<gray>Pozvedl jsi krumpáč"
     lower: "<gray>Skopil si svůj krumpáč"
     start: "<gold>Rychlost těžení - Aktivován <gray>(-{mana} {mana_unit})"
     end: "<gray>Rychlí dolů se odčervoval"
   absorption:
     name: Vstřebávání
-    desc: "Nastavajicí poškození sníží manu o 2x poškození místo tvého zdraví po dobu {value} sekund. Mana nebude regenerovana, když je aktviní absorpce. <yellow>[Klikni levým tlačítkem na štít a aktivuj si poškození]"
+    desc: "Nastavajicí poškození sníží manu o 2x poškození místo tvého zdraví po dobu {value} sekund. Mana nebude regenerovana, když je aktviní absorpce. <1>[Klikni levým tlačítkem na štít a aktivuj si poškození]"
     raise: "<gray>Pozdvihnul si svůj štít"
     lower: "<gray>Sklopil si svůj štít"
     start: "<gold>Absorpce Aktivován! <gray>(-{mana} {mana_unit})"
     end: "<gray>Absorpce vyprchal"
   terraform:
     name: Terraform
-    desc: "Rozbij bloky okamžitě v okruhu 4 bloků Ve stejné vrstvě při kopání po dobu {value} sekund. Ty musíš použit lopatu a další bloky musí být rozbité stejného typu a v jediné spojené žílé. <yellow>[Pro aktivaci klikni pravým tlačítkem na lopatu a vykopej blok]"
+    desc: "Rozbij bloky okamžitě v okruhu 4 bloků Ve stejné vrstvě při kopání po dobu {value} sekund. Ty musíš použit lopatu a další bloky musí být rozbité stejného typu a v jediné spojené žílé. <1>[Pro aktivaci klikni pravým tlačítkem na lopatu a vykopej blok]"
     raise: "<gray>Pozdvihnul si svoji lopatu"
     lower: "<gray>Sklopil si svoji lopatu"
     start: "<gold>Terraform Aktivován! <gray>(-{mana} {mana_unit})"
@@ -665,109 +672,384 @@ mana_abilities:
     name: Ostrý hák
     desc: "Způsob {value} poškození zahnuté entitě při kliknutí levým rybářským prutem"
     use: "<gold>Použij ostrý háček! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>{value} <gray>Cena Many: <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   charged_shot:
     name: Nabitá Střela
-    desc: "Vystřelené šípy způsobí větší škody Na základě toho, jak daleko byl luk natažen zpět Spotřebovana mana v procesu. Zbývá o {value}% více Poškození na jednoho jedince <yellow>[Levé kliknutí myši Luk přepneš do režimu nabitého snímku]"
+    desc: "Vystřelené šípy způsobí větší škody Na základě toho, jak daleko byl luk natažen zpět Spotřebovana mana v procesu. Zbývá o {value}% více Poškození na jednoho jedince <1>[Levé kliknutí myši Luk přepneš do režimu nabitého snímku]"
     enable: "<gray>Režim nabití snímku je nyní povolen"
     disable: "<gray>Režim nabitého snímku je nyní deaktivován"
     shoot: "<gold>Použij nabitou střelu! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Poškození <red>+{value}% / Mana <gray>Max Mana Cost: <aqua>{mana_cost} "
   lightning_blade:
     name: Lightning Blade
-    desc: Zvyšuj rychlost útoku o {value}% po dobu {duration} sekund.<yellow> [Klepni pravým tlačítkem myši a zaútoč na moba pro aktivaci]
+    desc: Zvyšuj rychlost útoku o {value}% po dobu {duration} sekund. <1>[Klepni pravým tlačítkem myši a zaútoč na moba pro aktivaci]
     raise: "<gray>Pozdvihnul si svůj meč"
     lower: "<gray>Sklopil si svůj meč"
     start: "<gold>Lightning Blade Aktivován! <gray>(-{mana} {mana_unit})"
     end: "<gray>Lightning Blade se opotřeboval"
-    menu: "<light_purple><bold>Schopnost Many </bold><blue>{mana_ability} {level} <gray>Rychlost útoku <red>+{value}% <gray>Trvání: <green>{duration}s <gray>Cena Many <aqua>{mana_cost} <gray>Odpočet: <yellow>{cooldown}s "
   not_ready: "<red>Schopnost není připravena! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Nedostane many! <gray>({mana} {mana_unit} vyžadovan, tvoje mana {current_mana}/{max_mana})"
-rewards:
-  item:
-    default_menu_message: "  {display_name}"
-    default_menu_message_multiple: "  {display_name} {amount}x"
-    default_chat_message: "  {display_name}"
-    default_chat_message_multiple: "  {display_name} {amount}x"
+  not_enough_mana: "<yellow>Nedostane many! <gray>({mana} {mana_unit} vyžadovan)"
 skills:
   farming:
     name: Farmaření
-    desc: "<gray>Skliď plodiny k získaní Farmaření {xp_unit}"
+    desc: "Skliď plodiny k získaní Farmaření {xp_unit}"
   foraging:
     name: Lesnictví
-    desc: "<gray>Pokacej strom k vydělávaní Lesnictví {xp_unit}"
+    desc: "Pokacej strom k vydělávaní Lesnictví {xp_unit}"
   mining:
     name: Těžba
-    desc: "<gray>Těž kámen a rudu, abys získal Mining {xp_unit}"
+    desc: "Těž kámen a rudu, abys získal Mining {xp_unit}"
   fishing:
     name: Fishing
-    desc: "<gray>Uchytni rybu a vyděl jako rybář {xp_unit}"
+    desc: "Uchytni rybu a vyděl jako rybář {xp_unit}"
   excavation:
     name: Excavation
-    desc: "<gray>Kopej s lopatou pro získaní Excavation {xp_unit}"
+    desc: "Kopej s lopatou pro získaní Excavation {xp_unit}"
   archery:
     name: Lukostřelectví
-    desc: "<gray>Střílej příšery a hráče s lukem na<gray>Získej lučišniství {xp_unit}"
+    desc: "Střílej příšery a hráče s lukem na Získej lučišniství {xp_unit}"
   defense:
     name: Obrana
-    desc: "<gray>Získej poškození od entity, abys získal obranu {xp_unit}"
+    desc: "Získej poškození od entity, abys získal obranu {xp_unit}"
   fighting:
     name: Bojování
-    desc: "<gray>Bojuj s příšery se zbraněmi na blízko a vydělej si<gray>Bojování {xp_unit}"
+    desc: "Bojuj s příšery se zbraněmi na blízko a vydělej si Bojování {xp_unit}"
   endurance:
     name: Vytrvalost
-    desc: "<gray>Procházej se a spusť pro získaní zkušenosti {xp_unit}"
+    desc: "Procházej se a spusť pro získaní zkušenosti {xp_unit}"
   agility:
     name: Agility
-    desc: "<gray>Skok a padni k poškození k výdělku<gray>Agility {xp_unit}"
+    desc: "Skok a padni k poškození k výdělku Agility {xp_unit}"
   alchemy:
     name: Alchemie
-    desc: "<gray>Uvař lektvary k získaní Xp pro alchemii{xp_unit}"
+    desc: "Uvař lektvary k získaní Xp pro Alchemii {xp_unit}"
   enchanting:
     name: Enchanting
-    desc: "<gray>Enchantováné itemy a knihy k výdělku<gray>Enchanting {xp_unit}"
+    desc: "Enchantováné itemy a knihy k výdělku Enchanting {xp_unit}"
   sorcery:
     name: Čarodějnictví
-    desc: "<gray>Použij schopnost many k získání Sorceru {xp_unit}"
+    desc: "Použij schopnost many k získání Sorceru {xp_unit}"
   healing:
     name: Léčení
-    desc: "<gray>Pití a splashnutí lektvarů k výdělku<gray>Léčení {xp_unit}"
+    desc: "Pití a splashnutí lektvarů k výdělku Léčení {xp_unit}"
   forging:
     name: Kovářství
-    desc: "<gray>Kombinuj knihy v kovadlině na<gray>Vydělávej jako kováč {xp_unit}"
+    desc: "=Kombinuj knihy v kovadlině na Vydělávej jako kováč {xp_unit}"
+sources:
+  block:
+    wheat: Wheat
+    potato: Potato
+    carrot: Carrot
+    beetroot: Beetroot
+    nether_wart: Nether Wart
+    pumpkin: Pumpkin
+    melon: Melon
+    sugar_cane: Sugar Cane
+    bamboo: Bamboo
+    cocoa: Cocoa
+    cactus: Cactus
+    brown_mushroom: Brown Mushroom
+    red_mushroom: Red Mushroom
+    kelp: Kelp
+    sea_pickle: Sea Pickles
+    sweet_berry_bush: Sweet Berries
+    glow_berries: Glow Berries
+    torchflower: Torchflower
+    pitcher_plant: Pitcher Plant
+    oak_log: Oak Log
+    spruce_log: Spruce Log
+    birch_log: Birch Log
+    jungle_log: Jungle Log
+    acacia_log: Acacia Log
+    dark_oak_log: Dark Oak Log
+    oak_leaves: Oak Leaves
+    spruce_leaves: Spruce Leaves
+    birch_leaves: Birch Leaves
+    jungle_leaves: Jungle Leaves
+    acacia_leaves: Acacia Leaves
+    dark_oak_leaves: Dark Oak Leaves
+    crimson_stem: Crimson Stem
+    warped_stem: Warped Stem
+    nether_wart_block: Nether Wart Block
+    warped_wart_block: Warped Wart Block
+    moss_block: Moss Block
+    moss_carpet: Moss Carpet
+    azalea: Azalea
+    flowering_azalea: Flowering Azalea
+    azalea_leaves: Azalea Leaves
+    flowering_azalea_leaves: Flowering Azalea Leaves
+    mangrove_log: Mangrove Log
+    mangrove_leaves: Mangrove Leaves
+    mangrove_roots: Mangrove Roots
+    cherry_log: Cherry Log
+    cherry_leaves: Cherry Leaves
+    pink_petals: Pink Petals
+    stone: Stone
+    cobblestone: Cobblestone
+    andesite: Andesite
+    diorite: Diorite
+    granite: Granite
+    coal_ore: Coal Ore
+    nether_quartz_ore: Nether Quartz Ore
+    iron_ore: Iron Ore
+    lapis_ore: Lapis Ore
+    redstone_ore: Redstone Ore
+    gold_ore: Gold Ore
+    diamond_ore: Diamond Ore
+    emerald_ore: Emerald Ore
+    terracotta: Terracotta
+    white_terracotta: White Terracotta
+    orange_terracotta: Orange Terracotta
+    yellow_terracotta: Yellow Terracotta
+    light_gray_terracotta: Light Gray Terrcotta
+    brown_terracotta: Brown Terrcotta
+    red_terracotta: Red Terracotta
+    netherrack: Netherrack
+    blackstone: Blackstone
+    basalt: Basalt
+    magma_block: Magma Block
+    nether_gold_ore: Nether Gold Ore
+    ancient_debris: Ancient Debris
+    end_stone: End Stone
+    obsidian: Obsidian
+    deepslate: Deepslate
+    copper_ore: Copper Ore
+    tuff: Tuff
+    calcite: Calcite
+    smooth_basalt: Smooth Basalt
+    amethyst_block: Amethyst Block
+    amethyst_cluster: Amethyst Cluster
+    deepslate_coal_ore: Deepslate Coal Ore
+    deepslate_iron_ore: Deepslate Iron Ore
+    deepslate_copper_ore: Deepslate Copper Ore
+    deepslate_gold_ore: Deepslate Gold Ore
+    deepslate_redstone_ore: Deepslate Redstone Ore
+    deepslate_lapis_ore: Deepslate Lapis Ore
+    deepslate_emerald_ore: Deepslate Emerald Ore
+    deepslate_diamond_ore: Deepslate Diamond Ore
+    dripstone_block: Dripstone Block
+    ice: Ice
+    packed_ice: Packed Ice
+    blue_ice: Blue Ice
+    reinforced_deepslate: Reinforced Deepslate
+    dirt: Dirt
+    grass_block: Grass Block
+    sand: Sand
+    gravel: Gravel
+    mycelium: Mycelium
+    clay: Clay
+    soul_sand: Soul Sand
+    coarse_dirt: Coarse Dirt
+    podzol: Podzol
+    soul_soil: Soul Soil
+    red_sand: Red Sand
+    rooted_dirt: Rooted Dirt
+    mud: Mud
+    muddy_mangrove_roots: Muddy Mangrove Roots
+    sculk: Sculk
+    sculk_vein: Sculk Vein
+    sculk_sensor: Sculk Sensor
+    sculk_catalyst: Sculk Catalyst
+    sculk_shrieker: Sculk Shrieker
+  fishing:
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
+  entity:
+    player: Player
+    bat: Bat
+    cat: Cat
+    chicken: Chicken
+    cod: Cod
+    cow: Cow
+    donkey: Donkey
+    fox: Fox
+    giant: Giant
+    horse: Horse
+    mooshroom: Mooshroom
+    mule: Mule
+    ocelot: Ocelot
+    parrot: Parrot
+    pig: Pig
+    rabbit: Rabbit
+    salmon: Salmon
+    sheep: Sheep
+    skeleton_horse: Skeleton Horse
+    snow_golem: Snow Golem
+    squid: Squid
+    strider: Strider
+    tropical_fish: Tropical Fish
+    turtle: Turtle
+    villager: Villager
+    wandering_trader: Wandering Trader
+    bee: Bee
+    cave_spider: Cave Spider
+    dolphin: Dolphin
+    enderman: Enderman
+    iron_golem: Iron Golem
+    llama: Llama
+    piglin: Piglin
+    panda: Panda
+    polar_bear: Polar Bear
+    pufferfish: Pufferfish
+    spider: Spider
+    wolf: Wolf
+    zombified_piglin: Zombified Piglin
+    blaze: Blaze
+    creeper: Creeper
+    drowned: Drowned
+    elder_guardian: Elder Guardian
+    endermite: Endermite
+    evoker: Evoker
+    ghast: Ghast
+    guardian: Guardian
+    hoglin: Hoglin
+    husk: Husk
+    illusioner: Illusioner
+    magma_cube: Magma Cube
+    phantom: Phantom
+    piglin_brute: Piglin Brute
+    pillager: Pillager
+    ravager: Ravager
+    shulker: Shulker
+    silverfish: Silverfish
+    skeleton: Skeleton
+    slime: Slime
+    stray: Stray
+    vex: Vex
+    vindicator: Vindicator
+    witch: Witch
+    wither_skeleton: Wither Skeleton
+    zoglin: Zoglin
+    zombie: Zombie
+    zombie_villager: Zombie Villager
+    ender_dragon: Ender Dragon
+    wither: Wither
+    axolotl: Axolotl
+    glow_squid: Glow Squid
+    goat: Goat
+    allay: Allay
+    frog: Frog
+    tadpole: Tadpole
+    warden: Warden
+    camel: Camel
+    sniffer: Sniffer
+  damage:
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+    fall_damage: Taking Fall Damage
+  statistic:
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
+  jumping:
+    jump_per_100: Jumping
+  brewing:
+    awkward: Awkward Potion
+    regular: Regular Potion
+    extended: Extended Duration Potion
+    upgraded: Upgraded Potion
+    splash: Splash Potion
+    lingering: Lingering Potion
+  enchanting:
+    weapon_per_level: Weapon
+    armor_per_level: Armor
+    tool_per_level: Tool
+    book_per_level: Book
+  mana_ability_use:
+    mana_ability_use: Using Mana Abilities
+  item_consume:
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    golden_apple: Golden Apple
+    enchanted_golden_apple: Enchanted Golden Apple
+  potion_splash:
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
+  anvil:
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
+  grindstone:
+    grindstone_per_level: Disenchant Item with Grindstone
+  units:
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost Experience
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
     name: Strength
-    desc: "<gray>Strength zvyšuje poškezení při útoku<gray>s různýni zbraněmi"
-    color: "<dark_red>"
-    symbol: "➽"
+    desc: "Strength zvyšuje poškezení při útoku s různýni zbraněmi"
   health:
     name: Zdraví
-    desc: "<gray>Zdraví zvyšuje počet {hp_unit} tobě<gray>Mít, což tobě úmožní vydržet déle<gray>v bojích"
-    color: "<red>"
-    symbol: "❤"
+    desc: "Zdraví zvyšuje počet {hp_unit} tobě Mít, což tobě úmožní vydržet déle v bojích"
   regeneration:
     name: Regenarace
-    desc: "<gray>Regenerace zvyšuje tvojí rychlost<gray>Obnovení zdraví i many"
-    color: "<gold>"
-    symbol: "❥"
+    desc: "Regenerace zvyšuje tvojí rychlost Obnovení zdraví i many"
   luck:
     name: Štěstí
-    desc: "<gray>Štěstí zvyšuje tvoji šancí na získaní<gray>Vzácnou kořist z příšer, rybaření, a ostátních"
-    color: "<dark_green>"
-    symbol: "☘"
+    desc: "Štěstí zvyšuje tvoji šancí na získaní Vzácnou kořist z příšer, rybaření, a ostátních"
   wisdom:
     name: Moudrost
-    desc: "<gray>Moudrost zvyšuje tvoji maximální manu, zvyšuje<gray>Získávání zkušeností a snižuje náklad na kovadlinu"
-    color: "<blue>"
-    symbol: "✿"
+    desc: "Moudrost zvyšuje tvoji maximální manu, zvyšuje Získávání zkušeností a snižuje náklad na kovadlinu"
   toughness:
     name: Odolnost
-    desc: "<gray>Tvrdost zvyšuje množství poškození<gray>snížených při útoku nepřítelem"
-    color: "<dark_purple>"
-    symbol: "✦"
+    desc: "Tvrdost zvyšuje množství poškození snížených při útoku nepřítelem"
+  crit_chance:
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit"
+  crit_damage:
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+  speed:
+    name: Speed
+    desc: "Speed increases how fast you can walk and run"
+traits:
+  attack_damage:
+    name: Attack Damage
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturation Regen
+  hunger_regen:
+    name: Hunger Regen
+  mana_regen:
+    name: Mana Regen
+  luck:
+    name: Luck
+  double_drop:
+    name: Double Drop
+  experience_bonus:
+    name: Experience Bonus
+  anvil_discount:
+    name: Anvil Discount
+  max_mana:
+    name: Max Mana
+  damage_reduction:
+    name: Damage Reduction
+  crit_chance:
+    name: Crit Chance
+  crit_damage:
+    name: Crit Damage
+  movement_speed:
+    name: Movement Speed
+ui:
+  maxed: MAXED
 units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 24
+file_version: 31
