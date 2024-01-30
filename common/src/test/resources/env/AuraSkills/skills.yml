@@ -179,7 +179,6 @@ skills:
       max_level: 97
       check_cancelled: true
       check_multiplier_permissions: true
-      exclude_negative_potions: false
   auraskills/forging:
     abilities:
       - auraskills/disenchanter

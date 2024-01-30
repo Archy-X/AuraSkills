@@ -63,10 +63,9 @@ public class PotionUtil {
     }
 
     public static boolean isNegativePotion(PotionType potionType) {
-        return switch (potionType) {
-            case POISON, SLOWNESS, INSTANT_DAMAGE, WEAKNESS -> true;
-            default -> false;
-        };
+        String typeStr = potionType.toString();
+        return typeStr.contains("POISON") || typeStr.contains("SLOWNESS") || typeStr.equals("INSTANT_DAMAGE") ||
+                typeStr.contains("WEAKNESS") || typeStr.contains("HARMING");
     }
 
 }

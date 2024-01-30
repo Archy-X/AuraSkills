@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.bukkit.loot.LootTable;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
+import dev.aurelium.auraskills.bukkit.util.PotionUtil;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
 import dev.aurelium.auraskills.common.item.SourceItem;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
@@ -134,7 +135,7 @@ public class BukkitItemRegistry implements ItemRegistry {
                 if (!(loot instanceof ItemLoot itemLoot)) {
                     continue;
                 }
-                if (item.equals(itemLoot.getItem())) {
+                if (item.equals(itemLoot.getItem().supplyItem(plugin, lootTable))) {
                     return true;
                 }
             }
@@ -207,7 +208,7 @@ public class BukkitItemRegistry implements ItemRegistry {
             String[] types = potionData.types();
             if (types != null) {
                 if (!TextUtil.contains(types, basePotionData.getType().toString())) {
-                                        return false;
+                    return false;
                 }
             }
             String[] excludedTypes = potionData.excludedTypes();
@@ -219,7 +220,13 @@ public class BukkitItemRegistry implements ItemRegistry {
             if (potionData.extended() != basePotionData.isExtended()) {
                 return false;
             }
-            return potionData.upgraded() == basePotionData.isUpgraded();
+            if (potionData.upgraded() != basePotionData.isUpgraded()) {
+                return false;
+            }
+            if (potionData.excludeNegative() && PotionUtil.isNegativePotion(basePotionData.getType())) {
+                return false;
+            }
+            return true;
         }
         return true;
     }

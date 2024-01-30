@@ -15,7 +15,8 @@ public class PotionDataParser implements UtilityParser<PotionData> {
         String[] excludedTypes = context.pluralizedArray("excluded_type", source, String.class);
         boolean extended = source.node("extended").getBoolean(false);
         boolean upgraded = source.node("upgraded").getBoolean(false);
+        boolean excludeNegative = source.node("exclude_negative").getBoolean(false);
 
-        return new SourcePotionData(types, excludedTypes, extended, upgraded);
+        return new SourcePotionData(types, excludedTypes, extended, upgraded, excludeNegative);
     }
 }

@@ -14,4 +14,6 @@ public interface PotionData {
 
     boolean upgraded();
 
+    boolean excludeNegative();
+
 }

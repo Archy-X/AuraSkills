@@ -160,7 +160,6 @@ config.yml:
     healing.enabled: skills.auraskills/healing.options.enabled
     healing.max-level: skills.auraskills/healing.options.max_level
     healing.check-cancelled: skills.auraskills/healing.options.check_cancelled
-    healing.exclude-negative-potions: skills.auraskills/healing.options.exclude_negative_potions
     healing.check-multiplier-permissions: skills.auraskills/healing.options.check_multiplier_permissions
     forging.enabled: skills.auraskills/forging.options.enabled
     forging.max-level: skills.auraskills/forging.options.max_level
