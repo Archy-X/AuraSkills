@@ -96,6 +96,11 @@ public class OfflineSkillsUser implements SkillsUser {
     }
 
     @Override
+    public boolean consumeMana(double amount) {
+        return false;
+    }
+
+    @Override
     public int getPowerLevel() {
         return 0;
     }

@@ -59,7 +59,7 @@ abilities:
       info: "+{value}% 任意 镐 伤害"
     stamina:
       name: 矿工耐力
-      desc: "持有 任意 镐 时获得 + {value} 韧性"
+      desc: "持有 任意 镐 时获得 +{value} 韧性"
       info: "+{value} 韧性"
     hardened_armor:
       name: 硬化盔甲
@@ -234,7 +234,7 @@ abilities:
       info: "+{value}% 时长"
     lingering:
       name: 滞留增强
-      desc: "滞留型药水持续时间增加 {value}% <gray>, 并减少 {value_2}% 受影响实体的效果."
+      desc: "滞留型药水持续时间增加 {value}%, 并减少 {value_2}% 受影响实体的效果."
       info: "-{value}% 自然持续时间, -{value_2}% 实体效果减退"
     wise_effect:
       name: 智慧专精
@@ -243,7 +243,7 @@ abilities:
   enchanting:
     xp_convert:
       name: 经验转化
-      desc: "每获得 {value} 点技能经验可以额外获得 1 <gray>  点原版的经验值."
+      desc: "每获得 {value} 点技能经验可以额外获得 1 点原版的经验值."
       info: "1 经验值/{value} 技能经验"
     enchanter:
       name: 附魔专精
@@ -251,20 +251,20 @@ abilities:
       info: "+{value}% 熟练度"
     xp_warrior:
       name: 经验战士
-      desc: "你杀死的生物有 {value}% 的几率<gray>  掉落双倍的经验."
+      desc: "你杀死的生物有 {value}% 的几率掉落双倍的经验."
       info: "{value}% 2x 经验值"
     enchanted_strength:
       name: 附魔之力
-      desc: "手持物品上的附魔能额外让你获得 +{value}<gray> 点/种 的力量"
+      desc: "手持物品上的附魔能额外让你获得 +{value}点/种 的力量"
       info: "{value} 力量/单个附魔"
     lucky_table:
       name: 幸运附魔台
-      desc: "正在使用的物品如果携带有从附魔台得到的附魔, <gray>  则会在它到达最高级之前有 {value}% <gray>的几<gray>  率再增加 1 级"
+      desc: "正在使用的物品如果携带有从附魔台得到的附魔, 则会在它到达最高级之前有 {value}% 的几率再增加 1 级"
       info: "{value}% 附魔升级几率"
   healing:
     life_essence:
       name: 生命源质
-      desc: "瞬间恢复(喷溅或滞留等均可) 药水能额外回复 <gray>  {value}% 生命值"
+      desc: 瞬间恢复(喷溅或滞留等均可) 药水能额外回复 {value}% 生命值
       info: "+{value}% 额外回复生命"
     healer:
       name: 治疗专精
@@ -272,7 +272,7 @@ abilities:
       info: "+{value}% 熟练度"
     life_steal:
       name: 生命窃取
-      desc: 每个击杀的生物或玩家<gray>可以为你回复 {value}% 的血量.
+      desc: 每个击杀的生物或玩家可以为你回复 {value}% 的血量.
       info: "偷取 {value}% 的血量"
     golden_heart:
       name: 黄金体质
@@ -280,13 +280,13 @@ abilities:
       info: "-{value}% 金心受到的伤害"
     revival:
       name: 重生光环
-      desc: 复活的 30 秒内获得 <red>+{value} <gray>点的生命与 <gold>+{value_2} 级生命恢复效果
+      desc: 复活的 30 秒内获得 +{value} 点的生命与 +{value_2} 级生命恢复效果
       info: "+{value} 点生命值, +{value_2} 级生命回复效果"
       message: "<white>重生之后, 你获得了 30 秒的庇护! <white>(<red>+{value} <gray>生命值, <gold>+{value_2} <gray>生命回复效果)"
   forging:
     disenchanter:
       name: 祛魔转化
-      desc: 使用磨石时每个去掉的附魔<gray>能额外获得 {value}% 的经验
+      desc: 使用磨石时每个去掉的附魔能额外获得 {value}% 的经验
       info: "+{value}% 磨石额外经验值"
     forger:
       name: 锻造专精
@@ -294,15 +294,15 @@ abilities:
       info: "+{value}% 熟练度"
     repairing:
       name: 高效修复
-      desc: 使用原材料而非<gray>工具合并修复的物品<gray>可以额外回复 {value}% <gray>的耐久度.
+      desc: 使用原材料而非工具合并修复的物品可以额外回复 {value}% 的耐久度.
       info: "+{value}% 铁砧修复度"
     anvil_master:
       name: 铁砧大师
-      desc: 在物品过于昂贵而无法修复之前<gray>降低修复物品时可能出现的最大消耗经验值至 {value} 级
+      desc: 在物品过于昂贵而无法修复之前降低修复物品时可能出现的最大消耗经验值至 {value} 级
       info: "{value} 最大消耗"
     skill_mender:
       name: 技能结合者
-      desc: 手上物品拥有经验修补的物品时<gray>可以在每次获得 2 点技能经验时有 {value}% 的几率<gray>额外为此工具回复 1 点耐久
+      desc: 手上物品拥有经验修补的物品时可以在每次获得 2 点技能经验时有 {value}% 的几率额外为此工具回复 1 点耐久
       info: "{value}% 修复几率"
 acf:
   core:
@@ -514,11 +514,10 @@ commands:
       reset_all: "<gray>玩家 <gold>{player} <gray>的所有技能等级已重置为 <aqua>1!"
       reset_skill: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>的等级已设置为 <aqua>1"
     setall:
-      at_least_one: "<yellow>等级最小需为 1!"
       set: "<gray>玩家 <gold>{player} <gray>的所有技能等级已设置为 <aqua>{level}!"
     setlevel:
-      at_least_one: "<yellow>等级最小需为 1!"
       set: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>的等级已设置为 <aqua>{level}"
+    at_least: "<yellow>Level must be at least {level}!"
   toggle:
     enabled: "<green>技能状态显示栏已打开"
     disabled: "<red>技能状态显示栏已关闭"
@@ -546,155 +545,125 @@ commands:
     set: "<gray>将玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>熟练度设置为了 <aqua>{amount}"
     remove: "<gray>成功为玩家 <gold>{player} <gray>取走了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
   unknown_skill: "<yellow>未知技能!"
+  unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>玩家尚未获得自己的技能存档文件。请重新加入游戏或重启服务器。"
 leveler:
-  title: "<green>{skill} 等级提升"
-  subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>技能成功升级! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>升级奖励:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}\n<dark_aqua><strikethrough>----------------------------------------"
-  stat_level: "\n  {color}+{num} {symbol} {stat}"
-  ability_unlock: "\n  <green>技能解锁! <gold><bold>{ability} </bold><gray>已被解锁"
-  ability_level_up: "\n  <green>技能升级! <gold><bold>{ability} </bold><gray>现在等级为 <gold>{level} <gray>级"
-  mana_ability_unlock: "\n  <light_purple>魔法技能解锁! <blue><bold>{mana_ability} </bold><gray>已被解锁"
-  mana_ability_level_up: "\n  <light_purple>魔法技能升级! <blue><bold>{mana_ability} </bold><gray>现在等级为l <gold>{level} <gray>级"
-  money_reward: "\n  <green>${amount}"
+  level_up: "{skill}升级成功"
+  skill_level_up: Skill Level Up
+  rewards: Rewards
+  ability_unlock: Ability Unlock
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Unlock
+  mana_ability_level_up: Mana Ability Level Up
   unclaimed_item: "<red>因为背包已满, 部分无法存储在物品栏的物品已被转移至临时存储区. 请输入 <yellow>/skills claimitems <red>及时领取这些物品."
 menus:
   common:
-    close: "<red>关闭"
-    level: "<gray>等级: <yellow>{level}"
-    progress_to_level: "<gray>到达等级 {level}: 进度为<yellow> {percent}%<gray>{current_xp}/{level_xp} {xp_unit}"
-    max_level: "<gold>最大等级"
-    ability_levels: "<gray>技能等级:{ability_1}{ability_2}{ability_3}{ability_4}{ability_5} "
-    ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
-    ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
-    stats_leveled: "<gray>属性已升级了 {stats} 级"
-    mana_ability: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level}<gray>持续时间: <green>{duration}s <gray>魔法值耗费: <aqua>{mana_cost} <gray>冷却时长: <yellow>{cooldown}s "
+    close: "关闭"
+    level: "等级"
+    progress_to_level: "Progress to Level"
+    max_level: "最大等级"
+    ability_levels: "技能等级"
+    stats_leveled: "Stats Leveled"
+    mana_ability: "魔法技能"
+    duration: "Duration"
+    mana_cost: "Mana Cost"
+    cooldown: "Cooldown"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Go Back"
+    back_click: "Back to {menu_name} Menu"
+    unlocked: "UNLOCKED"
+    in_progress: "IN PROGRESS"
+    locked: "LOCKED"
+    your_level: "Your Level"
+    next_page: "Next Page"
+    next_page_click: "Click to go to next page"
+    previous_page: "Previous Page"
+    previous_page_click: "Click to go to previous page"
   skills:
-    skills_title: 你的技能
-    your_skills: "<aqua>你的技能 - <gold>{player}"
-    your_skills_desc: "<gray>做各种各样的事情得到有趣的属性增强, 技能和更多!"
-    your_skills_hover: "<yellow>悬停在技能图标上可以了解更多!"
-    your_skills_click: "<yellow>点击技能图标以了解技能掌握进度!"
-    skill_click: "<yellow>点击查看技能掌握进度!"
-    skill_locked: "<red>你没有权限浏览此技能!"
+    skills_title: "你的技能"
+    your_skills: "你的技能"
+    your_skills_desc: "做各种各样的事情得到有趣的属性增强, 技能和更多!"
+    your_skills_hover: "悬停在技能图标上可以了解更多!"
+    your_skills_click: "点击技能图标以了解技能掌握进度!"
+    skill_click: "点击查看技能掌握进度!"
     stats: "状态"
-    stats_desc: "<gray>通过升级技能获得状态增益"
-    stats_click: "<yellow>点击了解更多或查看您的统计数据"
-  level_menu:
-    level_progression_title: "{skill} 等级 - 第 {page} 页"
-    your_ranking: "<gold>你的技能排名"
-    rank_out_of: "<white>你现在在全部的 {total} 名玩家中处于第 <gold>{rank}<white> 名"
-    rank_percent: "<white>你超过了 <gold>{percent}% <white>的玩家"
-    back: "<green>返回"
-    back_click: "<gray>返回 {menu_name} 菜单"
-    next_page: "<gold>下一页"
-    next_page_click: "<yellow>点击进入下一页"
-    previous_page: "<gold>上一页"
-    previous_page_click: "<yellow>点击返回上一页"
-    level_unlocked: "<green>等级 {level}"
-    level_in_progress: "<yellow>等级 {level}"
-    level_locked: "<red>等级 {level}"
-    level_number: "<gray>等级 <white>{level}"
-    unlocked: "<green>已解锁"
-    in_progress: "<yellow>正在进行"
-    locked: "<red>已锁定"
-    rewards: "<gray>奖励: {rewards}"
-    rewards_entry: " {color}+{num} {symbol} {stat}"
-    money_reward: " <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>技能解锁</bold><gray>  {desc}"
-    ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>魔法技能解锁</bold><gray>  {desc}"
-    mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
-    progress: "<gray>进度: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
-    leaderboard_click: "<yellow>点击查看 {skill} 排行榜"
-    sources: "<green>经验来源"
-    sources_desc: "<gray>来源菜单显示了你可以在技能中<gray>获得经验值的所有方式，以及<gray>每个来源提供的经验值。"
-    sources_click: "<yellow>点击查看 {skill} 来源"
-    abilities: "<red>技能"
-    abilities_desc: "<aqua>技能<gray>是被动技能，随着技能的升级，<gray>你可以解锁和升级。<light_purple>魔法技能<gray>是一种特殊类型的能力，<gray>需要激活并消耗魔法值。"
-    abilities_click: "<yellow>点击查看 {skill} 技能"
+    stats_desc: "通过升级技能获得状态增益"
+    stats_click: "点击了解更多或查看您的统计数据"
+  level_progression:
+    level_progression_title: "{skill} Levels - Page {page}"
+    your_ranking: "Your Skill Ranking"
+    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
+    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
+    rewards: "Rewards"
+    ability_unlock: "Ability Unlock"
+    mana_ability_unlock: "Mana Ability Unlock"
+    progress: "Progress"
+    leaderboard_click: "Click to view the {skill} leaderboard"
+    sources: "XP Sources"
+    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_click: "Click to view {skill} sources"
+    abilities: "Abilities"
+    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
+    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    abilities_click: "Click to view {skill} abilities"
   stats:
     stats_title: 你的属性
-    player_stat_entry: " {color}{symbol} {stat} <white>{level}"
-    skills: "<gray>技能: <white>{skills}"
-    your_level: "<gray>你的等级: {color}{level}"
-    attack_damage: "<dark_red>+{value}% 攻击伤害"
-    hp: "<red>+{value} ❤"
-    saturated_regen: "<gold>+{value} 饱和度"
-    full_hunger_regen: "<gold>+{value} 完全饥饿恢复"
-    almost_full_hunger_regen: "<gold>+{value} 近完全饥饿恢复"
-    mana_regen: "<aqua>+{value} 每秒魔法值恢复"
-    luck: "<dark_green>+{value} 幸运"
-    double_drop_chance: "<dark_green>双倍掉落: {value}%"
-    xp_gain: "<blue>+{value}% {xp_unit} 经验翻倍"
-    anvil_cost_reduction: "<blue>铁砧修复减少: {value}%"
-    max_mana: "<blue>最大魔力值: {value}"
-    incoming_damage: "<dark_purple>-{value}% 将受到的伤害"
+    skills: "技能"
   unclaimed_items:
     unclaimed_items_title: "领取物品"
-    inventory_full: "<yellow>你的物品栏没有足够的空间"
-    click_to_claim: "<yellow>点击领取!"
+    inventory_full: "你的物品栏没有足够的空间"
+    click_to_claim: "点击领取!"
   leaderboard:
     leaderboard_title: "{skill} 排行榜"
-    player_entry: "<yellow>{place}. <gold>{player}"
-    skill_level: "<gray>等级 <white>{level}"
   sources:
-    sources_title: "{skill} 经验来源 ({current_page}/{total_pages})"
-    sorter: "<aqua>对经验来源进行排序"
-    sort_type: "<gray>{selected}{type_name}"
-    selected: "<white>> "
+    sources_title: "{skill} 经验来源"
+    sorter: "对经验来源进行排序"
     descending: "从最高到最低"
     ascending: "从最低到最高"
-    alphabetical: "名称 （A-Z）"
+    alphabetical: "名称 (A-Z)"
     reverse_alphabetical: "名称 (Z - A)"
-    sort_click: "<yellow>点击以循环排序类型"
-    source_name: "<white>{name}"
-    source_xp: "<gray>经验值: <green>{xp}"
-    source_xp_rate: "<gray>经验值: <green>{xp}/{unit}"
-    multiplied_xp: "<white>经验倍率: <green>{xp}"
-    multiplied_xp_rate: "<white>经验倍率: <green>{xp}/{unit}"
-    multiplied_desc: "<gray><italic>这是乘以当前的经验值<gray><italic>得出所获得的经验值"
+    sort_click: "点击以循环排序类型"
+    multiplied_xp: "经验倍率"
+    multiplied_desc: "这是乘以当前的经验值得出所获得的经验值"
   abilities:
     abilities_title: "{skill} 技能"
-    locked_desc: "<white>描述： <gray>{desc}"
-    unlocked_at: "<gray>在 <dark_aqua>{skill} {level} 解锁。"
-    your_ability_level: "<white>你的等级: <aqua>{level}"
-    your_ability_level_maxed: "<white>你的等级: <aqua>{level} <gold>(MAXED)"
-    unlocked_desc: "<white>下次升级时 <dark_aqua>{skill} {level}<white> <gray>{desc}"
-    unlocked_desc_maxed: "<white>描述： <gray>{desc}"
-    desc_upgrade_value: "<gray>{current}<dark_gray>→{next}<gray>"
+    description: "Description"
+    unlocked_at: "<1>在 <2>{skill} {level} 解锁。"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: 自动补种
-    desc: "<gray>自动补种耕地上的作物, 持续 {value} 秒.<yellow>  [右键锄头并破坏农作物以激活]"
+    desc: "自动补种耕地上的作物, 持续 {value} 秒. <1>[右键锄头并破坏农作物以激活]"
     raise: "<gray>你拿起了你的锄头"
     lower: "<gray>你放下了你的锄头"
     start: "<gold>自动补种已激活! <gray>(-{mana} {mana_unit})"
-    end: "<gold>自动补种已结束"
+    end: "<gray>自动补种已结束"
   treecapitator:
     name: 伐树者
-    desc: "<gray>在技能激活的 {value} 秒内, 瞬间砍倒一棵树. <yellow>  [右键斧子并破坏原木方块以激活]"
+    desc: "在技能激活的 {value} 秒内, 瞬间砍倒一棵树. <1>[右键斧子并破坏原木方块以激活]"
     raise: "<gray>你拿起了你的斧头"
     lower: "<gray>你放下了你的斧头"
     start: "<gold>伐树者已激活! <gray>(-{mana} {mana_unit})"
-    end: "<gold>伐树者技能已结束"
+    end: "<gray>伐树者技能已结束"
   speed_mine:
     name: 超级碎石机
-    desc: "<gray>在技能激活的 {value} 秒内获得急迫 {haste_level}<yellow>  [右键镐子挖掘以激活]"
+    desc: "在技能激活的 {value} 秒内获得急迫 {haste_level}. <1>[右键镐子挖掘以激活]"
     raise: "<gray>你拿起了你的镐子"
     lower: "<gray>你放下了你的镐子"
     start: "<gold>超级碎石机已激活! <gray>(-{mana} {mana_unit})"
     end: "<gray>超级碎石机已关闭"
   absorption:
     name: 超级吸收
-    desc: "在技能触发的 {value} 秒内<gray>  你受到的伤害将会会被吸收<gray>  同时减少 伤害 x2 的魔法值<gray>  此技能触发时魔法值无法回复. <yellow>[左键盾牌后受到伤害自动触发]"
+    desc: "在技能触发的 {value} 秒内你受到的伤害将会会被吸收同时减少 伤害 x2 的魔法值此技能触发时魔法值无法回复. <1>[左键盾牌后受到伤害自动触发]"
     raise: "<gray>你握紧了你的盾牌"
     lower: "<gray>你放下了你的盾牌"
     start: "<gold>超级吸收已激活! <gray>(-{mana} {mana_unit})"
-    end: "<gold>超级吸收已关闭"
+    end: "<gray>超级吸收已关闭"
   terraform:
     name: 平整挖掘
-    desc: "在技能触发的 {value} 内破坏以你为中心<gray>  半径为 4 个方块内的所有方块<gray>  手中必须持有铲子, 并且被破坏的方块<gray>  只能是同一个种类并且相邻<gray>  <yellow>[右键铲子并挖掘方块以触发]"
+    desc: "在技能触发的 {value} 内破坏以你为中心半径为 {radius} 个方块内的所有方块手中必须持有铲子, 并且被破坏的方块只能是同一个种类并且相邻. <1>[右键铲子并挖掘方块以触发]"
     raise: "<gray>你拿起了你的铲子"
     lower: "<gray>你放下了你的铲子"
     start: "<gold>平整挖掘已激活! <gray>(-{mana} {mana_unit})"
@@ -703,76 +672,67 @@ mana_abilities:
     name: 锋利鱼钩
     desc: "持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害"
     use: "<gold>使用了锋利鱼钩! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level} <gray>伤害: <red>{value} <gray>魔法消耗: <aqua>{mana_cost} <gray>冷却时间: <yellow>{cooldown}s"
   charged_shot:
     name: 聚能穿射
-    desc: "你射出的箭将会额外造成伤害<gray>  此伤害取决于箭落地后与你的距离<gray>  并且此过程消耗魔法值. 每点魔法值的消耗<gray>  能为每支箭增加 {value}% 的伤害<yellow>  [左键弓可触发聚能穿射]"
+    desc: "你射出的箭将会额外造成伤害此伤害取决于箭落地后与你的距离并且此过程消耗魔法值. 每点魔法值的消耗能为每支箭增加 {value}% 的伤害. <1>[左键弓可触发聚能穿射]"
     enable: "<gray>聚能穿射已启用"
     disable: "<gray>聚能穿射已禁用"
     shoot: "<gold>聚能穿射已启用! <light_purple>+{percent}% 伤害 <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level}<gray>伤害: <red>+{value}% / 魔法值 <gray>最大魔法值消耗: <aqua>{mana_cost}"
   lightning_blade:
     name: 狂战之刃
-    desc: 在 {duration} 秒内增加 {value}% 的攻击速度.<yellow> [持剑右键后攻击敌人以激活]
+    desc: 在 {duration} 秒内增加 {value}% 的攻击速度. <1>[持剑右键后攻击敌人以激活]
     raise: "<gray>你握紧了你的剑"
     lower: "<gray>你放下了你的剑"
     start: "<gold>狂战之刃已激活! <gray>(-{mana} {mana_unit})"
     end: "<gray>狂战之刃已经已经结束"
-    menu: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level}<gray>攻击速度: <red>+{value}% <gray>持续时间: <green>{duration}s<gray>魔力耗费: <aqua>{mana_cost} <gray>冷却时间: <yellow>{cooldown}s"
-  not_ready: "<red><italic>技能还没有准备好! </italic><gray>({cooldown}s)"
-  not_enough_mana: "&法力不足! <gray>({mana} {mana_unit} 需要, 但是你只有 {current_mana}/{max_mana})"
-rewards:
-  item:
-    default_menu_message: "\n  {display_name}"
-    default_menu_message_multiple: "\n  {display_name} {amount}x"
-    default_chat_message: "\n  {display_name}"
-    default_chat_message_multiple: "\n  {display_name} {amount}x"
+  not_ready: "<red>技能还没有准备好! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>法力不足! <gray>({mana} {mana_unit} 需要)"
 skills:
   farming:
     name: 草药学
-    desc: "<gray>收获农作物以获取草药学 {xp_unit}"
+    desc: "收获农作物以获取草药学 {xp_unit}"
   foraging:
     name: 伐树
-    desc: "<gray>砍倒树木以获得伐树 {xp_unit}"
+    desc: "砍倒树木以获得伐树 {xp_unit}"
   mining:
     name: 采掘
-    desc: "<gray>挖掘石头和矿物以获得采掘 {xp_unit}"
+    desc: "挖掘石头和矿物以获得采掘 {xp_unit}"
   fishing:
     name: 钓鱼
-    desc: "<gray>在水边垂钓以获得钓鱼 {xp_unit}"
+    desc: "在水边垂钓以获得钓鱼 {xp_unit}"
   excavation:
     name: 挖掘
-    desc: "<gray>用铲子挖砂砾和沙子一类的方块以获得挖掘 {xp_unit}"
+    desc: "用铲子挖砂砾和沙子一类的方块以获得挖掘 {xp_unit}"
   archery:
     name: 弓箭手
-    desc: "<gray>使用弓箭射中生物或玩家以获得弓箭手 {xp_unit}"
+    desc: "使用弓箭射中生物或玩家以获得弓箭手 {xp_unit}"
   defense:
     name: 防御
-    desc: "<gray>被实体攻击以获得防御 {xp_unit}"
+    desc: "被实体攻击以获得防御 {xp_unit}"
   fighting:
     name: 战士
-    desc: "<gray>使用近战武器对实体造成伤害以获得战士 {xp_unit}"
+    desc: "使用近战武器对实体造成伤害以获得战士 {xp_unit}"
   endurance:
     name: 耐力
-    desc: "<gray>跑跑跳跳就可以获得耐力 {xp_unit}"
+    desc: "跑跑跳跳就可以获得耐力 {xp_unit}"
   agility:
     name: 敏捷
-    desc: "<gray>摔伤可以获得敏捷 {xp_unit}"
+    desc: "摔伤可以获得敏捷 {xp_unit}"
   alchemy:
     name: 炼金
-    desc: "<gray>酿造药水以获得炼金 {xp_unit}"
+    desc: "酿造药水以获得炼金 {xp_unit}"
   enchanting:
     name: 附魔
-    desc: "<gray>附魔物品或书籍以获得附魔 {xp_unit}"
+    desc: "附魔物品或书籍以获得附魔 {xp_unit}"
   sorcery:
     name: 法术
-    desc: "<gray>使用魔法技能以获得法术 {xp_unit}"
+    desc: "使用魔法技能以获得法术 {xp_unit}"
   healing:
     name: 药水学
-    desc: "<gray>饮用和扔出喷溅型药水以获得药水学 {xp_unit}"
+    desc: "饮用和扔出喷溅型药水以获得药水学 {xp_unit}"
   forging:
     name: 锻造
-    desc: "<gray>使用铁砧合并附魔书或修理装备以获得锻造 {xp_unit}"
+    desc: "使用铁砧合并附魔书或修理装备以获得锻造 {xp_unit}"
 sources:
   block:
     wheat: 小麦
@@ -792,6 +752,8 @@ sources:
     sea_pickle: 海泡菜
     sweet_berry_bush: 甜浆果
     glow_berries: 发光浆果
+    torchflower: Torchflower
+    pitcher_plant: Pitcher Plant
     oak_log: 橡木原木
     spruce_log: 云杉木原木
     birch_log: 白桦原木
@@ -817,6 +779,9 @@ sources:
     mangrove_log: 红树原木
     mangrove_leaves: 红树树叶
     mangrove_roots: 红树根
+    cherry_log: Cherry Log
+    cherry_leaves: Cherry Leaves
+    pink_petals: Pink Petals
     stone: 石头
     cobblestone: 圆石
     andesite: 安山岩
@@ -970,6 +935,8 @@ sources:
     frog: 青蛙
     tadpole: 蝌蚪
     warden: 监守者
+    camel: Camel
+    sniffer: Sniffer
   damage:
     mob_damage: 来自生物的伤害
     player_damage: 来自玩家的伤害
@@ -1012,7 +979,8 @@ sources:
     combine_weapon_per_level: 合并武器和附魔书
     combine_armor_per_level: 合并护甲和附魔书
     combine_tool_per_level: 合并工具和附魔书
-    grindstone_per_level: 用砂轮祛魔
+  grindstone:
+    grindstone_per_level: Disenchant Item with Grindstone
   units:
     damage: 伤害
     meter: 米
@@ -1040,7 +1008,48 @@ stats:
   toughness:
     name: 韧性
     desc: "<gray>韧性能减少敌人对你造成的伤害"
+  crit_chance:
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit"
+  crit_damage:
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+  speed:
+    name: Speed
+    desc: "Speed increases how fast you can walk and run"
+traits:
+  attack_damage:
+    name: Attack Damage
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturation Regen
+  hunger_regen:
+    name: Hunger Regen
+  mana_regen:
+    name: Mana Regen
+  luck:
+    name: Luck
+  double_drop:
+    name: Double Drop
+  experience_bonus:
+    name: Experience Bonus
+  anvil_discount:
+    name: Anvil Discount
+  max_mana:
+    name: Max Mana
+  damage_reduction:
+    name: Damage Reduction
+  crit_chance:
+    name: Crit Chance
+  crit_damage:
+    name: Crit Damage
+  movement_speed:
+    name: Movement Speed
+ui:
+  maxed: MAXED
 units:
   mana: 魔法值
   hp: 血量
   xp: 经验
+file_version: 31
