@@ -280,14 +280,6 @@ acf:
     location_please_specify_world: "<red>錯誤: 請指定世界座標. 例如: <yellow>world:x,y,z."
     location_please_specify_xyz: "<red>錯誤: 請指定座標 x, y, z. 例如: <yellow>world:x,y,z."
     location_console_not_relative: "<red>錯誤: 控制台不能使用相對坐標作為位置."
-action_bar:
-  idle: "<red>{hp}/{max_hp} {hp_unit}                <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp} {hp_unit}  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp} {hp_unit}  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp} {hp_unit}  <gold>+{xp_gained} {skill} {xp_unit} <gray>(最大值)  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp} {hp_unit}  <gold>-{xp_removed} {skill} {xp_unit} <gray>(最大值)  <aqua>{mana}/{max_mana} {mana_unit}"
-  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
-  boss_bar_maxed: "<gold>{skill} {level} <gray>(最大值)"
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>] "
   armor:
@@ -431,16 +423,16 @@ menus:
     primary_stat: "<gray>主要: {color}{stat}"
     secondary_stat: "<gray>次要: {color}{stat}"
     mana_ability: "<light_purple><bold>法術能力 </bold><blue>{mana_ability} {level}<gray>持續時間: <green>{duration}秒 <gray>法力成本: <aqua>{mana_cost} <gray>冷卻時間: <yellow>{cooldown}秒"
-  skills_menu:
-    skills_menu_title: 你的技能
+  skills:
+    skills_title: 你的技能
     your_skills: "<aqua>你的技能 - <gold>{player}"
     your_skills_desc: "<gray>通過執行各種任務來升級技能, <gray>以解鎖寶貴的屬性, 能力!"
     your_skills_hover: "<yellow>滑鼠指在技能上取得更多資訊!"
     your_skills_click: "<yellow>點擊一項技能可以查看等級進度!"
     skill_click: "<yellow>點擊查看等級進度!"
     skill_locked: "<red>你沒有權限查看這個技能!"
-  level_progression_menu:
-    level_progression_menu_title: "{skill} 等級 - 第 {page} 頁"
+  level_progression:
+    level_progression_title: "{skill} 等級 - 第 {page} 頁"
     your_ranking: "<yellow>你的技能排行"
     rank_out_of: "<white>你的排名是 <gold>{total} <white>玩家中的第<gold>{rank} <white>位"
     rank_percent: "<white>你的排行超過 <gold>{percent}%<white>的玩家"
@@ -464,8 +456,8 @@ menus:
     mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>法術能力解鎖</bold><gray>  {desc}"
     mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
     progress: "<gray>進度: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
-  stats_menu:
-    stats_menu_title: 你的統計資料
+  stats:
+    stats_title: 你的統計資料
     player_stat_entry: " {color}{symbol} {stat} <white>{level}"
     primary_skills_two: "<gray>主要技能: <white>{skill_1}, {skill_2}"
     primary_skills_three: "<gray>主要技能: <white>{skill_1}, {skill_2}, {skill_3}"
@@ -569,33 +561,21 @@ stats:
   strength:
     name: 強度
     desc: "<gray>強度會增加各種武器的攻擊力"
-    color: "<dark_red>"
-    symbol: "➽"
   health:
     name: 健康
     desc: "<gray>健康會增加你的{hp_unit} 數量, 使您在戰鬥中的壽命更長"
-    color: "<red>"
-    symbol: "❤"
   regeneration:
     name: 恢復
     desc: "<gray>恢復可以增加恢復生命值和法力值的速度"
-    color: "<gold>"
-    symbol: "❥"
   luck:
     name: 運氣
     desc: "<gray>運氣會增加您從怪物, 釣魚等中獲取稀有戰利品的機會"
-    color: "<dark_green>"
-    symbol: "☘"
   wisdom:
     name: 智慧
     desc: "<gray>智慧可以增加最大法力值, 增加經驗值並減少鐵砧成本"
-    color: "<blue>"
-    symbol: "✿"
   toughness:
     name: 剛性
     desc: "<gray>剛性增加了敵人攻擊所減少的傷害"
-    color: "<dark_purple>"
-    symbol: "✦"
 units:
   mana: 法力
   hp: 血量

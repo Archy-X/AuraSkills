@@ -344,15 +344,6 @@ acf:
     location_please_specify_world: "<red>错误: 请指定世界名称. 示例: <yellow>world:x,y,z"
     location_please_specify_xyz: "<red>错误: 请指定一个坐标。示例: <yellow>world:x,y,z"
     location_console_not_relative: "<red>错误: 控制台不能使用相对坐标来确定位置。"
-action_bar:
-  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(满级)  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(满级)  <aqua>{mana}/{max_mana} {mana_unit}"
-  ability: "{message}"
-  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
-  boss_bar_maxed: "<gold>{skill} {level} <gray>(满级)"
 commands:
   prefix: "<dark_gray>[<aqua>技能插件<dark_gray>] "
   armor:
@@ -578,8 +569,8 @@ menus:
     ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
     stats_leveled: "<gray>属性已升级了 {stats} 级"
     mana_ability: "<light_purple><bold>魔法技能 </bold><blue>{mana_ability} {level}<gray>持续时间: <green>{duration}s <gray>魔法值耗费: <aqua>{mana_cost} <gray>冷却时长: <yellow>{cooldown}s "
-  skills_menu:
-    skills_menu_title: 你的技能
+  skills:
+    skills_title: 你的技能
     your_skills: "<aqua>你的技能 - <gold>{player}"
     your_skills_desc: "<gray>做各种各样的事情得到有趣的属性增强, 技能和更多!"
     your_skills_hover: "<yellow>悬停在技能图标上可以了解更多!"
@@ -589,8 +580,8 @@ menus:
     stats: "状态"
     stats_desc: "<gray>通过升级技能获得状态增益"
     stats_click: "<yellow>点击了解更多或查看您的统计数据"
-  level_progression_menu:
-    level_progression_menu_title: "{skill} 等级 - 第 {page} 页"
+  level_menu:
+    level_progression_title: "{skill} 等级 - 第 {page} 页"
     your_ranking: "<gold>你的技能排名"
     rank_out_of: "<white>你现在在全部的 {total} 名玩家中处于第 <gold>{rank}<white> 名"
     rank_percent: "<white>你超过了 <gold>{percent}% <white>的玩家"
@@ -622,8 +613,8 @@ menus:
     abilities: "<red>技能"
     abilities_desc: "<aqua>技能<gray>是被动技能，随着技能的升级，<gray>你可以解锁和升级。<light_purple>魔法技能<gray>是一种特殊类型的能力，<gray>需要激活并消耗魔法值。"
     abilities_click: "<yellow>点击查看 {skill} 技能"
-  stats_menu:
-    stats_menu_title: 你的属性
+  stats:
+    stats_title: 你的属性
     player_stat_entry: " {color}{symbol} {stat} <white>{level}"
     skills: "<gray>技能: <white>{skills}"
     your_level: "<gray>你的等级: {color}{level}"
@@ -783,7 +774,7 @@ skills:
     name: 锻造
     desc: "<gray>使用铁砧合并附魔书或修理装备以获得锻造 {xp_unit}"
 sources:
-  farming:
+  block:
     wheat: 小麦
     potato: 马铃薯
     carrot: 胡萝卜
@@ -801,7 +792,6 @@ sources:
     sea_pickle: 海泡菜
     sweet_berry_bush: 甜浆果
     glow_berries: 发光浆果
-  foraging:
     oak_log: 橡木原木
     spruce_log: 云杉木原木
     birch_log: 白桦原木
@@ -827,7 +817,6 @@ sources:
     mangrove_log: 红树原木
     mangrove_leaves: 红树树叶
     mangrove_roots: 红树根
-  mining:
     stone: 石头
     cobblestone: 圆石
     andesite: 安山岩
@@ -876,16 +865,6 @@ sources:
     packed_ice: 浮冰
     blue_ice: 蓝冰
     reinforced_deepslate: 强化深板岩
-  fishing:
-    cod: 鳕鱼
-    salmon: 鲑鱼
-    tropical_fish: 热带鱼
-    pufferfish: 河豚
-    treasure: 宝藏物品
-    junk: 垃圾
-    rare: 稀有战利品
-    epic: 史诗级战利品
-  excavation:
     dirt: 泥土
     grass_block: 草方块
     sand: 沙子
@@ -900,7 +879,21 @@ sources:
     rooted_dirt: 缠根泥土
     mud: 泥巴
     muddy_mangrove_roots: 沾泥的红树根
-  mobs:
+    sculk: 幽匿块
+    sculk_vein: 幽匿脉络
+    sculk_sensor: 幽匿感测体
+    sculk_catalyst: 幽匿催发体
+    sculk_shrieker: 幽匿尖啸体
+  fishing:
+    cod: 鳕鱼
+    salmon: 鲑鱼
+    tropical_fish: 热带鱼
+    pufferfish: 河豚
+    treasure: 宝藏物品
+    junk: 垃圾
+    rare: 稀有战利品
+    epic: 史诗级战利品
+  entity:
     player: 玩家
     bat: 蝙蝠
     cat: 猫
@@ -977,17 +970,17 @@ sources:
     frog: 青蛙
     tadpole: 蝌蚪
     warden: 监守者
-  defense:
+  damage:
     mob_damage: 来自生物的伤害
     player_damage: 来自玩家的伤害
-  endurance:
+    fall_damage: 承受跌落伤害
+  statistic:
     walk_per_meter: 行走
     sprint_per_meter: 疾跑
     swim_per_meter: 游泳
-  agility:
+  jumping:
     jump_per_100: 跳跃
-    fall_damage: 承受跌落伤害
-  alchemy:
+  brewing:
     awkward: 粗制的药水
     regular: 普通药水
     extended: 延长药水时效
@@ -999,26 +992,22 @@ sources:
     armor_per_level: 护甲
     tool_per_level: 工具
     book_per_level: 附魔书
-  sorcery:
+  mana_ability_use:
     mana_ability_use: 使用魔法技能
-    sculk: 幽匿块
-    sculk_vein: 幽匿脉络
-    sculk_sensor: 幽匿感测体
-    sculk_catalyst: 幽匿催发体
-    sculk_shrieker: 幽匿尖啸体
-  healing:
+  item_consume:
     drink_regular: 饮用普通药水
     drink_extended: 饮用延长时长的药水
     drink_upgraded: 饮用已升级的药剂
+    golden_apple: 金苹果
+    enchanted_golden_apple: 附魔金苹果
+  potion_splash:
     splash_regular: 喷洒喷溅型药水
     splash_extended: 喷洒喷溅型延长时长的药水
     splash_upgraded: 喷洒喷溅型已升级的药水
     lingering_regular: 使用普通滞留型药水
     lingering_extended: 使用滞留型延长时长的药水
     lingering_upgraded: 使用已升级的滞留型药水
-    golden_apple: 金苹果
-    enchanted_golden_apple: 附魔金苹果
-  forging:
+  anvil:
     combine_books_per_level: 合并附魔书
     combine_weapon_per_level: 合并武器和附魔书
     combine_armor_per_level: 合并护甲和附魔书
@@ -1036,35 +1025,22 @@ stats:
   strength:
     name: 力量
     desc: "<gray>力量能使你在使用各种不同的武器时提升伤害"
-    color: "<dark_red>"
-    symbol: "➽"
   health:
     name: 生命值
     desc: "<gray>生命能够提升你的最大 {hp_unit}, 也允许你在战斗中能够活得更久"
-    color: "<red>"
-    symbol: "❤"
   regeneration:
     name: 再生
     desc: "<gray>再生增加你的生命和魔法值恢复速度"
-    color: "<gold>"
-    symbol: "❥"
   luck:
     name: 幸运
     desc: "<gray>幸运能够提升掉落物的掉落几率, 以及获得稀有掉落物的几率"
-    color: "<dark_green>"
-    symbol: "☘"
   wisdom:
     name: 智慧
     desc: "<gray>智慧能够增加魔法值上限, 增加经验值获取以及减少铁砧的经验值耗费"
-    color: "<blue>"
-    symbol: "✿"
   toughness:
     name: 韧性
     desc: "<gray>韧性能减少敌人对你造成的伤害"
-    color: "<dark_purple>"
-    symbol: "✦"
 units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 29
