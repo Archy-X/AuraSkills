@@ -61,7 +61,7 @@ public class TableCreator {
                     "skill_xp double not null, " +
                     "primary key (user_id, skill_name), " +
                     "constraint user_id_fk " +
-                    "foreign key (user_id) references auraskills_users (user_id)" +
+                    "foreign key (user_id) references " + tablePrefix + "users (user_id)" +
                     ");");
             plugin.logger().info("Created table " + tablePrefix + "skill_levels");
         }
@@ -76,16 +76,16 @@ public class TableCreator {
         }
         // Create the table
         try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-            statement.execute("create table auraskills.auraskills_key_values (" +
+            statement.execute("create table " + tablePrefix + "key_values (" +
                     "user_id int not null, " +
                     "data_id int not null, " +
                     "category_id varchar(128) null, " +
                     "key_name varchar(128) not null, " +
                     "value varchar(256) not null, " +
-                    "constraint auraskills_key_values_uk " +
+                    "constraint key_values_uk " +
                     "unique (user_id, data_id, category_id, key_name), " +
-                    "constraint auraskills_key_values_auraskills_users_user_id_fk " +
-                    "foreign key (user_id) references auraskills.auraskills_users (user_id) " +
+                    "constraint key_values_users_user_id_fk " +
+                    "foreign key (user_id) references " + tablePrefix + "users (user_id) " +
                     ");");
             plugin.logger().info("Created table " + tablePrefix + "key_values");
         }
