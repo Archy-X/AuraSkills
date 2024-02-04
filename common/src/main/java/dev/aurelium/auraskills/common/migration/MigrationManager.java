@@ -16,19 +16,40 @@ public class MigrationManager {
         this.plugin = plugin;
     }
 
-    public void attemptMigration() {
+    public void attemptConfigMigration() {
         try {
             ConfigurationNode config = FileUtil.loadYamlFile(new File(plugin.getPluginFolder(), "config.yml"));
             boolean migrateConfig = shouldMigrate("config_migration_complete", config);
+
+            if (!migrateConfig) {
+                return;
+            }
+
+            plugin.logger().warn("[Migrator] As part of the 2.0 update, the plugin has been renamed from AureliumSkills to AuraSkills and config files have had format changes");
+            plugin.logger().warn("[Migrator] Watch the following log messages for errors and report any to the Aurelium Discord");
+            plugin.logger().warn("[Migrator] Attempting to migrate config files from AureliumSkills to AuraSkills");
+
+            ConfigMigrator configMigrator = new ConfigMigrator(plugin);
+            configMigrator.migrate();
+            setMigrated("config_migration_complete", config);
+
+            FileUtil.saveYamlFile(new File(plugin.getPluginFolder(), "config.yml"), config);
+        } catch (Exception e) {
+            plugin.logger().severe("[Migrator] Error while migrating, please report this to the plugin Discord!");
+            e.printStackTrace();
+        }
+    }
+
+    public void attemptUserMigration() {
+        try {
+            ConfigurationNode config = FileUtil.loadYamlFile(new File(plugin.getPluginFolder(), "config.yml"));
             boolean migrateFileUser = shouldMigrate("file_user_migration_complete", config);
             boolean migrateSqlUser = shouldMigrate("sql_user_migration_complete", config);
 
-            if (!migrateConfig && !migrateFileUser && !migrateSqlUser) {
+            if (!migrateFileUser && !migrateSqlUser) {
                 return;
             }
-            plugin.logger().warn("[Migrator] As part of the 2.0 update, the plugin has been renamed from AureliumSkills to AuraSkills and config files have had format changes");
-            plugin.logger().warn("[Migrator] Watch the following log messages for errors and report any to the Aurelium Discord");
-            plugin.logger().warn("[Migrator] Attempting to migrate config and data files from AureliumSkills to AuraSkills");
+
             // Migrate playerdata folder to userdata
             if (migrateFileUser) {
                 FileUserMigrator fileUserMigrator = new FileUserMigrator(plugin);
@@ -41,11 +62,6 @@ public class MigrationManager {
                     sqlUserMigrator.migrate();
                 }
                 setMigrated("sql_user_migration_complete", config);
-            }
-            if (migrateConfig) {
-                ConfigMigrator configMigrator = new ConfigMigrator(plugin);
-                configMigrator.migrate();
-                setMigrated("config_migration_complete", config);
             }
             FileUtil.saveYamlFile(new File(plugin.getPluginFolder(), "config.yml"), config);
         } catch (Exception e) {

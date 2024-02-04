@@ -174,22 +174,24 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         sourceTypeRegistry.registerDefaults();
         itemRegistry = new BukkitItemRegistry(this);
         itemRegistry.getStorage().load();
-
+        // Create scheduler
+        scheduler = new BukkitScheduler(this);
         audiences = BukkitAudiences.create(this);
         eventHandler = new BukkitEventHandler(this);
         hookManager = new HookManager();
         generateConfigs(); // Generate default config files if missing
         // Handle migration
         MigrationManager migrationManager = new MigrationManager(this);
-        migrationManager.attemptMigration();
+        migrationManager.attemptConfigMigration();
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
+        // Initialize and migrate storage (connect to SQL database if enabled)
+        initStorageProvider();
+        migrationManager.attemptUserMigration();
         // Load blocked/disabled worlds lists
         worldManager = new BukkitWorldManager(this);
         worldManager.loadWorlds(getConfig());
-        // Create scheduler
-        scheduler = new BukkitScheduler(this);
         regionManager = new BukkitRegionManager(this);
         userManager = new BukkitUserManager(this);
         backupProvider = new BackupProvider(this);
@@ -205,7 +207,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         commandManager = commandRegistrar.registerCommands();
         levelManager = new BukkitLevelManager(this);
         itemManager = new ApiItemManager(this);
-        initStorageProvider();
         leaderboardManager.updateLeaderboards();
         leaderboardManager.startLeaderboardUpdater();
         registerPriorityEvents();

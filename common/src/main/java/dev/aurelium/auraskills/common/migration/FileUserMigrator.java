@@ -26,7 +26,7 @@ public class FileUserMigrator {
         File[] files = playerDataDir.listFiles();
         if (files == null || files.length == 0) return;
 
-        plugin.logger().info("[Migrator] Found AureliumSkills/playerdata files, attempting to migrate to AuraSkills/userdata");
+        plugin.logger().warn("[Migrator] Found AureliumSkills/playerdata files, attempting to migrate to AuraSkills/userdata");
         try {
             int migrated = 0;
             for (File playerDataFile : files) {
@@ -48,7 +48,7 @@ public class FileUserMigrator {
                 FileUtil.saveYamlFile(userFile, config);
                 migrated++;
             }
-            plugin.logger().info("[Migrator] Migrated " + migrated + " files from AureliumSkills/playerdata to AuraSkills/userdata");
+            plugin.logger().warn("[Migrator] Migrated " + migrated + " files from AureliumSkills/playerdata to AuraSkills/userdata");
         } catch (IOException e) {
             plugin.logger().severe("[Migrator] Failed to migrate files from AureliumSkills/playerdata to AuraSkills/userdata: " + e.getMessage());
             e.printStackTrace();

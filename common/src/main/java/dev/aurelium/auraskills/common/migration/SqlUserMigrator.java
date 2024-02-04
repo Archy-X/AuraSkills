@@ -33,6 +33,8 @@ public class SqlUserMigrator {
             // Only migrate if SkillData table exists
             if (!shouldMigrate(connection)) return;
 
+            plugin.logger().warn("[Migrator] Attempting to migrate SQL user data from SkillData table to new tables");
+
             int rowsMigrated = 0;
 
             String skillDataQuery = "SELECT * FROM SkillData;";
