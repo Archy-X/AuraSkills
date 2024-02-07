@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
@@ -75,6 +76,7 @@ public class FileUtil {
     public static ConfigurationNode loadYamlFile(File file) throws IOException {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .file(file)
+                .nodeStyle(NodeStyle.BLOCK)
                 .build();
         return loader.load();
     }
@@ -82,6 +84,7 @@ public class FileUtil {
     public static void saveYamlFile(File file, @NotNull ConfigurationNode config) throws IOException {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .file(file)
+                .nodeStyle(NodeStyle.BLOCK)
                 .indent(2)
                 .build();
         loader.save(config);

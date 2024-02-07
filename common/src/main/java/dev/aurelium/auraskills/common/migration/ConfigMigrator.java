@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 public class ConfigMigrator {
@@ -234,7 +235,7 @@ public class ConfigMigrator {
                     if (file.isFile()) {
                         Path filePath = file.toPath();
                         Path destFilePath = destinationPath.resolve(file.getName());
-                        Files.copy(filePath, destFilePath);
+                        Files.copy(filePath, destFilePath, StandardCopyOption.REPLACE_EXISTING);
                     }
                 }
             }

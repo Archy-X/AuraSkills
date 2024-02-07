@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
+import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.*;
@@ -146,6 +147,7 @@ public class PresetManager {
     private ConfigurationNode loadInputStream(InputStream inputStream) throws ConfigurateException {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .source(() -> new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)))
+                .nodeStyle(NodeStyle.BLOCK)
                 .build();
 
         return loader.load();
