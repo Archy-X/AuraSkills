@@ -2,308 +2,294 @@
 # Translators: Adrián, Edwin Sanchez, JORC, TnTVlogs, 25thsin
 # Contribute here: https://crowdin.com/project/aureliumskills/es#
 abilities:
-  farming:
-    bountiful_harvest:
-      name: Cosecha Abundante
-      desc: "{value}% de posibilidad para obtener drops dobles de los cultivos."
-      info: "{value}% 2x Drops"
-    farmer:
-      name: Agricultor
-      desc: "Gana un {value}% más de XP de Agricultura."
-      info: "+{value}% XP"
-    scythe_master:
-      name: Maestro de Guadaña
-      desc: "Incrementa el daño de las azadas en un {value}%"
-      info: "+{value}% Daño de Azada"
-    geneticist:
-      name: Genetista
-      desc: "Aumenta la ganancia de saturación de los alimentos de origen vegetal en {value}."
-      info: "+{value} Saturación"
-    triple_harvest:
-      name: Cosecha Triple
-      desc: "{value}% de posibilidad para obtener drops triples de los cultivos."
-      info: "{value}% 3x Drops"
-  foraging:
-    lumberjack:
-      name: Leñador
-      desc: "{value}% de posibilidad para obtener drops dobles de los troncos."
-      info: "{value}% 2x Drops"
-    forager:
-      name: Forrajero
-      desc: "Gana un {value}% más de XP de Forrajero."
-      info: "+{value}% XP"
-    axe_master:
-      name: Maestro del Hacha
-      desc: "Incrementa el daño de las hachas en un {value}%"
-      info: "+{value}% Daño de Hacha"
-    valor:
-      name: Valor
-      desc: "Obtén +{value} de Fuerza mientras sostienes un hacha"
-      info: "+{value} de Fuerza"
-    shredder:
-      name: Trituradora
-      desc: "{value}% de probabilidad de infligir triple daño de durabilidad con hachas."
-      info: "{value}% 3x Daño de Durabilidad"
-  mining:
-    lucky_miner:
-      name: Minero Afortunado
-      desc: "{value}% de posibilidad para obtener drops dobles de los minerales."
-      info: "{value}% 2x Drops"
-    miner:
-      name: Minero
-      desc: "Gana un {value}% más de XP de Minería."
-      info: "+{value}% XP"
-    pick_master:
-      name: Maestro del Pico
-      desc: "Inflige un {value}% más de daño con picos."
-      info: "+{value}% Daño de Pico"
-    stamina:
-      name: Energía
-      desc: "Obtén +{value} de Resistencia mientras sostienes un pico"
-      info: "+{value} Resistencia"
-    hardened_armor:
-      name: Armadura Resistente
-      desc: "{value}% de probabilidad para negar el daño de durabilidad en la armadura."
-      info: "{value}% Sin Pérdida de Durabilidad"
-  fishing:
-    lucky_catch:
-      name: Pesca de la Suerte
-      desc: "{value}% de posibilidad para obtener drops dobles de la pesca."
-      info: "{value}% 2x Drops"
-    fisher:
-      name: Pescador
-      desc: "Gana un {value}% más de XP de Pescador"
-      info: "+{value}% XP"
-    treasure_hunter:
-      name: Cazador de Tesoros
-      desc: "Un {value}% más de posibilidades de conseguir un botín raro en la pesca."
-      info: "+{value}% Botín Raro"
-    grappler:
-      name: Agarrador
-      desc: "Agarra entidades con un {value}% más de velocidad."
-      info: "+{value}% Velocidad de Agarre"
-    epic_catch:
-      name: Captura Épica
-      desc: "{value}% de posibilidades añadidas de conseguir botín épico en la pesca."
-      info: "+{value}% de botín épico"
-  excavation:
-    metal_detector:
-      name: Detector de Metales
-      desc: "{value}% de probabilidad añadida de obtener un botín raro al excavar."
-      info: "+{value}% Botín Raro"
-    excavator:
-      name: Excavador
-      desc: "Gana un {value}% más de XP de Excavación"
-      info: "+{value}% XP"
-    spade_master:
-      name: Maestro de Palas
-      desc: "Inflige un {value}% más de daño con palas."
-      info: "+{value}% Daño de Pala"
-    bigger_scoop:
-      name: Pala Grande
-      desc: "{value}% de probabilidad para obtener drops triples al cavar."
-      info: "{value}% 3x Drops"
-    lucky_spades:
-      name: Pala de la Suerte
-      desc: "{value}% de probabilidad añadida de obtener botín épico al excavar."
-      info: "+{value}% Botín Epico"
-  archery:
-    crit_chance:
-      name: Probabilidad de Crítico
-      desc: "+{value}% de probabilidad de infligir un golpe crítico."
-      info: "+{value}% de Probabilidad de Crítico"
-    archer:
-      name: Arquero
-      desc: "Gana un {value}% más de XP de Arquero."
-      info: "+{value}% XP"
-    bow_master:
-      name: Maestro del Arco
-      desc: "Inflige un {value}% más de daño con arcos."
-      info: "+{value}% Daño de Arco"
-    piercing:
-      name: Perforación
-      desc: "{value}% de probabilidad para que las flechas perforen a los mobs."
-      info: "{value}% Probabilidad de Perforación"
-    stun:
-      name: Aturdir
-      desc: "{value}% de probabilidad para reducir la velocidad del enemigo en un 20% por 2 segundos."
-      info: "{value}% Probabilidad de Aturdimiento"
-  defense:
-    shielding:
-      name: Blindaje
-      desc: "Reduce el daño entrante en un {value}% mientras estás agachado."
-      info: "-{value}% Daño Entrante agachándote"
-    defender:
-      name: Defensor
-      desc: "Gana un {value}% más de XP de Defensa"
-      info: "+{value}% XP"
-    mob_master:
-      name: Maestro de Criaturas
-      desc: "Reduce el daño entrante de los mobs en un {value}%"
-      info: "-{value}% Daño de Mobs"
-    immunity:
-      name: Inmunidad
-      desc: "{value}% de probabilidad de rechazar completamente un ataque enemigo."
-      info: "{value}% de Inmunidad"
-    no_debuff:
-      name: Sin Desventajas
-      desc: "{value}% de probabilidad para negar el efecto de una poción que te perjudique."
-      info: "{value}% Sin Desventajas"
-  fighting:
-    crit_damage:
-      name: Daño Crítico
-      desc: "Incrementa el daño por golpe crítico en un {value}%"
-      info: "+{value}% Daño Crítico"
-    fighter:
-      name: Luchador
-      desc: "Gana un {value}% más de XP de Luchador"
-      info: "+{value}% XP"
-    sword_master:
-      name: Maestro de Espada
-      desc: "Inflige un {value}% más de daño con espadas."
-      info: "+{value}% Daño de Espada"
-    first_strike:
-      name: Primer Golpe
-      desc: "Inflige un {value}% más de daño en el primer golpe."
-      info: "+{value}% Daño de Primer Golpe"
-      dealt: "<red>¡Primer Golpe!"
-    bleed:
-      name: Sangrar
-      desc: "{value}% de probabilidad de hacer sangrar al enemigo durante 3 ticks, infligiendo {value_2} puntos de daño por tick."
-      info: "{value}% de Probabilidad, {value_2} de Daño"
-      enemy_bleeding: "<red>¡Enemigo Sangrando!"
-      self_bleeding: "<red>¡Estás Sangrando!"
-      stop: "<red>El sangrado se ha detenido"
-  endurance:
-    anti_hunger:
-      name: Sin Hambre
-      desc: "{value}% de probabilidad para detener la pérdida de hambre."
-      info: "{value}% Sin Pérdida de Hambre"
-    runner:
-      name: Corredor
-      desc: "Gana un {value}% más de XP de Resistencia."
-      info: "+{value}% XP"
-    golden_heal:
-      name: Curación Dorada
-      desc: "Aumenta la ganancia de salud del efecto de regeneración en un {value}%"
-      info: "+{value}% Efecto de Regeneración"
-    recovery:
-      name: Recuperación
-      desc: "Aumenta la regeneración natural cuando tiene menos de la mitad de salud en un {value}%"
-      info: "+{value}% Regeneración de Salud Baja"
-    meal_steal:
-      name: Robo de Comida
-      desc: "{value}% de probabilidad de robar 1 punto de hambre al atacar a un jugador."
-      info: "{value}% Robo de Comida"
-  agility:
-    light_fall:
-      name: Caída Ligera
-      desc: "Reduce el daño de caída en un {value}%"
-      info: "-{value}% Daño de Caída"
-    jumper:
-      name: Saltador
-      desc: "Gana un {value}% más de XP de Agilidad"
-      info: "+{value}% XP"
-    sugar_rush:
-      name: Subida de Azúcar
-      desc: "Las pociones de velocidad y salto alto consumidas y salpicadas duran un {value}% más."
-      info: "{value}% Velocidad Duradera"
-    fleeting:
-      name: Fugaz
-      desc: "Gana +{value}% de velocidad de movimiento cuando estás por debajo del 20% de salud"
-      info: "+{value}% de Velocidad"
-      start: "<white>Has ganado una mejora de velocidad! <gray>(+{value}% Velocidad)"
-      end: "<gray>La mejora de velocidad ha finalizado"
-    thunder_fall:
-      name: Caída de Trueno
-      desc: "Si te agachas mientras caes, tienes un {value}% de probabilidad de infligir el {value_2}% del daño de caída a los mobs que estén en un radio de 3 bloques"
-      info: "{value}% de Probabilidad, {value_2}% de Daño"
-  alchemy:
-    alchemist:
-      name: Alquimista
-      desc: "Las pociones que preparas tienen un {value}% más de duración."
-      info: "+{value}% Duración de Poción"
-      lore: "<green>(+{duration})"
-    brewer:
-      name: Cervecero
-      desc: "Gana un {value}% más de XP de Alquimia"
-      info: "+{value}% XP"
-    splasher:
-      name: Salpicador
-      desc: "Las pociones que salpiques tienen un {value}% más de duración por cada jugador afectado."
-      info: "+{value}% Duración/Jugador"
-    lingering:
-      name: Persistente
-      desc: "Las pociones persistentes decaen naturalmente un {value}% más lento y decaen un {value_2}% menos por entidad afectada."
-      info: "-{value}% Natural, *{value_2}% Decaimiento de Entidad"
-    wise_effect:
-      name: Efecto Sabio
-      desc: "Gana un {value}% de sabiduría por cada efecto único de pociones que tengas activas."
-      info: "+{value} Sabiduría/Efecto"
-  enchanting:
-    xp_convert:
-      name: Convertir XP
-      desc: "Gana 1 experiencia de Minecraft por cada {value} de experiencia de habilidad que ganes."
-      info: "1 EXP/{value} EXP de Habilidad"
-    enchanter:
-      name: Encantador
-      desc: "Gana un {value}% más de XP de Encantador."
-      info: "+{value}% XP"
-    xp_warrior:
-      name: XP de Guerrero
-      desc: "Los monstruos que elimines tienen un {value}% de probabilidades de dar doble experiencia."
-      info: "{value}% 2x EXP de Monstruos"
-    enchanted_strength:
-      name: Fuerza Encantada
-      desc: "Gana {value} de Fuerza por cada encantamiento único en el objeto que sostienes."
-      info: "{value} Fuerza/Encantamiento"
-    lucky_table:
-      name: Mesa de la suerte
-      desc: "Los objetos que encantes tienen en la mesa de encantamientos tienen un {value}% de probabilidad de mejorar <gray> el encantamiento en 1 si no es el nivel máximo"
-      info: "{value}% Posibilidad de Mejora de Encantador"
-  healing:
-    life_essence:
-      name: Esencia de vida
-      desc: Las pociones de Vida Instantánea curan un {value}% más.
-      info: "+{value}% Salud Instantánea"
-    healer:
-      name: Curandero
-      desc: Gana un {value}% más de XP de Curación.
-      info: "+{value}% XP"
-    life_steal:
-      name: Robo de vida
-      desc: Cura un {value}% del HP máximo de los monstruos hostiles y jugadores que mates.
-      info: "Robar {value}% de HP"
-    golden_heart:
-      name: Corazones Oro
-      desc: El daño causado a tus corazones de absorción es reducido en un {value}%
-      info: "-{value}% Daño de Absorción"
-    revival:
-      name: Renacimiento
-      desc: Gana <red>+{value} de Salud <gray>y <gold>+{value_2} de Regeneración<gray> durante 30 segundos después de revivir.
-      info: "+{value} de Salud, +{value_2} de Regeneración"
-      message: "<white>Has ganado una bonificación de renacimiento por 30 segundos! <white>(<red>+{value} de salud, <gold>+{value_2} de regeneración<white>)"
-  forging:
-    disenchanter:
-      name: Desencantador
-      desc: Gana un {value}% más de experiencia al desencantar objetos usando una piedra de afilar.
-      info: "+{value}% Piedra de Afilar EXP"
-    forger:
-      name: Forjador
-      desc: Gana {value}% más de XP de Forjador.
-      info: "+{value}% XP"
-    repairing:
-      name: Reparando
-      desc: Reparar objetos en un yunque usando el material crudo del cual el objeto estaba hecho de reparaciones {value}% más de durabilidad.
-      info: "+{value}% Reparación del Yunque"
-    anvil_master:
-      name: Maestro del yunque
-      desc: Aumenta el costo máximo de reparación de un yunque antes de que sea demasiado caro para la experiencia {value}.
-      info: "{value} Coste Máximo"
-    skill_mender:
-      name: Reparador de habilidades
-      desc: Obtener XP de habilidad tiene un {value}% de probabilidad de reparar un objeto sostenido o una pieza de armadura desgastada con el hechizo de Reparación con 1 durabilidad por 2 habilidades XP.
-      info: "{value}% Probabilidad de Aturdimiento"
+  bountiful_harvest:
+    name: Cosecha Abundante
+    desc: "{value}% de posibilidad para obtener drops dobles de los cultivos."
+    info: "{value}% 2x Drops"
+  farmer:
+    name: Agricultor
+    desc: "Gana un {value}% más de XP de Agricultura."
+    info: "+{value}% XP"
+  scythe_master:
+    name: Maestro de Guadaña
+    desc: "Incrementa el daño de las azadas en un {value}%"
+    info: "+{value}% Daño de Azada"
+  geneticist:
+    name: Genetista
+    desc: "Aumenta la ganancia de saturación de los alimentos de origen vegetal en {value}."
+    info: "+{value} Saturación"
+  triple_harvest:
+    name: Cosecha Triple
+    desc: "{value}% de posibilidad para obtener drops triples de los cultivos."
+    info: "{value}% 3x Drops"
+  lumberjack:
+    name: Leñador
+    desc: "{value}% de posibilidad para obtener drops dobles de los troncos."
+    info: "{value}% 2x Drops"
+  forager:
+    name: Forrajero
+    desc: "Gana un {value}% más de XP de Forrajero."
+    info: "+{value}% XP"
+  axe_master:
+    name: Maestro del Hacha
+    desc: "Incrementa el daño de las hachas en un {value}%"
+    info: "+{value}% Daño de Hacha"
+  valor:
+    name: Valor
+    desc: "Obtén +{value} de Fuerza mientras sostienes un hacha"
+    info: "+{value} de Fuerza"
+  shredder:
+    name: Trituradora
+    desc: "{value}% de probabilidad de infligir triple daño de durabilidad con hachas."
+    info: "{value}% 3x Daño de Durabilidad"
+  lucky_miner:
+    name: Minero Afortunado
+    desc: "{value}% de posibilidad para obtener drops dobles de los minerales."
+    info: "{value}% 2x Drops"
+  miner:
+    name: Minero
+    desc: "Gana un {value}% más de XP de Minería."
+    info: "+{value}% XP"
+  pick_master:
+    name: Maestro del Pico
+    desc: "Inflige un {value}% más de daño con picos."
+    info: "+{value}% Daño de Pico"
+  stamina:
+    name: Energía
+    desc: "Obtén +{value} de Resistencia mientras sostienes un pico"
+    info: "+{value} Resistencia"
+  hardened_armor:
+    name: Armadura Resistente
+    desc: "{value}% de probabilidad para negar el daño de durabilidad en la armadura."
+    info: "{value}% Sin Pérdida de Durabilidad"
+  lucky_catch:
+    name: Pesca de la Suerte
+    desc: "{value}% de posibilidad para obtener drops dobles de la pesca."
+    info: "{value}% 2x Drops"
+  fisher:
+    name: Pescador
+    desc: "Gana un {value}% más de XP de Pescador"
+    info: "+{value}% XP"
+  treasure_hunter:
+    name: Cazador de Tesoros
+    desc: "Un {value}% más de posibilidades de conseguir un botín raro en la pesca."
+    info: "+{value}% Botín Raro"
+  grappler:
+    name: Agarrador
+    desc: "Agarra entidades con un {value}% más de velocidad."
+    info: "+{value}% Velocidad de Agarre"
+  epic_catch:
+    name: Captura Épica
+    desc: "{value}% de posibilidades añadidas de conseguir botín épico en la pesca."
+    info: "+{value}% de botín épico"
+  metal_detector:
+    name: Detector de Metales
+    desc: "{value}% de probabilidad añadida de obtener un botín raro al excavar."
+    info: "+{value}% Botín Raro"
+  excavator:
+    name: Excavador
+    desc: "Gana un {value}% más de XP de Excavación"
+    info: "+{value}% XP"
+  spade_master:
+    name: Maestro de Palas
+    desc: "Inflige un {value}% más de daño con palas."
+    info: "+{value}% Daño de Pala"
+  bigger_scoop:
+    name: Pala Grande
+    desc: "{value}% de probabilidad para obtener drops triples al cavar."
+    info: "{value}% 3x Drops"
+  lucky_spades:
+    name: Pala de la Suerte
+    desc: "{value}% de probabilidad añadida de obtener botín épico al excavar."
+    info: "+{value}% Botín Epico"
+  crit_chance:
+    name: Probabilidad de Crítico
+    desc: "+{value}% de probabilidad de infligir un golpe crítico."
+    info: "+{value}% de Probabilidad de Crítico"
+  archer:
+    name: Arquero
+    desc: "Gana un {value}% más de XP de Arquero."
+    info: "+{value}% XP"
+  bow_master:
+    name: Maestro del Arco
+    desc: "Inflige un {value}% más de daño con arcos."
+    info: "+{value}% Daño de Arco"
+  piercing:
+    name: Perforación
+    desc: "{value}% de probabilidad para que las flechas perforen a los mobs."
+    info: "{value}% Probabilidad de Perforación"
+  stun:
+    name: Aturdir
+    desc: "{value}% de probabilidad para reducir la velocidad del enemigo en un 20% por 2 segundos."
+    info: "{value}% Probabilidad de Aturdimiento"
+  shielding:
+    name: Blindaje
+    desc: "Reduce el daño entrante en un {value}% mientras estás agachado."
+    info: "-{value}% Daño Entrante agachándote"
+  defender:
+    name: Defensor
+    desc: "Gana un {value}% más de XP de Defensa"
+    info: "+{value}% XP"
+  mob_master:
+    name: Maestro de Criaturas
+    desc: "Reduce el daño entrante de los mobs en un {value}%"
+    info: "-{value}% Daño de Mobs"
+  immunity:
+    name: Inmunidad
+    desc: "{value}% de probabilidad de rechazar completamente un ataque enemigo."
+    info: "{value}% de Inmunidad"
+  no_debuff:
+    name: Sin Desventajas
+    desc: "{value}% de probabilidad para negar el efecto de una poción que te perjudique."
+    info: "{value}% Sin Desventajas"
+  crit_damage:
+    name: Daño Crítico
+    desc: "Incrementa el daño por golpe crítico en un {value}%"
+    info: "+{value}% Daño Crítico"
+  fighter:
+    name: Luchador
+    desc: "Gana un {value}% más de XP de Luchador"
+    info: "+{value}% XP"
+  sword_master:
+    name: Maestro de Espada
+    desc: "Inflige un {value}% más de daño con espadas."
+    info: "+{value}% Daño de Espada"
+  first_strike:
+    name: Primer Golpe
+    desc: "Inflige un {value}% más de daño en el primer golpe."
+    info: "+{value}% Daño de Primer Golpe"
+    dealt: "<red>¡Primer Golpe!"
+  bleed:
+    name: Sangrar
+    desc: "{value}% de probabilidad de hacer sangrar al enemigo durante 3 ticks, infligiendo {value_2} puntos de daño por tick."
+    info: "{value}% de Probabilidad, {value_2} de Daño"
+    enemy_bleeding: "<red>¡Enemigo Sangrando!"
+    self_bleeding: "<red>¡Estás Sangrando!"
+    stop: "<red>El sangrado se ha detenido"
+  anti_hunger:
+    name: Sin Hambre
+    desc: "{value}% de probabilidad para detener la pérdida de hambre."
+    info: "{value}% Sin Pérdida de Hambre"
+  runner:
+    name: Corredor
+    desc: "Gana un {value}% más de XP de Resistencia."
+    info: "+{value}% XP"
+  golden_heal:
+    name: Curación Dorada
+    desc: "Aumenta la ganancia de salud del efecto de regeneración en un {value}%"
+    info: "+{value}% Efecto de Regeneración"
+  recovery:
+    name: Recuperación
+    desc: "Aumenta la regeneración natural cuando tiene menos de la mitad de salud en un {value}%"
+    info: "+{value}% Regeneración de Salud Baja"
+  meal_steal:
+    name: Robo de Comida
+    desc: "{value}% de probabilidad de robar 1 punto de hambre al atacar a un jugador."
+    info: "{value}% Robo de Comida"
+  light_fall:
+    name: Caída Ligera
+    desc: "Reduce el daño de caída en un {value}%"
+    info: "-{value}% Daño de Caída"
+  jumper:
+    name: Saltador
+    desc: "Gana un {value}% más de XP de Agilidad"
+    info: "+{value}% XP"
+  sugar_rush:
+    name: Subida de Azúcar
+    desc: "Las pociones de velocidad y salto alto consumidas y salpicadas duran un {value}% más."
+    info: "{value}% Velocidad Duradera"
+  fleeting:
+    name: Fugaz
+    desc: "Gana +{value}% de velocidad de movimiento cuando estás por debajo del 20% de salud"
+    info: "+{value}% de Velocidad"
+    start: "<white>Has ganado una mejora de velocidad! <gray>(+{value}% Velocidad)"
+    end: "<gray>La mejora de velocidad ha finalizado"
+  thunder_fall:
+    name: Caída de Trueno
+    desc: "Si te agachas mientras caes, tienes un {value}% de probabilidad de infligir el {value_2}% del daño de caída a los mobs que estén en un radio de 3 bloques"
+    info: "{value}% de Probabilidad, {value_2}% de Daño"
+  alchemist:
+    name: Alquimista
+    desc: "Las pociones que preparas tienen un {value}% más de duración."
+    info: "+{value}% Duración de Poción"
+    lore: "<green>(+{duration})"
+  brewer:
+    name: Cervecero
+    desc: "Gana un {value}% más de XP de Alquimia"
+    info: "+{value}% XP"
+  splasher:
+    name: Salpicador
+    desc: "Las pociones que salpiques tienen un {value}% más de duración por cada jugador afectado."
+    info: "+{value}% Duración/Jugador"
+  lingering:
+    name: Persistente
+    desc: "Las pociones persistentes decaen naturalmente un {value}% más lento y decaen un {value_2}% menos por entidad afectada."
+    info: "-{value}% Natural, *{value_2}% Decaimiento de Entidad"
+  wise_effect:
+    name: Efecto Sabio
+    desc: "Gana un {value}% de sabiduría por cada efecto único de pociones que tengas activas."
+    info: "+{value} Sabiduría/Efecto"
+  xp_convert:
+    name: Convertir XP
+    desc: "Gana 1 experiencia de Minecraft por cada {value} de experiencia de habilidad que ganes."
+    info: "1 EXP/{value} EXP de Habilidad"
+  enchanter:
+    name: Encantador
+    desc: "Gana un {value}% más de XP de Encantador."
+    info: "+{value}% XP"
+  xp_warrior:
+    name: XP de Guerrero
+    desc: "Los monstruos que elimines tienen un {value}% de probabilidades de dar doble experiencia."
+    info: "{value}% 2x EXP de Monstruos"
+  enchanted_strength:
+    name: Fuerza Encantada
+    desc: "Gana {value} de Fuerza por cada encantamiento único en el objeto que sostienes."
+    info: "{value} Fuerza/Encantamiento"
+  lucky_table:
+    name: Mesa de la suerte
+    desc: "Los objetos que encantes tienen en la mesa de encantamientos tienen un {value}% de probabilidad de mejorar <gray> el encantamiento en 1 si no es el nivel máximo"
+    info: "{value}% Posibilidad de Mejora de Encantador"
+  life_essence:
+    name: Esencia de vida
+    desc: Las pociones de Vida Instantánea curan un {value}% más.
+    info: "+{value}% Salud Instantánea"
+  healer:
+    name: Curandero
+    desc: Gana un {value}% más de XP de Curación.
+    info: "+{value}% XP"
+  life_steal:
+    name: Robo de vida
+    desc: Cura un {value}% del HP máximo de los monstruos hostiles y jugadores que mates.
+    info: "Robar {value}% de HP"
+  golden_heart:
+    name: Corazones Oro
+    desc: El daño causado a tus corazones de absorción es reducido en un {value}%
+    info: "-{value}% Daño de Absorción"
+  revival:
+    name: Renacimiento
+    desc: Gana <red>+{value} de Salud <gray>y <gold>+{value_2} de Regeneración<gray> durante 30 segundos después de revivir.
+    info: "+{value} de Salud, +{value_2} de Regeneración"
+    message: "<white>Has ganado una bonificación de renacimiento por 30 segundos! <white>(<red>+{value} de salud, <gold>+{value_2} de regeneración<white>)"
+  disenchanter:
+    name: Desencantador
+    desc: Gana un {value}% más de experiencia al desencantar objetos usando una piedra de afilar.
+    info: "+{value}% Piedra de Afilar EXP"
+  forger:
+    name: Forjador
+    desc: Gana {value}% más de XP de Forjador.
+    info: "+{value}% XP"
+  repairing:
+    name: Reparando
+    desc: Reparar objetos en un yunque usando el material crudo del cual el objeto estaba hecho de reparaciones {value}% más de durabilidad.
+    info: "+{value}% Reparación del Yunque"
+  anvil_master:
+    name: Maestro del yunque
+    desc: Aumenta el costo máximo de reparación de un yunque antes de que sea demasiado caro para la experiencia {value}.
+    info: "{value} Coste Máximo"
+  skill_mender:
+    name: Reparador de habilidades
+    desc: Obtener XP de habilidad tiene un {value}% de probabilidad de reparar un objeto sostenido o una pieza de armadura desgastada con el hechizo de Reparación con 1 durabilidad por 2 habilidades XP.
+    info: "{value}% Probabilidad de Aturdimiento"
 acf:
   core:
     permission_denied: "<red>Lo siento, no tienes permiso para ejecutar este comando."
@@ -717,13 +703,10 @@ skills:
     desc: "Camina y corre para ganar XP de Resistencia {xp_unit}"
   agility:
     name: Agilidad
-    desc: "Salta y recibe daño por caída para ganar XP de Agilidad {xp_unit}"
   alchemy:
     name: Alquimia
-    desc: "Haz pociones para ganar XP de Alquimia {xp_unit}"
   enchanting:
     name: Encantador
-    desc: "Encanta items y libros para ganar XP de Encantador {xp_unit}"
   sorcery:
     name: Brujería
     desc: "Usa habilidades de maná para ganar {xp_unit} de Hechicería"
@@ -947,26 +930,12 @@ sources:
     swim_per_meter: Nadando
   jumping:
     jump_per_100: Saltando
-  brewing:
-    awkward: Poción Rara
-    regular: Poción regular
-    extended: Poción de duración extendida
-    upgraded: Poción mejorada
-    splash: Poción Arrojadiza
-    lingering: Poción persistente
-  enchanting:
-    weapon_per_level: Arma
-    armor_per_level: Armadura
-    tool_per_level: Herramienta
-    book_per_level: Libro
   mana_ability_use:
     mana_ability_use: Usando habilidades de maná
   item_consume:
     drink_regular: Beber poción regular
     drink_extended: Beber Poción de Duración Extendida
     drink_upgraded: Beber poción mejorada
-    golden_apple: Manzana dorada
-    enchanted_golden_apple: Manzana dorada encantada
   potion_splash:
     splash_regular: Poción regular arrojadiza
     splash_extended: Poción arrojadiza de duración extendida

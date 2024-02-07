@@ -2,308 +2,294 @@
 # Translators: BlueGodBalmung, Sinonx3, Aiena Team, JABS7777, Korean BBQ, Fly
 # Contribute here: https://crowdin.com/project/aureliumskills/de#
 abilities:
-  farming:
-    bountiful_harvest:
-      name: Ertragreiche Ernte
-      desc: "{value}% Chance, doppelte Drops von Pflanzen zu bekommen."
-      info: "{value}% 2x Drops"
-    farmer:
-      name: Landwirt
-      desc: "Verdiene {value}% mehr Ackerbau EP."
-      info: "+{value}% EP"
-    scythe_master:
-      name: Sensenmeister
-      desc: "Erhöht den Schaden von Hacken um {value}%"
-      info: "+{value}% Hackenschaden"
-    geneticist:
-      name: Genetiker
-      desc: "Erhöht den Sättigungsgewinn von pflanzlichen Lebensmitteln um {value}."
-      info: "+{value} Sättigung"
-    triple_harvest:
-      name: Dreifache Ernte
-      desc: "{value}% Chance, dreifache Drops von Pflanzen zu bekommen."
-      info: "{value}% 3x Drops"
-  foraging:
-    lumberjack:
-      name: Holzfäller
-      desc: "{value}% Chance, doppelte Drops von Baumstämmen zu bekommen."
-      info: "{value}% 2x Drops"
-    forager:
-      name: Waldläufer
-      desc: "Verdiene {value}% mehr Sammeln EP."
-      info: "+{value}% EP"
-    axe_master:
-      name: Axt-Meister
-      desc: "Erhöht den Schaden von Äxten um {value}%"
-      info: "+{value}% Axtschaden"
-    valor:
-      name: Wagemut
-      desc: "Gewährt +{value} Stärke während du eine Axt hältst"
-      info: "+{value} Stärke"
-    shredder:
-      name: Schredder
-      desc: "{value}% Chance, dreifachen Haltbarkeitsschaden mit Äxten zu verursachen."
-      info: "{value}% 3x Haltbarkeitsschaden"
-  mining:
-    lucky_miner:
-      name: Glückspilz
-      desc: "{value}% Chance, doppelte Drops von Erzen zu bekommen."
-      info: "{value}% 2x Drops"
-    miner:
-      name: Minenarbeiter
-      desc: "Verdiene {value}% mehr Bergbau EP."
-      info: "+{value}% EP"
-    pick_master:
-      name: Spitzhacken-Meister
-      desc: "Verursache {value}% mehr Schaden mit Spitzhacken."
-      info: "+{value}% Spitzhackenschaden"
-    stamina:
-      name: Ausdauer
-      desc: "Gewährt +{value} Widerstandskraft während du eine Spitzhacke hältst"
-      info: "+{value} Widerstandskraft"
-    hardened_armor:
-      name: Gehärtete Rüstung
-      desc: "{value}% Chance, dass deine Rüstung keinen Haltbarkeitsschaden erleidet."
-      info: "{value}% kein Haltbarkeitsverlust"
-  fishing:
-    lucky_catch:
-      name: Glücklicher Fang
-      desc: "{value}% Chance hinzugefügt doppelte Ressourcen <gray> beim Fischen zu bekommen."
-      info: "{value}% 2x Drops"
-    fisher:
-      name: Fischer
-      desc: "Verdiene {value}% mehr Fischen EP"
-      info: "+{value}% EP"
-    treasure_hunter:
-      name: Schatzjäger
-      desc: "{value}% Chance, beim Fischen seltene Beute zu finden."
-      info: "+{value}% Seltene Beute"
-    grappler:
-      name: Greifarm
-      desc: "Ziehe Fänge mit {value}% höherer Geschwindigkeit an Land."
-      info: "+{value}% Geschwindigkeit beim einholen"
-    epic_catch:
-      name: Epischer Fang
-      desc: "{value}% Chance, beim Fischen epische Beute zu finden."
-      info: "+{value}% Epische Beute"
-  excavation:
-    metal_detector:
-      name: Metalldetektor
-      desc: "{value}% Chance, beim Graben seltene Beute zu finden."
-      info: "+{value}% Seltene Beute"
-    excavator:
-      name: Ausgräber
-      desc: "Verdiene {value}% mehr Ausgrabung EP"
-      info: "+{value}% EP"
-    spade_master:
-      name: Schaufel-Meister
-      desc: "Verursache {value}% mehr Schaden mit Schaufeln."
-      info: "+{value}% Schaufelschaden"
-    bigger_scoop:
-      name: Riesen Schaufel
-      desc: "{value}% Chance, beim Graben dreifache Drops zu bekommen."
-      info: "{value}% 3x Drops"
-    lucky_spades:
-      name: Seltener Fund
-      desc: "{value}% Chance, beim Graben epische Beute zu finden."
-      info: "+{value}% Epische Beute"
-  archery:
-    crit_chance:
-      name: Kritische Trefferchance
-      desc: "+{value}% Chance, einen kritischen Treffer zu landen."
-      info: "+{value}% Kritische Trefferchance"
-    archer:
-      name: Bogenschütze
-      desc: "Verdiene {value}% mehr Bogenschießen EP."
-      info: "+{value}% EP"
-    bow_master:
-      name: Bogen-Meister
-      desc: "Verursache {value}% mehr Schaden mit Bögen."
-      info: "+{value}% Bogenschaden"
-    piercing:
-      name: Durchschuss
-      desc: "{value}% Chance für Pfeile Mobs zu durchbohren."
-      info: "{value}% Chance zu durchbohren"
-    stun:
-      name: Schock
-      desc: "{value}% Chance, den Feind für 2 Sekunden um 20% zu verlangsamen."
-      info: "{value}% Betäubungschance"
-  defense:
-    shielding:
-      name: Schutzschild
-      desc: "Reduziert eingehenden Schaden um {value}% während des Schleichens."
-      info: "-{value}% erlittener Schaden beim Schleichen"
-    defender:
-      name: Verteidiger
-      desc: "Verdiene {value}% mehr Verteidigung EP"
-      info: "+{value}% EP"
-    mob_master:
-      name: Kreaturen-Meister
-      desc: "Reduziert Schaden durch Mobs um {value}%"
-      info: "-{value}% Schaden von Kreaturen"
-    immunity:
-      name: Immunität
-      desc: "{value}% Chance einen feindlichen Angriff komplett zu negieren."
-      info: "{value}% Immunität"
-    no_debuff:
-      name: Statusschutz
-      desc: "{value}% Chance einen schädlichen Trank Effekt nicht anzuwenden."
-      info: "{value}% Statusschutz"
-  fighting:
-    crit_damage:
-      name: Kritischer Schaden
-      desc: "Erhöht den kritischen Schaden um {value}%"
-      info: "+{value}% Kritischer Schaden"
-    fighter:
-      name: Kämpfer
-      desc: "Verdiene {value}% mehr Kampf EP"
-      info: "+{value}% EP"
-    sword_master:
-      name: Schwert-Meister
-      desc: "Verursache {value}% mehr Schaden mit Schwertern."
-      info: "+{value}% Schwertschaden"
-    first_strike:
-      name: Erstschlag
-      desc: "Verursache beim ersten Treffer {value}% mehr Schaden."
-      info: "+{value}% Schaden bei Erstschlag"
-      dealt: "<red>Erstschlag!"
-    bleed:
-      name: Bluten
-      desc: "{value}% Chance den Feind für 3 ticks bluten zu lassen. Bluten verursacht {value_2} Schaden/tick."
-      info: "{value}% Chance, {value_2} Schaden"
-      enemy_bleeding: "<red>Gegner blutet!"
-      self_bleeding: "<red>Du blutest!"
-      stop: "<white>Du hast aufgehört zu bluten"
-  endurance:
-    anti_hunger:
-      name: Anti-Hunger
-      desc: "{value}% Chance den Hungerverlust zu stoppen."
-      info: "{value}% kein Hungerverlust"
-    runner:
-      name: Läufer
-      desc: "Verdiene {value}% mehr Ausdauer EP."
-      info: "+{value}% EP"
-    golden_heal:
-      name: Goldene Heilung
-      desc: "Erhöht die Heilung durch den Regenerationseffekt um {value}%"
-      info: "+{value}% Heilung durch Regeneration"
-    recovery:
-      name: Erholung
-      desc: "Erhöht, solange du weniger als die Hälfte deiner LP hast, die natürliche Regeneration um {value}%"
-      info: "+{value}% Regeneration bei niedrigen LP"
-    meal_steal:
-      name: Mundraub
-      desc: "{value}% Chance, einen Hungerpunkt zu stehlen, wenn du einen Spieler angreifst."
-      info: "{value}% Hunger stehlen"
-  agility:
-    light_fall:
-      name: Federfall
-      desc: "Reduziert allen Sturzschaden um {value}%"
-      info: "-{value}% Sturzschaden"
-    jumper:
-      name: Springer
-      desc: "Verdiene {value}% mehr Beweglichkeit EP"
-      info: "+{value}% EP"
-    sugar_rush:
-      name: Zuckerrausch
-      desc: "Getrunkene und geworfene Tränke der Schnelligkeit und Sprungkraft wirken {value}% länger."
-      info: "{value}% längere Schnelligkeit/Sprungkraft"
-    fleeting:
-      name: Flüchtig
-      desc: "Deine Bewegungsgeschwindigkeit ist um {value}% erhöht solange deine Gesundheit unter 20% liegt."
-      info: "+{value}% Geschwindigkeit"
-      start: "<white>Du hast einen flüchtigen Geschwindigkeitsschub erhalten! <gray>(+{value}% Schnelligkeit)"
-      end: "<gray>Flüchtiger Geschwindigkeitsschub ist ausgelaufen"
-    thunder_fall:
-      name: Donnersturz
-      desc: "Wenn du während eines Sturzes schleichst, hast du eine {value}% chance Kreaturen im Umkreis von 3 Blöcken {value_2}% deines Sturz-Schadens zuzufügen"
-      info: "{value}% Chance, {value_2}% Schaden"
-  alchemy:
-    alchemist:
-      name: Alchemist
-      desc: "Tränke die du braust wirken {value}% länger."
-      info: "+{value}% Wirkungsdauer von Tränken"
-      lore: "<green>(+{duration})"
-    brewer:
-      name: Brauer
-      desc: "Verdiene {value}% mehr Alchemie EP"
-      info: "+{value}% EP"
-    splasher:
-      name: Spritzer
-      desc: "Wurftränke wirken {value}% länger für jeden betroffenen Spieler."
-      info: "+{value}% Wirkungsdauer/Spieler"
-    lingering:
-      name: Verweilend
-      desc: "Verweiltränke lassen um {value}% langsamer und um {value_2}% pro betroffener Einheit weniger nach."
-      info: "-{value}% Verfall, -{value_2}% Abschwächung"
-    wise_effect:
-      name: Weise-Effekt
-      desc: "Erhalte {value} Weisheit für jeden einzigartigen aktiven Trankeffekt."
-      info: "+{value} Weisheit/Effekt"
-  enchanting:
-    xp_convert:
-      name: EP Konvertieren
-      desc: "Verdiene Erfahrung für jede {value} Fähigkeit XP, die du erhältst."
-      info: "1 EXP/{value} Skill XP"
-    enchanter:
-      name: Verzauberer
-      desc: "Verdiene {value}% mehr Verzauberungs EP."
-      info: "+{value}% XP"
-    xp_warrior:
-      name: XP Krieger
-      desc: "Mobs, die du tötest, haben eine Chance von {value}% doppelte Erfahrung zu geben."
-      info: "{value}% 2x Mob XP"
-    enchanted_strength:
-      name: Verzauberte Stärke
-      desc: "Erhalte {value} Stärke für jede einzelne Verzauberung auf dem abgehaltenen Gegenstand."
-      info: "{value} Stärke/Verzauberung"
-    lucky_table:
-      name: Glückswert
-      desc: "Gegenstände, die du mit dem Verzauberungstisch verzauberst haben eine {value}% Chance, die Verzauberung zu verbessern Level um 1, wenn nicht max. Level"
-      info: "{value}% Chance Verzauberungen zu verbessern"
-  healing:
-    life_essence:
-      name: Lebensessenz
-      desc: Tränke der Heilung heilen {value}% mehr.
-      info: "+{value}% Sofortleben"
-    healer:
-      name: Heiler
-      desc: Erhalte {value}% mehr Heilungserfahrung.
-      info: "+{value}% EP"
-    life_steal:
-      name: Lebensraub
-      desc: Heile {value}% der maximalen HP von feindlichen Mobsund Spielern, die du tötest.
-      info: "Raube {value}% HP"
-    golden_heart:
-      name: Goldherz
-      desc: Schaden an deinen Absorptionsherzen wirdum {value} % reduziert
-      info: "-{value}% Absorptionsschaden"
-    revival:
-      name: Wiederkehr
-      desc: Erhalte <red>+{value} Leben <gray>und <gold>+{value_2} Regeneration für 30 Sekunden nach der Wiederkehr.
-      info: "+{value} Leben, +{value_2} Regeneration"
-      message: "<white>Du hast einen Wiederkehrbonus für 30 Sekunden erhalten! <white>(<red>+{value} Leben, <gold>+{value_2} Regeneration<white>)"
-  forging:
-    disenchanter:
-      name: Entzauberer
-      desc: Erhalte {value}% mehr Erfahrung, wenn du Gegenstände mit einem Schleifstein entzauberst.
-      info: "+{value}% Schleifstein Erfahrung"
-    forger:
-      name: Schmied
-      desc: Verdiene {value}% mehr Sammeln EP.
-      info: "+{value}% EP"
-    repairing:
-      name: Reparieren
-      desc: Gegenstände am Amboss mit dem rohen Material zu reparieren aus dem es besteht repariert {value}% mehr Haltbarkeit.
-      info: "+{value}% Ambossreparatur"
-    anvil_master:
-      name: Schmiedemeister
-      desc: Erhöht die maximalen Reparaturkosten an einem Amboss bevor es zu teuer wird um {value} Erfahrungslevel.
-      info: "{value} Maximale Kosten"
-    skill_mender:
-      name: Notdürftige Ausbesserung
-      desc: Fertigkeiten EXP zu erhalten hat eine {value}% Chance einen gehaltenen Gegenstand oder ein beschädigtes Rüstungsteil mit Reparatur um 1 Haltbarkeit pro 2 Skill EXP zu reparieren.
-      info: "{value}% Reparaturchance"
+  bountiful_harvest:
+    name: Ertragreiche Ernte
+    desc: "{value}% Chance, doppelte Drops von Pflanzen zu bekommen."
+    info: "{value}% 2x Drops"
+  farmer:
+    name: Landwirt
+    desc: "Verdiene {value}% mehr Ackerbau EP."
+    info: "+{value}% EP"
+  scythe_master:
+    name: Sensenmeister
+    desc: "Erhöht den Schaden von Hacken um {value}%"
+    info: "+{value}% Hackenschaden"
+  geneticist:
+    name: Genetiker
+    desc: "Erhöht den Sättigungsgewinn von pflanzlichen Lebensmitteln um {value}."
+    info: "+{value} Sättigung"
+  triple_harvest:
+    name: Dreifache Ernte
+    desc: "{value}% Chance, dreifache Drops von Pflanzen zu bekommen."
+    info: "{value}% 3x Drops"
+  lumberjack:
+    name: Holzfäller
+    desc: "{value}% Chance, doppelte Drops von Baumstämmen zu bekommen."
+    info: "{value}% 2x Drops"
+  forager:
+    name: Waldläufer
+    desc: "Verdiene {value}% mehr Sammeln EP."
+    info: "+{value}% EP"
+  axe_master:
+    name: Axt-Meister
+    desc: "Erhöht den Schaden von Äxten um {value}%"
+    info: "+{value}% Axtschaden"
+  valor:
+    name: Wagemut
+    desc: "Gewährt +{value} Stärke während du eine Axt hältst"
+    info: "+{value} Stärke"
+  shredder:
+    name: Schredder
+    desc: "{value}% Chance, dreifachen Haltbarkeitsschaden mit Äxten zu verursachen."
+    info: "{value}% 3x Haltbarkeitsschaden"
+  lucky_miner:
+    name: Glückspilz
+    desc: "{value}% Chance, doppelte Drops von Erzen zu bekommen."
+    info: "{value}% 2x Drops"
+  miner:
+    name: Minenarbeiter
+    desc: "Verdiene {value}% mehr Bergbau EP."
+    info: "+{value}% EP"
+  pick_master:
+    name: Spitzhacken-Meister
+    desc: "Verursache {value}% mehr Schaden mit Spitzhacken."
+    info: "+{value}% Spitzhackenschaden"
+  stamina:
+    name: Ausdauer
+    desc: "Gewährt +{value} Widerstandskraft während du eine Spitzhacke hältst"
+    info: "+{value} Widerstandskraft"
+  hardened_armor:
+    name: Gehärtete Rüstung
+    desc: "{value}% Chance, dass deine Rüstung keinen Haltbarkeitsschaden erleidet."
+    info: "{value}% kein Haltbarkeitsverlust"
+  lucky_catch:
+    name: Glücklicher Fang
+    desc: "{value}% Chance hinzugefügt doppelte Ressourcen <gray> beim Fischen zu bekommen."
+    info: "{value}% 2x Drops"
+  fisher:
+    name: Fischer
+    desc: "Verdiene {value}% mehr Fischen EP"
+    info: "+{value}% EP"
+  treasure_hunter:
+    name: Schatzjäger
+    desc: "{value}% Chance, beim Fischen seltene Beute zu finden."
+    info: "+{value}% Seltene Beute"
+  grappler:
+    name: Greifarm
+    desc: "Ziehe Fänge mit {value}% höherer Geschwindigkeit an Land."
+    info: "+{value}% Geschwindigkeit beim einholen"
+  epic_catch:
+    name: Epischer Fang
+    desc: "{value}% Chance, beim Fischen epische Beute zu finden."
+    info: "+{value}% Epische Beute"
+  metal_detector:
+    name: Metalldetektor
+    desc: "{value}% Chance, beim Graben seltene Beute zu finden."
+    info: "+{value}% Seltene Beute"
+  excavator:
+    name: Ausgräber
+    desc: "Verdiene {value}% mehr Ausgrabung EP"
+    info: "+{value}% EP"
+  spade_master:
+    name: Schaufel-Meister
+    desc: "Verursache {value}% mehr Schaden mit Schaufeln."
+    info: "+{value}% Schaufelschaden"
+  bigger_scoop:
+    name: Riesen Schaufel
+    desc: "{value}% Chance, beim Graben dreifache Drops zu bekommen."
+    info: "{value}% 3x Drops"
+  lucky_spades:
+    name: Seltener Fund
+    desc: "{value}% Chance, beim Graben epische Beute zu finden."
+    info: "+{value}% Epische Beute"
+  crit_chance:
+    name: Kritische Trefferchance
+    desc: "+{value}% Chance, einen kritischen Treffer zu landen."
+    info: "+{value}% Kritische Trefferchance"
+  archer:
+    name: Bogenschütze
+    desc: "Verdiene {value}% mehr Bogenschießen EP."
+    info: "+{value}% EP"
+  bow_master:
+    name: Bogen-Meister
+    desc: "Verursache {value}% mehr Schaden mit Bögen."
+    info: "+{value}% Bogenschaden"
+  piercing:
+    name: Durchschuss
+    desc: "{value}% Chance für Pfeile Mobs zu durchbohren."
+    info: "{value}% Chance zu durchbohren"
+  stun:
+    name: Schock
+    desc: "{value}% Chance, den Feind für 2 Sekunden um 20% zu verlangsamen."
+    info: "{value}% Betäubungschance"
+  shielding:
+    name: Schutzschild
+    desc: "Reduziert eingehenden Schaden um {value}% während des Schleichens."
+    info: "-{value}% erlittener Schaden beim Schleichen"
+  defender:
+    name: Verteidiger
+    desc: "Verdiene {value}% mehr Verteidigung EP"
+    info: "+{value}% EP"
+  mob_master:
+    name: Kreaturen-Meister
+    desc: "Reduziert Schaden durch Mobs um {value}%"
+    info: "-{value}% Schaden von Kreaturen"
+  immunity:
+    name: Immunität
+    desc: "{value}% Chance einen feindlichen Angriff komplett zu negieren."
+    info: "{value}% Immunität"
+  no_debuff:
+    name: Statusschutz
+    desc: "{value}% Chance einen schädlichen Trank Effekt nicht anzuwenden."
+    info: "{value}% Statusschutz"
+  crit_damage:
+    name: Kritischer Schaden
+    desc: "Erhöht den kritischen Schaden um {value}%"
+    info: "+{value}% Kritischer Schaden"
+  fighter:
+    name: Kämpfer
+    desc: "Verdiene {value}% mehr Kampf EP"
+    info: "+{value}% EP"
+  sword_master:
+    name: Schwert-Meister
+    desc: "Verursache {value}% mehr Schaden mit Schwertern."
+    info: "+{value}% Schwertschaden"
+  first_strike:
+    name: Erstschlag
+    desc: "Verursache beim ersten Treffer {value}% mehr Schaden."
+    info: "+{value}% Schaden bei Erstschlag"
+    dealt: "<red>Erstschlag!"
+  bleed:
+    name: Bluten
+    desc: "{value}% Chance den Feind für 3 ticks bluten zu lassen. Bluten verursacht {value_2} Schaden/tick."
+    info: "{value}% Chance, {value_2} Schaden"
+    enemy_bleeding: "<red>Gegner blutet!"
+    self_bleeding: "<red>Du blutest!"
+    stop: "<white>Du hast aufgehört zu bluten"
+  anti_hunger:
+    name: Anti-Hunger
+    desc: "{value}% Chance den Hungerverlust zu stoppen."
+    info: "{value}% kein Hungerverlust"
+  runner:
+    name: Läufer
+    desc: "Verdiene {value}% mehr Ausdauer EP."
+    info: "+{value}% EP"
+  golden_heal:
+    name: Goldene Heilung
+    desc: "Erhöht die Heilung durch den Regenerationseffekt um {value}%"
+    info: "+{value}% Heilung durch Regeneration"
+  recovery:
+    name: Erholung
+    desc: "Erhöht, solange du weniger als die Hälfte deiner LP hast, die natürliche Regeneration um {value}%"
+    info: "+{value}% Regeneration bei niedrigen LP"
+  meal_steal:
+    name: Mundraub
+    desc: "{value}% Chance, einen Hungerpunkt zu stehlen, wenn du einen Spieler angreifst."
+    info: "{value}% Hunger stehlen"
+  light_fall:
+    name: Federfall
+    desc: "Reduziert allen Sturzschaden um {value}%"
+    info: "-{value}% Sturzschaden"
+  jumper:
+    name: Springer
+    desc: "Verdiene {value}% mehr Beweglichkeit EP"
+    info: "+{value}% EP"
+  sugar_rush:
+    name: Zuckerrausch
+    desc: "Getrunkene und geworfene Tränke der Schnelligkeit und Sprungkraft wirken {value}% länger."
+    info: "{value}% längere Schnelligkeit/Sprungkraft"
+  fleeting:
+    name: Flüchtig
+    desc: "Deine Bewegungsgeschwindigkeit ist um {value}% erhöht solange deine Gesundheit unter 20% liegt."
+    info: "+{value}% Geschwindigkeit"
+    start: "<white>Du hast einen flüchtigen Geschwindigkeitsschub erhalten! <gray>(+{value}% Schnelligkeit)"
+    end: "<gray>Flüchtiger Geschwindigkeitsschub ist ausgelaufen"
+  thunder_fall:
+    name: Donnersturz
+    desc: "Wenn du während eines Sturzes schleichst, hast du eine {value}% chance Kreaturen im Umkreis von 3 Blöcken {value_2}% deines Sturz-Schadens zuzufügen"
+    info: "{value}% Chance, {value_2}% Schaden"
+  alchemist:
+    name: Alchemist
+    desc: "Tränke die du braust wirken {value}% länger."
+    info: "+{value}% Wirkungsdauer von Tränken"
+    lore: "<green>(+{duration})"
+  brewer:
+    name: Brauer
+    desc: "Verdiene {value}% mehr Alchemie EP"
+    info: "+{value}% EP"
+  splasher:
+    name: Spritzer
+    desc: "Wurftränke wirken {value}% länger für jeden betroffenen Spieler."
+    info: "+{value}% Wirkungsdauer/Spieler"
+  lingering:
+    name: Verweilend
+    desc: "Verweiltränke lassen um {value}% langsamer und um {value_2}% pro betroffener Einheit weniger nach."
+    info: "-{value}% Verfall, -{value_2}% Abschwächung"
+  wise_effect:
+    name: Weise-Effekt
+    desc: "Erhalte {value} Weisheit für jeden einzigartigen aktiven Trankeffekt."
+    info: "+{value} Weisheit/Effekt"
+  xp_convert:
+    name: EP Konvertieren
+    desc: "Verdiene Erfahrung für jede {value} Fähigkeit XP, die du erhältst."
+    info: "1 EXP/{value} Skill XP"
+  enchanter:
+    name: Verzauberer
+    desc: "Verdiene {value}% mehr Verzauberungs EP."
+    info: "+{value}% XP"
+  xp_warrior:
+    name: XP Krieger
+    desc: "Mobs, die du tötest, haben eine Chance von {value}% doppelte Erfahrung zu geben."
+    info: "{value}% 2x Mob XP"
+  enchanted_strength:
+    name: Verzauberte Stärke
+    desc: "Erhalte {value} Stärke für jede einzelne Verzauberung auf dem abgehaltenen Gegenstand."
+    info: "{value} Stärke/Verzauberung"
+  lucky_table:
+    name: Glückswert
+    desc: "Gegenstände, die du mit dem Verzauberungstisch verzauberst haben eine {value}% Chance, die Verzauberung zu verbessern Level um 1, wenn nicht max. Level"
+    info: "{value}% Chance Verzauberungen zu verbessern"
+  life_essence:
+    name: Lebensessenz
+    desc: Tränke der Heilung heilen {value}% mehr.
+    info: "+{value}% Sofortleben"
+  healer:
+    name: Heiler
+    desc: Erhalte {value}% mehr Heilungserfahrung.
+    info: "+{value}% EP"
+  life_steal:
+    name: Lebensraub
+    desc: Heile {value}% der maximalen HP von feindlichen Mobsund Spielern, die du tötest.
+    info: "Raube {value}% HP"
+  golden_heart:
+    name: Goldherz
+    desc: Schaden an deinen Absorptionsherzen wirdum {value} % reduziert
+    info: "-{value}% Absorptionsschaden"
+  revival:
+    name: Wiederkehr
+    desc: Erhalte <red>+{value} Leben <gray>und <gold>+{value_2} Regeneration für 30 Sekunden nach der Wiederkehr.
+    info: "+{value} Leben, +{value_2} Regeneration"
+    message: "<white>Du hast einen Wiederkehrbonus für 30 Sekunden erhalten! <white>(<red>+{value} Leben, <gold>+{value_2} Regeneration<white>)"
+  disenchanter:
+    name: Entzauberer
+    desc: Erhalte {value}% mehr Erfahrung, wenn du Gegenstände mit einem Schleifstein entzauberst.
+    info: "+{value}% Schleifstein Erfahrung"
+  forger:
+    name: Schmied
+    desc: Verdiene {value}% mehr Sammeln EP.
+    info: "+{value}% EP"
+  repairing:
+    name: Reparieren
+    desc: Gegenstände am Amboss mit dem rohen Material zu reparieren aus dem es besteht repariert {value}% mehr Haltbarkeit.
+    info: "+{value}% Ambossreparatur"
+  anvil_master:
+    name: Schmiedemeister
+    desc: Erhöht die maximalen Reparaturkosten an einem Amboss bevor es zu teuer wird um {value} Erfahrungslevel.
+    info: "{value} Maximale Kosten"
+  skill_mender:
+    name: Notdürftige Ausbesserung
+    desc: Fertigkeiten EXP zu erhalten hat eine {value}% Chance einen gehaltenen Gegenstand oder ein beschädigtes Rüstungsteil mit Reparatur um 1 Haltbarkeit pro 2 Skill EXP zu reparieren.
+    info: "{value}% Reparaturchance"
 acf:
   core:
     permission_denied: "<red>Du hast nicht die benötigte Berechtigung um diesen Befehl auszuführen."
@@ -717,13 +703,10 @@ skills:
     desc: "Gehe und laufe um Ausdauer {xp_unit} zu erhalten"
   agility:
     name: Beweglichkeit
-    desc: "Springe und bekomme Fallschaden um Beweglichkeits {xp_unit} zu erhalten"
   alchemy:
     name: Alchemie
-    desc: "Braue Tränke um Alchemie {xp_unit} zu verdienen!"
   enchanting:
     name: Verzaubern
-    desc: "Verzaubernde Gegenstände und Bücher, um Verzaubern {xp_unit} zu erhalten"
   sorcery:
     name: Zauberei
     desc: "Verwende Mana-Fähigkeiten, um Hexerei {xp_unit} zu erhalten"
@@ -947,26 +930,12 @@ sources:
     swim_per_meter: Schwimmen
   jumping:
     jump_per_100: Springen
-  brewing:
-    awkward: Seltsamer Trank
-    regular: Gewöhnlicher Trank
-    extended: Trank mit verlängerter Wirkungsdauer
-    upgraded: Verbesserter Trank
-    splash: Wurftrank
-    lingering: Verweiltrank
-  enchanting:
-    weapon_per_level: Waffe
-    armor_per_level: Rüstung
-    tool_per_level: Werkzeug
-    book_per_level: Buch
   mana_ability_use:
     mana_ability_use: Mana-Fähigkeiten benutzen
   item_consume:
     drink_regular: Einen gewöhnlichen Trank trinken
     drink_extended: Einen Trank mit verlängerter Dauer trinken
     drink_upgraded: Einen verbesserten Trank trinken
-    golden_apple: Goldener Apfel
-    enchanted_golden_apple: Verzauberter goldener Apfel
   potion_splash:
     splash_regular: Gewöhnlicher Wurftrank
     splash_extended: Wurftrank mit verlängerter Wirkungsdauer

@@ -2,308 +2,294 @@
 # Translators: SnowCutieOwO, Qian_ai, huiqiang233, Kauo
 # Contribute here: https://crowdin.com/project/aureliumskills/zh-CN#
 abilities:
-  farming:
-    bountiful_harvest:
-      name: 收获满满
-      desc: "{value}% 的几率收获双倍农作物"
-      info: "{value}% 双倍 掉落物"
-    farmer:
-      name: 耕作专精
-      desc: "获得额外的 {value}% 耕作熟练度."
-      info: "+{value}% 熟练度"
-    scythe_master:
-      name: 镰刀专精
-      desc: "提升 {value}% 的锄头伤害"
-      info: "+{value}% 任意 锄头 伤害"
-    geneticist:
-      name: 素食主义者
-      desc: "额外增加 {value} 点植物食物回复的饥饿度"
-      info: "+{value}% 回复的饱食度"
-    triple_harvest:
-      name: 超级丰收
-      desc: "{value}% 的几率收获三倍掉落物"
-      info: "{value}% 三倍 掉落物"
-  foraging:
-    lumberjack:
-      name: 精准伐木
-      desc: "{value}% 的几率在伐木时获得双倍的木头"
-      info: "{value}% 双倍 掉落物"
-    forager:
-      name: 伐木专精
-      desc: "获得额外的 {value}% 伐木熟练度"
-      info: "+{value}% 熟练度"
-    axe_master:
-      name: 弄斧大师
-      desc: "提升 {value}% 的斧子伤害"
-      info: "+{value}% 任意 斧 伤害"
-    valor:
-      name: 怒气狂涌
-      desc: "持有 任意 斧头 时 +{value} 力量"
-      info: "+{value} 力量"
-    shredder:
-      name: 猛力一击
-      desc: "{value}% 的几率消耗三倍耐久造成更高的伤害"
-      info: "{value}% 三倍耐久损耗"
-  mining:
-    lucky_miner:
-      name: 幸运挖掘者
-      desc: "{value}% 的几率在挖矿时掉落双倍矿物"
-      info: "{value}% 双倍矿物掉落"
-    miner:
-      name: 矿工专精
-      desc: "获得额外的 {value}% 挖矿熟练度"
-      info: "+{value}% 熟练度"
-    pick_master:
-      name: 镐击大师
-      desc: "提升 {value}% 的镐子伤害"
-      info: "+{value}% 任意 镐 伤害"
-    stamina:
-      name: 矿工耐力
-      desc: "持有 任意 镐 时获得 +{value} 韧性"
-      info: "+{value} 韧性"
-    hardened_armor:
-      name: 硬化盔甲
-      desc: "{value}% 的几率受伤不消耗盔甲耐久"
-      info: "{value}% 盔甲耐久损耗减免"
-  fishing:
-    lucky_catch:
-      name: 幸运一竿
-      desc: "{value}% 的几率钓上双倍物品"
-      info: "{value}% 双倍 掉落物"
-    fisher:
-      name: 捕鱼专精
-      desc: "获得额外的 {value}% 的钓鱼熟练度"
-      info: "+{value}% 熟练度"
-    treasure_hunter:
-      name: 宝藏猎人
-      desc: "{value}% 的几率钓上稀有掉落物"
-      info: "+{value}% 稀有 掉落物获得率"
-    grappler:
-      name: 钩爪钓竿
-      desc: "用钓竿勾住并拉过来实体的速度增加 {value}%"
-      info: "+{value}% 抓住实体速度"
-    epic_catch:
-      name: 史诗一竿
-      desc: "{value}% 的几率钓上史诗掉落物"
-      info: "+{value}% 史诗 掉落物获得率"
-  excavation:
-    metal_detector:
-      name: 金属探测者
-      desc: "{value}% 的几率在挖掘时掉落稀有掉落物"
-      info: "+{value}% 稀有 掉落物获得率"
-    excavator:
-      name: 掘土专精
-      desc: "获得额外的 {value}% 挖掘熟练度"
-      info: "+{value}% 熟练度"
-    spade_master:
-      name: 舞铲阶级
-      desc: "提升 {value}% 的铲子伤害"
-      info: "+{value}% 任意 铲 伤害"
-    bigger_scoop:
-      name: 加倍掉落
-      desc: "{value}% 的几率在挖掘时掉落三倍掉落物"
-      info: "{value}% 三倍 掉落物"
-    lucky_spades:
-      name: 捡漏之王
-      desc: "{value}% 的几率在挖掘时掉落史诗掉落物"
-      info: "+{value}% 史诗 掉落物获得率"
-  archery:
-    crit_chance:
-      name: 猛力一击
-      desc: "+{value}% 的几率造成一次暴击伤害"
-      info: "+{value}% 暴击几率"
-    archer:
-      name: 弓箭专精
-      desc: "获得额外的 {value}% 弓箭熟练度"
-      info: "+{value}% 熟练度"
-    bow_master:
-      name: 弓箭大师
-      desc: "提升 {value}% 的弓伤害"
-      info: "+{value}% 任意 弓 伤害"
-    piercing:
-      name: 穿透之箭
-      desc: "{value}% 的几率可以使弓穿过多个生物并造成伤害"
-      info: "{value}% 射出穿透箭几率"
-    stun:
-      name: 眩晕打击
-      desc: "{value}% 的几率可以使敌人移动速度降低 20%, 持续2秒"
-      info: "{value}% 晕眩攻击几率"
-  defense:
-    shielding:
-      name: 捂头蹲防
-      desc: "蹲下时减少 {value}% 的伤害"
-      info: "-{value}% 蹲下时受到的伤害"
-    defender:
-      name: 防御专精
-      desc: "获得额外的 {value}% 防御熟练度"
-      info: "+{value}% 熟练度"
-    mob_master:
-      name: 知己知彼
-      desc: "减少 {value}% 来自于任意生物的伤害"
-      info: "-{value}% 任意 生物伤害"
-    immunity:
-      name: 敏捷躲闪
-      desc: "{value}% 的几率无视一次敌对生物的攻击"
-      info: "{value}% 无视几率"
-    no_debuff:
-      name: 负面效果清除
-      desc: "{value}% 的几率清除获得的负面药水效果"
-      info: "{value}% 清除负面效果几率"
-  fighting:
-    crit_damage:
-      name: 暴击伤害
-      desc: "增加 {value}% 的暴击伤害"
-      info: "增加 {value}% 的暴击伤害"
-    fighter:
-      name: 战斗专精
-      desc: "获得额外的 {value}% 战斗熟练度"
-      info: "+{value}% 熟练度"
-    sword_master:
-      name: 剑之大师
-      desc: "提升 {value}% 的剑伤害"
-      info: "+{value}% 任意 剑 伤害"
-    first_strike:
-      name: 先出之刃
-      desc: "首次攻击生物的时候造成 {value}% 的额外伤害"
-      info: "+{value}% 首次攻击伤害"
-      dealt: "<red>先出之刃!"
-    bleed:
-      name: 流血
-      desc: "{value}% 的几率使敌人流血失血3次, 每次流血伤害 {value_2} 点"
-      info: "{value}% 几率, {value_2} 伤害/次"
-      enemy_bleeding: "<red>敌人正在流血!"
-      self_bleeding: "<red>你正在流血!"
-      stop: "<white>流血已停止..."
-  endurance:
-    anti_hunger:
-      name: 横扫饥饿
-      desc: "{value}% 的几率使饥饿度停止损失"
-      info: "{value}% 无饥饿几率"
-    runner:
-      name: 探索专精
-      desc: "获得额外 {value}% 的探索熟练度"
-      info: "+{value}% 熟练度"
-    golden_heal:
-      name: 黄金体质
-      desc: "额外提升{value}% 的生命治疗恢复效果"
-      info: "+{value}% 效果增强"
-    recovery:
-      name: 自愈增强
-      desc: "当血量低于 {value}% 时增加回血速度"
-      info: "+{value}% 低血量自愈"
-    meal_steal:
-      name: 饥饿偷取
-      desc: "{value}% 从别的玩家身上偷取 2 点饥饿值"
-      info: "{value}% 饥饿偷取几率"
-  agility:
-    light_fall:
-      name: 轻盈降落
-      desc: "减少 {value}% 的摔落伤害"
-      info: "-{value}% 摔落伤害"
-    jumper:
-      name: 杂技专精
-      desc: "获得额外的 {value}% 杂技熟练度"
-      info: "+{value}% 熟练度"
-    sugar_rush:
-      name: 药力增强
-      desc: "跳跃提升与速度药水的持续时间增加 {value}%"
-      info: "{value}% 持续时间延长"
-    fleeting:
-      name: 残血飞奔
-      desc: "低于 20% 生命值时获得 +{value}% 的速度"
-      info: "+{value}% 速度"
-      start: "<white>你获得了残血速度提升! <gray>(+{value}% 速度)"
-      end: "<gray>残血速度提升已被关闭"
-    thunder_fall:
-      name: 落地震击
-      desc: "当按住Shift在空中掉落时有 {value}% 的几率能对半径3格内的生物造成 {value_2}% 的伤害"
-      info: "{value}% 震击几率, {value_2}% 伤害"
-  alchemy:
-    alchemist:
-      name: 炼金术士
-      desc: "制作的药水持续时间延长 {value}%"
-      info: "+{value}% 药水持续时间"
-      lore: "<green>(+{duration})"
-    brewer:
-      name: 酿造专精
-      desc: "获得额外的 {value}% 酿造熟练度"
-      info: "+{value}% 熟练度"
-    splasher:
-      name: 高效喷溅
-      desc: "喷溅型药水产生的效果时间延长 {value}%"
-      info: "+{value}% 时长"
-    lingering:
-      name: 滞留增强
-      desc: "滞留型药水持续时间增加 {value}%, 并减少 {value_2}% 受影响实体的效果."
-      info: "-{value}% 自然持续时间, -{value_2}% 实体效果减退"
-    wise_effect:
-      name: 智慧专精
-      desc: "每一个药水效果能额外获得 {value} 智慧熟练度"
-      info: "+{value} 每个药水效果获得的智慧熟练度"
-  enchanting:
-    xp_convert:
-      name: 经验转化
-      desc: "每获得 {value} 点技能经验可以额外获得 1 点原版的经验值."
-      info: "1 经验值/{value} 技能经验"
-    enchanter:
-      name: 附魔专精
-      desc: "获得额外的 {value}% 附魔熟练度."
-      info: "+{value}% 熟练度"
-    xp_warrior:
-      name: 经验战士
-      desc: "你杀死的生物有 {value}% 的几率掉落双倍的经验."
-      info: "{value}% 2x 经验值"
-    enchanted_strength:
-      name: 附魔之力
-      desc: "手持物品上的附魔能额外让你获得 +{value}点/种 的力量"
-      info: "{value} 力量/单个附魔"
-    lucky_table:
-      name: 幸运附魔台
-      desc: "正在使用的物品如果携带有从附魔台得到的附魔, 则会在它到达最高级之前有 {value}% 的几率再增加 1 级"
-      info: "{value}% 附魔升级几率"
-  healing:
-    life_essence:
-      name: 生命源质
-      desc: 瞬间恢复(喷溅或滞留等均可) 药水能额外回复 {value}% 生命值
-      info: "+{value}% 额外回复生命"
-    healer:
-      name: 治疗专精
-      desc: 获得额外的 {value}% 治疗熟练度
-      info: "+{value}% 熟练度"
-    life_steal:
-      name: 生命窃取
-      desc: 每个击杀的生物或玩家可以为你回复 {value}% 的血量.
-      info: "偷取 {value}% 的血量"
-    golden_heart:
-      name: 黄金体质
-      desc: 有伤害吸收效果的金心时<gray>金心受到的伤害减少 {value}%
-      info: "-{value}% 金心受到的伤害"
-    revival:
-      name: 重生光环
-      desc: 复活的 30 秒内获得 +{value} 点的生命与 +{value_2} 级生命恢复效果
-      info: "+{value} 点生命值, +{value_2} 级生命回复效果"
-      message: "<white>重生之后, 你获得了 30 秒的庇护! <white>(<red>+{value} <gray>生命值, <gold>+{value_2} <gray>生命回复效果)"
-  forging:
-    disenchanter:
-      name: 祛魔转化
-      desc: 使用磨石时每个去掉的附魔能额外获得 {value}% 的经验
-      info: "+{value}% 磨石额外经验值"
-    forger:
-      name: 锻造专精
-      desc: 获得额外的 {value}% 锻造熟练度
-      info: "+{value}% 熟练度"
-    repairing:
-      name: 高效修复
-      desc: 使用原材料而非工具合并修复的物品可以额外回复 {value}% 的耐久度.
-      info: "+{value}% 铁砧修复度"
-    anvil_master:
-      name: 铁砧大师
-      desc: 在物品过于昂贵而无法修复之前降低修复物品时可能出现的最大消耗经验值至 {value} 级
-      info: "{value} 最大消耗"
-    skill_mender:
-      name: 技能结合者
-      desc: 手上物品拥有经验修补的物品时可以在每次获得 2 点技能经验时有 {value}% 的几率额外为此工具回复 1 点耐久
-      info: "{value}% 修复几率"
+  bountiful_harvest:
+    name: 收获满满
+    desc: "{value}% 的几率收获双倍农作物"
+    info: "{value}% 双倍 掉落物"
+  farmer:
+    name: 耕作专精
+    desc: "获得额外的 {value}% 耕作熟练度."
+    info: "+{value}% 熟练度"
+  scythe_master:
+    name: 镰刀专精
+    desc: "提升 {value}% 的锄头伤害"
+    info: "+{value}% 任意 锄头 伤害"
+  geneticist:
+    name: 素食主义者
+    desc: "额外增加 {value} 点植物食物回复的饥饿度"
+    info: "+{value}% 回复的饱食度"
+  triple_harvest:
+    name: 超级丰收
+    desc: "{value}% 的几率收获三倍掉落物"
+    info: "{value}% 三倍 掉落物"
+  lumberjack:
+    name: 精准伐木
+    desc: "{value}% 的几率在伐木时获得双倍的木头"
+    info: "{value}% 双倍 掉落物"
+  forager:
+    name: 伐木专精
+    desc: "获得额外的 {value}% 伐木熟练度"
+    info: "+{value}% 熟练度"
+  axe_master:
+    name: 弄斧大师
+    desc: "提升 {value}% 的斧子伤害"
+    info: "+{value}% 任意 斧 伤害"
+  valor:
+    name: 怒气狂涌
+    desc: "持有 任意 斧头 时 +{value} 力量"
+    info: "+{value} 力量"
+  shredder:
+    name: 猛力一击
+    desc: "{value}% 的几率消耗三倍耐久造成更高的伤害"
+    info: "{value}% 三倍耐久损耗"
+  lucky_miner:
+    name: 幸运挖掘者
+    desc: "{value}% 的几率在挖矿时掉落双倍矿物"
+    info: "{value}% 双倍矿物掉落"
+  miner:
+    name: 矿工专精
+    desc: "获得额外的 {value}% 挖矿熟练度"
+    info: "+{value}% 熟练度"
+  pick_master:
+    name: 镐击大师
+    desc: "提升 {value}% 的镐子伤害"
+    info: "+{value}% 任意 镐 伤害"
+  stamina:
+    name: 矿工耐力
+    desc: "持有 任意 镐 时获得 +{value} 韧性"
+    info: "+{value} 韧性"
+  hardened_armor:
+    name: 硬化盔甲
+    desc: "{value}% 的几率受伤不消耗盔甲耐久"
+    info: "{value}% 盔甲耐久损耗减免"
+  lucky_catch:
+    name: 幸运一竿
+    desc: "{value}% 的几率钓上双倍物品"
+    info: "{value}% 双倍 掉落物"
+  fisher:
+    name: 捕鱼专精
+    desc: "获得额外的 {value}% 的钓鱼熟练度"
+    info: "+{value}% 熟练度"
+  treasure_hunter:
+    name: 宝藏猎人
+    desc: "{value}% 的几率钓上稀有掉落物"
+    info: "+{value}% 稀有 掉落物获得率"
+  grappler:
+    name: 钩爪钓竿
+    desc: "用钓竿勾住并拉过来实体的速度增加 {value}%"
+    info: "+{value}% 抓住实体速度"
+  epic_catch:
+    name: 史诗一竿
+    desc: "{value}% 的几率钓上史诗掉落物"
+    info: "+{value}% 史诗 掉落物获得率"
+  metal_detector:
+    name: 金属探测者
+    desc: "{value}% 的几率在挖掘时掉落稀有掉落物"
+    info: "+{value}% 稀有 掉落物获得率"
+  excavator:
+    name: 掘土专精
+    desc: "获得额外的 {value}% 挖掘熟练度"
+    info: "+{value}% 熟练度"
+  spade_master:
+    name: 舞铲阶级
+    desc: "提升 {value}% 的铲子伤害"
+    info: "+{value}% 任意 铲 伤害"
+  bigger_scoop:
+    name: 加倍掉落
+    desc: "{value}% 的几率在挖掘时掉落三倍掉落物"
+    info: "{value}% 三倍 掉落物"
+  lucky_spades:
+    name: 捡漏之王
+    desc: "{value}% 的几率在挖掘时掉落史诗掉落物"
+    info: "+{value}% 史诗 掉落物获得率"
+  crit_chance:
+    name: 猛力一击
+    desc: "+{value}% 的几率造成一次暴击伤害"
+    info: "+{value}% 暴击几率"
+  archer:
+    name: 弓箭专精
+    desc: "获得额外的 {value}% 弓箭熟练度"
+    info: "+{value}% 熟练度"
+  bow_master:
+    name: 弓箭大师
+    desc: "提升 {value}% 的弓伤害"
+    info: "+{value}% 任意 弓 伤害"
+  piercing:
+    name: 穿透之箭
+    desc: "{value}% 的几率可以使弓穿过多个生物并造成伤害"
+    info: "{value}% 射出穿透箭几率"
+  stun:
+    name: 眩晕打击
+    desc: "{value}% 的几率可以使敌人移动速度降低 20%, 持续2秒"
+    info: "{value}% 晕眩攻击几率"
+  shielding:
+    name: 捂头蹲防
+    desc: "蹲下时减少 {value}% 的伤害"
+    info: "-{value}% 蹲下时受到的伤害"
+  defender:
+    name: 防御专精
+    desc: "获得额外的 {value}% 防御熟练度"
+    info: "+{value}% 熟练度"
+  mob_master:
+    name: 知己知彼
+    desc: "减少 {value}% 来自于任意生物的伤害"
+    info: "-{value}% 任意 生物伤害"
+  immunity:
+    name: 敏捷躲闪
+    desc: "{value}% 的几率无视一次敌对生物的攻击"
+    info: "{value}% 无视几率"
+  no_debuff:
+    name: 负面效果清除
+    desc: "{value}% 的几率清除获得的负面药水效果"
+    info: "{value}% 清除负面效果几率"
+  crit_damage:
+    name: 暴击伤害
+    desc: "增加 {value}% 的暴击伤害"
+    info: "增加 {value}% 的暴击伤害"
+  fighter:
+    name: 战斗专精
+    desc: "获得额外的 {value}% 战斗熟练度"
+    info: "+{value}% 熟练度"
+  sword_master:
+    name: 剑之大师
+    desc: "提升 {value}% 的剑伤害"
+    info: "+{value}% 任意 剑 伤害"
+  first_strike:
+    name: 先出之刃
+    desc: "首次攻击生物的时候造成 {value}% 的额外伤害"
+    info: "+{value}% 首次攻击伤害"
+    dealt: "<red>先出之刃!"
+  bleed:
+    name: 流血
+    desc: "{value}% 的几率使敌人流血失血3次, 每次流血伤害 {value_2} 点"
+    info: "{value}% 几率, {value_2} 伤害/次"
+    enemy_bleeding: "<red>敌人正在流血!"
+    self_bleeding: "<red>你正在流血!"
+    stop: "<white>流血已停止..."
+  anti_hunger:
+    name: 横扫饥饿
+    desc: "{value}% 的几率使饥饿度停止损失"
+    info: "{value}% 无饥饿几率"
+  runner:
+    name: 探索专精
+    desc: "获得额外 {value}% 的探索熟练度"
+    info: "+{value}% 熟练度"
+  golden_heal:
+    name: 黄金体质
+    desc: "额外提升{value}% 的生命治疗恢复效果"
+    info: "+{value}% 效果增强"
+  recovery:
+    name: 自愈增强
+    desc: "当血量低于 {value}% 时增加回血速度"
+    info: "+{value}% 低血量自愈"
+  meal_steal:
+    name: 饥饿偷取
+    desc: "{value}% 从别的玩家身上偷取 2 点饥饿值"
+    info: "{value}% 饥饿偷取几率"
+  light_fall:
+    name: 轻盈降落
+    desc: "减少 {value}% 的摔落伤害"
+    info: "-{value}% 摔落伤害"
+  jumper:
+    name: 杂技专精
+    desc: "获得额外的 {value}% 杂技熟练度"
+    info: "+{value}% 熟练度"
+  sugar_rush:
+    name: 药力增强
+    desc: "跳跃提升与速度药水的持续时间增加 {value}%"
+    info: "{value}% 持续时间延长"
+  fleeting:
+    name: 残血飞奔
+    desc: "低于 20% 生命值时获得 +{value}% 的速度"
+    info: "+{value}% 速度"
+    start: "<white>你获得了残血速度提升! <gray>(+{value}% 速度)"
+    end: "<gray>残血速度提升已被关闭"
+  thunder_fall:
+    name: 落地震击
+    desc: "当按住Shift在空中掉落时有 {value}% 的几率能对半径3格内的生物造成 {value_2}% 的伤害"
+    info: "{value}% 震击几率, {value_2}% 伤害"
+  alchemist:
+    name: 炼金术士
+    desc: "制作的药水持续时间延长 {value}%"
+    info: "+{value}% 药水持续时间"
+    lore: "<green>(+{duration})"
+  brewer:
+    name: 酿造专精
+    desc: "获得额外的 {value}% 酿造熟练度"
+    info: "+{value}% 熟练度"
+  splasher:
+    name: 高效喷溅
+    desc: "喷溅型药水产生的效果时间延长 {value}%"
+    info: "+{value}% 时长"
+  lingering:
+    name: 滞留增强
+    desc: "滞留型药水持续时间增加 {value}%, 并减少 {value_2}% 受影响实体的效果."
+    info: "-{value}% 自然持续时间, -{value_2}% 实体效果减退"
+  wise_effect:
+    name: 智慧专精
+    desc: "每一个药水效果能额外获得 {value} 智慧熟练度"
+    info: "+{value} 每个药水效果获得的智慧熟练度"
+  xp_convert:
+    name: 经验转化
+    desc: "每获得 {value} 点技能经验可以额外获得 1 点原版的经验值."
+    info: "1 经验值/{value} 技能经验"
+  enchanter:
+    name: 附魔专精
+    desc: "获得额外的 {value}% 附魔熟练度."
+    info: "+{value}% 熟练度"
+  xp_warrior:
+    name: 经验战士
+    desc: "你杀死的生物有 {value}% 的几率掉落双倍的经验."
+    info: "{value}% 2x 经验值"
+  enchanted_strength:
+    name: 附魔之力
+    desc: "手持物品上的附魔能额外让你获得 +{value}点/种 的力量"
+    info: "{value} 力量/单个附魔"
+  lucky_table:
+    name: 幸运附魔台
+    desc: "正在使用的物品如果携带有从附魔台得到的附魔, 则会在它到达最高级之前有 {value}% 的几率再增加 1 级"
+    info: "{value}% 附魔升级几率"
+  life_essence:
+    name: 生命源质
+    desc: 瞬间恢复(喷溅或滞留等均可) 药水能额外回复 {value}% 生命值
+    info: "+{value}% 额外回复生命"
+  healer:
+    name: 治疗专精
+    desc: 获得额外的 {value}% 治疗熟练度
+    info: "+{value}% 熟练度"
+  life_steal:
+    name: 生命窃取
+    desc: 每个击杀的生物或玩家可以为你回复 {value}% 的血量.
+    info: "偷取 {value}% 的血量"
+  golden_heart:
+    name: 黄金体质
+    desc: 有伤害吸收效果的金心时<gray>金心受到的伤害减少 {value}%
+    info: "-{value}% 金心受到的伤害"
+  revival:
+    name: 重生光环
+    desc: 复活的 30 秒内获得 +{value} 点的生命与 +{value_2} 级生命恢复效果
+    info: "+{value} 点生命值, +{value_2} 级生命回复效果"
+    message: "<white>重生之后, 你获得了 30 秒的庇护! <white>(<red>+{value} <gray>生命值, <gold>+{value_2} <gray>生命回复效果)"
+  disenchanter:
+    name: 祛魔转化
+    desc: 使用磨石时每个去掉的附魔能额外获得 {value}% 的经验
+    info: "+{value}% 磨石额外经验值"
+  forger:
+    name: 锻造专精
+    desc: 获得额外的 {value}% 锻造熟练度
+    info: "+{value}% 熟练度"
+  repairing:
+    name: 高效修复
+    desc: 使用原材料而非工具合并修复的物品可以额外回复 {value}% 的耐久度.
+    info: "+{value}% 铁砧修复度"
+  anvil_master:
+    name: 铁砧大师
+    desc: 在物品过于昂贵而无法修复之前降低修复物品时可能出现的最大消耗经验值至 {value} 级
+    info: "{value} 最大消耗"
+  skill_mender:
+    name: 技能结合者
+    desc: 手上物品拥有经验修补的物品时可以在每次获得 2 点技能经验时有 {value}% 的几率额外为此工具回复 1 点耐久
+    info: "{value}% 修复几率"
 acf:
   core:
     permission_denied: "<red>你没有执行此命令的权限"
@@ -717,13 +703,10 @@ skills:
     desc: "跑跑跳跳就可以获得耐力 {xp_unit}"
   agility:
     name: 敏捷
-    desc: "摔伤可以获得敏捷 {xp_unit}"
   alchemy:
     name: 炼金
-    desc: "酿造药水以获得炼金 {xp_unit}"
   enchanting:
     name: 附魔
-    desc: "附魔物品或书籍以获得附魔 {xp_unit}"
   sorcery:
     name: 法术
     desc: "使用魔法技能以获得法术 {xp_unit}"
@@ -947,26 +930,12 @@ sources:
     swim_per_meter: 游泳
   jumping:
     jump_per_100: 跳跃
-  brewing:
-    awkward: 粗制的药水
-    regular: 普通药水
-    extended: 延长药水时效
-    upgraded: 升级药水等级
-    splash: 喷溅型药水
-    lingering: 滞留药水
-  enchanting:
-    weapon_per_level: 武器
-    armor_per_level: 护甲
-    tool_per_level: 工具
-    book_per_level: 附魔书
   mana_ability_use:
     mana_ability_use: 使用魔法技能
   item_consume:
     drink_regular: 饮用普通药水
     drink_extended: 饮用延长时长的药水
     drink_upgraded: 饮用已升级的药剂
-    golden_apple: 金苹果
-    enchanted_golden_apple: 附魔金苹果
   potion_splash:
     splash_regular: 喷洒喷溅型药水
     splash_extended: 喷洒喷溅型延长时长的药水

@@ -2,308 +2,294 @@
 # Translators: 糟糕的頻道
 # Contribute here: https://crowdin.com/project/aureliumskills/zh-TW#
 abilities:
-  farming:
-    bountiful_harvest:
-      name: 豐收
-      desc: "有{value}% 機率掉落兩倍農作物."
-      info: "{value}% 兩倍掉落"
-    farmer:
-      name: 農夫
-      desc: "獲得{value}% 額外的農業經驗."
-      info: "+{value}% 經驗"
-    scythe_master:
-      name: 鐮刀大師
-      desc: "增加鋤頭{value}% 傷害"
-      info: "+{value}% 鋤頭傷害"
-    geneticist:
-      name: 遺傳學家
-      desc: "從蔬菜增加{value}% 飽和度"
-      info: "+{value} 飽和度"
-    triple_harvest:
-      name: 三倍豐收
-      desc: "有{value}% 機率掉落三倍農作物."
-      info: "{value}% 三倍掉落"
-  foraging:
-    lumberjack:
-      name: 伐木工
-      desc: "有{value}% 機率掉落兩倍原木."
-      info: "{value}% 兩倍掉落"
-    forager:
-      name: 伐木
-      desc: "獲得{value}% 伐木經驗."
-      info: "+{value}% 經驗"
-    axe_master:
-      name: 斧頭大師
-      desc: "增加斧頭{value}% 傷害"
-      info: "+{value}% 斧頭傷害"
-    valor:
-      name: 勇者
-      desc: "手持斧頭時可獲得+{value} 強度"
-      info: "+{value} 強度"
-    shredder:
-      name: 粉碎機
-      desc: "使用斧頭時有{value}% 機率對護甲造成三倍傷害."
-      info: "{value}% 三倍耐久度損壞"
-  mining:
-    lucky_miner:
-      name: 幸運礦工
-      desc: "有{value}% 機率掉落兩倍礦物."
-      info: "{value}% 兩倍掉落"
-    miner:
-      name: 礦工
-      desc: "獲得{value}% 挖礦經驗."
-      info: "+{value}% 挖礦經驗"
-    pick_master:
-      name: 挖掘大師
-      desc: "增加{value}% 鎬子造成的傷害"
-      info: "+{value}% 傷害"
-    stamina:
-      name: 耐力
-      desc: "手持鎬子時可獲得+{value} 剛性"
-      info: "+{value} 剛性"
-    hardened_armor:
-      name: 硬化裝甲
-      desc: "有{value}% 機率不會對護甲耐久度造成損耗."
-      info: "{value}% 不會對耐久度造成損耗"
-  fishing:
-    lucky_catch:
-      name: 幸運爪子
-      desc: "有{value}% 機率釣到兩倍漁獲."
-      info: "{value}% 兩倍漁獲"
-    fisher:
-      name: 漁夫
-      desc: "獲得{value}% 額外的釣魚經驗"
-      info: "+{value}% 經驗"
-    treasure_hunter:
-      name: 寶藏獵人
-      desc: "有{value}% 機率釣到罕見寶物."
-      info: "{value}% 罕見寶物"
-    grappler:
-      name: 鉤爪
-      desc: "增加{value}% 釣魚速度"
-      info: "+{value}% 釣魚速度"
-    epic_catch:
-      name: 史詩級寶物
-      desc: "有{value}% 機率釣到史詩級寶物."
-      info: "{value}% 史詩級寶物"
-  excavation:
-    metal_detector:
-      name: 金屬探測器
-      desc: "有{value}% 機率挖到罕見寶物."
-      info: "{value}% 罕見寶物"
-    excavator:
-      name: 挖掘机
-      desc: "獲得{value}% 額外的挖礦經驗"
-      info: "+{value}% 經驗"
-    spade_master:
-      name: 圓鍬大師
-      desc: "增加{value}% 鏟子造成的傷害"
-      info: "+{value}% 鏟子傷害"
-    bigger_scoop:
-      name: 大杓子
-      desc: "有{value}% 機率挖到三倍掉落物."
-      info: "{value}% 三倍掉落"
-    lucky_spades:
-      name: 幸運黑桃
-      desc: "有{value}% 機率釣到史詩級寶物."
-      info: "{value}% 史詩級寶物"
-  archery:
-    crit_chance:
-      name: 暴擊機率
-      desc: "增加{value}% 暴擊機率."
-      info: "+{value}% 暴擊機率"
-    archer:
-      name: 弓箭手
-      desc: "獲得{value}% 射箭經驗."
-      info: "+{value}% 經驗"
-    bow_master:
-      name: 弓箭大師
-      desc: "增加{value}% 弓箭造成的傷害"
-      info: "+{value}% 弓箭傷害"
-    piercing:
-      name: 穿刺
-      desc: "弓箭有{value}% 機率可以射穿怪物."
-      info: "{value}% 穿刺機率"
-    stun:
-      name: 眩晕
-      desc: "有{value}% 的機率使敵人的移動速度降低20％, 持續2秒."
-      info: "{value}% 暈眩機率"
-  defense:
-    shielding:
-      name: 盾
-      desc: "潛行時減少{value}% 傷害"
-      info: "-{value}%潛行傷害"
-    defender:
-      name: 防禦
-      desc: "獲得{value}% 防禦經驗"
-      info: "+{value}% 經驗"
-    mob_master:
-      name: 怪物大師
-      desc: "減少{value}% 怪物攻擊傷害"
-      info: "-{value}% 怪物攻擊傷害"
-    immunity:
-      name: 抵抗力
-      desc: "{value}% 機率不受敵人攻擊傷害."
-      info: "{value}% 免受傷害"
-    no_debuff:
-      name: 無負面狀態
-      desc: "有{value}% 機率消除傷害性藥水效果"
-      info: "{value}% 無負面狀態"
-  fighting:
-    crit_damage:
-      name: 暴擊傷害
-      desc: "增加{value}% 暴擊傷害"
-      info: "+{value}% 暴擊傷害"
-    fighter:
-      name: 戰鬥
-      desc: "獲得{value}% 戰鬥經驗"
-      info: "+{value}% 經驗"
-    sword_master:
-      name: 劍術師
-      desc: "增加{value}% 劍造成的傷害"
-      info: "+{value}% 劍傷害"
-    first_strike:
-      name: 第一擊
-      desc: "增加{value}% 第一擊造成的傷害"
-      info: "+{value}% 第一擊"
-      dealt: "<red>第一擊!"
-    bleed:
-      name: 流血
-      desc: "{value}%使敵人流血 {base_ticks} 個ticks, 每個ticks造成 {value_2} 個傷害."
-      info: "{value}% 機率, 造成 {value_2} 個傷害"
-      enemy_bleeding: "<red>敵人在流血了!"
-      self_bleeding: "<red>你流血了!"
-      stop: "<white>已停止流血"
-  endurance:
-    anti_hunger:
-      name: 抗飢餓
-      desc: "{value}% 機率停止飢餓值損耗."
-      info: "{value}% 沒有飢餓值損耗"
-    runner:
-      name: 跑者
-      desc: "獲得{value}%耐力經驗."
-      info: "+{value}% 經驗"
-    golden_heal:
-      name: 黃金治療
-      desc: "加強恢復效果使生命值提升{value}%"
-      info: "+{value}% 恢復效果"
-    recovery:
-      name: 恢復
-      desc: "生命值不足一半時提高自然恢復 {value}%"
-      info: "+{value} 低血量恢復"
-    meal_steal:
-      name: 飢餓竊取
-      desc: "攻擊玩家有{value}%機率竊取1個飢餓值"
-      info: "{value}% 飢餓竊取"
-  agility:
-    light_fall:
-      name: 輕盈
-      desc: "降低 {value}% 摔落傷害"
-      info: "-{value}% 摔落傷害"
-    jumper:
-      name: 跳躍者
-      desc: "獲得{value}% 敏捷經驗"
-      info: "+{value}% 敏捷經驗"
-    sugar_rush:
-      name: 衝刺之糖
-      desc: "提升飛濺速度藥水與跳躍藥水{value}% 的持續時間"
-      info: "{value}% 持續速度"
-    fleeting:
-      name: 迅速
-      desc: "當血量小於20%時, 可獲得+{value} 速度"
-      info: "+{value}% 速度"
-      start: "<white>你獲得了短暫的速度提升! <gray>(+{value}% 速度)"
-      end: "<gray>速度提升已失效"
-    thunder_fall:
-      name: 雷暴
-      desc: "在摔落時潛行, 有 {value}%機率對3格範圍的怪物造成{value_2}% 摔落傷害"
-      info: "{value}% 機率, 造成 {value_2} 傷害"
-  alchemy:
-    alchemist:
-      name: 釀造師
-      desc: "釀造的藥水延長{value}% 持續時間"
-      info: "+{value}% 藥水持續時間"
-      lore: "<green>(+{duration})"
-    brewer:
-      name: 釀造
-      desc: "獲得{value}% 釀造經驗"
-      info: "+{value}% 釀造經驗"
-    splasher:
-      name: 飛濺
-      desc: "飛濺的藥水會使每個受影響的玩家, 獲得{value}%的持續時間"
-      info: "+{value}% 持續時間/玩家"
-    lingering:
-      name: 滯留
-      desc: "滯留藥水自然衰減 {value}% 每個受影響的實體衰減 {value_2}%"
-      info: "-{value}% 自然衰減, -{value_2}% 實體衰減"
-    wise_effect:
-      name: 明智
-      desc: "每個獨特的活性藥水, 可獲得+{value} 智慧"
-      info: "+{value} 智慧/效果"
-  enchanting:
-    xp_convert:
-      name: 經驗轉換
-      desc: "每獲得 {value} 點技能經驗可以額外獲得 1 點原版的經驗值."
-      info: "1 經驗值/{value} 技能經驗"
-    enchanter:
-      name: 附魔師
-      desc: "獲得額外的 {value}% 附魔經驗"
-      info: "+{value}% 附魔經驗"
-    xp_warrior:
-      name: 經驗戰士
-      desc: "你殺死的怪物有 {value}% 掉落兩倍的經驗。"
-      info: "{value}% 兩倍的打怪經驗"
-    enchanted_strength:
-      name: 魔法力量
-      desc: "手持物品上的附魔能額外讓你獲得 +{value} 力量"
-      info: "{value} 力量/附魔"
-    lucky_table:
-      name: 幸運附魔台
-      desc: "您使用附魔的物品附魔台有 {value}% 的機率升級附魔如果不是最高等級，則等級為 1"
-      info: "{value}% 附魔升級機率"
-  healing:
-    life_essence:
-      name: 生命本質
-      desc: 瞬間恢復藥水能額外回復 {value}% 血量
-      info: "+{value}% 額外回復血量"
-    healer:
-      name: 治癒者
-      desc: 獲得額外的 {value}% 治療經驗
-      info: "+{value}% 治療經驗"
-    life_steal:
-      name: 生命竊取
-      desc: 擊殺的怪物或玩家可以為你回復{value}%的血量.
-      info: "竊取 {value}% 的血量"
-    golden_heart:
-      name: 黄金之心
-      desc: 對吸收之心造成的傷害降低 {value}%
-      info: "-{value}% 黃金之心受到的傷害"
-    revival:
-      name: 重獲生機
-      desc: 重生後獲得 &c+{value} 生命值和 &6+{value_2} 恢復持續 30 秒.
-      info: "+{value} 點血量，+{value_2} 回復效果"
-      message: "<white>你獲得了 30 秒的重生獎勵！ <white>(<red>+{value} 血量, <gold>+{value_2} 回復效果<white>)"
-  forging:
-    disenchanter:
-      name: 去除附魔者
-      desc: 使用切石機分解物品時獲得的經驗值提高 {value}%.
-      info: "+{value}% 切石機經驗"
-    forger:
-      name: 鍛造者
-      desc: 獲得額外的 {value}% 鍛造經驗
-      info: "+{value}% 鍛造經驗"
-    repairing:
-      name: 重鑄
-      desc: 物品使用原材料在鐵砧修理, 可額外恢復 {value}% 的耐久度.
-      info: "+{value}% 鐵砧修復值"
-    anvil_master:
-      name: 鐵砧大師
-      desc: 增加鐵砧的最大維修成本, 以免{value} 經驗值太貴.
-      info: "{value} 最高成本"
-    skill_mender:
-      name: 技能修復者
-      desc: 獲得技能經驗有 {value}% 的機率修復持有的物品或損壞的盔甲, 每 2 個技能經驗增加1點耐久度.
-      info: "{value}% 修復機率"
+  bountiful_harvest:
+    name: 豐收
+    desc: "有{value}% 機率掉落兩倍農作物."
+    info: "{value}% 兩倍掉落"
+  farmer:
+    name: 農夫
+    desc: "獲得{value}% 額外的農業經驗."
+    info: "+{value}% 經驗"
+  scythe_master:
+    name: 鐮刀大師
+    desc: "增加鋤頭{value}% 傷害"
+    info: "+{value}% 鋤頭傷害"
+  geneticist:
+    name: 遺傳學家
+    desc: "從蔬菜增加{value}% 飽和度"
+    info: "+{value} 飽和度"
+  triple_harvest:
+    name: 三倍豐收
+    desc: "有{value}% 機率掉落三倍農作物."
+    info: "{value}% 三倍掉落"
+  lumberjack:
+    name: 伐木工
+    desc: "有{value}% 機率掉落兩倍原木."
+    info: "{value}% 兩倍掉落"
+  forager:
+    name: 伐木
+    desc: "獲得{value}% 伐木經驗."
+    info: "+{value}% 經驗"
+  axe_master:
+    name: 斧頭大師
+    desc: "增加斧頭{value}% 傷害"
+    info: "+{value}% 斧頭傷害"
+  valor:
+    name: 勇者
+    desc: "手持斧頭時可獲得+{value} 強度"
+    info: "+{value} 強度"
+  shredder:
+    name: 粉碎機
+    desc: "使用斧頭時有{value}% 機率對護甲造成三倍傷害."
+    info: "{value}% 三倍耐久度損壞"
+  lucky_miner:
+    name: 幸運礦工
+    desc: "有{value}% 機率掉落兩倍礦物."
+    info: "{value}% 兩倍掉落"
+  miner:
+    name: 礦工
+    desc: "獲得{value}% 挖礦經驗."
+    info: "+{value}% 挖礦經驗"
+  pick_master:
+    name: 挖掘大師
+    desc: "增加{value}% 鎬子造成的傷害"
+    info: "+{value}% 傷害"
+  stamina:
+    name: 耐力
+    desc: "手持鎬子時可獲得+{value} 剛性"
+    info: "+{value} 剛性"
+  hardened_armor:
+    name: 硬化裝甲
+    desc: "有{value}% 機率不會對護甲耐久度造成損耗."
+    info: "{value}% 不會對耐久度造成損耗"
+  lucky_catch:
+    name: 幸運爪子
+    desc: "有{value}% 機率釣到兩倍漁獲."
+    info: "{value}% 兩倍漁獲"
+  fisher:
+    name: 漁夫
+    desc: "獲得{value}% 額外的釣魚經驗"
+    info: "+{value}% 經驗"
+  treasure_hunter:
+    name: 寶藏獵人
+    desc: "有{value}% 機率釣到罕見寶物."
+    info: "{value}% 罕見寶物"
+  grappler:
+    name: 鉤爪
+    desc: "增加{value}% 釣魚速度"
+    info: "+{value}% 釣魚速度"
+  epic_catch:
+    name: 史詩級寶物
+    desc: "有{value}% 機率釣到史詩級寶物."
+    info: "{value}% 史詩級寶物"
+  metal_detector:
+    name: 金屬探測器
+    desc: "有{value}% 機率挖到罕見寶物."
+    info: "{value}% 罕見寶物"
+  excavator:
+    name: 挖掘机
+    desc: "獲得{value}% 額外的挖礦經驗"
+    info: "+{value}% 經驗"
+  spade_master:
+    name: 圓鍬大師
+    desc: "增加{value}% 鏟子造成的傷害"
+    info: "+{value}% 鏟子傷害"
+  bigger_scoop:
+    name: 大杓子
+    desc: "有{value}% 機率挖到三倍掉落物."
+    info: "{value}% 三倍掉落"
+  lucky_spades:
+    name: 幸運黑桃
+    desc: "有{value}% 機率釣到史詩級寶物."
+    info: "{value}% 史詩級寶物"
+  crit_chance:
+    name: 暴擊機率
+    desc: "增加{value}% 暴擊機率."
+    info: "+{value}% 暴擊機率"
+  archer:
+    name: 弓箭手
+    desc: "獲得{value}% 射箭經驗."
+    info: "+{value}% 經驗"
+  bow_master:
+    name: 弓箭大師
+    desc: "增加{value}% 弓箭造成的傷害"
+    info: "+{value}% 弓箭傷害"
+  piercing:
+    name: 穿刺
+    desc: "弓箭有{value}% 機率可以射穿怪物."
+    info: "{value}% 穿刺機率"
+  stun:
+    name: 眩晕
+    desc: "有{value}% 的機率使敵人的移動速度降低20％, 持續2秒."
+    info: "{value}% 暈眩機率"
+  shielding:
+    name: 盾
+    desc: "潛行時減少{value}% 傷害"
+    info: "-{value}%潛行傷害"
+  defender:
+    name: 防禦
+    desc: "獲得{value}% 防禦經驗"
+    info: "+{value}% 經驗"
+  mob_master:
+    name: 怪物大師
+    desc: "減少{value}% 怪物攻擊傷害"
+    info: "-{value}% 怪物攻擊傷害"
+  immunity:
+    name: 抵抗力
+    desc: "{value}% 機率不受敵人攻擊傷害."
+    info: "{value}% 免受傷害"
+  no_debuff:
+    name: 無負面狀態
+    desc: "有{value}% 機率消除傷害性藥水效果"
+    info: "{value}% 無負面狀態"
+  crit_damage:
+    name: 暴擊傷害
+    desc: "增加{value}% 暴擊傷害"
+    info: "+{value}% 暴擊傷害"
+  fighter:
+    name: 戰鬥
+    desc: "獲得{value}% 戰鬥經驗"
+    info: "+{value}% 經驗"
+  sword_master:
+    name: 劍術師
+    desc: "增加{value}% 劍造成的傷害"
+    info: "+{value}% 劍傷害"
+  first_strike:
+    name: 第一擊
+    desc: "增加{value}% 第一擊造成的傷害"
+    info: "+{value}% 第一擊"
+    dealt: "<red>第一擊!"
+  bleed:
+    name: 流血
+    desc: "{value}%使敵人流血 {base_ticks} 個ticks, 每個ticks造成 {value_2} 個傷害."
+    info: "{value}% 機率, 造成 {value_2} 個傷害"
+    enemy_bleeding: "<red>敵人在流血了!"
+    self_bleeding: "<red>你流血了!"
+    stop: "<white>已停止流血"
+  anti_hunger:
+    name: 抗飢餓
+    desc: "{value}% 機率停止飢餓值損耗."
+    info: "{value}% 沒有飢餓值損耗"
+  runner:
+    name: 跑者
+    desc: "獲得{value}%耐力經驗."
+    info: "+{value}% 經驗"
+  golden_heal:
+    name: 黃金治療
+    desc: "加強恢復效果使生命值提升{value}%"
+    info: "+{value}% 恢復效果"
+  recovery:
+    name: 恢復
+    desc: "生命值不足一半時提高自然恢復 {value}%"
+    info: "+{value} 低血量恢復"
+  meal_steal:
+    name: 飢餓竊取
+    desc: "攻擊玩家有{value}%機率竊取1個飢餓值"
+    info: "{value}% 飢餓竊取"
+  light_fall:
+    name: 輕盈
+    desc: "降低 {value}% 摔落傷害"
+    info: "-{value}% 摔落傷害"
+  jumper:
+    name: 跳躍者
+    desc: "獲得{value}% 敏捷經驗"
+    info: "+{value}% 敏捷經驗"
+  sugar_rush:
+    name: 衝刺之糖
+    desc: "提升飛濺速度藥水與跳躍藥水{value}% 的持續時間"
+    info: "{value}% 持續速度"
+  fleeting:
+    name: 迅速
+    desc: "當血量小於20%時, 可獲得+{value} 速度"
+    info: "+{value}% 速度"
+    start: "<white>你獲得了短暫的速度提升! <gray>(+{value}% 速度)"
+    end: "<gray>速度提升已失效"
+  thunder_fall:
+    name: 雷暴
+    desc: "在摔落時潛行, 有 {value}%機率對3格範圍的怪物造成{value_2}% 摔落傷害"
+    info: "{value}% 機率, 造成 {value_2} 傷害"
+  alchemist:
+    name: 釀造師
+    desc: "釀造的藥水延長{value}% 持續時間"
+    info: "+{value}% 藥水持續時間"
+    lore: "<green>(+{duration})"
+  brewer:
+    name: 釀造
+    desc: "獲得{value}% 釀造經驗"
+    info: "+{value}% 釀造經驗"
+  splasher:
+    name: 飛濺
+    desc: "飛濺的藥水會使每個受影響的玩家, 獲得{value}%的持續時間"
+    info: "+{value}% 持續時間/玩家"
+  lingering:
+    name: 滯留
+    desc: "滯留藥水自然衰減 {value}% 每個受影響的實體衰減 {value_2}%"
+    info: "-{value}% 自然衰減, -{value_2}% 實體衰減"
+  wise_effect:
+    name: 明智
+    desc: "每個獨特的活性藥水, 可獲得+{value} 智慧"
+    info: "+{value} 智慧/效果"
+  xp_convert:
+    name: 經驗轉換
+    desc: "每獲得 {value} 點技能經驗可以額外獲得 1 點原版的經驗值."
+    info: "1 經驗值/{value} 技能經驗"
+  enchanter:
+    name: 附魔師
+    desc: "獲得額外的 {value}% 附魔經驗"
+    info: "+{value}% 附魔經驗"
+  xp_warrior:
+    name: 經驗戰士
+    desc: "你殺死的怪物有 {value}% 掉落兩倍的經驗。"
+    info: "{value}% 兩倍的打怪經驗"
+  enchanted_strength:
+    name: 魔法力量
+    desc: "手持物品上的附魔能額外讓你獲得 +{value} 力量"
+    info: "{value} 力量/附魔"
+  lucky_table:
+    name: 幸運附魔台
+    desc: "您使用附魔的物品附魔台有 {value}% 的機率升級附魔如果不是最高等級，則等級為 1"
+    info: "{value}% 附魔升級機率"
+  life_essence:
+    name: 生命本質
+    desc: 瞬間恢復藥水能額外回復 {value}% 血量
+    info: "+{value}% 額外回復血量"
+  healer:
+    name: 治癒者
+    desc: 獲得額外的 {value}% 治療經驗
+    info: "+{value}% 治療經驗"
+  life_steal:
+    name: 生命竊取
+    desc: 擊殺的怪物或玩家可以為你回復{value}%的血量.
+    info: "竊取 {value}% 的血量"
+  golden_heart:
+    name: 黄金之心
+    desc: 對吸收之心造成的傷害降低 {value}%
+    info: "-{value}% 黃金之心受到的傷害"
+  revival:
+    name: 重獲生機
+    desc: 重生後獲得 &c+{value} 生命值和 &6+{value_2} 恢復持續 30 秒.
+    info: "+{value} 點血量，+{value_2} 回復效果"
+    message: "<white>你獲得了 30 秒的重生獎勵！ <white>(<red>+{value} 血量, <gold>+{value_2} 回復效果<white>)"
+  disenchanter:
+    name: 去除附魔者
+    desc: 使用切石機分解物品時獲得的經驗值提高 {value}%.
+    info: "+{value}% 切石機經驗"
+  forger:
+    name: 鍛造者
+    desc: 獲得額外的 {value}% 鍛造經驗
+    info: "+{value}% 鍛造經驗"
+  repairing:
+    name: 重鑄
+    desc: 物品使用原材料在鐵砧修理, 可額外恢復 {value}% 的耐久度.
+    info: "+{value}% 鐵砧修復值"
+  anvil_master:
+    name: 鐵砧大師
+    desc: 增加鐵砧的最大維修成本, 以免{value} 經驗值太貴.
+    info: "{value} 最高成本"
+  skill_mender:
+    name: 技能修復者
+    desc: 獲得技能經驗有 {value}% 的機率修復持有的物品或損壞的盔甲, 每 2 個技能經驗增加1點耐久度.
+    info: "{value}% 修復機率"
 acf:
   core:
     permission_denied: "很抱歉, 你沒有權限執行這個指令"
@@ -717,13 +703,10 @@ skills:
     desc: "走路或跑步來獲得耐力{xp_unit}"
   agility:
     name: 敏捷
-    desc: "跳躍並遭受傷害來獲得敏捷{xp_unit}"
   alchemy:
     name: 釀造
-    desc: "釀造藥水來獲得釀造{xp_unit}"
   enchanting:
     name: 附魔
-    desc: "附魔物品和書籍來獲得附魔{xp_unit}"
   sorcery:
     name: 法術
     desc: "使用使用魔法能力來獲得法術{xp_unit}"
@@ -947,26 +930,12 @@ sources:
     swim_per_meter: Swimming
   jumping:
     jump_per_100: Jumping
-  brewing:
-    awkward: Awkward Potion
-    regular: Regular Potion
-    extended: Extended Duration Potion
-    upgraded: Upgraded Potion
-    splash: Splash Potion
-    lingering: Lingering Potion
-  enchanting:
-    weapon_per_level: Weapon
-    armor_per_level: Armor
-    tool_per_level: Tool
-    book_per_level: Book
   mana_ability_use:
     mana_ability_use: Using Mana Abilities
   item_consume:
     drink_regular: Drink Regular Potion
     drink_extended: Drink Extended Duration Potion
     drink_upgraded: Drink Upgraded Potion
-    golden_apple: Golden Apple
-    enchanted_golden_apple: Enchanted Golden Apple
   potion_splash:
     splash_regular: Splash Regular Potion
     splash_extended: Splash Extended Duration Potion
