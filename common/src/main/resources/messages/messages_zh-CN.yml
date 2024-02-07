@@ -481,6 +481,15 @@ commands:
     list: "<white>玩家 <gold>{player} <white>的全局经验翻倍倍数为: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>经验值 翻倍倍数: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>仅玩家可以列出属于他们的经验翻倍器! 尝试指定一名玩家!"
+  preset:
+    load:
+      confirm: "<red>载入预设会覆盖你的配置文件! 下列文件会受到影响<gray>(<aqua>修改<gray>, <yellow>合并<gray>, <red>替换<gray>, <dark_red>删除<gray>): {entries}<red>该操作不可逆, 请预先备份好所有需要的文件. 再次输入命令以确认本次操作."
+      loaded: 成功载入预设 {name}, 正在重启服务器.
+      created: 创建文件
+      modified: 修改文件
+      replaced: 替换文件
+      deleted: 删除文件
+      skipped: 跳过文件
   profile:
     skills: "玩家 <gold>{name} <gray>的 Aurelium Skills 详细描述:\n<gray>玩家 UUID: <white>{uuid}\n<gray>技能: {skill_entries}"
     skill_entry: "\n<dark_aqua>{skill} <gray>- 等级: <white>{level}<gray>, 经验值: <white>{xp}"
@@ -503,7 +512,7 @@ commands:
       set: "<gray>玩家 <gold>{player} <gray>的所有技能等级已设置为 <aqua>{level}!"
     setlevel:
       set: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>的等级已设置为 <aqua>{level}"
-    at_least: "<yellow>Level must be at least {level}!"
+    at_least: "<yellow>所需等级至少应为 {level}!"
   toggle:
     enabled: "<green>技能状态显示栏已打开"
     disabled: "<red>技能状态显示栏已关闭"
@@ -531,42 +540,42 @@ commands:
     set: "<gray>将玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>熟练度设置为了 <aqua>{amount}"
     remove: "<gray>成功为玩家 <gold>{player} <gray>取走了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
   unknown_skill: "<yellow>未知技能!"
-  unknown_stat: "<yellow>Unknown stat!"
+  unknown_stat: "<yellow>未知属性!"
   no_profile: "<yellow>玩家尚未获得自己的技能存档文件。请重新加入游戏或重启服务器。"
 leveler:
   level_up: "{skill}升级成功"
-  skill_level_up: Skill Level Up
-  rewards: Rewards
-  ability_unlock: Ability Unlock
-  ability_level_up: Ability Level Up
-  mana_ability_unlock: Mana Ability Unlock
-  mana_ability_level_up: Mana Ability Level Up
+  skill_level_up: 技能等级提升
+  rewards: 奖励
+  ability_unlock: 解锁能力
+  ability_level_up: 能力等级提升
+  mana_ability_unlock: 解锁魔法能力
+  mana_ability_level_up: 魔法能力等级提升
   unclaimed_item: "<red>因为背包已满, 部分无法存储在物品栏的物品已被转移至临时存储区. 请输入 <yellow>/skills claimitems <red>及时领取这些物品."
 menus:
   common:
     close: "关闭"
     level: "等级"
-    progress_to_level: "Progress to Level"
+    progress_to_level: "升级进度"
     max_level: "最大等级"
     ability_levels: "技能等级"
-    stats_leveled: "Stats Leveled"
+    stats_leveled: "属性级别"
     mana_ability: "魔法技能"
-    duration: "Duration"
-    mana_cost: "Mana Cost"
-    cooldown: "Cooldown"
-    damage: "Damage"
-    max_mana_cost: "Max Mana Cost"
-    attack_speed: "Attack Speed"
-    back: "Go Back"
-    back_click: "Back to {menu_name} Menu"
-    unlocked: "UNLOCKED"
-    in_progress: "IN PROGRESS"
-    locked: "LOCKED"
-    your_level: "Your Level"
-    next_page: "Next Page"
-    next_page_click: "Click to go to next page"
-    previous_page: "Previous Page"
-    previous_page_click: "Click to go to previous page"
+    duration: "持续时间"
+    mana_cost: "魔力消耗"
+    cooldown: "冷却时间"
+    damage: "伤害"
+    max_mana_cost: "最大魔力消耗"
+    attack_speed: "攻击速度"
+    back: "返回"
+    back_click: "返回至 {menu_name} 菜单"
+    unlocked: "已解锁"
+    in_progress: "正在进行"
+    locked: "已锁定"
+    your_level: "当前等级"
+    next_page: "下一页"
+    next_page_click: "点击进入下一页"
+    previous_page: "上一页"
+    previous_page_click: "点击返回上一页"
   skills:
     skills_title: "你的技能"
     your_skills: "你的技能"
@@ -578,22 +587,22 @@ menus:
     stats_desc: "通过升级技能获得状态增益"
     stats_click: "点击了解更多或查看您的统计数据"
   level_progression:
-    level_progression_title: "{skill} Levels - Page {page}"
-    your_ranking: "Your Skill Ranking"
-    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
-    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
-    rewards: "Rewards"
-    ability_unlock: "Ability Unlock"
-    mana_ability_unlock: "Mana Ability Unlock"
-    progress: "Progress"
-    leaderboard_click: "Click to view the {skill} leaderboard"
-    sources: "XP Sources"
-    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
-    sources_click: "Click to view {skill} sources"
-    abilities: "Abilities"
-    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
-    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
-    abilities_click: "Click to view {skill} abilities"
+    level_progression_title: "{skill} 等级 - 第 {page} 页"
+    your_ranking: "你的技能排名"
+    rank_out_of: "<1>你现在在全部的 {total} 名玩家中处于第 <2>{rank}</2> 名</1>"
+    rank_percent: "<1>你是位于前 <2>{percent}%</2> 的玩家</1>"
+    rewards: "奖励"
+    ability_unlock: "解锁能力"
+    mana_ability_unlock: "解锁魔法能力"
+    progress: "进度"
+    leaderboard_click: "点击查看 {skill} 排行榜"
+    sources: "经验来源"
+    sources_desc: "来源菜单显示了你可以在技能7获得经验值的所有方式，以及每个来源提供的经验值。"
+    sources_click: "点击查看技能 {skill} 的经验来源"
+    abilities: "能力"
+    abilities_desc: "<2>能力</2> <1>是在你解锁并升级技能过程中获得的被动增益。</1>"
+    mana_abilities_desc: "<3>魔法能力</3> <1>是一种需要手动激活且会在过程中消耗魔法值的特殊能力。</1>"
+    abilities_click: "点击查看 {skill} 的能力"
   stats:
     stats_title: 你的属性
     skills: "技能"
@@ -615,9 +624,9 @@ menus:
     multiplied_desc: "这是乘以当前的经验值得出所获得的经验值"
   abilities:
     abilities_title: "{skill} 技能"
-    description: "Description"
+    description: "描述"
     unlocked_at: "<1>在 <2>{skill} {level} 解锁。"
-    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+    next_upgrade_at: "<2>{skill} <1>的下一等级为 {level}"
 mana_abilities:
   replenish:
     name: 自动补种
@@ -703,10 +712,13 @@ skills:
     desc: "跑跑跳跳就可以获得耐力 {xp_unit}"
   agility:
     name: 敏捷
+    desc: "跑跑跳跳或从高处摔落可获得敏捷 {xp_unit}"
   alchemy:
     name: 炼金
+    desc: "酿造与使用药水可获得炼金 {xp_unit}"
   enchanting:
     name: 附魔
+    desc: "为物品使用铁砧或附魔台附魔, 或使用砂轮祛魔以获得附魔 {xp_unit}"
   sorcery:
     name: 法术
     desc: "使用魔法技能以获得法术 {xp_unit}"
@@ -735,8 +747,8 @@ sources:
     sea_pickle: 海泡菜
     sweet_berry_bush: 甜浆果
     glow_berries: 发光浆果
-    torchflower: Torchflower
-    pitcher_plant: Pitcher Plant
+    torchflower: 火把花
+    pitcher_plant: 瓶子草
     oak_log: 橡木原木
     spruce_log: 云杉木原木
     birch_log: 白桦原木
@@ -762,9 +774,9 @@ sources:
     mangrove_log: 红树原木
     mangrove_leaves: 红树树叶
     mangrove_roots: 红树根
-    cherry_log: Cherry Log
-    cherry_leaves: Cherry Leaves
-    pink_petals: Pink Petals
+    cherry_log: 樱花原木
+    cherry_leaves: 樱花树叶
+    pink_petals: 粉红色花簇
     stone: 石头
     cobblestone: 圆石
     andesite: 安山岩
@@ -918,8 +930,8 @@ sources:
     frog: 青蛙
     tadpole: 蝌蚪
     warden: 监守者
-    camel: Camel
-    sniffer: Sniffer
+    camel: 骆驼
+    sniffer: 嗅探兽
   damage:
     mob_damage: 来自生物的伤害
     player_damage: 来自玩家的伤害
@@ -930,12 +942,26 @@ sources:
     swim_per_meter: 游泳
   jumping:
     jump_per_100: 跳跃
+  brewing:
+    awkward: 酿造粗制的药水
+    regular: 酿造平凡的药水
+    extended: 酿造长效的药水
+    upgraded: 酿造强化药水
+    splash: 酿造喷溅型药水
+    lingering: 酿造滞留型药水
+  enchanting:
+    weapon_per_level: 附魔武器
+    armor_per_level: 附魔盔甲
+    tool_per_level: 附魔工具
+    book_per_level: 附魔书
   mana_ability_use:
     mana_ability_use: 使用魔法技能
   item_consume:
     drink_regular: 饮用普通药水
     drink_extended: 饮用延长时长的药水
     drink_upgraded: 饮用已升级的药剂
+    golden_apple: 消耗金苹果
+    enchanted_golden_apple: 消耗附魔金苹果
   potion_splash:
     splash_regular: 喷洒喷溅型药水
     splash_extended: 喷洒喷溅型延长时长的药水
@@ -949,7 +975,7 @@ sources:
     combine_armor_per_level: 合并护甲和附魔书
     combine_tool_per_level: 合并工具和附魔书
   grindstone:
-    grindstone_per_level: Disenchant Item with Grindstone
+    grindstone_per_level: 用砂轮祛魔
   units:
     damage: 伤害
     meter: 米
@@ -978,47 +1004,47 @@ stats:
     name: 韧性
     desc: "<gray>韧性能减少敌人对你造成的伤害"
   crit_chance:
-    name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    name: 猛力一击
+    desc: "暴击率为你对敌方造成高额伤害的概率"
   crit_damage:
-    name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    name: 暴击伤害
+    desc: "暴击伤害是造成暴击时的伤害增幅"
   speed:
-    name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    name: 速度
+    desc: "速度属性可提升你的移动速度"
 traits:
   attack_damage:
-    name: Attack Damage
+    name: 攻击伤害
   hp:
-    name: HP
+    name: 血量
   saturation_regen:
-    name: Saturation Regen
+    name: 饱和度回复
   hunger_regen:
-    name: Hunger Regen
+    name: 饥饿回复
   mana_regen:
-    name: Mana Regen
+    name: 魔力再生
   luck:
-    name: Luck
+    name: 幸运
   double_drop:
-    name: Double Drop
+    name: 双倍掉落
   experience_bonus:
-    name: Experience Bonus
+    name: 经验加成
   anvil_discount:
-    name: Anvil Discount
+    name: 铁砧耗费减免
   max_mana:
-    name: Max Mana
+    name: 最大魔力
   damage_reduction:
-    name: Damage Reduction
+    name: 伤害减免
   crit_chance:
-    name: Crit Chance
+    name: 暴击几率
   crit_damage:
-    name: Crit Damage
+    name: 暴击伤害
   movement_speed:
-    name: Movement Speed
+    name: 移动速度
 ui:
-  maxed: MAXED
+  maxed: 满级
 units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 31
+file_version: 32

@@ -232,7 +232,7 @@ abilities:
   xp_convert:
     name: EP Konvertieren
     desc: "Verdiene Erfahrung für jede {value} Fähigkeit XP, die du erhältst."
-    info: "1 EXP/{value} Skill XP"
+    info: "1 EXP/{value} Fähigkeit XP"
   enchanter:
     name: Verzauberer
     desc: "Verdiene {value}% mehr Verzauberungs EP."
@@ -481,6 +481,15 @@ commands:
     list: "<white>Globaler XP Multiplikator für <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP Multiplikator: <aqua>{multiplier}x / +{percent}%"
     players_only: "Nur Spieler können ihre eigenen Modifikatoren auflisten! Versuche einen Spieler anzugeben!"
+  preset:
+    load:
+      confirm: "<red>Das Laden einer Voreinstellung überschreibt die Konfigurationsdateien! Die folgenden Dateien sind betroffen <gray>(<aqua>Anhang<gray>, <yellow>Zusammengefügt<gray>, <red>Ersetzt<gray>, <dark_red>Gelöscht<gray>): {entries} <red>Diese Aktion kann nicht rückgängig gemacht werden und es wird empfohlen, wichtige Dateien manuell sichern. Geben Sie den Befehl erneut ein, um ihn zu bestätigen."
+      loaded: Voreinstellung erfolgreich geladen {name}, der Server kann nun neu gestartet werden.
+      created: Erstellte Dateien
+      modified: Modifizierte Dateien
+      replaced: Ersetzte Dateien
+      deleted: Gelöschte Dateien
+      skipped: Übersprungene Dateien
   profile:
     skills: "Skills-Profil für <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
@@ -703,10 +712,13 @@ skills:
     desc: "Gehe und laufe um Ausdauer {xp_unit} zu erhalten"
   agility:
     name: Beweglichkeit
+    desc: "Bewege dich und bekomme Fallschaden um Beweglichkeit {xp_unit} zu erhalten"
   alchemy:
     name: Alchemie
+    desc: "Braue und wirf Tränke um Alchemie {xp_unit} zu erhalten"
   enchanting:
     name: Verzaubern
+    desc: "Verzaubere, kombiniere und schleife Gegenstände um Verzaubern {xp_unit} zu bekommen"
   sorcery:
     name: Zauberei
     desc: "Verwende Mana-Fähigkeiten, um Hexerei {xp_unit} zu erhalten"
@@ -930,12 +942,26 @@ sources:
     swim_per_meter: Schwimmen
   jumping:
     jump_per_100: Springen
+  brewing:
+    awkward: Braue seltsame Tränke
+    regular: Braue reguläre Tränke
+    extended: Braue Tränke mit verlängerter Dauer
+    upgraded: Braue verbesserte Tränke
+    splash: Braue werfbare Tränke
+    lingering: Braue verweilende Tränke
+  enchanting:
+    weapon_per_level: Verzaubere eine Waffe
+    armor_per_level: Verzaubere eine Rüstung
+    tool_per_level: Verzaubere ein Werkzeug
+    book_per_level: Verzaubere ein Buch
   mana_ability_use:
     mana_ability_use: Mana-Fähigkeiten benutzen
   item_consume:
     drink_regular: Einen gewöhnlichen Trank trinken
     drink_extended: Einen Trank mit verlängerter Dauer trinken
     drink_upgraded: Einen verbesserten Trank trinken
+    golden_apple: Konsumiere einen goldenen Apfel
+    enchanted_golden_apple: Konsumiere einen verzauberten goldenen Apfel
   potion_splash:
     splash_regular: Gewöhnlicher Wurftrank
     splash_extended: Wurftrank mit verlängerter Wirkungsdauer

@@ -12,7 +12,7 @@ abilities:
     info: "+{value}% XP"
   scythe_master:
     name: Scythe Master
-    desc: "Increases damage from hoes by {value}%"
+    desc: "Increases damage from hoes by {value}%."
     info: "+{value}% Hoe Damage"
   geneticist:
     name: Geneticist
@@ -68,7 +68,7 @@ abilities:
     info: "{value}% 2x Drops"
   fisher:
     name: Fisher
-    desc: "Earn {value}% more Fishing XP"
+    desc: "Earn {value}% more Fishing XP."
     info: "+{value}% XP"
   treasure_hunter:
     name: Treasure Hunter
@@ -88,7 +88,7 @@ abilities:
     info: "+{value}% Rare Loot"
   excavator:
     name: Excavator
-    desc: "Earn {value}% more Excavation XP"
+    desc: "Earn {value}% more Excavation XP."
     info: "+{value}% XP"
   spade_master:
     name: Spade Master
@@ -104,7 +104,7 @@ abilities:
     info: "+{value}% Epic Loot"
   crit_chance:
     name: Crit Chance
-    desc: "Grants +{value}% Crit Chance"
+    desc: "Grants +{value}% Crit Chance."
     info: "+{value}% Crit Chance"
   archer:
     name: Archer
@@ -128,7 +128,7 @@ abilities:
     info: "-{value}% Incoming Dmg Sneaking"
   defender:
     name: Defender
-    desc: "Earn {value}% more Defense XP"
+    desc: "Earn {value}% more Defense XP."
     info: "+{value}% XP"
   mob_master:
     name: Mob Master
@@ -144,11 +144,11 @@ abilities:
     info: "{value}% No Debuff"
   crit_damage:
     name: Crit Damage
-    desc: "Grants +{value}% Crit Damage"
+    desc: "Grants +{value}% Crit Damage."
     info: "+{value}% Crit Damage"
   fighter:
     name: Fighter
-    desc: "Earn {value}% more Fighting XP"
+    desc: "Earn {value}% more Fighting XP."
     info: "+{value}% XP"
   sword_master:
     name: Sword Master
@@ -192,7 +192,7 @@ abilities:
     info: "-{value}% Fall Damage"
   jumper:
     name: Jumper
-    desc: "Earn {value}% more Agility XP"
+    desc: "Earn {value}% more Agility XP."
     info: "+{value}% XP"
   sugar_rush:
     name: Sugar Rush
@@ -215,7 +215,7 @@ abilities:
     lore: "<green>(+{duration})"
   brewer:
     name: Brewer
-    desc: "Earn {value}% more Alchemy XP"
+    desc: "Earn {value}% more Alchemy XP."
     info: "+{value}% XP"
   splasher:
     name: Splasher

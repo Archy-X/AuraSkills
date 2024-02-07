@@ -2,308 +2,294 @@
 # Translators: Kaspian, Xeymoi, PLKaratusPL
 # Contribute here: https://crowdin.com/project/aureliumskills/pl#
 abilities:
-  farming:
-    bountiful_harvest:
-      name: Obfite Zbiory
-      desc: "{value}% szans na zdobycie podwójnych dropów<gray>  z upraw."
-      info: "{value}% 2x Dropów"
-    farmer:
-      name: Rolnik
-      desc: "Zdobywaj {value}% więcej XP Rolnictwa."
-      info: "+{value}% XP"
-    scythe_master:
-      name: Mistrz Motyki
-      desc: "Zwiększa obrażenia z motyki o {value}%"
-      info: "+{value}% Obrażeń Motyki"
-    geneticist:
-      name: Genetyk
-      desc: "Zwiększa przyrost nasycenia z<gray>  żywności roślinnej o {value}."
-      info: "+{value} Nasycenia"
-    triple_harvest:
-      name: Potrójne Zbieranie
-      desc: "{value}% szans na zdobycie potrójnych dropów<gray>  z upraw."
-      info: "{value}% 3x Dropów"
-  foraging:
-    lumberjack:
-      name: Świetny Drwal
-      desc: "{value}% szans na zdobycie podwójnych dropów<gray>  z pni."
-      info: "{value}% 2x Dropów"
-    forager:
-      name: Stolarz
-      desc: "Zdobywaj {value}% więcej XP Drwalnictwa."
-      info: "+{value}% XP"
-    axe_master:
-      name: Mistrz Topora
-      desc: "Zwiększa obrażenia z siekiery o {value}%"
-      info: "+{value}% Obrażeń Siekiery"
-    valor:
-      name: Głowica
-      desc: "Dodaje +{value} Siły podczas trzymania<gray>  siekiery"
-      info: "+{value} Siły"
-    shredder:
-      name: Trzaskacz
-      desc: "{value}% szans na zadanie potrójnych obrażeń<gray>  wytrzymałości za pomocą toporów."
-      info: "{value}% 3x Obrażeń Wytrzymałości"
-  mining:
-    lucky_miner:
-      name: Szczęśliwy Górnik
-      desc: "{value}% szans na zdobycie podwójnych dropów<gray>  z rud."
-      info: "{value}% 2x Dropów"
-    miner:
-      name: Górnik
-      desc: "Zdobywaj {value}% więcej XP Górnictwa."
-      info: "+{value}% XP"
-    pick_master:
-      name: Mistrz Kilofa
-      desc: "Zadaj {value}% więcej obrażeń za pomocą kilofów."
-      info: "+{value}% Obrażeń Kilofa"
-    stamina:
-      name: Energia
-      desc: "Dodaje +{value} Twardości podczas<gray>  trzymania kilofu"
-      info: "+{value} Wytrzymałości"
-    hardened_armor:
-      name: Utwardzona Zbroja
-      desc: "{value}% szans na negowanie<gray>  obrażeń wytrzymałości pancerza."
-      info: "{value}% Brak Utraty Wytrzymałości"
-  fishing:
-    lucky_catch:
-      name: Szczęśliwy Połów
-      desc: "{value}% szans na zdobycie podwójnych dropów<gray>  z łowienia."
-      info: "{value}% 2x Dropów"
-    fisher:
-      name: Rybak
-      desc: "Zdobywaj {value}% więcej XP Wędkarstwa."
-      info: "+{value}% XP"
-    treasure_hunter:
-      name: Łowca Skarbów
-      desc: "{value}% szans na zdobycie rzadkich łupów z łowienia."
-      info: "+{value}% Rzadkich Łupów"
-    grappler:
-      name: Hak
-      desc: "Łapie moby z {value}% większą prędkością."
-      info: "+{value}% Prędkości Haka"
-    epic_catch:
-      name: Epicki Połów
-      desc: "{value}% szans na zdobycie epickich łupów<gray>  z łowienia."
-      info: "+{value}% Epickich Łupów"
-  excavation:
-    metal_detector:
-      name: Wykrywacz Metalu
-      desc: "{value}% szans na zdobycie rzadkich łupów z kopania."
-      info: "+{value}% Rzadkich Łupów"
-    excavator:
-      name: Wydobywca
-      desc: "Zdobywaj {value}% więcej XP Wydobywania."
-      info: "+{value}% XP"
-    spade_master:
-      name: Mistrz Szpady
-      desc: "Zadaj {value}% więcej obrażeń za pomocą łopat."
-      info: "+{value}% Obrażeń Łopaty"
-    bigger_scoop:
-      name: Większa Miarka
-      desc: "{value}% szans na zdobycie potrójnych dropów z kopania."
-      info: "{value}% 3x Dropów"
-    lucky_spades:
-      name: Szczęśliwe Szpady
-      desc: "{value}% szans na zdobycie epickich łupów z kopania."
-      info: "+{value}% Epickich Łupów"
-  archery:
-    crit_chance:
-      name: Szansa Obrażeń Krytycznych
-      desc: "+{value}% szans na trafienie krytyczne."
-      info: "+{value}% Szansy na Krytykę"
-    archer:
-      name: Łucznik
-      desc: "Zdobywaj {value}% więcej XP Łucznictwa."
-      info: "+{value}% XP"
-    bow_master:
-      name: Mistrz Łuku
-      desc: "Zadaj {value}% więcej obrażeń za pomocą łuku."
-      info: "+{value}% Obrażeń Łuku"
-    piercing:
-      name: Przebicie
-      desc: "{value}% szans na strzałę na<gray>  przebicie się przez moby."
-      info: "{value}% Szansy Przebicia"
-    stun:
-      name: Ogłuszenie
-      desc: "{value}% szans na zmniejszenie prędkości ruchu<gray>  wroga o 20% na 2 sekundy."
-      info: "{value}% Szans Ogłuszenia"
-  defense:
-    shielding:
-      name: Osłona
-      desc: "Zmniejsz obrażenia przychodzące o {value}%<gray>  podczas skradania."
-      info: "-{value}% Przychodzących Obrażen"
-    defender:
-      name: Obrońca
-      desc: "Zdobywaj {value}% więcej XP Obrony."
-      info: "+{value}% XP"
-    mob_master:
-      name: Mistrz Potworów
-      desc: "Zmniejsza obrażenia od mobów o {value}%"
-      info: "-{value}% Obrażeń Mobów"
-    immunity:
-      name: Immunitet
-      desc: "{value}% szans na całkowite <gray>  negowanie ataku wroga."
-      info: "{value}% Immunitetu"
-    no_debuff:
-      name: Antidotum
-      desc: "{value}% szans na negowanie szkodliwego efektu mikstury."
-      info: "{value}% Braku Debufu"
-  fighting:
-    crit_damage:
-      name: Obrażenia Krytyczne
-      desc: "Zwiększa obrażenia krytyczne o {value}%"
-      info: "+{value}% Obrażeń Krytycznych"
-    fighter:
-      name: Wojownik
-      desc: "Zdobywaj {value}% więcej XP Walki"
-      info: "+{value}% XP"
-    sword_master:
-      name: Mistrz Miecza
-      desc: "Zadaj {value}% więcej obrażeń mieczami."
-      info: "+{value}% Obrażeń Miecza"
-    first_strike:
-      name: Pierwsze Uderzenie
-      desc: "Zadaj {value}% więcej obrażeń przy pierwszym trafieniu."
-      info: "+{value}% Obrażeń Pierwszego Ataku"
-      dealt: "<red>Pierwsze Uderzenie Zadane!"
-    bleed:
-      name: Krwotok
-      desc: "{value}% szans na to, że wróg zacznie krwawić przez<gray> 3 ticki, zadając {value_2} obrażeń na każdy tick."
-      info: "{value}% Szans, {value_2} Obrażeń"
-      enemy_bleeding: "<red>Przeciwnik Krwawi!"
-      self_bleeding: "<red>Krwawisz!"
-      stop: "<white>Krwawienie ustąpiło"
-  endurance:
-    anti_hunger:
-      name: Anty-Głód
-      desc: "{value}% szans na powstrzymanie utraty głodu."
-      info: "{value}% Braku Utraty Głodu"
-    runner:
-      name: Biegacz
-      desc: "Zdobywaj {value}% więcej XP Wytrzymałości."
-      info: "+{value}% XP"
-    golden_heal:
-      name: Złote Leczenie
-      desc: "Zwiększa efekt regeneracji<gray> przyrostu zdrowia o {value}%"
-      info: "+{value}% Regeneracji"
-    recovery:
-      name: Powrót Do Zdrowia
-      desc: "Zwiększa naturalną regenerację gdy<gray>  masz mniej niż połowę życia o {value}%"
-      info: "+{value}% Niskiej Regeneracji Zdrowia"
-    meal_steal:
-      name: Kradzież Posiłku
-      desc: "{value}% szans na kradzież 1 punktu głodowego<gray>  podczas atakowania gracza."
-      info: "{value}% Kradzieży Głodu"
-  agility:
-    light_fall:
-      name: Lekki Upadek
-      desc: "Zmniejsza obrażenia od upadku o {value}%"
-      info: "-{value}% Obrażeń od Upadku"
-    jumper:
-      name: Skoczek
-      desc: "Zdobywaj {value}% więcej XP Zręczności."
-      info: "+{value}% XP"
-    sugar_rush:
-      name: Moc Cukru
-      desc: "Wypite i rzucone mikstury szybkości i<gray>  zwiększonego skoku trwają {value}% dłużej."
-      info: "{value}% Dłuższa Prędkość"
-    fleeting:
-      name: Trucht
-      desc: "Zyskaj +{value}% szybkości ruchu, gdy twoje zdrowie spadnie poniżej 20%"
-      info: "+{value}% Prędkości"
-      start: "<white>Otrzymałeś zwiększenie szybkości truchtu! <gray>(+{value}% Prędkości)"
-      end: "<gray>Przyśpieszenie szybkości truchtu zostało wyłączone"
-    thunder_fall:
-      name: Spadek Piorunu
-      desc: "Podczas skradania się w czasie upadku, masz {value}% szans<gray>  na zadanie {value_2}% obrażeń od upadku oczekiwanym potworom<gray>  w promieniu 3 bloków"
-      info: "{value}% Szans, {value_2}% Obrażeń"
-  alchemy:
-    alchemist:
-      name: Alchemik
-      desc: "Mikstury, które warzysz mają o {value}%<gray>  więcej czasu trwania."
-      info: "+{value}% Czasu Trwania"
-      lore: "<green>(+{duration})"
-    brewer:
-      name: Mistrz Warzenia
-      desc: "Zdobywaj {value}% więcej XP Alchemii"
-      info: "+{value}% XP"
-    splasher:
-      name: Miotacz
-      desc: "Mikstury, które rzucisz zyskują {value}%<gray>  więcej czasu trwania dla każdego dotkniętego nimi gracza."
-      info: "+{value}% Czas trwania/Gracz"
-    lingering:
-      name: Długotrwały Efekt
-      desc: "Trwałe rzucane mikstury zanikają o {value}%<gray>  wolniej i zanikają o {value_2}% słabiej na każdą dotkniętą jej skutkami jednostkę."
-      info: "-{value}% Naturalnie, -{value_2}% Jednostki"
-    wise_effect:
-      name: Wiedza Z Efektu
-      desc: "Zdobądź {value} Mądrości za każdy<gray>  unikalny efekt mikstury."
-      info: "+{value} Mądrość/Efekt"
-  enchanting:
-    xp_convert:
-      name: Konwersja XP
-      desc: "Zdobądź 1 XP (MC) za każde zdobyte przez ciebie {value}<gray>  XP konkretnej umiejętności."
-      info: "Jedno doświadczenie za {value} doświadczenia umiejętności"
-    enchanter:
-      name: Zaklinacz
-      desc: "Zdobywaj {value}% więcej XP Zaklinania."
-      info: "+{value}% XP"
-    xp_warrior:
-      name: Doświadczenie Wojownika
-      desc: "Potwory które zabiłeś mają {value} procent więcej szansy <gray>że wyrzucą dwa razy więcej doświadczenia."
-      info: "{value} procent jako dwa razy więcej doświadczenia z potworów"
-    enchanted_strength:
-      name: Zaklęta Siła
-      desc: "Zdobądź {value} Siły za każdy unikalny<gray> enchant rzeczy trzymanej w ręce."
-      info: "Każda {value} siły = Każda {value} zaklęć"
-    lucky_table:
-      name: Szczęśliwy Stół
-      desc: "Przedmioty, które zakląłeś za pomocą stołu do zaklinania<gray>  mają {value}% szans na ulepszenie poziomu zaklęcia<gray>  o 1, jeśli nie jest to ich maksymalny poziom"
-      info: "{value}% Szans na Ulepszenie Zaklęcia"
-  healing:
-    life_essence:
-      name: Esencja Życia
-      desc: Natychmiastowe mikstury leczenia przywracają {value}% więcej życia.
-      info: "+{value}% Natychmiastowe Leczenie"
-    healer:
-      name: Uzdrowiciel
-      desc: Zdobywaj {value}% więcej XP Leczenia.
-      info: "+{value}% XP"
-    life_steal:
-      name: Kradzież Życia
-      desc: Wylecz {value}% maksymalnego HP z wrogich mobów<gray>  i graczy, których zabijasz.
-      info: "Kradzież {value}% HP"
-    golden_heart:
-      name: Złote Serce
-      desc: Obrażenia zadane sercom absorpcji są <gray>  zmniejszone o {value}%
-      info: "-{value}% Obrażeń Absorbcji"
-    revival:
-      name: Odrodzenie
-      desc: Zdobądź <red>+{value} Zdrowia <gray>oraz <gold>+{value_2} Regeneracji<gray>  przez 30 sekund po odrodzeniu.
-      info: "+{value} Zdrowia, +{value_2} Regeneracji"
-      message: "<white>Otrzymałeś bonus odrodzenia na 30 sekund! <white>(<red>+{value} Zdrowia, <gold>+{value_2} Regeneracji<white>)"
-  forging:
-    disenchanter:
-      name: Odczarowanie
-      desc: Zdobądź {value}% więcej doświadczenia podczas odczarowania<gray>  przedmiotów za pomocą kamienia szlifierskiego.
-      info: "+{value}% EXPa z Kamienia szlifierskiego"
-    forger:
-      name: Wykuwacz
-      desc: Zdobywaj {value}% więcej XP Kowalstwa.
-      info: "+{value}% XP"
-    repairing:
-      name: Naprawianie
-      desc: Naprawianie przedmiotów w kowadle przy użyciu surowca,<gray>  z którego został wykonany przedmiot, naprawia<gray>  {value}% więcej trwałości.
-      info: "+{value}% Naprawy Kowadła"
-    anvil_master:
-      name: Mistrz Kowadła
-      desc: Zwiększa maksymalny koszt napraw w kowadle<gray>  do {value} PD,  zanim stanie się on zbyt drogi.
-      info: "{value} Maksymalny Koszt"
-    skill_mender:
-      name: Naprawiacz Umiejętności
-      desc: Zdobywanie XP umiejętności ma {value}% szans na naprawę<gray>  trzymanego przedmiotu lub zużytego kawałka zbroi z zaklęciem Naprawa<gray>  o 1 wytrzymałość na 2 XP umiejętności.
-      info: "{value}% Szansy na Wyładowanie"
+  bountiful_harvest:
+    name: Obfite Zbiory
+    desc: "{value}% szans na zdobycie podwójnych dropów z upraw."
+    info: "{value}% 2x Dropów"
+  farmer:
+    name: Rolnik
+    desc: "Zdobywaj {value}% więcej XP Rolnictwa."
+    info: "+{value}% XP"
+  scythe_master:
+    name: Mistrz Motyki
+    desc: "Zwiększa obrażenia z motyki o {value}%"
+    info: "+{value}% Obrażeń Motyki"
+  geneticist:
+    name: Genetyk
+    desc: "Zwiększa przyrost nasycenia z żywności roślinnej o {value}."
+    info: "+{value} Nasycenia"
+  triple_harvest:
+    name: Potrójne Zbieranie
+    desc: "{value}% szans na zdobycie potrójnych dropów z upraw."
+    info: "{value}% 3x Dropów"
+  lumberjack:
+    name: Świetny Drwal
+    desc: "{value}% szans na zdobycie podwójnych dropów z pni."
+    info: "{value}% 2x Dropów"
+  forager:
+    name: Stolarz
+    desc: "Zdobywaj {value}% więcej XP Drwalnictwa."
+    info: "+{value}% XP"
+  axe_master:
+    name: Mistrz Topora
+    desc: "Zwiększa obrażenia z siekiery o {value}%"
+    info: "+{value}% Obrażeń Siekiery"
+  valor:
+    name: Głowica
+    desc: "Dodaje +{value} Siły podczas trzymania siekiery"
+    info: "+{value} Siły"
+  shredder:
+    name: Trzaskacz
+    desc: "{value}% szans na zadanie potrójnych obrażeń wytrzymałości za pomocą toporów."
+    info: "{value}% 3x Obrażeń Wytrzymałości"
+  lucky_miner:
+    name: Szczęśliwy Górnik
+    desc: "{value}% szans na zdobycie podwójnych dropów z rud."
+    info: "{value}% 2x Dropów"
+  miner:
+    name: Górnik
+    desc: "Zdobywaj {value}% więcej XP Górnictwa."
+    info: "+{value}% XP"
+  pick_master:
+    name: Mistrz Kilofa
+    desc: "Zadaj {value}% więcej obrażeń za pomocą kilofów."
+    info: "+{value}% Obrażeń Kilofa"
+  stamina:
+    name: Energia
+    desc: "Dodaje +{value} Twardości podczas trzymania kilofu"
+    info: "+{value} Wytrzymałości"
+  hardened_armor:
+    name: Utwardzona Zbroja
+    desc: "{value}% szans na negowanie obrażeń wytrzymałości pancerza."
+    info: "{value}% Brak Utraty Wytrzymałości"
+  lucky_catch:
+    name: Szczęśliwy Połów
+    desc: "{value}% szans na zdobycie podwójnych dropów z łowienia."
+    info: "{value}% 2x Dropów"
+  fisher:
+    name: Rybak
+    desc: "Zdobywaj {value}% więcej XP Wędkarstwa."
+    info: "+{value}% XP"
+  treasure_hunter:
+    name: Łowca Skarbów
+    desc: "{value}% szans na zdobycie rzadkich łupów z łowienia."
+    info: "+{value}% Rzadkich Łupów"
+  grappler:
+    name: Hak
+    desc: "Łapie moby z {value}% większą prędkością."
+    info: "+{value}% Prędkości Haka"
+  epic_catch:
+    name: Epicki Połów
+    desc: "{value}% szans na zdobycie epickich łupów z łowienia."
+    info: "+{value}% Epickich Łupów"
+  metal_detector:
+    name: Wykrywacz Metalu
+    desc: "{value}% szans na zdobycie rzadkich łupów z kopania."
+    info: "+{value}% Rzadkich Łupów"
+  excavator:
+    name: Wydobywca
+    desc: "Zdobywaj {value}% więcej XP Wydobywania."
+    info: "+{value}% XP"
+  spade_master:
+    name: Mistrz Szpady
+    desc: "Zadaj {value}% więcej obrażeń za pomocą łopat."
+    info: "+{value}% Obrażeń Łopaty"
+  bigger_scoop:
+    name: Większa Miarka
+    desc: "{value}% szans na zdobycie potrójnych dropów z kopania."
+    info: "{value}% 3x Dropów"
+  lucky_spades:
+    name: Szczęśliwe Szpady
+    desc: "{value}% szans na zdobycie epickich łupów z kopania."
+    info: "+{value}% Epickich Łupów"
+  crit_chance:
+    name: Szansa Obrażeń Krytycznych
+    desc: "+{value}% szans na trafienie krytyczne."
+    info: "+{value}% Szansy na Krytykę"
+  archer:
+    name: Łucznik
+    desc: "Zdobywaj {value}% więcej XP Łucznictwa."
+    info: "+{value}% XP"
+  bow_master:
+    name: Mistrz Łuku
+    desc: "Zadaj {value}% więcej obrażeń za pomocą łuku."
+    info: "+{value}% Obrażeń Łuku"
+  piercing:
+    name: Przebicie
+    desc: "{value}% szans na strzałę na przebicie się przez moby."
+    info: "{value}% Szansy Przebicia"
+  stun:
+    name: Ogłuszenie
+    desc: "{value}% szans na zmniejszenie prędkości ruchu wroga o 20% na 2 sekundy."
+    info: "{value}% Szans Ogłuszenia"
+  shielding:
+    name: Osłona
+    desc: "Zmniejsz obrażenia przychodzące o {value}% podczas skradania."
+    info: "-{value}% Przychodzących Obrażen"
+  defender:
+    name: Obrońca
+    desc: "Zdobywaj {value}% więcej XP Obrony."
+    info: "+{value}% XP"
+  mob_master:
+    name: Mistrz Potworów
+    desc: "Zmniejsza obrażenia od mobów o {value}%"
+    info: "-{value}% Obrażeń Mobów"
+  immunity:
+    name: Immunitet
+    desc: "{value}% szans na całkowite negowanie ataku wroga."
+    info: "{value}% Immunitetu"
+  no_debuff:
+    name: Antidotum
+    desc: "{value}% szans na negowanie szkodliwego efektu mikstury."
+    info: "{value}% Braku Debufu"
+  crit_damage:
+    name: Obrażenia Krytyczne
+    desc: "Zwiększa obrażenia krytyczne o {value}%"
+    info: "+{value}% Obrażeń Krytycznych"
+  fighter:
+    name: Wojownik
+    desc: "Zdobywaj {value}% więcej XP Walki"
+    info: "+{value}% XP"
+  sword_master:
+    name: Mistrz Miecza
+    desc: "Zadaj {value}% więcej obrażeń mieczami."
+    info: "+{value}% Obrażeń Miecza"
+  first_strike:
+    name: Pierwsze Uderzenie
+    desc: "Zadaj {value}% więcej obrażeń przy pierwszym trafieniu."
+    info: "+{value}% Obrażeń Pierwszego Ataku"
+    dealt: "<red>Pierwsze Uderzenie Zadane!"
+  bleed:
+    name: Krwotok
+    desc: "{value}% szans na to, że wróg zacznie krwawić przez {base_ticks} ticki, zadając {value_2} obrażeń na każdy tick."
+    info: "{value}% Szans, {value_2} Obrażeń"
+    enemy_bleeding: "<red>Przeciwnik Krwawi!"
+    self_bleeding: "<red>Krwawisz!"
+    stop: "<white>Krwawienie ustąpiło"
+  anti_hunger:
+    name: Anty-Głód
+    desc: "{value}% szans na powstrzymanie utraty głodu."
+    info: "{value}% Braku Utraty Głodu"
+  runner:
+    name: Biegacz
+    desc: "Zdobywaj {value}% więcej XP Wytrzymałości."
+    info: "+{value}% XP"
+  golden_heal:
+    name: Złote Leczenie
+    desc: "Zwiększa efekt regeneracji przyrostu zdrowia o {value}%"
+    info: "+{value}% Regeneracji"
+  recovery:
+    name: Powrót Do Zdrowia
+    desc: "Zwiększa naturalną regenerację gdy masz mniej niż połowę życia o {value}%"
+    info: "+{value}% Niskiej Regeneracji Zdrowia"
+  meal_steal:
+    name: Kradzież Posiłku
+    desc: "{value}% szans na kradzież 1 punktu głodowego podczas atakowania gracza."
+    info: "{value}% Kradzieży Głodu"
+  light_fall:
+    name: Lekki Upadek
+    desc: "Zmniejsza obrażenia od upadku o {value}%"
+    info: "-{value}% Obrażeń od Upadku"
+  jumper:
+    name: Skoczek
+    desc: "Zdobywaj {value}% więcej XP Zręczności."
+    info: "+{value}% XP"
+  sugar_rush:
+    name: Moc Cukru
+    desc: "Wypite i rzucone mikstury szybkości i zwiększonego skoku trwają {value}% dłużej."
+    info: "{value}% Dłuższa Prędkość"
+  fleeting:
+    name: Trucht
+    desc: "Zyskaj +{value}% szybkości ruchu, gdy twoje zdrowie spadnie poniżej 20%"
+    info: "+{value}% Prędkości"
+    start: "<white>Otrzymałeś zwiększenie szybkości truchtu! <gray>(+{value}% Prędkości)"
+    end: "<gray>Przyśpieszenie szybkości truchtu zostało wyłączone"
+  thunder_fall:
+    name: Spadek Piorunu
+    desc: "Podczas skradania się w czasie upadku, masz {value}% szans na zadanie {value_2}% obrażeń od upadku oczekiwanym potworom w promieniu 3 bloków"
+    info: "{value}% Szans, {value_2}% Obrażeń"
+  alchemist:
+    name: Alchemik
+    desc: "Mikstury, które warzysz mają o {value}% więcej czasu trwania."
+    info: "+{value}% Czasu Trwania"
+    lore: "<green>(+{duration})"
+  brewer:
+    name: Mistrz Warzenia
+    desc: "Zdobywaj {value}% więcej XP Alchemii"
+    info: "+{value}% XP"
+  splasher:
+    name: Miotacz
+    desc: "Mikstury, które rzucisz zyskują {value}% więcej czasu trwania dla każdego dotkniętego nimi gracza."
+    info: "+{value}% Czas trwania/Gracz"
+  lingering:
+    name: Długotrwały Efekt
+    desc: "Trwałe rzucane mikstury zanikają o {value}% wolniej i zanikają o {value_2}% słabiej na każdą dotkniętą jej skutkami jednostkę."
+    info: "-{value}% Naturalnie, -{value_2}% Jednostki"
+  wise_effect:
+    name: Wiedza Z Efektu
+    desc: "Zdobądź {value} Mądrości za każdy unikalny efekt mikstury."
+    info: "+{value} Mądrość/Efekt"
+  xp_convert:
+    name: Konwersja XP
+    desc: "Zdobądź 1 XP (MC) za każde zdobyte przez ciebie {value} XP konkretnej umiejętności."
+    info: "Jedno doświadczenie za {value} doświadczenia umiejętności"
+  enchanter:
+    name: Zaklinacz
+    desc: "Zdobywaj {value}% więcej XP Zaklinania."
+    info: "+{value}% XP"
+  xp_warrior:
+    name: Doświadczenie Wojownika
+    desc: "Potwory które zabiłeś mają {value} procent więcej szansy że wyrzucą dwa razy więcej doświadczenia."
+    info: "{value} procent jako dwa razy więcej doświadczenia z potworów"
+  enchanted_strength:
+    name: Zaklęta Siła
+    desc: "Zdobądź {value} Siły za każdy unikalny enchant rzeczy trzymanej w ręce."
+    info: "{value} Strength/Enchant"
+  lucky_table:
+    name: Szczęśliwy Stół
+    desc: "Przedmioty, które zakląłeś za pomocą stołu do zaklinania mają {value}% szans na ulepszenie poziomu zaklęcia o 1, jeśli nie jest to ich maksymalny poziom"
+    info: "{value}% Szans na Ulepszenie Zaklęcia"
+  life_essence:
+    name: Esencja Życia
+    desc: Natychmiastowe mikstury leczenia przywracają {value}% więcej życia.
+    info: "+{value}% Natychmiastowe Leczenie"
+  healer:
+    name: Uzdrowiciel
+    desc: Zdobywaj {value}% więcej XP Leczenia.
+    info: "+{value}% XP"
+  life_steal:
+    name: Kradzież Życia
+    desc: Wylecz {value}% maksymalnego HP z wrogich mobów i graczy, których zabijasz.
+    info: "Kradzież {value}% HP"
+  golden_heart:
+    name: Złote Serce
+    desc: Obrażenia zadane sercom absorpcji są zmniejszone o {value}%
+    info: "-{value}% Obrażeń Absorbcji"
+  revival:
+    name: Odrodzenie
+    desc: Zdobądź +{value} Zdrowia oraz +{value_2} Regeneracji przez 30 sekund po odrodzeniu.
+    info: "+{value} Zdrowia, +{value_2} Regeneracji"
+    message: "<white>Otrzymałeś bonus odrodzenia na 30 sekund! <white>(<red>+{value} Zdrowia, <gold>+{value_2} Regeneracji<white>)"
+  disenchanter:
+    name: Odczarowanie
+    desc: Zdobądź {value}% więcej doświadczenia podczas odczarowania przedmiotów za pomocą kamienia szlifierskiego.
+    info: "+{value}% Grindstone EXP"
+  forger:
+    name: Wykuwacz
+    desc: Zdobywaj {value}% więcej XP Kowalstwa.
+    info: "+{value}% XP"
+  repairing:
+    name: Naprawianie
+    desc: Naprawianie przedmiotów w kowadle przy użyciu surowca, z którego został wykonany przedmiot, naprawia {value}% więcej trwałości.
+    info: "+{value}% Naprawy Kowadła"
+  anvil_master:
+    name: Mistrz Kowadła
+    desc: Zwiększa maksymalny koszt napraw w kowadle do {value} PD, zanim stanie się on zbyt drogi.
+    info: "{value} Maksymalny Koszt"
+  skill_mender:
+    name: Naprawiacz Umiejętności
+    desc: Zdobywanie XP umiejętności ma {value}% szans na naprawę trzymanego przedmiotu lub zużytego kawałka zbroi z zaklęciem Naprawa o 1 wytrzymałość na 2 XP umiejętności.
+    info: "{value}% Szansy na Wyładowanie"
 acf:
   core:
     permission_denied: "<red>Przepraszam, ale nie masz uprawnień do wykonania tej komendy."
@@ -344,15 +330,6 @@ acf:
     location_please_specify_world: "<red>Błąd: Proszę określić świat. Przykład: <yellow>world:x,y,z."
     location_please_specify_xyz: "<red>Błąd: Proszę określić współrzędne x, y i z. Przykład: <yellow>world:x,y,z."
     location_console_not_relative: "<red>Błąd: Konsola nie może używać współrzędnych względnych dla lokalizacji."
-action_bar:
-  idle: "<red>{hp}/{max_hp}❤                 <aqua>{mana}/{max_mana} {mana_unit}"
-  xp: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  xp_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>({current_xp}/{level_xp} {xp_unit})  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed: "<red>{hp}/{max_hp}❤  <gold>+{xp_gained} {skill} {xp_unit} <gray>(MAX)  <aqua>{mana}/{max_mana} {mana_unit}"
-  maxed_removed: "<red>{hp}/{max_hp}❤  <gold>-{xp_removed} {skill} {xp_unit} <gray>(MAX)  <aqua>{mana}/{max_mana} {mana_unit}"
-  ability: "{message}"
-  boss_bar_xp: "<gold>{skill} {level} <gray>({current_xp}/{level_xp} {xp_unit})"
-  boss_bar_maxed: "<gold>{skill} {level} <gray>(MAX)"
 commands:
   prefix: "<dark_gray>[<aqua>Umiejętności<dark_gray>]<reset> "
   armor:
@@ -504,6 +481,15 @@ commands:
     list: "<white>Globalny mnożnik XP dla <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<white>Mnożnik XP <aqua>{skill} <white>: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Tylko gracze mogą wyświetlić własny mnożnik! Określ gracza!"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
   profile:
     skills: "Profil Aurelium Skills dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Umiejętności:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Poziom: <white>{level}<gray>, XP: <white>{xp}"
@@ -523,11 +509,10 @@ commands:
       reset_all: "<gray>Wszystkie umiejętności ustawione na poziom <aqua>1 <gray>dla gracza <gold>{player}"
       reset_skill: "<gray>Umiejętność <aqua>{skill} <gray>ustawiona na poziom <aqua>1 <gray>dla gracza <gold>{player}"
     setall:
-      at_least_one: "<yellow>Poziom musi wynosić co najmniej 1!"
       set: "<gray>Wszystkie umiejętności zostały ustawione na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
     setlevel:
-      at_least_one: "<yellow>Poziom musi wynosić co najmniej 1!"
       set: "<gray>Umiejętność <aqua>{skill} <gray>ustawiona na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
+    at_least: "<yellow>Level must be at least {level}!"
   toggle:
     enabled: "<green>Twój pasek umiejętności został włączony"
     disabled: "<red>Twój pasek umiejętności został wyłączony"
@@ -555,235 +540,196 @@ commands:
     set: "<gray>Ustawiono XP <aqua>{skill} <gray>graczowi <gray>{player} <gray>na {amount}"
     remove: "<gray>Usunięto <aqua>{amount} <gray>XP <aqua>{skill} <gray>graczowi <gold>{player}"
   unknown_skill: "<yellow>Nieznana umiejętność!"
+  unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Gracz nie ma profilu umiejętności. Spróbuj dołączyć ponownie do gry lub uruchomić ponownie serwer."
 leveler:
-  title: "<green>Nowy Poziom {skill}"
-  subtitle: "<gold>{old} ➜ {new}"
-  level_up: "<dark_aqua><strikethrough>----------------------------------------\n<reset> <dark_aqua>Nowy Poziom Umiejętności! <aqua><bold>{skill} </bold><dark_grey>{old}➜<dark_aqua><bold>{new}\n \n </bold><aqua>Nagrody:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_: "}\n<dark_aqua><strikethrough>----------------------------------------"
-  stat_level: "\n  {color}+{num}{symbol} {stat}"
-  ability_unlock: "\n  <green>Odblokowano Zdolność! <gray>Zdolność <gold><bold>{ability} </bold><gray>została odblokowana."
-  ability_level_up: "\n  <green>Nowy Poziom Zdolności! <gray>Zdolność <gold><bold>{ability} </bold><gray>ma teraz poziom <gold>{level}"
-  mana_ability_unlock: "\n  <light_purple>Odblokowano Zdolność Many! <gray>Zdolność <blue><bold>{mana_ability} </bold><gray>została odblokowana"
-  mana_ability_level_up: "\n  <light_purple>Nowy Poziom Zdolności Many! <gray>Zdolność <blue><bold>{mana_ability} </bold><gray>ma teraz poziom <gold>{level}"
-  money_reward: "\n  <green>${amount}"
+  level_up: "Nowy Poziom {skill}"
+  skill_level_up: Nowy Poziom Umiejętności
+  rewards: Nagrody
+  ability_unlock: Odblokowano Zdolność
+  ability_level_up: Nowy Poziom Zdolności
+  mana_ability_unlock: Odblokowano Zdolność Many
+  mana_ability_level_up: Nowy Poziom Zdolności Many
   unclaimed_item: "<red>Masz nieodebrane przedmioty, ponieważ twój ekwipunek był pełny, użyj <yellow>/skills claimitems <red>aby je odebrać"
 menus:
   common:
-    close: "<red>Zamknij"
-    level: "<gray>Poziom <yellow>{level}"
-    progress_to_level: "<gray>Postęp do Poziomu {level}: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
-    max_level: "<gold>MAKSYMALNY POZIOM"
-    ability_levels: "<gray>Poziomy Zdolności: {ability_1} {ability_2} {ability_3} {ability_4} {ability_5}"
-    ability_level_entry: "<gold>{ability} {level} <dark_gray>({info})"
-    ability_level_entry_locked: "<dark_gray><strikethrough>{ability}"
-    stats_leveled: "<gray>Podstawowe Statystyki: {stats}"
-    mana_ability: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Czas trwania: <green>{duration}s <gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
-  skills_menu:
-    skills_menu_title: Twoje Umiejętności
-    your_skills: "<aqua>Twoje Umiejętności - <gold>{player}"
-    your_skills_desc: "<gray>Ulepszaj Umiejętności wykonując różne zadania,<gray>aby odblokować cenne bonusy do statystyk,<gray>zdolności i wiele więcej!"
-    your_skills_hover: "<yellow>Przesuń na Umiejętność aby uzyskać więcej informacji!"
-    your_skills_click: "<yellow>Kliknij Umiejętność, aby wyświetlić postęp poziomu!"
-    skill_click: "<yellow>Kliknij, aby wyświetlić Postęp Poziomu!"
-    skill_locked: "<red>Nie masz uprawnień do wyświetlania tej umiejętności!"
-    stats: "<aqua>Statystyki"
-    stats_desc: "<gray>Zdobywaj bonusy do statystyk poprzez podnoszenie poziomu umiejętności"
-    stats_click: "<yellow>Kliknij, aby dowiedzieć się więcej lub zobaczyć swoje statystyki"
-  level_progression_menu:
-    level_progression_menu_title: "Poziomy {skill} - Strona {page}"
-    your_ranking: "<gold>Twój Ranking Umiejętności"
-    rank_out_of: "<white>Jesteś <gold>{rank}<white> z {total} graczy"
-    rank_percent: "<white>Jesteś <gold>{percent}% <white>lepszy od innych"
-    back: "<green>Wróć"
-    back_click: "<gray>Wróć do menu {menu_name}"
-    next_page: "<gold>Następna Strona"
-    next_page_click: "<yellow>Kliknij aby przejść do następnej strony"
-    previous_page: "<gold>Poprzednia Strona"
-    previous_page_click: "<yellow>Kliknij aby przejść do poprzedniej strony"
-    level_unlocked: "<green>Poziom {level}"
-    level_in_progress: "<yellow>Poziom {level}"
-    level_locked: "<red>Poziom {level}"
-    level_number: "<gray>Poziom <white>{level}"
-    unlocked: "<green>ODBLOKOWANE"
-    in_progress: "<yellow>W TRAKCIE"
-    locked: "<red>ZABLOKOWANE"
-    rewards: "<gray>Nagrody:{rewards}"
-    rewards_entry: "\n  {color}+{num} {symbol} {stat}"
-    money_reward: "\n  <green>${amount}"
-    ability_unlock: "<gold>{ability} <green><bold>Do Odblokowania<gray>  {desc}</bold>"
-    ability_level: "<gold>{ability} {level}<gray>  {desc}"
-    mana_ability_unlock: "<blue>{mana_ability} <light_purple><bold>Do Odblokowania (mana)<gray>  {desc}</bold>"
-    mana_ability_level: "<blue>{mana_ability} {level}<gray>  {desc}"
-    progress: "<gray>Postęp: <yellow>{percent}% <gray>{current_xp}/{level_xp} {xp_unit}"
-    leaderboard_click: "<yellow>Kliknij, aby wyświetlić tablicę wyników {skill}"
-    sources: "<green>Źródła XP"
-    sources_desc: "<gray>Menu źródeł pokazuje wszystkie sposoby<gray>zdobywania XP w ramach umiejętności, a także<gray>ile konkretnie XP daje każde źródło."
-    sources_click: "<yellow>Kliknij, aby zobaczyć źródła {skill}"
-    abilities: "<red>Zdolności"
-    abilities_desc: "<aqua>Zdolności <gray>są biernymi umiejętnościami, które odblokowujesz i<gray>ulepszasz w miarę podnoszenia umiejętności.<light_purple>Zdolności Many <gray>są specjalnym rodzajem zdolności<gray>wymagających aktywacji i zużywających manę."
-    abilities_click: "<yellow>Kliknij, aby zobaczyć zdolności {skill}"
-  stats_menu:
-    stats_menu_title: Twoje Statystyki
-    player_stat_entry: " {color}{symbol} {stat} <white>{level}"
-    skills: "<gray>Umiejętności: <white>{skills}"
-    your_level: "<gray>Twój Poziom: {color}{level}"
-    attack_damage: "<dark_red>+{value}% Obrażeń od Ataku"
-    hp: "<red>+{value} ❤"
-    saturated_regen: "<gold>+{value} Nasyconej Regeneracji"
-    full_hunger_regen: "<gold>+{value} Regeneracji Pełnego Głodu"
-    almost_full_hunger_regen: "<gold>+{value} Regeneracji Prawie Pełnego Głodu"
-    mana_regen: "<aqua>+{value} Regeneracji Many"
-    luck: "<dark_green>+{value} Szczęścia"
-    double_drop_chance: "<dark_green>Szansa na Podwójny Drop: {value}%"
-    xp_gain: "<blue>Zdobyte doświadczenie: +{value}% {xp_unit}"
-    anvil_cost_reduction: "<blue>Redukcja kosztu kowadła: {value}%"
-    max_mana: "<blue>Maksymalna Mana: {value}"
-    incoming_damage: "<dark_purple>-{value}% Przychodzących Obrażeń"
+    close: "Zamknij"
+    level: "Poziom"
+    progress_to_level: "Postęp do Poziomu"
+    max_level: "MAKSYMALNY POZIOM"
+    ability_levels: "Poziomy Zdolności"
+    stats_leveled: "Podstawowe Statystyki"
+    mana_ability: "Zdolność Many"
+    duration: "Czas trwania"
+    mana_cost: "Koszt many"
+    cooldown: "Czas odnowienia"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Wróć"
+    back_click: "Wróć do menu {menu_name}"
+    unlocked: "ODBLOKOWANE"
+    in_progress: "W TRAKCIE"
+    locked: "ZABLOKOWANE"
+    your_level: "Your Level"
+    next_page: "Następna Strona"
+    next_page_click: "Kliknij aby przejść do następnej strony"
+    previous_page: "Poprzednia Strona"
+    previous_page_click: "Kliknij aby przejść do poprzedniej strony"
+  skills:
+    skills_title: "Twoje Umiejętności"
+    your_skills: "Twoje Umiejętności"
+    your_skills_desc: "Ulepszaj Umiejętności wykonując różne zadania, aby odblokować cenne bonusy do statystyk, zdolności i wiele więcej!"
+    your_skills_hover: "Przesuń na Umiejętność aby uzyskać więcej informacji!"
+    your_skills_click: "Kliknij Umiejętność, aby wyświetlić postęp poziomu!"
+    skill_click: "Kliknij, aby wyświetlić Postęp Poziomu!"
+    stats: "Statystyki"
+    stats_desc: "Zdobywaj bonusy do statystyk poprzez podnoszenie poziomu umiejętności"
+    stats_click: "Kliknij, aby dowiedzieć się więcej lub zobaczyć swoje statystyki"
+  level_progression:
+    level_progression_title: "Poziomy {skill} - Strona {page}"
+    your_ranking: "Twój Ranking Umiejętności"
+    rank_out_of: "<1>Jesteś <2>{rank}</2> z {total} graczy</1>"
+    rank_percent: "<1>Jesteś <2>{percent}%</2> lepszy od innych</1>"
+    rewards: "Nagrody"
+    ability_unlock: "Do Odblokowania"
+    mana_ability_unlock: "Mana Ability Unlock"
+    progress: "Postęp"
+    leaderboard_click: "Kliknij, aby wyświetlić tablicę wyników {skill}"
+    sources: "Źródła XP"
+    sources_desc: "Menu źródeł pokazuje wszystkie sposoby zdobywania XP w ramach umiejętności, a także ile konkretnie XP daje każde źródło."
+    sources_click: "Kliknij, aby zobaczyć źródła {skill}"
+    abilities: "Zdolności"
+    abilities_desc: "<2>Zdolności</2> <1>są biernymi umiejętnościami, które odblokowujesz i ulepszasz w miarę podnoszenia umiejętności.</1>"
+    mana_abilities_desc: "<3>Zdolności Many</3> <1>są specjalnym rodzajem zdolności<gray>wymagających aktywacji i zużywających manę.</1>"
+    abilities_click: "Kliknij, aby zobaczyć zdolności {skill}"
+  stats:
+    stats_title: Twoje Statystyki
+    skills: "Umiejętności"
   unclaimed_items:
     unclaimed_items_title: "Odbierz Przedmioty"
-    inventory_full: "<yellow>Nie masz wystarczająco miejsca w swoim ekwipunku, aby odebrać ten przedmiot"
-    click_to_claim: "<yellow>Kliknij, aby odebrać!"
+    inventory_full: "Nie masz wystarczająco miejsca w swoim ekwipunku, aby odebrać ten przedmiot"
+    click_to_claim: "Kliknij, aby odebrać!"
   leaderboard:
     leaderboard_title: "Tablica wyników: {skill}"
-    player_entry: "<yellow>{place}. <gold>{player}"
-    skill_level: "<gray>Poziom: <white>{level}"
   sources:
     sources_title: "Źródła XP {skill} ({current_page}/{total_pages})"
-    sorter: "<aqua>Sortuj źródła XP"
-    sort_type: "<gray>{selected}{type_name}"
-    selected: "<white>> "
+    sorter: "Sortuj źródła XP"
     descending: "Od najwyższego do najniższego"
     ascending: "Od najniższego do najwyższego"
     alphabetical: "Nazwa (A-Z)"
     reverse_alphabetical: "Nazwa (Z-A)"
-    sort_click: "<yellow>Kliknij, aby wybrać typ sortowania"
-    source_name: "<white>{name}"
-    source_xp: "<gray>XP: <green>{xp}"
-    source_xp_rate: "<gray>XP: <green>{xp}/{unit}"
-    multiplied_xp: "<white>Mnożone XP: <green>{xp}"
-    multiplied_xp_rate: "<white>Mnożone XP: <green>{xp}/{unit}"
-    multiplied_desc: "<gray><italic>To jest XP, które faktycznie zdobędziesz<gray><italic>w oparciu o aktualne mnożniki XP"
+    sort_click: "<Kliknij, aby wybrać typ sortowania"
+    multiplied_xp: "Mnożone XP"
+    multiplied_desc: "To jest XP, które faktycznie zdobędziesz w oparciu o aktualne mnożniki XP"
   abilities:
     abilities_title: "Zdolności {skill}"
-    locked_desc: "<white>Opis: <gray>{desc}"
-    unlocked_at: "<gray>Odblokowanie: <dark_aqua>{skill} {level}"
-    your_ability_level: "<white>Twój poziom: <aqua>{level}"
-    your_ability_level_maxed: "<white>Twój poziom: <aqua>{level} <gold>(MAXED)"
-    unlocked_desc: "<white>Następne ulepszenie w <dark_aqua>{skill} {level}<white> <gray>{desc}"
-    unlocked_desc_maxed: "<white>Opis: <gray>{desc}"
-    desc_upgrade_value: "<gray>{current}<dark_gray>→{next}<gray>"
+    description: "Description"
+    unlocked_at: "<1>Odblokowanie: <2>{skill} {level}"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
-    desc: "<gray>Przesadza rośliny automatycznie na <gray>  {value} sekund. <yellow>[Kliknij prawym przyciskiem myszy i<yellow>  zniszcz plon, aby aktywować]"
+    desc: "Przesadza rośliny automatycznie na {value} sekund. <1>[Kliknij prawym przyciskiem myszy i zniszcz plon, aby aktywować]"
     raise: "<gray>Podnosisz swoją motykę"
     lower: "<gray>Obniżasz swoją motykę"
     start: "<gold>Autoprzesadzanie Aktywowane! <gray>(-{mana} {mana_unit})"
     end: "<gray>Automatyczne przesadzanie skończyło robić swoją robote"
   treecapitator:
     name: Niszczyciel Drzew
-    desc: "<gray>Natychmiast niszczy całe drzewa przez <gray>  {value} sekund. <yellow>[Kliknij prawym przyciskiem myszy i<yellow>  zniszcz pień, aby aktywować]"
+    desc: "Natychmiast niszczy całe drzewa przez {value} sekund. <1>[Kliknij prawym przyciskiem myszy i zniszcz pień, aby aktywować]"
     raise: "<gray>Podnosisz swój topór"
     lower: "<gray>Obniżasz swój topór"
     start: "<gold>Niszczenie Drzew Aktywowane! <gray>(-{mana} {mana_unit})"
     end: "<gray>Niszczyciel drzew się skończył"
   speed_mine:
     name: Szybkie Kopanie
-    desc: "<gray>Daje Pośpiech {haste_level} na {value} sekund.<yellow>  [Kliknij prawym przyciskiem kilofem i kop<yellow>  blok, aby aktywować]"
+    desc: "Daje Pośpiech {haste_level} na {value} sekund. <1>[Kliknij prawym przyciskiem kilofem i kop blok, aby aktywować]"
     raise: "<gray>Podnosisz swój kilof"
     lower: "<gray>Obniżasz swój kilof"
     start: "<gold>Szybkie Kopanie aktywowane! <gray>(-{mana} {mana_unit})"
     end: "<gray>Szybkie Kopanie się skończyło"
   absorption:
     name: Absorpcja
-    desc: "Nadchodzące obrażenia zmniejszą manę<gray>  o 2x minecraftowych obrażeń zamiast twojego<gray>  zdrowia na {value} sekund. Mana nie będzie<gray>  regenerowana, gdy Absorbcja jest aktywna. <yellow>[Kliknij lewym przyciskiem myszy tarczę i odnieś obrażenia, aby aktywować]"
+    desc: "Nadchodzące obrażenia zmniejszą manę o 2x minecraftowych obrażeń zamiast twojego zdrowia na {value} sekund. Mana nie będzie regenerowana, gdy Absorbcja jest aktywna. <1>[Kliknij lewym przyciskiem myszy tarczę i odnieś obrażenia, aby aktywować]"
     raise: "<gray>Podnosisz swoją tarczę"
     lower: "<gray>Obniżasz swoją tarczę"
     start: "<gold>Absorpcja Aktywowana! <gray>(-{mana} {mana_unit})"
-    end: "<gold>7Absorbcja się skończyła"
+    end: "<gray>Absorbcja się skończyła"
   terraform:
     name: Terraforma
-    desc: "Zniszcz bloki natychmiast w promieniu 4 bloków<gray>  w tej samej warstwie podczas kopania przez {value} sekund. Musisz<gray>  użyć łopaty, a dodatkowe zniszczone bloki muszą być<gray>  tego samego typu i w jednej połączonej żyle.<gray>  <yellow>[Kliknij prawym przyciskiem myszy łopatą i wykop blok, aby aktywować]"
+    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
     raise: "<gray>Podnosisz swoją łopatę"
     lower: "<gray>Obniżasz swoją łopatę"
     start: "<gold>Terraforma Aktywowana! <gray>(-{mana} {mana_unit})"
     end: "<gray>Terraforma się skończyła"
   sharp_hook:
     name: Ostry Hak
-    desc: "Zadaj {value} obrażeń zaczepionemu mobowi<gray>  klikając wędką lewym przyciskiem myszy"
+    desc: "Zadaj {value} obrażeń zaczepionemu mobowi klikając wędką lewym przyciskiem myszy"
     use: "<gold>Użyto Ostrego Haka! <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Obrażenia: <red>{value} <gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
   charged_shot:
     name: Naładowany Strzał
-    desc: "Strzały które wystrzelisz zadają więcej obrażeń<gray>  w zależności od tego, w jakim stopniu łuk został naciągnięty,<gray>  zużywając manę w tym procesie. Zadaje {value}% więcej<gray>  obrażeń na zużytą manę. <yellow>  [Kliknij lewym przyciskiem myszy łuk, aby przełączyć tryb naładowanego strzału]"
+    desc: "Strzały które wystrzelisz zadają więcej obrażeń w zależności od tego, w jakim stopniu łuk został naciągnięty, zużywając manę w tym procesie. Zadaje {value}% więcej obrażeń na zużytą manę. <1>[Kliknij lewym przyciskiem myszy łuk, aby przełączyć tryb naładowanego strzału]"
     enable: "<gray>Tryb naładowanego strzału jest teraz włączony"
     disable: "<gray>Tryb naładowanego strzału jest teraz wyłączony"
     shoot: "<gold>Użyto Naładowanego Strzału! <light_purple>+{percent}% Obrażeń <gray>(-{mana} {mana_unit})"
-    menu: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Obrażenia: <red>+{value}% / Mana <gray>Maksymalny koszt many: <aqua>{mana_cost}"
   lightning_blade:
     name: Ostrze Błyskawicy
-    desc: Zwiększa szybkość ataku o {value}% na {duration} sekund.<yellow> [Kliknij prawym przyciskiem miecz i zaatakuj moba, aby aktywować]
+    desc: Zwiększa szybkość ataku o {value}% na {duration} sekund. <1>[Kliknij prawym przyciskiem miecz i zaatakuj moba, aby aktywować]
     raise: "<gray>Przygotowałeś swój miecz"
     lower: "<gray>Obniżasz swój miecz"
     start: "<gold>Ostrze Błyskawicy Aktywowane! <gray>(-{mana} {mana_unit})"
     end: "<gray>Ostrze Błyskawicy zostało wyłączone"
-    menu: "<light_purple><bold>Zdolność Many </bold><blue>{mana_ability} {level}<gray>Prędkość ataku: <red>+{value}% <gray>Czas trwania: <green>{duration}s<gray>Koszt many: <aqua>{mana_cost} <gray>Czas odnowienia: <yellow>{cooldown}s"
   not_ready: "<red>Zdolność many nie jest gotowa! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Niewystarczająca ilość many! <gray>(wymagane {mana} {mana_unit}, masz {current_mana}/{max_mana}"
-rewards:
-  item:
-    default_menu_message: "\n  {display_name}"
-    default_menu_message_multiple: "\n  {display_name} {amount}x"
-    default_chat_message: "\n  {display_name}"
-    default_chat_message_multiple: "\n  {display_name} {amount}x"
+  not_enough_mana: "<yellow>Niewystarczająca ilość many! <gray>(wymagane {mana} {mana_unit})"
 skills:
   farming:
     name: Rolnictwo
-    desc: "<gray>Zbieraj plony, aby zdobyć {xp_unit} Rolnictwa"
+    desc: "Zbieraj plony, aby zdobyć {xp_unit} Rolnictwa"
   foraging:
     name: Drwalnictwo
-    desc: "<gray>Ścinaj drzewa, aby zdobyć {xp_unit} Drwalnictwa"
+    desc: "Ścinaj drzewa, aby zdobyć {xp_unit} Drwalnictwa"
   mining:
     name: Górnictwo
-    desc: "<gray>Wydobywaj kamień i rudy aby zdobyć {xp_unit} Górnictwa"
+    desc: "Wydobywaj kamień i rudy aby zdobyć {xp_unit} Górnictwa"
   fishing:
     name: Wędkarstwo
-    desc: "<gray>Łap ryby aby zdobyć {xp_unit} Wędkarstwa"
+    desc: "Łap ryby aby zdobyć {xp_unit} Wędkarstwa"
   excavation:
     name: Wydobywanie
-    desc: "<gray>Wykop łopatą, aby zdobyć {xp_unit} Wydobywania"
+    desc: "Wykop łopatą, aby zdobyć {xp_unit} Wydobywania"
   archery:
     name: Łucznictwo
-    desc: "<gray>Strzelaj w moby i graczy łukiem aby<gray>zdobyć {xp_unit} Łucznictwa"
+    desc: "Strzelaj w moby i graczy łukiem aby zdobyć {xp_unit} Łucznictwa"
   defense:
     name: Obrona
-    desc: "<gray>Otrzymuj obrażenia od bytów by otrzymać {xp_unit} Obrony"
+    desc: "Otrzymuj obrażenia od bytów by otrzymać {xp_unit} Obrony"
   fighting:
     name: Walka
-    desc: "<gray>Walcz z mobami za pomocą broni wręcz by<gray>zdobyć {xp_unit} Walki"
+    desc: "Walcz z mobami za pomocą broni wręcz by zdobyć {xp_unit} Walki"
   endurance:
     name: Wytrzymałość
-    desc: "<gray>Chodź i biegaj, aby zdobyć {xp_unit} Wytrzymałości"
+    desc: "Chodź i biegaj, aby zdobyć {xp_unit} Wytrzymałości"
   agility:
     name: Zręczność
-    desc: "<gray>Skacz i odbieraj obrażenia od upadku, by<gray>otrzymać {xp_unit} Zręczności"
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
     name: Alchemia
-    desc: "<gray>Warz mikstury, aby zdobyć {xp_unit} Alchemii"
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
     name: Zaklinanie
-    desc: "<gray>Zaklinaj przedmioty i książki, aby<gray>zdobyć {xp_unit} Zaklinania"
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
     name: Czarodziejstwo
-    desc: "<gray>Użyj zdolności many, by zdobyć {xp_unit} Czarodziejstwa"
+    desc: "Użyj zdolności many, by zdobyć {xp_unit} Czarodziejstwa"
   healing:
     name: Leczenie
-    desc: "<gray>Pij i rozbijaj mikstury, aby zdobyć<gray>{xp_unit} Leczenia"
+    desc: "Pij i rozbijaj mikstury, aby zdobyć {xp_unit} Leczenia"
   forging:
     name: Kowalstwo
-    desc: "<gray>Łącz i stosuj książki w kowadle, aby<gray>zdobyć {xp_unit} Kowalstwa"
+    desc: "Łącz i stosuj książki w kowadle, aby zdobyć {xp_unit} Kowalstwa"
 sources:
-  farming:
+  block:
     wheat: Pszenica
     potato: Ziemniak
     carrot: Marchewka
@@ -801,7 +747,8 @@ sources:
     sea_pickle: Iskrzyłuda
     sweet_berry_bush: Słodkie jagody
     glow_berries: Świecące jagody
-  foraging:
+    torchflower: Torchflower
+    pitcher_plant: Pitcher Plant
     oak_log: Dębowy pień
     spruce_log: Świerkowy pień
     birch_log: Brzozowy pień
@@ -827,7 +774,9 @@ sources:
     mangrove_log: Namorzynowy pień
     mangrove_leaves: Namorzynowe liście
     mangrove_roots: Namorzynowe korzenie
-  mining:
+    cherry_log: Cherry Log
+    cherry_leaves: Cherry Leaves
+    pink_petals: Pink Petals
     stone: Kamień
     cobblestone: Bruk
     andesite: Andezyt
@@ -876,16 +825,6 @@ sources:
     packed_ice: Zbity lód
     blue_ice: Niebieski lód lodowcowy
     reinforced_deepslate: Zbrojony łupek
-  fishing:
-    cod: Dorsz
-    salmon: Łosoś
-    tropical_fish: Ryba tropikalna
-    pufferfish: Rozdymka
-    treasure: Wartościowe przedmioty
-    junk: Śmieciowe przedmioty
-    rare: Rzadkie łupy
-    epic: Epickie łupy
-  excavation:
     dirt: Ziemia
     grass_block: Blok trawy
     sand: Piasek
@@ -900,7 +839,21 @@ sources:
     rooted_dirt: Zakorzeniona ziemia
     mud: Błoto
     muddy_mangrove_roots: Zabłocone namorzynowe korzenie
-  mobs:
+    sculk: Sculk
+    sculk_vein: Żyły sculku
+    sculk_sensor: Sculkowy czujnik
+    sculk_catalyst: Sculkowy katalizator
+    sculk_shrieker: Sculkowe wrzeszczydło
+  fishing:
+    cod: Dorsz
+    salmon: Łosoś
+    tropical_fish: Ryba tropikalna
+    pufferfish: Rozdymka
+    treasure: Wartościowe przedmioty
+    junk: Śmieciowe przedmioty
+    rare: Rzadkie łupy
+    epic: Epickie łupy
+  entity:
     player: Gracz
     bat: Nietoperz
     cat: Kot
@@ -977,52 +930,51 @@ sources:
     frog: Żaba
     tadpole: Kijanka
     warden: Nadzorca
-  defense:
+    camel: Camel
+    sniffer: Sniffer
+  damage:
     mob_damage: Obrażenia od mobów
     player_damage: Obrażenia od graczy
-  endurance:
+    fall_damage: Obrażenia od upadku
+  statistic:
     walk_per_meter: Chodzenie
     sprint_per_meter: Bieganie
     swim_per_meter: Pływanie
-  agility:
+  jumping:
     jump_per_100: Skakanie
-    fall_damage: Obrażenia od upadku
-  alchemy:
-    awkward: Klarowna mikstura
-    regular: Zwykła mikstura
-    extended: Mikstura z wydłużonym czasem trwania
-    upgraded: Ulepszona mikstura
-    splash: Miotana mikstura
-    lingering: Trwała mikstura
+  brewing:
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
   enchanting:
-    weapon_per_level: Broń
-    armor_per_level: Zbroja
-    tool_per_level: Narzędzie
-    book_per_level: Książka
-  sorcery:
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
+  mana_ability_use:
     mana_ability_use: Używanie Zdolności Many
-    sculk: Sculk
-    sculk_vein: Żyły sculku
-    sculk_sensor: Sculkowy czujnik
-    sculk_catalyst: Sculkowy katalizator
-    sculk_shrieker: Sculkowe wrzeszczydło
-  healing:
+  item_consume:
     drink_regular: Picie zwykłej mikstury
     drink_extended: Picie mikstury z wydłużonym czasem trwania
     drink_upgraded: Picie ulepszonej mikstury
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
+  potion_splash:
     splash_regular: Miotanie zwykłej mikstury
     splash_extended: Miotanie mikstury z wydłużonym czasem trwania
     splash_upgraded: Miotanie ulepszonej mikstury
     lingering_regular: Używanie zwykłej trwałej mikstury
     lingering_extended: Używanie trwałej mikstury z wydłużonym czasem trwania
     lingering_upgraded: Używanie ulepszonej trwałej mikstury
-    golden_apple: Złote jabłko
-    enchanted_golden_apple: Zaklęte złote jabłko
-  forging:
+  anvil:
     combine_books_per_level: Łączenie zaklętych książek
     combine_weapon_per_level: Łączenie broni z zaklętą książką
     combine_armor_per_level: Łączenie zbroi z zaklętą książką
     combine_tool_per_level: Łączenie narzędzia z zaklętą książką
+  grindstone:
     grindstone_per_level: Usuwanie zaklęć z przedmiotu za pomocą Kamienia szlifierskiego
   units:
     damage: Obrażenia
@@ -1035,36 +987,64 @@ sources:
 stats:
   strength:
     name: Siła
-    desc: "<gray>Siła zwiększa obrażenia od ataku<gray>różnymi broniami"
-    color: "<dark_red>"
-    symbol: "➽"
+    desc: "Siła zwiększa obrażenia od ataku różnymi broniami"
   health:
     name: Zdrowie
-    desc: "<gray>Zdrowie zwiększa ilość {hp_unit} które<gray>posiadasz, umożliwiając Ci dłuższe trwanie w<gray>walkach"
-    color: "<red>"
-    symbol: "❤"
+    desc: "Zdrowie zwiększa ilość {hp_unit} które posiadasz, umożliwiając Ci dłuższe trwanie w walkach"
   regeneration:
     name: Regeneracja
-    desc: "<gray>Regeneracja zwiększa szybkość<gray>odzyskiwania zarówno zdrowia jak i many"
-    color: "<gold>"
-    symbol: "❥"
+    desc: "Regeneracja zwiększa szybkość odzyskiwania zarówno zdrowia jak i many"
   luck:
     name: Szczęście
-    desc: "<gray>Szczęście zwiększa twoje szanse na zdobycie<gray>rzadkich łupów z mobów, ryb i wielu więcej"
-    color: "<dark_green>"
-    symbol: "☘"
+    desc: "Szczęście zwiększa twoje szanse na zdobycie rzadkich łupów z mobów, ryb i wielu więcej"
   wisdom:
     name: Mądrość
-    desc: "<gray>Mądrość zwiększa twoją maksymalną manę, zwiększa<gray>zdobyte doświadczenie i zmniejsza koszty kowadła"
-    color: "<blue>"
-    symbol: "✿"
+    desc: "Mądrość zwiększa twoją maksymalną manę, zwiększa zdobyte doświadczenie i zmniejsza koszty kowadła"
   toughness:
     name: Twardość
-    desc: "<gray>Twardość zwiększa ilość<gray>obrażeń zmniejszonych po atakach wroga"
-    color: "<dark_purple>"
-    symbol: "✦"
+    desc: "Twardość zwiększa ilość obrażeń zmniejszonych po atakach wroga"
+  crit_chance:
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit"
+  crit_damage:
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+  speed:
+    name: Speed
+    desc: "Speed increases how fast you can walk and run"
+traits:
+  attack_damage:
+    name: Attack Damage
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturation Regen
+  hunger_regen:
+    name: Hunger Regen
+  mana_regen:
+    name: Mana Regen
+  luck:
+    name: Luck
+  double_drop:
+    name: Double Drop
+  experience_bonus:
+    name: Experience Bonus
+  anvil_discount:
+    name: Anvil Discount
+  max_mana:
+    name: Max Mana
+  damage_reduction:
+    name: Damage Reduction
+  crit_chance:
+    name: Crit Chance
+  crit_damage:
+    name: Crit Damage
+  movement_speed:
+    name: Movement Speed
+ui:
+  maxed: MAXED
 units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 29
+file_version: 32
