@@ -98,6 +98,9 @@ config.yml:
     automatic-backups.enabled: '_'
     automatic-backups.minimum-interval-hours: '_'
     save-blank-profiles: '_'
+    forging.blocked-grindstone-enchants: source.grindstone.blocked_enchants
+    endurance.xp-gain-period: source.statistic.gain_period_ticks
+    alchemy.give-xp-on-potion-combat: source.entity.give_alchemy_on_potion_combat
   skills.yml:
     farming.enabled: skills.auraskills/farming.options.enabled
     farming.max-level: skills.auraskills/farming.options.max_level
@@ -136,7 +139,6 @@ config.yml:
     fighting.check-multiplier-permissions: skills.auraskills/fighting.options.check_multiplier_permissions
     endurance.enabled: skills.auraskills/endurance.options.enabled
     endurance.max-level: skills.auraskills/endurance.options.max_level
-    endurance.xp-gain-period: skills.auraskills/endurance.options.xp_gain_period
     endurance.check-multiplier-permissions: skills.auraskills/endurance.options.check_multiplier_permissions
     agility.enabled: skills.auraskills/agility.options.enabled
     agility.max-level: skills.auraskills/agility.options.max_level
@@ -145,8 +147,6 @@ config.yml:
     alchemy.enabled: skills.auraskills/alchemy.options.enabled
     alchemy.max-level: skills.auraskills/alchemy.options.max_level
     alchemy.check-cancelled: skills.auraskills/alchemy.options.check_cancelled
-    alchemy.give-xp-on-takeout: skills.auraskills/alchemy.options.give_xp_on_takeout
-    alchemy.give-xp-on-potion-combat: skills.auraskills/alchemy.options.give_xp_on_potion_combat
     alchemy.check-multiplier-permissions: skills.auraskills/alchemy.options.check_multiplier_permissions
     alchemy.ignore-custom-potions: skills.auraskills/alchemy.options.ignore_custom_potions
     enchanting.enabled: skills.auraskills/enchanting.options.enabled
@@ -165,7 +165,6 @@ config.yml:
     forging.max-level: skills.auraskills/forging.options.max_level
     forging.check-cancelled: skills.auraskills/forging.options.check_cancelled
     forging.check-multiplier-permissions: skills.auraskills/forging.options.check_multiplier_permissions
-    forging.blocked-grindstone-enchants: skills.auraskills/forging.options.blocked_grindstone_enchants
   stats.yml:
     strength.modifier: stats.auraskills/strength.traits.auraskills/attack_damage.modifier
     health.modifier: stats.auraskills/health.traits.auraskills/hp.modifier

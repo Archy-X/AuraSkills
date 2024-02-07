@@ -106,25 +106,13 @@ skills:
       max_level: 100
       spawner_multiplier: 1
       check_multiplier_permissions: true
-  auraskills/endurance:
-    abilities:
-      - auraskills/anti_hunger
-      - auraskills/runner
-      - auraskills/golden_heal
-      - auraskills/recovery
-      - auraskills/meal_steal
-    options:
-      enabled: true
-      max_level: 100
-      xp_gain_period: 12000
-      check_multiplier_permissions: true
   auraskills/agility:
     abilities:
       - auraskills/light_fall
       - auraskills/jumper
-      - auraskills/sugar_rush
+      - auraskills/golden_heal
       - auraskills/fleeting
-      - auraskills/thunder_fall
+      - auraskills/meal_steal
     options:
       enabled: true
       max_level: 100
@@ -134,22 +122,20 @@ skills:
     abilities:
       - auraskills/alchemist
       - auraskills/brewer
-      - auraskills/splasher
-      - auraskills/lingering
+      - auraskills/life_steal
+      - auraskills/golden_heart
       - auraskills/wise_effect
     options:
       enabled: true
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
-      give_xp_on_takeout: true
-      give_xp_on_potion_combat: false
       ignore_custom_potions: false
   auraskills/enchanting:
     abilities:
       - auraskills/xp_convert
       - auraskills/enchanter
-      - auraskills/xp_warrior
+      - auraskills/anvil_master
       - auraskills/enchanted_strength
       - auraskills/lucky_table
     options:
@@ -157,39 +143,4 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
-  auraskills/sorcery:
-    abilities:
-      - ''
-    options:
-      enabled: true
-      max_level: 100
-      check_cancelled: true
-      check_multiplier_permissions: true
-  auraskills/healing:
-    abilities:
-      - auraskills/life_essence
-      - auraskills/healer
-      - auraskills/life_steal
-      - auraskills/golden_heart
-      - auraskills/revival
-    options:
-      enabled: true
-      max_level: 100
-      check_cancelled: true
-      check_multiplier_permissions: true
-  auraskills/forging:
-    abilities:
-      - auraskills/disenchanter
-      - auraskills/forger
-      - auraskills/repairing
-      - auraskills/anvil_master
-      - auraskills/skill_mender
-    options:
-      enabled: true
-      max_level: 100
-      check_cancelled: true
-      check_multiplier_permissions: true
-      blocked_grindstone_enchants:
-        - binding_curse
-        - vanishing_curse
 file_version: 1

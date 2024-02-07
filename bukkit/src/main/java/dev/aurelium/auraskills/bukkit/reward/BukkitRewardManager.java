@@ -38,7 +38,9 @@ public class BukkitRewardManager extends RewardManager {
                     this.rewardTables.put(skill, new RewardTable(plugin));
                     continue;
                 } else {
-                    plugin.saveResource("rewards/" + skill.name().toLowerCase(Locale.ROOT) + ".yml", false);
+                    try {
+                        plugin.saveResource("rewards/" + skill.name().toLowerCase(Locale.ROOT) + ".yml", false);
+                    } catch (IllegalArgumentException ignored) {}
                 }
             }
             FileConfiguration rewardsConfig = YamlConfiguration.loadConfiguration(rewardsFile);

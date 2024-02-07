@@ -4,6 +4,7 @@ import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
+import com.archyx.slate.option.SlateOptions;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.AuraSkillsBukkit;
@@ -15,6 +16,7 @@ import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
 import dev.aurelium.auraskills.bukkit.api.ApiAuraSkillsBukkit;
 import dev.aurelium.auraskills.bukkit.api.ApiBukkitRegistrationUtil;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
+import dev.aurelium.auraskills.bukkit.commands.ConfirmManager;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
@@ -56,6 +58,7 @@ import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.api.ApiRegistrationUtil;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.config.preset.PresetManager;
 import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
@@ -143,6 +146,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private MenuHelper menuHelper;
     private EventHandler eventHandler;
     private ItemManager itemManager;
+    private ConfirmManager confirmManager;
+    private PresetManager presetManager;
     private boolean nbtApiEnabled;
 
     @Override
@@ -179,6 +184,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         audiences = BukkitAudiences.create(this);
         eventHandler = new BukkitEventHandler(this);
         hookManager = new HookManager();
+        userManager = new BukkitUserManager(this);
         generateConfigs(); // Generate default config files if missing
         // Handle migration
         MigrationManager migrationManager = new MigrationManager(this);
@@ -193,7 +199,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         worldManager = new BukkitWorldManager(this);
         worldManager.loadWorlds(getConfig());
         regionManager = new BukkitRegionManager(this);
-        userManager = new BukkitUserManager(this);
         backupProvider = new BackupProvider(this);
         xpRequirements = new XpRequirements(this);
         leaderboardManager = new LeaderboardManager(this);
@@ -203,6 +208,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         inventoryManager.init();
         rewardManager = new BukkitRewardManager(this); // Loaded later
         lootTableManager = new LootTableManager(this); // Loaded later
+        presetManager = new PresetManager(this);
+        confirmManager = new ConfirmManager(this);
         commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
         levelManager = new BukkitLevelManager(this);
@@ -311,6 +318,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             String sources = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
             loader.generateUserFile(sources);
         }
+        saveResource("presets/legacy.zip", false);
     }
 
     public void loadSkills() {
@@ -321,7 +329,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     private void registerAndLoadMenus() {
-        slate = new Slate(this);
+        slate = new Slate(this, new SlateOptions.SlateOptionsBuilder()
+                .loreWrappingWidth(43)
+                .build());
         menuHelper = new SlateMenuHelper(slate);
         new MenuRegistrar(this).register();
         menuFileManager = new MenuFileManager(this);
@@ -407,6 +417,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public InventoryManager getInventoryManager() {
         return inventoryManager;
+    }
+
+    public ConfirmManager getConfirmManager() {
+        return confirmManager;
     }
 
     public int getResourceId() {
@@ -565,6 +579,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public EventHandler getEventHandler() {
         return eventHandler;
+    }
+
+    @Override
+    public PresetManager getPresetManager() {
+        return presetManager;
     }
 
     public ItemManager getItemManager() {

@@ -14,7 +14,7 @@ dependencies {
     api("co.aikar:acf-core:0.5.1-SNAPSHOT")
     api("net.kyori:adventure-text-serializer-legacy:4.13.1")
     api("net.kyori:adventure-text-serializer-gson:4.13.1")
-    api("com.github.Archy-X:Polyglot:6c05ba05b1")
+    api("com.github.Archy-X:Polyglot:1.1.12")
     api("com.ezylang:EvalEx:3.0.4")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.atteo:evo-inflector:1.3")

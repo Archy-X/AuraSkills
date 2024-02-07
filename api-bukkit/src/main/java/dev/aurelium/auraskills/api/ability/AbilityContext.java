@@ -22,10 +22,7 @@ public class AbilityContext {
      * @return whether the ability is disabled
      */
     public boolean isDisabled(Ability ability) {
-        if (!ability.getSkill().isEnabled()) {
-            return true;
-        }
-        return !ability.isEnabled();
+        return !ability.isEnabled() || !ability.getSkill().isEnabled();
     }
 
     /**

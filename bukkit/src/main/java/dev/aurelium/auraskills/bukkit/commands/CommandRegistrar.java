@@ -132,7 +132,7 @@ public class CommandRegistrar {
             values.add("average");
             return values;
         });
-        completions.registerAsyncCompletion("lang", c -> plugin.getMessageProvider().getLoadedLanguages().stream().map(Locale::toLanguageTag).toList());
+        completions.registerAsyncCompletion("lang", c -> plugin.getMessageProvider().getLanguageCodes());
         completions.registerAsyncCompletion("item_keys", c -> {
             List<String> keys = new ArrayList<>();
             for (NamespacedId id : plugin.getItemRegistry().getIds()) {
@@ -165,6 +165,7 @@ public class CommandRegistrar {
         manager.registerCommand(new ProfileCommand(plugin));
         manager.registerCommand(new BackupCommand(plugin));
         manager.registerCommand(new XpCommand(plugin));
+        manager.registerCommand(new PresetCommand(plugin));
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {

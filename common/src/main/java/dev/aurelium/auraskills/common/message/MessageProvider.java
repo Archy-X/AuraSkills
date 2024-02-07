@@ -5,6 +5,7 @@ import com.archyx.polyglot.PolyglotProvider;
 import com.archyx.polyglot.config.MessageReplacements;
 import com.archyx.polyglot.config.PolyglotConfig;
 import com.archyx.polyglot.config.PolyglotConfigBuilder;
+import com.archyx.polyglot.lang.LangMessages;
 import com.archyx.polyglot.lang.MessageManager;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
@@ -190,6 +191,18 @@ public class MessageProvider implements PolyglotProvider {
 
     public Set<Locale> getLoadedLanguages() {
         return manager.getLoadedLanguages();
+    }
+
+    public List<String> getLanguageCodes() {
+        return manager.getLanguageCodes();
+    }
+
+    public String getLanguageCode(Locale locale) {
+        LangMessages messages = manager.getLangMessages(locale);
+        if (messages != null) {
+            return messages.getLanguageCode();
+        }
+        return locale.toLanguageTag();
     }
 
     @Override

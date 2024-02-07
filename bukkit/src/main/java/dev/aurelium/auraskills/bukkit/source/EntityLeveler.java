@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
@@ -111,7 +112,7 @@ public class EntityLeveler extends SourceLeveler {
             }
             if (damager instanceof ThrownPotion) {
                 // Mark as thrown potion if
-                if (Skills.ALCHEMY.isEnabled() && Skills.ALCHEMY.optionBoolean("give_xp_on_potion_combat")) {
+                if (Skills.ALCHEMY.isEnabled() && plugin.configBoolean(Option.SOURCE_ENTITY_GIVE_ALCHEMY_ON_POTION_COMBAT)) {
                     return new Pair<>(player, EntityXpSource.EntityDamagers.THROWN_POTION);
                 }
             }

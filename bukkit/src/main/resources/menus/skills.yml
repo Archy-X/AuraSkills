@@ -6,8 +6,9 @@ fill:
 items:
   your_skills:
     pos: 0,0
-    material: diamond_axe
-    flags: [hide_attributes]
+    material: player_head
+    skull_meta:
+      base64: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjcwNWZkOTRhMGM0MzE5MjdmYjRlNjM5YjBmY2ZiNDk3MTdlNDEyMjg1YTAyYjQzOWUwMTEyZGEyMmIyZTJlYyJ9fX0=
     display_name: '<aqua>{{your_skills}} - <gold>{player}'
     lore:
       - text: '{{your_skills_desc}}'
@@ -35,21 +36,21 @@ items:
 templates:
   skill:
     contexts:
-      farming: {group: first_row, order: 1, material: diamond_hoe, flags: [hide_attributes]}
-      foraging: {group: first_row, order: 2, material: stone_axe, flags: [hide_attributes]}
-      mining: {group: first_row, order: 3, material: iron_pickaxe, flags: [hide_attributes]}
-      fishing: {group: first_row, order: 4, material: fishing_rod}
-      excavation: {group: first_row, order: 5, material: golden_shovel, flags: [hide_attributes]}
-      archery: {group: second_row, order: 1, material: bow}
-      defense: {group: second_row, order: 2, material: chainmail_chestplate, flags: [hide_attributes]}
-      fighting: {group: second_row, order: 3, material: diamond_sword, flags: [hide_attributes]}
-      endurance: {group: second_row, order: 4, material: golden_apple}
-      agility: {group: second_row, order: 5, material: feather}
-      alchemy: {group: third_row, order: 1, material: potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
-      enchanting: {group: third_row, order: 2, material: enchanting_table}
-      sorcery: {group: third_row, order: 3, material: blaze_rod}
-      healing: {group: third_row, order: 4, material: splash_potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
-      forging: {group: third_row, order: 5, material: anvil}
+      archery: { group: first_row, order: 1, material: bow }
+      fighting: { group: first_row, order: 2, material: iron_sword, flags: [ hide_attributes ] }
+      defense: { group: first_row, order: 3, material: chainmail_chestplate, flags: [ hide_attributes ] }
+      endurance: {group: first_row, order: 4, material: golden_apple}
+      farming: {group: second_row, order: 1, material: iron_hoe, flags: [hide_attributes]}
+      foraging: {group: second_row, order: 2, material: iron_axe, flags: [hide_attributes]}
+      mining: {group: second_row, order: 3, material: iron_pickaxe, flags: [hide_attributes]}
+      fishing: {group: second_row, order: 4, material: fishing_rod}
+      excavation: {group: second_row, order: 5, material: iron_shovel, flags: [hide_attributes]}
+      agility: {group: third_row, order: 1, material: feather}
+      alchemy: {group: third_row, order: 2, material: potion, potion_data: {type: regen}, flags: [hide_potion_effects]}
+      enchanting: {group: third_row, order: 3, material: enchanting_table}
+      sorcery: {group: third_row, order: 4, material: blaze_rod}
+      healing: {group: third_row, order: 5, material: splash_potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
+      forging: {group: third_row, order: 6, material: anvil}
     groups:
       first_row:
         start: 1,0

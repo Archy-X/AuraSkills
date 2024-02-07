@@ -249,8 +249,9 @@ public class SkillsRootCommand extends BaseCommand {
 			User user = plugin.getUser(player);
 			user.setLocale(locale);
 			plugin.getCommandManager().setPlayerLocale(player, locale);
-			
-			player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.LANG_SET, locale).replace("{lang}", locale.toLanguageTag()));
+
+			String code = plugin.getMessageProvider().getLanguageCode(locale);
+			player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.LANG_SET, locale).replace("{lang}", code));
 		} else {
 			player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.LANG_NOT_FOUND, plugin.getLocale(player)));
 		}

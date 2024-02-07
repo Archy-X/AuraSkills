@@ -1,11 +1,11 @@
 patterns:
   - type: stat
-    stat: strength
-    value: 1
+    stat: health
+    value: 0.4
     pattern:
       interval: 1
   - type: stat
-    stat: wisdom
+    stat: regeneration
     value: 1
     pattern:
       interval: 2

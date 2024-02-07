@@ -10,12 +10,10 @@ import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.storage.backup.BackupProvider;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.io.File;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 @CommandAlias("%skills_alias")
 @Subcommand("backup")
@@ -63,24 +61,15 @@ public class BackupCommand extends BaseCommand {
             issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_LOAD_MUST_BE_YAML, locale));
             return;
         }
-        if (!issuer.isPlayer()) { // No need to confirm if console
-            loadBackup(file, issuer, locale);
-            return;
-        }
 
-
-        User user = plugin.getUserManager().getUser(issuer.getUniqueId());
-        if (user == null) return;
-
-        // Require player to double type command
-        Object typed = user.getMetadata().get("backup_command");
-        if (!(typed instanceof String typedFile) || !typedFile.equals(file.getName())) {
-            backupLoadConfirm(user, issuer, file);
+        if (plugin.getConfirmManager().requiresConfirmation(issuer, fileName)) {
+            issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_LOAD_CONFIRM, locale));
             return;
         }
 
         loadBackup(file, issuer, locale);
-        user.getMetadata().remove("backup_command");
+
+        plugin.getConfirmManager().remove(issuer);
     }
 
     private void loadBackup(File file, CommandIssuer issuer, Locale locale) {
@@ -95,10 +84,4 @@ public class BackupCommand extends BaseCommand {
         }
     }
 
-    private void backupLoadConfirm(User user, CommandIssuer issuer, File file) {
-        Locale locale = user.getLocale();
-        issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_LOAD_CONFIRM, locale));
-        user.getMetadata().put("backup_command", file.getName());
-        plugin.getScheduler().scheduleSync(() -> user.getMetadata().remove("backup_command"), 20 * 60 * 50, TimeUnit.MILLISECONDS);
-    }
 }

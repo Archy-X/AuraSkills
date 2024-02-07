@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.GrindstoneXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
@@ -103,7 +103,7 @@ public class GrindstoneLeveler extends SourceLeveler {
             return false;
         }
         // Check blocked list in config
-        List<String> blockedList = Skills.FORGING.optionStringList("blocked_grindstone_enchants");
+        List<String> blockedList = plugin.configStringList(Option.SOURCE_GRINDSTONE_BLOCKED_ENCHANTS);
         for (String blockedEnchantName : blockedList) {
             if (enchant.getKey().getKey().equalsIgnoreCase(blockedEnchantName)) {
                 return false;

@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.config.preset.PresetManager;
 import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
@@ -97,6 +98,8 @@ public interface AuraSkillsPlugin {
     MenuHelper getMenuHelper();
 
     EventHandler getEventHandler();
+
+    PresetManager getPresetManager();
 
     // Message convenience methods
 

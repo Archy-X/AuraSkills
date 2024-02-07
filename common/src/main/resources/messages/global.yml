@@ -13,6 +13,13 @@ action_bar:
   ability: "{message}"
   boss_bar_xp: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({percent}%)"
   boss_bar_maxed: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}})"
+commands:
+  preset:
+    load:
+      appended_entry: "<aqua>(+) <white>{file}"
+      merged_entry: "<yellow>(*) <white>{file}"
+      replaced_entry: "<red>(±) <white>{file}"
+      deleted_entry: "<dark_red>(-) <white>{file}"
 leveler_format:
   title: "<green>{{leveler.level_up}}"
   subtitle: "<gold>{old} ➜ {new}"

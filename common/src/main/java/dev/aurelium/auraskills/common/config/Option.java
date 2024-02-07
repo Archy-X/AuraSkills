@@ -97,6 +97,10 @@ public enum Option {
     CRITICAL_ENABLED_HOE("critical.enabled.hoe", OptionType.BOOLEAN),
     CRITICAL_ENABLED_HAND("critical.enabled.hand", OptionType.BOOLEAN),
     CRITICAL_ENABLED_OTHER("critical.enabled.other", OptionType.BOOLEAN),
+    // Source options
+    SOURCE_GRINDSTONE_BLOCKED_ENCHANTS("source.grindstone.blocked_enchants", OptionType.LIST),
+    SOURCE_STATISTIC_GAIN_PERIOD_TICKS("source.statistic.gain_period_ticks", OptionType.INT),
+    SOURCE_ENTITY_GIVE_ALCHEMY_ON_POTION_COMBAT("source.entity.give_alchemy_on_potion_combat", OptionType.BOOLEAN),
     // Menu options
     MENUS_PLACEHOLDER_API("menus.placeholder_api", OptionType.BOOLEAN),
     MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY("menus.stats.show_trait_values_directly", OptionType.BOOLEAN),

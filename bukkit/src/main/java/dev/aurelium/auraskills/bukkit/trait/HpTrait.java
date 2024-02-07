@@ -27,6 +27,7 @@ public class HpTrait extends TraitImpl {
     private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
     private final Map<Integer, Double> hearts = new HashMap<>();
     private static final double threshold = 0.1;
+    private final UUID ATTRIBUTE_ID = UUID.fromString("7d1423dd-91db-467a-8eb8-1886e30ca0b1");
 
     HpTrait(AuraSkills plugin) {
         super(plugin, Traits.HP);
@@ -143,7 +144,7 @@ public class HpTrait extends TraitImpl {
         // Return if no change
         if (hasChange) {
             // Applies modifier
-            attribute.addModifier(new AttributeModifier("skillsHealth", modifier, AttributeModifier.Operation.ADD_NUMBER));
+            attribute.addModifier(new AttributeModifier(ATTRIBUTE_ID, "skillsHealth", modifier, AttributeModifier.Operation.ADD_NUMBER));
             // Sets health to max if over max
             if (player.getHealth() > attribute.getValue()) {
                 player.setHealth(attribute.getValue());

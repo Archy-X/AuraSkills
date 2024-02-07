@@ -43,10 +43,19 @@ public class ConfigurateLoader {
      * @throws ConfigurateException If an error occurs while loading the file
      */
     public ConfigurationNode loadEmbeddedFile(String fileName) throws IOException {
+        ConfigurationNode config = loadEmbeddedFileOrNull(fileName);
+        if (config == null) {
+            throw new IllegalArgumentException("File " + fileName + "does not exist");
+        }
+        return config;
+    }
+
+    @Nullable
+    public ConfigurationNode loadEmbeddedFileOrNull(String fileName) throws IOException {
         URI uri = getEmbeddedURI(fileName);
 
         if (uri == null) {
-            throw new IllegalArgumentException("File " + fileName + " does not exist");
+            return null;
         }
 
         Map<String, String> env = new HashMap<>();
@@ -139,7 +148,9 @@ public class ConfigurateLoader {
 
     public void generateUserFile(String path) {
         try {
-            ConfigurationNode config = loadEmbeddedFile(path);
+            ConfigurationNode config = loadEmbeddedFileOrNull(path);
+            if (config == null) return;
+
             File file = new File(plugin.getPluginFolder(), path);
             if (!file.exists()) {
                 FileUtil.saveYamlFile(file, config);

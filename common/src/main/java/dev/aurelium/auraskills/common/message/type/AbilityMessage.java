@@ -255,7 +255,7 @@ public enum AbilityMessage implements MessageKey {
             path = "abilities.invalid";
             return;
         }
-        path = "abilities." + ability.getSkill().name().toLowerCase(Locale.ROOT) + "." + ability.name().toLowerCase(Locale.ROOT) + "." + this.name().substring(ability.name().length() + 1).toLowerCase(Locale.ROOT);
+        path = "abilities." + ability.name().toLowerCase(Locale.ROOT) + "." + this.name().substring(ability.name().length() + 1).toLowerCase(Locale.ROOT);
     }
 
     @Override

@@ -511,7 +511,7 @@ abilities:
     enabled: true
     base_value: 43.0
     value_per_level: 3.0
-    unlock: '{start}+4'
+    unlock: '{start}+3'
     level_up: 5
     max_level: 0
   auraskills/skill_mender:

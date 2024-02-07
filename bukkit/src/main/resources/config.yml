@@ -168,6 +168,15 @@ critical:
     hoe: true
     hand: false
     other: false
+source:
+  grindstone:
+    blocked_enchants:
+      - blinding_curse
+      - vanishing_curse
+  statistic:
+    gain_period_ticks: 12000
+  entity:
+    give_alchemy_on_potion_combat: false
 menus:
   placeholder_api: true
   stats:

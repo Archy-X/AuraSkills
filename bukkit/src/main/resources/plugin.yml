@@ -63,6 +63,8 @@ permissions:
         default: op
     auraskills.command.xp.remove:
         default: op
+    auraskills.command.preset:
+        default: op
     auraskills.command.profile:
         default: op
     auraskills.command.modifier:

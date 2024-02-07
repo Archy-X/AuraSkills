@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.StatisticXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
@@ -36,7 +36,7 @@ public class StatisticLeveler extends SourceLeveler {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 0, Skills.ENDURANCE.optionInt("xp_gain_period") * 50L, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerSync(task, 0, plugin.configInt(Option.SOURCE_STATISTIC_GAIN_PERIOD_TICKS) * 50L, TimeUnit.MILLISECONDS);
     }
 
     private void handlePlayer(Player player) {

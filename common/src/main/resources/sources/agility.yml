@@ -15,3 +15,30 @@ sources:
     menu_item:
       material: diamond_boots
     unit: '{sources.units.damage}'
+  walk_per_meter:
+    type: statistic
+    multiplier: 0.01
+    statistic: walk_one_cm
+    xp: 0.2
+    minimum_increase: 1000
+    menu_item:
+      material: iron_boots
+    unit: '{sources.units.meter}'
+  sprint_per_meter:
+    type: statistic
+    multiplier: 0.01
+    statistic: sprint_one_cm
+    xp: 0.06
+    minimum_increase: 1000
+    menu_item:
+      material: leather_boots
+    unit: '{sources.units.meter}'
+  swim_per_meter:
+    type: statistic
+    multiplier: 0.01
+    statistic: swim_one_cm
+    xp: 0.6
+    minimum_increase: 1000
+    menu_item:
+      material: water_bucket
+    unit: '{sources.units.meter}'

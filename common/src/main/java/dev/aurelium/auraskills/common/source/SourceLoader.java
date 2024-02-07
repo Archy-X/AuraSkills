@@ -45,9 +45,9 @@ public class SourceLoader {
         try {
             Map<String, ConfigurationNode> embeddedSources = new HashMap<>();
             ConfigurationNode fileDefault = null;
-            if (loadEmbedded) {
-                ConfigurationNode embedded = configurateLoader.loadEmbeddedFile(fileName);
-
+            // Attempt to load embedded file
+            ConfigurationNode embedded = configurateLoader.loadEmbeddedFileOrNull(fileName);
+            if (loadEmbedded && embedded != null) {
                 // Get the node containing default values in the file
                 fileDefault = embedded.node("default");
 
