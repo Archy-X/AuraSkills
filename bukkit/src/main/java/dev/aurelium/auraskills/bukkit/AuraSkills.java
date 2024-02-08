@@ -185,7 +185,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         eventHandler = new BukkitEventHandler(this);
         hookManager = new HookManager();
         userManager = new BukkitUserManager(this);
+        presetManager = new PresetManager(this);
         generateConfigs(); // Generate default config files if missing
+        initializeMenus(); // Generate menu files
         // Handle migration
         MigrationManager migrationManager = new MigrationManager(this);
         migrationManager.attemptConfigMigration();
@@ -208,7 +210,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         inventoryManager.init();
         rewardManager = new BukkitRewardManager(this); // Loaded later
         lootTableManager = new LootTableManager(this); // Loaded later
-        presetManager = new PresetManager(this);
         confirmManager = new ConfirmManager(this);
         commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
@@ -328,14 +329,17 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         statLoader.loadStats();
     }
 
-    private void registerAndLoadMenus() {
+    private void initializeMenus() {
         slate = new Slate(this, new SlateOptions.SlateOptionsBuilder()
                 .loreWrappingWidth(43)
                 .build());
         menuHelper = new SlateMenuHelper(slate);
-        new MenuRegistrar(this).register();
         menuFileManager = new MenuFileManager(this);
         menuFileManager.generateDefaultFiles();
+    }
+
+    private void registerAndLoadMenus() {
+        new MenuRegistrar(this).register();
         menuFileManager.loadMenus();
     }
 

@@ -18,7 +18,8 @@ public class MigrationManager {
 
     public void attemptConfigMigration() {
         try {
-            ConfigurationNode config = FileUtil.loadYamlFile(new File(plugin.getPluginFolder(), "config.yml"));
+            File mainConfig = new File(plugin.getPluginFolder(), "config.yml");
+            ConfigurationNode config = FileUtil.loadYamlFile(mainConfig);
             boolean migrateConfig = shouldMigrate("config_migration_complete", config);
 
             if (!migrateConfig) {
@@ -31,6 +32,8 @@ public class MigrationManager {
 
             ConfigMigrator configMigrator = new ConfigMigrator(plugin);
             configMigrator.migrate();
+
+            config = FileUtil.loadYamlFile(mainConfig); // Refresh main config to account for saves
             setMigrated("config_migration_complete", config);
 
             FileUtil.saveYamlFile(new File(plugin.getPluginFolder(), "config.yml"), config);

@@ -9,6 +9,7 @@ public class MenuFileManager {
 
     private final AuraSkills plugin;
     private final MenuManager manager;
+    private final String[] MENU_NAMES = new String[]{"abilities", "leaderboard", "level_progression", "skills", "sources", "stats"};
 
     public MenuFileManager(AuraSkills plugin) {
         this.plugin = plugin;
@@ -16,7 +17,7 @@ public class MenuFileManager {
     }
 
     public void generateDefaultFiles() {
-        for (String menuName : manager.getMenuProviderNames()) {
+        for (String menuName : MENU_NAMES) {
             File file = new File(plugin.getDataFolder() + "/menus", menuName + ".yml");
             if (!file.exists()) {
                 plugin.saveResource("menus/" + menuName + ".yml", false);

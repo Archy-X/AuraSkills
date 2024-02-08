@@ -6,6 +6,9 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.preset.ConfigPreset;
+import dev.aurelium.auraskills.common.config.preset.PresetLoadException;
+import dev.aurelium.auraskills.common.config.preset.PresetLoadResult;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -28,6 +31,8 @@ public class ConfigMigrator {
     public void migrate() {
         // Load migration_paths.yml
         try {
+            applyLegacyPreset(); // Set to legacy 15 skills
+
             ConfigurationNode migrationPaths = FileUtil.loadEmbeddedYamlFile("migration_paths.yml", plugin);
 
             var paths = loadFilesAndPaths(migrationPaths);
@@ -38,6 +43,7 @@ public class ConfigMigrator {
                 migrateFile(entry.getValue(), oldFile, newFile);
             }
             migrateLootAndRewards();
+            setMigrationDefaults();
         } catch (Exception e) {
             plugin.logger().severe("[Migrator] Error while migrating configs, please report this to the plugin Discord!");
             e.printStackTrace();
@@ -90,6 +96,20 @@ public class ConfigMigrator {
         loadAbilitiesConfigMigrationPaths(pathMap);
         loadSourcesConfigMigrationPaths(pathMap);
         return pathMap;
+    }
+
+    private void applyLegacyPreset() {
+        try {
+            ConfigPreset preset = plugin.getPresetManager().preparePreset("legacy.zip");
+            PresetLoadResult result = plugin.getPresetManager().loadPreset(preset);
+
+            int affected = result.created().size() + result.modified().size() + result.replaced().size() + result.deleted().size();
+
+            plugin.logger().warn("[Migrator] Applied legacy.zip config preset for 15 skills, " + affected + " files affected");
+        } catch (PresetLoadException | IOException e) {
+            plugin.logger().warn("[Migrator] Failed to apply legacy preset");
+            e.printStackTrace();
+        }
     }
 
     private List<Pair<String, String>> loadMigrationPaths(ConfigurationNode config) {
@@ -224,11 +244,22 @@ public class ConfigMigrator {
         plugin.logger().info("[Migrator] Copied contents of AureliumSkills/rewards directory to AuraSkills/rewards");
     }
 
+    private void setMigrationDefaults() throws IOException {
+        File file = new File(plugin.getPluginFolder(), "config.yml");
+        ConfigurationNode config = FileUtil.loadYamlFile(file);
+
+        config.node("start_level").set(1);
+
+        FileUtil.saveYamlFile(file, config);
+    }
+
     private void copyDirectory(File sourceDir, File destDir) {
         try {
             Path sourcePath = sourceDir.toPath();
             Path destinationPath = destDir.toPath();
-            Files.copy(sourcePath, destinationPath);
+            if (!destinationPath.toFile().exists()) {
+                Files.copy(sourcePath, destinationPath);
+            }
             File[] files = sourceDir.listFiles();
             if (files != null) {
                 for (File file : files) {

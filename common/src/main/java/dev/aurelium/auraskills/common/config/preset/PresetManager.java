@@ -28,7 +28,7 @@ public class PresetManager {
         this.plugin = plugin;
     }
 
-    public ConfigPreset preparePreset(String name) throws IllegalArgumentException {
+    public ConfigPreset preparePreset(String name) throws PresetLoadException {
         if (!name.endsWith(".zip")) {
             throw new PresetLoadException("File name must end in .zip");
         }
