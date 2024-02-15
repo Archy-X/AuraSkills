@@ -3,9 +3,10 @@ package dev.aurelium.auraskills.bukkit.skills.agility;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
-import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.PotionUtil;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
@@ -26,7 +27,6 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -36,7 +36,7 @@ import java.util.Locale;
 
 public class AgilityAbilities extends AbilityImpl {
 
-    private final String FLEETING_METADATA = "AureliumSkills-Fleeting";
+    public static final String FLEETING_ID = "auraskills/fleeting";
 
     public AgilityAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LIGHT_FALL, Abilities.JUMPER, Abilities.SUGAR_RUSH, Abilities.FLEETING, Abilities.THUNDER_FALL);
@@ -164,19 +164,11 @@ public class AgilityAbilities extends AbilityImpl {
         double maxHealth = attribute.getValue();
 
         if (player.getHealth() - event.getFinalDamage() < getFleetingHealthRequired() * maxHealth) {
-            if (player.hasMetadata(FLEETING_METADATA)) {
+            if (user.getTraitModifier(FLEETING_ID) != null) {
                 return;
             }
             double percent = getValue(ability, user);
-            float boostFactor = 1 + ((float) percent / 100);
-            float newSpeed = player.getWalkSpeed() * boostFactor;
-            if (newSpeed > 1) {
-                newSpeed = 1.0f;
-                percent = (newSpeed / player.getWalkSpeed() - 1) * 100;
-            }
-            float walkSpeedChange = newSpeed - player.getWalkSpeed();
-            player.setWalkSpeed(newSpeed);
-            player.setMetadata(FLEETING_METADATA, new FixedMetadataValue(plugin, walkSpeedChange));
+            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent));
 
             Locale locale = user.getLocale();
             plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
@@ -225,11 +217,12 @@ public class AgilityAbilities extends AbilityImpl {
     }
 
     private void removeFleetingMetadata(Player player) {
-        if (!player.hasMetadata(FLEETING_METADATA)) return;
+        User user = plugin.getUser(player);
 
-        float walkSpeedChange = player.getMetadata(FLEETING_METADATA).get(0).asFloat();
-        player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
-        player.removeMetadata(FLEETING_METADATA, plugin);
+        // Returns if there was no modifier to remove
+        if (!user.removeTraitModifier(FLEETING_ID)) {
+            return;
+        }
 
         Locale locale = plugin.getUser(player).getLocale();
         plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.FLEETING_END, locale));
@@ -238,15 +231,7 @@ public class AgilityAbilities extends AbilityImpl {
     @EventHandler
     public void fleetingLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        removeFleetingQuit(player);
-    }
-
-    public void removeFleetingQuit(Player player) {
-        if (player.hasMetadata(FLEETING_METADATA)) {
-            float walkSpeedChange = player.getMetadata(FLEETING_METADATA).get(0).asFloat();
-            player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
-            player.removeMetadata(FLEETING_METADATA, plugin);
-        }
+        plugin.getUser(player).removeTraitModifier(FLEETING_ID);
     }
 
     @EventHandler
@@ -263,30 +248,19 @@ public class AgilityAbilities extends AbilityImpl {
         if (attribute == null) return;
 
         if (player.getHealth() < getFleetingHealthRequired() * attribute.getValue()) {
-            if (player.hasMetadata(FLEETING_METADATA)) return;
-
-            User user = BukkitUser.getUser(event.getUser());
+            User user = plugin.getUser(player);
 
             double percent = getValue(ability, user);
-            float boostFactor = 1 + ((float) percent / 100);
-            float newSpeed = player.getWalkSpeed() * boostFactor;
-            if (newSpeed > 1) {
-                newSpeed = 1.0f;
-            }
-            float walkSpeedChange = newSpeed - player.getWalkSpeed();
-            player.setWalkSpeed(newSpeed);
-            player.setMetadata(FLEETING_METADATA, new FixedMetadataValue(plugin, walkSpeedChange));
+
+            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent));
         }
     }
 
     @EventHandler
     public void fleetingDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        if (!player.hasMetadata(FLEETING_METADATA)) return;
 
-        float walkSpeedChange = player.getMetadata(FLEETING_METADATA).get(0).asFloat();
-        player.setWalkSpeed(player.getWalkSpeed() - walkSpeedChange);
-        player.removeMetadata(FLEETING_METADATA, plugin);
+        plugin.getUser(player).removeTraitModifier(FLEETING_ID);
     }
 
     private double getFleetingHealthRequired() {

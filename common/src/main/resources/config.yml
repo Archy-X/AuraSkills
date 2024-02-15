@@ -101,10 +101,10 @@ damage_holograms:
     default: gray
     critical:
       digits: [white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
-start_level: 0
 leaderboards:
   update_period: 6000
   update_delay: 6000
+start_level: 0
 enable_skill_commands: true
 check_block_replace:
   enabled: true

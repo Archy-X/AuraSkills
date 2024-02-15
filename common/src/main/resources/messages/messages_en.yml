@@ -200,7 +200,7 @@ abilities:
     info: "{value}% Longer Speed"
   fleeting:
     name: Fleeting
-    desc: "Gain +{value}% movement speed when below 20% health"
+    desc: "Gain +{value} Speed when below 20% health."
     info: "+{value}% Speed"
     start: "<white>You have gained a fleeting speed boost! <gray>(+{value}% Speed)"
     end: "<gray>Fleeting speed boost has worn off"

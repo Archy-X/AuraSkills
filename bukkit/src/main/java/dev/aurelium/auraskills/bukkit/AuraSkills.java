@@ -19,8 +19,8 @@ import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.commands.ConfirmManager;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
+import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
@@ -45,7 +45,6 @@ import dev.aurelium.auraskills.bukkit.requirement.RequirementListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
-import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
 import dev.aurelium.auraskills.bukkit.trait.BukkitTraitManager;
 import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
@@ -259,6 +258,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         scheduler.shutdown();
         // Save users
         for (User user : userManager.getUserMap().values()) {
+            user.cleanUp(); // Remove Fleeting
             try {
                 storageProvider.save(user);
             } catch (Exception e) {
@@ -279,11 +279,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             e.printStackTrace();
         }
         itemRegistry.getStorage().save();
-        // Remove fleeting
-        var agilityAbilities = getAbilityManager().getAbilityImpl(AgilityAbilities.class);
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            agilityAbilities.removeFleetingQuit(player);
-        }
     }
 
     private void backupAutomatically() throws Exception {

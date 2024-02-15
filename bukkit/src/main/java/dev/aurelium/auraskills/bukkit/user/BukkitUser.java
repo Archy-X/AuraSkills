@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.user;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.user.User;
@@ -86,5 +87,12 @@ public class BukkitUser extends User {
         if (player != null) {
             ((AuraSkills) plugin).getAudiences().player(player).sendMessage(component);
         }
+    }
+
+    @Override
+    public void cleanUp() {
+        super.cleanUp();
+        // Remove fleeting
+        removeTraitModifier(AgilityAbilities.FLEETING_ID);
     }
 }

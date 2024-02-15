@@ -66,7 +66,6 @@ skills:
       check_multiplier_permissions: true
   auraskills/archery:
     abilities:
-      - auraskills/crit_chance
       - auraskills/archer
       - auraskills/bow_master
       - auraskills/piercing
@@ -95,7 +94,6 @@ skills:
       check_multiplier_permissions: true
   auraskills/fighting:
     abilities:
-      - auraskills/crit_damage
       - auraskills/fighter
       - auraskills/sword_master
       - auraskills/first_strike

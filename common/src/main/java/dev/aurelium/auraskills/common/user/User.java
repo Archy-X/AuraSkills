@@ -179,6 +179,7 @@ public abstract class User {
         return level;
     }
 
+    @Nullable
     public StatModifier getStatModifier(String name) {
         return statModifiers.get(name);
     }
@@ -222,6 +223,7 @@ public abstract class User {
         return level;
     }
 
+    @Nullable
     public TraitModifier getTraitModifier(String name) {
         return traitModifiers.get(name);
     }
@@ -494,6 +496,10 @@ public abstract class User {
         this.mana = state.mana();
 
         plugin.getStatManager().updateStats(this);
+    }
+
+    public void cleanUp() {
+
     }
 
     public SkillsUser toApi() {

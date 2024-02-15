@@ -5,7 +5,7 @@ patterns:
     pattern:
       interval: 1
   - type: stat
-    stat: luck
+    stat: strength
     value: 1
     pattern:
       interval: 2

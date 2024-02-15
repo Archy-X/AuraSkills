@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
-import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.trait.CritChanceTrait;
@@ -9,12 +8,10 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CriticalHandler {
 
-    private final Random rand = new Random();
     private final AuraSkills plugin;
 
     public CriticalHandler(AuraSkills plugin) {
@@ -22,10 +19,6 @@ public class CriticalHandler {
     }
 
     public DamageModifier getCrit(Player player, User user) {
-        if (!Abilities.CRIT_CHANCE.isEnabled()) {
-            return DamageModifier.none();
-        }
-
         if (!isCrit(user)) {
             return DamageModifier.none();
         }

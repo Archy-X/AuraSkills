@@ -1,6 +1,6 @@
 patterns:
   - type: stat
-    stat: strength
+    stat: crit_damage
     value: 1
     pattern:
       interval: 1

@@ -13,9 +13,9 @@ stats:
     enabled: true
     traits:
       auraskills/saturation_regen:
-        modifier: 0.008
+        modifier: 0.01
       auraskills/hunger_regen:
-        modifier: 0.008
+        modifier: 0.01
       auraskills/mana_regen:
         modifier: 0.01
   auraskills/luck:
@@ -113,7 +113,7 @@ traits:
     base: 0
   auraskills/crit_damage:
     enabled: true
-    base: 25
+    base: 0
   auraskills/movement_speed:
     enabled: true
     max: 300.0
