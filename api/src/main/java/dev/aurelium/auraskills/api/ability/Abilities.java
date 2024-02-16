@@ -87,16 +87,16 @@ public enum Abilities implements Ability {
 
     private final NamespacedId id;
     private final boolean hasSecondaryValue;
-    private final String defaultSkillName;
+    private final String legacySkillName;
 
-    Abilities(String defaultSkillName) {
-        this(defaultSkillName, false);
+    Abilities(String legacySkillName) {
+        this(legacySkillName, false);
     }
 
-    Abilities(String defaultSkill, boolean hasSecondaryValue) {
+    Abilities(String legacySkillName, boolean hasSecondaryValue) {
         this.id = NamespacedId.of(NamespacedId.AURASKILLS, this.name().toLowerCase(Locale.ROOT));
         this.hasSecondaryValue = hasSecondaryValue;
-        this.defaultSkillName = defaultSkill;
+        this.legacySkillName = legacySkillName;
     }
 
     @Override
@@ -114,8 +114,8 @@ public enum Abilities implements Ability {
         return provider.getSkill(this);
     }
 
-    public String getDefaultSkillName() {
-        return defaultSkillName;
+    public String getLegacySkillName() {
+        return legacySkillName;
     }
 
     @Override

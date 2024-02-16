@@ -143,7 +143,7 @@ public class ConfigMigrator {
 
         List<Pair<String, String>> abList = new ArrayList<>();
         for (Abilities ability : Abilities.values()) {
-            String skillName = ability.getDefaultSkillName().toLowerCase(Locale.ROOT);
+            String skillName = ability.getLegacySkillName().toLowerCase(Locale.ROOT);
             String abilityName = ability.getId().getKey().toLowerCase(Locale.ROOT);
             String oPath = "abilities." + skillName + "." + abilityName + ".";
             String nPath = "abilities.auraskills/" + abilityName + ".";
