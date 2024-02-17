@@ -128,7 +128,5 @@ sources:
     menu_item:
       material: pitcher_plant
 tags:
-  bountiful_harvest_applicable:
-    - '*'
-  triple_harvest_applicable:
+  farming_luck_applicable:
     - '*'

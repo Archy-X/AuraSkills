@@ -125,5 +125,5 @@ sources:
     block: red_mushroom_block
     xp: 2.0
 tags:
-  lumberjack_applicable:
+  foraging_luck_applicable:
     - '*'

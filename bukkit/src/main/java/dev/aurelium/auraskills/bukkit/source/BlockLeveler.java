@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -54,7 +55,7 @@ public class BlockLeveler extends SourceLeveler {
             // Allow Lucky Miner drops for ores that don't drop in block form (Silk Touch check handled by Lucky Miner)
             var miningAbilities = plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class);
             if (miningAbilities.dropsMineralDirectly(event.getBlock())) {
-                applyBlockLuck(skill, player, user, event.getBlock());
+                applyBlockLuck(skill, player, user, event.getBlock(), source);
             }
             return;
         }
@@ -63,7 +64,7 @@ public class BlockLeveler extends SourceLeveler {
         multiplier *= helper.getStateMultiplier(event.getBlock(), source);
 
         plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
-        applyBlockLuck(skill, player, user, event.getBlock());
+        applyBlockLuck(skill, player, user, event.getBlock(), source);
     }
 
     @EventHandler
@@ -93,16 +94,16 @@ public class BlockLeveler extends SourceLeveler {
                 // Checks that the block after one tick is the same material and matches the after_state/after_states
                 if (materialBefore == block.getType() && matchesStates(block, source.getAfterStates())) {
                     plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
-                    applyBlockLuck(skill, player, user, block);
+                    applyBlockLuck(skill, player, user, block, source);
                 }
             }, 50, TimeUnit.MILLISECONDS);
         } else { // Handle sources without after_state/after_states
             plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
-            applyBlockLuck(skill, player, user, block);
+            applyBlockLuck(skill, player, user, block, source);
         }
     }
 
-    private void applyBlockLuck(Skill skill, Player player, User user, Block block) {
+    private void applyBlockLuck(Skill skill, Player player, User user, Block block, XpSource source) {
         // Don't drop extra for silk touch + ores
         ItemStack tool = player.getInventory().getItemInMainHand();
         if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0 && plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class).dropsMineralDirectly(block)) {
@@ -112,7 +113,7 @@ public class BlockLeveler extends SourceLeveler {
         GatheringLuckTraits traitImpl = plugin.getTraitManager().getTraitImpl(GatheringLuckTraits.class);
         Trait blockLuckTrait = traitImpl.getTrait(skill);
         if (blockLuckTrait != null) {
-            traitImpl.apply(blockLuckTrait, block, player, user);
+            traitImpl.apply(blockLuckTrait, block, player, user, source);
         }
     }
 

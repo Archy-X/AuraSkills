@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
@@ -15,6 +16,7 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
+import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
@@ -44,10 +46,16 @@ public class GatheringLuckTraits extends TraitImpl {
         return 0;
     }
 
-    public void apply(Trait trait, Block block, Player player, User user) {
+    public void apply(Trait trait, Block block, Player player, User user, XpSource source) {
         // Get the skill corresponding to the block trait
         Skill skill = getSkill(trait);
         if (skill == null) return;
+
+        // Skip if the applicable tag doesn't have the source
+        SourceTag tag = getTag(skill);
+        if (tag != null && !plugin.getSkillManager().hasTag(source, tag)) {
+            return;
+        }
 
         if (failsChecks(player, skill)) return;
 
@@ -217,6 +225,20 @@ public class GatheringLuckTraits extends TraitImpl {
                 case MINING_LUCK -> Abilities.LUCKY_MINER;
                 case EXCAVATION_LUCK -> Abilities.BIGGER_SCOOP;
                 case FISHING_LUCK -> Abilities.LUCKY_CATCH;
+                default -> null;
+            };
+        }
+        return null;
+    }
+
+    @Nullable
+    public SourceTag getTag(Skill skill) {
+        if (skill instanceof Skills skills) {
+            return switch (skills) {
+                case FARMING -> SourceTag.FARMING_LUCK_APPLICABLE;
+                case FORAGING -> SourceTag.FORAGING_LUCK_APPLICABLE;
+                case MINING -> SourceTag.MINING_LUCK_APPLICABLE;
+                case EXCAVATION -> SourceTag.EXCAVATION_LUCK_APPLICABLE;
                 default -> null;
             };
         }

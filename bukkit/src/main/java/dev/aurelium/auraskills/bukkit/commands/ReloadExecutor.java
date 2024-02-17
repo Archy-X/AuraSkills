@@ -30,12 +30,9 @@ public class ReloadExecutor {
         plugin.getWorldManager().loadWorlds(plugin.getConfig());
         // Load skills
         plugin.loadSkills();
-        plugin.getLevelManager().registerLevelers();
         plugin.getUiProvider().getBossBarManager().loadOptions();
         plugin.getRewardManager().loadRewards();
         plugin.getLootTableManager().loadLootTables();
-        // Register default traits
-        plugin.getTraitManager().registerTraitImplementations();
         // Load menus
         plugin.getMenuFileManager().generateDefaultFiles();
         plugin.getMenuFileManager().loadMenus();

@@ -48,7 +48,7 @@ sources:
     block: muddy_mangrove_roots
     xp: 2.5
 tags:
-  bigger_scoop_applicable:
+  excavation_luck_applicable:
     - '*'
   metal_detector_applicable:
     - '*'
